@@ -2,8 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
-    previewFeatures = ["jsonProtocol"]
+  provider        = "prisma-client-js"
+  previewFeatures = ["jsonProtocol"]
 }
 
 datasource db {
@@ -12,9 +12,149 @@ datasource db {
   relationMode = "prisma"
 }
 
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+enum Category {
+  USER
+  ADMIN
 }
 
+enum Difficulty {
+  BEGINNER
+  EASY
+  MEDIUM
+  HARD
+  EXTREME
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Status {
+  BANNED
+  ACTIVE  // can post, comment, vote, etc
+  PENDING // must finish x number of challenges to be active
+}
+
+// Necessary for Next auth
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? // @db.Text
+  access_token      String? // @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? // @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model User {
+  id            String      @id @default(cuid())
+  name          String?
+  email         String?     @unique
+  role          Role        @default(USER)
+  status        Status      @default(PENDING)
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  Challenge     Challenge[]
+  Vote          Vote[]
+  Solution      Solution[]
+  Comment       Comment[]
+  Report        Report[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Challenge {
+  id         Int        @id @default(autoincrement())
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  category   Category
+  difficulty Difficulty
+  prompt     String
+  upvotes    Int
+  user       User       @relation(fields: [userId], references: [id])
+  userId     String
+  Vote       Vote[]
+  Solution   Solution[]
+  Comment    Comment[]
+  Report     Report[]
+
+  @@index([userId])
+}
+
+model Vote {
+  id          Int       @id @default(autoincrement())
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+  challenge   Challenge @relation(fields: [challengeId], references: [id])
+  challengeId Int
+  solution    Solution  @relation(fields: [solutionId], references: [id])
+  solutionId  Int
+
+  @@index([userId])
+  @@index([challengeId])
+  @@index([solutionId])
+}
+
+model Solution {
+  id          Int       @id @default(autoincrement())
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+  challenge   Challenge @relation(fields: [challengeId], references: [id])
+  challengeId Int
+  Vote        Vote[]
+
+  @@index([userId])
+  @@index([challengeId])
+}
+
+model Comment {
+  id          Int       @id @default(autoincrement())
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+  challenge   Challenge @relation(fields: [challengeId], references: [id])
+  challengeId Int
+  text        String
+
+  @@index([userId])
+  @@index([challengeId])
+}
+
+model Report {
+  id          Int       @id @default(autoincrement())
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+  challenge   Challenge @relation(fields: [challengeId], references: [id])
+  challengeId Int
+  text        String
+
+  @@index([userId])
+  @@index([challengeId])
+}

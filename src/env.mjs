@@ -1,5 +1,5 @@
-import { createEnv } from "@t3-oss/env-nextjs";
-import { z } from "zod";
+import { createEnv } from '@t3-oss/env-nextjs';
+import { z } from 'zod';
 
 export const env = createEnv({
   /**
@@ -8,7 +8,9 @@ export const env = createEnv({
    */
   server: {
     DATABASE_URL: z.string().url(),
-    NODE_ENV: z.enum(["development", "test", "production"]),
+    NODE_ENV: z.enum(['development', 'test', 'production']),
+    GITHUB_ID: z.string(),
+    GITHUB_SECRET: z.string(),
   },
 
   /**
@@ -27,6 +29,8 @@ export const env = createEnv({
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
+    GITHUB_SECRET: process.env.GITHUB_SECRET,
+    GITHUB_ID: process.env.GITHUB_ID,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.

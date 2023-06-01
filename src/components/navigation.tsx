@@ -1,6 +1,5 @@
 import { useTheme } from 'next-themes';
 
-import { UserButton } from '@clerk/nextjs';
 import { Bell, Moon, Sun } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -64,8 +63,6 @@ export function Navigation() {
             <button type="button">
               <Bell className="h-6 w-6" aria-hidden="true" />
             </button>
-
-            <UserButton afterSignOutUrl="/" />
           </div>
         </div>
       </nav>
