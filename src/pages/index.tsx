@@ -1,9 +1,11 @@
 import { type NextPage } from 'next';
+
 import { signIn, signOut, useSession } from 'next-auth/react';
 
 import Head from 'next/head';
-import { TypographyH1 } from '~/components/h1';
-import { Navigation } from '~/components/navigation';
+import { CodePanel } from '~/components/ui/editor';
+import { TypographyH1 } from '~/components/ui/h1';
+import { Navigation } from '~/components/ui/navigation';
 import { api } from '~/utils/api';
 
 const Home: NextPage = () => {
@@ -23,6 +25,7 @@ const Home: NextPage = () => {
       </header>
       <main>
         <AuthShowcase />
+        <CodePanel />
       </main>
     </>
   );

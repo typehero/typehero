@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^4.19.0",
+    "@monaco-editor/react": "^4.5.1",
     "@next-auth/prisma-adapter": "^1.0.6",
     "@prisma/client": "^4.14.0",
     "@radix-ui/react-navigation-menu": "^1.1.3",
