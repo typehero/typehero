@@ -1,10 +1,11 @@
 import Editor from '@monaco-editor/react';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import React from 'react';
+import { createTwoslashInlayProvider } from './twoslash';
 
 declare global {
   interface Window {
-    editor: any;
+    editor: monaco.editor.IStandaloneCodeEditor;
     treeStringToJson: any;
   }
 }
@@ -22,8 +23,15 @@ export const options: IGlobalEditorOptions | IEditorOptions = {
   readOnly: true,
 };
 
-const value = /* set from `myEditor.getModel()`: */ `import { equal } from "checking";
-const r1 = equal<{ a: 1 } & { b: 1 }, { a: 1, b: 1 }>()`;
+const value = `import { equal } from "checking";
+
+const r1 = equal<{ a: 1 } & { b: 1 }, { a: 1, b: 1 }>()
+//    ^?
+
+const r2 = equal<{ a: 1 } & { b: 1 }, { a: 2, b: 1 }>()
+//    ^?
+`;
+
 const libSource = `
 declare module "checking" {
 /// based on: https://github.com/type-challenges/type-challenges/blob/main/utils/index.d.ts
@@ -88,22 +96,30 @@ export const CodePanel = () => {
     monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, libUri);
     monaco.editor.createModel(libSource, 'typescript', monaco.Uri.parse(libUri));
 
-    const worker = await monaco.languages.typescript.getTypeScriptWorker();
-    const ts = await worker(editor.getModel()?.uri!);
+    const ts = await (
+      await monaco.languages.typescript.getTypeScriptWorker()
+    )(editor.getModel()?.uri!);
 
     const filename = editor.getModel()?.uri.toString();
 
     // what actually runs when checking errors
     const runCommand = async () => {
-      console.log(
-        ts.getSemanticDiagnostics(filename!), // actual type errors
+      let errors = await Promise.all([
+        ts.getSemanticDiagnostics(filename!),
         ts.getSyntacticDiagnostics(filename!),
-        // ts.getSuggestionDiagnostics(filename), unused triggers this
+        ts.getSuggestionDiagnostics(filename!),
         ts.getCompilerOptionsDiagnostics(filename!),
-      );
+      ] as const);
+
+      console.log(errors);
     };
 
     editor.getModel()?.onDidChangeContent((x) => runCommand());
+
+    monaco.languages.registerInlayHintsProvider(
+      'typescript',
+      createTwoslashInlayProvider(monaco, ts),
+    );
   };
 
   return (
