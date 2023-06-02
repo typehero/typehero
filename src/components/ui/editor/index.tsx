@@ -57,43 +57,6 @@ export function equal<A, B>(...args: Alike<A, B> extends true ? [] : [a: A, b: B
 const libUri = 'ts:filename/checking.d.ts';
 export const CodePanel = () => {
   const onMount = async (editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) => {
-    // const checkErrorsCmd = editor.addCommand(
-    //   0,
-    //   function () {
-    //     if (runCommand) {
-    //       runCommand();
-    //     } else {
-    //       alert('still loading');
-    //     }
-    //   },
-    //   'checkErrorsCmd',
-    // );
-    // monaco.languages.registerCodeLensProvider('typescript', {
-    //   provideCodeLenses: function (model, token) {
-    //     return {
-    //       lenses: [
-    //         {
-    //           range: {
-    //             startLineNumber: 1,
-    //             startColumn: 1,
-    //             endLineNumber: 2,
-    //             endColumn: 1,
-    //           },
-    //           id: 'Log TypeScript Errors to Console',
-    //           command: {
-    //             id: checkErrorsCmd,
-    //             title: 'Log TypeScript Errors to Console',
-    //           },
-    //         },
-    //       ],
-    //       dispose: () => {},
-    //     };
-    //   },
-    //   resolveCodeLens: function (model, codeLens, token) {
-    //     return codeLens;
-    //   },
-    // });
-
     monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, libUri);
     monaco.editor.createModel(libSource, 'typescript', monaco.Uri.parse(libUri));
 
