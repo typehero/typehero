@@ -1,3 +1,4 @@
+'use client';
 import Editor from '@monaco-editor/react';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import React from 'react';
