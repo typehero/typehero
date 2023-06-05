@@ -7,7 +7,6 @@
     "dev": "next dev",
     "postinstall": "prisma generate",
     "lint": "next lint",
-    "seed": "npx tsx ",
     "start": "next start",
     "typecheck": "tsc --noEmit"
   },

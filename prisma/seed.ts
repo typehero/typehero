@@ -14,11 +14,13 @@ async function main() {
         create: {
           createdAt: new Date(),
           updatedAt: new Date(),
-          name: "chris's first challenge",
-          prompt: `Extends<HelloWorld, \`Hello, \${string}\`>()
+          name: "trash's first challenge",
+          prompt: `/* _____________ Test Cases _____________ */
+Extends<HelloWorld, \`Hello, \${string}\`>()
 
 Extends<HelloWorld, \`\${string}!\`>()
 
+/* _____________ Your Code Here _____________ */
 type HelloWorld =`,
           difficulty: 'EASY',
           upvotes: 69,
