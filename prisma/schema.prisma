@@ -12,11 +12,6 @@ datasource db {
   relationMode = "prisma"
 }
 
-enum Category {
-  USER
-  ADMIN
-}
-
 enum Difficulty {
   BEGINNER
   EASY
@@ -95,8 +90,8 @@ model Challenge {
   id         Int        @id @default(autoincrement())
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
-  category   Category
   difficulty Difficulty
+  name     String
   prompt     String
   upvotes    Int
   user       User       @relation(fields: [userId], references: [id])
@@ -125,6 +120,7 @@ model Vote {
 
 model Solution {
   id          Int       @id @default(autoincrement())
+  content     String
   user        User      @relation(fields: [userId], references: [id])
   userId      String
   challenge   Challenge @relation(fields: [challengeId], references: [id])

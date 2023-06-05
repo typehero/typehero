@@ -26,18 +26,6 @@ const options: IGlobalEditorOptions | IEditorOptions = {
   // readOnly: true,
 };
 
-let value = `Extends<HelloWorld, \`Hello, \${string}\`>()
-
-Extends<HelloWorld, \`\${string}!\`>()
-
-type HelloWorld = `;
-
-const numLines = value.split('\n').length;
-const lastLineLength = value.split('\n').at(-1)?.length || 1;
-
-value += `""
-`;
-
 /// based on: https://github.com/type-challenges/type-challenges/blob/main/utils/index.d.ts
 const libSource = `
 type Equal<X, Y> =
@@ -85,60 +73,67 @@ function Extends<A, B>(...args: A extends B ? [] : [msg: [A, "doesn't extend", B
 
 const libUri = 'ts:filename/checking.d.ts';
 
-const onMount = async (editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) => {
-  monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, libUri);
-  monaco.editor.createModel(libSource, 'typescript', monaco.Uri.parse(libUri));
+const onMount =
+  (value: string) => async (editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) => {
+    const numLines = value.split('\n').length;
+    const lastLineLength = value.split('\n').at(-1)?.length || 1;
 
-  const model = editor.getModel();
+    monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, libUri);
+    monaco.editor.createModel(libSource, 'typescript', monaco.Uri.parse(libUri));
 
-  if (!model) {
-    throw new Error();
-  }
+    const model = editor.getModel();
 
-  globalThis.model = model;
-  globalThis.editor = editor;
+    if (!model) {
+      throw new Error();
+    }
 
-  const ts = await (await monaco.languages.typescript.getTypeScriptWorker())(model.uri);
+    globalThis.model = model;
+    globalThis.editor = editor;
 
-  const filename = model.uri.toString();
+    const ts = await (await monaco.languages.typescript.getTypeScriptWorker())(model.uri);
 
-  // what actually runs when checking errors
-  const runCommand = async () => {
-    const errors = await Promise.all([
-      ts.getSemanticDiagnostics(filename),
-      ts.getSyntacticDiagnostics(filename),
-      ts.getSuggestionDiagnostics(filename),
-      ts.getCompilerOptionsDiagnostics(filename),
-    ] as const);
+    const filename = model.uri.toString();
 
-    console.log(errors);
+    // what actually runs when checking errors
+    const runCommand = async () => {
+      const errors = await Promise.all([
+        ts.getSemanticDiagnostics(filename),
+        ts.getSyntacticDiagnostics(filename),
+        ts.getSuggestionDiagnostics(filename),
+        ts.getCompilerOptionsDiagnostics(filename),
+      ] as const);
+
+      console.log(errors);
+    };
+
+    let fixingStart = false;
+
+    model.onDidChangeContent((e) => {
+      if (
+        e.changes.some(
+          (c) =>
+            c.range.startLineNumber < numLines ||
+            (c.range.startLineNumber === numLines && c.range.startColumn <= lastLineLength),
+        )
+      ) {
+        if (!fixingStart && !e.isUndoing && !e.isRedoing) {
+          editor.trigger('someIdString', e.isUndoing ? 'redo' : 'undo', null);
+        }
+
+        fixingStart = !fixingStart;
+      }
+    });
+
+    monaco.languages.registerInlayHintsProvider(
+      'typescript',
+      createTwoslashInlayProvider(monaco, ts),
+    );
   };
 
-  let fixingStart = false;
-
-  model.onDidChangeContent((e) => {
-    if (
-      e.changes.some(
-        (c) =>
-          c.range.startLineNumber < numLines ||
-          (c.range.startLineNumber === numLines && c.range.startColumn <= lastLineLength),
-      )
-    ) {
-      if (!fixingStart && !e.isUndoing && !e.isRedoing) {
-        editor.trigger('someIdString', e.isUndoing ? 'redo' : 'undo', null);
-      }
-
-      fixingStart = !fixingStart;
-    }
-  });
-
-  monaco.languages.registerInlayHintsProvider(
-    'typescript',
-    createTwoslashInlayProvider(monaco, ts),
-  );
-};
-
-export const CodePanel = () => {
+interface Props {
+  prompt: string;
+}
+export const CodePanel = ({ prompt }: Props) => {
   return (
     <div style={{ height: '400px' }}>
       <Editor
@@ -146,8 +141,8 @@ export const CodePanel = () => {
         options={options}
         defaultLanguage="typescript"
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
-        onMount={onMount}
-        defaultValue={value}
+        onMount={onMount(prompt)}
+        defaultValue={prompt}
       />
     </div>
   );

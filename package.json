@@ -7,6 +7,7 @@
     "dev": "next dev",
     "postinstall": "prisma generate",
     "lint": "next lint",
+    "seed": "npx tsx ",
     "start": "next start",
     "typecheck": "tsc --noEmit"
   },
@@ -34,13 +35,15 @@
     "superjson": "1.12.2",
     "tailwind-merge": "^1.12.0",
     "tailwindcss-animate": "^1.0.5",
+    "typescript": "5.2.0-dev.20230605",
+    "uuid-by-string": "^4.0.0",
     "zod": "^3.21.4"
   },
   "devDependencies": {
     "@types/eslint": "^8.37.0",
     "@types/node": "^18.16.0",
     "@types/prettier": "^2.7.2",
-    "@types/react": "^18.2.6",
+    "@types/react": "^18.2.8",
     "@types/react-dom": "^18.2.4",
     "@typescript-eslint/eslint-plugin": "^5.59.6",
     "@typescript-eslint/parser": "^5.59.6",
@@ -51,10 +54,13 @@
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.2.8",
     "prisma": "^4.14.0",
-    "tailwindcss": "^3.3.0",
-    "typescript": "^5.0.4"
+    "tailwindcss": "^3.3.0"
   },
   "ct3aMetadata": {
     "initVersion": "7.13.1"
+  },
+  "prisma": {
+    "schema": "./prisma/schema.prisma",
+    "seed": "npx tsx ./prisma/seed.ts"
   }
 }
