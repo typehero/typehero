@@ -29,7 +29,7 @@ export function Navigation() {
   }
 
   return (
-    <header className="w-full border-b border-black dark:border-white">
+    <header className="w-full">
       <nav className="container flex h-14 items-center">
         <div className="flex w-full items-center justify-between">
           <div>

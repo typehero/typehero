@@ -27,7 +27,7 @@ enum Role {
 
 enum Status {
   BANNED
-  ACTIVE  // can post, comment, vote, etc
+  ACTIVE // can post, comment, vote, etc
   PENDING // must finish x number of challenges to be active
 }
 
@@ -87,19 +87,20 @@ model VerificationToken {
 }
 
 model Challenge {
-  id         Int        @id @default(autoincrement())
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  difficulty Difficulty
-  name       String
-  prompt     String
-  upvotes    Int
-  user       User       @relation(fields: [userId], references: [id])
-  userId     String
-  Vote       Vote[]
-  Solution   Solution[]
-  Comment    Comment[]
-  Report     Report[]
+  id          Int        @id @default(autoincrement())
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  difficulty  Difficulty
+  name        String
+  description String
+  prompt      String
+  upvotes     Int
+  user        User       @relation(fields: [userId], references: [id])
+  userId      String
+  Vote        Vote[]
+  Solution    Solution[]
+  Comment     Comment[]
+  Report      Report[]
 
   @@index([userId])
 }

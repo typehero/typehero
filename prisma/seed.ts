@@ -15,6 +15,11 @@ async function main() {
           createdAt: new Date(),
           updatedAt: new Date(),
           name: "trash's first challenge",
+          description: `### trash is a cool guy
+          - he likes to eat trash
+          - he likes to sleep in trash
+          - he likes to be trash
+          `,
           prompt: `/* _____________ Test Cases _____________ */
 Extends<HelloWorld, \`Hello, \${string}\`>()
 
@@ -40,6 +45,11 @@ type HelloWorld =`,
           createdAt: new Date(),
           updatedAt: new Date(),
           name: "g's first challenge",
+          description: `### g is a cool guy
+          - he does not like to eat trash
+          - he does not like to sleep in trash
+          - he doesn not like to be trash
+          `,
           prompt: `Equal<T, 1>();
 
 type T =`,

@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { prisma } from '~/server/db';
-import { CodePanel } from '../ui/editor';
+import { CodePanel } from './editor';
+import { DescriptionPanel } from './DescriptionPanel';
 
 interface Props {
   id: string;
@@ -14,12 +15,14 @@ export async function Challenge({ id }: Props) {
     notFound();
   }
 
+  console.log({ challenge });
   return (
-    <>
-      <h1>some challenge</h1>
+    <div className="flex h-full gap-2 p-4">
+      <DescriptionPanel description={challenge.description} />
 
-      <h2 className="text-xl">{challenge.name}</h2>
-      <CodePanel prompt={challenge.prompt} />
-    </>
+      <div className="h-full flex-1">
+        <CodePanel prompt={challenge.prompt} />
+      </div>
+    </div>
   );
 }

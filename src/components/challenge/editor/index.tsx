@@ -18,6 +18,7 @@ type IEditorOptions = monaco.editor.IEditorOptions;
 type Monaco = typeof monaco;
 
 const options: IGlobalEditorOptions | IEditorOptions = {
+  lineNumbers: 'off',
   tabSize: 2,
   insertSpaces: false,
   minimap: {
@@ -135,16 +136,14 @@ interface Props {
 }
 export const CodePanel = ({ prompt }: Props) => {
   return (
-    <div style={{ height: '400px' }}>
-      <Editor
-        theme="vs-dark"
-        options={options}
-        defaultLanguage="typescript"
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
-        onMount={onMount(prompt)}
-        defaultValue={prompt}
-      />
-    </div>
+    <Editor
+      theme="vs-dark"
+      options={options}
+      defaultLanguage="typescript"
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      onMount={onMount(prompt)}
+      defaultValue={prompt}
+    />
   );
 };
 
