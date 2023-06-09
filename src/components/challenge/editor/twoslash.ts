@@ -1,5 +1,5 @@
 // based on: https://github.com/microsoft/TypeScript-Website/blob/v2/packages/playground/src/twoslashInlays.ts
-import type * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import type * as monaco from 'monaco-editor';
 
 export const createTwoslashInlayProvider = (
 	m: typeof monaco,
@@ -14,6 +14,7 @@ export const createTwoslashInlayProvider = (
       if (model.isDisposed()) {
         return {
           hints: [],
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
           dispose: () => {},
         };
       }
@@ -27,11 +28,12 @@ export const createTwoslashInlayProvider = (
         if (cancel.isCancellationRequested) {
           return {
             hints: [],
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
             dispose: () => {},
           };
         }
 
-        const hint = await worker.getQuickInfoAtPosition(model.uri.toString(), inspectionOff);
+        const hint = await worker.getQuickInfoAtPosition(model.uri.toString(), inspectionOff) as { displayParts: { text:string}[]};
         if (!hint || !hint.displayParts) continue;
 
         // Make a one-liner
@@ -42,7 +44,7 @@ export const createTwoslashInlayProvider = (
         if (text.length > 120) text = text.slice(0, 119) + '...';
 
         const inlay: monaco.languages.InlayHint = {
-          // @ts-ignore
+          // @ts-expect-error undocumented kind
           kind: 0,
           position: new m.Position(endPos.lineNumber, endPos.column + 1),
           label: text,
@@ -54,6 +56,7 @@ export const createTwoslashInlayProvider = (
 
       return {
         hints: results,
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
         dispose: () => {},
       };
     },

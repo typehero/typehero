@@ -1,6 +1,6 @@
 'use client';
 import Editor from '@monaco-editor/react';
-import type * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import type * as monaco from 'monaco-editor';
 import React from 'react';
 import { createTwoslashInlayProvider } from './twoslash';
 
@@ -9,8 +9,6 @@ declare global {
   var editor: monaco.editor.IStandaloneCodeEditor;
   // eslint-disable-next-line no-var
   var model: monaco.editor.ITextModel;
-  // eslint-disable-next-line
-  var treeStringToJson: any;
 }
 
 type IGlobalEditorOptions = monaco.editor.IGlobalEditorOptions;
@@ -96,7 +94,7 @@ const onMount =
     const filename = model.uri.toString();
 
     // what actually runs when checking errors
-    const runCommand = async () => {
+    const _runCommand = async () => {
       const errors = await Promise.all([
         ts.getSemanticDiagnostics(filename),
         ts.getSyntacticDiagnostics(filename),

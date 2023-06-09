@@ -16,7 +16,7 @@ export function DescriptionPanel({ description: markdown }: Props) {
         </TabsList>
         <TabsContent value="description" className="mt-0">
           <div className="prose-invert prose-h3:text-xl">
-            <ReactMarkdown children={markdown} />
+            <ReactMarkdown>{markdown}</ReactMarkdown>
           </div>
         </TabsContent>
         <TabsContent value="solutions">
