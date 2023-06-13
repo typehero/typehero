@@ -15,10 +15,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html suppressHydrationWarning>
       <head />
-      <body>
+      <body className="flex flex-col">
         <Providers>
           <Navigation />
-          <main className={`${inter.className} bg-white dark:bg-neutral-900`}>{children}</main>
+          <main className={`${inter.className} flex-1 bg-white dark:bg-neutral-900`}>
+            {children}
+          </main>
         </Providers>
       </body>
     </html>

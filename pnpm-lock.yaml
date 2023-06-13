@@ -53,6 +53,9 @@ dependencies:
   lucide-react:
     specifier: ^0.224.0
     version: 0.224.0(react@18.2.0)
+  monaco-vim:
+    specifier: ^0.4.0
+    version: 0.4.0(monaco-editor@0.36.1)
   next:
     specifier: ^13.4.2
     version: 13.4.4(react-dom@18.2.0)(react@18.2.0)
@@ -3400,6 +3403,14 @@ packages:
 
   /monaco-editor@0.36.1:
     resolution: {integrity: sha512-/CaclMHKQ3A6rnzBzOADfwdSJ25BFoFT0Emxsc4zYVyav5SkK9iA6lEtIeuN/oRYbwPgviJT+t3l+sjFa28jYg==}
+
+  /monaco-vim@0.4.0(monaco-editor@0.36.1):
+    resolution: {integrity: sha512-+CsW0+Mvx2+eitkXS7OpUXIu57qXlqAL8oVkYhkPCEZ/c6+6gOp/IcG7w+Lb33YiZuTyvJ891+czkeJRPIEwVA==}
+    peerDependencies:
+      monaco-editor: '*'
+    dependencies:
+      monaco-editor: 0.36.1
+    dev: false
 
   /mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}

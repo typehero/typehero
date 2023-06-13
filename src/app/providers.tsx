@@ -9,7 +9,7 @@ interface Props {
 export function Providers({ children }: Props) {
   return (
     <SessionProvider>
-      <ThemeProvider attribute="class">{children}</ThemeProvider>;
+      <ThemeProvider attribute="class">{children}</ThemeProvider>
     </SessionProvider>
   );
 }

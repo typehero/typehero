@@ -1,8 +1,9 @@
 'use client';
 import Editor from '@monaco-editor/react';
-import type * as monaco from 'monaco-editor';
+import type * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import React from 'react';
 import { createTwoslashInlayProvider } from './twoslash';
+import { VimStatusBar, loadVim } from './vimMode';
 
 declare global {
   // eslint-disable-next-line no-var
@@ -11,11 +12,7 @@ declare global {
   var model: monaco.editor.ITextModel;
 }
 
-type IGlobalEditorOptions = monaco.editor.IGlobalEditorOptions;
-type IEditorOptions = monaco.editor.IEditorOptions;
-type Monaco = typeof monaco;
-
-const options: IGlobalEditorOptions | IEditorOptions = {
+const options: monaco.editor.IStandaloneEditorConstructionOptions = {
   lineNumbers: 'off',
   tabSize: 2,
   insertSpaces: false,
@@ -24,6 +21,8 @@ const options: IGlobalEditorOptions | IEditorOptions = {
   },
   // readOnly: true,
 };
+
+type Monaco = typeof monaco;
 
 /// based on: https://github.com/type-challenges/type-challenges/blob/main/utils/index.d.ts
 const libSource = `
@@ -89,6 +88,8 @@ const onMount =
     globalThis.model = model;
     globalThis.editor = editor;
 
+		loadVim(editor);
+
     const ts = await (await monaco.languages.typescript.getTypeScriptWorker())(model.uri);
 
     const filename = model.uri.toString();
@@ -134,14 +135,18 @@ interface Props {
 }
 export const CodePanel = ({ prompt }: Props) => {
   return (
-    <Editor
-      theme="vs-dark"
-      options={options}
-      defaultLanguage="typescript"
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
-      onMount={onMount(prompt)}
-      defaultValue={prompt}
-    />
+    <>
+      <Editor
+        theme="vs-dark"
+        options={options}
+        defaultLanguage="typescript"
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        onMount={onMount(prompt)}
+        defaultValue={prompt}
+        className="flex-1"
+      />
+      <VimStatusBar />
+    </>
   );
 };
 

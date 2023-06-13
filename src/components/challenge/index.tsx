@@ -20,7 +20,7 @@ export async function Challenge({ id }: Props) {
     <div className="flex h-full gap-2 p-4">
       <DescriptionPanel description={challenge.description} />
 
-      <div className="h-full flex-1">
+      <div className="h-full flex-1 flex flex-col">
         <CodePanel prompt={challenge.prompt} />
       </div>
     </div>
