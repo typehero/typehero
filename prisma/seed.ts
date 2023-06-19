@@ -8,6 +8,7 @@ async function main() {
     where: { id: trashId },
     update: {},
     create: {
+      id: trashId,
       email: 'chris@typehero.dev',
       name: 'chris',
       Challenge: {
@@ -28,7 +29,6 @@ Extends<HelloWorld, \`\${string}!\`>()
 /* _____________ Your Code Here _____________ */
 type HelloWorld =`,
           difficulty: 'EASY',
-          upvotes: 69,
         },
       },
     },
@@ -38,6 +38,7 @@ type HelloWorld =`,
     where: { id: gId },
     update: {},
     create: {
+      id: gId,
       email: 'g@typehero.dev',
       name: 'g',
       Challenge: {
@@ -54,7 +55,6 @@ type HelloWorld =`,
 
 type T =`,
           difficulty: 'EASY',
-          upvotes: 420,
         },
       },
     },

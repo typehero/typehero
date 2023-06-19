@@ -7,6 +7,7 @@
     "dev": "next dev",
     "postinstall": "prisma generate",
     "lint": "next lint",
+    "reset": "prisma db push --force-reset --preview-feature",
     "start": "next start",
     "typecheck": "tsc --noEmit"
   },
@@ -24,8 +25,10 @@
     "@trpc/next": "^10.26.0",
     "@trpc/react-query": "^10.26.0",
     "@trpc/server": "^10.26.0",
+    "@types/lodash": "^4.14.195",
     "class-variance-authority": "^0.6.0",
     "clsx": "^1.2.1",
+    "lodash": "^4.17.21",
     "lucide-react": "^0.224.0",
     "monaco-vim": "^0.4.0",
     "next": "^13.4.2",

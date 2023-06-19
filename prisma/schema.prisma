@@ -62,7 +62,7 @@ model Session {
 }
 
 model User {
-  id            String      @id @default(cuid())
+  id            String      @id @default(uuid())
   name          String?
   email         String?     @unique
   role          Role        @default(USER)
@@ -94,7 +94,6 @@ model Challenge {
   name        String
   description String
   prompt      String
-  upvotes     Int
   user        User       @relation(fields: [userId], references: [id])
   userId      String
   Vote        Vote[]
@@ -106,13 +105,13 @@ model Challenge {
 }
 
 model Vote {
-  id          Int       @id @default(autoincrement())
-  user        User      @relation(fields: [userId], references: [id])
+  id          Int        @id @default(autoincrement())
+  user        User       @relation(fields: [userId], references: [id])
   userId      String
-  challenge   Challenge @relation(fields: [challengeId], references: [id])
-  challengeId Int
-  solution    Solution  @relation(fields: [solutionId], references: [id])
-  solutionId  Int
+  challenge   Challenge? @relation(fields: [challengeId], references: [id])
+  challengeId Int?
+  solution    Solution?  @relation(fields: [solutionId], references: [id])
+  solutionId  Int?
 
   @@index([userId])
   @@index([challengeId])
