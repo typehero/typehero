@@ -20,7 +20,7 @@ export default async function Index() {
           {session && <span>Logged in as {session.user?.name}</span>}
         </p>
       </div>
-      <SignInOutButton />
+      <SignInOutButton session={session} />
     </>
   );
 }

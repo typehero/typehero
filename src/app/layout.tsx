@@ -4,6 +4,7 @@ import '../styles/globals.css';
 
 import { Inter } from 'next/font/google';
 import { Navigation } from '~/components/ui/navigation';
+import { Toaster } from '~/components/ui/toaster';
 
 const inter = Inter({ subsets: ['latin'] });
 export const metadata = {
@@ -15,12 +16,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html suppressHydrationWarning>
       <head />
-      <body className="flex flex-col">
+      <body className={`${inter.className} flex flex-col`}>
         <Providers>
           <Navigation />
-          <main className={`${inter.className} flex-1 bg-white dark:bg-neutral-900`}>
-            {children}
+          <main className="flex-1">
+            <div className="container h-full">{children}</div>
           </main>
+          <Toaster />
         </Providers>
       </body>
     </html>

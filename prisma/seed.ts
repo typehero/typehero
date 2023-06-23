@@ -1,7 +1,34 @@
-import { PrismaClient } from '@prisma/client';
+import { Difficulty, Prisma, PrismaClient } from '@prisma/client';
 import uuidByString from 'uuid-by-string';
 
 const prisma = new PrismaClient();
+const CHALLENGES_TO_CREATE = 50;
+const DIFFICULTIES = ['BEGINNER', 'EASY', 'MEDIUM', 'HARD', 'EXTREME'];
+const randomDifficulty = (): Difficulty => {
+  return DIFFICULTIES[Math.floor(Math.random() * DIFFICULTIES.length)] as Difficulty;
+};
+
+const challenges = (who: string): Prisma.ChallengeCreateNestedManyWithoutUserInput => ({
+  create: Array.from({ length: CHALLENGES_TO_CREATE }, (_, challengeIndex) => ({
+    name: `Challenge ${challengeIndex + 1}`,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    description: `### ${who} is a cool guy
+          - he likes to eat ${who}
+          - he likes to sleep in ${who}
+          - he likes to be ${who}
+          `,
+    prompt: `/* _____________ Test Cases _____________ */
+Extends<HelloWorld, \`Hello, \${string}\`>()
+
+Extends<HelloWorld, \`\${string}!\`>()
+
+/* _____________ Your Code Here _____________ */
+type HelloWorld =`,
+    difficulty: randomDifficulty(),
+  })),
+});
+
 async function main() {
   const trashId = uuidByString('trash');
   await prisma.user.upsert({
@@ -11,26 +38,7 @@ async function main() {
       id: trashId,
       email: 'chris@typehero.dev',
       name: 'chris',
-      Challenge: {
-        create: {
-          createdAt: new Date(),
-          updatedAt: new Date(),
-          name: "trash's first challenge",
-          description: `### trash is a cool guy
-          - he likes to eat trash
-          - he likes to sleep in trash
-          - he likes to be trash
-          `,
-          prompt: `/* _____________ Test Cases _____________ */
-Extends<HelloWorld, \`Hello, \${string}\`>()
-
-Extends<HelloWorld, \`\${string}!\`>()
-
-/* _____________ Your Code Here _____________ */
-type HelloWorld =`,
-          difficulty: 'EASY',
-        },
-      },
+      Challenge: challenges('trash'),
     },
   });
   const gId = uuidByString('g');
@@ -41,22 +49,7 @@ type HelloWorld =`,
       id: gId,
       email: 'g@typehero.dev',
       name: 'g',
-      Challenge: {
-        create: {
-          createdAt: new Date(),
-          updatedAt: new Date(),
-          name: "g's first challenge",
-          description: `### g is a cool guy
-          - he does not like to eat trash
-          - he does not like to sleep in trash
-          - he doesn not like to be trash
-          `,
-          prompt: `Equal<T, 1>();
-
-type T =`,
-          difficulty: 'EASY',
-        },
-      },
+      Challenge: challenges('g'),
     },
   });
 }

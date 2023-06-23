@@ -1,14 +1,14 @@
 'use client';
 
 import type { Challenge, Vote } from '@prisma/client';
+import { clsx } from 'clsx';
 import { debounce } from 'lodash';
+import { ArrowBigUp } from 'lucide-react';
 import { useSession } from 'next-auth/react';
+import { useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { incrementOrDecrementUpvote } from './increment.action';
-import { useRef, useState } from 'react';
-import { ArrowBigUp } from 'lucide-react';
-import { clsx } from 'clsx';
 
 interface Props {
   challenge: Challenge & {
@@ -30,6 +30,7 @@ export function DescriptionPanel({ challenge }: Props) {
       }
     }, 500),
   ).current;
+
   return (
     <div className="flex-1 rounded-md bg-white dark:bg-zinc-800">
       <Tabs defaultValue="description" className="w-full">
@@ -38,12 +39,12 @@ export function DescriptionPanel({ challenge }: Props) {
           <TabsTrigger value="solutions">Solutions</TabsTrigger>
         </TabsList>
         <TabsContent value="description" className="mt-0">
-          <div className="flex">
+          <div className="flex h-full">
             <div className="p-t-[2px] flex w-[30px] items-start justify-center">
               {session?.data?.user?.id && (
                 <button
                   className=""
-                  onClick={async () => {
+                  onClick={(): void => {
                     let shouldIncrement: boolean;
                     if (hasVoted) {
                       setVotes((v) => v - 1);
@@ -54,7 +55,11 @@ export function DescriptionPanel({ challenge }: Props) {
                       shouldIncrement = true;
                       setHasVoted(true);
                     }
-                    debouncedSearch(challenge.id, session?.data?.user?.id, shouldIncrement);
+                    debouncedSearch(challenge.id, session?.data?.user?.id, shouldIncrement)?.catch(
+                      (e) => {
+                        console.error(e);
+                      },
+                    );
                   }}
                 >
                   <ArrowBigUp className={clsx({ 'fill-red-500': hasVoted })} />
@@ -68,7 +73,7 @@ export function DescriptionPanel({ challenge }: Props) {
           </div>
         </TabsContent>
         <TabsContent value="solutions">
-          <div className="p-4">solu</div>
+          <div className="p-4">solutions</div>
         </TabsContent>
       </Tabs>
     </div>

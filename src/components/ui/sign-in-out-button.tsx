@@ -1,16 +1,15 @@
 'use client';
 
-import { signIn, signOut, useSession } from 'next-auth/react';
+import type { Session } from 'next-auth';
+import { signIn, signOut } from 'next-auth/react';
 
-export function SignInOutButton() {
-  const { data: session, status } = useSession();
-
+export function SignInOutButton({ session }: { session: Session | null }) {
   return (
     <button
       className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
-      onClick={status === 'authenticated' ? () => void signOut() : () => void signIn()}
+      onClick={session ? () => void signOut() : () => void signIn()}
     >
-      {status === 'authenticated' ? 'Sign out' : 'Sign in'}
+      {session ? 'Sign out' : 'Sign in'}
     </button>
   );
 }

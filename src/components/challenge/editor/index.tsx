@@ -1,7 +1,16 @@
 'use client';
 import Editor from '@monaco-editor/react';
+import { Settings } from 'lucide-react';
 import type * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
-import React from 'react';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '~/components/ui/dialog';
+import useLocalStorage from '~/utils/useLocalStorage';
+import { DEFAULT_SETTINGS, SettingsForm } from '../settings-form';
 import { createTwoslashInlayProvider } from './twoslash';
 import { VimStatusBar, loadVim } from './vimMode';
 
@@ -12,14 +21,13 @@ declare global {
   var model: monaco.editor.ITextModel;
 }
 
-const options: monaco.editor.IStandaloneEditorConstructionOptions = {
+const defaultOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
   lineNumbers: 'off',
   tabSize: 2,
   insertSpaces: false,
   minimap: {
     enabled: false,
   },
-  // readOnly: true,
 };
 
 type Monaco = typeof monaco;
@@ -88,7 +96,7 @@ const onMount =
     globalThis.model = model;
     globalThis.editor = editor;
 
-		loadVim(editor);
+    loadVim(editor);
 
     const ts = await (await monaco.languages.typescript.getTypeScriptWorker())(model.uri);
 
@@ -134,8 +142,31 @@ interface Props {
   prompt: string;
 }
 export const CodePanel = ({ prompt }: Props) => {
+  const [settings] = useLocalStorage('settings', JSON.stringify(DEFAULT_SETTINGS));
+  const parsedSettings = JSON.parse(settings);
+  const options = {
+    ...defaultOptions,
+    ...parsedSettings,
+  } as monaco.editor.IStandaloneEditorConstructionOptions;
   return (
     <>
+      <div className="container flex items-end space-y-2 bg-muted py-4">
+        <div className="ml-auto flex w-full space-x-2 sm:justify-end">
+          <Dialog>
+            <DialogTrigger>
+              <Settings />
+            </DialogTrigger>
+            <DialogContent className="w-[200px]">
+              <DialogHeader>
+                <DialogTitle>Settings</DialogTitle>
+                <div className="py-4">
+                  <SettingsForm />
+                </div>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
+        </div>
+      </div>
       <Editor
         theme="vs-dark"
         options={options}
