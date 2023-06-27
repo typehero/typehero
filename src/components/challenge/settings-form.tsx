@@ -104,7 +104,6 @@ export function SettingsForm() {
                 <SelectContent>
                   <SelectItem value="standard">Standard</SelectItem>
                   <SelectItem value="vim">Vim</SelectItem>
-                  <SelectItem value="emacs">Emacs</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />

@@ -1,35 +1,33 @@
 import type * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import { type VimMode, initVimMode } from 'monaco-vim';
+import { useEditorSettingsStore } from '../settings-store';
 
-const vimEnabledKey = 'vim-mode-enabled';
-const statusBarId = 'vim-status-bar';
+const STATUS_BAR_ID = 'vim-status-bar';
 
 export const VimStatusBar = () => {
+  const { settings } = useEditorSettingsStore();
+  if (settings.bindings === 'vim') {
+    activateVimMode(globalThis.editor);
+  } else {
+    deactivateVimMode();
+  }
   return (
-    <div className="flex flex-row-reverse justify-between">
-      <label className="flex gap-1">
-        Vim Mode:
-        <input
-          type="checkbox"
-          defaultChecked={localStorage.getItem(vimEnabledKey) === 'true'}
-          onChange={function (ev) {
-            if (ev.currentTarget.checked) {
-              activateVimMode(globalThis.editor);
-            } else {
-              deactivateVimMode();
-            }
-          }}
-        />
-      </label>
-      <div id={statusBarId} className="font-mono" />
+    <div className="flex">
+      <div id={STATUS_BAR_ID} className="font-mono" />
     </div>
   );
 };
 
 export function loadVim(editor: monaco.editor.IStandaloneCodeEditor) {
-  const status = localStorage.getItem(vimEnabledKey) ?? 'false';
+  // eslint-disable-next-line
+  const settings = localStorage.getItem('editor-settings');
+  if (!settings) return;
 
-  if (status === 'true') {
+  // eslint-disable-next-line
+  const parsedSettings = JSON.parse(settings);
+
+  // eslint-disable-next-line
+  if (parsedSettings?.state?.settings?.bindings === 'vim') {
     activateVimMode(editor);
   }
 }
@@ -41,21 +39,19 @@ declare global {
 
 export function activateVimMode(editor: monaco.editor.IStandaloneCodeEditor) {
   if (globalThis.vimMode === undefined) {
-    const statusBar = document.getElementById(statusBarId);
+    const statusBar = document.getElementById(STATUS_BAR_ID);
 
     if (statusBar === null) {
       return;
     }
 
     globalThis.vimMode = initVimMode(editor, statusBar);
-
-    localStorage.setItem(vimEnabledKey, 'true');
   }
 }
 
 export function deactivateVimMode() {
   if (globalThis.vimMode !== undefined) {
-    const statusBar = document.getElementById(statusBarId);
+    const statusBar = document.getElementById(STATUS_BAR_ID);
 
     if (statusBar === null) {
       return;
@@ -64,8 +60,6 @@ export function deactivateVimMode() {
     globalThis.vimMode.dispose();
 
     delete globalThis.vimMode;
-
-    localStorage.setItem(vimEnabledKey, 'false');
 
     statusBar.textContent = '';
   }
