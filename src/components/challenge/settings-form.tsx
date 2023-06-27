@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
@@ -8,7 +9,6 @@ import { Button } from '~/components/ui/button';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -22,7 +22,7 @@ import {
   SelectValue,
 } from '~/components/ui/select';
 import { toast } from '~/components/ui/use-toast';
-import useLocalStorage from '~/utils/useLocalStorage';
+import { useEditorSettingsStore } from './settings-store';
 
 const formSchema = z.object({
   fontSize: z.string(),
@@ -38,19 +38,14 @@ export const DEFAULT_SETTINGS = {
   tabSize: '2',
 };
 export function SettingsForm() {
-  const [settings, setSettings] = useLocalStorage('settings', JSON.stringify(DEFAULT_SETTINGS));
-  const parsedSettings = JSON.parse(settings) as FormSchema;
+  const { settings, updateSettings } = useEditorSettingsStore();
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      fontSize: parsedSettings.fontSize,
-      bindings: parsedSettings.bindings,
-      tabSize: parsedSettings.tabSize,
-    },
+    defaultValues: settings,
   });
 
   function onSubmit(data: FormSchema) {
-    setSettings(JSON.stringify(data));
+    updateSettings(data);
     toast({
       title: 'Settings updated!',
       description: (
@@ -137,7 +132,9 @@ export function SettingsForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <DialogPrimitive.Close asChild>
+          <Button type="submit">Submit</Button>
+        </DialogPrimitive.Close>
       </form>
     </Form>
   );

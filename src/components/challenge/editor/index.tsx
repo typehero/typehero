@@ -2,6 +2,8 @@
 import Editor from '@monaco-editor/react';
 import { Settings } from 'lucide-react';
 import type * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import { useTheme } from 'next-themes';
+import { useMemo } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -9,8 +11,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '~/components/ui/dialog';
-import useLocalStorage from '~/utils/useLocalStorage';
-import { DEFAULT_SETTINGS, SettingsForm } from '../settings-form';
+import { SettingsForm } from '../settings-form';
+import { useEditorSettingsStore } from '../settings-store';
 import { createTwoslashInlayProvider } from './twoslash';
 import { VimStatusBar, loadVim } from './vimMode';
 
@@ -28,6 +30,7 @@ const defaultOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
   minimap: {
     enabled: false,
   },
+  fontSize: 16,
 };
 
 type Monaco = typeof monaco;
@@ -142,12 +145,22 @@ interface Props {
   prompt: string;
 }
 export const CodePanel = ({ prompt }: Props) => {
-  const [settings] = useLocalStorage('settings', JSON.stringify(DEFAULT_SETTINGS));
-  const parsedSettings = JSON.parse(settings);
-  const options = {
-    ...defaultOptions,
-    ...parsedSettings,
-  } as monaco.editor.IStandaloneEditorConstructionOptions;
+  const { theme } = useTheme();
+
+  const { settings } = useEditorSettingsStore();
+  const editorTheme = theme === 'light' ? 'vs' : 'vs-dark';
+  const editorOptions = useMemo(() => {
+    const options = {
+      ...defaultOptions,
+      ...settings,
+      fontSize: parseInt(settings.fontSize),
+      tabSize: parseInt(settings.tabSize),
+    };
+    return {
+      ...options,
+    };
+  }, [settings]);
+
   return (
     <>
       <div className="container flex items-end space-y-2 bg-muted py-4">
@@ -168,8 +181,8 @@ export const CodePanel = ({ prompt }: Props) => {
         </div>
       </div>
       <Editor
-        theme="vs-dark"
-        options={options}
+        theme={editorTheme}
+        options={editorOptions}
         defaultLanguage="typescript"
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
         onMount={onMount(prompt)}

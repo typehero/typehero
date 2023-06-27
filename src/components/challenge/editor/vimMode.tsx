@@ -6,18 +6,22 @@ const statusBarId = 'vim-status-bar';
 
 export const VimStatusBar = () => {
   return (
-    <div className='flex justify-between flex-row-reverse'>
-      <label className='flex gap-1'>
-				Vim Mode: 
-        <input type="checkbox" defaultChecked={localStorage.getItem(vimEnabledKey) === "true"} onChange={function (ev) {
-					if (ev.currentTarget.checked) {
-						activateVimMode(globalThis.editor)
-					} else {
-						deactivateVimMode();
-					}
-				}} />
+    <div className="flex flex-row-reverse justify-between">
+      <label className="flex gap-1">
+        Vim Mode:
+        <input
+          type="checkbox"
+          defaultChecked={localStorage.getItem(vimEnabledKey) === 'true'}
+          onChange={function (ev) {
+            if (ev.currentTarget.checked) {
+              activateVimMode(globalThis.editor);
+            } else {
+              deactivateVimMode();
+            }
+          }}
+        />
       </label>
-			<div id={statusBarId} className="font-mono" />
+      <div id={statusBarId} className="font-mono" />
     </div>
   );
 };
@@ -59,7 +63,7 @@ export function deactivateVimMode() {
 
     globalThis.vimMode.dispose();
 
-		delete globalThis.vimMode;
+    delete globalThis.vimMode;
 
     localStorage.setItem(vimEnabledKey, 'false');
 
