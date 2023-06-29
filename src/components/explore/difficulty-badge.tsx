@@ -1,20 +1,21 @@
 import { Difficulty } from '@prisma/client';
 import { Badge } from '../ui/badge';
-import clsx from 'clsx';
 
 interface Props {
   difficulty: Difficulty;
 }
+
+const COLORS_BY_DIFFICULTY = {
+  BEGINNER: 'bg-pink-300',
+  EASY: 'bg-green-300',
+  MEDIUM: 'bg-yellow-300',
+  HARD: 'bg-red-300',
+  EXTREME: 'bg-orange-300',
+};
 export function DifficultyBadge({ difficulty }: Props) {
   return (
     <Badge
-      className={clsx({
-        'bg-pink-300': difficulty === 'BEGINNER',
-        'bg-green-300': difficulty === 'EASY',
-        'bg-yellow-300': difficulty === 'MEDIUM',
-        'bg-red-300': difficulty === 'HARD',
-        'bg-orange-300': difficulty === 'EXTREME',
-      })}
+      className={`${COLORS_BY_DIFFICULTY[difficulty]} hover:${COLORS_BY_DIFFICULTY[difficulty]}}`}
     >
       {difficulty}
     </Badge>

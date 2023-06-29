@@ -76,6 +76,7 @@ model User {
   Solution      Solution[]
   Comment       Comment[]
   Report        Report[]
+  Bookmark      Bookmark[]
 }
 
 model VerificationToken {
@@ -92,14 +93,15 @@ model Challenge {
   updatedAt   DateTime   @updatedAt
   difficulty  Difficulty
   name        String
-  description String
-  prompt      String
+  description Json
+  prompt      Json
   user        User       @relation(fields: [userId], references: [id])
   userId      String
   Vote        Vote[]
   Solution    Solution[]
   Comment     Comment[]
   Report      Report[]
+  Bookmark    Bookmark[]
 
   @@index([userId])
 }
@@ -150,6 +152,17 @@ model Report {
   challenge   Challenge @relation(fields: [challengeId], references: [id])
   challengeId Int
   text        String
+
+  @@index([userId])
+  @@index([challengeId])
+}
+
+model Bookmark {
+  id          Int        @id @default(autoincrement())
+  user        User       @relation(fields: [userId], references: [id])
+  userId      String
+  challenge   Challenge? @relation(fields: [challengeId], references: [id])
+  challengeId Int?
 
   @@index([userId])
   @@index([challengeId])

@@ -2,13 +2,19 @@
 
 import type { Challenge, Vote } from '@prisma/client';
 import { clsx } from 'clsx';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import remarkGfm from 'remark-gfm';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { debounce } from 'lodash';
-import { ArrowBigUp } from 'lucide-react';
+import { Bookmark, Share, ThumbsUp } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { incrementOrDecrementUpvote } from './increment.action';
+import { TypographyH3 } from '../ui/typography/h3';
+import { DifficultyBadge } from '../explore/difficulty-badge';
+import { Button } from '../ui/button';
 
 interface Props {
   challenge: Challenge & {
@@ -39,11 +45,14 @@ export function DescriptionPanel({ challenge }: Props) {
           <TabsTrigger value="solutions">Solutions</TabsTrigger>
         </TabsList>
         <TabsContent value="description" className="mt-0">
-          <div className="flex h-full">
-            <div className="p-t-[2px] flex w-[30px] items-start justify-center">
+          <div className="h-full p-5">
+            <TypographyH3 className="mb-2 font-medium">{challenge.name}</TypographyH3>
+            <div className="mb-6 flex items-center gap-6">
+              <DifficultyBadge difficulty={challenge.difficulty} />
               {session?.data?.user?.id && (
-                <button
-                  className=""
+                <Button
+                  className="gap-2 p-1"
+                  variant="ghost"
                   onClick={(): void => {
                     let shouldIncrement: boolean;
                     if (hasVoted) {
@@ -62,13 +71,47 @@ export function DescriptionPanel({ challenge }: Props) {
                     );
                   }}
                 >
-                  <ArrowBigUp className={clsx({ 'fill-red-500': hasVoted })} />
-                  {votes}
-                </button>
+                  <ThumbsUp
+                    size={20}
+                    className={clsx({
+                      'fill-green-700 stroke-green-700': hasVoted,
+                      'stroke-gray-500': !hasVoted,
+                    })}
+                  />
+                  <span className="self-end text-lg text-gray-500">{votes}</span>
+                </Button>
               )}
+              <Bookmark className="stroke-gray-500" />
+              <Share className="stroke-gray-500" />
             </div>
             <div className="prose-invert prose-h3:text-xl">
-              <ReactMarkdown>{challenge.description}</ReactMarkdown>
+              {/* @ts-ignore */}
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  p: ({ ...props }) => <p className="mb-4" {...props} />,
+                  code({ inline, className, children, ...props }) {
+                    const match = /language-(\w+)/.exec(className || '');
+                    return !inline && match ? (
+                      <SyntaxHighlighter
+                        // @ts-ignore
+                        style={vscDarkPlus} // theme
+                        language={match[1]}
+                        PreTag="section" // parent tag
+                        {...props}
+                      >
+                        {String(children).replace(/\n$/, '')}
+                      </SyntaxHighlighter>
+                    ) : (
+                      <code className={className} {...props}>
+                        {children}
+                      </code>
+                    );
+                  },
+                }}
+              >
+                {challenge.description}
+              </ReactMarkdown>
             </div>
           </div>
         </TabsContent>
