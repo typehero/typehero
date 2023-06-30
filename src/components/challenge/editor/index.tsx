@@ -11,10 +11,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '~/components/ui/dialog';
-import { SettingsForm } from '../settings-form';
 import { useEditorSettingsStore } from '../settings-store';
 import { createTwoslashInlayProvider } from './twoslash';
 import { VimStatusBar, loadVim } from './vimMode';
+import { ShareForm } from '../settings-form';
 
 declare global {
   // eslint-disable-next-line no-var
@@ -171,9 +171,9 @@ export const CodePanel = ({ prompt }: Props) => {
             </DialogTrigger>
             <DialogContent className="w-[200px]">
               <DialogHeader>
-                <DialogTitle>Settings</DialogTitle>
+                <DialogTitle>Share</DialogTitle>
                 <div className="py-4">
-                  <SettingsForm />
+                  <ShareForm />
                 </div>
               </DialogHeader>
             </DialogContent>
