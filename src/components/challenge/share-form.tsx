@@ -6,6 +6,7 @@ import * as z from 'zod';
 
 import { Form } from '~/components/ui/form';
 import { useEditorSettingsStore } from './settings-store';
+import { Input } from '../ui/input';
 
 const formSchema = z.object({
   fontSize: z.string(),
@@ -28,8 +29,10 @@ export function ShareForm() {
     defaultValues: settings,
   });
 
-  return <Form {...form}>
-    Sharing
-
-  </Form>;
+  return (
+    <Form {...form}>
+      <p className='pb-4'>Copy the url</p>
+      <Input value={window.location.href} />
+    </Form>
+  );
 }
