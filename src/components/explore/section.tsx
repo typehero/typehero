@@ -15,7 +15,11 @@ export async function ExploreSection({ title, data }: Props) {
       <TypographyH3 className="mb-3">{title}</TypographyH3>
       <div className="grid grid-cols-3 gap-2">
         {challenges.map((challenge) => (
-          <Link href={`/challenge/${challenge.id}`} key={challenge.id}>
+          <Link
+            className="group focus:outline-none"
+            href={`/challenge/${challenge.id}`}
+            key={challenge.id}
+          >
             <ExploreCard key={challenge.id} challenge={challenge} />
           </Link>
         ))}
