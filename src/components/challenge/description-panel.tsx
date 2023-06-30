@@ -96,13 +96,12 @@ export function DescriptionPanel({ challenge }: Props) {
                     <Share
                       size={20}
                       className="stroke-gray-500 hover:stroke-gray-400"
-                      onClick={() => { }}
                     />
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="w-[200px]">
                   <DialogHeader>
-                    <DialogTitle>Settings</DialogTitle>
+                    <DialogTitle>Share this challenege</DialogTitle>
                     <div className="py-4">
                       <ShareForm />
                     </div>

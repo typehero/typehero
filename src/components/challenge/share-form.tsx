@@ -1,38 +1,22 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
-
-import { Form } from '~/components/ui/form';
-import { useEditorSettingsStore } from './settings-store';
+import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-
-const formSchema = z.object({
-  fontSize: z.string(),
-  bindings: z.string(),
-  tabSize: z.string(),
-});
-
-export type FormSchema = z.infer<typeof formSchema>;
-
-export const DEFAULT_SETTINGS = {
-  fontSize: '12',
-  bindings: 'standard',
-  tabSize: '2',
-};
-
 export function ShareForm() {
-  const { settings } = useEditorSettingsStore();
-  const form = useForm<FormSchema>({
-    resolver: zodResolver(formSchema),
-    defaultValues: settings,
-  });
+  const url = window.location.href;
+
+  const copyToClipboard = () => {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url);
+    }
+  };
 
   return (
-    <Form {...form}>
-      <p className='pb-4'>Copy the url</p>
+    <div>
       <Input value={window.location.href} />
-    </Form>
+      <Button className="block ml-auto mt-4" onClick={copyToClipboard}>
+        Copy to Clipboard
+      </Button>
+    </div>
   );
 }
