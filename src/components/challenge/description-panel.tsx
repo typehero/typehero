@@ -15,6 +15,8 @@ import { incrementOrDecrementUpvote } from './increment.action';
 import { TypographyH3 } from '../ui/typography/h3';
 import { DifficultyBadge } from '../explore/difficulty-badge';
 import { Button } from '../ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
+import { ShareForm } from './share-form';
 
 interface Props {
   challenge: Challenge & {
@@ -38,11 +40,15 @@ export function DescriptionPanel({ challenge }: Props) {
   ).current;
 
   return (
-    <div className="flex-1 rounded-md bg-white dark:bg-zinc-800 overflow-y-auto">
+    <div className="flex-1 overflow-y-auto rounded-md bg-white dark:bg-zinc-800">
       <Tabs defaultValue="description" className="w-full">
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="description" className="hover:bg-zinc-200 dark:hover:bg-zinc-700">Description</TabsTrigger>
-          <TabsTrigger value="solutions" className="hover:bg-zinc-200 dark:hover:bg-zinc-700" >Solutions</TabsTrigger>
+          <TabsTrigger value="description" className="hover:bg-zinc-200 dark:hover:bg-zinc-700">
+            Description
+          </TabsTrigger>
+          <TabsTrigger value="solutions" className="hover:bg-zinc-200 dark:hover:bg-zinc-700">
+            Solutions
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="description" className="mt-0">
           <div className="h-full p-5">
@@ -84,9 +90,25 @@ export function DescriptionPanel({ challenge }: Props) {
               <Button variant="ghost" className="p-1">
                 <Bookmark size={20} className="stroke-gray-500 hover:stroke-gray-400" />
               </Button>
-              <Button variant="ghost" className="p-1">
-                <Share size={20} className="stroke-gray-500 hover:stroke-gray-400" />
-              </Button>
+              <Dialog>
+                <DialogTrigger>
+                  <Button variant="ghost" className="p-1">
+                    <Share
+                      size={20}
+                      className="stroke-gray-500 hover:stroke-gray-400"
+                      onClick={() => { }}
+                    />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="w-[200px]">
+                  <DialogHeader>
+                    <DialogTitle>Settings</DialogTitle>
+                    <div className="py-4">
+                      <ShareForm />
+                    </div>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
             </div>
             <div className="prose-invert prose-h3:text-xl">
               {/* @ts-ignore */}
