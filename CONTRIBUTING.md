@@ -11,8 +11,7 @@ cp .env.example .env
 
 ### 2. Setup planetscale.
 
-[Follow the planetscale quick start guide to get you connection string][prisma-quick-start]
-
+[Follow the planetscale quick start guide to get you connection string][planetscale-quick-start]
 
 ### 3. Create a new GitHub OAuth Application
 
@@ -33,7 +32,6 @@ Next, copy the client secret generated and the client ID into the `.env` file, r
 GITHUB_ID=<client_id>
 GITHUB_SECRET=<client_secret>
 ```
-
 
 ### 4. Install dependencies
 
@@ -67,10 +65,6 @@ Finally, you can run the dev server:
 pnpm dev
 ```
 
-[planetscale-quick-start]: https://planetscale.com/docs/tutorials/planetscale-quick-start-guide
-[new-oauth]: https://github.com/settings/applications/new
-
-
 ### Sync data
 
 Once the server is running you can seed and sync data
@@ -86,3 +80,5 @@ pnpm reset
 pnpx prisma db seed
 ```
 
+[planetscale-quick-start]: https://planetscale.com/docs/tutorials/planetscale-quick-start-guide
+[new-oauth]: https://github.com/settings/applications/new

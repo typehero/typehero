@@ -5,6 +5,5 @@
 - We also don't care how good you are at coding.
 - We need to add issues to track stuffz.
 
-
 ### Get Started
-look at `CONTRIBUTING.md` idiot
+look at [`CONTRIBUTING.md`](./CONTRIBUTING.md) idiot
