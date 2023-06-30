@@ -27,7 +27,7 @@ export async function Challenge({ id }: Props) {
     },
   });
 
-  if (!challenge) {
+  if (!challenge || typeof challenge.prompt !== "string") {
     notFound();
   }
 

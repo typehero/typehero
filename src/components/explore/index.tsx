@@ -6,9 +6,9 @@ import { Suspense } from 'react';
 
 export function Explore() {
   return (
-    <div className="flex h-full flex-col p-4">
-      <section className="mb-8 flex max-w-[980px] flex-col items-start gap-2 pt-4 md:pt-8">
-        <TypographyH1>Explore</TypographyH1>
+    <div className="flex h-full flex-col">
+      <section className="mb-8 flex max-w-[69ch] flex-col items-start gap-2 pt-4 md:pt-8">
+        <TypographyH1 className="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-indigo-500 dark:from-pink-400 dark:to-indigo-400">Explore</TypographyH1>
         <TypographyP>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
           ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
@@ -20,7 +20,7 @@ export function Explore() {
       </section>
 
       <Suspense fallback="loading...">
-        <ExploreSection title="Challenges" data={getChallenges} />
+        <ExploreSection data={getChallenges} />
       </Suspense>
     </div>
   );
