@@ -14,10 +14,11 @@ export function ExploreCard({ challenge }: Props) {
         <div className="space-y-1">
           <CardTitle>{challenge.name}</CardTitle>
           <CardDescription className="relative max-h-48 overflow-hidden pb-4">
-            <div
+            {/* it didn't like the div */}
+            {/* <div
               className="pointer-events-none absolute inset-0 h-full w-full"
               style={{ boxShadow: 'inset 0 -1.5rem 1rem -0.5rem #000' }}
-            ></div>
+            ></div> */}
             {challenge.description}
           </CardDescription>
         </div>
