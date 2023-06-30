@@ -9,11 +9,11 @@ interface Props {
 }
 
 const BORDERS_BY_DIFFICULTY = {
-  BEGINNER: 'hover:border-pink-300',
-  EASY: 'hover:border-green-300',
-  MEDIUM: 'hover:border-yellow-300',
-  HARD: 'hover:border-red-300',
-  EXTREME: 'hover:border-orange-300',
+  BEGINNER: 'dark:hover:border-pink-300 hover:border-pink-500',
+  EASY: 'dark:hover:border-green-300 hover:border-green-500',
+  MEDIUM: 'dark:hover:border-yellow-300 hover:border-yellow-500',
+  HARD: 'dark:hover:border-red-300 hover:border-red-500',
+  EXTREME: 'dark:hover:border-orange-300 hover:border-orange-500',
 };
 
 export function ExploreCard({ challenge }: Props) {
