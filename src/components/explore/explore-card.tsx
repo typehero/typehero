@@ -13,7 +13,13 @@ export function ExploreCard({ challenge }: Props) {
       <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0">
         <div className="space-y-1">
           <CardTitle>{challenge.name}</CardTitle>
-          <CardDescription>{challenge.description}</CardDescription>
+          <CardDescription className="relative max-h-48 overflow-hidden pb-4">
+            <div
+              className="pointer-events-none absolute inset-0 h-full w-full"
+              style={{ boxShadow: 'inset 0 -1.5rem 1rem -0.5rem #000' }}
+            ></div>
+            {challenge.description}
+          </CardDescription>
         </div>
       </CardHeader>
       <CardContent>
@@ -22,7 +28,7 @@ export function ExploreCard({ challenge }: Props) {
             <div className="flex items-center">
               <DifficultyBadge difficulty={challenge.difficulty} />
             </div>
-            <div className="flex items-center">
+            <div className="ml-4 flex items-center">
               <ArrowBigUp /> {challenge._count.Vote}
             </div>
           </div>
