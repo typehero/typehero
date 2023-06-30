@@ -6,7 +6,7 @@ const STATUS_BAR_ID = 'vim-status-bar';
 
 export const VimStatusBar = () => {
   const { settings } = useEditorSettingsStore();
-  if (settings.bindings === 'vim') {
+  if (settings.bindings === 'vim' && globalThis.editor) {
     activateVimMode(globalThis.editor);
   } else {
     deactivateVimMode();
