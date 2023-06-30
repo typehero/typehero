@@ -15,7 +15,6 @@ import { SettingsForm } from '../settings-form';
 import { useEditorSettingsStore } from '../settings-store';
 import { createTwoslashInlayProvider } from './twoslash';
 import { VimStatusBar, loadVim } from './vimMode';
-import { Challenge } from '@prisma/client';
 
 declare global {
   // eslint-disable-next-line no-var
@@ -25,7 +24,7 @@ declare global {
 }
 
 const defaultOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
-  lineNumbers: 'off',
+  lineNumbers: 'on',
   tabSize: 2,
   insertSpaces: false,
   minimap: {
@@ -51,7 +50,7 @@ type Alike<X, Y> = Equal<MergeInsertions<X>, MergeInsertions<Y>>
 
 type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never
 
-type NoInfer<T> = [T][T extends any ? T : never];
+type NoInfer<T> = [T][T extends any ? 0 : never];
 
 type IsUnion<T, U = T> = [T] extends [never]
 	? false
@@ -69,7 +68,7 @@ type IsUnion<T, U = T> = [T] extends [never]
  * 
  * To check what it is failing, you can hover over \`Equal\` and see what the types failing are
  */
-function Equal<A, B>(...args: Alike<A, B> extends true ? [] : [msg: "not equal"]): void;
+declare function Equal<A, B>(...args: Alike<A, B> extends true ? [] : [msg: "not equal"]): void;
 
 /** 
  * Helper function to test your code.
@@ -78,7 +77,7 @@ function Equal<A, B>(...args: Alike<A, B> extends true ? [] : [msg: "not equal"]
  * 
  * To check what it is failing, you can hover over \`Extends\` and see what the types failing are
  */
-function Extends<A, B>(...args: A extends B ? [] : [msg: [A, "doesn't extend", B]]): void;
+declare function Extends<A, B>(...args: A extends B ? [] : [msg: [A, "doesn't extend", B]]): void;
 `;
 
 const libUri = 'ts:filename/checking.d.ts';
@@ -143,7 +142,7 @@ const onMount =
   };
 
 interface Props {
-  prompt: Challenge['prompt'];
+  prompt: string;
 }
 export const CodePanel = ({ prompt }: Props) => {
   const { theme } = useTheme();
