@@ -92,12 +92,10 @@ export function DescriptionPanel({ challenge }: Props) {
               </Button>
               <Dialog>
                 <DialogTrigger>
-                  <Button variant="ghost" className="p-1">
                     <Share
                       size={20}
                       className="stroke-gray-500 hover:stroke-gray-400"
                     />
-                  </Button>
                 </DialogTrigger>
                 <DialogContent className="w-[200px]">
                   <DialogHeader>

@@ -1,7 +1,6 @@
 'use client';
 
 import { Button } from '../ui/button';
-import { Input } from '../ui/input';
 export function ShareForm() {
   const url = window.location.href;
 
@@ -13,7 +12,7 @@ export function ShareForm() {
 
   return (
     <div>
-      <Input value={window.location.href} />
+      <p>Copy this challenge url so to share with your friends!</p>
       <Button className="block ml-auto mt-4" onClick={copyToClipboard}>
         Copy to Clipboard
       </Button>
