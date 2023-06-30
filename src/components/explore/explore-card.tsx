@@ -7,13 +7,22 @@ import { DifficultyBadge } from './difficulty-badge';
 interface Props {
   challenge: Awaited<Challenges>[0];
 }
+
+const BORDERS_BY_DIFFICULTY = {
+  BEGINNER: 'hover:border-pink-300',
+  EASY: 'hover:border-green-300',
+  MEDIUM: 'hover:border-yellow-300',
+  HARD: 'hover:border-red-300',
+  EXTREME: 'hover:border-orange-300',
+};
+
 export function ExploreCard({ challenge }: Props) {
   return (
-    <Card>
-      <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0">
+    <Card className={`duration-300 ${BORDERS_BY_DIFFICULTY[challenge.difficulty]}`}>
+      <CardHeader className="grid items-start gap-4 space-y-0">
         <div className="space-y-1">
           <CardTitle>{challenge.name}</CardTitle>
-          <CardDescription className="relative max-h-48 overflow-hidden pb-4">
+          <CardDescription className="relative h-48 overflow-hidden pb-4">
             {/* it didn't like the div */}
             {/* <div
               className="pointer-events-none absolute inset-0 h-full w-full"
