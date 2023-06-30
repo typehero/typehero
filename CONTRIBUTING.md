@@ -13,6 +13,17 @@ cp .env.example .env
 
 [Follow the planetscale quick start guide to get you connection string][planetscale-quick-start]
 
+1. Click Get Started -> Continue with GitHub
+2. Click Blue "create".
+   <br/><img width="444" alt="Screenshot 2023-06-30 at 3 44 27 PM" src="https://github.com/bautistaaa/typehero/assets/31113245/c30929fe-68ca-407d-9894-ef2ea52ced3c">
+
+3. Click "Get connection strings".
+   <br/><img width="429" alt="Screenshot 2023-06-30 at 3 46 45 PM" src="https://github.com/bautistaaa/typehero/assets/31113245/c06a5829-92e6-417f-a5e6-083b7690923f">
+
+4. Switch to "Connect with Prisma" and copy the `DATABASE_URL` for `.env` 
+   <br/><img width="344" alt="Screenshot 2023-06-30 at 3 49 03 PM" src="https://github.com/bautistaaa/typehero/assets/31113245/4c9694ef-b954-47a8-9954-c2b677a1123a">
+
+
 ### 3. Create a new GitHub OAuth Application
 
 [Follow this link][new-oauth] to create a new app filling the following required details on creation:
