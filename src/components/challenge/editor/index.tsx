@@ -15,6 +15,7 @@ import { SettingsForm } from '../settings-form';
 import { useEditorSettingsStore } from '../settings-store';
 import { createTwoslashInlayProvider } from './twoslash';
 import { VimStatusBar, loadVim } from './vimMode';
+import { Challenge } from '@prisma/client';
 
 declare global {
   // eslint-disable-next-line no-var
@@ -142,7 +143,7 @@ const onMount =
   };
 
 interface Props {
-  prompt: string;
+  prompt: Challenge['prompt'];
 }
 export const CodePanel = ({ prompt }: Props) => {
   const { theme } = useTheme();
@@ -162,12 +163,12 @@ export const CodePanel = ({ prompt }: Props) => {
   }, [settings]);
 
   return (
-    <>
-      <div className="container flex items-end space-y-2 bg-muted py-4">
+    <div className="flex h-full flex-1 flex-col">
+      <div className="container flex h-[40px] items-center space-y-2 bg-muted">
         <div className="ml-auto flex w-full space-x-2 sm:justify-end">
           <Dialog>
             <DialogTrigger>
-              <Settings />
+              <Settings size={20} className="stroke-gray-500 hover:stroke-gray-400" />
             </DialogTrigger>
             <DialogContent className="w-[200px]">
               <DialogHeader>
@@ -190,7 +191,7 @@ export const CodePanel = ({ prompt }: Props) => {
         className="flex-1"
       />
       <VimStatusBar />
-    </>
+    </div>
   );
 };
 

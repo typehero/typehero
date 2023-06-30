@@ -1,5 +1,6 @@
-import { Difficulty, Prisma, PrismaClient } from '@prisma/client';
+import { type Difficulty, type Prisma, PrismaClient } from '@prisma/client';
 import uuidByString from 'uuid-by-string';
+import { CHALLENGE_MAP } from './challenges.mock';
 
 const prisma = new PrismaClient();
 const CHALLENGES_TO_CREATE = 50;
@@ -8,29 +9,15 @@ const randomDifficulty = (): Difficulty => {
   return DIFFICULTIES[Math.floor(Math.random() * DIFFICULTIES.length)] as Difficulty;
 };
 
-const challenges = (who: string): Prisma.ChallengeCreateNestedManyWithoutUserInput => ({
-  create: Array.from({ length: CHALLENGES_TO_CREATE }, (_, challengeIndex) => ({
-    name: `Challenge ${challengeIndex + 1}`,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    description: `### ${who} is a cool guy
-          - he likes to eat ${who}
-          - he likes to sleep in ${who}
-          - he likes to be ${who}
-          `,
-    prompt: `/* _____________ Test Cases _____________ */
-Extends<HelloWorld, \`Hello, \${string}\`>()
-
-Extends<HelloWorld, \`\${string}!\`>()
-
-/* _____________ Your Code Here _____________ */
-type HelloWorld =`,
-    difficulty: randomDifficulty(),
-  })),
+const challenges = (): Prisma.ChallengeCreateNestedManyWithoutUserInput => ({
+  create: Array.from({ length: CHALLENGES_TO_CREATE }, (_, challengeIndex) =>
+    CHALLENGE_MAP[randomDifficulty()](challengeIndex),
+  ),
 });
 
+export const trashId = uuidByString('trash');
+export const gId = uuidByString('g');
 async function main() {
-  const trashId = uuidByString('trash');
   await prisma.user.upsert({
     where: { id: trashId },
     update: {},
@@ -38,10 +25,9 @@ async function main() {
       id: trashId,
       email: 'chris@typehero.dev',
       name: 'chris',
-      Challenge: challenges('trash'),
+      Challenge: challenges(),
     },
   });
-  const gId = uuidByString('g');
   await prisma.user.upsert({
     where: { id: gId },
     update: {},
@@ -49,7 +35,7 @@ async function main() {
       id: gId,
       email: 'g@typehero.dev',
       name: 'g',
-      Challenge: challenges('g'),
+      Challenge: challenges(),
     },
   });
 }
