@@ -81,8 +81,12 @@ export function DescriptionPanel({ challenge }: Props) {
                   <span className="self-end text-lg text-gray-500">{votes}</span>
                 </Button>
               )}
-              <Bookmark className="stroke-gray-500" />
-              <Share className="stroke-gray-500" />
+              <Button variant="ghost" className="p-1">
+                <Bookmark size={20} className="stroke-gray-500 hover:stroke-gray-400" />
+              </Button>
+              <Button variant="ghost" className="p-1">
+                <Share size={20} className="stroke-gray-500 hover:stroke-gray-400" />
+              </Button>
             </div>
             <div className="prose-invert prose-h3:text-xl">
               {/* @ts-ignore */}
