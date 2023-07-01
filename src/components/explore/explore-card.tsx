@@ -19,6 +19,14 @@ const BORDERS_BY_DIFFICULTY = {
     'dark:hover:border-orange-300 hover:border-orange-500 dark:group-focus:border-orange-300 group-focus:border-orange-500',
 };
 
+const SHADOWS_BY_DIFFICULTY = {
+  BEGINNER: 'hover:shadow-[0_0_1rem_-0.5rem_#f9a8d4,inset_0_0_1rem_-0.5rem_#f9a8d4]',
+  EASY: 'hover:shadow-[0_0_1rem_-0.5rem_#86efac,inset_0_0_1rem_-0.5rem_#86efac]',
+  MEDIUM: 'hover:shadow-[0_0_1rem_-0.5rem_#fde047,inset_0_0_1rem_-0.5rem_#fde047]',
+  HARD: 'hover:shadow-[0_0_1rem_-0.5rem_#fca5a5,inset_0_0_1rem_-0.5rem_#fca5a5]',
+  EXTREME: 'hover:shadow-[0_0_1rem_-0.5rem_#fdba74,inset_0_0_1rem_-0.5rem_#fdba74]',
+};
+
 // in miliseconds
 const units = {
   year: 24 * 60 * 60 * 1000 * 365,
@@ -47,12 +55,16 @@ const getRelativeTime = (date) => {
 
 export function ExploreCard({ challenge }: Props) {
   return (
-    <Card className={`duration-300 ${BORDERS_BY_DIFFICULTY[challenge.difficulty]}`}>
+    <Card
+      className={`duration-300 ${SHADOWS_BY_DIFFICULTY[challenge.difficulty]} ${
+        BORDERS_BY_DIFFICULTY[challenge.difficulty]
+      }`}
+    >
       <CardHeader className="grid items-start gap-4 space-y-0">
         <div className="space-y-1">
           <CardTitle>{challenge.name}</CardTitle>
           <CardDescription className="relative h-48 overflow-hidden pb-4">
-            <div className="pointer-events-none absolute inset-0 h-full w-full shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card))]"></div>
+            <div className="pointer-events-none absolute inset-0 h-full w-full shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card))]" />
             {challenge.description}
           </CardDescription>
         </div>
