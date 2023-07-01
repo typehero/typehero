@@ -10,6 +10,7 @@ import { Bookmark as BookmarkIcon, Share, ThumbsUp } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
+import { useRouter } from 'next/navigation';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { incrementOrDecrementUpvote } from './increment.action';
 import { TypographyH3 } from '../ui/typography/h3';
@@ -29,6 +30,7 @@ interface Props {
   };
 }
 export function DescriptionPanel({ challenge }: Props) {
+  const router = useRouter();
   const [votes, setVotes] = useState(challenge._count.Vote);
   const [hasVoted, setHasVoted] = useState(challenge.Vote.length > 0);
   const [hasBookmarked, setHasBookmarked] = useState(challenge.Bookmark.length > 0);
@@ -39,6 +41,8 @@ export function DescriptionPanel({ challenge }: Props) {
       if (votes !== undefined && votes !== null) {
         setVotes(votes);
       }
+
+      router.refresh();
     }, 500),
   ).current;
 
@@ -47,6 +51,7 @@ export function DescriptionPanel({ challenge }: Props) {
       try {
         await addOrRemoveBookmark(challengeId, userId, shouldBookmark);
         setHasBookmarked(shouldBookmark);
+        router.refresh();
       } catch (e) {
         console.error(e);
         // it errored so reverse the intended changes
