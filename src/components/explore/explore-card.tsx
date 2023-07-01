@@ -56,15 +56,15 @@ const getRelativeTime = (date) => {
 export function ExploreCard({ challenge }: Props) {
   return (
     <Card
-      className={`duration-300 ${SHADOWS_BY_DIFFICULTY[challenge.difficulty]} ${
-        BORDERS_BY_DIFFICULTY[challenge.difficulty]
-      }`}
+      className={`hover:bg-card-hovered group duration-300 ${
+        SHADOWS_BY_DIFFICULTY[challenge.difficulty]
+      } ${BORDERS_BY_DIFFICULTY[challenge.difficulty]}`}
     >
       <CardHeader className="grid items-start gap-4 space-y-0">
         <div className="space-y-1">
           <CardTitle>{challenge.name}</CardTitle>
           <CardDescription className="relative h-48 overflow-hidden pb-4">
-            <div className="pointer-events-none absolute inset-0 h-full w-full shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card))]" />
+            <div className="pointer-events-none absolute inset-0 h-full w-full shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card))] duration-300 group-hover:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))]" />
             {challenge.description}
           </CardDescription>
         </div>
