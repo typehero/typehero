@@ -19,6 +19,32 @@ const BORDERS_BY_DIFFICULTY = {
     'dark:hover:border-orange-300 hover:border-orange-500 dark:group-focus:border-orange-300 group-focus:border-orange-500',
 };
 
+// in miliseconds
+const units = {
+  year: 24 * 60 * 60 * 1000 * 365,
+  month: (24 * 60 * 60 * 1000 * 365) / 12,
+  day: 24 * 60 * 60 * 1000,
+  hour: 60 * 60 * 1000,
+  minute: 60 * 1000,
+  second: 1000,
+};
+
+const rtf = new Intl.RelativeTimeFormat('en', {
+  numeric: 'auto',
+  // style: 'short'
+});
+
+// TODO: typescript
+const getRelativeTime = (date) => {
+  const now = new Date();
+  const elapsed = date - now;
+
+  // "Math.abs" accounts for both "past" & "future" scenarios
+  for (const u in units)
+    if (Math.abs(elapsed) > units[u] || u == 'second')
+      return rtf.format(Math.round(elapsed / units[u]), u);
+};
+
 export function ExploreCard({ challenge }: Props) {
   return (
     <Card className={`duration-300 ${BORDERS_BY_DIFFICULTY[challenge.difficulty]}`}>
@@ -45,7 +71,7 @@ export function ExploreCard({ challenge }: Props) {
               <ArrowBigUp /> {challenge._count.Vote}
             </div>
           </div>
-          <div>Updated {challenge.updatedAt.toLocaleDateString()}</div>
+          <div>Updated {getRelativeTime(challenge.updatedAt)}</div>
         </div>
       </CardContent>
     </Card>
