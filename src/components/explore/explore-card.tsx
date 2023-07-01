@@ -20,11 +20,14 @@ const BORDERS_BY_DIFFICULTY = {
 };
 
 const SHADOWS_BY_DIFFICULTY = {
-  BEGINNER: 'hover:shadow-[0_0_1rem_-0.5rem_#f9a8d4,inset_0_0_1rem_-0.5rem_#f9a8d4]',
-  EASY: 'hover:shadow-[0_0_1rem_-0.5rem_#86efac,inset_0_0_1rem_-0.5rem_#86efac]',
-  MEDIUM: 'hover:shadow-[0_0_1rem_-0.5rem_#fde047,inset_0_0_1rem_-0.5rem_#fde047]',
-  HARD: 'hover:shadow-[0_0_1rem_-0.5rem_#fca5a5,inset_0_0_1rem_-0.5rem_#fca5a5]',
-  EXTREME: 'hover:shadow-[0_0_1rem_-0.5rem_#fdba74,inset_0_0_1rem_-0.5rem_#fdba74]',
+  BEGINNER:
+    'hover:shadow-[0_0_1rem_-0.5rem_#f9a8d4,inset_0_0_1rem_-0.5rem_#f9a8d4] group-focus:shadow-[0_0_1rem_-0.5rem_#f9a8d4,inset_0_0_1rem_-0.5rem_#f9a8d4]',
+  EASY: 'hover:shadow-[0_0_1rem_-0.5rem_#86efac,inset_0_0_1rem_-0.5rem_#86efac] group-focus:shadow-[0_0_1rem_-0.5rem_#86efac,inset_0_0_1rem_-0.5rem_#86efac]',
+  MEDIUM:
+    'hover:shadow-[0_0_1rem_-0.5rem_#fde047,inset_0_0_1rem_-0.5rem_#fde047] group-focus:shadow-[0_0_1rem_-0.5rem_#fde047,inset_0_0_1rem_-0.5rem_#fde047]',
+  HARD: 'hover:shadow-[0_0_1rem_-0.5rem_#fca5a5,inset_0_0_1rem_-0.5rem_#fca5a5] group-focus:shadow-[0_0_1rem_-0.5rem_#fca5a5,inset_0_0_1rem_-0.5rem_#fca5a5]',
+  EXTREME:
+    'hover:shadow-[0_0_1rem_-0.5rem_#fdba74,inset_0_0_1rem_-0.5rem_#fdba74] group-focus:shadow-[0_0_1rem_-0.5rem_#fdba74,inset_0_0_1rem_-0.5rem_#fdba74]',
 };
 
 // in miliseconds
@@ -39,7 +42,7 @@ const units = {
 
 const rtf = new Intl.RelativeTimeFormat('en', {
   numeric: 'auto',
-  // style: 'short'
+  // TODO: style: 'short' on 640px - 720px
 });
 
 // TODO: typescript
@@ -56,7 +59,7 @@ const getRelativeTime = (date) => {
 export function ExploreCard({ challenge }: Props) {
   return (
     <Card
-      className={`hover:bg-card-hovered group duration-300 ${
+      className={`group duration-300 hover:bg-card-hovered group-focus:bg-card-hovered ${
         SHADOWS_BY_DIFFICULTY[challenge.difficulty]
       } ${BORDERS_BY_DIFFICULTY[challenge.difficulty]}`}
     >
@@ -64,7 +67,7 @@ export function ExploreCard({ challenge }: Props) {
         <div className="space-y-1">
           <CardTitle>{challenge.name}</CardTitle>
           <CardDescription className="relative h-48 overflow-hidden pb-4">
-            <div className="pointer-events-none absolute inset-0 h-full w-full shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card))] duration-300 group-hover:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))]" />
+            <div className="pointer-events-none absolute inset-0 h-full w-full shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card))] duration-300 group-hover:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))] group-focus:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))]" />
             {challenge.description}
           </CardDescription>
         </div>

@@ -28,10 +28,10 @@ export function Navigation() {
     <header className="w-full">
       <nav className="container flex h-14 items-center">
         <div className="flex w-full items-center justify-between">
-          <div className="flex">
-            <a className="mr-6 flex items-center space-x-2" href="/">
+          <div className="relative flex basis-1/3">
+            <a className="flex items-center space-x-2 duration-300" href="/">
               <svg
-                className="h-6 w-6 rounded-md"
+                className="h-6 w-6 rounded-md bg-indigo-500 p-[2px]"
                 viewBox="0 0 512 512"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -59,30 +59,35 @@ export function Navigation() {
                 </defs>
               </svg>
 
-              <span className="hidden font-bold sm:inline-block">type/hero</span>
+              <span className="font-bold leading-3">
+                type
+                <br />
+                hero
+              </span>
             </a>
-            <NavigationMenu>
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <Link href="/explore" legacyBehavior passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                      Explore
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger>Something Nice</NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <NavigationMenuLink>Nice</NavigationMenuLink>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
           </div>
-          <div className="flex items-center gap-4 pr-2">
+          <NavigationMenu className="basis-1/3">
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <Link href="/explore" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Explore
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem className="hidden sm:block">
+                <NavigationMenuTrigger>Something Nice</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <NavigationMenuLink>Nice</NavigationMenuLink>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+          <div className="flex basis-1/3 items-center justify-end gap-2">
             {mounted && (
               <button
                 type="button"
+                className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none"
                 onClick={() => {
                   setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
                 }}
@@ -92,7 +97,10 @@ export function Navigation() {
               </button>
             )}
 
-            <button type="button">
+            <button
+              type="button"
+              className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none"
+            >
               <Bell className="h-6 w-6" aria-hidden="true" />
             </button>
 
