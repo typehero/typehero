@@ -36,14 +36,14 @@ export function Navigation() {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <g clip-path="url(#clip0_1_2)">
+                <g clipPath="url(#clip0_1_2)">
                   <path
                     d="M462 0H50C22.3858 0 0 22.3858 0 50V462C0 489.614 22.3858 512 50 512H462C489.614 512 512 489.614 512 462V50C512 22.3858 489.614 0 462 0Z"
                     fill="#6366f1"
                   />
                   <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
+                    fillRule="evenodd"
+                    clipRule="evenodd"
                     d="M239.78 284.082H304V243H125V284.082H188.906V467H239.78V284.082Z"
                     fill="white"
                   />

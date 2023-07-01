@@ -14,7 +14,7 @@ import {
 import { useEditorSettingsStore } from '../settings-store';
 import { createTwoslashInlayProvider } from './twoslash';
 import { VimStatusBar, loadVim } from './vimMode';
-import { ShareForm } from '../settings-form';
+import { SettingsForm } from '../settings-form';
 
 declare global {
   // eslint-disable-next-line no-var
@@ -171,9 +171,9 @@ export const CodePanel = ({ prompt }: Props) => {
             </DialogTrigger>
             <DialogContent className="w-[200px]">
               <DialogHeader>
-                <DialogTitle>Share</DialogTitle>
+                <DialogTitle>Settings</DialogTitle>
                 <div className="py-4">
-                  <ShareForm />
+                  <SettingsForm />
                 </div>
               </DialogHeader>
             </DialogContent>
