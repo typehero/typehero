@@ -1,9 +1,9 @@
 name: CI
 
-on: [push, pull_request]
+on: [ push, pull_request ]
 
 env:
-  DATABASE_URL: "https://fake.com"
+  DATABASE_URL: 'https://fake.com'
 
 jobs:
   build:
@@ -13,15 +13,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
       - name: Install Dependencies
-        run: npm install
+        run: pnpm i
 
       - name: Typecheck
-        run: npm run typecheck
+        run: pnpm typecheck
 
       - name: Lint
-        run: npm run lint
+        run: pnpm lint
 
-      - name: Print Environment Variable
-        run: echo $MY_ENV_VAR
-
+      - name: Build
+        run: pnpm build
