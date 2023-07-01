@@ -13,7 +13,7 @@ export async function ExploreSection({ title, data }: Props) {
   return (
     <div>
       <TypographyH3 className="mb-3">{title}</TypographyH3>
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
         {challenges.map((challenge) => (
           <Link
             className="group focus:outline-none"
