@@ -2,7 +2,7 @@
 
 import { useTheme } from 'next-themes';
 
-import { Bell, Moon, Sun } from 'lucide-react';
+import { User, Bell, Moon, Sun } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import {
@@ -95,6 +95,10 @@ export function Navigation() {
             <button type="button">
               <Bell className="h-6 w-6" aria-hidden="true" />
             </button>
+
+            <Link href="/profile">
+              <User className="h-6 w-6" aria-hidden="true" />
+            </Link>
           </div>
         </div>
       </nav>
