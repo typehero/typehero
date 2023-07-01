@@ -42,8 +42,6 @@ export function DescriptionPanel({ challenge }: Props) {
     }, 500),
   ).current;
 
-  console.log({ challenge });
-
   const debouncedBookmark = useRef(
     debounce(async (challengeId: number, userId: string, shouldBookmark: boolean) => {
       try {
