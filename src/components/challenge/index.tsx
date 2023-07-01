@@ -24,10 +24,16 @@ export async function Challenge({ id }: Props) {
           challengeId: +id,
         },
       },
+      Bookmark: {
+        where: {
+          userId: session?.user.id,
+          challengeId: +id,
+        },
+      },
     },
   });
 
-  if (!challenge || typeof challenge.prompt !== "string") {
+  if (!challenge || typeof challenge.prompt !== 'string') {
     notFound();
   }
 

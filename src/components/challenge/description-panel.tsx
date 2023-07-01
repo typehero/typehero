@@ -1,12 +1,12 @@
 'use client';
 
-import type { Challenge, Vote } from '@prisma/client';
+import type { Bookmark, Challenge, Vote } from '@prisma/client';
 import { clsx } from 'clsx';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { debounce } from 'lodash';
-import { Bookmark, Share, ThumbsUp } from 'lucide-react';
+import { Bookmark as BookmarkIcon, Share, ThumbsUp } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
@@ -17,10 +17,12 @@ import { DifficultyBadge } from '../explore/difficulty-badge';
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
 import { ShareForm } from './share-form';
+import { addOrRemoveBookmark } from './bookmark.action';
 
 interface Props {
   challenge: Challenge & {
     Vote: Vote[];
+    Bookmark: Bookmark[];
     _count: {
       Vote: number;
     };
@@ -29,6 +31,7 @@ interface Props {
 export function DescriptionPanel({ challenge }: Props) {
   const [votes, setVotes] = useState(challenge._count.Vote);
   const [hasVoted, setHasVoted] = useState(challenge.Vote.length > 0);
+  const [hasBookmarked, setHasBookmarked] = useState(challenge.Bookmark.length > 0);
   const session = useSession();
   const debouncedSearch = useRef(
     debounce(async (challengeId: number, userId: string, shouldIncrement: boolean) => {
@@ -39,6 +42,20 @@ export function DescriptionPanel({ challenge }: Props) {
     }, 500),
   ).current;
 
+  console.log({ challenge });
+
+  const debouncedBookmark = useRef(
+    debounce(async (challengeId: number, userId: string, shouldBookmark: boolean) => {
+      try {
+        await addOrRemoveBookmark(challengeId, userId, shouldBookmark);
+        setHasBookmarked(shouldBookmark);
+      } catch (e) {
+        console.error(e);
+        // it errored so reverse the intended changes
+        setHasBookmarked(!shouldBookmark);
+      }
+    }, 500),
+  ).current;
   return (
     <div className="flex-1 overflow-y-auto rounded-md bg-white dark:bg-zinc-800">
       <Tabs defaultValue="description" className="w-full">
@@ -55,47 +72,78 @@ export function DescriptionPanel({ challenge }: Props) {
             <TypographyH3 className="mb-2 font-medium">{challenge.name}</TypographyH3>
             <div className="mb-6 flex items-center gap-6">
               <DifficultyBadge difficulty={challenge.difficulty} />
-              {session?.data?.user?.id && (
-                <Button
-                  className="gap-2 p-1"
-                  variant="ghost"
-                  onClick={(): void => {
-                    let shouldIncrement: boolean;
-                    if (hasVoted) {
-                      setVotes((v) => v - 1);
-                      shouldIncrement = false;
-                      setHasVoted(false);
-                    } else {
-                      setVotes((v) => v + 1);
-                      shouldIncrement = true;
-                      setHasVoted(true);
-                    }
-                    debouncedSearch(challenge.id, session?.data?.user?.id, shouldIncrement)?.catch(
-                      (e) => {
-                        console.error(e);
-                      },
-                    );
-                  }}
-                >
-                  <ThumbsUp
-                    size={20}
-                    className={clsx({
+              <Button
+                className="gap-2 p-1"
+                variant="ghost"
+                disabled={!session?.data?.user?.id}
+                onClick={(): void => {
+                  let shouldIncrement = false;
+                  if (hasVoted) {
+                    setVotes((v) => v - 1);
+                    shouldIncrement = false;
+                    setHasVoted(false);
+                  } else {
+                    setVotes((v) => v + 1);
+                    shouldIncrement = true;
+                    setHasVoted(true);
+                  }
+                  debouncedSearch(
+                    challenge.id,
+                    session?.data?.user?.id as string,
+                    shouldIncrement,
+                  )?.catch((e) => {
+                    console.error(e);
+                  });
+                }}
+              >
+                <ThumbsUp
+                  size={20}
+                  className={clsx(
+                    {
                       'fill-green-700 stroke-green-700': hasVoted,
                       'stroke-gray-500': !hasVoted,
-                    })}
-                  />
-                  <span className="self-end text-lg text-gray-500">{votes}</span>
-                </Button>
-              )}
-              <Button variant="ghost" className="p-1">
-                <Bookmark size={20} className="stroke-gray-500 hover:stroke-gray-400" />
+                    },
+                    'hover:stroke-gray-400',
+                  )}
+                />
+                <span className="self-end text-lg text-gray-500">{votes}</span>
+              </Button>
+              <Button
+                variant="ghost"
+                className="p-1"
+                disabled={!session?.data?.user?.id}
+                onClick={(): void => {
+                  let shouldBookmark = false;
+                  if (hasBookmarked) {
+                    shouldBookmark = false;
+                    setHasBookmarked(false);
+                  } else {
+                    shouldBookmark = true;
+                    setHasBookmarked(true);
+                  }
+                  debouncedBookmark(
+                    challenge.id,
+                    session?.data?.user?.id as string,
+                    shouldBookmark,
+                  )?.catch((e) => {
+                    console.error(e);
+                  });
+                }}
+              >
+                <BookmarkIcon
+                  size={20}
+                  className={clsx(
+                    {
+                      'fill-blue-500 stroke-blue-500': hasBookmarked,
+                      'stroke-gray-500': !hasBookmarked,
+                    },
+                    'hover:stroke-gray-400',
+                  )}
+                />
               </Button>
               <Dialog>
                 <DialogTrigger>
-                    <Share
-                      size={20}
-                      className="stroke-gray-500 hover:stroke-gray-400"
-                    />
+                  <Share size={20} className="stroke-gray-500 hover:stroke-gray-400" />
                 </DialogTrigger>
                 <DialogContent className="w-[200px]">
                   <DialogHeader>
