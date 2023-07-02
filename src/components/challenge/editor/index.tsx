@@ -16,7 +16,6 @@ import { createTwoslashInlayProvider } from './twoslash';
 import { VimStatusBar, loadVim } from './vimMode';
 import { SettingsForm } from '../settings-form';
 import { Button } from '~/components/ui/button';
-import clsx from 'clsx';
 import { useToast } from '~/components/ui/use-toast';
 import { ToastAction } from '~/components/ui/toast';
 
