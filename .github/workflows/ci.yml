@@ -3,9 +3,9 @@ name: CI
 on: [ push, pull_request ]
 
 env:
-  DATABASE_URL: 'https://fake.com'
-  GITHUB_ID: "xd"
-  GITHUB_SECRET: "lmao"
+  DATABASE_URL: 'mysql://fake.com'
+  GITHUB_ID: 'xd'
+  GITHUB_SECRET: 'lmao'
 
 jobs:
   build:
@@ -16,8 +16,25 @@ jobs:
         uses: actions/checkout@v2
 
       - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
         with:
           version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
       - name: Install Dependencies
         run: pnpm i
