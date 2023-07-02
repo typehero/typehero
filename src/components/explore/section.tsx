@@ -6,7 +6,6 @@ interface Props {
   data(): Challenges;
 }
 
-export const dynamic = 'force-dynamic';
 export async function ExploreSection({ data }: Props) {
   const challenges = await data();
   return (
