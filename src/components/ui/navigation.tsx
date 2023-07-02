@@ -14,10 +14,11 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from './navigation-menu';
+import { useSession } from 'next-auth/react';
 
 export function Navigation() {
   const [mounted, setMounted] = useState(false);
-
+  const session = useSession();
   const { setTheme, resolvedTheme } = useTheme();
 
   useEffect(() => {
@@ -104,9 +105,11 @@ export function Navigation() {
               <Bell className="h-6 w-6" aria-hidden="true" />
             </button>
 
-            <Link href="/profile">
-              <User className="h-6 w-6" aria-hidden="true" />
-            </Link>
+            {session.data && (
+              <Link href="/profile">
+                <User className="h-6 w-6" aria-hidden="true" />
+              </Link>
+            )}
           </div>
         </div>
       </nav>
