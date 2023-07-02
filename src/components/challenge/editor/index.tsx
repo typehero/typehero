@@ -120,7 +120,6 @@ const onMount =
       ] as const);
 
       const hasErrors = errors.some((e) => e.length);
-      console.log({ hasErrors });
 
       onError(hasErrors);
     };
@@ -175,7 +174,6 @@ export const CodePanel = ({ prompt }: Props) => {
   }, [settings]);
 
   const handleSubmit = () => {
-    console.log({ code });
     if (hasErrors) {
       toast({
         variant: 'destructive',
