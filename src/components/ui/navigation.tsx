@@ -22,7 +22,6 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from './dropdown-menu';
 import { useSession } from 'next-auth/react';
@@ -109,8 +108,8 @@ export function Navigation() {
                   setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
                 }}
               >
-                {resolvedTheme === 'dark' && <Moon className="h-6 w-6" aria-hidden="true" />}
-                {resolvedTheme === 'light' && <Sun className="h-6 w-6" aria-hidden="true" />}
+                {resolvedTheme === 'dark' && <Moon className="h-5 w-5" aria-hidden="true" />}
+                {resolvedTheme === 'light' && <Sun className="h-5 w-5" aria-hidden="true" />}
               </button>
             )}
 
@@ -118,14 +117,14 @@ export function Navigation() {
               type="button"
               className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none"
             >
-              <Bell className="h-6 w-6" aria-hidden="true" />
+              <Bell className="h-5 w-5" aria-hidden="true" />
             </button>
 
             {session.data ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
-                    <User className="h-6 w-6" />
+                    <User className="h-5 w-5" />
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56">
@@ -137,13 +136,11 @@ export function Navigation() {
                     <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
                       <User className="mr-2 h-4 w-4" />
                       <span>Profile</span>
-                      <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                     </DropdownMenuItem>
                   </Link>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={() => void signOut()}>
                     <span>Log out</span>
-                    <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -155,7 +152,7 @@ export function Navigation() {
                 }}
                 className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none"
               >
-                <LogIn className="h-6 w-6" />
+                <LogIn className="h-5 w-5" />
               </button>
             )}
           </div>

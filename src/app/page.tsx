@@ -11,21 +11,22 @@ export default function Index() {
         />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </Head>
-      <div className="mt-10 flex flex-col items-center justify-center gap-4">
-        <h1 className="text-center text-6xl text-white">Typehero</h1>
+      <div
+        className="relative -mx-4 flex flex-col items-center justify-center gap-4 overflow-hidden"
+        style={{ minHeight: 'calc(100dvh - 112px)' }}
+      >
+        <div className="absolute left-1/2 top-1/2 -z-10 h-72 w-72 -translate-x-[30%] -translate-y-[80%] rounded-full bg-pink-400/20 blur-3xl dark:bg-pink-400/10"></div>
+        <div className="absolute right-1/2 top-1/2 -z-10 h-72 w-72 -translate-y-[80%] translate-x-[30%] rounded-full bg-indigo-400/20 blur-3xl dark:bg-indigo-400/10"></div>
+        <h1 className="bg-gradient-to-r from-indigo-500 to-pink-500 bg-clip-text text-center text-6xl font-black tracking-tighter text-transparent dark:to-pink-400 ">
+          Type
+          <br />
+          Hero
+        </h1>
         <p className="font-bold">Challenage. Learn. Excel.</p>
 
-        <p className="mt-4 text-white">
-          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-          laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-          architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-          aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
-          voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit
-          amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut
-          labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum
-          exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi
-          consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam
-          nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+        <p className="max-w-[40ch] text-center text-black/50 dark:text-white/50">
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Debitis ullam quia vitae culpa
+          illum libero dignissimos, voluptas eius molestiae ipsum!
         </p>
       </div>
     </>
