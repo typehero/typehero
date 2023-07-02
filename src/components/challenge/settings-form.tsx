@@ -21,8 +21,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/ui/select';
-import { toast } from '~/components/ui/use-toast';
 import { useEditorSettingsStore } from './settings-store';
+import { useToast } from '../ui/use-toast';
 
 const formSchema = z.object({
   fontSize: z.string(),
@@ -38,6 +38,8 @@ export const DEFAULT_SETTINGS = {
   tabSize: '2',
 };
 export function SettingsForm() {
+  const { toast } = useToast();
+
   const { settings, updateSettings } = useEditorSettingsStore();
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),

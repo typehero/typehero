@@ -1,6 +1,6 @@
 import { DescriptionPanelSkeleton } from './description-panel-skeleton';
 
-export async function ChallengeSkeleton() {
+export function ChallengeSkeleton() {
   return (
     <div className="flex h-full gap-2 p-4">
       <DescriptionPanelSkeleton />
