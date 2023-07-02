@@ -13,7 +13,7 @@ export default async function Index() {
           name="description"
           content="Level up your typescript skills with interactive exercises"
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </Head>
       <div className="flex flex-col items-center justify-center gap-4">
         <p className="text-center text-2xl text-white">

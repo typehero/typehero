@@ -3,12 +3,15 @@ import { TypographyP } from '../ui/paragraph';
 import { TypographyH1 } from '../ui/typography/h1';
 import { ExploreSection } from './section';
 import { Suspense } from 'react';
+import { ExploreSectionSkeleton } from './section-skeleton';
 
 export function Explore() {
   return (
     <div className="flex h-full flex-col">
       <section className="mb-8 flex max-w-[69ch] flex-col items-start gap-2 pt-4 md:pt-8">
-        <TypographyH1 className="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-indigo-500 dark:from-pink-400 dark:to-indigo-400">Explore</TypographyH1>
+        <TypographyH1 className="bg-gradient-to-r from-indigo-500 to-pink-500 bg-clip-text text-transparent dark:to-pink-400">
+          Explore
+        </TypographyH1>
         <TypographyP>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
           ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
@@ -19,7 +22,7 @@ export function Explore() {
         </TypographyP>
       </section>
 
-      <Suspense fallback="loading...">
+      <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection data={getChallenges} />
       </Suspense>
     </div>
