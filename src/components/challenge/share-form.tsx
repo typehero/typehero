@@ -13,7 +13,7 @@ export function ShareForm() {
   return (
     <div>
       <p>Copy this challenge url so to share with your friends!</p>
-      <Button className="block ml-auto mt-4" onClick={copyToClipboard}>
+      <Button className="ml-auto mt-4 block" onClick={copyToClipboard}>
         Copy to Clipboard
       </Button>
     </div>

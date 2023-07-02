@@ -12,7 +12,7 @@ export const VimStatusBar = () => {
     deactivateVimMode();
   }
   return (
-    <div className="flex">
+    <div className="flex w-full">
       <div id={STATUS_BAR_ID} className="font-mono" />
     </div>
   );
