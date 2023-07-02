@@ -142,7 +142,7 @@ const onMount =
       }
     });
 
-    editor.getModel()?.onDidChangeContent(() => _runCommand());
+    editor.getModel()?.onDidChangeContent(() => void _runCommand());
 
     monaco.languages.registerInlayHintsProvider(
       'typescript',
