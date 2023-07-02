@@ -1,4 +1,4 @@
-import { Difficulty } from '@prisma/client';
+import { type Difficulty } from '@prisma/client';
 import { Badge } from '../ui/badge';
 
 interface Props {

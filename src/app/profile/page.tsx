@@ -1,6 +1,6 @@
 import Head from 'next/head';
 
-export default async function Profile() {
+export default function Profile() {
   return (
     <div>
       <Head>
