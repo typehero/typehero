@@ -3,6 +3,7 @@ import { TypographyP } from '../ui/paragraph';
 import { TypographyH1 } from '../ui/typography/h1';
 import { ExploreSection } from './section';
 import { Suspense } from 'react';
+import { ExploreSectionSkeleton } from './section-skeleton';
 
 export function Explore() {
   return (
@@ -21,7 +22,7 @@ export function Explore() {
         </TypographyP>
       </section>
 
-      <Suspense fallback="loading...">
+      <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection data={getChallenges} />
       </Suspense>
     </div>
