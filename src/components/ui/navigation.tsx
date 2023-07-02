@@ -106,7 +106,10 @@ export function Navigation() {
             </button>
 
             {session.data && (
-              <Link href="/profile">
+              <Link
+                className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none"
+                href="/profile"
+              >
                 <User className="h-6 w-6" aria-hidden="true" />
               </Link>
             )}
