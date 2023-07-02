@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { prisma } from '~/server/db';
+import Image from 'next/image';
 
 interface Props {
   username: string;
@@ -21,7 +22,7 @@ export async function Profile({ username: usernameFromQuery }: Props) {
   return (
     <>
       <h1>{user.id}</h1>
-      <img src={user.image ?? ''} />
+      <Image alt="user avatar" src={user.image ?? ''} />
 
       <p>{user.email}</p>
 
