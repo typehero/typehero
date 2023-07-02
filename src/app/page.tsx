@@ -1,7 +1,5 @@
 import { getServerSession } from 'next-auth';
 import Head from 'next/head';
-import { SignInOutButton } from '~/components/ui/sign-in-out-button';
-
 import { authOptions } from '~/server/auth';
 
 export default async function Index() {
