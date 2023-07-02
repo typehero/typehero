@@ -4,6 +4,8 @@ on: [ push, pull_request ]
 
 env:
   DATABASE_URL: 'https://fake.com'
+  GITHUB_ID: "xd"
+  GITHUB_SECRET: "lmao"
 
 jobs:
   build:
