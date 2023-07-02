@@ -1,9 +1,6 @@
-import { getServerSession } from 'next-auth';
 import Head from 'next/head';
-import { authOptions } from '~/server/auth';
 
-export default async function Index() {
-  const session = await getServerSession(authOptions);
+export default function Index() {
   return (
     <>
       <Head>
@@ -30,9 +27,6 @@ export default async function Index() {
           consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam
           nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
         </p>
-        <div className="flex flex-col items-center justify-center gap-4">
-          <SignInOutButton session={session} />
-        </div>
       </div>
     </>
   );
