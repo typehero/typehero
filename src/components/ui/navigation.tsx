@@ -2,9 +2,11 @@
 
 import { useTheme } from 'next-themes';
 
-import { User, Bell, Moon, Sun } from 'lucide-react';
 import Link from 'next/link';
+import { LogIn, User, Bell, Moon, Sun } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { signIn, signOut } from 'next-auth/react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -14,12 +16,25 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from './navigation-menu';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from './dropdown-menu';
 import { useSession } from 'next-auth/react';
 
 export function Navigation() {
   const [mounted, setMounted] = useState(false);
   const session = useSession();
   const { setTheme, resolvedTheme } = useTheme();
+  const router = useRouter();
+
+  function goHome() {
+    router.push('/');
+  }
 
   useEffect(() => {
     setMounted(true);
@@ -93,8 +108,8 @@ export function Navigation() {
                   setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
                 }}
               >
-                {resolvedTheme === 'dark' && <Moon className="h-6 w-6" aria-hidden="true" />}
-                {resolvedTheme === 'light' && <Sun className="h-6 w-6" aria-hidden="true" />}
+                {resolvedTheme === 'dark' && <Moon className="h-5 w-5" aria-hidden="true" />}
+                {resolvedTheme === 'light' && <Sun className="h-5 w-5" aria-hidden="true" />}
               </button>
             )}
 
@@ -102,13 +117,43 @@ export function Navigation() {
               type="button"
               className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none"
             >
-              <Bell className="h-6 w-6" aria-hidden="true" />
+              <Bell className="h-5 w-5" aria-hidden="true" />
             </button>
 
-            {session.data && (
-              <Link href="/profile">
-                <User className="h-6 w-6" aria-hidden="true" />
-              </Link>
+            {session.data ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
+                    <User className="h-5 w-5" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56">
+                  <DropdownMenuLabel className="text-neutral-600 dark:text-neutral-400">
+                    My Account
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <Link className="block" href="/profile">
+                    <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
+                      <User className="mr-2 h-4 w-4" />
+                      <span>Profile</span>
+                    </DropdownMenuItem>
+                  </Link>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => void signOut()}>
+                    <span>Log out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <button
+                onClick={() => {
+                  void signIn('github');
+                  goHome();
+                }}
+                className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none"
+              >
+                <LogIn className="h-5 w-5" />
+              </button>
             )}
           </div>
         </div>
