@@ -14,30 +14,50 @@ export function DescriptionPanelSkeleton() {
         </TabsList>
         <TabsContent value="description" className="mt-0">
           <div className="h-full p-5">
-            <div className="mb-2 h-6 w-1/2 rounded-lg dark:bg-slate-700 bg-slate-300"> </div>
+            <div className="mb-2 h-8 w-1/2 rounded-lg bg-slate-300 dark:bg-slate-700"> </div>
             <div className="mb-6 flex items-center gap-6 py-4">
-              <div className="h-5 w-10 rounded-lg dark:bg-slate-700 bg-slate-300"></div>
-              <div className="h-5 w-10 rounded-lg dark:bg-slate-700 bg-slate-300"></div>
-              <div className="h-5 w-10 rounded-lg dark:bg-slate-700 bg-slate-300"></div>
-              <div className="h-5 w-10 rounded-lg dark:bg-slate-700 bg-slate-300"></div>
+              <div className="h-6 w-10 rounded-full bg-slate-300 dark:bg-slate-700"></div>
+              <div className="h-6 w-4 rounded-lg bg-slate-300 dark:bg-slate-700"></div>
+              <div className="h-6 w-4 rounded-lg bg-slate-300 dark:bg-slate-700"></div>
+              <div className="h-6 w-4 rounded-lg bg-slate-300 dark:bg-slate-700"></div>
             </div>
-            <div className="prose-invert prose-h3:text-xl flex flex-col space-y-2">
-              <div className="h-3 rounded-lg dark:bg-slate-700 bg-slate-300"></div>
-              <div className="h-3 rounded-lg dark:bg-slate-700 bg-slate-300"></div>
-              <div className="h-3 rounded-lg dark:bg-slate-700 bg-slate-300"></div>
-              <div className="h-3 rounded-lg dark:bg-slate-700 bg-slate-300"></div>
-              <div className="h-3 rounded-lg dark:bg-slate-700 bg-slate-300"></div>
-              <div className="h-3 rounded-lg dark:bg-slate-700 bg-slate-300"></div>
+            <div className="flex flex-col space-y-10">
+              <div className="prose-invert prose-h3:text-xl flex flex-col space-y-2">
+                <div className="h-4 rounded-lg bg-slate-300 dark:bg-slate-700"></div>
+                <div className="h-4 rounded-lg bg-slate-300 dark:bg-slate-700"></div>
+                <div className="h-4 w-1/2 rounded-lg bg-slate-300 dark:bg-slate-700"></div>
+              </div>
+              <div className="prose-invert prose-h3:text-xl flex flex-col space-y-2">
+                <div className="h-4 rounded-lg bg-slate-300 dark:bg-slate-700"></div>
+                <div className="h-4 rounded-lg bg-slate-300 dark:bg-slate-700"></div>
+                <div className="h-4 w-1/2 rounded-lg bg-slate-300 dark:bg-slate-700"></div>
+              </div>
+              <div className="prose-invert prose-h3:text-xl flex flex-col space-y-2">
+                <div className="h-4 rounded-lg bg-slate-300 dark:bg-slate-700"></div>
+                <div className="h-4 rounded-lg bg-slate-300 dark:bg-slate-700"></div>
+                <div className="h-4 w-1/2 rounded-lg bg-slate-300 dark:bg-slate-700"></div>
+              </div>
             </div>
           </div>
         </TabsContent>
         <TabsContent className="flex h-full flex-col space-y-2 p-5" value="solutions">
-          <div className="h-3 rounded-lg dark:bg-slate-700 bg-slate-300"></div>
-          <div className="h-3 rounded-lg dark:bg-slate-700 bg-slate-300"></div>
-          <div className="h-3 rounded-lg dark:bg-slate-700 bg-slate-300"></div>
-          <div className="h-3 rounded-lg dark:bg-slate-700 bg-slate-300"></div>
-          <div className="h-3 rounded-lg dark:bg-slate-700 bg-slate-300"></div>
-          <div className="h-3 rounded-lg dark:bg-slate-700 bg-slate-300"></div>
+          <div className="flex flex-col space-y-10">
+            <div className="prose-invert prose-h3:text-xl flex flex-col space-y-2">
+              <div className="h-4 rounded-lg bg-slate-300 dark:bg-slate-700"></div>
+              <div className="h-4 rounded-lg bg-slate-300 dark:bg-slate-700"></div>
+              <div className="h-4 w-1/2 rounded-lg bg-slate-300 dark:bg-slate-700"></div>
+            </div>
+            <div className="prose-invert prose-h3:text-xl flex flex-col space-y-2">
+              <div className="h-4 rounded-lg bg-slate-300 dark:bg-slate-700"></div>
+              <div className="h-4 rounded-lg bg-slate-300 dark:bg-slate-700"></div>
+              <div className="h-4 w-1/2 rounded-lg bg-slate-300 dark:bg-slate-700"></div>
+            </div>
+            <div className="prose-invert prose-h3:text-xl flex flex-col space-y-2">
+              <div className="h-4 rounded-lg bg-slate-300 dark:bg-slate-700"></div>
+              <div className="h-4 rounded-lg bg-slate-300 dark:bg-slate-700"></div>
+              <div className="h-4 w-1/2 rounded-lg bg-slate-300 dark:bg-slate-700"></div>
+            </div>
+          </div>
         </TabsContent>
       </Tabs>
     </div>
