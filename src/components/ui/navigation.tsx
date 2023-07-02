@@ -139,17 +139,19 @@ export function Navigation() {
                     </DropdownMenuItem>
                   </Link>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => void signOut()}>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      void signOut();
+                      goHome();
+                    }}
+                  >
                     <span>Log out</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
               <button
-                onClick={() => {
-                  void signIn('github');
-                  goHome();
-                }}
+                onClick={() => void signIn('github')}
                 className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none"
               >
                 <LogIn className="h-5 w-5" />
