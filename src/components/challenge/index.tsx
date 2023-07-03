@@ -41,7 +41,7 @@ export async function Challenge({ id }: Props) {
     >
       <DescriptionPanel challenge={challenge} />
 
-      <CodePanel prompt={challenge.prompt} />
+      <CodePanel challenge={challenge} />
     </div>
   );
 }

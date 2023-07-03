@@ -1,8 +1,10 @@
 'use client';
 
 import Editor from '@monaco-editor/react';
+import type { Bookmark, Challenge, Vote } from '@prisma/client';
 import { Loader2, Settings } from 'lucide-react';
 import type * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import { useSession } from 'next-auth/react';
 import { useTheme } from 'next-themes';
 import { useMemo, useRef, useState } from 'react';
 import { Button } from '~/components/ui/button';
@@ -15,6 +17,7 @@ import {
 } from '~/components/ui/dialog';
 import { ToastAction } from '~/components/ui/toast';
 import { useToast } from '~/components/ui/use-toast';
+import { saveSubmission } from '../save-submission';
 import { SettingsForm } from '../settings-form';
 import { useEditorSettingsStore } from '../settings-store';
 import { libSource } from './editor-types';
@@ -36,18 +39,26 @@ const LIB_URI = 'ts:filename/checking.d.ts';
 type Monaco = typeof monaco;
 
 interface Props {
-  prompt: string;
+  challenge: Challenge & {
+    Vote: Vote[];
+    Bookmark: Bookmark[];
+    _count: {
+      Vote: number;
+    };
+  };
 }
 
 const libCache = new Set<string>();
-export const CodePanel = ({ prompt }: Props) => {
+export const CodePanel = ({ challenge }: Props) => {
   const { toast } = useToast();
   const { theme } = useTheme();
+  const { data: session } = useSession();
+  console.log({ session });
 
   const { settings } = useEditorSettingsStore();
   const [hasErrors, setHasErrors] = useState(false);
   const [initialTypecheckDone, setInitialTypecheckDone] = useState(false);
-  const [code, setCode] = useState(prompt);
+  const [code, setCode] = useState<string>(challenge.prompt as string);
   const editorTheme = theme === 'light' ? 'vs' : 'vs-dark';
   const modelRef = useRef<monaco.editor.ITextModel>();
   // ref doesnt cause a rerender
@@ -64,7 +75,9 @@ export const CodePanel = ({ prompt }: Props) => {
     };
   }, [settings]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    const [, solution] = code.split('/* _____________ Your Code Here _____________ */');
+
     if (hasErrors) {
       toast({
         variant: 'destructive',
@@ -72,6 +85,11 @@ export const CodePanel = ({ prompt }: Props) => {
         action: <ToastAction altText="Try again">Try again</ToastAction>,
       });
     } else {
+      await saveSubmission(
+        challenge.id,
+        session?.user?.id as string,
+        JSON.stringify(solution) ?? '',
+      );
       toast({
         variant: 'success',
         title: 'Good job!',
@@ -176,7 +194,7 @@ export const CodePanel = ({ prompt }: Props) => {
           options={editorOptions}
           defaultLanguage="typescript"
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
-          onMount={onMount(prompt, setHasErrors)}
+          onMount={onMount(code, setHasErrors)}
           value={code}
           onChange={(code) => setCode(code ?? '')}
         />
@@ -188,8 +206,9 @@ export const CodePanel = ({ prompt }: Props) => {
         <Button
           size="sm"
           className="bg-emerald-600 duration-300 hover:bg-emerald-500 dark:bg-emerald-300 dark:hover:bg-emerald-400"
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onClick={handleSubmit}
-          disabled={!initialTypecheckDone}
+          disabled={!initialTypecheckDone || !session?.user}
         >
           {!initialTypecheckDone && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           Submit
