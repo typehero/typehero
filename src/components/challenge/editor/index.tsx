@@ -1,7 +1,7 @@
 'use client';
 
 import Editor from '@monaco-editor/react';
-import { Settings } from 'lucide-react';
+import { Loader2, Settings } from 'lucide-react';
 import type * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import { useTheme } from 'next-themes';
 import { useMemo, useRef, useState } from 'react';
@@ -39,12 +39,14 @@ interface Props {
   prompt: string;
 }
 
+const libCache = new Set<string>();
 export const CodePanel = ({ prompt }: Props) => {
   const { toast } = useToast();
   const { theme } = useTheme();
 
   const { settings } = useEditorSettingsStore();
   const [hasErrors, setHasErrors] = useState(false);
+  const [initialTypecheckDone, setInitialTypecheckDone] = useState(false);
   const [code, setCode] = useState(prompt);
   const editorTheme = theme === 'light' ? 'vs' : 'vs-dark';
   const modelRef = useRef<monaco.editor.ITextModel>();
@@ -85,8 +87,13 @@ export const CodePanel = ({ prompt }: Props) => {
       const numLines = value.split('\n').length;
       const lastLineLength = value.split('\n').at(-1)?.length || 1;
 
-      monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, LIB_URI);
-      monaco.editor.createModel(libSource, 'typescript', monaco.Uri.parse(LIB_URI));
+      // once you register a lib you cant unregister it (idk how to unregister it)
+      // so when editor mounts again it tries to add the lib again and throws an error
+      if (!libCache.has(libSource)) {
+        monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, LIB_URI);
+        monaco.editor.createModel(libSource, 'typescript', monaco.Uri.parse(LIB_URI));
+        libCache.add(libSource);
+      }
 
       const model = editor.getModel();
 
@@ -102,7 +109,7 @@ export const CodePanel = ({ prompt }: Props) => {
       const filename = model.uri.toString();
 
       // what actually runs when checking errors
-      const _runCommand = async () => {
+      const typeCheck = async () => {
         const errors = await Promise.all([
           ts.getSemanticDiagnostics(filename),
           ts.getSyntacticDiagnostics(filename),
@@ -131,9 +138,14 @@ export const CodePanel = ({ prompt }: Props) => {
 
           fixingStart = !fixingStart;
         }
+
+        // @TODO: race condition exists. you can click submit before this is done
+        // how to gaurd this?
+        typeCheck().catch(console.error);
       });
 
-      editor.getModel()?.onDidChangeContent(() => void _runCommand());
+      await typeCheck();
+      setInitialTypecheckDone(true);
 
       monaco.languages.registerInlayHintsProvider(
         'typescript',
@@ -171,11 +183,15 @@ export const CodePanel = ({ prompt }: Props) => {
       </div>
       <div className="sticky bottom-0 flex items-center justify-between bg-muted p-2">
         {editorState && <VimStatusBar editor={editorState} />}
+        {/* some hacky stuff to avoid layout shift. fix if you want */}
+        {!editorState && <div />}
         <Button
           size="sm"
           className="bg-green-300 hover:bg-green-400 dark:hover:bg-green-200"
           onClick={handleSubmit}
+          disabled={!initialTypecheckDone}
         >
+          {!initialTypecheckDone && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           Submit
         </Button>
       </div>
