@@ -60,19 +60,23 @@ export function DescriptionPanel({ challenge }: Props) {
     }, 500),
   ).current;
   return (
-    <div className="flex-1 overflow-y-auto rounded-md bg-white dark:bg-zinc-800">
+    <div className="flex-1 overflow-y-auto rounded-xl bg-white dark:bg-zinc-800">
       <Tabs defaultValue="description" className="w-full">
-        <TabsList className="sticky top-0 grid w-full grid-cols-2">
-          <TabsTrigger value="description">Description</TabsTrigger>
-          <TabsTrigger value="solutions">Solutions</TabsTrigger>
+        <TabsList className="sticky top-0 grid w-full grid-cols-2 rounded-xl bg-neutral-200 bg-opacity-70 backdrop-blur-md dark:bg-muted">
+          <TabsTrigger className="rounded-lg" value="description">
+            Description
+          </TabsTrigger>
+          <TabsTrigger className="rounded-lg" value="solutions">
+            Solutions
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="description" className="mt-0">
-          <div className="h-full p-5">
+          <div className="h-full px-1 py-3 dark:px-4">
             <TypographyH3 className="mb-2 font-medium">{challenge.name}</TypographyH3>
             <div className="mb-6 flex items-center gap-6">
               <DifficultyBadge difficulty={challenge.difficulty} />
               <Button
-                className="gap-2 p-1"
+                className="w-14 gap-2 rounded-lg p-1"
                 variant="ghost"
                 disabled={!session?.data?.user?.id}
                 onClick={(): void => {
@@ -99,13 +103,24 @@ export function DescriptionPanel({ challenge }: Props) {
                   size={20}
                   className={clsx(
                     {
-                      'fill-green-700 stroke-green-700': hasVoted,
+                      'fill-emerald-600 stroke-emerald-600 dark:fill-emerald-400 dark:stroke-emerald-400':
+                        hasVoted,
                       'stroke-gray-500': !hasVoted,
                     },
                     'hover:stroke-gray-400',
                   )}
                 />
-                <span className="self-end text-lg text-gray-500">{votes}</span>
+                <span
+                  className={clsx(
+                    {
+                      'text-600 stroke-emerald-600 dark:text-emerald-400': hasVoted,
+                      'text-gray-500': !hasVoted,
+                    },
+                    'self-end text-lg',
+                  )}
+                >
+                  {votes}
+                </span>
               </Button>
               <Button
                 variant="ghost"
@@ -157,6 +172,7 @@ export function DescriptionPanel({ challenge }: Props) {
             <div className="prose-invert leading-8 prose-h3:text-xl">
               {/* @ts-ignore */}
               <ReactMarkdown
+                className="rounded-xl"
                 remarkPlugins={[remarkGfm]}
                 components={{
                   p: ({ ...props }) => <p className="mb-4" {...props} />,
