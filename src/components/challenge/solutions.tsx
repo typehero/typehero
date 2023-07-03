@@ -6,10 +6,10 @@ import { TypographyH3 } from '../ui/typography/h3';
 import type { Challenge } from '.';
 
 interface Props {
-  challenge: Challenge;
+  challenge: NonNullable<Challenge>;
 }
 export function Solutions({ challenge }: Props) {
-  const hasSolution = challenge?.Solution?.length! > 0;
+  const hasSolution = challenge.Solution?.length > 0;
 
   const handleClick = () => {
     console.log('do stuff');
