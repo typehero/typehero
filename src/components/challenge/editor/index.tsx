@@ -1,7 +1,6 @@
 'use client';
 
 import Editor from '@monaco-editor/react';
-import type { Bookmark, Challenge, Vote } from '@prisma/client';
 import { Loader2, Settings } from 'lucide-react';
 import type * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import { useSession } from 'next-auth/react';
@@ -23,6 +22,7 @@ import { useEditorSettingsStore } from '../settings-store';
 import { libSource } from './editor-types';
 import { createTwoslashInlayProvider } from './twoslash';
 import { VimStatusBar } from './vimMode';
+import type { Challenge } from '..';
 
 const DEFAULT_OPTIONS: monaco.editor.IStandaloneEditorConstructionOptions = {
   lineNumbers: 'on',
@@ -39,13 +39,7 @@ const LIB_URI = 'ts:filename/checking.d.ts';
 type Monaco = typeof monaco;
 
 interface Props {
-  challenge: Challenge & {
-    Vote: Vote[];
-    Bookmark: Bookmark[];
-    _count: {
-      Vote: number;
-    };
-  };
+  challenge: Challenge;
 }
 
 const libCache = new Set<string>();
@@ -53,12 +47,14 @@ export const CodePanel = ({ challenge }: Props) => {
   const { toast } = useToast();
   const { theme } = useTheme();
   const { data: session } = useSession();
-  console.log({ session });
+
+  // const userCode = challenge?.Solution?.[0]?.code;
+  // const defaultCode = `${challenge?.prompt}${userCode}`;
 
   const { settings } = useEditorSettingsStore();
   const [hasErrors, setHasErrors] = useState(false);
   const [initialTypecheckDone, setInitialTypecheckDone] = useState(false);
-  const [code, setCode] = useState<string>(challenge.prompt as string);
+  const [code, setCode] = useState<string>(challenge?.prompt as string);
   const editorTheme = theme === 'light' ? 'vs' : 'vs-dark';
   const modelRef = useRef<monaco.editor.ITextModel>();
   // ref doesnt cause a rerender
@@ -157,8 +153,6 @@ export const CodePanel = ({ challenge }: Props) => {
           fixingStart = !fixingStart;
         }
 
-        // @TODO: race condition exists. you can click submit before this is done
-        // how to gaurd this?
         typeCheck().catch(console.error);
       });
 

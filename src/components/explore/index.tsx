@@ -23,14 +23,14 @@ export function Explore() {
       </section>
 
       <Suspense fallback={<ExploreSectionSkeleton />}>
-        <ExploreSection data={getChallenges} />
+        <ExploreSection data={getChallenge} />
       </Suspense>
     </div>
   );
 }
 
-export type Challenges = ReturnType<typeof getChallenges>;
-async function getChallenges() {
+export type Challenge = ReturnType<typeof getChallenge>;
+async function getChallenge() {
   return prisma.challenge.findMany({
     include: {
       _count: {
