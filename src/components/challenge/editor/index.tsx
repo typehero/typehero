@@ -143,7 +143,7 @@ export const CodePanel = ({ prompt }: Props) => {
 
   return (
     <div className="flex flex-1 flex-col overflow-hidden rounded-md">
-      <div className="container flex h-[40px] flex-row-reverse items-center space-y-2 border border-b-zinc-300 bg-muted dark:border-b-zinc-700">
+      <div className="container sticky top-0 flex h-[40px] flex-row-reverse items-center border border-b-zinc-300 bg-muted py-2 dark:border-b-zinc-700">
         <Dialog>
           <DialogTrigger>
             <Settings size={20} className="stroke-gray-500 hover:stroke-gray-400" />
@@ -169,7 +169,7 @@ export const CodePanel = ({ prompt }: Props) => {
           onChange={(code) => setCode(code ?? '')}
         />
       </div>
-      <div className="flex items-center justify-between bg-muted p-2">
+      <div className="sticky bottom-0 flex items-center justify-between bg-muted p-2">
         {editorState && <VimStatusBar editor={editorState} />}
         <Button
           size="sm"
