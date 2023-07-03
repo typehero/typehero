@@ -61,15 +61,14 @@ export function Navigation() {
           <div className="relative flex basis-1/3">
             <a className="flex items-center space-x-2 duration-300" href="/">
               <svg
-                className="h-6 w-6 rounded-md bg-indigo-500 p-[2px]"
+                className="h-6 w-6 rounded-md bg-[#3178C6] p-[2px]"
                 viewBox="0 0 512 512"
-                fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <g clipPath="url(#clip0_1_2)">
                   <path
                     d="M462 0H50C22.3858 0 0 22.3858 0 50V462C0 489.614 22.3858 512 50 512H462C489.614 512 512 489.614 512 462V50C512 22.3858 489.614 0 462 0Z"
-                    fill="#6366f1"
+                    fill="#3178C6"
                   />
                   <path
                     fillRule="evenodd"
