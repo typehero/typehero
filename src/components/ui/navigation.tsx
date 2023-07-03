@@ -39,7 +39,9 @@ export function Navigation() {
     try {
       setLoading(true);
       await signIn('github');
-    } catch {
+    } catch (error) {
+      console.error(error);
+    } finally {
       setLoading(false);
     }
   };
