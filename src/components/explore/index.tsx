@@ -7,9 +7,9 @@ import { ExploreSectionSkeleton } from './section-skeleton';
 
 export function Explore() {
   return (
-    <div className="flex h-full flex-col">
-      <section className="mb-8 flex max-w-[69ch] flex-col items-start gap-2 pt-4 md:pt-8">
-        <TypographyH1 className="bg-gradient-to-r from-[#3178C6] to-pink-500 bg-clip-text text-transparent dark:to-pink-400">
+    <div className="container flex h-full flex-col">
+      <section className="mb-8 flex max-w-[69ch] flex-col items-start gap-2 px-2 pt-4 md:pt-8">
+        <TypographyH1 className="bg-gradient-to-r from-[#3178C6] from-30% to-black bg-clip-text text-transparent dark:to-white">
           Explore
         </TypographyH1>
         <TypographyP>

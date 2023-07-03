@@ -36,7 +36,7 @@ export async function Challenge({ id }: Props) {
 
   return (
     <div
-      className="flex  flex-col gap-2 py-4 md:flex-row"
+      className="flex flex-col gap-2 px-4 pb-4 lg:flex-row 2xl:grid 2xl:grid-cols-3"
       style={{ height: 'calc(100dvh - 3.5rem)' }}
     >
       <DescriptionPanel challenge={challenge} />

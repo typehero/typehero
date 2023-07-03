@@ -154,16 +154,16 @@ export const CodePanel = ({ prompt }: Props) => {
     };
 
   return (
-    <div className="flex flex-1 flex-col overflow-hidden rounded-md">
-      <div className="container sticky top-0 flex h-[40px] flex-row-reverse items-center border border-b-zinc-300 bg-muted py-2 dark:border-b-zinc-700">
+    <div className="col-span-2 flex flex-1 flex-col overflow-hidden rounded-xl border border-zinc-300 dark:border-zinc-700">
+      <div className="container sticky top-0 flex h-[40px] flex-row-reverse items-center border-b border-zinc-300 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
         <Dialog>
           <DialogTrigger>
-            <Settings size={20} className="stroke-gray-500 hover:stroke-gray-400" />
+            <Settings size={20} className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" />
           </DialogTrigger>
           <DialogContent className="w-[200px]">
             <DialogHeader>
               <DialogTitle>Settings</DialogTitle>
-              <div className="py-4">
+              <div className="pt-4">
                 <SettingsForm />
               </div>
             </DialogHeader>
@@ -181,13 +181,13 @@ export const CodePanel = ({ prompt }: Props) => {
           onChange={(code) => setCode(code ?? '')}
         />
       </div>
-      <div className="sticky bottom-0 flex items-center justify-between bg-muted p-2">
+      <div className="sticky bottom-0 flex items-center justify-between p-2 dark:bg-[#1e1e1e]">
         {editorState && <VimStatusBar editor={editorState} />}
         {/* some hacky stuff to avoid layout shift. fix if you want */}
         {!editorState && <div />}
         <Button
           size="sm"
-          className="bg-green-300 hover:bg-green-400 dark:hover:bg-green-200"
+          className="bg-emerald-600 duration-300 hover:bg-emerald-500 dark:bg-emerald-300 dark:hover:bg-emerald-400"
           onClick={handleSubmit}
           disabled={!initialTypecheckDone}
         >

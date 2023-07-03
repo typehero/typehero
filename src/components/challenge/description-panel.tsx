@@ -60,53 +60,22 @@ export function DescriptionPanel({ challenge }: Props) {
     }, 500),
   ).current;
   return (
-    <div className="flex-1 overflow-y-auto rounded-md bg-white dark:bg-zinc-800">
+    <div className="col-span-1 flex-1 overflow-y-auto rounded-xl bg-white dark:bg-zinc-800">
       <Tabs defaultValue="description" className="w-full">
-        <TabsList className="sticky top-0 grid w-full grid-cols-2">
-          <TabsTrigger value="description">Description</TabsTrigger>
-          <TabsTrigger value="solutions">Solutions</TabsTrigger>
+        <TabsList className="sticky top-0 grid w-full grid-cols-2 rounded-xl bg-neutral-200 bg-opacity-70 backdrop-blur-md dark:bg-muted">
+          <TabsTrigger className="rounded-lg" value="description">
+            Description
+          </TabsTrigger>
+          <TabsTrigger className="rounded-lg" value="solutions">
+            Solutions
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="description" className="mt-0">
-          <div className="h-full p-5">
+          <div className="h-full px-1 pb-0 pt-3 dark:px-4 dark:pb-2">
             <TypographyH3 className="mb-2 font-medium">{challenge.name}</TypographyH3>
-            <div className="mb-6 flex items-center gap-6">
+            <div className="mb-6 flex items-center gap-4">
               <DifficultyBadge difficulty={challenge.difficulty} />
-              <Button
-                className="gap-2 p-1"
-                variant="ghost"
-                disabled={!session?.data?.user?.id}
-                onClick={(): void => {
-                  let shouldIncrement = false;
-                  if (hasVoted) {
-                    setVotes((v) => v - 1);
-                    shouldIncrement = false;
-                    setHasVoted(false);
-                  } else {
-                    setVotes((v) => v + 1);
-                    shouldIncrement = true;
-                    setHasVoted(true);
-                  }
-                  debouncedSearch(
-                    challenge.id,
-                    session?.data?.user?.id as string,
-                    shouldIncrement,
-                  )?.catch((e) => {
-                    console.error(e);
-                  });
-                }}
-              >
-                <ThumbsUp
-                  size={20}
-                  className={clsx(
-                    {
-                      'fill-green-700 stroke-green-700': hasVoted,
-                      'stroke-gray-500': !hasVoted,
-                    },
-                    'hover:stroke-gray-400',
-                  )}
-                />
-                <span className="self-end text-lg text-gray-500">{votes}</span>
-              </Button>
+
               <Button
                 variant="ghost"
                 className="p-1"
@@ -142,7 +111,9 @@ export function DescriptionPanel({ challenge }: Props) {
               </Button>
               <Dialog>
                 <DialogTrigger>
-                  <Share size={20} className="stroke-gray-500 hover:stroke-gray-400" />
+                  <Button variant="ghost" className="p-1">
+                    <Share size={20} className="stroke-gray-500 hover:stroke-gray-400" />
+                  </Button>
                 </DialogTrigger>
                 <DialogContent className="w-[200px]">
                   <DialogHeader>
@@ -153,6 +124,53 @@ export function DescriptionPanel({ challenge }: Props) {
                   </DialogHeader>
                 </DialogContent>
               </Dialog>
+              <Button
+                className="group -ml-1 w-14 gap-2 rounded-lg p-1"
+                variant="ghost"
+                disabled={!session?.data?.user?.id}
+                onClick={(): void => {
+                  let shouldIncrement = false;
+                  if (hasVoted) {
+                    setVotes((v) => v - 1);
+                    shouldIncrement = false;
+                    setHasVoted(false);
+                  } else {
+                    setVotes((v) => v + 1);
+                    shouldIncrement = true;
+                    setHasVoted(true);
+                  }
+                  debouncedSearch(
+                    challenge.id,
+                    session?.data?.user?.id as string,
+                    shouldIncrement,
+                  )?.catch((e) => {
+                    console.error(e);
+                  });
+                }}
+              >
+                <ThumbsUp
+                  size={20}
+                  className={clsx(
+                    {
+                      'fill-emerald-600 stroke-emerald-600 group-hover:stroke-emerald-500 dark:fill-emerald-400 dark:stroke-emerald-400':
+                        hasVoted,
+                      'stroke-zinc-500': !hasVoted,
+                    },
+                    'duration-300 group-hover:stroke-zinc-400',
+                  )}
+                />
+                <span
+                  className={clsx(
+                    {
+                      'text-emerald-600 dark:text-emerald-400': hasVoted,
+                      'text-zinc-500 group-hover:text-zinc-400': !hasVoted,
+                    },
+                    'self-end text-lg duration-300',
+                  )}
+                >
+                  {votes}
+                </span>
+              </Button>
             </div>
             <div className="prose-invert leading-8 prose-h3:text-xl">
               {/* @ts-ignore */}
@@ -166,6 +184,7 @@ export function DescriptionPanel({ challenge }: Props) {
                       <SyntaxHighlighter
                         // @ts-ignore
                         style={vscDarkPlus} // theme
+                        className="rounded-xl dark:rounded-md"
                         language={match[1]}
                         PreTag="section" // parent tag
                         {...props}

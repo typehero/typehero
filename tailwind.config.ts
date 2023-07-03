@@ -13,6 +13,10 @@ module.exports = {
       },
     },
     extend: {
+      screens: {
+        // iPad Pro vertical is 1024px exactly
+        lg: '1025px',
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
