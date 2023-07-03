@@ -3,7 +3,7 @@
 import { useTheme } from 'next-themes';
 
 import Link from 'next/link';
-import { LogIn, User, Bell, Moon, Sun } from 'lucide-react';
+import { LogIn, User, Bell, Moon, Sun, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signIn, signOut } from 'next-auth/react';
@@ -16,6 +16,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from './navigation-menu';
+import { Button } from './button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,13 +29,20 @@ import { useSession } from 'next-auth/react';
 
 export function Navigation() {
   const [mounted, setMounted] = useState(false);
-  const session = useSession();
+  const [loading, setLoading] = useState(false);
+  const { data: session, status } = useSession();
   const { setTheme, resolvedTheme } = useTheme();
   const router = useRouter();
 
-  function goHome() {
+  // NOTE: 1. loading == true -> 2. signIn() -> 3. session status == 'loading' (loading == false)
+  const handleSignIn = async () => {
+    setLoading(true);
+    await signIn('github');
+  };
+  const handleSignOut = async () => {
+    await signOut({ redirect: false });
     router.push('/');
-  }
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -120,7 +128,7 @@ export function Navigation() {
               <Bell className="h-5 w-5" aria-hidden="true" />
             </button>
 
-            {session.data ? (
+            {session ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
@@ -139,23 +147,24 @@ export function Navigation() {
                     </DropdownMenuItem>
                   </Link>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                    onClick={() => {
-                      void signOut();
-                      goHome();
-                    }}
-                  >
+                  <DropdownMenuItem onClick={() => void handleSignOut()}>
                     <span>Log out</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <button
-                onClick={() => void signIn('github')}
-                className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none"
+
+              <Button
+                disabled={loading || status === 'loading'}
+                onClick={() => void handleSignIn()}
+                className="rounded-lg bg-white p-2 text-black duration-300 focus:bg-accent focus:outline-none dark:bg-black dark:text-white"
               >
-                <LogIn className="h-5 w-5" />
-              </button>
+                {loading || status === 'loading' ? (
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                ) : (
+                  <LogIn className="h-5 w-5" />
+                )}
+              </Button>
             )}
           </div>
         </div>
