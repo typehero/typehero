@@ -66,9 +66,9 @@ export function DescriptionPanel({ challenge }: Props) {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="description" className="mt-0">
-          <div className="h-full p-5">
+          <div className="h-full px-1 pb-0 pt-3 dark:px-4 dark:pb-2">
             <TypographyH3 className="mb-2 font-medium">{challenge.name}</TypographyH3>
-            <div className="mb-6 flex items-center gap-6">
+            <div className="mb-6 flex items-center gap-4">
               <DifficultyBadge difficulty={challenge.difficulty} />
               <Button
                 className="gap-2 p-1"
