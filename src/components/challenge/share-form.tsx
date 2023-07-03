@@ -27,8 +27,8 @@ export function ShareForm() {
       <p>Copy this challenge url to share with your friends!</p>
       <code className="px-4 py-2 border dark:border-gray-300 rounded-md">{url}</code>
       <button
-        className={`ml-auto mt-4 flex items-center justify-between space-x-2 rounded-lg px-3 py-2 duration-300 active:scale-75
-        ${copied ? 'bg-green-500 dark:bg-green-700 dark:text-white' : 'text-black dark:bg-white'}`}
+        className={`ml-auto mt-4 flex items-center justify-between space-x-2 rounded-lg px-3 py-2 duration-300 active:scale-75 
+        ${copied ? 'text-green-500 border border-green-500 dark:border-green-700 dark:bg-green-700 dark:text-white' : 'text-black dark:bg-white border border-gray-100 hover:bg-gray-100'}`}
         onClick={() => void copyToClipboard()}
       >
         <span>{copied ? 'Copied!' : 'Copy'}</span>
