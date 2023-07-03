@@ -20,7 +20,7 @@ export async function Profile({ username: usernameFromQuery }: Props) {
   }
 
   return (
-    <>
+    <div className="container">
       <h1>{user.id}</h1>
       <Image alt="user avatar" width="100" height="100" src={user.image ?? ''} />
 
@@ -29,6 +29,6 @@ export async function Profile({ username: usernameFromQuery }: Props) {
       <h2 className="text-xl">Raw user:</h2>
       <pre>{JSON.stringify(user, null, 4)}</pre>
       {/* <button onClick={() => handleClick(user.id)}>update user name for id: {user.id}</button> */}
-    </>
+    </div>
   );
 }
