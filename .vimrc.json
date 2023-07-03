@@ -1,0 +1,20 @@
+{
+  "projectlocal": {
+    "nvim-lsp": ["tsserver"],
+    "ale": {
+      "fixers": {
+        "typescript": ["prettier"],
+        "typescriptreact": ["prettier"],
+        "javascript": ["prettier"],
+        "javascriptreact": ["prettier"]
+      },
+      "linters": {
+        "typescript": ["eslint"],
+        "typescriptreact": ["eslint"],
+        "javascript": ["eslint"],
+        "javascriptreact": ["eslint"]
+      }
+    }
+  }
+}
+
