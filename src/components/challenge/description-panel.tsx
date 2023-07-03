@@ -1,33 +1,28 @@
 'use client';
 
-import type { Bookmark, Challenge, Vote } from '@prisma/client';
 import { clsx } from 'clsx';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import remarkGfm from 'remark-gfm';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { debounce } from 'lodash';
 import { Bookmark as BookmarkIcon, Share, ThumbsUp } from 'lucide-react';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { useRouter } from 'next/navigation';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
-import { incrementOrDecrementUpvote } from './increment.action';
-import { TypographyH3 } from '../ui/typography/h3';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import remarkGfm from 'remark-gfm';
 import { DifficultyBadge } from '../explore/difficulty-badge';
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
-import { ShareForm } from './share-form';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
+import { TypographyH3 } from '../ui/typography/h3';
 import { addOrRemoveBookmark } from './bookmark.action';
+import { incrementOrDecrementUpvote } from './increment.action';
+import { ShareForm } from './share-form';
+import { Solutions } from './solutions';
+import type { Challenge } from '.';
 
 interface Props {
-  challenge: Challenge & {
-    Vote: Vote[];
-    Bookmark: Bookmark[];
-    _count: {
-      Vote: number;
-    };
-  };
+  challenge: NonNullable<Challenge>;
 }
 export function DescriptionPanel({ challenge }: Props) {
   const router = useRouter();
@@ -199,13 +194,13 @@ export function DescriptionPanel({ challenge }: Props) {
                   },
                 }}
               >
-                {challenge.description}
+                {challenge?.description}
               </ReactMarkdown>
             </div>
           </div>
         </TabsContent>
         <TabsContent value="solutions">
-          <div className="p-4">solutions</div>
+          <Solutions challenge={challenge} />
         </TabsContent>
       </Tabs>
     </div>

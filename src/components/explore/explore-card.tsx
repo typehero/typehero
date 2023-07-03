@@ -1,11 +1,11 @@
 import { ArrowBigUp } from 'lucide-react';
 
-import { type Challenges } from '.';
+import { type Challenge } from '.';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { DifficultyBadge } from './difficulty-badge';
 
 interface Props {
-  challenge: Awaited<Challenges>[0];
+  challenge: Awaited<Challenge>[0];
 }
 
 const BORDERS_BY_DIFFICULTY = {
@@ -62,8 +62,9 @@ const getRelativeTime = (date: Date) => {
 export function ExploreCard({ challenge }: Props) {
   return (
     <Card
-      className={`group duration-300 hover:bg-card-hovered group-focus:bg-card-hovered ${SHADOWS_BY_DIFFICULTY[challenge.difficulty]
-        } ${BORDERS_BY_DIFFICULTY[challenge.difficulty]}`}
+      className={`group duration-300 hover:bg-card-hovered group-focus:bg-card-hovered ${
+        SHADOWS_BY_DIFFICULTY[challenge.difficulty]
+      } ${BORDERS_BY_DIFFICULTY[challenge.difficulty]}`}
     >
       <CardHeader className="grid items-start gap-4 space-y-0">
         <div className="space-y-1">
