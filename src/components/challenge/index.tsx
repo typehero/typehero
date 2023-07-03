@@ -9,9 +9,6 @@ interface Props {
 }
 export async function Challenge({ id }: Props) {
   const session = await getServerSession();
-  // query a challenge by id
-  // include the count of votes
-  // include if I voted for this challenge
   const challenge = await prisma.challenge.findFirst({
     where: { id: +id },
     include: {

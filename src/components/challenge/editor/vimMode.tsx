@@ -1,66 +1,35 @@
+'use client';
+
 import type * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
-import { type VimMode, initVimMode } from 'monaco-vim';
+import { initVimMode, type VimMode } from 'monaco-vim';
+import { useEffect, useRef } from 'react';
 import { useEditorSettingsStore } from '../settings-store';
 
-const STATUS_BAR_ID = 'vim-status-bar';
-
-export const VimStatusBar = () => {
+interface Props {
+  editor: monaco.editor.IStandaloneCodeEditor;
+}
+export const VimStatusBar = ({ editor }: Props) => {
+  const statusBarRef = useRef<HTMLDivElement | null>(null);
+  const vimModeRef = useRef<VimMode>();
   const { settings } = useEditorSettingsStore();
-  if (settings.bindings === 'vim' && globalThis.editor) {
-    activateVimMode(globalThis.editor);
-  } else {
-    deactivateVimMode();
-  }
+
+  useEffect(() => {
+    if (settings.bindings === 'vim') {
+      if (!vimModeRef.current) {
+        vimModeRef.current = initVimMode(editor, statusBarRef.current);
+      }
+    } else {
+      vimModeRef.current?.dispose();
+      vimModeRef.current = undefined;
+      if (statusBarRef.current) {
+        statusBarRef.current.textContent = '';
+      }
+    }
+  }, [editor, settings.bindings]);
+
   return (
     <div className="flex w-full">
-      <div id={STATUS_BAR_ID} className="font-mono" />
+      <div ref={statusBarRef} className="font-mono" />
     </div>
   );
 };
-
-export function loadVim(editor: monaco.editor.IStandaloneCodeEditor) {
-  // eslint-disable-next-line
-  const settings = localStorage.getItem('editor-settings');
-  if (!settings) return;
-
-  // eslint-disable-next-line
-  const parsedSettings = JSON.parse(settings);
-
-  // eslint-disable-next-line
-  if (parsedSettings?.state?.settings?.bindings === 'vim') {
-    activateVimMode(editor);
-  }
-}
-
-declare global {
-  // eslint-disable-next-line no-var
-  var vimMode: VimMode | undefined;
-}
-
-export function activateVimMode(editor: monaco.editor.IStandaloneCodeEditor) {
-  if (globalThis.vimMode === undefined) {
-    const statusBar = document.getElementById(STATUS_BAR_ID);
-
-    if (statusBar === null) {
-      return;
-    }
-
-    globalThis.vimMode = initVimMode(editor, statusBar);
-  }
-}
-
-export function deactivateVimMode() {
-  if (globalThis.vimMode !== undefined) {
-    const statusBar = document.getElementById(STATUS_BAR_ID);
-
-    if (statusBar === null) {
-      return;
-    }
-
-    globalThis.vimMode.dispose();
-
-    delete globalThis.vimMode;
-
-    statusBar.textContent = '';
-  }
-}

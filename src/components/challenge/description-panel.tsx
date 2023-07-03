@@ -161,7 +161,6 @@ export function DescriptionPanel({ challenge }: Props) {
                 components={{
                   p: ({ ...props }) => <p className="mb-4" {...props} />,
                   code({ inline, className, children, ...props }) {
-                    console.log(children);
                     const match = /language-(\w+)/.exec(className || '');
                     return !inline && match ? (
                       <SyntaxHighlighter
