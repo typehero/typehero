@@ -67,6 +67,7 @@ export function DescriptionPanel({ challenge }: Props) {
           <TabsTrigger value="solutions">Solutions</TabsTrigger>
         </TabsList>
         <TabsContent value="description" className="mt-0">
+
           <div className="h-full p-5">
             <TypographyH3 className="mb-2 font-medium">{challenge.name}</TypographyH3>
             <div className="mb-6 flex items-center gap-6">
@@ -154,13 +155,14 @@ export function DescriptionPanel({ challenge }: Props) {
                 </DialogContent>
               </Dialog>
             </div>
-            <div className="prose-invert prose-h3:text-xl">
+            <div className="prose-invert prose-h3:text-xl leading-8">
               {/* @ts-ignore */}
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
                   p: ({ ...props }) => <p className="mb-4" {...props} />,
                   code({ inline, className, children, ...props }) {
+                    console.log(children)
                     const match = /language-(\w+)/.exec(className || '');
                     return !inline && match ? (
                       <SyntaxHighlighter
@@ -173,7 +175,7 @@ export function DescriptionPanel({ challenge }: Props) {
                         {String(children).replace(/\n$/, '')}
                       </SyntaxHighlighter>
                     ) : (
-                      <code className={className} {...props}>
+                        <code className="rounded-md p-1 bg-neutral-200 dark:bg-black font-mono">
                         {children}
                       </code>
                     );

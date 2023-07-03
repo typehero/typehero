@@ -13,10 +13,10 @@ export const CHALLENGE_MAP: Record<
     updatedAt: new Date(),
     Bookmark: randomTrueOrFalse()
       ? {
-          create: {
-            userId: randomTrueOrFalse() ? trashId : gId,
-          },
-        }
+        create: {
+          userId: randomTrueOrFalse() ? trashId : gId,
+        },
+      }
       : undefined,
     description: `Implement the built-in \`Pick<T, K>\` generic without using it.
 
@@ -48,7 +48,6 @@ Extends<HelloWorld, \`\${string}!\`>()
 type HelloWorld =`,
     difficulty: 'BEGINNER',
   }),
-
   EASY: (challengeIndex: number) => ({
     name: `Easy Challenge ${challengeIndex + 1}`,
     createdAt: new Date(),
@@ -87,8 +86,7 @@ type HelloWorld =`,
     name: `Medium Challenge ${challengeIndex + 1}`,
     createdAt: new Date(),
     updatedAt: new Date(),
-    description: `
-    Implement the built-in \`Omit<T, K>\` generic without using it.
+    description: `Implement the built-in \`Omit<T, K>\` generic without using it.
 
 Constructs a type by picking the set of properties \`K\` from \`T\`
 
@@ -121,8 +119,7 @@ type HelloWorld =`,
     name: `Hard Challenge ${challengeIndex + 1}`,
     createdAt: new Date(),
     updatedAt: new Date(),
-    description: `
-    Implement a simpiled version of a Vue-like typing support.
+    description: `Implement a simpiled version of a Vue-like typing support.
 
 By providing a function name \`SimpleVue\` (similar to \`Vue.extend\` or \`defineComponent\`), it should properly infer the \`this\` type inside computed and methods.
 
@@ -171,8 +168,7 @@ type HelloWorld =`,
     name: `Extreme Challenge ${challengeIndex + 1}`,
     createdAt: new Date(),
     updatedAt: new Date(),
-    description: `
-Implement a generic \`GetReadonlyKeys<T>\` that returns a union of the readonly keys of an Object.
+    description: `Implement a generic \`GetReadonlyKeys<T>\` that returns a union of the readonly keys of an Object.
 
 For example
 
