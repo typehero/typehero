@@ -52,8 +52,8 @@ const getRelativeTime = (date: Date) => {
   const elapsed = date - now;
 
   // "Math.abs" accounts for both "past" & "future" scenarios
-  // @ts-ignore
   for (const u in units)
+    // @ts-ignore
     if (Math.abs(elapsed) > units[u] || u == 'second')
       // @ts-ignore
       return rtf.format(Math.round(elapsed / units[u]), u);

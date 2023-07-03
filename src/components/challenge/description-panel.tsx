@@ -70,42 +70,7 @@ export function DescriptionPanel({ challenge }: Props) {
             <TypographyH3 className="mb-2 font-medium">{challenge.name}</TypographyH3>
             <div className="mb-6 flex items-center gap-4">
               <DifficultyBadge difficulty={challenge.difficulty} />
-              <Button
-                className="gap-2 p-1"
-                variant="ghost"
-                disabled={!session?.data?.user?.id}
-                onClick={(): void => {
-                  let shouldIncrement = false;
-                  if (hasVoted) {
-                    setVotes((v) => v - 1);
-                    shouldIncrement = false;
-                    setHasVoted(false);
-                  } else {
-                    setVotes((v) => v + 1);
-                    shouldIncrement = true;
-                    setHasVoted(true);
-                  }
-                  debouncedSearch(
-                    challenge.id,
-                    session?.data?.user?.id as string,
-                    shouldIncrement,
-                  )?.catch((e) => {
-                    console.error(e);
-                  });
-                }}
-              >
-                <ThumbsUp
-                  size={20}
-                  className={clsx(
-                    {
-                      'fill-green-700 stroke-green-700': hasVoted,
-                      'stroke-gray-500': !hasVoted,
-                    },
-                    'hover:stroke-gray-400',
-                  )}
-                />
-                <span className="self-end text-lg text-gray-500">{votes}</span>
-              </Button>
+
               <Button
                 variant="ghost"
                 className="p-1"

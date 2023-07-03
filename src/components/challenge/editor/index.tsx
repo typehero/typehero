@@ -164,7 +164,7 @@ export const CodePanel = ({ challenge }: Props) => {
 
   return (
     <div className="col-span-2 flex flex-1 flex-col overflow-hidden rounded-xl border border-zinc-300 dark:border-zinc-700">
-      <div className="container sticky top-0 flex h-[40px] flex-row-reverse items-center border-b border-zinc-300 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
+      <div className="sticky top-0 flex h-[40px] flex-row-reverse items-center border-b border-zinc-300 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
         <Dialog>
           <DialogTrigger>
             <Settings size={20} className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" />
