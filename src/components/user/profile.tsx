@@ -22,7 +22,7 @@ export async function Profile({ username: usernameFromQuery }: Props) {
   return (
     <>
       <h1>{user.id}</h1>
-      <Image alt="user avatar" src={user.image ?? ''} />
+      <Image alt="user avatar" width="100" height="100" src={user.image ?? ''} />
 
       <p>{user.email}</p>
 
