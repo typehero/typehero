@@ -153,6 +153,7 @@ export function Navigation() {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
+
               <Button
                 disabled={loading || status === 'loading'}
                 onClick={() => void handleSignIn()}

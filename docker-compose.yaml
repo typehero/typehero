@@ -1,0 +1,22 @@
+# create a docker image with mysql and a default password of admin
+version: '3'
+
+services:
+  db:
+    image: bitnami/mysql:latest
+    container_name: db
+    restart: always
+    environment:
+      MYSQL_ROOT_USER: dev
+      MYSQL_ROOT_PASSWORD: dev
+      MYSQL_DATABASE: typehero
+
+    # create a volume for the docker container_name
+    volumes:
+      - data:/bitnami/mysql/data
+    platform: linux/amd64
+    ports:
+      - 3306:3306
+volumes:
+  data:
+    driver: local
