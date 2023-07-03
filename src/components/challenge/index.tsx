@@ -16,8 +16,6 @@ export async function Challenge({ id }: Props) {
     notFound();
   }
 
-  console.log({ challenge });
-
   return (
     <div
       className="flex  flex-col gap-2 py-4 md:flex-row"
@@ -61,4 +59,7 @@ async function getChallenge(id: string, session: Session | null) {
         },
       },
     },
-  };
+  });
+
+  return challenge;
+}

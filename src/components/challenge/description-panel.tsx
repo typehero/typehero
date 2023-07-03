@@ -22,13 +22,13 @@ import { Solutions } from './solutions';
 import type { Challenge } from '.';
 
 interface Props {
-  challenge: Challenge;
+  challenge: NonNullable<Challenge>;
 }
 export function DescriptionPanel({ challenge }: Props) {
   const router = useRouter();
-  const [votes, setVotes] = useState(challenge._count.Vote ?? 0);
-  const [hasVoted, setHasVoted] = useState(challenge.Vote.length! > 0);
-  const [hasBookmarked, setHasBookmarked] = useState(challenge.Bookmark.length! > 0);
+  const [votes, setVotes] = useState(challenge._count.Vote);
+  const [hasVoted, setHasVoted] = useState(challenge.Vote.length > 0);
+  const [hasBookmarked, setHasBookmarked] = useState(challenge.Bookmark.length > 0);
   const session = useSession();
   const debouncedSearch = useRef(
     debounce(async (challengeId: number, userId: string, shouldIncrement: boolean) => {
@@ -66,11 +66,46 @@ export function DescriptionPanel({ challenge }: Props) {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="description" className="mt-0">
-          <div className="h-full px-1 pb-0 pt-3 dark:px-4 dark:pb-2">
+          <div className="h-full p-5">
             <TypographyH3 className="mb-2 font-medium">{challenge.name}</TypographyH3>
-            <div className="mb-6 flex items-center gap-4">
+            <div className="mb-6 flex items-center gap-6">
               <DifficultyBadge difficulty={challenge.difficulty} />
-
+              <Button
+                className="gap-2 p-1"
+                variant="ghost"
+                disabled={!session?.data?.user?.id}
+                onClick={(): void => {
+                  let shouldIncrement = false;
+                  if (hasVoted) {
+                    setVotes((v) => v - 1);
+                    shouldIncrement = false;
+                    setHasVoted(false);
+                  } else {
+                    setVotes((v) => v + 1);
+                    shouldIncrement = true;
+                    setHasVoted(true);
+                  }
+                  debouncedSearch(
+                    challenge.id,
+                    session?.data?.user?.id as string,
+                    shouldIncrement,
+                  )?.catch((e) => {
+                    console.error(e);
+                  });
+                }}
+              >
+                <ThumbsUp
+                  size={20}
+                  className={clsx(
+                    {
+                      'fill-green-700 stroke-green-700': hasVoted,
+                      'stroke-gray-500': !hasVoted,
+                    },
+                    'hover:stroke-gray-400',
+                  )}
+                />
+                <span className="self-end text-lg text-gray-500">{votes}</span>
+              </Button>
               <Button
                 variant="ghost"
                 className="p-1"
@@ -85,7 +120,7 @@ export function DescriptionPanel({ challenge }: Props) {
                     setHasBookmarked(true);
                   }
                   debouncedBookmark(
-                    challenge?.id ?? 0,
+                    challenge.id,
                     session?.data?.user?.id as string,
                     shouldBookmark,
                   )?.catch((e) => {

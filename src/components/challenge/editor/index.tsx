@@ -39,7 +39,7 @@ const LIB_URI = 'ts:filename/checking.d.ts';
 type Monaco = typeof monaco;
 
 interface Props {
-  challenge: Challenge;
+  challenge: NonNullable<Challenge>;
 }
 
 const libCache = new Set<string>();
@@ -47,9 +47,6 @@ export const CodePanel = ({ challenge }: Props) => {
   const { toast } = useToast();
   const { theme } = useTheme();
   const { data: session } = useSession();
-
-  // const userCode = challenge?.Solution?.[0]?.code;
-  // const defaultCode = `${challenge?.prompt}${userCode}`;
 
   const { settings } = useEditorSettingsStore();
   const [hasErrors, setHasErrors] = useState(false);
@@ -82,7 +79,7 @@ export const CodePanel = ({ challenge }: Props) => {
       });
     } else {
       await saveSubmission(
-        challenge.id,
+        challenge?.id,
         session?.user?.id as string,
         JSON.stringify(solution) ?? '',
       );
