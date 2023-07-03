@@ -141,7 +141,7 @@ export const CodePanel = ({ prompt }: Props) => {
 
         // @TODO: race condition exists. you can click submit before this is done
         // how to gaurd this?
-        typeCheck();
+        typeCheck().catch(console.error);
       });
 
       await typeCheck();
