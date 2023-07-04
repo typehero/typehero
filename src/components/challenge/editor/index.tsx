@@ -64,9 +64,8 @@ export const CodePanel = ({ challenge }: Props) => {
       return challenge.prompt;
     }
 
-    const [appendSolutionToThis, separator] = (challenge.prompt as string).split(
-      /(\/\/ CODE START)/g,
-    );
+    const [appendSolutionToThis, separator] = (challenge.prompt as string).split(USER_CODE_START);
+
     const parsedUserSolution = JSON.parse(usersExistingSolution?.code as string) as string;
 
     return `${appendSolutionToThis ?? ''}${separator ?? ''}${parsedUserSolution}`;
