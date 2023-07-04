@@ -5,6 +5,7 @@ import { Loader2, Settings } from 'lucide-react';
 import type * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import { useSession } from 'next-auth/react';
 import { useTheme } from 'next-themes';
+import { useRouter } from 'next/navigation';
 import { useMemo, useRef, useState } from 'react';
 import { Button } from '~/components/ui/button';
 import {
@@ -16,14 +17,14 @@ import {
 } from '~/components/ui/dialog';
 import { ToastAction } from '~/components/ui/toast';
 import { useToast } from '~/components/ui/use-toast';
+import type { Challenge } from '..';
 import { saveSubmission } from '../save-submission';
 import { SettingsForm } from '../settings-form';
 import { useEditorSettingsStore } from '../settings-store';
+import { USER_CODE_START } from './constants';
 import { libSource } from './editor-types';
 import { createTwoslashInlayProvider } from './twoslash';
 import { VimStatusBar } from './vimMode';
-import type { Challenge } from '..';
-import { USER_CODE_START } from './constants';
 
 const DEFAULT_OPTIONS: monaco.editor.IStandaloneEditorConstructionOptions = {
   lineNumbers: 'on',
@@ -45,6 +46,7 @@ interface Props {
 
 const libCache = new Set<string>();
 export const CodePanel = ({ challenge }: Props) => {
+  const router = useRouter();
   const { toast } = useToast();
   const { theme } = useTheme();
   const { data: session } = useSession();
@@ -100,6 +102,7 @@ export const CodePanel = ({ challenge }: Props) => {
         session?.user?.id as string,
         JSON.stringify(solution) ?? '',
       );
+      router.refresh();
       toast({
         variant: 'success',
         title: 'Good job!',
