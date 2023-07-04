@@ -4,7 +4,6 @@ import { DescriptionPanelSkeleton } from './description-panel-skeleton';
 import { useLayoutSettingsStore } from './layout-store';
 import { useRef, useEffect } from 'react';
 
-// TODO: glitches when resizing, fix it
 export function ChallengeSkeleton() {
   const leftSide = useRef<HTMLDivElement | null>(null);
   const wholeThing = useRef<HTMLDivElement | null>(null);
@@ -14,8 +13,10 @@ export function ChallengeSkeleton() {
     const wholeRef = wholeThing.current as HTMLDivElement;
     const leftRef = leftSide.current as HTMLDivElement;
     wholeRef.classList.remove('opacity-0');
-    leftRef.style.width = settings.width;
-  }, [settings.width]);
+    window.innerWidth > 1025
+      ? (leftRef.style.width = settings.width)
+      : (leftRef.style.height = settings.height);
+  }, [settings]);
   return (
     <div
       ref={wholeThing}
@@ -24,7 +25,7 @@ export function ChallengeSkeleton() {
     >
       <div
         ref={leftSide}
-        className="w-full animate-pulse overflow-y-auto rounded-xl bg-white dark:bg-zinc-800"
+        className="w-full min-w-full animate-pulse overflow-y-auto rounded-xl bg-white dark:bg-zinc-800 lg:min-w-[500px]"
       >
         <DescriptionPanelSkeleton />
       </div>
@@ -33,7 +34,7 @@ export function ChallengeSkeleton() {
       </div>
       <div
         style={{ flex: '1 1 0%' }}
-        className="flex min-w-[500px] flex-col items-center justify-center overflow-hidden rounded-xl border border-zinc-300 pb-3 dark:border-zinc-700 dark:bg-[#1e1e1e]"
+        className="flex flex-col items-center justify-center overflow-hidden rounded-xl border border-zinc-300 pb-3 dark:border-zinc-700 dark:bg-[#1e1e1e] lg:min-w-[500px]"
       >
         Loading...
       </div>

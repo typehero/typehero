@@ -3,6 +3,7 @@ import { persist } from 'zustand/middleware';
 
 export const DEFAULT_SETTINGS = {
   width: '500px',
+  height: '300px',
 };
 
 type Settings = typeof DEFAULT_SETTINGS;
