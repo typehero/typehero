@@ -6,6 +6,7 @@ import { Loader2, Settings } from 'lucide-react';
 import type * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import { useSession } from 'next-auth/react';
 import { useTheme } from 'next-themes';
+import { useRouter } from 'next/navigation';
 import { useMemo, useRef, useState } from 'react';
 import { Button } from '~/components/ui/button';
 import {
@@ -47,6 +48,7 @@ interface Props {
 
 const libCache = new Set<string>();
 export const CodePanel = ({ challenge }: Props) => {
+  const router = useRouter();
   const { toast } = useToast();
   const { theme } = useTheme();
   const { data: session } = useSession();
@@ -102,6 +104,7 @@ export const CodePanel = ({ challenge }: Props) => {
         session?.user?.id as string,
         JSON.stringify(solution) ?? '',
       );
+      router.refresh();
       toast({
         variant: 'success',
         title: 'Good job!',
