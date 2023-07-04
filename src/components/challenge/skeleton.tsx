@@ -7,15 +7,19 @@ import { useRef, useEffect } from 'react';
 // TODO: glitches when resizing, fix it
 export function ChallengeSkeleton() {
   const leftSide = useRef<HTMLDivElement | null>(null);
+  const wholeThing = useRef<HTMLDivElement | null>(null);
   const { settings } = useLayoutSettingsStore();
 
   useEffect(() => {
+    const wholeRef = wholeThing.current as HTMLDivElement;
     const leftRef = leftSide.current as HTMLDivElement;
+    wholeRef.classList.remove('opacity-0');
     leftRef.style.width = settings.width;
   }, [settings.width]);
   return (
     <div
-      className="flex flex-col px-4 pb-4 lg:flex-row"
+      ref={wholeThing}
+      className="flex flex-col px-4 pb-4 opacity-0 lg:flex-row"
       style={{ height: 'calc(100dvh - 3.5rem)' }}
     >
       <div

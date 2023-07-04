@@ -95,7 +95,7 @@ export function InnerIndex({ challenge }: Props) {
         <DescriptionPanel challenge={challenge} />
       </div>
       <div ref={resizer} className="resizer group relative cursor-col-resize p-2">
-        <div className="absolute left-1/2 top-1/2 h-1 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-400   duration-300 active:duration-75 group-hover:bg-neutral-600 group-active:bg-emerald-400 dark:bg-neutral-700 group-hover:dark:bg-neutral-500 lg:h-24 lg:w-1" />
+        <div className="absolute left-1/2 top-1/2 h-1 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-400 duration-300 group-hover:bg-neutral-600 group-active:bg-emerald-400 group-active:duration-75 dark:bg-neutral-700 group-hover:dark:bg-neutral-500 lg:h-24 lg:w-1" />
       </div>
       <div
         ref={rightSide}
