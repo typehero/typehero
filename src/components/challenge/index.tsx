@@ -12,8 +12,9 @@ export type Challenge = Awaited<ReturnType<typeof getChallenge>>;
 export async function Challenge({ id }: Props) {
   const session = await getServerSession();
   const challenge = await getChallenge(id, session);
+
   if (!challenge || typeof challenge.prompt !== 'string') {
-    notFound();
+    return notFound();
   }
 
   return <InnerIndex challenge={challenge} />;
