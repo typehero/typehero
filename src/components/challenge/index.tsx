@@ -23,7 +23,7 @@ export async function Challenge({ id }: Props) {
   return (
     <ChallengeLayout
       left={<DescriptionPanel challenge={challenge} />}
-      right={<CodePanel challenge={challenge} />}
+      right={<CodePanel mode="solve" challenge={challenge} />}
     />
   );
 }

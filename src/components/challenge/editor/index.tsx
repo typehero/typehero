@@ -49,9 +49,16 @@ type Props =
     }
   | {
       mode: 'create';
-			challenge?: never
-			onSubmit?: () => void;
+      challenge?: never;
+      onSubmit: (code: string) => void;
     };
+
+type TsErrors = [
+  monaco.languages.typescript.Diagnostic[],
+  monaco.languages.typescript.Diagnostic[],
+  monaco.languages.typescript.Diagnostic[],
+  monaco.languages.typescript.Diagnostic[],
+];
 
 const libCache = new Set<string>();
 
@@ -61,29 +68,27 @@ export const CodePanel = (props: Props) => {
   const { theme } = useTheme();
   const { data: session } = useSession();
   const { settings } = useEditorSettingsStore();
-  const [hasErrors, setHasErrors] = useState(false);
+  const [tsErrors, setTsErrors] = useState<TsErrors>([[], [], [], []]);
   const [initialTypecheckDone, setInitialTypecheckDone] = useState(false);
 
-	const challenge = props.mode === 'solve' ? props.challenge : null!
-
-	// Prisma.JsonValue
+  // Prisma.JsonValue
   const defaultCode = useMemo(() => {
-		// if (props.mode)
+    if (props.mode !== 'solve') return '';
 
     // if a user has an existing solution use that instead of prompt
-    const usersExistingSolution = challenge.Solution?.[0];
+    const usersExistingSolution = props.challenge.Solution?.[0];
 
     if (!usersExistingSolution) {
-      return challenge.prompt;
+      return props.challenge.prompt;
     }
 
-    const [appendSolutionToThis, separator] = (challenge.prompt as string).split(
+    const [appendSolutionToThis, separator] = (props.challenge.prompt as string).split(
       /(\/\/ CODE START)/g,
     );
     const parsedUserSolution = JSON.parse(usersExistingSolution?.code as string) as string;
 
     return `${appendSolutionToThis ?? ''}${separator ?? ''}${parsedUserSolution}`;
-  }, [challenge.Solution, challenge.prompt]);
+  }, [props.challenge?.Solution, props.challenge?.prompt, props.mode]);
 
   const [code, setCode] = useState(defaultCode as string);
 
@@ -103,33 +108,68 @@ export const CodePanel = (props: Props) => {
     };
   }, [settings]);
 
-  const handleSubmit = async () => {
-    const [, solution] = code.split(USER_CODE_START);
+  const handleSubmit =
+    props.mode === 'solve'
+      ? async () => {
+          const [, solution] = code.split(USER_CODE_START);
 
-    if (hasErrors) {
-      toast({
-        variant: 'destructive',
-        title: 'Uh oh! You still have errors.',
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
-      });
-    } else {
-      await saveSubmission(
-        challenge?.id,
-        session?.user?.id as string,
-        JSON.stringify(solution) ?? '',
-      );
-      router.refresh();
-      toast({
-        variant: 'success',
-        title: 'Good job!',
-        description: 'You completed this challenge.',
-        action: <ToastAction altText="Try again">Dismiss</ToastAction>,
-      });
-    }
-  };
+          const hasErrors = tsErrors.some((e) => e.length);
+
+          if (hasErrors) {
+            toast({
+              variant: 'destructive',
+              title: 'Uh oh! You still have errors.',
+              action: <ToastAction altText="Try again">Try again</ToastAction>,
+            });
+          } else {
+            await saveSubmission(
+              props.challenge.id,
+              session?.user?.id as string,
+              JSON.stringify(solution) ?? '',
+            );
+            router.refresh();
+            toast({
+              variant: 'success',
+              title: 'Good job!',
+              description: 'You completed this challenge.',
+              action: <ToastAction altText="Try again">Dismiss</ToastAction>,
+            });
+          }
+        }
+      : () => {
+          // check that it has some test cases
+          // checks that there is a line that starts with Equal or Extends or NotEqual
+          if (!/(?:\n|^)\s*(?:Equal|Extends|NotEqual)</.test(code)) {
+            return toast({
+              variant: 'destructive',
+              title: 'You need to have test cases in your challenge',
+              action: <ToastAction altText="Try again">Try again</ToastAction>,
+            });
+          }
+
+					const hasErrors = !!tsErrors[0].length;
+
+          if (!hasErrors) {
+            return toast({
+              variant: 'destructive',
+              title: 'You need to have failing test cases in your challenge',
+              action: <ToastAction altText="Try again">Try again</ToastAction>,
+            });
+          }
+
+          if (!code.includes(USER_CODE_START)) {
+            return toast({
+              variant: 'destructive',
+              title: `You need to have the line \`${USER_CODE_START}\` to signify the non-editable part`,
+              action: <ToastAction altText="Try again">Try again</ToastAction>,
+            });
+          }
+
+          props.onSubmit(code);
+        };
 
   const onMount =
-    (value: string, onError: (v: boolean) => void) =>
+    (value: string, onError: (v: TsErrors) => void) =>
     async (editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) => {
       const lineWithUserCode = value
         .split('\n')
@@ -165,9 +205,7 @@ export const CodePanel = (props: Props) => {
           ts.getCompilerOptionsDiagnostics(filename),
         ] as const);
 
-        const hasErrors = errors.some((e) => e.length);
-
-        onError(hasErrors);
+        onError(errors);
       };
 
       // TODO: we prolly should use this for blocking ranges as it might not be as janky
@@ -214,7 +252,7 @@ export const CodePanel = (props: Props) => {
           options={editorOptions}
           defaultLanguage="typescript"
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
-          onMount={onMount(code, setHasErrors)}
+          onMount={onMount(code, setTsErrors)}
           value={code}
           onChange={(code) => setCode(code ?? '')}
         />
@@ -253,5 +291,3 @@ export const CodePanel = (props: Props) => {
     </>
   );
 };
-
-CodePanel.displayName = 'CodePanel' as const;
