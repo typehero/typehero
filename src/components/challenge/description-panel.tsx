@@ -115,6 +115,13 @@ export function DescriptionPanel({ challenge }: Props) {
           </p>
         )
       })
+    } else if (response === 'not_logged_in') {
+      toast({
+        title: 'You are not loggeed in',
+        description: (
+          <p>Please log in to make this report.</p>
+        )
+      })
     }
 
     setDialogOpen(false);
@@ -165,10 +172,10 @@ export function DescriptionPanel({ challenge }: Props) {
                         render={({ field }) => (
                           <FormItem>
                             <div className="flex gap-4 items-center">
-                              <Checkbox checked={field.value as boolean} onChange={field.onChange} onCheckedChange={field.onChange} />
-                              <div>
+                              <Checkbox id="examples" checked={field.value as boolean} onChange={field.onChange} onCheckedChange={field.onChange} />
+                              <label htmlFor="examples">
                                 Description or examples are unclear or incorrect
-                              </div>
+                              </label>
                             </div>
                           </FormItem>
                         )}
@@ -178,11 +185,10 @@ export function DescriptionPanel({ challenge }: Props) {
                         render={({ field }) => (
                           <FormItem>
                             <div className="flex items-center gap-4">
-
-                              <Checkbox checked={field.value as boolean} onCheckedChange={field.onChange} />
-                              <div>
+                              <Checkbox id="derogatory" checked={field.value as boolean} onCheckedChange={field.onChange} />
+                              <label htmlFor="derogatory">
                                 Racist or other derogatory statement
-                              </div>
+                              </label>
                             </div>
                           </FormItem>
                         )}
@@ -192,10 +198,10 @@ export function DescriptionPanel({ challenge }: Props) {
                         render={({ field }) => (
                           <FormItem>
                             <div className="flex items-center gap-4">
-                              <Checkbox checked={field.value as boolean} onCheckedChange={field.onChange} />
-                              <div>
+                              <Checkbox id="other" checked={field.value as boolean} onCheckedChange={field.onChange} />
+                              <label htmlFor="other">
                                 Other
-                              </div>
+                              </label>
                             </div>
                           </FormItem>
                         )}

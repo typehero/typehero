@@ -9,26 +9,26 @@ export async function doTheThing() {
 }
 
 export async function addReport(challengeId: number, userId: string, data: FormValues) {
-  const something = await prisma.report.findMany({
+  if(userId === undefined) return 'not_logged_in';
+
+  const report = await prisma.report.findMany({
     where: {
       challengeId,
       userId,
     }
   });
-  if(something.length > 0) {
+  if(report.length > 0) {
+    console.info(report);
     return 'report_already_made';
   }
   
-  await prisma.report.upsert({
-    where: {
-      id: 1
-    },
-    update:{},
-    create: {
+  await prisma.report.create({
+    data: {
       challengeId,
       userId,
-      // TODO(jim): Determine best way to update the db model. Quick and dirty for now
-      text: JSON.stringify(data)
+      text: data.comments,
+      unclear: data.examples,
+      derogatory: data.derogatory,
     }
   })
 

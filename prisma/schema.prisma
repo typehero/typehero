@@ -175,6 +175,8 @@ model Report {
   challenge   Challenge @relation(fields: [challengeId], references: [id])
   challengeId Int
   text        String
+  derogatory  Boolean   @default(false)
+  unclear     Boolean   @default(false)
 
   @@index([userId])
   @@index([challengeId])
