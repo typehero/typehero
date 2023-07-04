@@ -1,9 +1,12 @@
 'use client';
 
 import Editor from '@monaco-editor/react';
+import clsx from 'clsx';
 import { Loader2, Settings } from 'lucide-react';
 import type * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import { useSession } from 'next-auth/react';
 import { useTheme } from 'next-themes';
+import { useRouter } from 'next/navigation';
 import { useMemo, useRef, useState } from 'react';
 import { Button } from '~/components/ui/button';
 import {
@@ -14,9 +17,13 @@ import {
   DialogTrigger,
 } from '~/components/ui/dialog';
 import { ToastAction } from '~/components/ui/toast';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
 import { useToast } from '~/components/ui/use-toast';
+import type { Challenge } from '..';
+import { saveSubmission } from '../save-submission';
 import { SettingsForm } from '../settings-form';
 import { useEditorSettingsStore } from '../settings-store';
+import { USER_CODE_START } from './constants';
 import { libSource } from './editor-types';
 import { createTwoslashInlayProvider } from './twoslash';
 import { VimStatusBar } from './vimMode';
@@ -36,18 +43,36 @@ const LIB_URI = 'ts:filename/checking.d.ts';
 type Monaco = typeof monaco;
 
 interface Props {
-  prompt: string;
+  challenge: NonNullable<Challenge>;
 }
 
 const libCache = new Set<string>();
-export const CodePanel = ({ prompt }: Props) => {
+export const CodePanel = ({ challenge }: Props) => {
+  const router = useRouter();
   const { toast } = useToast();
   const { theme } = useTheme();
-
+  const { data: session } = useSession();
   const { settings } = useEditorSettingsStore();
   const [hasErrors, setHasErrors] = useState(false);
   const [initialTypecheckDone, setInitialTypecheckDone] = useState(false);
-  const [code, setCode] = useState(prompt);
+
+  const defaultCode = useMemo(() => {
+    // if a user has an existing solution use that instead of prompt
+    const usersExistingSolution = challenge.Solution?.[0];
+
+    if (!usersExistingSolution) {
+      return challenge.prompt;
+    }
+
+    const [appendSolutionToThis, separator] = (challenge.prompt as string).split(
+      /(\/\/ CODE START)/g,
+    );
+    const parsedUserSolution = JSON.parse(usersExistingSolution?.code as string) as string;
+
+    return `${appendSolutionToThis ?? ''}${separator ?? ''}${parsedUserSolution}`;
+  }, [challenge.Solution, challenge.prompt]);
+  const [code, setCode] = useState(defaultCode as string);
+
   const editorTheme = theme === 'light' ? 'vs' : 'vs-dark';
   const modelRef = useRef<monaco.editor.ITextModel>();
   // ref doesnt cause a rerender
@@ -64,7 +89,9 @@ export const CodePanel = ({ prompt }: Props) => {
     };
   }, [settings]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    const [, solution] = code.split(USER_CODE_START);
+
     if (hasErrors) {
       toast({
         variant: 'destructive',
@@ -72,6 +99,12 @@ export const CodePanel = ({ prompt }: Props) => {
         action: <ToastAction altText="Try again">Try again</ToastAction>,
       });
     } else {
+      await saveSubmission(
+        challenge?.id,
+        session?.user?.id as string,
+        JSON.stringify(solution) ?? '',
+      );
+      router.refresh();
       toast({
         variant: 'success',
         title: 'Good job!',
@@ -84,8 +117,9 @@ export const CodePanel = ({ prompt }: Props) => {
   const onMount =
     (value: string, onError: (v: boolean) => void) =>
     async (editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) => {
-      const numLines = value.split('\n').length;
-      const lastLineLength = value.split('\n').at(-1)?.length || 1;
+      const lineWithUserCode = value
+        .split('\n')
+        .findIndex((line) => line.includes(USER_CODE_START));
 
       // once you register a lib you cant unregister it (idk how to unregister it)
       // so when editor mounts again it tries to add the lib again and throws an error
@@ -122,25 +156,15 @@ export const CodePanel = ({ prompt }: Props) => {
         onError(hasErrors);
       };
 
-      let fixingStart = false;
-
+      // TODO: we prolly should use this for blocking ranges as it might not be as janky
+      // https://github.com/Pranomvignesh/constrained-editor-plugin
       model.onDidChangeContent((e) => {
-        if (
-          e.changes.some(
-            (c) =>
-              c.range.startLineNumber < numLines ||
-              (c.range.startLineNumber === numLines && c.range.startColumn <= lastLineLength),
-          )
-        ) {
-          if (!fixingStart && !e.isUndoing && !e.isRedoing) {
-            editor.trigger('someIdString', e.isUndoing ? 'redo' : 'undo', null);
-          }
-
-          fixingStart = !fixingStart;
+        // in monaco editor, the first line is e1e1e
+        // do net let them type if they are editing before lineWithUserCode
+        if (e.changes.some((c) => c.range.startLineNumber <= lineWithUserCode + 1)) {
+          editor.trigger('someIdString', 'undo', null);
         }
 
-        // @TODO: race condition exists. you can click submit before this is done
-        // how to gaurd this?
         typeCheck().catch(console.error);
       });
 
@@ -154,16 +178,16 @@ export const CodePanel = ({ prompt }: Props) => {
     };
 
   return (
-    <div className="flex flex-1 flex-col overflow-hidden rounded-md">
-      <div className="container sticky top-0 flex h-[40px] flex-row-reverse items-center border border-b-zinc-300 bg-muted py-2 dark:border-b-zinc-700">
+    <>
+      <div className="sticky top-0 flex h-[40px] flex-row-reverse items-center border-b border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
         <Dialog>
           <DialogTrigger>
-            <Settings size={20} className="stroke-gray-500 hover:stroke-gray-400" />
+            <Settings size={20} className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" />
           </DialogTrigger>
           <DialogContent className="w-[200px]">
             <DialogHeader>
               <DialogTitle>Settings</DialogTitle>
-              <div className="py-4">
+              <div className="pt-4">
                 <SettingsForm />
               </div>
             </DialogHeader>
@@ -176,26 +200,43 @@ export const CodePanel = ({ prompt }: Props) => {
           options={editorOptions}
           defaultLanguage="typescript"
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
-          onMount={onMount(prompt, setHasErrors)}
+          onMount={onMount(code, setHasErrors)}
           value={code}
           onChange={(code) => setCode(code ?? '')}
         />
       </div>
-      <div className="sticky bottom-0 flex items-center justify-between bg-muted p-2">
+      <div
+        className={clsx(
+          {
+            'justify-between': editorState,
+          },
+          'sticky bottom-0 flex items-center justify-end p-2 dark:bg-[#1e1e1e]',
+        )}
+      >
         {editorState && <VimStatusBar editor={editorState} />}
-        {/* some hacky stuff to avoid layout shift. fix if you want */}
-        {!editorState && <div />}
-        <Button
-          size="sm"
-          className="bg-green-300 hover:bg-green-400 dark:hover:bg-green-200"
-          onClick={handleSubmit}
-          disabled={!initialTypecheckDone}
-        >
-          {!initialTypecheckDone && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          Submit
-        </Button>
+        <TooltipProvider>
+          <Tooltip delayDuration={0.05} open={session?.user?.id ? false : undefined}>
+            <TooltipTrigger asChild>
+              <span>
+                <Button
+                  size="sm"
+                  className="cursor-pointer bg-emerald-600 duration-300 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
+                  // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                  onClick={handleSubmit}
+                  disabled={!initialTypecheckDone || !session?.user}
+                >
+                  {!initialTypecheckDone && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  Submit
+                </Button>
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Login to Submit</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
-    </div>
+    </>
   );
 };
 

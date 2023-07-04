@@ -1,31 +1,38 @@
 'use client';
 
+import { useCallback, useState } from 'react';
+import { Clipboard as ClipboardIcon, CheckCircle2 as CheckCircle2Icon } from 'lucide-react';
+
 export function ShareForm() {
   const url = window.location.href;
-  const copyButton = document.getElementById('copy-button') as HTMLButtonElement;
+  const [copied, setCopied] = useState(false);
 
-  const copyToClipboard = async (): Promise<void> => {
-    if (navigator.clipboard) {
-      try {
+  const copyToClipboard = useCallback(async () => {
+    const url = window.location.href;
+
+    try {
+      if (navigator.clipboard && !copied) {
         await navigator.clipboard.writeText(url);
-        copyButton.textContent = 'Copied!';
-        copyButton.classList.add('bg-green-500');
-      } catch {
-        copyButton.textContent = 'Failed to copy';
-        copyButton.classList.add('bg-green-500');
+        setCopied(true);
+        window.setTimeout(() => setCopied(false), 3000);
       }
+    } catch (e) {
+      console.error('copyToClipboard', e);
+      setCopied(false);
     }
-  };
+  }, [setCopied, copied]);
 
   return (
-    <div>
+    <div className="flex flex-col space-y-4">
       <p>Copy this challenge url to share with your friends!</p>
+      <code className="px-4 py-2 border dark:border-gray-300 rounded-md">{url}</code>
       <button
-        id="copy-button"
-        className="ml-auto mt-4 block rounded-lg px-3 py-2 text-black duration-300 hover:scale-110 hover:rounded-2xl hover:duration-300 active:scale-95 active:rounded-md active:duration-75 dark:bg-white"
-        onClick={() => void copyToClipboard}
+        className={`ml-auto mt-4 flex items-center justify-between space-x-2 rounded-lg px-3 py-2 duration-300 active:scale-75 
+        ${copied ? 'text-green-500 border border-green-500 dark:border-green-700 dark:bg-green-700 dark:text-white' : 'text-black dark:bg-white border border-gray-100 hover:bg-gray-100'}`}
+        onClick={() => void copyToClipboard()}
       >
-        Copy to Clipboard
+        <span>{copied ? 'Copied!' : 'Copy'}</span>
+        {copied ? <CheckCircle2Icon /> : <ClipboardIcon />}
       </button>
     </div>
   );

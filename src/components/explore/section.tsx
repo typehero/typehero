@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import type { Challenges } from '.';
+import type { Challenge } from '.';
 import { ExploreCard } from './explore-card';
 
 interface Props {
-  data(): Challenges;
+  data(): Challenge;
 }
 
 export async function ExploreSection({ data }: Props) {

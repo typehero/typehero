@@ -9,8 +9,10 @@
     "lint": "next lint",
     "reset": "prisma db push --force-reset --preview-feature",
     "start": "next start",
+    "refresh": "pnpm reset && pnpm prisma db seed",
     "typecheck": "tsc --noEmit"
   },
+  "type": "module",
   "dependencies": {
     "@clerk/nextjs": "^4.19.0",
     "@hookform/resolvers": "^3.1.1",
@@ -28,6 +30,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
     "@radix-ui/react-toast": "^1.1.4",
+    "@radix-ui/react-tooltip": "^1.0.6",
     "@t3-oss/env-nextjs": "^0.3.1",
     "@tanstack/react-query": "^4.29.7",
     "@trpc/client": "^10.26.0",
@@ -42,7 +45,7 @@
     "lodash": "^4.17.21",
     "lucide-react": "^0.224.0",
     "monaco-vim": "^0.4.0",
-    "next": "^13.4.2",
+    "next": "^13.4.8",
     "next-auth": "^4.22.1",
     "next-themes": "^0.2.1",
     "react": "18.2.0",

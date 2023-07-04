@@ -1,14 +1,26 @@
+import { type Session, getServerSession } from 'next-auth';
 import { notFound } from 'next/navigation';
 import { prisma } from '~/server/db';
-import { DescriptionPanel } from './description-panel';
-import { CodePanel } from './editor';
-import { getServerSession } from 'next-auth';
+
+import { InnerIndex } from './innerIndex';
 
 interface Props {
   id: string;
 }
+
+export type Challenge = Awaited<ReturnType<typeof getChallenge>>;
 export async function Challenge({ id }: Props) {
   const session = await getServerSession();
+  const challenge = await getChallenge(id, session);
+
+  if (!challenge || typeof challenge.prompt !== 'string') {
+    return notFound();
+  }
+
+  return <InnerIndex challenge={challenge} />;
+}
+
+async function getChallenge(id: string, session: Session | null) {
   const challenge = await prisma.challenge.findFirst({
     where: { id: +id },
     include: {
@@ -27,21 +39,19 @@ export async function Challenge({ id }: Props) {
           challengeId: +id,
         },
       },
+      Solution: {
+        where: {
+          userId: session?.user.id,
+          challengeId: +id,
+        },
+      },
+      SharedSolution: {
+        where: {
+          challengeId: +id,
+        },
+      },
     },
   });
 
-  if (!challenge || typeof challenge.prompt !== 'string') {
-    notFound();
-  }
-
-  return (
-    <div
-      className="flex  flex-col gap-2 py-4 md:flex-row"
-      style={{ height: 'calc(100dvh - 3.5rem)' }}
-    >
-      <DescriptionPanel challenge={challenge} />
-
-      <CodePanel prompt={challenge.prompt} />
-    </div>
-  );
+  return challenge;
 }

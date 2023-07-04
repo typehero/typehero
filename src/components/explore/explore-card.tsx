@@ -1,11 +1,17 @@
+'use client';
+
 import { ArrowBigUp } from 'lucide-react';
 
-import { type Challenges } from '.';
+import { type Challenge } from '.';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { DifficultyBadge } from './difficulty-badge';
+import ReactMarkdown from 'react-markdown';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import remarkGfm from 'remark-gfm';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 interface Props {
-  challenge: Awaited<Challenges>[0];
+  challenge: Awaited<Challenge>[0];
 }
 
 const BORDERS_BY_DIFFICULTY = {
@@ -52,8 +58,9 @@ const getRelativeTime = (date: Date) => {
   const elapsed = date - now;
 
   // "Math.abs" accounts for both "past" & "future" scenarios
+  // @ts-ignore
   for (const u in units)
-    // @ts-ignore
+  // @ts-ignore
     if (Math.abs(elapsed) > units[u] || u == 'second')
       // @ts-ignore
       return rtf.format(Math.round(elapsed / units[u]), u);
@@ -67,10 +74,37 @@ export function ExploreCard({ challenge }: Props) {
     >
       <CardHeader className="grid items-start gap-4 space-y-0">
         <div className="space-y-1">
-          <CardTitle>{challenge.name}</CardTitle>
+          <CardTitle className="pb-4">{challenge.name}</CardTitle>
           <CardDescription className="relative h-48 overflow-hidden pb-4">
             <div className="pointer-events-none absolute inset-0 h-full w-full shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card))] duration-300 group-hover:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))] group-focus:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))]" />
-            {challenge.description?.toString()}
+            {/* // TODO: we use this in two places and we should just make this shared */}
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                p: ({ ...props }) => <p className="mb-4" {...props} />,
+                code({ inline, className, children, ...props }) {
+                  const match = /language-(\w+)/.exec(className || '');
+                  return !inline && match ? (
+                    <SyntaxHighlighter
+                      // @ts-ignore
+                      style={vscDarkPlus} // theme
+                      className="rounded-xl dark:rounded-md"
+                      language={match[1]}
+                      PreTag="section" // parent tag
+                      {...props}
+                    >
+                      {String(children).replace(/\n$/, '')}
+                    </SyntaxHighlighter>
+                  ) : (
+                    <code className="rounded-md bg-neutral-200 p-1 font-mono dark:bg-black">
+                      {children}
+                    </code>
+                  );
+                },
+              }}
+            >
+              {challenge?.shortDescription}
+            </ReactMarkdown>
           </CardDescription>
         </div>
       </CardHeader>
