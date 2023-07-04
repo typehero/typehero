@@ -11,7 +11,8 @@
     "format": "prettier -w 'src/**/*.{ts,tsx,css,cjs,mjs,json}'",
     "start": "next start",
     "refresh": "pnpm reset && pnpm prisma db seed",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prepare": "husky install"
   },
   "type": "module",
   "dependencies": {
@@ -85,7 +86,8 @@
     "prettier-plugin-tailwindcss": "^0.2.8",
     "prisma": "^4.14.0",
     "tailwindcss": "^3.3.0",
-    "tsx": "^3.12.7"
+    "tsx": "^3.12.7",
+    "husky": "^8.0.0"
   },
   "ct3aMetadata": {
     "initVersion": "7.13.1"
