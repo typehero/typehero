@@ -230,7 +230,7 @@ export function DescriptionPanel({ challenge }: Props) {
             </div>
           </div>
         </TabsContent>
-        <TabsContent value="solutions">
+        <TabsContent className="mt-0" value="solutions">
           <Solutions challenge={challenge} />
         </TabsContent>
       </Tabs>
