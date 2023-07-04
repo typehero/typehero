@@ -32,10 +32,10 @@ export const CHALLENGE_MAP: Record<
     updatedAt: new Date(),
     Bookmark: randomTrueOrFalse()
       ? {
-        create: {
-          userId: randomTrueOrFalse() ? trashId : gId,
-        },
-      }
+          create: {
+            userId: randomTrueOrFalse() ? trashId : gId,
+          },
+        }
       : undefined,
     description: loadChallenegeSync('beginner/desc'),
     shortDescription,

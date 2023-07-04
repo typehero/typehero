@@ -2,7 +2,7 @@ import { Card, CardDescription, CardHeader, CardTitle } from '../ui/card';
 
 export function ExploreCardSkeleton() {
   return (
-    <Card className={`group duration-300 hover:bg-card-hovered group-focus:bg-card-hovered`}>
+    <Card className="group duration-300 hover:bg-card-hovered group-focus:bg-card-hovered">
       <CardHeader className="grid items-start gap-4 space-y-0">
         <div className="space-y-1">
           <CardTitle className="h-5 w-1/2 rounded-lg bg-slate-300 dark:bg-slate-700">
