@@ -16,7 +16,7 @@ export const VimStatusBar = ({ editor }: Props) => {
   useEffect(() => {
     if (settings.bindings === 'vim') {
       if (!vimModeRef.current) {
-        // vimModeRef.current = initVimMode(editor, statusBarRef.current);
+        vimModeRef.current = initVimMode(editor, statusBarRef.current);
       }
     } else {
       vimModeRef.current?.dispose();
