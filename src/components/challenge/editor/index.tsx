@@ -28,7 +28,7 @@ import { libSource } from './editor-types';
 import { createTwoslashInlayProvider } from './twoslash';
 import { VimStatusBar } from './vimMode';
 
-const DEFAULT_OPTIONS: monaco.editor.IStandaloneEditorConstructionOptions = {
+const DEFAULT_OPTIONS = {
   lineNumbers: 'on',
   tabSize: 2,
   insertSpaces: false,
@@ -36,7 +36,7 @@ const DEFAULT_OPTIONS: monaco.editor.IStandaloneEditorConstructionOptions = {
     enabled: false,
   },
   fontSize: 16,
-} as const;
+} as const satisfies monaco.editor.IStandaloneEditorConstructionOptions;
 
 const LIB_URI = 'ts:filename/checking.d.ts';
 
@@ -194,7 +194,7 @@ export const CodePanel = ({ challenge }: Props) => {
           </DialogContent>
         </Dialog>
       </div>
-      <div className="flex-1">
+      <div className="flex-1 w-full">
         <Editor
           theme={editorTheme}
           options={editorOptions}
