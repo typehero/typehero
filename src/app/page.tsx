@@ -12,7 +12,7 @@ export default function Index() {
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </Head>
       <div
-        className="relative -mx-4 flex flex-col items-center justify-center gap-4 overflow-hidden px-4"
+        className="relative flex flex-col items-center justify-center gap-4 overflow-hidden px-4"
         style={{ minHeight: 'calc(100dvh - 112px)' }}
       >
         <div className="absolute left-1/2 top-1/2 -z-10 h-96 w-96 -translate-x-[30%] -translate-y-[69%] rounded-full bg-black/0 blur-3xl dark:bg-white/20"></div>
