@@ -1,17 +1,16 @@
-'use client';
-
 import { Lock } from 'lucide-react';
-import { useSession } from 'next-auth/react';
+import { getServerSession } from 'next-auth';
 import Head from 'next/head';
+import { authOptions } from '~/server/auth';
 
-export default function Admin() {
-  const session = useSession();
+async function Admin() {
+  const session = await getServerSession(authOptions);
   return (
     <div>
       <Head>
         <title>Admin</title>
       </Head>
-      {session.data?.user.role === 'ADMIN' ? (
+      {session?.user.role.includes('ADMIN') ? (
         <div className="flex flex-col">{/** Admin Content Go Here */}</div>
       ) : (
         <div
@@ -27,3 +26,5 @@ export default function Admin() {
     </div>
   );
 }
+
+export default Admin;
