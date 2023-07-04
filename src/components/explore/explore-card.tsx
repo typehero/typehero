@@ -51,26 +51,23 @@ const rtf = new Intl.RelativeTimeFormat('en', {
   // TODO: style: 'short' on 640px - 720px
 });
 
-// TODO: typescript
+// get relevant time from a date object
 const getRelativeTime = (date: Date) => {
-  const now = new Date();
-  // @ts-ignore
-  const elapsed = date - now;
+  const elapsed = date.getTime() - Date.now();
 
-  // "Math.abs" accounts for both "past" & "future" scenarios
-  // @ts-ignore
-  for (const u in units)
-  // @ts-ignore
-    if (Math.abs(elapsed) > units[u] || u == 'second')
-      // @ts-ignore
-      return rtf.format(Math.round(elapsed / units[u]), u);
+  for (const [unit, ms] of Object.entries(units)) {
+    if (Math.abs(elapsed) > ms || unit === 'second') {
+      return rtf.format(Math.round(elapsed / ms), unit as Intl.RelativeTimeFormatUnit);
+    }
+  }
 };
 
 export function ExploreCard({ challenge }: Props) {
   return (
     <Card
-      className={`group duration-300 hover:bg-card-hovered group-focus:bg-card-hovered ${SHADOWS_BY_DIFFICULTY[challenge.difficulty]
-        } ${BORDERS_BY_DIFFICULTY[challenge.difficulty]}`}
+      className={`group duration-300 hover:bg-card-hovered group-focus:bg-card-hovered ${
+        SHADOWS_BY_DIFFICULTY[challenge.difficulty]
+      } ${BORDERS_BY_DIFFICULTY[challenge.difficulty]}`}
     >
       <CardHeader className="grid items-start gap-4 space-y-0">
         <div className="space-y-1">

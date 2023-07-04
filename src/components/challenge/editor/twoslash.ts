@@ -2,7 +2,7 @@
 import type * as monaco from 'monaco-editor';
 
 export const createTwoslashInlayProvider = (
-	m: typeof monaco,
+  m: typeof monaco,
   worker: monaco.languages.typescript.TypeScriptWorker,
 ) => {
   const provider: monaco.languages.InlayHintsProvider = {
@@ -33,7 +33,9 @@ export const createTwoslashInlayProvider = (
           };
         }
 
-        const hint = await worker.getQuickInfoAtPosition(model.uri.toString(), inspectionOff) as { displayParts: { text:string}[]};
+        const hint = (await worker.getQuickInfoAtPosition(model.uri.toString(), inspectionOff)) as {
+          displayParts: { text: string }[];
+        };
         if (!hint || !hint.displayParts) continue;
 
         // Make a one-liner

@@ -42,12 +42,20 @@ const LIB_URI = 'ts:filename/checking.d.ts';
 
 type Monaco = typeof monaco;
 
-interface Props {
-  challenge: NonNullable<Challenge>;
-}
+type Props =
+  | {
+      mode: 'solve';
+      challenge: NonNullable<Challenge>;
+    }
+  | {
+      mode: 'create';
+			challenge?: never
+			onSubmit?: () => void;
+    };
 
 const libCache = new Set<string>();
-export const CodePanel = ({ challenge }: Props) => {
+
+export const CodePanel = (props: Props) => {
   const router = useRouter();
   const { toast } = useToast();
   const { theme } = useTheme();
@@ -56,7 +64,12 @@ export const CodePanel = ({ challenge }: Props) => {
   const [hasErrors, setHasErrors] = useState(false);
   const [initialTypecheckDone, setInitialTypecheckDone] = useState(false);
 
+	const challenge = props.mode === 'solve' ? props.challenge : null!
+
+	// Prisma.JsonValue
   const defaultCode = useMemo(() => {
+		// if (props.mode)
+
     // if a user has an existing solution use that instead of prompt
     const usersExistingSolution = challenge.Solution?.[0];
 
@@ -71,6 +84,7 @@ export const CodePanel = ({ challenge }: Props) => {
 
     return `${appendSolutionToThis ?? ''}${separator ?? ''}${parsedUserSolution}`;
   }, [challenge.Solution, challenge.prompt]);
+
   const [code, setCode] = useState(defaultCode as string);
 
   const editorTheme = theme === 'light' ? 'vs' : 'vs-dark';
@@ -194,7 +208,7 @@ export const CodePanel = ({ challenge }: Props) => {
           </DialogContent>
         </Dialog>
       </div>
-      <div className="flex-1 w-full">
+      <div className="w-full flex-1">
         <Editor
           theme={editorTheme}
           options={editorOptions}
