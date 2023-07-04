@@ -175,6 +175,7 @@ export function Navigation() {
                     <Loader2 className="h-5 w-5 animate-spin" />
                   ) : (
                     <div className="flex items-center space-x-2">
+                      <LogIn className="h-5 w-5" />
                       <span className="dark:text-white">Login</span>
                     </div>
                   )}
