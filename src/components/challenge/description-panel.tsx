@@ -24,6 +24,7 @@ import type { Challenge } from '.';
 interface Props {
   challenge: NonNullable<Challenge>;
 }
+
 export function DescriptionPanel({ challenge }: Props) {
   const router = useRouter();
   const [votes, setVotes] = useState(challenge._count.Vote);

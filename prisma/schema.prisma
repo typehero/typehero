@@ -89,21 +89,22 @@ model VerificationToken {
 }
 
 model Challenge {
-  id             Int              @id @default(autoincrement())
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  difficulty     Difficulty
-  name           String
-  description    Json
-  prompt         Json
-  user           User             @relation(fields: [userId], references: [id])
-  userId         String
-  Vote           Vote[]
-  Solution       Solution[]
-  Comment        Comment[]
-  Report         Report[]
-  Bookmark       Bookmark[]
-  SharedSolution SharedSolution[]
+  id               Int              @id @default(autoincrement())
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  difficulty       Difficulty
+  name             String
+  description      Json
+  shortDescription String
+  prompt           Json
+  user             User             @relation(fields: [userId], references: [id])
+  userId           String
+  Vote             Vote[]
+  Solution         Solution[]
+  Comment          Comment[]
+  Report           Report[]
+  Bookmark         Bookmark[]
+  SharedSolution   SharedSolution[]
 
   @@index([userId])
 }
