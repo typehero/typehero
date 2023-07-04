@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 dependencies:
   '@clerk/nextjs':
     specifier: ^4.19.0
@@ -190,6 +186,9 @@ devDependencies:
   eslint-config-next:
     specifier: ^13.4.2
     version: 13.4.2(eslint@8.40.0)(typescript@5.1.3)
+  husky:
+    specifier: ^8.0.0
+    version: 8.0.0
   monaco-editor:
     specifier: '=0.36.1'
     version: 0.36.1
@@ -3741,6 +3740,12 @@ packages:
     engines: {node: '>=14.18.0'}
     dev: true
 
+  /husky@8.0.0:
+    resolution: {integrity: sha512-4qbE/5dzNDNxFEkX9MNRPKl5+omTXQzdILCUWiqG/lWIAioiM5vln265/l6I2Zx8gpW8l1ukZwGQeCFbBZ6+6w==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dev: true
+
   /ignore@5.2.4:
     resolution: {integrity: sha512-MAb38BcSbH0eHNBxn7ql2NH/kX33OkB3lZ1BNdh7ENeRChHTYsTvWrMubiIAMNS2llXEEgZ1MUOBtXChP3kaFQ==}
     engines: {node: '>= 4'}
@@ -6276,3 +6281,7 @@ packages:
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: false
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
