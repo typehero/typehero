@@ -55,7 +55,7 @@ export function DescriptionPanel({ challenge }: Props) {
     }, 500),
   ).current;
   return (
-    <div className="col-span-1 flex-1 overflow-y-auto rounded-xl bg-white dark:bg-zinc-800">
+    <>
       <Tabs defaultValue="description" className="w-full">
         <TabsList className="sticky top-0 grid w-full grid-cols-2 rounded-xl bg-neutral-200 bg-opacity-70 backdrop-blur-md dark:bg-muted">
           <TabsTrigger className="rounded-lg" value="description">
@@ -203,6 +203,6 @@ export function DescriptionPanel({ challenge }: Props) {
           <Solutions challenge={challenge} />
         </TabsContent>
       </Tabs>
-    </div>
+    </>
   );
 }
