@@ -3,7 +3,7 @@
 import { useTheme } from 'next-themes';
 
 import Link from 'next/link';
-import { LogIn, User, Bell, Moon, Sun, Loader2 } from 'lucide-react';
+import { User, Bell, Moon, Sun, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { signIn, signOut } from 'next-auth/react';
