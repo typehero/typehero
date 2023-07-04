@@ -10,10 +10,6 @@ import {
 
 const challengesList = [
   {
-    challengeTitle: 'Extreme Challenge 1',
-    challengeStatus: 'In-Progress',
-  },
-  {
     challengeTitle: 'Easy Challenge 1',
     challengeStatus: 'Submitted',
   },
@@ -25,13 +21,9 @@ const challengesList = [
     challengeTitle: 'Easy Challenge 3',
     challengeStatus: 'Submitted',
   },
-  {
-    challengeTitle: 'Extreme Challenge 4',
-    challengeStatus: 'In-Progress',
-  },
 ];
 
-export function Overview() {
+export function SolutionsTab() {
   return (
     <Table>
       <TableCaption>A list of your recent challenges.</TableCaption>

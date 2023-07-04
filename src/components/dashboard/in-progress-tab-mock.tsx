@@ -14,24 +14,12 @@ const challengesList = [
     challengeStatus: 'In-Progress',
   },
   {
-    challengeTitle: 'Easy Challenge 1',
-    challengeStatus: 'Submitted',
-  },
-  {
-    challengeTitle: 'Easy Challenge 2',
-    challengeStatus: 'Submitted',
-  },
-  {
-    challengeTitle: 'Easy Challenge 3',
-    challengeStatus: 'Submitted',
-  },
-  {
     challengeTitle: 'Extreme Challenge 4',
     challengeStatus: 'In-Progress',
   },
 ];
 
-export function Overview() {
+export function InProgressTab() {
   return (
     <Table>
       <TableCaption>A list of your recent challenges.</TableCaption>
