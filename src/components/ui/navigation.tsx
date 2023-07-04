@@ -132,47 +132,52 @@ export function Navigation() {
                 </button>
               )}
 
-              <button
-                type="button"
-                className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none"
-              >
-                <Bell className="h-5 w-5" aria-hidden="true" />
-              </button>
-
               {session ? (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <button className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
-                      <User className="h-5 w-5" />
-                    </button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56">
-                    <DropdownMenuLabel className="text-neutral-600 dark:text-neutral-400">
-                      My Account
-                    </DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <Link className="block" href={`/@${session.user.name ?? ''}`}>
-                      <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
-                        <User className="mr-2 h-4 w-4" />
-                        <span>Profile</span>
+                <>
+                  <button
+                    type="button"
+                    className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none"
+                  >
+                    <Bell className="h-5 w-5" aria-hidden="true" />
+                  </button>
+
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
+                        <User className="h-5 w-5" />
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-56">
+                      <DropdownMenuLabel className="text-neutral-600 dark:text-neutral-400">
+                        My Account
+                      </DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <Link className="block" href={`/@${session.user.name ?? ''}`}>
+                        <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
+                          <User className="mr-2 h-4 w-4" />
+                          <span>Profile</span>
+                        </DropdownMenuItem>
+                      </Link>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={() => void handleSignOut()}>
+                        <span>Log out</span>
                       </DropdownMenuItem>
-                    </Link>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => void handleSignOut()}>
-                      <span>Log out</span>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </>
               ) : (
                 <Button
                   disabled={loading || status === 'loading'}
                   onClick={() => void handleSignIn()}
-                  className="rounded-lg bg-white p-2 text-black duration-300 focus:bg-accent focus:outline-none dark:bg-black dark:text-white"
+                  className="rounded-lg bg-white p-2 text-black duration-300 hover:bg-gray-200 focus:bg-accent focus:outline-none dark:bg-black dark:text-white hover:dark:bg-gray-800"
                 >
                   {loading || status === 'loading' ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
                   ) : (
-                    <LogIn className="h-5 w-5" />
+                    <div className="flex items-center space-x-2">
+                      <LogIn className="h-5 w-5" />
+                      <span className="dark:text-white">Login</span>
+                    </div>
                   )}
                 </Button>
               )}
