@@ -25,10 +25,14 @@ export function ShareForm() {
   return (
     <div className="flex flex-col space-y-4">
       <p>Copy this challenge url to share with your friends!</p>
-      <code className="px-4 py-2 border dark:border-gray-300 rounded-md">{url}</code>
+      <code className="rounded-md border px-4 py-2 dark:border-gray-300">{url}</code>
       <button
         className={`ml-auto mt-4 flex items-center justify-between space-x-2 rounded-lg px-3 py-2 duration-300 active:scale-75 
-        ${copied ? 'text-green-500 border border-green-500 dark:border-green-700 dark:bg-green-700 dark:text-white' : 'text-black dark:bg-white border border-gray-100 hover:bg-gray-100'}`}
+        ${
+          copied
+            ? 'border border-green-500 text-green-500 dark:border-green-700 dark:bg-green-700 dark:text-white'
+            : 'border border-gray-100 text-black hover:bg-gray-100 dark:bg-white'
+        }`}
         onClick={() => void copyToClipboard()}
       >
         <span>{copied ? 'Copied!' : 'Copy'}</span>
