@@ -9,6 +9,7 @@ const randomDifficulty = (): Difficulty => {
   return DIFFICULTIES[Math.floor(Math.random() * DIFFICULTIES.length)] as Difficulty;
 };
 
+// TODO: make this deterministic as the seed should always have the same difficulty 
 const challenges = (): Prisma.ChallengeCreateNestedManyWithoutUserInput => ({
   create: Array.from({ length: CHALLENGES_TO_CREATE }, (_, challengeIndex) =>
     CHALLENGE_MAP[randomDifficulty()](challengeIndex),
