@@ -39,10 +39,10 @@ export function Navigation() {
   const handleSignIn = async () => {
     try {
       setLoading(true);
+      // page reloads after sign in, so no need to setLoading(false), othersiwe ugly visual glitch
       await signIn('github');
     } catch (error) {
-      console.error(error);
-    } finally {
+      // only set loading to false if there was an error and page didn't reload after sign in
       setLoading(false);
     }
   };
@@ -169,13 +169,12 @@ export function Navigation() {
                 <Button
                   disabled={loading || status === 'loading'}
                   onClick={() => void handleSignIn()}
-                  className="rounded-lg bg-white p-2 text-black duration-300 hover:bg-gray-200 focus:bg-accent focus:outline-none dark:bg-black dark:text-white hover:dark:bg-gray-800"
+                  className="w-20 rounded-lg bg-white p-2 text-black duration-300 hover:bg-gray-200 focus:bg-accent focus:outline-none dark:bg-black dark:text-white hover:dark:bg-gray-800"
                 >
                   {loading || status === 'loading' ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
                   ) : (
                     <div className="flex items-center space-x-2">
-                      <LogIn className="h-5 w-5" />
                       <span className="dark:text-white">Login</span>
                     </div>
                   )}
