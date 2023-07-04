@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowBigUp } from 'lucide-react';
+import { ArrowBigUp, ThumbsUp } from 'lucide-react';
 
 import { type Challenge } from '.';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
@@ -9,6 +9,7 @@ import ReactMarkdown from 'react-markdown';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import remarkGfm from 'remark-gfm';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import clsx from 'clsx';
 
 interface Props {
   challenge: Awaited<Challenge>[0];
@@ -111,8 +112,9 @@ export function ExploreCard({ challenge }: Props) {
             <div className="flex items-center">
               <DifficultyBadge difficulty={challenge.difficulty} />
             </div>
-            <div className="ml-4 flex items-center">
-              <ArrowBigUp /> {challenge._count.Vote}
+            <div className="ml-4 flex items-center justify-center text-center">
+              <ThumbsUp size={20} className="mr-2" />
+              <span>{challenge._count.Vote}</span>
             </div>
           </div>
           <div>Updated {getRelativeTime(challenge.updatedAt)}</div>
