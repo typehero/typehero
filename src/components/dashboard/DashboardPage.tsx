@@ -13,8 +13,8 @@ export const metadata: Metadata = {
 
 export default function DashboardPage() {
   return (
-    <>
-      <div className="flex-1 space-y-4 p-8 pl-20 pt-6">
+    <div className="container">
+      <div className="flex-1 space-y-4 pt-6">
         <div className="flex items-center gap-4">
           <div className="flex items-center space-x-2">
             <Image alt="user avatar" width="100" height="100" src="/avatar.jpeg" />
@@ -75,6 +75,6 @@ export default function DashboardPage() {
           </TabsContent>
         </Tabs>
       </div>
-    </>
+    </div>
   );
 }
