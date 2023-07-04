@@ -34,7 +34,7 @@ export default function DashboardPage() {
             <TabsTrigger value="solutions" >
               Solutions
             </TabsTrigger>
-            <TabsTrigger value="bookmarks" >
+            <TabsTrigger value="bookmarks" disabled>
               Bookmarks
             </TabsTrigger>
             <TabsTrigger value="comments" disabled>
