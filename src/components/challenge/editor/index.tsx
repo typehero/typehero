@@ -43,20 +43,32 @@ interface Props {
   challenge: NonNullable<Challenge>;
 }
 
-const libCache = new Set < string > ();
+const libCache = new Set<string>();
 export const CodePanel = ({ challenge }: Props) => {
   const { toast } = useToast();
   const { theme } = useTheme();
   const { data: session } = useSession();
-
   const { settings } = useEditorSettingsStore();
   const [hasErrors, setHasErrors] = useState(false);
   const [initialTypecheckDone, setInitialTypecheckDone] = useState(false);
-  const [code, setCode] = useState < string > (challenge?.prompt as string);
+
+  const defaultCode = useMemo(() => {
+    // if a user has an existing solution use that instead of prompt
+    const usersExistingSolution = challenge.Solution?.[0];
+    const [appendSolutionToThis, separator] = (challenge.prompt as string).split(
+      /(\/\/ CODE START)/g,
+    );
+    const parsedUserSolution = JSON.parse(usersExistingSolution?.code as string) as string;
+    return usersExistingSolution
+      ? `${appendSolutionToThis ?? ''}${separator ?? ''}${parsedUserSolution}`
+      : challenge.prompt;
+  }, [challenge.Solution, challenge.prompt]);
+  const [code, setCode] = useState(defaultCode as string);
+
   const editorTheme = theme === 'light' ? 'vs' : 'vs-dark';
-  const modelRef = useRef < monaco.editor.ITextModel > ();
+  const modelRef = useRef<monaco.editor.ITextModel>();
   // ref doesnt cause a rerender
-  const [editorState, setEditorState] = useState < monaco.editor.IStandaloneCodeEditor > ();
+  const [editorState, setEditorState] = useState<monaco.editor.IStandaloneCodeEditor>();
   const editorOptions = useMemo(() => {
     const options = {
       ...DEFAULT_OPTIONS,
@@ -95,65 +107,66 @@ export const CodePanel = ({ challenge }: Props) => {
 
   const onMount =
     (value: string, onError: (v: boolean) => void) =>
-      async (editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) => {
-        const lineWithUserCode =
-          value.split('\n').findIndex((line) => line.includes(USER_CODE_START));
+    async (editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) => {
+      const lineWithUserCode = value
+        .split('\n')
+        .findIndex((line) => line.includes(USER_CODE_START));
 
-        // once you register a lib you cant unregister it (idk how to unregister it)
-        // so when editor mounts again it tries to add the lib again and throws an error
-        if (!libCache.has(libSource)) {
-          monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, LIB_URI);
-          monaco.editor.createModel(libSource, 'typescript', monaco.Uri.parse(LIB_URI));
-          libCache.add(libSource);
-        }
+      // once you register a lib you cant unregister it (idk how to unregister it)
+      // so when editor mounts again it tries to add the lib again and throws an error
+      if (!libCache.has(libSource)) {
+        monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, LIB_URI);
+        monaco.editor.createModel(libSource, 'typescript', monaco.Uri.parse(LIB_URI));
+        libCache.add(libSource);
+      }
 
-        const model = editor.getModel();
+      const model = editor.getModel();
 
-        if (!model) {
-          throw new Error();
-        }
+      if (!model) {
+        throw new Error();
+      }
 
-        modelRef.current = model;
-        setEditorState(editor);
+      modelRef.current = model;
+      setEditorState(editor);
 
-        const ts = await (await monaco.languages.typescript.getTypeScriptWorker())(model.uri);
+      const ts = await (await monaco.languages.typescript.getTypeScriptWorker())(model.uri);
 
-        const filename = model.uri.toString();
+      const filename = model.uri.toString();
 
-        // what actually runs when checking errors
-        const typeCheck = async () => {
-          const errors = await Promise.all([
-            ts.getSemanticDiagnostics(filename),
-            ts.getSyntacticDiagnostics(filename),
-            ts.getSuggestionDiagnostics(filename),
-            ts.getCompilerOptionsDiagnostics(filename),
-          ] as const);
+      // what actually runs when checking errors
+      const typeCheck = async () => {
+        const errors = await Promise.all([
+          ts.getSemanticDiagnostics(filename),
+          ts.getSyntacticDiagnostics(filename),
+          ts.getSuggestionDiagnostics(filename),
+          ts.getCompilerOptionsDiagnostics(filename),
+        ] as const);
 
-          const hasErrors = errors.some((e) => e.length);
+        const hasErrors = errors.some((e) => e.length);
 
-          onError(hasErrors);
-        };
-
-        // TODO: we prolly should use this for blocking ranges as it might not be as janky
-        // https://github.com/Pranomvignesh/constrained-editor-plugin
-        model.onDidChangeContent((e) => {
-          // in monaco editor, the first line is e1e1e
-          // do net let them type if they are editing before lineWithUserCode
-          if (e.changes.some((c) => c.range.startLineNumber <= (lineWithUserCode + 1))) {
-            editor.trigger('someIdString', 'undo', null);
-          }
-
-          typeCheck().catch(console.error);
-        });
-
-        await typeCheck();
-        setInitialTypecheckDone(true);
-
-        monaco.languages.registerInlayHintsProvider(
-          'typescript',
-          createTwoslashInlayProvider(monaco, ts),
-        );
+        onError(hasErrors);
       };
+
+      // TODO: we prolly should use this for blocking ranges as it might not be as janky
+      // https://github.com/Pranomvignesh/constrained-editor-plugin
+      model.onDidChangeContent((e) => {
+        // in monaco editor, the first line is e1e1e
+        // do net let them type if they are editing before lineWithUserCode
+        if (e.changes.some((c) => c.range.startLineNumber <= lineWithUserCode + 1)) {
+          editor.trigger('someIdString', 'undo', null);
+        }
+
+        typeCheck().catch(console.error);
+      });
+
+      await typeCheck();
+      setInitialTypecheckDone(true);
+
+      monaco.languages.registerInlayHintsProvider(
+        'typescript',
+        createTwoslashInlayProvider(monaco, ts),
+      );
+    };
 
   return (
     <>
