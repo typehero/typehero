@@ -8,7 +8,7 @@ import {
 } from './dropdown-menu';
 
 import * as AllIcons from 'lucide-react';
-import { Icon } from 'lucide-react';
+import type { Icon } from 'lucide-react';
 
 export type ActionMenuItem = {
   icon?: keyof typeof AllIcons;

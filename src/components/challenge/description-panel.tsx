@@ -189,7 +189,7 @@ export function DescriptionPanel({ challenge }: Props) {
                       />
                       <FormField
                         name='other'
-                        render={({ field, fieldState }) => (
+                        render={({ field }) => (
                           <FormItem>
                             <div className="flex items-center gap-4">
                               <Checkbox checked={field.value as boolean} onCheckedChange={field.onChange} />
@@ -202,7 +202,7 @@ export function DescriptionPanel({ challenge }: Props) {
                       />
                       <FormField
                         name='comments'
-                        render={({ field, fieldState }) => (
+                        render={({ field }) => (
                           <FormItem>
                             <TypographyLarge>
                               Comments
