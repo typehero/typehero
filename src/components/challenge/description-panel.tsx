@@ -10,16 +10,23 @@ import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
+import { Button } from '~/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '~/components/ui/dialog';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
+import { TypographyH3 } from '~/components/ui/typography/h3';
+import type { Challenge } from '.';
 import { DifficultyBadge } from '../explore/difficulty-badge';
-import { Button } from '../ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
-import { TypographyH3 } from '../ui/typography/h3';
 import { addOrRemoveBookmark } from './bookmark.action';
 import { incrementOrDecrementUpvote } from './increment.action';
 import { ShareForm } from './share-form';
 import { Solutions } from './solutions';
-import type { Challenge } from '.';
 
 interface Props {
   challenge: NonNullable<Challenge>;
@@ -55,6 +62,7 @@ export function DescriptionPanel({ challenge }: Props) {
       }
     }, 500),
   ).current;
+
   return (
     <>
       <Tabs defaultValue="description" className="w-full">
@@ -72,39 +80,50 @@ export function DescriptionPanel({ challenge }: Props) {
             <div className="mb-6 flex items-center gap-4">
               <DifficultyBadge difficulty={challenge.difficulty} />
 
-              <Button
-                variant="ghost"
-                className="p-1"
-                disabled={!session?.data?.user?.id}
-                onClick={(): void => {
-                  let shouldBookmark = false;
-                  if (hasBookmarked) {
-                    shouldBookmark = false;
-                    setHasBookmarked(false);
-                  } else {
-                    shouldBookmark = true;
-                    setHasBookmarked(true);
-                  }
-                  debouncedBookmark(
-                    challenge.id,
-                    session?.data?.user?.id as string,
-                    shouldBookmark,
-                  )?.catch((e) => {
-                    console.error(e);
-                  });
-                }}
-              >
-                <BookmarkIcon
-                  size={20}
-                  className={clsx(
-                    {
-                      'fill-blue-500 stroke-blue-500': hasBookmarked,
-                      'stroke-gray-500': !hasBookmarked,
-                    },
-                    'hover:stroke-gray-400',
-                  )}
-                />
-              </Button>
+              <TooltipProvider>
+                <Tooltip delayDuration={0.05} open={session?.data?.user?.id ? false : undefined}>
+                  <TooltipTrigger asChild>
+                    <span>
+                      <Button
+                        variant="ghost"
+                        className="p-1"
+                        disabled={!session?.data?.user?.id}
+                        onClick={(): void => {
+                          let shouldBookmark = false;
+                          if (hasBookmarked) {
+                            shouldBookmark = false;
+                            setHasBookmarked(false);
+                          } else {
+                            shouldBookmark = true;
+                            setHasBookmarked(true);
+                          }
+                          debouncedBookmark(
+                            challenge.id,
+                            session?.data?.user?.id as string,
+                            shouldBookmark,
+                          )?.catch((e) => {
+                            console.error(e);
+                          });
+                        }}
+                      >
+                        <BookmarkIcon
+                          size={20}
+                          className={clsx(
+                            {
+                              'fill-blue-500 stroke-blue-500': hasBookmarked,
+                              'stroke-gray-500': !hasBookmarked,
+                            },
+                            'hover:stroke-gray-400',
+                          )}
+                        />
+                      </Button>
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Login to Bookmark</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
               <Dialog>
                 <DialogTrigger>
                   <Button variant="ghost" className="p-1">
@@ -120,53 +139,64 @@ export function DescriptionPanel({ challenge }: Props) {
                   </DialogHeader>
                 </DialogContent>
               </Dialog>
-              <Button
-                className="group -ml-1 w-14 gap-2 rounded-lg p-1"
-                variant="ghost"
-                disabled={!session?.data?.user?.id}
-                onClick={(): void => {
-                  let shouldIncrement = false;
-                  if (hasVoted) {
-                    setVotes((v) => v - 1);
-                    shouldIncrement = false;
-                    setHasVoted(false);
-                  } else {
-                    setVotes((v) => v + 1);
-                    shouldIncrement = true;
-                    setHasVoted(true);
-                  }
-                  debouncedSearch(
-                    challenge.id,
-                    session?.data?.user?.id as string,
-                    shouldIncrement,
-                  )?.catch((e) => {
-                    console.error(e);
-                  });
-                }}
-              >
-                <ThumbsUp
-                  size={20}
-                  className={clsx(
-                    {
-                      'fill-emerald-600 stroke-emerald-600 group-hover:stroke-emerald-500 dark:fill-emerald-400 dark:stroke-emerald-400':
-                        hasVoted,
-                      'stroke-zinc-500': !hasVoted,
-                    },
-                    'duration-300 group-hover:stroke-zinc-400',
-                  )}
-                />
-                <span
-                  className={clsx(
-                    {
-                      'text-emerald-600 dark:text-emerald-400': hasVoted,
-                      'text-zinc-500 group-hover:text-zinc-400': !hasVoted,
-                    },
-                    'self-end text-lg duration-300',
-                  )}
-                >
-                  {votes}
-                </span>
-              </Button>
+              <TooltipProvider>
+                <Tooltip delayDuration={0.05} open={session?.data?.user?.id ? false : undefined}>
+                  <TooltipTrigger asChild>
+                    <span>
+                      <Button
+                        className="group -ml-1 w-14 gap-2 rounded-lg p-1"
+                        variant="ghost"
+                        disabled={!session?.data?.user?.id}
+                        onClick={(): void => {
+                          let shouldIncrement = false;
+                          if (hasVoted) {
+                            setVotes((v) => v - 1);
+                            shouldIncrement = false;
+                            setHasVoted(false);
+                          } else {
+                            setVotes((v) => v + 1);
+                            shouldIncrement = true;
+                            setHasVoted(true);
+                          }
+                          debouncedSearch(
+                            challenge.id,
+                            session?.data?.user?.id as string,
+                            shouldIncrement,
+                          )?.catch((e) => {
+                            console.error(e);
+                          });
+                        }}
+                      >
+                        <ThumbsUp
+                          size={20}
+                          className={clsx(
+                            {
+                              'fill-emerald-600 stroke-emerald-600 group-hover:stroke-emerald-500 dark:fill-emerald-400 dark:stroke-emerald-400':
+                                hasVoted,
+                              'stroke-zinc-500': !hasVoted,
+                            },
+                            'duration-300 group-hover:stroke-zinc-400',
+                          )}
+                        />
+                        <span
+                          className={clsx(
+                            {
+                              'text-emerald-600 dark:text-emerald-400': hasVoted,
+                              'text-zinc-500 group-hover:text-zinc-400': !hasVoted,
+                            },
+                            'self-end text-lg duration-300',
+                          )}
+                        >
+                          {votes}
+                        </span>
+                      </Button>
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Login to Upvote</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
             <div className="prose-invert leading-8 prose-h3:text-xl">
               {/* @ts-ignore */}
