@@ -1,6 +1,7 @@
 'use client';
 
 import Editor from '@monaco-editor/react';
+import clsx from 'clsx';
 import { Loader2, Settings } from 'lucide-react';
 import type * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import { useSession } from 'next-auth/react';
@@ -16,7 +17,6 @@ import {
 } from '~/components/ui/dialog';
 import { ToastAction } from '~/components/ui/toast';
 import { useToast } from '~/components/ui/use-toast';
-import { cn } from '~/utils/cn';
 import type { Challenge } from '..';
 import { saveSubmission } from '../save-submission';
 import { SettingsForm } from '../settings-form';
@@ -202,9 +202,11 @@ export const CodePanel = ({ challenge }: Props) => {
         />
       </div>
       <div
-        className={cn(
+        className={clsx(
+          {
+            'justify-between': editorState,
+          },
           'sticky bottom-0 flex items-center justify-end p-2 dark:bg-[#1e1e1e]',
-          editorState ? 'justify-between' : '',
         )}
       >
         {editorState && <VimStatusBar editor={editorState} />}
