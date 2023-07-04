@@ -17,20 +17,37 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogFooter
 } from '~/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
 import { TypographyH3 } from '~/components/ui/typography/h3';
 import type { Challenge } from '.';
 import { DifficultyBadge } from '../explore/difficulty-badge';
+import { ActionMenu } from '../ui/action-menu';
+import { Textarea } from '../ui/textarea';
 import { addOrRemoveBookmark } from './bookmark.action';
 import { incrementOrDecrementUpvote } from './increment.action';
 import { ShareForm } from './share-form';
 import { Solutions } from './solutions';
+import { Form, FormField, FormItem } from '../ui/form';
+import { useForm } from 'react-hook-form';
+import { Checkbox } from '../ui/checkbox';
+import { TypographyLarge } from '../ui/typography/large';
+import { addReport } from './report.action';
+import { toast } from '../ui/use-toast';
+
 
 interface Props {
   challenge: NonNullable<Challenge>;
 }
+
+export type FormValues = {
+  comments: string;
+  examples: boolean;
+  derogatory: boolean;
+  other: boolean;
+};
 
 export function DescriptionPanel({ challenge }: Props) {
   const router = useRouter();
@@ -63,6 +80,47 @@ export function DescriptionPanel({ challenge }: Props) {
     }, 500),
   ).current;
 
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  const form = useForm<FormValues>({
+    defaultValues: {
+      comments: '',
+      other: false,
+      examples: false,
+      derogatory: false,
+    },
+
+  });
+
+  async function onSubmit(data: FormValues) {
+    const response = await addReport(challenge.id, session?.data?.user?.id as string, data);
+    if (response === 'created') {
+      toast({
+        title: 'Feedback Sent',
+        variant: 'success',
+        description: (
+          <p>
+            Thank you for submitting this feedback. Someone from our moderator
+            team will be reviewing it shortly.
+          </p>
+        )
+      });
+    } else if(response === 'report_already_made') {
+      toast({
+        title: 'Report already made',
+        description: (
+          <p>
+            You have already made a report about this challenge. We are still 
+            reviewing the question.
+          </p>
+        )
+      })
+    }
+
+    setDialogOpen(false);
+
+  }
+
   return (
     <>
       <Tabs defaultValue="description" className="w-full">
@@ -76,7 +134,97 @@ export function DescriptionPanel({ challenge }: Props) {
         </TabsList>
         <TabsContent value="description" className="mt-0">
           <div className="h-full px-1 pb-0 pt-3 dark:px-4 dark:pb-2">
-            <TypographyH3 className="mb-2 font-medium">{challenge.name}</TypographyH3>
+            <div className="flex justify-between items-baseline">
+              <TypographyH3 className="mb-2 font-medium">{challenge.name}</TypographyH3>
+              <div>
+                <ActionMenu items={[
+                  {
+                    key: 'feedback',
+                    label: 'Feedback',
+                    icon: 'Flag'
+                  }
+                ]} onChange={() => setDialogOpen(true)} />
+              </div>
+            </div>
+
+            <Dialog open={dialogOpen} onOpenChange={e => setDialogOpen(!e)}>
+              <DialogContent>
+                <Form {...form}>
+                  {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
+                  <form onSubmit={form.handleSubmit(onSubmit)}>
+                    <DialogHeader>
+                      <DialogTitle>
+                        Feedback: {challenge.name}
+                      </DialogTitle>
+                    </DialogHeader>
+
+                    <div className="flex flex-col gap-4 my-4">
+                      <TypographyLarge>Issues Encountered</TypographyLarge>
+                      <FormField
+                        name='examples'
+                        render={({ field }) => (
+                          <FormItem>
+                            <div className="flex gap-4 items-center">
+                              <Checkbox checked={field.value as boolean} onChange={field.onChange} onCheckedChange={field.onChange} />
+                              <div>
+                                Description or examples are unclear or incorrect
+                              </div>
+                            </div>
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        name='derogatory'
+                        render={({ field }) => (
+                          <FormItem>
+                            <div className="flex items-center gap-4">
+
+                              <Checkbox checked={field.value as boolean} onCheckedChange={field.onChange} />
+                              <div>
+                                Racist or other derogatory statement
+                              </div>
+                            </div>
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        name='other'
+                        render={({ field, fieldState }) => (
+                          <FormItem>
+                            <div className="flex items-center gap-4">
+                              <Checkbox checked={field.value as boolean} onCheckedChange={field.onChange} />
+                              <div>
+                                Other
+                              </div>
+                            </div>
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        name='comments'
+                        render={({ field, fieldState }) => (
+                          <FormItem>
+                            <TypographyLarge>
+                              Comments
+                            </TypographyLarge>
+                            <Textarea value={field.value as string} onChange={field.onChange} />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <DialogFooter>
+                      <Button variant='secondary' type="button" onClick={() => setDialogOpen(false)}>
+                        Close
+                      </Button>
+                      <Button type="submit">
+                        Report
+                      </Button>
+                    </DialogFooter>
+                  </form>
+                </Form>
+              </DialogContent>
+            </Dialog>
+
             <div className="mb-6 flex items-center gap-4">
               <DifficultyBadge difficulty={challenge.difficulty} />
 
