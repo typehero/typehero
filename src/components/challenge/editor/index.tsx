@@ -55,13 +55,17 @@ export const CodePanel = ({ challenge }: Props) => {
   const defaultCode = useMemo(() => {
     // if a user has an existing solution use that instead of prompt
     const usersExistingSolution = challenge.Solution?.[0];
+
+    if (!usersExistingSolution) {
+      return challenge.prompt;
+    }
+
     const [appendSolutionToThis, separator] = (challenge.prompt as string).split(
       /(\/\/ CODE START)/g,
     );
     const parsedUserSolution = JSON.parse(usersExistingSolution?.code as string) as string;
-    return usersExistingSolution
-      ? `${appendSolutionToThis ?? ''}${separator ?? ''}${parsedUserSolution}`
-      : challenge.prompt;
+
+    return `${appendSolutionToThis ?? ''}${separator ?? ''}${parsedUserSolution}`;
   }, [challenge.Solution, challenge.prompt]);
   const [code, setCode] = useState(defaultCode as string);
 
