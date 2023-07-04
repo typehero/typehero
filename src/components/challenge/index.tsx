@@ -1,8 +1,8 @@
 import { type Session, getServerSession } from 'next-auth';
 import { notFound } from 'next/navigation';
 import { prisma } from '~/server/db';
-import { DescriptionPanel } from './description-panel';
-import { CodePanel } from './editor';
+
+import { InnerIndex } from './innerIndex';
 
 interface Props {
   id: string;
@@ -16,16 +16,7 @@ export async function Challenge({ id }: Props) {
     notFound();
   }
 
-  return (
-    <div
-      className="flex flex-col gap-2 px-4 pb-4 lg:flex-row 2xl:grid 2xl:grid-cols-3"
-      style={{ height: 'calc(100dvh - 3.5rem)' }}
-    >
-      <DescriptionPanel challenge={challenge} />
-
-      <CodePanel challenge={challenge} />
-    </div>
-  );
+  return <InnerIndex challenge={challenge} />;
 }
 
 async function getChallenge(id: string, session: Session | null) {
