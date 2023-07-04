@@ -27,6 +27,7 @@ export function Solutions({ challenge }: Props) {
   );
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function SolutionRow() {
   const date = new Date();
   return (

@@ -1,8 +1,8 @@
-/* _____________ Test Cases _____________ */
-Extends<HelloWorld, `Hello, \${string}`>()
+// TEST CASE START 
+Extends<HelloWorld, `Hello, ${string}`>()
 
 Extends<HelloWorld, `${string}!`>()
 
-/* _____________ Your Code Here _____________ */
-type HelloWorld = "" 
+// CODE START
 
+type HelloWorld = ""

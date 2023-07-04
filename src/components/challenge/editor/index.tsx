@@ -23,6 +23,7 @@ import { libSource } from './editor-types';
 import { createTwoslashInlayProvider } from './twoslash';
 import { VimStatusBar } from './vimMode';
 import type { Challenge } from '..';
+import { USER_CODE_START } from './constants';
 
 const DEFAULT_OPTIONS: monaco.editor.IStandaloneEditorConstructionOptions = {
   lineNumbers: 'on',
@@ -42,7 +43,7 @@ interface Props {
   challenge: NonNullable<Challenge>;
 }
 
-const libCache = new Set<string>();
+const libCache = new Set < string > ();
 export const CodePanel = ({ challenge }: Props) => {
   const { toast } = useToast();
   const { theme } = useTheme();
@@ -51,11 +52,11 @@ export const CodePanel = ({ challenge }: Props) => {
   const { settings } = useEditorSettingsStore();
   const [hasErrors, setHasErrors] = useState(false);
   const [initialTypecheckDone, setInitialTypecheckDone] = useState(false);
-  const [code, setCode] = useState<string>(challenge?.prompt as string);
+  const [code, setCode] = useState < string > (challenge?.prompt as string);
   const editorTheme = theme === 'light' ? 'vs' : 'vs-dark';
-  const modelRef = useRef<monaco.editor.ITextModel>();
+  const modelRef = useRef < monaco.editor.ITextModel > ();
   // ref doesnt cause a rerender
-  const [editorState, setEditorState] = useState<monaco.editor.IStandaloneCodeEditor>();
+  const [editorState, setEditorState] = useState < monaco.editor.IStandaloneCodeEditor > ();
   const editorOptions = useMemo(() => {
     const options = {
       ...DEFAULT_OPTIONS,
@@ -69,7 +70,7 @@ export const CodePanel = ({ challenge }: Props) => {
   }, [settings]);
 
   const handleSubmit = async () => {
-    const [, solution] = code.split('/* _____________ Your Code Here _____________ */');
+    const [, solution] = code.split(USER_CODE_START);
 
     if (hasErrors) {
       toast({
@@ -94,73 +95,63 @@ export const CodePanel = ({ challenge }: Props) => {
 
   const onMount =
     (value: string, onError: (v: boolean) => void) =>
-    async (editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) => {
-      const numLines = value.split('\n').length;
-      const lastLineLength = value.split('\n').at(-1)?.length || 1;
+      async (editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) => {
+        const lineWithUserCode =
+          value.split('\n').findIndex((line) => line.includes(USER_CODE_START));
 
-      // once you register a lib you cant unregister it (idk how to unregister it)
-      // so when editor mounts again it tries to add the lib again and throws an error
-      if (!libCache.has(libSource)) {
-        monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, LIB_URI);
-        monaco.editor.createModel(libSource, 'typescript', monaco.Uri.parse(LIB_URI));
-        libCache.add(libSource);
-      }
-
-      const model = editor.getModel();
-
-      if (!model) {
-        throw new Error();
-      }
-
-      modelRef.current = model;
-      setEditorState(editor);
-
-      const ts = await (await monaco.languages.typescript.getTypeScriptWorker())(model.uri);
-
-      const filename = model.uri.toString();
-
-      // what actually runs when checking errors
-      const typeCheck = async () => {
-        const errors = await Promise.all([
-          ts.getSemanticDiagnostics(filename),
-          ts.getSyntacticDiagnostics(filename),
-          ts.getSuggestionDiagnostics(filename),
-          ts.getCompilerOptionsDiagnostics(filename),
-        ] as const);
-
-        const hasErrors = errors.some((e) => e.length);
-
-        onError(hasErrors);
-      };
-
-      let fixingStart = false;
-
-      model.onDidChangeContent((e) => {
-        if (
-          e.changes.some(
-            (c) =>
-              c.range.startLineNumber < numLines ||
-              (c.range.startLineNumber === numLines && c.range.startColumn <= lastLineLength),
-          )
-        ) {
-          if (!fixingStart && !e.isUndoing && !e.isRedoing) {
-            editor.trigger('someIdString', e.isUndoing ? 'redo' : 'undo', null);
-          }
-
-          fixingStart = !fixingStart;
+        // once you register a lib you cant unregister it (idk how to unregister it)
+        // so when editor mounts again it tries to add the lib again and throws an error
+        if (!libCache.has(libSource)) {
+          monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, LIB_URI);
+          monaco.editor.createModel(libSource, 'typescript', monaco.Uri.parse(LIB_URI));
+          libCache.add(libSource);
         }
 
-        typeCheck().catch(console.error);
-      });
+        const model = editor.getModel();
 
-      await typeCheck();
-      setInitialTypecheckDone(true);
+        if (!model) {
+          throw new Error();
+        }
 
-      monaco.languages.registerInlayHintsProvider(
-        'typescript',
-        createTwoslashInlayProvider(monaco, ts),
-      );
-    };
+        modelRef.current = model;
+        setEditorState(editor);
+
+        const ts = await (await monaco.languages.typescript.getTypeScriptWorker())(model.uri);
+
+        const filename = model.uri.toString();
+
+        // what actually runs when checking errors
+        const typeCheck = async () => {
+          const errors = await Promise.all([
+            ts.getSemanticDiagnostics(filename),
+            ts.getSyntacticDiagnostics(filename),
+            ts.getSuggestionDiagnostics(filename),
+            ts.getCompilerOptionsDiagnostics(filename),
+          ] as const);
+
+          const hasErrors = errors.some((e) => e.length);
+
+          onError(hasErrors);
+        };
+
+        model.onDidChangeContent((e) => {
+        // in monaco editor, the first line is e1e1e
+          // do net let them type if they are editing before lineWithUserCode
+          if (e.changes.some((c) => c.range.startLineNumber <= (lineWithUserCode + 1))) {
+            editor.trigger('someIdString', 'undo', null);
+          }
+
+          typeCheck().catch(console.error);
+        });
+
+        await typeCheck();
+        setInitialTypecheckDone(true);
+
+        monaco.languages.registerInlayHintsProvider(
+          'typescript',
+          createTwoslashInlayProvider(monaco, ts),
+        );
+      };
 
   return (
     <div className="col-span-2 flex flex-1 flex-col overflow-hidden rounded-xl border border-zinc-300 dark:border-zinc-700">
