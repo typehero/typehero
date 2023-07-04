@@ -1,6 +1,7 @@
 'use client';
 
 import Editor from '@monaco-editor/react';
+import clsx from 'clsx';
 import { Loader2, Settings } from 'lucide-react';
 import type * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import { useSession } from 'next-auth/react';
@@ -15,15 +16,16 @@ import {
   DialogTrigger,
 } from '~/components/ui/dialog';
 import { ToastAction } from '~/components/ui/toast';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
 import { useToast } from '~/components/ui/use-toast';
+import type { Challenge } from '..';
 import { saveSubmission } from '../save-submission';
 import { SettingsForm } from '../settings-form';
 import { useEditorSettingsStore } from '../settings-store';
+import { USER_CODE_START } from './constants';
 import { libSource } from './editor-types';
 import { createTwoslashInlayProvider } from './twoslash';
 import { VimStatusBar } from './vimMode';
-import type { Challenge } from '..';
-import { USER_CODE_START } from './constants';
 
 const DEFAULT_OPTIONS: monaco.editor.IStandaloneEditorConstructionOptions = {
   lineNumbers: 'on',
@@ -200,20 +202,36 @@ export const CodePanel = ({ challenge }: Props) => {
           onChange={(code) => setCode(code ?? '')}
         />
       </div>
-      <div className="sticky bottom-0 flex items-center justify-between p-2 dark:bg-[#1e1e1e]">
+      <div
+        className={clsx(
+          {
+            'justify-between': editorState,
+          },
+          'sticky bottom-0 flex items-center justify-end p-2 dark:bg-[#1e1e1e]',
+        )}
+      >
         {editorState && <VimStatusBar editor={editorState} />}
-        {/* some hacky stuff to avoid layout shift. fix if you want */}
-        {!editorState && <div />}
-        <Button
-          size="sm"
-          className="bg-emerald-600 duration-300 hover:bg-emerald-500 dark:bg-emerald-300 dark:hover:bg-emerald-400"
-          // eslint-disable-next-line @typescript-eslint/no-misused-promises
-          onClick={handleSubmit}
-          disabled={!initialTypecheckDone || !session?.user}
-        >
-          {!initialTypecheckDone && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          Submit
-        </Button>
+        <TooltipProvider>
+          <Tooltip delayDuration={0.05} open={session?.user?.id ? false : undefined}>
+            <TooltipTrigger asChild>
+              <span>
+                <Button
+                  size="sm"
+                  className="bg-emerald-600 duration-300 hover:bg-emerald-500 dark:bg-emerald-300 dark:hover:bg-emerald-400"
+                  // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                  onClick={handleSubmit}
+                  disabled={!initialTypecheckDone || !session?.user}
+                >
+                  {!initialTypecheckDone && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  Submit
+                </Button>
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Login to Submit</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
     </>
   );
