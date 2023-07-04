@@ -3,8 +3,8 @@ import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { Overview } from '~/components/dashboard/overview';
-import { InProgressTab } from "~/components/dashboard/in-progress-tab-mock";
-import { SolutionsTab } from "~/components/dashboard/solutions-tab-mock";
+import { InProgressTab } from '~/components/dashboard/in-progress-tab-mock';
+import { SolutionsTab } from '~/components/dashboard/solutions-tab-mock';
 
 export const metadata: Metadata = {
   title: 'Dashboard',
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function DashboardPage() {
   return (
     <>
-      <div className="flex-1 space-y-4 p-8 pt-6">
+      <div className="flex-1 space-y-4 p-8 pl-20 pt-6">
         <div className="flex items-center gap-4">
           <div className="flex items-center space-x-2">
             <Image alt="user avatar" width="100" height="100" src="/avatar.jpeg" />
@@ -28,12 +28,8 @@ export default function DashboardPage() {
         <Tabs defaultValue="overview" className="space-y-4">
           <TabsList>
             <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="in-progress" >
-              In-Progress
-            </TabsTrigger>
-            <TabsTrigger value="solutions" >
-              Solutions
-            </TabsTrigger>
+            <TabsTrigger value="in-progress">In-Progress</TabsTrigger>
+            <TabsTrigger value="solutions">Solutions</TabsTrigger>
             <TabsTrigger value="bookmarks" disabled>
               Bookmarks
             </TabsTrigger>
