@@ -60,7 +60,7 @@ const getRelativeTime = (date: Date) => {
       return rtf.format(Math.round(elapsed / ms), unit as Intl.RelativeTimeFormatUnit);
     }
   }
-}
+};
 
 export function ExploreCard({ challenge }: Props) {
   return (
