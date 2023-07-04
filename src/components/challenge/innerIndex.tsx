@@ -1,17 +1,16 @@
 'use client';
 
-import { DescriptionPanel } from './description-panel';
 import { CodePanel } from './editor';
+import { DescriptionPanel } from './description-panel';
 import { useRef, useEffect } from 'react';
-import type { Challenge } from '.';
 import { useLayoutSettingsStore } from './layout-store';
 
+import type { Challenge } from '.';
 interface Props {
   challenge: NonNullable<Challenge>;
 }
 
 export function InnerIndex({ challenge }: Props) {
-  // Query the element
   const parent = useRef<HTMLDivElement | null>(null);
   const resizer = useRef<HTMLDivElement | null>(null);
   const leftSide = useRef<HTMLDivElement | null>(null);
@@ -23,18 +22,26 @@ export function InnerIndex({ challenge }: Props) {
     const leftRef = leftSide.current as HTMLDivElement;
     const rightRef = rightSide.current as HTMLDivElement;
 
-    leftRef.style.width = settings.width;
+    // resize width on desktop, height on mobile
+    window.innerWidth > 1025
+      ? (leftRef.style.width = settings.width)
+      : (leftRef.style.height = settings.height);
 
     // The current position of mouse
     let x = 0;
+    let y = 0;
 
-    // Width of left side
+    // Width of left side on dekstop, height of top side on mobile;
     let leftWidth = 0;
+    let topHeight = 0;
 
     const mouseDownHandler = (e: MouseEvent) => {
       // Get the current mouse position
-      x = e.clientX;
-      leftWidth = leftSide?.current?.getBoundingClientRect().width as number | 0;
+      window.innerWidth > 1025 ? (x = e.clientX) : (y = e.clientY);
+
+      window.innerWidth > 1025
+        ? (leftWidth = leftSide?.current?.getBoundingClientRect().width as number | 0)
+        : (topHeight = leftSide?.current?.getBoundingClientRect().height as number | 0);
 
       // Attach the listeners to `document`
       document.addEventListener('mousemove', mouseMoveHandler);
@@ -44,43 +51,62 @@ export function InnerIndex({ challenge }: Props) {
     const mouseMoveHandler = (e: MouseEvent) => {
       // How far the mouse has been moved
       const dx = e.clientX - x;
-      // TODO: for mobile vertical resize
-      // const dy = e.clientY - y;
+      const dy = e.clientY - y;
 
-      const divideBy = parent?.current?.getBoundingClientRect().width as number | 1;
-      const newLeftWidth = ((leftWidth + dx) * 100) / divideBy;
-      updateSettings({ width: `${rightRef.offsetWidth}px` });
+      const divideByW = parent?.current?.getBoundingClientRect().width as number | 1;
+      const divideByH = parent?.current?.getBoundingClientRect().height as number | 1;
+      const newLeftWidth = ((leftWidth + dx) * 100) / divideByW;
+      const newTopHeight = ((topHeight + dy) * 100) / divideByH;
 
-      leftRef.style.width = `${newLeftWidth}%`;
-      ref.style.cursor = 'col-resize';
-      document.body.style.cursor = 'col-resize';
-      leftRef.style.userSelect = 'none';
-      leftRef.style.pointerEvents = 'none';
+      window.innerWidth > 1025
+        ? (leftRef.style.width = `${newLeftWidth}%`)
+        : (leftRef.style.height = `${newTopHeight}%`);
 
-      rightRef.style.userSelect = 'none';
+      // prevent cursor from blinking when you move mouse too fast (leaving resizer area)
+      window.innerWidth > 1025
+        ? (document.body.style.cursor = 'col-resize')
+        : (document.body.style.cursor = 'row-resize');
+
+      // prevent unexpected text selection while resizing
       rightRef.style.pointerEvents = 'none';
+      leftRef.style.pointerEvents = 'none';
+      rightRef.style.userSelect = 'none';
+      leftRef.style.userSelect = 'none';
     };
     const mouseUpHandler = function () {
-      ref.style.removeProperty('cursor');
+      // undo cursor col-resize from above
       document.body.style.removeProperty('cursor');
 
+      // undo text selection prevention
       leftRef.style.removeProperty('user-select');
-      leftRef.style.removeProperty('pointer-events');
-
       rightRef.style.removeProperty('user-select');
+      leftRef.style.removeProperty('pointer-events');
       rightRef.style.removeProperty('pointer-events');
 
       // Remove the handlers of `mousemove` and `mouseup`
       document.removeEventListener('mousemove', mouseMoveHandler);
       document.removeEventListener('mouseup', mouseUpHandler);
-      updateSettings({ width: `${leftRef.offsetWidth}px` });
+
+      window.innerWidth > 1025
+        ? updateSettings({ width: `${leftRef.offsetWidth}px`, height: settings.height })
+        : updateSettings({ width: settings.width, height: `${leftRef.offsetHeight}px` });
     };
+
+    // handle window resize
+    const resizeHandler = () => {
+      window.innerWidth > 1025
+        ? ((leftRef.style.width = settings.width), (leftRef.style.height = 'auto'))
+        : ((leftRef.style.height = settings.height), (leftRef.style.width = 'auto'));
+    };
+
+    window.addEventListener('resize', resizeHandler);
+
     ref?.addEventListener('mousedown', mouseDownHandler);
 
     return () => {
       ref?.removeEventListener('mousedown', mouseDownHandler);
     };
-  }, []);
+  }, [settings, updateSettings]);
 
   return (
     <div
@@ -90,17 +116,20 @@ export function InnerIndex({ challenge }: Props) {
     >
       <div
         ref={leftSide}
-        className="w-full min-w-[500px] overflow-y-auto rounded-xl bg-white dark:bg-zinc-800"
+        className="min-h-[42px] w-full overflow-y-auto rounded-xl bg-white dark:bg-zinc-800 lg:min-w-[500px]"
       >
         <DescriptionPanel challenge={challenge} />
       </div>
-      <div ref={resizer} className="resizer group relative cursor-col-resize p-2">
-        <div className="absolute left-1/2 top-1/2 h-1 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-400   duration-300 active:duration-75 group-hover:bg-neutral-600 group-active:bg-emerald-400 dark:bg-neutral-700 group-hover:dark:bg-neutral-500 lg:h-24 lg:w-1" />
+      <div
+        ref={resizer}
+        className="resizer group relative cursor-row-resize p-2 lg:cursor-col-resize"
+      >
+        <div className="absolute left-1/2 top-1/2 h-1 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-400 duration-300 group-hover:bg-neutral-600 group-active:bg-emerald-400 group-active:duration-75 dark:bg-neutral-700 group-hover:dark:bg-neutral-500 lg:h-24 lg:w-1" />
       </div>
       <div
         ref={rightSide}
         style={{ flex: '1 1 0%' }}
-        className="flex w-full min-w-[500px] flex-col overflow-hidden rounded-xl border border-zinc-300 dark:border-zinc-700"
+        className="flex min-h-[90px] w-full flex-col overflow-hidden rounded-xl border border-zinc-300 dark:border-zinc-700 lg:min-w-[500px]"
       >
         <CodePanel challenge={challenge} />
       </div>
