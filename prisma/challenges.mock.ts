@@ -13,10 +13,14 @@ function randomTrueOrFalse() {
  */
 function loadChallenegeSync(challengeSlug: string) {
   // read from the __seed__ folder all the markdown files
-  //
-  const filePath = path.join(__dirname, `../__seed__/${challengeSlug}.md`);
+  const dirname = path.dirname(new URL(import.meta.url).pathname);
+  const filePath = path.join(dirname, `../__seed__/${challengeSlug}.md`);
   return fs.readFileSync(filePath, 'utf8');
 }
+
+const shortDescription = `This is a typescript challenge short description area in which we can place text.
+
+  In this challenge you will learn how to do something or at the least you learn how to use \`any\``;
 
 export const CHALLENGE_MAP: Record<
   Difficulty,
@@ -28,12 +32,13 @@ export const CHALLENGE_MAP: Record<
     updatedAt: new Date(),
     Bookmark: randomTrueOrFalse()
       ? {
-          create: {
-            userId: randomTrueOrFalse() ? trashId : gId,
-          },
-        }
+        create: {
+          userId: randomTrueOrFalse() ? trashId : gId,
+        },
+      }
       : undefined,
     description: loadChallenegeSync('beginner/desc'),
+    shortDescription,
     prompt: loadChallenegeSync('beginner/prompt'),
     difficulty: 'BEGINNER',
   }),
@@ -42,6 +47,7 @@ export const CHALLENGE_MAP: Record<
     createdAt: new Date(),
     updatedAt: new Date(),
     description: loadChallenegeSync('easy/desc'),
+    shortDescription,
     prompt: loadChallenegeSync('easy/prompt'),
     difficulty: 'EASY',
   }),
@@ -50,6 +56,7 @@ export const CHALLENGE_MAP: Record<
     createdAt: new Date(),
     updatedAt: new Date(),
     description: loadChallenegeSync('medium/desc'),
+    shortDescription,
     prompt: loadChallenegeSync('medium/prompt'),
     difficulty: 'MEDIUM',
   }),
@@ -58,6 +65,7 @@ export const CHALLENGE_MAP: Record<
     createdAt: new Date(),
     updatedAt: new Date(),
     description: loadChallenegeSync('hard/desc'),
+    shortDescription,
     prompt: loadChallenegeSync('hard/prompt'),
     difficulty: 'HARD',
   }),
@@ -66,6 +74,7 @@ export const CHALLENGE_MAP: Record<
     createdAt: new Date(),
     updatedAt: new Date(),
     description: loadChallenegeSync('extreme/desc'),
+    shortDescription,
     prompt: loadChallenegeSync('extreme/prompt'),
     difficulty: 'EXTREME',
   }),
