@@ -69,22 +69,25 @@ model Role {
 }
 
 model User {
-  id             String           @id @default(uuid())
-  name           String?
-  email          String?          @unique
-  roles          Role[]
-  status         Status           @default(PENDING)
-  emailVerified  DateTime?
-  image          String?
-  accounts       Account[]
-  sessions       Session[]
-  Challenge      Challenge[]
-  Vote           Vote[]
-  Solution       Solution[]
-  Comment        Comment[]
-  Report         Report[]
-  Bookmark       Bookmark[]
-  SharedSolution SharedSolution[]
+  id              String             @id @default(uuid())
+  name            String?
+  email           String?            @unique
+  roles           Role[]
+  status          Status             @default(PENDING)
+  emailVerified   DateTime?
+  image           String?
+  accounts        Account[]
+  sessions        Session[]
+  Challenge       Challenge[]
+  Vote            Vote[]
+  Solution        Solution[]
+  Report          Report[]
+  Bookmark        Bookmark[]
+  SharedSolution  SharedSolution[]
+  Comment         ChallengeComment[]
+  Reply           ChallengeReply[]
+  SolutionComment SolutionComment[]
+  SolutionReply   SolutionReply[]
 }
 
 model VerificationToken {
@@ -96,19 +99,19 @@ model VerificationToken {
 }
 
 model Challenge {
-  id               Int              @id @default(autoincrement())
-  createdAt        DateTime         @default(now())
-  updatedAt        DateTime         @updatedAt
+  id               Int                @id @default(autoincrement())
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
   difficulty       Difficulty
   name             String
   description      Json
   shortDescription String
   prompt           Json
-  user             User             @relation(fields: [userId], references: [id])
+  user             User               @relation(fields: [userId], references: [id])
   userId           String
   Vote             Vote[]
   Solution         Solution[]
-  Comment          Comment[]
+  Comment          ChallengeComment[]
   Report           Report[]
   Bookmark         Bookmark[]
   SharedSolution   SharedSolution[]
@@ -133,15 +136,16 @@ model Vote {
 }
 
 model SharedSolution {
-  id          Int        @id @default(autoincrement())
-  description Json
-  solution    Solution   @relation(fields: [solutionId], references: [id])
-  solutionId  Int
-  Vote        Vote[]
-  User        User?      @relation(fields: [userId], references: [id])
-  userId      String?
-  Challenge   Challenge? @relation(fields: [challengeId], references: [id])
-  challengeId Int?
+  id              Int               @id @default(autoincrement())
+  description     Json
+  solution        Solution          @relation(fields: [solutionId], references: [id])
+  solutionId      Int
+  Vote            Vote[]
+  User            User?             @relation(fields: [userId], references: [id])
+  userId          String?
+  Challenge       Challenge?        @relation(fields: [challengeId], references: [id])
+  challengeId     Int?
+  SolutionComment SolutionComment[]
 
   @@index([solutionId])
   @@index([userId])
@@ -163,16 +167,54 @@ model Solution {
   @@index([challengeId])
 }
 
-model Comment {
-  id          Int       @id @default(autoincrement())
-  user        User      @relation(fields: [userId], references: [id])
+model ChallengeComment {
+  id          Int              @id @default(autoincrement())
+  user        User             @relation(fields: [userId], references: [id])
   userId      String
-  challenge   Challenge @relation(fields: [challengeId], references: [id])
+  challenge   Challenge        @relation(fields: [challengeId], references: [id])
   challengeId Int
   text        String
+  replies     ChallengeReply[]
 
   @@index([userId])
   @@index([challengeId])
+}
+
+model ChallengeReply {
+  id        Int              @id @default(autoincrement())
+  user      User             @relation(fields: [userId], references: [id])
+  userId    String
+  comment   ChallengeComment @relation(fields: [commentId], references: [id])
+  commentId Int
+  text      String
+
+  @@index([userId])
+  @@index([commentId])
+}
+
+model SolutionComment {
+  id            Int             @id @default(autoincrement())
+  user          User            @relation(fields: [userId], references: [id])
+  userId        String
+  solution      SharedSolution  @relation(fields: [solutionId], references: [id])
+  solutionId    Int
+  text          String
+  SolutionReply SolutionReply[]
+
+  @@index([userId])
+  @@index([solutionId])
+}
+
+model SolutionReply {
+  id         Int             @id @default(autoincrement())
+  user       User            @relation(fields: [userId], references: [id])
+  userId     String
+  solution   SolutionComment @relation(fields: [solutionId], references: [id])
+  solutionId Int
+  text       String
+
+  @@index([userId])
+  @@index([solutionId])
 }
 
 model Report {
