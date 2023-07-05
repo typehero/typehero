@@ -21,7 +21,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './dropdown-menu';
@@ -64,7 +63,7 @@ export function Navigation() {
     <header className="w-full">
       <nav
         className={`flex h-14 items-center ${
-          pathname.includes('/challenge') ? 'px-4' : 'container'
+          pathname.includes('/challenge') || pathname.includes('/create') ? 'px-4' : 'container'
         }`}
       >
         <div className="flex w-full items-center justify-between">
