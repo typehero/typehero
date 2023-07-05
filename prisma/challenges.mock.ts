@@ -1,5 +1,6 @@
 import type { Difficulty, Prisma } from '@prisma/client';
 import { gId, trashId } from './seed';
+import url from 'url';
 
 import fs from 'fs';
 import path from 'path';
@@ -13,9 +14,9 @@ function randomTrueOrFalse() {
  */
 function loadChallenegeSync(challengeSlug: string) {
   // read from the __seed__ folder all the markdown files
-  const dirname = path.dirname(new URL(import.meta.url).pathname);
-  const filePath = path.join(dirname, `../__seed__/${challengeSlug}.md`);
-  return fs.readFileSync(filePath, 'utf8');
+  const filePath = new URL(`../__seed__/${challengeSlug}.md`, import.meta.url);
+  // return the file contents
+  return fs.readFileSync(url.fileURLToPath(filePath), 'utf8');
 }
 
 const shortDescription = `This is a typescript challenge short description area in which we can place text.
