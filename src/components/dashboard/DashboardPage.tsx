@@ -17,7 +17,13 @@ export default function DashboardPage() {
       <div className="flex-1 space-y-4 pt-6">
         <div className="flex items-center gap-4">
           <div className="flex items-center space-x-2">
-            <Image alt="user avatar" width="100" height="100" src="/avatar.jpeg" />
+            <Image
+              className="rounded-3xl"
+              alt="user avatar"
+              width="100"
+              height="100"
+              src="/avatar.jpeg"
+            />
           </div>
           <div>
             <p className="text-3xl font-bold tracking-tight">Username</p>
@@ -26,14 +32,37 @@ export default function DashboardPage() {
           </div>
         </div>
         <Tabs defaultValue="overview" className="space-y-4">
-          <TabsList>
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="in-progress">In-Progress</TabsTrigger>
-            <TabsTrigger value="solutions">Solutions</TabsTrigger>
-            <TabsTrigger value="bookmarks" disabled>
+          <TabsList className="rounded-full border border-border bg-background">
+            <TabsTrigger
+              className="rounded-l-2xl rounded-r-lg duration-300 data-[state=active]:bg-border"
+              value="overview"
+            >
+              Overview
+            </TabsTrigger>
+            <TabsTrigger
+              className="rounded-lg duration-300 data-[state=active]:bg-border"
+              value="in-progress"
+            >
+              In-Progress
+            </TabsTrigger>
+            <TabsTrigger
+              className="rounded-lg duration-300 data-[state=active]:bg-border"
+              value="solutions"
+            >
+              Solutions
+            </TabsTrigger>
+            <TabsTrigger
+              className="rounded-lg duration-300 data-[state=active]:bg-border"
+              value="bookmarks"
+              disabled
+            >
               Bookmarks
             </TabsTrigger>
-            <TabsTrigger value="comments" disabled>
+            <TabsTrigger
+              className="rounded-l-lg rounded-r-full duration-300 data-[state=active]:bg-border"
+              value="comments"
+              disabled
+            >
               Comments
             </TabsTrigger>
           </TabsList>
