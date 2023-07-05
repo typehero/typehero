@@ -6,10 +6,6 @@ import { Bookmark as BookmarkIcon, Share, ThumbsUp } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
-import ReactMarkdown from 'react-markdown';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import remarkGfm from 'remark-gfm';
 import { Button } from '~/components/ui/button';
 import {
   Dialog,
@@ -17,7 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogFooter
+  DialogFooter,
 } from '~/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
@@ -36,7 +32,7 @@ import { Checkbox } from '../ui/checkbox';
 import { TypographyLarge } from '../ui/typography/large';
 import { addReport } from './report.action';
 import { toast } from '../ui/use-toast';
-
+import { Markdown } from './markdown';
 
 interface Props {
   challenge: NonNullable<Challenge>;
@@ -89,7 +85,6 @@ export function DescriptionPanel({ challenge }: Props) {
       examples: false,
       derogatory: false,
     },
-
   });
 
   async function onSubmit(data: FormValues) {
@@ -100,32 +95,29 @@ export function DescriptionPanel({ challenge }: Props) {
         variant: 'success',
         description: (
           <p>
-            Thank you for submitting this feedback. Someone from our moderator
-            team will be reviewing it shortly.
+            Thank you for submitting this feedback. Someone from our moderator team will be
+            reviewing it shortly.
           </p>
-        )
+        ),
       });
-    } else if(response === 'report_already_made') {
+    } else if (response === 'report_already_made') {
       toast({
         title: 'Report already made',
         description: (
           <p>
-            You have already made a report about this challenge. We are still 
-            reviewing the question.
+            You have already made a report about this challenge. We are still reviewing the
+            question.
           </p>
-        )
-      })
+        ),
+      });
     } else if (response === 'not_logged_in') {
       toast({
         title: 'You are not loggeed in',
-        description: (
-          <p>Please log in to make this report.</p>
-        )
-      })
+        description: <p>Please log in to make this report.</p>,
+      });
     }
 
     setDialogOpen(false);
-
   }
 
   return (
@@ -141,38 +133,44 @@ export function DescriptionPanel({ challenge }: Props) {
         </TabsList>
         <TabsContent value="description" className="mt-0">
           <div className="h-full px-1 pb-0 pt-3 dark:px-4 dark:pb-2">
-            <div className="flex justify-between items-baseline">
+            <div className="flex items-baseline justify-between">
               <TypographyH3 className="mb-2 font-medium">{challenge.name}</TypographyH3>
               <div>
-                <ActionMenu items={[
-                  {
-                    key: 'feedback',
-                    label: 'Feedback',
-                    icon: 'Flag'
-                  }
-                ]} onChange={() => setDialogOpen(true)} />
+                <ActionMenu
+                  items={[
+                    {
+                      key: 'feedback',
+                      label: 'Feedback',
+                      icon: 'Flag',
+                    },
+                  ]}
+                  onChange={() => setDialogOpen(true)}
+                />
               </div>
             </div>
 
-            <Dialog open={dialogOpen} onOpenChange={e => setDialogOpen(!e)}>
+            <Dialog open={dialogOpen} onOpenChange={(e) => setDialogOpen(!e)}>
               <DialogContent>
                 <Form {...form}>
                   {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
                   <form onSubmit={form.handleSubmit(onSubmit)}>
                     <DialogHeader>
-                      <DialogTitle>
-                        Feedback: {challenge.name}
-                      </DialogTitle>
+                      <DialogTitle>Feedback: {challenge.name}</DialogTitle>
                     </DialogHeader>
 
-                    <div className="flex flex-col gap-4 my-4">
+                    <div className="my-4 flex flex-col gap-4">
                       <TypographyLarge>Issues Encountered</TypographyLarge>
                       <FormField
-                        name='examples'
+                        name="examples"
                         render={({ field }) => (
                           <FormItem>
-                            <div className="flex gap-4 items-center">
-                              <Checkbox id="examples" checked={field.value as boolean} onChange={field.onChange} onCheckedChange={field.onChange} />
+                            <div className="flex items-center gap-4">
+                              <Checkbox
+                                id="examples"
+                                checked={field.value as boolean}
+                                onChange={field.onChange}
+                                onCheckedChange={field.onChange}
+                              />
                               <label htmlFor="examples">
                                 Description or examples are unclear or incorrect
                               </label>
@@ -181,11 +179,15 @@ export function DescriptionPanel({ challenge }: Props) {
                         )}
                       />
                       <FormField
-                        name='derogatory'
+                        name="derogatory"
                         render={({ field }) => (
                           <FormItem>
                             <div className="flex items-center gap-4">
-                              <Checkbox id="derogatory" checked={field.value as boolean} onCheckedChange={field.onChange} />
+                              <Checkbox
+                                id="derogatory"
+                                checked={field.value as boolean}
+                                onCheckedChange={field.onChange}
+                              />
                               <label htmlFor="derogatory">
                                 Racist or other derogatory statement
                               </label>
@@ -194,37 +196,39 @@ export function DescriptionPanel({ challenge }: Props) {
                         )}
                       />
                       <FormField
-                        name='other'
+                        name="other"
                         render={({ field }) => (
                           <FormItem>
                             <div className="flex items-center gap-4">
-                              <Checkbox id="other" checked={field.value as boolean} onCheckedChange={field.onChange} />
-                              <label htmlFor="other">
-                                Other
-                              </label>
+                              <Checkbox
+                                id="other"
+                                checked={field.value as boolean}
+                                onCheckedChange={field.onChange}
+                              />
+                              <label htmlFor="other">Other</label>
                             </div>
                           </FormItem>
                         )}
                       />
                       <FormField
-                        name='comments'
+                        name="comments"
                         render={({ field }) => (
                           <FormItem>
-                            <TypographyLarge>
-                              Comments
-                            </TypographyLarge>
+                            <TypographyLarge>Comments</TypographyLarge>
                             <Textarea value={field.value as string} onChange={field.onChange} />
                           </FormItem>
                         )}
                       />
                     </div>
                     <DialogFooter>
-                      <Button variant='secondary' type="button" onClick={() => setDialogOpen(false)}>
+                      <Button
+                        variant="secondary"
+                        type="button"
+                        onClick={() => setDialogOpen(false)}
+                      >
                         Close
                       </Button>
-                      <Button type="submit">
-                        Report
-                      </Button>
+                      <Button type="submit">Report</Button>
                     </DialogFooter>
                   </form>
                 </Form>
@@ -353,34 +357,7 @@ export function DescriptionPanel({ challenge }: Props) {
               </TooltipProvider>
             </div>
             <div className="prose-invert leading-8 prose-h3:text-xl">
-              {/* @ts-ignore */}
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                components={{
-                  p: ({ ...props }) => <p className="mb-4" {...props} />,
-                  code({ inline, className, children, ...props }) {
-                    const match = /language-(\w+)/.exec(className || '');
-                    return !inline && match ? (
-                      <SyntaxHighlighter
-                        // @ts-ignore
-                        style={vscDarkPlus} // theme
-                        className="rounded-xl dark:rounded-md"
-                        language={match[1]}
-                        PreTag="section" // parent tag
-                        {...props}
-                      >
-                        {String(children).replace(/\n$/, '')}
-                      </SyntaxHighlighter>
-                    ) : (
-                      <code className="rounded-md bg-neutral-200 p-1 font-mono dark:bg-black">
-                        {children}
-                      </code>
-                    );
-                  },
-                }}
-              >
-                {challenge?.description}
-              </ReactMarkdown>
+              <Markdown>{challenge.description as string}</Markdown>
             </div>
           </div>
         </TabsContent>
