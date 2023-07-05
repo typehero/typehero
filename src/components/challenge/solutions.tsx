@@ -51,20 +51,20 @@ export function Solutions({ challenge }: Props) {
 function SolutionRow() {
   const date = new Date();
   return (
-    <div className="flex cursor-pointer flex-col gap-2 p-4 duration-300 hover:bg-neutral-100 dark:rounded-none dark:hover:bg-neutral-700">
+    <div className="group flex cursor-pointer flex-col gap-2 p-4 duration-300 hover:bg-neutral-100 dark:rounded-none dark:hover:bg-neutral-700">
       <h3 className="font-bold">🔥🔥Some | LeetCodeLooking✅ | Title🔥🔥</h3>
-      <div className="mb-2 flex items-center gap-2 text-neutral-600 dark:text-neutral-400">
-        <div className="rounded-lg bg-neutral-200 pl-1 pr-2 font-bold dark:bg-neutral-700 dark:text-neutral-300">
-          @&nbsp;username goes here
+      <div className="flex items-center gap-2 text-sm text-neutral-500">
+        <div className="rounded-full bg-neutral-200 px-2 py-1 text-xs font-bold text-neutral-600 dark:bg-neutral-700 dark:text-neutral-400">
+          @&nbsp;username
         </div>
         <div>{date.toLocaleString()}</div>
       </div>
-      <div className="flex gap-5 text-neutral-600 duration-300 dark:text-neutral-400">
-        <button className="flex items-center gap-2 rounded-full bg-emerald-600/10 p-2 pr-3 text-emerald-600 duration-300 hover:bg-emerald-400/20 dark:bg-emerald-400/20 dark:text-emerald-400">
-          <ArrowUp className="stroke-1" /> 70
+      <div className="flex gap-3 text-neutral-600 duration-300 dark:text-neutral-400">
+        <button className="flex cursor-pointer items-center gap-2 rounded-full bg-emerald-600/10 px-2 py-1 text-sm text-emerald-600 duration-300 hover:bg-emerald-400/40 dark:bg-emerald-400/20 dark:text-emerald-400 dark:hover:bg-emerald-400/40">
+          <ArrowUp className="h-4 w-4 stroke-1" /> 70
         </button>
-        <button className="flex items-center gap-2 rounded-full bg-white/5 p-2 pr-3 duration-300 hover:bg-black/20 only:dark:hover:bg-white/20">
-          <MessageCircle className="stroke-1" /> 69
+        <button className="flex cursor-pointer items-center gap-2 rounded-full bg-black/5 px-2 py-1 text-sm duration-300 hover:bg-black/20 dark:bg-white/5 dark:hover:bg-white/20">
+          <MessageCircle className="h-4 w-4 stroke-1" /> 69
         </button>
       </div>
     </div>
