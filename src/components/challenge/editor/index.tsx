@@ -54,10 +54,10 @@ type Props =
     };
 
 type TsErrors = [
-  monaco.languages.typescript.Diagnostic[],
-  monaco.languages.typescript.Diagnostic[],
-  monaco.languages.typescript.Diagnostic[],
-  monaco.languages.typescript.Diagnostic[],
+  SemanticDiagnostics: monaco.languages.typescript.Diagnostic[],
+  SyntacticDiagnostics: monaco.languages.typescript.Diagnostic[],
+  SuggestionDiagnostics: monaco.languages.typescript.Diagnostic[],
+  CompilerOptionsDiagnostics: monaco.languages.typescript.Diagnostic[],
 ];
 
 const libCache = new Set<string>();
@@ -147,7 +147,7 @@ export const CodePanel = (props: Props) => {
             });
           }
 
-					const hasErrors = !!tsErrors[0].length;
+          const hasErrors = !!tsErrors[0].length;
 
           if (!hasErrors) {
             return toast({

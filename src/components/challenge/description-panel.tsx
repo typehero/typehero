@@ -199,16 +199,14 @@ export function DescriptionPanel({ challenge }: Props) {
               </TooltipProvider>
             </div>
             <div className="prose-invert leading-8 prose-h3:text-xl">
-              {/* @ts-ignore */}
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
                   p: ({ ...props }) => <p className="mb-4" {...props} />,
-                  code({ inline, className, children, ...props }) {
+                  code({ inline, className, children, style: _style, ...props }) {
                     const match = /language-(\w+)/.exec(className || '');
                     return !inline && match ? (
                       <SyntaxHighlighter
-                        // @ts-ignore
                         style={vscDarkPlus} // theme
                         className="rounded-xl dark:rounded-md"
                         language={match[1]}
@@ -225,7 +223,7 @@ export function DescriptionPanel({ challenge }: Props) {
                   },
                 }}
               >
-                {challenge?.description}
+                {challenge?.description as string}
               </ReactMarkdown>
             </div>
           </div>

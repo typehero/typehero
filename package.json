@@ -21,6 +21,7 @@
     "@next-auth/prisma-adapter": "^1.0.6",
     "@prisma/client": "^4.14.0",
     "@radix-ui/react-avatar": "^1.0.3",
+    "@radix-ui/react-checkbox": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.4",
     "@radix-ui/react-dropdown-menu": "^2.0.5",
     "@radix-ui/react-label": "^2.0.2",
