@@ -25,7 +25,7 @@ export function ChallengeSkeleton() {
     >
       <div
         ref={leftSide}
-        className="w-full min-w-full animate-pulse overflow-y-auto rounded-xl bg-white dark:bg-zinc-800 lg:min-w-[500px]"
+        className="w-full min-w-full animate-pulse overflow-y-auto rounded-xl border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 lg:min-w-[500px]"
       >
         <DescriptionPanelSkeleton />
       </div>

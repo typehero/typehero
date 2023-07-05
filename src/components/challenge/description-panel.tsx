@@ -6,6 +6,7 @@ import { Bookmark as BookmarkIcon, Share, ThumbsUp } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
+
 import { Button } from '~/components/ui/button';
 import {
   Dialog,
@@ -123,16 +124,22 @@ export function DescriptionPanel({ challenge }: Props) {
   return (
     <>
       <Tabs defaultValue="description" className="w-full">
-        <TabsList className="sticky top-0 grid w-full grid-cols-2 rounded-xl bg-neutral-200 bg-opacity-70 backdrop-blur-md dark:bg-muted">
-          <TabsTrigger className="rounded-lg" value="description">
+        <TabsList className="sticky top-0 z-10 grid h-auto w-full grid-cols-2 rounded-none border-b border-zinc-300 bg-background/90 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
+          <TabsTrigger
+            value="description"
+            className="rounded-md rounded-tl-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
+          >
             Description
           </TabsTrigger>
-          <TabsTrigger className="rounded-lg" value="solutions">
+          <TabsTrigger
+            value="solutions"
+            className="rounded-md rounded-tr-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
+          >
             Solutions
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="description" className="mt-0">
-          <div className="h-full px-1 pb-0 pt-3 dark:px-4 dark:pb-2">
+        <TabsContent value="description" className="mt-0 dark:bg-muted">
+          <div className="h-full px-4 py-3">
             <div className="flex items-baseline justify-between">
               <TypographyH3 className="mb-2 font-medium">{challenge.name}</TypographyH3>
               <div>
@@ -361,7 +368,7 @@ export function DescriptionPanel({ challenge }: Props) {
             </div>
           </div>
         </TabsContent>
-        <TabsContent className="mt-0" value="solutions">
+        <TabsContent value="solutions" className="mt-0 dark:bg-muted">
           <Solutions challenge={challenge} />
         </TabsContent>
       </Tabs>

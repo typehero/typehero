@@ -4,15 +4,21 @@ export function DescriptionPanelSkeleton() {
   return (
     <>
       <Tabs defaultValue="description" className="w-full">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="description" className="hover:bg-zinc-200 dark:hover:bg-zinc-700">
+        <TabsList className="sticky top-0 grid h-auto w-full grid-cols-2 rounded-none border-b border-zinc-300 bg-background dark:border-zinc-700 dark:bg-muted">
+          <TabsTrigger
+            value="description"
+            className="rounded-md rounded-tl-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
+          >
             Description
           </TabsTrigger>
-          <TabsTrigger value="solutions" className="hover:bg-zinc-200 dark:hover:bg-zinc-700">
+          <TabsTrigger
+            value="solutions"
+            className="rounded-md rounded-tr-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
+          >
             Solutions
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="description" className="mt-0">
+        <TabsContent value="description" className="mt-0 dark:bg-muted">
           <div className="h-full p-5">
             <div className="mb-2 h-8 w-1/2 rounded-lg bg-zinc-300 dark:bg-zinc-700"> </div>
             <div className="mb-6 flex items-center gap-6 py-4">

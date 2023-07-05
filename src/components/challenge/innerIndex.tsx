@@ -116,7 +116,7 @@ export function InnerIndex({ challenge }: Props) {
     >
       <div
         ref={leftSide}
-        className="min-h-[42px] w-full overflow-y-auto rounded-xl bg-white dark:bg-zinc-800 lg:min-w-[500px]"
+        className="min-h-[42px] w-full overflow-y-auto rounded-xl border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 lg:min-w-[500px]"
       >
         <DescriptionPanel challenge={challenge} />
       </div>
