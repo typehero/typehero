@@ -1,0 +1,51 @@
+diff --git a/package.json b/package.json
+index 32b6844c5342b3a577fc090be305d2d3584c4998..1366e857838c134a36dfaf88a908aae3968cccdb 100644
+--- a/package.json
++++ b/package.json
+@@ -82,6 +82,7 @@
+     "@babel/preset-react": "^7.17.12",
+     "@babel/preset-typescript": "^7.17.12",
+     "@edge-runtime/jest-environment": "1.1.0-beta.35",
++    "@next-auth/tsconfig": "0.0.0",
+     "@swc/core": "^1.2.198",
+     "@swc/jest": "^0.2.21",
+     "@testing-library/dom": "^8.13.0",
+@@ -110,8 +111,7 @@
+     "postcss-nested": "^5.0.6",
+     "react": "^18",
+     "react-dom": "^18",
+-    "whatwg-fetch": "^3.6.2",
+-    "@next-auth/tsconfig": "0.0.0"
++    "whatwg-fetch": "^3.6.2"
+   },
+   "scripts": {
+     "build": "pnpm clean && pnpm build:js && pnpm build:css",
+@@ -124,5 +124,10 @@
+     "test": "jest --config ./config/jest.config.js",
+     "generate-providers": "node ./config/generate-providers.js",
+     "lint": "eslint src config tests"
++  },
++  "pnpm": {
++    "patchedDependencies": {
++      "next-auth@4.22.1": "patches/next-auth@4.22.1.patch"
++    }
+   }
+ }
+\ No newline at end of file
+diff --git a/providers/github.js b/providers/github.js
+index d9a68e0f126df7b05fb4b38fa2969827765c43c6..c5c1af28e1773561ea018a4d4720b7e55c632066 100644
+--- a/providers/github.js
++++ b/providers/github.js
+@@ -47,11 +47,9 @@ function Github(options) {
+     },
+ 
+     profile(profile) {
+-      var _profile$name;
+-
+       return {
+         id: profile.id.toString(),
+-        name: (_profile$name = profile.name) !== null && _profile$name !== void 0 ? _profile$name : profile.login,
++        name: profile.login,
+         email: profile.email,
+         image: profile.avatar_url
+       };
