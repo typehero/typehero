@@ -1,4 +1,5 @@
-const { fontFamily } = require('tailwindcss/defaultTheme');
+// eslint-disable-next-line
+const { fontFamily } = require('tailwindcss/defaultTheme') as typeof import('tailwindcss/defaultTheme');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -54,8 +55,8 @@ module.exports = {
         },
       },
       borderRadius: {
-        lg: `var(--radius)`,
-        md: `calc(var(--radius) - 2px)`,
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
       fontFamily: {

@@ -9,7 +9,10 @@ import { Markdown } from '../ui/markdown';
 import getRelativeTime from '~/utils/relativeTime';
 
 interface Props {
-  challenge: Awaited<Challenge>[0];
+  challenge: Pick<
+    Awaited<Challenge>[0],
+    'difficulty' | 'name' | 'shortDescription' | '_count' | 'updatedAt'
+  >;
 }
 
 const BORDERS_BY_DIFFICULTY = {

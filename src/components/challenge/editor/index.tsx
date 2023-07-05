@@ -23,7 +23,7 @@ import type { Challenge } from '..';
 import { saveSubmission } from '../save-submission';
 import { SettingsForm } from '../settings-form';
 import { useEditorSettingsStore } from '../settings-store';
-import { USER_CODE_START } from './constants';
+import { USER_CODE_START, USER_CODE_START_REGEX } from './constants';
 import { libSource } from './editor-types';
 import { createTwoslashInlayProvider } from './twoslash';
 import { VimStatusBar } from './vimMode';
@@ -42,16 +42,29 @@ const LIB_URI = 'ts:filename/checking.d.ts';
 
 type Monaco = typeof monaco;
 
-type Props =
+type Props = (
   | {
       mode: 'solve';
-      challenge: NonNullable<Challenge>;
+      challenge: Pick<NonNullable<Challenge>, 'Solution' | 'prompt' | 'id'>;
+      prompt?: never;
     }
   | {
       mode: 'create';
       challenge?: never;
       onSubmit: (code: string) => void;
-    };
+      prompt: string | undefined;
+    }
+  | {
+      mode: 'check-created';
+      challenge?: never;
+      prompt: string;
+      onSubmit: () => void;
+    }
+) & {
+  /** @default "Submit" */
+  submitText?: string;
+  extraButton?: React.ReactNode;
+};
 
 type TsErrors = [
   SemanticDiagnostics: monaco.languages.typescript.Diagnostic[],
@@ -73,7 +86,7 @@ export const CodePanel = (props: Props) => {
 
   // Prisma.JsonValue
   const defaultCode = useMemo(() => {
-    if (props.mode !== 'solve') return '';
+    if (props.mode !== 'solve') return props.prompt ?? '';
 
     // if a user has an existing solution use that instead of prompt
     const usersExistingSolution = props.challenge.Solution?.[0];
@@ -83,12 +96,12 @@ export const CodePanel = (props: Props) => {
     }
 
     const [appendSolutionToThis, separator] = (props.challenge.prompt as string).split(
-      /(\/\/ CODE START)/g,
+      USER_CODE_START_REGEX,
     );
     const parsedUserSolution = JSON.parse(usersExistingSolution?.code as string) as string;
 
     return `${appendSolutionToThis ?? ''}${separator ?? ''}${parsedUserSolution}`;
-  }, [props.challenge?.Solution, props.challenge?.prompt, props.mode]);
+  }, [props.challenge?.Solution, props.challenge?.prompt, props.mode, props.prompt]);
 
   const [code, setCode] = useState(defaultCode as string);
 
@@ -136,37 +149,52 @@ export const CodePanel = (props: Props) => {
             });
           }
         }
-      : () => {
+      : props.mode === 'create'
+      ? () => {
           // check that it has some test cases
           // checks that there is a line that starts with Equal or Extends or NotEqual
           if (!/(?:\n|^)\s*(?:Equal|Extends|NotEqual)</.test(code)) {
-            return toast({
+            toast({
               variant: 'destructive',
               title: 'You need to have test cases in your challenge',
               action: <ToastAction altText="Try again">Try again</ToastAction>,
             });
+
+            return Promise.resolve();
           }
 
           const hasErrors = !!tsErrors[0].length;
 
           if (!hasErrors) {
-            return toast({
+            toast({
               variant: 'destructive',
               title: 'You need to have failing test cases in your challenge',
               action: <ToastAction altText="Try again">Try again</ToastAction>,
             });
+
+            return Promise.resolve();
           }
 
-          if (!code.includes(USER_CODE_START)) {
-            return toast({
+          if (!USER_CODE_START_REGEX.test(code)) {
+            toast({
               variant: 'destructive',
               title: `You need to have the line \`${USER_CODE_START}\` to signify the non-editable part`,
               action: <ToastAction altText="Try again">Try again</ToastAction>,
             });
+
+            return Promise.resolve();
           }
 
           props.onSubmit(code);
-        };
+
+          return Promise.resolve();
+        }
+      : props.mode === 'check-created'
+      ? () => {
+					props.onSubmit();
+          return Promise.resolve();
+        }
+      : () => Promise.reject('not finished');
 
   const onMount =
     (value: string, onError: (v: TsErrors) => void) =>
@@ -210,15 +238,17 @@ export const CodePanel = (props: Props) => {
 
       // TODO: we prolly should use this for blocking ranges as it might not be as janky
       // https://github.com/Pranomvignesh/constrained-editor-plugin
-      model.onDidChangeContent((e) => {
-        // in monaco editor, the first line is e1e1e
-        // do net let them type if they are editing before lineWithUserCode
-        if (e.changes.some((c) => c.range.startLineNumber <= lineWithUserCode + 1)) {
-          editor.trigger('someIdString', 'undo', null);
-        }
+      if (props.mode !== 'create') {
+        model.onDidChangeContent((e) => {
+          // in monaco editor, the first line is e1e1e
+          // do net let them type if they are editing before lineWithUserCode
+          if (e.changes.some((c) => c.range.startLineNumber <= lineWithUserCode + 1)) {
+            editor.trigger('someIdString', 'undo', null);
+          }
 
-        typeCheck().catch(console.error);
-      });
+          typeCheck().catch(console.error);
+        });
+      }
 
       await typeCheck();
       setInitialTypecheckDone(true);
@@ -266,27 +296,30 @@ export const CodePanel = (props: Props) => {
         )}
       >
         {editorState && <VimStatusBar editor={editorState} />}
-        <TooltipProvider>
-          <Tooltip delayDuration={0.05} open={session?.user?.id ? false : undefined}>
-            <TooltipTrigger asChild>
-              <span>
-                <Button
-                  size="sm"
-                  className="cursor-pointer bg-emerald-600 duration-300 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
-                  // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                  onClick={handleSubmit}
-                  disabled={!initialTypecheckDone || !session?.user}
-                >
-                  {!initialTypecheckDone && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                  Submit
-                </Button>
-              </span>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Login to Submit</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <div className="flex items-center justify-center gap-4">
+          {props.extraButton}
+          <TooltipProvider>
+            <Tooltip delayDuration={0.05} open={session?.user?.id ? false : undefined}>
+              <TooltipTrigger asChild>
+                <span>
+                  <Button
+                    size="sm"
+                    className="cursor-pointer bg-emerald-600 duration-300 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
+                    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                    onClick={handleSubmit}
+                    disabled={!initialTypecheckDone || !session?.user}
+                  >
+                    {!initialTypecheckDone && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    {props.submitText ?? 'Submit'}
+                  </Button>
+                </span>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Login to Submit</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
       </div>
     </>
   );
