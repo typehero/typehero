@@ -2,13 +2,16 @@ import { type Session, getServerSession } from 'next-auth';
 import { notFound } from 'next/navigation';
 import { prisma } from '~/server/db';
 
-import { InnerIndex } from './innerIndex';
+import { ChallengeLayout } from './challenge-layout';
+import { DescriptionPanel } from './description-panel';
+import { CodePanel } from './editor';
 
 interface Props {
   id: string;
 }
 
 export type Challenge = Awaited<ReturnType<typeof getChallenge>>;
+
 export async function Challenge({ id }: Props) {
   const session = await getServerSession();
   const challenge = await getChallenge(id, session);
@@ -17,7 +20,12 @@ export async function Challenge({ id }: Props) {
     return notFound();
   }
 
-  return <InnerIndex challenge={challenge} />;
+  return (
+    <ChallengeLayout
+      left={<DescriptionPanel challenge={challenge} />}
+      right={<CodePanel mode="solve" challenge={challenge} />}
+    />
+  );
 }
 
 async function getChallenge(id: string, session: Session | null) {

@@ -1,26 +1,62 @@
 'use client';
 
-import { CodePanel } from './editor';
-import { DescriptionPanel } from './description-panel';
-import { useRef, useEffect } from 'react';
-import { useLayoutSettingsStore } from './layout-store';
+import clsx from 'clsx';
+import { useRef, useEffect, type ReactNode } from 'react';
 
-import type { Challenge } from '.';
-interface Props {
-  challenge: NonNullable<Challenge>;
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+
+export const DEFAULT_SETTINGS = {
+  width: '500px',
+  height: '300px',
+};
+
+type Settings = typeof DEFAULT_SETTINGS;
+
+interface State {
+  settings: Settings;
+  updateSettings: (settings: Settings) => void;
 }
 
-export function InnerIndex({ challenge }: Props) {
-  const parent = useRef<HTMLDivElement | null>(null);
-  const resizer = useRef<HTMLDivElement | null>(null);
-  const leftSide = useRef<HTMLDivElement | null>(null);
-  const rightSide = useRef<HTMLDivElement | null>(null);
+export const useLayoutSettingsStore = create<State>()(
+  persist(
+    (set, get) => ({
+      settings: DEFAULT_SETTINGS,
+      updateSettings: (settings) => set({ settings: { ...get().settings, ...settings } }),
+    }),
+    {
+      name: 'challenge-layout-settings',
+    },
+  ),
+);
+
+export interface ChallengeLayoutProps {
+  left: ReactNode;
+  right: ReactNode;
+  skeleton?: boolean;
+}
+
+export function ChallengeLayout({ left, right, skeleton = false }: ChallengeLayoutProps) {
+  const parent = useRef<HTMLDivElement>(null);
+  const resizer = useRef<HTMLDivElement>(null);
+  const leftSide = useRef<HTMLDivElement>(null);
+  const rightSide = useRef<HTMLDivElement>(null);
   const { settings, updateSettings } = useLayoutSettingsStore();
 
   useEffect(() => {
     const ref = resizer.current as HTMLDivElement;
     const leftRef = leftSide.current as HTMLDivElement;
     const rightRef = rightSide.current as HTMLDivElement;
+    const parentRef = parent.current as HTMLDivElement;
+
+    if (skeleton) {
+      parentRef.classList.remove('opacity-0');
+      window.innerWidth > 1025
+        ? (leftRef.style.width = settings.width)
+        : (leftRef.style.height = settings.height);
+
+      return;
+    }
 
     // resize width on desktop, height on mobile
     window.innerWidth > 1025
@@ -53,8 +89,8 @@ export function InnerIndex({ challenge }: Props) {
       const dx = e.clientX - x;
       const dy = e.clientY - y;
 
-      const divideByW = parent?.current?.getBoundingClientRect().width as number | 1;
-      const divideByH = parent?.current?.getBoundingClientRect().height as number | 1;
+      const divideByW = parent.current?.getBoundingClientRect().width as number | 1;
+      const divideByH = parent.current?.getBoundingClientRect().height as number | 1;
       const newLeftWidth = ((leftWidth + dx) * 100) / divideByW;
       const newTopHeight = ((topHeight + dy) * 100) / divideByH;
 
@@ -106,32 +142,48 @@ export function InnerIndex({ challenge }: Props) {
     return () => {
       ref?.removeEventListener('mousedown', mouseDownHandler);
     };
-  }, [settings, updateSettings]);
+  }, [settings, updateSettings, skeleton]);
 
   return (
     <div
       ref={parent}
-      className="flex flex-col px-4 pb-4 lg:flex-row"
+      className={clsx('flex flex-col px-4 pb-4 lg:flex-row', skeleton && 'opacity-0')}
       style={{ height: 'calc(100dvh - 3.5rem)' }}
     >
       <div
         ref={leftSide}
-        className="min-h-[42px] w-full overflow-y-auto rounded-xl border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 lg:min-w-[500px]"
+        className={clsx(
+          'min-h-[42px] w-full overflow-y-auto rounded-xl border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 lg:min-w-[500px]',
+          skeleton && 'animate-pulse',
+        )}
       >
-        <DescriptionPanel challenge={challenge} />
+        {left}
       </div>
       <div
         ref={resizer}
-        className="resizer group relative cursor-row-resize p-2 lg:cursor-col-resize"
+        className={clsx(
+          'resizer relative p-2',
+          !skeleton && 'group cursor-row-resize lg:cursor-col-resize',
+        )}
       >
-        <div className="absolute left-1/2 top-1/2 h-1 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-400 duration-300 group-hover:bg-neutral-600 group-active:bg-emerald-400 group-active:duration-75 dark:bg-neutral-700 group-hover:dark:bg-neutral-500 lg:h-24 lg:w-1" />
+        <div
+          className={clsx(
+            'absolute left-1/2 top-1/2 h-1 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-400 lg:h-24 lg:w-1',
+            skeleton
+              ? 'dark:bg-neutral-700'
+              : 'duration-300 group-hover:bg-neutral-600 group-active:bg-emerald-400 group-active:duration-75 dark:bg-neutral-700 group-hover:dark:bg-neutral-500',
+          )}
+        />
       </div>
       <div
         ref={rightSide}
         style={{ flex: '1 1 0%' }}
-        className="flex min-h-[90px] w-full flex-col overflow-hidden rounded-xl border border-zinc-300 dark:border-zinc-700 lg:min-w-[500px]"
+        className={clsx(
+          'flex flex-col overflow-hidden rounded-xl border border-zinc-300 dark:border-zinc-700 lg:min-w-[500px]',
+          skeleton ? 'items-center justify-center pb-3 dark:bg-[#1e1e1e]' : 'min-h-[90px] w-full',
+        )}
       >
-        <CodePanel challenge={challenge} />
+        {right}
       </div>
     </div>
   );

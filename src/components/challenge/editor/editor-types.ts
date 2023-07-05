@@ -37,6 +37,16 @@ type IsUnion<T, U = T> = [T] extends [never]
  */
 declare function Equal<A, B>(...args: Alike<A, B> extends true ? [] : [msg: "not equal"]): void;
 
+
+/** 
+ * Helper function to test your code.
+ * 
+ * Checks that two types aren't the same
+ * 
+ * To check what it is failing, you can hover over \`NotEqual\` and see what the types failing are
+ */
+declare function NotEqual<A, B>(...args: Alike<A, B> extends true ? [msg: "equal"] : []): void;
+
 /** 
  * Helper function to test your code.
  * 
