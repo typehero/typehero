@@ -17,17 +17,17 @@ export function Solutions({ challenge }: Props) {
 
   return (
     <>
-      <div className="sticky right-0 top-0 flex h-full items-center justify-between px-2 pb-2 pt-1">
+      <div className="sticky right-0 top-0 flex h-full items-center justify-between p-2">
         <div className="flex gap-2">
-          <div className="flex gap-2 rounded-xl bg-blue-600/10 px-4 py-1 text-blue-600 dark:bg-blue-400/10 dark:text-blue-400">
+          <div className="flex gap-2 rounded-xl bg-blue-600/10 px-4 py-2 text-blue-600 dark:bg-blue-400/10 dark:text-blue-400">
             All
           </div>
-          <div className="flex gap-2 rounded-xl bg-black/5 px-4 py-1 text-neutral-500 dark:bg-white/5 dark:text-neutral-400">
+          <div className="flex gap-2 rounded-xl bg-black/5 px-4 py-2 text-neutral-500 dark:bg-white/5 dark:text-neutral-400">
             Tag 2
           </div>
         </div>
         <Button
-          className="bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
+          className="rounded-xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
           onClick={() => handleClick()}
           disabled={!hasSolution}
         >

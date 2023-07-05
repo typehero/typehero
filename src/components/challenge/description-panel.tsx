@@ -123,23 +123,23 @@ export function DescriptionPanel({ challenge }: Props) {
 
   return (
     <>
-      <Tabs defaultValue="description" className="w-full bg-background">
-        <TabsList className="sticky top-0 grid h-auto w-full grid-cols-2 rounded-xl bg-neutral-200 bg-opacity-70 backdrop-blur-md dark:rounded-none dark:bg-background dark:p-0">
+      <Tabs defaultValue="description" className="w-full">
+        <TabsList className="sticky bg-background dark:bg-muted top-0 grid h-auto w-full grid-cols-2 rounded-none border-b border-zinc-300 dark:border-zinc-700">
           <TabsTrigger
-            className="rounded-lg dark:rounded-b-none dark:data-[state=active]:bg-muted"
             value="description"
+            className="rounded-md rounded-tl-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
           >
             Description
           </TabsTrigger>
           <TabsTrigger
-            className="rounded-lg dark:rounded-b-none dark:data-[state=active]:bg-muted"
             value="solutions"
+            className="rounded-md rounded-tr-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
           >
             Solutions
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="description" className="mt-0 rounded-tr-xl dark:bg-muted">
-          <div className="h-full px-1 pb-0 pt-3 dark:px-4 dark:pb-2">
+        <TabsContent value="description" className="mt-0 dark:bg-muted">
+          <div className="h-full px-4 py-3">
             <div className="flex items-baseline justify-between">
               <TypographyH3 className="mb-2 font-medium">{challenge.name}</TypographyH3>
               <div>
@@ -368,7 +368,7 @@ export function DescriptionPanel({ challenge }: Props) {
             </div>
           </div>
         </TabsContent>
-        <TabsContent value="solutions" className="mt-0 rounded-tl-2xl dark:bg-muted">
+        <TabsContent value="solutions" className="mt-0 dark:bg-muted">
           <Solutions challenge={challenge} />
         </TabsContent>
       </Tabs>
