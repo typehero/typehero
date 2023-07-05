@@ -1,6 +1,10 @@
+'use server';
 import Head from 'next/head';
+import {testing} from '../components/testing.action';
 
-export default function Index() {
+export default async function Index() {
+  const data = await testing();
+  console.info('DATA', data);
   return (
     <>
       <Head>
