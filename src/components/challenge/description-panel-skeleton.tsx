@@ -3,16 +3,22 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 export function DescriptionPanelSkeleton() {
   return (
     <>
-      <Tabs defaultValue="description" className="w-full">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="description" className="hover:bg-zinc-200 dark:hover:bg-zinc-700">
+      <Tabs defaultValue="description" className="w-full bg-background">
+        <TabsList className="sticky top-0 grid h-auto w-full grid-cols-2 rounded-xl bg-neutral-200 bg-opacity-70 backdrop-blur-md dark:rounded-none dark:bg-background dark:p-0">
+          <TabsTrigger
+            value="description"
+            className="rounded-lg dark:rounded-b-none dark:data-[state=active]:bg-muted"
+          >
             Description
           </TabsTrigger>
-          <TabsTrigger value="solutions" className="hover:bg-zinc-200 dark:hover:bg-zinc-700">
+          <TabsTrigger
+            value="solutions"
+            className="rounded-lg dark:rounded-b-none dark:data-[state=active]:bg-muted"
+          >
             Solutions
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="description" className="mt-0">
+        <TabsContent value="description" className="mt-0 h-screen rounded-tr-xl dark:bg-muted">
           <div className="h-full p-5">
             <div className="mb-2 h-8 w-1/2 rounded-lg bg-zinc-300 dark:bg-zinc-700"> </div>
             <div className="mb-6 flex items-center gap-6 py-4">

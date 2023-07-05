@@ -16,13 +16,13 @@ export function Solutions({ challenge }: Props) {
   };
 
   return (
-    <div className="relative flex flex-col gap-4">
-      <div className="sticky right-0 top-0 flex h-full items-center justify-between px-2 py-1">
+    <>
+      <div className="sticky right-0 top-0 flex h-full items-center justify-between px-2 pb-2 pt-1">
         <div className="flex gap-2">
-          <div className="flex gap-2 rounded-full bg-blue-600/10 px-4 py-1 text-blue-600 dark:bg-blue-400/10 dark:text-blue-400">
+          <div className="flex gap-2 rounded-xl bg-blue-600/10 px-4 py-1 text-blue-600 dark:bg-blue-400/10 dark:text-blue-400">
             All
           </div>
-          <div className="flex gap-2 rounded-full bg-black/5 px-4 py-1 text-neutral-500 dark:bg-white/5 dark:text-neutral-400">
+          <div className="flex gap-2 rounded-xl bg-black/5 px-4 py-1 text-neutral-500 dark:bg-white/5 dark:text-neutral-400">
             Tag 2
           </div>
         </div>
@@ -34,9 +34,11 @@ export function Solutions({ challenge }: Props) {
           <Plus className="mr-2 h-4 w-4" /> Solution
         </Button>
       </div>
-      <SolutionRow />
-      <SolutionRow2 />
-    </div>
+      <div className="relative flex flex-col gap-4">
+        <SolutionRow />
+        <SolutionRow2 />
+      </div>
+    </>
   );
 }
 
