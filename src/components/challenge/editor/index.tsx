@@ -191,7 +191,7 @@ export const CodePanel = (props: Props) => {
         }
       : props.mode === 'check-created'
       ? () => {
-					props.onSubmit();
+          props.onSubmit();
           return Promise.resolve();
         }
       : () => Promise.reject('not finished');
@@ -238,17 +238,17 @@ export const CodePanel = (props: Props) => {
 
       // TODO: we prolly should use this for blocking ranges as it might not be as janky
       // https://github.com/Pranomvignesh/constrained-editor-plugin
-      if (props.mode !== 'create') {
-        model.onDidChangeContent((e) => {
+      model.onDidChangeContent((e) => {
+        if (props.mode !== 'create') {
           // in monaco editor, the first line is e1e1e
           // do net let them type if they are editing before lineWithUserCode
           if (e.changes.some((c) => c.range.startLineNumber <= lineWithUserCode + 1)) {
             editor.trigger('someIdString', 'undo', null);
           }
+        }
 
-          typeCheck().catch(console.error);
-        });
-      }
+        typeCheck().catch(console.error);
+      });
 
       await typeCheck();
       setInitialTypecheckDone(true);
