@@ -11,7 +11,8 @@
     "format": "prettier -w 'src/**/*.{ts,tsx,css,cjs,mjs,json}'",
     "start": "next start",
     "refresh": "pnpm reset && pnpm prisma db seed",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prepare": "husky install"
   },
   "type": "module",
   "dependencies": {
@@ -21,6 +22,7 @@
     "@next-auth/prisma-adapter": "^1.0.6",
     "@prisma/client": "^4.14.0",
     "@radix-ui/react-avatar": "^1.0.3",
+    "@radix-ui/react-checkbox": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.4",
     "@radix-ui/react-dropdown-menu": "^2.0.5",
     "@radix-ui/react-label": "^2.0.2",
@@ -84,7 +86,8 @@
     "prettier-plugin-tailwindcss": "^0.2.8",
     "prisma": "^4.14.0",
     "tailwindcss": "^3.3.0",
-    "tsx": "^3.12.7"
+    "tsx": "^3.12.7",
+    "husky": "^8.0.0"
   },
   "ct3aMetadata": {
     "initVersion": "7.13.1"
