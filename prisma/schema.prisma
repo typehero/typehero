@@ -20,9 +20,10 @@ enum Difficulty {
   EXTREME
 }
 
-enum Role {
+enum RoleTypes {
   USER
   ADMIN
+  MODERATOR
 }
 
 enum Status {
@@ -61,11 +62,17 @@ model Session {
   @@index([userId])
 }
 
+model Role {
+  id   String    @id @default(uuid())
+  user User[]
+  role RoleTypes @unique
+}
+
 model User {
   id             String           @id @default(uuid())
   name           String?
   email          String?          @unique
-  role           Role             @default(USER)
+  roles          Role[]
   status         Status           @default(PENDING)
   emailVerified  DateTime?
   image          String?

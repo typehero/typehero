@@ -1,5 +1,5 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import type { Role } from '@prisma/client';
+import type { Role, RoleTypes } from '@prisma/client';
 import { type GetServerSidePropsContext } from 'next';
 import { getServerSession, type DefaultSession, type NextAuthOptions } from 'next-auth';
 import GitHubProvider from 'next-auth/providers/github';
@@ -16,25 +16,67 @@ declare module 'next-auth' {
   interface Session extends DefaultSession {
     user: {
       id: string;
-      role: Role;
+      role: RoleTypes[];
     } & DefaultSession['user'];
   }
 
   interface User {
-    role: Role;
+    roles: Role[];
   }
 }
 
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-        role: user.role,
-      },
-    }),
+    session: async ({ session, user }) => {
+      // 1. State
+      let userRoles: RoleTypes[] = [];
+
+      // 2. If user already has roles, reduce them to a RoleTypes array.
+      if (user.roles) {
+        userRoles = user.roles.reduce((acc: RoleTypes[], role) => {
+          acc.push(role.role);
+          return acc;
+        }, []);
+      }
+
+      // 3. If the current user doesn't have a USER role. Assign one.
+      if (!userRoles.includes('USER')) {
+        const updatedUser = await prisma.user.update({
+          where: {
+            id: user.id,
+          },
+          data: {
+            roles: {
+              connectOrCreate: {
+                where: {
+                  role: 'USER',
+                },
+                create: {
+                  role: 'USER',
+                },
+              },
+            },
+          },
+          include: {
+            roles: true,
+          },
+        });
+
+        userRoles = updatedUser.roles.reduce((acc: RoleTypes[], role) => {
+          acc.push(role.role);
+          return acc;
+        }, []);
+      }
+
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: user.id,
+          role: userRoles,
+        },
+      };
+    },
   },
   adapter: PrismaAdapter(prisma),
   providers: [
