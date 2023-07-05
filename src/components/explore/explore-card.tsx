@@ -46,7 +46,7 @@ export function ExploreCard({ challenge }: Props) {
           <CardTitle className="pb-4">{challenge.name}</CardTitle>
           <CardDescription className="relative h-48 overflow-hidden pb-4">
             <div className="pointer-events-none absolute inset-0 h-full w-full shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card))] duration-300 group-hover:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))] group-focus:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))]" />
-            <Markdown description={challenge?.shortDescription} />
+            <Markdown>{challenge?.shortDescription}</Markdown>
           </CardDescription>
         </div>
       </CardHeader>

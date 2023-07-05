@@ -5,11 +5,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import remarkGfm from 'remark-gfm';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-interface Props {
-  description: string;
-}
-
-export function Markdown({ description }: Props) {
+export function Markdown({ children }: { children: string }) {
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
@@ -36,7 +32,7 @@ export function Markdown({ description }: Props) {
         },
       }}
     >
-      {description}
+      {children}
     </ReactMarkdown>
   );
 }
