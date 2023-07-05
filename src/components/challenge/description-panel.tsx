@@ -124,7 +124,7 @@ export function DescriptionPanel({ challenge }: Props) {
   return (
     <>
       <Tabs defaultValue="description" className="w-full">
-        <TabsList className="sticky top-0 grid h-auto w-full grid-cols-2 rounded-none border-b border-zinc-300 bg-background dark:border-zinc-700 dark:bg-muted">
+        <TabsList className="sticky top-0 z-10 grid h-auto w-full grid-cols-2 rounded-none border-b border-zinc-300 bg-background/90 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
           <TabsTrigger
             value="description"
             className="rounded-md rounded-tl-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
