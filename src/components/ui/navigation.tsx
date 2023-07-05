@@ -3,7 +3,7 @@
 import { useTheme } from 'next-themes';
 
 import Link from 'next/link';
-import { LogIn, User, Bell, Moon, Sun, Loader2 } from 'lucide-react';
+import { LogIn, Plus, Settings, User, Bell, Moon, Sun, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { signIn, signOut } from 'next-auth/react';
@@ -26,6 +26,7 @@ import {
   DropdownMenuTrigger,
 } from './dropdown-menu';
 import { useSession } from 'next-auth/react';
+import { RoleTypes } from '@prisma/client';
 
 export function Navigation() {
   const [mounted, setMounted] = useState(false);
@@ -34,6 +35,10 @@ export function Navigation() {
   const { setTheme, resolvedTheme } = useTheme();
   const router = useRouter();
   const pathname = usePathname();
+
+  const isAdmin = session?.user?.role?.includes(RoleTypes.ADMIN);
+  const isMod = session?.user?.role?.includes(RoleTypes.MODERATOR);
+  const isAdminOrMod = isAdmin || isMod;
 
   // NOTE: 1. loading == true -> 2. signIn() -> 3. session status == 'loading' (loading == false)
   const handleSignIn = async () => {
@@ -148,16 +153,26 @@ export function Navigation() {
                       </button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-56">
-                      <DropdownMenuLabel className="text-neutral-600 dark:text-neutral-400">
-                        My Account
-                      </DropdownMenuLabel>
-                      <DropdownMenuSeparator />
+                      <Link className="block" href="/create">
+                        <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
+                          <Plus className="mr-2 h-4 w-4" />
+                          <span>Create a Challange</span>
+                        </DropdownMenuItem>
+                      </Link>
                       <Link className="block" href={`/@${session.user.name ?? ''}`}>
                         <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
                           <User className="mr-2 h-4 w-4" />
                           <span>Profile</span>
                         </DropdownMenuItem>
                       </Link>
+                      {isAdminOrMod && (
+                        <Link className="block" href="/admin">
+                          <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
+                            <Settings className="mr-2 h-4 w-4" />
+                            <span>Admin</span>
+                          </DropdownMenuItem>
+                        </Link>
+                      )}
                       <DropdownMenuSeparator />
                       <DropdownMenuItem onClick={() => void handleSignOut()}>
                         <span>Log out</span>

@@ -80,14 +80,14 @@
     "autoprefixer": "^10.4.14",
     "eslint": "^8.40.0",
     "eslint-config-next": "^13.4.2",
+    "husky": "^8.0.0",
     "monaco-editor": "=0.36.1",
     "postcss": "^8.4.21",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.2.8",
     "prisma": "^4.14.0",
     "tailwindcss": "^3.3.0",
-    "tsx": "^3.12.7",
-    "husky": "^8.0.0"
+    "tsx": "^3.12.7"
   },
   "ct3aMetadata": {
     "initVersion": "7.13.1"
@@ -95,5 +95,10 @@
   "prisma": {
     "schema": "./prisma/schema.prisma",
     "seed": "npx tsx ./prisma/seed.ts"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "next-auth@4.22.1": "patches/next-auth@4.22.1.patch"
+    }
   }
 }
