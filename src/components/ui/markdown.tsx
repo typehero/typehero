@@ -1,23 +1,23 @@
 'use client';
 
 import ReactMarkdown from 'react-markdown';
-import SyntaxHighlighter from 'react-syntax-highlighter';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import remarkGfm from 'remark-gfm';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import clsx from 'clsx';
 
 export function Markdown({ children }: { children: string }) {
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
       components={{
-        p: ({ ...props }) => <p className="mb-4" {...props} />,
-        code({ inline, className, children, ...props }) {
+        p: ({ className, ...props }) => <p className={clsx(className, 'mb-4')} {...props} />,
+        code({ inline, className, children, style: _, ...props }) {
           const match = /language-(\w+)/.exec(className || '');
           return !inline && match ? (
             <SyntaxHighlighter
-              // @ts-ignore
               style={vscDarkPlus} // theme
-              className="rounded-xl dark:rounded-md"
+              className={clsx(className, 'rounded-xl dark:rounded-md')}
               language={match[1]}
               PreTag="section" // parent tag
               {...props}

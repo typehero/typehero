@@ -1,19 +1,22 @@
 'use client';
 
-import { ChallengeLayout } from '../../components/challenge/challenge-layout';
-import { Textarea } from '../../components/ui/textarea';
-import { CodePanel } from '../../components/challenge/editor';
+import { ChallengeLayout } from '~/components/challenge/challenge-layout';
+import { Textarea } from '~/components/ui/textarea';
+import { CodePanel } from '~/components/challenge/editor';
 import { useState } from 'react';
-import { Checkbox } from '../../components/ui/checkbox';
-import { Label } from '../../components/ui/label';
-import remarkGfm from 'remark-gfm';
-import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
-import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/default-highlight';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { Checkbox } from '~/components/ui/checkbox';
+import { Label } from '~/components/ui/label';
+import { Markdown } from '~/components/ui/markdown';
 
 export default function CreateChallenge() {
   const [isPreviewing, setIsPreviewing] = useState(false);
   const [md, setMd] = useState('');
+
+  function onSubmit(code: string) {
+    // TODO actually make this upload a challenge
+    // maybe add a preview first?
+    console.log('submitted:', { code, md });
+  }
 
   return (
     <ChallengeLayout
@@ -21,33 +24,7 @@ export default function CreateChallenge() {
         <div className="flex h-full flex-col gap-3 border-zinc-300 p-4 dark:border-zinc-700">
           {isPreviewing ? (
             <div className="prose-invert flex-1 leading-8 prose-h3:text-xl">
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                components={{
-                  p: ({ ...props }) => <p className="mb-4" {...props} />,
-                  code({ inline, className, children, style: _style, ...props }) {
-                    const match = /language-(\w+)/.exec(className || '');
-
-                    return !inline && match ? (
-                      <SyntaxHighlighter
-                        style={vscDarkPlus} // theme
-                        className="rounded-xl dark:rounded-md"
-                        language={match[1]}
-                        PreTag="section" // parent tag
-                        {...props}
-                      >
-                        {String(children).replace(/\n$/, '')}
-                      </SyntaxHighlighter>
-                    ) : (
-                      <code className="rounded-md bg-neutral-200 p-1 font-mono dark:bg-black">
-                        {children}
-                      </code>
-                    );
-                  },
-                }}
-              >
-                {md}
-              </ReactMarkdown>
+              <Markdown>{md}</Markdown>
             </div>
           ) : (
             <Textarea
@@ -71,7 +48,7 @@ export default function CreateChallenge() {
           </div>
         </div>
       }
-      right={<CodePanel mode="create" onSubmit={console.log} />}
+      right={<CodePanel mode="create" onSubmit={onSubmit} />}
     />
   );
 }

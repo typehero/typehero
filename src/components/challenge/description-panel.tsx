@@ -33,7 +33,7 @@ import { Checkbox } from '../ui/checkbox';
 import { TypographyLarge } from '../ui/typography/large';
 import { addReport } from './report.action';
 import { toast } from '../ui/use-toast';
-import { Markdown } from './markdown';
+import { Markdown } from '../ui/markdown';
 
 interface Props {
   challenge: NonNullable<Challenge>;
