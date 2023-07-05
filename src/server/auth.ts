@@ -2,7 +2,7 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import type { Role, RoleTypes } from '@prisma/client';
 import { type GetServerSidePropsContext } from 'next';
 import { getServerSession, type DefaultSession, type NextAuthOptions } from 'next-auth';
-import GitHubProvider from 'next-auth/providers/github';
+import GitHubProvider, { GithubProfile } from 'next-auth/providers/github';
 import { env } from '~/env.mjs';
 import { prisma } from '~/server/db';
 
@@ -83,6 +83,16 @@ export const authOptions: NextAuthOptions = {
     GitHubProvider({
       clientId: env.GITHUB_ID,
       clientSecret: env.GITHUB_SECRET,
+      profile(profile: GithubProfile) {
+        return {
+          id: profile.id.toString(),
+          name: profile.name,
+          userName: profile.login,
+          email: profile.email,
+          image: profile.avatar_url,
+          roles: []
+        };
+      },
     }),
   ],
 };
