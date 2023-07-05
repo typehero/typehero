@@ -54,7 +54,6 @@ export function ChallengeLayout({ left, right, skeleton = false }: ChallengeLayo
       window.innerWidth > 1025
         ? (leftRef.style.width = settings.width)
         : (leftRef.style.height = settings.height);
-
       return;
     }
 
@@ -66,31 +65,25 @@ export function ChallengeLayout({ left, right, skeleton = false }: ChallengeLayo
     // The current position of mouse
     let x = 0;
     let y = 0;
-
     // Width of left side on dekstop, height of top side on mobile;
     let leftWidth = 0;
     let topHeight = 0;
 
-    const mouseDownHandler = (e: MouseEvent) => {
-      // Get the current mouse position
-      window.innerWidth > 1025 ? (x = e.clientX) : (y = e.clientY);
+    const mouseMoveHandler = (e: MouseEvent | TouchEvent) => {
+      let dx = 0;
+      let dy = 0;
+      if (e instanceof MouseEvent) {
+        // How far the mouse has been moved
+        dx = e.clientX - x;
+        dy = e.clientY - y;
+      } else if (e instanceof TouchEvent) {
+        // How far the finger has been moved
+        dx = e?.changedTouches?.[0]?.clientX ? e.changedTouches[0].clientX - x : 0;
+        dy = e?.changedTouches?.[0]?.clientY ? e.changedTouches[0].clientY - y : 0;
+      }
 
-      window.innerWidth > 1025
-        ? (leftWidth = leftSide?.current?.getBoundingClientRect().width as number | 0)
-        : (topHeight = leftSide?.current?.getBoundingClientRect().height as number | 0);
-
-      // Attach the listeners to `document`
-      document.addEventListener('mousemove', mouseMoveHandler);
-      document.addEventListener('mouseup', mouseUpHandler);
-    };
-
-    const mouseMoveHandler = (e: MouseEvent) => {
-      // How far the mouse has been moved
-      const dx = e.clientX - x;
-      const dy = e.clientY - y;
-
-      const divideByW = parent.current?.getBoundingClientRect().width as number | 1;
-      const divideByH = parent.current?.getBoundingClientRect().height as number | 1;
+      const divideByW = parent?.current?.getBoundingClientRect().width as number | 1;
+      const divideByH = parent?.current?.getBoundingClientRect().height as number | 1;
       const newLeftWidth = ((leftWidth + dx) * 100) / divideByW;
       const newTopHeight = ((topHeight + dy) * 100) / divideByH;
 
@@ -109,6 +102,32 @@ export function ChallengeLayout({ left, right, skeleton = false }: ChallengeLayo
       rightRef.style.userSelect = 'none';
       leftRef.style.userSelect = 'none';
     };
+
+    const mouseDownHandler = (e: MouseEvent | TouchEvent) => {
+      if (e instanceof MouseEvent) {
+        // Get the current mouse position
+        window.innerWidth > 1025 ? (x = e.clientX) : (y = e.clientY);
+      } else if (e instanceof TouchEvent) {
+        // Get the current finger position
+        window.innerWidth > 1025
+          ? (x = e?.touches?.[0]?.clientX ?? 0)
+          : (y = e?.touches?.[0]?.clientY ?? 0);
+      }
+
+      window.innerWidth > 1025
+        ? (leftWidth = leftSide?.current?.getBoundingClientRect().width as number | 0)
+        : (topHeight = leftSide?.current?.getBoundingClientRect().height as number | 0);
+
+      // Attach the listeners to `document`
+      if (e instanceof MouseEvent) {
+        document.addEventListener('mousemove', mouseMoveHandler);
+        document.addEventListener('mouseup', mouseUpHandler);
+      } else if (e instanceof TouchEvent) {
+        document.addEventListener('touchmove', mouseMoveHandler);
+        document.addEventListener('touchend', mouseUpHandler, false);
+      }
+    };
+
     const mouseUpHandler = function () {
       // undo cursor col-resize from above
       document.body.style.removeProperty('cursor');
@@ -119,8 +138,10 @@ export function ChallengeLayout({ left, right, skeleton = false }: ChallengeLayo
       leftRef.style.removeProperty('pointer-events');
       rightRef.style.removeProperty('pointer-events');
 
-      // Remove the handlers of `mousemove` and `mouseup`
+      // Remove the handlers of `mousemove` and `mouseup` or `touchmove` and `touchend` from the `document`
+      document.removeEventListener('touchmove', mouseMoveHandler);
       document.removeEventListener('mousemove', mouseMoveHandler);
+      document.removeEventListener('touchend', mouseUpHandler);
       document.removeEventListener('mouseup', mouseUpHandler);
 
       window.innerWidth > 1025
@@ -136,11 +157,13 @@ export function ChallengeLayout({ left, right, skeleton = false }: ChallengeLayo
     };
 
     window.addEventListener('resize', resizeHandler);
-
     ref?.addEventListener('mousedown', mouseDownHandler);
+    ref?.addEventListener('touchstart', mouseDownHandler, false);
 
     return () => {
+      window.removeEventListener('resize', resizeHandler);
       ref?.removeEventListener('mousedown', mouseDownHandler);
+      ref?.removeEventListener('touchstart', mouseDownHandler);
     };
   }, [settings, updateSettings, skeleton]);
 
