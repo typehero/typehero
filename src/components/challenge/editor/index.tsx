@@ -95,15 +95,15 @@ export const CodePanel = (props: Props) => {
       return props.challenge.prompt;
     }
 
-    const [appendSolutionToThis, separator] = (props.challenge.prompt as string).split(
+    const [appendSolutionToThis, separator] = (props.challenge.prompt).split(
       USER_CODE_START_REGEX,
     );
-    const parsedUserSolution = JSON.parse(usersExistingSolution?.code as string) as string;
+    const parsedUserSolution = usersExistingSolution?.code;
 
     return `${appendSolutionToThis ?? ''}${separator ?? ''}${parsedUserSolution}`;
   }, [props.challenge?.Solution, props.challenge?.prompt, props.mode, props.prompt]);
 
-  const [code, setCode] = useState(defaultCode as string);
+  const [code, setCode] = useState(defaultCode);
 
   const editorTheme = theme === 'light' ? 'vs' : 'vs-dark';
   const modelRef = useRef<monaco.editor.ITextModel>();
@@ -138,7 +138,7 @@ export const CodePanel = (props: Props) => {
             await saveSubmission(
               props.challenge.id,
               session?.user?.id as string,
-              JSON.stringify(solution) ?? '',
+              solution ?? '',
             );
             router.refresh();
             toast({

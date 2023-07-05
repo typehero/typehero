@@ -364,7 +364,7 @@ export function DescriptionPanel({ challenge }: Props) {
               </TooltipProvider>
             </div>
             <div className="prose-invert leading-8 prose-h3:text-xl">
-              <Markdown>{challenge.description as string}</Markdown>
+              <Markdown>{challenge.description}</Markdown>
             </div>
           </div>
         </TabsContent>
