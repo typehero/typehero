@@ -104,9 +104,9 @@ model Challenge {
   updatedAt        DateTime           @updatedAt
   difficulty       Difficulty
   name             String
-  description      Json
+  description      String             @db.MediumText
   shortDescription String
-  prompt           Json
+  prompt           String             @db.MediumText
   user             User               @relation(fields: [userId], references: [id])
   userId           String
   Vote             Vote[]
@@ -137,7 +137,7 @@ model Vote {
 
 model SharedSolution {
   id              Int               @id @default(autoincrement())
-  description     Json
+  description     String            @db.MediumText
   solution        Solution          @relation(fields: [solutionId], references: [id])
   solutionId      Int
   Vote            Vote[]
@@ -154,7 +154,7 @@ model SharedSolution {
 
 model Solution {
   id             Int              @id @default(autoincrement())
-  code           Json
+  code           String           @db.MediumText
   user           User             @relation(fields: [userId], references: [id])
   userId         String
   challenge      Challenge        @relation(fields: [challengeId], references: [id])
