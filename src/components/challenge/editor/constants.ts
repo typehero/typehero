@@ -9,4 +9,4 @@ export const TEST_CASE_START = '// TEST CASE START';
  */
 export const USER_CODE_START = '// CODE START';
 
-export const USER_CODE_START_REGEX = new RegExp(`\n${USER_CODE_START}`);
+export const USER_CODE_START_REGEX = new RegExp(`(\n${USER_CODE_START})`);
