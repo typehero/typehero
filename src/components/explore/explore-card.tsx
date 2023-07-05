@@ -1,14 +1,12 @@
 'use client';
 
-import { ArrowBigUp } from 'lucide-react';
+import { ThumbsUp } from 'lucide-react';
 
 import { type Challenge } from '.';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { DifficultyBadge } from './difficulty-badge';
-import ReactMarkdown from 'react-markdown';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import remarkGfm from 'remark-gfm';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { Markdown } from '../ui/markdown';
+import getRelativeTime from '~/utils/relativeTime';
 
 interface Props {
   challenge: Awaited<Challenge>[0];
@@ -36,32 +34,6 @@ const SHADOWS_BY_DIFFICULTY = {
     'hover:shadow-[0_0_1rem_-0.5rem_#fdba74,inset_0_0_1rem_-0.5rem_#fdba74] group-focus:shadow-[0_0_1rem_-0.5rem_#fdba74,inset_0_0_1rem_-0.5rem_#fdba74]',
 };
 
-// in miliseconds
-const units = {
-  year: 24 * 60 * 60 * 1000 * 365,
-  month: (24 * 60 * 60 * 1000 * 365) / 12,
-  day: 24 * 60 * 60 * 1000,
-  hour: 60 * 60 * 1000,
-  minute: 60 * 1000,
-  second: 1000,
-};
-
-const rtf = new Intl.RelativeTimeFormat('en', {
-  numeric: 'auto',
-  // TODO: style: 'short' on 640px - 720px
-});
-
-// get relevant time from a date object
-const getRelativeTime = (date: Date) => {
-  const elapsed = date.getTime() - Date.now();
-
-  for (const [unit, ms] of Object.entries(units)) {
-    if (Math.abs(elapsed) > ms || unit === 'second') {
-      return rtf.format(Math.round(elapsed / ms), unit as Intl.RelativeTimeFormatUnit);
-    }
-  }
-};
-
 export function ExploreCard({ challenge }: Props) {
   return (
     <Card
@@ -74,34 +46,7 @@ export function ExploreCard({ challenge }: Props) {
           <CardTitle className="pb-4">{challenge.name}</CardTitle>
           <CardDescription className="relative h-48 overflow-hidden pb-4">
             <div className="pointer-events-none absolute inset-0 h-full w-full shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card))] duration-300 group-hover:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))] group-focus:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))]" />
-            {/* // TODO: we use this in two places and we should just make this shared */}
-            <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
-              components={{
-                p: ({ ...props }) => <p className="mb-4" {...props} />,
-                code({ inline, className, children, ...props }) {
-                  const match = /language-(\w+)/.exec(className || '');
-                  return !inline && match ? (
-                    <SyntaxHighlighter
-                      // @ts-ignore
-                      style={vscDarkPlus} // theme
-                      className="rounded-xl dark:rounded-md"
-                      language={match[1]}
-                      PreTag="section" // parent tag
-                      {...props}
-                    >
-                      {String(children).replace(/\n$/, '')}
-                    </SyntaxHighlighter>
-                  ) : (
-                    <code className="rounded-md bg-neutral-200 p-1 font-mono dark:bg-black">
-                      {children}
-                    </code>
-                  );
-                },
-              }}
-            >
-              {challenge?.shortDescription}
-            </ReactMarkdown>
+            <Markdown>{challenge?.shortDescription}</Markdown>
           </CardDescription>
         </div>
       </CardHeader>
@@ -111,11 +56,12 @@ export function ExploreCard({ challenge }: Props) {
             <div className="flex items-center">
               <DifficultyBadge difficulty={challenge.difficulty} />
             </div>
-            <div className="ml-4 flex items-center">
-              <ArrowBigUp /> {challenge._count.Vote}
+            <div className="ml-4 flex items-center justify-center text-center">
+              <ThumbsUp size={20} className="mr-2" />
+              <span>{challenge._count.Vote}</span>
             </div>
           </div>
-          <div>Updated {getRelativeTime(challenge.updatedAt)}</div>
+          <div>{getRelativeTime(challenge.updatedAt)}</div>
         </div>
       </CardContent>
     </Card>
