@@ -102,3 +102,9 @@ main {
     opacity: 0;
   }
 }
+
+@media (pointer: coarse) {
+  #cursorthing {
+    display: none;
+  }
+}
