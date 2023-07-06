@@ -9,6 +9,7 @@ import { useToast } from '~/components/ui/use-toast';
 import { postSolution } from './post-solution.action';
 import type { Challenge } from '..';
 import { useSession } from 'next-auth/react';
+import { useTheme } from 'next-themes';
 
 const getDefaultMarkdown = (solution: string) => `
 ## Thoughts
@@ -68,39 +69,86 @@ export function SolutionEditor({ setOpen, challenge }: Props) {
     }
   };
 
+  const { theme } = useTheme();
+  theme == 'dark'
+    ? document.documentElement.setAttribute('data-color-mode', 'dark')
+    : document.documentElement.setAttribute('data-color-mode', 'light');
+
   return (
-    <div className="flex h-full flex-col gap-3">
+    <>
       <Form {...form}>
         {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-        <form className="flex h-full flex-col gap-3" onSubmit={form.handleSubmit(onSubmit)}>
-          <FormField
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input {...field} placeholder="Enter a title for your solution." />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="content"
-            render={({ field }) => (
-              // @ts-ignore
-              <MDEditor height="100%" value={field.value} onChange={field.onChange} />
-            )}
-          />
-          <div className="flex items-center justify-end gap-2">
-            <Button variant="ghost" type="button" onClick={() => setOpen(false)}>
+        <form className="flex h-full flex-col" onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="sticky right-0 top-[41px] z-10 flex items-center justify-between gap-2 border-b border-zinc-300 bg-background/90 bg-opacity-20 p-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
+            <div className="flex-1">
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        className="rounded-xl border-zinc-300 bg-zinc-100 focus-visible:ring-0 focus-visible:ring-offset-0 dark:border-zinc-700 dark:bg-zinc-900"
+                        {...field}
+                        placeholder="Enter a title for your solution."
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <Button
+              className="h-9 rounded-xl bg-white text-black hover:bg-zinc-200 focus-visible:bg-zinc-200 focus-visible:ring-offset-0 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:focus-visible:bg-zinc-700"
+              type="button"
+              onClick={() => setOpen(false)}
+            >
               Cancel
             </Button>
-            <Button type="submit">Post</Button>
+            <Button className="h-9 rounded-xl" type="submit">
+              Post
+            </Button>
+          </div>
+          <div className="flex-1">
+            <FormField
+              control={form.control}
+              name="content"
+              render={({ field }) => (
+                // @ts-ignore
+                <MDEditor
+                  height="100%"
+                  value={field.value}
+                  // non-split-screen by default
+                  preview="edit"
+                  // removes resize handle on bottom right
+                  visibleDragbar={false}
+                  // @ts-ignore
+                  onChange={field.onChange}
+                  // TODO: customize toolbar GH #131
+                  // components={{
+                  //   toolbar: (command, disabled, executeCommand) => {
+                  //     if (command.keyCommand === 'code') {
+                  //       return (
+                  //         <button
+                  //           aria-label="Insert code"
+                  //           disabled={disabled}
+                  //           onClick={(evn) => {
+                  //             evn.stopPropagation();
+                  //             executeCommand(command, command.groupName);
+                  //           }}
+                  //         >
+                  //           Code
+                  //         </button>
+                  //       );
+                  //     }
+                  //   },
+                  // }}
+                />
+              )}
+            />
           </div>
         </form>
       </Form>
-    </div>
+    </>
   );
 }
