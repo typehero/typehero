@@ -52,6 +52,12 @@ async function getChallenge(id: string, session: Session | null) {
           userId: session?.user.id,
           challengeId: +id,
         },
+        orderBy: [
+          {
+            createdAt: 'desc',
+          },
+        ],
+        take: 10,
       },
       SharedSolution: {
         where: {
