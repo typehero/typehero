@@ -138,9 +138,8 @@ model Vote {
 model SharedSolution {
   id              Int               @id @default(autoincrement())
   createdAt       DateTime          @default(now())
+  title           String
   description     String            @db.MediumText
-  solution        Solution          @relation(fields: [solutionId], references: [id])
-  solutionId      Int
   Vote            Vote[]
   User            User?             @relation(fields: [userId], references: [id])
   userId          String?
@@ -148,22 +147,20 @@ model SharedSolution {
   challengeId     Int?
   SolutionComment SolutionComment[]
 
-  @@index([solutionId])
   @@index([userId])
   @@index([challengeId])
 }
 
 model Solution {
-  id             Int              @id @default(autoincrement())
-  code           String           @db.MediumText
-  createdAt      DateTime         @default(now())
-  isSuccessful   Boolean
-  user           User             @relation(fields: [userId], references: [id])
-  userId         String
-  challenge      Challenge        @relation(fields: [challengeId], references: [id])
-  challengeId    Int
-  Vote           Vote[]
-  SharedSolution SharedSolution[]
+  id           Int       @id @default(autoincrement())
+  code         String    @db.MediumText
+  createdAt    DateTime  @default(now())
+  isSuccessful Boolean
+  user         User      @relation(fields: [userId], references: [id])
+  userId       String
+  challenge    Challenge @relation(fields: [challengeId], references: [id])
+  challengeId  Int
+  Vote         Vote[]
 
   @@index([userId])
   @@index([challengeId])

@@ -7,14 +7,15 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 
+import { useForm } from 'react-hook-form';
 import { Button } from '~/components/ui/button';
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogFooter,
 } from '~/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
@@ -22,18 +23,17 @@ import { TypographyH3 } from '~/components/ui/typography/h3';
 import type { Challenge } from '.';
 import { DifficultyBadge } from '../explore/difficulty-badge';
 import { ActionMenu } from '../ui/action-menu';
+import { Checkbox } from '../ui/checkbox';
+import { Form, FormField, FormItem } from '../ui/form';
+import { Markdown } from '../ui/markdown';
 import { Textarea } from '../ui/textarea';
+import { TypographyLarge } from '../ui/typography/large';
+import { toast } from '../ui/use-toast';
 import { addOrRemoveBookmark } from './bookmark.action';
 import { incrementOrDecrementUpvote } from './increment.action';
+import { addReport } from './report.action';
 import { ShareForm } from './share-form';
 import { Solutions } from './solutions';
-import { Form, FormField, FormItem } from '../ui/form';
-import { useForm } from 'react-hook-form';
-import { Checkbox } from '../ui/checkbox';
-import { TypographyLarge } from '../ui/typography/large';
-import { addReport } from './report.action';
-import { toast } from '../ui/use-toast';
-import { Markdown } from '../ui/markdown';
 import { Submissions } from './submissions';
 
 interface Props {
@@ -304,11 +304,11 @@ export function DescriptionPanel({ challenge }: Props) {
                 </DialogTrigger>
                 <DialogContent className="w-[200px]">
                   <DialogHeader>
-                    <DialogTitle>Share this challenege</DialogTitle>
-                    <div className="pt-4">
-                      <ShareForm />
-                    </div>
+                    <DialogTitle>Share this challenge</DialogTitle>
                   </DialogHeader>
+                  <div className="pt-4">
+                    <ShareForm />
+                  </div>
                 </DialogContent>
               </Dialog>
               <TooltipProvider>
