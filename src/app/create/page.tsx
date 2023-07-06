@@ -109,39 +109,42 @@ export default function CreateChallenge() {
           </TabsList>
           <TabsContent
             value="short-description"
-            className="mt-0 flex flex-1 flex-col gap-3 p-4 dark:bg-muted [&[hidden]]:hidden"
+            className="mt-0 flex flex-1 flex-col p-4 dark:bg-muted [&[hidden]]:hidden"
           >
-            <h1>Name:</h1>
+            <div className="mb-1 mt-3 flex items-center justify-between pr-1">
+              <h1>Name:</h1>
+
+              <Label
+                htmlFor="previewTitle"
+                className="flex cursor-pointer items-center gap-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Preview:
+                <Checkbox
+                  id="previewTitle"
+                  className="border-zinc-500"
+                  checked={isPreviewing.name}
+                  onCheckedChange={(checked) =>
+                    setIsPreviewing((rest) => ({ ...rest, name: checked === true }))
+                  }
+                />
+              </Label>
+            </div>
             {isPreviewing.name ? (
               <h2 className="px-3 py-2">{name}</h2>
             ) : (
               <Input
-                className="resize-none dark:border-white"
+                className="resize-none border-zinc-300 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900"
                 value={name}
                 onChange={(ev) => setName(ev.currentTarget.value)}
               />
             )}
-            <div className="flex items-center justify-end space-x-2">
-              <Label
-                htmlFor="preview"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Preview:
-              </Label>
-              <Checkbox
-                id="preview"
-                checked={isPreviewing.name}
-                onCheckedChange={(checked) =>
-                  setIsPreviewing((rest) => ({ ...rest, name: checked === true }))
-                }
-              />
-            </div>
-            <h1>Name:</h1>
+
+            <h1 className="mb-1 mt-3">Name:</h1>
             <Select onValueChange={(value: Difficulty) => setDifficulty(value)} value={difficulty}>
-              <SelectTrigger className="dark:border-white">
+              <SelectTrigger className="border-zinc-300 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900">
                 <SelectValue placeholder="Select a Difficulty" />
               </SelectTrigger>
-              <SelectContent className="dark:border-white">
+              <SelectContent className="border-zinc-300 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900">
                 <SelectItem value="BEGINNER">BEGINNER</SelectItem>
                 <SelectItem value="EASY">EASY</SelectItem>
                 <SelectItem value="MEDIUM">MEDIUM</SelectItem>
@@ -149,64 +152,66 @@ export default function CreateChallenge() {
                 <SelectItem value="EXTREME">EXTREME</SelectItem>
               </SelectContent>
             </Select>
-            <h1>Short Description:</h1>
+            <div className="mb-1 mt-3 flex items-center justify-between pr-1">
+              <h1>Short Description:</h1>
+              <Label
+                htmlFor="preview"
+                className="flex cursor-pointer items-center gap-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Preview:
+                <Checkbox
+                  id="preview"
+                  className="border-zinc-500"
+                  checked={isPreviewing.shortDescription}
+                  onCheckedChange={(checked) =>
+                    setIsPreviewing((rest) => ({ ...rest, shortDescription: checked === true }))
+                  }
+                />
+              </Label>
+            </div>
             {isPreviewing.shortDescription ? (
-              <div className="prose-invert flex-1 text-sm">
+              <div className="prose-invert flex-1 px-3 py-2 text-sm">
                 <Markdown>{shortDescription}</Markdown>
               </div>
             ) : (
               <Textarea
-                className="flex-1 resize-none dark:border-white"
+                className="flex-1 resize-none border-zinc-300 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900"
                 value={shortDescription}
                 onChange={(ev) => setShortDescription(ev.currentTarget.value)}
               />
             )}
-            <div className="flex items-center justify-end space-x-2">
-              <Label
-                htmlFor="preview"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Preview:
-              </Label>
-              <Checkbox
-                id="preview"
-                checked={isPreviewing.shortDescription}
-                onCheckedChange={(checked) =>
-                  setIsPreviewing((rest) => ({ ...rest, shortDescription: checked === true }))
-                }
-              />
-            </div>
           </TabsContent>
           <TabsContent
             value="long-description"
-            className="mt-0 flex flex-1 flex-col gap-3 p-4 dark:bg-muted [&[hidden]]:hidden"
+            className="relative mt-0 flex flex-1 flex-col dark:bg-muted [&[hidden]]:hidden"
           >
+            <div className="absolute right-4 top-4 flex items-center justify-end">
+              <Label
+                htmlFor="previewLong"
+                className="flex cursor-pointer gap-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Preview:
+                <Checkbox
+                  id="previewLong"
+                  className="border-zinc-500"
+                  checked={isPreviewing.description}
+                  onCheckedChange={(checked) =>
+                    setIsPreviewing((rest) => ({ ...rest, description: checked === true }))
+                  }
+                />
+              </Label>
+            </div>
             {isPreviewing.description ? (
-              <div className="prose-invert flex-1 leading-8 prose-h3:text-xl">
+              <div className="prose-invert flex-1 px-3 py-1 leading-8 prose-h3:text-xl">
                 <Markdown>{description}</Markdown>
               </div>
             ) : (
               <Textarea
-                className="flex-1 resize-none dark:border-white"
+                className="flex-1 resize-none border-none bg-zinc-100 dark:bg-zinc-900"
                 value={description}
                 onChange={(ev) => setDescription(ev.currentTarget.value)}
               />
             )}
-            <div className="flex items-center justify-end space-x-2">
-              <Label
-                htmlFor="preview"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Preview:
-              </Label>
-              <Checkbox
-                id="preview"
-                checked={isPreviewing.description}
-                onCheckedChange={(checked) =>
-                  setIsPreviewing((rest) => ({ ...rest, description: checked === true }))
-                }
-              />
-            </div>
           </TabsContent>
         </Tabs>
       }
