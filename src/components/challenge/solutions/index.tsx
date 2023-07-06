@@ -2,13 +2,23 @@
 import { ArrowUp, MessageCircle, Plus } from 'lucide-react';
 
 import { Button } from '~/components/ui/button';
-import type { Challenge } from '.';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '~/components/ui/dialog';
+import type { Challenge } from '..';
+import { SolutionEditor } from './solution-editor';
+import { useState } from 'react';
 
 interface Props {
   challenge: NonNullable<Challenge>;
 }
 export function Solutions({ challenge }: Props) {
   const hasSolution = challenge.Solution?.length > 0;
+  const [openSolutionEditor, setOpenSolutionEditor] = useState(false);
 
   const handleClick = () => {
     console.log('do stuff');
@@ -25,13 +35,30 @@ export function Solutions({ challenge }: Props) {
             Tag 2
           </div>
         </div>
-        <Button
-          className="h-8 rounded-xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
-          onClick={() => handleClick()}
-          disabled={!hasSolution}
-        >
-          <Plus className="mr-2 h-4 w-4" /> Solution
-        </Button>
+        <Dialog open={openSolutionEditor} onOpenChange={setOpenSolutionEditor}>
+          <DialogTrigger>
+            <Button
+              className="h-8 rounded-xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
+              onClick={() => handleClick()}
+              disabled={!hasSolution}
+            >
+              <Plus className="mr-2 h-4 w-4" /> Solution
+            </Button>
+          </DialogTrigger>
+          <DialogContent
+            onEscapeKeyDown={(e) => e.preventDefault()}
+            onPointerDownOutside={(e) => e.preventDefault()}
+            className="flex h-5/6 w-11/12 max-w-none flex-col md:w-11/12"
+            displayX={false}
+          >
+            <DialogHeader>
+              <DialogTitle>Share your solution</DialogTitle>
+            </DialogHeader>
+            <div className="h-full pt-4">
+              <SolutionEditor challenge={challenge} setOpen={setOpenSolutionEditor} />
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
       <div className="relative flex flex-col">
         <SolutionRow />

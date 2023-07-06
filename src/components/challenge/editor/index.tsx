@@ -269,10 +269,10 @@ export const CodePanel = (props: Props) => {
           <DialogContent className="w-[200px]">
             <DialogHeader>
               <DialogTitle>Settings</DialogTitle>
-              <div className="pt-4">
-                <SettingsForm />
-              </div>
             </DialogHeader>
+            <div className="pt-4">
+              <SettingsForm />
+            </div>
           </DialogContent>
         </Dialog>
       </div>

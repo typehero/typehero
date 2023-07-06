@@ -41,6 +41,7 @@
     "@trpc/react-query": "^10.26.0",
     "@trpc/server": "^10.26.0",
     "@types/lodash": "^4.14.195",
+    "@uiw/react-md-editor": "^3.23.3",
     "class-variance-authority": "^0.6.0",
     "clsx": "^1.2.1",
     "cmdk": "^0.2.0",
