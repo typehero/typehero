@@ -90,7 +90,6 @@ export function DescriptionPanelSkeleton() {
             </div>
           </div>
         </TabsContent>
-        2
       </Tabs>
     </>
   );
