@@ -63,6 +63,9 @@ async function getChallenge(id: string, session: Session | null) {
         where: {
           challengeId: +id,
         },
+        include: {
+          user: true
+        }
       },
     },
   });

@@ -40,6 +40,20 @@ try {
       email: 'g@typehero.dev',
       name: 'g',
       challenge: challenges(),
+      solution: {
+        create: {
+          code: 'const a: string = "hello world"',
+          isSuccessful: true,
+          challengeId: 1,
+        },
+      },
+      sharedSolution: {
+        create: {
+          challengeId: 1,
+          title: 'This is a solution',
+          description: 'this is a description',
+        },
+      },
     },
   });
 

@@ -10,6 +10,7 @@ import { postSolution } from './post-solution.action';
 import type { Challenge } from '..';
 import { useSession } from 'next-auth/react';
 import { useTheme } from 'next-themes';
+import { useRouter } from 'next/navigation';
 
 const getDefaultMarkdown = (solution: string) => `
 ## Thoughts
@@ -39,6 +40,7 @@ interface Props {
 
 export function SolutionEditor({ setOpen, challenge }: Props) {
   const session = useSession();
+  const router = useRouter();
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -55,6 +57,8 @@ export function SolutionEditor({ setOpen, challenge }: Props) {
         title: data.title,
         userId: session?.data?.user?.id as string,
       });
+
+      router.refresh();
       toast({
         variant: 'success',
         title: 'Your solution has been posted!',
@@ -67,6 +71,7 @@ export function SolutionEditor({ setOpen, challenge }: Props) {
     } finally {
       setOpen(false);
     }
+
   };
 
   const { theme } = useTheme();
