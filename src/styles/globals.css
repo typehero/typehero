@@ -86,11 +86,8 @@ main {
   height: 100%;
 }
 
-#leftBall {
-  animation: balls 5s linear infinite alternate;
-}
-
-#riteBall {
+#leftblob,
+#rightblob {
   animation: balls 5s linear infinite alternate;
 }
 
@@ -100,11 +97,5 @@ main {
   }
   to {
     opacity: 0;
-  }
-}
-
-@media (pointer: coarse) {
-  #cursorthing {
-    display: none;
   }
 }
