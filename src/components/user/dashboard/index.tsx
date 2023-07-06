@@ -1,17 +1,52 @@
-import type { Metadata } from 'next';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
-import { Overview } from '~/components/dashboard/overview';
-import { InProgressTab } from '~/components/dashboard/in-progress-tab-mock';
-import { SolutionsTab } from '~/components/dashboard/solutions-tab-mock';
+import { Overview } from '../dashboard/overview';
+import { InProgressTab } from '../dashboard/in-progress-tab';
+import { SolutionsTab } from '../dashboard/solutions-tab';
+import { User } from '@prisma/client';
+import { getRelativeTime } from '~/utils/relativeTime';
+import { prisma } from '~/server/db';
 
-export const metadata: Metadata = {
-  title: 'Dashboard',
-  description: 'Example dashboard app using the components.',
-};
+interface Props {
+  user: User;
+}
 
-export default function DashboardPage() {
+export type UserData = NonNullable<Awaited<ReturnType<typeof getUserdata>>>;
+async function getUserdata(id: string) {
+  const userData = await prisma.user.findFirst({
+    where: {
+      id,
+    },
+    include: {
+      Solution: {
+        where: {
+          userId: id 
+        },
+        orderBy: [
+          {
+            createdAt: 'desc',
+          },
+        ],
+        take: 10,
+        include: {
+          challenge: true,
+        },
+      },
+    },
+  });
+
+  return userData
+}
+
+export default async function Dashboard({ user }: Props) {
+  const userData = await getUserdata(user.id);
+
+  // TODO: this seems sus
+  if (!userData) {
+    return null;
+  }
+
   return (
     <div className="container">
       <div className="flex-1 space-y-4 pt-6">
@@ -26,19 +61,17 @@ export default function DashboardPage() {
             />
           </div>
           <div>
-            <p className="text-3xl font-bold tracking-tight">Username</p>
-            <p className="text-sm italic tracking-tight">Joined: 07/03/2023</p>
-            <p className="text-sm italic tracking-tight">Challenges Complete: 5</p>
+            <p className="text-3xl font-bold tracking-tight">{user.name}</p>
+            <p
+              className="text-sm italic tracking-tight"
+              title={`Joined ${user.createdAt.toString()}`}
+            >
+              Joined {getRelativeTime(user.createdAt)}
+            </p>
           </div>
         </div>
-        <Tabs defaultValue="overview" className="space-y-4">
+        <Tabs defaultValue="in-progress" className="space-y-4">
           <TabsList className="rounded-full border border-border bg-background">
-            <TabsTrigger
-              className="rounded-l-2xl rounded-r-lg duration-300 data-[state=active]:bg-border"
-              value="overview"
-            >
-              Overview
-            </TabsTrigger>
             <TabsTrigger
               className="rounded-lg duration-300 data-[state=active]:bg-border"
               value="in-progress"
@@ -97,7 +130,7 @@ export default function DashboardPage() {
                   <CardTitle>Solutions</CardTitle>
                 </CardHeader>
                 <CardContent className="pl-2">
-                  <SolutionsTab />
+                  <SolutionsTab solutions={userData?.Solution} />
                 </CardContent>
               </Card>
             </div>
