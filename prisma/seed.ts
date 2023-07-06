@@ -28,7 +28,7 @@ try {
       id: trashId,
       email: 'chris@typehero.dev',
       name: 'chris',
-      Challenge: challenges(),
+      challenge: challenges(),
     },
   });
 
@@ -39,7 +39,7 @@ try {
       id: gId,
       email: 'g@typehero.dev',
       name: 'g',
-      Challenge: challenges(),
+      challenge: challenges(),
     },
   });
 

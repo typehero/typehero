@@ -21,7 +21,7 @@ interface Props {
 type Status = 'all' | 'accepted' | 'rejected';
 export function Submissions({ challenge }: Props) {
   const [selectedStatus, setSelectStatus] = useState<Status>('all');
-  const submissions = challenge.Solution;
+  const submissions = challenge.solution;
 
   const filteredSubmissions = useMemo(() => {
     const predicate = (submission: Solution) => {

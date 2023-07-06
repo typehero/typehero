@@ -10,7 +10,7 @@ import {
 import { UserData } from '.';
 import Link from 'next/link';
 
-export function SolutionsTab({ solutions = [] }: { solutions: UserData['Solution'] }) {
+export function SolutionsTab({ solutions = [] }: { solutions: UserData['solution'] }) {
   return (
     <Table>
       <TableCaption>A list of your recent challenges.</TableCaption>

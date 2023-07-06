@@ -49,9 +49,9 @@ export type FormValues = {
 
 export function DescriptionPanel({ challenge }: Props) {
   const router = useRouter();
-  const [votes, setVotes] = useState(challenge._count.Vote);
-  const [hasVoted, setHasVoted] = useState(challenge.Vote.length > 0);
-  const [hasBookmarked, setHasBookmarked] = useState(challenge.Bookmark.length > 0);
+  const [votes, setVotes] = useState(challenge._count.vote);
+  const [hasVoted, setHasVoted] = useState(challenge.vote.length > 0);
+  const [hasBookmarked, setHasBookmarked] = useState(challenge.bookmark.length > 0);
   const session = useSession();
   const debouncedSearch = useRef(
     debounce(async (challengeId: number, userId: string, shouldIncrement: boolean) => {

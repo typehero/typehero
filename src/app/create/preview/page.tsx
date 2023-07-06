@@ -63,7 +63,7 @@ export default function PreviewCreatedChallenge() {
             <ExploreCard
               challenge={{
                 ...createChallengeStore.data,
-                _count: { Vote: 420 },
+                _count: { vote: 420 },
                 updatedAt: new Date(),
                 difficulty: 'BEGINNER',
               }}

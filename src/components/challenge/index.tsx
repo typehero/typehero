@@ -33,21 +33,21 @@ async function getChallenge(id: string, session: Session | null) {
     where: { id: +id },
     include: {
       _count: {
-        select: { Vote: true },
+        select: { vote: true },
       },
-      Vote: {
+      vote: {
         where: {
           userId: session?.user.id,
           challengeId: +id,
         },
       },
-      Bookmark: {
+      bookmark: {
         where: {
           userId: session?.user.id,
           challengeId: +id,
         },
       },
-      Solution: {
+      solution: {
         where: {
           userId: session?.user.id,
           challengeId: +id,
@@ -59,7 +59,7 @@ async function getChallenge(id: string, session: Session | null) {
         ],
         take: 10,
       },
-      SharedSolution: {
+      sharedSolution: {
         where: {
           challengeId: +id,
         },
