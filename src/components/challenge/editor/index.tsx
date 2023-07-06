@@ -49,7 +49,7 @@ const LIB_URI = 'ts:filename/checking.d.ts';
 type Props = (
   | {
       mode: 'solve';
-      challenge: Pick<NonNullable<Challenge>, 'Solution' | 'prompt' | 'id'>;
+      challenge: Pick<NonNullable<Challenge>, 'solution' | 'prompt' | 'id'>;
       prompt?: never;
     }
   | {
@@ -93,7 +93,7 @@ export const CodePanel = (props: Props) => {
     if (props.mode !== 'solve') return props.prompt ?? '';
 
     // if a user has an existing solution use that instead of prompt
-    const usersExistingSolution = props.challenge.Solution?.[0];
+    const usersExistingSolution = props.challenge.solution?.[0];
 
     if (!usersExistingSolution) {
       return props.challenge.prompt;
@@ -103,7 +103,7 @@ export const CodePanel = (props: Props) => {
     const parsedUserSolution = usersExistingSolution?.code;
 
     return `${appendSolutionToThis ?? ''}${separator ?? ''}${parsedUserSolution}`;
-  }, [props.challenge?.Solution, props.challenge?.prompt, props.mode, props.prompt]);
+  }, [props.challenge?.solution, props.challenge?.prompt, props.mode, props.prompt]);
 
   const [code, setCode] = useState(defaultCode);
 

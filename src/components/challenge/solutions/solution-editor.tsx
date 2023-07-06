@@ -41,7 +41,7 @@ export function SolutionEditor({ setOpen, challenge }: Props) {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      content: getDefaultMarkdown(challenge.Solution[0]?.code ?? ''),
+      content: getDefaultMarkdown(challenge.solution[0]?.code ?? ''),
     },
   });
   const { toast } = useToast();

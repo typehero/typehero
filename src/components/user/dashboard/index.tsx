@@ -19,7 +19,7 @@ async function getUserdata(id: string) {
       id,
     },
     include: {
-      Solution: {
+      solution: {
         where: {
           userId: id 
         },
@@ -130,7 +130,7 @@ export default async function Dashboard({ user }: Props) {
                   <CardTitle>Solutions</CardTitle>
                 </CardHeader>
                 <CardContent className="pl-2">
-                  <SolutionsTab solutions={userData?.Solution} />
+                  <SolutionsTab solutions={userData.solution} />
                 </CardContent>
               </Card>
             </div>

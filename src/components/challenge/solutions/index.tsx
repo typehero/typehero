@@ -17,7 +17,7 @@ interface Props {
   challenge: NonNullable<Challenge>;
 }
 export function Solutions({ challenge }: Props) {
-  const hasSolution = challenge.Solution?.length > 0;
+  const hasSolution = challenge.solution?.length > 0;
   const [openSolutionEditor, setOpenSolutionEditor] = useState(false);
 
   const handleClick = () => {

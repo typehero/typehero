@@ -31,7 +31,7 @@ export const CHALLENGE_MAP: Record<
     name: `Beginner Challenge ${challengeIndex + 1}`,
     createdAt: new Date(),
     updatedAt: new Date(),
-    Bookmark: randomTrueOrFalse()
+    bookmark: randomTrueOrFalse()
       ? {
           create: {
             userId: randomTrueOrFalse() ? trashId : gId,

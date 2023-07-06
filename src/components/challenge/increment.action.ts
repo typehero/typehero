@@ -32,10 +32,10 @@ export async function incrementOrDecrementUpvote(
     where: { id: challengeId },
     include: {
       _count: {
-        select: { Vote: true },
+        select: { vote: true },
       },
     },
   });
 
-  return count?._count.Vote;
+  return count?._count.vote;
 }
