@@ -75,6 +75,7 @@ model User {
   roles           Role[]
   status          Status             @default(PENDING)
   emailVerified   DateTime?
+  createdAt       DateTime           @default(now())
   image           String?
   accounts        Account[]
   sessions        Session[]
