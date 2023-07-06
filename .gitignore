@@ -43,3 +43,7 @@ yarn-error.log*
 
 # vimrc
 *vimrc*
+
+# monaco-editor dependency
+public/vs/
+monaco-editor.d.ts

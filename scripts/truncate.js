@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
@@ -5,6 +6,7 @@ const prisma = new PrismaClient();
 async function truncateTables() {
   try {
     // Get all table names
+    /** @type {{ table_name: string }[]} */
     const tableNames = await prisma.$queryRaw`
     SELECT table_name FROM information_schema.tables
     WHERE table_schema = 'public' -- Replace 'public' with your schema name if necessary

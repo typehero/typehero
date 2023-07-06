@@ -1,9 +1,9 @@
 'use client';
 
-import Editor from '@monaco-editor/react';
+import Editor, { loader } from '@monaco-editor/react';
 import clsx from 'clsx';
 import { Loader2, Settings } from 'lucide-react';
-import type * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import type * as monaco from 'monaco-editor';
 import { useSession } from 'next-auth/react';
 import { useTheme } from 'next-themes';
 import { useRouter } from 'next/navigation';
@@ -28,6 +28,12 @@ import { libSource } from './editor-types';
 import { createTwoslashInlayProvider } from './twoslash';
 import { VimStatusBar } from './vimMode';
 
+loader.config({
+	paths: {
+		vs: 'https://typescript.azureedge.net/cdn/5.1.6/monaco/min/vs'
+	}
+})
+
 const DEFAULT_OPTIONS = {
   lineNumbers: 'on',
   tabSize: 2,
@@ -39,8 +45,6 @@ const DEFAULT_OPTIONS = {
 } as const satisfies monaco.editor.IStandaloneEditorConstructionOptions;
 
 const LIB_URI = 'ts:filename/checking.d.ts';
-
-type Monaco = typeof monaco;
 
 type Props = (
   | {
@@ -198,7 +202,8 @@ export const CodePanel = (props: Props) => {
 
   const onMount =
     (value: string, onError: (v: TsErrors) => void) =>
-    async (editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) => {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    async (editor: monaco.editor.IStandaloneCodeEditor, monaco: typeof import('monaco-editor')) => {
       const lineWithUserCode = value
         .split('\n')
         .findIndex((line) => line.includes(USER_CODE_START));

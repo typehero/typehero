@@ -36,13 +36,17 @@
     ".eslintrc.cjs",
     "next-env.d.ts",
     "*.ts",
+		"./scripts/*.js",
+		"./scripts/*.mjs",
+		"./scripts/*.cjs",
     "./src/**/*.ts",
     "./src/**/*.tsx",
     "./src/**/*.cjs",
     "./src/**/*.mjs",
     ".next/types/**/*.ts"
-  ],
+, "scripts/dl-monaco.mjs"  ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+		"*.d.ts",
   ]
 }

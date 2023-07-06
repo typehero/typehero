@@ -1,0 +1,13 @@
+diff --git a/dist/index.d.ts b/dist/index.d.ts
+index cb4dde7ee7ebc13c366548610d88e24ea672fd03..e0cd328d114b8025876495fb7d2fec5dece8cbe0 100644
+--- a/dist/index.d.ts
++++ b/dist/index.d.ts
+@@ -3,7 +3,7 @@ import * as react from 'react';
+ import { ReactNode } from 'react';
+ import * as monaco_editor from 'monaco-editor';
+ import { editor } from 'monaco-editor';
+-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
++import * as monaco from 'monaco-editor';
+ 
+ type MonacoDiffEditor = editor.IStandaloneDiffEditor;
+ type DiffOnMount = (editor: MonacoDiffEditor, monaco: Monaco) => void;
