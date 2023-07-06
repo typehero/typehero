@@ -22,6 +22,10 @@ import {
 } from '../../components/ui/select';
 import { type Difficulty } from '@prisma/client';
 
+import { useTheme } from 'next-themes';
+
+import MDEditor from '@uiw/react-md-editor';
+
 export default function CreateChallenge() {
   const createChallengeStore = useCreateChallengeStore();
   const [isPreviewing, setIsPreviewing] = useState({
@@ -85,6 +89,11 @@ export default function CreateChallenge() {
 
     router.push('/create/preview');
   }
+
+  const { theme } = useTheme();
+  theme == 'dark'
+    ? document.documentElement.setAttribute('data-color-mode', 'dark')
+    : document.documentElement.setAttribute('data-color-mode', 'light');
 
   return (
     <ChallengeLayout
@@ -185,7 +194,7 @@ export default function CreateChallenge() {
             value="long-description"
             className="relative mt-0 flex flex-1 flex-col dark:bg-muted [&[hidden]]:hidden"
           >
-            <div className="absolute right-4 top-4 flex items-center justify-end">
+            <div className="absolute bottom-4 right-4 z-10 flex items-center justify-end">
               <Label
                 htmlFor="previewLong"
                 className="flex cursor-pointer gap-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -206,11 +215,43 @@ export default function CreateChallenge() {
                 <Markdown>{description}</Markdown>
               </div>
             ) : (
-              <Textarea
-                className="flex-1 resize-none border-none bg-zinc-100 dark:bg-zinc-900"
-                value={description}
-                onChange={(ev) => setDescription(ev.currentTarget.value)}
-              />
+              <>
+                <MDEditor
+                  height="100%"
+                  className="flex-1"
+                  value={description}
+                  // non-split-screen by default
+                  preview="edit"
+                  // removes resize handle on bottom right
+                  visibleDragbar={false}
+                  // @ts-ignore
+                  onChange={(ev) => setDescription(ev)}
+                  // TODO: customize toolbar GH #131
+                  // components={{
+                  //   toolbar: (command, disabled, executeCommand) => {
+                  //     if (command.keyCommand === 'code') {
+                  //       return (
+                  //         <button
+                  //           aria-label="Insert code"
+                  //           disabled={disabled}
+                  //           onClick={(evn) => {
+                  //             evn.stopPropagation();
+                  //             executeCommand(command, command.groupName);
+                  //           }}
+                  //         >
+                  //           Code
+                  //         </button>
+                  //       );
+                  //     }
+                  //   },
+                  // }}
+                />
+                {/* <Textarea
+                  className="flex-1 resize-none border-none bg-zinc-100 dark:bg-zinc-900"
+                  value={description}
+                  onChange={(ev) => setDescription(ev.currentTarget.value)}
+                /> */}
+              </>
             )}
           </TabsContent>
         </Tabs>
