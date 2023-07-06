@@ -85,3 +85,26 @@ body,
 main {
   height: 100%;
 }
+
+#leftBall {
+  animation: balls 5s linear infinite alternate;
+}
+
+#riteBall {
+  animation: balls 5s linear infinite alternate;
+}
+
+@keyframes balls {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@media (pointer: coarse) {
+  #cursorthing {
+    display: none;
+  }
+}
