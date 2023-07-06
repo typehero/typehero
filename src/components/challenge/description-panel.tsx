@@ -124,7 +124,7 @@ export function DescriptionPanel({ challenge }: Props) {
 
   return (
     <>
-      <Tabs defaultValue="description" className="w-full">
+      <Tabs defaultValue="description" className="flex h-full w-full flex-col">
         <TabsList className="sticky top-0 z-10 grid h-auto w-full grid-cols-3 rounded-none border-b border-zinc-300 bg-background/90 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
           <TabsTrigger
             value="description"
@@ -145,7 +145,7 @@ export function DescriptionPanel({ challenge }: Props) {
             Submissions
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="description" className="mt-0 dark:bg-muted">
+        <TabsContent value="description" className="mt-0 flex-1 dark:bg-muted">
           <div className="h-full px-4 py-3">
             <div className="flex items-baseline justify-between">
               <TypographyH3 className="mb-2 font-medium">{challenge.name}</TypographyH3>
@@ -375,10 +375,10 @@ export function DescriptionPanel({ challenge }: Props) {
             </div>
           </div>
         </TabsContent>
-        <TabsContent value="solutions" className="mt-0 dark:bg-muted">
+        <TabsContent value="solutions" className="mt-0 flex-1 dark:bg-muted">
           <Solutions challenge={challenge} />
         </TabsContent>
-        <TabsContent value="submissions" className="mt-0 dark:bg-muted">
+        <TabsContent value="submissions" className="mt-0 flex-1 dark:bg-muted">
           <Submissions challenge={challenge} />
         </TabsContent>
       </Tabs>
