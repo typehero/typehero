@@ -86,16 +86,3 @@ main {
   height: 100%;
 }
 
-#leftblob,
-#rightblob {
-  animation: balls 5s linear infinite alternate;
-}
-
-@keyframes balls {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
