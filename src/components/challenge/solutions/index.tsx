@@ -6,6 +6,7 @@ import { Button } from '~/components/ui/button';
 import type { Challenge } from '..';
 import { SolutionEditor } from './solution-editor';
 import { useState } from 'react';
+import { SharedSolution } from '@prisma/client';
 
 interface Props {
   challenge: NonNullable<Challenge>;
@@ -13,6 +14,8 @@ interface Props {
 export function Solutions({ challenge }: Props) {
   const hasSolution = challenge.solution?.length > 0;
   const [openSolutionEditor, setOpenSolutionEditor] = useState(false);
+
+  const sharedSolution = challenge.sharedSolution;
 
   const handleClick = () => {
     setOpenSolutionEditor(true);
@@ -41,29 +44,28 @@ export function Solutions({ challenge }: Props) {
               <Plus className="mr-2 h-4 w-4" /> Solution
             </Button>
           </div>
-          <SolutionRow />
-          <SolutionRow />
-          <SolutionRow />
-          <SolutionRow />
-          <SolutionRow />
-          <SolutionRow />
-          <SolutionRow />
-          <SolutionRow />
+
+          {sharedSolution.map((solution) => (
+            <SolutionRow key={solution.id} solution={solution} />
+          ))}
         </>
       )}
     </div>
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function SolutionRow() {
+function SolutionRow({
+  solution,
+}: {
+  solution: NonNullable<NonNullable<Challenge>['sharedSolution'][0]>;
+}) {
   const date = new Date();
   return (
     <div className="group flex cursor-pointer flex-col gap-2 p-4 duration-300 hover:bg-neutral-100 dark:rounded-none dark:hover:bg-neutral-700">
-      <h3 className="font-bold">🔥🔥Some | LeetCodeLooking✅ | Title🔥🔥</h3>
+      <h3 className="font-bold">{solution.title}</h3>
       <div className="flex items-center gap-2 text-sm text-neutral-500">
         <div className="rounded-full bg-neutral-200 px-2 py-1 text-xs font-bold text-neutral-600 dark:bg-neutral-700 dark:text-neutral-400">
-          @&nbsp;username
+          {solution.user?.name}
         </div>
         <div>{date.toLocaleString()}</div>
       </div>

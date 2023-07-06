@@ -136,6 +136,7 @@ model Vote {
   @@index([solutionId])
 }
 
+/// This is a public solution created by a user for a challenge
 model SharedSolution {
   id              Int               @id @default(autoincrement())
   createdAt       DateTime          @default(now())
@@ -152,6 +153,7 @@ model SharedSolution {
   @@index([challengeId])
 }
 
+/// This is a submission of a challenge
 model Solution {
   id           Int       @id @default(autoincrement())
   code         String    @db.MediumText
