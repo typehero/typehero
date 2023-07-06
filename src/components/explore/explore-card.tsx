@@ -6,7 +6,7 @@ import { type Challenge } from '.';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { DifficultyBadge } from './difficulty-badge';
 import { Markdown } from '../ui/markdown';
-import getRelativeTime from '~/utils/relativeTime';
+import { getRelativeTime } from '~/utils/relativeTime';
 
 interface Props {
   challenge: Pick<

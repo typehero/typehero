@@ -20,7 +20,7 @@ import { ToastAction } from '~/components/ui/toast';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
 import { useToast } from '~/components/ui/use-toast';
 import type { Challenge } from '..';
-import { saveSubmission } from '../save-submission';
+import { saveSubmission } from '../save-submission.action';
 import { SettingsForm } from '../settings-form';
 import { useEditorSettingsStore } from '../settings-store';
 import { USER_CODE_START, USER_CODE_START_REGEX } from './constants';
@@ -95,9 +95,7 @@ export const CodePanel = (props: Props) => {
       return props.challenge.prompt;
     }
 
-    const [appendSolutionToThis, separator] = (props.challenge.prompt).split(
-      USER_CODE_START_REGEX,
-    );
+    const [appendSolutionToThis, separator] = props.challenge.prompt.split(USER_CODE_START_REGEX);
     const parsedUserSolution = usersExistingSolution?.code;
 
     return `${appendSolutionToThis ?? ''}${separator ?? ''}${parsedUserSolution}`;
@@ -128,6 +126,14 @@ export const CodePanel = (props: Props) => {
 
           const hasErrors = tsErrors.some((e) => e.length);
 
+          await saveSubmission(
+            props.challenge.id,
+            session?.user?.id as string,
+            solution ?? '',
+            !hasErrors,
+          );
+          router.refresh();
+
           if (hasErrors) {
             toast({
               variant: 'destructive',
@@ -135,12 +141,6 @@ export const CodePanel = (props: Props) => {
               action: <ToastAction altText="Try again">Try again</ToastAction>,
             });
           } else {
-            await saveSubmission(
-              props.challenge.id,
-              session?.user?.id as string,
-              solution ?? '',
-            );
-            router.refresh();
             toast({
               variant: 'success',
               title: 'Good job!',
