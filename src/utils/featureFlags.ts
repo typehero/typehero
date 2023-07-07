@@ -1,12 +1,21 @@
-import { get } from '@vercel/edge-config';
+import { createClient } from '@vercel/edge-config';
+import { env } from '../env.mjs';
 
-const MARKETING_MODE_FLAG = 'marketing';
+interface FeatureFlags {
+  // The mode the site is running in
+  mode: 'marketing' | 'production';
+}
 
-/**
- * Returns true if the feature flag is enabled.
- */
-export const isMarketing = async () => {
-  const featureFlagEnabled = await get(MARKETING_MODE_FLAG);
+// We use prefixes to avoid mixing up the flags with other Edge Config values
+const prefixKey = (key: string) => `ff_${key}`;
+// export async function get(key: keyof FeatureFlags) {
+//   const prefixedKey = prefixKey(key);
+//   const edgeConfig = createClient(env.EDGE_CONFIG);
+//   const featureFlag = await edgeConfig.get<FeatureFlags>(prefixedKey);
+//   return featureFlag;
+// }
 
-  return featureFlagEnabled !== undefined;
-};
+// For now we use this since it is a simp build time thingy
+export function isProd() {
+  return process.env.NODE_ENV === 'production';
+}

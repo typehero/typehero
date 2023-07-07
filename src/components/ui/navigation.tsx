@@ -26,6 +26,7 @@ import {
 } from './dropdown-menu';
 import { useSession } from 'next-auth/react';
 import { RoleTypes } from '@prisma/client';
+import { isProd } from '~/utils/featureFlags';
 
 export function Navigation() {
   const [mounted, setMounted] = useState(false);
@@ -62,9 +63,8 @@ export function Navigation() {
   return (
     <header className="w-full">
       <nav
-        className={`flex h-14 items-center ${
-          pathname.includes('/challenge') || pathname.includes('/create') ? 'px-4' : 'container'
-        }`}
+        className={`flex h-14 items-center ${pathname.includes('/challenge') || pathname.includes('/create') ? 'px-4' : 'container'
+          }`}
       >
         <div className="flex w-full items-center justify-between">
           <div className="relative flex">
@@ -112,12 +112,14 @@ export function Navigation() {
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
-                <NavigationMenuItem className="hidden sm:block">
-                  <NavigationMenuTrigger>Something Nice</NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <NavigationMenuLink>Nice</NavigationMenuLink>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
+                {!isProd() && (
+                  <NavigationMenuItem className="hidden sm:block">
+                    <NavigationMenuTrigger>Something Nice</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <NavigationMenuLink>Nice</NavigationMenuLink>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                )}
               </NavigationMenuList>
             </NavigationMenu>
           </div>
