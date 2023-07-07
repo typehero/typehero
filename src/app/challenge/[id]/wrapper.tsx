@@ -1,6 +1,6 @@
 'use client';
 import { useSelectedLayoutSegments } from 'next/navigation';
-import { CodePanel } from '~/components/challenges/editor';
+import { CodePanel } from '~/components/challenge/editor';
 import type { Challenge } from './layout';
 
 export function Wrapper({ challenge }: { challenge: Challenge }) {

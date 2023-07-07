@@ -1,6 +1,6 @@
 import { getServerSession, type Session } from 'next-auth';
 import { notFound } from 'next/navigation';
-import { LeftPanel } from '~/components/challenges/left-panel';
+import { LeftPanel } from '~/components/challenge/left-panel';
 import { prisma } from '~/server/db';
 
 interface Props {

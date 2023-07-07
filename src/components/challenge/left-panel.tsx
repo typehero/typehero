@@ -133,7 +133,7 @@ export function LeftPanel({ challenge, selectedTab }: Props) {
             value="description"
             className="rounded-md rounded-tl-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
           >
-            <Link href={`/challenge/${challenge.id}`}>Desription</Link>
+            <Link href={`/challenge/${challenge.id}`}>Description</Link>
           </TabsTrigger>
           <TabsTrigger
             value="solutions"

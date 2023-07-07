@@ -1,12 +1,13 @@
 'use client';
 import { ArrowUp, MessageCircle, Plus } from 'lucide-react';
-import { useState } from 'react';
+
 import { Button } from '~/components/ui/button';
-import { getRelativeTime } from '~/utils/relativeTime';
 
 import { SolutionEditor } from './solution-editor';
+import { useState } from 'react';
+import { getRelativeTime } from '~/utils/relativeTime';
+import { type Challenge } from '~/app/challenge/[id]/page';
 
-import type { Challenge } from '..';
 interface Props {
   challenge: NonNullable<Challenge>;
 }
