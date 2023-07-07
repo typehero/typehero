@@ -85,7 +85,7 @@ export function SolutionEditor({ setOpen, challenge }: Props) {
       <Form {...form}>
         {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
         <form className="flex h-full flex-col" onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="sticky right-0 top-[41px] z-10 flex items-center justify-between gap-2 border-b border-zinc-300 bg-background/90 bg-opacity-20 p-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
+          <div className="sticky right-0 top-[41px] z-10 flex items-center justify-between gap-2 border-b border-zinc-300 bg-background/90 bg-opacity-20 p-1 pr-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
             <div className="flex-1">
               <FormField
                 control={form.control}
@@ -105,13 +105,13 @@ export function SolutionEditor({ setOpen, challenge }: Props) {
               />
             </div>
             <Button
-              className="h-9 rounded-xl bg-white text-black hover:bg-zinc-200 focus-visible:bg-zinc-200 focus-visible:ring-offset-0 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:focus-visible:bg-zinc-700"
+              className="h-8 rounded-lg bg-white px-3 py-2 text-black hover:bg-zinc-200 focus-visible:bg-zinc-200 focus-visible:ring-offset-0 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:focus-visible:bg-zinc-700"
               type="button"
               onClick={() => setOpen(false)}
             >
               Cancel
             </Button>
-            <Button className="h-9 rounded-xl" type="submit">
+            <Button className="h-8 rounded-lg px-3 py-2" type="submit">
               Post
             </Button>
           </div>

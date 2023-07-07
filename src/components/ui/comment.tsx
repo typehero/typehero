@@ -8,14 +8,14 @@ type Props = {
 
 const Comment = ({ userId, text, createdAt }: Props) => {
   return (
-    <div className="flex cursor-pointer flex-col gap-2 p-4 duration-300 hover:bg-neutral-100 dark:rounded-none dark:hover:bg-neutral-700">
-      <p>{text}</p>
-      <div className="space-x-2">
-        <span className="max-w-fit rounded-lg bg-neutral-200 pl-1 pr-2 font-bold dark:bg-neutral-700 dark:text-neutral-300">
-          @{userId}
+    <div className="flex cursor-pointer flex-col gap-2 p-4 pt-2 duration-300 hover:bg-neutral-100 dark:rounded-none dark:hover:bg-zinc-700/50">
+      <div className="flex items-center gap-2">
+        <span className="my-auto max-w-fit rounded-full bg-neutral-200 p-1 px-2 text-xs font-bold text-neutral-500 dark:bg-zinc-700 dark:text-neutral-400">
+          @&nbsp;{userId}
         </span>
-        <span>{getRelativeTime(createdAt)}</span>
+        <span className="text-sm text-neutral-500">{getRelativeTime(createdAt)}</span>
       </div>
+      <p>{text}</p>
     </div>
   );
 };

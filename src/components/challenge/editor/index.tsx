@@ -309,7 +309,7 @@ export const CodePanel = (props: Props) => {
                 <span>
                   <Button
                     size="sm"
-                    className="cursor-pointer bg-emerald-600 duration-300 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
+                    className="cursor-pointer rounded-lg bg-emerald-600 duration-300 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
                     // eslint-disable-next-line @typescript-eslint/no-misused-promises
                     onClick={handleSubmit}
                     disabled={!initialTypecheckDone || !session?.user}
