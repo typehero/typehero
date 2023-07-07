@@ -1,4 +1,4 @@
-import { type Session, getServerSession } from 'next-auth';
+import { getServerSession, type Session } from 'next-auth';
 import { notFound } from 'next/navigation';
 import { prisma } from '~/server/db';
 
@@ -38,19 +38,16 @@ async function getChallenge(id: string, session: Session | null) {
       vote: {
         where: {
           userId: session?.user.id,
-          challengeId: +id,
         },
       },
       bookmark: {
         where: {
           userId: session?.user.id,
-          challengeId: +id,
         },
       },
       solution: {
         where: {
           userId: session?.user.id,
-          challengeId: +id,
         },
         orderBy: [
           {
@@ -60,9 +57,6 @@ async function getChallenge(id: string, session: Session | null) {
         take: 10,
       },
       sharedSolution: {
-        where: {
-          challengeId: +id,
-        },
         orderBy: [
           {
             createdAt: 'desc',
