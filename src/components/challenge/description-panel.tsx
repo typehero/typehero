@@ -7,14 +7,15 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 
+import { useForm } from 'react-hook-form';
 import { Button } from '~/components/ui/button';
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogFooter,
 } from '~/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
@@ -22,18 +23,18 @@ import { TypographyH3 } from '~/components/ui/typography/h3';
 import type { Challenge } from '.';
 import { DifficultyBadge } from '../explore/difficulty-badge';
 import { ActionMenu } from '../ui/action-menu';
+import { Checkbox } from '../ui/checkbox';
+import { Form, FormField, FormItem } from '../ui/form';
+import { Markdown } from '../ui/markdown';
 import { Textarea } from '../ui/textarea';
+import { TypographyLarge } from '../ui/typography/large';
+import { toast } from '../ui/use-toast';
 import { addOrRemoveBookmark } from './bookmark.action';
+import Comments from './comments';
 import { incrementOrDecrementUpvote } from './increment.action';
+import { addReport } from './report.action';
 import { ShareForm } from './share-form';
 import { Solutions } from './solutions';
-import { Form, FormField, FormItem } from '../ui/form';
-import { useForm } from 'react-hook-form';
-import { Checkbox } from '../ui/checkbox';
-import { TypographyLarge } from '../ui/typography/large';
-import { addReport } from './report.action';
-import { toast } from '../ui/use-toast';
-import { Markdown } from '../ui/markdown';
 
 interface Props {
   challenge: NonNullable<Challenge>;
@@ -123,8 +124,8 @@ export function DescriptionPanel({ challenge }: Props) {
 
   return (
     <>
-      <Tabs defaultValue="description" className="w-full">
-        <TabsList className="sticky top-0 z-10 grid h-auto w-full grid-cols-2 rounded-none border-b border-zinc-300 bg-background/90 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
+      <Tabs defaultValue="description" className="h-full w-full">
+        <TabsList className="sticky top-0 z-10 grid h-auto w-full grid-cols-3 rounded-none border-b border-zinc-300 bg-background/90 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
           <TabsTrigger
             value="description"
             className="rounded-md rounded-tl-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
@@ -136,6 +137,12 @@ export function DescriptionPanel({ challenge }: Props) {
             className="rounded-md rounded-tr-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
           >
             Solutions
+          </TabsTrigger>
+          <TabsTrigger
+            value="comments"
+            className="rounded-md rounded-tr-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
+          >
+            Comments
           </TabsTrigger>
         </TabsList>
         <TabsContent value="description" className="mt-0 dark:bg-muted">
@@ -370,6 +377,9 @@ export function DescriptionPanel({ challenge }: Props) {
         </TabsContent>
         <TabsContent value="solutions" className="mt-0 dark:bg-muted">
           <Solutions challenge={challenge} />
+        </TabsContent>
+        <TabsContent value="comments" className="mt-0 h-full dark:bg-muted">
+          <Comments />
         </TabsContent>
       </Tabs>
     </>
