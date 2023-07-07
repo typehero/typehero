@@ -78,6 +78,11 @@ async function getChallenge(id: string, session: Session | null) {
       },
       comment: {
         take: 10,
+        orderBy: [
+          {
+            createdAt: 'desc',
+          },
+        ],
         include: {
           user: true,
         },
