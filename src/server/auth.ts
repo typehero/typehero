@@ -21,6 +21,7 @@ declare module 'next-auth' {
   }
 
   interface User {
+    createdAt: Date;
     roles: Role[];
   }
 }
@@ -74,6 +75,7 @@ export const authOptions: NextAuthOptions = {
           ...session.user,
           id: user.id,
           role: userRoles,
+          createAt: user.createdAt,
         },
       };
     },

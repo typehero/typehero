@@ -32,7 +32,7 @@ async function getChallenge() {
   return prisma.challenge.findMany({
     include: {
       _count: {
-        select: { Vote: true },
+        select: { vote: true },
       },
     },
   });

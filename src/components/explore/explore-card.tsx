@@ -6,7 +6,7 @@ import { type Challenge } from '.';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { DifficultyBadge } from './difficulty-badge';
 import { Markdown } from '../ui/markdown';
-import getRelativeTime from '~/utils/relativeTime';
+import { getRelativeTime } from '~/utils/relativeTime';
 
 interface Props {
   challenge: Pick<
@@ -61,7 +61,7 @@ export function ExploreCard({ challenge }: Props) {
             </div>
             <div className="ml-4 flex items-center justify-center text-center">
               <ThumbsUp size={20} className="mr-2" />
-              <span>{challenge._count.Vote}</span>
+              <span>{challenge._count.vote}</span>
             </div>
           </div>
           <div>{getRelativeTime(challenge.updatedAt)}</div>

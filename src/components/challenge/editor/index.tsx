@@ -1,9 +1,9 @@
 'use client';
 
-import Editor from '@monaco-editor/react';
+import Editor, { loader } from '@monaco-editor/react';
 import clsx from 'clsx';
 import { Loader2, Settings } from 'lucide-react';
-import type * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import type * as monaco from 'monaco-editor';
 import { useSession } from 'next-auth/react';
 import { useTheme } from 'next-themes';
 import { useRouter } from 'next/navigation';
@@ -20,13 +20,19 @@ import { ToastAction } from '~/components/ui/toast';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
 import { useToast } from '~/components/ui/use-toast';
 import type { Challenge } from '..';
-import { saveSubmission } from '../save-submission';
+import { saveSubmission } from '../save-submission.action';
 import { SettingsForm } from '../settings-form';
 import { useEditorSettingsStore } from '../settings-store';
 import { USER_CODE_START, USER_CODE_START_REGEX } from './constants';
 import { libSource } from './editor-types';
 import { createTwoslashInlayProvider } from './twoslash';
 import { VimStatusBar } from './vimMode';
+
+loader.config({
+  paths: {
+    vs: 'https://typescript.azureedge.net/cdn/5.1.6/monaco/min/vs',
+  },
+});
 
 const DEFAULT_OPTIONS = {
   lineNumbers: 'on',
@@ -40,12 +46,10 @@ const DEFAULT_OPTIONS = {
 
 const LIB_URI = 'ts:filename/checking.d.ts';
 
-type Monaco = typeof monaco;
-
 type Props = (
   | {
       mode: 'solve';
-      challenge: Pick<NonNullable<Challenge>, 'Solution' | 'prompt' | 'id'>;
+      challenge: Pick<NonNullable<Challenge>, 'solution' | 'prompt' | 'id'>;
       prompt?: never;
     }
   | {
@@ -89,21 +93,19 @@ export const CodePanel = (props: Props) => {
     if (props.mode !== 'solve') return props.prompt ?? '';
 
     // if a user has an existing solution use that instead of prompt
-    const usersExistingSolution = props.challenge.Solution?.[0];
+    const usersExistingSolution = props.challenge.solution?.[0];
 
     if (!usersExistingSolution) {
       return props.challenge.prompt;
     }
 
-    const [appendSolutionToThis, separator] = (props.challenge.prompt as string).split(
-      USER_CODE_START_REGEX,
-    );
-    const parsedUserSolution = JSON.parse(usersExistingSolution?.code as string) as string;
+    const [appendSolutionToThis, separator] = props.challenge.prompt.split(USER_CODE_START_REGEX);
+    const parsedUserSolution = usersExistingSolution?.code;
 
     return `${appendSolutionToThis ?? ''}${separator ?? ''}${parsedUserSolution}`;
-  }, [props.challenge?.Solution, props.challenge?.prompt, props.mode, props.prompt]);
+  }, [props.challenge?.solution, props.challenge?.prompt, props.mode, props.prompt]);
 
-  const [code, setCode] = useState(defaultCode as string);
+  const [code, setCode] = useState(defaultCode);
 
   const editorTheme = theme === 'light' ? 'vs' : 'vs-dark';
   const modelRef = useRef<monaco.editor.ITextModel>();
@@ -128,6 +130,14 @@ export const CodePanel = (props: Props) => {
 
           const hasErrors = tsErrors.some((e) => e.length);
 
+          await saveSubmission(
+            props.challenge.id,
+            session?.user?.id as string,
+            solution ?? '',
+            !hasErrors,
+          );
+          router.refresh();
+
           if (hasErrors) {
             toast({
               variant: 'destructive',
@@ -135,12 +145,6 @@ export const CodePanel = (props: Props) => {
               action: <ToastAction altText="Try again">Try again</ToastAction>,
             });
           } else {
-            await saveSubmission(
-              props.challenge.id,
-              session?.user?.id as string,
-              JSON.stringify(solution) ?? '',
-            );
-            router.refresh();
             toast({
               variant: 'success',
               title: 'Good job!',
@@ -198,7 +202,8 @@ export const CodePanel = (props: Props) => {
 
   const onMount =
     (value: string, onError: (v: TsErrors) => void) =>
-    async (editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) => {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    async (editor: monaco.editor.IStandaloneCodeEditor, monaco: typeof import('monaco-editor')) => {
       const lineWithUserCode = value
         .split('\n')
         .findIndex((line) => line.includes(USER_CODE_START));
@@ -269,10 +274,10 @@ export const CodePanel = (props: Props) => {
           <DialogContent className="w-[200px]">
             <DialogHeader>
               <DialogTitle>Settings</DialogTitle>
-              <div className="pt-4">
-                <SettingsForm />
-              </div>
             </DialogHeader>
+            <div className="pt-4">
+              <SettingsForm />
+            </div>
           </DialogContent>
         </Dialog>
       </div>

@@ -75,19 +75,20 @@ model User {
   roles           Role[]
   status          Status             @default(PENDING)
   emailVerified   DateTime?
+  createdAt       DateTime           @default(now())
   image           String?
   accounts        Account[]
   sessions        Session[]
-  Challenge       Challenge[]
-  Vote            Vote[]
-  Solution        Solution[]
-  Report          Report[]
-  Bookmark        Bookmark[]
-  SharedSolution  SharedSolution[]
-  Comment         ChallengeComment[]
-  Reply           ChallengeReply[]
-  SolutionComment SolutionComment[]
-  SolutionReply   SolutionReply[]
+  challenge       Challenge[]
+  vote            Vote[]
+  solution        Solution[]
+  report          Report[]
+  bookmark        Bookmark[]
+  sharedSolution  SharedSolution[]
+  comment         ChallengeComment[]
+  reply           ChallengeReply[]
+  solutionComment SolutionComment[]
+  solutionReply   SolutionReply[]
 }
 
 model VerificationToken {
@@ -104,17 +105,17 @@ model Challenge {
   updatedAt        DateTime           @updatedAt
   difficulty       Difficulty
   name             String
-  description      Json
+  description      String             @db.MediumText
   shortDescription String
-  prompt           Json
+  prompt           String             @db.MediumText
   user             User               @relation(fields: [userId], references: [id])
   userId           String
-  Vote             Vote[]
-  Solution         Solution[]
-  Comment          ChallengeComment[]
-  Report           Report[]
-  Bookmark         Bookmark[]
-  SharedSolution   SharedSolution[]
+  vote             Vote[]
+  solution         Solution[]
+  comment          ChallengeComment[]
+  report           Report[]
+  bookmark         Bookmark[]
+  sharedSolution   SharedSolution[]
 
   @@index([userId])
 }
@@ -127,7 +128,7 @@ model Vote {
   challengeId      Int?
   solution         Solution?       @relation(fields: [solutionId], references: [id])
   solutionId       Int?
-  SharedSolution   SharedSolution? @relation(fields: [sharedSolutionId], references: [id])
+  sharedSolution   SharedSolution? @relation(fields: [sharedSolutionId], references: [id])
   sharedSolutionId Int?
 
   @@index([userId])
@@ -135,34 +136,35 @@ model Vote {
   @@index([solutionId])
 }
 
+/// This is a public solution created by a user for a challenge
 model SharedSolution {
   id              Int               @id @default(autoincrement())
-  description     Json
-  solution        Solution          @relation(fields: [solutionId], references: [id])
-  solutionId      Int
-  Vote            Vote[]
-  User            User?             @relation(fields: [userId], references: [id])
+  createdAt       DateTime          @default(now())
+  title           String
+  description     String            @db.MediumText
+  vote            Vote[]
+  user            User?             @relation(fields: [userId], references: [id])
   userId          String?
-  Challenge       Challenge?        @relation(fields: [challengeId], references: [id])
+  challenge       Challenge?        @relation(fields: [challengeId], references: [id])
   challengeId     Int?
-  SolutionComment SolutionComment[]
+  solutionComment SolutionComment[]
 
-  @@index([solutionId])
   @@index([userId])
   @@index([challengeId])
 }
 
+/// This is a submission of a challenge
 model Solution {
-  id             Int              @id @default(autoincrement())
-  code           Json
-  user           User             @relation(fields: [userId], references: [id])
-  userId         String
-  challenge      Challenge        @relation(fields: [challengeId], references: [id])
-  challengeId    Int
-  Vote           Vote[]
-  SharedSolution SharedSolution[]
+  id           Int       @id @default(autoincrement())
+  code         String    @db.MediumText
+  createdAt    DateTime  @default(now())
+  isSuccessful Boolean
+  user         User      @relation(fields: [userId], references: [id])
+  userId       String
+  challenge    Challenge @relation(fields: [challengeId], references: [id])
+  challengeId  Int
+  vote         Vote[]
 
-  @@unique([challengeId, userId])
   @@index([userId])
   @@index([challengeId])
 }
@@ -199,7 +201,7 @@ model SolutionComment {
   solution      SharedSolution  @relation(fields: [solutionId], references: [id])
   solutionId    Int
   text          String
-  SolutionReply SolutionReply[]
+  solutionReply SolutionReply[]
 
   @@index([userId])
   @@index([solutionId])

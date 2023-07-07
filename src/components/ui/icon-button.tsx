@@ -15,10 +15,8 @@ export interface IconButtonProps extends ButtonProps {
 export function IconButton({ icon, iconSize, ...props }: IconButtonProps) {
   const Icon = AllIcons[icon] as Icon;
   return (
-    <Button
-      {...props}
-    >
+    <Button {...props}>
       <Icon size={iconSize} />
     </Button>
-  )
+  );
 }

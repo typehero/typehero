@@ -10,10 +10,10 @@ const units = {
 
 const rtf = new Intl.RelativeTimeFormat('en', {
   numeric: 'auto',
-  style: 'short',
+  style: 'long',
 });
 
-const getRelativeTime = (date: Date) => {
+export const getRelativeTime = (date: Date) => {
   const elapsed = date.getTime() - Date.now();
 
   for (const [unit, ms] of Object.entries(units)) {
@@ -22,5 +22,3 @@ const getRelativeTime = (date: Date) => {
     }
   }
 };
-
-export default getRelativeTime;

@@ -7,6 +7,7 @@ const config = {
     {
       extends: ['plugin:@typescript-eslint/recommended-requiring-type-checking'],
       files: ['*.ts', '*.tsx'],
+			excludedFiles: ['./monaco-editor.d.ts'],
       parserOptions: {
         project: path.join(__dirname, 'tsconfig.json'),
       },

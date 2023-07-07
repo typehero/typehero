@@ -35,6 +35,7 @@ import { incrementOrDecrementUpvote } from './increment.action';
 import { addReport } from './report.action';
 import { ShareForm } from './share-form';
 import { Solutions } from './solutions';
+import { Submissions } from './submissions';
 
 interface Props {
   challenge: NonNullable<Challenge>;
@@ -49,9 +50,9 @@ export type FormValues = {
 
 export function DescriptionPanel({ challenge }: Props) {
   const router = useRouter();
-  const [votes, setVotes] = useState(challenge._count.Vote);
-  const [hasVoted, setHasVoted] = useState(challenge.Vote.length > 0);
-  const [hasBookmarked, setHasBookmarked] = useState(challenge.Bookmark.length > 0);
+  const [votes, setVotes] = useState(challenge._count.vote);
+  const [hasVoted, setHasVoted] = useState(challenge.vote.length > 0);
+  const [hasBookmarked, setHasBookmarked] = useState(challenge.bookmark.length > 0);
   const session = useSession();
   const debouncedSearch = useRef(
     debounce(async (challengeId: number, userId: string, shouldIncrement: boolean) => {
@@ -124,8 +125,8 @@ export function DescriptionPanel({ challenge }: Props) {
 
   return (
     <>
-      <Tabs defaultValue="description" className="h-full w-full">
-        <TabsList className="sticky top-0 z-10 grid h-auto w-full grid-cols-3 rounded-none border-b border-zinc-300 bg-background/90 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
+      <Tabs defaultValue="description" className="flex h-full w-full flex-col">
+        <TabsList className="sticky top-0 z-10 grid h-auto w-full grid-cols-4 rounded-none border-b border-zinc-300 bg-background/90 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
           <TabsTrigger
             value="description"
             className="rounded-md rounded-tl-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
@@ -139,13 +140,19 @@ export function DescriptionPanel({ challenge }: Props) {
             Solutions
           </TabsTrigger>
           <TabsTrigger
+            value="submissions"
+            className="rounded-md rounded-tr-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
+          >
+            Submissions
+          </TabsTrigger>
+          <TabsTrigger
             value="comments"
             className="rounded-md rounded-tr-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
           >
             Comments
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="description" className="mt-0 dark:bg-muted">
+        <TabsContent value="description" className="mt-0 flex-1 dark:bg-muted">
           <div className="h-full px-4 py-3">
             <div className="flex items-baseline justify-between">
               <TypographyH3 className="mb-2 font-medium">{challenge.name}</TypographyH3>
@@ -298,17 +305,15 @@ export function DescriptionPanel({ challenge }: Props) {
               </TooltipProvider>
               <Dialog>
                 <DialogTrigger>
-                  <Button variant="ghost" className="p-1">
-                    <Share size={20} className="stroke-gray-500 hover:stroke-gray-400" />
-                  </Button>
+                  <Share size={20} className="stroke-gray-500 hover:stroke-gray-400" />
                 </DialogTrigger>
                 <DialogContent className="w-[200px]">
                   <DialogHeader>
-                    <DialogTitle>Share this challenege</DialogTitle>
-                    <div className="pt-4">
-                      <ShareForm />
-                    </div>
+                    <DialogTitle>Share this challenge</DialogTitle>
                   </DialogHeader>
+                  <div className="pt-4">
+                    <ShareForm />
+                  </div>
                 </DialogContent>
               </Dialog>
               <TooltipProvider>
@@ -371,12 +376,15 @@ export function DescriptionPanel({ challenge }: Props) {
               </TooltipProvider>
             </div>
             <div className="prose-invert leading-8 prose-h3:text-xl">
-              <Markdown>{challenge.description as string}</Markdown>
+              <Markdown>{challenge.description}</Markdown>
             </div>
           </div>
         </TabsContent>
-        <TabsContent value="solutions" className="mt-0 dark:bg-muted">
+        <TabsContent value="solutions" className="mt-0 flex-1 dark:bg-muted">
           <Solutions challenge={challenge} />
+        </TabsContent>
+        <TabsContent value="submissions" className="mt-0 flex-1 dark:bg-muted">
+          <Submissions challenge={challenge} />
         </TabsContent>
         <TabsContent value="comments" className="mt-0 h-full dark:bg-muted">
           <Comments />

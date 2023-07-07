@@ -1,4 +1,4 @@
-import getRelativeTime from '~/utils/relativeTime';
+import { getRelativeTime } from '~/utils/relativeTime';
 
 type Props = {
   id: number;

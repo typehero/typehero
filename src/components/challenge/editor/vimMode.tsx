@@ -1,6 +1,6 @@
 'use client';
 
-import type * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import type * as monaco from 'monaco-editor';
 import { initVimMode, type VimMode } from 'monaco-vim';
 import { useEffect, useRef } from 'react';
 import { useEditorSettingsStore } from '../settings-store';

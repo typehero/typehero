@@ -1,4 +1,4 @@
-import { type Session, getServerSession } from 'next-auth';
+import { getServerSession, type Session } from 'next-auth';
 import { notFound } from 'next/navigation';
 import { prisma } from '~/server/db';
 
@@ -33,29 +33,47 @@ async function getChallenge(id: string, session: Session | null) {
     where: { id: +id },
     include: {
       _count: {
-        select: { Vote: true },
+        select: { vote: true },
       },
-      Vote: {
+      vote: {
         where: {
           userId: session?.user.id,
           challengeId: +id,
         },
       },
-      Bookmark: {
+      bookmark: {
         where: {
           userId: session?.user.id,
           challengeId: +id,
         },
       },
-      Solution: {
+      solution: {
         where: {
           userId: session?.user.id,
           challengeId: +id,
         },
+        orderBy: [
+          {
+            createdAt: 'desc',
+          },
+        ],
+        take: 10,
       },
-      SharedSolution: {
+      sharedSolution: {
         where: {
           challengeId: +id,
+        },
+        orderBy: [
+          {
+            createdAt: 'desc',
+          },
+        ],
+        take: 5,
+        include: {
+          user: true,
+          _count: {
+            select: { vote: true, solutionComment: true },
+          },
         },
       },
     },
