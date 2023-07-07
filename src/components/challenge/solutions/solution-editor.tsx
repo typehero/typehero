@@ -58,11 +58,13 @@ export function SolutionEditor({ setOpen, challenge }: Props) {
         userId: session?.data?.user?.id as string,
       });
 
-      router.refresh();
       toast({
         variant: 'success',
         title: 'Your solution has been posted!',
       });
+
+      // refresh the router so we see latest data
+      router.refresh();
     } catch (error) {
       toast({
         variant: 'destructive',

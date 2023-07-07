@@ -63,9 +63,18 @@ async function getChallenge(id: string, session: Session | null) {
         where: {
           challengeId: +id,
         },
+        orderBy: [
+          {
+            createdAt: 'desc',
+          },
+        ],
+        take: 5,
         include: {
-          user: true
-        }
+          user: true,
+          _count: {
+            select: { vote: true, solutionComment: true },
+          },
+        },
       },
     },
   });
