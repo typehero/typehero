@@ -1,6 +1,10 @@
 import { RoleTypes } from '@prisma/client';
 import { Lock } from 'lucide-react';
 import { getServerSession } from 'next-auth';
+import { getBannedUsers, getReports } from '~/components/admin/admin.actions';
+import { ReportDetails } from '~/components/admin/reports';
+import { BannedUsers } from '~/components/admin/users';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { authOptions } from '~/server/auth';
 
 async function Admin() {
@@ -13,9 +17,9 @@ async function Admin() {
 
   return (
     <div>
-      <div className="flex flex-col items-center justify-center gap-4">
+      <div className="flex flex-col gap-4">
         {isModOrAdmin ? (
-          <ModerationView />
+          <View />
         ) : (
           <div
             className="flex w-full flex-col items-center justify-center space-y-2"
@@ -33,16 +37,43 @@ async function Admin() {
   );
 }
 
-const ModerationView = async () => {
-  const session = await getServerSession(authOptions);
-  const roles = session?.user.role ?? [];
+const View = async () => {
+  const allReports = await getReports();
+  const allBannedUsers = await getBannedUsers();
 
   return (
-    <div>
-      <p className="text-center text-2xl text-white">Moderation View</p>
-      <div className="m-8">
-        Roles:
-        <div>{JSON.stringify(roles)}</div>
+    <div className="m-8 flex flex-col space-y-4">
+      <div className="space-y-2">
+        <div className="mx-2 flex flex-col">
+          <p className="text-2xl font-semibold text-black dark:text-white">Moderation</p>
+          <p className="max-w-[40ch] text-start text-sm text-neutral-400 dark:text-neutral-600">
+            A view of all the reports & users.
+          </p>
+        </div>
+        <div className="flex flex-col space-y-2">
+          <Tabs defaultValue="reports" className="space-x-4">
+            <TabsList className="rounded-full border border-border bg-background">
+              <TabsTrigger
+                className="rounded-l-2xl rounded-r-lg duration-300 data-[state=active]:bg-border"
+                value="reports"
+              >
+                Reports
+              </TabsTrigger>
+              <TabsTrigger
+                className="rounded-l-2xl rounded-r-lg duration-300 data-[state=active]:bg-border"
+                value="users"
+              >
+                Users
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="reports">
+              <ReportDetails data={allReports} />
+            </TabsContent>
+            <TabsContent value="users">
+              <BannedUsers data={allBannedUsers} />
+            </TabsContent>
+          </Tabs>
+        </div>
       </div>
     </div>
   );

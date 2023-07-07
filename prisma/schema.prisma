@@ -26,10 +26,16 @@ enum RoleTypes {
   MODERATOR
 }
 
-enum Status {
+enum UserStatus {
   BANNED
   ACTIVE // can post, comment, vote, etc
   PENDING // must finish x number of challenges to be active
+}
+
+enum ReportStatus {
+  PENDING
+  CLEARED
+  DISMISSED
 }
 
 // Necessary for Next auth
@@ -69,26 +75,33 @@ model Role {
 }
 
 model User {
-  id              String             @id @default(uuid())
-  name            String?
-  email           String?            @unique
-  roles           Role[]
-  status          Status             @default(PENDING)
-  emailVerified   DateTime?
-  createdAt       DateTime           @default(now())
-  image           String?
-  accounts        Account[]
-  sessions        Session[]
-  challenge       Challenge[]
-  vote            Vote[]
-  solution        Solution[]
-  report          Report[]
-  bookmark        Bookmark[]
-  sharedSolution  SharedSolution[]
-  comment         ChallengeComment[]
-  reply           ChallengeReply[]
-  solutionComment SolutionComment[]
-  solutionReply   SolutionReply[]
+  id String @id @default(uuid())
+
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  roles         Role[]
+
+  status    UserStatus @default(PENDING)
+  banReason String?    @db.MediumText
+
+  accounts         Account[]
+  sessions         Session[]
+  challenge        Challenge[]
+  vote             Vote[]
+  solution         Solution[]
+  report           Report[]           @relation(name: "report_author")
+  moderatedReports Report[]           @relation(name: "moderated_reports")
+  bookmark         Bookmark[]
+  sharedSolution   SharedSolution[]
+  comment          ChallengeComment[]
+  reply            ChallengeReply[]
+  solutionComment  SolutionComment[]
+  solutionReply    SolutionReply[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model VerificationToken {
@@ -100,22 +113,25 @@ model VerificationToken {
 }
 
 model Challenge {
-  id               Int                @id @default(autoincrement())
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
+  id               Int        @id @default(autoincrement())
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
   difficulty       Difficulty
   name             String
-  description      String             @db.MediumText
+  description      String     @db.MediumText
   shortDescription String
-  prompt           String             @db.MediumText
-  user             User               @relation(fields: [userId], references: [id])
-  userId           String
-  vote             Vote[]
-  solution         Solution[]
-  comment          ChallengeComment[]
-  report           Report[]
-  bookmark         Bookmark[]
-  sharedSolution   SharedSolution[]
+  prompt           String     @db.MediumText
+  disabled         Boolean    @default(false)
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  vote           Vote[]
+  solution       Solution[]
+  comment        ChallengeComment[]
+  report         Report[]
+  bookmark       Bookmark[]
+  sharedSolution SharedSolution[]
 
   @@index([userId])
 }
@@ -220,16 +236,26 @@ model SolutionReply {
 }
 
 model Report {
-  id          Int       @id @default(autoincrement())
-  user        User      @relation(fields: [userId], references: [id])
-  userId      String
+  id Int @id @default(autoincrement())
+
+  author   User   @relation(fields: [authorId], references: [id], name: "report_author")
+  authorId String
+
   challenge   Challenge @relation(fields: [challengeId], references: [id])
   challengeId Int
-  text        String
-  derogatory  Boolean   @default(false)
-  unclear     Boolean   @default(false)
 
-  @@index([userId])
+  text       String       @db.MediumText
+  derogatory Boolean      @default(false)
+  unclear    Boolean      @default(false)
+  status     ReportStatus @default(PENDING)
+
+  moderator   User?   @relation(fields: [moderatorId], references: [id], name: "moderated_reports")
+  moderatorId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([authorId])
   @@index([challengeId])
 }
 

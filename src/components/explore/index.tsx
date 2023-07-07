@@ -1,6 +1,6 @@
+import { Suspense } from 'react';
 import { prisma } from '~/server/db';
 import { ExploreSection } from './section';
-import { Suspense } from 'react';
 import { ExploreSectionSkeleton } from './section-skeleton';
 
 export function Explore() {
@@ -30,6 +30,9 @@ export function Explore() {
 export type Challenge = ReturnType<typeof getChallenge>;
 async function getChallenge() {
   return prisma.challenge.findMany({
+    where: {
+      disabled: false,
+    },
     include: {
       _count: {
         select: { vote: true },
