@@ -19,7 +19,6 @@ import {
 import { ToastAction } from '~/components/ui/toast';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
 import { useToast } from '~/components/ui/use-toast';
-import type { Challenge } from '..';
 import { saveSubmission } from '../save-submission.action';
 import { SettingsForm } from '../settings-form';
 import { useEditorSettingsStore } from '../settings-store';
@@ -27,6 +26,7 @@ import { USER_CODE_START, USER_CODE_START_REGEX } from './constants';
 import { libSource } from './editor-types';
 import { createTwoslashInlayProvider } from './twoslash';
 import { VimStatusBar } from './vimMode';
+import { type Challenge } from '~/app/challenge/[id]/page';
 
 loader.config({
   paths: {

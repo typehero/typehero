@@ -52,7 +52,7 @@
     "lodash": "^4.17.21",
     "lucide-react": "^0.224.0",
     "monaco-vim": "^0.4.0",
-    "next": "^13.4.8",
+    "next": "^13.4.9",
     "next-auth": "^4.22.1",
     "next-themes": "^0.2.1",
     "react": "18.2.0",

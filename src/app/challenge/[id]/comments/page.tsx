@@ -11,7 +11,7 @@ interface Props {
 
 export type Challenge = Awaited<ReturnType<typeof getChallenge>>;
 
-export default async function Challenges({ params: { id } }: Props) {
+export default async function CommentsPage({ params: { id } }: Props) {
   const session = await getServerSession();
   const challenge = await getChallenge(id, session);
 
@@ -19,9 +19,7 @@ export default async function Challenges({ params: { id } }: Props) {
     return notFound();
   }
 
-  console.log('challenge root');
-
-  return <LeftPanel challenge={challenge} selectedTab={'description'} />;
+  return <LeftPanel challenge={challenge} selectedTab={'comments'} />;
 }
 
 async function getChallenge(id: string, session: Session | null) {

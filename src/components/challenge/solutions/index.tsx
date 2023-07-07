@@ -3,11 +3,10 @@ import { ArrowUp, MessageCircle, Plus } from 'lucide-react';
 
 import { Button } from '~/components/ui/button';
 
-import type { Challenge } from '..';
 import { SolutionEditor } from './solution-editor';
 import { useState } from 'react';
-import { SharedSolution } from '@prisma/client';
 import { getRelativeTime } from '~/utils/relativeTime';
+import { type Challenge } from '~/app/challenge/[id]/page';
 
 interface Props {
   challenge: NonNullable<Challenge>;
@@ -60,7 +59,6 @@ function SolutionRow({
 }: {
   solution: NonNullable<NonNullable<Challenge>['sharedSolution'][0]>;
 }) {
-  const date = new Date();
   return (
     <div className="group flex cursor-pointer flex-col gap-2 p-4 duration-300 hover:bg-neutral-100 dark:rounded-none dark:hover:bg-neutral-700">
       <h3 className="font-bold">{solution.title}</h3>
