@@ -27,16 +27,16 @@ export function ActionMenu(props: ActionMenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <AllIcons.MoreHorizontal size={16} />
+        <AllIcons.MoreHorizontal className="cursor-pointer" size={16} />
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className="rounded-full">
         {props.items.map((item) => {
           const Icon = (item.icon ? AllIcons[item.icon] : null) as OptionalIcon;
           return (
             <DropdownMenuItem
               onClick={() => props.onChange(item)}
               key={item.key}
-              className="flex items-center gap-2 p-2"
+              className="flex items-center gap-2 rounded-full"
             >
               <div>{Icon ? <Icon size={16} /> : null}</div>
               <div>{item.label}</div>
