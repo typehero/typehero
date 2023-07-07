@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { Overview } from '../dashboard/overview';
 import { InProgressTab } from '../dashboard/in-progress-tab';
 import { SolutionsTab } from '../dashboard/solutions-tab';
-import { User } from '@prisma/client';
+import type { User } from '@prisma/client';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { prisma } from '~/server/db';
 

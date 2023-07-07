@@ -1,10 +1,7 @@
 import { getServerSession, type Session } from 'next-auth';
 import { notFound } from 'next/navigation';
-import { prisma } from '~/server/db';
-
-import { ChallengeLayout } from '~/components/challenges/challenge-layout';
 import { LeftPanel } from '~/components/challenges/left-panel';
-import { CodePanel } from '~/components/challenges/editor';
+import { prisma } from '~/server/db';
 
 interface Props {
   params: {
@@ -22,9 +19,9 @@ export default async function Challenges({ params: { id } }: Props) {
     return notFound();
   }
 
-  console.log('challenge root')
+  console.log('challenge root');
 
-  return <LeftPanel challenge={challenge} selectedTab={'description'} />
+  return <LeftPanel challenge={challenge} selectedTab={'description'} />;
 }
 
 async function getChallenge(id: string, session: Session | null) {

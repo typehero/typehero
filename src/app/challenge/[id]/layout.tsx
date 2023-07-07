@@ -1,8 +1,9 @@
-import { getServerSession, Session } from 'next-auth';
+import { getServerSession, type Session } from 'next-auth';
 import { ChallengeLayout } from '~/components/challenge/challenge-layout';
 import { prisma } from '~/server/db';
 import { Wrapper } from './wrapper';
 
+export type Challenge = Awaited<ReturnType<typeof getChallenge>>;
 export default async function LayoutData({
   children,
   params: { id },

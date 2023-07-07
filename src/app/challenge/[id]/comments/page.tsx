@@ -1,10 +1,7 @@
 import { getServerSession, type Session } from 'next-auth';
 import { notFound } from 'next/navigation';
-import { prisma } from '~/server/db';
-
-import { ChallengeLayout } from '~/components/challenges/challenge-layout';
 import { LeftPanel } from '~/components/challenges/left-panel';
-import { CodePanel } from '~/components/challenges/editor';
+import { prisma } from '~/server/db';
 
 interface Props {
   params: {

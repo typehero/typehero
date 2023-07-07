@@ -1,8 +1,9 @@
 'use client';
 import { useSelectedLayoutSegments } from 'next/navigation';
 import { CodePanel } from '~/components/challenges/editor';
+import type { Challenge } from './layout';
 
-export function Wrapper({ challenge }: { challenge: any }) {
+export function Wrapper({ challenge }: { challenge: Challenge }) {
   const segments = useSelectedLayoutSegments();
   if (!challenge) return <div>loading</div>;
   console.log({ segments });

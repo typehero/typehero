@@ -20,7 +20,6 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
 import { TypographyH3 } from '~/components/ui/typography/h3';
-import type { Challenge } from '.';
 import { DifficultyBadge } from '../explore/difficulty-badge';
 import { ActionMenu } from '../ui/action-menu';
 import { Checkbox } from '../ui/checkbox';
@@ -37,6 +36,7 @@ import { ShareForm } from './share-form';
 import { Solutions } from './solutions';
 import { Submissions } from './submissions';
 import Link from 'next/link';
+import { type Challenge } from '~/app/challenge/[id]/layout';
 
 interface Props {
   challenge: NonNullable<Challenge>;
@@ -133,25 +133,25 @@ export function LeftPanel({ challenge, selectedTab }: Props) {
             value="description"
             className="rounded-md rounded-tl-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
           >
-            <Link href={`/challenges/${challenge.id}`}>Desription</Link>
+            <Link href={`/challenge/${challenge.id}`}>Desription</Link>
           </TabsTrigger>
           <TabsTrigger
             value="solutions"
             className="rounded-md rounded-tr-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
           >
-            <Link href={`/challenges/${challenge.id}/solutions`}>Solutions</Link>
+            <Link href={`/challenge/${challenge.id}/solutions`}>Solutions</Link>
           </TabsTrigger>
           <TabsTrigger
             value="submissions"
             className="rounded-md rounded-tr-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
           >
-            <Link href={`/challenges/${challenge.id}/submissions`}>Submissions</Link>
+            <Link href={`/challenge/${challenge.id}/submissions`}>Submissions</Link>
           </TabsTrigger>
           <TabsTrigger
             value="comments"
             className="rounded-md rounded-tr-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
           >
-            <Link href={`/challenges/${challenge.id}/comments`}>Comments</Link>
+            <Link href={`/challenge/${challenge.id}/comments`}>Comments</Link>
           </TabsTrigger>
         </TabsList>
         <TabsContent value="description" className="mt-0 flex-1 dark:bg-muted">

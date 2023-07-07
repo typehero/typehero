@@ -1,7 +1,7 @@
 'use client';
 
 import type { Solution } from '@prisma/client';
-import type { Challenge } from '.';
+import { type Challenge } from '~/app/challenge/[id]/layout';
 import { getRelativeTime } from '~/utils/relativeTime';
 import clsx from 'clsx';
 import {

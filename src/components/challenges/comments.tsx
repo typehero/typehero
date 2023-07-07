@@ -1,6 +1,6 @@
 import { Button } from '~/components/ui/button';
 import Comment from '~/components/ui/comment';
-import type { Challenge } from '.';
+import type { Challenge } from '../challenge';
 
 interface Props {
   challenge: NonNullable<Challenge>;
