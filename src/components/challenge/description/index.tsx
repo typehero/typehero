@@ -21,7 +21,6 @@ import {
 } from '~/components/ui/dialog';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
 import { TypographyH3 } from '~/components/ui/typography/h3';
-import type { Challenge } from '../';
 import { DifficultyBadge } from '../../explore/difficulty-badge';
 import { ActionMenu } from '../../ui/action-menu';
 import { Checkbox } from '../../ui/checkbox';
@@ -35,6 +34,7 @@ import { toast } from '../../ui/use-toast';
 import { addOrRemoveBookmark } from '../bookmark.action';
 import { incrementOrDecrementUpvote } from '../increment.action';
 import { addReport } from '../report.action';
+import { type Challenge } from '~/app/challenge/[id]/layout';
 
 interface Props {
   challenge: NonNullable<Challenge>;

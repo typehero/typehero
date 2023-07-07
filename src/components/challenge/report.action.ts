@@ -1,7 +1,7 @@
 'use server';
 
 import { prisma } from '~/server/db';
-import type { FormValues } from './left-panel';
+import type { FormValues } from './description';
 
 export async function doTheThing() {
   await Promise.resolve(0);
