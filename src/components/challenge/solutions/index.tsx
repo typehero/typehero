@@ -33,7 +33,9 @@ export function Solutions({ challenge }: Props) {
               <div className="flex gap-2 rounded-xl bg-blue-600/10 px-4 py-1 text-blue-600 dark:bg-blue-400/10 dark:text-blue-400">
                 All
               </div>
-              <div className="flex gap-2 rounded-xl bg-black/5 px-4 py-1 text-neutral-500 dark:bg-white/5 dark:text-neutral-400">generics</div>
+              <div className="flex gap-2 rounded-xl bg-black/5 px-4 py-1 text-neutral-500 dark:bg-white/5 dark:text-neutral-400">
+                generics
+              </div>
             </div>
             <Button
               className="h-8 rounded-xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"

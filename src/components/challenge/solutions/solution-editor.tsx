@@ -73,7 +73,6 @@ export function SolutionEditor({ setOpen, challenge }: Props) {
     } finally {
       setOpen(false);
     }
-
   };
 
   const { theme } = useTheme();
