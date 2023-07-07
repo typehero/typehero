@@ -310,6 +310,9 @@ export function DescriptionPanel({ challenge }: Props) {
                 <DialogContent className="w-[200px]">
                   <DialogHeader>
                     <DialogTitle>Share this challenge</DialogTitle>
+                    <div className="pt-4">
+                      <ShareForm />
+                    </div>
                   </DialogHeader>
                   <div className="pt-4">
                     <ShareForm />
