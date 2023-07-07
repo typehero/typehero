@@ -40,7 +40,7 @@ const ModerationView = async () => {
   return (
     <div>
       <p className="text-center text-2xl text-white">Moderation View</p>
-      <div className='m-8'>
+      <div className="m-8">
         Roles:
         <div>{JSON.stringify(roles)}</div>
       </div>

@@ -29,10 +29,10 @@ import { createTwoslashInlayProvider } from './twoslash';
 import { VimStatusBar } from './vimMode';
 
 loader.config({
-	paths: {
-		vs: 'https://typescript.azureedge.net/cdn/5.1.6/monaco/min/vs'
-	}
-})
+  paths: {
+    vs: 'https://typescript.azureedge.net/cdn/5.1.6/monaco/min/vs',
+  },
+});
 
 const DEFAULT_OPTIONS = {
   lineNumbers: 'on',
