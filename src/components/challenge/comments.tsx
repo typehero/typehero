@@ -1,10 +1,11 @@
 import type { ChallengeComment } from '@prisma/client';
 import { Button } from '~/components/ui/button';
 import Comment from '~/components/ui/comment';
+import type { Challenge } from '.';
 
-// type Props = {
-//   comments: ChallengeComment[];
-// };
+interface Props {
+  challenge: NonNullable<Challenge>;
+}
 
 const comments: ChallengeComment[] = [
   {
@@ -21,15 +22,15 @@ const comments: ChallengeComment[] = [
   },
 ];
 
-const Comments = () => {
+const Comments = ({ challenge }: Props) => {
   return (
     <div className="flex h-full w-full flex-col py-4">
       <div className="flex-1 flex-grow">
-        {comments.map((comment) => (
+        {challenge.comment.map((comment) => (
           <Comment
             key={comment.id}
             id={comment.id}
-            userId={comment.userId}
+            userId={comment.user.name ?? ''}
             challengeId={comment.challengeId}
             text={comment.text}
           />

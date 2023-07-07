@@ -387,7 +387,7 @@ export function DescriptionPanel({ challenge }: Props) {
           <Submissions challenge={challenge} />
         </TabsContent>
         <TabsContent value="comments" className="mt-0 h-full dark:bg-muted">
-          <Comments />
+          <Comments challenge={challenge} />
         </TabsContent>
       </Tabs>
     </>
