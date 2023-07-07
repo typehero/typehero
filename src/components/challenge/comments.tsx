@@ -11,13 +11,7 @@ const Comments = ({ challenge }: Props) => {
     <div className="flex h-full w-full flex-col py-4">
       <div className="flex-1 flex-grow">
         {challenge.comment.map((comment) => (
-          <Comment
-            key={comment.id}
-            id={comment.id}
-            userId={comment.user.name ?? ''}
-            challengeId={comment.challengeId}
-            text={comment.text}
-          />
+          <Comment key={comment.id} userId={comment.user.name ?? ''} text={comment.text} />
         ))}
       </div>
       <Button className="sticky bottom-4 right-4 max-w-fit self-end">Comment</Button>

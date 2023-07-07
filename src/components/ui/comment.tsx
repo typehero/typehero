@@ -1,13 +1,11 @@
 import { getRelativeTime } from '~/utils/relativeTime';
 
 type Props = {
-  id: number;
   userId: string;
-  challengeId: number;
   text: string;
 };
 
-const Comment = ({ id, userId, challengeId, text }: Props) => {
+const Comment = ({ userId, text }: Props) => {
   // TODO: make a date created column to the Comment schema and props
   const dateCreated = new Date();
   return (
