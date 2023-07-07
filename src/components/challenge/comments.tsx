@@ -1,4 +1,3 @@
-import type { ChallengeComment } from '@prisma/client';
 import { Button } from '~/components/ui/button';
 import Comment from '~/components/ui/comment';
 import type { Challenge } from '.';
@@ -6,21 +5,6 @@ import type { Challenge } from '.';
 interface Props {
   challenge: NonNullable<Challenge>;
 }
-
-const comments: ChallengeComment[] = [
-  {
-    id: 0,
-    userId: 'me',
-    challengeId: 1,
-    text: 'This is a comment',
-  },
-  {
-    id: 1,
-    userId: 'you',
-    challengeId: 1,
-    text: 'This challenge sucks',
-  },
-];
 
 const Comments = ({ challenge }: Props) => {
   return (
