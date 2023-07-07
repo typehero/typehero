@@ -60,6 +60,70 @@ export function Navigation() {
     setMounted(true);
   }, []);
 
+  const renderLoginDetails = (): JSX.Element | null => {
+    if (isProd()) return null;
+
+    return session ? (
+      <>
+        <button
+          type="button"
+          className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none"
+        >
+          <Bell className="h-5 w-5" aria-hidden="true" />
+        </button>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
+              <User className="h-5 w-5" />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56">
+            <Link className="block" href="/create">
+              <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
+                <Plus className="mr-2 h-4 w-4" />
+                <span>Create a Challange</span>
+              </DropdownMenuItem>
+            </Link>
+            <Link className="block" href={`/@${session.user.name ?? ''}`}>
+              <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
+                <User className="mr-2 h-4 w-4" />
+                <span>Profile</span>
+              </DropdownMenuItem>
+            </Link>
+            {isAdminOrMod && (
+              <Link className="block" href="/admin">
+                <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Admin</span>
+                </DropdownMenuItem>
+              </Link>
+            )}
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => void handleSignOut()}>
+              <span>Log out</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </>
+    ) : (
+      <Button
+        disabled={loading || status === 'loading'}
+        onClick={() => void handleSignIn()}
+        className="w-20 rounded-lg bg-white p-2 text-black duration-300 hover:bg-gray-200 focus:bg-accent focus:outline-none dark:bg-black dark:text-white hover:dark:bg-gray-800"
+      >
+        {loading || status === 'loading' ? (
+          <Loader2 className="h-5 w-5 animate-spin" />
+        ) : (
+          <div className="flex items-center space-x-2">
+            <LogIn className="h-5 w-5" />
+            <span className="dark:text-white">Login</span>
+          </div>
+        )}
+      </Button>
+    );
+  };
+
   return (
     <header className="w-full">
       <nav
@@ -103,25 +167,28 @@ export function Navigation() {
                 hero
               </span>
             </a>
-            <NavigationMenu className="pl-6">
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <Link href="/explore" legacyBehavior passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                      Explore
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-                {!isProd() && (
-                  <NavigationMenuItem className="hidden sm:block">
-                    <NavigationMenuTrigger>Something Nice</NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <NavigationMenuLink>Nice</NavigationMenuLink>
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
-                )}
-              </NavigationMenuList>
-            </NavigationMenu>
+
+            {!isProd() && (
+              <NavigationMenu className="pl-6">
+                <NavigationMenuList>
+                  <>
+                    <NavigationMenuItem>
+                      <Link href="/explore" legacyBehavior passHref>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                          Explore
+                        </NavigationMenuLink>
+                      </Link>
+                    </NavigationMenuItem>
+                    <NavigationMenuItem className="hidden sm:block">
+                      <NavigationMenuTrigger>Something Nice</NavigationMenuTrigger>
+                      <NavigationMenuContent>
+                        <NavigationMenuLink>Nice</NavigationMenuLink>
+                      </NavigationMenuContent>
+                    </NavigationMenuItem>
+                  </>
+                </NavigationMenuList>
+              </NavigationMenu>
+            )}
           </div>
           <div className="flex">
             <div className="flex items-center justify-end gap-2">
@@ -138,65 +205,7 @@ export function Navigation() {
                 </button>
               )}
 
-              {session ? (
-                <>
-                  <button
-                    type="button"
-                    className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none"
-                  >
-                    <Bell className="h-5 w-5" aria-hidden="true" />
-                  </button>
-
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <button className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
-                        <User className="h-5 w-5" />
-                      </button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-56">
-                      <Link className="block" href="/create">
-                        <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
-                          <Plus className="mr-2 h-4 w-4" />
-                          <span>Create a Challange</span>
-                        </DropdownMenuItem>
-                      </Link>
-                      <Link className="block" href={`/@${session.user.name ?? ''}`}>
-                        <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
-                          <User className="mr-2 h-4 w-4" />
-                          <span>Profile</span>
-                        </DropdownMenuItem>
-                      </Link>
-                      {isAdminOrMod && (
-                        <Link className="block" href="/admin">
-                          <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
-                            <Settings className="mr-2 h-4 w-4" />
-                            <span>Admin</span>
-                          </DropdownMenuItem>
-                        </Link>
-                      )}
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem onClick={() => void handleSignOut()}>
-                        <span>Log out</span>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </>
-              ) : (
-                <Button
-                  disabled={loading || status === 'loading'}
-                  onClick={() => void handleSignIn()}
-                  className="w-20 rounded-lg bg-white p-2 text-black duration-300 hover:bg-gray-200 focus:bg-accent focus:outline-none dark:bg-black dark:text-white hover:dark:bg-gray-800"
-                >
-                  {loading || status === 'loading' ? (
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                  ) : (
-                    <div className="flex items-center space-x-2">
-                      <LogIn className="h-5 w-5" />
-                      <span className="dark:text-white">Login</span>
-                    </div>
-                  )}
-                </Button>
-              )}
+              {renderLoginDetails()}
             </div>
           </div>
         </div>
