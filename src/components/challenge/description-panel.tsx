@@ -30,6 +30,7 @@ import { Textarea } from '../ui/textarea';
 import { TypographyLarge } from '../ui/typography/large';
 import { toast } from '../ui/use-toast';
 import { addOrRemoveBookmark } from './bookmark.action';
+import Comments from './comments';
 import { incrementOrDecrementUpvote } from './increment.action';
 import { addReport } from './report.action';
 import { ShareForm } from './share-form';
@@ -125,7 +126,7 @@ export function DescriptionPanel({ challenge }: Props) {
   return (
     <>
       <Tabs defaultValue="description" className="flex h-full w-full flex-col">
-        <TabsList className="sticky top-0 z-10 grid h-auto w-full grid-cols-3 rounded-none border-b border-zinc-300 bg-background/90 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
+        <TabsList className="sticky top-0 z-10 grid h-auto w-full grid-cols-4 rounded-none border-b border-zinc-300 bg-background/90 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
           <TabsTrigger
             value="description"
             className="rounded-md rounded-tl-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
@@ -143,6 +144,12 @@ export function DescriptionPanel({ challenge }: Props) {
             className="rounded-md rounded-tr-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
           >
             Submissions
+          </TabsTrigger>
+          <TabsTrigger
+            value="comments"
+            className="rounded-md rounded-tr-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
+          >
+            Comments
           </TabsTrigger>
         </TabsList>
         <TabsContent value="description" className="mt-0 flex-1 dark:bg-muted">
@@ -303,6 +310,9 @@ export function DescriptionPanel({ challenge }: Props) {
                 <DialogContent className="w-[200px]">
                   <DialogHeader>
                     <DialogTitle>Share this challenge</DialogTitle>
+                    <div className="pt-4">
+                      <ShareForm />
+                    </div>
                   </DialogHeader>
                   <div className="pt-4">
                     <ShareForm />
@@ -378,6 +388,9 @@ export function DescriptionPanel({ challenge }: Props) {
         </TabsContent>
         <TabsContent value="submissions" className="mt-0 flex-1 dark:bg-muted">
           <Submissions challenge={challenge} />
+        </TabsContent>
+        <TabsContent value="comments" className="mt-0 h-full dark:bg-muted">
+          <Comments challenge={challenge} />
         </TabsContent>
       </Tabs>
     </>
