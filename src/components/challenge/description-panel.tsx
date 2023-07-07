@@ -298,9 +298,7 @@ export function DescriptionPanel({ challenge }: Props) {
               </TooltipProvider>
               <Dialog>
                 <DialogTrigger>
-                  <Button variant="ghost" className="p-1">
-                    <Share size={20} className="stroke-gray-500 hover:stroke-gray-400" />
-                  </Button>
+                  <Share size={20} className="stroke-gray-500 hover:stroke-gray-400" />
                 </DialogTrigger>
                 <DialogContent className="w-[200px]">
                   <DialogHeader>
