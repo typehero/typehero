@@ -24,7 +24,7 @@ const Comments = ({ challenge }: Props) => {
       >
         <div className="flex items-center">
           <MessageCircle className="h-5 w-5"></MessageCircle>
-          &nbsp; Comments
+          &nbsp; Comments ({challenge.comment.length})
         </div>
         <ChevronDown
           className={clsx('h-4 w-4 duration-300', {
