@@ -38,6 +38,11 @@ enum ReportStatus {
   DISMISSED
 }
 
+enum Visibility {
+  VISIBLE
+  HIDDEN
+}
+
 // Necessary for Next auth
 model Account {
   id                String  @id @default(cuid())
@@ -86,19 +91,23 @@ model User {
   status    UserStatus @default(PENDING)
   banReason String?    @db.MediumText
 
-  accounts         Account[]
-  sessions         Session[]
-  challenge        Challenge[]
-  vote             Vote[]
-  solution         Solution[]
-  report           Report[]           @relation(name: "report_author")
-  moderatedReports Report[]           @relation(name: "moderated_reports")
-  bookmark         Bookmark[]
-  sharedSolution   SharedSolution[]
-  comment          ChallengeComment[]
-  reply            ChallengeReply[]
-  solutionComment  SolutionComment[]
-  solutionReply    SolutionReply[]
+  accounts  Account[]
+  sessions  Session[]
+  challenge Challenge[]
+  vote      Vote[]
+  solution  Solution[]
+
+  challengeReports          ChallengeReport[] @relation(name: "authored_challenge_reports")
+  moderatedChallengeReports ChallengeReport[] @relation(name: "moderated_challenge_reports")
+  commentReports            CommentReport[]   @relation(name: "authored_comment_reports")
+  moderatedCommentReports   CommentReport[]   @relation(name: "moderated_comment_reports")
+
+  bookmark        Bookmark[]
+  sharedSolution  SharedSolution[]
+  comment         ChallengeComment[]
+  reply           ChallengeReply[]
+  solutionComment SolutionComment[]
+  solutionReply   SolutionReply[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -121,7 +130,7 @@ model Challenge {
   description      String     @db.MediumText
   shortDescription String
   prompt           String     @db.MediumText
-  disabled         Boolean    @default(false)
+  visibility       Visibility @default(VISIBLE)
 
   user   User   @relation(fields: [userId], references: [id])
   userId String
@@ -129,7 +138,7 @@ model Challenge {
   vote           Vote[]
   solution       Solution[]
   comment        ChallengeComment[]
-  report         Report[]
+  report         ChallengeReport[]
   bookmark       Bookmark[]
   sharedSolution SharedSolution[]
 
@@ -186,14 +195,16 @@ model Solution {
 }
 
 model ChallengeComment {
-  id          Int              @id @default(autoincrement())
-  createdAt   DateTime         @default(now())
-  user        User             @relation(fields: [userId], references: [id])
-  userId      String
-  challenge   Challenge        @relation(fields: [challengeId], references: [id])
-  challengeId Int
-  text        String
-  replies     ChallengeReply[]
+  id            Int              @id @default(autoincrement())
+  createdAt     DateTime         @default(now())
+  user          User             @relation(fields: [userId], references: [id])
+  userId        String
+  challenge     Challenge        @relation(fields: [challengeId], references: [id])
+  challengeId   Int
+  text          String
+  visibility    Visibility       @default(VISIBLE)
+  replies       ChallengeReply[]
+  CommentReport CommentReport[]
 
   @@index([userId])
   @@index([challengeId])
@@ -220,7 +231,9 @@ model SolutionComment {
   solution      SharedSolution  @relation(fields: [solutionId], references: [id])
   solutionId    Int
   text          String
+  visibility    Visibility      @default(VISIBLE)
   solutionReply SolutionReply[]
+  CommentReport CommentReport[]
 
   @@index([userId])
   @@index([solutionId])
@@ -239,28 +252,69 @@ model SolutionReply {
   @@index([solutionId])
 }
 
-model Report {
+model ChallengeReport {
   id Int @id @default(autoincrement())
 
-  author   User   @relation(fields: [authorId], references: [id], name: "report_author")
-  authorId String
+  // meta information
+  text   String       @db.MediumText
+  status ReportStatus @default(PENDING)
 
+  // report types
+  derogatory Boolean @default(false)
+  unclear    Boolean @default(false)
+
+  // user infor
+  author      User    @relation(fields: [authorId], references: [id], name: "authored_challenge_reports")
+  authorId    String
+  moderator   User?   @relation(fields: [moderatorId], references: [id], name: "moderated_challenge_reports")
+  moderatorId String?
+
+  // attached challenge.
   challenge   Challenge @relation(fields: [challengeId], references: [id])
   challengeId Int
 
-  text       String       @db.MediumText
-  derogatory Boolean      @default(false)
-  unclear    Boolean      @default(false)
-  status     ReportStatus @default(PENDING)
-
-  moderator   User?   @relation(fields: [moderatorId], references: [id], name: "moderated_reports")
-  moderatorId String?
-
+  // time
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([authorId])
   @@index([challengeId])
+  @@index([moderatorId])
+}
+
+model CommentReport {
+  id Int @id @default(autoincrement())
+
+  // meta information
+  text   String?      @db.MediumText
+  status ReportStatus @default(PENDING)
+
+  // report types
+  threats    Boolean @default(false)
+  hateSpeech Boolean @default(false)
+  spam       Boolean @default(false)
+  bullying   Boolean @default(false)
+
+  // user info
+  author      User    @relation(fields: [authorId], references: [id], name: "authored_comment_reports")
+  authorId    String
+  moderator   User?   @relation(fields: [moderatorId], references: [id], name: "moderated_comment_reports")
+  moderatorId String?
+
+  // attached comments
+  challengeComment   ChallengeComment? @relation(fields: [challengeCommentId], references: [id])
+  challengeCommentId Int?
+  solutionComment    SolutionComment?  @relation(fields: [solutionCommendId], references: [id])
+  solutionCommendId  Int?
+
+  // time
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([moderatorId])
+  @@index([authorId])
+  @@index([challengeCommentId])
+  @@index([solutionCommendId])
 }
 
 model Bookmark {

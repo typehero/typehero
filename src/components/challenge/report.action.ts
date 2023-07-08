@@ -8,10 +8,10 @@ export async function doTheThing() {
   return 'done';
 }
 
-export async function addReport(challengeId: number, userId: string, data: FormValues) {
+export async function addChallengeReport(challengeId: number, userId: string, data: FormValues) {
   if (userId === undefined) return 'not_logged_in';
 
-  const report = await prisma.report.findMany({
+  const report = await prisma.challengeReport.findMany({
     where: {
       challengeId,
       authorId: userId,
@@ -22,7 +22,7 @@ export async function addReport(challengeId: number, userId: string, data: FormV
     return 'report_already_made';
   }
 
-  await prisma.report.create({
+  await prisma.challengeReport.create({
     data: {
       challengeId,
       authorId: userId,

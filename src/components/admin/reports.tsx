@@ -8,7 +8,7 @@ import { useState } from 'react';
 import {
   banUser,
   disableChallenge,
-  dismissReport,
+  dismissChallengeReport,
   type AdminReportDetails,
 } from '~/components/admin/admin.actions';
 import { Badge } from '../ui/badge';
@@ -85,7 +85,7 @@ export const ReportDetails = ({ data }: ReportsProps) => {
   async function handleDismissReport() {
     try {
       if (selectedIssue) {
-        await dismissReport(selectedIssue.id);
+        await dismissChallengeReport(selectedIssue.id);
       }
     } catch (e) {
     } finally {

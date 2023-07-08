@@ -1,12 +1,12 @@
 'use client';
 
+import Link from 'next/link';
+import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
+import { Description } from '~/components/challenge/description';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import Comments from './comments';
-import { Description } from '~/components/challenge/description';
 import { Solutions } from './solutions';
 import { Submissions } from './submissions';
-import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
-import Link from 'next/link';
 
 interface Props {
   challenge: ChallengeRouteData;

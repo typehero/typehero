@@ -30,11 +30,11 @@ import { Textarea } from '../../ui/textarea';
 import { TypographyLarge } from '../../ui/typography/large';
 import { ShareForm } from '../share-form';
 
+import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import { toast } from '../../ui/use-toast';
 import { addOrRemoveBookmark } from '../bookmark.action';
 import { incrementOrDecrementUpvote } from '../increment.action';
-import { addReport } from '../report.action';
-import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
+import { addChallengeReport } from '../report.action';
 
 interface Props {
   challenge: ChallengeRouteData;
@@ -91,7 +91,11 @@ export function Description({ challenge }: Props) {
 
   async function onSubmit(data: FormValues) {
     try {
-      const response = await addReport(challenge.id, session?.data?.user?.id as string, data);
+      const response = await addChallengeReport(
+        challenge.id,
+        session?.data?.user?.id as string,
+        data,
+      );
       if (response === 'created') {
         toast({
           title: 'Feedback Sent',

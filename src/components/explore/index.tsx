@@ -33,7 +33,7 @@ export type ExploreChallengeData = Awaited<ReturnType<typeof getExploreChallenge
 async function getExploreChallengeData() {
   return prisma.challenge.findMany({
     where: {
-      disabled: false,
+      visibility: 'VISIBLE',
     },
     include: {
       _count: {

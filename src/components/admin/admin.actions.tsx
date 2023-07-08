@@ -4,14 +4,14 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '~/server/auth';
 import { prisma } from '~/server/db';
 
-export type AdminReportDetails = Awaited<ReturnType<typeof getReports>>;
+export type AdminReportDetails = Awaited<ReturnType<typeof getChallengeReports>>;
 
 /**
  * The function fetches all the reports along
  * with challenge and the user.
  */
-export async function getReports() {
-  return prisma.report.findMany({
+export async function getChallengeReports() {
+  return prisma.challengeReport.findMany({
     include: {
       challenge: {
         include: {
@@ -54,10 +54,10 @@ export async function disableChallenge(challengeId: number, reportId: number) {
           id: challengeId,
         },
         data: {
-          disabled: true,
+          visibility: 'HIDDEN',
         },
       }),
-      prisma.report.update({
+      prisma.challengeReport.update({
         where: {
           id: reportId,
         },
@@ -79,9 +79,9 @@ export async function disableChallenge(challengeId: number, reportId: number) {
  * @param reportId The id of the report.
  * @returns
  */
-export async function dismissReport(reportId: number) {
+export async function dismissChallengeReport(reportId: number) {
   const session = await getServerSession(authOptions);
-  return prisma.report.update({
+  return prisma.challengeReport.update({
     where: {
       id: reportId,
     },
@@ -118,7 +118,7 @@ export async function banUser(userId: string, reportId: number, banReason?: stri
           userId: userId,
         },
         data: {
-          disabled: true,
+          visibility: 'HIDDEN',
         },
       }),
       prisma.session.deleteMany({
@@ -126,7 +126,7 @@ export async function banUser(userId: string, reportId: number, banReason?: stri
           userId: userId,
         },
       }),
-      prisma.report.update({
+      prisma.challengeReport.update({
         where: {
           id: reportId,
         },
@@ -154,7 +154,7 @@ export async function unbanUser(userId: string) {
         userId: userId,
       },
       data: {
-        disabled: false,
+        visibility: 'VISIBLE',
       },
     }),
     prisma.user.update({
