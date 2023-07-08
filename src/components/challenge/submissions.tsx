@@ -1,7 +1,7 @@
 'use client';
 
 import type { Solution } from '@prisma/client';
-import { type Challenge } from '~/app/challenge/[id]/layout';
+import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import { getRelativeTime } from '~/utils/relativeTime';
 import clsx from 'clsx';
 import {
@@ -15,7 +15,7 @@ import {
 import { useMemo, useState } from 'react';
 
 interface Props {
-  challenge: NonNullable<Challenge>;
+  challenge: ChallengeRouteData;
 }
 
 type Status = 'all' | 'accepted' | 'rejected';
