@@ -225,6 +225,7 @@ export default function CreateChallenge() {
                   // removes resize handle on bottom right
                   visibleDragbar={false}
                   // @ts-ignore
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                   onChange={(ev) => setDescription(ev)}
                   // TODO: customize toolbar GH #131
                   // components={{
