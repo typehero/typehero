@@ -187,6 +187,7 @@ model Solution {
 
 model ChallengeComment {
   id          Int              @id @default(autoincrement())
+  createdAt   DateTime         @default(now())
   user        User             @relation(fields: [userId], references: [id])
   userId      String
   challenge   Challenge        @relation(fields: [challengeId], references: [id])
@@ -200,6 +201,7 @@ model ChallengeComment {
 
 model ChallengeReply {
   id        Int              @id @default(autoincrement())
+  createdAt DateTime         @default(now())
   user      User             @relation(fields: [userId], references: [id])
   userId    String
   comment   ChallengeComment @relation(fields: [commentId], references: [id])
@@ -212,6 +214,7 @@ model ChallengeReply {
 
 model SolutionComment {
   id            Int             @id @default(autoincrement())
+  createdAt     DateTime        @default(now())
   user          User            @relation(fields: [userId], references: [id])
   userId        String
   solution      SharedSolution  @relation(fields: [solutionId], references: [id])
@@ -225,6 +228,7 @@ model SolutionComment {
 
 model SolutionReply {
   id         Int             @id @default(autoincrement())
+  createdAt  DateTime        @default(now())
   user       User            @relation(fields: [userId], references: [id])
   userId     String
   solution   SolutionComment @relation(fields: [solutionId], references: [id])

@@ -1,27 +1,20 @@
 import { getServerSession, type Session } from 'next-auth';
-import { notFound } from 'next/navigation';
-import { LeftPanel } from '~/components/challenge/left-panel';
+import { ChallengeLayout } from '~/components/challenge/challenge-layout';
 import { prisma } from '~/server/db';
-
-interface Props {
-  params: {
-    id: string;
-  };
-}
+import { Wrapper } from './wrapper';
 
 export type Challenge = Awaited<ReturnType<typeof getChallenge>>;
-
-export default async function Challenges({ params: { id } }: Props) {
+export default async function LayoutData({
+  children,
+  params: { id },
+}: {
+  children: React.ReactNode;
+  params: { id: string };
+}) {
   const session = await getServerSession();
   const challenge = await getChallenge(id, session);
-
-  if (!challenge || typeof challenge.prompt !== 'string') {
-    return notFound();
-  }
-
-  console.log('challenge root');
-
-  return <LeftPanel challenge={challenge} selectedTab={'description'} />;
+  if (!challenge) return <div>loading</div>;
+  return <ChallengeLayout left={children} right={<Wrapper challenge={challenge} />} />;
 }
 
 async function getChallenge(id: string, session: Session | null) {

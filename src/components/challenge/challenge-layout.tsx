@@ -176,7 +176,7 @@ export function ChallengeLayout({ left, right, skeleton = false }: ChallengeLayo
       <div
         ref={leftSide}
         className={clsx(
-          'min-h-[42px] w-full overflow-y-auto rounded-xl border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 lg:min-w-[500px]',
+          'min-h-[42px] w-full overflow-hidden rounded-l-2xl rounded-r-xl border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 lg:min-w-[500px]',
           skeleton && 'animate-pulse',
         )}
       >
@@ -202,7 +202,7 @@ export function ChallengeLayout({ left, right, skeleton = false }: ChallengeLayo
         ref={rightSide}
         style={{ flex: '1 1 0%' }}
         className={clsx(
-          'flex flex-col overflow-hidden rounded-xl border border-zinc-300 dark:border-zinc-700 lg:min-w-[500px]',
+          'flex flex-col overflow-hidden rounded-l-xl rounded-r-2xl border border-zinc-300 dark:border-zinc-700 lg:min-w-[500px]',
           skeleton ? 'items-center justify-center pb-3 dark:bg-[#1e1e1e]' : 'min-h-[90px] w-full',
         )}
       >

@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from '~/components/ui/table';
-import { UserData } from '.';
+import type { UserData } from '.';
 import Link from 'next/link';
 
 export function SolutionsTab({ solutions = [] }: { solutions: UserData['solution'] }) {

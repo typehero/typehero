@@ -1,18 +1,17 @@
 import { getServerSession, type Session } from 'next-auth';
 import { notFound } from 'next/navigation';
+import { LeftPanel } from '~/components/challenge/left-panel';
 import { prisma } from '~/server/db';
 
-import { ChallengeLayout } from './challenge-layout';
-import { DescriptionPanel } from './description-panel';
-import { CodePanel } from './editor';
-
 interface Props {
-  id: string;
+  params: {
+    id: string;
+  };
 }
 
 export type Challenge = Awaited<ReturnType<typeof getChallenge>>;
 
-export async function Challenge({ id }: Props) {
+export default async function SubmissionPage({ params: { id } }: Props) {
   const session = await getServerSession();
   const challenge = await getChallenge(id, session);
 
@@ -20,12 +19,7 @@ export async function Challenge({ id }: Props) {
     return notFound();
   }
 
-  return (
-    <ChallengeLayout
-      left={<DescriptionPanel challenge={challenge} />}
-      right={<CodePanel mode="solve" challenge={challenge} />}
-    />
-  );
+  return <LeftPanel challenge={challenge} selectedTab={'submissions'} />;
 }
 
 async function getChallenge(id: string, session: Session | null) {
@@ -68,6 +62,17 @@ async function getChallenge(id: string, session: Session | null) {
           _count: {
             select: { vote: true, solutionComment: true },
           },
+        },
+      },
+      comment: {
+        take: 10,
+        orderBy: [
+          {
+            createdAt: 'desc',
+          },
+        ],
+        include: {
+          user: true,
         },
       },
     },

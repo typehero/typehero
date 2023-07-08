@@ -7,13 +7,13 @@ export function DescriptionPanelSkeleton() {
         <TabsList className="sticky top-0 grid h-auto w-full grid-cols-3 rounded-none border-b border-zinc-300 bg-background dark:border-zinc-700 dark:bg-muted">
           <TabsTrigger
             value="description"
-            className="rounded-md rounded-tl-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
+            className="rounded-md rounded-tl-xl duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
           >
             Description
           </TabsTrigger>
           <TabsTrigger
             value="solutions"
-            className="rounded-md rounded-tr-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
+            className="rounded-md duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
           >
             Solutions
           </TabsTrigger>
