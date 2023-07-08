@@ -8,7 +8,7 @@
     "postinstall": "prisma generate && pnpm dl-monaco",
     "lint": "next lint",
     "reset": "prisma db push --force-reset",
-    "format": "prettier -w 'src/**/*.{ts,tsx,css,cjs,mjs,json}'",
+    "format": "prettier -w \"src/**/*.{ts,tsx,css,cjs,mjs,json}\"",
     "start": "next start",
     "refresh": "pnpm reset && pnpm prisma db seed",
     "typecheck": "tsc --noEmit",
