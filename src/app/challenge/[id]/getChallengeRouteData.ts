@@ -5,7 +5,7 @@ import { prisma } from '../../../server/db';
 export type ChallengeRouteData = NonNullable<Awaited<ReturnType<typeof getChallengeRouteData>>>;
 
 // TODO: Make this only get called once on the routes that need it
-export async function getChallengeRouteData(id: string, session: Session | null) {	
+export async function getChallengeRouteData(id: string, session: Session | null) {
   const challenge = await prisma.challenge.findFirst({
     where: { id: +id },
     include: {
