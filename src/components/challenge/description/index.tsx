@@ -34,10 +34,10 @@ import { toast } from '../../ui/use-toast';
 import { addOrRemoveBookmark } from '../bookmark.action';
 import { incrementOrDecrementUpvote } from '../increment.action';
 import { addReport } from '../report.action';
-import { type Challenge } from '~/app/challenge/[id]/layout';
+import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 
 interface Props {
-  challenge: NonNullable<Challenge>;
+  challenge: ChallengeRouteData;
 }
 
 export type FormValues = {

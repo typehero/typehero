@@ -6,10 +6,10 @@ import { Button } from '~/components/ui/button';
 import { SolutionEditor } from './solution-editor';
 import { useState } from 'react';
 import { getRelativeTime } from '~/utils/relativeTime';
-import { type Challenge } from '~/app/challenge/[id]/page';
+import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 
 interface Props {
-  challenge: NonNullable<Challenge>;
+  challenge: ChallengeRouteData;
 }
 export function Solutions({ challenge }: Props) {
   const hasSolution = challenge.solution?.length > 0;
@@ -45,11 +45,7 @@ export function Solutions({ challenge }: Props) {
   );
 }
 
-function SolutionRow({
-  solution,
-}: {
-  solution: NonNullable<NonNullable<Challenge>['sharedSolution'][0]>;
-}) {
+function SolutionRow({ solution }: { solution: ChallengeRouteData['sharedSolution'][number] }) {
   return (
     <div className="group flex cursor-pointer flex-col gap-2 p-4 duration-300 hover:bg-neutral-100 dark:rounded-none dark:hover:bg-zinc-700/50">
       <div className="flex items-center justify-between">

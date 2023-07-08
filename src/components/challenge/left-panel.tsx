@@ -5,11 +5,11 @@ import Comments from './comments';
 import { Description } from '~/components/challenge/description';
 import { Solutions } from './solutions';
 import { Submissions } from './submissions';
-import { type Challenge } from '~/app/challenge/[id]/layout';
+import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import Link from 'next/link';
 
 interface Props {
-  challenge: NonNullable<Challenge>;
+  challenge: ChallengeRouteData;
   selectedTab: 'description' | 'submissions' | 'solutions' | 'comments';
 }
 

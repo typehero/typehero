@@ -1,14 +1,13 @@
 import { RoleTypes } from '@prisma/client';
 import { Lock } from 'lucide-react';
-import { getServerSession } from 'next-auth';
 import { getBannedUsers, getReports } from '~/components/admin/admin.actions';
 import { ReportDetails } from '~/components/admin/reports';
 import { BannedUsers } from '~/components/admin/users';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
-import { authOptions } from '~/server/auth';
+import { getServerAuthSession } from '~/server/auth';
 
 async function Admin() {
-  const session = await getServerSession(authOptions);
+  const session = await getServerAuthSession();
   const roles = session?.user.role ?? [];
 
   const isMod = roles.includes(RoleTypes.MODERATOR);
@@ -22,7 +21,7 @@ async function Admin() {
           <View />
         ) : (
           <div
-            className="flex w-full flex-col items-center justify-center space-y-2"
+            className="flex w-full flex-col items-center justify-center space-y-2 min-h-[calc(100dvh-112px)]"
             // TODO: i bet there is a css/tw way to do this, @Nikita can fix in 2ms
             style={{ minHeight: 'calc(100dvh - 112px)' }}
           >
