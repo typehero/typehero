@@ -38,7 +38,7 @@ async function getExploreChallengeData() {
     include: {
       _count: {
         select: { vote: true, comment: true, solution: true },
-      }
+      },
     },
   });
 }

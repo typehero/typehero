@@ -21,7 +21,7 @@ async function Admin() {
           <View />
         ) : (
           <div
-            className="flex w-full flex-col items-center justify-center space-y-2 min-h-[calc(100dvh-112px)]"
+            className="flex min-h-[calc(100dvh-112px)] w-full flex-col items-center justify-center space-y-2"
             // TODO: i bet there is a css/tw way to do this, @Nikita can fix in 2ms
             style={{ minHeight: 'calc(100dvh - 112px)' }}
           >

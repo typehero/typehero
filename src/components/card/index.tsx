@@ -24,41 +24,36 @@ const cardVariants = cva('card border-2 rounded-xl @container/card dark:bg-gray-
   },
 });
 
-const headerVariants = cva(
-  'relative rounded-t-xl bg-gradient-to-b p-6 pb-12',
-  {
-    variants: {
-      variant: {
-        BEGINNER: 'dark:bg-pink-400 dark:text-gray-800 dark:from-pink-700/40 dark:to-pink-300/50',
-        EASY: 'dark:bg-green-500 dark:from-green-800/60 dark:to-green-600',
-        MEDIUM: 'dark:bg-yellow-400 dark:text-gray-800 dark:from-yellow-700/60 dark:to-yellow-400',
-        EXTREME: 'dark:bg-orange-400 dark:from-orange-700/60 dark:to-orange-400',
-        HARD: 'dark:bg-red-600 dark:from-red-800/50 dark:to-red-500'
-      }
+const headerVariants = cva('relative rounded-t-xl bg-gradient-to-b p-6 pb-12', {
+  variants: {
+    variant: {
+      BEGINNER: 'dark:bg-pink-400 dark:text-gray-800 dark:from-pink-700/40 dark:to-pink-300/50',
+      EASY: 'dark:bg-green-500 dark:from-green-800/60 dark:to-green-600',
+      MEDIUM: 'dark:bg-yellow-400 dark:text-gray-800 dark:from-yellow-700/60 dark:to-yellow-400',
+      EXTREME: 'dark:bg-orange-400 dark:from-orange-700/60 dark:to-orange-400',
+      HARD: 'dark:bg-red-600 dark:from-red-800/50 dark:to-red-500',
     },
-    defaultVariants: {
-      variant: 'BEGINNER'
-    }
-  }
-);
+  },
+  defaultVariants: {
+    variant: 'BEGINNER',
+  },
+});
 
-const actionButton = cva(
-  'rounded-full p-4 hover:shadow hover:outline',
-  {
-    variants: {
-      variant: {
-        BEGINNER: 'dark:bg-pink-400 dark:shadow-pink-300',
-        EASY: 'dark:bg-green-600 dark:shadow-green-400 dark:hover:outline-green-800',
-        MEDIUM: 'dark:bg-yellow-400',
-        HARD: 'dark:bg-red-500 dark:shadow-red-300 dark:hover:outline-red-800',
-        EXTREME: 'dark:bg-orange-400 dark:hover:outline-orange-700/70 dark:hover:shadow-orange-800/70',
-      }
+const actionButton = cva('rounded-full p-4 hover:shadow hover:outline', {
+  variants: {
+    variant: {
+      BEGINNER: 'dark:bg-pink-400 dark:shadow-pink-300',
+      EASY: 'dark:bg-green-600 dark:shadow-green-400 dark:hover:outline-green-800',
+      MEDIUM: 'dark:bg-yellow-400',
+      HARD: 'dark:bg-red-500 dark:shadow-red-300 dark:hover:outline-red-800',
+      EXTREME:
+        'dark:bg-orange-400 dark:hover:outline-orange-700/70 dark:hover:shadow-orange-800/70',
     },
-    defaultVariants: {
-      variant: 'BEGINNER'
-    }
-  }
-);
+  },
+  defaultVariants: {
+    variant: 'BEGINNER',
+  },
+});
 
 export interface CardProps extends VariantProps<typeof cardVariants> {
   title: string;
@@ -74,9 +69,7 @@ export interface CardProps extends VariantProps<typeof cardVariants> {
 }
 
 export default function Card({ challenge, variant }: CardProps) {
-
   const router = useRouter();
-
 
   return (
     <div className={cn(cardVariants({ variant: variant }), '')}>
@@ -88,7 +81,7 @@ export default function Card({ challenge, variant }: CardProps) {
           <button
             className={actionButton({ variant: variant })}
             type="button"
-            onClick={e=> {
+            onClick={(e) => {
               e.preventDefault();
               router.push(`/challenge/${challenge.id}`);
             }}
@@ -105,7 +98,7 @@ export default function Card({ challenge, variant }: CardProps) {
           </div>
           <div className="flex flex-col items-center">
             <TypographyH3>
-              <div className="flex gap-4 items-center">
+              <div className="flex items-center gap-4">
                 <MessageCircle size={28} />
                 <TypographyH3>{challenge._count.comment}</TypographyH3>
               </div>
@@ -113,9 +106,7 @@ export default function Card({ challenge, variant }: CardProps) {
             <TypographyP>Comments</TypographyP>
           </div>
         </div>
-        <p>
-          {challenge.shortDescription}
-        </p>
+        <p>{challenge.shortDescription}</p>
       </section>
     </div>
   );

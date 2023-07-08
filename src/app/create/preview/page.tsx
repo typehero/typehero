@@ -66,7 +66,7 @@ export default function PreviewCreatedChallenge() {
                 _count: {
                   vote: 420,
                   solution: 0,
-                  comment: 0
+                  comment: 0,
                 },
                 updatedAt: new Date(),
                 difficulty: 'BEGINNER',
