@@ -1,9 +1,11 @@
+import { Suspense } from 'react';
 import { prisma } from '~/server/db';
 import { ExploreSection } from './section';
-import { Suspense } from 'react';
 import { ExploreSectionSkeleton } from './section-skeleton';
 
-export function Explore() {
+export async function Explore() {
+  const data = await getExploreChallengeData();
+
   return (
     <div className="container flex h-full flex-col">
       <section className="mb-8 flex max-w-[69ch] flex-col items-start gap-2">
@@ -21,15 +23,18 @@ export function Explore() {
       </section>
 
       <Suspense fallback={<ExploreSectionSkeleton />}>
-        <ExploreSection data={getChallenge} />
+        <ExploreSection data={data} />
       </Suspense>
     </div>
   );
 }
 
-export type Challenge = ReturnType<typeof getChallenge>;
-async function getChallenge() {
+export type ExploreChallengeData = Awaited<ReturnType<typeof getExploreChallengeData>>;
+async function getExploreChallengeData() {
   return prisma.challenge.findMany({
+    where: {
+      disabled: false,
+    },
     include: {
       _count: {
         select: { vote: true, comment: true, solution: true },

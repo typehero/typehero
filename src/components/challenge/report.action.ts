@@ -14,7 +14,7 @@ export async function addReport(challengeId: number, userId: string, data: FormV
   const report = await prisma.report.findMany({
     where: {
       challengeId,
-      userId,
+      authorId: userId,
     },
   });
   if (report.length > 0) {
@@ -25,7 +25,7 @@ export async function addReport(challengeId: number, userId: string, data: FormV
   await prisma.report.create({
     data: {
       challengeId,
-      userId,
+      authorId: userId,
       text: data.comments,
       unclear: data.examples,
       derogatory: data.derogatory,

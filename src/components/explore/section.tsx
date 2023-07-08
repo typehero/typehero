@@ -1,11 +1,11 @@
 import Link from 'next/link';
-import type { Challenge } from '.';
+import type { ExploreChallengeData } from '.';
 import { ExploreCard } from './explore-card';
 import Card from '~/components/card';
 import { Difficulty } from '@prisma/client';
 
 interface Props {
-  data(): Challenge;
+  data: ExploreChallengeData;
 }
 
 const difficultyToNumber:  Record<Difficulty, number> = {
@@ -28,15 +28,6 @@ export async function ExploreSection({ data }: Props) {
           content="what"
           challenge={challenge}
         />
-      ))}
-      {challenges.map((challenge) => (
-        <Link
-          className="group focus:outline-none"
-          href={`/challenge/${challenge.id}`}
-          key={challenge.id}
-        >
-          <ExploreCard key={challenge.id} challenge={challenge} />
-        </Link>
       ))}
     </div>
   );
