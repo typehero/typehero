@@ -90,36 +90,43 @@ export function Description({ challenge }: Props) {
   });
 
   async function onSubmit(data: FormValues) {
-    const response = await addReport(challenge.id, session?.data?.user?.id as string, data);
-    if (response === 'created') {
+    try {
+      const response = await addReport(challenge.id, session?.data?.user?.id as string, data);
+      if (response === 'created') {
+        toast({
+          title: 'Feedback Sent',
+          variant: 'success',
+          description: (
+            <p>
+              Thank you for submitting this feedback. Someone from our moderator team will be
+              reviewing it shortly.
+            </p>
+          ),
+        });
+      } else if (response === 'report_already_made') {
+        toast({
+          title: 'Report already made',
+          description: (
+            <p>
+              You have already made a report about this challenge. We are still reviewing the
+              question.
+            </p>
+          ),
+        });
+      } else if (response === 'not_logged_in') {
+        toast({
+          title: 'You are not loggeed in',
+          description: <p>Please log in to make this report.</p>,
+        });
+      }
+      setDialogOpen(false);
+    } catch (e) {
       toast({
-        title: 'Feedback Sent',
-        variant: 'success',
-        description: (
-          <p>
-            Thank you for submitting this feedback. Someone from our moderator team will be
-            reviewing it shortly.
-          </p>
-        ),
-      });
-    } else if (response === 'report_already_made') {
-      toast({
-        title: 'Report already made',
-        description: (
-          <p>
-            You have already made a report about this challenge. We are still reviewing the
-            question.
-          </p>
-        ),
-      });
-    } else if (response === 'not_logged_in') {
-      toast({
-        title: 'You are not loggeed in',
-        description: <p>Please log in to make this report.</p>,
+        title: 'Something went wrong.',
+        variant: 'destructive',
+        description: <p>An error was encountered while trying to make a report.</p>,
       });
     }
-
-    setDialogOpen(false);
   }
   return (
     <>
