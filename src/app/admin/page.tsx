@@ -1,6 +1,6 @@
 import { RoleTypes } from '@prisma/client';
 import { Lock } from 'lucide-react';
-import { getBannedUsers, getReports } from '~/components/admin/admin.actions';
+import { getBannedUsers, getChallengeReports } from '~/components/admin/admin.actions';
 import { ReportDetails } from '~/components/admin/reports';
 import { BannedUsers } from '~/components/admin/users';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
@@ -37,7 +37,7 @@ async function Admin() {
 }
 
 const View = async () => {
-  const allReports = await getReports();
+  const allReports = await getChallengeReports();
   const allBannedUsers = await getBannedUsers();
 
   return (
