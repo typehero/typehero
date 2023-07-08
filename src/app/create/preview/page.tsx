@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { CodePanel } from '~/components/challenge/editor';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { Markdown } from '../../../components/ui/markdown';
-import { ExploreCard } from '../../../components/explore/explore-card';
+import ExploreCard from '../../../components/explore/explore-card';
 import { Button } from '../../../components/ui/button';
 
 export default function PreviewCreatedChallenge() {
@@ -30,21 +30,21 @@ export default function PreviewCreatedChallenge() {
     <ChallengeLayout
       left={
         <Tabs
-          defaultValue="description"
+          defaultValue="card"
           className="flex h-full w-full flex-col border-zinc-300 dark:border-zinc-700"
         >
           <TabsList className="sticky top-0 z-10 grid h-auto w-full grid-cols-2 rounded-none border-b border-zinc-300 bg-background/90 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
+            <TabsTrigger
+              value="card"
+              className="rounded-md rounded-tl-xl duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
+            >
+              Card
+            </TabsTrigger>
             <TabsTrigger
               value="description"
               className="rounded-md rounded-tr-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
             >
               Description
-            </TabsTrigger>
-            <TabsTrigger
-              value="card"
-              className="rounded-md rounded-tl-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
-            >
-              Card
             </TabsTrigger>
           </TabsList>
           <TabsContent

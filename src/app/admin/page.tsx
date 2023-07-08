@@ -20,11 +20,7 @@ async function Admin() {
         {isModOrAdmin ? (
           <View />
         ) : (
-          <div
-            className="flex min-h-[calc(100dvh-112px)] w-full flex-col items-center justify-center space-y-2"
-            // TODO: i bet there is a css/tw way to do this, @Nikita can fix in 2ms
-            style={{ minHeight: 'calc(100dvh - 112px)' }}
-          >
+          <div className="flex min-h-[calc(100dvh-112px)] w-full flex-col items-center justify-center space-y-2">
             <Lock className="h-8 w-8" />
             <span className="max-w-[40ch] text-center text-black/50 dark:text-white/50">
               You do not have permissions to access the page.
