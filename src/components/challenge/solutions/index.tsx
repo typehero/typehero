@@ -1,5 +1,5 @@
 'use client';
-import { ArrowUp, MessageCircle, Plus } from 'lucide-react';
+import { ArrowLeft, ArrowUp, Lock, MessageCircle, Plus } from 'lucide-react';
 
 import { Button } from '~/components/ui/button';
 
@@ -7,6 +7,7 @@ import { SolutionEditor } from './solution-editor';
 import { useState } from 'react';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
+import { useSession } from 'next-auth/react';
 
 interface Props {
   challenge: ChallengeRouteData;
@@ -14,6 +15,7 @@ interface Props {
 export function Solutions({ challenge }: Props) {
   const hasSolution = challenge.solution?.length > 0;
   const [openSolutionEditor, setOpenSolutionEditor] = useState(false);
+  const session = useSession();
 
   const sharedSolution = challenge.sharedSolution;
 
@@ -24,7 +26,28 @@ export function Solutions({ challenge }: Props) {
   return (
     <div className="relative h-full">
       {openSolutionEditor ? (
-        <SolutionEditor challenge={challenge} setOpen={setOpenSolutionEditor} />
+        session.status === 'authenticated' ? (
+          <SolutionEditor challenge={challenge} setOpen={setOpenSolutionEditor} />
+        ) : (
+          <div className="flex h-full w-full flex-col items-center justify-center space-y-4">
+            <div className="flex flex-col items-center justify-center space-y-2">
+              <Lock className="h-8 w-8" />
+              <span className="max-w-[40ch] text-center text-black/50 dark:text-white/50">
+                You need to be logged in to post a solution.
+              </span>
+            </div>
+            <Button
+              variant={'ghost'}
+              className="gap-2"
+              onClick={() => {
+                setOpenSolutionEditor(!openSolutionEditor);
+              }}
+            >
+              <ArrowLeft />
+              Back
+            </Button>
+          </div>
+        )
       ) : (
         <>
           <div className="sticky right-0 top-[41px] flex justify-end border-b border-zinc-300 bg-background/90 p-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
