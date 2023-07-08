@@ -1,6 +1,5 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import type { Role, RoleTypes } from '@prisma/client';
-import { type GetServerSidePropsContext } from 'next';
 import { getServerSession, type DefaultSession, type NextAuthOptions } from 'next-auth';
 import GitHubProvider from 'next-auth/providers/github';
 import { env } from '~/env.mjs';
@@ -94,9 +93,6 @@ export const authOptions: NextAuthOptions = {
  *
  * @see https://next-auth.js.org/configuration/nextjs
  */
-export const getServerAuthSession = (ctx: {
-  req: GetServerSidePropsContext['req'];
-  res: GetServerSidePropsContext['res'];
-}) => {
-  return getServerSession(ctx.req, ctx.res, authOptions);
+export const getServerAuthSession = () => {
+  return getServerSession(authOptions);
 };

@@ -1,14 +1,14 @@
 import clsx from 'clsx';
 import { Button } from '~/components/ui/button';
 import Comment from '~/components/ui/comment';
-import { type Challenge } from '~/app/challenge/[id]/page';
+import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import { MessageCircle, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import { Input } from '../ui/input';
 import NoComments from './nocomments';
 
 interface Props {
-  challenge: NonNullable<Challenge>;
+  challenge: ChallengeRouteData;
 }
 
 const Comments = ({ challenge }: Props) => {

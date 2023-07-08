@@ -26,7 +26,7 @@ import { USER_CODE_START, USER_CODE_START_REGEX } from './constants';
 import { libSource } from './editor-types';
 import { createTwoslashInlayProvider } from './twoslash';
 import { VimStatusBar } from './vimMode';
-import { type Challenge } from '~/app/challenge/[id]/page';
+import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 
 loader.config({
   paths: {
@@ -49,7 +49,7 @@ const LIB_URI = 'ts:filename/checking.d.ts';
 type Props = (
   | {
       mode: 'solve';
-      challenge: Pick<NonNullable<Challenge>, 'solution' | 'prompt' | 'id'>;
+      challenge: Pick<ChallengeRouteData, 'solution' | 'prompt' | 'id'>;
       prompt?: never;
     }
   | {

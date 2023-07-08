@@ -7,7 +7,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '~/component
 import { Input } from '~/components/ui/input';
 import { useToast } from '~/components/ui/use-toast';
 import { postSolution } from './post-solution.action';
-import { type Challenge } from '~/app/challenge/[id]/layout';
+import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import { useSession } from 'next-auth/react';
 import { useTheme } from 'next-themes';
 import { useRouter } from 'next/navigation';
@@ -34,7 +34,7 @@ const formSchema = z.object({
 export type FormSchema = z.infer<typeof formSchema>;
 
 interface Props {
-  challenge: NonNullable<Challenge>;
+  challenge: ChallengeRouteData;
   setOpen: (v: boolean) => void;
 }
 

@@ -1,10 +1,9 @@
 import { RoleTypes } from '@prisma/client';
 import { Lock } from 'lucide-react';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '~/server/auth';
+import { getServerAuthSession } from '~/server/auth';
 
 async function Admin() {
-  const session = await getServerSession(authOptions);
+  const session = await getServerAuthSession();
   const roles = session?.user.role ?? [];
 
   const isMod = roles.includes(RoleTypes.MODERATOR);
@@ -34,7 +33,7 @@ async function Admin() {
 }
 
 const ModerationView = async () => {
-  const session = await getServerSession(authOptions);
+  const session = await getServerAuthSession();
   const roles = session?.user.role ?? [];
 
   return (
