@@ -57,9 +57,8 @@ export default function PreviewCreatedChallenge() {
           </TabsContent>
           <TabsContent
             value="card"
-            className="mt-0 flex flex-1 flex-col gap-3 p-4 dark:bg-muted [&[hidden]]:hidden"
+            className="mt-0 flex flex-1 flex-col gap-3 p-4 dark:bg-background [&[hidden]]:hidden"
           >
-            <h1>Card Preview</h1>
             <ExploreCard
               challenge={{
                 ...createChallengeStore.data,
@@ -69,7 +68,7 @@ export default function PreviewCreatedChallenge() {
                   comment: 0,
                 },
                 updatedAt: new Date(),
-                difficulty: 'BEGINNER',
+                difficulty: createChallengeStore.data.difficulty,
               }}
             />
           </TabsContent>
