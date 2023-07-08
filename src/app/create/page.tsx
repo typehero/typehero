@@ -1,7 +1,6 @@
 'use client';
 
 import { ChallengeLayout } from '~/components/challenge/challenge-layout';
-import { Textarea } from '~/components/ui/textarea';
 import { CodePanel } from '~/components/challenge/editor';
 import { useState } from 'react';
 import { Checkbox } from '~/components/ui/checkbox';
@@ -9,18 +8,12 @@ import { Label } from '~/components/ui/label';
 import { Markdown } from '~/components/ui/markdown';
 import { useCreateChallengeStore } from './create-challenge-store';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
-import { Input } from '~/components/ui/input';
 import { useToast } from '~/components/ui/use-toast';
 import { ToastAction } from '@radix-ui/react-toast';
 import { useRouter } from 'next/navigation';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '../../components/ui/select';
+
 import { type Difficulty } from '@prisma/client';
+import ExploreCardInputs from '../../components/create/explore-card-inputs';
 
 import { useTheme } from 'next-themes';
 
@@ -30,12 +23,10 @@ export default function CreateChallenge() {
   const createChallengeStore = useCreateChallengeStore();
   const [isPreviewing, setIsPreviewing] = useState({
     description: false,
-    shortDescription: false,
-    name: false,
   });
   const [description, setDescription] = useState(createChallengeStore.data?.description ?? '');
-  const [difficulty, setDifficulty] = useState<Difficulty | undefined>(
-    createChallengeStore.data?.difficulty,
+  const [difficulty, setDifficulty] = useState<Difficulty | 'BEGINNER'>(
+    createChallengeStore.data?.difficulty || 'BEGINNER',
   );
   const [shortDescription, setShortDescription] = useState(
     createChallengeStore.data?.shortDescription ?? '',
@@ -105,13 +96,13 @@ export default function CreateChallenge() {
           <TabsList className="sticky top-0 z-10 grid h-auto w-full grid-cols-2 rounded-none border-b border-zinc-300 bg-background/90 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
             <TabsTrigger
               value="short-description"
-              className="rounded-md rounded-tr-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
+              className="rounded-md rounded-tl-xl duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
             >
               Short Description
             </TabsTrigger>
             <TabsTrigger
               value="long-description"
-              className="rounded-md rounded-tl-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
+              className="rounded-md rounded-tr-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
             >
               Long Description
             </TabsTrigger>
@@ -120,75 +111,14 @@ export default function CreateChallenge() {
             value="short-description"
             className="mt-0 flex flex-1 flex-col p-4 dark:bg-muted [&[hidden]]:hidden"
           >
-            <div className="mb-1 mt-3 flex items-center justify-between pr-1">
-              <h1>Name:</h1>
-
-              <Label
-                htmlFor="previewTitle"
-                className="flex cursor-pointer items-center gap-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Preview:
-                <Checkbox
-                  id="previewTitle"
-                  className="border-zinc-500"
-                  checked={isPreviewing.name}
-                  onCheckedChange={(checked) =>
-                    setIsPreviewing((rest) => ({ ...rest, name: checked === true }))
-                  }
-                />
-              </Label>
-            </div>
-            {isPreviewing.name ? (
-              <h2 className="px-3 py-2">{name}</h2>
-            ) : (
-              <Input
-                className="resize-none border-zinc-300 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900"
-                value={name}
-                onChange={(ev) => setName(ev.currentTarget.value)}
-              />
-            )}
-
-            <h1 className="mb-1 mt-3">Name:</h1>
-            <Select onValueChange={(value: Difficulty) => setDifficulty(value)} value={difficulty}>
-              <SelectTrigger className="border-zinc-300 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900">
-                <SelectValue placeholder="Select a Difficulty" />
-              </SelectTrigger>
-              <SelectContent className="border-zinc-300 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900">
-                <SelectItem value="BEGINNER">BEGINNER</SelectItem>
-                <SelectItem value="EASY">EASY</SelectItem>
-                <SelectItem value="MEDIUM">MEDIUM</SelectItem>
-                <SelectItem value="HARD">HARD</SelectItem>
-                <SelectItem value="EXTREME">EXTREME</SelectItem>
-              </SelectContent>
-            </Select>
-            <div className="mb-1 mt-3 flex items-center justify-between pr-1">
-              <h1>Short Description:</h1>
-              <Label
-                htmlFor="preview"
-                className="flex cursor-pointer items-center gap-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Preview:
-                <Checkbox
-                  id="preview"
-                  className="border-zinc-500"
-                  checked={isPreviewing.shortDescription}
-                  onCheckedChange={(checked) =>
-                    setIsPreviewing((rest) => ({ ...rest, shortDescription: checked === true }))
-                  }
-                />
-              </Label>
-            </div>
-            {isPreviewing.shortDescription ? (
-              <div className="prose-invert flex-1 px-3 py-2 text-sm">
-                <Markdown>{shortDescription}</Markdown>
-              </div>
-            ) : (
-              <Textarea
-                className="flex-1 resize-none border-zinc-300 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900"
-                value={shortDescription}
-                onChange={(ev) => setShortDescription(ev.currentTarget.value)}
-              />
-            )}
+            <ExploreCardInputs
+              name={name}
+              setName={setName}
+              difficulty={difficulty}
+              setDifficulty={setDifficulty}
+              shortDescription={shortDescription}
+              setShortDescription={setShortDescription}
+            />
           </TabsContent>
           <TabsContent
             value="long-description"

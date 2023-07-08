@@ -45,14 +45,7 @@ export function LeftPanel({ challenge, selectedTab }: Props) {
             <Description challenge={challenge}></Description>
           </div>
 
-          <div
-            className="sticky bottom-0 overflow-hidden rounded-xl border border-zinc-300 border-b-background bg-background/90 backdrop-blur-sm duration-300 dark:border-zinc-700 dark:border-b-muted dark:bg-muted/90"
-            style={{
-              marginLeft: '-1px',
-              marginRight: '-1px',
-              boxShadow: '0px 0px 3rem -0.25rem #0004',
-            }}
-          >
+          <div className="sticky bottom-0 -mx-[1px] overflow-hidden rounded-xl border border-zinc-300 border-b-background bg-background/90 shadow-[0_0_3rem_-0.25rem_#0004] backdrop-blur-sm duration-300 dark:border-zinc-700 dark:border-b-muted dark:bg-muted/90 dark:shadow-[0_0_3rem_-0.25rem_#0008]">
             <Comments challenge={challenge} />
           </div>
         </div>
