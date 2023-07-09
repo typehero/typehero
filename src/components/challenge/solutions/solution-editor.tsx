@@ -123,7 +123,6 @@ export function SolutionEditor({ setOpen, challenge }: Props) {
                 // @ts-ignore
                 <MDEditor
                   height="100%"
-                  className="bg-red-500"
                   value={field.value}
                   // non-split-screen by default
                   preview="edit"
