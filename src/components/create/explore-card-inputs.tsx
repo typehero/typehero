@@ -69,7 +69,7 @@ const ExploreCardInputs = ({
             </SelectContent>
           </Select>
           <h1 className="pt-3 text-sm text-black/50 dark:text-white/70">Challenge Title:</h1>
-          <CardTitle className="pb-4 pt-0 text-4xl dark:text-white">
+          <CardTitle className="pb-4 pt-0 text-3xl dark:text-white">
             <input
               className="bg-transparent placeholder-black/50 focus:outline-none dark:placeholder-white/70"
               style={{ textShadow: '0 0 0.5rem #0003' }}
