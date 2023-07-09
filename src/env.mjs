@@ -12,6 +12,7 @@ export const env = createEnv({
     GITHUB_ID: z.string(),
     GITHUB_SECRET: z.string(),
     // EDGE_CONFIG: z.string(),
+    NEXTAUTH_SECRET: z.string(),
   },
 
   /**
@@ -33,6 +34,7 @@ export const env = createEnv({
     GITHUB_SECRET: process.env.GITHUB_SECRET,
     GITHUB_ID: process.env.GITHUB_ID,
     // EDGE_CONFIG: process.env.EDGE_CONFIG,
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.

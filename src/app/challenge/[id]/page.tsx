@@ -17,7 +17,5 @@ export default async function Challenges({ params: { id } }: Props) {
     return notFound();
   }
 
-  console.log('challenge root');
-
   return <LeftPanel challenge={challenge} selectedTab={'description'} />;
 }

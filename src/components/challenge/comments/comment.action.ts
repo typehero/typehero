@@ -1,8 +1,8 @@
 'use server';
 
 import { getServerSession } from 'next-auth';
-import { CommentReportSchemaType } from '~/components/challenge/comments/comment';
-import { authOptions } from '~/server/auth';
+import { type CommentReportSchemaType } from '~/components/challenge/comments/comment';
+import { authOptions, getServerAuthSession } from '~/server/auth';
 import { prisma } from '~/server/db';
 
 /**
@@ -12,7 +12,7 @@ import { prisma } from '~/server/db';
  * @param text The comment text.
  */
 export async function addChallengeComment(challengeId: number, text: string) {
-  const session = await getServerSession(authOptions);
+  const session = await getServerAuthSession();
 
   // 1. Checks.
   if (!session?.user.id) return 'unauthorized';
