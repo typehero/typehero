@@ -93,7 +93,7 @@ export const BannedUsers = ({ data }: BannedUsersProps) => {
                     onChange={(item) => {
                       if (item.key === 'unban') {
                         // any better workarounds for void?
-                        void handleUserUnban(user);
+                        handleUserUnban(user);
                       }
                     }}
                   />

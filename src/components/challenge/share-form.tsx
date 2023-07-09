@@ -33,7 +33,7 @@ export function ShareForm() {
             ? 'border border-green-500 text-green-500 dark:border-green-700 dark:bg-green-700 dark:text-white'
             : 'border border-gray-100 text-black hover:bg-gray-100 dark:bg-white'
         }`}
-        onClick={() => void copyToClipboard()}
+        onClick={copyToClipboard}
       >
         <span>{copied ? 'Copied!' : 'Copy'}</span>
         {copied ? <CheckCircle2Icon /> : <ClipboardIcon />}
