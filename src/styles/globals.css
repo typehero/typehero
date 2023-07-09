@@ -105,6 +105,7 @@ main {
 
 .w-md-editor-toolbar-divider {
   @apply bg-zinc-300 dark:bg-zinc-700;
+  /* TODO: not aligned center vertically */
   height: 1.5rem !important;
 }
 .w-md-editor-toolbar ul {
@@ -114,7 +115,7 @@ main {
   @apply text-black dark:text-white;
 }
 .w-md-editor-toolbar ul li button {
-  @apply flex h-8 w-8 items-center justify-center rounded-md p-1 text-neutral-500 hover:bg-neutral-200 hover:text-black dark:hover:bg-zinc-700 dark:hover:text-white;
+  @apply flex h-8 w-auto min-w-[2rem] items-center justify-center rounded-md p-1 text-neutral-500 hover:bg-neutral-200 hover:text-black dark:hover:bg-zinc-700 dark:hover:text-white;
 }
 .w-md-editor-toolbar ul li button[disabled] {
   @apply cursor-default text-neutral-700 hover:bg-transparent hover:text-neutral-700;
@@ -127,7 +128,7 @@ main {
 }
 
 .w-md-editor-preview {
-  padding: 0.5rem 1rem !important;
+  padding: 1rem !important;
   box-shadow: inset 1px 0 0 0 rgb(212 212 216) !important;
 }
 .dark .w-md-editor-preview {

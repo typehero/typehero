@@ -145,6 +145,7 @@ export default function CreateChallenge() {
                 <Markdown>{description}</Markdown>
               </div>
             ) : (
+              // TODO: move out to customized component
               <MDEditor
                 height="100%"
                 className="flex-1"
