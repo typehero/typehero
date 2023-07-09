@@ -1,7 +1,6 @@
 'use server';
 
-import { getServerSession } from 'next-auth';
-import { authOptions } from '~/server/auth';
+import { getServerAuthSession } from '~/server/auth';
 import { prisma } from '~/server/db';
 
 export type AdminReportDetails = Awaited<ReturnType<typeof getChallengeReports>>;
@@ -10,7 +9,7 @@ export type AdminReportDetails = Awaited<ReturnType<typeof getChallengeReports>>
  * The function fetches all the reports along
  * with challenge and the user.
  */
-export async function getChallengeReports() {
+export function getChallengeReports() {
   return prisma.challengeReport.findMany({
     include: {
       challenge: {
@@ -46,7 +45,7 @@ export async function getBannedUsers() {
  * @returns
  */
 export async function disableChallenge(challengeId: number, reportId: number) {
-  const session = await getServerSession(authOptions);
+  const session = await getServerAuthSession();
   try {
     await prisma.$transaction([
       prisma.challenge.update({
@@ -80,7 +79,7 @@ export async function disableChallenge(challengeId: number, reportId: number) {
  * @returns
  */
 export async function dismissChallengeReport(reportId: number) {
-  const session = await getServerSession(authOptions);
+  const session = await getServerAuthSession();
   return prisma.challengeReport.update({
     where: {
       id: reportId,
@@ -100,7 +99,7 @@ export async function dismissChallengeReport(reportId: number) {
  * @returns
  */
 export async function banUser(userId: string, reportId: number, banReason?: string) {
-  const session = await getServerSession(authOptions);
+  const session = await getServerAuthSession();
 
   try {
     await prisma.$transaction([
