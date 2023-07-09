@@ -1,6 +1,15 @@
 'use client';
 
-import { ThumbsUp, PlayCircle, Bookmark } from 'lucide-react';
+import {
+  ThumbsUp,
+  PlayCircle,
+  Bookmark,
+  Circle,
+  Diamond,
+  Triangle,
+  Plus,
+  Sparkle,
+} from 'lucide-react';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { DifficultyBadge } from './difficulty-badge';
@@ -47,21 +56,58 @@ const GRADIENTS_BY_DIFFICULTY = {
     'bg-gradient-to-br hover:bg-[right_-2px_bottom] bg-[length:200%_200%] bg-left-top dark:from-orange-950 dark:via-orange-500 dark:to-orange-300 dark:via-30% from-orange-300 via-orange-500 via-30% to-orange-600',
 };
 
+const COLORS_BY_DIFFICULTY = {
+  BEGINNER: 'dark:group-hover:text-pink-300 group-hover:text-pink-600',
+  EASY: 'dark:group-hover:text-green-300 group-hover:text-green-600',
+  MEDIUM: 'dark:group-hover:text-yellow-300 group-hover:text-yellow-600',
+  HARD: 'dark:group-hover:text-red-300 group-hover:text-red-600',
+  EXTREME: 'dark:group-hover:text-orange-300 group-hover:text-orange-600',
+};
+
 const ExploreCard = ({ challenge }: Props) => {
   return (
     <Card
-      className={`group overflow-hidden duration-300
+      className={`group relative overflow-hidden duration-300
       ${GRADIENTS_BY_DIFFICULTY[challenge.difficulty]}
       ${SHADOWS_BY_DIFFICULTY[challenge.difficulty]} 
       ${BORDERS_BY_DIFFICULTY[challenge.difficulty]}
       `}
     >
-      {/* TODO: add background shapes grid pattern */}
+      {challenge.difficulty === 'BEGINNER' && (
+        <>
+          <Circle className="absolute -right-4 -top-8 h-24 w-24 stroke-1 text-white/30 duration-300 group-hover:h-20 group-hover:w-20"></Circle>
+          <Circle className="absolute -right-4 -top-8 h-32 w-32 stroke-1 text-white/30 duration-500 group-hover:h-28 group-hover:w-28"></Circle>
+        </>
+      )}
+      {challenge.difficulty === 'EASY' && (
+        <>
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 stroke-1 text-white/30 duration-300 group-hover:h-20 group-hover:w-20 group-hover:rotate-0"></Diamond>
+          <Diamond className="absolute -right-5 -top-10 h-32 w-32 rotate-12 stroke-1 text-white/30 duration-500 group-hover:h-28 group-hover:w-28 group-hover:-rotate-12"></Diamond>
+        </>
+      )}
+      {challenge.difficulty === 'MEDIUM' && (
+        <>
+          <Triangle className="absolute -right-2 -top-4 h-20 w-20 rotate-[40deg] stroke-1 text-white/50 duration-300 group-hover:rotate-[0deg] group-hover:scale-50"></Triangle>
+          <Triangle className="absolute -right-10 -top-12 h-36 w-36 rotate-45 stroke-1 text-white/50 duration-500 group-hover:h-32 group-hover:w-32 group-hover:rotate-[20deg]"></Triangle>
+        </>
+      )}
+      {challenge.difficulty === 'HARD' && (
+        <>
+          <Plus className="absolute -right-4 -top-8 h-24 w-24 stroke-1 text-white/30 duration-300 group-hover:scale-0"></Plus>
+          <Plus className="absolute -right-4 -top-8 h-32 w-32 stroke-1 text-white/30 duration-200 group-hover:scale-[3]"></Plus>
+        </>
+      )}
+      {challenge.difficulty === 'EXTREME' && (
+        <>
+          <Sparkle className="absolute -right-4 -top-10 h-24 w-24 stroke-1 text-white/40 duration-500 group-hover:-translate-x-4 group-hover:translate-y-10 group-hover:-rotate-[125deg]"></Sparkle>
+          <Sparkle className="absolute -right-12 -top-20 h-48 w-48 stroke-1 text-white/40 duration-300 group-hover:h-24 group-hover:w-24"></Sparkle>
+        </>
+      )}
       <CardHeader className="relative grid items-start gap-4">
         <div className="flex flex-col items-start gap-2">
           <DifficultyBadge difficulty={challenge.difficulty} />
           <CardTitle
-            className="pb-4 text-4xl text-white"
+            className="pb-4 text-3xl text-white"
             style={{ textShadow: '0 0 0.5rem #0003' }}
           >
             {challenge.name}
@@ -69,8 +115,12 @@ const ExploreCard = ({ challenge }: Props) => {
         </div>
       </CardHeader>
       <CardContent className="relative rounded-xl bg-background p-6 duration-300 group-hover:bg-card-hovered">
-        <div className="absolute right-7 top-1 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-background duration-300 group-hover:bg-card-hovered">
-          <PlayCircle />
+        <div className="absolute right-8 top-1 flex h-20 w-20 -translate-y-1/2 items-center justify-center rounded-full bg-background duration-300 group-hover:bg-card-hovered">
+          <PlayCircle
+            className={`mt-1 h-12 w-12 stroke-1 duration-300 group-hover:scale-110 ${
+              COLORS_BY_DIFFICULTY[challenge.difficulty]
+            }`}
+          />
         </div>
         <CardDescription className="relative h-14 max-w-[75%] overflow-hidden pb-4">
           <div className="pointer-events-none absolute inset-0 h-full w-full shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card))] duration-300 group-hover:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))] group-focus:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))]" />
