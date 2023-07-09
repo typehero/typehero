@@ -167,6 +167,7 @@ export const ReportDetails = ({ data }: ReportsProps) => {
           })}
         </TableBody>
       </Table>
+      {/* // TODO: good first issue, dont use controlled state for this */}
       <Dialog open={dialogOpen} onOpenChange={(e) => setDialogOpen(!e)}>
         {/* max-w-xl is not the best solution, the dialog width need fixing with the markdown. */}
         <DialogContent className="max-w-xl">
