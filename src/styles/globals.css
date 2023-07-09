@@ -127,7 +127,7 @@ main {
 }
 
 .w-md-editor-preview {
-  padding: 0.5rem 1rem !important;
+  padding: 1rem !important;
   box-shadow: inset 1px 0 0 0 rgb(212 212 216) !important;
 }
 .dark .w-md-editor-preview {
