@@ -17,7 +17,7 @@ import ExploreCardInputs from '../../components/create/explore-card-inputs';
 
 import { useTheme } from 'next-themes';
 
-import MDEditor from '@uiw/react-md-editor';
+import { RichMarkdownEditor } from '~/components/ui/rich-markdown-editor';
 
 export default function CreateChallenge() {
   const createChallengeStore = useCreateChallengeStore();
@@ -145,19 +145,7 @@ export default function CreateChallenge() {
                 <Markdown>{description}</Markdown>
               </div>
             ) : (
-              // TODO: move out to customized component
-              <MDEditor
-                height="100%"
-                className="flex-1"
-                value={description}
-                // non-split-screen by default
-                preview="edit"
-                // removes resize handle on bottom right
-                visibleDragbar={false}
-                // @ts-ignore
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                onChange={(ev) => setDescription(ev)}
-              />
+              <RichMarkdownEditor onChange={(val) => setDescription(val)} value={description} />
             )}
           </TabsContent>
         </Tabs>

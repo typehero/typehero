@@ -10,58 +10,8 @@ import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteD
 import { useSession } from 'next-auth/react';
 import { useTheme } from 'next-themes';
 import { useRouter } from 'next/navigation';
-import { useContext } from 'react';
 
-import MDEditor, { commands, type ICommand, EditorContext } from '@uiw/react-md-editor';
-
-const PreviewToggle = () => {
-  console.warn(commands);
-  const { preview, dispatch } = useContext(EditorContext);
-  const click = () => {
-    dispatch?.({
-      preview: preview === 'edit' ? 'preview' : 'edit',
-    });
-  };
-  if (preview === 'edit') {
-    return (
-      // TODO: styles don't work for some reason
-      <button
-        className="mr-2 w-10 px-2 font-bold"
-        style={{
-          width: '4rem !important',
-          padding: '0.25rem 1rem !important',
-          fontWeight: 'bold !important',
-        }}
-        type="button"
-        onClick={click}
-      >
-        Preview
-      </button>
-    );
-  }
-  return (
-    // TODO: styles don't work for some reason
-    <button
-      className="mr-2 w-10 px-2 font-bold"
-      style={{
-        width: '4rem !important',
-        padding: '0.25rem 1rem !important',
-        fontWeight: 'bold !important',
-      }}
-      type="button"
-      onClick={click}
-    >
-      Edit
-    </button>
-  );
-};
-
-const codePreview: ICommand = {
-  name: 'preview',
-  keyCommand: 'preview',
-  value: 'preview',
-  icon: <PreviewToggle />,
-};
+import { RichMarkdownEditor } from '~/components/ui/rich-markdown-editor';
 
 const getDefaultMarkdown = (solution: string) => `
 ## Thoughts
@@ -171,53 +121,10 @@ export function SolutionEditor({ setOpen, challenge }: Props) {
             name="content"
             render={({ field }) => (
               // @ts-ignore
-              <MDEditor
-                height="100%"
+              <RichMarkdownEditor
                 value={field.value}
                 // non-split-screen by default
-                preview="edit"
-                // TODO: might be a better way to select certain buttons insetad of re-rendering to <></>
-                // commands={[commands.codeEdit, commands.codePreview]}
-                // removes resize handle on bottom right
-                visibleDragbar={false}
-                extraCommands={[codePreview, commands.fullscreen]}
-                // @ts-ignore
                 onChange={field.onChange}
-                components={{
-                  toolbar: (command) => {
-                    // toolbar: (command, disabled, executeCommand) => {
-                    // re-render these to nothing
-                    if (
-                      command.keyCommand === 'hr' ||
-                      command.keyCommand === 'link' ||
-                      command.keyCommand === 'quote' ||
-                      command.keyCommand === 'image' ||
-                      command.keyCommand === 'comment' ||
-                      command.keyCommand === 'list' ||
-                      // TODO: these aren't under command.keyCommand?
-                      command.keyCommand === 'unordered-list' ||
-                      command.keyCommand === 'ordered-list' ||
-                      command.keyCommand === 'checked-list'
-                    ) {
-                      return <></>;
-                    }
-                    // custom code button option
-                    if (command.keyCommand === 'code') {
-                      // return (
-                      //   <button
-                      //     aria-label="Insert code"
-                      //     disabled={disabled}
-                      //     onClick={(evn) => {
-                      //       evn.stopPropagation();
-                      //       executeCommand(command, command.groupName);
-                      //     }}
-                      //   >
-                      //     a
-                      //   </button>
-                      // );
-                    }
-                  },
-                }}
               />
             )}
           />

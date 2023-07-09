@@ -3,7 +3,7 @@ import { Delete } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
+import type { ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '~/components/ui/dialog';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { Button } from '../../ui/button';

@@ -36,9 +36,9 @@ export const ReportDetails = ({ data }: ReportsProps) => {
   const [selectedIssue, setSelectedIssue] = useState<AdminReportDetails[number]>();
   const [banReason, setBanReason] = useState('');
   const handledReports = data.filter((report) => report.moderatorId === session.data?.user.id);
-  // todo: will add them to a dropdown later.
-  const [isDismissedHidden, setIsDismissedHidden] = useState(false);
-  const [isClearedHidden, setIsClearedHidden] = useState(false);
+  // TODO: will add them to a dropdown later.
+  const [isDismissedHidden, _setIsDismissedHidden] = useState(false);
+  const [isClearedHidden, _setIsClearedHidden] = useState(false);
 
   // Functions
   async function handleUserBan() {
