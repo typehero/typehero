@@ -106,7 +106,7 @@ export function Navigation() {
       <Button
         disabled={loading || status === 'loading'}
         onClick={handleSignIn}
-        className="w-20 rounded-lg bg-white p-2 text-black duration-300 hover:bg-gray-200 focus:bg-accent focus:outline-none dark:bg-black dark:text-white hover:dark:bg-gray-800"
+        className="w-20 rounded-lg bg-transparent p-2 text-black duration-300 hover:bg-gray-200 focus:bg-accent focus:outline-none dark:text-white hover:dark:bg-gray-800"
       >
         {loading || status === 'loading' ? (
           <Loader2 className="h-5 w-5 animate-spin" />
