@@ -240,7 +240,7 @@ export function Description({ challenge }: Props) {
                   variant="ghost"
                   className="p-1"
                   disabled={!session?.data?.user?.id}
-                  onClick={(): void => {
+                  onClick={() => {
                     let shouldBookmark = false;
                     if (hasBookmarked) {
                       shouldBookmark = false;
@@ -283,9 +283,6 @@ export function Description({ challenge }: Props) {
           <DialogContent className="w-[200px]">
             <DialogHeader>
               <DialogTitle>Share this challenge</DialogTitle>
-              <div className="pt-4">
-                <ShareForm />
-              </div>
             </DialogHeader>
             <div className="pt-4">
               <ShareForm />
@@ -300,7 +297,7 @@ export function Description({ challenge }: Props) {
                   className="group -ml-1 w-14 gap-2 rounded-lg p-1"
                   variant="ghost"
                   disabled={!session?.data?.user?.id}
-                  onClick={(): void => {
+                  onClick={() => {
                     let shouldIncrement = false;
                     if (hasVoted) {
                       setVotes((v) => v - 1);

@@ -96,16 +96,12 @@ const Comments = ({ challenge }: Props) => {
           onChange={(e) => {
             setText(e.target.value);
           }}
-          onKeyUp={(e) => {
-            void handleEnterKey(e);
-          }}
+          onKeyUp={handleEnterKey}
           className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
           placeholder="Enter your comment here."
         />
         <Button
-          onClick={() => {
-            void createChallengeComment();
-          }}
+          onClick={createChallengeComment}
           className="h-8 rounded-lg bg-emerald-600 px-3 py-2 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
         >
           Comment

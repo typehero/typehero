@@ -271,9 +271,7 @@ export const ReportDetails = ({ data }: ReportsProps) => {
                 </div>
                 <Button
                   variant={'destructive'}
-                  onClick={() => {
-                    void handleUserBan();
-                  }}
+                  onClick={handleUserBan}
                   className="flex items-center justify-center gap-2"
                 >
                   <Gavel className="h-4 w-4" />
@@ -284,7 +282,7 @@ export const ReportDetails = ({ data }: ReportsProps) => {
                   <Button
                     variant={'outline'}
                     onClick={() => {
-                      void handleDisableChallenge();
+                      handleDisableChallenge();
                     }}
                     className="flex items-center justify-center gap-2"
                   >
@@ -292,9 +290,7 @@ export const ReportDetails = ({ data }: ReportsProps) => {
                     Disable Challenge
                   </Button>
                   <Button
-                    onClick={() => {
-                      void handleDismissReport();
-                    }}
+                    onClick={handleDismissReport}
                     className="flex items-center justify-center gap-2"
                   >
                     <X className="h-4 w-4" />

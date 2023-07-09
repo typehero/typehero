@@ -95,7 +95,7 @@ export function Navigation() {
             <Button
               variant="ghost"
               className="h-8 w-full justify-start rounded-b-lg rounded-t-sm px-2 text-red-500 hover:bg-red-500/20 hover:text-red-500"
-              onClick={() => void handleSignOut()}
+              onClick={handleSignOut}
             >
               <span className="text-red-500">Log out</span>
             </Button>
@@ -105,7 +105,7 @@ export function Navigation() {
     ) : (
       <Button
         disabled={loading || status === 'loading'}
-        onClick={() => void handleSignIn()}
+        onClick={handleSignIn}
         className="w-20 rounded-lg bg-white p-2 text-black duration-300 hover:bg-gray-200 focus:bg-accent focus:outline-none dark:bg-black dark:text-white hover:dark:bg-gray-800"
       >
         {loading || status === 'loading' ? (

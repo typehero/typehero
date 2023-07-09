@@ -39,7 +39,7 @@ export default function CreateChallenge() {
 
   function onSubmit(prompt: string) {
     if (name.length < 3) {
-      return void toast({
+      return toast({
         variant: 'destructive',
         title: 'The title length should be longer than 3 character',
         action: <ToastAction altText="Try again">Try again</ToastAction>,
@@ -47,7 +47,7 @@ export default function CreateChallenge() {
     }
 
     if (shortDescription.length < 10) {
-      return void toast({
+      return toast({
         variant: 'destructive',
         title: 'The short description should be longer than 10 character',
         action: <ToastAction altText="Try again">Try again</ToastAction>,
@@ -55,7 +55,7 @@ export default function CreateChallenge() {
     }
 
     if (description.length < 20) {
-      return void toast({
+      return toast({
         variant: 'destructive',
         title: 'The description should be longer than 20 character',
         action: <ToastAction altText="Try again">Try again</ToastAction>,
@@ -63,7 +63,7 @@ export default function CreateChallenge() {
     }
 
     if (difficulty === undefined) {
-      return void toast({
+      return toast({
         variant: 'destructive',
         title: 'Please select a difficulty',
         action: <ToastAction altText="Try again">Try again</ToastAction>,
