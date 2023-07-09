@@ -3,8 +3,8 @@ import { ChevronDown, MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
+import Comment from '~/components/challenge/comments/comment';
 import { Button } from '~/components/ui/button';
-import Comment from '~/components/ui/comment';
 import { toast } from '~/components/ui/use-toast';
 import { Input } from '../../ui/input';
 import NoComments from '../nocomments';
@@ -75,19 +75,14 @@ const Comments = ({ challenge }: Props) => {
         ></ChevronDown>
       </button>
       <div
-        className={clsx('flex flex-col flex-col-reverse overscroll-contain duration-300', {
+        className={clsx('flex flex-col-reverse overscroll-contain duration-300', {
           'h-64 overflow-y-auto': showComments,
           'h-0 overflow-y-hidden': !showComments,
         })}
       >
         {challenge.comment.length === 0 && <NoComments></NoComments>}
         {challenge.comment.map((comment) => (
-          <Comment
-            key={comment.id}
-            userId={comment.user.name ?? ''}
-            text={comment.text}
-            createdAt={comment.createdAt}
-          />
+          <Comment key={comment.id} comment={comment} />
         ))}
       </div>
       <div className="m-2 mt-0 flex items-center justify-between gap-2 rounded-xl bg-background/90 bg-neutral-100 p-1 pr-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-700/90">
