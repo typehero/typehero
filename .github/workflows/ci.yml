@@ -6,6 +6,7 @@ env:
   DATABASE_URL: 'mysql://fake.com'
   GITHUB_ID: 'xd'
   GITHUB_SECRET: 'lmao'
+  NEXTAUTH_SECRET: 'ligma'
 
 jobs:
   build:

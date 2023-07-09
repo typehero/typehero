@@ -9,7 +9,7 @@ export type AdminReportDetails = Awaited<ReturnType<typeof getChallengeReports>>
  * The function fetches all the reports along
  * with challenge and the user.
  */
-export function getChallengeReports() {
+export async function getChallengeReports() {
   return prisma.challengeReport.findMany({
     include: {
       challenge: {
