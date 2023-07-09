@@ -85,3 +85,55 @@ body,
 main {
   height: 100%;
 }
+.w-md-editor-content {
+  @apply bg-background dark:bg-muted;
+}
+
+.w-md-editor-toolbar {
+  @apply flex w-full gap-2;
+  /* border-b border-b-zinc-300 */
+  border-bottom: 1px solid rgb(212 212 216) !important;
+  /* bg-background (in light mode) */
+  background: #fff !important;
+}
+
+/* dark:border-b-zinc-300 dark:bg-muted */
+.dark .w-md-editor-toolbar {
+  border-bottom: 1px solid rgb(63 63 70) !important;
+  background: hsl(240 3.7% 15.9%) !important;
+}
+
+.w-md-editor-toolbar-divider {
+  @apply bg-zinc-300 dark:bg-zinc-700;
+  height: 1.5rem !important;
+}
+.w-md-editor-toolbar ul {
+  @apply flex items-center;
+}
+.w-md-editor-toolbar ul li.active button {
+  @apply text-black dark:text-white;
+}
+.w-md-editor-toolbar ul li button {
+  @apply flex h-8 w-8 items-center justify-center rounded-md p-1 text-neutral-500 hover:bg-neutral-200 hover:text-black dark:hover:bg-zinc-700 dark:hover:text-white;
+}
+.w-md-editor-toolbar ul li button[disabled] {
+  @apply cursor-default text-neutral-700 hover:bg-transparent hover:text-neutral-700;
+}
+.w-md-editor-toolbar ul li button svg {
+  @apply h-4 w-4;
+}
+.w-md-editor {
+  background: var(--muted) !important;
+}
+
+.w-md-editor-preview {
+  padding: 0.5rem 1rem !important;
+  box-shadow: inset 1px 0 0 0 rgb(212 212 216) !important;
+}
+.dark .w-md-editor-preview {
+  box-shadow: inset 1px 0 0 0 rgb(63 63 70) !important;
+}
+
+.w-md-editor-preview .wmde-markdown {
+  @apply bg-muted;
+}

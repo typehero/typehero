@@ -55,7 +55,7 @@ const ExploreCardInputs = ({
       {/* TODO: add background shapes grid pattern */}
       <CardHeader className="relative grid items-start gap-4">
         <div className="flex flex-col items-start">
-          <h1 className="text-sm text-white/70">Challenge Difficulty Level:</h1>
+          <h1 className="text-sm text-black/50 dark:text-white/70">Challenge Difficulty Level:</h1>
           <Select onValueChange={(value: Difficulty) => setDifficulty(value)} value={difficulty}>
             <SelectTrigger className="h-8 max-w-fit border-0 p-0 focus:ring-0 focus:ring-offset-0 focus-visible:border-0 focus-visible:ring-0 focus-visible:ring-offset-0">
               <DifficultyBadge difficulty={difficulty || 'BEGINNER'} />
@@ -68,10 +68,10 @@ const ExploreCardInputs = ({
               <SelectItem value="EXTREME">EXTREME</SelectItem>
             </SelectContent>
           </Select>
-          <h1 className="pt-3 text-sm text-white/70">Challenge Title:</h1>
-          <CardTitle className="pb-4 pt-0 text-4xl text-white">
+          <h1 className="pt-3 text-sm text-black/50 dark:text-white/70">Challenge Title:</h1>
+          <CardTitle className="pb-4 pt-0 text-4xl dark:text-white">
             <input
-              className="bg-transparent placeholder-white/70 focus:outline-none"
+              className="bg-transparent placeholder-black/50 focus:outline-none dark:placeholder-white/70"
               style={{ textShadow: '0 0 0.5rem #0003' }}
               value={name}
               placeholder="Enter Challenge Title"
@@ -86,7 +86,7 @@ const ExploreCardInputs = ({
         </div>
 
         <div className="mb-1 flex items-center justify-between pr-1">
-          <h1 className="text-sm text-white/70">Short Description:</h1>
+          <h1 className="text-sm text-black/70 dark:text-white/70">Short Description:</h1>
 
           <Label
             htmlFor="preview"
@@ -109,7 +109,7 @@ const ExploreCardInputs = ({
             <Markdown>{shortDescription}</Markdown>
           ) : (
             <textarea
-              className="w-full resize-none bg-transparent text-white placeholder-white/70 focus:outline-none"
+              className="w-full resize-none bg-transparent placeholder-black/70 focus:outline-none dark:text-white dark:placeholder-white/70"
               value={shortDescription}
               placeholder="Enter Short Description"
               onChange={(ev) => setShortDescription(ev.currentTarget.value)}

@@ -145,44 +145,37 @@ export default function CreateChallenge() {
                 <Markdown>{description}</Markdown>
               </div>
             ) : (
-              <>
-                <MDEditor
-                  height="100%"
-                  className="flex-1"
-                  value={description}
-                  // non-split-screen by default
-                  preview="edit"
-                  // removes resize handle on bottom right
-                  visibleDragbar={false}
-                  // @ts-ignore
-                  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                  onChange={(ev) => setDescription(ev)}
-                  // TODO: customize toolbar GH #131
-                  // components={{
-                  //   toolbar: (command, disabled, executeCommand) => {
-                  //     if (command.keyCommand === 'code') {
-                  //       return (
-                  //         <button
-                  //           aria-label="Insert code"
-                  //           disabled={disabled}
-                  //           onClick={(evn) => {
-                  //             evn.stopPropagation();
-                  //             executeCommand(command, command.groupName);
-                  //           }}
-                  //         >
-                  //           Code
-                  //         </button>
-                  //       );
-                  //     }
-                  //   },
-                  // }}
-                />
-                {/* <Textarea
-                  className="flex-1 resize-none border-none bg-zinc-100 dark:bg-zinc-900"
-                  value={description}
-                  onChange={(ev) => setDescription(ev.currentTarget.value)}
-                /> */}
-              </>
+              <MDEditor
+                height="100%"
+                className="flex-1"
+                value={description}
+                // non-split-screen by default
+                preview="edit"
+                // removes resize handle on bottom right
+                visibleDragbar={false}
+                // @ts-ignore
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+                onChange={(ev) => setDescription(ev)}
+                // TODO: customize toolbar GH #131
+                // components={{
+                //   toolbar: (command, disabled, executeCommand) => {
+                //     if (command.keyCommand === 'code') {
+                //       return (
+                //         <button
+                //           aria-label="Insert code"
+                //           disabled={disabled}
+                //           onClick={(evn) => {
+                //             evn.stopPropagation();
+                //             executeCommand(command, command.groupName);
+                //           }}
+                //         >
+                //           Code
+                //         </button>
+                //       );
+                //     }
+                //   },
+                // }}
+              />
             )}
           </TabsContent>
         </Tabs>
