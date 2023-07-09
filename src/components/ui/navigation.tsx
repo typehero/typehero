@@ -7,15 +7,7 @@ import { LogIn, Plus, Settings, User, Bell, Moon, Sun, Loader2 } from 'lucide-re
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { signIn, signOut } from 'next-auth/react';
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from './navigation-menu';
+import { navigationMenuTriggerStyle } from './navigation-menu';
 import { Button } from './button';
 import {
   DropdownMenu,
@@ -78,7 +70,7 @@ export function Navigation() {
               <User className="h-5 w-5" />
             </button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
+          <DropdownMenuContent className="mr-4 w-56 rounded-xl">
             <Link className="block" href="/create">
               <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
                 <Plus className="mr-2 h-4 w-4" />
@@ -100,9 +92,13 @@ export function Navigation() {
               </Link>
             )}
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => void handleSignOut()}>
-              <span>Log out</span>
-            </DropdownMenuItem>
+            <Button
+              variant="ghost"
+              className="h-8 w-full justify-start rounded-b-lg rounded-t-sm px-2 text-red-500 hover:bg-red-500/20 hover:text-red-500"
+              onClick={() => void handleSignOut()}
+            >
+              <span className="text-red-500">Log out</span>
+            </Button>
           </DropdownMenuContent>
         </DropdownMenu>
       </>
@@ -132,7 +128,7 @@ export function Navigation() {
         }`}
       >
         <div className="flex w-full items-center justify-between">
-          <div className="relative flex">
+          <div className="relative flex gap-3">
             <a className="flex items-center space-x-2 duration-300" href="/">
               <svg
                 className="h-6 w-6 rounded-md bg-[#3178C6] p-[2px]"
@@ -170,25 +166,11 @@ export function Navigation() {
             </a>
 
             {!isProd() && (
-              <NavigationMenu className="pl-6">
-                <NavigationMenuList>
-                  <>
-                    <NavigationMenuItem>
-                      <Link href="/explore" legacyBehavior passHref>
-                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                          Explore
-                        </NavigationMenuLink>
-                      </Link>
-                    </NavigationMenuItem>
-                    <NavigationMenuItem className="hidden sm:block">
-                      <NavigationMenuTrigger>Something Nice</NavigationMenuTrigger>
-                      <NavigationMenuContent>
-                        <NavigationMenuLink>Nice</NavigationMenuLink>
-                      </NavigationMenuContent>
-                    </NavigationMenuItem>
-                  </>
-                </NavigationMenuList>
-              </NavigationMenu>
+              <Link href="/explore" legacyBehavior passHref>
+                <Button variant="ghost" className={navigationMenuTriggerStyle()}>
+                  Explore
+                </Button>
+              </Link>
             )}
           </div>
           <div className="flex">
