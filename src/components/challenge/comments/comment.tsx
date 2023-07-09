@@ -78,6 +78,7 @@ const Comment = ({ comment }: CommentProps) => {
           description: <p>The comment has successfully been reported.</p>,
         });
         setDialogOpen(false);
+        form.reset();
       }
     } catch (e) {
       toast({
