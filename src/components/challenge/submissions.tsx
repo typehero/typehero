@@ -4,14 +4,7 @@ import type { Solution } from '@prisma/client';
 import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import { getRelativeTime } from '~/utils/relativeTime';
 import clsx from 'clsx';
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-} from '~/components/ui/select';
+
 import { useMemo, useState } from 'react';
 
 interface Props {
@@ -33,26 +26,40 @@ export function Submissions({ challenge }: Props) {
   }, [selectedStatus, submissions]);
   return (
     <>
-      <Select value={selectedStatus} onValueChange={(e) => setSelectStatus(e as Status)}>
-        <div className="sticky right-0 top-[41px] flex justify-end border-b border-zinc-300 bg-background/90 p-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
-          <SelectTrigger className="w-48 rounded-xl border border-zinc-300 bg-neutral-100 focus-visible:border-zinc-50 focus-visible:ring-0 focus-visible:ring-offset-0 dark:border-zinc-700 dark:bg-neutral-900">
-            <SelectValue placeholder="Select a fruit" />
-          </SelectTrigger>
+      <div className="sticky right-0 top-[41px] flex gap-2 border-b border-zinc-300 bg-background/90 p-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
+        <div
+          className={`flex cursor-pointer gap-2 rounded-xl px-4 py-1 duration-300  ${
+            selectedStatus === 'all'
+              ? 'bg-blue-600 text-background dark:bg-blue-400'
+              : 'bg-blue-600/10 text-blue-600 hover:bg-blue-600/30 dark:bg-blue-400/10 dark:text-blue-400 dark:hover:bg-blue-400/30'
+          }
+            `}
+          onClick={() => setSelectStatus('all')}
+        >
+          All
         </div>
-        <SelectContent className="rounded-xl">
-          <SelectGroup>
-            <SelectItem className="cursor-pointer rounded-lg" value="all">
-              All Statuses
-            </SelectItem>
-            <SelectItem className="cursor-pointer rounded-lg" value="accepted">
-              Accepted
-            </SelectItem>
-            <SelectItem className="cursor-pointer rounded-lg" value="rejected">
-              Rejected
-            </SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
+        <div
+          className={`flex cursor-pointer gap-2 rounded-xl px-4 py-1 duration-300  ${
+            selectedStatus === 'accepted'
+              ? 'bg-emerald-600 text-background dark:bg-emerald-400'
+              : 'bg-emerald-600/10 text-emerald-600 hover:bg-emerald-600/30 dark:bg-emerald-400/10 dark:text-emerald-400 dark:hover:bg-emerald-400/30'
+          }`}
+          onClick={() => setSelectStatus('accepted')}
+        >
+          Accepted
+        </div>
+        <div
+          className={`flex cursor-pointer gap-2 rounded-xl px-4 py-1 duration-300  ${
+            selectedStatus === 'rejected'
+              ? 'bg-rose-600 text-background dark:bg-rose-400'
+              : 'bg-rose-600/10 text-rose-600 hover:bg-rose-600/30 dark:bg-rose-400/10 dark:text-rose-400 dark:hover:bg-rose-400/30'
+          }`}
+          onClick={() => setSelectStatus('rejected')}
+        >
+          Rejected
+        </div>
+      </div>
+
       <ul className="relative flex flex-col">
         {filteredSubmissions.map((submission) => {
           return <SubmissionRow submission={submission} key={submission.id} />;

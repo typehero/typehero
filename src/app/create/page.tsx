@@ -157,25 +157,6 @@ export default function CreateChallenge() {
                 // @ts-ignore
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                 onChange={(ev) => setDescription(ev)}
-                // TODO: customize toolbar GH #131
-                // components={{
-                //   toolbar: (command, disabled, executeCommand) => {
-                //     if (command.keyCommand === 'code') {
-                //       return (
-                //         <button
-                //           aria-label="Insert code"
-                //           disabled={disabled}
-                //           onClick={(evn) => {
-                //             evn.stopPropagation();
-                //             executeCommand(command, command.groupName);
-                //           }}
-                //         >
-                //           Code
-                //         </button>
-                //       );
-                //     }
-                //   },
-                // }}
               />
             )}
           </TabsContent>
