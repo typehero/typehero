@@ -7,7 +7,8 @@ env:
   GITHUB_ID: 'xd'
   GITHUB_SECRET: 'lmao'
   NEXTAUTH_SECRET: 'ligma'
-  NEXTAUTH_URL: 'ballz'
+  NEXTAUTH_URL: 'http://localhost:3000'
+
 
 jobs:
   build:
