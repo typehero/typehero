@@ -166,10 +166,8 @@ export function Navigation() {
             </a>
 
             {!isProd() && (
-              <Link href="/explore" legacyBehavior passHref>
-                <Button variant="ghost" className={navigationMenuTriggerStyle()}>
-                  Explore
-                </Button>
+              <Link href="/explore">
+                <span className={navigationMenuTriggerStyle()}>Explore</span>
               </Link>
             )}
           </div>
