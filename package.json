@@ -87,6 +87,7 @@
     "eslint": "^8.40.0",
     "eslint-config-next": "^13.4.2",
     "husky": "^8.0.0",
+    "lint-staged": "^13.2.3",
     "postcss": "^8.4.21",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.2.8",
@@ -106,5 +107,10 @@
       "next-auth@4.22.1": "patches/next-auth@4.22.1.patch",
       "@monaco-editor/react@4.5.1": "patches/@monaco-editor__react@4.5.1.patch"
     }
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx,css}": "prettier --write"
   }
+
+
 }
