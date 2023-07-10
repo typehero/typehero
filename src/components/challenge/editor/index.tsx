@@ -93,7 +93,6 @@ export const CodePanel = (props: Props) => {
   const [tsErrors, setTsErrors] = useState<TsErrors>([[], [], [], []]);
   const [initialTypecheckDone, setInitialTypecheckDone] = useState(false);
 
-  // Prisma.JsonValue
   const defaultCode = useMemo(() => {
     if (props.mode !== 'solve') return props.prompt ?? '';
 

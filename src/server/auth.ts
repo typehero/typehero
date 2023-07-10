@@ -79,7 +79,6 @@ export const authOptions: NextAuthOptions = {
       };
     },
   },
-  secret: env.NEXTAUTH_SECRET,
   adapter: PrismaAdapter(prisma),
   providers: [
     GitHubProvider({

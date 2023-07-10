@@ -22,9 +22,11 @@ export default function Index() {
         </h1>
         <p className="font-bold">💪 Challenge 🧠 Learn 📈 Excel</p>
 
-        <p className="max-w-[40ch] text-center text-neutral-400 dark:text-neutral-600">
-          Unlock the power of strong typing and seamless JavaScript integration on our immersive
-          learning platform designed for developers of all levels
+        <p className="max-w-[80ch] bg-transparent text-center text-neutral-600 dark:text-neutral-400">
+          Connect and collaborate with a community of TypeScript developers on Type Hero. Engage in
+          discussions, create challenges, and share insights with fellow typescript enthusiasts.
+          Type Hero has collaborative coding challenges that foster a supportive and inspiring
+          environment, where you can learn from others and showcase your expertise.
         </p>
       </div>
       <Footsies />
