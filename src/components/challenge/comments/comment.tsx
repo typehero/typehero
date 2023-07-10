@@ -1,3 +1,4 @@
+'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Delete } from 'lucide-react';
 import { useState } from 'react';
@@ -13,6 +14,7 @@ import { Textarea } from '../../ui/textarea';
 import { TypographyLarge } from '../../ui/typography/large';
 import { toast } from '../../ui/use-toast';
 import { reportChallengeComment } from './comment.action';
+import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 
 interface CommentProps {
   comment: ChallengeRouteData['comment'][number];
@@ -98,7 +100,14 @@ const Comment = ({ comment }: CommentProps) => {
           <span className="my-auto max-w-fit rounded-full bg-neutral-200 p-1 px-2 text-xs font-bold text-neutral-500 dark:bg-zinc-700 dark:text-neutral-400">
             @&nbsp;{comment.user.name}
           </span>
-          <span className="text-sm text-neutral-500">{getRelativeTime(comment.createdAt)}</span>
+          <Tooltip delayDuration={0.05}>
+            <TooltipTrigger asChild>
+              <span className="text-sm text-neutral-500">{getRelativeTime(comment.createdAt)}</span>
+            </TooltipTrigger>
+            <TooltipContent>
+              <span className="text-white-500 text-sm">{comment.createdAt.toLocaleString()}</span>
+            </TooltipContent>
+          </Tooltip>
         </div>
         <button
           onClick={() => {
@@ -126,9 +135,14 @@ const Comment = ({ comment }: CommentProps) => {
                 <span className="my-auto max-w-fit rounded-full bg-neutral-200 p-1 px-2 text-xs font-bold text-neutral-500 dark:bg-zinc-700 dark:text-neutral-400">
                   @&nbsp;{comment.user.name}
                 </span>
-                <span className="text-sm text-neutral-500">
-                  {getRelativeTime(comment.createdAt)}
-                </span>
+                <Tooltip>
+                  <span className="text-sm text-neutral-500">
+                    {getRelativeTime(comment.createdAt)}
+                  </span>
+                  <TooltipContent>
+                    <p>Add to library</p>
+                  </TooltipContent>
+                </Tooltip>
               </div>
               <p>{comment.text}</p>
             </div>

@@ -288,64 +288,62 @@ export function Description({ challenge }: Props) {
             </div>
           </DialogContent>
         </Dialog>
-        <TooltipProvider>
-          <Tooltip delayDuration={0.05} open={session?.data?.user?.id ? false : undefined}>
-            <TooltipTrigger asChild>
-              <span>
-                <Button
-                  className="group -ml-1 w-14 gap-2 rounded-lg p-1"
-                  variant="ghost"
-                  disabled={!session?.data?.user?.id}
-                  onClick={() => {
-                    let shouldIncrement = false;
-                    if (hasVoted) {
-                      setVotes((v) => v - 1);
-                      shouldIncrement = false;
-                      setHasVoted(false);
-                    } else {
-                      setVotes((v) => v + 1);
-                      shouldIncrement = true;
-                      setHasVoted(true);
-                    }
-                    debouncedSearch(
-                      challenge.id,
-                      session?.data?.user?.id as string,
-                      shouldIncrement,
-                    )?.catch((e) => {
-                      console.error(e);
-                    });
-                  }}
+        <Tooltip delayDuration={0.05} open={session?.data?.user?.id ? false : undefined}>
+          <TooltipTrigger asChild>
+            <span>
+              <Button
+                className="group -ml-1 w-14 gap-2 rounded-lg p-1"
+                variant="ghost"
+                disabled={!session?.data?.user?.id}
+                onClick={() => {
+                  let shouldIncrement = false;
+                  if (hasVoted) {
+                    setVotes((v) => v - 1);
+                    shouldIncrement = false;
+                    setHasVoted(false);
+                  } else {
+                    setVotes((v) => v + 1);
+                    shouldIncrement = true;
+                    setHasVoted(true);
+                  }
+                  debouncedSearch(
+                    challenge.id,
+                    session?.data?.user?.id as string,
+                    shouldIncrement,
+                  )?.catch((e) => {
+                    console.error(e);
+                  });
+                }}
+              >
+                <ThumbsUp
+                  size={20}
+                  className={clsx(
+                    {
+                      'fill-emerald-600 stroke-emerald-600 group-hover:stroke-emerald-500 dark:fill-emerald-400 dark:stroke-emerald-400':
+                        hasVoted,
+                      'stroke-zinc-500': !hasVoted,
+                    },
+                    'duration-300 group-hover:stroke-zinc-400',
+                  )}
+                />
+                <span
+                  className={clsx(
+                    {
+                      'text-emerald-600 dark:text-emerald-400': hasVoted,
+                      'text-zinc-500 group-hover:text-zinc-400': !hasVoted,
+                    },
+                    'self-end text-lg duration-300',
+                  )}
                 >
-                  <ThumbsUp
-                    size={20}
-                    className={clsx(
-                      {
-                        'fill-emerald-600 stroke-emerald-600 group-hover:stroke-emerald-500 dark:fill-emerald-400 dark:stroke-emerald-400':
-                          hasVoted,
-                        'stroke-zinc-500': !hasVoted,
-                      },
-                      'duration-300 group-hover:stroke-zinc-400',
-                    )}
-                  />
-                  <span
-                    className={clsx(
-                      {
-                        'text-emerald-600 dark:text-emerald-400': hasVoted,
-                        'text-zinc-500 group-hover:text-zinc-400': !hasVoted,
-                      },
-                      'self-end text-lg duration-300',
-                    )}
-                  >
-                    {votes}
-                  </span>
-                </Button>
-              </span>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Login to Upvote</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+                  {votes}
+                </span>
+              </Button>
+            </span>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Login to Upvote</p>
+          </TooltipContent>
+        </Tooltip>
       </div>
       <div className="prose-invert leading-8 prose-h3:text-xl">
         <Markdown>{challenge.description}</Markdown>
