@@ -12,7 +12,8 @@ export const env = createEnv({
     GITHUB_ID: z.string(),
     GITHUB_SECRET: z.string(),
     // EDGE_CONFIG: z.string(),
-    NEXTAUTH_SECRET: z.string(),
+    NEXTAUTH_SECRET:
+      process.env.NODE_ENV === 'production' ? z.string().min(1) : z.string().min(1).optional(),
   },
 
   /**
