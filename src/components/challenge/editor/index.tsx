@@ -3,6 +3,7 @@
 import Editor, { loader } from '@monaco-editor/react';
 import clsx from 'clsx';
 import { Loader2, Settings } from 'lucide-react';
+import { initVimMode } from 'monaco-vim';
 import type * as monaco from 'monaco-editor';
 import { useSession } from 'next-auth/react';
 import { useTheme } from 'next-themes';
@@ -25,12 +26,16 @@ import { useEditorSettingsStore } from '../settings-store';
 import { USER_CODE_START, USER_CODE_START_REGEX } from './constants';
 import { libSource } from './editor-types';
 import { createTwoslashInlayProvider } from './twoslash';
-import { VimStatusBar } from './vimMode';
 import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
+import dynamic from 'next/dynamic';
+
+const VimStatusBar = dynamic(() => import('./vimMode').then((v) => v.VimStatusBar), {
+  ssr: false,
+});
 
 loader.config({
   paths: {
-    vs: 'https://typescript.azureedge.net/cdn/5.1.6/monaco/min/vs',
+    vs: '/vs',
   },
 });
 
@@ -300,7 +305,7 @@ export const CodePanel = (props: Props) => {
           'sticky bottom-0 flex items-center justify-end p-2 dark:bg-[#1e1e1e]',
         )}
       >
-        {editorState && <VimStatusBar editor={editorState} />}
+        {editorState && <VimStatusBar editor={editorState} initVimMode={initVimMode} />}
         <div className="flex items-center justify-center gap-4">
           {props.extraButton}
           <TooltipProvider>
