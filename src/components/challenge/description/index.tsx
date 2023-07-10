@@ -3,6 +3,7 @@
 import { clsx } from 'clsx';
 import { debounce } from 'lodash';
 
+import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
@@ -78,8 +79,6 @@ export function Description({ challenge }: Props) {
     }, 500),
   ).current;
 
-  const [dialogOpen, setDialogOpen] = useState(false);
-
   const form = useForm<FormValues>({
     defaultValues: {
       comments: '',
@@ -123,7 +122,6 @@ export function Description({ challenge }: Props) {
           description: <p>Please log in to make this report.</p>,
         });
       }
-      setDialogOpen(false);
     } catch (e) {
       toast({
         title: 'Something went wrong.',
@@ -136,98 +134,99 @@ export function Description({ challenge }: Props) {
     <>
       <div className="flex items-baseline justify-between">
         <TypographyH3 className="mb-2 font-medium">{challenge.name}</TypographyH3>
+        <Dialog>
+          <DialogTrigger>
+            <ActionMenu
+              items={[
+                {
+                  key: 'feedback',
+                  label: 'Feedback',
+                  icon: 'Flag',
+                },
+              ]}
+              onChange={() => {
+                // do nothing
+              }}
+            />
+          </DialogTrigger>
 
-        <ActionMenu
-          items={[
-            {
-              key: 'feedback',
-              label: 'Feedback',
-              icon: 'Flag',
-            },
-          ]}
-          onChange={() => setDialogOpen(true)}
-        />
+          <DialogContent>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)}>
+                <DialogHeader>
+                  <DialogTitle>Feedback: {challenge.name}</DialogTitle>
+                </DialogHeader>
+
+                <div className="my-4 flex flex-col gap-4">
+                  <TypographyLarge>Issues Encountered</TypographyLarge>
+                  <FormField
+                    name="examples"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="flex items-center gap-4">
+                          <Checkbox
+                            id="examples"
+                            checked={field.value as boolean}
+                            onChange={field.onChange}
+                            onCheckedChange={field.onChange}
+                          />
+                          <label htmlFor="examples">
+                            Description or examples are unclear or incorrect
+                          </label>
+                        </div>
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    name="derogatory"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="flex items-center gap-4">
+                          <Checkbox
+                            id="derogatory"
+                            checked={field.value as boolean}
+                            onCheckedChange={field.onChange}
+                          />
+                          <label htmlFor="derogatory">Racist or other derogatory statement</label>
+                        </div>
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    name="other"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="flex items-center gap-4">
+                          <Checkbox
+                            id="other"
+                            checked={field.value as boolean}
+                            onCheckedChange={field.onChange}
+                          />
+                          <label htmlFor="other">Other</label>
+                        </div>
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    name="comments"
+                    render={({ field }) => (
+                      <FormItem>
+                        <TypographyLarge>Comments</TypographyLarge>
+                        <Textarea value={field.value as string} onChange={field.onChange} />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <DialogFooter>
+                  <DialogPrimitive.Close asChild>
+                    <Button type="submit">Report</Button>
+                  </DialogPrimitive.Close>
+                </DialogFooter>
+              </form>
+            </Form>
+          </DialogContent>
+        </Dialog>
       </div>
-
-      <Dialog open={dialogOpen} onOpenChange={(e) => setDialogOpen(!e)}>
-        <DialogContent>
-          <Form {...form}>
-            {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-              <DialogHeader>
-                <DialogTitle>Feedback: {challenge.name}</DialogTitle>
-              </DialogHeader>
-
-              <div className="my-4 flex flex-col gap-4">
-                <TypographyLarge>Issues Encountered</TypographyLarge>
-                <FormField
-                  name="examples"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="flex items-center gap-4">
-                        <Checkbox
-                          id="examples"
-                          checked={field.value as boolean}
-                          onChange={field.onChange}
-                          onCheckedChange={field.onChange}
-                        />
-                        <label htmlFor="examples">
-                          Description or examples are unclear or incorrect
-                        </label>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  name="derogatory"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="flex items-center gap-4">
-                        <Checkbox
-                          id="derogatory"
-                          checked={field.value as boolean}
-                          onCheckedChange={field.onChange}
-                        />
-                        <label htmlFor="derogatory">Racist or other derogatory statement</label>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  name="other"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="flex items-center gap-4">
-                        <Checkbox
-                          id="other"
-                          checked={field.value as boolean}
-                          onCheckedChange={field.onChange}
-                        />
-                        <label htmlFor="other">Other</label>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  name="comments"
-                  render={({ field }) => (
-                    <FormItem>
-                      <TypographyLarge>Comments</TypographyLarge>
-                      <Textarea value={field.value as string} onChange={field.onChange} />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <DialogFooter>
-                <Button variant="secondary" type="button" onClick={() => setDialogOpen(false)}>
-                  Close
-                </Button>
-                <Button type="submit">Report</Button>
-              </DialogFooter>
-            </form>
-          </Form>
-        </DialogContent>
-      </Dialog>
 
       <div className="mb-6 flex items-center gap-4">
         <DifficultyBadge difficulty={challenge.difficulty} />

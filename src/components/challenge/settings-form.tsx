@@ -23,6 +23,7 @@ import {
 } from '~/components/ui/select';
 import { useEditorSettingsStore } from './settings-store';
 import { useToast } from '../ui/use-toast';
+import { DialogFooter } from '../ui/dialog';
 
 const formSchema = z.object({
   fontSize: z.string(),
@@ -133,9 +134,12 @@ export function SettingsForm() {
             </FormItem>
           )}
         />
-        <DialogPrimitive.Close asChild>
-          <Button type="submit">Submit</Button>
-        </DialogPrimitive.Close>
+
+        <DialogFooter>
+          <DialogPrimitive.Close asChild>
+            <Button type="submit">Save</Button>
+          </DialogPrimitive.Close>
+        </DialogFooter>
       </form>
     </Form>
   );
