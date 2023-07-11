@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-import type { ReactNode } from 'react';
+import { useMemo, type ReactNode } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 
 type Tab = 'description' | 'submissions' | 'solutions';
@@ -9,17 +9,24 @@ interface Props {
   children: ReactNode;
   challengeId: number;
 }
+
 export function LeftWrapper({ challengeId, children }: Props) {
   const pathname = usePathname();
   const router = useRouter();
-  let selectedTab: Tab = 'description';
-  const splitPath = pathname.split('/');
 
-  if (splitPath.includes('submissions')) {
-    selectedTab = 'submissions';
-  } else if (splitPath.includes('solutions')) {
-    selectedTab = 'solutions';
-  }
+  const selectedTab: Tab = useMemo(() => {
+    const splitPath = pathname.split('/');
+
+    if (splitPath.includes('submissions')) {
+      return 'submissions';
+    }
+    if (splitPath.includes('solutions')) {
+      return 'solutions';
+    }
+
+    return 'description';
+  }, [pathname]);
+
   return (
     <Tabs
       defaultValue={selectedTab}
