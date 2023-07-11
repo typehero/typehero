@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
-import { LeftPanel } from '~/components/challenge/left-panel';
-import { getChallengeRouteData } from './getChallengeRouteData';
+import { Description } from '~/components/challenge/description';
 import { getServerAuthSession } from '~/server/auth';
+import { getChallengeRouteData } from './getChallengeRouteData';
 
 interface Props {
   params: {
@@ -17,5 +17,5 @@ export default async function Challenges({ params: { id } }: Props) {
     return notFound();
   }
 
-  return <LeftPanel challenge={challenge} selectedTab={'description'} />;
+  return <Description challenge={challenge} />;
 }
