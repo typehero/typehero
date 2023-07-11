@@ -37,7 +37,7 @@ function removeHtmlComments(): Transformer {
 export function Markdown({ children }: { children: string }) {
   return (
     <ReactMarkdown
-      remarkPlugins={[remarkGfm, removeHtmlComments]}
+      remarkPlugins={[removeHtmlComments, remarkGfm]}
       components={{
         h1: ({ className, ...props }) => (
           <h1 className={clsx(className, 'mb-2 pb-2 text-3xl font-bold')} {...props} />
