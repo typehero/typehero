@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
-import { LeftPanel } from '~/components/challenge/left-panel';
-import { getChallengeRouteData } from '../getChallengeRouteData';
+import { Submissions } from '~/components/challenge/submissions';
 import { getServerAuthSession } from '../../../../server/auth';
+import { getChallengeRouteData } from '../getChallengeRouteData';
 
 interface Props {
   params: {
@@ -16,6 +16,5 @@ export default async function SubmissionPage({ params: { id } }: Props) {
   if (!challenge) {
     return notFound();
   }
-
-  return <LeftPanel challenge={challenge} selectedTab={'submissions'} />;
+  return <Submissions challenge={challenge} />;
 }

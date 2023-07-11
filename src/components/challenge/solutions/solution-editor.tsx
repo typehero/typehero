@@ -36,10 +36,10 @@ export type FormSchema = z.infer<typeof formSchema>;
 
 interface Props {
   challenge: ChallengeRouteData;
-  setOpen: (v: boolean) => void;
+  dismiss: () => void;
 }
 
-export function SolutionEditor({ setOpen, challenge }: Props) {
+export function SolutionEditor({ dismiss, challenge }: Props) {
   const session = useSession();
   const router = useRouter();
   const form = useForm<FormSchema>({
@@ -72,7 +72,7 @@ export function SolutionEditor({ setOpen, challenge }: Props) {
         title: 'Uh oh! Something went wrong. Please try again.',
       });
     } finally {
-      setOpen(false);
+      dismiss();
     }
   };
 
@@ -107,7 +107,7 @@ export function SolutionEditor({ setOpen, challenge }: Props) {
           <Button
             className="h-8 rounded-lg bg-white px-3 py-2 text-black hover:bg-zinc-200 focus-visible:bg-zinc-200 focus-visible:ring-offset-0 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:focus-visible:bg-zinc-700"
             type="button"
-            onClick={() => setOpen(false)}
+            onClick={dismiss}
           >
             Cancel
           </Button>
