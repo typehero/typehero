@@ -14,6 +14,12 @@ export function Markdown({ children }: { children: string }) {
         h1: ({ className, ...props }) => (
           <h1 className={clsx(className, 'mb-2 pb-2 text-3xl font-bold')} {...props} />
         ),
+        h2: ({ className, ...props }) => (
+          <h2 className={clsx(className, 'mb-2 pb-2 text-2xl font-bold')} {...props} />
+        ),
+        h3: ({ className, ...props }) => (
+          <h3 className={clsx(className, 'mb-2 pb-2 text-xl font-bold')} {...props} />
+        ),
         p: ({ className, ...props }) => <p className={clsx(className, 'mb-4')} {...props} />,
         code({ inline, className, children, style: _, ...props }) {
           const match = /language-(\w+)/.exec(className || '');
