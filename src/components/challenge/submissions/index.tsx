@@ -6,6 +6,7 @@ import { getRelativeTime } from '~/utils/relativeTime';
 import clsx from 'clsx';
 
 import { useMemo, useState } from 'react';
+import Link from 'next/link';
 
 interface Props {
   challenge: ChallengeRouteData;
@@ -62,7 +63,9 @@ export function Submissions({ challenge }: Props) {
 
       <ul className="relative flex flex-col">
         {filteredSubmissions.map((submission) => {
-          return <SubmissionRow submission={submission} key={submission.id} />;
+          return (
+            <SubmissionRow challengeId={challenge.id} submission={submission} key={submission.id} />
+          );
         })}
       </ul>
     </>
@@ -70,24 +73,20 @@ export function Submissions({ challenge }: Props) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function SubmissionRow({ submission }: { submission: Solution }) {
-  const handleClick = () => {
-    console.log('navigate to some route and overlay submission on top of editor');
-  };
+function SubmissionRow({ challengeId, submission }: { challengeId: number; submission: Solution }) {
   return (
-    <li
-      className="flex cursor-pointer items-center justify-between px-4 py-2 duration-300 hover:bg-neutral-100 dark:rounded-none dark:hover:bg-zinc-700/50"
-      onClick={handleClick}
-    >
-      <div
-        className={clsx({
-          'text-emerald-600  dark:text-emerald-400': submission.isSuccessful,
-          'text-rose-600  dark:text-rose-400': !submission.isSuccessful,
-        })}
-      >
-        {submission.isSuccessful ? 'Accepted' : 'Rejected'}
-      </div>
-      <div className="text-sm text-neutral-500">{getRelativeTime(submission.createdAt)}</div>
+    <li className="flex cursor-pointer items-center justify-between px-4 py-2 duration-300 hover:bg-neutral-100 dark:rounded-none dark:hover:bg-zinc-700/50">
+      <Link className="w-full" href={`/challenge/${challengeId}/submissions/${submission.id}`}>
+        <div
+          className={clsx({
+            'text-emerald-600  dark:text-emerald-400': submission.isSuccessful,
+            'text-rose-600  dark:text-rose-400': !submission.isSuccessful,
+          })}
+        >
+          {submission.isSuccessful ? 'Accepted' : 'Rejected'}
+        </div>
+        <div className="text-sm text-neutral-500">{getRelativeTime(submission.createdAt)}</div>
+      </Link>
     </li>
   );
 }

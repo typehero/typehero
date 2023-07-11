@@ -82,8 +82,6 @@ type TsErrors = [
   CompilerOptionsDiagnostics: monaco.languages.typescript.Diagnostic[],
 ];
 
-const libCache = new Set<string>();
-
 export const CodePanel = (props: Props) => {
   const router = useRouter();
   const { toast } = useToast();
@@ -93,7 +91,6 @@ export const CodePanel = (props: Props) => {
   const [tsErrors, setTsErrors] = useState<TsErrors>([[], [], [], []]);
   const [initialTypecheckDone, setInitialTypecheckDone] = useState(false);
 
-  // Prisma.JsonValue
   const defaultCode = useMemo(() => {
     if (props.mode !== 'solve') return props.prompt ?? '';
 
@@ -132,7 +129,6 @@ export const CodePanel = (props: Props) => {
     props.mode === 'solve'
       ? async () => {
           const [, solution] = code.split(USER_CODE_START);
-
           const hasErrors = tsErrors.some((e) => e.length);
 
           await saveSubmission(
@@ -213,12 +209,9 @@ export const CodePanel = (props: Props) => {
         .split('\n')
         .findIndex((line) => line.includes(USER_CODE_START));
 
-      // once you register a lib you cant unregister it (idk how to unregister it)
-      // so when editor mounts again it tries to add the lib again and throws an error
-      if (!libCache.has(libSource)) {
+      if (!monaco.editor.getModel(monaco.Uri.parse(LIB_URI))) {
         monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, LIB_URI);
         monaco.editor.createModel(libSource, 'typescript', monaco.Uri.parse(LIB_URI));
-        libCache.add(libSource);
       }
 
       const model = editor.getModel();
