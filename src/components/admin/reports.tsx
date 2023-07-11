@@ -1,6 +1,5 @@
 'use client';
 
-import { formatDistance } from 'date-fns';
 import { EyeOff, Gavel, X } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -11,6 +10,7 @@ import {
   dismissChallengeReport,
   type AdminReportDetails,
 } from '~/components/admin/admin.actions';
+import { getRelativeTime } from '~/utils/relativeTime';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
@@ -125,10 +125,7 @@ export const ReportDetails = ({ data }: ReportsProps) => {
             // 2. Local State
             const challengeName = report.challenge.name;
             const text = report.text;
-            const relativeTime = formatDistance(report.createdAt, Date.now(), {
-              addSuffix: true,
-              includeSeconds: true,
-            });
+            const relativeTime = getRelativeTime(report.createdAt);
             const absoluteTime = new Intl.DateTimeFormat('en-US', {
               dateStyle: 'medium',
               timeStyle: 'medium',
