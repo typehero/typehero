@@ -7,7 +7,7 @@ import { DifficultyBadge } from '../explore/difficulty-badge';
 import { Markdown } from '../ui/markdown';
 import { getRelativeTime } from '~/utils/relativeTime';
 
-import { Select, SelectContent, SelectItem, SelectTrigger } from '../../components/ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger } from '~/components/ui/select';
 import { Checkbox } from '~/components/ui/checkbox';
 import { Label } from '~/components/ui/label';
 

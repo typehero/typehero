@@ -7,12 +7,12 @@ import { z } from 'zod';
 import type { ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '~/components/ui/dialog';
 import { getRelativeTime } from '~/utils/relativeTime';
-import { Button } from '../../ui/button';
-import { Checkbox } from '../../ui/checkbox';
-import { Form, FormField, FormItem } from '../../ui/form';
-import { Textarea } from '../../ui/textarea';
-import { TypographyLarge } from '../../ui/typography/large';
-import { toast } from '../../ui/use-toast';
+import { Button } from '~/components/ui/button';
+import { Checkbox } from '~/components/ui/checkbox';
+import { Form, FormField, FormItem } from '~/components/ui/form';
+import { Textarea } from '~/components/ui/textarea';
+import { TypographyLarge } from '~/components/ui/typography/large';
+import { toast } from '~/components/ui/use-toast';
 import { reportChallengeComment } from './comment.action';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 

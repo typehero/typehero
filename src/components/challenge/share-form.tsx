@@ -2,8 +2,6 @@
 
 import { useCallback, useState } from 'react';
 import { Clipboard as ClipboardIcon, CheckCircle2 as CheckCircle2Icon } from 'lucide-react';
-import { Button } from '../ui/button';
-import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { DialogFooter } from '../ui/dialog';
 
 export function ShareForm() {

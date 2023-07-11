@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { Submissions } from '~/components/challenge/submissions';
-import { getServerAuthSession } from '../../../../server/auth';
+import { getServerAuthSession } from '~/server/auth';
 import { getChallengeRouteData } from '../getChallengeRouteData';
 
 interface Props {

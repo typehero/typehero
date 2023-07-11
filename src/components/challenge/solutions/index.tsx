@@ -42,7 +42,7 @@ export function Solutions({ challenge }: Props) {
             <SolutionRow
               key={solution.id}
               solution={solution}
-              handleClick={(id: string) => {
+              handleClick={() => {
                 setView('details');
               }}
             />
@@ -56,7 +56,6 @@ export function Solutions({ challenge }: Props) {
 }
 
 function SolutionRow({
-  handleClick,
   solution,
 }: {
   handleClick: (id: string) => void;

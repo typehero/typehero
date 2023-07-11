@@ -13,7 +13,7 @@ import { ToastAction } from '@radix-ui/react-toast';
 import { useRouter } from 'next/navigation';
 
 import { type Difficulty } from '@prisma/client';
-import ExploreCardInputs from '../../components/create/explore-card-inputs';
+import ExploreCardInputs from '~/components/create/explore-card-inputs';
 
 import { useTheme } from 'next-themes';
 

@@ -87,6 +87,7 @@
     "autoprefixer": "^10.4.14",
     "eslint": "^8.40.0",
     "eslint-config-next": "^13.4.2",
+    "eslint-plugin-import": "^2.27.5",
     "husky": "^8.0.0",
     "lint-staged": "^13.2.3",
     "postcss": "^8.4.21",

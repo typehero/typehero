@@ -1,4 +1,6 @@
+/* eslint-disable import/namespace */
 'use client';
+
 import React from 'react';
 import {
   DropdownMenu,

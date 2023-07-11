@@ -22,17 +22,17 @@ import {
 } from '~/components/ui/dialog';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
 import { TypographyH3 } from '~/components/ui/typography/h3';
-import { DifficultyBadge } from '../../explore/difficulty-badge';
-import { ActionMenu } from '../../ui/action-menu';
-import { Checkbox } from '../../ui/checkbox';
-import { Form, FormField, FormItem } from '../../ui/form';
-import { Markdown } from '../../ui/markdown';
-import { Textarea } from '../../ui/textarea';
-import { TypographyLarge } from '../../ui/typography/large';
+import { DifficultyBadge } from '~/components/explore/difficulty-badge';
+import { ActionMenu } from '~/components/ui/action-menu';
+import { Checkbox } from '~/components/ui/checkbox';
+import { Form, FormField, FormItem } from '~/components/ui/form';
+import { Markdown } from '~/components/ui/markdown';
+import { Textarea } from '~/components/ui/textarea';
+import { TypographyLarge } from '~/components/ui/typography/large';
 import { ShareForm } from '../share-form';
 
 import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
-import { toast } from '../../ui/use-toast';
+import { toast } from '~/components/ui/use-toast';
 import { addOrRemoveBookmark } from '../bookmark.action';
 import { incrementOrDecrementUpvote } from '../increment.action';
 import { addChallengeReport } from '../report.action';

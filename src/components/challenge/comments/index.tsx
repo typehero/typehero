@@ -8,7 +8,7 @@ import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteD
 import Comment from '~/components/challenge/comments/comment';
 import { Button } from '~/components/ui/button';
 import { toast } from '~/components/ui/use-toast';
-import { Input } from '../../ui/input';
+import { Input } from '~/components/ui/input';
 import NoComments from '../nocomments';
 import { addChallengeComment } from './comment.action';
 
