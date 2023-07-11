@@ -1,6 +1,6 @@
 'use server';
 import { type Session } from 'next-auth';
-import { prisma } from '../../../server/db';
+import { prisma } from '~/server/db';
 
 export type ChallengeRouteData = NonNullable<Awaited<ReturnType<typeof getChallengeRouteData>>>;
 

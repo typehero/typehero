@@ -12,6 +12,8 @@ const COLORS_BY_DIFFICULTY = {
   HARD: 'dark:bg-red-300 bg-red-500',
   EXTREME: 'dark:bg-orange-300 bg-orange-500',
 };
+
+// TODO: move this somewhere else
 export function DifficultyBadge({ difficulty }: Props) {
   return <Badge className={`${COLORS_BY_DIFFICULTY[difficulty]}`}>{difficulty}</Badge>;
 }

@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { LogIn, Plus, Settings, User, Bell, Moon, Sun, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { signIn, signOut } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import { navigationMenuTriggerStyle } from './navigation-menu';
 import { Button } from './button';
 import {
@@ -16,7 +16,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './dropdown-menu';
-import { useSession } from 'next-auth/react';
 import { RoleTypes } from '@prisma/client';
 import { isProd } from '~/utils/featureFlags';
 

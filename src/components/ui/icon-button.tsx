@@ -1,3 +1,4 @@
+/* eslint-disable import/namespace */
 'use client';
 
 import * as AllIcons from 'lucide-react';

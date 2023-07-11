@@ -4,8 +4,20 @@
 const config = {
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
-  extends: ['next/core-web-vitals', 'plugin:@typescript-eslint/recommended'],
+  extends: [
+    'next/core-web-vitals',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
+  ],
   rules: {
+    // This is to enforce the use of import aliases
+    'no-restricted-imports': [
+      'error',
+      {
+        patterns: ['^(?!\\.\\/)((?!.)[sS])*) ?$', '../.*'],
+      },
+    ],
     '@typescript-eslint/consistent-type-imports': [
       'warn',
       {

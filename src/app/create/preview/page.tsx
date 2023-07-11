@@ -5,9 +5,9 @@ import { useCreateChallengeStore } from '../create-challenge-store';
 import { useRouter } from 'next/navigation';
 import { CodePanel } from '~/components/challenge/editor';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
-import { Markdown } from '../../../components/ui/markdown';
-import ExploreCard from '../../../components/explore/explore-card';
-import { Button } from '../../../components/ui/button';
+import { Markdown } from '~/components/ui/markdown';
+import ExploreCard from '~/components/explore/explore-card';
+import { Button } from '~/components/ui/button';
 
 export default function PreviewCreatedChallenge() {
   const createChallengeStore = useCreateChallengeStore();
