@@ -7,6 +7,7 @@ export type Intent = 'body' | 'leading' | 'title' | 'h1' | 'h2' | 'h3';
 export interface TextProps<T extends TagOptions = 'text'> {
   intent?: Intent;
   weight?: 'bold' | 'semi' | 'medium' | 'default';
+  color?: 'primary' | 'default';
   tag?: T;
 }
 
