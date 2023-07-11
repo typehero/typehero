@@ -1,3 +1,5 @@
+'use client';
+
 import clsx from 'clsx';
 import { ChevronDown, MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
