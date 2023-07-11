@@ -1,37 +1,71 @@
-import { X } from 'lucide-react';
+import { Copy, X } from 'lucide-react';
 import Link from 'next/link';
 
 import type { ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
-import { useMemo, useState } from 'react';
-import { USER_CODE_START_REGEX } from '../editor/constants';
+import { Button } from '~/components/ui/button';
+import { Markdown } from '~/components/ui/markdown';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
+import { toast } from '~/components/ui/use-toast';
+import { getRelativeTime } from '~/utils/relativeTime';
 
 interface Props {
   challenge: ChallengeRouteData;
   submissionId: string;
 }
+const codifyForMarkdown = (code: string) => {
+  return `\`\`\`ts
+${code} \`\`\``;
+};
 export function SubmissionOverview({ challenge, submissionId }: Props) {
-  const defaultCode = useMemo(() => {
-    // if a user has an existing solution use that instead of prompt
-    const submission = challenge.solution?.find((submission) => submission.id === +submissionId);
+  const submission = challenge.solution?.find((submission) => submission.id === +submissionId);
+  const code = codifyForMarkdown(submission?.code.trimStart() ?? '');
 
-    const [appendSolutionToThis, separator] = challenge.prompt.split(USER_CODE_START_REGEX);
-    const parsedUserSolution = submission?.code;
+  const copyToClipboard = async () => {
+    if (navigator.clipboard) {
+      await navigator.clipboard.writeText(submission?.code ?? '').catch(console.error);
+      toast({
+        variant: 'success',
+        description: 'Copied!',
+      });
+    }
+  };
 
-    return `${appendSolutionToThis ?? ''}${separator ?? ''}${parsedUserSolution}`;
-  }, [challenge.prompt, challenge.solution, submissionId]);
+  if (!submission) return null;
 
-  const [code, setCode] = useState(defaultCode);
   return (
     <>
       <div className="sticky top-0 flex h-[40px] items-center justify-between border-b border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
         <Link href={`/challenge/${challenge.id}/submissions`}>
-          <X />
+          <X size={20} className="stroke-gray-500 hover:stroke-gray-400" />
         </Link>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant="ghost" onClick={copyToClipboard}>
+                <Copy size={20} className="stroke-gray-500 hover:stroke-gray-400" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Copy</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
-      <div className="w-full flex-1 p-2">
-        <pre>{JSON.stringify(code, null, 2)}</pre>
+      <div className="p-2">
+        <div className="mb-5">
+          <div
+            className={`inline-block rounded-xl px-4 py-1 ${
+              submission.isSuccessful
+                ? 'bg-emerald-600/10 text-emerald-600  dark:bg-emerald-400/10 dark:text-emerald-400 '
+                : 'bg-rose-600/10 text-rose-600 dark:bg-rose-400/10 dark:text-rose-400 '
+            }`}
+          >
+            {submission?.isSuccessful ? 'Accepted' : 'Rejected'}
+          </div>
+          <div className="text-sm text-neutral-500">{getRelativeTime(submission.createdAt)}</div>
+        </div>
+        <Markdown>{code}</Markdown>
       </div>
-      <div className="sticky bottom-0 flex items-center justify-end p-2 dark:bg-[#1e1e1e]"></div>
     </>
   );
 }

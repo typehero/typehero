@@ -34,7 +34,6 @@ const Comments = ({ challenge }: Props) => {
   async function createChallengeComment() {
     try {
       const res = await addChallengeComment(challenge.id, text);
-      console.log(challenge.id, text);
       if (res === 'text_is_empty') {
         toast({
           title: 'Empty Comment',
