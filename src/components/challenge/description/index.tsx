@@ -10,7 +10,7 @@ import { useRef, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 
-import { Bookmark as BookmarkIcon, Share, ThumbsUp, UserIcon } from 'lucide-react';
+import { Bookmark as BookmarkIcon, Share, ThumbsUp } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '~/components/ui/button';
 import {
@@ -55,11 +55,6 @@ export function Description({ challenge }: Props) {
   const [hasVoted, setHasVoted] = useState(challenge.vote.length > 0);
   const [hasBookmarked, setHasBookmarked] = useState(challenge.bookmark.length > 0);
   const session = useSession();
-  const challengeCreator = useRef(challenge.user.name);
-
-  if (!challengeCreator.current) {
-    challengeCreator.current = '';
-  }
 
   const debouncedSearch = useRef(
     debounce(async (challengeId: number, userId: string, shouldIncrement: boolean) => {
@@ -143,24 +138,19 @@ export function Description({ challenge }: Props) {
         <div className="flex flex-col">
           <TypographyH3 className="mb-2 font-medium">{challenge.name}</TypographyH3>
 
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  className="h-fit w-fit rounded-full bg-red-500 hover:bg-red-500 hover:underline"
-                  size="sm"
-                >
-                  <UserIcon className="mr-2" size="15"/>
-                  <Link  href={`/@${encodeURIComponent(challengeCreator.current)}`}>
-                    {challengeCreator.current}
-                  </Link>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p className="text-sm font-medium leading-none">Created By</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                className="h-fit w-fit rounded-full bg-neutral-200 p-1 px-2 text-xs font-bold text-neutral-500 dark:bg-zinc-700 dark:text-neutral-400"
+                size="sm"
+              >
+                <Link href={`/@${challenge.user.name}`}>@ {challenge.user.name}</Link>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p className="text-sm font-medium leading-none">Created By</p>
+            </TooltipContent>
+          </Tooltip>
         </div>
         <Dialog>
           <DialogTrigger>
