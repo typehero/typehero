@@ -10,7 +10,8 @@ import { useRef, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 
-import { Bookmark as BookmarkIcon, Share, ThumbsUp } from 'lucide-react';
+import { Bookmark as BookmarkIcon, Share, ThumbsUp, UserIcon } from 'lucide-react';
+import Link from 'next/link';
 import { Button } from '~/components/ui/button';
 import {
   Dialog,
@@ -54,6 +55,12 @@ export function Description({ challenge }: Props) {
   const [hasVoted, setHasVoted] = useState(challenge.vote.length > 0);
   const [hasBookmarked, setHasBookmarked] = useState(challenge.bookmark.length > 0);
   const session = useSession();
+  const challengeCreator = useRef(challenge.user.name);
+
+  if (!challengeCreator.current) {
+    challengeCreator.current = '';
+  }
+
   const debouncedSearch = useRef(
     debounce(async (challengeId: number, userId: string, shouldIncrement: boolean) => {
       const votes = await incrementOrDecrementUpvote(challengeId, userId, shouldIncrement);
@@ -133,7 +140,28 @@ export function Description({ challenge }: Props) {
   return (
     <>
       <div className="flex items-baseline justify-between">
-        <TypographyH3 className="mb-2 font-medium">{challenge.name}</TypographyH3>
+        <div className="flex flex-col">
+          <TypographyH3 className="mb-2 font-medium">{challenge.name}</TypographyH3>
+
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  className="h-fit w-fit rounded-full bg-red-500 hover:bg-red-500 hover:underline"
+                  size="sm"
+                >
+                  <UserIcon className="mr-2" size="15"/>
+                  <Link  href={`/@${encodeURIComponent(challengeCreator.current)}`}>
+                    {challengeCreator.current}
+                  </Link>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="text-sm font-medium leading-none">Created By</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
         <Dialog>
           <DialogTrigger>
             <ActionMenu
