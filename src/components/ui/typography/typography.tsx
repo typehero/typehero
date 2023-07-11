@@ -30,12 +30,12 @@ const styles = cva<{
 }>('', {
   variants: {
     intent: {
-      body: 'text-md text-slate-800 dark:text-slate-100',
-      leading: 'text-[1.125rem] font-medium',
+      body: 'text-md leading-7 [&:not(:first-child)]:mt-4 text-slate-800 dark:text-slate-100',
+      leading: 'text-[1.125rem] font-medium [&:not(:first-child)]:mt-4',
       title: 'text-[8rem] font-bold',
       h1: 'text-[2rem] font-bold',
       h2: 'text-[1.5rem] font-semibold',
-      h3: 'font-bold italic text-[1.25rem]',
+      h3: 'font-bold italic text-[1.25rem] tracking-tight',
     },
     weight: {
       bold: 'font-bold',
