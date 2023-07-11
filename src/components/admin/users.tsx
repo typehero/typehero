@@ -1,8 +1,8 @@
 'use client';
 
-import { formatDistance } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { unbanUser, type AdminBannedUsers } from '~/components/admin/admin.actions';
+import { getRelativeTime } from '~/utils/relativeTime';
 import { ActionMenu } from '../ui/action-menu';
 import { Badge } from '../ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
@@ -58,10 +58,7 @@ export const BannedUsers = ({ data }: BannedUsersProps) => {
           {data.map((user, userIdx) => {
             const username = user.name;
             const status = user.status;
-            const relativeTime = formatDistance(user.updatedAt, Date.now(), {
-              addSuffix: true,
-              includeSeconds: true,
-            });
+            const relativeTime = getRelativeTime(user.updatedAt);
             const absoluteTime = new Intl.DateTimeFormat('en-US', {
               dateStyle: 'medium',
               timeStyle: 'medium',
