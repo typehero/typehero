@@ -89,7 +89,7 @@ export async function loadChallengesFromTypeChallenge() {
 /**
  * Load markdown file synchronously from the __seed__
  */
-function loadChallenegeSync(challengeSlug: string) {
+function loadChallengeSync(challengeSlug: string) {
   // read from the __seed__ folder all the markdown files
   const filePath = new URL(`../__seed__/${challengeSlug}.md`, import.meta.url);
   // return the file contents
@@ -111,45 +111,45 @@ export const CHALLENGE_MAP: Record<
         },
       }
       : undefined,
-    description: loadChallenegeSync("beginner/desc"),
+    description: loadChallengeSync("beginner/desc"),
     shortDescription: faker.lorem.lines({ min: 1, max: 2 }),
-    prompt: loadChallenegeSync("beginner/prompt"),
+    prompt: loadChallengeSync("beginner/prompt"),
     difficulty: "BEGINNER",
   }),
   EASY: () => ({
     name: faker.hacker.phrase(),
     createdAt: faker.date.between({ from: "2022-01-01", to: new Date() }),
     updatedAt: faker.date.between({ from: "2023-05-01", to: new Date() }),
-    description: loadChallenegeSync("easy/desc"),
+    description: loadChallengeSync("easy/desc"),
     shortDescription: faker.lorem.lines({ min: 1, max: 2 }),
-    prompt: loadChallenegeSync("easy/prompt"),
+    prompt: loadChallengeSync("easy/prompt"),
     difficulty: "EASY",
   }),
   MEDIUM: () => ({
     name: faker.hacker.phrase(),
     createdAt: faker.date.between({ from: "2022-01-01", to: new Date() }),
     updatedAt: faker.date.between({ from: "2023-05-01", to: new Date() }),
-    description: loadChallenegeSync("medium/desc"),
+    description: loadChallengeSync("medium/desc"),
     shortDescription: faker.lorem.lines({ min: 1, max: 2 }),
-    prompt: loadChallenegeSync("medium/prompt"),
+    prompt: loadChallengeSync("medium/prompt"),
     difficulty: "MEDIUM",
   }),
   HARD: () => ({
     name: faker.hacker.phrase(),
     createdAt: faker.date.between({ from: "2022-01-01", to: new Date() }),
     updatedAt: faker.date.between({ from: "2023-05-01", to: new Date() }),
-    description: loadChallenegeSync("hard/desc"),
+    description: loadChallengeSync("hard/desc"),
     shortDescription: faker.lorem.lines({ min: 1, max: 2 }),
-    prompt: loadChallenegeSync("hard/prompt"),
+    prompt: loadChallengeSync("hard/prompt"),
     difficulty: "HARD",
   }),
   EXTREME: () => ({
     name: faker.hacker.phrase(),
     createdAt: faker.date.between({ from: "2022-01-01", to: new Date() }),
     updatedAt: faker.date.between({ from: "2023-05-01", to: new Date() }),
-    description: loadChallenegeSync("extreme/desc"),
+    description: loadChallengeSync("extreme/desc"),
     shortDescription: faker.lorem.lines({ min: 1, max: 2 }),
-    prompt: loadChallenegeSync("extreme/prompt"),
+    prompt: loadChallengeSync("extreme/prompt"),
     difficulty: "EXTREME",
   }),
 };
