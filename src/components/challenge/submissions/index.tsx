@@ -74,15 +74,9 @@ export function Submissions({ challenge }: Props) {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function SubmissionRow({ challengeId, submission }: { challengeId: number; submission: Solution }) {
-  const handleClick = () => {
-    console.log('navigate to some route and overlay submission on top of editor');
-  };
   return (
-    <li
-      className="flex cursor-pointer items-center justify-between px-4 py-2 duration-300 hover:bg-neutral-100 dark:rounded-none dark:hover:bg-zinc-700/50"
-      onClick={handleClick}
-    >
-      <Link href={`/challenge/${challengeId}/submissions/${submission.id}`}>
+    <li className="flex cursor-pointer items-center justify-between px-4 py-2 duration-300 hover:bg-neutral-100 dark:rounded-none dark:hover:bg-zinc-700/50">
+      <Link className="w-full" href={`/challenge/${challengeId}/submissions/${submission.id}`}>
         <div
           className={clsx({
             'text-emerald-600  dark:text-emerald-400': submission.isSuccessful,
