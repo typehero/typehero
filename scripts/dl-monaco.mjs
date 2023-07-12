@@ -11,10 +11,30 @@ const typescriptVersion = '5.0.2';
 const baseUrl = `https://typescript.azureedge.net/cdn/${typescriptVersion}/monaco`;
 
 /**
+ * @param {{url: URL, options?: object, retries: number}} param0
+ * @returns {Promise<Response>}
+ */
+async function fetchFile({ url, options, retries }) {
+  const fileResponse = await fetch(url, options);
+
+  if (!fileResponse.ok && retries > 0) {
+    const persistentRetryValue = retries - 1;
+    return fetchFile({ url, options, retries: persistentRetryValue });
+  }
+
+  return fileResponse;
+}
+
+/**
  * @param {readonly [remoteUrl: string, diskPath:string]} param0
  */
 async function downloadAndSaveFile([remoteUrl, diskPath]) {
-  const file = await (await fetch(new URL(baseUrl + remoteUrl))).text();
+  const file = await (
+    await fetchFile({
+      url: new URL(baseUrl + remoteUrl),
+      retries: 5,
+    })
+  ).text();
 
   const pathToSave = url.fileURLToPath(path.join(import.meta.url, '../../', diskPath));
 
