@@ -3,8 +3,7 @@
  * for Docker builds.
  */
 await import('./src/env.mjs');
-await import('./scripts/dl-monaco.mjs').then(({ download }) => download(true));
-
+await import('./scripts/dl-monaco.mjs').then(({ download }) => download());
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
