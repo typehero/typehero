@@ -20,9 +20,9 @@ import { useTheme } from 'next-themes';
 import { RichMarkdownEditor } from '~/components/ui/rich-markdown-editor';
 
 const DEFAULT_CHALLENGE_TEMPLATE = `// TEST CASE START (code in test cases are not editable)
-Extends<Expected1, MyPick<Todo, 'title'>>()
+Equal<Expected1, MyPick<Todo, 'title'>>()
 
-Extends<Expected2, MyPick<Todo, 'title' | 'completed'>>()
+Equal<Expected2, MyPick<Todo, 'title' | 'completed'>>()
 
 // @ts-expect-error
 MyPick<Todo, 'title' | 'completed' | 'invalid'>
