@@ -92,7 +92,7 @@ const Comments = ({ challenge }: Props) => {
           onChange={(e) => {
             setText(e.target.value);
           }}
-          onKeyDown={handleEnterKey}
+          onKeyUp={handleEnterKey}
           rows={10}
           className="min-h-auto resize-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
           placeholder="Enter your comment here."
