@@ -7,6 +7,7 @@ import { Button } from '~/components/ui/button';
 import { Markdown } from '~/components/ui/markdown';
 import { TypographyLarge } from '~/components/ui/typography/large';
 import { toast } from '~/components/ui/use-toast';
+import { UserBadge } from '~/components/ui/user-badge';
 
 interface Props {
   solution: SolutionData;
@@ -44,9 +45,7 @@ export function SolutionDetails({ solution }: Props) {
             <TypographyLarge>{solution.title}</TypographyLarge>
           </div>
           <div className="flex items-center gap-4">
-            <div className="rounded-full bg-neutral-100 px-2 py-1 text-xs font-bold text-neutral-400 dark:bg-zinc-700 dark:text-neutral-400">
-              @&nbsp;{solution.user?.name}
-            </div>
+            <UserBadge username={solution.user?.name ?? ''} />
             <div className="flex items-center">
               <Calendar className="mr-2 h-4 w-4 stroke-gray-400" />
               <span className="text-xs text-gray-400">{solution.createdAt.toLocaleString()}</span>
