@@ -3,7 +3,7 @@
 import clsx from 'clsx';
 import { ChevronDown, MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import Comment from '~/components/challenge/comments/comment';
 import { Button } from '~/components/ui/button';
@@ -11,30 +11,31 @@ import { toast } from '~/components/ui/use-toast';
 import NoComments from '../nocomments';
 import { addChallengeComment } from './comment.action';
 import { Textarea } from '~/components/ui/textarea';
+import { debounce } from 'lodash';
 
 interface Props {
   challenge: ChallengeRouteData;
 }
 
 const Comments = ({ challenge }: Props) => {
-  // State
   const [showComments, setShowComments] = useState(false);
   const [text, setText] = useState('');
+  const [isCommenting, setIsCommenting] = useState(false);
   const router = useRouter();
 
-  // Functions
   const handleClick = () => {
     setShowComments(!showComments);
   };
 
-  async function handleEnterKey(e: React.KeyboardEvent<HTMLTextAreaElement>) {
-    if (!e.shiftKey && e.key === 'Enter') {
+  const handleEnterKey = async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (!e.shiftKey && e.key === 'Enter' && !isCommenting) {
       await createChallengeComment();
     }
-  }
+  };
 
   async function createChallengeComment() {
     try {
+      setIsCommenting(true);
       const res = await addChallengeComment(challenge.id, text);
       if (res === 'text_is_empty') {
         toast({
@@ -47,6 +48,7 @@ const Comments = ({ challenge }: Props) => {
           description: <p>You need to be signed in to post a comment.</p>,
         });
       }
+      setIsCommenting(false);
       setText('');
     } catch (e) {
       toast({
@@ -93,8 +95,8 @@ const Comments = ({ challenge }: Props) => {
             setText(e.target.value);
           }}
           onKeyUp={handleEnterKey}
-          rows={10}
-          className="min-h-auto resize-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+          rows={2}
+          className="min-h-0 resize-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
           placeholder="Enter your comment here."
         />
         <Button
