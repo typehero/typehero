@@ -1,9 +1,8 @@
 import type { Difficulty, Prisma } from '@prisma/client';
-import { gId, trashId } from './seed';
 import url from 'url';
+import { gId, trashId } from './seed';
 
 import fs from 'fs';
-import path from 'path';
 
 function randomTrueOrFalse() {
   return Math.random() > 0.5;

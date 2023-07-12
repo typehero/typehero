@@ -19,6 +19,32 @@ import { useTheme } from 'next-themes';
 
 import { RichMarkdownEditor } from '~/components/ui/rich-markdown-editor';
 
+const DEFAULT_CHALLENGE_TEMPLATE = `// TEST CASE START (code in test cases are not editable)
+Extends<Expected1, MyPick<Todo, 'title'>>()
+
+Extends<Expected2, MyPick<Todo, 'title' | 'completed'>>()
+
+// @ts-expect-error
+MyPick<Todo, 'title' | 'completed' | 'invalid'>
+
+interface Todo {
+  title: string
+  description: string
+  completed: boolean
+}
+
+interface Expected1 {
+  title: string
+}
+
+interface Expected2 {
+  title: string
+  completed: boolean
+}
+
+// CODE START (code below this line is editable)
+type MyPick<T, K> = any`;
+
 export default function CreateChallenge() {
   const createChallengeStore = useCreateChallengeStore();
   const [isPreviewing, setIsPreviewing] = useState({
@@ -155,7 +181,7 @@ export default function CreateChallenge() {
           mode="create"
           onSubmit={onSubmit}
           submitText="Preview"
-          prompt={createChallengeStore.data?.prompt}
+          prompt={createChallengeStore.data?.prompt ?? DEFAULT_CHALLENGE_TEMPLATE}
         />
       }
     />
