@@ -3,7 +3,7 @@
 import clsx from 'clsx';
 import { ChevronDown, MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import Comment from '~/components/challenge/comments/comment';
 import { Button } from '~/components/ui/button';
@@ -11,7 +11,6 @@ import { toast } from '~/components/ui/use-toast';
 import NoComments from '../nocomments';
 import { addChallengeComment } from './comment.action';
 import { Textarea } from '~/components/ui/textarea';
-import { debounce } from 'lodash';
 
 interface Props {
   challenge: ChallengeRouteData;
