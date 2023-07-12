@@ -96,7 +96,7 @@ export const CodePanel = (props: Props) => {
     '',
   );
 
-  const defaultCode = useMemo(() => {
+  const getDefaultCode = () => {
     if (props.mode !== 'solve') return props.prompt ?? '';
 
     if (!localStorageCode) {
@@ -106,23 +106,20 @@ export const CodePanel = (props: Props) => {
     const [appendSolutionToThis, separator] = props.challenge.prompt.split(USER_CODE_START_REGEX);
 
     return `${appendSolutionToThis ?? ''}${separator ?? ''}${localStorageCode}`;
-  }, [localStorageCode, props.challenge?.prompt, props.mode, props.prompt]);
+  };
 
-  const [code, setCode] = useState(defaultCode);
+  const [code, setCode] = useState(() => getDefaultCode());
 
   const editorTheme = theme === 'light' ? 'vs' : 'vs-dark';
   const modelRef = useRef<monaco.editor.ITextModel>();
   // ref doesnt cause a rerender
   const [editorState, setEditorState] = useState<monaco.editor.IStandaloneCodeEditor>();
   const editorOptions = useMemo(() => {
-    const options = {
+    return {
       ...DEFAULT_OPTIONS,
       ...settings,
       fontSize: parseInt(settings.fontSize),
       tabSize: parseInt(settings.tabSize),
-    };
-    return {
-      ...options,
     };
   }, [settings]);
 
