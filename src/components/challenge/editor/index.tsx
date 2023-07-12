@@ -28,6 +28,7 @@ import { libSource } from './editor-types';
 import { createTwoslashInlayProvider } from './twoslash';
 import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import dynamic from 'next/dynamic';
+import { useLocalStorage } from '~/utils/useLocalStorage';
 
 const VimStatusBar = dynamic(() => import('./vimMode').then((v) => v.VimStatusBar), {
   ssr: false,
@@ -90,22 +91,22 @@ export const CodePanel = (props: Props) => {
   const { settings } = useEditorSettingsStore();
   const [tsErrors, setTsErrors] = useState<TsErrors>([[], [], [], []]);
   const [initialTypecheckDone, setInitialTypecheckDone] = useState(false);
+  const [localStorageCode, setLocalStorageCode] = useLocalStorage(
+    `challenge-${props.challenge?.id}`,
+    '',
+  );
 
   const defaultCode = useMemo(() => {
     if (props.mode !== 'solve') return props.prompt ?? '';
 
-    // if a user has an existing solution use that instead of prompt
-    const usersExistingSolution = props.challenge.solution?.[0];
-
-    if (!usersExistingSolution) {
+    if (!localStorageCode) {
       return props.challenge.prompt;
     }
 
     const [appendSolutionToThis, separator] = props.challenge.prompt.split(USER_CODE_START_REGEX);
-    const parsedUserSolution = usersExistingSolution?.code;
 
-    return `${appendSolutionToThis ?? ''}${separator ?? ''}${parsedUserSolution}`;
-  }, [props.challenge?.solution, props.challenge?.prompt, props.mode, props.prompt]);
+    return `${appendSolutionToThis ?? ''}${separator ?? ''}${localStorageCode}`;
+  }, [localStorageCode, props.challenge?.prompt, props.mode, props.prompt]);
 
   const [code, setCode] = useState(defaultCode);
 
@@ -287,7 +288,12 @@ export const CodePanel = (props: Props) => {
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onMount={onMount(code, setTsErrors)}
           value={code}
-          onChange={(code) => setCode(code ?? '')}
+          onChange={(code) => {
+            setCode(code ?? '');
+            // we we only want to save whats after the comment
+            const [, , storeThiseCode] = (code ?? '').split(USER_CODE_START_REGEX);
+            setLocalStorageCode(storeThiseCode ?? '');
+          }}
         />
       </div>
       <div
