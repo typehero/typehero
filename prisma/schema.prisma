@@ -127,8 +127,11 @@ model Challenge {
   updatedAt        DateTime   @updatedAt
   difficulty       Difficulty
   name             String
+  /// this is the description to describe the challenge on description panel
   description      String     @db.MediumText
+  /// this is a short blue thats shown on the explore card
   shortDescription String
+  /// this is the test cases + default starter code
   prompt           String     @db.MediumText
   visibility       Visibility @default(VISIBLE)
 
