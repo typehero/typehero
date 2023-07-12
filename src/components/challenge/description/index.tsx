@@ -11,8 +11,8 @@ import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Bookmark as BookmarkIcon, Share, ThumbsUp } from 'lucide-react';
-import Link from 'next/link';
 import { Button } from '~/components/ui/button';
+import { UserBadge } from '~/components/ui/user-badge';
 import {
   Dialog,
   DialogContent,
@@ -135,23 +135,9 @@ export function Description({ challenge }: Props) {
   return (
     <>
       <div className="flex items-baseline justify-between">
-        <div className="flex flex-col">
-          <TypographyH3 className="mb-2 font-medium">{challenge.name}</TypographyH3>
-
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                className="h-fit w-fit rounded-full bg-neutral-200 p-1 px-2 text-xs font-bold text-neutral-500 dark:bg-zinc-700 dark:text-neutral-400"
-                size="sm"
-              >
-                <Link href={`/@${challenge.user.name}`}>@ {challenge.user.name}</Link>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p className="text-sm font-medium leading-none">Created By</p>
-            </TooltipContent>
-          </Tooltip>
-        </div>
+          <TypographyH3 className="mb-2 font-medium flex items-center gap-2">
+            {challenge.name}
+          </TypographyH3>
         <Dialog>
           <DialogTrigger>
             <ActionMenu
@@ -246,7 +232,8 @@ export function Description({ challenge }: Props) {
         </Dialog>
       </div>
 
-      <div className="mb-6 flex items-center gap-4">
+      <div className="mb-6 flex items-center gap-2">
+        <UserBadge username={challenge.user.name ? challenge.user.name : ''} />
         <DifficultyBadge difficulty={challenge.difficulty} />
 
         <TooltipProvider>
