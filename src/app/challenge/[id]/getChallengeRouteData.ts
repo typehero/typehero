@@ -9,6 +9,7 @@ export async function getChallengeRouteData(id: string, session: Session | null)
   const challenge = await prisma.challenge.findFirst({
     where: { id: +id },
     include: {
+      user: true,
       _count: {
         select: { vote: true },
       },

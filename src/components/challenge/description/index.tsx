@@ -12,6 +12,7 @@ import { useForm } from 'react-hook-form';
 
 import { Bookmark as BookmarkIcon, Share, ThumbsUp } from 'lucide-react';
 import { Button } from '~/components/ui/button';
+import { UserBadge } from '~/components/ui/user-badge';
 import {
   Dialog,
   DialogContent,
@@ -54,6 +55,7 @@ export function Description({ challenge }: Props) {
   const [hasVoted, setHasVoted] = useState(challenge.vote.length > 0);
   const [hasBookmarked, setHasBookmarked] = useState(challenge.bookmark.length > 0);
   const session = useSession();
+
   const debouncedSearch = useRef(
     debounce(async (challengeId: number, userId: string, shouldIncrement: boolean) => {
       const votes = await incrementOrDecrementUpvote(challengeId, userId, shouldIncrement);
@@ -133,7 +135,9 @@ export function Description({ challenge }: Props) {
   return (
     <>
       <div className="flex items-baseline justify-between">
-        <TypographyH3 className="mb-2 font-medium">{challenge.name}</TypographyH3>
+          <TypographyH3 className="mb-2 font-medium flex items-center gap-2">
+            {challenge.name}
+          </TypographyH3>
         <Dialog>
           <DialogTrigger>
             <ActionMenu
@@ -228,7 +232,8 @@ export function Description({ challenge }: Props) {
         </Dialog>
       </div>
 
-      <div className="mb-6 flex items-center gap-4">
+      <div className="mb-6 flex items-center gap-2">
+        <UserBadge username={challenge.user.name ? challenge.user.name : ''} />
         <DifficultyBadge difficulty={challenge.difficulty} />
 
         <TooltipProvider>

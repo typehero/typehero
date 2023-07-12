@@ -10,10 +10,10 @@ cp .env.example .env
 ```
 
 ### 2 Configure your database
-You can either use planetscale or a local docker container to run your database. 
-Use either 2.a or 2.b for the next step. 
+You can either use planetscale or a local docker container to run your database.
+Use either 2.a or 2.b for the next step.
 
-### 2.a Docker local DB 
+### 2.a Docker local DB
 
 Starting the docker container
 ```
@@ -103,3 +103,6 @@ pnpm refresh
 [planetscale-quick-start]: https://planetscale.com/docs/tutorials/planetscale-quick-start-guide
 [new-oauth]: https://github.com/settings/applications/new
 
+#### Dependencies
+
+UI Library: [shadcn](https://ui.shadcn.com/)
