@@ -128,9 +128,7 @@ const Comment = ({ comment }: CommentProps) => {
           <div className="space-y-2">
             <div className="flex flex-col space-y-2 rounded-3xl border bg-zinc-900 p-3">
               <div className="flex items-center gap-2">
-                <span className="my-auto max-w-fit rounded-full bg-neutral-200 p-1 px-2 text-xs font-bold text-neutral-500 dark:bg-zinc-700 dark:text-neutral-400">
-                  @&nbsp;{comment.user.name}
-                </span>
+                <UserBadge username={comment.user.name} />
                 <Tooltip>
                   <span className="text-sm text-neutral-500">
                     {getRelativeTime(comment.createdAt)}

@@ -233,7 +233,7 @@ export function Description({ challenge }: Props) {
       </div>
 
       <div className="mb-6 flex items-center gap-2">
-        <UserBadge username={challenge.user.name ? challenge.user.name : ''} />
+        <UserBadge username={challenge.user.name} />
         <DifficultyBadge difficulty={challenge.difficulty} />
 
         <TooltipProvider>
