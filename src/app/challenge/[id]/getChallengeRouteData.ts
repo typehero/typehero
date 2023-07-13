@@ -15,17 +15,17 @@ export async function getChallengeRouteData(id: string, session: Session | null)
       },
       vote: {
         where: {
-          userId: session?.user.id,
+          userId: session?.user.id || '',
         },
       },
       bookmark: {
         where: {
-          userId: session?.user.id,
+          userId: session?.user.id || '',
         },
       },
       solution: {
         where: {
-          userId: session?.user.id,
+          userId: session?.user.id || '',
         },
         orderBy: [
           {

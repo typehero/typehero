@@ -11,6 +11,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { useToast } from '~/components/ui/use-toast';
 import { ToastAction } from '@radix-ui/react-toast';
 import { useRouter } from 'next/navigation';
+// @ts-ignore
+import DEFAULT_DESCRIPTION from './default-description.md';
+// @ts-ignore
+import DEFAULT_CHALLENGE_TEMPLATE from './default-challenge.md';
 
 import { type Difficulty } from '@prisma/client';
 import ExploreCardInputs from '~/components/create/explore-card-inputs';
@@ -19,38 +23,14 @@ import { useTheme } from 'next-themes';
 
 import { RichMarkdownEditor } from '~/components/ui/rich-markdown-editor';
 
-const DEFAULT_CHALLENGE_TEMPLATE = `// TEST CASE START (code in test cases are not editable)
-Equal<Expected1, MyPick<Todo, 'title'>>()
-
-Equal<Expected2, MyPick<Todo, 'title' | 'completed'>>()
-
-// @ts-expect-error
-MyPick<Todo, 'title' | 'completed' | 'invalid'>
-
-interface Todo {
-  title: string
-  description: string
-  completed: boolean
-}
-
-interface Expected1 {
-  title: string
-}
-
-interface Expected2 {
-  title: string
-  completed: boolean
-}
-
-// CODE START (code below this line is editable)
-type MyPick<T, K> = any`;
-
 export default function CreateChallenge() {
   const createChallengeStore = useCreateChallengeStore();
   const [isPreviewing, setIsPreviewing] = useState({
     description: false,
   });
-  const [description, setDescription] = useState(createChallengeStore.data?.description ?? '');
+  const [description, setDescription] = useState(
+    createChallengeStore.data?.description ?? DEFAULT_DESCRIPTION,
+  );
   const [difficulty, setDifficulty] = useState<Difficulty | 'BEGINNER'>(
     createChallengeStore.data?.difficulty || 'BEGINNER',
   );
@@ -116,25 +96,25 @@ export default function CreateChallenge() {
     <ChallengeLayout
       left={
         <Tabs
-          defaultValue="short-description"
+          defaultValue="card-editor"
           className="flex h-full w-full flex-col border-zinc-300 dark:border-zinc-700"
         >
           <TabsList className="sticky top-0 z-10 grid h-auto w-full grid-cols-2 rounded-none border-b border-zinc-300 bg-background/90 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
             <TabsTrigger
-              value="short-description"
+              value="card-editor"
               className="rounded-md rounded-tl-xl duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
             >
-              Short Description
+              Card Editor
             </TabsTrigger>
             <TabsTrigger
-              value="long-description"
+              value="challenge-description"
               className="rounded-md rounded-tr-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
             >
-              Long Description
+              Challenge Description
             </TabsTrigger>
           </TabsList>
           <TabsContent
-            value="short-description"
+            value="card-editor"
             className="mt-0 flex flex-1 flex-col p-4 dark:bg-muted [&[hidden]]:hidden"
           >
             <ExploreCardInputs
@@ -147,7 +127,7 @@ export default function CreateChallenge() {
             />
           </TabsContent>
           <TabsContent
-            value="long-description"
+            value="challenge-description"
             className="relative mt-0 flex flex-1 flex-col dark:bg-muted [&[hidden]]:hidden"
           >
             <div className="absolute bottom-4 right-4 z-10 flex items-center justify-end">
