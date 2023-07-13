@@ -138,3 +138,34 @@ main {
 .w-md-editor-preview .wmde-markdown {
   @apply bg-muted;
 }
+
+#challenge {
+  animation: rotato 15s -10s linear infinite reverse;
+}
+#challengeWrap {
+  animation: rotato 15s -10s linear infinite;
+}
+
+#learn {
+  animation: rotato 15s -5s linear infinite reverse;
+}
+#learnWrap {
+  animation: rotato 15s -5s linear infinite;
+}
+
+#excel {
+  animation: rotato 15s linear infinite reverse;
+}
+#excelWrap {
+  animation: rotato 15s linear infinite;
+}
+
+@keyframes rotato {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
