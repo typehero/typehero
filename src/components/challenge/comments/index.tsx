@@ -8,33 +8,33 @@ import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteD
 import Comment from '~/components/challenge/comments/comment';
 import { Button } from '~/components/ui/button';
 import { toast } from '~/components/ui/use-toast';
-import { Input } from '~/components/ui/input';
 import NoComments from '../nocomments';
 import { addChallengeComment } from './comment.action';
+import { Textarea } from '~/components/ui/textarea';
 
 interface Props {
   challenge: ChallengeRouteData;
 }
 
 const Comments = ({ challenge }: Props) => {
-  // State
   const [showComments, setShowComments] = useState(false);
   const [text, setText] = useState('');
+  const [isCommenting, setIsCommenting] = useState(false);
   const router = useRouter();
 
-  // Functions
   const handleClick = () => {
     setShowComments(!showComments);
   };
 
-  async function handleEnterKey(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key === 'Enter') {
+  const handleEnterKey = async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (!e.shiftKey && e.key === 'Enter' && !isCommenting) {
       await createChallengeComment();
     }
-  }
+  };
 
   async function createChallengeComment() {
     try {
+      setIsCommenting(true);
       const res = await addChallengeComment(challenge.id, text);
       if (res === 'text_is_empty') {
         toast({
@@ -47,6 +47,7 @@ const Comments = ({ challenge }: Props) => {
           description: <p>You need to be signed in to post a comment.</p>,
         });
       }
+      setIsCommenting(false);
       setText('');
     } catch (e) {
       toast({
@@ -86,14 +87,15 @@ const Comments = ({ challenge }: Props) => {
           <Comment key={comment.id} comment={comment} />
         ))}
       </div>
-      <div className="m-2 mt-0 flex items-center justify-between gap-2 rounded-xl bg-background/90 bg-neutral-100 p-1 pr-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-700/90">
-        <Input
+      <div className="m-2 mt-0 flex items-end justify-between gap-2 rounded-xl bg-background/90 bg-neutral-100 p-1 pr-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-700/90">
+        <Textarea
           value={text}
           onChange={(e) => {
             setText(e.target.value);
           }}
           onKeyUp={handleEnterKey}
-          className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+          rows={2}
+          className="min-h-0 resize-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
           placeholder="Enter your comment here."
         />
         <Button

@@ -42,10 +42,8 @@ const commentReportSchema = z
 export type CommentReportSchemaType = z.infer<typeof commentReportSchema>;
 
 const Comment = ({ comment }: CommentProps) => {
-  // State
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  // Hooks
   const form = useForm<CommentReportSchemaType>({
     resolver: zodResolver(commentReportSchema),
     mode: 'onChange',
@@ -58,7 +56,6 @@ const Comment = ({ comment }: CommentProps) => {
     },
   });
 
-  // Functions
   async function handleCommentReport(data: CommentReportSchemaType) {
     try {
       const res = await reportChallengeComment(data, comment.id);
