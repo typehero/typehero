@@ -27,7 +27,7 @@ const Comments = ({ challengeId, commentCount }: Props) => {
   const router = useRouter();
   const { ref, inView } = useInView();
 
-  const { data, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
+  const { data, status, hasNextPage, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
     queryFn: ({ pageParam = '' }) =>
       getInfiniteComments({ challengeId, take: 10, lastCursor: pageParam }),
     queryKey: ['comments'],
@@ -98,21 +98,23 @@ const Comments = ({ challengeId, commentCount }: Props) => {
           'h-0 overflow-y-hidden': !showComments,
         })}
       >
-        {!isLoading && data?.pages[0]?.data.length === 0 && <NoComments></NoComments>}
-        {!isLoading &&
-          data?.pages.map((page) =>
-            page.data.map((comment, index) =>
-              page.data.length === index + 1 ? (
-                <div ref={ref} key={index}>
+        {(status === 'loading' || isFetchingNextPage) && <CommentSkeleton />}
+        {status === 'success' &&
+          (data?.pages[0]?.data.length === 0 ? (
+            <NoComments></NoComments>
+          ) : (
+            data?.pages.map((page) =>
+              page.data.map((comment, index) =>
+                page.data.length === index + 1 ? (
+                  <div ref={ref} key={index}>
+                    <Comment key={comment.id} comment={comment} />
+                  </div>
+                ) : (
                   <Comment key={comment.id} comment={comment} />
-                </div>
-              ) : (
-                <Comment key={comment.id} comment={comment} />
+                ),
               ),
-            ),
-          )}
-
-        {(isLoading || isFetchingNextPage) && <CommentSkeleton />}
+            )
+          ))}
       </div>
       <div className="m-2 mt-0 flex items-end justify-between gap-2 rounded-xl bg-background/90 bg-neutral-100 p-1 pr-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-700/90">
         <Textarea

@@ -3,13 +3,13 @@ import { prisma } from '~/server/db';
 
 export type ChallengeRouteData = NonNullable<Awaited<ReturnType<typeof getInfiniteComments>>>;
 
-interface queryParams {
+interface QueryParams {
   challengeId: number;
   take?: number;
   lastCursor?: number;
 }
 
-export async function getInfiniteComments({ challengeId, take = 10, lastCursor }: queryParams) {
+export async function getInfiniteComments({ challengeId, take = 10, lastCursor }: QueryParams) {
   const results = await prisma.challengeComment.findMany({
     where: { challengeId },
     include: { user: true },
