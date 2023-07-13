@@ -6,6 +6,13 @@ await import('./src/env.mjs');
 await import('./scripts/dl-monaco.mjs').then(({ download }) => download());
 /** @type {import("next").NextConfig} */
 const config = {
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.md$/,
+      use: 'raw-loader',
+    });
+    return config;
+  },
   reactStrictMode: true,
   experimental: {
     serverActions: true,

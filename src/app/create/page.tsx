@@ -11,6 +11,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { useToast } from '~/components/ui/use-toast';
 import { ToastAction } from '@radix-ui/react-toast';
 import { useRouter } from 'next/navigation';
+// @ts-ignore
+import DEFAULT_DESCRIPTION from './default-description.md';
+// @ts-ignore
+import DEFAULT_CHALLENGE_TEMPLATE from './default-challenge.md';
 
 import { type Difficulty } from '@prisma/client';
 import ExploreCardInputs from '~/components/create/explore-card-inputs';
@@ -18,54 +22,6 @@ import ExploreCardInputs from '~/components/create/explore-card-inputs';
 import { useTheme } from 'next-themes';
 
 import { RichMarkdownEditor } from '~/components/ui/rich-markdown-editor';
-
-const DEFAULT_DESCRIPTION = `### Description
-Implement the built-in \`Pick<T, K>\` generic without using it.
-
-  Constructs a type by picking the set of properties \`K\` from \`T\`
-
-  For example:
-
-\`\`\`ts
-  interface Todo {
-    title: string
-    description: string
-    completed: boolean
-  }
-
-  type TodoPreview = MyPick<Todo, 'title' | 'completed'>
-
-  const todo: TodoPreview = {
-      title: 'Clean room',
-      completed: false,
-  }
-\`\`\`
-`;
-const DEFAULT_CHALLENGE_TEMPLATE = `// TEST CASE START (code in test cases are not editable)
-Equal<Expected1, MyPick<Todo, 'title'>>()
-
-Equal<Expected2, MyPick<Todo, 'title' | 'completed'>>()
-
-// @ts-expect-error
-MyPick<Todo, 'title' | 'completed' | 'invalid'>
-
-interface Todo {
-  title: string
-  description: string
-  completed: boolean
-}
-
-interface Expected1 {
-  title: string
-}
-
-interface Expected2 {
-  title: string
-  completed: boolean
-}
-
-// CODE START (code below this line is editable)
-type MyPick<T, K> = any`;
 
 export default function CreateChallenge() {
   const createChallengeStore = useCreateChallengeStore();

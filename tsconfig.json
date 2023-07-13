@@ -35,6 +35,7 @@
   "include": [
     ".eslintrc.cjs",
     "next-env.d.ts",
+    "global.d.ts",
     "*.ts",
     "./scripts/*.js",
     "./scripts/*.mjs",
