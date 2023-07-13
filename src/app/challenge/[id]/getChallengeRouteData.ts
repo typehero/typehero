@@ -49,7 +49,6 @@ export async function getChallengeRouteData(id: string, session: Session | null)
         },
       },
       comment: {
-        take: 10,
         orderBy: [
           {
             createdAt: 'desc',
