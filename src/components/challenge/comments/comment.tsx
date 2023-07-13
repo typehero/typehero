@@ -115,7 +115,7 @@ const Comment = ({ comment }: CommentProps) => {
           Report
         </button>
       </div>
-      <p>{comment.text}</p>
+      <p className="w-full break-words">{comment.text}</p>
       <Dialog
         open={dialogOpen}
         onOpenChange={() => {
