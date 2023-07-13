@@ -125,12 +125,12 @@ const Comment = ({ comment }: CommentProps) => {
           setDialogOpen(!dialogOpen);
         }}
       >
-        <DialogContent className="max-w-lg space-y-4">
+        <DialogContent className="max-w-lg">
           <DialogHeader>
             <DialogTitle>Report Comment</DialogTitle>
           </DialogHeader>
           <div className="space-y-2">
-            <div className="flex flex-col space-y-2 rounded-md border-2 px-2 py-3">
+            <div className="flex flex-col space-y-2 rounded-3xl border bg-zinc-900 p-3">
               <div className="flex items-center gap-2">
                 <span className="my-auto max-w-fit rounded-full bg-neutral-200 p-1 px-2 text-xs font-bold text-neutral-500 dark:bg-zinc-700 dark:text-neutral-400">
                   @&nbsp;{comment.user.name}
@@ -149,8 +149,10 @@ const Comment = ({ comment }: CommentProps) => {
             <Form {...form}>
               {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
               <form onSubmit={form.handleSubmit(handleCommentReport)}>
-                <div className="flex flex-col space-y-2">
+                <div className="py-2">
                   <TypographyLarge>Issues</TypographyLarge>
+                </div>
+                <div className="flex flex-col space-y-2 px-2">
                   <FormField
                     control={form.control}
                     name="bullying"
@@ -246,7 +248,7 @@ const Comment = ({ comment }: CommentProps) => {
                       return (
                         <FormItem>
                           <div className="flex flex-row items-center gap-2">
-                            <label htmlFor="text">
+                            <label className="-ml-2" htmlFor="text">
                               <TypographyLarge>Other</TypographyLarge>
                             </label>
                             {text !== undefined && text.length > 0 && (
