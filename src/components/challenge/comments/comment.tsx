@@ -125,7 +125,7 @@ const Comment = ({ comment }: CommentProps) => {
           setDialogOpen(!dialogOpen);
         }}
       >
-        <DialogContent className="max-w-lg space-y-4">
+        <DialogContent className="max-w-lg">
           <DialogHeader>
             <DialogTitle>Report Comment</DialogTitle>
           </DialogHeader>
