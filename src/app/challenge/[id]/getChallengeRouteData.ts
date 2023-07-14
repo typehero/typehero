@@ -4,7 +4,7 @@ import { prisma } from '~/server/db';
 
 export type ChallengeRouteData = NonNullable<Awaited<ReturnType<typeof getChallengeRouteData>>>;
 
-// TODO: Make this only get called once on the routes that need it
+// this is to data to populate the description tab (default tab on challenge page)
 export async function getChallengeRouteData(id: string, session: Session | null) {
   const challenge = await prisma.challenge.findFirst({
     where: { id: +id },
@@ -21,31 +21,6 @@ export async function getChallengeRouteData(id: string, session: Session | null)
       bookmark: {
         where: {
           userId: session?.user.id || '',
-        },
-      },
-      solution: {
-        where: {
-          userId: session?.user.id || '',
-        },
-        orderBy: [
-          {
-            createdAt: 'desc',
-          },
-        ],
-        take: 10,
-      },
-      sharedSolution: {
-        orderBy: [
-          {
-            createdAt: 'desc',
-          },
-        ],
-        take: 5,
-        include: {
-          user: true,
-          _count: {
-            select: { vote: true, solutionComment: true },
-          },
         },
       },
       comment: {

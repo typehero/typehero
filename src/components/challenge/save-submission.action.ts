@@ -7,7 +7,7 @@ export async function saveSubmission(
   code: string,
   isSuccessful: boolean,
 ) {
-  await prisma.solution.create({
+  await prisma.submission.create({
     data: {
       challengeId,
       userId,

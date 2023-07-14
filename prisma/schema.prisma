@@ -90,11 +90,11 @@ model User {
   status    UserStatus @default(PENDING)
   banReason String?    @db.MediumText
 
-  accounts  Account[]
-  sessions  Session[]
-  challenge Challenge[]
-  vote      Vote[]
-  solution  Solution[]
+  accounts   Account[]
+  sessions   Session[]
+  challenge  Challenge[]
+  vote       Vote[]
+  submission Submission[]
 
   challengeReports          ChallengeReport[] @relation(name: "authored_challenge_reports")
   moderatedChallengeReports ChallengeReport[] @relation(name: "moderated_challenge_reports")
@@ -138,7 +138,7 @@ model Challenge {
   userId String
 
   vote           Vote[]
-  solution       Solution[]
+  submission     Submission[]
   comment        ChallengeComment[]
   report         ChallengeReport[]
   bookmark       Bookmark[]
@@ -153,14 +153,15 @@ model Vote {
   userId           String
   challenge        Challenge?      @relation(fields: [challengeId], references: [id])
   challengeId      Int?
-  solution         Solution?       @relation(fields: [solutionId], references: [id])
-  solutionId       Int?
+  submission       Submission?     @relation(fields: [submissionId], references: [id])
+  submissionId     Int?
   sharedSolution   SharedSolution? @relation(fields: [sharedSolutionId], references: [id])
   sharedSolutionId Int?
 
   @@index([userId])
   @@index([challengeId])
-  @@index([solutionId])
+  @@index([submissionId])
+  @@index([sharedSolutionId])
 }
 
 /// This is a public solution created by a user for a challenge
@@ -180,8 +181,8 @@ model SharedSolution {
   @@index([challengeId])
 }
 
-/// This is a submission of a challenge
-model Solution {
+/// Every attempt a user makes to a challenge is stored here
+model Submission {
   id           Int       @id @default(autoincrement())
   code         String    @db.MediumText
   createdAt    DateTime  @default(now())

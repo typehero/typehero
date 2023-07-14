@@ -7,7 +7,7 @@ interface Props {
   };
 }
 
-export type SolutionData = NonNullable<Awaited<ReturnType<typeof getSolution>>>;
+export type ChallengeSolution = NonNullable<Awaited<ReturnType<typeof getSolution>>>;
 export default async function SolutionPage({ params: { solutionId } }: Props) {
   const solution = await getSolution(solutionId);
   if (!solution) return null;

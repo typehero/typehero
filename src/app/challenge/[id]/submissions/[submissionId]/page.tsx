@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation';
 import { getServerAuthSession } from '~/server/auth';
 
-import { getChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import { Submissions } from '~/components/challenge/submissions';
+import { getChallengeSubmissions } from '../page';
 interface Props {
   params: {
     id: string;
@@ -11,11 +11,11 @@ interface Props {
 
 export default async function SubmissionPage({ params: { id } }: Props) {
   const session = await getServerAuthSession();
-  const challenge = await getChallengeRouteData(id, session);
+  const submissions = await getChallengeSubmissions(session?.user.id ?? '', id);
 
-  if (!challenge) {
+  if (!submissions) {
     return notFound();
   }
 
-  return <Submissions challenge={challenge} />;
+  return <Submissions submissions={submissions} />;
 }
