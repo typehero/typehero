@@ -8,22 +8,35 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { Markdown } from '~/components/ui/markdown';
 import ExploreCard from '~/components/explore/explore-card';
 import { Button } from '~/components/ui/button';
+import { uploadChallenge } from '../create.action';
+import { useState } from 'react';
 
 export default function PreviewCreatedChallenge() {
   const createChallengeStore = useCreateChallengeStore();
-
   const router = useRouter();
+  const [isRedirecting, setIsRedirecting] = useState(false);
 
   if (createChallengeStore.data === undefined) {
-    return router.replace('/create');
+    if (!isRedirecting) {
+      router.replace('/create');
+    }
+
+    // TODO: show some ui when isRedirecting
+    return;
   }
 
-  function publishChallenge() {
+  async function publishChallenge() {
     console.log(createChallengeStore.data);
 
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const { id } = await uploadChallenge(createChallengeStore.data!);
+
+    // TODO: add guard in case the upload fails
     createChallengeStore.clear();
 
-    // router.push('/explore');
+    router.push(`/challenge/${id}`);
+
+    setIsRedirecting(true);
   }
 
   return (
@@ -84,8 +97,7 @@ export default function PreviewCreatedChallenge() {
             <Button
               size="sm"
               className="cursor-pointer whitespace-nowrap bg-red-600 duration-300 hover:bg-red-500 dark:bg-red-400 dark:hover:bg-red-300"
-              // eslint-disable-next-line @typescript-eslint/no-misused-promises
-              onClick={() => router.push('/create')}
+              onClick={() => router.push('/create/')}
             >
               Continue Editing
             </Button>

@@ -17,9 +17,9 @@ import { Markdown } from '../ui/markdown';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { type ExploreChallengeData } from './';
 
-interface Props {
+interface ExploreCardProps {
   challenge: Pick<
-    Awaited<ExploreChallengeData>[0],
+    ExploreChallengeData[0],
     'difficulty' | 'name' | 'shortDescription' | '_count' | 'updatedAt'
   >;
 }
@@ -64,7 +64,7 @@ const COLORS_BY_DIFFICULTY = {
   EXTREME: 'dark:group-hover:text-orange-300 group-hover:text-orange-600',
 };
 
-const ExploreCard = ({ challenge }: Props) => {
+const ExploreCard = ({ challenge }: ExploreCardProps) => {
   return (
     <Card
       className={`group relative overflow-hidden duration-300

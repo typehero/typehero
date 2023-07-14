@@ -1,22 +1,19 @@
-import type { Difficulty } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-interface CreateState {
-  data:
-    | {
-        name: string;
-        difficulty: Difficulty;
-        shortDescription: string;
-        description: string;
-        prompt: string;
-      }
-    | undefined;
-  setData: (data: NonNullable<CreateState['data']>) => void;
-  clear: () => void;
-}
+export type CreateChallengeInputData = Pick<
+  Prisma.ChallengeCreateInput,
+  'name' | 'difficulty' | 'shortDescription' | 'description' | 'prompt'
+>;
 
-export const useCreateChallengeStore = create<CreateState>()(
+export type CreateChallengeState = {
+  data: CreateChallengeInputData | undefined;
+  setData: (data: CreateChallengeInputData) => void;
+  clear: () => void;
+};
+
+export const useCreateChallengeStore = create<CreateChallengeState>()(
   persist(
     (set, _get) => ({
       data: undefined,
