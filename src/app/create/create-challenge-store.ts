@@ -2,14 +2,14 @@ import type { Prisma } from '@prisma/client';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+export type CreateChallengeInputData = Pick<
+  Prisma.ChallengeCreateInput,
+  'name' | 'difficulty' | 'shortDescription' | 'description' | 'prompt'
+>;
+
 export type CreateChallengeState = {
-  data:
-    | Pick<
-        Prisma.ChallengeCreateInput,
-        'name' | 'difficulty' | 'shortDescription' | 'description' | 'prompt'
-      >
-    | undefined;
-  setData: (data: NonNullable<CreateChallengeState['data']>) => void;
+  data: CreateChallengeInputData | undefined;
+  setData: (data: CreateChallengeInputData) => void;
   clear: () => void;
 };
 

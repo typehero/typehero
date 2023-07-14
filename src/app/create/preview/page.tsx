@@ -95,7 +95,6 @@ export default function PreviewCreatedChallenge() {
           submitText="Publish"
           extraButton={
             <Button
-              type="submit"
               size="sm"
               className="cursor-pointer whitespace-nowrap bg-red-600 duration-300 hover:bg-red-500 dark:bg-red-400 dark:hover:bg-red-300"
               onClick={() => router.push('/create/')}

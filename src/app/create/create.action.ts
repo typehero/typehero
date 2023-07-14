@@ -3,9 +3,9 @@
 import { prisma } from '~/server/db';
 import { createChallengeValidator } from './create-validator';
 import { getServerAuthSession } from '~/server/auth';
-import { type CreateChallengeState } from './create-challenge-store';
+import { type CreateChallengeInputData } from './create-challenge-store';
 
-export async function uploadChallenge(data: NonNullable<CreateChallengeState['data']>) {
+export async function uploadChallenge(data: CreateChallengeInputData) {
   const parsedData = createChallengeValidator.parse(data);
 
   const session = await getServerAuthSession();
