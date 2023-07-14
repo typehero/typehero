@@ -138,3 +138,14 @@ main {
 .w-md-editor-preview .wmde-markdown {
   @apply bg-muted;
 }
+
+.custom-scrollable-element::-webkit-scrollbar {
+  width: 8px;
+}
+.custom-scrollable-element::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+.custom-scrollable-element::-webkit-scrollbar-thumb {
+  @apply bg-zinc-700/50;
+  border-radius: 10px;
+}

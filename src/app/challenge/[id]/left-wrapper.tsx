@@ -30,7 +30,7 @@ export function LeftWrapper({ challengeId, children }: Props) {
   return (
     <Tabs
       defaultValue={selectedTab}
-      className="flex h-full w-full flex-col overflow-y-auto overflow-x-hidden"
+      className="custom-scrollable-element flex h-full w-full flex-col overflow-x-hidden overflow-y-scroll"
     >
       <TabsList className="sticky top-0 z-10 grid h-auto w-full grid-cols-3 rounded-none rounded-tl-2xl rounded-tr-xl border-b border-zinc-300 bg-background/90 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
         <TabsTrigger
