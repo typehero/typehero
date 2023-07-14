@@ -11,17 +11,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { useToast } from '~/components/ui/use-toast';
 import { ToastAction } from '@radix-ui/react-toast';
 import { useRouter } from 'next/navigation';
-// @ts-ignore
 import DEFAULT_DESCRIPTION from './default-description.md';
-// @ts-ignore
 import DEFAULT_CHALLENGE_TEMPLATE from './default-challenge.md';
 
 import { type Difficulty } from '@prisma/client';
 import ExploreCardInputs from '~/components/create/explore-card-inputs';
 
 import { useTheme } from 'next-themes';
-
 import { RichMarkdownEditor } from '~/components/ui/rich-markdown-editor';
+import { createChallengeValidator } from './create-validator';
 
 export default function CreateChallenge() {
   const createChallengeStore = useCreateChallengeStore();
@@ -44,45 +42,27 @@ export default function CreateChallenge() {
   const { toast } = useToast();
 
   function onSubmit(prompt: string) {
-    if (name.length < 3) {
-      return toast({
-        variant: 'destructive',
-        title: 'The title length should be longer than 3 character',
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
-      });
-    }
-
-    if (shortDescription.length < 10) {
-      return toast({
-        variant: 'destructive',
-        title: 'The short description should be longer than 10 character',
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
-      });
-    }
-
-    if (description.length < 20) {
-      return toast({
-        variant: 'destructive',
-        title: 'The description should be longer than 20 character',
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
-      });
-    }
-
-    if (difficulty === undefined) {
-      return toast({
-        variant: 'destructive',
-        title: 'Please select a difficulty',
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
-      });
-    }
-
-    createChallengeStore.setData({
+    const parseResult = createChallengeValidator.safeParse({
       name,
       description,
       shortDescription,
       difficulty,
       prompt,
     });
+
+    if (!parseResult.success) {
+      for (const error of parseResult.error.errors) {
+        toast({
+          title: error.message,
+          variant: 'destructive',
+          action: <ToastAction altText="dismiss">Dismiss</ToastAction>,
+        });
+      }
+
+      return;
+    }
+
+    createChallengeStore.setData(parseResult.data);
 
     router.push('/create/preview');
   }
