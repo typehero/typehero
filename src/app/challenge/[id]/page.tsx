@@ -25,7 +25,7 @@ export default async function Challenges({ params: { id } }: Props) {
       </div>
 
       <div className="sticky bottom-0 -mx-[1px] overflow-hidden rounded-xl border border-zinc-300 border-b-background bg-background/90 shadow-[0_0_3rem_-0.25rem_#0004] backdrop-blur-sm duration-300 dark:border-zinc-700 dark:border-b-muted dark:bg-muted/90 dark:shadow-[0_0_3rem_-0.25rem_#0008]">
-        <Comments challenge={challenge} />
+        <Comments challengeId={challenge.id} commentCount={challenge.comment.length} />
       </div>
     </div>
   );
