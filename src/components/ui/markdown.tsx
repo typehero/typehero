@@ -34,9 +34,10 @@ function removeHtmlComments(): Transformer {
   };
 }
 
-export function Markdown({ children }: { children: string }) {
+export function Markdown({ children, className }: { children: string; className?: string }) {
   return (
     <ReactMarkdown
+      className={className}
       remarkPlugins={[removeHtmlComments, remarkGfm]}
       components={{
         h1: ({ className, ...props }) => (

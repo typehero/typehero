@@ -24,7 +24,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '.
 import { Textarea } from '../ui/textarea';
 import { TypographyH3 } from '../ui/typography/h3';
 import { toast } from '../ui/use-toast';
-
 interface ReportsProps {
   data: AdminReportDetails;
 }
@@ -135,7 +134,7 @@ export const ReportDetails = ({ data }: ReportsProps) => {
               <TableRow
                 onClick={() => {
                   setSelectedIssue(report);
-                  setDialogOpen(true);
+                  router.push(`/admin/report/${report.id}`);
                 }}
                 className="hover:cursor-pointer"
                 key={reportIdx}

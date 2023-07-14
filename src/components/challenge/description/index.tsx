@@ -135,9 +135,9 @@ export function Description({ challenge }: Props) {
   return (
     <>
       <div className="flex items-baseline justify-between">
-          <TypographyH3 className="mb-2 font-medium flex items-center gap-2">
-            {challenge.name}
-          </TypographyH3>
+        <TypographyH3 className="mb-2 flex items-center gap-2 font-medium">
+          {challenge.name}
+        </TypographyH3>
         <Dialog>
           <DialogTrigger>
             <ActionMenu
