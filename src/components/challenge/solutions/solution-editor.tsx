@@ -1,4 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSession } from 'next-auth/react';
+import { useTheme } from 'next-themes';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from '~/components/ui/button';
@@ -6,11 +9,8 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '~/component
 import { Input } from '~/components/ui/input';
 import { useToast } from '~/components/ui/use-toast';
 import { postSolution } from './post-solution.action';
-import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
-import { useSession } from 'next-auth/react';
-import { useTheme } from 'next-themes';
-import { useRouter } from 'next/navigation';
 
+import type { ChallengeSolutionsRouteData } from '~/app/challenge/[id]/solutions/page';
 import { RichMarkdownEditor } from '~/components/ui/rich-markdown-editor';
 
 const getDefaultMarkdown = (solution: string) => `
@@ -35,7 +35,7 @@ const formSchema = z.object({
 export type FormSchema = z.infer<typeof formSchema>;
 
 interface Props {
-  challenge: ChallengeRouteData;
+  challenge: ChallengeSolutionsRouteData;
   dismiss: () => void;
 }
 
@@ -45,7 +45,7 @@ export function SolutionEditor({ dismiss, challenge }: Props) {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      content: getDefaultMarkdown(challenge.solution[0]?.code ?? ''),
+      content: getDefaultMarkdown(challenge.submission[0]?.code ?? ''),
     },
   });
   const { toast } = useToast();

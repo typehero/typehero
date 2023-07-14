@@ -77,7 +77,7 @@ export default function PreviewCreatedChallenge() {
                 ...createChallengeStore.data,
                 _count: {
                   vote: 420,
-                  solution: 0,
+                  submission: 0,
                   comment: 0,
                 },
                 updatedAt: new Date(),

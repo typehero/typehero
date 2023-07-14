@@ -1,24 +1,23 @@
 'use client';
 
-import type { Solution } from '@prisma/client';
-import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
-import { getRelativeTime } from '~/utils/relativeTime';
+import type { Submission } from '@prisma/client';
 import clsx from 'clsx';
+import { getRelativeTime } from '~/utils/relativeTime';
 
-import { useMemo, useState } from 'react';
 import Link from 'next/link';
+import { useMemo, useState } from 'react';
+import type { ChallengeSubmissions } from '~/app/challenge/[id]/submissions/page';
 
 interface Props {
-  challenge: ChallengeRouteData;
+  submissions: ChallengeSubmissions;
 }
 
 type Status = 'all' | 'accepted' | 'rejected';
-export function Submissions({ challenge }: Props) {
+export function Submissions({ submissions }: Props) {
   const [selectedStatus, setSelectStatus] = useState<Status>('all');
-  const submissions = challenge.solution;
 
   const filteredSubmissions = useMemo(() => {
-    const predicate = (submission: Solution) => {
+    const predicate = (submission: Submission) => {
       if (selectedStatus === 'all') return true;
       if (selectedStatus === 'accepted') return submission.isSuccessful;
       return !submission.isSuccessful;
@@ -64,7 +63,11 @@ export function Submissions({ challenge }: Props) {
       <ul className="relative flex flex-col">
         {filteredSubmissions.map((submission) => {
           return (
-            <SubmissionRow challengeId={challenge.id} submission={submission} key={submission.id} />
+            <SubmissionRow
+              challengeId={submission.challengeId}
+              submission={submission}
+              key={submission.id}
+            />
           );
         })}
       </ul>
@@ -73,7 +76,7 @@ export function Submissions({ challenge }: Props) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function SubmissionRow({ challengeId, submission }: { challengeId: number; submission: Solution }) {
+function SubmissionRow({ challengeId, submission }: { challengeId: number; submission: Submission }) {
   return (
     <li className="flex cursor-pointer items-center justify-between px-4 py-2 duration-300 hover:bg-neutral-100 dark:rounded-none dark:hover:bg-zinc-700/50">
       <Link className="w-full" href={`/challenge/${challengeId}/submissions/${submission.id}`}>

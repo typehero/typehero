@@ -40,7 +40,7 @@ try {
       email: 'g@typehero.dev',
       name: 'g',
       challenge: challenges(),
-      solution: {
+      submission: {
         create: {
           code: 'const a: string = "hello world"',
           isSuccessful: true,

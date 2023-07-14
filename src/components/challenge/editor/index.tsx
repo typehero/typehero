@@ -55,7 +55,7 @@ const LIB_URI = 'ts:filename/checking.d.ts';
 type Props = (
   | {
       mode: 'solve';
-      challenge: Pick<ChallengeRouteData, 'solution' | 'prompt' | 'id'>;
+      challenge: ChallengeRouteData;
       prompt?: never;
     }
   | {

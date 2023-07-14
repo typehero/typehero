@@ -1,23 +1,27 @@
+import { useQuery } from '@tanstack/react-query';
 import { Copy, X } from 'lucide-react';
 import Link from 'next/link';
-
-import type { ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import { Button } from '~/components/ui/button';
 import { Markdown } from '~/components/ui/markdown';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
 import { toast } from '~/components/ui/use-toast';
+import { getBaseUrl } from '~/utils/getBaseUrl';
 import { getRelativeTime } from '~/utils/relativeTime';
 
 interface Props {
-  challenge: ChallengeRouteData;
   submissionId: string;
 }
 const codifyForMarkdown = (code: string) => {
   return `\`\`\`ts
 ${code} \`\`\``;
 };
-export function SubmissionOverview({ challenge, submissionId }: Props) {
-  const submission = challenge.solution?.find((submission) => submission.id === +submissionId);
+
+export function SubmissionOverview({ submissionId }: Props) {
+  const { data: submission } = useQuery({
+    queryKey: ['submission', submissionId],
+    queryFn: () => getSubmission(submissionId),
+  });
+
   const code = codifyForMarkdown(submission?.code.trimStart() ?? '');
 
   const copyToClipboard = async () => {
@@ -35,7 +39,7 @@ export function SubmissionOverview({ challenge, submissionId }: Props) {
   return (
     <>
       <div className="sticky top-0 flex h-[40px] items-center justify-between border-b border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
-        <Link href={`/challenge/${challenge.id}/submissions`}>
+        <Link href={`/challenge/${submission.challengeId}/submissions`}>
           <X size={20} className="stroke-gray-500 hover:stroke-gray-400" />
         </Link>
         <TooltipProvider>
@@ -60,7 +64,7 @@ export function SubmissionOverview({ challenge, submissionId }: Props) {
                 : 'bg-rose-600/10 text-rose-600 dark:bg-rose-400/10 dark:text-rose-400 '
             }`}
           >
-            {submission?.isSuccessful ? 'Accepted' : 'Rejected'}
+            {submission.isSuccessful ? 'Accepted' : 'Rejected'}
           </div>
           <div className="text-sm text-neutral-500">{getRelativeTime(submission.createdAt)}</div>
         </div>
@@ -68,4 +72,8 @@ export function SubmissionOverview({ challenge, submissionId }: Props) {
       </div>
     </>
   );
+}
+
+function getSubmission(id: string) {
+  return fetch(`${getBaseUrl()}/api/submissions/${id}`).then((res) => res.json());
 }

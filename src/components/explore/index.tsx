@@ -29,7 +29,7 @@ async function getExploreChallengeData() {
     },
     include: {
       _count: {
-        select: { vote: true, comment: true, solution: true },
+        select: { vote: true, comment: true, submission: true },
       },
     },
   });

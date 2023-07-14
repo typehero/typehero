@@ -4,22 +4,20 @@ import { ArrowUp, MessageCircle, Plus } from 'lucide-react';
 import { Button } from '~/components/ui/button';
 
 import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 import { useState } from 'react';
-import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
+import type { ChallengeSolutionsRouteData } from '~/app/challenge/[id]/solutions/page';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { SolutionEditor } from './solution-editor';
-import Link from 'next/link';
 
 interface Props {
-  challenge: ChallengeRouteData;
+  challenge: ChallengeSolutionsRouteData;
 }
 type View = 'editor' | 'list' | 'details';
 export function Solutions({ challenge }: Props) {
   const [view, setView] = useState<View>('list');
-  const hasSolution = challenge.solution?.length > 0;
+  const loggedInUserHasSolution = challenge?.submission?.length;
   const session = useSession();
-
-  const sharedSolution = challenge.sharedSolution;
 
   return (
     <div className="relative h-full">
@@ -33,12 +31,12 @@ export function Solutions({ challenge }: Props) {
             <Button
               className="h-8 rounded-lg bg-emerald-600 px-3 py-2 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
               onClick={() => setView('editor')}
-              disabled={!hasSolution || !session?.data?.user}
+              disabled={!loggedInUserHasSolution || !session?.data?.user}
             >
               <Plus className="mr-2 h-4 w-4" /> Solution
             </Button>
           </div>
-          {sharedSolution.map((solution) => (
+          {challenge?.sharedSolution.map((solution) => (
             <SolutionRow
               key={solution.id}
               solution={solution}
@@ -59,7 +57,7 @@ function SolutionRow({
   solution,
 }: {
   handleClick: (id: string) => void;
-  solution: ChallengeRouteData['sharedSolution'][number];
+  solution: ChallengeSolutionsRouteData['sharedSolution'][0];
 }) {
   return (
     <Link href={`/challenge/${solution.challengeId}/solutions/${solution.id}`}>

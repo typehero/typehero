@@ -1,7 +1,8 @@
 'use client';
+
 import { Calendar, MessageCircle, Share, X } from 'lucide-react';
 import Link from 'next/link';
-import type { SolutionData } from '~/app/challenge/[id]/solutions/[solutionId]/page';
+import type { ChallengeSolution } from '~/app/challenge/[id]/solutions/[solutionId]/page';
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
 import { Button } from '~/components/ui/button';
 import { Markdown } from '~/components/ui/markdown';
@@ -10,12 +11,12 @@ import { toast } from '~/components/ui/use-toast';
 import { UserBadge } from '~/components/ui/user-badge';
 
 interface Props {
-  solution: SolutionData;
+  solution: ChallengeSolution;
 }
 export function SolutionDetails({ solution }: Props) {
-  const url = window.location.href;
   const handleShareClick = async () => {
     if (navigator.clipboard) {
+      const url = window.location.href;
       await navigator.clipboard.writeText(url);
       toast({
         variant: 'success',

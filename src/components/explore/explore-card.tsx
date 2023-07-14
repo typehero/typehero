@@ -135,7 +135,7 @@ const ExploreCard = ({ challenge }: ExploreCardProps) => {
           </div>
           <div className="mr-auto flex flex-col items-center">
             <h1 className="text-4xl font-bold text-black dark:text-white">
-              {challenge._count.solution}
+              {challenge._count.submission}
             </h1>
             <span>Solutions</span>
           </div>

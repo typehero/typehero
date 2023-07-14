@@ -10,7 +10,7 @@ import {
 import type { UserData } from '.';
 import Link from 'next/link';
 
-export function SolutionsTab({ solutions = [] }: { solutions: UserData['solution'] }) {
+export function SolutionsTab({ submissions = [] }: { submissions: UserData['submission'] }) {
   return (
     <Table>
       <TableCaption>A list of your recent challenges.</TableCaption>
@@ -21,12 +21,12 @@ export function SolutionsTab({ solutions = [] }: { solutions: UserData['solution
         </TableRow>
       </TableHeader>
       <TableBody>
-        {solutions.map((solution) => (
-          <TableRow key={solution.id}>
+        {submissions.map((submission) => (
+          <TableRow key={submission.id}>
             <TableCell className="font-medium underline">
-              <Link href={`/challenge/${solution.challenge.id}`}>{solution.challenge.name}</Link>
+              <Link href={`/challenge/${submission.challenge.id}`}>{submission.challenge.name}</Link>
             </TableCell>
-            <TableCell>{solution.isSuccessful ? 'Accepted' : 'Rejected'}</TableCell>
+            <TableCell>{submission.isSuccessful ? 'Accepted' : 'Rejected'}</TableCell>
           </TableRow>
         ))}
       </TableBody>
