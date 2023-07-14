@@ -68,7 +68,7 @@ export async function disableChallenge(challengeId: number, reportId: number) {
     ]);
   } catch (e) {
     console.log(e);
-    return 'uh_oh';
+    return 'failed';
   }
 }
 
@@ -137,7 +137,7 @@ export async function banUser(userId: string, reportId: number, banReason?: stri
     ]);
   } catch (e) {
     console.log(e);
-    return 'uh_oh';
+    return 'failed';
   }
 }
 /**

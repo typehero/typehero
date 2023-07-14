@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { Footsies } from '~/components/ui/footsies';
 
-export default function Index() {
+export default async function Index() {
   return (
     <>
       <Head>
