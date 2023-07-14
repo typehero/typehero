@@ -7,7 +7,8 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
- DialogHeader } from '~/components/ui/dialog';
+  DialogHeader,
+} from '~/components/ui/dialog';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import {
@@ -37,14 +38,7 @@ export default function ReportActions({
 
   async function handleDisableChallenge(challengeId: number, reportId: number) {
     try {
-      const f = await disableChallenge(challengeId, reportId);
-      if (f !== 'failed') {
-        toast({
-          title: 'Success',
-          description: <p>Challenge disabled successfully.</p>,
-        });
-        router.push('/admin');
-      }
+      await disableChallenge(challengeId, reportId);
     } catch (e) {
       toast({
         title: 'Error',
@@ -56,14 +50,12 @@ export default function ReportActions({
 
   async function handleBanUser(userId: string, reportId: number, banReason?: string) {
     try {
-      const f = await banUser(userId, reportId, banReason);
-      if (f !== 'failed') {
-        toast({
-          title: 'Success',
-          description: <p>User banned successfully.</p>,
-        });
-        router.push('/admin');
-      }
+      await banUser(userId, reportId, banReason);
+      toast({
+        title: 'Success',
+        description: <p>User banned successfully.</p>,
+      });
+      router.push('/admin');
     } catch (e) {
       toast({
         title: 'Error',
@@ -75,7 +67,7 @@ export default function ReportActions({
 
   async function handleDismissReport(reportId: number) {
     try {
-      const f = await dismissChallengeReport(reportId);
+      await dismissChallengeReport(reportId);
       toast({
         title: 'Success',
         description: <p>Dismissed successfully.</p>,

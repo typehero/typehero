@@ -46,30 +46,25 @@ export async function getBannedUsers() {
  */
 export async function disableChallenge(challengeId: number, reportId: number) {
   const session = await getServerAuthSession();
-  try {
-    await prisma.$transaction([
-      prisma.challenge.update({
-        where: {
-          id: challengeId,
-        },
-        data: {
-          visibility: 'HIDDEN',
-        },
-      }),
-      prisma.challengeReport.update({
-        where: {
-          id: reportId,
-        },
-        data: {
-          status: 'CLEARED',
-          moderatorId: session?.user.id,
-        },
-      }),
-    ]);
-  } catch (e) {
-    console.log(e);
-    return 'failed';
-  }
+  await prisma.$transaction([
+    prisma.challenge.update({
+      where: {
+        id: challengeId,
+      },
+      data: {
+        visibility: 'HIDDEN',
+      },
+    }),
+    prisma.challengeReport.update({
+      where: {
+        id: reportId,
+      },
+      data: {
+        status: 'CLEARED',
+        moderatorId: session?.user.id,
+      },
+    }),
+  ]);
 }
 
 /**
@@ -101,44 +96,39 @@ export async function dismissChallengeReport(reportId: number) {
 export async function banUser(userId: string, reportId: number, banReason?: string) {
   const session = await getServerAuthSession();
 
-  try {
-    await prisma.$transaction([
-      prisma.user.update({
-        where: {
-          id: userId,
-        },
-        data: {
-          status: 'BANNED',
-          banReason: banReason,
-        },
-      }),
-      prisma.challenge.updateMany({
-        where: {
-          userId: userId,
-        },
-        data: {
-          visibility: 'HIDDEN',
-        },
-      }),
-      prisma.session.deleteMany({
-        where: {
-          userId: userId,
-        },
-      }),
-      prisma.challengeReport.update({
-        where: {
-          id: reportId,
-        },
-        data: {
-          status: 'CLEARED',
-          moderatorId: session?.user.id,
-        },
-      }),
-    ]);
-  } catch (e) {
-    console.log(e);
-    return 'failed';
-  }
+  await prisma.$transaction([
+    prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        status: 'BANNED',
+        banReason: banReason,
+      },
+    }),
+    prisma.challenge.updateMany({
+      where: {
+        userId: userId,
+      },
+      data: {
+        visibility: 'HIDDEN',
+      },
+    }),
+    prisma.session.deleteMany({
+      where: {
+        userId: userId,
+      },
+    }),
+    prisma.challengeReport.update({
+      where: {
+        id: reportId,
+      },
+      data: {
+        status: 'CLEARED',
+        moderatorId: session?.user.id,
+      },
+    }),
+  ]);
 }
 /**
  * The function lifts the ban off the user i.e. updates

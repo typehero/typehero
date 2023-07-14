@@ -22,7 +22,7 @@ async function getSolution(solutionId: string) {
     },
     include: {
       challenge: true,
-      user: true
+      user: true,
     },
   });
 
