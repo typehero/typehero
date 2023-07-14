@@ -8,37 +8,12 @@ import { UserBadge } from '~/components/ui/user-badge';
 import { AlertCircle, ThumbsUp } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert';
 import ReportActions from './actions';
+import { getChallenge } from '~/components/admin/admin.actions';
 
 export interface Props {
   params: {
     id: string;
   };
-}
-
-export async function getChallenge(id: number) {
-  return prisma.challengeReport.findFirstOrThrow({
-    where: {
-      id,
-    },
-    include: {
-      author: true,
-      moderator: {
-        select: {
-          name: true,
-        },
-      },
-      challenge: {
-        include: {
-          user: true,
-          vote: true,
-        },
-      },
-    },
-  });
-}
-
-async function bob() {
-  return 'hi, I am bob';
 }
 
 export default async function (props: Props) {

@@ -166,3 +166,25 @@ export async function unbanUser(userId: string) {
     }),
   ]);
 }
+
+export async function getChallenge(id: number) {
+  return prisma.challengeReport.findFirstOrThrow({
+    where: {
+      id,
+    },
+    include: {
+      author: true,
+      moderator: {
+        select: {
+          name: true,
+        },
+      },
+      challenge: {
+        include: {
+          user: true,
+          vote: true,
+        },
+      },
+    },
+  });
+}
