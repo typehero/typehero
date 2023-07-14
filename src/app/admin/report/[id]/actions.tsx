@@ -55,7 +55,6 @@ export default function ReportActions({
   }
 
   async function handleBanUser(userId: string, reportId: number, banReason?: string) {
-    console.info(userId, reportId, banReason);
     try {
       const f = await banUser(userId, reportId, banReason);
       if (f !== 'failed') {
