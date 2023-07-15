@@ -3,6 +3,9 @@ import { prisma } from '~/server/db';
 import { ExploreSection } from './section';
 import { ExploreSectionSkeleton } from './section-skeleton';
 
+// CI fails without this
+export const dynamic = 'force-dynamic';
+
 export async function Explore() {
   return (
     <div className="container flex h-full flex-col">
