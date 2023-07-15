@@ -1,21 +1,22 @@
 'use client';
 
 import {
-  ThumbsUp,
-  PlayCircle,
-  Bookmark,
+  Calendar,
   Circle,
   Diamond,
-  Triangle,
+  MessageCircle,
+  PlayCircle,
   Plus,
   Sparkle,
+  ThumbsUp,
+  Triangle,
 } from 'lucide-react';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { DifficultyBadge } from './difficulty-badge';
-import { Markdown } from '../ui/markdown';
 import { getRelativeTime } from '~/utils/relativeTime';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
+import { Markdown } from '../ui/markdown';
 import { type ExploreChallengeData } from './';
+import { DifficultyBadge } from './difficulty-badge';
 
 interface ExploreCardProps {
   challenge: Pick<
@@ -126,26 +127,22 @@ const ExploreCard = ({ challenge }: ExploreCardProps) => {
           <div className="pointer-events-none absolute inset-0 h-full w-full shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card))] duration-300 group-hover:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))] group-focus:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))]" />
           <Markdown>{challenge?.shortDescription}</Markdown>
         </CardDescription>
-        <div className="flex items-end justify-between gap-8 pt-2 text-sm text-muted-foreground">
-          <div className="flex flex-col items-center">
-            <h1 className="text-4xl font-bold text-black dark:text-white">
-              {challenge._count.comment}
-            </h1>
-            <span>Comments</span>
-          </div>
-          <div className="mr-auto flex flex-col items-center">
-            <h1 className="text-4xl font-bold text-black dark:text-white">
-              {challenge._count.submission}
-            </h1>
-            <span>Solutions</span>
-          </div>
-          <div className="flex flex-col items-end gap-4">
-            <div className="flex items-center justify-center gap-2 text-center">
-              <Bookmark size={20} className="mr-2" />
-              <ThumbsUp size={20} />
-              <span>{challenge._count.vote}</span>
+
+        <div className="text-muted-foreground">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-6 text-center">
+              <div className="flex items-center gap-2">
+                <MessageCircle size={18} />
+                {challenge._count.comment}
+              </div>
+              <div className="flex items-center gap-2">
+                <ThumbsUp size={18} />
+                <span>{challenge._count.vote}</span>
+              </div>
             </div>
-            {getRelativeTime(challenge.updatedAt)}
+            <div className="flex items-center gap-2 text-sm">
+              <Calendar size={18} /> {getRelativeTime(challenge.updatedAt)}
+            </div>
           </div>
         </div>
       </CardContent>

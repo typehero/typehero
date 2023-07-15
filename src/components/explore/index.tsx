@@ -3,34 +3,75 @@ import { prisma } from '~/server/db';
 import { ExploreSection } from './section';
 import { ExploreSectionSkeleton } from './section-skeleton';
 
-export async function Explore() {
-  const data = await getExploreChallengeData();
+// CI fails without this
+export const dynamic = 'force-dynamic';
 
+export async function Explore() {
   return (
     <div className="container flex h-full flex-col">
-      <section className="mb-8 flex max-w-[69ch] flex-col items-start gap-2">
-        <h1 className="my-4 bg-gradient-to-r from-[#3178C6] from-30% to-black bg-clip-text text-4xl font-bold tracking-tight text-transparent dark:to-white md:text-6xl lg:my-6">
-          <span className="mb-2 block text-2xl md:text-4xl">Welcome to</span> Type Hero Explore
-        </h1>
-      </section>
+      <p className="max-w-[66ch] bg-transparent pt-5 text-justify text-lg leading-10 text-neutral-600 dark:text-neutral-400">
+        <span className="text-xl font-bold text-[#3178c6]">Explore</span> the challenges. Embrace
+        the opportunity to grow, learn, and showcase your programming abilities. We hope you find
+        the <span className="font-semibold text-neutral-200">perfect</span> challenge!
+      </p>
 
       <Suspense fallback={<ExploreSectionSkeleton />}>
-        <ExploreSection data={data} />
+        <ExploreSection title="Great for Beginners" fetcher={getEasyChallenges} />
+      </Suspense>
+
+      <Suspense fallback={<ExploreSectionSkeleton />}>
+        <ExploreSection title="Great for Enthusiasts" fetcher={getMediumChallenges} />
+      </Suspense>
+
+      <Suspense fallback={<ExploreSectionSkeleton />}>
+        <ExploreSection title="For the Experts" fetcher={getHardChallenges} />
       </Suspense>
     </div>
   );
 }
 
-export type ExploreChallengeData = Awaited<ReturnType<typeof getExploreChallengeData>>;
-async function getExploreChallengeData() {
+export type ExploreChallengeData = Awaited<ReturnType<typeof getEasyChallenges>>;
+async function getEasyChallenges() {
   return prisma.challenge.findMany({
     where: {
       visibility: 'VISIBLE',
+      difficulty: { in: ['EASY'] },
     },
     include: {
       _count: {
-        select: { vote: true, comment: true, submission: true },
+        select: { vote: true, comment: true },
       },
     },
+    take: 6,
+  });
+}
+
+async function getMediumChallenges() {
+  return prisma.challenge.findMany({
+    where: {
+      visibility: 'VISIBLE',
+      difficulty: { in: ['MEDIUM'] },
+    },
+    include: {
+      _count: {
+        select: { vote: true, comment: true },
+      },
+    },
+    take: 6,
+  });
+}
+
+async function getHardChallenges() {
+  return prisma.challenge.findMany({
+    where: {
+      visibility: 'VISIBLE',
+      difficulty: { in: ['HARD'] },
+    },
+    include: {
+      _count: {
+        select: { vote: true, comment: true },
+      },
+    },
+    take: 6,
   });
 }
