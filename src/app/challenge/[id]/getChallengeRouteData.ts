@@ -7,7 +7,6 @@ export type ChallengeRouteData = NonNullable<Awaited<ReturnType<typeof getChalle
 
 // this is to data to populate the description tab (default tab on challenge page)
 export const getChallengeRouteData = cache(async (id: string, session: Session | null) => {
-  console.log('challenge', id, session?.user?.id);
   const challenge = await prisma.challenge.findFirst({
     where: { id: +id },
     include: {
@@ -17,12 +16,12 @@ export const getChallengeRouteData = cache(async (id: string, session: Session |
       },
       vote: {
         where: {
-          userId: session?.user?.id ?? '',
+          userId: session?.user.id || '',
         },
       },
       bookmark: {
         where: {
-          userId: session?.user?.id ?? '',
+          userId: session?.user.id || '',
         },
       },
       comment: {

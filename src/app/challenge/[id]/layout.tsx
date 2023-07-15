@@ -13,7 +13,6 @@ export default async function LayoutData({
 }) {
   const session = await getServerAuthSession();
   const challenge = await getChallengeRouteData(id, session);
-  // const challenge = await getChallengeRouteData(id, session?.user?.id ?? '');
   if (!challenge) return <div>loading</div>;
 
   return (

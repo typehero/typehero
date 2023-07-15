@@ -21,11 +21,8 @@ export default async function SubmissionPage({ params: { id } }: Props) {
   return <Submissions submissions={submissions} />;
 }
 
-export const dynamic = 'force-dynamic';
-
 export type ChallengeSubmissions = NonNullable<Awaited<ReturnType<typeof getChallengeSubmissions>>>;
 export const getChallengeSubmissions = cache(async (userId: string, challengeId: string) => {
-  console.log('getChallengeSubmissions');
   const solutions = await prisma.submission.findMany({
     where: { challengeId: +challengeId, userId },
     orderBy: [
