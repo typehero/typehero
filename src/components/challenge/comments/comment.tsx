@@ -59,6 +59,28 @@ const Comment = ({ comment }: CommentProps) => {
     },
   });
 
+  async function copyPathNotifyUser() {
+    try {
+      await copyCommentUrlToClipboard();
+      toast({
+        title: 'Success!',
+        variant: 'success',
+        description: <p>Copied comment URL to clipboard!</p>,
+      });
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: 'Failure!',
+        variant: 'destructive',
+        description: <p>Something went wrong!</p>,
+      });
+    }
+  }
+
+  async function copyCommentUrlToClipboard() {
+    await navigator.clipboard.writeText(`${window.location.href}/comment/${comment.id}`);
+  }
+
   async function handleCommentReport(data: CommentReportSchemaType) {
     try {
       const res = await reportChallengeComment(data, comment.id);
@@ -134,6 +156,39 @@ const Comment = ({ comment }: CommentProps) => {
               Report
             </button>
           )}
+        <div className="flex items-center">
+          <div
+            onClick={() => {
+              copyPathNotifyUser();
+            }}
+            className="mr-2 flex items-center text-neutral-500 hover:text-[#007bcd]"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              className="lucide lucide-share "
+            >
+              <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+              <polyline points="16 6 12 2 8 6" />
+              <line x1="12" x2="12" y1="2" y2="15" />
+            </svg>
+            <small className="font-md text-sm leading-none hover:underline">Share</small>
+          </div>
+          <button
+            onClick={() => {
+              setDialogOpen(true);
+            }}
+            className="flex text-sm text-neutral-400 hover:text-neutral-400 hover:underline dark:text-neutral-600"
+          >
+            Report
+          </button>
         </div>
       </div>
       <p className="w-full break-words pl-[1px] text-sm">
@@ -169,7 +224,47 @@ const Comment = ({ comment }: CommentProps) => {
                 </Tooltip>
               </div>
               <p className="max-h-[30vh] overflow-y-auto">{comment.text}</p>
+              <p>{comment.text}</p>
+              <div className="flex">
+                {/* UPVOTE */}
+                <div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    className="lucide lucide-arrow-big-up stroke-neutral-500 hover:stroke-white"
+                  >
+                    <path d="M9 18v-6H5l7-7 7 7h-4v6H9z" />
+                  </svg>
+                </div>
+                {/* VOTE COUNT */}
+                <div className="text-neutral-500 hover:text-white">0</div>
+                {/* DOWNVOTE */}
+                <div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    className="lucide lucide-arrow-big-down stroke-neutral-500 hover:stroke-white"
+                  >
+                    <path d="M15 6v6h4l-7 7-7-7h4V6h6z" />
+                  </svg>
+                </div>
+              </div>
             </div>
+
             <Form {...form}>
               {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
               <form onSubmit={form.handleSubmit(handleCommentReport)}>
@@ -295,6 +390,7 @@ const Comment = ({ comment }: CommentProps) => {
                     </p>
                   )}
                 </div>
+
                 <div className="flex pt-4">
                   <Button type="submit" className="w-full">
                     Report
