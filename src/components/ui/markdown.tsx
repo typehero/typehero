@@ -16,6 +16,7 @@ const HTML_COMMENT_REGEX = new RegExp('<!--([\\s\\S]*?)-->', 'g');
 function removeHtmlComments(): Transformer {
   return (tree) => {
     // TODO: PRs are welcomed to fix the any type
+    // eslint-disable-next-line
     const handler: BuildVisitor<any> = (node, index, parent) => {
       const isComment = node.value.match(HTML_COMMENT_REGEX);
 
