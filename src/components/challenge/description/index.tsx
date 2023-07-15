@@ -72,7 +72,7 @@ export function Description({ challenge }: Props) {
       try {
         await addOrRemoveBookmark(challengeId, userId, shouldBookmark);
         setHasBookmarked(shouldBookmark);
-        router.refresh();
+        // router.refresh();
       } catch (e) {
         console.error(e);
         // it errored so reverse the intended changes

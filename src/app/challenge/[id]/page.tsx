@@ -13,6 +13,7 @@ interface Props {
 export default async function Challenges({ params: { id } }: Props) {
   const session = await getServerAuthSession();
   const challenge = await getChallengeRouteData(id, session);
+  // const challenge = await getChallengeRouteData(id, session?.user?.id ?? '');
 
   if (!challenge) {
     return notFound();

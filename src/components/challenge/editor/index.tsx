@@ -29,6 +29,7 @@ import { createTwoslashInlayProvider } from './twoslash';
 import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import dynamic from 'next/dynamic';
 import { useLocalStorage } from '~/utils/useLocalStorage';
+import { revalidatePath } from 'next/cache';
 
 const VimStatusBar = dynamic(() => import('./vimMode').then((v) => v.VimStatusBar), {
   ssr: false,
@@ -136,6 +137,8 @@ export const CodePanel = (props: Props) => {
             !hasErrors,
           );
           router.refresh();
+          // Doesn't work, only with fetch?
+          revalidatePath('/challenge/[id]/submissions');
 
           if (hasErrors) {
             toast({
