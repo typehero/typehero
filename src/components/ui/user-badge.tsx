@@ -12,14 +12,18 @@ const UserBadge = (props: UserBadgeProps) => {
       <TooltipTrigger asChild>
         <Link href={`/@${props.username}`}>
           <Button
-            className="h-fit w-fit rounded-full bg-neutral-200 p-1 px-2 text-xs font-bold text-neutral-500 hover:bg-neutral-300 dark:bg-zinc-700 dark:text-neutral-400 dark:hover:bg-neutral-500"
+            className="-ml-[0.33rem] flex h-auto w-fit items-center rounded-full bg-transparent py-1 pl-[0.33rem] pr-2 text-xs font-bold text-neutral-700 hover:bg-neutral-300 dark:text-neutral-400 dark:hover:bg-zinc-700 dark:hover:text-neutral-300"
             size="sm"
           >
-            @ {props.username}
+            @{props.username}
           </Button>
         </Link>
       </TooltipTrigger>
-      <TooltipContent>
+      <TooltipContent
+        align="start"
+        avoidCollisions={false}
+        className="rounded-2xl rounded-bl-sm px-3 py-1 text-xs invert"
+      >
         <span>Author</span>
       </TooltipContent>
     </Tooltip>

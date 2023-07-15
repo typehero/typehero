@@ -98,16 +98,16 @@ const Comment = ({ comment }: CommentProps) => {
   const isAuthor = loggedinUser.data?.user?.id === comment.user.id;
 
   return (
-    <div className="flex cursor-pointer flex-col gap-2 p-3 pt-2 duration-300 hover:bg-neutral-100 dark:rounded-none dark:hover:bg-zinc-700/50">
+    <div className="flex flex-col gap-2 p-3 pt-2">
       <div className="flex justify-between">
-        <div className="flex items-center gap-2">
-          <UserBadge username={comment.user.name} />
+        <div className="flex items-center gap-1">
+          <UserBadge username={comment.user.name ?? ''} />
           <Tooltip delayDuration={0.05}>
             <TooltipTrigger asChild>
               <span className="text-sm text-neutral-500">{getRelativeTime(comment.createdAt)}</span>
             </TooltipTrigger>
-            <TooltipContent>
-              <span className="text-white-500 text-sm">{comment.createdAt.toLocaleString()}</span>
+            <TooltipContent align="start" className="rounded-xl">
+              <span className="text-white-500 text-xs">{comment.createdAt.toLocaleString()}</span>
             </TooltipContent>
           </Tooltip>
         </div>
@@ -136,7 +136,7 @@ const Comment = ({ comment }: CommentProps) => {
           )}
         </div>
       </div>
-      <p className="w-full break-words">
+      <p className="w-full break-words pl-[1px] text-sm">
         {/* TODO: <code></code> is <Markdown /> does not wrap long lines causing overflow */}
         {/* <Markdown>{comment.text}</Markdown> */}
         {comment.text}
@@ -154,14 +154,17 @@ const Comment = ({ comment }: CommentProps) => {
           </DialogHeader>
           <div className="space-y-2">
             <div className="flex flex-col space-y-2 rounded-3xl border p-3 dark:bg-zinc-900">
-              <div className="flex items-center gap-2">
+              {/* TODO: use comment template component inside this new separate component */}
+              <div className="flex items-center gap-1">
                 <UserBadge username={comment.user.name} />
                 <Tooltip>
                   <span className="text-sm text-neutral-500">
                     {getRelativeTime(comment.createdAt)}
                   </span>
-                  <TooltipContent>
-                    <p>Add to library</p>
+                  <TooltipContent className="rounded-xl">
+                    <span className="text-white-500 text-sm">
+                      {comment.createdAt.toLocaleString()}
+                    </span>
                   </TooltipContent>
                 </Tooltip>
               </div>

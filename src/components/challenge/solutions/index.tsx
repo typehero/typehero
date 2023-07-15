@@ -9,6 +9,7 @@ import { useState } from 'react';
 import type { ChallengeSolutionsRouteData } from '~/app/challenge/[id]/solutions/page';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { SolutionEditor } from './solution-editor';
+import { UserBadge } from '~/components/ui/user-badge';
 
 interface Props {
   challenge: ChallengeSolutionsRouteData;
@@ -60,23 +61,27 @@ function SolutionRow({
   solution: ChallengeSolutionsRouteData['sharedSolution'][0];
 }) {
   return (
-    <Link href={`/challenge/${solution.challengeId}/solutions/${solution.id}`}>
-      <div className="group flex cursor-pointer flex-col gap-2 p-4 duration-300 hover:bg-neutral-100 dark:rounded-none dark:hover:bg-zinc-700/50">
-        <div className="flex items-center justify-between">
-          <h3 className="font-bold">{solution.title}</h3>
-          <div className="text-sm text-neutral-500">{getRelativeTime(solution.createdAt)}</div>
-        </div>
-        <div className="flex gap-3 text-neutral-600 duration-300 dark:text-neutral-400">
-          <div className="my-auto mr-auto max-w-fit rounded-full bg-neutral-100 px-2 py-1 text-xs font-bold text-neutral-400 dark:bg-zinc-700 dark:text-neutral-400">
-            @&nbsp;{solution.user?.name}
+    <Link
+      className="flex justify-between p-4 duration-300 hover:bg-neutral-100 dark:hover:bg-zinc-700/50"
+      href={`/challenge/${solution.challengeId}/solutions/${solution.id}`}
+    >
+      <div className="group flex cursor-pointer flex-col gap-2">
+        <h3 className="font-bold">{solution.title}</h3>
+        <div className="flex items-center gap-1 text-neutral-600 dark:text-neutral-400">
+          <UserBadge username={solution.user?.name ?? ''} />
+          <div className="mr-auto text-sm text-neutral-500">
+            {getRelativeTime(solution.createdAt)}
           </div>
-          <button className="flex cursor-pointer items-center gap-2 rounded-full bg-neutral-100 px-2 py-1 text-sm duration-300 hover:bg-neutral-200 dark:bg-zinc-700 dark:hover:bg-zinc-600">
-            <MessageCircle className="h-4 w-4 stroke-1" /> {solution._count.solutionComment}
-          </button>
-          <button className="flex cursor-pointer items-center gap-2 rounded-full bg-emerald-600/10 px-2 py-1 text-sm text-emerald-600 duration-300 hover:bg-emerald-600/20 dark:bg-emerald-400/20 dark:text-emerald-400 dark:hover:bg-emerald-400/40">
-            <ArrowUp className="h-4 w-4 stroke-1" /> {solution._count.vote}
-          </button>
         </div>
+      </div>
+      <div className="flex items-center gap-4 text-neutral-600 duration-300 dark:text-neutral-400">
+        <button className="flex cursor-pointer items-center gap-2 rounded-full px-2 py-1 text-sm duration-300 hover:bg-neutral-200 dark:hover:bg-zinc-600">
+          <MessageCircle className="h-4 w-4 stroke-1" /> {solution._count.solutionComment}
+        </button>
+        {/* hover:bg-neutral-200 dark:bg-zinc-700 dark:hover:bg-zinc-600 */}
+        <button className="flex cursor-pointer items-center gap-2 rounded-full bg-emerald-600/10 px-2 py-1 text-sm text-emerald-600 duration-300 hover:bg-emerald-600/20 dark:bg-emerald-400/20 dark:text-emerald-400 dark:hover:bg-emerald-400/40">
+          <ArrowUp className="h-4 w-4 stroke-1" /> {solution._count.vote}
+        </button>
       </div>
     </Link>
   );

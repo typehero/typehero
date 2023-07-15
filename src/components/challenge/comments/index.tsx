@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { ChevronDown, MessageCircle, Loader2 } from 'lucide-react';
+import { ChevronDown, MessageCircle, Loader2, Code, Link2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Comment from '~/components/challenge/comments/comment';
@@ -95,8 +95,8 @@ const Comments = ({ challengeId, commentCount }: Props) => {
         ></ChevronDown>
       </button>
       <div
-        className={clsx('flex flex-col-reverse overscroll-contain pb-2 duration-300', {
-          'h-64 overflow-y-auto': showComments,
+        className={clsx('flex flex-col-reverse overscroll-contain duration-300', {
+          'h-64 overflow-y-auto pb-2': showComments,
           'h-0 overflow-y-hidden': !showComments,
         })}
       >
@@ -118,7 +118,7 @@ const Comments = ({ challengeId, commentCount }: Props) => {
             )
           ))}
       </div>
-      <div className="m-2 mt-0 flex items-end justify-between rounded-xl rounded-br-lg bg-background/90 bg-neutral-100 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-700/90">
+      <div className="relative m-2 mt-0 flex items-end justify-between rounded-xl rounded-br-lg bg-background/90 bg-neutral-100 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-700/90">
         <Textarea
           value={text}
           onChange={(e) => {
@@ -126,9 +126,11 @@ const Comments = ({ challengeId, commentCount }: Props) => {
           }}
           onKeyDown={handleEnterKey}
           rows={3}
-          className="min-h-0 resize-none border-0 p-2 px-3 focus-visible:ring-0 focus-visible:ring-offset-0"
+          className="min-h-0 resize-none border-0 px-3 py-2 focus-visible:ring-0 focus-visible:ring-offset-0"
           placeholder="Enter your comment here."
         />
+        <Code className="absolute bottom-0 left-1 h-7 w-7 cursor-pointer stroke-gray-500 p-2 duration-150 hover:stroke-gray-600 dark:stroke-zinc-400 dark:hover:stroke-zinc-300"></Code>
+        <Link2 className="absolute bottom-0 left-7 h-7 w-7 cursor-pointer stroke-gray-500 p-2 duration-150 hover:stroke-gray-600 dark:stroke-zinc-400 dark:hover:stroke-zinc-300"></Link2>
         <div className="flex flex-col items-end justify-end gap-2 p-2">
           <div
             className={`text-sm  ${
