@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic';
 export async function Explore() {
   return (
     <div className="container flex h-full flex-col">
-      <p className="max-w-[66ch] bg-transparent pt-5 text-justify text-lg leading-10 text-neutral-600 dark:text-neutral-400">
+      <p className="max-w-[66ch] bg-transparent pt-5 text-lg leading-10 text-neutral-600 dark:text-neutral-400">
         <span className="text-xl font-bold text-[#3178c6]">Explore</span> the challenges. Embrace
         the opportunity to grow, learn, and showcase your programming abilities. We hope you find
         the <span className="font-semibold text-neutral-200">perfect</span> challenge!
