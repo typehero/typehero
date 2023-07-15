@@ -1,23 +1,22 @@
 'use client';
 
 import {
-  ThumbsUp,
-  PlayCircle,
-  Bookmark,
+  Calendar,
   Circle,
   Diamond,
-  Triangle,
+  MessageCircle,
+  PlayCircle,
   Plus,
   Sparkle,
-  MessageCircle,
-  Calendar,
+  ThumbsUp,
+  Triangle,
 } from 'lucide-react';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { DifficultyBadge } from './difficulty-badge';
-import { Markdown } from '../ui/markdown';
 import { getRelativeTime } from '~/utils/relativeTime';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
+import { Markdown } from '../ui/markdown';
 import { type ExploreChallengeData } from './';
+import { DifficultyBadge } from './difficulty-badge';
 
 interface ExploreCardProps {
   challenge: Pick<
