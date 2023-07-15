@@ -76,7 +76,7 @@ export function Navigation() {
                 <span>Create a Challange</span>
               </DropdownMenuItem>
             </Link>
-            <Link className="block" href={`/@${session.user.name ?? ''}`}>
+            <Link className="block" href={`/@${session.user.name}`}>
               <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
                 <User className="mr-2 h-4 w-4" />
                 <span>Profile</span>

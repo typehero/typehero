@@ -23,13 +23,13 @@ export const BannedUsers = ({ data }: BannedUsersProps) => {
       await unbanUser(user.id);
       toast({
         title: 'Unbanned',
-        description: `The user ${user.name ? '@' + user.name + ' ' : ''}was successfully unbanned.`,
+        description: `The user @${user.name} was successfully unbanned.`,
       });
     } catch (e) {
       toast({
         title: 'Something went wrong.',
         variant: 'destructive',
-        description: `The user ${user.name ? '@' + user.name + ' ' : ''}could not be unbanned.`,
+        description: `The user @${user.name} could not be unbanned.`,
       });
     } finally {
       router.refresh();

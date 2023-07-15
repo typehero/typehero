@@ -24,6 +24,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '.
 import { Textarea } from '../ui/textarea';
 import { TypographyH3 } from '../ui/typography/h3';
 import { toast } from '../ui/use-toast';
+import { UserBadge } from '../ui/user-badge';
+
 interface ReportsProps {
   data: AdminReportDetails;
 }
@@ -144,7 +146,9 @@ export const ReportDetails = ({ data }: ReportsProps) => {
                     ? challengeName.substring(0, 10) + '...'
                     : challengeName}
                 </TableCell>
-                <TableCell>@{report.author.name}</TableCell>
+                <TableCell>
+                  <UserBadge username={report.author.name} />
+                </TableCell>
                 <TableCell title={absoluteTime}>{relativeTime}</TableCell>
                 <TableCell title={text}>
                   {text.length > 15 ? text.substring(0, 10) : text}
@@ -163,142 +167,145 @@ export const ReportDetails = ({ data }: ReportsProps) => {
           })}
         </TableBody>
       </Table>
-      {/* // TODO: good first issue, dont use controlled state for this */}
-      <Dialog open={dialogOpen} onOpenChange={(e) => setDialogOpen(!e)}>
-        {/* max-w-xl is not the best solution, the dialog width need fixing with the markdown. */}
-        <DialogContent className="max-w-xl">
-          <ScrollArea className="h-[500px]">
-            <div className="flex flex-col gap-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Challenge</CardTitle>
-                  <CardDescription>A detailed description of the challenge.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-col space-y-2">
-                    <div className="flex flex-col space-y-2">
-                      <h5 className="text-sm text-neutral-400 dark:text-neutral-600">Name</h5>
-                      <TypographyP>{selectedIssue?.challenge.name}</TypographyP>
-                    </div>
-                    <div className="flex flex-col space-y-2">
-                      <h5 className="text-sm text-neutral-400 dark:text-neutral-600">
-                        Description
-                      </h5>
-                      <div className="prose-invert flex-1 leading-8 prose-h3:text-xl">
-                        {/* todo: fix the width overflow because of markdown component. */}
 
-                        <Markdown>
-                          {selectedIssue?.challenge.description ?? 'Not Specified.'}
-                        </Markdown>
-                      </div>
-                    </div>
-                    <div className="flex flex-col space-y-2">
-                      <h5 className="text-sm text-neutral-400 dark:text-neutral-600">Created By</h5>
-                      <TypographyP>@{selectedIssue?.challenge.user.name}</TypographyP>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Report</CardTitle>
-                  <CardDescription>A detailed description of the report.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-col space-y-2">
-                    <div className="flex flex-col space-y-2">
-                      <h5 className="text-sm text-neutral-400 dark:text-neutral-600">Reason</h5>
-                      <TypographyP>
-                        {selectedIssue?.text && selectedIssue.text.length > 0
-                          ? selectedIssue.text
-                          : 'Not Specified.'}
-                      </TypographyP>
-                    </div>
-                    <div className="flex flex-col space-y-2">
-                      <h5 className="text-sm text-neutral-400 dark:text-neutral-600">Tags</h5>
-                      <div className="flex flex-wrap gap-2">
-                        {selectedIssue?.derogatory && (
-                          <Badge variant="destructive">Derogatory</Badge>
-                        )}
-                        {selectedIssue?.unclear && <Badge variant="outline">Unclear</Badge>}
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              {selectedIssue?.moderator && (
+      {selectedIssue && (
+        <Dialog open={dialogOpen} onOpenChange={(e) => setDialogOpen(!e)}>
+          <DialogContent className="max-w-xl">
+            <ScrollArea className="h-[500px]">
+              <div className="flex flex-col gap-4">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Activity</CardTitle>
-                    <CardDescription>An account of activity on the report.</CardDescription>
+                    <CardTitle>Challenge</CardTitle>
+                    <CardDescription>A detailed description of the challenge.</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="flex flex-col space-y-2">
                       <div className="flex flex-col space-y-2">
-                        <h5 className="text-sm text-neutral-400 dark:text-neutral-600">
-                          Handled By
-                        </h5>
-                        <TypographyP>@{selectedIssue.moderator.name}</TypographyP>
+                        <h5 className="text-sm text-neutral-400 dark:text-neutral-600">Name</h5>
+                        <TypographyP>{selectedIssue.challenge.name}</TypographyP>
                       </div>
                       <div className="flex flex-col space-y-2">
-                        <h5 className="text-sm text-neutral-400 dark:text-neutral-600">At</h5>
-                        <div className="flex">
-                          {new Intl.DateTimeFormat('en-US', {
-                            dateStyle: 'medium',
-                            timeStyle: 'medium',
-                          }).format(selectedIssue.updatedAt)}
+                        <h5 className="text-sm text-neutral-400 dark:text-neutral-600">
+                          Description
+                        </h5>
+                        <div className="prose-invert flex-1 leading-8 prose-h3:text-xl">
+                          {/* todo: fix the width overflow because of markdown component. */}
+
+                          <Markdown>
+                            {selectedIssue.challenge.description ?? 'Not Specified.'}
+                          </Markdown>
+                        </div>
+                      </div>
+                      <div className="flex flex-col space-y-2">
+                        <h5 className="text-sm text-neutral-400 dark:text-neutral-600">
+                          Created By
+                        </h5>
+                        <UserBadge username={selectedIssue.challenge.user.name} />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Report</CardTitle>
+                    <CardDescription>A detailed description of the report.</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex flex-col space-y-2">
+                      <div className="flex flex-col space-y-2">
+                        <h5 className="text-sm text-neutral-400 dark:text-neutral-600">Reason</h5>
+                        <TypographyP>
+                          {selectedIssue.text && selectedIssue.text.length > 0
+                            ? selectedIssue.text
+                            : 'Not Specified.'}
+                        </TypographyP>
+                      </div>
+                      <div className="flex flex-col space-y-2">
+                        <h5 className="text-sm text-neutral-400 dark:text-neutral-600">Tags</h5>
+                        <div className="flex flex-wrap gap-2">
+                          {selectedIssue.derogatory && (
+                            <Badge variant="destructive">Derogatory</Badge>
+                          )}
+                          {selectedIssue.unclear && <Badge variant="outline">Unclear</Badge>}
                         </div>
                       </div>
                     </div>
                   </CardContent>
                 </Card>
-              )}
-              <div className="flex flex-col space-y-2">
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="ban_reason">Ban Reason</Label>
-                  <Textarea
-                    className="max-w-xl"
-                    id="ban_reason"
-                    placeholder="An optional ban reason..."
-                    value={banReason}
-                    onChange={(e) => {
-                      setBanReason(e.target.value);
-                    }}
-                  />
-                </div>
-                <Button
-                  variant={'destructive'}
-                  onClick={handleUserBan}
-                  className="flex items-center justify-center gap-2"
-                >
-                  <Gavel className="h-4 w-4" />
-                  Ban @{selectedIssue?.challenge.user.name}
-                </Button>
-                <Separator />
-                <div className="flex flex-col gap-2">
+                {selectedIssue.moderator && (
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Activity</CardTitle>
+                      <CardDescription>An account of activity on the report.</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex flex-col space-y-2">
+                        <div className="flex flex-col space-y-2">
+                          <h5 className="text-sm text-neutral-400 dark:text-neutral-600">
+                            Handled By
+                          </h5>
+                          <TypographyP>@{selectedIssue.moderator.name}</TypographyP>
+                        </div>
+                        <div className="flex flex-col space-y-2">
+                          <h5 className="text-sm text-neutral-400 dark:text-neutral-600">At</h5>
+                          <div className="flex">
+                            {new Intl.DateTimeFormat('en-US', {
+                              dateStyle: 'medium',
+                              timeStyle: 'medium',
+                            }).format(selectedIssue.updatedAt)}
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+                <div className="flex flex-col space-y-2">
+                  <div className="flex flex-col gap-2">
+                    <Label htmlFor="ban_reason">Ban Reason</Label>
+                    <Textarea
+                      className="max-w-xl"
+                      id="ban_reason"
+                      placeholder="An optional ban reason..."
+                      value={banReason}
+                      onChange={(e) => {
+                        setBanReason(e.target.value);
+                      }}
+                    />
+                  </div>
                   <Button
-                    variant={'outline'}
-                    onClick={() => {
-                      handleDisableChallenge();
-                    }}
+                    variant={'destructive'}
+                    onClick={handleUserBan}
                     className="flex items-center justify-center gap-2"
                   >
-                    <EyeOff className="h-4 w-4" />
-                    Disable Challenge
+                    <Gavel className="h-4 w-4" />
+                    Ban @{selectedIssue?.challenge.user.name}
                   </Button>
-                  <Button
-                    onClick={handleDismissReport}
-                    className="flex items-center justify-center gap-2"
-                  >
-                    <X className="h-4 w-4" />
-                    Dismiss Report
-                  </Button>
+                  <Separator />
+                  <div className="flex flex-col gap-2">
+                    <Button
+                      variant={'outline'}
+                      onClick={() => {
+                        handleDisableChallenge();
+                      }}
+                      className="flex items-center justify-center gap-2"
+                    >
+                      <EyeOff className="h-4 w-4" />
+                      Disable Challenge
+                    </Button>
+                    <Button
+                      onClick={handleDismissReport}
+                      className="flex items-center justify-center gap-2"
+                    >
+                      <X className="h-4 w-4" />
+                      Dismiss Report
+                    </Button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </ScrollArea>
-        </DialogContent>
-      </Dialog>
+            </ScrollArea>
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 };
