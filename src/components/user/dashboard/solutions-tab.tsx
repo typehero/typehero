@@ -24,7 +24,9 @@ export function SolutionsTab({ submissions = [] }: { submissions: UserData['subm
         {submissions.map((submission) => (
           <TableRow key={submission.id}>
             <TableCell className="font-medium underline">
-              <Link href={`/challenge/${submission.challenge.id}`}>{submission.challenge.name}</Link>
+              <Link href={`/challenge/${submission.challenge.id}`}>
+                {submission.challenge.name}
+              </Link>
             </TableCell>
             <TableCell>{submission.isSuccessful ? 'Accepted' : 'Rejected'}</TableCell>
           </TableRow>

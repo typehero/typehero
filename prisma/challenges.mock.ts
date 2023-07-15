@@ -43,7 +43,7 @@ export async function loadChallengesFromTypeChallenge() {
       "info.yml",
     );
     const contents = await readFile(infoFile).then((r) => r.toString());
-    const { title, difficulty, tags } = parse(contents) as InfoFile;
+    const { title, difficulty } = parse(contents) as InfoFile;
 
     const README = await readFile(
       resolve(QUESTIONS_PATH, dir.name, "README.md"),
@@ -53,9 +53,14 @@ export async function loadChallengesFromTypeChallenge() {
         "",
       )
     );
+
     const prompt = await readFile(
       resolve(QUESTIONS_PATH, dir.name, "template.ts"),
     ).then((f) => f.toString());
+
+    const testData = await readFile(
+      resolve(QUESTIONS_PATH, dir.name, 'test-cases.ts')
+    ).then(f => f.toString().replace(/import .* from '@type-challenges\/utils';?/g, ''));
 
     const [selfId] = dir.name.split("-");
 
@@ -69,7 +74,7 @@ export async function loadChallengesFromTypeChallenge() {
       id: idNum,
       name: title,
       description: README,
-      prompt,
+      prompt: `// TEST CASE START\n${testData}\n\n// CODE START\n${prompt}`,
       difficulty: difficulty === "warm"
         ? "BEGINNER"
         : difficulty.toUpperCase() as Difficulty,
