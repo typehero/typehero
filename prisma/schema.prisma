@@ -204,7 +204,7 @@ model ChallengeComment {
   userId        String
   challenge     Challenge        @relation(fields: [challengeId], references: [id])
   challengeId   Int
-  text          String
+  text          String           @db.VarChar(1000)
   visibility    Visibility       @default(VISIBLE)
   replies       ChallengeReply[]
   CommentReport CommentReport[]
@@ -233,7 +233,7 @@ model SolutionComment {
   userId        String
   solution      SharedSolution  @relation(fields: [solutionId], references: [id])
   solutionId    Int
-  text          String
+  text          String          @db.VarChar(1000)
   visibility    Visibility      @default(VISIBLE)
   solutionReply SolutionReply[]
   CommentReport CommentReport[]

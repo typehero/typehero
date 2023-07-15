@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { ChevronDown, MessageCircle } from 'lucide-react';
+import { ChevronDown, MessageCircle, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Comment from '~/components/challenge/comments/comment';
@@ -14,6 +14,8 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
 import { getInfiniteComments } from './getCommentRouteData';
 import { CommentSkeleton } from '../comment-skeleton';
+
+const MAX_COMMENT_LENGTH = 1000;
 
 interface Props {
   challengeId: number;
@@ -93,7 +95,7 @@ const Comments = ({ challengeId, commentCount }: Props) => {
         ></ChevronDown>
       </button>
       <div
-        className={clsx('flex flex-col-reverse overscroll-contain duration-300', {
+        className={clsx('flex flex-col-reverse overscroll-contain pb-2 duration-300', {
           'h-64 overflow-y-auto': showComments,
           'h-0 overflow-y-hidden': !showComments,
         })}
@@ -116,23 +118,49 @@ const Comments = ({ challengeId, commentCount }: Props) => {
             )
           ))}
       </div>
-      <div className="m-2 mt-0 flex items-end justify-between gap-2 rounded-xl bg-background/90 bg-neutral-100 p-1 pr-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-700/90">
+      <div className="m-2 mt-0 flex items-end justify-between rounded-xl rounded-br-lg bg-background/90 bg-neutral-100 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-700/90">
         <Textarea
           value={text}
           onChange={(e) => {
             setText(e.target.value);
           }}
           onKeyDown={handleEnterKey}
-          rows={2}
-          className="min-h-0 resize-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+          rows={3}
+          className="min-h-0 resize-none border-0 p-2 px-3 focus-visible:ring-0 focus-visible:ring-offset-0"
           placeholder="Enter your comment here."
         />
-        <Button
-          onClick={createChallengeComment}
-          className="h-8 rounded-lg bg-emerald-600 px-3 py-2 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
-        >
-          Comment
-        </Button>
+        <div className="flex flex-col items-end justify-end gap-2 p-2">
+          <div
+            className={`text-sm  ${
+              text.length > MAX_COMMENT_LENGTH
+                ? 'text-red-600 dark:text-red-400'
+                : text.length > MAX_COMMENT_LENGTH * 0.9
+                ? 'text-amber-600 dark:text-amber-400'
+                : 'text-neutral-500 dark:text-zinc-500'
+            }`}
+          >
+            {text.length}/{MAX_COMMENT_LENGTH}
+          </div>
+          {/* TODO: add disabled state with tooltip prompting to log in if user is logged out */}
+          <Button
+            disabled={text.length > MAX_COMMENT_LENGTH || text.length === 0 || isCommenting}
+            onClick={createChallengeComment}
+            className={`h-8 w-[5.5rem] rounded-lg rounded-br-sm
+            px-3 py-2 ${
+              text.length > MAX_COMMENT_LENGTH
+                ? 'bg-red-600 hover:bg-red-500 dark:bg-red-400 dark:hover:bg-red-300'
+                : 'bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300'
+            }`}
+          >
+            {isCommenting ? (
+              <Loader2 className="h-5 w-5 animate-spin" />
+            ) : text.length > MAX_COMMENT_LENGTH ? (
+              'Too Long'
+            ) : (
+              'Comment'
+            )}
+          </Button>
+        </div>
       </div>
     </div>
   );
