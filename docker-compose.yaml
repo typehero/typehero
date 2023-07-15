@@ -4,7 +4,7 @@ version: '3'
 services:
   db:
     image: bitnami/mysql:latest
-    container_name: db
+    container_name: typehero-db
     restart: always
     environment:
       MYSQL_ROOT_USER: dev
