@@ -76,7 +76,13 @@ export function Submissions({ submissions }: Props) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function SubmissionRow({ challengeId, submission }: { challengeId: number; submission: Submission }) {
+function SubmissionRow({
+  challengeId,
+  submission,
+}: {
+  challengeId: number;
+  submission: Submission;
+}) {
   return (
     <li className="flex cursor-pointer items-center justify-between px-4 py-2 duration-300 hover:bg-neutral-100 dark:rounded-none dark:hover:bg-zinc-700/50">
       <Link className="w-full" href={`/challenge/${challengeId}/submissions/${submission.id}`}>

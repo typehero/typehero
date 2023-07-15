@@ -1,61 +1,84 @@
-import { type Difficulty, type Prisma, PrismaClient } from '@prisma/client';
-import uuidByString from 'uuid-by-string';
-import { CHALLENGE_MAP } from './challenges.mock';
+import { type Difficulty, PrismaClient } from "@prisma/client";
+import uuidByString from "uuid-by-string";
+import { loadChallengesFromTypeChallenge } from "./challenges.mock";
+import { faker } from "@faker-js/faker";
+import UserMock from "./user.mock";
+
 
 const prisma = new PrismaClient();
-const CHALLENGES_TO_CREATE = 20;
-const DIFFICULTIES = ['BEGINNER', 'EASY', 'MEDIUM', 'HARD', 'EXTREME'];
+if(process.env.STAGE === 'local') {
+
+  const usersToBeMade = Array.from({ length: 15 }, () => UserMock());
+
+  await prisma.user.createMany({
+    data: usersToBeMade
+  });
+
+  // Load the challenges.
+  const data = await loadChallengesFromTypeChallenge();
+  const users = await prisma.user.findMany({
+    select: {
+      id: true
+    }
+  }).then(r => r.map(u => u.id));
+
+  await prisma.challenge.createMany({
+    data: data.map(challenge => ({
+      ...challenge,
+      userId: faker.helpers.arrayElement(users)
+    }))
+  });
+}
+
+
+const DIFFICULTIES = ["BEGINNER", "EASY", "MEDIUM", "HARD", "EXTREME"];
 const randomDifficulty = (): Difficulty => {
-  return DIFFICULTIES[Math.floor(Math.random() * DIFFICULTIES.length)] as Difficulty;
+  return DIFFICULTIES[
+    Math.floor(Math.random() * DIFFICULTIES.length)
+  ] as Difficulty;
 };
 
-// TODO: make this deterministic as the seed should always have the same difficulty
-const challenges = (): Prisma.ChallengeCreateNestedManyWithoutUserInput => ({
-  create: Array.from({ length: CHALLENGES_TO_CREATE }, (_, challengeIndex) =>
-    CHALLENGE_MAP[randomDifficulty()](challengeIndex),
-  ),
-});
-
-export const trashId = uuidByString('trash');
-export const gId = uuidByString('g');
+export const trashId = uuidByString("trash");
+export const gId = uuidByString("g");
 
 // NOTE: we can use top-level await because we are in a module
 try {
-  await prisma.user.upsert({
-    where: { id: trashId },
-    update: {},
-    create: {
-      id: trashId,
-      email: 'chris@typehero.dev',
-      name: 'chris',
-      challenge: challenges(),
-    },
-  });
 
-  await prisma.user.upsert({
-    where: { id: gId },
-    update: {},
-    create: {
-      id: gId,
-      email: 'g@typehero.dev',
-      name: 'g',
-      challenge: challenges(),
-      submission: {
-        create: {
-          code: 'const a: string = "hello world"',
-          isSuccessful: true,
-          challengeId: 1,
-        },
-      },
-      sharedSolution: {
-        create: {
-          challengeId: 1,
-          title: 'This is a solution',
-          description: 'this is a description',
-        },
-      },
-    },
-  });
+  // await prisma.user.upsert({
+  //   where: { id: trashId },
+  //   update: {},
+  //   create: {
+  //     id: trashId,
+  //     email: "chris@typehero.dev",
+  //     name: "chris",
+  //     challenge: challenges(),
+  //   },
+  // });
+
+  // await prisma.user.upsert({
+  //   where: { id: gId },
+  //   update: {},
+  //   create: {
+  //     id: gId,
+  //     email: "g@typehero.dev",
+  //     name: "g",
+  //     challenge: challenges(),
+  //     solution: {
+  //       create: {
+  //         code: 'const a: string = "hello world"',
+  //         isSuccessful: true,
+  //         challengeId: 1,
+  //       },
+  //     },
+  //     sharedSolution: {
+  //       create: {
+  //         challengeId: 1,
+  //         title: faker.lorem.words(7),
+  //         description: faker.lorem.words({ min: 5, max: 25 }),
+  //       },
+  //     },
+  //   },
+  // });
 
   await prisma.$disconnect();
 } catch (e) {
