@@ -4,13 +4,12 @@ import { getServerSession } from 'next-auth';
 
 import { prisma } from '~/server/db';
 import { authOptions } from '~/server/auth';
-import type { FormSchema } from '.';
 
 /**
  * This will only let you update your own profile
  * @param profileData
  */
-export async function updateProfile(profileData: FormSchema) {
+export async function updateProfile(socialUrls: string[]) {
   const session = await getServerSession(authOptions);
 
   // 1. Checks.
@@ -19,6 +18,8 @@ export async function updateProfile(profileData: FormSchema) {
   // update the profile
   await prisma.user.update({
     where: { id: session?.user.id },
-    data: profileData,
+    data: {
+      socialUrls,
+    },
   });
 }
