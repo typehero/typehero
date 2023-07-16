@@ -20,10 +20,7 @@ export default async function Challenges({ params: { id } }: Props) {
 
   return (
     <div className="relative flex h-full flex-col justify-between">
-      <div className="px-4 py-3">
-        <Description challenge={challenge}></Description>
-      </div>
-
+      <Description challenge={challenge}></Description>
       <Comments challengeId={challenge.id} commentCount={challenge.comment.length} />
     </div>
   );

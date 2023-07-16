@@ -132,7 +132,7 @@ export function Description({ challenge }: Props) {
     }
   }
   return (
-    <>
+    <div className="px-4 py-3">
       <div className="flex items-baseline justify-between">
         <TypographyH3 className="mb-2 flex items-center gap-2 font-medium">
           {challenge.name}
@@ -352,6 +352,6 @@ export function Description({ challenge }: Props) {
       <div className="prose-invert leading-8 prose-h3:text-xl">
         <Markdown>{challenge.description}</Markdown>
       </div>
-    </>
+    </div>
   );
 }
