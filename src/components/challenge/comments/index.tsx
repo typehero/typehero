@@ -112,7 +112,7 @@ const Comments = ({ challengeId, commentCount }: Props) => {
           {(status === 'loading' || isFetchingNextPage) && <CommentSkeleton />}
           {status === 'success' &&
             (data?.pages[0]?.data.length === 0 ? (
-              <NoComments></NoComments>
+              <NoComments />
             ) : (
               data?.pages.map((page) =>
                 page.data.map((comment, index) =>

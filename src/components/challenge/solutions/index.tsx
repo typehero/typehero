@@ -50,7 +50,7 @@ export function Solutions({ challenge }: Props) {
               setView={setView}
               loggedInUser={session?.data?.user ? true : false}
               loggedInUserHasSolution={loggedInUserHasSolution > 0 ? true : false}
-            ></NoSolutions>
+            />
           )}
         </>
       )}

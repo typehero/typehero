@@ -7,6 +7,7 @@ import { getRelativeTime } from '~/utils/relativeTime';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import type { ChallengeSubmissions } from '~/app/challenge/[id]/submissions/page';
+import NoSubmissions from './nosubmissions';
 
 interface Props {
   submissions: ChallengeSubmissions;
@@ -26,7 +27,7 @@ export function Submissions({ submissions }: Props) {
   }, [selectedStatus, submissions]);
   return (
     <>
-      {filteredSubmissions.length !== 0 && (
+      {filteredSubmissions.length !== 0 ? (
         <div className="sticky right-0 top-[41px] flex gap-2 border-b border-zinc-300 bg-background/90 p-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
           <div
             className={`flex cursor-pointer gap-2 rounded-xl px-4 py-1 duration-300  ${
@@ -60,6 +61,8 @@ export function Submissions({ submissions }: Props) {
             Rejected
           </div>
         </div>
+      ) : (
+        <NoSubmissions />
       )}
 
       <ul className="relative flex flex-col">
