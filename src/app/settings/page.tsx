@@ -22,9 +22,7 @@ export default async function SettingsPage() {
     <Settings
       data={{
         bio: profileData.bio,
-        linkedInUrl: profileData.linkedInUrl,
-        githubUrl: profileData.githubUrl,
-        twitterUrl: profileData.twitterUrl,
+        socialUrls: profileData.socialUrls,
       }}
     />
   );

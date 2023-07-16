@@ -3,7 +3,7 @@
 import { useTheme } from 'next-themes';
 
 import Link from 'next/link';
-import { Cog, LogIn, Plus, Settings, User, Bell, Moon, Sun, Loader2 } from 'lucide-react';
+import { Settings2, LogIn, Plus, Settings, User, Bell, Moon, Sun, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { signIn, signOut, useSession } from 'next-auth/react';
@@ -87,7 +87,7 @@ export function Navigation() {
             </Link>
             <Link className="block" href="/settings">
               <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
-                <Cog className="mr-2 h-4 w-4" />
+                <Settings2 className="mr-2 h-4 w-4" />
                 <span>Settings</span>
               </DropdownMenuItem>
             </Link>
