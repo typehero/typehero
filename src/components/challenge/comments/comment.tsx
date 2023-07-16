@@ -165,15 +165,15 @@ const Comment = ({ comment }: CommentProps) => {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
+              width="12"
+              height="12"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              className="lucide lucide-share "
+              className="lucide lucide-share"
             >
               <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
               <polyline points="16 6 12 2 8 6" />
@@ -181,14 +181,16 @@ const Comment = ({ comment }: CommentProps) => {
             </svg>
             <small className="font-md text-sm leading-none hover:underline">Share</small>
           </div>
-          <button
-            onClick={() => {
-              setDialogOpen(true);
-            }}
-            className="flex text-sm text-neutral-400 hover:text-neutral-400 hover:underline dark:text-neutral-600"
-          >
-            Report
-          </button>
+          <div>
+            <button
+              onClick={() => {
+                setDialogOpen(true);
+              }}
+              className="flex text-sm text-neutral-400 hover:text-neutral-400 hover:underline dark:text-neutral-600"
+            >
+              Report
+            </button>
+          </div>
         </div>
       </div>
       <p className="w-full break-words pl-[1px] text-sm">
