@@ -3,7 +3,7 @@
 import { ThumbsUp, PlayCircle, Bookmark } from 'lucide-react';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { DifficultyBadge } from '../explore/difficulty-badge';
+import { DifficultyBadge } from '../ui/difficulty-badge';
 import { Markdown } from '../ui/markdown';
 import { getRelativeTime } from '~/utils/relativeTime';
 

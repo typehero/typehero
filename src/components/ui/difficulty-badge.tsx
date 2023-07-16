@@ -1,5 +1,5 @@
 import { type Difficulty } from '@prisma/client';
-import { Badge } from '../ui/badge';
+import { Badge } from './badge';
 
 interface Props {
   difficulty: Difficulty;
@@ -13,7 +13,6 @@ const COLORS_BY_DIFFICULTY = {
   EXTREME: 'dark:bg-orange-300 bg-orange-600',
 };
 
-// TODO: move this somewhere else
 export function DifficultyBadge({ difficulty }: Props) {
   return (
     <Badge

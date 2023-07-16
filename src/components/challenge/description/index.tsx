@@ -23,7 +23,7 @@ import {
 } from '~/components/ui/dialog';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
 import { TypographyH3 } from '~/components/ui/typography/h3';
-import { DifficultyBadge } from '~/components/explore/difficulty-badge';
+import { DifficultyBadge } from '~/components/ui/difficulty-badge';
 import { ActionMenu } from '~/components/ui/action-menu';
 import { Checkbox } from '~/components/ui/checkbox';
 import { Form, FormField, FormItem } from '~/components/ui/form';

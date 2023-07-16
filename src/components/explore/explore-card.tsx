@@ -16,7 +16,7 @@ import { getRelativeTime } from '~/utils/relativeTime';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Markdown } from '../ui/markdown';
 import { type ExploreChallengeData } from './';
-import { DifficultyBadge } from './difficulty-badge';
+import { DifficultyBadge } from '../ui/difficulty-badge';
 
 interface ExploreCardProps {
   challenge: Pick<
@@ -115,15 +115,15 @@ const ExploreCard = ({ challenge }: ExploreCardProps) => {
           <DifficultyBadge difficulty={challenge.difficulty} />
         </div>
       </CardHeader>
-      <CardContent className="relative rounded-xl bg-background p-6 duration-300 group-hover:bg-card-hovered">
-        <div className="absolute right-8 top-1 flex h-20 w-20 -translate-y-1/2 items-center justify-center rounded-full bg-background duration-300 group-hover:bg-card-hovered">
+      <CardContent className="relative rounded-xl bg-background p-4 duration-300 group-hover:bg-card-hovered">
+        {/* <div className="absolute -top-4 right-8 flex h-20 w-20 -translate-y-1/2 items-center justify-center rounded-full bg-background duration-300 group-hover:bg-card-hovered">
           <PlayCircle
             className={`mt-1 h-12 w-12 stroke-1 duration-300 group-hover:scale-110 ${
               COLORS_BY_DIFFICULTY[challenge.difficulty]
             }`}
           />
-        </div>
-        <CardDescription className="relative h-16 max-w-[77%] overflow-hidden pb-4">
+        </div> */}
+        <CardDescription className="relative h-16 overflow-hidden pb-4">
           <div className="pointer-events-none absolute inset-0 h-full w-full shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card))] duration-300 group-hover:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))] group-focus:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))]" />
           <Markdown>{challenge?.shortDescription}</Markdown>
         </CardDescription>
