@@ -138,3 +138,11 @@ main {
 .w-md-editor-preview .wmde-markdown {
   @apply bg-muted;
 }
+
+.custom-scrollable-element {
+  scrollbar-width: none;
+}
+
+.custom-scrollable-element::-webkit-scrollbar {
+  width: 0;
+}
