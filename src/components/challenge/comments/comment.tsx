@@ -1,6 +1,6 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Delete } from 'lucide-react';
+import { Delete, Share } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -135,22 +135,7 @@ const Comment = ({ comment }: CommentProps) => {
             }}
             className="mr-2 flex items-center text-neutral-500 hover:text-[#007bcd]"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              className="lucide lucide-share"
-            >
-              <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
-              <polyline points="16 6 12 2 8 6" />
-              <line x1="12" x2="12" y1="2" y2="15" />
-            </svg>
+            <Share className="h-3 w-3" />
             <small className="font-md text-sm leading-none hover:underline">Share</small>
           </div>
           <div>
