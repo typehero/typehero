@@ -88,13 +88,9 @@ model User {
   roles         Role[]
 
   /// this is the bio that shows up on the profile page
-  bio         String @default("") @db.VarChar(255)
+  bio        String @default("") @db.VarChar(255)
   /// this is the twitter URL that shows up on the profile page
-  twitterUrl  String @default("") @db.VarChar(255)
-  /// this is the linked URL that shows up on the profile page
-  linkedInUrl String @default("") @db.VarChar(255)
-  /// this is the github URL that shows up on the profile page
-  githubUrl   String @default("") @db.VarChar(255)
+  socialUrls Json   @default("[\"\",\"\",\"\",\"\"]")
 
   status    UserStatus @default(PENDING)
   banReason String?    @db.MediumText
