@@ -1,7 +1,5 @@
 'use client';
-import { ArrowUp, MessageCircle, Plus } from 'lucide-react';
-
-import { Button } from '~/components/ui/button';
+import { ArrowUp, MessageCircle } from 'lucide-react';
 
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
@@ -10,6 +8,8 @@ import type { ChallengeSolutionsRouteData } from '~/app/challenge/[id]/solutions
 import { getRelativeTime } from '~/utils/relativeTime';
 import { SolutionEditor } from './solution-editor';
 import { UserBadge } from '~/components/ui/user-badge';
+import NoSolutions from './nosolutions';
+import SubmitSolution from './submit-solution';
 
 interface Props {
   challenge: ChallengeSolutionsRouteData;
@@ -28,15 +28,19 @@ export function Solutions({ challenge }: Props) {
 
       {view === 'list' && (
         <>
-          <div className="sticky right-0 top-[41px] flex justify-end border-b border-zinc-300 bg-background/90 p-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
-            <Button
-              className="h-8 rounded-lg bg-emerald-600 px-3 py-2 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
-              onClick={() => setView('editor')}
-              disabled={!loggedInUserHasSolution || !session?.data?.user}
-            >
-              <Plus className="mr-2 h-4 w-4" /> Solution
-            </Button>
-          </div>
+          {(loggedInUserHasSolution || !session?.data?.user) &&
+            challenge.sharedSolution.length !== 0 && (
+              <div className="sticky right-0 top-[41px] flex justify-end border-b border-zinc-300 bg-background/90 p-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
+                <SubmitSolution setView={setView} />
+              </div>
+            )}
+          {challenge.sharedSolution.length === 0 && (
+            <NoSolutions
+              setView={setView}
+              loggedInUser={session?.data?.user ? true : false}
+              loggedInUserHasSolution={loggedInUserHasSolution > 0 ? true : false}
+            ></NoSolutions>
+          )}
           {challenge?.sharedSolution.map((solution) => (
             <SolutionRow
               key={solution.id}
