@@ -1,6 +1,6 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Delete } from 'lucide-react';
+import { Delete, Trash2, Reply } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -16,6 +16,8 @@ import { toast } from '~/components/ui/use-toast';
 import { reportChallengeComment } from './comment.action';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 import { UserBadge } from '~/components/ui/user-badge';
+import { useSession } from 'next-auth/react';
+// import { Markdown } from '~/components/ui/markdown';
 
 interface CommentProps {
   comment: ChallengeRouteData['comment'][number];
@@ -91,54 +93,82 @@ const Comment = ({ comment }: CommentProps) => {
 
   const text = form.watch('text');
 
+  const loggedinUser = useSession();
+
+  const isAuthor = loggedinUser.data?.user?.id === comment.user.id;
+
   return (
-    <div className="flex cursor-pointer flex-col gap-2 p-4 pt-2 duration-300 hover:bg-neutral-100 dark:rounded-none dark:hover:bg-zinc-700/50">
-      <div className="flex justify-between">
-        <div className="flex items-center gap-2">
-          <UserBadge username={comment.user.name} />
+    <div className="flex flex-col gap-1 p-3 pt-2">
+      <div className="flex justify-between pr-[0.4rem]">
+        <div className="flex items-center gap-1">
+          <UserBadge username={comment.user.name ?? ''} />
           <Tooltip delayDuration={0.05}>
             <TooltipTrigger asChild>
               <span className="text-sm text-neutral-500">{getRelativeTime(comment.createdAt)}</span>
             </TooltipTrigger>
-            <TooltipContent>
-              <span className="text-white-500 text-sm">{comment.createdAt.toLocaleString()}</span>
+            <TooltipContent align="start" className="rounded-xl">
+              <span className="text-white-500 text-xs">{comment.createdAt.toLocaleString()}</span>
             </TooltipContent>
           </Tooltip>
         </div>
-        <button
-          onClick={() => {
-            setDialogOpen(true);
-          }}
-          className="flex text-sm text-neutral-400 hover:text-neutral-400 hover:underline dark:text-neutral-600"
-        >
-          Report
-        </button>
+
+        <div className="flex gap-2">
+          {/* TODO: make dis work */}
+          <button className="flex cursor-pointer items-center gap-1 text-sm text-neutral-400 duration-200 hover:text-neutral-500 hover:underline dark:text-neutral-600 dark:hover:text-neutral-500">
+            <Reply className="h-3 w-3" />
+            Reply
+          </button>
+          {/* TODO: make dis work */}
+          {isAuthor ? (
+            <button className="flex cursor-pointer items-center gap-1 text-sm text-neutral-400 duration-200 hover:text-neutral-500 hover:underline dark:text-neutral-600 dark:hover:text-neutral-500">
+              <Trash2 className="h-3 w-3" />
+              Delete
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                setDialogOpen(true);
+              }}
+              className="flex cursor-pointer items-center text-sm text-neutral-400 duration-200 hover:text-neutral-500 hover:underline dark:text-neutral-600 dark:hover:text-neutral-500"
+            >
+              Report
+            </button>
+          )}
+        </div>
       </div>
-      <p className="w-full break-words">{comment.text}</p>
+      <p className="w-full break-words pl-[1px] text-sm">
+        {/* TODO: <code></code> is <Markdown /> does not wrap long lines causing overflow */}
+        {/* <Markdown>{comment.text}</Markdown> */}
+        {comment.text}
+      </p>
       <Dialog
         open={dialogOpen}
         onOpenChange={() => {
           setDialogOpen(!dialogOpen);
         }}
       >
+        {/* TODO: make a separate component */}
         <DialogContent className="max-w-lg">
           <DialogHeader>
             <DialogTitle>Report Comment</DialogTitle>
           </DialogHeader>
           <div className="space-y-2">
-            <div className="flex flex-col space-y-2 rounded-3xl border bg-zinc-900 p-3">
-              <div className="flex items-center gap-2">
+            <div className="flex flex-col space-y-2 rounded-3xl border p-3 dark:bg-zinc-900">
+              {/* TODO: use comment template component inside this new separate component */}
+              <div className="flex items-center gap-1">
                 <UserBadge username={comment.user.name} />
                 <Tooltip>
                   <span className="text-sm text-neutral-500">
                     {getRelativeTime(comment.createdAt)}
                   </span>
-                  <TooltipContent>
-                    <p>Add to library</p>
+                  <TooltipContent className="rounded-xl">
+                    <span className="text-white-500 text-sm">
+                      {comment.createdAt.toLocaleString()}
+                    </span>
                   </TooltipContent>
                 </Tooltip>
               </div>
-              <p>{comment.text}</p>
+              <p className="max-h-[30vh] overflow-y-auto">{comment.text}</p>
             </div>
             <Form {...form}>
               {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}

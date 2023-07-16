@@ -69,22 +69,25 @@ export function Navigation() {
               <User className="h-5 w-5" />
             </button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="mr-4 w-56 rounded-xl">
+          <DropdownMenuContent
+            align="end"
+            className="mt-[0.33rem] w-56 rounded-xl bg-white/50 backdrop-blur-sm dark:bg-neutral-950/50"
+          >
             <Link className="block" href="/create">
-              <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
+              <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none dark:hover:bg-neutral-700/50">
                 <Plus className="mr-2 h-4 w-4" />
                 <span>Create a Challange</span>
               </DropdownMenuItem>
             </Link>
             <Link className="block" href={`/@${session.user.name}`}>
-              <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
+              <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none dark:hover:bg-neutral-700/50">
                 <User className="mr-2 h-4 w-4" />
                 <span>Profile</span>
               </DropdownMenuItem>
             </Link>
             {isAdminOrMod && (
               <Link className="block" href="/admin">
-                <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
+                <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none dark:hover:bg-neutral-700/50">
                   <Settings className="mr-2 h-4 w-4" />
                   <span>Admin</span>
                 </DropdownMenuItem>
@@ -93,7 +96,7 @@ export function Navigation() {
             <DropdownMenuSeparator />
             <Button
               variant="ghost"
-              className="h-8 w-full justify-start rounded-b-lg rounded-t-sm px-2 text-red-500 hover:bg-red-500/20 hover:text-red-500"
+              className="h-8 w-full justify-start rounded-b-lg rounded-t-sm bg-opacity-50 px-2 text-red-500 hover:bg-red-500/20 hover:text-red-500"
               onClick={handleSignOut}
             >
               <span className="text-red-500">Log out</span>
