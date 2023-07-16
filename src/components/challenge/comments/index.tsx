@@ -7,13 +7,13 @@ import { useEffect, useState } from 'react';
 import Comment from '~/components/challenge/comments/comment';
 import { Button } from '~/components/ui/button';
 import { toast } from '~/components/ui/use-toast';
-import NoComments from '../nocomments';
+import NoComments from './nocomments';
 import { addChallengeComment } from './comment.action';
 import { Textarea } from '~/components/ui/textarea';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
 import { getInfiniteComments } from './getCommentRouteData';
-import { CommentSkeleton } from '../comment-skeleton';
+import { CommentSkeleton } from './comment-skeleton';
 
 const MAX_COMMENT_LENGTH = 1000;
 
