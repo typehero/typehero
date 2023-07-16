@@ -3,7 +3,7 @@
 import { useForm } from 'react-hook-form';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-// import { updateProfile } from './settings.action';
+import { updateProfile } from './settings.action';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { RichMarkdownEditor } from '../ui/rich-markdown-editor';
@@ -11,16 +11,12 @@ import { useState } from 'react';
 import { Github, Linkedin, Twitter, Youtube, Link as LinkIcon } from 'lucide-react';
 
 interface FormValues {
-  socialUrls: CustomJsonValue;
+  userLinks: string[];
   bio: string;
 }
 
-type CustomJsonValue = {
-  [key: string]: any;
-  [Symbol.iterator]?: () => IterableIterator<[string, any]>;
-};
 const formSchema = z.object({
-  socialUrls: z.array(z.string()),
+  userLinks: z.array(z.string()),
   bio: z.string(),
 });
 
@@ -31,31 +27,22 @@ export const Settings = ({ data }: { data: FormSchema }) => {
   const [socialUrls, setSocialUrls] = useState(initialSocialUrls);
 
   const [bio, setBio] = useState(data.bio);
-  const { handleSubmit } = useForm<FormValues>({
+  const { handleSubmit } = useForm < FormValues > ({
     resolver: zodResolver(formSchema),
     defaultValues: {
       ...data,
     },
   });
 
-  // const handleStateChange = (index: number, e: any) => {
-  //   const values: FormValues = getValues();
-  //   const newValues = { ...values };
-  //   newValues.socialUrls = { ...values.socialUrls };
-  //   newValues.socialUrls[index] = e.target.value;
-  //   console.log(newValues.socialUrls);
-  //   setValue('socialUrls', newValues.socialUrls);
-  // };
-
   const handleStateChange = (index: number, value: string) => {
     const newValues = [...socialUrls];
-    console.log(value);
     newValues[index] = value;
     setSocialUrls(newValues);
   };
+
   const onSubmit = (values: FormValues) => {
     console.log(values);
-    // updateProfile(values);
+    updateProfile(values);
   };
 
   return (

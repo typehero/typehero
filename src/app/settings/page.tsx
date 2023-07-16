@@ -16,13 +16,16 @@ export default async function SettingsPage() {
     where: {
       id: session.user.id,
     },
+    include: {
+      userLinks: true,
+    }
   });
 
   return (
     <Settings
       data={{
         bio: profileData.bio,
-        socialUrls: profileData.socialUrls,
+        userLinks: profileData.userLinks,
       }}
     />
   );
