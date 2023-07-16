@@ -28,28 +28,30 @@ export function Solutions({ challenge }: Props) {
 
       {view === 'list' && (
         <>
-          {(loggedInUserHasSolution || !session?.data?.user) &&
-            challenge.sharedSolution.length !== 0 && (
+          {challenge.sharedSolution.length !== 0 ? (
+            <>
+              (loggedInUserHasSolution || !session?.data?.user) && (
               <div className="sticky right-0 top-[41px] flex justify-end border-b border-zinc-300 bg-background/90 p-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
                 <SubmitSolution setView={setView} />
               </div>
-            )}
-          {challenge.sharedSolution.length === 0 && (
+              )
+              {challenge?.sharedSolution.map((solution) => (
+                <SolutionRow
+                  key={solution.id}
+                  solution={solution}
+                  handleClick={() => {
+                    setView('details');
+                  }}
+                />
+              ))}
+            </>
+          ) : (
             <NoSolutions
               setView={setView}
               loggedInUser={session?.data?.user ? true : false}
               loggedInUserHasSolution={loggedInUserHasSolution > 0 ? true : false}
             ></NoSolutions>
           )}
-          {challenge?.sharedSolution.map((solution) => (
-            <SolutionRow
-              key={solution.id}
-              solution={solution}
-              handleClick={() => {
-                setView('details');
-              }}
-            />
-          ))}
         </>
       )}
 
