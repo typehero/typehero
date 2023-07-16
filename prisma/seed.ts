@@ -7,6 +7,12 @@ import UserMock from './user.mock';
 const prisma = new PrismaClient();
 
 const usersToBeMade = Array.from({ length: 15 }, () => UserMock());
+const alotOfSharedSolutions = (challengeId: number) =>
+  Array.from({ length: 50 }, () => ({
+    challengeId,
+    title: faker.lorem.words(7),
+    description: faker.lorem.words({ min: 5, max: 25 }),
+  }));
 
 await prisma.user.createMany({
   data: usersToBeMade,
@@ -32,43 +38,33 @@ await prisma.challenge.createMany({
 export const trashId = uuidByString('trash');
 export const gId = uuidByString('g');
 
-// NOTE: we can use top-level await because we are in a module
 try {
-  // await prisma.user.upsert({
-  //   where: { id: trashId },
-  //   update: {},
-  //   create: {
-  //     id: trashId,
-  //     email: "chris@typehero.dev",
-  //     name: "chris",
-  //     challenge: challenges(),
-  //   },
-  // });
+  const someChallenge = await prisma.challenge.findFirst();
 
-  // await prisma.user.upsert({
-  //   where: { id: gId },
-  //   update: {},
-  //   create: {
-  //     id: gId,
-  //     email: "g@typehero.dev",
-  //     name: "g",
-  //     challenge: challenges(),
-  //     solution: {
-  //       create: {
-  //         code: 'const a: string = "hello world"',
-  //         isSuccessful: true,
-  //         challengeId: 1,
-  //       },
-  //     },
-  //     sharedSolution: {
-  //       create: {
-  //         challengeId: 1,
-  //         title: faker.lorem.words(7),
-  //         description: faker.lorem.words({ min: 5, max: 25 }),
-  //       },
-  //     },
-  //   },
-  // });
+  await prisma.user.upsert({
+    where: { id: trashId },
+    update: {},
+    create: {
+      id: trashId,
+      email: 'chris@typehero.dev',
+      name: 'chris',
+      sharedSolution: {
+        create: alotOfSharedSolutions(someChallenge?.id ?? 2),
+      },
+    },
+  });
+
+  await prisma.challenge.update({
+    where: { id: someChallenge?.id },
+    data: {
+      comment: {
+        create: Array.from({ length: 50 }, () => ({
+          text: 'here is a comment',
+          userId: trashId,
+        })),
+      },
+    },
+  });
 
   await prisma.$disconnect();
 } catch (e) {

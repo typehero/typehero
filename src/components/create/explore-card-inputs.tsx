@@ -52,7 +52,6 @@ const ExploreCardInputs = ({
         ${GRADIENTS_BY_DIFFICULTY[difficulty]}
       `}
     >
-      {/* TODO: add background shapes grid pattern */}
       <CardHeader className="relative grid items-start gap-4">
         <div className="flex flex-col items-start">
           <h1 className="text-sm text-black/50 dark:text-white/70">Challenge Difficulty Level:</h1>

@@ -2,7 +2,7 @@
 'use client';
 
 import * as AllIcons from 'lucide-react';
-import type { Icon } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import React from 'react';
 import { Button, type ButtonProps } from './button';
 
@@ -14,7 +14,7 @@ export interface IconButtonProps extends ButtonProps {
 }
 
 export function IconButton({ icon, iconSize, ...props }: IconButtonProps) {
-  const Icon = AllIcons[icon] as Icon;
+  const Icon = AllIcons[icon] as LucideIcon;
   return (
     <Button {...props}>
       <Icon size={iconSize} />
