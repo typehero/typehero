@@ -1,6 +1,6 @@
 name: CI
 
-on: [ push, pull_request ]
+on: [push, pull_request]
 
 env:
   DATABASE_URL: 'mysql://fake.com'
@@ -9,10 +9,13 @@ env:
   NEXTAUTH_SECRET: 'ligma'
   NEXTAUTH_URL: 'http://localhost:3000'
 
-
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    concurrency:
+      group: ${{ github.ref }}
+      cancel-in-progress: true
 
     steps:
       - name: Checkout
