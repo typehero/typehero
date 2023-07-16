@@ -27,7 +27,7 @@ export function Submissions({ submissions }: Props) {
   }, [selectedStatus, submissions]);
   return (
     <>
-      {filteredSubmissions.length !== 0 ? (
+      {submissions.length !== 0 ? (
         <div className="sticky right-0 top-[41px] flex gap-2 border-b border-zinc-300 bg-background/90 p-2 px-4 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
           <div
             className={`flex cursor-pointer gap-2 rounded-lg px-4 py-1 duration-300  ${
