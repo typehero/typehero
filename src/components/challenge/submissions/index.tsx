@@ -28,9 +28,9 @@ export function Submissions({ submissions }: Props) {
   return (
     <>
       {filteredSubmissions.length !== 0 ? (
-        <div className="sticky right-0 top-[41px] flex gap-2 border-b border-zinc-300 bg-background/90 p-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
+        <div className="sticky right-0 top-[41px] flex gap-2 border-b border-zinc-300 bg-background/90 p-2 px-4 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
           <div
-            className={`flex cursor-pointer gap-2 rounded-xl px-4 py-1 duration-300  ${
+            className={`flex cursor-pointer gap-2 rounded-lg px-4 py-1 duration-300  ${
               selectedStatus === 'all'
                 ? 'bg-blue-600 text-background dark:bg-blue-400'
                 : 'bg-blue-600/10 text-blue-600 hover:bg-blue-600/30 dark:bg-blue-400/10 dark:text-blue-400 dark:hover:bg-blue-400/30'
@@ -41,7 +41,7 @@ export function Submissions({ submissions }: Props) {
             All
           </div>
           <div
-            className={`flex cursor-pointer gap-2 rounded-xl px-4 py-1 duration-300  ${
+            className={`flex cursor-pointer gap-2 rounded-lg px-4 py-1 duration-300  ${
               selectedStatus === 'accepted'
                 ? 'bg-emerald-600 text-background dark:bg-emerald-400'
                 : 'bg-emerald-600/10 text-emerald-600 hover:bg-emerald-600/30 dark:bg-emerald-400/10 dark:text-emerald-400 dark:hover:bg-emerald-400/30'
@@ -51,7 +51,7 @@ export function Submissions({ submissions }: Props) {
             Accepted
           </div>
           <div
-            className={`flex cursor-pointer gap-2 rounded-xl px-4 py-1 duration-300  ${
+            className={`flex cursor-pointer gap-2 rounded-lg px-4 py-1 duration-300  ${
               selectedStatus === 'rejected'
                 ? 'bg-rose-600 text-background dark:bg-rose-400'
                 : 'bg-rose-600/10 text-rose-600 hover:bg-rose-600/30 dark:bg-rose-400/10 dark:text-rose-400 dark:hover:bg-rose-400/30'
