@@ -10,7 +10,7 @@ import {
 } from './dropdown-menu';
 
 import * as AllIcons from 'lucide-react';
-import type { Icon } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 
 export type ActionMenuItem = {
   icon?: keyof typeof AllIcons;
@@ -23,7 +23,7 @@ export interface ActionMenuProps {
   onChange: (e: ActionMenuItem) => void;
 }
 
-type OptionalIcon = Icon | null;
+type OptionalIcon = LucideIcon | null;
 
 export function ActionMenu(props: ActionMenuProps) {
   return (

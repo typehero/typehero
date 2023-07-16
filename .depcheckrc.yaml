@@ -1,0 +1,20 @@
+# running npx depcheck will yield packages that are "likely" not imported but sometimes
+# the packages are required and not imported
+# use this file to add those packages to this list ot exclude 
+
+ignores:
+  # types are used and auto imported by typescript
+  - '@types/eslint'
+  - '@types/react-dom'
+  - '@types/prettier'
+  # misc
+  - '@monaco-editor/loader'
+  - '@t3-oss/env-nextjs'
+  - 'postcss'
+  - 'raw-loader'
+  - 'tsx'
+  - 'postcss'
+  - 'autoprefixer'
+  - 'prettier-plugin-tailwindcss'
+  # some big g shit right here
+  - '~'
