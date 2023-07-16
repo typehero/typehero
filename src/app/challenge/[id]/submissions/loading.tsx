@@ -1,5 +1,5 @@
-import { SolutionsSkeleton } from '~/components/challenge/solutions/solution-skeleton';
+import { SubmissionsSkeleton } from '~/components/challenge/submissions/submissions-skeleton';
 
 export default function Loading() {
-  return <SolutionsSkeleton />;
+  return <SubmissionsSkeleton />;
 }
