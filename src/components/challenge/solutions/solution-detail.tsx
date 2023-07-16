@@ -1,5 +1,6 @@
 'use client';
 
+import { Comment } from '@prisma/client';
 import { Calendar, MessageCircle, Share, X } from 'lucide-react';
 import Link from 'next/link';
 import type { ChallengeSolution } from '~/app/challenge/[id]/solutions/[solutionId]/page';
@@ -49,11 +50,11 @@ export function SolutionDetails({ solution }: Props) {
             <UserBadge username={solution.user?.name ?? ''} />
             <div className="flex items-center">
               <Calendar className="mr-2 h-4 w-4 stroke-gray-400" />
-              <span className="text-xs text-gray-400">{solution.createdAt.toLocaleString()}</span>
+              <span className="text-xs text-gray-400">{solution?.createdAt?.toLocaleString()}</span>
             </div>
           </div>
         </div>
-        <Markdown>{solution.description}</Markdown>
+        <Markdown>{solution.description || ''}</Markdown>
       </div>
       <div className="sticky bottom-0 -mx-[1px] overflow-hidden rounded-xl border border-zinc-300 border-b-background bg-background/90 shadow-[0_0_3rem_-0.25rem_#0004] backdrop-blur-sm duration-300 dark:border-zinc-700 dark:border-b-muted dark:bg-muted/90 dark:shadow-[0_0_3rem_-0.25rem_#0008]"></div>
       <div className="flex gap-2">

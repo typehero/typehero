@@ -146,6 +146,7 @@ model Challenge {
   bookmark       Bookmark[]
   sharedSolution SharedSolution[]
   Report         Report[]           @relation("report_challenge")
+  jimComment     Comment[]
 
   @@index([userId])
 }
@@ -179,6 +180,7 @@ model SharedSolution {
   challenge       Challenge?        @relation(fields: [challengeId], references: [id])
   challengeId     Int?
   solutionComment SolutionComment[]
+  Comment         Comment[]
 
   @@index([userId])
   @@index([challengeId])
@@ -378,7 +380,11 @@ model Report {
   challengeId Int?
   challenge   Challenge? @relation("report_challenge", fields: [challengeId], references: [id])
 
+  commentId Int?
+  comment   Comment? @relation("report_comment", fields: [commentId], references: [id])
+
   @@unique([id])
+  @@index([commentId])
   @@index([reporterId])
   @@index([userId])
   @@index([challengeId])
@@ -390,12 +396,19 @@ enum CommentRoot {
 }
 
 model Comment {
-  id   Int    @id @default(autoincrement())
-  text String @db.MediumText
+  id       Int    @id @default(autoincrement())
+  text     String @db.MediumText
   parentId Int?
 
   rootType CommentRoot @default(CHALLENGE)
 
-  
-  
+  rootChallengeId Int?
+  rootChallenge   Challenge? @relation(fields: [rootChallengeId], references: [id])
+
+  rootSolutionId Int?
+  rootSolution   SharedSolution? @relation(fields: [rootSolutionId], references: [id])
+  Report         Report[]        @relation("report_comment")
+
+  @@index([rootSolutionId])
+  @@index([rootChallengeId])
 }
