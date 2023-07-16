@@ -89,12 +89,12 @@ const Comments = ({ challengeId, commentCount }: Props) => {
     >
       <div className="relative">
         <button
-          className="flex w-full items-center justify-between gap-2 p-3 font-medium text-neutral-500 duration-300 hover:text-neutral-700 dark:hover:text-zinc-300"
+          className="flex w-full items-center justify-between gap-2 p-3 font-medium text-neutral-500 duration-300 hover:text-neutral-700 focus:outline-none dark:hover:text-zinc-300"
           onClick={() => handleClick()}
         >
-          <div className="flex items-center">
+          <div className="flex items-center gap-2">
             <MessageCircle className="h-5 w-5"></MessageCircle>
-            &nbsp; Comments ({commentCount})
+            Comments ({commentCount})
           </div>
           <ChevronDown
             className={clsx('h-4 w-4 duration-300', {

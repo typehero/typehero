@@ -98,8 +98,8 @@ const Comment = ({ comment }: CommentProps) => {
   const isAuthor = loggedinUser.data?.user?.id === comment.user.id;
 
   return (
-    <div className="flex flex-col gap-2 p-3 pt-2">
-      <div className="flex justify-between">
+    <div className="flex flex-col gap-1 p-3 pt-2">
+      <div className="flex justify-between pr-[0.4rem]">
         <div className="flex items-center gap-1">
           <UserBadge username={comment.user.name ?? ''} />
           <Tooltip delayDuration={0.05}>
