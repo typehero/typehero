@@ -10,7 +10,7 @@ const Hero = () => (
       </filter>
       <rect width="100%" height="100%" filter="url(#noise)"></rect>
     </svg> */}
-    <div className="flex h-full flex-col justify-center items-center lg:items-start gap-10 overflow-visible">
+    <div className="flex h-full flex-col justify-center items-center lg:items-start gap-10 overflow-visible text-white">
       <div className="relative lg:mr-auto flex items-center gap-5">
         <div className="absolute left-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-x-[15%] -translate-y-1/2 rounded-full bg-white/10 blur-2xl dark:block lg:h-96 lg:w-96 lg:blur-3xl"></div>
         <div className="absolute right-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-y-1/2 translate-x-[15%] rounded-full bg-[#3178c6]/20 blur-2xl dark:block lg:h-96 lg:w-96 lg:blur-3xl"></div>
