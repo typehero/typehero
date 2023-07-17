@@ -8,7 +8,6 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { RichMarkdownEditor } from '../ui/rich-markdown-editor';
 import { Github, Linkedin, Twitter, Youtube, Link as LinkIcon } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 
 export interface UserLinkType {
   id: string | null;
@@ -35,8 +34,7 @@ const formSchema = z.object({
 });
 
 export const Settings = ({ data }: { data: FormSchema }) => {
-  const router = useRouter();
-  const { handleSubmit, control, register } = useForm<FormValues>({
+  const { control, getValues, trigger, register } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       ...data,
@@ -64,13 +62,18 @@ export const Settings = ({ data }: { data: FormSchema }) => {
     await updateProfile(updateProfileData);
 
     // This might not be the way?
-    router.refresh();
+    // router.refresh();
   };
 
   return (
     <div className="container">
       <h2 className="text-3xl font-bold">Profile</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form
+        action={async () => {
+          const valid = await trigger();
+          if (valid) onSubmit(getValues());
+        }}
+      >
         <h4 className="text-xl font-bold">Tell us about yourself</h4>
         <div className="h-[300px]">
           <Controller
@@ -84,23 +87,21 @@ export const Settings = ({ data }: { data: FormSchema }) => {
 
         <div className="mt-8 flex flex-col items-start space-y-3">
           <h4 className="text-xl font-bold">Social accounts</h4>
-          {Array(4)
-            .fill('')
-            .map((_, i) => {
-              const val: UserLinkType = data.userLinks[i];
-              return (
-                <div key={`url-${i}`} className="flex items-center gap-2">
-                  <MagikcIcon url={val?.url ?? ''} />
-                  <Input
-                    defaultValue={val?.url}
-                    placeholder="Link to social profile"
-                    className="w-64"
-                    // @ts-ignore
-                    {...register(`userLinks.${i}.value`)}
-                  />
-                </div>
-              );
-            })}
+          {data.userLinks.map((val: UserLinkType, i: number) => {
+            // const val: UserLinkType = data.userLinks[i];
+            return (
+              <div key={`url-${i}`} className="flex items-center gap-2">
+                <MagikcIcon url={val?.url ?? ''} />
+                <Input
+                  defaultValue={val?.url}
+                  placeholder="Link to social profile"
+                  className="w-64"
+                  // @ts-ignore
+                  {...register(`userLinks.${i}.value`)}
+                />
+              </div>
+            );
+          })}
 
           <Button type="submit">Update Profile</Button>
         </div>

@@ -17,23 +17,26 @@ export default async function SettingsPage() {
     },
     include: {
       userLinks: true,
-    }
+    },
+    orderBy: {
+      updatedAt: 'asc',
+    },
   });
-  
+
   // make the user links have 4 at all times
-  const userLinks = profileData.userLinks = [
+  const userLinks = (profileData.userLinks = [
     ...profileData.userLinks,
     ...Array(4 - profileData.userLinks.length).fill({
       id: null,
       url: '',
-    })
-  ];  
+    }),
+  ]);
 
   return (
     <Settings
       data={{
         bio: profileData.bio,
-        userLinks
+        userLinks,
       }}
     />
   );

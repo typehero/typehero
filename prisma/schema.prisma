@@ -78,10 +78,15 @@ model Role {
   role RoleTypes @unique
 }
 
+/// This is a table that contains all the user links they can add to profile
 model UserLink {
   id   String @id @default(uuid())
   user User[]
   url  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
 }
 
 model User {
