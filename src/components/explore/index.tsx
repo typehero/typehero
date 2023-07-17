@@ -8,11 +8,12 @@ export const dynamic = 'force-dynamic';
 
 export async function Explore() {
   return (
-    <div className="container flex h-full flex-col">
-      <p className="max-w-[66ch] bg-transparent pt-5 text-lg leading-10 text-neutral-600 dark:text-neutral-400">
-        <span className="text-xl font-bold text-[#3178c6]">Explore</span> the challenges. Embrace
-        the opportunity to grow, learn, and showcase your programming abilities. We hope you find
-        the <span className="font-semibold text-neutral-200">perfect</span> challenge!
+    <div className="container flex h-full flex-col items-center">
+      <p className="max-w-[66ch] px-4 pt-5 text-lg leading-10 text-neutral-600 dark:text-neutral-400 md:text-center">
+        <span className="text-xl font-bold text-[#3178c6] dark:text-[#4e99ea]">Explore</span> the
+        challenges. Embrace the opportunity to grow, learn, and showcase your programming abilities.
+        We hope you find the <span className="font-semibold dark:text-neutral-200">perfect</span>{' '}
+        challenge!
       </p>
 
       <Suspense fallback={<ExploreSectionSkeleton />}>
@@ -31,6 +32,7 @@ export async function Explore() {
 }
 
 export type ExploreChallengeData = Awaited<ReturnType<typeof getEasyChallenges>>;
+// TODO: this is trash
 async function getEasyChallenges() {
   return prisma.challenge.findMany({
     where: {
@@ -41,6 +43,7 @@ async function getEasyChallenges() {
       _count: {
         select: { vote: true, comment: true },
       },
+      user: true,
     },
     take: 6,
   });
@@ -56,6 +59,7 @@ async function getMediumChallenges() {
       _count: {
         select: { vote: true, comment: true },
       },
+      user: true,
     },
     take: 6,
   });
@@ -71,6 +75,7 @@ async function getHardChallenges() {
       _count: {
         select: { vote: true, comment: true },
       },
+      user: true,
     },
     take: 6,
   });

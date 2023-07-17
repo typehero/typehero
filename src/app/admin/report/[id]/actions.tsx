@@ -23,7 +23,6 @@ import { toast } from '~/components/ui/use-toast';
 
 export default function ReportActions({
   moderatorId,
-  moderator,
   challenge,
   reportId,
 }: {
