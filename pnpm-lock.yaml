@@ -240,6 +240,9 @@ devDependencies:
   tsx:
     specifier: ^3.12.7
     version: 3.12.7
+  typescript:
+    specifier: ^5.1.6
+    version: 5.1.6
   yaml:
     specifier: ^2.3.1
     version: 2.3.1
