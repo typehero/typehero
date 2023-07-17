@@ -10,10 +10,12 @@ import ExploreCard from '~/components/explore/explore-card';
 import { Button } from '~/components/ui/button';
 import { uploadChallenge } from '../create.action';
 import { useState } from 'react';
+import { useSession } from 'next-auth/react';
 
 export default function PreviewCreatedChallenge() {
   const createChallengeStore = useCreateChallengeStore();
   const router = useRouter();
+  const user = useSession();
   const [isRedirecting, setIsRedirecting] = useState(false);
 
   if (createChallengeStore.data === undefined) {
@@ -79,6 +81,8 @@ export default function PreviewCreatedChallenge() {
                   vote: 420,
                   comment: 0,
                 },
+                // @ts-ignore
+                user: user?.data?.user || { name: 'you' },
                 updatedAt: new Date(),
                 difficulty: createChallengeStore.data.difficulty,
               }}

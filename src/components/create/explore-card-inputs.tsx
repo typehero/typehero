@@ -49,7 +49,7 @@ const ExploreCardInputs = ({
 
   return (
     <Card
-      className={`group overflow-hidden duration-300
+      className={`overflow-hidden duration-300
         ${GRADIENTS_BY_DIFFICULTY[difficulty]}
       `}
     >

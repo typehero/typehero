@@ -87,7 +87,7 @@ const ExploreCard = ({ challenge }: ExploreCardProps) => {
           <Sparkle className="absolute -right-12 -top-20 h-48 w-48 stroke-1 text-white/40 duration-300 group-hover:h-24 group-hover:w-24 dark:group-hover:text-black/30"></Sparkle>
         </>
       )}
-      <CardHeader className="relative flex flex-col items-start gap-1 pb-4">
+      <CardHeader className="relative flex flex-col items-start gap-1">
         <CardTitle className="max-w-[75%] truncate text-2xl text-white duration-300 dark:text-white dark:group-hover:text-black/70">
           {challenge.name}
         </CardTitle>
@@ -105,7 +105,7 @@ const ExploreCard = ({ challenge }: ExploreCardProps) => {
           <div className="pointer-events-none absolute inset-0 h-full w-full shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card))] duration-300 group-hover:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))] group-focus:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))]" />
           <Markdown>{challenge?.shortDescription}</Markdown>
         </CardDescription>
-        <div className="flex flex-col justify-end gap-3 pb-6 pl-6 text-muted-foreground">
+        <div className="flex flex-col items-end justify-end gap-3 pb-6 pl-6 text-muted-foreground">
           <div className="flex items-center gap-2 text-sm">
             {challenge._count.comment}
             <MessageCircle size={18} />
