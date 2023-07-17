@@ -31,12 +31,12 @@ export function SolutionDetails({ solution }: Props) {
 
   return (
     <div className="relative flex h-full flex-col">
-      <div className="sticky right-0 top-[41px] flex border-b border-zinc-300 bg-background/90 p-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
+      <div className="sticky right-0 top-0 w-full flex border-b border-zinc-300 bg-background/90 p-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
         <Link href={`/challenge/${solution.challengeId}/solutions`}>
           <X size={20} className="stroke-gray-500 hover:stroke-gray-400" />
         </Link>
       </div>
-      <div className="flex-1 px-4 py-3">
+      <div className="flex-1 overflow-y-auto custom-scrollable-element px-4 py-3">
         <div className="mb-5 flex flex-col gap-3">
           <div className="flex items-center gap-2">
             <Avatar>

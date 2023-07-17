@@ -22,8 +22,6 @@ interface Props {
   commentCount: number;
 }
 
-
-
 const Comments = ({ challengeId, commentCount }: Props) => {
   const [showComments, setShowComments] = useState(false);
   const [text, setText] = useState('');
@@ -87,7 +85,7 @@ const Comments = ({ challengeId, commentCount }: Props) => {
   return (
     <div
       className={clsx(
-        'sticky bottom-0 overflow-hidden  border-zinc-300 bg-background/90 shadow-[0_0_3rem_-0.25rem_#0004] backdrop-blur-sm duration-300 dark:border-zinc-700 dark:border-b-muted dark:bg-muted/90 dark:shadow-[0_0_3rem_-0.25rem_#0008]',
+        'sticky bottom-0 overflow-hidden border-zinc-300 bg-background/90 shadow-[0_0_3rem_-0.25rem_#0004] backdrop-blur-sm duration-300 dark:border-zinc-700 dark:border-b-muted dark:bg-muted/90 dark:shadow-[0_0_3rem_-0.25rem_#0008]',
         {
           'border-t': !showComments,
         },
@@ -109,7 +107,7 @@ const Comments = ({ challengeId, commentCount }: Props) => {
           ></ChevronDown>
         </button>
         <div
-          className={clsx('flex flex-col-reverse overscroll-contain duration-300', {
+          className={clsx('custom-scrollable-element flex flex-col-reverse overscroll-contain duration-300', {
             'h-[64] pb-2 md:h-[calc(100vh_-_247px)]': showComments,
             'h-0 overflow-y-hidden': !showComments,
             'overflow-y-auto': showComments && data?.pages[0]?.data.length !== 0,
