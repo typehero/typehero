@@ -1,4 +1,3 @@
-'use client';
 
 import { Circle, Diamond, MessageCircle, Plus, Sparkle, ThumbsUp, Triangle } from 'lucide-react';
 
@@ -7,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui
 import { Markdown } from '../ui/markdown';
 import { type ExploreChallengeData } from './';
 import { DifficultyBadge } from '../ui/difficulty-badge';
-import { UserBadge } from '../ui/user-badge';
+import { Button } from '../ui/button';
 
 interface ExploreCardProps {
   challenge: Pick<
@@ -51,7 +50,7 @@ const GRADIENTS_BY_DIFFICULTY = {
 const ExploreCard = ({ challenge }: ExploreCardProps) => {
   return (
     <Card
-      className={`group relative overflow-hidden duration-500
+      className={`group relative overflow-hidden duration-300
       ${GRADIENTS_BY_DIFFICULTY[challenge.difficulty]}
       ${SHADOWS_BY_DIFFICULTY[challenge.difficulty]} 
       ${BORDERS_BY_DIFFICULTY[challenge.difficulty]}
@@ -87,34 +86,33 @@ const ExploreCard = ({ challenge }: ExploreCardProps) => {
           <Sparkle className="absolute -right-12 -top-20 h-48 w-48 stroke-1 text-white/40 duration-300 group-hover:h-24 group-hover:w-24 dark:group-hover:text-black/30"></Sparkle>
         </>
       )}
-      <CardHeader className="relative flex flex-col items-start gap-1">
+      <CardHeader className="relative flex flex-col py-5 items-start gap-1">
         <CardTitle className="max-w-[75%] truncate text-2xl text-white duration-300 dark:text-white dark:group-hover:text-black/70">
           {challenge.name}
         </CardTitle>
-        <div className="flex items-center gap-4 text-center text-white duration-300 dark:group-hover:text-black">
+        <div className="flex items-center gap-6 text-center text-white duration-300 dark:group-hover:text-black">
           <DifficultyBadge difficulty={challenge.difficulty} />
-          {/* NOTE: Tailwind is a programming language */}
-          <div className="dark duration-300 dark:group-hover:invert">
-            <UserBadge username={challenge.user.name} />
+          <div className="flex items-center gap-2 text-sm">
+            <MessageCircle size={18} />
+            {challenge._count.comment}
           </div>
-          <div className="-ml-2 text-xs">{getRelativeTime(challenge.updatedAt)}</div>
+          <div className="flex items-center gap-2 text-sm">
+            <ThumbsUp size={18} />
+            {challenge._count.vote}
+          </div>
         </div>
       </CardHeader>
-      <CardContent className="relative flex justify-between gap-2 rounded-xl bg-background p-6 pb-0 duration-300 group-hover:bg-card-hovered">
+      <CardContent className="relative flex flex-col justify-between gap-2 rounded-xl bg-background p-6 pb-0 duration-300 group-hover:bg-card-hovered">
+        <div className="flex items-center gap-2">
+          <Button size="sm" className="-ml-[0.33rem] flex h-auto w-fit items-center rounded-full bg-transparent py-1 pl-[0.33rem] pr-2 text-xs font-bold text-neutral-700 hover:bg-black/10 dark:text-white dark:hover:bg-white/20" >
+            @{challenge.user.name} 
+          </Button>
+          <div className="text-sm text-muted-foreground">{getRelativeTime(challenge.updatedAt)}</div>
+        </div>
         <CardDescription className="relative h-20 overflow-hidden pb-4">
           <div className="pointer-events-none absolute inset-0 h-full w-full shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card))] duration-300 group-hover:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))] group-focus:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))]" />
-          <Markdown>{challenge?.shortDescription}</Markdown>
+          {challenge?.shortDescription}
         </CardDescription>
-        <div className="flex flex-col items-end justify-end gap-3 pb-6 pl-6 text-muted-foreground">
-          <div className="flex items-center gap-2 text-sm">
-            {challenge._count.comment}
-            <MessageCircle size={18} />
-          </div>
-          <div className="flex items-center gap-2 text-sm">
-            {challenge._count.vote}
-            <ThumbsUp size={18} />
-          </div>
-        </div>
       </CardContent>
     </Card>
   );
