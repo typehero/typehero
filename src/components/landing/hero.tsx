@@ -66,11 +66,10 @@ const Hero = () => (
 
     <div className="relative md:block hidden rounded-full w-full h-3/4">
       <div
-        className="movingbackground absolute -z-30 -inset-40 top-1/2 -translate-y-1/2 rounded-full aspect-square"
+        className="movingbackground absolute -z-30 -inset-40 top-1/2 -translate-y-1/2 rounded-full aspect-square shadow-[inset_0_0_5rem_5rem] shadow-background"
         style={{
           backgroundSize: '3.5rem 3.5rem',
           backgroundImage: 'linear-gradient(to right, #8888 1px, transparent 1px), linear-gradient(to bottom, #8888 1px, transparent 1px)',
-          boxShadow: 'inset 0 0 5rem 5rem #09090b'
         }}
       >
 
