@@ -10,33 +10,36 @@ import { RichMarkdownEditor } from '../ui/rich-markdown-editor';
 import { useState } from 'react';
 import { Github, Linkedin, Twitter, Youtube, Link as LinkIcon } from 'lucide-react';
 
+interface UserLinkType {
+  id: string | null;
+  url: string;
+}
+
 interface FormValues {
-  userLinks: {
-    id: string | null;
-    value: string;
-  }[];
+  userLinks: UserLinkType[];
   bio: string;
 }
 
+export type FormSchema = z.infer<typeof formSchema>;
+
 const formSchema = z.object({
+  // TODO: make this have a good typesafe exp
   // userLinks: z.array(
   //   z.object({
-  //     id: z.string().nullable().optional(),
-  //     url: z.string().optional()
-  //   }).optional(),
+  //     id: z.string().nullable(),
+  //     url: z.string().url(),
+  //   }),
   // ),
   userLinks: z.any(),
   bio: z.string(),
 });
 
-export type FormSchema = z.infer<typeof formSchema>;
-
 export const Settings = ({ data }: { data: FormSchema }) => {
   const [bio, setBio] = useState(data.bio);
-  const { handleSubmit, control, formState: {errors}, register } = useForm < FormValues > ({
+  const { handleSubmit, control, register } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      ...data
+      ...data,
     },
   });
 
@@ -46,28 +49,28 @@ export const Settings = ({ data }: { data: FormSchema }) => {
   });
 
   const onSubmit = (values: FormValues) => {
-    const dataToSubmit = data.userLinks.map((link, i) => ({
+    const dataToSubmit = data.userLinks.map((link: UserLinkType, i: number) => ({
       ...link,
-      url: values.userLinks[i].value ?? '',
+      // @ts-ignore
+      url: values.userLinks[i].value,
     }));
 
-    console.log(JSON.stringify(dataToSubmit, null, 2));
-    // updateProfile({
-    //   bio: values.bio,
-    // });
+    console.log(dataToSubmit);
+
+    updateProfile(dataToSubmit);
   };
 
   return (
     <div className="container">
       <h2 className="text-3xl font-bold">Profile</h2>
-      <pre>{JSON.stringify(errors.userLinks, null, 2)}</pre>
       <form onSubmit={handleSubmit(onSubmit)}>
         <h4 className="text-xl font-bold">Tell us about yourself</h4>
         <div className="h-[300px]">
+          {/* TODO:: do we need to connect this to hook form? */}
           <RichMarkdownEditor value={bio} onChange={(val) => setBio(val)} />
         </div>
 
-        { }
+        {}
         <div className="mt-8 flex flex-col items-start space-y-3">
           <h4 className="text-xl font-bold">Social accounts</h4>
           {Array(4)
