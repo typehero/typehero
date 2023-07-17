@@ -37,7 +37,7 @@ export async function updateProfile(profileData: { bio: string; userLinks: UserL
     ),
   );
 
-  // filter for all links that are empty string and dlete from db
+  // filter for all links that are empty string and delete from db
   const emptyLinks = profileData.userLinks.filter((link) => link.url === '');
   await prisma.userLink.deleteMany({
     where: {

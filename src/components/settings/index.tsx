@@ -7,7 +7,6 @@ import { updateProfile } from './settings.action';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { RichMarkdownEditor } from '../ui/rich-markdown-editor';
-import { useState } from 'react';
 import { Github, Linkedin, Twitter, Youtube, Link as LinkIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
@@ -37,7 +36,6 @@ const formSchema = z.object({
 
 export const Settings = ({ data }: { data: FormSchema }) => {
   const router = useRouter();
-  const [bio, setBio] = useState(data.bio);
   const { handleSubmit, control, register } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -62,8 +60,7 @@ export const Settings = ({ data }: { data: FormSchema }) => {
       userLinks,
     };
 
-    console.log(updateProfileData);
-
+    // call the server action
     await updateProfile(updateProfileData);
 
     // This might not be the way?
