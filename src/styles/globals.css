@@ -146,3 +146,16 @@ main {
 .custom-scrollable-element::-webkit-scrollbar {
   width: 0;
 }
+
+.movingbackground {
+  animation: movingbackground 60s linear infinite !important;
+}
+
+@keyframes movingbackground {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}
