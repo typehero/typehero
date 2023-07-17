@@ -138,10 +138,10 @@ const Comment = ({ comment }: CommentProps) => {
             onClick={() => {
               copyPathNotifyUser();
             }}
-            className=" flex items-center text-neutral-500 hover:text-neutral-400"
+            className="gap-1 cursor-pointer duration-200 flex items-center hover:underline text-neutral-500 hover:text-neutral-400"
           >
-            <Share className="h-3 w-3 mr-0.5" />
-            <small className="font-md text-sm leading-none hover:underline">Share</small>
+            <Share className="h-3 w-3" />
+            <small className="font-md text-sm leading-none">Share</small>
           </div>
           {/* TODO: make dis work */}
           <button className="flex cursor-pointer items-center gap-1 text-sm text-neutral-500 duration-200 hover:text-neutral-400 hover:underline dark:text-neutral-500 dark:hover:text-neutral-400">
@@ -164,25 +164,7 @@ const Comment = ({ comment }: CommentProps) => {
               Report
             </button>
           )}
-          <div
-            onClick={() => {
-              copyPathNotifyUser();
-            }}
-            className="mr-2 flex items-center text-neutral-500 hover:text-[#007bcd]"
-          >
-            <Share className="h-3 w-3" />
-            <small className="font-md text-sm leading-none hover:underline">Share</small>
-          </div>
-          <div>
-            <button
-              onClick={() => {
-                setDialogOpen(true);
-              }}
-              className="flex text-sm text-neutral-400 hover:text-neutral-400 hover:underline dark:text-neutral-600"
-            >
-              Report
-            </button>
-          </div>
+        
         </div>
       </div>
       <p className="w-full break-words pl-[1px] text-sm">
