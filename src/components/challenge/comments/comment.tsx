@@ -1,7 +1,6 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Delete, Trash2, Reply } from 'lucide-react';
-import { Delete, Share } from 'lucide-react';
+import { Delete, Trash2, Reply, Share } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -134,7 +133,6 @@ const Comment = ({ comment }: CommentProps) => {
           </Tooltip>
         </div>
 
-        <div className="flex gap-2">
         <div className="flex items-center gap-2">
           <div
             onClick={() => {
@@ -166,7 +164,6 @@ const Comment = ({ comment }: CommentProps) => {
               Report
             </button>
           )}
-        <div className="flex items-center">
           <div
             onClick={() => {
               copyPathNotifyUser();
@@ -221,7 +218,6 @@ const Comment = ({ comment }: CommentProps) => {
                 </Tooltip>
               </div>
               <p className="max-h-[30vh] overflow-y-auto">{comment.text}</p>
-              <p>{comment.text}</p>
             </div>
 
             <Form {...form}>
