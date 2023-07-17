@@ -156,7 +156,7 @@ export const CodePanel = (props: Props) => {
       ? () => {
           // check that it has some test cases
           // checks that there is a line that starts with Equal or Extends or NotEqual
-          if (!/(?:\n|^)\s*(?:Equal|Extends|NotEqual)</.test(code)) {
+          if (!/(?:\n|^)\s*(?:Equal|Extends|NotEqual|Expect)</.test(code)) {
             toast({
               variant: 'destructive',
               title: 'You need to have test cases in your challenge',
@@ -167,6 +167,7 @@ export const CodePanel = (props: Props) => {
           }
 
           const hasErrors = !!tsErrors[0].length;
+          console.info(tsErrors);
 
           if (!hasErrors) {
             toast({
