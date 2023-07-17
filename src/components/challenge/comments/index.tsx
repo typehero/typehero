@@ -10,7 +10,7 @@ import { toast } from '~/components/ui/use-toast';
 import NoComments from './nocomments';
 import { addChallengeComment } from './comment.action';
 import { Textarea } from '~/components/ui/textarea';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
 import { getInfiniteComments } from './getCommentRouteData';
 import { CommentSkeleton } from './comment-skeleton';
@@ -22,10 +22,14 @@ interface Props {
   commentCount: number;
 }
 
+
+
 const Comments = ({ challengeId, commentCount }: Props) => {
   const [showComments, setShowComments] = useState(false);
   const [text, setText] = useState('');
   const [isCommenting, setIsCommenting] = useState(false);
+
+  const queryClient = useQueryClient();
   const router = useRouter();
   const { ref, inView } = useInView();
 
@@ -50,6 +54,7 @@ const Comments = ({ challengeId, commentCount }: Props) => {
     try {
       setIsCommenting(true);
       const res = await addChallengeComment(challengeId, text);
+
       if (res === 'text_is_empty') {
         toast({
           title: 'Empty Comment',
@@ -63,6 +68,7 @@ const Comments = ({ challengeId, commentCount }: Props) => {
       }
       setIsCommenting(false);
       setText('');
+      await queryClient.invalidateQueries(['comments']);
     } catch (e) {
       toast({
         title: 'Unauthorized',
