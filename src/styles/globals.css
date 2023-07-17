@@ -148,6 +148,20 @@ main {
 .custom-scrollable-element::-webkit-scrollbar-thumb {
   @apply bg-neutral-300/50 dark:bg-zinc-700/50 rounded-l-xl;
 }
+
 .custom-scrollable-element::-webkit-scrollbar-thumb:hover {
   @apply bg-neutral-300 dark:bg-zinc-600;
+}
+
+.movingbackground {
+  animation: movingbackground 60s linear infinite !important;
+}
+
+@keyframes movingbackground {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
 }
