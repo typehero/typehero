@@ -84,8 +84,8 @@ export function SolutionEditor({ dismiss, challenge }: Props) {
   return (
     <Form {...form}>
       {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-      <form className="flex h-full flex-col" onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="sticky right-0 top-[41px] z-10 flex items-center justify-between gap-2 border-b border-zinc-300 bg-background/90 bg-opacity-20 p-1 pr-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
+      <form className="flex h-full relative flex-col" onSubmit={form.handleSubmit(onSubmit)}>
+        <div className="sticky right-0 top-0 w-full z-10 flex items-center justify-between gap-2 border-b border-zinc-300 bg-background/90 bg-opacity-20 p-1 pr-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
           <div className="flex-1">
             <FormField
               control={form.control}

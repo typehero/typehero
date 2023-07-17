@@ -139,12 +139,18 @@ main {
   @apply bg-muted;
 }
 
-.custom-scrollable-element {
-  scrollbar-width: none;
+.custom-scrollable-element::-webkit-scrollbar {
+  width: 0.6rem;
+}
+.custom-scrollable-element::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+.custom-scrollable-element::-webkit-scrollbar-thumb {
+  @apply bg-neutral-300/50 dark:bg-zinc-700/50 rounded-l-xl;
 }
 
-.custom-scrollable-element::-webkit-scrollbar {
-  width: 0;
+.custom-scrollable-element::-webkit-scrollbar-thumb:hover {
+  @apply bg-neutral-300 dark:bg-zinc-600;
 }
 
 .movingbackground {

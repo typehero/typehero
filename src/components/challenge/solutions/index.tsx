@@ -31,19 +31,21 @@ export function Solutions({ challenge }: Props) {
           {challenge.sharedSolution.length !== 0 ? (
             <>
               {(loggedInUserHasSolution || !session?.data?.user) && (
-                <div className="sticky right-0 top-[41px] flex justify-end border-b border-zinc-300 bg-background/90 p-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
+                <div className="absolute right-0 top-0 w-full flex justify-end border-b border-zinc-300 bg-background/70 p-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/70">
                   <SubmitSolution setView={setView} />
                 </div>
               )}
-              {challenge?.sharedSolution.map((solution) => (
-                <SolutionRow
+              <div className="h-full pt-12 overflow-y-auto custom-scrollable-element">
+                {challenge?.sharedSolution.map((solution) => (
+                  <SolutionRow
                   key={solution.id}
                   solution={solution}
                   handleClick={() => {
                     setView('details');
                   }}
-                />
-              ))}
+                  />
+                  ))}
+              </div>
             </>
           ) : (
             <NoSolutions
@@ -71,7 +73,7 @@ function SolutionRow({
       className="group flex cursor-pointer flex-col gap-2 p-4 duration-300 hover:bg-neutral-100 dark:hover:bg-zinc-700/50"
       href={`/challenge/${solution.challengeId}/solutions/${solution.id}`}
     >
-      <h3 className="font-bold">{solution.title}</h3>
+      <h3 className="font-bold truncate">{solution.title}</h3>
       <div className="flex items-center gap-1 text-neutral-600 dark:text-neutral-400">
         <UserBadge username={solution.user?.name ?? ''} />
         <div className="mr-auto text-sm text-neutral-500">

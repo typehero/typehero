@@ -19,7 +19,7 @@ export default async function Challenges({ params: { id } }: Props) {
   }
 
   return (
-    <div className="relative flex h-full flex-col justify-between">
+    <div className="relative h-full">
       <Description challenge={challenge}></Description>
       <Comments challengeId={challenge.id} commentCount={challenge.comment.length} />
     </div>

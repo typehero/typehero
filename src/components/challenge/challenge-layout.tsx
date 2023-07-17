@@ -200,9 +200,8 @@ export function ChallengeLayout({ left, right, skeleton = false }: ChallengeLayo
       </div>
       <div
         ref={rightSide}
-        style={{ flex: '1 1 0%' }}
         className={clsx(
-          'flex flex-col overflow-hidden rounded-l-xl rounded-r-2xl border border-zinc-300 dark:border-zinc-700 lg:min-w-[500px]',
+          'flex flex-1 flex-col overflow-hidden rounded-l-xl rounded-r-2xl border border-zinc-300 dark:border-zinc-700 lg:min-w-[500px]',
           skeleton ? 'items-center justify-center pb-3 dark:bg-[#1e1e1e]' : 'min-h-[90px] w-full',
         )}
       >
