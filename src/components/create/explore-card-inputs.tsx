@@ -1,18 +1,16 @@
 'use client';
 // TODO: unify this with the explore card into single component (maybe? idk how that'd work, too many changes)
-import { ThumbsUp, PlayCircle, Bookmark } from 'lucide-react';
+import { MessageCircle, ThumbsUp } from 'lucide-react';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 
-import { Markdown } from '../ui/markdown';
 import { getRelativeTime } from '~/utils/relativeTime';
 
 import { Select, SelectContent, SelectItem, SelectTrigger } from '~/components/ui/select';
-import { Checkbox } from '~/components/ui/checkbox';
-import { Label } from '~/components/ui/label';
 
 import { type Difficulty } from '@prisma/client';
 import { useState } from 'react';
+import { Button } from '../ui/button';
 import { DifficultyBadge } from '../ui/difficulty-badge';
 
 // NOTE: this does not have hover: effects from explore-card
@@ -53,87 +51,58 @@ const ExploreCardInputs = ({
         ${GRADIENTS_BY_DIFFICULTY[difficulty]}
       `}
     >
-      <CardHeader className="relative grid items-start gap-4">
-        <div className="flex flex-col items-start">
-          <h1 className="text-sm text-black/50 dark:text-white/70">Challenge Difficulty Level:</h1>
+      <CardHeader className="relative flex flex-col items-start gap-1 py-5">
+        <CardTitle className="pb-4 pt-0 text-3xl dark:text-white">
+          <input
+            className="bg-transparent placeholder-black/50 focus:outline-none dark:placeholder-white/70"
+            style={{ textShadow: '0 0 0.5rem #0003' }}
+            value={name}
+            placeholder="Enter Challenge Title"
+            onChange={(ev) => setName(ev.currentTarget.value)}
+          />
+        </CardTitle>
+        <div className="flex items-center gap-6 text-center text-white duration-300 dark:group-hover:text-black">
           <Select onValueChange={(value: Difficulty) => setDifficulty(value)} value={difficulty}>
             <SelectTrigger className="h-8 max-w-fit border-0 p-0 focus:ring-0 focus:ring-offset-0 focus-visible:border-0 focus-visible:ring-0 focus-visible:ring-offset-0">
               <DifficultyBadge difficulty={difficulty || 'BEGINNER'} />
             </SelectTrigger>
             <SelectContent className="border-zinc-300 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900">
               <SelectItem value="BEGINNER">BEGINNER</SelectItem>
-              <SelectItem value="EASY">EASY</SelectItem>
               <SelectItem value="MEDIUM">MEDIUM</SelectItem>
               <SelectItem value="HARD">HARD</SelectItem>
               <SelectItem value="EXTREME">EXTREME</SelectItem>
             </SelectContent>
           </Select>
-          <h1 className="pt-3 text-sm text-black/50 dark:text-white/70">Challenge Title:</h1>
-          <CardTitle className="pb-4 pt-0 text-3xl dark:text-white">
-            <input
-              className="bg-transparent placeholder-black/50 focus:outline-none dark:placeholder-white/70"
-              style={{ textShadow: '0 0 0.5rem #0003' }}
-              value={name}
-              placeholder="Enter Challenge Title"
-              onChange={(ev) => setName(ev.currentTarget.value)}
-            />
-          </CardTitle>
+          <div className="flex items-center gap-2 text-sm">
+            <MessageCircle size={18} />
+            20
+          </div>
+          <div className="flex items-center gap-2 text-sm">
+            <ThumbsUp size={18} />
+            100
+          </div>
         </div>
       </CardHeader>
-      <CardContent className="relative rounded-xl bg-background p-6 duration-300 group-hover:bg-card-hovered">
-        <div className="absolute right-7 top-1 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-background duration-300 group-hover:bg-card-hovered">
-          <PlayCircle />
-        </div>
 
-        <div className="mb-1 flex items-center justify-between pr-1">
-          <h1 className="text-sm text-black/70 dark:text-white/70">Short Description:</h1>
-
-          <Label
-            htmlFor="preview"
-            className="flex cursor-pointer items-center gap-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+      <CardContent className="relative flex flex-col justify-between gap-2 rounded-xl bg-background p-6 pb-0 duration-300 group-hover:bg-card-hovered">
+        <div className="flex items-center gap-2">
+          <Button
+            size="sm"
+            className="-ml-[0.33rem] flex h-auto w-fit items-center rounded-full bg-transparent py-1 pl-[0.33rem] pr-2 text-xs font-bold text-neutral-700 hover:bg-black/10 dark:text-white dark:hover:bg-white/20"
           >
-            Preview:
-            <Checkbox
-              id="preview"
-              className="border-zinc-500"
-              checked={isPreviewing.shortDescription}
-              onCheckedChange={(checked) =>
-                setIsPreviewing((rest) => ({ ...rest, shortDescription: checked === true }))
-              }
-            />
-          </Label>
+            @you
+          </Button>
+          <div className="text-sm text-muted-foreground">{getRelativeTime(new Date())}</div>
         </div>
-        <CardDescription className="relative h-14 max-w-[75%] overflow-hidden pb-4">
+        <CardDescription className="relative h-20 overflow-hidden pb-4">
           <div className="pointer-events-none absolute inset-0 h-full w-full shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card))] duration-300 group-hover:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))] group-focus:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))]" />
-          {isPreviewing.shortDescription ? (
-            <Markdown>{shortDescription}</Markdown>
-          ) : (
-            <textarea
-              className="w-full resize-none bg-transparent placeholder-black/70 focus:outline-none dark:text-white dark:placeholder-white/70"
-              value={shortDescription}
-              placeholder="Enter Short Description"
-              onChange={(ev) => setShortDescription(ev.currentTarget.value)}
-            />
-          )}
+          <textarea
+            className="w-full resize-none bg-transparent placeholder-black/70 focus:outline-none dark:text-white dark:placeholder-white/70"
+            value={shortDescription}
+            placeholder="Enter Short Description"
+            onChange={(ev) => setShortDescription(ev.currentTarget.value)}
+          />
         </CardDescription>
-        <div className="flex items-end justify-between gap-8 pt-2 text-sm text-muted-foreground">
-          <div className="flex flex-col items-center">
-            <h1 className="text-4xl font-bold text-black dark:text-white">0</h1>
-            <span>Comments</span>
-          </div>
-          <div className="mr-auto flex flex-col items-center">
-            <h1 className="text-4xl font-bold text-black dark:text-white">0</h1>
-            <span>Solutions</span>
-          </div>
-          <div className="flex flex-col items-end gap-4">
-            <div className="flex items-center justify-center gap-2 text-center">
-              <Bookmark size={20} className="mr-2" />
-              <ThumbsUp size={20} />
-              <span>69</span>
-            </div>
-            {getRelativeTime(new Date())}
-          </div>
-        </div>
       </CardContent>
     </Card>
   );
