@@ -12,43 +12,34 @@ import { UserLink } from '@prisma/client';
  */
 export async function updateProfile(profileData: {
   bio: string;
-  userLinks: { id: string; url: string };
+  userLinks: { id: string | null; url: string }[];
 }) {
-  console.log(profileData);
   const session = await getServerSession(authOptions);
 
   // 1. Checks.
   if (!session?.user.id) return 'unauthorized';
 
-  // 2. if the link they have is not in the database, create it.
-  const userLink = await prisma.userLink.findUniqueOrThrow({
+  // 2. Update the users links
+  await prisma.$transaction(
+    profileData.userLinks.map((link) =>
+      prisma.userLink.upsert({
+        where: { id: link.id ?? '-1' },
+        update: { url: link.url },
+        create: {
+          url: link.url,
+          user: { connect: { id: session?.user.id } },
+        },
+      }),
+    ),
+  );
+
+  // filter for all links that are empty string and dlete from db
+  const emptyLinks = profileData.userLinks.filter((link) => link.url === '');
+  await prisma.userLink.deleteMany({
     where: {
-      id: profileData.userLinks.id,
+      id: {
+        in: emptyLinks.map((link) => link.id ?? '-1'),
+      },
     },
   });
-
-  console.log(userLink);
-
-  // if (!userLink) {
-  //   await prisma.userLink.create({
-  //     data: {
-  //       url: profileData.userLinks.url,
-  //       user: {
-  //         connect: {
-  //           id: session?.user.id,
-  //         },
-  //       },
-  //     },
-  //   });
-  // }
-  //
-  // // 3. Update the users link
-  // await prisma.userLink.update({
-  //   where: {
-  //     id: profileData.userLinks.id,
-  //   },
-  //   data: {
-  //     url: profileData.userLinks.url,
-  //   },
-  // });
 }

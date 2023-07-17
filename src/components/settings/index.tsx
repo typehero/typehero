@@ -9,6 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { RichMarkdownEditor } from '../ui/rich-markdown-editor';
 import { useState } from 'react';
 import { Github, Linkedin, Twitter, Youtube, Link as LinkIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 interface UserLinkType {
   id: string | null;
@@ -35,6 +36,7 @@ const formSchema = z.object({
 });
 
 export const Settings = ({ data }: { data: FormSchema }) => {
+  const router = useRouter();
   const [bio, setBio] = useState(data.bio);
   const { handleSubmit, control, register } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -48,16 +50,25 @@ export const Settings = ({ data }: { data: FormSchema }) => {
     name: 'userLinks',
   });
 
-  const onSubmit = (values: FormValues) => {
-    const dataToSubmit = data.userLinks.map((link: UserLinkType, i: number) => ({
+  const onSubmit = async (values: FormValues) => {
+    const userLinks = data.userLinks.map((link: UserLinkType, i: number) => ({
       ...link,
       // @ts-ignore
       url: values.userLinks[i].value,
     }));
 
-    console.log(dataToSubmit);
+    const updateProfileData = {
+      bio: values.bio,
+      userLinks,
+    };
 
-    updateProfile(dataToSubmit);
+    console.log(updateProfileData);
+
+    await updateProfile(updateProfileData);
+    // HACK: this is hard refresh
+    // TODO: fix this hack
+    // window.location.reload();
+    router.refresh();
   };
 
   return (
@@ -84,6 +95,7 @@ export const Settings = ({ data }: { data: FormSchema }) => {
                     defaultValue={val?.url}
                     placeholder="Link to social profile"
                     className="w-64"
+                    // @ts-ignore
                     {...register(`userLinks.${i}.value`)}
                   />
                 </div>
