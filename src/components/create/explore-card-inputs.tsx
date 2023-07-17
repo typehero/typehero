@@ -3,7 +3,7 @@
 import { ThumbsUp, PlayCircle, Bookmark } from 'lucide-react';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { DifficultyBadge } from '../explore/difficulty-badge';
+
 import { Markdown } from '../ui/markdown';
 import { getRelativeTime } from '~/utils/relativeTime';
 
@@ -13,6 +13,7 @@ import { Label } from '~/components/ui/label';
 
 import { type Difficulty } from '@prisma/client';
 import { useState } from 'react';
+import { DifficultyBadge } from '../ui/difficulty-badge';
 
 // NOTE: this does not have hover: effects from explore-card
 const GRADIENTS_BY_DIFFICULTY = {
@@ -48,7 +49,7 @@ const ExploreCardInputs = ({
 
   return (
     <Card
-      className={`group overflow-hidden duration-300
+      className={`overflow-hidden duration-300
         ${GRADIENTS_BY_DIFFICULTY[difficulty]}
       `}
     >
