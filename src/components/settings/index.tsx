@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { Github, Linkedin, Twitter, Youtube, Link as LinkIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
-interface UserLinkType {
+export interface UserLinkType {
   id: string | null;
   url: string;
 }
@@ -65,9 +65,8 @@ export const Settings = ({ data }: { data: FormSchema }) => {
     console.log(updateProfileData);
 
     await updateProfile(updateProfileData);
-    // HACK: this is hard refresh
-    // TODO: fix this hack
-    // window.location.reload();
+
+    // This might not be the way?
     router.refresh();
   };
 
@@ -80,7 +79,7 @@ export const Settings = ({ data }: { data: FormSchema }) => {
           <Controller
             control={control}
             name="bio"
-            render={({ field: { onChange, onBlur, value, ref } }) => (
+            render={({ field: { onChange, value } }) => (
               <RichMarkdownEditor value={value} onChange={onChange} />
             )}
           />
@@ -91,7 +90,7 @@ export const Settings = ({ data }: { data: FormSchema }) => {
           {Array(4)
             .fill('')
             .map((_, i) => {
-              const val: any = data.userLinks[i];
+              const val: UserLinkType = data.userLinks[i];
               return (
                 <div key={`url-${i}`} className="flex items-center gap-2">
                   <MagikcIcon url={val?.url ?? ''} />

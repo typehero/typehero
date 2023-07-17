@@ -4,17 +4,16 @@ import { getServerSession } from 'next-auth';
 
 import { prisma } from '~/server/db';
 import { authOptions } from '~/server/auth';
+import type { UserLinkType } from '.';
 
-import { UserLink } from '@prisma/client';
 /**
  * This will only let you update your own profile
  * @param profileData
  */
-export async function updateProfile(profileData: {
-  bio: string;
-  userLinks: { id: string | null; url: string }[];
-}) {
+// TODO: add transactions to this update #GFI
+export async function updateProfile(profileData: { bio: string; userLinks: UserLinkType[] }) {
   const session = await getServerSession(authOptions);
+
   // 1. Checks.
   if (!session?.user.id) return 'unauthorized';
 
