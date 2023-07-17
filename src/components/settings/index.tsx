@@ -8,6 +8,7 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { RichMarkdownEditor } from '../ui/rich-markdown-editor';
 import { Github, Linkedin, Twitter, Youtube, Link as LinkIcon } from 'lucide-react';
+import { useRouter } from "next/navigation"
 
 export interface UserLinkType {
   id: string | null;
@@ -34,6 +35,7 @@ const formSchema = z.object({
 });
 
 export const Settings = ({ data }: { data: FormSchema }) => {
+  const router = useRouter()
   const { control, getValues, trigger, register } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -62,7 +64,7 @@ export const Settings = ({ data }: { data: FormSchema }) => {
     await updateProfile(updateProfileData);
 
     // This might not be the way?
-    // router.refresh();
+    router.refresh();
   };
 
   return (

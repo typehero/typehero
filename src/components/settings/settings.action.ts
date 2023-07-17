@@ -14,20 +14,20 @@ import type { UserLinkType } from '.';
 export async function updateProfile(profileData: { bio: string; userLinks: UserLinkType[] }) {
   const session = await getServerSession(authOptions);
 
-  // 1. Checks.
+  // 1. Checks that the user is logged in
   if (!session?.user.id) return 'unauthorized';
 
-  // 2. Update the user bio field
+  // 2. Update the user bio field in the db
   await prisma.user.update({
     where: { id: session?.user.id },
     data: { bio: profileData.bio },
   });
 
-  // 2. Update the users links
+  // 3. Update the users links in the db
   await prisma.$transaction(
     profileData.userLinks.map((link) =>
       prisma.userLink.upsert({
-        where: { id: link.id ?? '-1' },
+        where: { id: link.id ?? '' },
         update: { url: link.url },
         create: {
           url: link.url,
@@ -37,13 +37,14 @@ export async function updateProfile(profileData: { bio: string; userLinks: UserL
     ),
   );
 
-  // filter for all links that are empty string and delete from db
-  const emptyLinks = profileData.userLinks.filter((link) => link.url === '');
-  await prisma.userLink.deleteMany({
-    where: {
-      id: {
-        in: emptyLinks.map((link) => link.id ?? '-1'),
-      },
-    },
-  });
+  // TODO: fix deleting
+  // 4. filter for all links that are empty string and delete from db
+  // const emptyLinks = profileData.userLinks.filter((link) => link.url === '');
+  // await prisma.userLink.deleteMany({
+  //   where: {
+  //     id: {
+  //       in: emptyLinks.map((link) => link.id ?? '-1'),
+  //     },
+  //   },
+  // });
 }
