@@ -18,7 +18,6 @@ import { reportChallengeComment } from './comment.action';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 import { UserBadge } from '~/components/ui/user-badge';
 import { useSession } from 'next-auth/react';
-// import { Markdown } from '~/components/ui/markdown';
 
 interface CommentProps {
   comment: ChallengeRouteData['comment'][number];
@@ -136,14 +135,24 @@ const Comment = ({ comment }: CommentProps) => {
         </div>
 
         <div className="flex gap-2">
+        <div className="flex items-center gap-2">
+          <div
+            onClick={() => {
+              copyPathNotifyUser();
+            }}
+            className=" flex items-center text-neutral-500 hover:text-neutral-400"
+          >
+            <Share className="h-3 w-3 mr-0.5" />
+            <small className="font-md text-sm leading-none hover:underline">Share</small>
+          </div>
           {/* TODO: make dis work */}
-          <button className="flex cursor-pointer items-center gap-1 text-sm text-neutral-400 duration-200 hover:text-neutral-500 hover:underline dark:text-neutral-600 dark:hover:text-neutral-500">
+          <button className="flex cursor-pointer items-center gap-1 text-sm text-neutral-500 duration-200 hover:text-neutral-400 hover:underline dark:text-neutral-500 dark:hover:text-neutral-400">
             <Reply className="h-3 w-3" />
             Reply
           </button>
           {/* TODO: make dis work */}
           {isAuthor ? (
-            <button className="flex cursor-pointer items-center gap-1 text-sm text-neutral-400 duration-200 hover:text-neutral-500 hover:underline dark:text-neutral-600 dark:hover:text-neutral-500">
+            <button className="flex cursor-pointer items-center gap-1 text-sm text-neutral-500 duration-200 hover:text-neutral-400 hover:underline dark:text-neutral-500 dark:hover:text-neutral-400">
               <Trash2 className="h-3 w-3" />
               Delete
             </button>
