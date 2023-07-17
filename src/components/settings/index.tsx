@@ -1,6 +1,6 @@
 'use client';
 
-import { useFieldArray, useForm } from 'react-hook-form';
+import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { updateProfile } from './settings.action';
@@ -77,11 +77,15 @@ export const Settings = ({ data }: { data: FormSchema }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <h4 className="text-xl font-bold">Tell us about yourself</h4>
         <div className="h-[300px]">
-          {/* TODO:: do we need to connect this to hook form? */}
-          <RichMarkdownEditor value={bio} onChange={(val) => setBio(val)} />
+          <Controller
+            control={control}
+            name="bio"
+            render={({ field: { onChange, onBlur, value, ref } }) => (
+              <RichMarkdownEditor value={value} onChange={onChange} />
+            )}
+          />
         </div>
 
-        {}
         <div className="mt-8 flex flex-col items-start space-y-3">
           <h4 className="text-xl font-bold">Social accounts</h4>
           {Array(4)

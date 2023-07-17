@@ -15,9 +15,14 @@ export async function updateProfile(profileData: {
   userLinks: { id: string | null; url: string }[];
 }) {
   const session = await getServerSession(authOptions);
-
   // 1. Checks.
   if (!session?.user.id) return 'unauthorized';
+
+  // 2. Update the user bio field
+  await prisma.user.update({
+    where: { id: session?.user.id },
+    data: { bio: profileData.bio },
+  });
 
   // 2. Update the users links
   await prisma.$transaction(
