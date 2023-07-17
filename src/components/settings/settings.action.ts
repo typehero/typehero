@@ -23,28 +23,29 @@ export async function updateProfile(profileData: { bio: string; userLinks: UserL
     data: { bio: profileData.bio },
   });
 
-  // 3. Update the users links in the db
+  // 3. Update the users links in the db if the url is not empty
   await prisma.$transaction(
-    profileData.userLinks.map((link) =>
-      prisma.userLink.upsert({
-        where: { id: link.id ?? '' },
-        update: { url: link.url },
-        create: {
-          url: link.url,
-          user: { connect: { id: session?.user.id } },
-        },
-      }),
-    ),
+    profileData.userLinks
+      .filter((link) => link.url !== '')
+      .map((link) =>
+        prisma.userLink.upsert({
+          where: { id: link.id ?? '' },
+          update: { url: link.url },
+          create: {
+            url: link.url,
+            user: { connect: { id: session?.user.id } },
+          },
+        }),
+      ),
   );
 
-  // TODO: fix deleting
-  // 4. filter for all links that are empty string and delete from db
-  // const emptyLinks = profileData.userLinks.filter((link) => link.url === '');
-  // await prisma.userLink.deleteMany({
-  //   where: {
-  //     id: {
-  //       in: emptyLinks.map((link) => link.id ?? '-1'),
-  //     },
-  //   },
-  // });
+  // 4. Filter for all links that are empty string and delete from db
+  const emptyLinks = profileData.userLinks.filter((link) => link.url === '');
+  await prisma.userLink.deleteMany({
+    where: {
+      id: {
+        in: emptyLinks.map((link) => link.id ?? '-1'),
+      },
+    },
+  });
 }
