@@ -71,7 +71,7 @@ const Community = async function () {
         </div>
       </div>
       <div className="relative flex-1 pb-36 pl-4 lg:pb-0">
-        <div className="absolute -top-14 left-12 flex w-[calc(100%-5rem)] flex-wrap gap-x-0 gap-y-12">
+        <div className="absolute -top-[3.875rem] left-[3.25rem] flex w-[calc(100%-5rem)] flex-wrap gap-x-2 gap-y-[3.75rem]">
           {avatars.map((avatar) => (
             <div
               key={avatar.id}
@@ -80,7 +80,7 @@ const Community = async function () {
             ></div>
           ))}
         </div>
-        <div className="flex flex-wrap gap-x-0 gap-y-12">
+        <div className="flex flex-wrap gap-x-2 gap-y-[3.75rem]">
           {avatars.map((avatar) => (
             <div
               key={avatar.id}
