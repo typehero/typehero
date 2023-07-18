@@ -153,13 +153,10 @@ main {
   @apply bg-neutral-300 dark:bg-zinc-600;
 }
 
-.background {
-  background-size: 2.4rem 2.4rem;
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-}
-
-.movingbackground {
+.moving-grid-background {
+  background-size: 2.5rem 2.5rem;
+  background-image: linear-gradient(to right, #8882 1px, transparent 1px),
+    linear-gradient(to bottom, #8882 1px, transparent 1px);
   animation: movingbackground 60s linear infinite !important;
 }
 
@@ -169,5 +166,11 @@ main {
   }
   100% {
     background-position: 100% 0;
+  }
+}
+
+@media(prefers-reduced-motion: reduce) {
+  .moving-grid-background {
+    animation: none !important;
   }
 }
