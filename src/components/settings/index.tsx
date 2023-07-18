@@ -11,6 +11,8 @@ import { Github, Linkedin, Twitter, Youtube, Link as LinkIcon } from 'lucide-rea
 import { toast } from '../ui/use-toast';
 import { ToastAction } from '../ui/toast';
 
+import { ErrorMessage } from '@hookform/error-message';
+
 export interface UserLinkType {
   id: string | null;
   url: string;
@@ -27,16 +29,21 @@ const formSchema = z.object({
   // TODO: make this have a good typesafe exp
   // userLinks: z.array(
   //   z.object({
-  //     id: z.string().nullable(),
+  //     id: z.union([z.string(), z.null()]),
   //     url: z.string().url(),
   //   }),
   // ),
   userLinks: z.any(),
-  bio: z.string(),
+  bio: z.string().optional(),
 });
 
 export const Settings = ({ data }: { data: FormSchema }) => {
-  const { control, getValues, register } = useForm<FormValues>({
+  const {
+    formState: { isValid, errors },
+    control,
+    getValues,
+    register,
+  } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       ...data,
@@ -49,6 +56,15 @@ export const Settings = ({ data }: { data: FormSchema }) => {
   });
 
   const onSubmit = async (values: FormValues) => {
+    if (!isValid) {
+      toast({
+        variant: 'destructive',
+        title: 'You must put a valid link',
+        action: <ToastAction altText="Error in urls">Error in url</ToastAction>,
+      });
+      return;
+    }
+
     const userLinks = data.userLinks.map((link: UserLinkType, i: number) => ({
       ...link,
       // @ts-ignore
@@ -65,7 +81,7 @@ export const Settings = ({ data }: { data: FormSchema }) => {
 
     toast({
       variant: 'success',
-      title: 'Uh oh! You still have errors.',
+      title: 'Your settings have been updated',
       action: <ToastAction altText="Settings updated">Settings updated</ToastAction>,
     });
   };
@@ -84,6 +100,12 @@ export const Settings = ({ data }: { data: FormSchema }) => {
             )}
           />
         </div>
+
+        <ErrorMessage
+          errors={errors}
+          name="userLinks"
+          render={({ message }) => <p>{message}</p>}
+        />
 
         <div className="mt-8 flex flex-col items-start space-y-3">
           <h4 className="text-xl font-bold">Social accounts</h4>
