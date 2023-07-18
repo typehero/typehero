@@ -3,7 +3,6 @@ import { Circle, Diamond, MessageCircle, Plus, Sparkle, ThumbsUp, Triangle } fro
 
 import { getRelativeTime } from '~/utils/relativeTime';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { Markdown } from '../ui/markdown';
 import { type ExploreChallengeData } from './';
 import { DifficultyBadge } from '../ui/difficulty-badge';
 import { Button } from '../ui/button';
