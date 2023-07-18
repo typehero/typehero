@@ -79,3 +79,90 @@ const Hero = () => (
   </div>
 )
 export default Hero
+// import Link from 'next/link';
+
+// import { Github as GitHubIcon } from 'lucide-react';
+
+// import { Button } from '~/components/ui/button';
+// import { FakeChallengeCard } from '~/components/landing/fake-challenge-card';
+
+// const TypeHeroLogo = () => {
+//   return (
+//     <svg
+//       width="164"
+//       height="164"
+//       viewBox="0 0 164 164"
+//       fill="none"
+//       xmlns="http://www.w3.org/2000/svg"
+//     >
+//       <path
+//         d="M0 29.8182C0 13.3501 13.3501 0 29.8182 0H134.182C150.65 0 164 13.3501 164 29.8182V134.182C164 150.65 150.65 164 134.182 164H29.8182C13.3501 164 0 150.65 0 134.182V29.8182Z"
+//         fill="#3178C6"
+//       />
+//       <path
+//         fillRule="evenodd"
+//         clipRule="evenodd"
+//         d="M71.4351 80.307H91.9394V67.0909H34.7879V80.307H55.1919V139.152H71.4351V80.307Z"
+//         fill="white"
+//       />
+//       <path
+//         d="M91.9394 139.152V67.0909H106.946V96.9549H129.078V67.0909H144.121V139.152H129.078V109.182H106.946V139.152H91.9394Z"
+//         fill="white"
+//       />
+//     </svg>
+//   );
+// };
+
+// export const Hero = () => {
+//   return (
+//     <section className="flex justify-center" id="hero">
+//       <div className="flex w-full max-w-6xl flex-col items-center px-8">
+//         <div className="flex flex-row">
+//           <div className="flex w-full flex-col justify-center gap-10">
+//             <div className="relative flex w-full items-center justify-start gap-4">
+//               <div className="absolute left-1/2 top-1/2 -z-10 hidden h-64 w-64 -translate-x-[30%] -translate-y-[50%] rounded-full bg-slate-400/20 blur-3xl dark:block lg:h-96 lg:w-96"></div>
+//               <div className="absolute right-1/2 top-1/2 -z-10 hidden h-64 w-64 -translate-y-[40%] rounded-full bg-[#3178c6]/20 blur-3xl dark:block lg:h-96 lg:w-96"></div>
+//               <TypeHeroLogo />
+//               <h1 className="bg-gradient-to-r from-[#3178c6] to-black bg-clip-text text-8xl font-extrabold leading-[78px] text-transparent dark:to-white">
+//                 type
+//                 <br />
+//                 hero
+//               </h1>
+//             </div>
+//             <p className="text-base font-medium leading-7 text-neutral-700 dark:text-neutral-300">
+//               Connect, collaborate, and grow with a community of TypeScript developers. Elevate your
+//               skills trough interactive coding challenges, discussions, and knowledge sharing
+//             </p>
+//             <div className="flex gap-3">
+//               <Button className="font-bold" asChild>
+//                 <Link href="/explore">Explore challenges</Link>
+//               </Button>
+//               <Button
+//                 className="border-2 border-black font-bold dark:border-white dark:text-white"
+//                 asChild
+//                 variant="outline"
+//               >
+//                 <a className="inline-flex gap-1" href="https://github.com/">
+//                   <GitHubIcon />
+//                   GitHub
+//                 </a>
+//               </Button>
+//             </div>
+//           </div>
+
+//           <div className="relative h-[800px] w-full">
+//             <div className="background absolute -z-30 aspect-square h-[750px] w-[650px] translate-x-[-30px] shadow-[inset_0_0_5rem_3rem] shadow-background"></div>
+//             <FakeChallengeCard
+//               className="absolute z-10 translate-x-[77px] translate-y-[258px]"
+//               title="Implement a generic type"
+//             />
+//             <FakeChallengeCard
+//               className="absolute translate-x-[190px] translate-y-[116px]"
+//               title="Implement a JSON parser type"
+//             />
+//           </div>
+//         </div>
+//       </div>
+//     </section>
+//   );
+// };
