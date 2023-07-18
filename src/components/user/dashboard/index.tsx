@@ -11,9 +11,11 @@ import { Button } from '~/components/ui/button';
 import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '~/server/auth';
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 
 interface Props {
-  user: User;
+  // TODO: how do do this union type with just letting prisma halp
+  user: User & { userLinks: { id: string | null; url: string }[] };
 }
 
 export type UserData = NonNullable<Awaited<ReturnType<typeof getUserdata>>>;
@@ -54,12 +56,6 @@ export default async function Dashboard({ user }: Props) {
 
   return (
     <div className="container">
-      {session?.user.id === user.id && (
-        <Link href="/settings">
-          <Button>Edit Profile</Button>
-        </Link>
-      )}
-
       <div className="flex-1 space-y-4 pt-6">
         <div className="flex items-center gap-4">
           <div className="flex items-center space-x-2">
@@ -80,7 +76,31 @@ export default async function Dashboard({ user }: Props) {
               Joined {getRelativeTime(user.createdAt)}
             </p>
           </div>
+          {session?.user.id === user.id && (
+            <Link href="/settings">
+              <Button>Edit Profile</Button>
+            </Link>
+          )}
         </div>
+
+        <div className="max-w-md">
+          <ReactMarkdown>{user.bio}</ReactMarkdown>
+        </div>
+
+        {user.userLinks.length > 0 && (
+          <ol>
+            {user.userLinks
+              .filter((item) => item.url !== '')
+              .map((link) => (
+                <li key={link.id}>
+                  <a href={link.url} target="_blank" rel="noopener noreferrer">
+                    {link.url}
+                  </a>
+                </li>
+              ))}
+          </ol>
+        )}
+
         <Tabs defaultValue="in-progress" className="space-y-4">
           <TabsList className="rounded-full border border-border bg-background">
             <TabsTrigger
