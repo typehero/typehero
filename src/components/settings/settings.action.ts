@@ -4,7 +4,7 @@ import { getServerSession } from 'next-auth';
 
 import { prisma } from '~/server/db';
 import { authOptions } from '~/server/auth';
-import type { UserLinkType } from '.';
+import type { FormSchema, UserLinkType } from '.';
 import { revalidatePath } from 'next/cache';
 
 /**
@@ -12,7 +12,7 @@ import { revalidatePath } from 'next/cache';
  * @param profileData
  */
 // TODO: add transactions to this update #GFI
-export async function updateProfile(profileData: { bio: string; userLinks: UserLinkType[] }) {
+export async function updateProfile(profileData: FormSchema) {
   const session = await getServerSession(authOptions);
 
   // 1. Checks that the user is logged in
@@ -26,17 +26,16 @@ export async function updateProfile(profileData: { bio: string; userLinks: UserL
 
   // 3. Update the users links in the db if the url is not empty
   await prisma.$transaction(
-    profileData.userLinks
-      .map((link) =>
-        prisma.userLink.upsert({
-          where: { id: link.id ?? '' },
-          update: { url: link.url },
-          create: {
-            url: link.url,
-            user: { connect: { id: session?.user.id } },
-          },
-        }),
-      ),
+    profileData.userLinks.map((link) =>
+      prisma.userLink.upsert({
+        where: { id: link.id ?? '' },
+        update: { url: link.url },
+        create: {
+          url: link.url,
+          user: { connect: { id: session?.user.id } },
+        },
+      }),
+    ),
   );
 
   // do this after we do the shit

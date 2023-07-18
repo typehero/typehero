@@ -1,5 +1,5 @@
 import { useTheme } from 'next-themes';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 import MDEditor, { commands, type ICommand, EditorContext } from '@uiw/react-md-editor';
 
@@ -59,9 +59,11 @@ interface Props {
 
 export function RichMarkdownEditor({ value, onChange }: Props) {
   const { theme } = useTheme();
-  theme == 'dark'
-    ? document.documentElement.setAttribute('data-color-mode', 'dark')
-    : document.documentElement.setAttribute('data-color-mode', 'light');
+  useEffect(() => {
+    theme == 'dark'
+      ? document.documentElement.setAttribute('data-color-mode', 'dark')
+      : document.documentElement.setAttribute('data-color-mode', 'light');
+  }, [theme]);
 
   return (
     <div className="h-full flex-1">
