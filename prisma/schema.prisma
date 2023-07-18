@@ -114,18 +114,15 @@ model User {
 
   challengeReports          ChallengeReport[] @relation(name: "authored_challenge_reports")
   moderatedChallengeReports ChallengeReport[] @relation(name: "moderated_challenge_reports")
-  commentReports            CommentReport[]   @relation(name: "authored_comment_reports")
-  moderatedCommentReports   CommentReport[]   @relation(name: "moderated_comment_reports")
 
   bookmark        Bookmark[]
   sharedSolution  SharedSolution[]
-  comment         ChallengeComment[]
-  reply           ChallengeReply[]
-  solutionComment SolutionComment[]
-  solutionReply   SolutionReply[]
+  comment Comment[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  reports      Report[] @relation("reporter")
+  reportsAbout Report[] @relation("reported_user")
 }
 
 model VerificationToken {
@@ -155,10 +152,11 @@ model Challenge {
 
   vote           Vote[]
   submission     Submission[]
-  comment        ChallengeComment[]
+  comment         Comment[]
   report         ChallengeReport[]
   bookmark       Bookmark[]
   sharedSolution SharedSolution[]
+  Report         Report[]           @relation("report_challenge")
 
   @@index([userId])
 }
@@ -191,7 +189,8 @@ model SharedSolution {
   userId          String?
   challenge       Challenge?        @relation(fields: [challengeId], references: [id])
   challengeId     Int?
-  solutionComment SolutionComment[]
+  solutionComment Comment[]
+  Report          Report[]
 
   @@index([userId])
   @@index([challengeId])
@@ -211,64 +210,6 @@ model Submission {
 
   @@index([userId])
   @@index([challengeId])
-}
-
-model ChallengeComment {
-  id            Int              @id @default(autoincrement())
-  createdAt     DateTime         @default(now())
-  user          User             @relation(fields: [userId], references: [id])
-  userId        String
-  challenge     Challenge        @relation(fields: [challengeId], references: [id])
-  challengeId   Int
-  text          String           @db.VarChar(1000)
-  visibility    Visibility       @default(VISIBLE)
-  replies       ChallengeReply[]
-  CommentReport CommentReport[]
-
-  @@index([userId])
-  @@index([challengeId])
-}
-
-model ChallengeReply {
-  id        Int              @id @default(autoincrement())
-  createdAt DateTime         @default(now())
-  user      User             @relation(fields: [userId], references: [id])
-  userId    String
-  comment   ChallengeComment @relation(fields: [commentId], references: [id])
-  commentId Int
-  text      String
-
-  @@index([userId])
-  @@index([commentId])
-}
-
-model SolutionComment {
-  id            Int             @id @default(autoincrement())
-  createdAt     DateTime        @default(now())
-  user          User            @relation(fields: [userId], references: [id])
-  userId        String
-  solution      SharedSolution  @relation(fields: [solutionId], references: [id])
-  solutionId    Int
-  text          String          @db.VarChar(1000)
-  visibility    Visibility      @default(VISIBLE)
-  solutionReply SolutionReply[]
-  CommentReport CommentReport[]
-
-  @@index([userId])
-  @@index([solutionId])
-}
-
-model SolutionReply {
-  id         Int             @id @default(autoincrement())
-  createdAt  DateTime        @default(now())
-  user       User            @relation(fields: [userId], references: [id])
-  userId     String
-  solution   SolutionComment @relation(fields: [solutionId], references: [id])
-  solutionId Int
-  text       String
-
-  @@index([userId])
-  @@index([solutionId])
 }
 
 model ChallengeReport {
@@ -301,41 +242,6 @@ model ChallengeReport {
   @@index([moderatorId])
 }
 
-model CommentReport {
-  id Int @id @default(autoincrement())
-
-  // meta information
-  text   String?      @db.MediumText
-  status ReportStatus @default(PENDING)
-
-  // report types
-  threats    Boolean @default(false)
-  hateSpeech Boolean @default(false)
-  spam       Boolean @default(false)
-  bullying   Boolean @default(false)
-
-  // user info
-  author      User    @relation(fields: [authorId], references: [id], name: "authored_comment_reports")
-  authorId    String
-  moderator   User?   @relation(fields: [moderatorId], references: [id], name: "moderated_comment_reports")
-  moderatorId String?
-
-  // attached comments
-  challengeComment   ChallengeComment? @relation(fields: [challengeCommentId], references: [id])
-  challengeCommentId Int?
-  solutionComment    SolutionComment?  @relation(fields: [solutionCommendId], references: [id])
-  solutionCommendId  Int?
-
-  // time
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([moderatorId])
-  @@index([authorId])
-  @@index([challengeCommentId])
-  @@index([solutionCommendId])
-}
-
 model Bookmark {
   id          Int        @id @default(autoincrement())
   user        User       @relation(fields: [userId], references: [id])
@@ -345,4 +251,97 @@ model Bookmark {
 
   @@index([userId])
   @@index([challengeId])
+}
+
+enum ReportType {
+  CHALLENGE
+  USER
+  COMMENT
+  SOLUTION
+}
+
+enum IssueType {
+  DEROGATORY
+  OTHER
+  UNCLEAR
+  BULLYING
+  SPAM
+  HATESPEECH
+  THREAT
+}
+
+model ReportIssue {
+  id       Int       @id @default(autoincrement())
+  reportId Int
+  report   Report    @relation(fields: [reportId], references: [id])
+  type     IssueType
+
+  @@unique([id])
+  @@index([reportId])
+}
+
+model Report {
+  // Base table info
+  id Int @id @default(autoincrement())
+
+  text String @db.MediumText
+
+  type   ReportType
+  status ReportStatus
+  issues ReportIssue[]
+
+  // Reporter information
+  reporterId String
+  reporter   User   @relation("reporter", fields: [reporterId], references: [id])
+
+  // reported User Info
+  userId String?
+  user   User?   @relation("reported_user", fields: [userId], references: [id])
+
+  // reported Challenge Info
+  challengeId Int?
+  challenge   Challenge? @relation("report_challenge", fields: [challengeId], references: [id])
+
+  commentId Int?
+  comment   Comment? @relation("report_comment", fields: [commentId], references: [id])
+
+  solutionId Int?
+  solution   SharedSolution? @relation(fields: [solutionId], references: [id])
+
+  @@unique([id])
+  @@index([commentId])
+  @@index([reporterId])
+  @@index([userId])
+  @@index([challengeId])
+  @@index([solutionId])
+}
+
+enum CommentRoot {
+  SOLUTION
+  CHALLENGE
+}
+
+model Comment {
+  id       Int    @id @default(autoincrement())
+  text     String @db.MediumText
+  parentId Int?
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  rootType CommentRoot @default(CHALLENGE)
+
+  rootChallengeId Int?
+  rootChallenge   Challenge? @relation(fields: [rootChallengeId], references: [id])
+
+  rootSolutionId Int?
+  rootSolution   SharedSolution? @relation(fields: [rootSolutionId], references: [id])
+  Report         Report[]        @relation("report_comment")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([rootSolutionId])
+  @@index([rootChallengeId])
+  @@index([userId])
 }
