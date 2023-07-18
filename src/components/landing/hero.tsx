@@ -78,7 +78,12 @@ const Hero = () => (
       </div>
 
       <div className="group relative hidden h-[800px] overflow-visible rounded-full lg:block">
-        <div className="moving-grid-background absolute -inset-40 top-1/2 -z-30 aspect-square -translate-y-1/2 translate-x-[-30px] rounded-full shadow-[inset_0_0_5rem_3rem] shadow-background" />
+        <div className="absolute -inset-40 top-1/2 -z-30 aspect-square -translate-y-1/2 translate-x-[-30px] overflow-hidden rounded-full">
+          <div className="relative h-full w-full">
+            <div className="moving-grid-background absolute h-full w-[200%]"></div>
+            <div className="absolute h-full w-full rounded-full shadow-[inset_0_0_5rem_3rem] shadow-background"></div>
+          </div>
+        </div>
         <FakeChallengeCard
           className="absolute translate-x-[100px] translate-y-[116px] group-hover:z-10 group-hover:translate-x-[27px] group-hover:translate-y-[256px] xl:translate-x-[190px] xl:group-hover:translate-x-[77px]"
           title="Implement a JSON parser type"
