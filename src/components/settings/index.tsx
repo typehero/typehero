@@ -8,8 +8,8 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { RichMarkdownEditor } from '../ui/rich-markdown-editor';
 import { Github, Linkedin, Twitter, Youtube, Link as LinkIcon } from 'lucide-react';
-import { experimental_useFormStatus as useFormStatus } from 'react-dom';
-import { useEffect } from 'react';
+import { toast } from '../ui/use-toast';
+import { ToastAction } from '../ui/toast';
 
 export interface UserLinkType {
   id: string | null;
@@ -36,14 +36,7 @@ const formSchema = z.object({
 });
 
 export const Settings = ({ data }: { data: FormSchema }) => {
-  const { pending } = useFormStatus();
-  const {
-    formState: { isSubmitSuccessful },
-    reset,
-    control,
-    getValues,
-    register,
-  } = useForm<FormValues>({
+  const { control, getValues, register } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       ...data,
@@ -69,7 +62,12 @@ export const Settings = ({ data }: { data: FormSchema }) => {
 
     // call the server action
     await updateProfile(updateProfileData);
-    // reset(data);
+
+    toast({
+      variant: 'success',
+      title: 'Uh oh! You still have errors.',
+      action: <ToastAction altText="Settings updated">Settings updated</ToastAction>,
+    });
   };
 
   return (
@@ -89,29 +87,24 @@ export const Settings = ({ data }: { data: FormSchema }) => {
 
         <div className="mt-8 flex flex-col items-start space-y-3">
           <h4 className="text-xl font-bold">Social accounts</h4>
-          {data.userLinks
-            .sort((a, b) => b.url.localeCompare(a.url))
-            .map((val: UserLinkType, i: number) => {
-              return (
-                <div key={`url-${i}`} className="flex items-center gap-2">
-                  <MagikcIcon url={val?.url ?? ''} />
-                  <Input
-                    defaultValue={val?.url}
-                    placeholder="Link to social profile"
-                    className="w-64"
-                    // @ts-ignore
-                    {...register(`userLinks.${i}.value`)}
-                  />
-                  {JSON.stringify(val)}
-                </div>
-              );
-            })}
+          {fields.map((val: UserLinkType, i: number) => {
+            return (
+              <div key={`url-${i}`} className="flex items-center gap-2">
+                <MagikcIcon url={val?.url ?? ''} />
+                <Input
+                  defaultValue={val?.url}
+                  placeholder="Link to social profile"
+                  className="w-64"
+                  // @ts-ignore
+                  {...register(`userLinks.${i}.value`)}
+                />
+              </div>
+            );
+          })}
         </div>
-        <pre>{JSON.stringify(data, null, 2)}</pre>
 
         <Button type="submit" className="mt-6">
-          {!pending && 'Save'}
-          {pending && 'Saving...'}
+          Save
         </Button>
       </form>
     </div>
