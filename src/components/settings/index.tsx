@@ -8,7 +8,8 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { RichMarkdownEditor } from '../ui/rich-markdown-editor';
 import { Github, Linkedin, Twitter, Youtube, Link as LinkIcon } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { experimental_useFormStatus as useFormStatus } from 'react-dom';
+import { useEffect } from 'react';
 
 export interface UserLinkType {
   id: string | null;
@@ -35,15 +36,21 @@ const formSchema = z.object({
 });
 
 export const Settings = ({ data }: { data: FormSchema }) => {
-  const router = useRouter();
-  const { control, getValues, trigger, register } = useForm < FormValues > ({
+  const { pending } = useFormStatus();
+  const {
+    formState: { isSubmitSuccessful },
+    reset,
+    control,
+    getValues,
+    register,
+  } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       ...data,
     },
   });
 
-  useFieldArray({
+  const { fields } = useFieldArray({
     control,
     name: 'userLinks',
   });
@@ -62,20 +69,13 @@ export const Settings = ({ data }: { data: FormSchema }) => {
 
     // call the server action
     await updateProfile(updateProfileData);
-
-    // This might not be the way?
-    router.refresh();
+    // reset(data);
   };
 
   return (
     <div className="container">
       <h2 className="mt-10 text-3xl font-bold">Profile</h2>
-      <form
-        action={async () => {
-          const valid = await trigger();
-          if (valid) onSubmit(getValues());
-        }}
-      >
+      <form action={() => onSubmit(getValues())}>
         <h4 className="mb-4 text-xl">Tell us about yourself</h4>
         <div className="h-[300px] w-[600px]">
           <Controller
@@ -89,25 +89,29 @@ export const Settings = ({ data }: { data: FormSchema }) => {
 
         <div className="mt-8 flex flex-col items-start space-y-3">
           <h4 className="text-xl font-bold">Social accounts</h4>
-          {data.userLinks.map((val: UserLinkType, i: number) => {
-            return (
-              <div key={`url-${i}`} className="flex items-center gap-2">
-                <MagikcIcon url={val?.url ?? ''} />
-                <Input
-                  defaultValue={val?.url}
-                  placeholder="Link to social profile"
-                  className="w-64"
-                  // @ts-ignore
-                  {...register(`userLinks.${i}.value`)}
-                />
-                {JSON.stringify(val)}
-              </div>
-            );
-          })}
+          {data.userLinks
+            .sort((a, b) => b.url.localeCompare(a.url))
+            .map((val: UserLinkType, i: number) => {
+              return (
+                <div key={`url-${i}`} className="flex items-center gap-2">
+                  <MagikcIcon url={val?.url ?? ''} />
+                  <Input
+                    defaultValue={val?.url}
+                    placeholder="Link to social profile"
+                    className="w-64"
+                    // @ts-ignore
+                    {...register(`userLinks.${i}.value`)}
+                  />
+                  {JSON.stringify(val)}
+                </div>
+              );
+            })}
         </div>
+        <pre>{JSON.stringify(data, null, 2)}</pre>
 
         <Button type="submit" className="mt-6">
-          Update Profile
+          {!pending && 'Save'}
+          {pending && 'Saving...'}
         </Button>
       </form>
     </div>
