@@ -1,8 +1,9 @@
 'use client';
+import { Keyboard as KeyboardIcon } from 'lucide-react';
 
 export function Footsies() {
   return (
-    <footer className="flex flex-col items-center text-sm font-light text-neutral-400 dark:text-neutral-700">
+    <footer className="flex flex-col items-center text-sm font-light">
       {/* squiggly divider line */}
       <svg
         aria-hidden="true"
@@ -22,7 +23,15 @@ export function Footsies() {
         </pattern>
         <rect width="100%" height="100%" fill="url(#a)" />
       </svg>
-      <div className="my-12">© 2069 Type Hero</div>
+      {/* <h2 className="text-4xl font-bold">Early birds get the perks</h2>
+      <p className="max-w-[50ch] bg-transparent px-8 lg:px-0 text-center lg:text-left text-black/50 dark:text-white/50">
+        TypeHero is currently under construction. We’ll
+        let you know as soon as it’s ready! 
+      </p> */}
+      <div className="my-12 container px-10 md:px-24 flex flex-col lg:flex-row gap-6 justify-between">
+        <div className="flex items-center gap-2">Built with <KeyboardIcon className="h-4 w-4 text-red-500" /> by the Trash Devs community. The source code will soon™️ be available on GitHub</div>
+        <div className="text-neutral-500">© 2069 Type Hero</div>
+      </div>
     </footer>
   );
 }
