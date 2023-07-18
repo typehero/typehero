@@ -72,15 +72,16 @@ const Hero = () => (
         </div>
       </div>
     
-    <div className="relative h-[800px] lg:block overflow-visible hidden">
+    <div className="relative h-[800px] group rounded-full lg:block overflow-visible hidden">
         <div className="moving-grid-background top-1/2 -translate-y-1/2 rounded-full -inset-40 absolute -z-30 aspect-square translate-x-[-30px] shadow-[inset_0_0_5rem_3rem] shadow-background" />
         <FakeChallengeCard
-          className="absolute z-10 translate-x-[27px] xl:translate-x-[77px] translate-y-[256px]"
-          title="Implement a generic type"
+          className="absolute group-hover:z-10 group-hover:translate-x-[27px] group-hover:translate-y-[256px] xl:group-hover:translate-x-[77px] translate-x-[100px] xl:translate-x-[190px] translate-y-[116px]"
+          title="Implement a JSON parser type"
         />
         <FakeChallengeCard
-          className="absolute translate-x-[100px] xl:translate-x-[190px] translate-y-[116px]"
-          title="Implement a JSON parser type"
+          difficulty="EASY"
+          className="absolute group-hover:translate-x-[100px] group-hover:translate-y-[116px] xl:group-hover:translate-x-[190px] translate-x-[27px] xl:translate-x-[77px] translate-y-[256px]"
+          title="Implement a generic type"
         />
       </div>
     </div>
