@@ -78,6 +78,17 @@ model Role {
   role RoleTypes @unique
 }
 
+/// This is a table that contains all the user links they can add to profile
+model UserLink {
+  id   String @id @default(uuid())
+  user User[]
+  url  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+}
+
 model User {
   id String @id @default(uuid())
 
@@ -86,6 +97,11 @@ model User {
   emailVerified DateTime?
   image         String?
   roles         Role[]
+
+  /// this is the bio that shows up on the profile page
+  bio       String     @default("") @db.VarChar(255)
+  /// this is the twitter URL that shows up on the profile page
+  userLinks UserLink[]
 
   status    UserStatus @default(PENDING)
   banReason String?    @db.MediumText

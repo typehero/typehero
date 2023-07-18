@@ -5,6 +5,7 @@ interface Props {
     username: string;
   };
 }
+
 export default function Page({ params }: Props) {
   return <Profile username={params.username} />;
 }

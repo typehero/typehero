@@ -7,6 +7,10 @@ import { SolutionsTab } from '../dashboard/solutions-tab';
 import type { User } from '@prisma/client';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { prisma } from '~/server/db';
+import { Button } from '~/components/ui/button';
+import Link from 'next/link';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '~/server/auth';
 
 interface Props {
   user: User;
@@ -41,6 +45,7 @@ async function getUserdata(id: string) {
 
 export default async function Dashboard({ user }: Props) {
   const userData = await getUserdata(user.id);
+  const session = await getServerSession(authOptions);
 
   // TODO: this seems sus
   if (!userData) {
@@ -48,7 +53,13 @@ export default async function Dashboard({ user }: Props) {
   }
 
   return (
-    <div className="container md:px-24">
+    <div className="container">
+      {session?.user.id === user.id && (
+        <Link href="/settings">
+          <Button>Edit Profile</Button>
+        </Link>
+      )}
+
       <div className="flex-1 space-y-4 pt-6">
         <div className="flex items-center gap-4">
           <div className="flex items-center space-x-2">
