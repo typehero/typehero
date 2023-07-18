@@ -1,18 +1,12 @@
-// eslint-disable-next-line
-const { fontFamily } = require('tailwindcss/defaultTheme') as typeof import('tailwindcss/defaultTheme');
+const { fontFamily } =
+  // eslint-disable-next-line
+  require('tailwindcss/defaultTheme') as typeof import('tailwindcss/defaultTheme');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ['class'],
   content: ['./app/**/*.{js,ts,jsx,tsx,mdx}', 'src/**/*.{ts,tsx}'],
   theme: {
-    container: {
-      center: true,
-      padding: '1rem',
-      screens: {
-        '2xl': '1400px',
-      },
-    },
     extend: {
       screens: {
         // iPad Pro vertical is 1024px exactly
@@ -78,5 +72,9 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography'), require('@tailwindcss/container-queries')],
+  plugins: [
+    require('tailwindcss-animate'),
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/container-queries'),
+  ],
 };

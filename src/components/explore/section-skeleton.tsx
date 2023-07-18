@@ -3,7 +3,7 @@ import { ExploreCardSkeleton } from './explore-card-skeleton';
 
 export function ExploreSectionSkeleton() {
   return (
-    <div className="p-5 container md:px-24">
+    <div className="container p-5  ">
       <div className="flex items-center justify-center">
         <Skeleton className="my-4 h-10 w-1/3 rounded-lg bg-zinc-300 dark:bg-zinc-700" />
       </div>

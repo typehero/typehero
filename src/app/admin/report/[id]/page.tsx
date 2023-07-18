@@ -38,7 +38,7 @@ const Report = async function (props: Props) {
   } = await getChallenge(idNum);
 
   return (
-    <div className="container md:px-24">
+    <div className="container  ">
       <div className="sticky top-0 z-50 flex items-center justify-between bg-background/80">
         <Text intent="h1" color="primary">
           Challenge Report
@@ -122,6 +122,6 @@ const Report = async function (props: Props) {
       </section>
     </div>
   );
-}
+};
 
 export default Report;

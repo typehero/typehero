@@ -146,7 +146,7 @@ main {
   background-color: transparent;
 }
 .custom-scrollable-element::-webkit-scrollbar-thumb {
-  @apply bg-neutral-300/50 dark:bg-zinc-700/50 rounded-l-xl;
+  @apply rounded-l-xl bg-neutral-300/50 dark:bg-zinc-700/50;
 }
 
 .custom-scrollable-element::-webkit-scrollbar-thumb:hover {
@@ -169,8 +169,12 @@ main {
   }
 }
 
-@media(prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce) {
   .moving-grid-background {
     animation: none !important;
   }
+}
+
+.container {
+  @apply mx-auto max-w-[1400px] px-4 md:px-24;
 }

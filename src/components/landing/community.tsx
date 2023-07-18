@@ -27,11 +27,9 @@ const Community = async function () {
     return response.data.map((contributor) => contributor);
   }
   const avatars = await getOcto();
-  const avatars2 = avatars.slice(0, 8).concat(avatars.slice(16, 24));
-  const avatars3 = avatars.slice(8, 16).concat(avatars.slice(24, 24));
 
   return (
-    <section className="container flex min-h-[80lvh] flex-col justify-center md:px-24 lg:flex-row lg:items-center">
+    <section className="container flex min-h-[80lvh] flex-col justify-center   lg:flex-row lg:items-center">
       <div className="flex flex-1 flex-col items-center pb-36 lg:items-start lg:pb-0">
         <h2 className="mb-2 text-center text-4xl font-bold lg:text-left">Built by the community</h2>
         <span className="text-neutral-400 dark:text-neutral-600">
@@ -42,7 +40,7 @@ const Community = async function () {
           the contributors who made this possible so far.
         </p>
         <div className="flex flex-col gap-3 sm:flex-row">
-          <button className="group flex items-center gap-2 rounded-xl bg-neutral-200 px-3 py-2 text-sm font-bold duration-300 hover:bg-[#5865F2] hover:text-white dark:bg-neutral-800 dark:hover:bg-[#5865F2]">
+          <button className="group mx-auto flex items-center gap-2 rounded-xl bg-neutral-200 px-3 py-2 text-sm font-bold duration-300 hover:bg-[#5865F2] hover:text-white dark:bg-neutral-800 dark:hover:bg-[#5865F2]">
             <svg
               className="h-4 w-4 fill-current group-hover:rotate-[360deg]"
               style={{ transition: 'color 0s, transform 0.3s' }}
