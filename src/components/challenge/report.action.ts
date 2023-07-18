@@ -3,11 +3,6 @@
 import { prisma } from '~/server/db';
 import type { FormValues } from './description';
 
-export async function doTheThing() {
-  await Promise.resolve(0);
-  return 'done';
-}
-
 export async function addChallengeReport(challengeId: number, userId: string, data: FormValues) {
   if (userId === undefined) return 'not_logged_in';
 
