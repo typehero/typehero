@@ -20,6 +20,9 @@ export async function Profile({ username: usernameFromQuery }: Props) {
         equals: username,
       },
     },
+    include: {
+      userLinks: true,
+    }
   });
 
   if (!user || !username) {

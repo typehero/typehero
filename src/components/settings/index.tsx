@@ -10,7 +10,6 @@ import { RichMarkdownEditor } from '../ui/rich-markdown-editor';
 import { Github, Linkedin, Twitter, Youtube, Link as LinkIcon } from 'lucide-react';
 import { toast } from '../ui/use-toast';
 import { ToastAction } from '../ui/toast';
-
 import { ErrorMessage } from '@hookform/error-message';
 
 export interface UserLinkType {
@@ -26,18 +25,16 @@ interface FormValues {
 export type FormSchema = z.infer<typeof formSchema>;
 
 const formSchema = z.object({
-  // TODO: make this have a good typesafe exp
-  // userLinks: z.array(
-  //   z.object({
-  //     id: z.union([z.string(), z.null()]),
-  //     url: z.string().url(),
-  //   }),
-  // ),
-  userLinks: z.any(),
+  userLinks: z.array(
+    z.object({
+      id: z.union([z.string(), z.null()]),
+      url: z.union([z.string().url(), z.literal('')]),
+    }),
+  ),
   bio: z.string().optional(),
 });
 
-export const Settings = ({ data }: { data: FormSchema }) => {
+export const Settings = ({ profileData }: { profileData: FormSchema }) => {
   const {
     formState: { isValid, errors },
     control,
@@ -46,7 +43,7 @@ export const Settings = ({ data }: { data: FormSchema }) => {
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      ...data,
+      ...profileData,
     },
   });
 
@@ -65,19 +62,8 @@ export const Settings = ({ data }: { data: FormSchema }) => {
       return;
     }
 
-    const userLinks = data.userLinks.map((link: UserLinkType, i: number) => ({
-      ...link,
-      // @ts-ignore
-      url: values.userLinks[i].value,
-    }));
-
-    const updateProfileData = {
-      bio: values.bio,
-      userLinks,
-    };
-
     // call the server action
-    await updateProfile(updateProfileData);
+    await updateProfile(values);
 
     toast({
       variant: 'success',
@@ -101,28 +87,26 @@ export const Settings = ({ data }: { data: FormSchema }) => {
           />
         </div>
 
-        <ErrorMessage
-          errors={errors}
-          name="userLinks"
-          render={({ message }) => <p>{message}</p>}
-        />
+        {/* TODO: get errors working on each field */}
+        <ErrorMessage errors={errors} name="userLinks" render={({ message }) => <p>{message}</p>} />
 
         <div className="mt-8 flex flex-col items-start space-y-3">
           <h4 className="text-xl font-bold">Social accounts</h4>
-          {fields.map((val: UserLinkType, i: number) => {
-            return (
-              <div key={`url-${i}`} className="flex items-center gap-2">
-                <MagikcIcon url={val?.url ?? ''} />
-                <Input
-                  defaultValue={val?.url}
-                  placeholder="Link to social profile"
-                  className="w-64"
-                  // @ts-ignore
-                  {...register(`userLinks.${i}.value`)}
-                />
-              </div>
-            );
-          })}
+          {fields
+            .map((val, i) => {
+              return (
+                <div key={`url-${i}`} className="flex items-center gap-2">
+                  <MagikcIcon url={val?.url ?? ''} />
+                  <Input
+                    defaultValue={val?.url}
+                    placeholder="Link to social profile"
+                    className="w-64"
+                    // @ts-ignore
+                    {...register(`userLinks.${i}.url`)}
+                  />
+                </div>
+              );
+            })}
         </div>
 
         <Button type="submit" className="mt-6">
