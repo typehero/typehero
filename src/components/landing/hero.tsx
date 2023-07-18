@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { Github } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -79,11 +79,12 @@ const Hero = () => {
         </div>
 
         <div className="group relative hidden h-[800px] overflow-visible rounded-full lg:block">
-          <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.3  }}
-          className="moving-grid-background absolute -inset-40 top-1/2 -z-30 aspect-square -translate-y-1/2 translate-x-[-30px] rounded-full shadow-[inset_0_0_5rem_3rem] shadow-background" />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="moving-grid-background absolute -inset-40 top-1/2 -z-30 aspect-square -translate-y-1/2 translate-x-[-30px] rounded-full shadow-[inset_0_0_5rem_3rem] shadow-background"
+          />
           <FakeChallengeCard
             animation={{
               initial: {
@@ -113,10 +114,6 @@ const Hero = () => {
                 y: 70,
                 opacity: 1,
               },
-              transition: {
-                duration: 0.5,
-                delay: 0.3,
-              }
             }}
             difficulty="EASY"
             className="absolute"
