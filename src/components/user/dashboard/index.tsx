@@ -48,7 +48,7 @@ export default async function Dashboard({ user }: Props) {
   }
 
   return (
-    <div className="container">
+    <div className="container md:px-24">
       <div className="flex-1 space-y-4 pt-6">
         <div className="flex items-center gap-4">
           <div className="flex items-center space-x-2">

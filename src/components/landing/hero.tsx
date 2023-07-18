@@ -31,17 +31,17 @@ const TypeHeroLogo = () => {
 };
 
 const Hero = () => (
-<section className="overflow-x-hidden">
-  <svg className="pointer-events-none mix-blend-soft-light opacity-50 z-10 absolute left-0 top-0 h-full w-full" id="grain">
+<section className="lg:overflow-x-hidden">
+  {/* <svg className="pointer-events-none mix-blend-soft-light opacity-50 z-10 absolute left-0 top-0 h-full w-full" id="grain">
     <filter id="noise">
       <feTurbulence type="fractalNoise" baseFrequency="1" numOctaves="5" stitchTiles="stitch"></feTurbulence>
     </filter>
     <rect width="100%" height="100%" filter="url(#noise)"></rect>
-  </svg>
-  <div className="mb-[56px] container items-center justify-center grid lg:grid-cols-2 min-h-[calc(100lvh_-_112px)]">
+  </svg> */}
+  <div className="mb-[56px] container md:px-24 items-center justify-center grid lg:grid-cols-2 min-h-[calc(100lvh_-_112px)]">
     <div className="flex w-full flex-col justify-center items-center lg:items-start gap-10">
         <div className="relative flex w-full items-center justify-center lg:justify-start gap-4">
-          <div className="absolute left-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-x-[15%] -translate-y-[50%] rounded-full bg-slate-400/20 blur-3xl dark:block"></div>
+          <div className="absolute left-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-x-[15%] -translate-y-[50%] rounded-full bg-slate-400/10 blur-3xl dark:block"></div>
           <div className="absolute right-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-y-[40%] rounded-full bg-[#3178c6]/20 blur-3xl dark:block"></div>
           <TypeHeroLogo />
           <h1 className="bg-gradient-to-r from-[#3178c6] to-black bg-clip-text text-6xl sm:text-8xl font-extrabold sm:leading-[5.5rem] text-transparent dark:to-white">
@@ -72,14 +72,14 @@ const Hero = () => (
         </div>
       </div>
     
-    <div className="relative h-[800px] lg:block overflow-visible hidden  w-full">
-        <div className="background absolute -z-30 aspect-square h-[750px] w-[650px] translate-x-[-30px] shadow-[inset_0_0_5rem_3rem] shadow-background"></div>
+    <div className="relative h-[800px] lg:block overflow-visible hidden">
+        <div className="moving-grid-background top-1/2 -translate-y-1/2 rounded-full -inset-40 absolute -z-30 aspect-square translate-x-[-30px] shadow-[inset_0_0_5rem_3rem] shadow-background" />
         <FakeChallengeCard
-          className="absolute z-10 translate-x-[77px] translate-y-[258px]"
+          className="absolute z-10 translate-x-[27px] xl:translate-x-[77px] translate-y-[256px]"
           title="Implement a generic type"
         />
         <FakeChallengeCard
-          className="absolute translate-x-[190px] translate-y-[116px]"
+          className="absolute translate-x-[100px] xl:translate-x-[190px] translate-y-[116px]"
           title="Implement a JSON parser type"
         />
       </div>

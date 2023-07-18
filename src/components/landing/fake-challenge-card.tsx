@@ -25,7 +25,7 @@ export const FakeChallengeCard = ({ title, className }: FakeChallengeCardProps) 
       <div className="translate-x-1 text-xs">
         Implement the built-in <code>Pick</code> type.
       </div>
-      <div className="h-56 flex-grow rounded-xl bg-zinc-300/70 p-4 dark:bg-zinc-800/70">
+      <div className="h-56 mt-4 flex-grow rounded-xl bg-zinc-300/70 p-4 dark:bg-zinc-800/70">
         <svg
           width="256"
           height="193"
