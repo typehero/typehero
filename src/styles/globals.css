@@ -153,6 +153,12 @@ main {
   @apply bg-neutral-300 dark:bg-zinc-600;
 }
 
+.background {
+  background-size: 2.4rem 2.4rem;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+}
+
 .movingbackground {
   animation: movingbackground 60s linear infinite !important;
 }
