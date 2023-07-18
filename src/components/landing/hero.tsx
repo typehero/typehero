@@ -56,8 +56,9 @@ const Hero = () => (
           skills trough interactive coding challenges, discussions, and knowledge sharing
         </p>
         <div className="flex gap-3">
-          <Button className="font-bold rounded-xl py-2 px-4 flex items-center gap-2" asChild>
-            <Link href="/explore">Explore challenges</Link>
+          <Button className="font-bold relative rounded-xl py-2 px-4 flex items-center gap-2 group dark:hover:text-white duration-500 overflow-hidden">
+            <div className="absolute -translate-x-full h-44 w-44 group-hover:translate-x-0 duration-500 rounded-full bg-[#3178C6]"/>
+            <Link className="z-10" href="/explore">Explore challenges</Link>
           </Button>
           <Button
             className="border-2 rounded-xl py-2 px-4 flex items-center gap-2 dark:text-white"
