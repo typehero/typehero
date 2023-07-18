@@ -27,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Providers>
           <Navigation />
           <main className="flex-1">
-            <div className="h-full overflow-x-hidden">{children}</div>
+            <div className="h-full">{children}</div>
           </main>
           <Toaster />
         </Providers>
