@@ -3,10 +3,12 @@
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import remarkGfm from 'remark-gfm';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { vs, vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+
 import clsx from 'clsx';
 import { visit, SKIP, type BuildVisitor } from 'unist-util-visit';
 import type { Transformer } from 'unified';
+import { useTheme } from 'next-themes';
 
 const HTML_COMMENT_REGEX = new RegExp('<!--([\\s\\S]*?)-->', 'g');
 
@@ -36,6 +38,9 @@ function removeHtmlComments(): Transformer {
 }
 
 export function Markdown({ children, className }: { children: string; className?: string }) {
+  const { theme } = useTheme();
+  const syntaxHighlighterTheme = theme === 'light' ? vs : vscDarkPlus;
+
   return (
     <ReactMarkdown
       className={className}
@@ -55,7 +60,7 @@ export function Markdown({ children, className }: { children: string; className?
           const match = /language-(\w+)/.exec(className || '');
           return !inline && match ? (
             <SyntaxHighlighter
-              style={vscDarkPlus} // theme
+              style={syntaxHighlighterTheme} // theme
               className={clsx(className, 'rounded-xl dark:rounded-md')}
               language={match[1]}
               PreTag="section" // parent tag
