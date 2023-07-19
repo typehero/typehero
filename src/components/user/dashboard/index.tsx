@@ -7,14 +7,14 @@ import { SolutionsTab } from '../dashboard/solutions-tab';
 import type { User } from '@prisma/client';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { prisma } from '~/server/db';
-import ReportDialog from '~/components/report';
-import { ActionMenu } from '~/components/ui/action-menu';
 import UserHeader from './user-header';
 import { Button } from '~/components/ui/button';
 import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '~/server/auth';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
+import { MagicIcon } from '~/components/ui/magic-icon';
+import { stripProtocolAndWWW } from '~/utils/stringUtils';
 
 interface Props {
   // TODO: how do do this union type with just letting prisma halp
@@ -59,31 +59,35 @@ export default async function Dashboard({ user }: Props) {
 
   return (
     <div className="container">
-      <div className="flex-1 space-y-4 pt-6">
-        <div className="flex items-center gap-4">
-          <div className="flex items-center space-x-2">
+      <div className="flex-1 space-y-4 mt-10">
+        <div className="flex gap-4">
+          <div className="flex pace-x-2">
             <Image
               className="rounded-3xl"
               alt="user avatar"
               width="100"
               height="100"
-              src="/avatar.jpeg"
+              src={user.image ?? '/avatar.jpeg'}
             />
           </div>
-          <div>
-            <UserHeader user={user} />
-            <p
-              className="text-sm italic tracking-tight"
-              title={`Joined ${user.createdAt.toString()}`}
-            >
-              Joined {getRelativeTime(user.createdAt)}
-            </p>
+          <div className="flex w-full justify-between">
+            <div>
+              <UserHeader user={user} />
+              <p
+                className="text-sm italic tracking-tight"
+                title={`Joined ${user.createdAt.toString()}`}
+              >
+                Joined {getRelativeTime(user.createdAt)}
+              </p>
+            </div>
+            <div>
+              {session?.user.id === user.id && (
+                <Link href="/settings">
+                  <Button variant="outline">Edit Profile</Button>
+                </Link>
+              )}
+            </div>
           </div>
-          {session?.user.id === user.id && (
-            <Link href="/settings">
-              <Button>Edit Profile</Button>
-            </Link>
-          )}
         </div>
 
         <div className="max-w-md">
@@ -91,17 +95,23 @@ export default async function Dashboard({ user }: Props) {
         </div>
 
         {user.userLinks.length > 0 && (
-          <ol>
+          <div>
             {user.userLinks
               .filter((item) => item.url !== '')
               .map((link) => (
-                <li key={link.id}>
-                  <a href={link.url} target="_blank" rel="noopener noreferrer">
-                    {link.url}
+                <div className="flex gap-2" key={link.id}>
+                  <MagicIcon url={link.url} />
+                  <a
+                    className="hover:text-zinc-400"
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {stripProtocolAndWWW(link.url)}
                   </a>
-                </li>
+                </div>
               ))}
-          </ol>
+          </div>
         )}
 
         <Tabs defaultValue="in-progress" className="space-y-4">

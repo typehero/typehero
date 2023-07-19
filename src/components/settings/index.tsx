@@ -1,16 +1,16 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Github, Link as LinkIcon, Linkedin, Twitter, Youtube } from 'lucide-react';
 import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form';
 import * as z from 'zod';
 import { Button } from '../ui/button';
 import { Form, FormItem } from '../ui/form';
 import { Input } from '../ui/input';
 import { RichMarkdownEditor } from '../ui/rich-markdown-editor';
-import { ToastAction } from '../ui/toast';
 import { toast } from '../ui/use-toast';
 import { updateProfile } from './settings.action';
+import Link from 'next/link';
+import { MagicIcon } from '../ui/magic-icon';
 
 export interface UserLinkType {
   id: string | null;
@@ -29,8 +29,14 @@ const formSchema = z.object({
 
 export type FormSchema = z.infer<typeof formSchema>;
 
-export const Settings = ({ profileData }: { profileData: FormSchema }) => {
-  const form = useForm<FormSchema>({
+export const Settings = ({
+  profileData,
+  username,
+}: {
+  profileData: FormSchema;
+  username: string;
+}) => {
+  const form = useForm < FormSchema > ({
     resolver: zodResolver(formSchema),
     defaultValues: {
       ...profileData,
@@ -61,16 +67,26 @@ export const Settings = ({ profileData }: { profileData: FormSchema }) => {
     toast({
       variant: 'success',
       title: 'Your settings have been updated',
-      action: <ToastAction altText="Settings updated">Settings updated</ToastAction>,
     });
   };
 
   return (
     <div className="container">
-      <h2 className="mt-10 text-3xl font-bold">Profile</h2>
+      <div className="flex w-full justify-between mt-10">
+        <div className="mr-10">
+          <h2 className="text-3xl font-bold">Settings</h2>
+          <h4 className="text-xl font-bold mt-6 mb-4">Bio</h4>
+        </div>
+
+        <Link href={`@${username}`} className="mb-6">
+          <Button variant="outline" type="button">
+            View profile
+          </Button>
+        </Link>
+      </div>
+
       <Form {...form}>
         <form action={() => onSubmit(getValues())}>
-          <h4 className="mb-4 text-xl">Tell us about yourself</h4>
           <div className="h-[300px] w-[600px]">
             <Controller
               control={control}
@@ -110,14 +126,3 @@ export const Settings = ({ profileData }: { profileData: FormSchema }) => {
     </div>
   );
 };
-
-function MagicIcon({ url }: { url: string }) {
-  if (url.startsWith('https://github.com/')) return <Github className="h-5 w-5 text-neutral-400" />;
-  if (url.startsWith('https://twitter.com/'))
-    return <Twitter className="h-5 w-5 text-neutral-400" />;
-  if (url.startsWith('https://linked.in/'))
-    return <Linkedin className="h-5 w-5 text-neutral-400" />;
-  if (url.startsWith('https://youtube.com/'))
-    return <Youtube className="h-5 w-5 text-neutral-400" />;
-  return <LinkIcon className="h-5 w-5 text-neutral-400" />;
-}
