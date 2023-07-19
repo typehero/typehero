@@ -266,7 +266,12 @@ export const CodePanel = (props: Props) => {
       <div className="sticky top-0 flex h-[40px] flex-row-reverse items-center border-b border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
         <Dialog>
           <DialogTrigger>
-            <Settings size={20} className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" />
+            <Tooltip>
+              <TooltipTrigger>
+                <Settings size={20} className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" />
+              </TooltipTrigger>
+              <TooltipContent className="px-2 py-1">Settings</TooltipContent>
+            </Tooltip>
           </DialogTrigger>
           <DialogContent className="w-[200px]">
             <DialogHeader>
@@ -305,27 +310,25 @@ export const CodePanel = (props: Props) => {
         {editorState && <VimStatusBar editor={editorState} initVimMode={initVimMode} />}
         <div className="flex items-center justify-center gap-4">
           {props.extraButton}
-          <TooltipProvider>
-            <Tooltip delayDuration={0.05} open={session?.user?.id ? false : undefined}>
-              <TooltipTrigger asChild>
-                <span>
-                  <Button
-                    size="sm"
-                    className="cursor-pointer rounded-lg bg-emerald-600 duration-300 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
-                    // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                    onClick={handleSubmit}
-                    disabled={!initialTypecheckDone || !session?.user}
-                  >
-                    {!initialTypecheckDone && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    {props.submitText ?? 'Submit'}
-                  </Button>
-                </span>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Login to Submit</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span>
+                <Button
+                  size="sm"
+                  className="cursor-pointer rounded-lg bg-emerald-600 duration-300 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
+                  // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                  onClick={handleSubmit}
+                  disabled={!initialTypecheckDone || !session?.user}
+                >
+                  {!initialTypecheckDone && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  {props.submitText ?? 'Submit'}
+                </Button>
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Login to Submit</p>
+            </TooltipContent>
+          </Tooltip>
         </div>
       </div>
     </>
