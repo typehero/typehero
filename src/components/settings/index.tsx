@@ -4,13 +4,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form';
 import * as z from 'zod';
 import { Button } from '../ui/button';
-import { Form, FormItem } from '../ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
 import { RichMarkdownEditor } from '../ui/rich-markdown-editor';
 import { toast } from '../ui/use-toast';
 import { updateProfile } from './settings.action';
 import Link from 'next/link';
 import { MagicIcon } from '../ui/magic-icon';
+import { Select, SelectTrigger } from '@radix-ui/react-select';
 
 export interface UserLinkType {
   id: string | null;
@@ -21,10 +22,10 @@ const formSchema = z.object({
   userLinks: z.array(
     z.object({
       id: z.union([z.string(), z.null()]),
-      url: z.union([z.string().url(), z.literal('')]),
+      url: z.union([z.string().url().max(256), z.literal('')]),
     }),
   ),
-  bio: z.string().optional(),
+  bio: z.string().max(256).optional(),
 });
 
 export type FormSchema = z.infer<typeof formSchema>;
@@ -36,7 +37,7 @@ export const Settings = ({
   profileData: FormSchema;
   username: string;
 }) => {
-  const form = useForm < FormSchema > ({
+  const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       ...profileData,
@@ -72,10 +73,10 @@ export const Settings = ({
 
   return (
     <div className="container">
-      <div className="flex w-full justify-between mt-10">
+      <div className="mt-10 flex w-full justify-between">
         <div className="mr-10">
           <h2 className="text-3xl font-bold">Settings</h2>
-          <h4 className="text-xl font-bold mt-6 mb-4">Bio</h4>
+          <h4 className="mb-4 mt-6 text-xl font-bold">Bio</h4>
         </div>
 
         <Link href={`@${username}`} className="mb-6">
@@ -87,12 +88,15 @@ export const Settings = ({
 
       <Form {...form}>
         <form action={() => onSubmit(getValues())}>
-          <div className="h-[300px] w-[600px]">
-            <Controller
-              control={control}
+          <div >
+            <FormField
+              control={form.control}
               name="bio"
-              render={({ field: { onChange, value } }) => (
-                <RichMarkdownEditor value={value as string} onChange={onChange} />
+              render={({ field }) => (
+                <FormItem className="h-[300px] w-[600px]">
+                  <RichMarkdownEditor value={field.value as string} onChange={field.onChange} />
+                  <FormMessage />
+                </FormItem>
               )}
             />
           </div>
@@ -110,7 +114,7 @@ export const Settings = ({
                       {...register(`userLinks.${i}.url`)}
                     />
                     {errors.userLinks?.[i]?.url?.message && (
-                      <div className="text-red-500">{errors.userLinks?.[i]?.url?.message}</div>
+                      <div className="text-destructive">{errors.userLinks?.[i]?.url?.message}</div>
                     )}
                   </div>
                 </FormItem>
