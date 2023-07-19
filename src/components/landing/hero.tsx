@@ -77,22 +77,53 @@ const Hero = () => (
         </div>
       </div>
 
-      <div className="group relative hidden h-[800px] overflow-visible rounded-full lg:block">
+      <div className="relative hidden h-[800px] overflow-visible rounded-full lg:block">
         <div className="absolute -inset-40 top-1/2 -z-30 aspect-square -translate-y-1/2 translate-x-[-30px] overflow-hidden rounded-full">
           <div className="relative h-full w-full">
-            <div className="moving-grid-background absolute h-full w-[200%]"></div>
-            <div className="absolute h-full w-full rounded-full shadow-[inset_0_0_5rem_3rem] shadow-background"></div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="moving-grid-background absolute h-full w-[200%]"
+            />
+            <div className="absolute h-full w-full rounded-full shadow-[inset_0_0_5rem_3rem] shadow-background" />
           </div>
         </div>
-        <FakeChallengeCard
-          className="absolute translate-x-[100px] translate-y-[116px] group-hover:z-10 group-hover:translate-x-[27px] group-hover:translate-y-[256px] xl:translate-x-[190px] xl:group-hover:translate-x-[77px]"
-          title="Implement a JSON parser type"
-        />
-        <FakeChallengeCard
-          difficulty="EASY"
-          className="absolute translate-x-[27px] translate-y-[256px] group-hover:translate-x-[100px] group-hover:translate-y-[116px] xl:translate-x-[77px] xl:group-hover:translate-x-[190px]"
-          title="Implement a generic type"
-        />
+        <motion.div
+          initial={{
+            y: 80,
+            x: 140,
+            opacity: 0,
+          }}
+          animate={{
+            y: 70,
+            opacity: 1,
+          }}
+          className="group"
+        >
+          <FakeChallengeCard
+            difficulty="EASY"
+            className="absolute"
+            title="Implement a generic type"
+          />
+        </motion.div>
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 270,
+            x: 20,
+          }}
+          animate={{
+            y: 260,
+            opacity: 1,
+            transition: {
+              duration: 0.5,
+            },
+          }}
+          className="group"
+        >
+          <FakeChallengeCard className="absolute" title="Implement a JSON parser type" />
+        </motion.div>
       </div>
     </div>
   </section>
