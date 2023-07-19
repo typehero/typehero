@@ -15,7 +15,6 @@ export async function Explore() {
         We hope you find the <span className="font-semibold dark:text-neutral-200">perfect</span>{' '}
         challenge!
       </p>
-
       <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection title="Great for Beginners" fetcher={getEasyChallenges} />
       </Suspense>

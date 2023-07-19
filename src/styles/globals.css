@@ -154,18 +154,19 @@ main {
 }
 
 .moving-grid-background {
+  will-change: transform;
   background-size: 2.5rem 2.5rem;
   background-image: linear-gradient(to right, #8882 1px, transparent 1px),
     linear-gradient(to bottom, #8882 1px, transparent 1px);
-  animation: movingbackground 30s linear infinite !important;
+  animation: movingbackground 90s linear infinite !important;
 }
 
 @keyframes movingbackground {
   0% {
-    translate: 0 0;
+    transform: translate(0, 0);
   }
   100% {
-    translate: -50% 0;
+    transform: translate(0, -50%);
   }
 }
 
