@@ -59,9 +59,9 @@ export default async function Dashboard({ user }: Props) {
 
   return (
     <div className="container">
-      <div className="flex-1 space-y-4 pt-6">
-        <div className="flex items-center gap-4">
-          <div className="flex items-center space-x-2">
+      <div className="flex-1 space-y-4 mt-10">
+        <div className="flex gap-4">
+          <div className="flex pace-x-2">
             <Image
               className="rounded-3xl"
               alt="user avatar"
@@ -70,20 +70,24 @@ export default async function Dashboard({ user }: Props) {
               src={user.image ?? '/avatar.jpeg'}
             />
           </div>
-          <div>
-            <UserHeader user={user} />
-            <p
-              className="text-sm italic tracking-tight"
-              title={`Joined ${user.createdAt.toString()}`}
-            >
-              Joined {getRelativeTime(user.createdAt)}
-            </p>
+          <div className="flex w-full justify-between">
+            <div>
+              <UserHeader user={user} />
+              <p
+                className="text-sm italic tracking-tight"
+                title={`Joined ${user.createdAt.toString()}`}
+              >
+                Joined {getRelativeTime(user.createdAt)}
+              </p>
+            </div>
+            <div>
+              {session?.user.id === user.id && (
+                <Link href="/settings">
+                  <Button variant="outline">Edit Profile</Button>
+                </Link>
+              )}
+            </div>
           </div>
-          {session?.user.id === user.id && (
-            <Link href="/settings">
-              <Button variant="outline">Edit Profile</Button>
-            </Link>
-          )}
         </div>
 
         <div className="max-w-md">

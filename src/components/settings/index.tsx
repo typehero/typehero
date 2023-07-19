@@ -72,11 +72,12 @@ export const Settings = ({
 
   return (
     <div className="container">
-      <div className="flex items-end">
+      <div className="flex w-full justify-between mt-10">
         <div className="mr-10">
-          <h2 className="mt-10 text-3xl font-bold">Profile</h2>
-          <h4 className="mb-4 text-xl">Tell us about yourself</h4>
+          <h2 className="text-3xl font-bold">Settings</h2>
+          <h4 className="text-xl font-bold mt-6 mb-4">Bio</h4>
         </div>
+
         <Link href={`@${username}`} className="mb-6">
           <Button variant="outline" type="button">
             View profile
