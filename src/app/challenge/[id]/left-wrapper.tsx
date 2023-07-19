@@ -28,10 +28,7 @@ export function LeftWrapper({ challengeId, children }: Props) {
   }, [pathname]);
 
   return (
-    <Tabs
-      defaultValue={selectedTab}
-      className="flex h-full w-full flex-col overflow-hidden"
-    >
+    <Tabs defaultValue={selectedTab} className="flex h-full w-full flex-col overflow-hidden">
       <TabsList className="sticky top-0 z-10 grid h-auto w-full grid-cols-3 rounded-none rounded-tl-2xl rounded-tr-xl border-b border-zinc-300 bg-background/90 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
         <TabsTrigger
           value="description"

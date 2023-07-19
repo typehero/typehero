@@ -22,7 +22,7 @@ export async function Profile({ username: usernameFromQuery }: Props) {
     },
     include: {
       userLinks: true,
-    }
+    },
   });
 
   if (!user || !username) {

@@ -59,12 +59,7 @@ export default function ReportDialog({
   | ReportCommentDialogProps
   | ReportSolutionDialogProps
 >) {
-  const {
-    handleSubmit,
-    register,
-    control,
-    setValue,
-  } = useForm({
+  const { handleSubmit, register, control, setValue } = useForm({
     defaultValues: {
       derogatory: false,
       unclear: false,

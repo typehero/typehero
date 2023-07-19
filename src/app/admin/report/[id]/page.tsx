@@ -22,16 +22,8 @@ const Report = async function (props: Props) {
     return redirect('/admin');
   }
   // Grab the items.
-  const {
-    author,
-    challenge,
-    derogatory,
-    id,
-    moderatorId,
-    moderator,
-    unclear,
-    text,
-  } = await getChallenge(idNum);
+  const { author, challenge, derogatory, id, moderatorId, moderator, unclear, text } =
+    await getChallenge(idNum);
 
   return (
     <div className="container  ">

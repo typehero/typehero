@@ -1,17 +1,15 @@
 'use client';
 
-import Text from "~/components/ui/typography/typography";
-import { type User } from "@prisma/client";
-import ReportDialog from "~/components/report";
-import { ActionMenu } from "~/components/ui/action-menu";
+import Text from '~/components/ui/typography/typography';
+import { type User } from '@prisma/client';
+import ReportDialog from '~/components/report';
+import { ActionMenu } from '~/components/ui/action-menu';
 
 export interface UserHeaderProps {
   user: User;
 }
 
-export default function UserHeader({
-  user,
-}: UserHeaderProps) {
+export default function UserHeader({ user }: UserHeaderProps) {
   return (
     <div className="flex gap-4">
       <Text intent="h1">{user.name}</Text>
@@ -22,7 +20,7 @@ export default function UserHeader({
               key: 'report',
               label: 'Report',
               icon: 'Flag',
-            }
+            },
           ]}
           onChange={() => {
             // do nothing
@@ -30,5 +28,5 @@ export default function UserHeader({
         />
       </ReportDialog>
     </div>
-  )
+  );
 }

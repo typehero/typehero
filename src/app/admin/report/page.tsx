@@ -27,51 +27,46 @@ const f = cva('border p-4 rounded-xl', {
       [ReportType.USER]: 'border-green-300',
       [ReportType.COMMENT]: 'border-yellow-400',
       [ReportType.SOLUTION]: 'border-pink-300',
-    }
+    },
   },
   defaultVariants: {
-    type: 'USER'
-  }
+    type: 'USER',
+  },
 });
 
 export default async function ReportPage() {
   const reports = await getReports();
 
   const bob = reports.reduce((all, cur) => {
-    if(!all[cur.type]) all[cur.type] = [];
+    if (!all[cur.type]) all[cur.type] = [];
     all[cur.type].push(cur);
     return all;
-  }, {} as Record<ReportType, (typeof reports[0])[]>);
-  
+  }, {} as Record<ReportType, (typeof reports)[0][]>);
+
   return (
     <div className="container">
-      {
-        Object.entries(bob)
-          .map(([key, reports]) => {
-            return (
-              <div key={`types-${key}`}>
-                <header className="mb-4">
-                  <Text intent="h1">
-                    {key}
-                  </Text>
-                </header>
-                <section>
-                  {
-                    reports.map(report => (
-                      <div className={f({ type: report.type })} key={`report-${report.id}`}>
-                        Reported By: 
-                        {report.reporter.name} <br />
-                        {report.type === 'CHALLENGE' && report.challenge && report.challenge.name}
-                        <br />User being reported: 
-                        {report.type === 'USER' && report.user && report.user.name}<br />
-                      </div>
-                    ))
-                  }
-                </section>
-              </div>
-            )
-          })
-      }
+      {Object.entries(bob).map(([key, reports]) => {
+        return (
+          <div key={`types-${key}`}>
+            <header className="mb-4">
+              <Text intent="h1">{key}</Text>
+            </header>
+            <section>
+              {reports.map((report) => (
+                <div className={f({ type: report.type })} key={`report-${report.id}`}>
+                  Reported By:
+                  {report.reporter.name} <br />
+                  {report.type === 'CHALLENGE' && report.challenge && report.challenge.name}
+                  <br />
+                  User being reported:
+                  {report.type === 'USER' && report.user && report.user.name}
+                  <br />
+                </div>
+              ))}
+            </section>
+          </div>
+        );
+      })}
     </div>
   );
 }
