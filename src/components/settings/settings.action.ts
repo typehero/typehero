@@ -4,7 +4,7 @@ import { getServerSession } from 'next-auth';
 
 import { prisma } from '~/server/db';
 import { authOptions } from '~/server/auth';
-import type { FormSchema, UserLinkType } from '.';
+import type { FormSchema } from '.';
 import { revalidatePath } from 'next/cache';
 
 /**

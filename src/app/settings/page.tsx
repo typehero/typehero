@@ -40,6 +40,7 @@ export default async function SettingsPage() {
         bio: profileData.bio,
         userLinks,
       }}
+      username={profileData.name}
     />
   );
 }
