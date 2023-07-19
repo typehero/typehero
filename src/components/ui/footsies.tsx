@@ -28,8 +28,11 @@ export function Footsies() {
         TypeHero is currently under construction. We’ll
         let you know as soon as it’s ready! 
       </p> */}
-      <div className="my-12 container px-10 md:px-24 flex flex-col lg:flex-row gap-6 justify-between">
-        <div className="flex items-center gap-2">Built with <KeyboardIcon className="h-4 w-4 text-red-500" /> by the Trash Devs community. The source code will soon™️ be available on GitHub</div>
+      <div className="container my-12 flex flex-col justify-between gap-6 px-10 pb-2   lg:flex-row">
+        <div className="space-x-2">
+          Built with <KeyboardIcon className="inline-block h-4 w-4 text-blue-500" /> by the Trash
+          Devs community. The source code will soon™️ be available on GitHub
+        </div>
         <div className="text-neutral-500">© 2069 Type Hero</div>
       </div>
     </footer>

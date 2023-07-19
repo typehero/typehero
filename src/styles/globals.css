@@ -146,7 +146,7 @@ main {
   background-color: transparent;
 }
 .custom-scrollable-element::-webkit-scrollbar-thumb {
-  @apply bg-neutral-300/50 dark:bg-zinc-700/50 rounded-l-xl;
+  @apply rounded-l-xl bg-neutral-300/50 dark:bg-zinc-700/50;
 }
 
 .custom-scrollable-element::-webkit-scrollbar-thumb:hover {
@@ -157,20 +157,24 @@ main {
   background-size: 2.5rem 2.5rem;
   background-image: linear-gradient(to right, #8882 1px, transparent 1px),
     linear-gradient(to bottom, #8882 1px, transparent 1px);
-  animation: movingbackground 60s linear infinite !important;
+  animation: movingbackground 30s linear infinite !important;
 }
 
 @keyframes movingbackground {
   0% {
-    background-position: 0 0;
+    translate: 0 0;
   }
   100% {
-    background-position: 100% 0;
+    translate: -50% 0;
   }
 }
 
-@media(prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce) {
   .moving-grid-background {
     animation: none !important;
   }
+}
+
+.container {
+  @apply mx-auto max-w-[1400px] px-4 md:px-24;
 }

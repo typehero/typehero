@@ -32,96 +32,100 @@ const TypeHeroLogo = () => {
   );
 };
 
-const Hero = () => {
-  return (
-    <section className="lg:overflow-x-hidden">
-      {/* <svg className="pointer-events-none mix-blend-soft-light opacity-50 z-10 absolute left-0 top-0 h-full w-full" id="grain">
+const Hero = () => (
+  <section className="lg:overflow-x-hidden">
+    {/* <svg className="pointer-events-none mix-blend-soft-light opacity-50 z-10 absolute left-0 top-0 h-full w-full" id="grain">
     <filter id="noise">
       <feTurbulence type="fractalNoise" baseFrequency="1" numOctaves="5" stitchTiles="stitch"></feTurbulence>
     </filter>
     <rect width="100%" height="100%" filter="url(#noise)"></rect>
   </svg> */}
-      <div className="container mb-[56px] grid min-h-[calc(100lvh_-_112px)] items-center justify-center md:px-24 lg:grid-cols-2">
-        <div className="flex w-full flex-col items-center justify-center gap-10 lg:items-start">
-          <div className="relative flex w-full items-center justify-center gap-4 lg:justify-start">
-            <div className="absolute left-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-x-[15%] -translate-y-[50%] rounded-full bg-slate-400/10 blur-3xl dark:block"></div>
-            <div className="absolute right-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-y-[40%] rounded-full bg-[#3178c6]/20 blur-3xl dark:block"></div>
-            <TypeHeroLogo />
-            <h1 className="bg-gradient-to-r from-[#3178c6] to-black bg-clip-text text-6xl font-extrabold text-transparent dark:to-white sm:text-8xl sm:leading-[5.5rem]">
-              type
-              <br />
-              hero
-            </h1>
-          </div>
-
-          <p className="max-w-[50ch] bg-transparent px-8 text-center leading-9 text-black/50 dark:text-white/50 lg:px-0 lg:text-left">
-            Connect, collaborate, and grow with a community of TypeScript developers. Elevate your
-            skills trough interactive coding challenges, discussions, and knowledge sharing
-          </p>
-          <div className="flex gap-3">
-            <Button className="group relative flex items-center gap-2 overflow-hidden rounded-xl px-4 py-2 font-bold duration-500 dark:hover:text-white">
-              <div className="absolute h-44 w-44 -translate-x-full rounded-full bg-[#3178C6] duration-500 group-hover:translate-x-0" />
-              <Link className="z-10" href="/explore">
-                Explore challenges
-              </Link>
-            </Button>
-            <Button
-              className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
-              asChild
-              variant="outline"
-            >
-              <a className="inline-flex gap-1" href="https://github.com/">
-                <Github className="h-4 w-4" />
-                GitHub
-              </a>
-            </Button>
-          </div>
+    <div className="container mb-[56px]   grid min-h-[calc(100lvh_-_112px)] items-center justify-center lg:grid-cols-2">
+      <div className="flex w-full flex-col items-center justify-center gap-10 lg:items-start">
+        <div className="relative flex w-full items-center justify-center gap-4 lg:justify-start">
+          <div className="absolute left-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-x-[15%] -translate-y-[50%] rounded-full bg-slate-400/10 blur-3xl dark:block"></div>
+          <div className="absolute right-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-y-[40%] rounded-full bg-[#3178c6]/20 blur-3xl dark:block"></div>
+          <TypeHeroLogo />
+          <h1 className="bg-gradient-to-r from-[#3178c6] to-black bg-clip-text text-6xl font-extrabold text-transparent dark:to-white sm:text-8xl sm:leading-[5.5rem]">
+            type
+            <br />
+            hero
+          </h1>
         </div>
 
-        <div className="group relative hidden h-[800px] overflow-visible rounded-full lg:block">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="moving-grid-background absolute -inset-40 top-1/2 -z-30 aspect-square -translate-y-1/2 translate-x-[-30px] rounded-full shadow-[inset_0_0_5rem_3rem] shadow-background"
-          />
+        <p className="max-w-[50ch] bg-transparent px-8 text-center leading-8 text-black/50 dark:text-white/50 lg:px-0 lg:text-left">
+          Connect, collaborate, and grow with a community of TypeScript developers. Elevate your
+          skills trough interactive coding challenges, discussions, and knowledge sharing
+        </p>
+        <div className="flex gap-3">
+          <Button className="group relative flex items-center gap-2 overflow-hidden rounded-xl px-4 py-2 font-bold duration-500 dark:hover:text-white">
+            <div className="absolute h-44 w-44 -translate-x-full rounded-full bg-[#3178C6] duration-500 group-hover:translate-x-0" />
+            <Link className="z-10" href="/explore">
+              Explore challenges
+            </Link>
+          </Button>
+          <Button
+            className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
+            asChild
+            variant="outline"
+          >
+            <a className="inline-flex gap-1" href="https://github.com/">
+              <Github className="h-4 w-4" />
+              GitHub
+            </a>
+          </Button>
+        </div>
+      </div>
+
+      <div className="relative hidden h-[800px] overflow-visible rounded-full lg:block">
+        <div className="absolute -inset-40 top-1/2 -z-30 aspect-square -translate-y-1/2 translate-x-[-30px] overflow-hidden rounded-full">
+          <div className="relative h-full w-full">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="moving-grid-background absolute h-full w-[200%]"
+            />
+            <div className="absolute h-full w-full rounded-full shadow-[inset_0_0_5rem_3rem] shadow-background" />
+          </div>
+        </div>
+        <motion.div
+          initial={{
+            y: 80,
+            x: 140,
+            opacity: 0,
+          }}
+          animate={{
+            y: 70,
+            opacity: 1,
+          }}
+          className="group"
+        >
           <FakeChallengeCard
-            animation={{
-              initial: {
-                opacity: 0,
-                y: 270,
-                x: 20,
-              },
-              animate: {
-                y: 260,
-                opacity: 1,
-                transition: {
-                  duration: 0.5,
-                },
-              },
-            }}
-            className="absolute z-10"
-            title="Implement a JSON parser type"
-          />
-          <FakeChallengeCard
-            animation={{
-              initial: {
-                y: 80,
-                x: 140,
-                opacity: 0,
-              },
-              animate: {
-                y: 70,
-                opacity: 1,
-              },
-            }}
             difficulty="EASY"
             className="absolute"
             title="Implement a generic type"
           />
-        </div>
+        </motion.div>
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 270,
+            x: 20,
+          }}
+          animate={{
+            y: 260,
+            opacity: 1,
+            transition: {
+              duration: 0.5,
+            },
+          }}
+          className="group"
+        >
+          <FakeChallengeCard className="absolute" title="Implement a JSON parser type" />
+        </motion.div>
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 export default Hero;

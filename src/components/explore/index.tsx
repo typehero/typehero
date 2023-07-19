@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic';
 
 export async function Explore() {
   return (
-    <div className="container md:px-24 flex h-full flex-col items-center">
+    <div className="container   flex h-full flex-col items-center">
       <p className="max-w-[66ch] px-4 pt-5 text-lg leading-10 text-neutral-600 dark:text-neutral-400 md:text-center">
         <span className="text-xl font-bold text-[#3178c6] dark:text-[#4e99ea]">Explore</span> the
         challenges. Embrace the opportunity to grow, learn, and showcase your programming abilities.
