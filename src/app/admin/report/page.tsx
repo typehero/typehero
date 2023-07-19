@@ -5,13 +5,17 @@ import { ReportType } from '@prisma/client';
 import Text from '~/components/ui/typography/typography';
 import { cva } from 'class-variance-authority';
 
+export const dynamic = 'force-dynamic';
+
 async function getReports() {
   return prisma.report.findMany({
     include: {
       challenge: true,
       user: true,
       reporter: true,
-      issues: true
+      issues: true,
+      comment: true,
+      solution: true,
     },
     take: 25,
   });
