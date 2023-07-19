@@ -10,6 +10,7 @@ interface QueryParams {
 }
 
 export async function getInfiniteComments({ challengeId, take = 10, lastCursor }: QueryParams) {
+  console.log({ lastCursor });
   const results = await prisma.challengeComment.findMany({
     where: { challengeId },
     include: { user: true },

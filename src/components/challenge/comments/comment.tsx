@@ -20,6 +20,7 @@ import { useSession } from 'next-auth/react';
 
 interface CommentProps {
   comment: ChallengeRouteData['comment'][number];
+  currentId?: number;
 }
 
 const commentReportSchema = z
@@ -43,7 +44,7 @@ const commentReportSchema = z
 
 export type CommentReportSchemaType = z.infer<typeof commentReportSchema>;
 
-const Comment = ({ comment }: CommentProps) => {
+const Comment = ({ comment, currentId }: CommentProps) => {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const form = useForm<CommentReportSchemaType>({
@@ -119,7 +120,7 @@ const Comment = ({ comment }: CommentProps) => {
   const isAuthor = loggedinUser.data?.user?.id === comment.user.id;
 
   return (
-    <div className="flex flex-col gap-1 p-3 pt-2">
+    <div className={` ${comment.id === currentId ? 'bg-red' : ''} flex flex-col gap-1 p-3 pt-2 `}>
       <div className="flex justify-between pr-[0.4rem]">
         <div className="flex items-center gap-1">
           <UserBadge username={comment.user.name ?? ''} />
@@ -138,7 +139,7 @@ const Comment = ({ comment }: CommentProps) => {
             onClick={() => {
               copyPathNotifyUser();
             }}
-            className="gap-1 cursor-pointer duration-200 flex items-center hover:underline text-neutral-500 hover:text-neutral-400"
+            className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 hover:underline"
           >
             <Share className="h-3 w-3" />
             <small className="font-md text-sm leading-none">Share</small>
@@ -164,13 +165,16 @@ const Comment = ({ comment }: CommentProps) => {
               Report
             </button>
           )}
-        
         </div>
       </div>
-      <p className="w-full break-words pl-[1px] text-sm">
+      <p
+        className={`${
+          comment.id === currentId ? 'text-red-300' : ''
+        } w-full break-words pl-[1px] text-sm `}
+      >
         {/* TODO: <code></code> is <Markdown /> does not wrap long lines causing overflow */}
         {/* <Markdown>{comment.text}</Markdown> */}
-        {comment.text}
+        {comment.text} {comment.id} {currentId}
       </p>
       <Dialog
         open={dialogOpen}
