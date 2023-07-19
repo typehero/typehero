@@ -158,7 +158,7 @@ main {
   background-size: 2.5rem 2.5rem;
   background-image: linear-gradient(to right, #8882 1px, transparent 1px),
     linear-gradient(to bottom, #8882 1px, transparent 1px);
-  animation: movingbackground 60s linear infinite !important;
+  animation: movingbackground 90s linear infinite !important;
 }
 
 @keyframes movingbackground {
@@ -166,7 +166,7 @@ main {
     transform: translate(0, 0);
   }
   100% {
-    transform: translate(-50%, 0);
+    transform: translate(0, -50%);
   }
 }
 

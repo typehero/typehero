@@ -84,7 +84,7 @@ const Hero = () => (
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="moving-grid-background absolute h-full w-[200%]"
+              className="moving-grid-background absolute h-[200%] w-full"
             />
             <div className="absolute h-full w-full rounded-full shadow-[inset_0_0_5rem_3rem] shadow-background" />
           </div>
