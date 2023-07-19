@@ -9,7 +9,7 @@ interface QueryParams {
   lastCursor?: number;
 }
 
-export async function getInfiniteComments({ challengeId, take = 10, lastCursor }: QueryParams) {
+export async function getInfiniteComments({ challengeId, lastCursor }: QueryParams) {
   const results = await prisma.comment.findMany({
     where: {
       rootType: 'CHALLENGE',

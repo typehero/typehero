@@ -1,15 +1,10 @@
 'use client';
 // TODO: unify this with the explore card into single component (maybe? idk how that'd work, too many changes)
 import { MessageCircle, ThumbsUp } from 'lucide-react';
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-
 import { getRelativeTime } from '~/utils/relativeTime';
-
 import { Select, SelectContent, SelectItem, SelectTrigger } from '~/components/ui/select';
-
 import { type Difficulty } from '@prisma/client';
-import { useState } from 'react';
 import { Button } from '../ui/button';
 import { DifficultyBadge } from '../ui/difficulty-badge';
 
@@ -41,10 +36,6 @@ const ExploreCardInputs = ({
   shortDescription,
   setShortDescription,
 }: Props) => {
-  const [isPreviewing, setIsPreviewing] = useState({
-    shortDescription: false,
-  });
-
   return (
     <Card
       className={`overflow-hidden duration-300

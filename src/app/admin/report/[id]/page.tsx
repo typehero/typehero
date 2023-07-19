@@ -1,4 +1,3 @@
-import { prisma } from '~/server/db';
 import { redirect } from 'next/navigation';
 import Text from '~/components/ui/typography/typography';
 import Link from 'next/link';
@@ -30,11 +29,8 @@ const Report = async function (props: Props) {
     id,
     moderatorId,
     moderator,
-    createdAt,
-    updatedAt,
     unclear,
     text,
-    status,
   } = await getChallenge(idNum);
 
   return (

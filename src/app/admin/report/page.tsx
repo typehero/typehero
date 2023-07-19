@@ -1,4 +1,3 @@
-import { getChallengeReports } from '~/components/admin/admin.actions';
 import React from 'react';
 import { prisma } from '~/server/db';
 import { ReportType } from '@prisma/client';
