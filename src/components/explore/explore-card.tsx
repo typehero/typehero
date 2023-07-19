@@ -102,13 +102,10 @@ const ExploreCard = ({ challenge }: ExploreCardProps) => {
       </CardHeader>
       <CardContent className="relative flex flex-col justify-between gap-2 rounded-xl bg-background p-6 pb-0 duration-300 group-hover:bg-card-hovered">
         <div className="flex items-center gap-2">
-          <Button
-            size="sm"
-            className="-ml-[0.33rem] flex h-auto w-fit items-center rounded-full bg-transparent py-1 pl-[0.33rem] pr-2 text-xs font-bold text-neutral-700 hover:bg-black/10 dark:text-white dark:hover:bg-white/20"
-          >
+          <div className="-ml-[0.33rem] flex h-auto w-fit items-center whitespace-nowrap rounded-full bg-transparent py-1 pl-[0.33rem] pr-2 text-xs font-bold text-neutral-700 duration-300 hover:bg-black/10 dark:text-white dark:hover:bg-white/20">
             @{challenge.user.name}
-          </Button>
-          <div className="text-sm text-muted-foreground">
+          </div>
+          <div className="whitespace-nowrap text-sm text-muted-foreground">
             {getRelativeTime(challenge.updatedAt)}
           </div>
         </div>
