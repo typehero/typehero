@@ -47,7 +47,6 @@
     "cmdk": "^0.2.0",
     "date-fns": "^2.30.0",
     "framer-motion": "^10.12.22",
-    "framer-motion-3d": "^10.12.22",
     "lodash": "^4.17.21",
     "lucide-react": "^0.260.0",
     "monaco-editor": "^0.40.0",
