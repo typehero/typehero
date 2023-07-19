@@ -35,7 +35,7 @@ const Community = async function () {
         <span className="text-neutral-400 dark:text-neutral-600">
           By developers, for developers
         </span>
-        <p className="my-8 max-w-[50ch] bg-transparent px-8 text-center leading-7 text-black/50 dark:text-white/50 lg:px-0 lg:text-left">
+        <p className="my-8 max-w-[50ch] bg-transparent px-8 text-center leading-8 text-black/50 dark:text-white/50 lg:px-0 lg:text-left">
           TypeHero is free, open-source, and built by developers just like you. These are some of
           the contributors who made this possible so far.
         </p>

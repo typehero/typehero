@@ -53,7 +53,7 @@ const Hero = () => (
           </h1>
         </div>
 
-        <p className="max-w-[50ch] bg-transparent px-8 text-center leading-9 text-black/50 dark:text-white/50 lg:px-0 lg:text-left">
+        <p className="max-w-[50ch] bg-transparent px-8 text-center leading-8 text-black/50 dark:text-white/50 lg:px-0 lg:text-left">
           Connect, collaborate, and grow with a community of TypeScript developers. Elevate your
           skills trough interactive coding challenges, discussions, and knowledge sharing
         </p>
