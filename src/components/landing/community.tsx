@@ -1,11 +1,10 @@
 import { Octokit } from 'octokit';
-import { Github } from 'lucide-react';
 
 const Community = async function () {
   async function getOcto() {
     if (!process.env.PROD) {
       console.log('You are not in production mode. Mocking data.');
-      return Array(21).fill({
+      return Array(13).fill({
         login: 'PickleNik',
         avatar_url: 'https://avatars.githubusercontent.com/u/31113245?v=4',
         html_url: 'https://github.com/PickleNik',
@@ -69,21 +68,12 @@ const Community = async function () {
         </div>
       </div>
       <div className="relative flex-1 pb-36 pl-4 lg:pb-0">
-        <div className="absolute -top-[3.875rem] left-[3.25rem] flex w-[calc(100%-5rem)] flex-wrap gap-x-2 gap-y-[3.75rem]">
+        <div className="mx-auto flex w-[18.25rem] flex-wrap gap-x-3 gap-y-1 sm:w-[23rem] [&>*:nth-child(7n_+_1)]:ml-[2.375rem] sm:[&>*:nth-child(7n_+_1)]:ml-0 sm:[&>*:nth-child(9n_+_1)]:ml-[2.375rem]">
           {avatars.map((avatar) => (
             <div
               key={avatar.id}
               style={{ backgroundImage: `url('${avatar.avatar_url}')` }}
-              className="h-16 w-16 rounded-full bg-neutral-700 bg-cover"
-            ></div>
-          ))}
-        </div>
-        <div className="flex flex-wrap gap-x-2 gap-y-[3.75rem]">
-          {avatars.map((avatar) => (
-            <div
-              key={avatar.id}
-              style={{ backgroundImage: `url('${avatar.avatar_url}')` }}
-              className="h-16 w-16 rounded-full bg-neutral-700 bg-cover"
+              className="honeycombchild h-16 w-16 rounded-full bg-neutral-700 bg-cover"
             ></div>
           ))}
         </div>
