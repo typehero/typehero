@@ -102,7 +102,10 @@ const Comment = ({ comment }: CommentProps) => {
               Delete
             </button>
           ) : (
-            <ReportDialog reportType="COMMENT" commentId={comment.id}>
+            <ReportDialog
+              reportType="COMMENT"
+              commentId={comment.id}
+            >
               <button
                 onClick={() => {
                   setDialogOpen(true);
