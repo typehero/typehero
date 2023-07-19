@@ -25,14 +25,18 @@ export const getChallengeRouteData = cache(async (id: string, session: Session |
         },
       },
       comment: {
+        where: {
+          rootType: 'CHALLENGE',
+          rootChallengeId: +id,
+        },
+        include: {
+          user: true,
+        },
         orderBy: [
           {
             createdAt: 'desc',
           },
         ],
-        include: {
-          user: true,
-        },
       },
     },
   });

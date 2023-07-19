@@ -10,10 +10,11 @@ interface QueryParams {
 }
 
 export async function getInfiniteComments({ challengeId, take = 10, lastCursor }: QueryParams) {
-  const results = await prisma.challengeComment.findMany({
-    where: { challengeId },
-    include: { user: true },
-    take,
+  const results = await prisma.comment.findMany({
+    where: {
+      rootType: 'CHALLENGE',
+      rootChallengeId: challengeId,
+    },
     ...(lastCursor && {
       skip: 1,
       cursor: {
@@ -23,36 +24,24 @@ export async function getInfiniteComments({ challengeId, take = 10, lastCursor }
     orderBy: {
       createdAt: 'desc',
     },
+    include: {
+      user: true,
+    }
   });
 
-  if (results.length == 0) {
-    return {
-      data: [],
-      metaData: {
-        lastCursor: null,
-        hasNextPage: false,
-      },
-    };
-  }
-
-  const lastPostInResults = results[results.length - 1];
-  const cursor = lastPostInResults?.id;
-
-  const nextPage = await prisma.challengeComment.findMany({
-    where: { challengeId },
-    include: { user: true },
-    take,
-    skip: 1,
-    cursor: {
-      id: cursor,
-    },
-  });
-
+  const last = results.at(-1);
+  const hasNextPage = last && last.id ? 
+    await prisma.comment.findMany({
+      where: {
+        rootChallengeId: challengeId,
+      }
+    }).then(f => f.length > 0) : false;
+  
   return {
     data: results,
     metaData: {
-      lastCursor: cursor,
-      hasNextPage: nextPage.length > 0,
-    },
+      lastCursor: last ? last.id : null,
+      hasNextPage,
+    }
   };
 }

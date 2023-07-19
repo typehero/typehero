@@ -1,9 +1,35 @@
 'use server';
 
+import { type Report, type Prisma } from '@prisma/client';
 import { getServerAuthSession } from '~/server/auth';
 import { prisma } from '~/server/db';
 
 export type AdminReportDetails = Awaited<ReturnType<typeof getChallengeReports>>;
+
+// FML this was obnoxious to do
+export type ChallengeInfo = {type: 'CHALLENGE'} & Omit<Report, 'id' | 'userId' | 'type' | 'status'>;
+export type UserInfo = {type: 'USER'} & Omit<Report, 'id' | 'challengeId' | 'type' | 'status'>;
+
+/**
+ * 
+ * @param info the info needed to create the Report instance
+ * @param issues any issues types that are connected to this.
+ * @returns the newly created report information.
+ */
+export async function addReport(info: ChallengeInfo | UserInfo, issues: Prisma.ReportIssueCreateManyReportInput[] = [{ type: 'OTHER' }]) {
+
+  return prisma.report.create({
+    data: {
+      status: 'PENDING',
+      ...info,
+      issues: {
+        createMany: {
+          data: issues
+        },
+      }
+    },
+  });
+}
 
 /**
  * The function fetches all the reports along

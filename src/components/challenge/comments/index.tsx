@@ -8,7 +8,7 @@ import Comment from '~/components/challenge/comments/comment';
 import { Button } from '~/components/ui/button';
 import { toast } from '~/components/ui/use-toast';
 import NoComments from './nocomments';
-import { addChallengeComment } from './comment.action';
+import { addComment } from './comment.action';
 import { Textarea } from '~/components/ui/textarea';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
@@ -33,8 +33,8 @@ const Comments = ({ challengeId, commentCount }: Props) => {
 
   const { data, status, hasNextPage, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
     queryFn: ({ pageParam = '' }) =>
-      getInfiniteComments({ challengeId, take: 10, lastCursor: pageParam }),
-    queryKey: ['comments'],
+      getInfiniteComments({ challengeId, take: 10, lastCursor: +pageParam }),
+    queryKey: ['comments', challengeId],
     getNextPageParam: (lastPage) => lastPage.metaData.lastCursor,
   });
 
@@ -51,8 +51,11 @@ const Comments = ({ challengeId, commentCount }: Props) => {
   async function createChallengeComment() {
     try {
       setIsCommenting(true);
-      const res = await addChallengeComment(challengeId, text);
-
+      const res = await addComment({
+        text,
+        rootChallengeId: challengeId,
+        rootType: 'CHALLENGE',
+      });
       if (res === 'text_is_empty') {
         toast({
           title: 'Empty Comment',
@@ -66,7 +69,7 @@ const Comments = ({ challengeId, commentCount }: Props) => {
       }
       setIsCommenting(false);
       setText('');
-      await queryClient.invalidateQueries(['comments']);
+      await queryClient.invalidateQueries(['comments', challengeId]);
     } catch (e) {
       toast({
         title: 'Unauthorized',

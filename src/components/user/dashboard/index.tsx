@@ -7,6 +7,9 @@ import { SolutionsTab } from '../dashboard/solutions-tab';
 import type { User } from '@prisma/client';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { prisma } from '~/server/db';
+import ReportDialog from '~/components/report';
+import { ActionMenu } from '~/components/ui/action-menu';
+import UserHeader from './user-header';
 import { Button } from '~/components/ui/button';
 import Link from 'next/link';
 import { getServerSession } from 'next-auth';
@@ -68,7 +71,7 @@ export default async function Dashboard({ user }: Props) {
             />
           </div>
           <div>
-            <p className="text-3xl font-bold tracking-tight">{user.name}</p>
+            <UserHeader user={user} />
             <p
               className="text-sm italic tracking-tight"
               title={`Joined ${user.createdAt.toString()}`}

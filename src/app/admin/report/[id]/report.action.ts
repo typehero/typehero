@@ -1,16 +1,22 @@
 import { prisma } from '~/server/db';
 export async function getReports() {
-  const challengeReports = await prisma.challengeReport.findMany({
+  const challengeReports = await prisma.report.findMany({
+    where: {
+      type: 'CHALLENGE',
+    },
     include: {
       challenge: {
         include: {
           user: true,
         },
       },
-      author: true,
     },
   });
-  const otherReports = await prisma.commentReport.findMany();
+  const otherReports = await prisma.report.findMany({
+    where: {
+      type: {not: 'CHALLENGE'},
+    }
+  });
   return {
     challengeReports,
     otherReports,

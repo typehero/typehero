@@ -3,7 +3,6 @@
 import { clsx } from 'clsx';
 import { debounce } from 'lodash';
 
-import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
@@ -15,28 +14,21 @@ import { Button } from '~/components/ui/button';
 import { UserBadge } from '~/components/ui/user-badge';
 import {
   Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
+  DialogContent, DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from '~/components/ui/dialog';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
 import { TypographyH3 } from '~/components/ui/typography/h3';
 import { DifficultyBadge } from '~/components/ui/difficulty-badge';
 import { ActionMenu } from '~/components/ui/action-menu';
-import { Checkbox } from '~/components/ui/checkbox';
-import { Form, FormField, FormItem } from '~/components/ui/form';
 import { Markdown } from '~/components/ui/markdown';
-import { Textarea } from '~/components/ui/textarea';
-import { TypographyLarge } from '~/components/ui/typography/large';
 import { ShareForm } from '../share-form';
 
 import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
-import { toast } from '~/components/ui/use-toast';
 import { addOrRemoveBookmark } from '../bookmark.action';
 import { incrementOrDecrementUpvote } from '../increment.action';
-import { addChallengeReport } from '../report.action';
+import ReportDialog from '~/components/report';
 import { getRelativeTime } from '~/utils/relativeTime';
 
 interface Props {
@@ -90,48 +82,6 @@ export function Description({ challenge }: Props) {
     },
   });
 
-  async function onSubmit(data: FormValues) {
-    try {
-      const response = await addChallengeReport(
-        challenge.id,
-        session?.data?.user?.id as string,
-        data,
-      );
-      if (response === 'created') {
-        toast({
-          title: 'Feedback Sent',
-          variant: 'success',
-          description: (
-            <p>
-              Thank you for submitting this feedback. Someone from our moderator team will be
-              reviewing it shortly.
-            </p>
-          ),
-        });
-      } else if (response === 'report_already_made') {
-        toast({
-          title: 'Report already made',
-          description: (
-            <p>
-              You have already made a report about this challenge. We are still reviewing the
-              question.
-            </p>
-          ),
-        });
-      } else if (response === 'not_logged_in') {
-        toast({
-          title: 'You are not loggeed in',
-          description: <p>Please log in to make this report.</p>,
-        });
-      }
-    } catch (e) {
-      toast({
-        title: 'Something went wrong.',
-        variant: 'destructive',
-        description: <p>An error was encountered while trying to make a report.</p>,
-      });
-    }
-  }
   return (
     <div className="custom-scrollable-element overflow-y-auto h-full px-4 pt-3 pb-36">
       {/* NOTE: collapse this element */}
@@ -251,98 +201,21 @@ export function Description({ challenge }: Props) {
             <p>Login to Upvote</p>
           </TooltipContent>
         </Tooltip>
-        <Dialog>
-          <DialogTrigger>
-            <ActionMenu
-              items={[
-                {
-                  key: 'feedback',
-                  label: 'Feedback',
-                  icon: 'Flag',
-                },
-              ]}
-              onChange={() => {
-                // do nothing
-              }}
-            />
-          </DialogTrigger>
-
-          <DialogContent>
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)}>
-                <DialogHeader>
-                  <DialogTitle>Feedback: {challenge.name}</DialogTitle>
-                </DialogHeader>
-
-                <div className="my-4 flex flex-col gap-4">
-                  <TypographyLarge>Issues Encountered</TypographyLarge>
-                  <FormField
-                    name="examples"
-                    render={({ field }) => (
-                      <FormItem>
-                        <div className="flex items-center gap-4">
-                          <Checkbox
-                            id="examples"
-                            checked={field.value as boolean}
-                            onChange={field.onChange}
-                            onCheckedChange={field.onChange}
-                          />
-                          <label htmlFor="examples">
-                            Description or examples are unclear or incorrect
-                          </label>
-                        </div>
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    name="derogatory"
-                    render={({ field }) => (
-                      <FormItem>
-                        <div className="flex items-center gap-4">
-                          <Checkbox
-                            id="derogatory"
-                            checked={field.value as boolean}
-                            onCheckedChange={field.onChange}
-                          />
-                          <label htmlFor="derogatory">Racist or other derogatory statement</label>
-                        </div>
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    name="other"
-                    render={({ field }) => (
-                      <FormItem>
-                        <div className="flex items-center gap-4">
-                          <Checkbox
-                            id="other"
-                            checked={field.value as boolean}
-                            onCheckedChange={field.onChange}
-                          />
-                          <label htmlFor="other">Other</label>
-                        </div>
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    name="comments"
-                    render={({ field }) => (
-                      <FormItem>
-                        <TypographyLarge>Comments</TypographyLarge>
-                        <Textarea value={field.value as string} onChange={field.onChange} />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <DialogFooter>
-                  <DialogPrimitive.Close asChild>
-                    <Button type="submit">Report</Button>
-                  </DialogPrimitive.Close>
-                </DialogFooter>
-              </form>
-            </Form>
-          </DialogContent>
-        </Dialog>
+        <ReportDialog reportType="CHALLENGE" challengeId={challenge.id}>
+          <ActionMenu
+            items={[
+              {
+                key: 'feedback',
+                label: 'Feedback',
+                icon: 'Flag',
+              },
+            ]}
+            onChange={() => {
+              // do nothing
+            }}
+          />
+        </ReportDialog>
+        
       </div>
 
       <div className="mb-6 flex items-center gap-4">
