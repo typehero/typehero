@@ -33,7 +33,7 @@ const TypeHeroLogo = () => {
 };
 
 const Hero = () => (
-  <section className="lg:overflow-x-hidden">
+  <section className="overflow-hidden">
     {/* <svg className="pointer-events-none mix-blend-soft-light opacity-50 z-10 absolute left-0 top-0 h-full w-full" id="grain">
     <filter id="noise">
       <feTurbulence type="fractalNoise" baseFrequency="1" numOctaves="5" stitchTiles="stitch"></feTurbulence>
