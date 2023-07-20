@@ -1,17 +1,16 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form';
+import { useFieldArray, useForm, useWatch } from 'react-hook-form';
 import * as z from 'zod';
 import { Button } from '../ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
+import { Form, FormField, FormItem, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
 import { RichMarkdownEditor } from '../ui/rich-markdown-editor';
 import { toast } from '../ui/use-toast';
 import { updateProfile } from './settings.action';
 import Link from 'next/link';
 import { MagicIcon } from '../ui/magic-icon';
-import { Select, SelectTrigger } from '@radix-ui/react-select';
 
 export interface UserLinkType {
   id: string | null;
@@ -88,7 +87,7 @@ export const Settings = ({
 
       <Form {...form}>
         <form action={() => onSubmit(getValues())}>
-          <div >
+          <div>
             <FormField
               control={form.control}
               name="bio"

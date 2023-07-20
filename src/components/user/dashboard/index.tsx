@@ -59,9 +59,9 @@ export default async function Dashboard({ user }: Props) {
 
   return (
     <div className="container">
-      <div className="flex-1 space-y-4 mt-10">
+      <div className="mt-10 flex-1 space-y-4">
         <div className="flex gap-4">
-          <div className="flex pace-x-2">
+          <div className="pace-x-2 flex">
             <Image
               className="rounded-3xl"
               alt="user avatar"

@@ -1,5 +1,2 @@
-const Features = () => (
-  <>
-  </>
-)
-export default Features
+const Features = () => <></>;
+export default Features;

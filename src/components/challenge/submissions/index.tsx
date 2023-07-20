@@ -26,9 +26,9 @@ export function Submissions({ submissions }: Props) {
     return submissions.filter(predicate);
   }, [selectedStatus, submissions]);
   return (
-    <div className="h-full relative">
+    <div className="relative h-full">
       {submissions.length !== 0 ? (
-        <div className="absolute w-full right-0 top-0 z-10 flex gap-2 border-b border-zinc-300 bg-background/70 p-2 px-4 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/70">
+        <div className="absolute right-0 top-0 z-10 flex w-full gap-2 border-b border-zinc-300 bg-background/70 p-2 px-4 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/70">
           <div
             className={`flex cursor-pointer gap-2 rounded-lg px-4 py-1 duration-300  ${
               selectedStatus === 'all'
@@ -65,7 +65,7 @@ export function Submissions({ submissions }: Props) {
         <NoSubmissions />
       )}
 
-      <ul className="overflow-y-auto pt-12 h-full custom-scrollable-element flex flex-col">
+      <ul className="custom-scrollable-element flex h-full flex-col overflow-y-auto pt-12">
         {filteredSubmissions.map((submission) => {
           return (
             <SubmissionRow

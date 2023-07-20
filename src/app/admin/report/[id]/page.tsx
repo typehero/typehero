@@ -1,4 +1,3 @@
-import { prisma } from '~/server/db';
 import { redirect } from 'next/navigation';
 import Text from '~/components/ui/typography/typography';
 import Link from 'next/link';
@@ -23,19 +22,8 @@ const Report = async function (props: Props) {
     return redirect('/admin');
   }
   // Grab the items.
-  const {
-    author,
-    challenge,
-    derogatory,
-    id,
-    moderatorId,
-    moderator,
-    createdAt,
-    updatedAt,
-    unclear,
-    text,
-    status,
-  } = await getChallenge(idNum);
+  const { author, challenge, derogatory, id, moderatorId, moderator, unclear, text } =
+    await getChallenge(idNum);
 
   return (
     <div className="container  ">

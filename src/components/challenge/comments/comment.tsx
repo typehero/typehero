@@ -1,6 +1,5 @@
 'use client';
 import { Trash2, Reply, Share } from 'lucide-react';
-import { useState } from 'react';
 import { z } from 'zod';
 import type { ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import { getRelativeTime } from '~/utils/relativeTime';
@@ -36,8 +35,6 @@ const commentReportSchema = z
 export type CommentReportSchemaType = z.infer<typeof commentReportSchema>;
 
 const Comment = ({ comment }: CommentProps) => {
-  const [dialogOpen, setDialogOpen] = useState(false);
-
   async function copyPathNotifyUser() {
     try {
       await copyCommentUrlToClipboard();
@@ -106,7 +103,7 @@ const Comment = ({ comment }: CommentProps) => {
             <ReportDialog reportType="COMMENT" commentId={comment.id}>
               <button
                 onClick={() => {
-                  setDialogOpen(true);
+                  // do somehting
                 }}
                 className="flex cursor-pointer items-center text-sm text-neutral-400 duration-200 hover:text-neutral-500 hover:underline dark:text-neutral-600 dark:hover:text-neutral-500"
               >

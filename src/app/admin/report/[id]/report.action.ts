@@ -14,8 +14,8 @@ export async function getReports() {
   });
   const otherReports = await prisma.report.findMany({
     where: {
-      type: {not: 'CHALLENGE'},
-    }
+      type: { not: 'CHALLENGE' },
+    },
   });
   return {
     challengeReports,

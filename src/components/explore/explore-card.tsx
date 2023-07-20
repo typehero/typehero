@@ -4,7 +4,6 @@ import { getRelativeTime } from '~/utils/relativeTime';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { type ExploreChallengeData } from './';
 import { DifficultyBadge } from '../ui/difficulty-badge';
-import { Button } from '../ui/button';
 
 interface ExploreCardProps {
   challenge: Pick<

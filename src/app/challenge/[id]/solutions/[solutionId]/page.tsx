@@ -23,15 +23,14 @@ async function getSolution(solutionId: string) {
     include: {
       challenge: true,
       user: true,
-
     },
   });
 
   const f = await prisma.comment.findMany({
     where: {
       rootType: 'SOLUTION',
-      rootSolutionId: +solutionId
-    }
+      rootSolutionId: +solutionId,
+    },
   });
 
   return {
