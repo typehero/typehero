@@ -90,216 +90,220 @@ export default function ReportDialog({
   }
 
   return (
-    <Dialog
-      open={show}
-      onOpenChange={(e) => {
-        setShow(e);
-      }}
-    >
-      <DialogTrigger asChild={triggerAsChild}>{children}</DialogTrigger>
-      <DialogContent>
-        <form
-          onSubmit={handleSubmit(async (e) => {
-            let args = {} as UserReport | ChallengeReport | CommentReport | SolutionReport;
-            switch (reportType) {
-              case 'CHALLENGE':
-                args = {
-                  ...props,
-                  text: e.comments,
-                  type: reportType,
-                } as ChallengeReport;
-                break;
-              case 'COMMENT':
-                args = {
-                  ...props,
-                  text: e.comments,
-                  type: reportType,
-                } as CommentReport;
-                break;
-              case 'USER':
-                args = {
-                  ...props,
-                  text: e.comments,
-                  type: reportType,
-                } as UserReport;
-                break;
-              case 'SOLUTION':
-                args = {
-                  ...props,
-                  text: e.comments,
-                  type: reportType,
-                } as SolutionReport;
-            }
+    <div>
+      <Dialog
+        open={show}
+        onOpenChange={(e) => {
+          setShow(e);
+        }}
+      >
+        <DialogTrigger asChild={triggerAsChild}>{children}</DialogTrigger>
+        <DialogContent>
+          <form
+            onSubmit={handleSubmit(async (e) => {
+              let args = {} as UserReport | ChallengeReport | CommentReport | SolutionReport;
+              switch (reportType) {
+                case 'CHALLENGE':
+                  args = {
+                    ...props,
+                    text: e.comments,
+                    type: reportType,
+                  } as ChallengeReport;
+                  break;
+                case 'COMMENT':
+                  args = {
+                    ...props,
+                    text: e.comments,
+                    type: reportType,
+                  } as CommentReport;
+                  break;
+                case 'USER':
+                  args = {
+                    ...props,
+                    text: e.comments,
+                    type: reportType,
+                  } as UserReport;
+                  break;
+                case 'SOLUTION':
+                  args = {
+                    ...props,
+                    text: e.comments,
+                    type: reportType,
+                  } as SolutionReport;
+              }
 
-            // This shit is like... extra jank.
-            const issues = Object.entries(e).reduce((all, [key, value]) => {
-              if (key === 'comments') return all;
-              if (value)
-                all.push({
-                  type: key.toUpperCase() as IssueType,
-                });
-              return all;
-            }, [] as { type: IssueType }[]);
+              // This shit is like... extra jank.
+              const issues = Object.entries(e).reduce((all, [key, value]) => {
+                if (key === 'comments') return all;
+                if (value)
+                  all.push({
+                    type: key.toUpperCase() as IssueType,
+                  });
+                return all;
+              }, [] as { type: IssueType }[]);
 
-            const value = await addReport({
-              ...args,
-              issues,
-            });
+              const value = await addReport({
+                ...args,
+                issues,
+              });
 
-            switch (value) {
-              case 'already_exists':
-                toast({
-                  title: 'Already reported',
-                  description: <p>You have already made a report with this information.</p>,
-                });
-                break;
-              case 'created':
-                toast({
-                  title: 'Created',
-                  variant: 'success',
-                  description: <p>A report has been made.</p>,
-                });
-                break;
-              case 'not_logged_in':
-                toast({
-                  title: 'Not Logged In',
-                  variant: 'destructive',
-                  description: <p>You must be logged in to make a report.</p>,
-                });
-            }
-            setShow(false);
-          })}
-        >
-          <DialogHeader>
-            <DialogTitle>{desc}</DialogTitle>
-            <DialogDescription>Please be as thorough in your report as you can.</DialogDescription>
-          </DialogHeader>
-          <div className="mt-4 flex flex-col gap-2">
-            <Text intent="leading">Please select all that apply:</Text>
-            <FormField
-              name="derogatory"
-              render={() => (
-                <FormItem>
-                  <div className="flex items-center gap-2">
-                    <Checkbox
-                      {...register('derogatory')}
-                      onCheckedChange={(e) => setValue('derogatory', e as boolean)}
-                    />
-                    <div>Derogatory</div>
-                  </div>
-                </FormItem>
-              )}
-              control={control}
-            />
-            <FormField
-              name="derogatory"
-              render={() => (
-                <FormItem>
-                  <div className="flex items-center gap-2">
-                    <Checkbox
-                      {...register('bullying')}
-                      onCheckedChange={(e) => setValue('bullying', e as boolean)}
-                    />
-                    <div>Bullying</div>
-                  </div>
-                </FormItem>
-              )}
-              control={control}
-            />
-            <FormField
-              name="hateSpeech"
-              render={() => (
-                <FormItem>
-                  <div className="flex items-center gap-2">
-                    <Checkbox
-                      {...register('hateSpeech')}
-                      onCheckedChange={(e) => setValue('hateSpeech', e as boolean)}
-                    />
-                    <div>Hate speech</div>
-                  </div>
-                </FormItem>
-              )}
-              control={control}
-            />
-            <FormField
-              name="spam"
-              render={() => (
-                <FormItem>
-                  <div className="flex items-center gap-2">
-                    <Checkbox
-                      {...register('spam')}
-                      onCheckedChange={(e) => setValue('spam', e as boolean)}
-                    />
-                    <div>Spam</div>
-                  </div>
-                </FormItem>
-              )}
-              control={control}
-            />
-            <FormField
-              name="threat"
-              render={() => (
-                <FormItem>
-                  <div className="flex items-center gap-2">
-                    <Checkbox
-                      {...register('threat')}
-                      onCheckedChange={(e) => setValue('threat', e as boolean)}
-                    />
-                    <div>Threat of violence</div>
-                  </div>
-                </FormItem>
-              )}
-              control={control}
-            />
-            {reportType === 'CHALLENGE' && (
+              switch (value) {
+                case 'already_exists':
+                  toast({
+                    title: 'Already reported',
+                    description: <p>You have already made a report with this information.</p>,
+                  });
+                  break;
+                case 'created':
+                  toast({
+                    title: 'Created',
+                    variant: 'success',
+                    description: <p>A report has been made.</p>,
+                  });
+                  break;
+                case 'not_logged_in':
+                  toast({
+                    title: 'Not Logged In',
+                    variant: 'destructive',
+                    description: <p>You must be logged in to make a report.</p>,
+                  });
+              }
+              setShow(false);
+            })}
+          >
+            <DialogHeader>
+              <DialogTitle>{desc}</DialogTitle>
+              <DialogDescription>
+                Please be as thorough in your report as you can.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="mt-4 flex flex-col gap-2">
+              <Text intent="leading">Please select all that apply:</Text>
               <FormField
-                name="unclear"
+                name="derogatory"
                 render={() => (
                   <FormItem>
                     <div className="flex items-center gap-2">
                       <Checkbox
-                        {...register('unclear')}
-                        onCheckedChange={(e) => setValue('unclear', e as boolean)}
+                        {...register('derogatory')}
+                        onCheckedChange={(e) => setValue('derogatory', e as boolean)}
                       />
-                      <div>Unclear</div>
+                      <div>Derogatory</div>
                     </div>
                   </FormItem>
                 )}
                 control={control}
               />
-            )}
-
-            <FormField
-              name="comments"
-              render={() => (
-                <FormItem className="my-3">
-                  <div className="flex flex-col gap-3">
-                    <div>Other information</div>
-                    <Textarea
-                      {...register('comments')}
-                      placeholder="Any extra information to help our moderator team when reviewing this report."
-                    />
-                  </div>
-                </FormItem>
+              <FormField
+                name="derogatory"
+                render={() => (
+                  <FormItem>
+                    <div className="flex items-center gap-2">
+                      <Checkbox
+                        {...register('bullying')}
+                        onCheckedChange={(e) => setValue('bullying', e as boolean)}
+                      />
+                      <div>Bullying</div>
+                    </div>
+                  </FormItem>
+                )}
+                control={control}
+              />
+              <FormField
+                name="hateSpeech"
+                render={() => (
+                  <FormItem>
+                    <div className="flex items-center gap-2">
+                      <Checkbox
+                        {...register('hateSpeech')}
+                        onCheckedChange={(e) => setValue('hateSpeech', e as boolean)}
+                      />
+                      <div>Hate speech</div>
+                    </div>
+                  </FormItem>
+                )}
+                control={control}
+              />
+              <FormField
+                name="spam"
+                render={() => (
+                  <FormItem>
+                    <div className="flex items-center gap-2">
+                      <Checkbox
+                        {...register('spam')}
+                        onCheckedChange={(e) => setValue('spam', e as boolean)}
+                      />
+                      <div>Spam</div>
+                    </div>
+                  </FormItem>
+                )}
+                control={control}
+              />
+              <FormField
+                name="threat"
+                render={() => (
+                  <FormItem>
+                    <div className="flex items-center gap-2">
+                      <Checkbox
+                        {...register('threat')}
+                        onCheckedChange={(e) => setValue('threat', e as boolean)}
+                      />
+                      <div>Threat of violence</div>
+                    </div>
+                  </FormItem>
+                )}
+                control={control}
+              />
+              {reportType === 'CHALLENGE' && (
+                <FormField
+                  name="unclear"
+                  render={() => (
+                    <FormItem>
+                      <div className="flex items-center gap-2">
+                        <Checkbox
+                          {...register('unclear')}
+                          onCheckedChange={(e) => setValue('unclear', e as boolean)}
+                        />
+                        <div>Unclear</div>
+                      </div>
+                    </FormItem>
+                  )}
+                  control={control}
+                />
               )}
-              control={control}
-            />
-          </div>
 
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={(e) => {
-                e.preventDefault();
-                setShow(false);
-              }}
-            >
-              Cancel
-            </Button>
-            <Button type="submit">Send report</Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+              <FormField
+                name="comments"
+                render={() => (
+                  <FormItem className="my-3">
+                    <div className="flex flex-col gap-3">
+                      <div>Other information</div>
+                      <Textarea
+                        {...register('comments')}
+                        placeholder="Any extra information to help our moderator team when reviewing this report."
+                      />
+                    </div>
+                  </FormItem>
+                )}
+                control={control}
+              />
+            </div>
+
+            <DialogFooter>
+              <Button
+                variant="outline"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShow(false);
+                }}
+              >
+                Cancel
+              </Button>
+              <Button type="submit">Send report</Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 }
