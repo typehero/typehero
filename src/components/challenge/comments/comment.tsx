@@ -11,7 +11,6 @@ import ReportDialog from '~/components/report';
 
 interface CommentProps {
   comment: ChallengeRouteData['comment'][number];
-  currentId?: number;
 }
 
 const commentReportSchema = z
@@ -114,14 +113,10 @@ const Comment = ({ comment }: CommentProps) => {
           )}
         </div>
       </div>
-      <p
-        className={`${
-          comment.id === currentId ? 'text-red-300' : ''
-        } w-full break-words pl-[1px] text-sm `}
-      >
+      <p className="w-full break-words pl-[1px] text-sm">
         {/* TODO: <code></code> is <Markdown /> does not wrap long lines causing overflow */}
         {/* <Markdown>{comment.text}</Markdown> */}
-        {comment.text} {comment.id} {currentId}
+        {comment.text}
       </p>
     </div>
   );

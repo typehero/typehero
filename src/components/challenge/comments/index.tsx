@@ -20,11 +20,9 @@ const MAX_COMMENT_LENGTH = 1000;
 interface Props {
   challengeId: number;
   commentCount: number;
-  idToSelect: number;
-  expanded: boolean;
 }
 
-const Comments = ({ challengeId, commentCount, expanded, idToSelect }: Props) => {
+const Comments = ({ challengeId, commentCount }: Props) => {
   const [showComments, setShowComments] = useState(false);
   const [text, setText] = useState('');
   const [isCommenting, setIsCommenting] = useState(false);
@@ -39,8 +37,6 @@ const Comments = ({ challengeId, commentCount, expanded, idToSelect }: Props) =>
     queryKey: ['comments', challengeId],
     getNextPageParam: (lastPage) => lastPage.metaData.lastCursor,
   });
-
-  console.log({ data, status, hasNextPage, fetchNextPage, isFetchingNextPage });
 
   const handleClick = () => {
     setShowComments(!showComments);
@@ -85,7 +81,6 @@ const Comments = ({ challengeId, commentCount, expanded, idToSelect }: Props) =>
     }
   }
 
-  console.log({ expanded });
   useEffect(() => {
     if (inView && hasNextPage) fetchNextPage();
   }, [hasNextPage, inView, fetchNextPage]);
@@ -136,7 +131,7 @@ const Comments = ({ challengeId, commentCount, expanded, idToSelect }: Props) =>
                       <Comment key={comment.id} comment={comment} />
                     </div>
                   ) : (
-                    <Comment key={comment.id} comment={comment} currentId={idToSelect} />
+                    <Comment key={comment.id} comment={comment} />
                   ),
                 ),
               )
