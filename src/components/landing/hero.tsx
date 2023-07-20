@@ -40,7 +40,7 @@ const Hero = () => (
     </filter>
     <rect width="100%" height="100%" filter="url(#noise)"></rect>
   </svg> */}
-    <div className="container mb-[56px]   grid min-h-[calc(100lvh_-_112px)] items-center justify-center lg:grid-cols-2">
+    <div className="container mb-[56px] grid min-h-[calc(100lvh_-_112px)] items-center justify-center lg:grid-cols-2">
       <div className="flex w-full flex-col items-center justify-center gap-10 lg:items-start">
         <div className="relative flex w-full items-center justify-center gap-4 lg:justify-start">
           <div className="absolute left-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-x-[15%] -translate-y-[50%] rounded-full bg-slate-400/10 blur-3xl dark:block"></div>
@@ -58,11 +58,11 @@ const Hero = () => (
           skills trough interactive coding challenges, discussions, and knowledge sharing
         </p>
         <div className="flex gap-3">
-          <Button className="group relative flex items-center gap-2 overflow-hidden rounded-xl px-4 py-2 font-bold duration-500 dark:hover:text-white">
-            <div className="absolute h-44 w-44 -translate-x-full rounded-full bg-[#3178C6] duration-500 group-hover:translate-x-0" />
-            <Link className="z-10" href="/explore">
-              Explore challenges
-            </Link>
+          <Button
+            className="relative flex items-center gap-2 overflow-hidden rounded-xl px-4 py-2 font-bold"
+            asChild
+          >
+            <Link href="/explore">Explore challenges</Link>
           </Button>
           <Button
             className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
@@ -84,7 +84,7 @@ const Hero = () => (
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="moving-grid-background absolute h-full w-[200%]"
+              className="moving-grid-background absolute h-[200%] w-full"
             />
             <div className="absolute h-full w-full rounded-full shadow-[inset_0_0_5rem_3rem] shadow-background" />
           </div>

@@ -9,7 +9,7 @@ interface QueryParams {
   lastCursor?: number;
 }
 
-export async function getInfiniteComments({ challengeId, take = 10, lastCursor }: QueryParams) {
+export async function getInfiniteComments({ challengeId, lastCursor }: QueryParams) {
   const results = await prisma.comment.findMany({
     where: {
       rootType: 'CHALLENGE',
@@ -26,22 +26,26 @@ export async function getInfiniteComments({ challengeId, take = 10, lastCursor }
     },
     include: {
       user: true,
-    }
+    },
   });
 
   const last = results.at(-1);
-  const hasNextPage = last && last.id ? 
-    await prisma.comment.findMany({
-      where: {
-        rootChallengeId: challengeId,
-      }
-    }).then(f => f.length > 0) : false;
-  
+  const hasNextPage =
+    last && last.id
+      ? await prisma.comment
+          .findMany({
+            where: {
+              rootChallengeId: challengeId,
+            },
+          })
+          .then((f) => f.length > 0)
+      : false;
+
   return {
     data: results,
     metaData: {
       lastCursor: last ? last.id : null,
       hasNextPage,
-    }
+    },
   };
 }

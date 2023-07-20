@@ -1,6 +1,5 @@
 'use client';
 import { Trash2, Reply, Share } from 'lucide-react';
-import { useState } from 'react';
 import { z } from 'zod';
 import type { ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import { getRelativeTime } from '~/utils/relativeTime';
@@ -9,7 +8,6 @@ import { UserBadge } from '~/components/ui/user-badge';
 import { useSession } from 'next-auth/react';
 import { toast } from '~/components/ui/use-toast';
 import ReportDialog from '~/components/report';
-
 
 interface CommentProps {
   comment: ChallengeRouteData['comment'][number];
@@ -37,8 +35,6 @@ const commentReportSchema = z
 export type CommentReportSchemaType = z.infer<typeof commentReportSchema>;
 
 const Comment = ({ comment }: CommentProps) => {
-  const [dialogOpen, setDialogOpen] = useState(false);
-
   async function copyPathNotifyUser() {
     try {
       await copyCommentUrlToClipboard();
@@ -67,12 +63,14 @@ const Comment = ({ comment }: CommentProps) => {
 
   return (
     <div className="flex flex-col gap-1 p-3 pt-2">
-      <div className="flex justify-between pr-[0.4rem]">
+      <div className="flex items-start justify-between pr-[0.4rem]">
         <div className="flex items-center gap-1">
           <UserBadge username={comment.user.name ?? ''} />
           <Tooltip delayDuration={0.05}>
             <TooltipTrigger asChild>
-              <span className="text-sm text-neutral-500">{getRelativeTime(comment.createdAt)}</span>
+              <span className="mr-2 whitespace-nowrap text-sm text-neutral-500">
+                {getRelativeTime(comment.createdAt)}
+              </span>
             </TooltipTrigger>
             <TooltipContent align="start" className="rounded-xl">
               <span className="text-white-500 text-xs">{comment.createdAt.toLocaleString()}</span>
@@ -80,12 +78,12 @@ const Comment = ({ comment }: CommentProps) => {
           </Tooltip>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center justify-end gap-2">
           <div
             onClick={() => {
               copyPathNotifyUser();
             }}
-            className="gap-1 cursor-pointer duration-200 flex items-center hover:underline text-neutral-500 hover:text-neutral-400"
+            className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 hover:underline"
           >
             <Share className="h-3 w-3" />
             <small className="font-md text-sm leading-none">Share</small>
@@ -102,13 +100,10 @@ const Comment = ({ comment }: CommentProps) => {
               Delete
             </button>
           ) : (
-            <ReportDialog
-              reportType="COMMENT"
-              commentId={comment.id}
-            >
+            <ReportDialog reportType="COMMENT" commentId={comment.id}>
               <button
                 onClick={() => {
-                  setDialogOpen(true);
+                  // do somehting
                 }}
                 className="flex cursor-pointer items-center text-sm text-neutral-400 duration-200 hover:text-neutral-500 hover:underline dark:text-neutral-600 dark:hover:text-neutral-500"
               >
@@ -116,7 +111,6 @@ const Comment = ({ comment }: CommentProps) => {
               </button>
             </ReportDialog>
           )}
-
         </div>
       </div>
       <p className="w-full break-words pl-[1px] text-sm">
