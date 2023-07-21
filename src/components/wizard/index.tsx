@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
-import { UseFormReturn, useForm } from 'react-hook-form';
+import { type UseFormReturn, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from '~/components/ui/button';
 import { Form } from '~/components/ui/form';
@@ -59,17 +59,7 @@ const schemas = {
 type Schemas = typeof schemas;
 export type CreateChallengeSchema = z.infer<typeof createChallengeSchema>;
 
-export type WizardForm = UseFormReturn<
-  {
-    name: string;
-    prompt: string;
-    difficulty: 'BEGINNER' | 'EASY' | 'MEDIUM' | 'HARD' | 'EXTREME';
-    description: string;
-    shortDescription: string;
-  },
-  any,
-  undefined
->;
+export type WizardForm = UseFormReturn<CreateChallengeSchema>;
 
 export default function Wizard() {
   const router = useRouter();

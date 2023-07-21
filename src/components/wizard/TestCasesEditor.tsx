@@ -11,23 +11,24 @@ import {
   DialogTrigger,
 } from '~/components/ui/dialog';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
-import { WizardForm } from '.';
-import { LIB_URI, TsErrors } from '../challenge/code-panel';
+import type { WizardForm } from '.';
+import { LIB_URI, type TsErrors } from '../challenge/code-panel';
 import { libSource } from '../challenge/code-panel/editor-types';
 import { SettingsForm } from '../challenge/settings-form';
 import { CodeEditor } from '../ui/code-editor';
 import { FormField, FormItem, FormMessage } from '../ui/form';
 import { TypographyH3 } from '../ui/typography/h3';
+import type { OnChange } from '@monaco-editor/react';
 
 interface Props {
   form: WizardForm;
 }
 
 export function TestCasesEditor({ form }: Props) {
-  // const prompt = useWatch({ control: form.control, name: 'prompt' });
-  const [tsErrors, setTsErrors] = useState<TsErrors>([[], [], [], []]);
+  const [, setTsErrors] = useState<TsErrors>([[], [], [], []]);
   const onMount =
     (onError: (v: TsErrors) => void) =>
+    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
     async (editor: monaco.editor.IStandaloneCodeEditor, monaco: typeof import('monaco-editor')) => {
       if (!monaco.editor.getModel(monaco.Uri.parse(LIB_URI))) {
         monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, LIB_URI);
@@ -56,7 +57,7 @@ export function TestCasesEditor({ form }: Props) {
         onError(errors);
       };
 
-      model.onDidChangeContent((e) => {
+      model.onDidChangeContent(() => {
         typeCheck().catch(console.error);
       });
 
@@ -99,7 +100,7 @@ export function TestCasesEditor({ form }: Props) {
                   <CodeEditor
                     onMount={onMount(setTsErrors)}
                     value={field.value}
-                    onChange={field.onChange as any}
+                    onChange={field.onChange as OnChange}
                   />
                 </div>
               </div>
@@ -111,3 +112,21 @@ export function TestCasesEditor({ form }: Props) {
     </div>
   );
 }
+// Add these extra validations
+// if (!/(?:\n|^)\s*(?:Equal|Extends|NotEqual|Expect)</.test(code)) {
+//   toast({
+//     variant: 'destructive',
+//     title: 'You need to have test cases in your challenge',
+//     action: <ToastAction altText="Try again">Try again</ToastAction>,
+//   });
+//
+// const hasErrors = !!tsErrors[0].length;
+//
+// if (!USER_CODE_START_REGEX.test(code)) {
+//   toast({
+//     variant: 'destructive',
+//     title: `You need to have the line \`${USER_CODE_START}\` to signify the non-editable part`,
+//     action: <ToastAction altText="Try again">Try again</ToastAction>,
+//   });
+//
+//

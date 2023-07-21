@@ -1,9 +1,9 @@
 'use client';
 
 import { useWatch } from 'react-hook-form';
-import { WizardForm } from '.';
-import { ExploreChallengeData } from '../explore';
-import ExploreCard from '../explore/explore-card';
+import type { WizardForm } from '.';
+import type { ExploreChallengeData } from '../explore';
+import { ExploreCard } from '../explore/explore-card';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
@@ -28,10 +28,12 @@ export function ChallengeCardEditor({ form }: Props) {
     shortDescription: shortDescription || 'Your Short Description Here',
     user: {
       name: 'You',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any,
     _count: {
       vote: 100,
       comment: 50,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any,
     updatedAt: new Date(),
   };
@@ -47,7 +49,10 @@ export function ChallengeCardEditor({ form }: Props) {
               return (
                 <FormItem>
                   <FormLabel>Email</FormLabel>
-                  <Select onValueChange={field.onChange as any} defaultValue={field.value}>
+                  <Select
+                    onValueChange={field.onChange as (value: string) => void}
+                    defaultValue={field.value}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select a difficulty for your challenge" />
