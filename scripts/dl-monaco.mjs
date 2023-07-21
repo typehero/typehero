@@ -4,8 +4,8 @@ import url from 'node:url';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-/** @link https://typescript.azureedge.net/indexes/releases.json */
-const typescriptVersion = '5.0.2';
+/** @link https://ktypescript.azureedge.net/indexes/releases.json */
+const typescriptVersion = '5.1.6';
 
 /** @link https://github.com/microsoft/TypeScript-Make-Monaco-Builds */
 const baseUrl = `https://typescript.azureedge.net/cdn/${typescriptVersion}/monaco`;
