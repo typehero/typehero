@@ -55,15 +55,18 @@ const codePreview: ICommand = {
 interface Props {
   value: string;
   onChange: (v: string) => void;
+  dismissPreview?: boolean;
 }
 
-export function RichMarkdownEditor({ value, onChange }: Props) {
+export function RichMarkdownEditor({ dismissPreview, value, onChange }: Props) {
   const { theme } = useTheme();
   useEffect(() => {
     theme == 'dark'
       ? document.documentElement.setAttribute('data-color-mode', 'dark')
       : document.documentElement.setAttribute('data-color-mode', 'light');
   }, [theme]);
+
+  const extraCommands = [...(dismissPreview ? [] : [codePreview, commands.fullscreen])];
 
   return (
     <div className="h-full flex-1">
@@ -73,7 +76,7 @@ export function RichMarkdownEditor({ value, onChange }: Props) {
         // non-split-screen by default
         preview="edit"
         visibleDragbar={false}
-        extraCommands={[codePreview, commands.fullscreen]}
+        extraCommands={extraCommands}
         // @ts-ignore
         onChange={onChange}
         components={{

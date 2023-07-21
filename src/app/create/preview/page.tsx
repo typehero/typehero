@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { CodePanel } from '~/components/challenge/editor';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { Markdown } from '~/components/ui/markdown';
-import ExploreCard from '~/components/explore/explore-card';
+import { ExploreCard } from '~/components/explore/explore-card';
 import { Button } from '~/components/ui/button';
 import { uploadChallenge } from '../create.action';
 import { useState } from 'react';
