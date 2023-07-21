@@ -13,5 +13,5 @@ export function Wrapper({ challenge }: { challenge: ChallengeRouteData }) {
     return <SubmissionOverview submissionId={segments[1]} />;
   }
 
-  return <CodePanel mode="solve" challenge={challenge} />;
+  return <CodePanel challenge={challenge} />;
 }
