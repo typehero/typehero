@@ -1,19 +1,20 @@
 import { WizardForm } from '.';
-import { TypographyH3 } from '../ui/typography/h3';
+import { Button } from '../ui/button';
 
 interface Props {
-  form: WizardForm;
+  goBack(): void;
 }
-export function Summary({ form }: Props) {
-  const values = form.getValues();
-
+export function Summary({ goBack }: Props) {
   return (
-    <div className="flex h-full flex-col py-6">
-      <TypographyH3 className="mb-6">Summary</TypographyH3>
-      <div className="flex flex-1 gap-6">
-        <div className="flex">
-          <pre>{JSON.stringify(values, null, 2)}</pre>
-        </div>
+    <div className="flex h-full flex-col items-center justify-center">
+      <div className="mb-5 text-center text-5xl font-bold text-gray-900 dark:text-gray-100">
+        Thanks for creating a challenge! Submit it to the community for review.
+      </div>
+      <div className="flex gap-3">
+        <Button variant="secondary" onClick={goBack}>
+          Review
+        </Button>
+        <Button type="submit">Submit</Button>
       </div>
     </div>
   );

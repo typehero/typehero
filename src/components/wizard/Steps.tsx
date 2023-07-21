@@ -28,7 +28,7 @@ export function Steps<T extends Step>({ steps, current, onChange }: Props<T>) {
                 onClick={() => onChange?.(step, stepIdx)}
               >
                 <span className="flex items-center px-6 py-4 text-sm font-medium">
-                  <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full text-white">
+                  <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-green-300 text-white dark:bg-green-800">
                     <Check className="stroke-black dark:stroke-white" size={20} />
                   </span>
                   <span className="ml-4 text-sm font-medium">{step.name}</span>

@@ -249,7 +249,7 @@ export const CodePanel = (props: Props) => {
         <Dialog>
           <DialogTrigger>
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <Settings size={20} className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" />
               </TooltipTrigger>
               <TooltipContent className="px-2 py-1">Settings</TooltipContent>
@@ -290,18 +290,16 @@ export const CodePanel = (props: Props) => {
           {props.extraButton}
           <Tooltip>
             <TooltipTrigger asChild>
-              <span>
-                <Button
-                  size="sm"
-                  className="cursor-pointer rounded-lg bg-emerald-600 duration-300 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
-                  // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                  onClick={handleSubmit}
-                  disabled={!initialTypecheckDone || !session?.user}
-                >
-                  {!initialTypecheckDone && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                  {props.submitText ?? 'Submit'}
-                </Button>
-              </span>
+              <Button
+                size="sm"
+                className="cursor-pointer rounded-lg bg-emerald-600 duration-300 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
+                // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                onClick={handleSubmit}
+                disabled={!initialTypecheckDone || !session?.user}
+              >
+                {!initialTypecheckDone && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                {props.submitText ?? 'Submit'}
+              </Button>
             </TooltipTrigger>
             <TooltipContent>
               <p>Login to Submit</p>

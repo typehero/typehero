@@ -16,7 +16,7 @@ interface Props {
 
 export function ChallengeCardEditor({ form }: Props) {
   const difficulty = useWatch({ control: form.control, name: 'difficulty' });
-  const title = useWatch({ control: form.control, name: 'title' });
+  const title = useWatch({ control: form.control, name: 'name' });
   const shortDescription = useWatch({ control: form.control, name: 'shortDescription' });
 
   const data: Pick<
@@ -67,7 +67,7 @@ export function ChallengeCardEditor({ form }: Props) {
           />
           <FormField
             control={form.control}
-            name="title"
+            name="name"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Challenge Title</FormLabel>

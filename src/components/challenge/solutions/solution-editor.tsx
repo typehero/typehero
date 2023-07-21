@@ -54,8 +54,8 @@ export function SolutionEditor({ dismiss, challenge }: Props) {
     try {
       await postSolution({
         challengeId: challenge.id,
-        description: data.content,
-        title: data.title,
+        description: data.content ?? '',
+        title: data.title ?? '',
         userId: session?.data?.user?.id as string,
       });
 
