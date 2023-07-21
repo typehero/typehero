@@ -1,15 +1,18 @@
 'use client';
 
-import Editor, { loader } from '@monaco-editor/react';
+import { loader } from '@monaco-editor/react';
 import clsx from 'clsx';
 import { Loader2, Settings } from 'lucide-react';
-import { initVimMode } from 'monaco-vim';
 import type * as monaco from 'monaco-editor';
+import { initVimMode } from 'monaco-vim';
 import { useSession } from 'next-auth/react';
 import { useTheme } from 'next-themes';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { useMemo, useRef, useState } from 'react';
+import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import { Button } from '~/components/ui/button';
+import { CodeEditor } from '~/components/ui/code-editor';
 import {
   Dialog,
   DialogContent,
@@ -18,17 +21,15 @@ import {
   DialogTrigger,
 } from '~/components/ui/dialog';
 import { ToastAction } from '~/components/ui/toast';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 import { useToast } from '~/components/ui/use-toast';
+import { useLocalStorage } from '~/utils/useLocalStorage';
 import { saveSubmission } from '../save-submission.action';
 import { SettingsForm } from '../settings-form';
 import { useEditorSettingsStore } from '../settings-store';
 import { USER_CODE_START, USER_CODE_START_REGEX } from './constants';
 import { libSource } from './editor-types';
 import { createTwoslashInlayProvider } from './twoslash';
-import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
-import dynamic from 'next/dynamic';
-import { useLocalStorage } from '~/utils/useLocalStorage';
 
 const VimStatusBar = dynamic(() => import('./vimMode').then((v) => v.VimStatusBar), {
   ssr: false,
@@ -40,17 +41,7 @@ loader.config({
   },
 });
 
-const DEFAULT_OPTIONS = {
-  lineNumbers: 'on',
-  tabSize: 2,
-  insertSpaces: false,
-  minimap: {
-    enabled: false,
-  },
-  fontSize: 16,
-} as const satisfies monaco.editor.IStandaloneEditorConstructionOptions;
-
-const LIB_URI = 'ts:filename/checking.d.ts';
+export const LIB_URI = 'ts:filename/checking.d.ts';
 
 type Props = (
   | {
@@ -76,7 +67,7 @@ type Props = (
   extraButton?: React.ReactNode;
 };
 
-type TsErrors = [
+export type TsErrors = [
   SemanticDiagnostics: monaco.languages.typescript.Diagnostic[],
   SyntacticDiagnostics: monaco.languages.typescript.Diagnostic[],
   SuggestionDiagnostics: monaco.languages.typescript.Diagnostic[],
@@ -110,18 +101,9 @@ export const CodePanel = (props: Props) => {
 
   const [code, setCode] = useState(() => getDefaultCode());
 
-  const editorTheme = theme === 'light' ? 'vs' : 'vs-dark';
   const modelRef = useRef<monaco.editor.ITextModel>();
   // ref doesnt cause a rerender
   const [editorState, setEditorState] = useState<monaco.editor.IStandaloneCodeEditor>();
-  const editorOptions = useMemo(() => {
-    return {
-      ...DEFAULT_OPTIONS,
-      ...settings,
-      fontSize: parseInt(settings.fontSize),
-      tabSize: parseInt(settings.tabSize),
-    };
-  }, [settings]);
 
   const handleSubmit =
     props.mode === 'solve'
@@ -284,11 +266,7 @@ export const CodePanel = (props: Props) => {
         </Dialog>
       </div>
       <div className="w-full flex-1">
-        <Editor
-          theme={editorTheme}
-          options={editorOptions}
-          defaultLanguage="typescript"
-          // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        <CodeEditor
           onMount={onMount(code, setTsErrors)}
           value={code}
           onChange={(code) => {

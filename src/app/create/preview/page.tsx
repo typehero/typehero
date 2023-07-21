@@ -1,16 +1,14 @@
 'use client';
 
-import { ChallengeLayout } from '~/components/challenge/challenge-layout';
-import { useCreateChallengeStore } from '../create-challenge-store';
-import { useRouter } from 'next/navigation';
-import { CodePanel } from '~/components/challenge/editor';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
-import { Markdown } from '~/components/ui/markdown';
-import { ExploreCard } from '~/components/explore/explore-card';
-import { Button } from '~/components/ui/button';
-import { uploadChallenge } from '../create.action';
-import { useState } from 'react';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { ChallengeLayout } from '~/components/challenge/challenge-layout';
+import { ExploreCard } from '~/components/explore/explore-card';
+import { Markdown } from '~/components/ui/markdown';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
+import { useCreateChallengeStore } from '../create-challenge-store';
+import { uploadChallenge } from '../create.action';
 
 export default function PreviewCreatedChallenge() {
   const createChallengeStore = useCreateChallengeStore();
@@ -90,23 +88,7 @@ export default function PreviewCreatedChallenge() {
           </TabsContent>
         </Tabs>
       }
-      right={
-        <CodePanel
-          mode="check-created"
-          prompt={createChallengeStore.data.prompt}
-          onSubmit={publishChallenge}
-          submitText="Publish"
-          extraButton={
-            <Button
-              size="sm"
-              className="cursor-pointer whitespace-nowrap bg-red-600 duration-300 hover:bg-red-500 dark:bg-red-400 dark:hover:bg-red-300"
-              onClick={() => router.push('/create/')}
-            >
-              Continue Editing
-            </Button>
-          }
-        />
-      }
+      right={<div />}
     />
   );
 }

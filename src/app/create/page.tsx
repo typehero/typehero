@@ -1,18 +1,16 @@
 'use client';
 
-import { ChallengeLayout } from '~/components/challenge/challenge-layout';
-import { CodePanel } from '~/components/challenge/editor';
+import { ToastAction } from '@radix-ui/react-toast';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { ChallengeLayout } from '~/components/challenge/challenge-layout';
 import { Checkbox } from '~/components/ui/checkbox';
 import { Label } from '~/components/ui/label';
 import { Markdown } from '~/components/ui/markdown';
-import { useCreateChallengeStore } from './create-challenge-store';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { useToast } from '~/components/ui/use-toast';
-import { ToastAction } from '@radix-ui/react-toast';
-import { useRouter } from 'next/navigation';
+import { useCreateChallengeStore } from './create-challenge-store';
 import DEFAULT_DESCRIPTION from './default-description.md';
-import DEFAULT_CHALLENGE_TEMPLATE from './default-challenge.md';
 
 import { type Difficulty } from '@prisma/client';
 import ExploreCardInputs from '~/components/create/explore-card-inputs';
@@ -136,14 +134,7 @@ export default function CreateChallenge() {
           </TabsContent>
         </Tabs>
       }
-      right={
-        <CodePanel
-          mode="create"
-          onSubmit={onSubmit}
-          submitText="Preview"
-          prompt={createChallengeStore.data?.prompt ?? DEFAULT_CHALLENGE_TEMPLATE}
-        />
-      }
+      right={<div />}
     />
   );
 }

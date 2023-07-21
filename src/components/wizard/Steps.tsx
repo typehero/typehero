@@ -15,7 +15,10 @@ interface Props<T extends Step> {
 export function Steps<T extends Step>({ steps, current, onChange }: Props<T>) {
   return (
     <nav aria-label="Progress">
-      <ol role="list" className="divide-y rounded-xl border md:flex md:divide-y-0">
+      <ol
+        role="list"
+        className="divide-y rounded-xl border border-zinc-300  dark:border-zinc-700 md:flex md:divide-y-0"
+      >
         {steps.map((step, stepIdx) => (
           <li key={step.name} className="relative md:flex md:flex-1">
             {current > stepIdx ? (
@@ -25,20 +28,18 @@ export function Steps<T extends Step>({ steps, current, onChange }: Props<T>) {
                 onClick={() => onChange?.(step, stepIdx)}
               >
                 <span className="flex items-center px-6 py-4 text-sm font-medium">
-                  <span className="bg-brand-600 group-hover:bg-brand-800 dark:bg-brand-500 dark:group-hover:bg-brand-400 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full text-white">
-                    <Check size={20} />
+                  <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full text-white">
+                    <Check className="stroke-black dark:stroke-white" size={20} />
                   </span>
                   <span className="ml-4 text-sm font-medium">{step.name}</span>
                 </span>
               </a>
             ) : current === stepIdx ? (
               <span className="flex items-center px-6 py-4 text-sm font-medium" aria-current="step">
-                <span className="border-brand-600 dark:border-brand-300 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2">
-                  <span className="text-brand-600 dark:text-brand-300">{step.id}</span>
+                <span className="flex h-10  w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-zinc-300 dark:border-zinc-700">
+                  <span>{step.id}</span>
                 </span>
-                <span className="text-brand-600 dark:text-brand-300 ml-4 text-sm font-medium">
-                  {step.name}
-                </span>
+                <span className="ml-4 text-sm font-medium">{step.name}</span>
               </span>
             ) : (
               <span className="group flex items-center">
@@ -59,7 +60,7 @@ export function Steps<T extends Step>({ steps, current, onChange }: Props<T>) {
                   aria-hidden="true"
                 >
                   <svg
-                    className="h-full w-full text-gray-300 dark:text-gray-700"
+                    className="h-full w-full text-zinc-300 dark:text-zinc-700"
                     viewBox="0 0 22 80"
                     fill="none"
                     preserveAspectRatio="none"
