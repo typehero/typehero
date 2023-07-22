@@ -18,7 +18,7 @@ import {
   DialogTrigger,
 } from '~/components/ui/dialog';
 import { ToastAction } from '~/components/ui/toast';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 import { useToast } from '~/components/ui/use-toast';
 import { saveSubmission } from '../save-submission.action';
 import { SettingsForm } from '../settings-form';
@@ -204,6 +204,14 @@ export const CodePanel = (props: Props) => {
     (value: string, onError: (v: TsErrors) => void) =>
     // eslint-disable-next-line @typescript-eslint/consistent-type-imports
     async (editor: monaco.editor.IStandaloneCodeEditor, monaco: typeof import('monaco-editor')) => {
+      monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+        ...monaco.languages.typescript.typescriptDefaults.getCompilerOptions(),
+        strict: true,
+        target: monaco.languages.typescript.ScriptTarget.ESNext,
+        strictNullChecks: true,
+      })
+
+
       const lineWithUserCode = value
         .split('\n')
         .findIndex((line) => line.includes(USER_CODE_START));
