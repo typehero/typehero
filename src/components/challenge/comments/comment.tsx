@@ -94,7 +94,6 @@ const Comment = ({ comment }: CommentProps) => {
             <Reply className="h-3 w-3" />
             Reply
           </button>
-          {/* TODO: make dis work */}
           {isAuthor ? (
             <CommentDeleteDialog comment={comment} asChild>
               <button className="flex cursor-pointer items-center gap-1 text-sm text-neutral-500 duration-200 hover:text-neutral-400 hover:underline dark:text-neutral-500 dark:hover:text-neutral-400">
