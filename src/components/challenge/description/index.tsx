@@ -82,40 +82,38 @@ export function Description({ challenge }: Props) {
         {/* TODO: split this mess into components, make buttons have bigger horizontal padding and decrease the gap value on container above */}
         <Tooltip>
           <TooltipTrigger asChild>
-            <span>
-              <Button
-                variant="ghost"
-                className="p-1"
-                disabled={!session?.data?.user?.id}
-                onClick={() => {
-                  let shouldBookmark = false;
-                  if (hasBookmarked) {
-                    shouldBookmark = false;
-                    setHasBookmarked(false);
-                  } else {
-                    shouldBookmark = true;
-                    setHasBookmarked(true);
-                  }
-                  debouncedBookmark(
-                    challenge.id,
-                    session?.data?.user?.id as string,
-                    shouldBookmark,
-                  )?.catch((e) => {
-                    console.error(e);
-                  });
-                }}
-              >
-                <BookmarkIcon
-                  className={clsx(
-                    {
-                      'fill-blue-500 stroke-blue-500': hasBookmarked,
-                      'stroke-zinc-500': !hasBookmarked,
-                    },
-                    'h-4 w-4 hover:stroke-zinc-400',
-                  )}
-                />
-              </Button>
-            </span>
+            <Button
+              variant="ghost"
+              className="p-1"
+              disabled={!session?.data?.user?.id}
+              onClick={() => {
+                let shouldBookmark = false;
+                if (hasBookmarked) {
+                  shouldBookmark = false;
+                  setHasBookmarked(false);
+                } else {
+                  shouldBookmark = true;
+                  setHasBookmarked(true);
+                }
+                debouncedBookmark(
+                  challenge.id,
+                  session?.data?.user?.id as string,
+                  shouldBookmark,
+                )?.catch((e) => {
+                  console.error(e);
+                });
+              }}
+            >
+              <BookmarkIcon
+                className={clsx(
+                  {
+                    'fill-blue-500 stroke-blue-500': hasBookmarked,
+                    'stroke-zinc-500': !hasBookmarked,
+                  },
+                  'h-4 w-4 hover:stroke-zinc-400',
+                )}
+              />
+            </Button>
           </TooltipTrigger>
           <TooltipContent>
             <p>{session?.data?.user?.id ? 'Bookmark' : 'Login to Bookmark'}</p>
@@ -143,54 +141,52 @@ export function Description({ challenge }: Props) {
         </Dialog>
         <Tooltip>
           <TooltipTrigger asChild>
-            <span>
-              <Button
-                className="group gap-2 rounded-xl px-2 py-1"
-                variant="ghost"
-                disabled={!session?.data?.user?.id}
-                onClick={() => {
-                  let shouldIncrement = false;
-                  if (hasVoted) {
-                    setVotes((v) => v - 1);
-                    shouldIncrement = false;
-                    setHasVoted(false);
-                  } else {
-                    setVotes((v) => v + 1);
-                    shouldIncrement = true;
-                    setHasVoted(true);
-                  }
-                  debouncedSearch(
-                    challenge.id,
-                    session?.data?.user?.id as string,
-                    shouldIncrement,
-                  )?.catch((e) => {
-                    console.error(e);
-                  });
-                }}
+            <Button
+              className="group gap-2 rounded-xl px-2 py-1"
+              variant="ghost"
+              disabled={!session?.data?.user?.id}
+              onClick={() => {
+                let shouldIncrement = false;
+                if (hasVoted) {
+                  setVotes((v) => v - 1);
+                  shouldIncrement = false;
+                  setHasVoted(false);
+                } else {
+                  setVotes((v) => v + 1);
+                  shouldIncrement = true;
+                  setHasVoted(true);
+                }
+                debouncedSearch(
+                  challenge.id,
+                  session?.data?.user?.id as string,
+                  shouldIncrement,
+                )?.catch((e) => {
+                  console.error(e);
+                });
+              }}
+            >
+              <ThumbsUp
+                className={clsx(
+                  {
+                    'fill-emerald-600 stroke-emerald-600 group-hover:stroke-emerald-400 dark:fill-emerald-400 dark:stroke-emerald-400':
+                      hasVoted,
+                    'stroke-zinc-500 group-hover:stroke-zinc-400': !hasVoted,
+                  },
+                  'h-4 w-4 duration-200 group-hover:scale-105 group-active:scale-95 group-active:duration-75',
+                )}
+              />
+              <span
+                className={clsx(
+                  {
+                    'text-emerald-600 dark:text-emerald-400': hasVoted,
+                    'text-zinc-500 group-hover:text-zinc-400': !hasVoted,
+                  },
+                  'my-auto w-4 self-end duration-300',
+                )}
               >
-                <ThumbsUp
-                  className={clsx(
-                    {
-                      'fill-emerald-600 stroke-emerald-600 group-hover:stroke-emerald-400 dark:fill-emerald-400 dark:stroke-emerald-400':
-                        hasVoted,
-                      'stroke-zinc-500 group-hover:stroke-zinc-400': !hasVoted,
-                    },
-                    'h-4 w-4 duration-200 group-hover:scale-105 group-active:scale-95 group-active:duration-75',
-                  )}
-                />
-                <span
-                  className={clsx(
-                    {
-                      'text-emerald-600 dark:text-emerald-400': hasVoted,
-                      'text-zinc-500 group-hover:text-zinc-400': !hasVoted,
-                    },
-                    'my-auto w-4 self-end duration-300',
-                  )}
-                >
-                  {votes}
-                </span>
-              </Button>
-            </span>
+                {votes}
+              </span>
+            </Button>
           </TooltipTrigger>
           <TooltipContent>
             <p>{session?.data?.user?.id ? 'Upvote' : 'Login to Upvote'}</p>

@@ -1,15 +1,17 @@
 'use client';
 
-import Editor, { loader } from '@monaco-editor/react';
+import { loader } from '@monaco-editor/react';
 import clsx from 'clsx';
 import { Loader2, Settings } from 'lucide-react';
-import { initVimMode } from 'monaco-vim';
 import type * as monaco from 'monaco-editor';
+import { initVimMode } from 'monaco-vim';
 import { useSession } from 'next-auth/react';
-import { useTheme } from 'next-themes';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
-import { useMemo, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
+import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import { Button } from '~/components/ui/button';
+import { CodeEditor } from '~/components/ui/code-editor';
 import {
   Dialog,
   DialogContent,
@@ -20,15 +22,12 @@ import {
 import { ToastAction } from '~/components/ui/toast';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 import { useToast } from '~/components/ui/use-toast';
+import { useLocalStorage } from '~/utils/useLocalStorage';
 import { saveSubmission } from '../save-submission.action';
 import { SettingsForm } from '../settings-form';
-import { useEditorSettingsStore } from '../settings-store';
 import { USER_CODE_START, USER_CODE_START_REGEX } from './constants';
 import { libSource } from './editor-types';
 import { createTwoslashInlayProvider } from './twoslash';
-import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
-import dynamic from 'next/dynamic';
-import { useLocalStorage } from '~/utils/useLocalStorage';
 
 const VimStatusBar = dynamic(() => import('./vimMode').then((v) => v.VimStatusBar), {
   ssr: false,
@@ -40,43 +39,13 @@ loader.config({
   },
 });
 
-const DEFAULT_OPTIONS = {
-  lineNumbers: 'on',
-  tabSize: 2,
-  insertSpaces: false,
-  minimap: {
-    enabled: false,
-  },
-  fontSize: 16,
-} as const satisfies monaco.editor.IStandaloneEditorConstructionOptions;
+export const LIB_URI = 'ts:filename/checking.d.ts';
 
-const LIB_URI = 'ts:filename/checking.d.ts';
-
-type Props = (
-  | {
-      mode: 'solve';
-      challenge: ChallengeRouteData;
-      prompt?: never;
-    }
-  | {
-      mode: 'create';
-      challenge?: never;
-      onSubmit: (code: string) => void;
-      prompt: string | undefined;
-    }
-  | {
-      mode: 'check-created';
-      challenge?: never;
-      prompt: string;
-      onSubmit: () => void;
-    }
-) & {
-  /** @default "Submit" */
-  submitText?: string;
-  extraButton?: React.ReactNode;
+type Props = {
+  challenge: ChallengeRouteData;
 };
 
-type TsErrors = [
+export type TsErrors = [
   SemanticDiagnostics: monaco.languages.typescript.Diagnostic[],
   SyntacticDiagnostics: monaco.languages.typescript.Diagnostic[],
   SuggestionDiagnostics: monaco.languages.typescript.Diagnostic[],
@@ -86,9 +55,7 @@ type TsErrors = [
 export const CodePanel = (props: Props) => {
   const router = useRouter();
   const { toast } = useToast();
-  const { theme } = useTheme();
   const { data: session } = useSession();
-  const { settings } = useEditorSettingsStore();
   const [tsErrors, setTsErrors] = useState<TsErrors>([[], [], [], []]);
   const [initialTypecheckDone, setInitialTypecheckDone] = useState(false);
   const [localStorageCode, setLocalStorageCode] = useLocalStorage(
@@ -97,8 +64,6 @@ export const CodePanel = (props: Props) => {
   );
 
   const getDefaultCode = () => {
-    if (props.mode !== 'solve') return props.prompt ?? '';
-
     if (!localStorageCode) {
       return props.challenge.prompt;
     }
@@ -110,95 +75,37 @@ export const CodePanel = (props: Props) => {
 
   const [code, setCode] = useState(() => getDefaultCode());
 
-  const editorTheme = theme === 'light' ? 'vs' : 'vs-dark';
   const modelRef = useRef<monaco.editor.ITextModel>();
   // ref doesnt cause a rerender
   const [editorState, setEditorState] = useState<monaco.editor.IStandaloneCodeEditor>();
-  const editorOptions = useMemo(() => {
-    return {
-      ...DEFAULT_OPTIONS,
-      ...settings,
-      fontSize: parseInt(settings.fontSize),
-      tabSize: parseInt(settings.tabSize),
-    };
-  }, [settings]);
 
-  const handleSubmit =
-    props.mode === 'solve'
-      ? async () => {
-          const [, solution] = code.split(USER_CODE_START);
-          const hasErrors = tsErrors.some((e) => e.length);
+  const handleSubmit = async () => {
+    const [, solution] = code.split(USER_CODE_START);
+    const hasErrors = tsErrors.some((e) => e.length);
 
-          await saveSubmission(
-            props.challenge.id,
-            session?.user?.id as string,
-            solution ?? '',
-            !hasErrors,
-          );
-          router.refresh();
+    await saveSubmission(
+      props.challenge.id,
+      session?.user?.id as string,
+      solution ?? '',
+      !hasErrors,
+    );
+    router.refresh();
 
-          if (hasErrors) {
-            toast({
-              variant: 'destructive',
-              title: 'Uh oh! You still have errors.',
-              action: <ToastAction altText="Try again">Try again</ToastAction>,
-            });
-          } else {
-            toast({
-              variant: 'success',
-              title: 'Good job!',
-              description: 'You completed this challenge.',
-              action: <ToastAction altText="Try again">Dismiss</ToastAction>,
-            });
-          }
-        }
-      : props.mode === 'create'
-      ? () => {
-          // check that it has some test cases
-          // checks that there is a line that starts with Equal or Extends or NotEqual
-          if (!/(?:\n|^)\s*(?:Equal|Extends|NotEqual|Expect)</.test(code)) {
-            toast({
-              variant: 'destructive',
-              title: 'You need to have test cases in your challenge',
-              action: <ToastAction altText="Try again">Try again</ToastAction>,
-            });
-
-            return Promise.resolve();
-          }
-
-          const hasErrors = !!tsErrors[0].length;
-          console.info(tsErrors);
-
-          if (!hasErrors) {
-            toast({
-              variant: 'destructive',
-              title: 'You need to have failing test cases in your challenge',
-              action: <ToastAction altText="Try again">Try again</ToastAction>,
-            });
-
-            return Promise.resolve();
-          }
-
-          if (!USER_CODE_START_REGEX.test(code)) {
-            toast({
-              variant: 'destructive',
-              title: `You need to have the line \`${USER_CODE_START}\` to signify the non-editable part`,
-              action: <ToastAction altText="Try again">Try again</ToastAction>,
-            });
-
-            return Promise.resolve();
-          }
-
-          props.onSubmit(code);
-
-          return Promise.resolve();
-        }
-      : props.mode === 'check-created'
-      ? () => {
-          props.onSubmit();
-          return Promise.resolve();
-        }
-      : () => Promise.reject('not finished');
+    if (hasErrors) {
+      toast({
+        variant: 'destructive',
+        title: 'Uh oh! You still have errors.',
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
+    } else {
+      toast({
+        variant: 'success',
+        title: 'Good job!',
+        description: 'You completed this challenge.',
+        action: <ToastAction altText="Try again">Dismiss</ToastAction>,
+      });
+    }
+  };
 
   const onMount =
     (value: string, onError: (v: TsErrors) => void) =>
@@ -210,11 +117,6 @@ export const CodePanel = (props: Props) => {
         target: monaco.languages.typescript.ScriptTarget.ESNext,
         strictNullChecks: true,
       })
-
-
-      const lineWithUserCode = value
-        .split('\n')
-        .findIndex((line) => line.includes(USER_CODE_START));
 
       if (!monaco.editor.getModel(monaco.Uri.parse(LIB_URI))) {
         monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, LIB_URI);
@@ -249,14 +151,6 @@ export const CodePanel = (props: Props) => {
       // TODO: we prolly should use this for blocking ranges as it might not be as janky
       // https://github.com/Pranomvignesh/constrained-editor-plugin
       model.onDidChangeContent((e) => {
-        if (props.mode !== 'create') {
-          // in monaco editor, the first line is e1e1e
-          // do net let them type if they are editing before lineWithUserCode
-          if (e.changes.some((c) => c.range.startLineNumber <= lineWithUserCode + 1)) {
-            editor.trigger('someIdString', 'undo', null);
-          }
-        }
-
         typeCheck().catch(console.error);
       });
 
@@ -275,7 +169,7 @@ export const CodePanel = (props: Props) => {
         <Dialog>
           <DialogTrigger>
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <Settings size={20} className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" />
               </TooltipTrigger>
               <TooltipContent className="px-2 py-1">Settings</TooltipContent>
@@ -292,11 +186,7 @@ export const CodePanel = (props: Props) => {
         </Dialog>
       </div>
       <div className="w-full flex-1">
-        <Editor
-          theme={editorTheme}
-          options={editorOptions}
-          defaultLanguage="typescript"
-          // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        <CodeEditor
           onMount={onMount(code, setTsErrors)}
           value={code}
           onChange={(code) => {
@@ -317,21 +207,18 @@ export const CodePanel = (props: Props) => {
       >
         {editorState && <VimStatusBar editor={editorState} initVimMode={initVimMode} />}
         <div className="flex items-center justify-center gap-4">
-          {props.extraButton}
           <Tooltip>
             <TooltipTrigger asChild>
-              <span>
-                <Button
-                  size="sm"
-                  className="cursor-pointer rounded-lg bg-emerald-600 duration-300 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
-                  // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                  onClick={handleSubmit}
-                  disabled={!initialTypecheckDone || !session?.user}
-                >
-                  {!initialTypecheckDone && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                  {props.submitText ?? 'Submit'}
-                </Button>
-              </span>
+              <Button
+                size="sm"
+                className="cursor-pointer rounded-lg bg-emerald-600 duration-300 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
+                // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                onClick={handleSubmit}
+                disabled={!initialTypecheckDone || !session?.user}
+              >
+                {!initialTypecheckDone && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                Submit
+              </Button>
             </TooltipTrigger>
             <TooltipContent>
               <p>Login to Submit</p>
