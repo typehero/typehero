@@ -77,7 +77,7 @@ export function TestCasesEditor({ form }: Props) {
                   <Dialog>
                     <DialogTrigger>
                       <Tooltip>
-                        <TooltipTrigger>
+                        <TooltipTrigger asChild>
                           <Settings
                             size={20}
                             className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400"
