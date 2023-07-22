@@ -1,13 +1,13 @@
-import { redirect } from 'next/navigation';
-import Text from '~/components/ui/typography/typography';
-import Link from 'next/link';
-import { Markdown } from '~/components/ui/markdown';
-import Editor from '~/components/ui/editor';
-import { UserBadge } from '~/components/ui/user-badge';
 import { AlertCircle, ThumbsUp } from 'lucide-react';
-import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert';
-import ReportActions from './actions';
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { getChallenge } from '~/components/admin/admin.actions';
+import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert';
+import { CodeEditor } from '~/components/ui/code-editor';
+import { Markdown } from '~/components/ui/markdown';
+import Text from '~/components/ui/typography/typography';
+import { UserBadge } from '~/components/ui/user-badge';
+import ReportActions from './actions';
 
 export interface Props {
   params: {
@@ -105,7 +105,7 @@ const Report = async function (props: Props) {
           <Markdown className="mt-4">{challenge.description}</Markdown>
         </div>
         <div className="w-full md:w-1/2">
-          <Editor value={challenge.prompt} />
+          <CodeEditor value={challenge.prompt} />
         </div>
       </section>
     </div>

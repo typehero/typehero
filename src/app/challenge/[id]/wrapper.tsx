@@ -1,6 +1,6 @@
 'use client';
 import { useSelectedLayoutSegments } from 'next/navigation';
-import { CodePanel } from '~/components/challenge/editor';
+import { CodePanel } from '~/components/challenge/code-panel';
 import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import { SubmissionOverview } from '~/components/challenge/submissions/overview';
 
@@ -13,5 +13,5 @@ export function Wrapper({ challenge }: { challenge: ChallengeRouteData }) {
     return <SubmissionOverview submissionId={segments[1]} />;
   }
 
-  return <CodePanel mode="solve" challenge={challenge} />;
+  return <CodePanel challenge={challenge} />;
 }
