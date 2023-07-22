@@ -12,7 +12,7 @@ export function Summary({ goBack }: Props) {
       </div>
       <div className="flex gap-3">
         <Button variant="secondary" onClick={goBack}>
-          Review
+          Back
         </Button>
         <Button type="submit">Submit</Button>
       </div>
