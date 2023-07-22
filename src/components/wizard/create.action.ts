@@ -2,7 +2,7 @@
 
 import { prisma } from '~/server/db';
 import { getServerAuthSession } from '~/server/auth';
-import { CreateChallengeSchema } from '.';
+import { type CreateChallengeSchema } from '.';
 
 export async function uploadChallenge(data: CreateChallengeSchema) {
   const session = await getServerAuthSession();

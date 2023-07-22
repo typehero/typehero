@@ -111,6 +111,13 @@ export const CodePanel = (props: Props) => {
     (value: string, onError: (v: TsErrors) => void) =>
     // eslint-disable-next-line @typescript-eslint/consistent-type-imports
     async (editor: monaco.editor.IStandaloneCodeEditor, monaco: typeof import('monaco-editor')) => {
+      monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+        ...monaco.languages.typescript.typescriptDefaults.getCompilerOptions(),
+        strict: true,
+        target: monaco.languages.typescript.ScriptTarget.ESNext,
+        strictNullChecks: true,
+      })
+
       if (!monaco.editor.getModel(monaco.Uri.parse(LIB_URI))) {
         monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, LIB_URI);
         monaco.editor.createModel(libSource, 'typescript', monaco.Uri.parse(LIB_URI));
