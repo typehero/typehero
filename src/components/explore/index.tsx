@@ -37,6 +37,11 @@ async function getEasyChallenges() {
     where: {
       visibility: 'VISIBLE',
       difficulty: { in: ['EASY'] },
+      user: {
+        NOT: {
+          status: 'BANNED'
+        }
+      }
     },
     include: {
       _count: {
@@ -53,6 +58,11 @@ async function getMediumChallenges() {
     where: {
       visibility: 'VISIBLE',
       difficulty: { in: ['MEDIUM'] },
+      user: {
+        NOT: {
+          status: 'BANNED'
+        }
+      }
     },
     include: {
       _count: {
@@ -69,6 +79,11 @@ async function getHardChallenges() {
     where: {
       visibility: 'VISIBLE',
       difficulty: { in: ['HARD'] },
+      user: {
+        NOT: {
+          status: 'BANNED'
+        }
+      }
     },
     include: {
       _count: {

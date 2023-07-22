@@ -3,6 +3,7 @@ import { Wrapper } from './wrapper';
 import { getChallengeRouteData } from './getChallengeRouteData';
 import { getServerAuthSession } from '~/server/auth';
 import { LeftWrapper } from './left-wrapper';
+import { redirect } from 'next/navigation';
 
 export default async function LayoutData({
   children,
@@ -13,7 +14,8 @@ export default async function LayoutData({
 }) {
   const session = await getServerAuthSession();
   const challenge = await getChallengeRouteData(id, session);
-  if (!challenge) return <div>loading</div>;
+
+  if (!challenge) return redirect('/explore');
 
   return (
     <ChallengeLayout
