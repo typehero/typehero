@@ -1,4 +1,6 @@
-import Editor, { OnChange, OnMount } from '@monaco-editor/react';
+'use client';
+
+import Editor, { type OnChange, type OnMount } from '@monaco-editor/react';
 import type * as monaco from 'monaco-editor';
 import { useTheme } from 'next-themes';
 import { useMemo } from 'react';
