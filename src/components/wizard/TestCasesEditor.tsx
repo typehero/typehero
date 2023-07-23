@@ -1,5 +1,3 @@
-'use client';
-
 import type { OnChange } from '@monaco-editor/react';
 import { Settings } from 'lucide-react';
 import type * as monaco from 'monaco-editor';
@@ -29,9 +27,9 @@ interface Props {
 export function TestCasesEditor({ form, hasTsErrors, setTsErrors }: Props) {
   const onMount = useCallback(
     (onError: (v: TsErrors) => void) =>
-      // eslint-disable-next-line @typescript-eslint/consistent-type-imports
       async (
         editor: monaco.editor.IStandaloneCodeEditor,
+        // eslint-disable-next-line @typescript-eslint/consistent-type-imports
         monaco: typeof import('monaco-editor'),
       ) => {
         if (!monaco.editor.getModel(monaco.Uri.parse(LIB_URI))) {
