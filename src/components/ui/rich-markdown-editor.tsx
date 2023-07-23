@@ -164,11 +164,11 @@ export function RichMarkdownEditor({ dismissPreview, value, onChange }: Props) {
         }}
       />
       {isImageUploading && (
-        <div className="absolute bottom-0 flex w-full bg-stone-600 pl-2">
+        <div className="absolute bottom-0 pl-3 flex w-full items-center p-2 bg-neutral-100 dark:bg-zinc-700 dark:text-white">
           <div role="status">
             <svg
               aria-hidden="true"
-              className="mr-2 h-8 w-8 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
+              className="mr-3 h-5 w-5 animate-spin fill-black dark:text-neutral-500 dark:fill-white text-gray-300"
               viewBox="0 0 100 101"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -184,7 +184,7 @@ export function RichMarkdownEditor({ dismissPreview, value, onChange }: Props) {
             </svg>
             <span className="sr-only">Loading...</span>
           </div>
-          <div className="text-black">Uploading image...</div>
+          <div>Uploading image...</div>
         </div>
       )}
     </div>
