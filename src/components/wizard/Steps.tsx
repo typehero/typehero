@@ -7,9 +7,10 @@ interface Props<T extends Step> {
   steps: T[];
   onChange: (index: number) => void;
   onNext: () => void;
+  onSubmit: () => Promise<void>;
 }
 
-export function Steps<T extends Step>({ steps, current, onChange, onNext }: Props<T>) {
+export function Steps<T extends Step>({ steps, current, onChange, onNext, onSubmit }: Props<T>) {
   return (
     <nav className="items-center justify-between md:flex" aria-label="Progress">
       <ol
@@ -78,16 +79,16 @@ export function Steps<T extends Step>({ steps, current, onChange, onNext }: Prop
       <div className="flex justify-end gap-3">
         <>
           {current > 0 && (
-            <Button variant="ghost" type="button" onClick={() => onChange(current - 1)}>
+            <Button variant="ghost" onClick={() => onChange(current - 1)}>
               Back
             </Button>
           )}
           {current === 3 ? (
-            <Button type="submit" className="w-[79px]">
+            <Button className="w-[79px]" onClick={onSubmit}>
               Submit
             </Button>
           ) : (
-            <Button type="button" onClick={onNext} className="w-[79px]">
+            <Button onClick={onNext} className="w-[79px]">
               Next
             </Button>
           )}

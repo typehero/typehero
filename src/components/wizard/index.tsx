@@ -95,15 +95,17 @@ export function Wizard() {
   return (
     <div className="container h-full pb-6">
       <div className="flex h-full flex-col">
+        {/* we cant nest this in the form because it causes the editor to resize inifinitely hence the onSubmit(wtf..) */}
+        <Steps
+          steps={steps}
+          current={step}
+          onChange={(idx) => setStep(idx)}
+          onNext={handleNextClick}
+          onSubmit={form.handleSubmit(onSubmit)}
+        />
         {rendered && (
           <Form {...form}>
-            <form className="flex-1" onSubmit={form.handleSubmit(onSubmit)}>
-              <Steps
-                steps={steps}
-                current={step}
-                onChange={(idx) => setStep(idx)}
-                onNext={handleNextClick}
-              />
+            <form className="flex-1">
               {step === 0 && <ChallengeCardEditor form={form} />}
               {step === 1 && <DescriptionEditor form={form} />}
               {step === 2 && <TestCasesEditor form={form} />}
