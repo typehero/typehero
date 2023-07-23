@@ -1,6 +1,6 @@
 'use client';
 
-import Editor, { type OnChange, type OnMount } from '@monaco-editor/react';
+import Editor, { type EditorProps, type OnChange, type OnMount } from '@monaco-editor/react';
 import type * as monaco from 'monaco-editor';
 import { useTheme } from 'next-themes';
 import { useMemo } from 'react';
@@ -16,15 +16,14 @@ const DEFAULT_OPTIONS = {
   fontSize: 16,
 } as const satisfies monaco.editor.IStandaloneEditorConstructionOptions;
 
-interface Props {
+interface Props extends EditorProps {
   onChange?: OnChange;
   onMount?: OnMount;
   options?: monaco.editor.IStandaloneEditorConstructionOptions;
   value: string;
-  height?: string | number;
 }
 
-export function CodeEditor({ onChange, onMount, options, value, height }: Props) {
+export function CodeEditor({ onChange, onMount, options, value, ...props }: Props) {
   const { theme } = useTheme();
   const editorTheme = theme === 'light' ? 'vs' : 'vs-dark';
   const { settings } = useEditorSettingsStore();
@@ -40,7 +39,7 @@ export function CodeEditor({ onChange, onMount, options, value, height }: Props)
 
   return (
     <Editor
-      height={height}
+      {...props}
       theme={editorTheme}
       options={editorOptions}
       defaultLanguage="typescript"

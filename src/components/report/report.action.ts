@@ -148,7 +148,15 @@ export async function getInfiniteReports(lastCursor?: number) {
 export async function getReports(lastCursor?: number, take = 25) {
   return prisma.report.findMany({
     include: {
-      challenge: true,
+      challenge: {
+        include: {
+          _count: {
+            select: {
+              vote: true,
+            }
+          }
+        }
+      },
       user: true,
       reporter: true,
       issues: true,
@@ -166,9 +174,6 @@ export async function getReports(lastCursor?: number, take = 25) {
       {
         status: 'asc',
       },
-      {
-        type: 'desc',
-      },
     ],
   });
 }
@@ -183,7 +188,6 @@ export async function addChallengeReport(challengeId: number, userId: string, da
     },
   });
   if (report.length > 0) {
-    console.info(report);
     return 'report_already_made';
   }
 

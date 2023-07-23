@@ -13,6 +13,7 @@ import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import {
   banUser,
+  deleteComment,
   deleteSolution,
   disableChallenge,
   dismissReport,
@@ -50,6 +51,23 @@ export default function ReportActions({ report }: ReportActionsProps) {
         return report.solution?.user as User;
     }
   }, [report]);
+
+  async function handleDeleteComment(commentId: number, reportId: number) {
+    try {
+      await deleteComment(commentId, reportId);
+      toast({
+        title: 'Success',
+        description: <p>Comment deleted successfully</p>,
+      });
+      router.push('/admin/report');
+    } catch (e) {
+      toast({
+        title: 'Error',
+        variant: 'destructive',
+        description: <p>An error occurred. Please try again later.</p>,
+      });
+    }
+  }
 
   async function handleDisableChallenge(challengeId: number, reportId: number) {
     try {
@@ -145,7 +163,7 @@ export default function ReportActions({ report }: ReportActionsProps) {
       {report.type === 'COMMENT' && (
         <Button
           disabled={report.moderatorId !== null}
-          onClick={() => console.info('do a thing')}
+          onClick={() => handleDeleteComment(report.commentId as number, report.id)}
           variant="destructive"
         >
           Delete Comment

@@ -56,6 +56,25 @@ export async function getChallengeReports() {
 
 export type AdminBannedUsers = Awaited<ReturnType<typeof getBannedUsers>>;
 
+export async function deleteComment(commentId: number, reportId: number) {
+  return prisma.$transaction([
+    prisma.comment.delete({
+      where: {
+        id: commentId,
+      },
+    }),
+    prisma.report.update({
+      where: {
+        id: reportId,
+      },
+      data: {
+        status: 'CLEARED',
+        updatedAt: new Date(),
+      },
+    }),
+  ]);
+}
+
 /**
  * The function fetches all the banned
  * user's.
@@ -93,6 +112,7 @@ export async function disableChallenge(challengeId: number, reportId: number) {
       data: {
         status: 'CLEARED',
         moderatorId: session?.user.id,
+        updatedAt: new Date(),
       },
     }),
   ]);
@@ -113,6 +133,7 @@ export async function dismissReport(reportId: number) {
     data: {
       status: 'DISMISSED',
       moderatorId: session?.user.id,
+      updatedAt: new Date(),
     },
   });
 }
@@ -131,6 +152,7 @@ export async function deleteSolution(solutionId: number, reportId: number) {
         },
         data: {
           status: 'CLEARED',
+          updatedAt: new Date(),
         },
       }),
     ]);
@@ -180,6 +202,7 @@ export async function banUser(userId: string, reportId: number, banReason?: stri
       data: {
         status: 'CLEARED',
         moderatorId: session?.user.id,
+        updatedAt: new Date(),
       },
     }),
   ]);
@@ -212,22 +235,17 @@ export async function unbanUser(userId: string) {
 }
 
 export async function getChallenge(id: number) {
-  return prisma.challengeReport.findFirstOrThrow({
+  return prisma.challenge.findFirstOrThrow({
     where: {
       id,
     },
     include: {
-      author: true,
-      moderator: {
+      _count: {
         select: {
-          name: true,
-        },
-      },
-      challenge: {
-        include: {
-          user: true,
           vote: true,
-        },
+          bookmark: true,
+          comment: true,
+        }
       },
     },
   });
