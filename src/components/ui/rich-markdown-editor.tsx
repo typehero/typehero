@@ -56,9 +56,20 @@ interface Props {
   value: string;
   onChange: (v: string) => void;
   dismissPreview?: boolean;
+  /**
+   * This will allow images to be uploaded to CDN
+   *
+   * @default false
+   */
+  allowImageUpload?: boolean;
 }
 
-export function RichMarkdownEditor({ dismissPreview, value, onChange }: Props) {
+export function RichMarkdownEditor({
+  dismissPreview,
+  value,
+  onChange,
+  allowImageUpload = false,
+}: Props) {
   // @ts-ignore someone fix the types, #GFI
   const editorRef = useRef<MDEditor>(null);
   const [isImageUploading, setIsImageUploading] = useState(false);
@@ -106,24 +117,27 @@ export function RichMarkdownEditor({ dismissPreview, value, onChange }: Props) {
   });
 
   const handlePasta = async (event: React.ClipboardEvent<HTMLTextAreaElement>) => {
-    {
-      const items = event.clipboardData?.items;
-      if (!items) return;
-      // upload the image to and endpoint
-      for (const item of items) {
-        if (item.kind === 'file') {
-          const blob = item.getAsFile();
-          if (!blob) return;
-          const reader = new FileReader();
-          reader.onload = (event) => {
-            const src = event.target?.result;
-            if (!src) return;
-          };
+    // only allow image if it's enabled
+    if (!allowImageUpload) return;
 
-          setIsImageUploading(true);
-          // upload to the endpoint
-          await startUpload([blob]);
-        }
+    const items = event.clipboardData?.items;
+    if (!items) return;
+    // upload the image to and endpoint
+    for (const item of items) {
+      if (item.kind === 'file') {
+        const blob = item.getAsFile();
+        if (!blob) return;
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const src = event.target?.result;
+          if (!src) return;
+        };
+
+        // update state for the loading spinner
+        setIsImageUploading(true);
+
+        // upload to the endpoint
+        await startUpload([blob]);
       }
     }
   };
@@ -164,11 +178,11 @@ export function RichMarkdownEditor({ dismissPreview, value, onChange }: Props) {
         }}
       />
       {isImageUploading && (
-        <div className="absolute bottom-0 pl-3 flex w-full items-center p-2 bg-neutral-100 dark:bg-zinc-700 dark:text-white">
+        <div className="absolute bottom-0 flex w-full items-center bg-neutral-100 p-2 pl-3 dark:bg-zinc-700 dark:text-white">
           <div role="status">
             <svg
               aria-hidden="true"
-              className="mr-3 h-5 w-5 animate-spin fill-black dark:text-neutral-500 dark:fill-white text-gray-300"
+              className="mr-3 h-5 w-5 animate-spin fill-black text-gray-300 dark:fill-white dark:text-neutral-500"
               viewBox="0 0 100 101"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
