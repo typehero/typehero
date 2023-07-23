@@ -23,13 +23,13 @@ const Report = async function (props: Props) {
     return redirect('/admin');
   }
 
-  const f = await getReport(idNum);
+  const report = await getReport(idNum);
 
-  if (!f) return redirect('/admin');
+  if (!report) return redirect('/admin');
 
   let title = '';
 
-  switch (f.type) {
+  switch (report.type) {
     case 'USER':
       title = 'User Report';
       break;
@@ -67,10 +67,10 @@ const Report = async function (props: Props) {
         <Text intent="h1" color="primary">
           {title}
         </Text>
-        <ReportActions report={f} />
+        <ReportActions report={report} />
       </div>
 
-      {f?.moderator && (
+      {report?.moderator && (
         <Alert className="mt-4" variant="destructive">
           <div className="flex items-center gap-2">
             <AlertCircle className="h-[1.25rem]" />
@@ -78,13 +78,13 @@ const Report = async function (props: Props) {
           </div>
 
           <AlertDescription>
-            Moderator @{f?.moderator.name} took action on this case already.
+            Moderator @{report?.moderator.name} took action on this case already.
           </AlertDescription>
         </Alert>
       )}
 
       <div className="wrapper mt-4 flex flex-col gap-4 md:flex-row">
-        <section className="order-2 flex-grow md:order-1">{ReportEl(f)}</section>
+        <section className="order-2 flex-grow md:order-1">{ReportEl(report)}</section>
         <aside className="order-1 flex-shrink-0 md:order-2 md:w-1/3 lg:w-[30%]">
           <Text intent="h2" className="mt-6">
             Information
@@ -92,14 +92,14 @@ const Report = async function (props: Props) {
 
           <Text className="mt-4" intent="leading">
             Reporter{' '}
-            <Link className="text-gray-400 hover:underline" href={`/@${f?.reporter.name}`}>
-              @{f?.reporter.name}
+            <Link className="text-gray-400 hover:underline" href={`/@${report?.reporter.name}`}>
+              @{report?.reporter.name}
             </Link>{' '}
             says that this challenge includes:{' '}
           </Text>
 
           <ul className="list-disc pl-8">
-            {f.issues.map((issue) => (
+            {report.issues.map((issue) => (
               <li key={`issue-${issue.id}`}>{issue.type}</li>
             ))}
           </ul>
@@ -107,7 +107,7 @@ const Report = async function (props: Props) {
           <section className="my-4">
             <Text weight="semi">Other comments by reporter</Text>
             <div className="mt-4 rounded-lg bg-zinc-200 p-4 text-gray-800 dark:bg-zinc-800 dark:text-white">
-              <Markdown>{f?.text || '_No additional comments given_'}</Markdown>
+              <Markdown>{report?.text || '_No additional comments given_'}</Markdown>
             </div>
           </section>
         </aside>
