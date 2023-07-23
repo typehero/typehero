@@ -1,5 +1,5 @@
 import { Check } from 'lucide-react';
-import type { Step } from '.';
+import { STEPS, type Step } from '.';
 import { Button } from '../ui/button';
 
 interface Props<T extends Step> {
@@ -78,12 +78,12 @@ export function Steps<T extends Step>({ steps, current, onChange, onNext, onSubm
       </ol>
       <div className="flex justify-end gap-3">
         <>
-          {current > 0 && (
+          {current > STEPS.ChallengeCard && (
             <Button variant="ghost" onClick={() => onChange(current - 1)}>
               Back
             </Button>
           )}
-          {current === 3 ? (
+          {current === STEPS.Summary ? (
             <Button className="w-[79px]" onClick={onSubmit}>
               Submit
             </Button>

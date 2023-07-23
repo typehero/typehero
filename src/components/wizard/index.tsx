@@ -17,6 +17,12 @@ import DEFAULT_CHALLENGE_TEMPLATE from './default-challenge.md';
 import DEFAULT_DESCRIPTION from './default-description.md';
 import type { TsErrors } from '../challenge/code-panel';
 
+export const enum STEPS {
+  ChallengeCard,
+  Description,
+  TestCases,
+  Summary,
+}
 const testCaseRegex = new RegExp('(?:\n|^)s*(?:Equal|Extends|NotEqual|Expect)<');
 const createExploreCardSchema = z.object({
   difficulty: z.enum(['BEGINNER', 'EASY', 'MEDIUM', 'HARD', 'EXTREME']),
@@ -84,7 +90,7 @@ export function Wizard() {
     if (success) {
       // if they are currently on test cases do not let them go to next step
       // until a type error exists
-      if (step === 2) {
+      if (step === STEPS.TestCases) {
         if (!hasTsErrors) return;
       }
       setStep((step) => step + 1);
@@ -115,9 +121,9 @@ export function Wizard() {
         {rendered && (
           <Form {...form}>
             <form className="flex-1">
-              {step === 0 && <ChallengeCardEditor form={form} />}
-              {step === 1 && <DescriptionEditor form={form} />}
-              {step === 2 && (
+              {step === STEPS.ChallengeCard && <ChallengeCardEditor form={form} />}
+              {step === STEPS.Description && <DescriptionEditor form={form} />}
+              {step === STEPS.TestCases && (
                 <TestCasesEditor form={form} hasTsErrors={hasTsErrors} setTsErrors={setTsErrors} />
               )}
               {step === 3 && <Summary />}
