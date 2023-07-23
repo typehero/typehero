@@ -8,6 +8,9 @@ patchedDependencies:
   '@monaco-editor/react@4.5.1':
     hash: xep4qb27qzc6gvlhv2fxe3r2ka
     path: patches/@monaco-editor__react@4.5.1.patch
+  monaco-vim@0.4.0:
+    hash: j3oqxjoadtct3pc6tokddngzsm
+    path: patches/monaco-vim@0.4.0.patch
   next-auth@4.22.1:
     hash: mr6pbhgbmy4dt4xo4hxm5k4ym4
     path: patches/next-auth@4.22.1.patch
@@ -111,7 +114,7 @@ dependencies:
     version: 0.40.0
   monaco-vim:
     specifier: ^0.4.0
-    version: 0.4.0(monaco-editor@0.40.0)
+    version: 0.4.0(patch_hash=j3oqxjoadtct3pc6tokddngzsm)(monaco-editor@0.40.0)
   next:
     specifier: ^13.4.10
     version: 13.4.10(react-dom@18.2.0)(react@18.2.0)
@@ -5270,13 +5273,14 @@ packages:
     resolution: {integrity: sha512-1wymccLEuFSMBvCk/jT1YDW/GuxMLYwnFwF9CDyYCxoTw2Pt379J3FUhwy9c43j51JdcxVPjwk0jm0EVDsBS2g==}
     dev: false
 
-  /monaco-vim@0.4.0(monaco-editor@0.40.0):
+  /monaco-vim@0.4.0(patch_hash=j3oqxjoadtct3pc6tokddngzsm)(monaco-editor@0.40.0):
     resolution: {integrity: sha512-+CsW0+Mvx2+eitkXS7OpUXIu57qXlqAL8oVkYhkPCEZ/c6+6gOp/IcG7w+Lb33YiZuTyvJ891+czkeJRPIEwVA==}
     peerDependencies:
       monaco-editor: '*'
     dependencies:
       monaco-editor: 0.40.0
     dev: false
+    patched: true
 
   /mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
