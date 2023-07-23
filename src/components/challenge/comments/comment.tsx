@@ -1,13 +1,14 @@
 'use client';
-import { Trash2, Reply, Share } from 'lucide-react';
+import { Reply, Share, Trash2 } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 import { z } from 'zod';
 import type { ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
-import { getRelativeTime } from '~/utils/relativeTime';
-import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
-import { UserBadge } from '~/components/ui/user-badge';
-import { useSession } from 'next-auth/react';
-import { toast } from '~/components/ui/use-toast';
 import ReportDialog from '~/components/report';
+import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
+import { toast } from '~/components/ui/use-toast';
+import { UserBadge } from '~/components/ui/user-badge';
+import { getRelativeTime } from '~/utils/relativeTime';
+import CommentDeleteDialog from './delete';
 
 interface CommentProps {
   comment: ChallengeRouteData['comment'][number];
@@ -93,12 +94,13 @@ const Comment = ({ comment }: CommentProps) => {
             <Reply className="h-3 w-3" />
             Reply
           </button>
-          {/* TODO: make dis work */}
           {isAuthor ? (
-            <button className="flex cursor-pointer items-center gap-1 text-sm text-neutral-500 duration-200 hover:text-neutral-400 hover:underline dark:text-neutral-500 dark:hover:text-neutral-400">
-              <Trash2 className="h-3 w-3" />
-              Delete
-            </button>
+            <CommentDeleteDialog comment={comment} asChild>
+              <button className="flex cursor-pointer items-center gap-1 text-sm text-neutral-500 duration-200 hover:text-neutral-400 hover:underline dark:text-neutral-500 dark:hover:text-neutral-400">
+                <Trash2 className="h-3 w-3" />
+                Delete
+              </button>
+            </CommentDeleteDialog>
           ) : (
             <ReportDialog reportType="COMMENT" commentId={comment.id}>
               <button

@@ -32,3 +32,21 @@ export async function addComment(comment: ChallengeComment | SolutionComment) {
     },
   });
 }
+/**
+ * Delete's a comment given a comment id. It must
+ * be your own comment.
+ * @props comment_id The id of the comment.
+ */
+export async function deleteComment(comment_id: number) {
+  const session = await getServerAuthSession();
+
+  if (!session?.user.id) return 'unauthorized';
+  if (!comment_id) return 'invalid_comment';
+
+  return await prisma.comment.delete({
+    where: {
+      userId: session.user.id,
+      id: comment_id,
+    },
+  });
+}
