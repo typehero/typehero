@@ -1,31 +1,29 @@
 import { Check } from 'lucide-react';
-
-interface Step {
-  id: string;
-  name: string;
-  href?: string;
-}
+import { STEPS, type Step } from '.';
+import { Button } from '../ui/button';
 
 interface Props<T extends Step> {
   current: number;
   steps: T[];
-  onChange?: (step: T, index: number) => void;
+  onChange: (index: number) => void;
+  onNext: () => void;
+  onSubmit: () => Promise<void>;
 }
 
-export function Steps<T extends Step>({ steps, current, onChange }: Props<T>) {
+export function Steps<T extends Step>({ steps, current, onChange, onNext, onSubmit }: Props<T>) {
   return (
-    <nav aria-label="Progress">
+    <nav className="items-center justify-between md:flex" aria-label="Progress">
       <ol
         role="list"
-        className="divide-y rounded-xl border border-zinc-300  dark:border-zinc-700 md:flex md:divide-y-0"
+        className="mb-3 divide-y rounded-xl border border-zinc-300  dark:border-zinc-700 md:flex md:w-10/12 md:divide-y-0"
       >
         {steps.map((step, stepIdx) => (
           <li key={step.name} className="relative md:flex md:flex-1">
             {current > stepIdx ? (
               <a
-                href={step.href ?? '#'}
+                href={'#'}
                 className="group flex w-full items-center"
-                onClick={() => onChange?.(step, stepIdx)}
+                onClick={() => onChange(stepIdx)}
               >
                 <span className="flex items-center px-6 py-4 text-sm font-medium">
                   <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-green-300 text-white dark:bg-green-800">
@@ -78,6 +76,24 @@ export function Steps<T extends Step>({ steps, current, onChange }: Props<T>) {
           </li>
         ))}
       </ol>
+      <div className="flex justify-end gap-3">
+        <>
+          {current > STEPS.ChallengeCard && (
+            <Button variant="ghost" onClick={() => onChange(current - 1)}>
+              Back
+            </Button>
+          )}
+          {current === STEPS.Summary ? (
+            <Button className="w-[79px]" onClick={onSubmit}>
+              Submit
+            </Button>
+          ) : (
+            <Button onClick={onNext} className="w-[79px]">
+              Next
+            </Button>
+          )}
+        </>
+      </div>
     </nav>
   );
 }

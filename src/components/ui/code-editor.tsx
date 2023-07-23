@@ -35,7 +35,9 @@ export function CodeEditor({ onChange, onMount, options, value, ...props }: Prop
       tabSize: parseInt(settings.tabSize),
       ...options,
     };
-  }, [settings]);
+  }, [options, settings]);
+
+  console.log({ value });
 
   return (
     <Editor
@@ -46,6 +48,7 @@ export function CodeEditor({ onChange, onMount, options, value, ...props }: Prop
       onMount={onMount}
       value={value}
       onChange={onChange}
+      {...props}
     />
   );
 }
