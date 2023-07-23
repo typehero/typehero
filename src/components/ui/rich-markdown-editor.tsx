@@ -107,6 +107,7 @@ export function RichMarkdownEditor({ dismissPreview, value, onChange }: Props) {
           const uploadedFile = uploadedFilesResult[0];
 
           // insert string at cursor position by calling on change
+          // BUG: this doesnt allow undo to work, needs fixie
           onChange(
             `${value.slice(0, textarea.selectionStart)}![${uploadedFile?.fileKey}](${uploadedFile?.fileUrl
             })${value.slice(textarea.selectionEnd)}`,
