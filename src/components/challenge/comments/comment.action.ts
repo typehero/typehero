@@ -24,6 +24,8 @@ export async function addComment(comment: ChallengeComment | SolutionComment) {
 
   if (!session?.user.id) return 'unauthorized';
   if (comment.text.length === 0) return 'text_is_empty';
+  if (!session?.user.id) return 'unauthorized';
+  if (comment.text.length === 0) return 'text_is_empty';
 
   return await prisma.comment.create({
     data: {

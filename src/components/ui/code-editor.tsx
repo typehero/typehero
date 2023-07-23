@@ -21,8 +21,10 @@ interface Props {
   onMount?: OnMount;
   options?: monaco.editor.IStandaloneEditorConstructionOptions;
   value: string;
+  height?: string | number;
 }
-export function CodeEditor({ onChange, onMount, options, value }: Props) {
+
+export function CodeEditor({ onChange, onMount, options, value, height }: Props) {
   const { theme } = useTheme();
   const editorTheme = theme === 'light' ? 'vs' : 'vs-dark';
   const { settings } = useEditorSettingsStore();
@@ -38,6 +40,7 @@ export function CodeEditor({ onChange, onMount, options, value }: Props) {
 
   return (
     <Editor
+      height={height}
       theme={editorTheme}
       options={editorOptions}
       defaultLanguage="typescript"

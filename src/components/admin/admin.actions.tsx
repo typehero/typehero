@@ -86,7 +86,7 @@ export async function disableChallenge(challengeId: number, reportId: number) {
         visibility: 'HIDDEN',
       },
     }),
-    prisma.challengeReport.update({
+    prisma.report.update({
       where: {
         id: reportId,
       },
@@ -104,9 +104,9 @@ export async function disableChallenge(challengeId: number, reportId: number) {
  * @param reportId The id of the report.
  * @returns
  */
-export async function dismissChallengeReport(reportId: number) {
+export async function dismissReport(reportId: number) {
   const session = await getServerAuthSession();
-  return prisma.challengeReport.update({
+  return prisma.report.update({
     where: {
       id: reportId,
     },
@@ -115,6 +115,29 @@ export async function dismissChallengeReport(reportId: number) {
       moderatorId: session?.user.id,
     },
   });
+}
+
+export async function deleteSolution(solutionId: number, reportId: number) {
+  try {
+    await prisma.$transaction([
+      prisma.sharedSolution.delete({
+        where: {
+          id: solutionId,
+        },
+      }),
+      prisma.report.update({
+        where: {
+          id: reportId,
+        },
+        data: {
+          status: 'CLEARED',
+        },
+      }),
+    ]);
+    return 'ok';
+  } catch (e) {
+    return 'failed';
+  }
 }
 
 /**
@@ -150,7 +173,7 @@ export async function banUser(userId: string, reportId: number, banReason?: stri
         userId: userId,
       },
     }),
-    prisma.challengeReport.update({
+    prisma.report.update({
       where: {
         id: reportId,
       },

@@ -12,6 +12,7 @@ import CommentDeleteDialog from './delete';
 
 interface CommentProps {
   comment: ChallengeRouteData['comment'][number];
+  readonly?: boolean;
 }
 
 const commentReportSchema = z
@@ -35,7 +36,7 @@ const commentReportSchema = z
 
 export type CommentReportSchemaType = z.infer<typeof commentReportSchema>;
 
-const Comment = ({ comment }: CommentProps) => {
+const Comment = ({ comment, readonly = false }: CommentProps) => {
   async function copyPathNotifyUser() {
     try {
       await copyCommentUrlToClipboard();
@@ -78,42 +79,39 @@ const Comment = ({ comment }: CommentProps) => {
             </TooltipContent>
           </Tooltip>
         </div>
-
-        <div className="flex flex-wrap items-center justify-end gap-2">
-          <div
-            onClick={() => {
-              copyPathNotifyUser();
-            }}
-            className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 hover:underline"
-          >
-            <Share className="h-3 w-3" />
-            <small className="font-md text-sm leading-none">Share</small>
+        {!readonly && (
+          <div className="flex flex-wrap items-center justify-end gap-2">
+            <div
+              onClick={() => {
+                copyPathNotifyUser();
+              }}
+              className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 hover:underline"
+            >
+              <Share className="h-3 w-3" />
+              <small className="font-md text-sm leading-none">Share</small>
+            </div>
+            {/* TODO: make dis work */}
+            <button className="flex cursor-pointer items-center gap-1 text-sm text-neutral-500 duration-200 hover:text-neutral-400 hover:underline dark:text-neutral-500 dark:hover:text-neutral-400">
+              <Reply className="h-3 w-3" />
+              Reply
+            </button>
+            {/* TODO: make dis work */}
+            {isAuthor ? (
+              <CommentDeleteDialog comment={comment} asChild>
+                <button className="flex cursor-pointer items-center gap-1 text-sm text-neutral-500 duration-200 hover:text-neutral-400 hover:underline dark:text-neutral-500 dark:hover:text-neutral-400">
+                  <Trash2 className="h-3 w-3" />
+                  Delete
+                </button>
+              </CommentDeleteDialog>
+            ) : (
+              <ReportDialog reportType="COMMENT" commentId={comment.id}>
+                <button className="flex cursor-pointer items-center text-sm text-neutral-400 duration-200 hover:text-neutral-500 hover:underline dark:text-neutral-600 dark:hover:text-neutral-500">
+                  Report
+                </button>
+              </ReportDialog>
+            )}
           </div>
-          {/* TODO: make dis work */}
-          <button className="flex cursor-pointer items-center gap-1 text-sm text-neutral-500 duration-200 hover:text-neutral-400 hover:underline dark:text-neutral-500 dark:hover:text-neutral-400">
-            <Reply className="h-3 w-3" />
-            Reply
-          </button>
-          {isAuthor ? (
-            <CommentDeleteDialog comment={comment} asChild>
-              <button className="flex cursor-pointer items-center gap-1 text-sm text-neutral-500 duration-200 hover:text-neutral-400 hover:underline dark:text-neutral-500 dark:hover:text-neutral-400">
-                <Trash2 className="h-3 w-3" />
-                Delete
-              </button>
-            </CommentDeleteDialog>
-          ) : (
-            <ReportDialog reportType="COMMENT" commentId={comment.id}>
-              <button
-                onClick={() => {
-                  // do somehting
-                }}
-                className="flex cursor-pointer items-center text-sm text-neutral-400 duration-200 hover:text-neutral-500 hover:underline dark:text-neutral-600 dark:hover:text-neutral-500"
-              >
-                Report
-              </button>
-            </ReportDialog>
-          )}
-        </div>
+        )}
       </div>
       <p className="w-full break-words pl-[1px] text-sm">
         {/* TODO: <code></code> is <Markdown /> does not wrap long lines causing overflow */}

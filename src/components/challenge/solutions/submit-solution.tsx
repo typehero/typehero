@@ -2,7 +2,7 @@ import { Plus } from 'lucide-react';
 import { Button } from '~/components/ui/button';
 
 interface Props {
-  disabled: boolean
+  disabled: boolean;
   setView: (view: 'editor' | 'list') => void;
 }
 
