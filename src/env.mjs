@@ -23,6 +23,10 @@ export const env = createEnv({
     R2_ACCOUNT_ID: z.string(),
     R2_ACCESS_KEY_ID: z.string(),
     R2_ACCESS_KEY: z.string(),
+
+    // upload thing 
+    UPLOADTHING_SECRET: z.string(),
+    UPLOADTHING_APP_ID: z.string()
   },
 
   /**
@@ -48,6 +52,8 @@ export const env = createEnv({
     R2_ACCOUNT_ID: process.env.R2_ACCOUNT_ID,
     R2_ACCESS_KEY_ID: process.env.R2_ACCESS_KEY_ID,
     R2_ACCESS_KEY: process.env.R2_ACCESS_KEY,
+    UPLOADTHING_SECRET: process.env.UPLOADTHING_SECRET,
+    UPLOADTHING_APP_ID: process.env.UPLOADTHING_APP_ID,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.

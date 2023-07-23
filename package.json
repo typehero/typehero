@@ -45,6 +45,7 @@
     "@tanstack/react-table": "^8.9.3",
     "@types/lodash": "^4.14.195",
     "@uiw/react-md-editor": "^3.23.3",
+    "@uploadthing/react": "^5.2.0",
     "class-variance-authority": "^0.6.1",
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
@@ -62,6 +63,7 @@
     "react": "18.2.0",
     "react-day-picker": "^8.8.0",
     "react-dom": "18.2.0",
+    "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.45.1",
     "react-intersection-observer": "^9.5.2",
     "react-markdown": "^8.0.7",
@@ -74,6 +76,7 @@
     "tailwindcss-animate": "^1.0.6",
     "unified": "^10.1.2",
     "unist-util-visit": "^5.0.0",
+    "uploadthing": "^5.2.1",
     "uuid-by-string": "^4.0.0",
     "zod": "^3.21.4",
     "zustand": "^4.3.9"
