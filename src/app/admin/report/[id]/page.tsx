@@ -1,14 +1,15 @@
-import { AlertCircle, ThumbsUp } from 'lucide-react';
+import { AlertCircle, ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { getChallenge } from '~/components/admin/admin.actions';
 import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert';
-import { CodeEditor } from '~/components/ui/code-editor';
 import { Markdown } from '~/components/ui/markdown';
 import Text from '~/components/ui/typography/typography';
-import { UserBadge } from '~/components/ui/user-badge';
 import ReportActions from './actions';
-
+import ChallengeReport from '~/components/report/types/challenge.report';
+import CommentReport from '~/components/report/types/comment.report';
+import UserReportUi from '~/components/report/types/user.report';
+import SolutionReport from '~/components/report/types/solution.report';
+import { getReport, type ReportWithInfo } from './report.action';
 export interface Props {
   params: {
     id: string;
@@ -21,29 +22,55 @@ const Report = async function (props: Props) {
   if (isNaN(idNum)) {
     return redirect('/admin');
   }
-  // Grab the items.
-  const { author, challenge, derogatory, id, moderatorId, moderator, unclear, text } =
-    await getChallenge(idNum);
+
+  const report = await getReport(idNum);
+
+  if (!report) return redirect('/admin');
+
+  let title = '';
+
+  switch (report.type) {
+    case 'USER':
+      title = 'User Report';
+      break;
+    case 'CHALLENGE':
+      title = 'Challenge Report';
+      break;
+    case 'COMMENT':
+      title = 'Comment Report';
+      break;
+    case 'SOLUTION':
+      title = 'Solution Report';
+      break;
+  }
+
+  const ReportEl = (report: NonNullable<ReportWithInfo>) => {
+    switch (report.type) {
+      case 'CHALLENGE':
+        return <ChallengeReport report={report} />;
+      case 'COMMENT':
+        return <CommentReport report={report} />;
+      case 'SOLUTION':
+        return <SolutionReport report={report} />;
+      case 'USER':
+        return <UserReportUi report={report} />;
+    }
+  };
 
   return (
     <div className="container  ">
+      <Link href="/admin" className="inline-flex gap-2">
+        {' '}
+        <ChevronLeft /> <span>Back to reports</span>
+      </Link>
       <div className="sticky top-0 z-50 flex items-center justify-between bg-background/80">
         <Text intent="h1" color="primary">
-          Challenge Report
+          {title}
         </Text>
-        <ReportActions
-          reportId={id}
-          moderatorId={moderatorId}
-          moderator={moderator}
-          challenge={challenge}
-        />
+        <ReportActions report={report} />
       </div>
 
-      <Text intent="h2" className="mt-6">
-        Report information
-      </Text>
-
-      {moderator && (
+      {report?.moderator && (
         <Alert className="mt-4" variant="destructive">
           <div className="flex items-center gap-2">
             <AlertCircle className="h-[1.25rem]" />
@@ -51,63 +78,40 @@ const Report = async function (props: Props) {
           </div>
 
           <AlertDescription>
-            Moderator @{moderator.name} took action on this case already.
+            Moderator @{report?.moderator.name} took action on this case already.
           </AlertDescription>
         </Alert>
       )}
 
-      <Text className="mt-4" intent="leading">
-        Reporter{' '}
-        <Link className="text-gray-400 hover:underline" href={`/@${author.name}`}>
-          @{author.name}
-        </Link>{' '}
-        says that this challenge:{' '}
-      </Text>
-
-      <ul className="list-disc pl-8">
-        {derogatory && <li>Is derogatory</li>}
-        {unclear && <li>Is unclear</li>}
-        {!(derogatory || unclear) && <li>Has some other issue (see comments below)</li>}
-      </ul>
-
-      <section className="my-4">
-        <Text weight="semi">Other comments by reporter</Text>
-        <div className="mt-4 rounded-lg bg-zinc-200 p-4 text-gray-800 dark:bg-zinc-800 dark:text-white">
-          <Markdown>{text || '__No additional comments given__'}</Markdown>
-        </div>
-      </section>
-
-      <Text intent="h2" className="mt-6">
-        Challenge information
-      </Text>
-
-      <section className="mt-6 flex flex-wrap gap-4 md:flex-nowrap">
-        <div className="w-full rounded-lg p-4 dark:bg-muted/90 md:w-1/2">
-          <Text intent="h3">{challenge.name}</Text>
-          <Text className="mt-2">
-            Created at:{' '}
-            {challenge.createdAt.toLocaleString('en-US', {
-              dateStyle: 'medium',
-              timeStyle: 'medium',
-            })}
+      <div className="wrapper mt-4 flex flex-col gap-4 md:flex-row">
+        <section className="order-2 flex-grow md:order-1">{ReportEl(report)}</section>
+        <aside className="order-1 flex-shrink-0 md:order-2 md:w-1/3 lg:w-[30%]">
+          <Text intent="h2" className="mt-6">
+            Information
           </Text>
-          <Text intent="body">
-            Last updated on:{' '}
-            {challenge.updatedAt.toLocaleString('en-US', {
-              dateStyle: 'medium',
-              timeStyle: 'medium',
-            })}
+
+          <Text className="mt-4" intent="leading">
+            Reporter{' '}
+            <Link className="text-gray-400 hover:underline" href={`/@${report?.reporter.name}`}>
+              @{report?.reporter.name}
+            </Link>{' '}
+            says that this challenge includes:{' '}
           </Text>
-          <UserBadge username={challenge.user.name || 'No author found'} />
-          <div className="my-2 flex gap-4">
-            <ThumbsUp /> {challenge.vote.length}
-          </div>
-          <Markdown className="mt-4">{challenge.description}</Markdown>
-        </div>
-        <div className="w-full md:w-1/2">
-          <CodeEditor value={challenge.prompt} />
-        </div>
-      </section>
+
+          <ul className="list-disc pl-8">
+            {report.issues.map((issue) => (
+              <li key={`issue-${issue.id}`}>{issue.type}</li>
+            ))}
+          </ul>
+
+          <section className="my-4">
+            <Text weight="semi">Other comments by reporter</Text>
+            <div className="mt-4 rounded-lg bg-zinc-200 p-4 text-gray-800 dark:bg-zinc-800 dark:text-white">
+              <Markdown>{report?.text || '_No additional comments given_'}</Markdown>
+            </div>
+          </section>
+        </aside>
+      </div>
     </div>
   );
 };

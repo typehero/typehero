@@ -37,6 +37,9 @@ export async function getInfiniteComments({ challengeId, lastCursor }: QueryPara
             where: {
               rootChallengeId: challengeId,
             },
+            cursor: {
+              id: last.id,
+            },
           })
           .then((f) => f.length > 0)
       : false;

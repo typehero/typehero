@@ -116,7 +116,7 @@ export const CodePanel = (props: Props) => {
         strict: true,
         target: monaco.languages.typescript.ScriptTarget.ESNext,
         strictNullChecks: true,
-      })
+      });
 
       if (!monaco.editor.getModel(monaco.Uri.parse(LIB_URI))) {
         monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, LIB_URI);

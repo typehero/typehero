@@ -1,8 +1,11 @@
+'use server';
 import { RoleTypes } from '@prisma/client';
 import { Lock } from 'lucide-react';
-import { getBannedUsers, getChallengeReports } from '~/components/admin/admin.actions';
-import { ReportDetails } from '~/components/admin/reports';
+import React from 'react';
+import { getBannedUsers } from '~/components/admin/admin.actions';
+import Reports2 from '~/components/admin/reports';
 import { BannedUsers } from '~/components/admin/users';
+import { getInfiniteReports } from '~/components/report/report.action';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { getServerAuthSession } from '~/server/auth';
 
@@ -33,11 +36,12 @@ async function Admin() {
 }
 
 const View = async () => {
-  const allReports = await getChallengeReports();
   const allBannedUsers = await getBannedUsers();
+  // This needs done because server functions are dumb and this throws A LOT of errors otherwise.
+  const firstPage = await getInfiniteReports();
 
   return (
-    <div className="m-8 flex flex-col space-y-4">
+    <div className="m-8 flex flex-col space-y-4 container">
       <div className="space-y-2">
         <div className="mx-2 flex flex-col">
           <p className="text-2xl font-semibold text-black dark:text-white">Moderation</p>
@@ -62,7 +66,9 @@ const View = async () => {
               </TabsTrigger>
             </TabsList>
             <TabsContent value="reports">
-              <ReportDetails data={allReports} />
+              <React.Suspense fallback={<>Loading...</>}>
+                <Reports2 initialReports={firstPage}/>
+              </React.Suspense>
             </TabsContent>
             <TabsContent value="users">
               <BannedUsers data={allBannedUsers} />

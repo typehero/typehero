@@ -22,6 +22,7 @@ interface Props extends EditorProps {
   options?: monaco.editor.IStandaloneEditorConstructionOptions;
   value: string;
 }
+
 export function CodeEditor({ onChange, onMount, options, value, ...props }: Props) {
   const { theme } = useTheme();
   const editorTheme = theme === 'light' ? 'vs' : 'vs-dark';
@@ -40,6 +41,7 @@ export function CodeEditor({ onChange, onMount, options, value, ...props }: Prop
 
   return (
     <Editor
+      {...props}
       theme={editorTheme}
       options={editorOptions}
       defaultLanguage="typescript"

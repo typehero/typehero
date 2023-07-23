@@ -1,6 +1,6 @@
 'use client';
 
-import { type Challenge, type User, type Vote } from '@prisma/client';
+import { type User } from '@prisma/client';
 import {
   Dialog,
   DialogContent,
@@ -10,46 +10,81 @@ import {
   DialogHeader,
 } from '~/components/ui/dialog';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   banUser,
+  deleteComment,
+  deleteSolution,
   disableChallenge,
-  dismissChallengeReport,
+  dismissReport,
 } from '~/components/admin/admin.actions';
 import { Button } from '~/components/ui/button';
 import { Label } from '~/components/ui/label';
 import { Textarea } from '~/components/ui/textarea';
 import { toast } from '~/components/ui/use-toast';
+import { type ReportWithInfo } from './report.action';
 
-export default function ReportActions({
-  moderatorId,
-  challenge,
-  reportId,
-}: {
-  moderatorId: string | null;
-  moderator: { name: string | null } | null;
-  challenge: Challenge & { user: User; vote: Vote[] };
-  reportId: number;
-}) {
+export interface ReportActionsProps {
+  report: NonNullable<ReportWithInfo>;
+}
+// export type ReportActionsProps = UserReportActionProps | ChallengeReportActionProps | SolutionReportActionProps | CommentReportActionProps;
+
+export interface ReportActionsBase {
+  moderator?: User;
+  user: User;
+}
+
+export default function ReportActions({ report }: ReportActionsProps) {
   const [banReason, setBanReason] = useState('');
   const [ban, setBan] = useState(false);
   const router = useRouter();
 
-  async function handleDisableChallenge(challengeId: number, reportId: number) {
+  const user = useMemo(() => {
+    switch (report.type) {
+      case 'USER':
+        return report.user as User;
+      case 'CHALLENGE':
+        return report?.challenge?.user as User;
+      case 'COMMENT':
+        return report?.comment?.user as User;
+      case 'SOLUTION':
+        return report.solution?.user as User;
+    }
+  }, [report]);
+
+  async function handleDeleteComment(commentId: number, reportId: number) {
     try {
-      await disableChallenge(challengeId, reportId);
+      await deleteComment(commentId, reportId);
+      toast({
+        title: 'Success',
+        description: <p>Comment deleted successfully</p>,
+      });
+      router.push('/admin/report');
     } catch (e) {
       toast({
         title: 'Error',
         variant: 'destructive',
-        description: <p>An error occurred. Please try again later.s</p>,
+        description: <p>An error occurred. Please try again later.</p>,
+      });
+    }
+  }
+
+  async function handleDisableChallenge(challengeId: number, reportId: number) {
+    try {
+      await disableChallenge(challengeId, reportId);
+      router.push('/admin/report');
+    } catch (e) {
+      toast({
+        title: 'Error',
+        variant: 'destructive',
+        description: <p>An error occurred. Please try again later</p>,
       });
     }
   }
 
   async function handleBanUser(userId: string, reportId: number, banReason?: string) {
     try {
-      await banUser(userId, reportId, banReason);
+      await banUser(report.userId as string, reportId, banReason);
       toast({
         title: 'Success',
         description: <p>User banned successfully.</p>,
@@ -59,48 +94,92 @@ export default function ReportActions({
       toast({
         title: 'Error',
         variant: 'destructive',
-        description: <p>An error occurred. Please try again later.s</p>,
+        description: <p>An error occurred. Please try again later</p>,
       });
     }
   }
 
   async function handleDismissReport(reportId: number) {
     try {
-      await dismissChallengeReport(reportId);
+      await dismissReport(reportId);
       toast({
         title: 'Success',
         description: <p>Dismissed successfully.</p>,
       });
       router.push('/admin');
     } catch (e) {
+      console.error(e);
       toast({
         title: 'Error',
         variant: 'destructive',
-        description: <p>An error occurred. Please try again later.s</p>,
+        description: <p>An error occurred. Please try again later</p>,
+      });
+    }
+  }
+
+  async function handleRemoveSolution(solutionId: number) {
+    const response = await deleteSolution(solutionId, report.id);
+    if (response === 'ok') {
+      toast({
+        title: 'Successfully removed solution',
+      });
+      router.push('/admin');
+    } else {
+      toast({
+        title: 'Error',
+        description: <p>Something has gone wrong. Please try again later.</p>,
       });
     }
   }
 
   return (
     <div className="flex gap-2">
-      <Button variant="destructive" disabled={moderatorId !== null} onClick={() => setBan(true)}>
-        Ban @{challenge.user.name}
-      </Button>
       <Button
-        disabled={moderatorId !== null}
-        onClick={() => handleDisableChallenge(challenge.id, reportId)}
+        variant="destructive"
+        disabled={report.moderatorId !== null}
+        onClick={() => setBan(true)}
       >
-        Disable Challenge
+        Ban @{user.name}
       </Button>
-      <Button disabled={moderatorId !== null} onClick={() => handleDismissReport(reportId)}>
+
+      {report.type === 'CHALLENGE' && (
+        <Button
+          disabled={report.moderatorId !== null}
+          onClick={() => handleDisableChallenge(report.challengeId as number, report.id)}
+        >
+          Disable Challenge
+        </Button>
+      )}
+
+      {report.type === 'SOLUTION' && (
+        <Button
+          disabled={report.moderator !== null}
+          onClick={() => handleRemoveSolution(report.solutionId as number)}
+        >
+          Remove Solution
+        </Button>
+      )}
+
+      {report.type === 'COMMENT' && (
+        <Button
+          disabled={report.moderatorId !== null}
+          onClick={() => handleDeleteComment(report.commentId as number, report.id)}
+          variant="destructive"
+        >
+          Delete Comment
+        </Button>
+      )}
+
+      <Button disabled={report.moderatorId !== null} onClick={() => handleDismissReport(report.id)}>
         Dismiss Report
       </Button>
+
       <Dialog open={ban} onOpenChange={() => setBan(false)}>
         <DialogContent className="sm:max-w-[425px]">
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              handleBanUser(challenge.user.id, reportId, banReason);
+              handleBanUser('', report.id, banReason);
             }}
           >
             <DialogHeader>

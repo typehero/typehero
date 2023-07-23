@@ -123,6 +123,8 @@ model User {
   updatedAt    DateTime @updatedAt
   reports      Report[] @relation("reporter")
   reportsAbout Report[] @relation("reported_user")
+  moderated Report[] @relation("report_moderator")
+  
 }
 
 model VerificationToken {
@@ -308,12 +310,19 @@ model Report {
   solutionId Int?
   solution   SharedSolution? @relation(fields: [solutionId], references: [id])
 
+  moderatorId String?
+  moderator User? @relation("report_moderator", fields: [moderatorId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@unique([id])
   @@index([commentId])
   @@index([reporterId])
   @@index([userId])
   @@index([challengeId])
   @@index([solutionId])
+  @@index([moderatorId])
 }
 
 enum CommentRoot {
