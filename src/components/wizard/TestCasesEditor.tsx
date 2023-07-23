@@ -2,7 +2,7 @@
 
 import { Settings } from 'lucide-react';
 import type * as monaco from 'monaco-editor';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -25,44 +25,50 @@ interface Props {
 }
 
 export function TestCasesEditor({ form }: Props) {
-  const [, setTsErrors] = useState<TsErrors>([[], [], [], []]);
-  const onMount =
+  const [tsErrors, setTsErrors] = useState<TsErrors>([[], [], [], []]);
+  const onMount = useCallback(
     (onError: (v: TsErrors) => void) =>
-    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
-    async (editor: monaco.editor.IStandaloneCodeEditor, monaco: typeof import('monaco-editor')) => {
-      if (!monaco.editor.getModel(monaco.Uri.parse(LIB_URI))) {
-        monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, LIB_URI);
-        monaco.editor.createModel(libSource, 'typescript', monaco.Uri.parse(LIB_URI));
-      }
+      // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+      async (
+        editor: monaco.editor.IStandaloneCodeEditor,
+        monaco: typeof import('monaco-editor'),
+      ) => {
+        if (!monaco.editor.getModel(monaco.Uri.parse(LIB_URI))) {
+          monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, LIB_URI);
+          monaco.editor.createModel(libSource, 'typescript', monaco.Uri.parse(LIB_URI));
+        }
 
-      const model = editor.getModel();
+        const model = editor.getModel();
 
-      if (!model) {
-        throw new Error();
-      }
+        if (!model) {
+          throw new Error();
+        }
 
-      const ts = await (await monaco.languages.typescript.getTypeScriptWorker())(model.uri);
+        const ts = await (await monaco.languages.typescript.getTypeScriptWorker())(model.uri);
 
-      const filename = model.uri.toString();
+        const filename = model.uri.toString();
 
-      // what actually runs when checking errors
-      const typeCheck = async () => {
-        const errors = await Promise.all([
-          ts.getSemanticDiagnostics(filename),
-          ts.getSyntacticDiagnostics(filename),
-          ts.getSuggestionDiagnostics(filename),
-          ts.getCompilerOptionsDiagnostics(filename),
-        ] as const);
+        // what actually runs when checking errors
+        const typeCheck = async () => {
+          const errors = await Promise.all([
+            ts.getSemanticDiagnostics(filename),
+            ts.getSyntacticDiagnostics(filename),
+            ts.getSuggestionDiagnostics(filename),
+            ts.getCompilerOptionsDiagnostics(filename),
+          ] as const);
 
-        onError(errors);
-      };
+          onError(errors);
+        };
 
-      model.onDidChangeContent(() => {
-        typeCheck().catch(console.error);
-      });
+        model.onDidChangeContent(() => {
+          typeCheck().catch(console.error);
+        });
 
-      await typeCheck();
-    };
+        await typeCheck();
+      },
+    [],
+  );
+
   return (
     <div className="flex h-full flex-col py-6">
       <TypographyH3 className="mb-6">Create Test Cases</TypographyH3>
@@ -103,8 +109,8 @@ export function TestCasesEditor({ form }: Props) {
                     onChange={field.onChange as OnChange}
                   />
                 </div>
+                <FormMessage />
               </div>
-              <FormMessage />
             </FormItem>
           );
         }}
@@ -112,21 +118,3 @@ export function TestCasesEditor({ form }: Props) {
     </div>
   );
 }
-// Add these extra validations
-// if (!/(?:\n|^)\s*(?:Equal|Extends|NotEqual|Expect)</.test(code)) {
-//   toast({
-//     variant: 'destructive',
-//     title: 'You need to have test cases in your challenge',
-//     action: <ToastAction altText="Try again">Try again</ToastAction>,
-//   });
-//
-// const hasErrors = !!tsErrors[0].length;
-//
-// if (!USER_CODE_START_REGEX.test(code)) {
-//   toast({
-//     variant: 'destructive',
-//     title: `You need to have the line \`${USER_CODE_START}\` to signify the non-editable part`,
-//     action: <ToastAction altText="Try again">Try again</ToastAction>,
-//   });
-//
-//
