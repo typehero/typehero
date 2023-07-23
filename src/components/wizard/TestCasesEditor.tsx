@@ -1,8 +1,9 @@
 'use client';
 
+import type { OnChange } from '@monaco-editor/react';
 import { Settings } from 'lucide-react';
 import type * as monaco from 'monaco-editor';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -18,14 +19,14 @@ import { SettingsForm } from '../challenge/settings-form';
 import { CodeEditor } from '../ui/code-editor';
 import { FormField, FormItem, FormMessage } from '../ui/form';
 import { TypographyH3 } from '../ui/typography/h3';
-import type { OnChange } from '@monaco-editor/react';
 
 interface Props {
   form: WizardForm;
+  hasTsErrors: boolean;
+  setTsErrors: (errors: TsErrors) => void;
 }
 
-export function TestCasesEditor({ form }: Props) {
-  const [tsErrors, setTsErrors] = useState<TsErrors>([[], [], [], []]);
+export function TestCasesEditor({ form, hasTsErrors, setTsErrors }: Props) {
   const onMount = useCallback(
     (onError: (v: TsErrors) => void) =>
       // eslint-disable-next-line @typescript-eslint/consistent-type-imports
@@ -110,6 +111,9 @@ export function TestCasesEditor({ form }: Props) {
                   />
                 </div>
                 <FormMessage />
+                {!hasTsErrors && (
+                  <div className="text-sm text-destructive">You must have failing test cases</div>
+                )}
               </div>
             </FormItem>
           );

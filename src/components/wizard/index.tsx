@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useForm, type UseFormReturn } from 'react-hook-form';
 import { z } from 'zod';
 import { Form } from '~/components/ui/form';
@@ -15,6 +15,7 @@ import { TestCasesEditor } from './TestCasesEditor';
 import { uploadChallenge } from './create.action';
 import DEFAULT_CHALLENGE_TEMPLATE from './default-challenge.md';
 import DEFAULT_DESCRIPTION from './default-description.md';
+import type { TsErrors } from '../challenge/code-panel';
 
 const testCaseRegex = new RegExp('(?:\n|^)s*(?:Equal|Extends|NotEqual|Expect)<');
 const createExploreCardSchema = z.object({
@@ -61,6 +62,9 @@ export function Wizard() {
   const router = useRouter();
   const [step, setStep] = useState(0);
   const [rendered, setRendered] = useState(false);
+  const [tsErrors, setTsErrors] = useState<TsErrors>([[], [], [], []]);
+
+  const hasTsErrors = useMemo(() => tsErrors.some((e) => e.length), [tsErrors]);
   const form = useForm<CreateChallengeSchema>({
     resolver: zodResolver(createChallengeSchema),
     defaultValues: {
@@ -78,6 +82,11 @@ export function Wizard() {
   const handleNextClick = async () => {
     const { success } = steps[step]!.schema.safeParse(form.getValues());
     if (success) {
+      // if they are currently on test cases do not let them go to next step
+      // until a type error exists
+      if (step === 2) {
+        if (!hasTsErrors) return;
+      }
       setStep((step) => step + 1);
     } else {
       await form.trigger();
@@ -108,7 +117,9 @@ export function Wizard() {
             <form className="flex-1">
               {step === 0 && <ChallengeCardEditor form={form} />}
               {step === 1 && <DescriptionEditor form={form} />}
-              {step === 2 && <TestCasesEditor form={form} />}
+              {step === 2 && (
+                <TestCasesEditor form={form} hasTsErrors={hasTsErrors} setTsErrors={setTsErrors} />
+              )}
               {step === 3 && <Summary />}
             </form>
           </Form>
