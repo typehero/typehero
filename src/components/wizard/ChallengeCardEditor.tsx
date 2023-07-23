@@ -40,7 +40,7 @@ export function ChallengeCardEditor({ form }: Props) {
   return (
     <div className="h-full py-6">
       <TypographyH3 className="mb-6">Create Challenge Card</TypographyH3>
-      <div className="flex items-center gap-12">
+      <div className="flex items-start gap-12">
         <div className="flex w-1/3 flex-col gap-3">
           <FormField
             control={form.control}
