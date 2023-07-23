@@ -77,11 +77,12 @@ export function RichMarkdownEditor({ dismissPreview, value, onChange }: Props) {
     if (!textarea) return;
     const startPos = textarea.selectionStart;
     const endPos = textarea.selectionEnd;
-
     const value = textarea.value;
 
     const left = value.substring(0, startPos);
     const right = value.substring(endPos, value.length);
+
+    // BUG: this should allow for undo to work but not sure how to fix it
     onChange(`${left}${text}${right}`);
   };
 
