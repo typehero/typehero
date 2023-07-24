@@ -1,0 +1,65 @@
+diff --git a/package.json b/package.json
+index 632ffb9d6507c634c3ab7aabb147d51c346df29c..7703a7c3e107f0d99550c9053dd3927329610639 100644
+--- a/package.json
++++ b/package.json
+@@ -2,7 +2,7 @@
+   "name": "monaco-vim",
+   "version": "0.4.0",
+   "description": "Vim keybindings for monaco-editor",
+-  "main": "./lib/index.js",
++  "main": "./src/index.mjs",
+   "scripts": {
+     "test": "echo \"No test in this repo\"",
+     "start": "webpack-dev-server --mode development --host=0.0.0.0 --port=8080",
+diff --git a/src/cm/keymap_vim.js b/src/cm/keymap_vim.mjs
+similarity index 100%
+rename from src/cm/keymap_vim.js
+rename to src/cm/keymap_vim.mjs
+diff --git a/src/cm_adapter.js b/src/cm_adapter.mjs
+similarity index 98%
+rename from src/cm_adapter.js
+rename to src/cm_adapter.mjs
+index d4c81a13d4d355496062dd462a7faa8690e816cd..37b8d7b1bc69bca841eb92f90e9a83093b21bdb4 100644
+--- a/src/cm_adapter.js
++++ b/src/cm_adapter.mjs
+@@ -1,15 +1,24 @@
+ /**
+  * An adapter to make CodeMirror's vim bindings work with monaco
+  */
+-import {
++const {
+   KeyCode,
+   Range,
+   Position,
+   Selection,
+   SelectionDirection,
+-  editor as monacoEditor,
+-} from "monaco-editor/esm/vs/editor/editor.api";
+-import { ShiftCommand } from "monaco-editor/esm/vs/editor/common/commands/shiftCommand";
++  editor: monacoEditor,
++} = globalThis.monaco;
++const { ShiftCommand } = await new Promise((resolve) => {
++  // check if monaco has loaded
++  if ('require' in globalThis) {
++    return require(['vs/editor/common/commands/shiftCommand'], resolve);
++  }
++
++  // fallback
++  console.warn("couldn't load the monaco plugin, ignore on the server");
++  resolve({ ShiftCommand() {} });
++});
+ const VerticalRevealType = {
+   Bottom: 4,
+ };
+diff --git a/src/demo.js b/src/demo.mjs
+similarity index 100%
+rename from src/demo.js
+rename to src/demo.mjs
+diff --git a/src/index.js b/src/index.mjs
+similarity index 100%
+rename from src/index.js
+rename to src/index.mjs
+diff --git a/src/statusbar.js b/src/statusbar.mjs
+similarity index 100%
+rename from src/statusbar.js
+rename to src/statusbar.mjs

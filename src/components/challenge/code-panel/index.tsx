@@ -4,7 +4,6 @@ import { loader } from '@monaco-editor/react';
 import clsx from 'clsx';
 import { Loader2, Settings } from 'lucide-react';
 import type * as monaco from 'monaco-editor';
-import { initVimMode } from 'monaco-vim';
 import { useSession } from 'next-auth/react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
@@ -205,7 +204,7 @@ export const CodePanel = (props: Props) => {
           'sticky bottom-0 flex items-center justify-end p-2 dark:bg-[#1e1e1e]',
         )}
       >
-        {editorState && <VimStatusBar editor={editorState} initVimMode={initVimMode} />}
+        {editorState && <VimStatusBar editor={editorState} />}
         <div className="flex items-center justify-center gap-4">
           <Tooltip>
             <TooltipTrigger asChild>

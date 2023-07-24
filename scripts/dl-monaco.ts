@@ -70,6 +70,10 @@ const files = [
     '/min/vs/base/common/worker/simpleWorker.nls.js',
     './public/vs/base/common/worker/simpleWorker.nls.js',
   ],
+  [
+    './vs/base/browser/ui/codicons/codicon/codicon.ttf',
+    './public/vs/base/browser/ui/codicons/codicon/codicon.ttf'
+  ],
 ] as const;
 
 async function isTSversionCorrect(path: string) {
@@ -91,12 +95,12 @@ const force = process.argv.includes('--force');
 // get the path to the root monaco-editor.d.ts file
 const dTSPath = url.fileURLToPath(path.join(import.meta.url, '../../', files[0][1]));
 
-// is the version exciting && correct
+// is the version existing && correct
 const isCorrectVersionInstalled = await isTSversionCorrect(dTSPath);
 
 if (force || !isCorrectVersionInstalled) {
   if (force) {
-    console.log(`🚨 Using force ovrwrites public/vs and monaco-editor.d.ts`);
+    console.log(`🚨 Using force overwrites public/vs and monaco-editor.d.ts`);
   }
   console.log(`🌍 Downloading monaco-editor with typescript: ${TYPESCRIPT_VERSION}`);
   await Promise.all(files.map(downloadAndSaveFile));
