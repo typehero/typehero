@@ -26,7 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${inter.className} flex flex-col`}>
         <Providers>
           <Navigation />
-          <main className="flex">
+          <main className="flex-1">
             <div className="h-full">{children}</div>
           </main>
           <Toaster />
