@@ -4,6 +4,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import MDEditor, { commands, type ICommand, EditorContext } from '@uiw/react-md-editor';
 import { useUploadThing } from '~/utils/useUploadthing';
 import { insertText } from '~/utils/domUtils';
+import { toast } from './use-toast';
 
 const PreviewToggle = () => {
   const { preview, dispatch } = useContext(EditorContext);
@@ -98,11 +99,21 @@ export function RichMarkdownEditor({
       );
 
       setIsImageUploading(false);
+
+      toast({
+        title: 'Image was uploaded successfully',
+        variant: 'success',
+      });
     },
     onUploadError: (err) => {
       console.log(err);
 
       setIsImageUploading(false);
+
+      toast({
+        title: 'Image failed to upload',
+        variant: 'destructive',
+      });
     },
   });
 
