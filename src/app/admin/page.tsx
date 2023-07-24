@@ -3,11 +3,9 @@ import { RoleTypes } from '@prisma/client';
 import { Lock } from 'lucide-react';
 import React from 'react';
 import { ChallengeReviews } from '~/components/admin/challenge-reviews';
-import { Reports } from '~/components/admin/reports';
-import {
-  getBannedUsers, getUploadedImages,
-} from '~/components/admin/admin.actions';
+import { getBannedUsers, getUploadedImages } from '~/components/admin/admin.actions';
 import { ImageUploadReport } from '~/components/admin/images';
+// import Reports2 from '~/components/admin/reports';
 import { BannedUsers } from '~/components/admin/users';
 import { getInfiniteReports } from '~/components/report/report.action';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
@@ -45,7 +43,6 @@ const View = async () => {
   const allBannedUsers = await getBannedUsers();
   // This needs done because server functions are dumb and this throws A LOT of errors otherwise.
   const firstPage = await getInfiniteReports();
-
   const uploadedimages = await getUploadedImages();
 
   return (
@@ -87,7 +84,7 @@ const View = async () => {
             </TabsList>
             <TabsContent value="reports">
               <React.Suspense fallback={<>Loading...</>}>
-                <Reports initialReports={firstPage} />
+                {/* <Reports2 initialReports={firstPage} /> */}
               </React.Suspense>
             </TabsContent>
             <TabsContent value="users">
