@@ -30,6 +30,10 @@ const config = {
         protocol: 'https',
         hostname: 'avatars.githubusercontent.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'uploadthing.com',
+      },
     ],
   },
   swcMinify: true,

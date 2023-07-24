@@ -2,9 +2,12 @@
 import { RoleTypes } from '@prisma/client';
 import { Lock } from 'lucide-react';
 import React from 'react';
-import { getBannedUsers } from '~/components/admin/admin.actions';
 import { ChallengeReviews } from '~/components/admin/challenge-reviews';
 import { Reports } from '~/components/admin/reports';
+import {
+  getBannedUsers, getUploadedImages,
+} from '~/components/admin/admin.actions';
+import { ImageUploadReport } from '~/components/admin/images';
 import { BannedUsers } from '~/components/admin/users';
 import { getInfiniteReports } from '~/components/report/report.action';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
@@ -36,18 +39,22 @@ async function Admin() {
   );
 }
 
+// TODO: i think we need nested routing here so we can only load the data when the tab is active
+// 💀 this has to be a job for trash
 const View = async () => {
   const allBannedUsers = await getBannedUsers();
   // This needs done because server functions are dumb and this throws A LOT of errors otherwise.
   const firstPage = await getInfiniteReports();
+
+  const uploadedimages = await getUploadedImages();
 
   return (
     <div className="container m-8 flex flex-col space-y-4">
       <div className="space-y-2">
         <div className="mx-2 flex flex-col">
           <p className="text-2xl font-semibold text-black dark:text-white">Moderation</p>
-          <p className="max-w-[40ch] text-start text-sm text-neutral-400 dark:text-neutral-600">
-            A view of all the reports & users.
+          <p className="text-start text-sm text-neutral-400 dark:text-neutral-600">
+            A view of all the reports & users and all uploaded user images
           </p>
         </div>
         <div className="flex flex-col space-y-2">
@@ -71,6 +78,12 @@ const View = async () => {
               >
                 Users
               </TabsTrigger>
+              <TabsTrigger
+                className="rounded-l-2xl rounded-r-lg duration-300 data-[state=active]:bg-border"
+                value="images"
+              >
+                Images
+              </TabsTrigger>
             </TabsList>
             <TabsContent value="reports">
               <React.Suspense fallback={<>Loading...</>}>
@@ -82,6 +95,9 @@ const View = async () => {
             </TabsContent>
             <TabsContent value="challengeReviews">
               <ChallengeReviews />
+            </TabsContent>
+            <TabsContent value="images">
+              <ImageUploadReport data={uploadedimages} />
             </TabsContent>
           </Tabs>
         </div>
