@@ -15,8 +15,9 @@ export type InfoFile = {
     email: string;
     github: string;
   };
-  tags: string;
   difficulty: 'easy' | 'medium' | 'warm' | 'hard' | 'extreme';
+  tags: string;
+  tagtypes: 'generics' | 'unions' | 'transformations';
 };
 
 /**

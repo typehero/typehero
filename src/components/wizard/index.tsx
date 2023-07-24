@@ -34,6 +34,7 @@ const createExploreCardSchema = z.object({
     .string()
     .min(10, 'The short description must be longer than 10 characters')
     .max(191, 'The short description must be shorter than 191 characters'),
+  tagtypes: z.enum(['GENERICS', 'UNIONS', 'TRANSFORMATIONS']),
 });
 const createDescriptionSchema = z.object({
   description: z.string().min(20, 'The description must be longer than 20 characters').max(65536),

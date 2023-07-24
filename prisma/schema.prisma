@@ -19,6 +19,12 @@ enum Difficulty {
   EXTREME
 }
 
+enum TagTypes {
+  GENERICS
+  UNIONS
+  TRANSFORMATIONS
+}
+
 enum RoleTypes {
   USER
   ADMIN
@@ -76,6 +82,12 @@ model Role {
   id   String    @id @default(uuid())
   user User[]
   role RoleTypes @unique
+}
+
+model Tag {
+  id   String   @id @default(uuid())
+  challenge Challenge[]
+  tagTypes  TagTypes @unique
 }
 
 /// This is a table that contains all the user links they can add to profile
@@ -154,11 +166,13 @@ model Challenge {
 
   vote           Vote[]
   submission     Submission[]
-  comment         Comment[]
+  comment        Comment[]
   report         ChallengeReport[]
   bookmark       Bookmark[]
   sharedSolution SharedSolution[]
   Report         Report[]           @relation("report_challenge")
+  tag            Tag[]
+  tagtypes       TagTypes
 
   @@index([userId])
 }

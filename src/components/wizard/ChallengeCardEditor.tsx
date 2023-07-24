@@ -18,14 +18,16 @@ export function ChallengeCardEditor({ form }: Props) {
   const difficulty = useWatch({ control: form.control, name: 'difficulty' });
   const title = useWatch({ control: form.control, name: 'name' });
   const shortDescription = useWatch({ control: form.control, name: 'shortDescription' });
+  const tagtypes = useWatch({ control: form.control, name: 'tagtypes' });
 
   const data: Pick<
     ExploreChallengeData[0],
-    'difficulty' | 'name' | 'shortDescription' | 'user' | '_count' | 'updatedAt'
+    'difficulty' | 'name' | 'shortDescription' | 'tagtypes' | 'user' | '_count' | 'updatedAt'
   > = {
     difficulty,
     name: title || 'Your Title Here',
     shortDescription: shortDescription || 'Your Short Description Here',
+    tagtypes,
     user: {
       name: 'You',
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -99,6 +101,33 @@ export function ChallengeCardEditor({ form }: Props) {
                 <FormMessage />
               </FormItem>
             )}
+          />
+          <FormField
+            control={form.control}
+            name="tagtypes"
+            render={({ field }) => {
+              return (
+                <FormItem>
+                  <FormLabel>Challenge Category</FormLabel>
+                  <Select
+                    onValueChange={field.onChange as (value: string) => void}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a category for your challenge" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="GENERICS">GENERICS</SelectItem>
+                      <SelectItem value="UNIONS">UNIONS</SelectItem>
+                      <SelectItem value="TRANSFORMATIONS">TRANSFORMATIONS</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              );
+            }}
           />
         </div>
         <div className="w-[392px]">

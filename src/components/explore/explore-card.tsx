@@ -4,11 +4,12 @@ import { getRelativeTime } from '~/utils/relativeTime';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { type ExploreChallengeData } from './';
 import { DifficultyBadge } from '../ui/difficulty-badge';
+import { TagBadge } from '../ui/tag-badge';
 
 interface ExploreCardProps {
   challenge: Pick<
     ExploreChallengeData[0],
-    'difficulty' | 'name' | 'shortDescription' | 'user' | '_count' | 'updatedAt'
+    'difficulty' | 'name' | 'shortDescription' | 'tagtypes' | 'user' | '_count' | 'updatedAt'
   >;
 }
 
@@ -89,6 +90,7 @@ export const ExploreCard = ({ challenge }: ExploreCardProps) => {
         </CardTitle>
         <div className="flex items-center gap-6 text-center text-white duration-300 dark:group-hover:text-black">
           <DifficultyBadge difficulty={challenge.difficulty} />
+          <TagBadge tagtypes={challenge.tagtypes} />
           <div className="flex items-center gap-2 text-sm">
             <MessageCircle size={18} />
             {challenge._count.comment}
