@@ -3,6 +3,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 
 import MDEditor, { commands, type ICommand, EditorContext } from '@uiw/react-md-editor';
 import { useUploadThing } from '~/utils/useUploadthing';
+import { insertText } from '~/utils/domUtils';
 
 const PreviewToggle = () => {
   const { preview, dispatch } = useContext(EditorContext);
@@ -83,20 +84,6 @@ export function RichMarkdownEditor({
 
   const extraCommands = [...(dismissPreview ? [] : [codePreview, commands.fullscreen])];
 
-  const insertTextToEditor = (text: string) => {
-    const textarea = editorRef.current?.textarea;
-    if (!textarea) return;
-    const startPos = textarea.selectionStart;
-    const endPos = textarea.selectionEnd;
-    const value = textarea.value;
-
-    const left = value.substring(0, startPos);
-    const right = value.substring(endPos, value.length);
-
-    // BUG: this should allow for undo to work but not sure how to fix it
-    onChange(`${left}${text}${right}`);
-  };
-
   const { startUpload } = useUploadThing('imageUploader', {
     onClientUploadComplete: (res) => {
       console.log('client upload complete');
@@ -105,7 +92,10 @@ export function RichMarkdownEditor({
       const uploadedFile = res[0];
 
       // insert string at cursor position by calling on change
-      insertTextToEditor(`![${uploadedFile?.fileKey}](${uploadedFile?.fileUrl})`);
+      insertText(
+        `![${uploadedFile?.fileKey}](${uploadedFile?.fileUrl})`,
+        editorRef.current.textarea,
+      );
 
       setIsImageUploading(false);
     },
