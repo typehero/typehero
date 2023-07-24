@@ -117,11 +117,6 @@ export function RichMarkdownEditor({
       if (item.kind === 'file') {
         const blob = item.getAsFile();
         if (!blob) return;
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          const src = event.target?.result;
-          if (!src) return;
-        };
 
         // update state for the loading spinner
         setIsImageUploading(true);

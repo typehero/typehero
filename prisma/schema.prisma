@@ -122,6 +122,8 @@ model User {
   reports      Report[] @relation("reporter")
   reportsAbout Report[] @relation("reported_user")
   moderated    Report[] @relation("report_moderator")
+
+  imageUpload ImageUpload[]
 }
 
 model VerificationToken {
@@ -297,9 +299,9 @@ enum CommentRoot {
 }
 
 model Comment {
-  id       Int    @id @default(autoincrement())
-  text     String @db.MediumText
-  visible Boolean @default(true)
+  id       Int     @id @default(autoincrement())
+  text     String  @db.MediumText
+  visible  Boolean @default(true)
   parentId Int?
 
   userId String
@@ -334,3 +336,23 @@ model Waitlist {
   email     String
   intention WaitlistIntention
 }
+
+model ImageUpload {
+  /// the id of the db row
+  id String @id @default(uuid())
+
+  /// the user id fk
+  userId String
+
+  /// The user that this is related to
+  user User @relation(fields: [userId], references: [id])
+
+  /// the url to the s3 uploaded assets
+  url String @db.VarChar(256)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+

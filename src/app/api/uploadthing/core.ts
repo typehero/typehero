@@ -1,19 +1,20 @@
 import { createUploadthing, type FileRouter } from 'uploadthing/next';
+import { prisma } from '~/server/db';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '~/server/auth';
 
 const f = createUploadthing();
-
-const auth = (_req: Request) => Promise.resolve({ id: 'fakeId' });
 
 type ValidFileTypes = 'image' | 'video' | 'audio' | 'blob';
 type FileRouterInput =
   | ValidFileTypes[]
   | {
-      // @ts-ignore fixed by typehero god
-      [key: ValidFileTypes]: {
-        maxFileSize?: string;
-        maxFileCount?: number;
-      };
+    // @ts-ignore fixed by typehero god
+    [key: ValidFileTypes]: {
+      maxFileSize?: string;
+      maxFileCount?: number;
     };
+  };
 
 // control the file sizes for all image types
 const DEFAULT_IMAGE_UPLOAD_PARAMS: FileRouterInput = { maxFileSize: '4MB', maxFiles: 1 };
@@ -26,21 +27,23 @@ export const ourFileRouter = {
     'image/jpeg': DEFAULT_IMAGE_UPLOAD_PARAMS,
   })
     // Set permissions and file types for this FileRoute
-    .middleware(async ({ req }) => {
-      // This code runs on your server before upload
-      const user = await auth(req);
+    .middleware(async () => {
+      const session = await getServerSession(authOptions);
 
       // If you throw, the user will not be able to upload
-      if (!user) throw new Error('Unauthorized');
+      if (!session?.user.id) throw new Error('Unauthorized');
 
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
-      return { userId: user.id };
+      return { userId: session.user.id };
     })
     .onUploadComplete(async ({ metadata, file }) => {
-      // This code RUNS ON YOUR SERVER after upload
-      console.log('Upload complete for userId:', metadata.userId);
-
-      console.log('file url', file.url);
+      // save to db
+      await prisma.imageUpload.create({
+        data: {
+          url: file.url,
+          user: { connect: { id: metadata.userId } },
+        },
+      });
     }),
 } satisfies FileRouter;
 
