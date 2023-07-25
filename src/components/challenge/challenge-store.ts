@@ -1,4 +1,5 @@
 import type { Difficulty } from '@prisma/client';
+import type { TagTypes } from '@prisma/client';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -10,6 +11,7 @@ interface ChallengeState {
         shortDescription: string;
         description: string;
         prompt: string;
+        tagtypes: TagTypes;
       }
     | undefined;
   setData: (data: NonNullable<ChallengeState['data']>) => void;

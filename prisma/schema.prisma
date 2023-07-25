@@ -84,10 +84,12 @@ model Role {
   role RoleTypes @unique
 }
 
+// This is a table that contains all the tag types that can be added to a challenge
 model Tag {
-  id   String   @id @default(uuid())
-  challenge Challenge[]
-  tagTypes  TagTypes @unique
+  id          Int     @id @default(autoincrement())
+  name        String  @unique         
+  tag         TagTypes @unique
+  challenges  Challenge[]
 }
 
 /// This is a table that contains all the user links they can add to profile
@@ -171,7 +173,7 @@ model Challenge {
   bookmark       Bookmark[]
   sharedSolution SharedSolution[]
   Report         Report[]           @relation("report_challenge")
-  tag            Tag[]
+  tags           Tag[]
   tagtypes       TagTypes
 
   @@index([userId])
