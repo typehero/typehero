@@ -101,7 +101,6 @@ export function Wizard() {
   };
 
   async function onSubmit(data: CreateChallengeSchema) {
-    console.log({ data });
     const { id } = await uploadChallenge(data);
 
     router.push(`/challenge/${id}`);
