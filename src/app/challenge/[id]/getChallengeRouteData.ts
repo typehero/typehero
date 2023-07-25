@@ -10,11 +10,7 @@ export const getChallengeRouteData = cache(async (id: string, session: Session |
   const challenge = await prisma.challenge.findFirst({
     where: {
       id: +id,
-      user: {
-        NOT: {
-          status: 'BANNED'
-        }
-      }
+      visibility: 'VISIBLE',
     },
     include: {
       user: true,

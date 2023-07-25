@@ -205,6 +205,11 @@ export async function banUser(userId: string, reportId: number, banReason?: stri
         updatedAt: new Date(),
       },
     }),
+    prisma.comment.deleteMany({
+      where: {
+        userId: userId
+      }
+    })
   ]);
 }
 /**
