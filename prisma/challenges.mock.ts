@@ -1,4 +1,4 @@
-import { type Difficulty, type Prisma } from '@prisma/client';
+import { type Difficulty } from '@prisma/client';
 import { gId, trashId } from './seed';
 import url from 'url';
 import { parse } from 'yaml';
