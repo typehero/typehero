@@ -15,7 +15,7 @@ import {
   banUser,
   deleteComment,
   deleteSolution,
-  disableChallenge,
+  banChallenge,
   dismissReport,
 } from '~/components/admin/admin.actions';
 import { Button } from '~/components/ui/button';
@@ -59,7 +59,7 @@ export default function ReportActions({ report }: ReportActionsProps) {
         title: 'Success',
         description: <p>Comment deleted successfully</p>,
       });
-      router.push('/admin/report');
+      router.push('/admin');
     } catch (e) {
       toast({
         title: 'Error',
@@ -71,8 +71,8 @@ export default function ReportActions({ report }: ReportActionsProps) {
 
   async function handleDisableChallenge(challengeId: number, reportId: number) {
     try {
-      await disableChallenge(challengeId, reportId);
-      router.push('/admin/report');
+      await banChallenge(challengeId, reportId);
+      router.push('/admin');
     } catch (e) {
       toast({
         title: 'Error',
