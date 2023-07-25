@@ -15,6 +15,7 @@ export type FakeChallengeCardProps = {
   title: string;
   className?: string;
   difficulty?: 'EASY' | 'MEDIUM' | 'HARD';
+  tagtypes?: 'GENERICS' | 'UNIONS' | 'TRANSFORMATIONS';
 };
 
 const COLORS_BY_DIFFICULTY = {

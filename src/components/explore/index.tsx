@@ -43,6 +43,7 @@ async function getEasyChallenges() {
         select: { vote: true, comment: true },
       },
       user: true,
+      // tags: true,
     },
     take: 6,
   });
@@ -59,6 +60,7 @@ async function getMediumChallenges() {
         select: { vote: true, comment: true },
       },
       user: true,
+      // tags: true,
     },
     take: 6,
   });
@@ -75,6 +77,7 @@ async function getHardChallenges() {
         select: { vote: true, comment: true },
       },
       user: true,
+      // tags: true,
     },
     take: 6,
   });

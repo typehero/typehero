@@ -16,8 +16,8 @@ export type InfoFile = {
     github: string;
   };
   difficulty: 'easy' | 'medium' | 'warm' | 'hard' | 'extreme';
-  tags: string;
-  tagtypes: 'generics' | 'unions' | 'transformations';
+  // tags: string;
+  tagtypes: 'generics' | 'unions' | 'transformations'
 };
 
 /**
@@ -69,6 +69,7 @@ export async function loadChallengesFromTypeChallenge() {
       prompt: `// TEST CASE START\n${testData}\n\n// CODE START\n${prompt}`,
       difficulty: difficulty === 'warm' ? 'BEGINNER' : (difficulty.toUpperCase() as Difficulty),
       shortDescription: README.slice(0, 100),
+      tagtypes: 'GENERICS',
     });
   }
 
@@ -89,62 +90,4 @@ function loadChallengeSync(challengeSlug: string) {
   const filePath = new URL(`../__seed__/${challengeSlug}.md`, import.meta.url);
   // return the file contents
   return fs.readFileSync(url.fileURLToPath(filePath), 'utf8');
-}
-
-export const CHALLENGE_MAP: Record<
-  Difficulty,
-  (v: number) => Prisma.ChallengeCreateWithoutUserInput
-> = {
-  BEGINNER: () => ({
-    name: faker.hacker.phrase(),
-    createdAt: faker.date.between({ from: '2022-01-01', to: new Date() }),
-    updatedAt: faker.date.between({ from: '2023-05-01', to: new Date() }),
-    bookmark: faker.datatype.boolean()
-      ? {
-          create: {
-            userId: faker.datatype.boolean() ? trashId : gId,
-          },
-        }
-      : undefined,
-    description: loadChallengeSync('beginner/desc'),
-    shortDescription: faker.lorem.lines({ min: 1, max: 2 }),
-    prompt: loadChallengeSync('beginner/prompt'),
-    difficulty: 'BEGINNER',
-  }),
-  EASY: () => ({
-    name: faker.hacker.phrase(),
-    createdAt: faker.date.between({ from: '2022-01-01', to: new Date() }),
-    updatedAt: faker.date.between({ from: '2023-05-01', to: new Date() }),
-    description: loadChallengeSync('easy/desc'),
-    shortDescription: faker.lorem.lines({ min: 1, max: 2 }),
-    prompt: loadChallengeSync('easy/prompt'),
-    difficulty: 'EASY',
-  }),
-  MEDIUM: () => ({
-    name: faker.hacker.phrase(),
-    createdAt: faker.date.between({ from: '2022-01-01', to: new Date() }),
-    updatedAt: faker.date.between({ from: '2023-05-01', to: new Date() }),
-    description: loadChallengeSync('medium/desc'),
-    shortDescription: faker.lorem.lines({ min: 1, max: 2 }),
-    prompt: loadChallengeSync('medium/prompt'),
-    difficulty: 'MEDIUM',
-  }),
-  HARD: () => ({
-    name: faker.hacker.phrase(),
-    createdAt: faker.date.between({ from: '2022-01-01', to: new Date() }),
-    updatedAt: faker.date.between({ from: '2023-05-01', to: new Date() }),
-    description: loadChallengeSync('hard/desc'),
-    shortDescription: faker.lorem.lines({ min: 1, max: 2 }),
-    prompt: loadChallengeSync('hard/prompt'),
-    difficulty: 'HARD',
-  }),
-  EXTREME: () => ({
-    name: faker.hacker.phrase(),
-    createdAt: faker.date.between({ from: '2022-01-01', to: new Date() }),
-    updatedAt: faker.date.between({ from: '2023-05-01', to: new Date() }),
-    description: loadChallengeSync('extreme/desc'),
-    shortDescription: faker.lorem.lines({ min: 1, max: 2 }),
-    prompt: loadChallengeSync('extreme/prompt'),
-    difficulty: 'EXTREME',
-  }),
 };

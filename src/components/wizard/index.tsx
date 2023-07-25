@@ -16,6 +16,7 @@ import { uploadChallenge } from './create.action';
 import DEFAULT_CHALLENGE_TEMPLATE from './default-challenge.md';
 import DEFAULT_DESCRIPTION from './default-description.md';
 import type { TsErrors } from '../challenge/code-panel';
+import { TagTypes } from '@prisma/client';
 
 export const enum STEPS {
   ChallengeCard,
@@ -26,6 +27,7 @@ export const enum STEPS {
 const testCaseRegex = new RegExp('(?:\n|^)s*(?:Equal|Extends|NotEqual|Expect)<');
 const createExploreCardSchema = z.object({
   difficulty: z.enum(['BEGINNER', 'EASY', 'MEDIUM', 'HARD', 'EXTREME']),
+  // tagtypes: z.array(z.enum([TagTypes.GENERICS, TagTypes.UNIONS, TagTypes.TRANSFORMATIONS])),
   name: z
     .string()
     .min(3, 'The name must be longer than 3 characters')
@@ -34,7 +36,7 @@ const createExploreCardSchema = z.object({
     .string()
     .min(10, 'The short description must be longer than 10 characters')
     .max(191, 'The short description must be shorter than 191 characters'),
-  tagtypes: z.enum(['GENERICS', 'UNIONS', 'TRANSFORMATIONS']),
+    tagtypes: z.enum(['GENERICS', 'UNIONS', 'TRANSFORMATIONS']),
 });
 const createDescriptionSchema = z.object({
   description: z.string().min(20, 'The description must be longer than 20 characters').max(65536),
