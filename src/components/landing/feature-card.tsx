@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect, type CSSProperties, type MouseEvent } from 'react';
 import {
   motion,
   useMotionTemplate,
@@ -7,7 +8,8 @@ import {
   type MotionStyle,
   type MotionValue,
 } from 'framer-motion';
-import { type MouseEvent } from 'react';
+import { useTheme } from 'next-themes';
+import Image from 'next/image';
 
 type WrapperStyle = MotionStyle & {
   '--x': MotionValue<string>;
@@ -17,14 +19,27 @@ type WrapperStyle = MotionStyle & {
 export const FeatureCard = ({
   title,
   description,
-  icon,
+  image,
 }: {
   title: string;
   description: string;
-  icon: React.ReactNode;
+  image: {
+    dark: string;
+    light: string;
+    placeholder: string;
+    alt: string;
+    style?: CSSProperties;
+  };
 }) => {
+  const [cardImage, setCardImage] = useState<string>(image.placeholder);
+  const { theme } = useTheme();
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+
+  useEffect(() => {
+    if (theme === 'dark') setCardImage(image.dark);
+    if (theme === 'light') setCardImage(image.light);
+  }, [theme]);
 
   function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
     const { left, top } = currentTarget.getBoundingClientRect();
@@ -44,13 +59,21 @@ export const FeatureCard = ({
         } as WrapperStyle
       }
     >
-      <motion.div className="b-black/90 h-full w-full rounded-xl border bg-gradient-to-b from-neutral-50/90 to-neutral-100/90 px-6 py-10 backdrop-blur-2xl transition duration-300 hover:border-transparent dark:from-neutral-950/90 dark:to-neutral-900/90">
-        <div className="flex flex-col items-center gap-4">
-          {icon}
-          <h2 className="text-xl font-bold tracking-tight md:text-3xl">{title}</h2>
-          <p className="text-center text-sm leading-7 text-zinc-600 dark:text-zinc-400">
-            {description}
-          </p>
+      <motion.div className="b-black/90 relative h-full w-full overflow-hidden rounded-xl border bg-gradient-to-b from-neutral-50/90 to-neutral-100/90 backdrop-blur-2xl transition duration-300 hover:border-transparent dark:from-neutral-950/90 dark:to-neutral-800/90">
+        <div className="mx-10 my-10 min-h-[450px] w-full">
+          <div className="flex w-4/6 flex-col gap-3">
+            <h2 className="text-xl font-bold tracking-tight md:text-xl">{title}</h2>
+            <p className="text-base leading-7 text-zinc-600 dark:text-zinc-400">{description}</p>
+          </div>
+          <Image
+            src={cardImage}
+            alt={image.alt}
+            style={{
+              ...image.style,
+              position: 'absolute',
+              userSelect: 'none',
+            }}
+          />
         </div>
       </motion.div>
     </motion.div>

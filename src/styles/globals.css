@@ -178,6 +178,7 @@ main {
   @apply pointer-events-none absolute select-none rounded-xl opacity-0 transition-opacity duration-300 hover:opacity-100;
   background: radial-gradient(
     500px circle at var(--x) var(--y),
+    1000px circle at var(--x) var(--y),
     #5295dc 0,
     rgba(255, 255, 255, 0) 50%,
     transparent 80%
