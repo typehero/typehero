@@ -2,7 +2,6 @@ import { FeatureCard } from '~/components/landing/feature-card';
 
 import FeatureCardChallengeDark from '~/assets/images/feature_card_challenge_dark.png';
 import FeatureCardChallengeLight from '~/assets/images/feature_card_challenge_light.png';
-import FeatureCardPlaceholder from '~/assets/images/feature_card_placeholder.png';
 
 const Features = () => {
   return (
@@ -17,34 +16,22 @@ const Features = () => {
             <FeatureCard
               title="Learn & Excel"
               description="Create new challenges with a built-in challenge editor and choose accepted solutions"
+              className="left-[35px] top-[35%] w-[150%] sm:left-[35px] sm:top-[30%] sm:w-[110%]"
               image={{
-                dark: FeatureCardChallengeDark as unknown as string,
-                light: FeatureCardChallengeLight as unknown as string,
-                placeholder: FeatureCardPlaceholder as unknown as string,
+                dark: FeatureCardChallengeDark,
+                light: FeatureCardChallengeLight,
                 alt: 'Something',
-                style: {
-                  top: '30%',
-                  left: '35px',
-                  width: '110%',
-                  maxWidth: 'unset',
-                },
               }}
             />
 
             <FeatureCard
               title="Learn & Excel"
               description="Create new challenges with a built-in challenge editor and choose accepted solutions"
+              className="left-[35px] top-[35%] w-[150%] sm:left-[35px] sm:top-[30%] sm:w-[110%]"
               image={{
-                dark: FeatureCardChallengeDark as unknown as string,
-                light: FeatureCardChallengeLight as unknown as string,
-                placeholder: FeatureCardPlaceholder as unknown as string,
+                dark: FeatureCardChallengeDark,
+                light: FeatureCardChallengeLight,
                 alt: 'Something',
-                style: {
-                  top: '30%',
-                  left: '35px',
-                  width: '110%',
-                  maxWidth: 'unset',
-                },
               }}
             />
           </div>

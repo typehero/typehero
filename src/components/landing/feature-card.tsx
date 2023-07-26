@@ -1,6 +1,9 @@
 'use client';
 
-import { useState, useEffect, type CSSProperties, type MouseEvent } from 'react';
+import Image from 'next/image';
+import { type StaticImageData } from 'next/image';
+import { useTheme } from 'next-themes';
+import { useEffect, type CSSProperties, type MouseEvent, useState } from 'react';
 import {
   motion,
   useMotionTemplate,
@@ -8,8 +11,6 @@ import {
   type MotionStyle,
   type MotionValue,
 } from 'framer-motion';
-import { useTheme } from 'next-themes';
-import Image from 'next/image';
 
 type WrapperStyle = MotionStyle & {
   '--x': MotionValue<string>;
@@ -19,27 +20,22 @@ type WrapperStyle = MotionStyle & {
 export const FeatureCard = ({
   title,
   description,
+  className,
   image,
 }: {
   title: string;
   description: string;
+  className?: string;
   image: {
-    dark: string;
-    light: string;
-    placeholder: string;
+    dark: StaticImageData;
+    light: StaticImageData;
     alt: string;
-    style?: CSSProperties;
   };
 }) => {
-  const [cardImage, setCardImage] = useState<string>(image.placeholder);
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-
-  useEffect(() => {
-    if (theme === 'dark') setCardImage(image.dark);
-    if (theme === 'light') setCardImage(image.light);
-  }, [theme]);
 
   function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
     const { left, top } = currentTarget.getBoundingClientRect();
@@ -47,6 +43,10 @@ export const FeatureCard = ({
     mouseX.set(clientX - left);
     mouseY.set(clientY - top);
   }
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <motion.div
@@ -65,15 +65,34 @@ export const FeatureCard = ({
             <h2 className="text-xl font-bold tracking-tight md:text-xl">{title}</h2>
             <p className="text-base leading-7 text-zinc-600 dark:text-zinc-400">{description}</p>
           </div>
-          <Image
-            src={cardImage}
-            alt={image.alt}
-            style={{
-              ...image.style,
-              position: 'absolute',
-              userSelect: 'none',
-            }}
-          />
+          {mounted && (
+            <>
+              {resolvedTheme === 'light' && (
+                <Image
+                  src={image.light}
+                  alt={image.alt}
+                  className={className}
+                  style={{
+                    position: 'absolute',
+                    userSelect: 'none',
+                    maxWidth: 'unset',
+                  }}
+                />
+              )}
+              {resolvedTheme === 'dark' && (
+                <Image
+                  src={image.dark}
+                  alt={image.alt}
+                  className={className}
+                  style={{
+                    position: 'absolute',
+                    userSelect: 'none',
+                    maxWidth: 'unset',
+                  }}
+                />
+              )}
+            </>
+          )}
         </div>
       </motion.div>
     </motion.div>
