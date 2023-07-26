@@ -74,6 +74,6 @@ export function SubmissionOverview({ submissionId }: Props) {
   );
 }
 
-function getSubmission(id: string) {
+async function getSubmission(id: string) {
   return fetch(`${getBaseUrl()}/api/submissions/${id}`).then((res) => res.json());
 }

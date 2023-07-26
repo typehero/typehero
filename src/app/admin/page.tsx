@@ -3,7 +3,8 @@ import { RoleTypes } from '@prisma/client';
 import { Lock } from 'lucide-react';
 import React from 'react';
 import { getBannedUsers } from '~/components/admin/admin.actions';
-import Reports2 from '~/components/admin/reports';
+import { ChallengeReviews } from '~/components/admin/challenge-reviews';
+import { Reports } from '~/components/admin/reports';
 import { BannedUsers } from '~/components/admin/users';
 import { getInfiniteReports } from '~/components/report/report.action';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
@@ -41,7 +42,7 @@ const View = async () => {
   const firstPage = await getInfiniteReports();
 
   return (
-    <div className="m-8 flex flex-col space-y-4 container">
+    <div className="container m-8 flex flex-col space-y-4">
       <div className="space-y-2">
         <div className="mx-2 flex flex-col">
           <p className="text-2xl font-semibold text-black dark:text-white">Moderation</p>
@@ -59,7 +60,13 @@ const View = async () => {
                 Reports
               </TabsTrigger>
               <TabsTrigger
-                className="rounded-l-2xl rounded-r-lg duration-300 data-[state=active]:bg-border"
+                className="duration-300 data-[state=active]:bg-border"
+                value="challengeReviews"
+              >
+                Challenge Reviews
+              </TabsTrigger>
+              <TabsTrigger
+                className="rounded-l-lg rounded-r-2xl duration-300 data-[state=active]:bg-border"
                 value="users"
               >
                 Users
@@ -67,11 +74,14 @@ const View = async () => {
             </TabsList>
             <TabsContent value="reports">
               <React.Suspense fallback={<>Loading...</>}>
-                <Reports2 initialReports={firstPage}/>
+                <Reports initialReports={firstPage} />
               </React.Suspense>
             </TabsContent>
             <TabsContent value="users">
               <BannedUsers data={allBannedUsers} />
+            </TabsContent>
+            <TabsContent value="challengeReviews">
+              <ChallengeReviews />
             </TabsContent>
           </Tabs>
         </div>

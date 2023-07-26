@@ -2,14 +2,14 @@ import Link from 'next/link';
 
 import { ExploreCard } from './explore-card';
 
-import type { ExploreChallengeData } from '.';
+import type { ExploreChallengeFetcher } from '.';
 import type { Difficulty } from '@prisma/client';
 import { Button } from '../ui/button';
 import { ChevronRight } from 'lucide-react';
 
 interface Props {
   title: string;
-  fetcher: () => Promise<ExploreChallengeData>;
+  fetcher: ExploreChallengeFetcher;
 }
 
 const difficultyToNumber: Record<Difficulty, number> = {

@@ -153,9 +153,9 @@ export async function getReports(lastCursor?: number, take = 25) {
           _count: {
             select: {
               vote: true,
-            }
-          }
-        }
+            },
+          },
+        },
       },
       user: true,
       reporter: true,

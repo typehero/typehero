@@ -65,7 +65,7 @@ export async function loadChallengesFromTypeChallenge() {
       id: idNum,
       name: title,
       description: README,
-      status: ChallengeStatus.ACTIVE,
+      status: Math.floor(Math.random() * 2) > 0 ? ChallengeStatus.PENDING : ChallengeStatus.ACTIVE,
       prompt: `// TEST CASE START\n${testData}\n\n// CODE START\n${prompt}`,
       difficulty: difficulty === 'warm' ? 'BEGINNER' : (difficulty.toUpperCase() as Difficulty),
       shortDescription: README.slice(0, 100),

@@ -29,7 +29,6 @@ enum RoleTypes {
 enum UserStatus {
   BANNED
   ACTIVE // can post, comment, vote, etc
-  PENDING // must finish x number of challenges to be active
 }
 
 enum ReportStatus {
@@ -104,7 +103,7 @@ model User {
   /// this is the twitter URL that shows up on the profile page
   userLinks UserLink[]
 
-  status    UserStatus @default(PENDING)
+  status    UserStatus @default(ACTIVE)
   banReason String?    @db.MediumText
 
   accounts   Account[]
