@@ -4,8 +4,6 @@ import { type Report, type Prisma } from '@prisma/client';
 import { getServerAuthSession } from '~/server/auth';
 import { prisma } from '~/server/db';
 
-export type AdminReportDetails = Awaited<ReturnType<typeof getChallengeReports>>;
-
 // FML this was obnoxious to do
 export type ChallengeInfo = { type: 'CHALLENGE' } & Omit<
   Report,
@@ -32,24 +30,6 @@ export async function addReport(
           data: issues,
         },
       },
-    },
-  });
-}
-
-/**
- * The function fetches all the reports along
- * with challenge and the user.
- */
-export async function getChallengeReports() {
-  return prisma.challengeReport.findMany({
-    include: {
-      challenge: {
-        include: {
-          user: true,
-        },
-      },
-      author: true,
-      moderator: true,
     },
   });
 }
@@ -94,7 +74,7 @@ export async function getBannedUsers() {
  * @param reportId The id of the report.
  * @returns
  */
-export async function disableChallenge(challengeId: number, reportId: number) {
+export async function banChallenge(challengeId: number, reportId: number) {
   const session = await getServerAuthSession();
   await prisma.$transaction([
     prisma.challenge.update({
@@ -102,7 +82,7 @@ export async function disableChallenge(challengeId: number, reportId: number) {
         id: challengeId,
       },
       data: {
-        visibility: 'HIDDEN',
+        status: 'BANNED',
       },
     }),
     prisma.report.update({
@@ -187,7 +167,7 @@ export async function banUser(userId: string, reportId: number, banReason?: stri
         userId: userId,
       },
       data: {
-        visibility: 'HIDDEN',
+        status: 'BANNED',
       },
     }),
     prisma.session.deleteMany({
@@ -228,7 +208,7 @@ export async function unbanUser(userId: string) {
         userId: userId,
       },
       data: {
-        visibility: 'VISIBLE',
+        status: 'ACTIVE',
       },
     }),
     prisma.user.update({
@@ -253,7 +233,7 @@ export async function getChallenge(id: number) {
           vote: true,
           bookmark: true,
           comment: true,
-        }
+        },
       },
     },
   });

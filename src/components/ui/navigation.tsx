@@ -17,7 +17,6 @@ import {
   DropdownMenuTrigger,
 } from './dropdown-menu';
 import { RoleTypes } from '@prisma/client';
-import { isProd } from '~/utils/featureFlags';
 
 export function Navigation() {
   const [mounted, setMounted] = useState(false);
@@ -52,8 +51,6 @@ export function Navigation() {
   }, []);
 
   const renderLoginDetails = (): JSX.Element | null => {
-    if (isProd()) return null;
-
     return session ? (
       <>
         <button
@@ -173,11 +170,9 @@ export function Navigation() {
               </span>
             </a>
 
-            {!isProd() && (
-              <Link href="/explore">
-                <span className={navigationMenuTriggerStyle()}>Explore</span>
-              </Link>
-            )}
+            <Link href="/explore">
+              <span className={navigationMenuTriggerStyle()}>Explore</span>
+            </Link>
           </div>
           <div className="flex">
             <div className="flex items-center justify-end gap-2">
