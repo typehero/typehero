@@ -16,7 +16,7 @@ const Features = () => {
             <FeatureCard
               title="Learn & Excel"
               description="Create new challenges with a built-in challenge editor and choose accepted solutions"
-              className="left-[35px] top-[35%] w-[150%] sm:left-[35px] sm:top-[30%] sm:w-[110%]"
+              className="group-hover:scale-105 transition-transform duration-300 left-[35px] top-[35%] w-[150%] sm:left-[35px] sm:top-[30%] sm:w-[110%]"
               image={{
                 dark: FeatureCardChallengeDark,
                 light: FeatureCardChallengeLight,
@@ -27,7 +27,7 @@ const Features = () => {
             <FeatureCard
               title="Learn & Excel"
               description="Create new challenges with a built-in challenge editor and choose accepted solutions"
-              className="left-[35px] top-[35%] w-[150%] sm:left-[35px] sm:top-[30%] sm:w-[110%]"
+              className="group-hover:scale-105 transition-transform duration-300 left-[35px] top-[35%] w-[150%] sm:left-[35px] sm:top-[30%] sm:w-[110%]"
               image={{
                 dark: FeatureCardChallengeDark,
                 light: FeatureCardChallengeLight,

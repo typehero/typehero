@@ -86,7 +86,7 @@ const Hero = () => (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
               className="moving-grid-background absolute h-[200%] w-full"
             />
             <div className="absolute h-full w-full rounded-full shadow-[inset_0_0_5rem_3rem] shadow-background" />
@@ -101,6 +101,9 @@ const Hero = () => (
           animate={{
             y: 140,
             opacity: 1,
+            transition: {
+              duration: 0.4,
+            }
           }}
           className="group"
         >
@@ -120,7 +123,8 @@ const Hero = () => (
             y: 260,
             opacity: 1,
             transition: {
-              duration: 0.5,
+              duration: 0.4,
+              delay: 0.1,
             },
           }}
           className="group"
