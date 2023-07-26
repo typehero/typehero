@@ -14,6 +14,7 @@ export async function getInfiniteComments({ challengeId, lastCursor }: QueryPara
     where: {
       rootType: 'CHALLENGE',
       rootChallengeId: challengeId,
+      visible: true,
     },
     ...(lastCursor && {
       skip: 1,

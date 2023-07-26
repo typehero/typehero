@@ -31,6 +31,7 @@ export const getChallengeRouteData = cache(async (id: string, session: Session |
         where: {
           rootType: 'CHALLENGE',
           rootChallengeId: +id,
+          visible: true,
         },
         include: {
           user: true,

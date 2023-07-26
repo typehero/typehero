@@ -333,6 +333,7 @@ enum CommentRoot {
 model Comment {
   id       Int    @id @default(autoincrement())
   text     String @db.MediumText
+  visible Boolean @default(true)
   parentId Int?
 
   userId String
