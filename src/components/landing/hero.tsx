@@ -1,5 +1,6 @@
 'use client';
 
+import { Balancer } from 'react-wrap-balancer';
 import { Github } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '~/components/ui/button';
@@ -40,7 +41,7 @@ const Hero = () => (
     </filter>
     <rect width="100%" height="100%" filter="url(#noise)"></rect>
   </svg> */}
-    <div className="container mb-[56px] grid min-h-[calc(100lvh_-_112px)] items-center justify-center lg:grid-cols-2">
+    <div className="container mb-[128px] mt-[90px] lg:mt-0 grid items-center justify-center lg:grid-cols-2">
       <div className="flex w-full flex-col items-center justify-center gap-10 lg:items-start">
         <div className="relative flex w-full items-center justify-center gap-4 lg:justify-start">
           <div className="absolute left-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-x-[15%] -translate-y-[50%] rounded-full bg-slate-400/10 blur-3xl dark:block"></div>
@@ -53,9 +54,11 @@ const Hero = () => (
           </h1>
         </div>
 
-        <p className="max-w-[50ch] bg-transparent px-8 text-center leading-8 text-black/50 dark:text-white/50 lg:px-0 lg:text-left">
-          Connect, collaborate, and grow with a community of TypeScript developers. Elevate your
-          skills trough interactive coding challenges, discussions, and knowledge sharing
+        <p className="bg-transparent px-8 text-center font-medium leading-8 text-zinc-600 dark:text-zinc-300 lg:px-0 lg:text-left">
+          <Balancer>
+            Connect, collaborate, and grow with a community of TypeScript developers. Elevate your
+            skills trough interactive coding challenges, discussions, and knowledge sharing
+          </Balancer>
         </p>
         <div className="flex gap-3">
           <Button
@@ -78,7 +81,7 @@ const Hero = () => (
       </div>
 
       <div className="relative hidden h-[800px] overflow-visible rounded-full lg:block">
-        <div className="absolute -inset-40 top-1/2 -z-30 aspect-square -translate-y-1/2 translate-x-[-30px] overflow-hidden rounded-full">
+        <div className="absolute -inset-40 top-1/2 -z-30 -translate-y-1/2 translate-x-[-30px] overflow-hidden rounded-full">
           <div className="relative h-full w-full">
             <motion.div
               initial={{ opacity: 0 }}
@@ -91,12 +94,12 @@ const Hero = () => (
         </div>
         <motion.div
           initial={{
-            y: 80,
-            x: 140,
+            y: 150,
+            x: 180,
             opacity: 0,
           }}
           animate={{
-            y: 70,
+            y: 140,
             opacity: 1,
           }}
           className="group"
@@ -111,7 +114,7 @@ const Hero = () => (
           initial={{
             opacity: 0,
             y: 270,
-            x: 20,
+            x: 80,
           }}
           animate={{
             y: 260,

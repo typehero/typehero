@@ -155,7 +155,7 @@ main {
 
 .moving-grid-background {
   will-change: transform;
-  background-size: 2.5rem 2.5rem;
+  background-size: 3rem 3rem;
   background-image: linear-gradient(to right, #8882 1px, transparent 1px),
     linear-gradient(to bottom, #8882 1px, transparent 1px);
   animation: movingbackground 90s linear infinite !important;
@@ -177,7 +177,6 @@ main {
 .animated-feature-cards::before {
   @apply pointer-events-none absolute select-none rounded-xl opacity-0 transition-opacity duration-300 hover:opacity-100;
   background: radial-gradient(
-    500px circle at var(--x) var(--y),
     1000px circle at var(--x) var(--y),
     #5295dc 0,
     rgba(255, 255, 255, 0) 50%,
