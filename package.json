@@ -13,8 +13,8 @@
     "refresh": "pnpm reset && pnpm prisma db seed",
     "typecheck": "tsc --noEmit",
     "prepare": "husky install",
-    "dl-monaco": "node scripts/dl-monaco.mjs",
-    "dl-monaco:force": "node scripts/dl-monaco.mjs --force"
+    "dl-monaco": "tsx scripts/dl-monaco.ts",
+    "dl-monaco:force": "tsx scripts/dl-monaco.ts --force"
   },
   "type": "module",
   "dependencies": {
@@ -111,7 +111,8 @@
   "pnpm": {
     "patchedDependencies": {
       "next-auth@4.22.1": "patches/next-auth@4.22.1.patch",
-      "@monaco-editor/react@4.5.1": "patches/@monaco-editor__react@4.5.1.patch"
+      "@monaco-editor/react@4.5.1": "patches/@monaco-editor__react@4.5.1.patch",
+      "monaco-vim@0.4.0": "patches/monaco-vim@0.4.0.patch"
     }
   },
   "lint-staged": {

@@ -54,7 +54,7 @@ const NoSolutions = ({ setView, loggedInUser, loggedInUserHasSolution }: Props) 
         No solutions yet, <br />
         {loggedInUser && loggedInUserHasSolution ? (
           <>
-            be the first to submit one! <SubmitSolution setView={setView} />
+            be the first to submit one! <SubmitSolution disabled={false} setView={setView} />
           </>
         ) : (
           'complete the challenge to submit one!'

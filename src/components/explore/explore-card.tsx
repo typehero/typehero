@@ -44,7 +44,7 @@ const GRADIENTS_BY_DIFFICULTY = {
     'bg-gradient-to-br hover:bg-[right_-2px_bottom] bg-[length:200%_200%] bg-left-top dark:from-orange-950 dark:via-orange-500 dark:to-orange-300 dark:via-30% from-orange-400 via-orange-600 via-30% to-orange-600',
 };
 
-const ExploreCard = ({ challenge }: ExploreCardProps) => {
+export const ExploreCard = ({ challenge }: ExploreCardProps) => {
   return (
     <Card
       className={`group relative overflow-hidden duration-300

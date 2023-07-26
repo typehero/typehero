@@ -1,15 +1,14 @@
 'use client';
 
 import type * as monaco from 'monaco-editor';
-import { type initVimMode, type VimMode } from 'monaco-vim';
 import { useEffect, useRef } from 'react';
 import { useEditorSettingsStore } from '../settings-store';
+import { type VimMode, initVimMode } from 'monaco-vim';
 
 interface VimStatusBarProps {
   editor: monaco.editor.IStandaloneCodeEditor;
-  initVimMode: typeof initVimMode;
 }
-export const VimStatusBar = ({ editor, initVimMode }: VimStatusBarProps) => {
+export const VimStatusBar = ({ editor }: VimStatusBarProps) => {
   const statusBarRef = useRef<HTMLDivElement | null>(null);
   const vimModeRef = useRef<VimMode>();
   const { settings } = useEditorSettingsStore();
@@ -26,7 +25,7 @@ export const VimStatusBar = ({ editor, initVimMode }: VimStatusBarProps) => {
         statusBarRef.current.textContent = '';
       }
     }
-  }, [editor, initVimMode, settings.bindings]);
+  }, [editor, settings.bindings]);
 
   return (
     <div className="flex w-full">

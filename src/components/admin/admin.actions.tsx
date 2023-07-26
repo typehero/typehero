@@ -4,8 +4,6 @@ import { type Report, type Prisma } from '@prisma/client';
 import { getServerAuthSession } from '~/server/auth';
 import { prisma } from '~/server/db';
 
-export type AdminReportDetails = Awaited<ReturnType<typeof getChallengeReports>>;
-
 // FML this was obnoxious to do
 export type ChallengeInfo = { type: 'CHALLENGE' } & Omit<
   Report,
@@ -36,25 +34,26 @@ export async function addReport(
   });
 }
 
-/**
- * The function fetches all the reports along
- * with challenge and the user.
- */
-export async function getChallengeReports() {
-  return prisma.challengeReport.findMany({
-    include: {
-      challenge: {
-        include: {
-          user: true,
-        },
-      },
-      author: true,
-      moderator: true,
-    },
-  });
-}
-
 export type AdminBannedUsers = Awaited<ReturnType<typeof getBannedUsers>>;
+
+export async function deleteComment(commentId: number, reportId: number) {
+  return prisma.$transaction([
+    prisma.comment.delete({
+      where: {
+        id: commentId,
+      },
+    }),
+    prisma.report.update({
+      where: {
+        id: reportId,
+      },
+      data: {
+        status: 'CLEARED',
+        updatedAt: new Date(),
+      },
+    }),
+  ]);
+}
 
 /**
  * The function fetches all the banned
@@ -75,7 +74,7 @@ export async function getBannedUsers() {
  * @param reportId The id of the report.
  * @returns
  */
-export async function disableChallenge(challengeId: number, reportId: number) {
+export async function banChallenge(challengeId: number, reportId: number) {
   const session = await getServerAuthSession();
   await prisma.$transaction([
     prisma.challenge.update({
@@ -83,16 +82,17 @@ export async function disableChallenge(challengeId: number, reportId: number) {
         id: challengeId,
       },
       data: {
-        visibility: 'HIDDEN',
+        status: 'BANNED',
       },
     }),
-    prisma.challengeReport.update({
+    prisma.report.update({
       where: {
         id: reportId,
       },
       data: {
         status: 'CLEARED',
         moderatorId: session?.user.id,
+        updatedAt: new Date(),
       },
     }),
   ]);
@@ -104,17 +104,42 @@ export async function disableChallenge(challengeId: number, reportId: number) {
  * @param reportId The id of the report.
  * @returns
  */
-export async function dismissChallengeReport(reportId: number) {
+export async function dismissReport(reportId: number) {
   const session = await getServerAuthSession();
-  return prisma.challengeReport.update({
+  return prisma.report.update({
     where: {
       id: reportId,
     },
     data: {
       status: 'DISMISSED',
       moderatorId: session?.user.id,
+      updatedAt: new Date(),
     },
   });
+}
+
+export async function deleteSolution(solutionId: number, reportId: number) {
+  try {
+    await prisma.$transaction([
+      prisma.sharedSolution.delete({
+        where: {
+          id: solutionId,
+        },
+      }),
+      prisma.report.update({
+        where: {
+          id: reportId,
+        },
+        data: {
+          status: 'CLEARED',
+          updatedAt: new Date(),
+        },
+      }),
+    ]);
+    return 'ok';
+  } catch (e) {
+    return 'failed';
+  }
 }
 
 /**
@@ -142,7 +167,7 @@ export async function banUser(userId: string, reportId: number, banReason?: stri
         userId: userId,
       },
       data: {
-        visibility: 'HIDDEN',
+        status: 'BANNED',
       },
     }),
     prisma.session.deleteMany({
@@ -150,13 +175,14 @@ export async function banUser(userId: string, reportId: number, banReason?: stri
         userId: userId,
       },
     }),
-    prisma.challengeReport.update({
+    prisma.report.update({
       where: {
         id: reportId,
       },
       data: {
         status: 'CLEARED',
         moderatorId: session?.user.id,
+        updatedAt: new Date(),
       },
     }),
   ]);
@@ -174,7 +200,7 @@ export async function unbanUser(userId: string) {
         userId: userId,
       },
       data: {
-        visibility: 'VISIBLE',
+        status: 'ACTIVE',
       },
     }),
     prisma.user.update({
@@ -189,21 +215,16 @@ export async function unbanUser(userId: string) {
 }
 
 export async function getChallenge(id: number) {
-  return prisma.challengeReport.findFirstOrThrow({
+  return prisma.challenge.findFirstOrThrow({
     where: {
       id,
     },
     include: {
-      author: true,
-      moderator: {
+      _count: {
         select: {
-          name: true,
-        },
-      },
-      challenge: {
-        include: {
-          user: true,
           vote: true,
+          bookmark: true,
+          comment: true,
         },
       },
     },

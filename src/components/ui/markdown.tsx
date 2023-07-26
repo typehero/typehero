@@ -46,6 +46,9 @@ export function Markdown({ children, className }: { children: string; className?
       className={className}
       remarkPlugins={[removeHtmlComments, remarkGfm]}
       components={{
+        ul: ({ className, ...props }) => (
+          <ul className={clsx(className, 'list-disc ps-10')} {...props} />
+        ),
         h1: ({ className, ...props }) => (
           <h1 className={clsx(className, 'mb-2 pb-2 text-3xl font-bold')} {...props} />
         ),

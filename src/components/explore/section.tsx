@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import Card from './explore-card';
+import { ExploreCard } from './explore-card';
 
 import type { ExploreChallengeData } from '.';
 import type { Difficulty } from '@prisma/client';
@@ -59,7 +59,7 @@ export async function ExploreSection({ title, fetcher }: Props) {
               href={`/challenge/${challenge.id}`}
               key={challenge.id}
             >
-              <Card key={`challenge-${challenge.id}`} challenge={challenge} />
+              <ExploreCard key={`challenge-${challenge.id}`} challenge={challenge} />
             </Link>
           ))}
       </div>

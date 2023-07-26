@@ -1,13 +1,10 @@
 'use server';
 
 import { prisma } from '~/server/db';
-import { createChallengeValidator } from './create-validator';
 import { getServerAuthSession } from '~/server/auth';
-import { type CreateChallengeInputData } from './create-challenge-store';
+import { type CreateChallengeSchema } from '.';
 
-export async function uploadChallenge(data: CreateChallengeInputData) {
-  const parsedData = createChallengeValidator.parse(data);
-
+export async function uploadChallenge(data: CreateChallengeSchema) {
   const session = await getServerAuthSession();
 
   if (!session) {
@@ -16,7 +13,7 @@ export async function uploadChallenge(data: CreateChallengeInputData) {
 
   return prisma.challenge.create({
     data: {
-      ...parsedData,
+      ...data,
       userId: session.user.id,
     },
     select: {

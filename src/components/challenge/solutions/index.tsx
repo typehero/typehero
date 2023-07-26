@@ -30,11 +30,9 @@ export function Solutions({ challenge }: Props) {
         <>
           {challenge.sharedSolution.length !== 0 ? (
             <>
-              {(loggedInUserHasSolution || !session?.data?.user) && (
-                <div className="absolute right-0 top-0 flex w-full justify-end border-b border-zinc-300 bg-background/70 p-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/70">
-                  <SubmitSolution setView={setView} />
-                </div>
-              )}
+              <div className="absolute right-0 top-0 flex w-full justify-end border-b border-zinc-300 bg-background/70 p-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/70">
+                <SubmitSolution disabled={Boolean(!loggedInUserHasSolution)} setView={setView} />
+              </div>
               <div className="custom-scrollable-element h-full overflow-y-auto pt-12">
                 {challenge?.sharedSolution.map((solution) => (
                   <SolutionRow

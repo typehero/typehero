@@ -6,9 +6,17 @@ import { prisma } from '~/server/db';
 export type ChallengeRouteData = NonNullable<Awaited<ReturnType<typeof getChallengeRouteData>>>;
 
 // this is to data to populate the description tab (default tab on challenge page)
-export const getChallengeRouteData = cache(async (id: string, session: Session | null) => {
-  const challenge = await prisma.challenge.findFirst({
-    where: { id: +id },
+export const getChallengeRouteData = cache((id: string, session: Session | null) => {
+  return prisma.challenge.findFirstOrThrow({
+    where: {
+      id: +id,
+      status: 'ACTIVE',
+      user: {
+        NOT: {
+          status: 'BANNED',
+        },
+      },
+    },
     include: {
       user: true,
       _count: {
@@ -40,6 +48,4 @@ export const getChallengeRouteData = cache(async (id: string, session: Session |
       },
     },
   });
-
-  return challenge;
 });
