@@ -38,6 +38,7 @@ enum ReportStatus {
 }
 
 enum ChallengeStatus {
+  DECLINED
   BANNED
   PENDING
   ACTIVE

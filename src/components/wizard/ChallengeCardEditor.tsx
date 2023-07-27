@@ -60,6 +60,7 @@ export function ChallengeCardEditor({ form }: Props) {
                     </FormControl>
                     <SelectContent>
                       <SelectItem value="BEGINNER">BEGINNER</SelectItem>
+                      <SelectItem value="EASY">EASY</SelectItem>
                       <SelectItem value="MEDIUM">MEDIUM</SelectItem>
                       <SelectItem value="HARD">HARD</SelectItem>
                       <SelectItem value="EXTREME">EXTREME</SelectItem>

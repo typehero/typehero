@@ -9,6 +9,7 @@ import {
   useReactTable,
   type ColumnDef,
 } from '@tanstack/react-table';
+import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import type { ChallengeReviewData } from '~/app/api/challenge-reviews/route';
 import { Button } from '~/components/ui/button';
@@ -28,6 +29,7 @@ interface Props {
 }
 
 export function DataTable({ columns }: Props) {
+  const router = useRouter();
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 20,
@@ -62,6 +64,8 @@ export function DataTable({ columns }: Props) {
     manualPagination: true,
   });
 
+  if (data.isLoading) return null;
+
   return (
     <div className="w-full rounded-md border">
       <Table>
@@ -83,7 +87,11 @@ export function DataTable({ columns }: Props) {
         <TableBody>
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
+              <TableRow
+                key={row.id}
+                data-state={row.getIsSelected() && 'selected'}
+                onClick={() => router.push(`/admin/challenge/${row.original.id}`)}
+              >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}

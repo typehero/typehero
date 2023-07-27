@@ -9,6 +9,10 @@ export const columns: ColumnDef<Challenge>[] = [
     header: 'Name',
   },
   {
+    accessorKey: 'difficulty',
+    header: 'Difficulty',
+  },
+  {
     accessorKey: 'shortDescription',
     header: 'Description',
   },

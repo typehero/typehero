@@ -129,7 +129,9 @@ export function Navigation() {
     <header className="w-full">
       <nav
         className={`flex h-14 items-center ${
-          pathname.includes('/challenge') ? 'px-4' : 'container  '
+          pathname.startsWith('/challenge') || pathname.startsWith('/admin/challenge')
+            ? 'px-4'
+            : 'container  '
         }`}
       >
         <div className="flex w-full items-center justify-between">

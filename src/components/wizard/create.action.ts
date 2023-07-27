@@ -4,7 +4,7 @@ import { prisma } from '~/server/db';
 import { getServerAuthSession } from '~/server/auth';
 import { type CreateChallengeSchema } from '.';
 
-export async function uploadChallenge(data: CreateChallengeSchema) {
+export async function uploadChallenge(data: CreateChallengeSchema, isUserACreator: boolean) {
   const session = await getServerAuthSession();
 
   if (!session) {
@@ -15,6 +15,8 @@ export async function uploadChallenge(data: CreateChallengeSchema) {
     data: {
       ...data,
       userId: session.user.id,
+      // if a user has the creator role already then their challenges dont need to be approved anymore
+      ...(isUserACreator ? { status: 'ACTIVE' } : {}),
     },
     select: {
       id: true,
