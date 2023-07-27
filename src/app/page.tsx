@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { Provider as BalancerProvider } from 'react-wrap-balancer';
 import Hero from '~/components/landing/hero';
 import Features from '~/components/landing/features';
 import Community from '~/components/landing/community';
@@ -15,10 +16,12 @@ export default async function Index() {
         />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </Head>
-      <Hero />
-      <Features />
-      <Community />
-      <Footsies />
+      <BalancerProvider>
+        <Hero />
+        <Features />
+        <Community />
+        <Footsies />
+      </BalancerProvider>
     </>
   );
 }

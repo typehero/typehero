@@ -155,10 +155,39 @@ main {
 
 .moving-grid-background {
   will-change: transform;
-  background-size: 2.5rem 2.5rem;
+  background-size: 3rem 3rem;
   background-image: linear-gradient(to right, #8882 1px, transparent 1px),
     linear-gradient(to bottom, #8882 1px, transparent 1px);
   animation: movingbackground 90s linear infinite !important;
+}
+
+.features-background-mask {
+  mask-image: linear-gradient(
+    rgba(0, 0, 0, 0) 0%, 
+    rgba(0, 0, 0, 0) 50%, 
+    rgba(0, 0, 0, 1) 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    rgba(0, 0, 0, 0) 0%, 
+    rgba(0, 0, 0, 0) 50%, 
+    rgba(0, 0, 0, 1) 100%
+  );
+}
+
+.animated-feature-cards::before {
+  @apply pointer-events-none absolute select-none rounded-xl opacity-0 transition-opacity duration-300 hover:opacity-100;
+  background: radial-gradient(
+    1000px circle at var(--x) var(--y),
+    #5295dc 0,
+    rgba(255, 255, 255, 0) 50%,
+    transparent 80%
+  );
+  z-index: -1;
+  content: '';
+  top: -1px;
+  bottom: -1px;
+  left: -1px;
+  right: -1px;
 }
 
 @keyframes movingbackground {
