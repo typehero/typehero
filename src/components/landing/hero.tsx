@@ -41,7 +41,7 @@ const Hero = () => (
     </filter>
     <rect width="100%" height="100%" filter="url(#noise)"></rect>
   </svg> */}
-    <div className="container mb-[128px] mt-[90px] lg:mt-0 grid items-center justify-center lg:grid-cols-2">
+    <div className="container mb-[64px] mt-[90px] lg:mt-0 grid items-center justify-center lg:grid-cols-2">
       <div className="flex w-full flex-col items-center justify-center gap-10 lg:items-start">
         <div className="relative flex w-full items-center justify-center gap-4 lg:justify-start">
           <div className="absolute left-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-x-[15%] -translate-y-[50%] rounded-full bg-slate-400/10 blur-3xl dark:block"></div>

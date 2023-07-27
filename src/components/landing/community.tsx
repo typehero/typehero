@@ -28,7 +28,7 @@ const Community = async function () {
   const avatars = await getOcto();
 
   return (
-    <section className="container mt-[48px] flex min-h-[80lvh] flex-col justify-center lg:flex-row lg:items-center">
+    <section className="container md:mb-[172px] mt-[172px] flex flex-col justify-center lg:flex-row lg:items-center">
       <div className="flex flex-1 flex-col items-center pb-36 lg:items-start lg:pb-0">
         <h2 className="mb-2 text-center text-4xl font-bold lg:text-left">Built by the community</h2>
         <span className="text-neutral-400 dark:text-neutral-600">
