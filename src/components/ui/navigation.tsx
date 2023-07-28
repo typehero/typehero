@@ -126,7 +126,7 @@ export function Navigation() {
   };
 
   return (
-    <header className="w-full">
+    <header className="w-full z-10">
       <nav
         className={`flex h-14 items-center ${
           pathname.startsWith('/challenge') || pathname.startsWith('/admin/challenge')

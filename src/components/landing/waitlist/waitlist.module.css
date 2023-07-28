@@ -1,0 +1,50 @@
+/* The module for the Waitlist page background */
+.waitlistBackground {
+  position: relative;
+  top: -56px;
+  min-height: calc(100vh - 56px);
+  background: linear-gradient(0deg, hsl(var(--background)) 0%, rgba(9, 9, 11, 0) 100%),
+    linear-gradient(
+      270deg,
+      rgba(59, 131, 199, 0) 44.51%,
+      rgba(59, 131, 199, 0.17) 75.5%,
+      rgba(49, 120, 198, 0.3) 100%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(59, 199, 182, 0) 22.98%,
+      rgba(59, 182, 199, 0.17) 67.78%,
+      rgba(49, 189, 198, 0.3) 100%
+    );
+}
+
+/* The module for the background of the banner on the landing page */
+.backdrop {
+  background: linear-gradient(0deg, hsl(var(--background)) 5%, rgba(0, 0, 0, 0) 100%),
+    linear-gradient(
+      225deg,
+      rgba(59, 131, 199, 0) 44.51%,
+      rgba(59, 131, 199, 0.17) 75.5%,
+      rgba(49, 120, 198, 0.3) 100%
+    ),
+    url('../../../assets/images/background_pattern.png');
+  background-size: cover;
+  background-position-x: center;
+  background-repeat: no-repeat;
+}
+@media (max-width: 1280px) {
+  .backdrop {
+    background-position-x: 50%;
+    background-size: 1800px;
+  }
+}
+@media (max-width: 768px) {
+  .backdrop {
+    background-position-x: 60%;
+  }
+}
+@media (max-width: 480px) {
+  .backdrop {
+    background-position-x: 70%;
+  }
+}
