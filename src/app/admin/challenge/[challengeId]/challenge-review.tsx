@@ -11,17 +11,24 @@ import { approveChallenge, denyChallenge } from './challenge-review.action';
 import type { ChallengeToReview } from './page';
 import { useToast } from '~/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { useMemo } from 'react';
 
 interface Props {
   challenge: ChallengeToReview;
 }
 export function ChallengeReview({ challenge }: Props) {
   const router = useRouter();
+  const { data: session } = useSession();
   const { toast } = useToast();
+  const isUserACreator = useMemo(
+    () => session?.user.role.includes('CREATOR') ?? false,
+    [session?.user.role],
+  );
   const handleApproveChallenge = async () => {
     console.log(challenge.id);
     try {
-      await approveChallenge(challenge.id, challenge.userId, challenge.user.name);
+      await approveChallenge(challenge.id, challenge.userId, isUserACreator);
       toast({
         variant: 'success',
         title: 'Challenge Approved Successfully',
