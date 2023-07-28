@@ -3,7 +3,7 @@ import { Provider as BalancerProvider } from 'react-wrap-balancer';
 import Hero from '~/components/landing/hero';
 import Features from '~/components/landing/features';
 import Community from '~/components/landing/community';
-import Waitlist from '~/components/landing/waitlist';
+import Waitlist from '~/components/landing/waitlist/banner';
 import { Footsies } from '~/components/ui/footsies';
 
 export default async function Index() {
