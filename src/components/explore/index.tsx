@@ -30,7 +30,7 @@ export async function Explore() {
   );
 }
 
-export type ExploreChallengeData = Awaited<ReturnType<typeof getEasyChallenges>>;
+export type ExploreChallengeFetcher = typeof getEasyChallenges;
 // TODO: this is trash
 async function getEasyChallenges() {
   return prisma.challenge.findMany({

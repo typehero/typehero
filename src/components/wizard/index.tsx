@@ -16,6 +16,7 @@ import { uploadChallenge } from './create.action';
 import DEFAULT_CHALLENGE_TEMPLATE from './default-challenge.md';
 import DEFAULT_DESCRIPTION from './default-description.md';
 import type { TsErrors } from '../challenge/code-panel';
+import { useSession } from 'next-auth/react';
 
 export const enum STEPS {
   ChallengeCard,
@@ -66,9 +67,15 @@ export type WizardForm = UseFormReturn<CreateChallengeSchema>;
 
 export function Wizard() {
   const router = useRouter();
+  const { data: session } = useSession();
   const [step, setStep] = useState(0);
   const [rendered, setRendered] = useState(false);
   const [tsErrors, setTsErrors] = useState<TsErrors>([[], [], [], []]);
+
+  const isUserACreator = useMemo(
+    () => session?.user.role.includes('CREATOR') ?? false,
+    [session?.user.role],
+  );
 
   const hasTsErrors = useMemo(() => tsErrors.some((e) => e.length), [tsErrors]);
   const form = useForm<CreateChallengeSchema>({
@@ -101,9 +108,15 @@ export function Wizard() {
   };
 
   async function onSubmit(data: CreateChallengeSchema) {
-    const { id } = await uploadChallenge(data);
+    const { id } = await uploadChallenge(data, isUserACreator);
 
-    router.push(`/challenge/${id}`);
+    router.refresh();
+
+    if (isUserACreator) {
+      router.push(`/challenge/${id}`);
+    } else {
+      router.push(`/explore}`);
+    }
   }
 
   return (
@@ -125,7 +138,7 @@ export function Wizard() {
               {step === STEPS.TestCases && (
                 <TestCasesEditor form={form} hasTsErrors={hasTsErrors} setTsErrors={setTsErrors} />
               )}
-              {step === 3 && <Summary />}
+              {step === 3 && <Summary isUserACreator={isUserACreator} />}
             </form>
           </Form>
         )}
