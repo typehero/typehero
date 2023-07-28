@@ -185,6 +185,14 @@ export async function banUser(userId: string, reportId: number, banReason?: stri
         updatedAt: new Date(),
       },
     }),
+    prisma.comment.updateMany({
+      where: {
+        userId: userId,
+      },
+      data: {
+        visible: false,
+      }
+    })
   ]);
 }
 /**
