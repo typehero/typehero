@@ -1,8 +1,7 @@
 import { notFound } from 'next/navigation';
-import { cache } from 'react';
 import { Submissions } from '~/components/challenge/submissions';
 import { getServerAuthSession } from '~/server/auth';
-import { prisma } from '~/server/db';
+import { getChallengeSubmissions } from './getChallengeSubmissions';
 
 interface Props {
   params: {
@@ -20,17 +19,3 @@ export default async function SubmissionPage({ params: { id } }: Props) {
 
   return <Submissions submissions={submissions} />;
 }
-
-export type ChallengeSubmissions = NonNullable<Awaited<ReturnType<typeof getChallengeSubmissions>>>;
-export const getChallengeSubmissions = cache(async (userId: string, challengeId: string) => {
-  const solutions = await prisma.submission.findMany({
-    where: { challengeId: +challengeId, userId },
-    orderBy: [
-      {
-        createdAt: 'desc',
-      },
-    ],
-  });
-
-  return solutions;
-});
