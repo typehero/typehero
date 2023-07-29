@@ -13,6 +13,7 @@
     "refresh": "pnpm reset && pnpm prisma db seed",
     "typecheck": "tsc --noEmit",
     "prepare": "husky install",
+    "dl-git": "tsx scripts/contributors.ts",
     "dl-monaco": "tsx scripts/dl-monaco.ts",
     "dl-monaco:force": "tsx scripts/dl-monaco.ts --force"
   },
@@ -47,6 +48,7 @@
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
     "date-fns": "^2.30.0",
+    "dotenv": "^16.3.1",
     "framer-motion": "^10.12.22",
     "lodash": "^4.17.21",
     "lucide-react": "^0.260.0",
