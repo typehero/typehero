@@ -22,10 +22,17 @@ async function getOcto() {
 }
 
 async function start() {
-  const avatars = await getOcto();
+  const contributors = await getOcto();
+
+  const text = [
+    `// prettier-ignore`,
+    `// eslint-disable`,
+    `export const contributors = ${JSON.stringify(contributors, null, 4)}`,
+    ``,
+  ].join('\n');
 
   const dir = path.join(__dirname, '../public');
-  await fs.writeFile(`${dir}/contributors.json`, JSON.stringify(avatars));
+  await fs.writeFile(`${dir}/contributors.ts`, text);
 }
 
 start();

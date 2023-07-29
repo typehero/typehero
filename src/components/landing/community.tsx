@@ -1,7 +1,7 @@
-import contributors from '../../../scripts/contributors.json';
+// eslint-disable-next-line no-restricted-imports
+import { contributors } from '../../../public/contributors';
 
 const Community = async function () {
-  console.log({ contributors });
   return (
     <section className="container mt-[172px] flex flex-col justify-center md:mb-[172px] lg:flex-row lg:items-center">
       <div className="flex flex-1 flex-col items-center pb-36 lg:items-start lg:pb-0">
@@ -45,11 +45,12 @@ const Community = async function () {
       <div className="relative flex-1 pb-36 pl-4 lg:pb-0">
         <div className="mx-auto flex w-[18.25rem] flex-wrap gap-x-3 gap-y-1 sm:w-[23rem] [&>*:nth-child(7n_+_1)]:ml-[2.375rem] sm:[&>*:nth-child(7n_+_1)]:ml-0 sm:[&>*:nth-child(9n_+_1)]:ml-[2.375rem]">
           {contributors.map((contributor) => (
-            <div
-              key={contributor.id}
-              style={{ backgroundImage: `url('${contributor.avatar_url}')` }}
-              className="honeycombchild h-16 w-16 rounded-full bg-neutral-700 bg-cover"
-            ></div>
+            <a key={contributor.id} target="_blank" href={contributor.html_url}>
+              <div
+                style={{ backgroundImage: `url('${contributor.avatar_url}')` }}
+                className="honeycombchild h-16 w-16 rounded-full bg-neutral-700 bg-cover"
+              ></div>
+            </a>
           ))}
         </div>
       </div>
