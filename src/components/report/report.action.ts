@@ -145,7 +145,7 @@ export async function getInfiniteReports(lastCursor?: number) {
   };
 }
 
-export async function getReports(lastCursor?: number, take = 25) {
+export async function getReports(lastCursor?: number, take = 3) {
   return prisma.report.findMany({
     include: {
       challenge: {

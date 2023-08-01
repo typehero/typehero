@@ -8,7 +8,11 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip
 import { toast } from '~/components/ui/use-toast';
 import { UserBadge } from '~/components/ui/user-badge';
 import { getRelativeTime } from '~/utils/relativeTime';
-import CommentDeleteDialog from './delete';
+import { CommentDeleteDialog } from './delete';
+import { Markdown } from '~/components/ui/markdown';
+import { useState } from 'react';
+import clsx from 'clsx';
+import { Button } from '~/components/ui/button';
 
 interface CommentProps {
   comment: ChallengeRouteData['comment'][number];
@@ -37,6 +41,9 @@ const commentReportSchema = z
 export type CommentReportSchemaType = z.infer<typeof commentReportSchema>;
 
 const Comment = ({ comment, readonly = false }: CommentProps) => {
+  const isTooManyLines = comment.text.split('\n').length > 15;
+  console.log({ isTooManyLines, l: comment.text.split('\n').length, text: comment.text });
+  const [showReadMore, setShowReadMore] = useState(isTooManyLines); // take some default value from the calculation of characters
   async function copyPathNotifyUser() {
     try {
       await copyCommentUrlToClipboard();
@@ -113,10 +120,23 @@ const Comment = ({ comment, readonly = false }: CommentProps) => {
           </div>
         )}
       </div>
-      <p className="w-full break-words pl-[1px] text-sm">
-        {/* TODO: <code></code> is <Markdown /> does not wrap long lines causing overflow */}
-        {/* <Markdown>{comment.text}</Markdown> */}
-        {comment.text}
+      <p
+        className={clsx(
+          { 'h-full': !showReadMore, 'max-h-[300px]': showReadMore },
+          'relative w-full overflow-hidden break-words pl-[1px] text-sm',
+        )}
+      >
+        <Markdown>{comment.text}</Markdown>
+        {showReadMore && (
+          <div
+            className="absolute top-0 flex h-full w-full cursor-pointer items-end bg-gradient-to-b from-transparent to-white dark:to-zinc-800"
+            onClick={() => setShowReadMore(false)}
+          >
+            <div className="text-md text-label-1 dark:text-dark-label-1 flex w-full items-center justify-center hover:bg-transparent">
+              Read more
+            </div>
+          </div>
+        )}
       </p>
     </div>
   );

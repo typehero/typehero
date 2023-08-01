@@ -42,6 +42,7 @@ export function ChallengeLayout({ left, right, skeleton = false }: ChallengeLayo
   const leftSide = useRef<HTMLDivElement>(null);
   const rightSide = useRef<HTMLDivElement>(null);
   const { settings, updateSettings } = useLayoutSettingsStore();
+  console.log(settings);
 
   useEffect(() => {
     const ref = resizer.current as HTMLDivElement;

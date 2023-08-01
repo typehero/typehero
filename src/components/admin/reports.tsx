@@ -50,17 +50,6 @@ export function Reports({ initialReports }: ReportsProps) {
 
   return (
     <section className="data-table">
-      <header className="flex justify-end">
-        <Pagination
-          onChange={(e) => {
-            if (!e.detail.pageLoaded) fetchNextPage().then(() => setPage(e.detail.page - 1));
-            else setPage(e.detail.page - 1);
-          }}
-          totalPages={data?.pages.length}
-          hasNextPage={hasNextPage}
-          currentPage={0 + 1}
-        />
-      </header>
       <Table>
         <TableHeader>
           <TableRow>

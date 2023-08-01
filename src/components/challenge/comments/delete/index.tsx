@@ -36,7 +36,7 @@ export const CommentDeleteDialog = ({ children, comment, ...props }: CommentDele
         description: 'An error occurred while trying to delete the comment.',
       });
     } finally {
-      queryClient.invalidateQueries(['comments', comment.rootChallengeId]);
+      queryClient.invalidateQueries([`challenge-${comment.rootChallengeId}-comments`]);
       setIsOpen(!isOpen);
     }
   }
