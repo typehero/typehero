@@ -1,18 +1,18 @@
 'use client';
-import { Reply, Share, Trash2 } from 'lucide-react';
+
+import clsx from 'clsx';
+import { Pencil, Reply, Share, Trash2 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
+import { useState } from 'react';
 import { z } from 'zod';
 import type { ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import ReportDialog from '~/components/report';
+import { Markdown } from '~/components/ui/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 import { toast } from '~/components/ui/use-toast';
 import { UserBadge } from '~/components/ui/user-badge';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { CommentDeleteDialog } from './delete';
-import { Markdown } from '~/components/ui/markdown';
-import { useState } from 'react';
-import clsx from 'clsx';
-import { Button } from '~/components/ui/button';
 
 interface CommentProps {
   comment: ChallengeRouteData['comment'][number];
@@ -42,7 +42,6 @@ export type CommentReportSchemaType = z.infer<typeof commentReportSchema>;
 
 const Comment = ({ comment, readonly = false }: CommentProps) => {
   const isTooManyLines = comment.text.split('\n').length > 15;
-  console.log({ isTooManyLines, l: comment.text.split('\n').length, text: comment.text });
   const [showReadMore, setShowReadMore] = useState(isTooManyLines); // take some default value from the calculation of characters
   async function copyPathNotifyUser() {
     try {
@@ -75,50 +74,19 @@ const Comment = ({ comment, readonly = false }: CommentProps) => {
       <div className="flex items-start justify-between pr-[0.4rem]">
         <div className="flex items-center gap-1">
           <UserBadge username={comment.user.name ?? ''} />
+        </div>
+        <div className="flex items-center gap-1">
           <Tooltip delayDuration={0.05}>
             <TooltipTrigger asChild>
               <span className="mr-2 whitespace-nowrap text-sm text-neutral-500">
                 {getRelativeTime(comment.createdAt)}
               </span>
             </TooltipTrigger>
-            <TooltipContent align="start" className="rounded-xl">
+            <TooltipContent align="start" className="rounded-xl" alignOffset={-55}>
               <span className="text-white-500 text-xs">{comment.createdAt.toLocaleString()}</span>
             </TooltipContent>
           </Tooltip>
         </div>
-        {!readonly && (
-          <div className="flex flex-wrap items-center justify-end gap-2">
-            <div
-              onClick={() => {
-                copyPathNotifyUser();
-              }}
-              className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 hover:underline"
-            >
-              <Share className="h-3 w-3" />
-              <small className="font-md text-sm leading-none">Share</small>
-            </div>
-            {/* TODO: make dis work */}
-            <button className="flex cursor-pointer items-center gap-1 text-sm text-neutral-500 duration-200 hover:text-neutral-400 hover:underline dark:text-neutral-500 dark:hover:text-neutral-400">
-              <Reply className="h-3 w-3" />
-              Reply
-            </button>
-            {/* TODO: make dis work */}
-            {isAuthor ? (
-              <CommentDeleteDialog comment={comment} asChild>
-                <button className="flex cursor-pointer items-center gap-1 text-sm text-neutral-500 duration-200 hover:text-neutral-400 hover:underline dark:text-neutral-500 dark:hover:text-neutral-400">
-                  <Trash2 className="h-3 w-3" />
-                  Delete
-                </button>
-              </CommentDeleteDialog>
-            ) : (
-              <ReportDialog reportType="COMMENT" commentId={comment.id}>
-                <button className="flex cursor-pointer items-center text-sm text-neutral-400 duration-200 hover:text-neutral-500 hover:underline dark:text-neutral-600 dark:hover:text-neutral-500">
-                  Report
-                </button>
-              </ReportDialog>
-            )}
-          </div>
-        )}
       </div>
       <p
         className={clsx(
@@ -138,6 +106,47 @@ const Comment = ({ comment, readonly = false }: CommentProps) => {
           </div>
         )}
       </p>
+      <>
+        {!readonly && (
+          <div className="flex items-center gap-4 py-4">
+            <div
+              onClick={() => {
+                copyPathNotifyUser();
+              }}
+              className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
+            >
+              <Share size={16} />
+              <div className="text-xs">Share</div>
+            </div>
+            {/* TODO: make dis work */}
+            <button className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300">
+              <Reply size={18} />
+              <div className="text-xs">Reply</div>
+            </button>
+            {isAuthor && (
+              <button className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300">
+                <Pencil size={16} />
+                <div className="text-xs">Edit</div>
+              </button>
+            )}
+            {/* TODO: make dis work */}
+            {isAuthor ? (
+              <CommentDeleteDialog comment={comment} asChild>
+                <button className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300">
+                  <Trash2 size={16} />
+                  <div className="text-xs">Delete</div>
+                </button>
+              </CommentDeleteDialog>
+            ) : (
+              <ReportDialog reportType="COMMENT" commentId={comment.id}>
+                <button className="flex cursor-pointer items-center text-sm text-neutral-400 duration-200 hover:text-neutral-500 dark:text-neutral-600 dark:hover:text-neutral-500">
+                  Report
+                </button>
+              </ReportDialog>
+            )}
+          </div>
+        )}
+      </>
     </div>
   );
 };

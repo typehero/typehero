@@ -2,13 +2,12 @@
 
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
-import { ChevronDown, Loader2, MessageCircle } from 'lucide-react';
+import { ChevronDown, ChevronLeft, ChevronRight, Loader2, MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { type RefObject, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type RefObject } from 'react';
 import Comment from '~/components/challenge/comments/comment';
 import { Button } from '~/components/ui/button';
 import { Markdown } from '~/components/ui/markdown';
-import { Pagination2 } from '~/components/ui/pagination';
 import { Textarea } from '~/components/ui/textarea';
 import { toast } from '~/components/ui/use-toast';
 import { CommentSkeleton } from './comment-skeleton';
@@ -27,13 +26,13 @@ export const Comments = ({ challengeId, commentCount }: Props) => {
   const [commentMode, setCommentMode] = useState<'editor' | 'preview'>('editor');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-
-  useAutosizeTextArea(textAreaRef, text, commentMode);
-
+  const commentContainerRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
   const router = useRouter();
 
   const [page, setPage] = useState(1);
+
+  useAutosizeTextArea(textAreaRef, text, commentMode);
 
   const { status, data } = useQuery({
     queryKey: [`challenge-${challengeId}-comments`, page],
@@ -41,10 +40,6 @@ export const Comments = ({ challengeId, commentCount }: Props) => {
     keepPreviousData: true,
     staleTime: 5000,
   });
-
-  const handleClick = () => {
-    setShowComments(!showComments);
-  };
 
   const handleEnterKey = async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.shiftKey && e.key === 'Enter' && !isSubmitting) {
@@ -87,6 +82,14 @@ export const Comments = ({ challengeId, commentCount }: Props) => {
     }
   }
 
+  const handleChangePage = (page: number) => {
+    setPage(page);
+    commentContainerRef.current?.scroll({
+      top: 128,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <div
       className={clsx(
@@ -99,7 +102,7 @@ export const Comments = ({ challengeId, commentCount }: Props) => {
       <div className="relative">
         <button
           className="flex w-full items-center justify-between gap-2 p-3 font-medium text-neutral-500 duration-300 hover:text-neutral-700 focus:outline-none dark:hover:text-zinc-300"
-          onClick={() => handleClick()}
+          onClick={() => setShowComments(!showComments)}
         >
           <div className="flex items-center gap-2">
             <MessageCircle className="h-5 w-5" />
@@ -112,6 +115,7 @@ export const Comments = ({ challengeId, commentCount }: Props) => {
           />
         </button>
         <div
+          ref={commentContainerRef}
           className={clsx(
             'custom-scrollable-element flex flex-col overscroll-contain duration-300',
             {
@@ -170,7 +174,11 @@ export const Comments = ({ challengeId, commentCount }: Props) => {
               ))}
           </div>
           <div className="mt-2 flex justify-center">
-            <Pagination2 currentPage={page} totalPages={data?.totalPages ?? 0} onClick={setPage} />
+            <Pagination
+              currentPage={page}
+              totalPages={data?.totalPages ?? 0}
+              onClick={handleChangePage}
+            />
           </div>
         </div>
       </div>
@@ -195,4 +203,61 @@ function useAutosizeTextArea(
     }
     // eslint-disable-next-line
   }, [textAreaRef.current, value, commentMode]);
+}
+
+function Pagination({
+  currentPage,
+  totalPages,
+  onClick,
+}: {
+  totalPages: number;
+  currentPage: number;
+  onClick(page: number): void;
+}) {
+  const maxVisiblePages = 5;
+  const halfVisiblePages = Math.floor(maxVisiblePages / 2);
+
+  let startPage = currentPage - halfVisiblePages;
+  let endPage = currentPage + halfVisiblePages;
+
+  if (startPage <= 0) {
+    startPage = 1;
+    endPage = Math.min(totalPages, maxVisiblePages);
+  }
+
+  if (endPage > totalPages) {
+    endPage = totalPages;
+    startPage = Math.max(1, totalPages - maxVisiblePages + 1);
+  }
+
+  const pages = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+
+  return (
+    <nav className="justify-space-between flex items-center gap-2">
+      <Button
+        variant="ghost"
+        disabled={currentPage === 1}
+        onClick={() => onClick(Math.max(0, currentPage - 1))}
+      >
+        <ChevronLeft />
+      </Button>
+      {pages.map((page) => (
+        <Button
+          variant="ghost"
+          key={`pagination-${page}`}
+          className={clsx({ 'border border-black dark:border-white/30 ': page === currentPage })}
+          onClick={() => onClick(page)}
+        >
+          {page}
+        </Button>
+      ))}
+      <Button
+        variant="ghost"
+        disabled={currentPage === totalPages}
+        onClick={() => onClick(Math.min(totalPages, currentPage + 1))}
+      >
+        <ChevronRight />
+      </Button>
+    </nav>
+  );
 }

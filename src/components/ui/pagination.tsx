@@ -1,7 +1,5 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useMemo } from 'react';
-import { Button } from './button';
-import clsx from 'clsx';
 
 export interface OnPageChangePayload {
   page: number;
@@ -78,43 +76,5 @@ export default function Pagination({
         </button>
       </div>
     </div>
-  );
-}
-
-interface Props {
-  totalPages: number;
-  currentPage: number;
-  onClick(page: number): void;
-}
-export function Pagination2({ currentPage, totalPages, onClick }: Props) {
-  // we want to show a max of 10 buttons
-  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-  return (
-    <nav className="justify-space-between flex items-center gap-2">
-      <Button
-        variant="ghost"
-        disabled={currentPage === 1}
-        onClick={() => onClick(Math.max(0, currentPage - 1))}
-      >
-        <ChevronLeft />
-      </Button>
-      {pages.map((page) => (
-        <Button
-          variant="ghost"
-          key={`pagination-${page}`}
-          className={clsx({ 'border border-black dark:border-white/30 ': page === currentPage })}
-          onClick={() => onClick(page)}
-        >
-          {page}
-        </Button>
-      ))}
-      <Button
-        variant="ghost"
-        disabled={currentPage === totalPages}
-        onClick={() => onClick(Math.min(totalPages, currentPage + 1))}
-      >
-        <ChevronRight />
-      </Button>
-    </nav>
   );
 }
