@@ -2,7 +2,7 @@
 
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
-import { ChevronDown, ChevronLeft, ChevronRight, Loader2, MessageCircle } from 'lucide-react';
+import { ChevronDown, ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import Comment from '~/components/challenge/comments/comment';
