@@ -8,12 +8,12 @@ import Comment from '~/components/challenge/comments/comment';
 import { Button } from '~/components/ui/button';
 import { toast } from '~/components/ui/use-toast';
 import NoComments from '../comments/nocomments';
-import { addComment } from '../comments/comment.action';
 import { Textarea } from '~/components/ui/textarea';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
 import { getInfiniteComments } from './getSolutionData';
 import { CommentSkeleton } from '../comments/comment-skeleton';
+import { addComment } from '../comments/comment.action';
 
 interface Props {
   solutionId: number;

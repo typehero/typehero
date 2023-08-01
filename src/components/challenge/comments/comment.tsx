@@ -3,7 +3,7 @@
 import clsx from 'clsx';
 import { Pencil, Reply, Share, Trash2 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { z } from 'zod';
 import type { ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import ReportDialog from '~/components/report';
@@ -13,6 +13,9 @@ import { toast } from '~/components/ui/use-toast';
 import { UserBadge } from '~/components/ui/user-badge';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { CommentDeleteDialog } from './delete';
+import { CommentInput } from './comment-input';
+import { updateComment } from './comment.action';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface CommentProps {
   comment: ChallengeRouteData['comment'][number];
@@ -41,8 +44,16 @@ const commentReportSchema = z
 export type CommentReportSchemaType = z.infer<typeof commentReportSchema>;
 
 const Comment = ({ comment, readonly = false }: CommentProps) => {
+  const queryClient = useQueryClient();
+  const [text, setText] = useState(comment.text);
+  const [isEditing, setIsEditing] = useState(false);
   const isTooManyLines = comment.text.split('\n').length > 15;
   const [showReadMore, setShowReadMore] = useState(isTooManyLines); // take some default value from the calculation of characters
+
+  useEffect(() => {
+    setShowReadMore(isTooManyLines);
+  }, [isTooManyLines]);
+
   async function copyPathNotifyUser() {
     try {
       await copyCommentUrlToClipboard();
@@ -57,6 +68,36 @@ const Comment = ({ comment, readonly = false }: CommentProps) => {
         title: 'Failure!',
         variant: 'destructive',
         description: <p>Something went wrong!</p>,
+      });
+    }
+  }
+  const handleEnterKey = async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.shiftKey && e.key === 'Enter') {
+      e.preventDefault();
+      await updateChallengeComment();
+    }
+  };
+
+  async function updateChallengeComment() {
+    try {
+      const res = await updateComment(text, comment.id);
+      if (res === 'text_is_empty') {
+        toast({
+          title: 'Empty Comment',
+          description: <p>You cannot post an empty comment.</p>,
+        });
+      } else if (res === 'unauthorized') {
+        toast({
+          title: 'Unauthorized',
+          description: <p>You need to be signed in to post a comment.</p>,
+        });
+      }
+      queryClient.invalidateQueries([`challenge-${comment.rootChallengeId}-comments`]);
+    } catch (e) {
+      toast({
+        title: 'Unauthorized',
+        variant: 'destructive',
+        description: <p>You need to be signed in to post a comment.</p>,
       });
     }
   }
@@ -88,24 +129,43 @@ const Comment = ({ comment, readonly = false }: CommentProps) => {
           </Tooltip>
         </div>
       </div>
-      <p
-        className={clsx(
-          { 'h-full': !showReadMore, 'max-h-[300px]': showReadMore },
-          'relative w-full overflow-hidden break-words pl-[1px] text-sm',
-        )}
-      >
-        <Markdown>{comment.text}</Markdown>
-        {showReadMore && (
-          <div
-            className="absolute top-0 flex h-full w-full cursor-pointer items-end bg-gradient-to-b from-transparent to-white dark:to-zinc-800"
-            onClick={() => setShowReadMore(false)}
+      <div>
+        {!isEditing && (
+          <p
+            className={clsx(
+              { 'h-full': !showReadMore, 'max-h-[300px]': showReadMore },
+              'relative w-full overflow-hidden break-words pl-[1px] text-sm',
+            )}
           >
-            <div className="text-md text-label-1 dark:text-dark-label-1 flex w-full items-center justify-center hover:bg-transparent">
-              Read more
-            </div>
-          </div>
+            <Markdown>{comment.text}</Markdown>
+            {showReadMore && (
+              <div
+                className="absolute top-0 flex h-full w-full cursor-pointer items-end bg-gradient-to-b from-transparent to-white dark:to-zinc-800"
+                onClick={() => setShowReadMore(false)}
+              >
+                <div className="text-md text-label-1 dark:text-dark-label-1 flex w-full items-center justify-center hover:bg-transparent">
+                  Read more
+                </div>
+              </div>
+            )}
+          </p>
         )}
-      </p>
+        {isEditing && (
+          <CommentInput
+            value={text}
+            onCancel={() => {
+              setIsEditing(false);
+            }}
+            onChange={setText}
+            onKeyDown={handleEnterKey}
+            onSubmit={async () => {
+              await updateChallengeComment();
+              setIsEditing(false);
+            }}
+            mode="edit"
+          />
+        )}
+      </div>
       <>
         {!readonly && (
           <div className="flex items-center gap-4 py-4">
@@ -124,7 +184,10 @@ const Comment = ({ comment, readonly = false }: CommentProps) => {
               <div className="text-xs">Reply</div>
             </button>
             {isAuthor && (
-              <button className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300">
+              <button
+                onClick={() => setIsEditing(!isEditing)}
+                className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
+              >
                 <Pencil size={16} />
                 <div className="text-xs">Edit</div>
               </button>

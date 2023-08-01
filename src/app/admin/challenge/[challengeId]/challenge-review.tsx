@@ -26,7 +26,6 @@ export function ChallengeReview({ challenge }: Props) {
     [session?.user.role],
   );
   const handleApproveChallenge = async () => {
-    console.log(challenge.id);
     try {
       await approveChallenge(challenge.id, challenge.userId, isUserACreator);
       toast({

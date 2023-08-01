@@ -4,12 +4,11 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { ChevronDown, ChevronLeft, ChevronRight, Loader2, MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef, useState, type RefObject } from 'react';
+import { useRef, useState } from 'react';
 import Comment from '~/components/challenge/comments/comment';
 import { Button } from '~/components/ui/button';
-import { Markdown } from '~/components/ui/markdown';
-import { Textarea } from '~/components/ui/textarea';
 import { toast } from '~/components/ui/use-toast';
+import { CommentInput } from './comment-input';
 import { CommentSkeleton } from './comment-skeleton';
 import { addComment } from './comment.action';
 import { getPaginatedComments } from './getCommentRouteData';
@@ -23,16 +22,11 @@ interface Props {
 export const Comments = ({ challengeId, commentCount }: Props) => {
   const [showComments, setShowComments] = useState(false);
   const [text, setText] = useState('');
-  const [commentMode, setCommentMode] = useState<'editor' | 'preview'>('editor');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const commentContainerRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
   const router = useRouter();
 
   const [page, setPage] = useState(1);
-
-  useAutosizeTextArea(textAreaRef, text, commentMode);
 
   const { status, data } = useQuery({
     queryKey: [`challenge-${challengeId}-comments`, page],
@@ -42,7 +36,7 @@ export const Comments = ({ challengeId, commentCount }: Props) => {
   });
 
   const handleEnterKey = async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.shiftKey && e.key === 'Enter' && !isSubmitting) {
+    if (e.shiftKey && e.key === 'Enter') {
       e.preventDefault();
       await createChallengeComment();
     }
@@ -50,7 +44,6 @@ export const Comments = ({ challengeId, commentCount }: Props) => {
 
   async function createChallengeComment() {
     try {
-      setIsSubmitting(true);
       const res = await addComment({
         text,
         rootChallengeId: challengeId,
@@ -67,7 +60,6 @@ export const Comments = ({ challengeId, commentCount }: Props) => {
           description: <p>You need to be signed in to post a comment.</p>,
         });
       }
-      setIsSubmitting(false);
       setText('');
       queryClient.invalidateQueries([`challenge-${challengeId}-comments`, page]);
     } catch (e) {
@@ -77,7 +69,6 @@ export const Comments = ({ challengeId, commentCount }: Props) => {
         description: <p>You need to be signed in to post a comment.</p>,
       });
     } finally {
-      setCommentMode('editor');
       router.refresh();
     }
   }
@@ -125,45 +116,13 @@ export const Comments = ({ challengeId, commentCount }: Props) => {
             },
           )}
         >
-          <div className="m-2 mt-0 flex flex-col rounded-xl rounded-br-lg bg-background/90 bg-neutral-100 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-700/90">
-            <div>
-              {commentMode === 'editor' && (
-                <Textarea
-                  ref={textAreaRef}
-                  value={text}
-                  onChange={(e) => {
-                    setText(e.target.value);
-                  }}
-                  onKeyDown={handleEnterKey}
-                  className="resize-none border-0 px-3 py-2 focus-visible:ring-0 focus-visible:ring-offset-0"
-                  placeholder="Enter your comment here."
-                />
-              )}
-              {commentMode === 'preview' && (
-                <div className="p-2">
-                  <Markdown>{text}</Markdown>
-                </div>
-              )}
-            </div>
-            <div className="flex justify-end">
-              <div className="flex gap-2 p-2">
-                <Button
-                  variant="ghost"
-                  className="h-8"
-                  onClick={() => setCommentMode(commentMode === 'editor' ? 'preview' : 'editor')}
-                >
-                  {commentMode === 'editor' ? 'Preview' : 'Edit'}
-                </Button>
-                <Button
-                  disabled={text.length === 0 || isSubmitting}
-                  onClick={createChallengeComment}
-                  className="h-8 w-[5.5rem] rounded-lg rounded-br-sm bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
-                >
-                  {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Comment'}
-                </Button>
-              </div>
-            </div>
-          </div>
+          <CommentInput
+            onChange={setText}
+            value={text}
+            onKeyDown={handleEnterKey}
+            onSubmit={createChallengeComment}
+            mode="create"
+          />
           {status === 'loading' && <CommentSkeleton />}
           <div className="flex-1">
             {status === 'success' &&
@@ -185,25 +144,6 @@ export const Comments = ({ challengeId, commentCount }: Props) => {
     </div>
   );
 };
-
-function useAutosizeTextArea(
-  textAreaRef: RefObject<HTMLTextAreaElement>,
-  value: string,
-  commentMode: string,
-) {
-  useEffect(() => {
-    if (textAreaRef.current) {
-      // We need to reset the height momentarily to get the correct scrollHeight for the textarea
-      textAreaRef.current.style.height = '0px';
-      const scrollHeight = textAreaRef.current.scrollHeight;
-
-      // We then set the height directly, outside of the render loop
-      // Trying to set this with state or a ref will product an incorrect value.
-      textAreaRef.current.style.height = scrollHeight + 'px';
-    }
-    // eslint-disable-next-line
-  }, [textAreaRef.current, value, commentMode]);
-}
 
 function Pagination({
   currentPage,
