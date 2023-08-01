@@ -1,8 +1,11 @@
 import { Loader2 } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 import { useEffect, useRef, useState, type RefObject } from 'react';
 import { Button } from '~/components/ui/button';
 import { Markdown } from '~/components/ui/markdown';
 import { Textarea } from '~/components/ui/textarea';
+import { ToastAction } from '~/components/ui/toast';
+import { useToast } from '~/components/ui/use-toast';
 
 interface Props {
   mode: 'edit' | 'create';
@@ -14,6 +17,8 @@ interface Props {
 }
 
 export function CommentInput({ mode, onCancel, onChange, onKeyDown, value, onSubmit }: Props) {
+  const { data: session } = useSession();
+  const { toast } = useToast();
   const [commentMode, setCommentMode] = useState<'editor' | 'preview'>('editor');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -60,6 +65,16 @@ export function CommentInput({ mode, onCancel, onChange, onKeyDown, value, onSub
             disabled={value.length === 0 || isSubmitting}
             onClick={async () => {
               try {
+                if (!session?.user) {
+                  toast({
+                    variant: 'destructive',
+                    title: 'You need to be logged in to comment.',
+                    action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
+                  });
+
+                  return;
+                }
+
                 setIsSubmitting(true);
 
                 await onSubmit();

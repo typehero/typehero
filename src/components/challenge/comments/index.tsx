@@ -132,13 +132,15 @@ export const Comments = ({ challengeId, commentCount }: Props) => {
                 data?.comments?.map((comment) => <Comment key={comment.id} comment={comment} />)
               ))}
           </div>
-          <div className="mt-2 flex justify-center">
-            <Pagination
-              currentPage={page}
-              totalPages={data?.totalPages ?? 0}
-              onClick={handleChangePage}
-            />
-          </div>
+          {(data?.totalPages ?? 0) > 1 && (
+            <div className="mt-2 flex justify-center">
+              <Pagination
+                currentPage={page}
+                totalPages={data?.totalPages ?? 0}
+                onClick={handleChangePage}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
