@@ -34,6 +34,24 @@ export async function addComment(comment: ChallengeComment | SolutionComment) {
     },
   });
 }
+
+export async function updateComment(text: string, id: number) {
+  const session = await getServerAuthSession();
+
+  if (!session?.user.id) return 'unauthorized';
+  if (text.length === 0) return 'text_is_empty';
+  if (!session?.user.id) return 'unauthorized';
+
+  return await prisma.comment.update({
+    where: {
+      id,
+    },
+    data: {
+      text,
+      userId: session.user.id,
+    },
+  });
+}
 /**
  * Delete's a comment given a comment id. It must
  * be your own comment.
