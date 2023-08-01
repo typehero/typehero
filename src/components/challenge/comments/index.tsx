@@ -1,56 +1,56 @@
 'use client';
 
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
-import { ChevronDown, MessageCircle, Loader2, Code, Link2 } from 'lucide-react';
+import { ChevronDown, ChevronLeft, ChevronRight, Loader2, MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState, type RefObject } from 'react';
 import Comment from '~/components/challenge/comments/comment';
 import { Button } from '~/components/ui/button';
-import { toast } from '~/components/ui/use-toast';
-import NoComments from './nocomments';
-import { addComment } from './comment.action';
+import { Markdown } from '~/components/ui/markdown';
 import { Textarea } from '~/components/ui/textarea';
-import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
-import { useInView } from 'react-intersection-observer';
-import { getInfiniteComments } from './getCommentRouteData';
+import { toast } from '~/components/ui/use-toast';
 import { CommentSkeleton } from './comment-skeleton';
-
-const MAX_COMMENT_LENGTH = 1000;
+import { addComment } from './comment.action';
+import { getPaginatedComments } from './getCommentRouteData';
+import NoComments from './nocomments';
 
 interface Props {
   challengeId: number;
   commentCount: number;
 }
 
-const Comments = ({ challengeId, commentCount }: Props) => {
+export const Comments = ({ challengeId, commentCount }: Props) => {
   const [showComments, setShowComments] = useState(false);
   const [text, setText] = useState('');
-  const [isCommenting, setIsCommenting] = useState(false);
-
+  const [commentMode, setCommentMode] = useState<'editor' | 'preview'>('editor');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const commentContainerRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { ref, inView } = useInView();
 
-  const { data, status, hasNextPage, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
-    queryFn: ({ pageParam = '' }) =>
-      getInfiniteComments({ challengeId, take: 10, lastCursor: +pageParam }),
-    queryKey: ['comments', challengeId],
-    getNextPageParam: (lastPage) => lastPage.metaData.lastCursor,
+  const [page, setPage] = useState(1);
+
+  useAutosizeTextArea(textAreaRef, text, commentMode);
+
+  const { status, data } = useQuery({
+    queryKey: [`challenge-${challengeId}-comments`, page],
+    queryFn: () => getPaginatedComments({ challengeId, page }),
+    keepPreviousData: true,
+    staleTime: 5000,
   });
 
-  const handleClick = () => {
-    setShowComments(!showComments);
-  };
-
   const handleEnterKey = async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (!e.shiftKey && e.key === 'Enter' && !isCommenting) {
+    if (e.shiftKey && e.key === 'Enter' && !isSubmitting) {
+      e.preventDefault();
       await createChallengeComment();
     }
   };
 
   async function createChallengeComment() {
     try {
-      setIsCommenting(true);
+      setIsSubmitting(true);
       const res = await addComment({
         text,
         rootChallengeId: challengeId,
@@ -67,9 +67,9 @@ const Comments = ({ challengeId, commentCount }: Props) => {
           description: <p>You need to be signed in to post a comment.</p>,
         });
       }
-      setIsCommenting(false);
+      setIsSubmitting(false);
       setText('');
-      await queryClient.invalidateQueries(['comments', challengeId]);
+      queryClient.invalidateQueries([`challenge-${challengeId}-comments`, page]);
     } catch (e) {
       toast({
         title: 'Unauthorized',
@@ -77,13 +77,18 @@ const Comments = ({ challengeId, commentCount }: Props) => {
         description: <p>You need to be signed in to post a comment.</p>,
       });
     } finally {
+      setCommentMode('editor');
       router.refresh();
     }
   }
 
-  useEffect(() => {
-    if (inView && hasNextPage) fetchNextPage();
-  }, [hasNextPage, inView, fetchNextPage]);
+  const handleChangePage = (page: number) => {
+    setPage(page);
+    commentContainerRef.current?.scroll({
+      top: 128,
+      behavior: 'smooth',
+    });
+  };
 
   return (
     <div
@@ -97,90 +102,83 @@ const Comments = ({ challengeId, commentCount }: Props) => {
       <div className="relative">
         <button
           className="flex w-full items-center justify-between gap-2 p-3 font-medium text-neutral-500 duration-300 hover:text-neutral-700 focus:outline-none dark:hover:text-zinc-300"
-          onClick={() => handleClick()}
+          onClick={() => setShowComments(!showComments)}
         >
           <div className="flex items-center gap-2">
-            <MessageCircle className="h-5 w-5"></MessageCircle>
+            <MessageCircle className="h-5 w-5" />
             Comments ({commentCount})
           </div>
           <ChevronDown
             className={clsx('h-4 w-4 duration-300', {
               '-rotate-180': !showComments,
             })}
-          ></ChevronDown>
+          />
         </button>
         <div
+          ref={commentContainerRef}
           className={clsx(
-            'custom-scrollable-element flex flex-col-reverse overscroll-contain duration-300',
+            'custom-scrollable-element flex flex-col overscroll-contain duration-300',
             {
-              'h-36 pb-2 lg:h-[calc(100vh_-_247px)]': showComments,
+              'h-[calc(100vh_-_164px)] pb-2': showComments,
               'h-0 overflow-y-hidden': !showComments,
-              'overflow-y-auto': showComments && data?.pages[0]?.data.length !== 0,
+              'overflow-y-auto': showComments && data?.comments.length !== 0,
             },
           )}
         >
-          {(status === 'loading' || isFetchingNextPage) && <CommentSkeleton />}
-          {status === 'success' &&
-            (data?.pages[0]?.data.length === 0 ? (
-              <NoComments />
-            ) : (
-              data?.pages.map((page) =>
-                page.data.map((comment, index) =>
-                  page.data.length === index + 1 ? (
-                    <div ref={ref} key={index}>
-                      <Comment key={comment.id} comment={comment} />
-                    </div>
-                  ) : (
-                    <Comment key={comment.id} comment={comment} />
-                  ),
-                ),
-              )
-            ))}
-        </div>
-        <div className="relative m-2 mt-0 flex items-end justify-between rounded-xl rounded-br-lg bg-background/90 bg-neutral-100 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-700/90">
-          <Textarea
-            value={text}
-            onChange={(e) => {
-              setText(e.target.value);
-            }}
-            onKeyDown={handleEnterKey}
-            rows={3}
-            className="min-h-0 resize-none border-0 px-3 py-2 focus-visible:ring-0 focus-visible:ring-offset-0"
-            placeholder="Enter your comment here."
-          />
-          <Code className="absolute bottom-0 left-1 h-7 w-7 cursor-pointer stroke-gray-500 p-2 duration-150 hover:stroke-gray-600 dark:stroke-zinc-400 dark:hover:stroke-zinc-300"></Code>
-          <Link2 className="absolute bottom-0 left-7 h-7 w-7 cursor-pointer stroke-gray-500 p-2 duration-150 hover:stroke-gray-600 dark:stroke-zinc-400 dark:hover:stroke-zinc-300"></Link2>
-          <div className="flex flex-col items-end justify-end gap-2 p-2">
-            <div
-              className={`text-sm  ${
-                text.length > MAX_COMMENT_LENGTH
-                  ? 'text-red-600 dark:text-red-400'
-                  : text.length > MAX_COMMENT_LENGTH * 0.9
-                  ? 'text-amber-600 dark:text-amber-400'
-                  : 'text-neutral-500 dark:text-zinc-500'
-              }`}
-            >
-              {text.length}/{MAX_COMMENT_LENGTH}
-            </div>
-            {/* TODO: add disabled state with tooltip prompting to log in if user is logged out */}
-            <Button
-              disabled={text.length > MAX_COMMENT_LENGTH || text.length === 0 || isCommenting}
-              onClick={createChallengeComment}
-              className={`h-8 w-[5.5rem] rounded-lg rounded-br-sm
-            px-3 py-2 ${
-              text.length > MAX_COMMENT_LENGTH
-                ? 'bg-red-600 hover:bg-red-500 dark:bg-red-400 dark:hover:bg-red-300'
-                : 'bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300'
-            }`}
-            >
-              {isCommenting ? (
-                <Loader2 className="h-5 w-5 animate-spin" />
-              ) : text.length > MAX_COMMENT_LENGTH ? (
-                'Too Long'
-              ) : (
-                'Comment'
+          <div className="m-2 mt-0 flex flex-col rounded-xl rounded-br-lg bg-background/90 bg-neutral-100 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-700/90">
+            <div>
+              {commentMode === 'editor' && (
+                <Textarea
+                  ref={textAreaRef}
+                  value={text}
+                  onChange={(e) => {
+                    setText(e.target.value);
+                  }}
+                  onKeyDown={handleEnterKey}
+                  className="resize-none border-0 px-3 py-2 focus-visible:ring-0 focus-visible:ring-offset-0"
+                  placeholder="Enter your comment here."
+                />
               )}
-            </Button>
+              {commentMode === 'preview' && (
+                <div className="p-2">
+                  <Markdown>{text}</Markdown>
+                </div>
+              )}
+            </div>
+            <div className="flex justify-end">
+              <div className="flex gap-2 p-2">
+                <Button
+                  variant="ghost"
+                  className="h-8"
+                  onClick={() => setCommentMode(commentMode === 'editor' ? 'preview' : 'editor')}
+                >
+                  {commentMode === 'editor' ? 'Preview' : 'Edit'}
+                </Button>
+                <Button
+                  disabled={text.length === 0 || isSubmitting}
+                  onClick={createChallengeComment}
+                  className="h-8 w-[5.5rem] rounded-lg rounded-br-sm bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
+                >
+                  {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Comment'}
+                </Button>
+              </div>
+            </div>
+          </div>
+          {status === 'loading' && <CommentSkeleton />}
+          <div className="flex-1">
+            {status === 'success' &&
+              (data.comments.length === 0 ? (
+                <NoComments />
+              ) : (
+                data?.comments?.map((comment) => <Comment key={comment.id} comment={comment} />)
+              ))}
+          </div>
+          <div className="mt-2 flex justify-center">
+            <Pagination
+              currentPage={page}
+              totalPages={data?.totalPages ?? 0}
+              onClick={handleChangePage}
+            />
           </div>
         </div>
       </div>
@@ -188,4 +186,78 @@ const Comments = ({ challengeId, commentCount }: Props) => {
   );
 };
 
-export default Comments;
+function useAutosizeTextArea(
+  textAreaRef: RefObject<HTMLTextAreaElement>,
+  value: string,
+  commentMode: string,
+) {
+  useEffect(() => {
+    if (textAreaRef.current) {
+      // We need to reset the height momentarily to get the correct scrollHeight for the textarea
+      textAreaRef.current.style.height = '0px';
+      const scrollHeight = textAreaRef.current.scrollHeight;
+
+      // We then set the height directly, outside of the render loop
+      // Trying to set this with state or a ref will product an incorrect value.
+      textAreaRef.current.style.height = scrollHeight + 'px';
+    }
+    // eslint-disable-next-line
+  }, [textAreaRef.current, value, commentMode]);
+}
+
+function Pagination({
+  currentPage,
+  totalPages,
+  onClick,
+}: {
+  totalPages: number;
+  currentPage: number;
+  onClick(page: number): void;
+}) {
+  const maxVisiblePages = 5;
+  const halfVisiblePages = Math.floor(maxVisiblePages / 2);
+
+  let startPage = currentPage - halfVisiblePages;
+  let endPage = currentPage + halfVisiblePages;
+
+  if (startPage <= 0) {
+    startPage = 1;
+    endPage = Math.min(totalPages, maxVisiblePages);
+  }
+
+  if (endPage > totalPages) {
+    endPage = totalPages;
+    startPage = Math.max(1, totalPages - maxVisiblePages + 1);
+  }
+
+  const pages = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+
+  return (
+    <nav className="justify-space-between flex items-center gap-2">
+      <Button
+        variant="ghost"
+        disabled={currentPage === 1}
+        onClick={() => onClick(Math.max(0, currentPage - 1))}
+      >
+        <ChevronLeft />
+      </Button>
+      {pages.map((page) => (
+        <Button
+          variant="ghost"
+          key={`pagination-${page}`}
+          className={clsx({ 'border border-black dark:border-white/30 ': page === currentPage })}
+          onClick={() => onClick(page)}
+        >
+          {page}
+        </Button>
+      ))}
+      <Button
+        variant="ghost"
+        disabled={currentPage === totalPages}
+        onClick={() => onClick(Math.min(totalPages, currentPage + 1))}
+      >
+        <ChevronRight />
+      </Button>
+    </nav>
+  );
+}
