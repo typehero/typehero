@@ -6,10 +6,10 @@ const Community = async function () {
     <section className="container mt-[172px] flex flex-col justify-center md:mb-[172px] lg:flex-row lg:items-center">
       <div className="flex flex-1 flex-col items-center pb-36 lg:items-start lg:pb-0">
         <h2 className="mb-2 text-center text-4xl font-bold lg:text-left">Built by the community</h2>
-        <span className="text-neutral-400 dark:text-neutral-600">
+        <span className="text-neutral-400 dark:text-neutral-400/70">
           By developers, for developers
         </span>
-        <p className="my-8 max-w-[50ch] bg-transparent px-8 text-center leading-8 text-black/50 dark:text-white/50 lg:px-0 lg:text-left">
+        <p className="my-8 max-w-[50ch] bg-transparent px-8 text-center leading-8 text-zinc-600 dark:text-zinc-400 lg:px-0 lg:text-left">
           TypeHero is free, open-source, and built by developers just like you. These are some of
           the contributors who made this possible so far.
         </p>

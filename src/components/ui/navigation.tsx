@@ -73,7 +73,7 @@ export function Navigation() {
             <Link className="block" href="/wizard">
               <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none dark:hover:bg-neutral-700/50">
                 <Plus className="mr-2 h-4 w-4" />
-                <span>Create a Challange</span>
+                <span>Create a Challenge</span>
               </DropdownMenuItem>
             </Link>
             <Link className="block" href={`/@${session.user.name}`}>
@@ -186,8 +186,8 @@ export function Navigation() {
                     setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
                   }}
                 >
-                  {resolvedTheme === 'dark' && <Moon className="h-5 w-5" aria-hidden="true" />}
-                  {resolvedTheme === 'light' && <Sun className="h-5 w-5" aria-hidden="true" />}
+                  {resolvedTheme === 'dark' && <Moon className="h-5 w-5 " aria-hidden="true" aria-label="Switch to light mode"/>}
+                  {resolvedTheme === 'light' && <Sun className="h-5 w-5" aria-hidden="true" aria-label="Switch to dark mode"/>}
                 </button>
               )}
 
