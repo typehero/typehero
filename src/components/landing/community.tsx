@@ -1,4 +1,7 @@
 // eslint-disable-next-line no-restricted-imports
+import { Octokit } from 'octokit';
+
+// eslint-disable-next-line no-restricted-imports
 import { contributors } from '../../../public/contributors';
 
 const Community = async function () {
