@@ -9,6 +9,8 @@ env:
   GITHUB_SECRET: 'lmao'
   NEXTAUTH_SECRET: 'ligma'
   NEXTAUTH_URL: 'http://localhost:3000'
+  UPLOADTHING_SECRET: 'ligma'
+  UPLOADTHING_APP_ID: 'ligma'
 
 jobs:
   build:
