@@ -9,9 +9,10 @@ import { Markdown } from '~/components/ui/markdown';
 import { TypographyLarge } from '~/components/ui/typography/large';
 import { toast } from '~/components/ui/use-toast';
 import { UserBadge } from '~/components/ui/user-badge';
-import Comment from './solution-comments';
 import ReportDialog from '~/components/report';
 import { ActionMenu } from '~/components/ui/action-menu';
+import { Comments } from '../comments';
+import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 
 interface Props {
   solution: ChallengeSolution;
@@ -37,13 +38,29 @@ export function SolutionDetails({ solution }: Props) {
       </div>
       <div className="custom-scrollable-element flex-1 overflow-y-auto px-4 py-3">
         <div className="mb-5 flex flex-col gap-3">
-          <div className="flex items-center gap-2">
-            <Avatar>
-              <AvatarImage src={solution.user?.image ?? ''} alt="github profile picture" />
-              <AvatarFallback>{solution.user?.name}</AvatarFallback>
-            </Avatar>
-            <TypographyLarge>{solution.title}</TypographyLarge>
-            <div className="ml-auto">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Avatar>
+                <AvatarImage src={solution.user?.image ?? ''} alt="github profile picture" />
+                <AvatarFallback>{solution.user?.name}</AvatarFallback>
+              </Avatar>
+              <TypographyLarge>{solution.title}</TypographyLarge>
+            </div>
+            <div className="flex items-center gap-2">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    onClick={handleShareClick}
+                    className="group p-0 text-gray-500 group-hover:text-gray-400"
+                  >
+                    <Share className="mr-2 h-4 w-4 stroke-gray-500 group-hover:stroke-gray-400" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Share challenge</p>
+                </TooltipContent>
+              </Tooltip>
               <ReportDialog reportType="SOLUTION" solutionId={solution.id as number}>
                 <ActionMenu
                   items={[
@@ -70,17 +87,11 @@ export function SolutionDetails({ solution }: Props) {
         </div>
         <Markdown>{solution.description || ''}</Markdown>
       </div>
-      <div className="sticky bottom-0 -mx-[1px] overflow-hidden rounded-xl border border-zinc-300 border-b-background bg-background/90 shadow-[0_0_3rem_-0.25rem_#0004] backdrop-blur-sm duration-300 dark:border-zinc-700 dark:border-b-muted dark:bg-muted/90 dark:shadow-[0_0_3rem_-0.25rem_#0008]"></div>
-      <Comment solutionId={solution.id as number} commentCount={solution.jimComments.length} />
-      <div className="flex gap-2">
-        <Button
-          variant="ghost"
-          onClick={handleShareClick}
-          className="group text-gray-500 group-hover:text-gray-400"
-        >
-          <Share className="mr-2 h-4 w-4 stroke-gray-500 group-hover:stroke-gray-400" /> Share
-        </Button>
-      </div>
+      <Comments
+        rootId={solution.id as number}
+        commentCount={solution.jimComments.length}
+        type="SOLUTION"
+      />
     </div>
   );
 }

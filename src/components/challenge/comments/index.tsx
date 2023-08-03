@@ -1,5 +1,6 @@
 'use client';
 
+import type { CommentRoot } from '@prisma/client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { ChevronDown, ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react';
@@ -15,11 +16,12 @@ import { getPaginatedComments } from './getCommentRouteData';
 import NoComments from './nocomments';
 
 interface Props {
-  challengeId: number;
+  rootId: number;
   commentCount: number;
+  type: CommentRoot;
 }
 
-export const Comments = ({ challengeId, commentCount }: Props) => {
+export const Comments = ({ rootId, commentCount, type }: Props) => {
   const [showComments, setShowComments] = useState(false);
   const [text, setText] = useState('');
   const commentContainerRef = useRef<HTMLDivElement>(null);
@@ -28,9 +30,12 @@ export const Comments = ({ challengeId, commentCount }: Props) => {
 
   const [page, setPage] = useState(1);
 
+  const queryKey =
+    type === 'CHALLENGE' ? `challenge-${rootId}-comments` : `solution-${rootId}-comments`;
+
   const { status, data } = useQuery({
-    queryKey: [`challenge-${challengeId}-comments`, page],
-    queryFn: () => getPaginatedComments({ challengeId, page }),
+    queryKey: [queryKey, page],
+    queryFn: () => getPaginatedComments({ rootId, page, rootType: type }),
     keepPreviousData: true,
     staleTime: 5000,
   });
@@ -46,8 +51,8 @@ export const Comments = ({ challengeId, commentCount }: Props) => {
     try {
       const res = await addComment({
         text,
-        rootChallengeId: challengeId,
-        rootType: 'CHALLENGE',
+        rootId,
+        rootType: type,
       });
       if (res === 'text_is_empty') {
         toast({
@@ -61,7 +66,7 @@ export const Comments = ({ challengeId, commentCount }: Props) => {
         });
       }
       setText('');
-      queryClient.invalidateQueries([`challenge-${challengeId}-comments`, page]);
+      queryClient.invalidateQueries([queryKey, page]);
     } catch (e) {
       toast({
         title: 'Unauthorized',

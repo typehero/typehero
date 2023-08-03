@@ -10,6 +10,7 @@ import { SolutionEditor } from './solution-editor';
 import { UserBadge } from '~/components/ui/user-badge';
 import NoSolutions from './nosolutions';
 import SubmitSolution from './submit-solution';
+import { Button } from '~/components/ui/button';
 
 interface Props {
   challenge: ChallengeSolutionsRouteData;
@@ -73,7 +74,12 @@ function SolutionRow({
     >
       <h3 className="truncate font-bold">{solution.title}</h3>
       <div className="flex items-center gap-1 text-neutral-600 dark:text-neutral-400">
-        <UserBadge username={solution.user?.name ?? ''} />
+        <Button
+          className="-ml-[0.33rem] flex h-auto w-fit items-center rounded-full bg-transparent py-1 pl-[0.33rem] pr-2 text-xs font-bold text-neutral-700 hover:bg-black/10 dark:text-white dark:hover:bg-white/20"
+          size="sm"
+        >
+          @{solution.user?.name ?? ''}
+        </Button>
         <div className="mr-auto text-sm text-neutral-500">
           {getRelativeTime(solution.createdAt)}
         </div>

@@ -1,25 +1,20 @@
 'use server';
 
-import { type Prisma } from '@prisma/client';
+import type { CommentRoot } from '@prisma/client';
 import { getServerAuthSession } from '~/server/auth';
 import { prisma } from '~/server/db';
-
-export type ChallengeComment = Omit<
-  Prisma.CommentCreateManyInput,
-  'rootType' | 'rootSolutionId' | 'userId'
-> & { rootType: 'CHALLENGE' };
-
-export type SolutionComment = Omit<
-  Prisma.CommentCreateManyInput,
-  'rootType' | 'rootChallengeId' | 'userId'
-> & { rootType: 'SOLUTION' };
 
 /**
  *
  * @param comment a Challenge or Solution-based comment.
  * @returns the prisma create response.
  */
-export async function addComment(comment: ChallengeComment | SolutionComment) {
+interface CommentToCreate {
+  text: string;
+  rootType: CommentRoot;
+  rootId: number;
+}
+export async function addComment(comment: CommentToCreate) {
   const session = await getServerAuthSession();
 
   if (!session?.user.id) return 'unauthorized';
@@ -27,9 +22,16 @@ export async function addComment(comment: ChallengeComment | SolutionComment) {
   if (!session?.user.id) return 'unauthorized';
   if (comment.text.length === 0) return 'text_is_empty';
 
+  const { rootId, ...commentToCreate } = {
+    ...comment,
+    ...(comment.rootType === 'CHALLENGE'
+      ? { rootChallengeId: comment.rootId }
+      : { rootSolutionId: comment.rootId }),
+  };
+
   return await prisma.comment.create({
     data: {
-      ...comment,
+      ...commentToCreate,
       userId: session.user.id,
     },
   });
