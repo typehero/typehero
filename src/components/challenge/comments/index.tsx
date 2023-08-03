@@ -115,19 +115,21 @@ export const Comments = ({ rootId, commentCount, type }: Props) => {
           className={clsx(
             'custom-scrollable-element flex flex-col overscroll-contain duration-300',
             {
-              'h-[calc(100vh_-_164px)] pb-2': showComments,
+              'h-64 pb-4 md:h-[calc(100vh_-_164px)]': showComments,
               'h-0 overflow-y-hidden': !showComments,
               'overflow-y-auto': showComments && data?.comments.length !== 0,
             },
           )}
         >
-          <CommentInput
-            onChange={setText}
-            value={text}
-            onKeyDown={handleEnterKey}
-            onSubmit={createChallengeComment}
-            mode="create"
-          />
+          <div className="m-2 mt-0">
+            <CommentInput
+              onChange={setText}
+              value={text}
+              onKeyDown={handleEnterKey}
+              onSubmit={createChallengeComment}
+              mode="create"
+            />
+          </div>
           {status === 'loading' && <CommentSkeleton />}
           <div className="flex-1">
             {status === 'success' &&

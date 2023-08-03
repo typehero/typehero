@@ -26,27 +26,25 @@ export function CommentInput({ mode, onCancel, onChange, onKeyDown, value, onSub
   useAutosizeTextArea(textAreaRef, value, commentMode);
 
   return (
-    <div className="m-2 mt-0 flex flex-col rounded-xl rounded-br-lg bg-background/90 bg-neutral-100 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-700/90">
-      <div>
-        {commentMode === 'editor' && (
-          <Textarea
-            ref={textAreaRef}
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            onKeyDown={(e) => {
-              if (isSubmitting) return;
-              onKeyDown(e);
-            }}
-            className="resize-none border-0 px-3 py-2 focus-visible:ring-0 focus-visible:ring-offset-0"
-            placeholder="Enter your comment here."
-          />
-        )}
-        {commentMode === 'preview' && (
-          <div className="p-2">
-            <Markdown>{value}</Markdown>
-          </div>
-        )}
-      </div>
+    <div className="flex flex-col rounded-xl rounded-br-lg bg-background/90 bg-neutral-100 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-700/90">
+      {commentMode === 'editor' && (
+        <Textarea
+          ref={textAreaRef}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onKeyDown={(e) => {
+            if (isSubmitting) return;
+            onKeyDown(e);
+          }}
+          className="resize-none border-0 px-3 py-2 focus-visible:ring-0 focus-visible:ring-offset-0 md:max-h-[calc(100vh_-_232px)]"
+          placeholder="Enter your comment here."
+        />
+      )}
+      {commentMode === 'preview' && (
+        <div className="min-h-[5rem] overflow-y-auto break-words px-3 pt-2 text-sm md:max-h-[calc(100vh_-_232px)]">
+          <Markdown>{value}</Markdown>
+        </div>
+      )}
       <div className="flex justify-end">
         <div className="flex gap-2 p-2">
           <Button
