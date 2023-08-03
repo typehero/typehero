@@ -4,6 +4,8 @@
 
 @layer base {
   :root {
+    --gradient-angle: 360deg;
+
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
 
@@ -162,14 +164,10 @@ main {
 }
 
 .features-background-mask {
-  mask-image: linear-gradient(
-    rgba(0, 0, 0, 0) 0%, 
-    rgba(0, 0, 0, 0) 50%, 
-    rgba(0, 0, 0, 1) 100%
-  );
+  mask-image: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 1) 100%);
   -webkit-mask-image: linear-gradient(
-    rgba(0, 0, 0, 0) 0%, 
-    rgba(0, 0, 0, 0) 50%, 
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0) 50%,
     rgba(0, 0, 0, 1) 100%
   );
 }
@@ -207,4 +205,32 @@ main {
 
 .container {
   @apply mx-auto max-w-[1400px] px-4 md:px-24;
+}
+
+/* overrides a conflicting style on the honeycomb grid */
+@media (min-width: 1280px) {
+  .honeycomboverride > *:first-child {
+    margin-left: 2.375rem /* 38px */ !important;
+  }
+}
+
+@property --gradient-angle {
+  syntax: '<angle>'; /* <- defined as type angle for the transition to work */
+  initial-value: 360deg;
+  inherits: false;
+}
+
+.hero-join-button {
+  background: linear-gradient(var(--gradient-angle), #3178c6, #34d399, #3178c6);
+  animation: gradient-rotate 10s linear infinite reverse;
+}
+
+@keyframes gradient-rotate {
+  0% {
+    --gradient-angle: 360deg;
+  }
+
+  100% {
+    --gradient-angle: 0deg;
+  }
 }

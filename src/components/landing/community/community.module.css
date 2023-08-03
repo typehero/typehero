@@ -1,0 +1,32 @@
+/* The module for the background of the banner on the landing page */
+.backdrop {
+  background: linear-gradient(-6deg, hsla(var(--background) / 0.5) 5%, hsl(var(--background)) 30%),
+    linear-gradient(
+      225deg,
+      rgba(59, 131, 199, 0) 44.51%,
+      rgba(59, 131, 199, 0.17) 75.5%,
+      rgba(49, 120, 198, 0.3) 100%
+    ),
+    url('../../../assets/images/background_pattern_flipped.png');
+  /* TODO: fix to cover */
+  background-size: contain;
+  background-position-x: center;
+  background-position-y: bottom;
+  background-repeat: no-repeat;
+}
+@media (max-width: 1280px) {
+  .backdrop {
+    background-position-x: 50%;
+    background-size: 1800px;
+  }
+}
+@media (max-width: 768px) {
+  .backdrop {
+    background-position-x: 60%;
+  }
+}
+@media (max-width: 480px) {
+  .backdrop {
+    background-position-x: 70%;
+  }
+}
