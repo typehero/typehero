@@ -75,7 +75,7 @@ export function RichMarkdownEditor({
     commands.strikethrough,
     commands.codeBlock,
     commands.code,
-    uploadImage,
+    ...(allowImageUpload ? [uploadImage] : []),
   ];
 
   const { startUpload } = useUploadThing('imageUploader', {
@@ -112,7 +112,7 @@ export function RichMarkdownEditor({
 
   useEffect(() => {
     const ref = fileInputRef.current!;
-    if (!ref) return;
+    if (!ref || !allowImageUpload) return;
 
     const handler = async () => {
       if (!ref.files?.[0]) return;
@@ -126,7 +126,7 @@ export function RichMarkdownEditor({
     return () => {
       ref.removeEventListener('change', handler);
     };
-  }, [startUpload]);
+  }, [startUpload, allowImageUpload]);
 
   const handlePasta = async (event: React.ClipboardEvent<HTMLTextAreaElement>) => {
     // only allow image if it's enabled
