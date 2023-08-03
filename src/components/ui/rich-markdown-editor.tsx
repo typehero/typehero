@@ -80,7 +80,6 @@ export function RichMarkdownEditor({
 
   const { startUpload } = useUploadThing('imageUploader', {
     onClientUploadComplete: (res) => {
-      console.log('client upload complete');
       if (!res) return;
       // fist file in the array
       const uploadedFile = res[0];
@@ -100,7 +99,7 @@ export function RichMarkdownEditor({
       });
     },
     onUploadError: (err) => {
-      console.log(err);
+      console.error(err);
 
       setIsImageUploading(false);
 
@@ -117,7 +116,6 @@ export function RichMarkdownEditor({
 
     const handler = async () => {
       if ((ref.files?.length ?? 0) <= 0) return;
-      console.log('starting upload');
       setIsImageUploading(true);
 
       if (!ref.files?.[0]) return;
