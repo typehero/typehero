@@ -115,12 +115,10 @@ export function RichMarkdownEditor({
     if (!ref) return;
 
     const handler = async () => {
-      if ((ref.files?.length ?? 0) <= 0) return;
+      if (!ref.files?.[0]) return;
       setIsImageUploading(true);
 
-      if (!ref.files?.[0]) return;
-
-      await startUpload([ref.files?.[0]]);
+      await startUpload([ref.files[0]]);
     };
 
     ref.addEventListener('change', handler);
