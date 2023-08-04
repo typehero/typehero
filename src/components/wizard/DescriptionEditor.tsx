@@ -11,6 +11,9 @@ interface Props {
   form: WizardForm;
 }
 
+//TODO: Match outer border of the Description editor to the Description card
+//      Figure out why there's a gap between the editor and the border
+//      Also why tf is one corner not rounded
 export function DescriptionEditor({ form }: Props) {
   const description = useWatch({ control: form.control, name: 'description' });
   return (

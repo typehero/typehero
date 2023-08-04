@@ -15,7 +15,7 @@ export function Steps<T extends Step>({ steps, current, onChange, onNext, onSubm
     <nav className="items-center justify-between md:flex" aria-label="Progress">
       <ol
         role="list"
-        className="mb-3 divide-y rounded-xl border border-zinc-300  dark:border-zinc-700 md:flex md:w-10/12 md:divide-y-0"
+        className="mb-3 divide-y divide-zinc-200 dark:divide-zinc-700/80 rounded-xl border border-zinc-200 dark:border-zinc-700/80 md:flex md:w-10/12 md:divide-y-0"
       >
         {steps.map((step, stepIdx) => (
           <li key={step.name} className="relative md:flex md:flex-1">
@@ -34,7 +34,7 @@ export function Steps<T extends Step>({ steps, current, onChange, onNext, onSubm
               </a>
             ) : current === stepIdx ? (
               <span className="flex items-center px-6 py-4 text-sm font-medium" aria-current="step">
-                <span className="flex h-10  w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-zinc-300 dark:border-zinc-700">
+                <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-zinc-200 dark:border-zinc-700">
                   <span>{step.id}</span>
                 </span>
                 <span className="ml-4 text-sm font-medium">{step.name}</span>
@@ -42,10 +42,10 @@ export function Steps<T extends Step>({ steps, current, onChange, onNext, onSubm
             ) : (
               <span className="group flex items-center">
                 <span className="flex items-center px-6 py-4 text-sm font-medium">
-                  <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2">
-                    <span className="text-gray-500">{step.id}</span>
+                  <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-zinc-100 dark:border-zinc-800">
+                    <span className="text-gray-500 dark:text-gray-400">{step.id}</span>
                   </span>
-                  <span className="ml-4 text-sm font-medium text-gray-500 ">{step.name}</span>
+                  <span className="ml-4 text-sm font-medium text-gray-500 dark:text-gray-400">{step.name}</span>
                 </span>
               </span>
             )}
@@ -58,7 +58,7 @@ export function Steps<T extends Step>({ steps, current, onChange, onNext, onSubm
                   aria-hidden="true"
                 >
                   <svg
-                    className="h-full w-full text-zinc-300 dark:text-zinc-700"
+                    className="h-full w-full text-zinc-200 dark:text-zinc-700/80"
                     viewBox="0 0 22 80"
                     fill="none"
                     preserveAspectRatio="none"
