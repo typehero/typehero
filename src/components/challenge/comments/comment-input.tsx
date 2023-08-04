@@ -11,21 +11,12 @@ interface Props {
   mode: 'edit' | 'create' | 'reply';
   onCancel?: () => void;
   onChange: (text: string) => void;
-  onKeyDown: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
   value: string;
   placeholder?: string;
   onSubmit: () => Promise<void>;
 }
 
-export function CommentInput({
-  mode,
-  onCancel,
-  onChange,
-  onKeyDown,
-  value,
-  placeholder,
-  onSubmit,
-}: Props) {
+export function CommentInput({ mode, onCancel, onChange, value, placeholder, onSubmit }: Props) {
   const { data: session } = useSession();
   const { toast } = useToast();
   const [commentMode, setCommentMode] = useState<'editor' | 'preview'>('editor');
@@ -34,17 +25,33 @@ export function CommentInput({
 
   useAutosizeTextArea(textAreaRef, value, commentMode);
 
+  const handleEnterKey = async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.shiftKey && e.key === 'Enter') {
+      e.preventDefault();
+      if (!session?.user) {
+        toast({
+          variant: 'destructive',
+          title: 'You need to be logged in to comment.',
+          action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
+        });
+
+        return;
+      }
+      setIsSubmitting(true);
+      await onSubmit();
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="flex flex-col rounded-xl rounded-br-lg bg-background/90 bg-neutral-100 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-700/90">
       {commentMode === 'editor' && (
         <Textarea
+          autoFocus
           ref={textAreaRef}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          onKeyDown={(e) => {
-            if (isSubmitting) return;
-            onKeyDown(e);
-          }}
+          onKeyDown={handleEnterKey}
           className="resize-none border-0 px-3 py-2 focus-visible:ring-0 focus-visible:ring-offset-0 md:max-h-[calc(100vh_-_232px)]"
           placeholder={placeholder ?? 'Enter your comment here.'}
         />

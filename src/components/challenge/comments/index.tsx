@@ -125,7 +125,6 @@ export const Comments = ({ rootId, commentCount, type }: Props) => {
             <CommentInput
               onChange={setText}
               value={text}
-              onKeyDown={handleEnterKey}
               onSubmit={createChallengeComment}
               mode="create"
             />
