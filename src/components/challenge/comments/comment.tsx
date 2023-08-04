@@ -100,6 +100,7 @@ export const Comment = ({
       }
       setReplyText('');
       queryClient.invalidateQueries([replyQueryKey, page]);
+      setShowReplies(true);
     } catch (e) {
       toast({
         title: 'Unauthorized',

@@ -6,8 +6,6 @@ const PAGESIZE = 10;
 
 export type PaginatedComments = NonNullable<Awaited<ReturnType<typeof getPaginatedComments>>>;
 
-type _count = PaginatedComments['comments'][number]['_count'];
-
 export async function getPaginatedComments({
   page,
   rootId,
