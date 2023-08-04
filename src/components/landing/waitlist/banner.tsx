@@ -9,9 +9,9 @@ import styles from '~/components/landing/waitlist/waitlist.module.css';
 
 const Waitlist = () => {
   return (
-    <section className={clsx(styles.backdrop, 'relative overflow-hidden pb-[38px] pt-[64px]')}>
-      <div className="container relative grid grid-cols-1 items-center justify-center md:grid-cols-2">
-        <div className="flex flex-col gap-8 pb-16 pt-56 text-center md:py-16 md:text-left">
+    <section className={clsx(styles.backdrop, 'relative overflow-hidden')}>
+      <div className="container relative grid grid-cols-1 items-center justify-center pb-[70px] pt-[64px] md:grid-cols-2">
+        <div className="flex flex-col gap-8 pb-8 pt-56 text-center md:py-16 md:text-left">
           <h1 className="text-4xl font-bold">
             <Balancer>Early birds get the perks</Balancer>
           </h1>
