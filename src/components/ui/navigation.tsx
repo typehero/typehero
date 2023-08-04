@@ -126,7 +126,7 @@ export function Navigation() {
   };
 
   return (
-    <header className="w-full z-10">
+    <header className="z-10 w-full">
       <nav
         className={`flex h-14 items-center ${
           pathname.startsWith('/challenge') || pathname.startsWith('/admin/challenge')
@@ -138,7 +138,7 @@ export function Navigation() {
           <div className="relative flex gap-3">
             <a className="flex items-center space-x-2 duration-300" href="/">
               <svg
-                className="h-6 w-6 rounded-md bg-[#3178C6] p-[2px]"
+                className="h-8 w-8 rounded-md bg-[#3178C6] p-[2px]"
                 viewBox="0 0 512 512"
                 xmlns="http://www.w3.org/2000/svg"
               >
