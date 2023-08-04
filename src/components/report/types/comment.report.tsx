@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { type ReportWithInfo } from '~/app/admin/report/[id]/report.action';
-import Comment from '~/components/challenge/comments/comment';
+import { Comment } from '~/components/challenge/comments/comment';
 
 export default function CommentReport({ report }: { report: NonNullable<ReportWithInfo> }) {
   if (report.type !== 'COMMENT' || report.commentId === null || !report.comment) return null;
