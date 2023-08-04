@@ -1,7 +1,7 @@
 'use client';
 
 import { Balancer } from 'react-wrap-balancer';
-import { Github } from 'lucide-react';
+import { Github, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '~/components/ui/button';
 import { FakeChallengeCard } from '~/components/landing/fake-challenge-card';
@@ -34,14 +34,8 @@ const TypeHeroLogo = () => {
 };
 
 const Hero = () => (
-  <section className="overflow-hidden">
-    {/* <svg className="pointer-events-none mix-blend-soft-light opacity-50 z-10 absolute left-0 top-0 h-full w-full" id="grain">
-    <filter id="noise">
-      <feTurbulence type="fractalNoise" baseFrequency="1" numOctaves="5" stitchTiles="stitch"></feTurbulence>
-    </filter>
-    <rect width="100%" height="100%" filter="url(#noise)"></rect>
-  </svg> */}
-    <div className="container mb-[64px] mt-[90px] lg:mt-0 grid items-center justify-center lg:grid-cols-2">
+  <section className="-mt-[56px] min-h-[calc(100vh)] overflow-hidden lg:min-h-0 lg:pt-[56px]">
+    <div className="container grid min-h-screen items-center justify-center lg:min-h-0 lg:grid-cols-2">
       <div className="flex w-full flex-col items-center justify-center gap-10 lg:items-start">
         <div className="relative flex w-full items-center justify-center gap-4 lg:justify-start">
           <div className="absolute left-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-x-[15%] -translate-y-[50%] rounded-full bg-slate-400/10 blur-3xl dark:block"></div>
@@ -54,18 +48,40 @@ const Hero = () => (
           </h1>
         </div>
 
-        <p className="bg-transparent px-8 text-center font-medium leading-8 text-zinc-600 dark:text-zinc-300 lg:px-0 lg:text-left">
+        <p className="max-w-[55ch] bg-transparent px-8 text-center font-medium leading-8 text-black/50 dark:text-white/50 lg:px-0 lg:text-left">
           <Balancer>
             Connect, collaborate, and grow with a community of TypeScript developers. Elevate your
             skills trough interactive coding challenges, discussions, and knowledge sharing
           </Balancer>
         </p>
         <div className="flex gap-3">
-          <Button
+          {/* <Button
             className="relative flex items-center gap-2 overflow-hidden rounded-xl px-4 py-2 font-bold"
             asChild
           >
             <Link href="/explore">Explore challenges</Link>
+          </Button> */}
+          <Button
+            className="hero-join-button group relative mx-auto w-fit overflow-hidden rounded-xl p-[2px] font-bold transition-all duration-300 hover:bg-transparent hover:shadow-[0_0_2rem_-0.5rem_#3178c6] dark:hidden md:mr-0 lg:mr-auto"
+            asChild
+          >
+            <Link href="/waitlist">
+              <span className="inline-flex h-full w-fit items-center gap-1 rounded-xl bg-neutral-100 px-4 py-2 text-[#3178c6] transition-all duration-300 group-hover:bg-white">
+                <Mail className="mr-1 h-4 w-4 stroke-[3]" />
+                Join the Waitlist
+              </span>
+            </Link>
+          </Button>
+          <Button
+            className="hero-join-button-dark group relative mx-auto hidden w-fit overflow-hidden rounded-xl p-[1px] font-bold transition-all duration-300 dark:block dark:hover:shadow-[0_0_2rem_-0.5rem_#fff8] md:mr-0 lg:mr-auto"
+            asChild
+          >
+            <Link href="/waitlist">
+              <span className="inline-flex h-full w-fit items-center gap-1 rounded-xl px-4 py-2 transition-all duration-300 dark:bg-neutral-900 dark:text-white group-hover:dark:bg-black">
+                <Mail className="mr-1 h-4 w-4 stroke-[3]" />
+                Join the Waitlist
+              </span>
+            </Link>
           </Button>
           <Button
             className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
@@ -103,7 +119,7 @@ const Hero = () => (
             opacity: 1,
             transition: {
               duration: 0.4,
-            }
+            },
           }}
           className="group"
         >

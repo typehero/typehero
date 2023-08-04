@@ -112,21 +112,64 @@ const Comment = ({ comment, readonly = false }: CommentProps) => {
 
   return (
     <div className="flex flex-col gap-1 p-3 pt-2">
-      <div className="flex items-start justify-between pr-[0.4rem]">
+      <div className="flex items-start justify-between gap-4 pr-[0.4rem]">
         <div className="flex items-center gap-1">
           <UserBadge username={comment.user.name ?? ''} />
-        </div>
-        <div className="flex items-center gap-1">
           <Tooltip delayDuration={0.05}>
             <TooltipTrigger asChild>
-              <span className="mr-2 whitespace-nowrap text-sm text-neutral-500">
+              <span className="whitespace-nowrap text-[0.8rem] text-neutral-500 dark:text-neutral-400">
                 {getRelativeTime(comment.createdAt)}
               </span>
             </TooltipTrigger>
             <TooltipContent align="start" className="rounded-xl" alignOffset={-55}>
-              <span className="text-white-500 text-xs">{comment.createdAt.toLocaleString()}</span>
+              <span className="text-xs text-white">{comment.createdAt.toLocaleString()}</span>
             </TooltipContent>
           </Tooltip>
+        </div>
+        <div className="to-200% my-auto h-[1px] w-full bg-zinc-300 dark:bg-zinc-600" />
+        <div className="my-auto flex items-center gap-4">
+          {!readonly && (
+            <>
+              <div
+                onClick={() => {
+                  copyPathNotifyUser();
+                }}
+                className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
+              >
+                <Share className="h-3 w-3" />
+                <div className="hidden text-[0.8rem] sm:block">Share</div>
+              </div>
+              {/* TODO: make dis work */}
+              <button className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300">
+                <Reply className="h-4 w-4" />
+                <div className="hidden text-[0.8rem] sm:block">Reply</div>
+              </button>
+              {isAuthor && (
+                <button
+                  onClick={() => setIsEditing(!isEditing)}
+                  className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
+                >
+                  <Pencil className="h-3 w-3" />
+                  <div className="hidden text-[0.8rem] sm:block">Edit</div>
+                </button>
+              )}
+              {/* TODO: make dis work */}
+              {isAuthor ? (
+                <CommentDeleteDialog comment={comment} asChild>
+                  <button className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300">
+                    <Trash2 className="h-3 w-3" />
+                    <div className="hidden text-[0.8rem] sm:block">Delete</div>
+                  </button>
+                </CommentDeleteDialog>
+              ) : (
+                <ReportDialog reportType="COMMENT" commentId={comment.id}>
+                  <button className="flex cursor-pointer items-center text-[0.8rem] text-neutral-400 duration-200 hover:text-neutral-500 dark:text-neutral-600 dark:hover:text-neutral-500">
+                    Report
+                  </button>
+                </ReportDialog>
+              )}
+            </>
+          )}
         </div>
       </div>
       <div>
@@ -151,65 +194,23 @@ const Comment = ({ comment, readonly = false }: CommentProps) => {
           </p>
         )}
         {isEditing && (
-          <CommentInput
-            value={text}
-            onCancel={() => {
-              setIsEditing(false);
-            }}
-            onChange={setText}
-            onKeyDown={handleEnterKey}
-            onSubmit={async () => {
-              await updateChallengeComment();
-              setIsEditing(false);
-            }}
-            mode="edit"
-          />
-        )}
-      </div>
-      <>
-        {!readonly && (
-          <div className="flex items-center gap-4 py-4">
-            <div
-              onClick={() => {
-                copyPathNotifyUser();
+          <div className="my-2">
+            <CommentInput
+              value={text}
+              onCancel={() => {
+                setIsEditing(false);
               }}
-              className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
-            >
-              <Share size={16} />
-              <div className="text-xs">Share</div>
-            </div>
-            {/* TODO: make dis work */}
-            <button className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300">
-              <Reply size={18} />
-              <div className="text-xs">Reply</div>
-            </button>
-            {isAuthor && (
-              <button
-                onClick={() => setIsEditing(!isEditing)}
-                className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
-              >
-                <Pencil size={16} />
-                <div className="text-xs">Edit</div>
-              </button>
-            )}
-            {/* TODO: make dis work */}
-            {isAuthor ? (
-              <CommentDeleteDialog comment={comment} asChild>
-                <button className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300">
-                  <Trash2 size={16} />
-                  <div className="text-xs">Delete</div>
-                </button>
-              </CommentDeleteDialog>
-            ) : (
-              <ReportDialog reportType="COMMENT" commentId={comment.id}>
-                <button className="flex cursor-pointer items-center text-sm text-neutral-400 duration-200 hover:text-neutral-500 dark:text-neutral-600 dark:hover:text-neutral-500">
-                  Report
-                </button>
-              </ReportDialog>
-            )}
+              onChange={setText}
+              onKeyDown={handleEnterKey}
+              onSubmit={async () => {
+                await updateChallengeComment();
+                setIsEditing(false);
+              }}
+              mode="edit"
+            />
           </div>
         )}
-      </>
+      </div>
     </div>
   );
 };
