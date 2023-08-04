@@ -1,11 +1,10 @@
 /* The module for the background of the banner on the landing page */
 .backdrop {
-  background: linear-gradient(-6deg, hsla(var(--background) / 0.5) 5%, hsl(var(--background)) 30%),
-    linear-gradient(
-      225deg,
-      rgba(59, 131, 199, 0) 44.51%,
-      rgba(59, 131, 199, 0.17) 75.5%,
-      rgba(49, 120, 198, 0.3) 100%
+  background: linear-gradient(
+      -3deg,
+      hsla(var(--background) / 0.75) 0%,
+      hsl(var(--background) / 0.95) 33%,
+      hsl(var(--background)) 50%
     ),
     url('../../../assets/images/background_pattern_flipped.png');
   background-size: cover;
@@ -36,6 +35,18 @@
 }
 @media (max-width: 768px) {
   .backdrop {
+    background: linear-gradient(
+        -3deg,
+        hsla(var(--background) / 0.75) 0%,
+        hsl(var(--background) / 0.95) 15%,
+        hsl(var(--background)) 30%
+      ),
+      url('../../../assets/images/background_pattern_flipped.png');
+    background-size: 1800px;
+
+    background-position-y: bottom;
+    background-position-x: center;
+    background-repeat: no-repeat;
     background-position-x: 60%;
   }
 }

@@ -52,8 +52,9 @@ const Community = async function () {
           </div>
         </div>
       </div> */}
-      <section className={clsx(styles.backdrop, 'relative overflow-hidden')}>
-        <div className="bg-white/0 dark:bg-black/0">
+      {/* backdrop styles don't apply for the last pixel row of the elment for some reason no there's p and m offsets*/}
+      <section className={clsx(styles.backdrop, 'relative -mb-[1px] overflow-hidden pb-[1px]')}>
+        <div className="backdrop-blur-md">
           <div className="container flex flex-col justify-center pt-[128px] md:pb-[128px] lg:flex-row lg:items-center">
             <div className="flex flex-1 flex-col items-center gap-6 pb-36 lg:items-start lg:pb-0">
               <div className="rounded-full bg-gradient-to-r from-[#31bdc6] to-[#3178c6] p-[1px] brightness-90 contrast-150 dark:brightness-125 dark:contrast-100">
