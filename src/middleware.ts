@@ -1,6 +1,11 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
 export function middleware(req: NextRequest) {
+  // don't allow auth on preview domains so we can test shit
+  if (req.headers.get("host") !== "typehero.dev") {
+    return NextResponse.next();
+  }
+
   if (process.env.NODE_ENV === 'production') {
     const basicAuth = req.headers.get('authorization');
     const url = req.nextUrl;
