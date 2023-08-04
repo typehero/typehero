@@ -225,10 +225,10 @@ main {
 .hero-join-button {
   background: linear-gradient(
     var(--gradient-angle),
-    hsla(211, 60%, 48%, 0.5),
-    hsla(211, 60%, 48%, 0.1),
+    hsla(211, 60%, 48%, 0.7),
+    hsla(211, 60%, 48%, 0.3),
     #3178c6,
-    hsla(211, 60%, 48%, 0.3)
+    hsla(211, 60%, 48%, 0.5)
   );
   animation: gradient-rotate 5s linear infinite reverse;
 }
@@ -241,6 +241,11 @@ main {
     #fff,
     hsla(0, 0%, 100%, 0.3)
   ) !important;
+  animation: gradient-rotate 5s linear infinite reverse;
+}
+
+.wl-form-button {
+  background: linear-gradient(var(--gradient-angle), #34d399, #60a5fa, #ff88ff, #ff8844);
   animation: gradient-rotate 5s linear infinite reverse;
 }
 
