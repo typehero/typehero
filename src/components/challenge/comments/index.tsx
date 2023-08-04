@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import { ChevronDown, ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
-import Comment from '~/components/challenge/comments/comment';
+import { Comment } from '~/components/challenge/comments/comment';
 import { Button } from '~/components/ui/button';
 import { toast } from '~/components/ui/use-toast';
 import { CommentInput } from './comment-input';

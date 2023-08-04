@@ -1,7 +1,4 @@
 // eslint-disable-next-line no-restricted-imports
-// import { Octokit } from 'octokit';
-
-// eslint-disable-next-line no-restricted-imports
 import { contributors } from '../../../../public/contributors';
 
 import { GitBranch } from 'lucide-react';
@@ -11,34 +8,6 @@ import { clsx } from 'clsx';
 import { type CSSProperties } from 'react';
 
 const Community = async function () {
-  // async function getOcto() {
-  //   if (!process.env.PROD) {
-  //     console.log('You are not in production mode. Mocking data.');
-  //     return Array(13).fill({
-  //       login: 'PickleNik',
-  //       avatar_url: 'https://avatars.githubusercontent.com/u/31113245?v=4',
-  //       html_url: 'https://github.com/PickleNik',
-  //     });
-  //   }
-  //   if (!process.env.GITHUB_TOKEN) {
-  //     console.error('No GitHub token provided. Please set GITHUB_TOKEN env var.');
-  //     return [];
-  //   }
-  //
-  //   // TODO: hacksore already thinking about making the Graphql api work here
-  //   const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
-  //   const response = await octokit.request('GET /repos/{owner}/{repo}/contributors', {
-  //     owner: 'bautistaa',
-  //     repo: 'typehero',
-  //     headers: {
-  //       'X-GitHub-Api-Version': '2022-11-28',
-  //     },
-  //   });
-  //   // put all avatar urls in a list
-  //   return response.data.map((contributor) => contributor);
-  // }
-  // const avatars = await getOcto();
-  //
   type WrapperStyle = CSSProperties & {
     '--bottom': string;
   };

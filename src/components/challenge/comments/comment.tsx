@@ -3,7 +3,7 @@
 import clsx from 'clsx';
 import { Pencil, Reply, Share, Trash2 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { z } from 'zod';
 import type { ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import ReportDialog from '~/components/report';
@@ -43,16 +43,10 @@ const commentReportSchema = z
 
 export type CommentReportSchemaType = z.infer<typeof commentReportSchema>;
 
-const Comment = ({ comment, readonly = false }: CommentProps) => {
+export const Comment = ({ comment, readonly = false }: CommentProps) => {
   const queryClient = useQueryClient();
   const [text, setText] = useState(comment.text);
   const [isEditing, setIsEditing] = useState(false);
-  const isTooManyLines = comment.text.split('\n').length > 15;
-  const [showReadMore, setShowReadMore] = useState(isTooManyLines); // take some default value from the calculation of characters
-
-  useEffect(() => {
-    setShowReadMore(isTooManyLines);
-  }, [isTooManyLines]);
 
   async function copyPathNotifyUser() {
     try {
@@ -173,26 +167,7 @@ const Comment = ({ comment, readonly = false }: CommentProps) => {
         </div>
       </div>
       <div>
-        {!isEditing && (
-          <p
-            className={clsx(
-              { 'h-full': !showReadMore, 'max-h-[300px]': showReadMore },
-              'relative w-full overflow-hidden break-words pl-[1px] text-sm',
-            )}
-          >
-            <Markdown>{comment.text}</Markdown>
-            {showReadMore && (
-              <div
-                className="absolute top-0 flex h-full w-full cursor-pointer items-end bg-gradient-to-b from-transparent to-white dark:to-zinc-800"
-                onClick={() => setShowReadMore(false)}
-              >
-                <div className="text-md text-label-1 dark:text-dark-label-1 flex w-full items-center justify-center hover:bg-transparent">
-                  Read more
-                </div>
-              </div>
-            )}
-          </p>
-        )}
+        {!isEditing && <ExpandableContent content={comment.text} />}
         {isEditing && (
           <div className="my-2">
             <CommentInput
@@ -215,4 +190,44 @@ const Comment = ({ comment, readonly = false }: CommentProps) => {
   );
 };
 
-export default Comment;
+const ExpandableContent = ({ content }: { content: string }) => {
+  const [expanded, setExpanded] = useState(true);
+  const contentWrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if ((contentWrapperRef.current?.clientHeight ?? 0) > 300) {
+        setExpanded(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [content]);
+
+  return (
+    <div
+      className={clsx(
+        { 'h-full': expanded, 'max-h-[300px]': !expanded },
+        'relative w-full overflow-hidden break-words pl-[1px] text-sm',
+      )}
+      ref={contentWrapperRef}
+    >
+      <Markdown>{content}</Markdown>
+      {!expanded && (
+        <div
+          className="absolute top-0 flex h-full w-full cursor-pointer items-end bg-gradient-to-b from-transparent to-white dark:to-zinc-800"
+          onClick={() => setExpanded(true)}
+        >
+          <div className="text-md text-label-1 dark:text-dark-label-1 flex w-full items-center justify-center hover:bg-transparent">
+            Read more
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};

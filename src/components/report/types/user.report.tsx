@@ -1,7 +1,7 @@
 'use server';
 
 import { type ReportWithInfo } from '~/app/admin/report/[id]/report.action';
-import Comment from '~/components/challenge/comments/comment';
+import { Comment } from '~/components/challenge/comments/comment';
 import { Expandable } from '~/components/ui/expandable';
 import { Markdown } from '~/components/ui/markdown';
 import Text from '~/components/ui/typography/typography';

@@ -80,6 +80,7 @@ export function CommentInput({ mode, onCancel, onChange, onKeyDown, value, onSub
                 console.error(e);
               } finally {
                 setIsSubmitting(false);
+                setCommentMode('editor');
               }
             }}
             className="h-8 w-[5.5rem] rounded-lg rounded-br-sm bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
