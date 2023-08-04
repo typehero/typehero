@@ -10,12 +10,12 @@ export const getChallengeRouteData = cache((id: string, session: Session | null)
   return prisma.challenge.findFirstOrThrow({
     where: {
       id: +id,
-      status: 'ACTIVE'
+      status: 'ACTIVE',
     },
     include: {
       user: true,
       _count: {
-        select: { vote: true },
+        select: { vote: true, comment: true },
       },
       vote: {
         where: {
@@ -26,21 +26,6 @@ export const getChallengeRouteData = cache((id: string, session: Session | null)
         where: {
           userId: session?.user.id || '',
         },
-      },
-      comment: {
-        where: {
-          rootType: 'CHALLENGE',
-          rootChallengeId: +id,
-          visible: true,
-        },
-        include: {
-          user: true,
-        },
-        orderBy: [
-          {
-            createdAt: 'desc',
-          },
-        ],
       },
     },
   });

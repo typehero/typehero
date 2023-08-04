@@ -8,15 +8,24 @@ import { ToastAction } from '~/components/ui/toast';
 import { useToast } from '~/components/ui/use-toast';
 
 interface Props {
-  mode: 'edit' | 'create';
+  mode: 'edit' | 'create' | 'reply';
   onCancel?: () => void;
   onChange: (text: string) => void;
   onKeyDown: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
   value: string;
+  placeholder?: string;
   onSubmit: () => Promise<void>;
 }
 
-export function CommentInput({ mode, onCancel, onChange, onKeyDown, value, onSubmit }: Props) {
+export function CommentInput({
+  mode,
+  onCancel,
+  onChange,
+  onKeyDown,
+  value,
+  placeholder,
+  onSubmit,
+}: Props) {
   const { data: session } = useSession();
   const { toast } = useToast();
   const [commentMode, setCommentMode] = useState<'editor' | 'preview'>('editor');
@@ -38,7 +47,7 @@ export function CommentInput({ mode, onCancel, onChange, onKeyDown, value, onSub
               onKeyDown(e);
             }}
             className="resize-none border-0 px-3 py-2 focus-visible:ring-0 focus-visible:ring-offset-0"
-            placeholder="Enter your comment here."
+            placeholder={placeholder ?? 'Enter your comment here.'}
           />
         )}
         {commentMode === 'preview' && (
@@ -56,7 +65,7 @@ export function CommentInput({ mode, onCancel, onChange, onKeyDown, value, onSub
           >
             {commentMode === 'editor' ? 'Preview' : 'Edit'}
           </Button>
-          {mode === 'edit' && (
+          {mode !== 'create' && (
             <Button variant="secondary" className="h-8" onClick={() => onCancel?.()}>
               Cancel
             </Button>

@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation';
+import { Comments } from '~/components/challenge/comments';
 import { Description } from '~/components/challenge/description';
 import { getServerAuthSession } from '~/server/auth';
 import { getChallengeRouteData } from './getChallengeRouteData';
-import { Comments } from '~/components/challenge/comments';
 
 interface Props {
   params: {
@@ -22,7 +22,7 @@ export default async function Challenges({ params: { id } }: Props) {
     <div className="relative h-full">
       <Description challenge={challenge}></Description>
       {/* BUG: comment length wont update when adding/deleting a comment */}
-      <Comments rootId={challenge.id} commentCount={challenge.comment.length} type="CHALLENGE" />
+      <Comments rootId={challenge.id} commentCount={challenge._count.comment} type="CHALLENGE" />
     </div>
   );
 }

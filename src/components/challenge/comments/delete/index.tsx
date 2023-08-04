@@ -1,7 +1,5 @@
 import { type DialogTriggerProps } from '@radix-ui/react-dialog';
-import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import { TypographyP } from '~/components//ui/paragraph';
 import { Button } from '~/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '~/components/ui/dialog';
@@ -10,14 +8,20 @@ import { TypographyLarge } from '~/components/ui/typography/large';
 import { toast } from '~/components/ui/use-toast';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { deleteComment } from '../comment.action';
+import { type PaginatedComments } from '../getCommentRouteData';
 
 interface CommentDeleteDialogProps extends DialogTriggerProps {
-  comment: ChallengeRouteData['comment'][number];
+  comment: PaginatedComments['comments'][number];
+  onDelete?: () => void;
 }
 
-export const CommentDeleteDialog = ({ children, comment, ...props }: CommentDeleteDialogProps) => {
+export const CommentDeleteDialog = ({
+  children,
+  comment,
+  onDelete,
+  ...props
+}: CommentDeleteDialogProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const queryClient = useQueryClient();
 
   async function handleDeleteComment() {
     try {
@@ -36,7 +40,9 @@ export const CommentDeleteDialog = ({ children, comment, ...props }: CommentDele
         description: 'An error occurred while trying to delete the comment.',
       });
     } finally {
-      queryClient.invalidateQueries([`challenge-${comment.rootChallengeId}-comments`]);
+      if (onDelete) {
+        onDelete();
+      }
       setIsOpen(!isOpen);
     }
   }

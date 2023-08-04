@@ -43,6 +43,11 @@ export async function getReport(idNum: number) {
       comment: {
         include: {
           user: true,
+          _count: {
+            select: {
+              replies: true,
+            },
+          },
           rootChallenge: true,
           rootSolution: true,
         },

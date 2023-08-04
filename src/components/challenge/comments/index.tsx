@@ -30,11 +30,11 @@ export const Comments = ({ rootId, commentCount, type }: Props) => {
 
   const [page, setPage] = useState(1);
 
-  const queryKey =
+  const commentsQueryKey =
     type === 'CHALLENGE' ? `challenge-${rootId}-comments` : `solution-${rootId}-comments`;
 
   const { status, data } = useQuery({
-    queryKey: [queryKey, page],
+    queryKey: [commentsQueryKey, page],
     queryFn: () => getPaginatedComments({ rootId, page, rootType: type }),
     keepPreviousData: true,
     staleTime: 5000,
@@ -66,7 +66,7 @@ export const Comments = ({ rootId, commentCount, type }: Props) => {
         });
       }
       setText('');
-      queryClient.invalidateQueries([queryKey, page]);
+      queryClient.invalidateQueries([commentsQueryKey, page]);
     } catch (e) {
       toast({
         title: 'Unauthorized',
@@ -134,7 +134,16 @@ export const Comments = ({ rootId, commentCount, type }: Props) => {
               (data.comments.length === 0 ? (
                 <NoComments />
               ) : (
-                data?.comments?.map((comment) => <Comment key={comment.id} comment={comment} />)
+                data?.comments?.map((comment) => (
+                  <Comment
+                    key={comment.id}
+                    comment={comment}
+                    rootId={rootId}
+                    type={type}
+                    onReply={() => queryClient.invalidateQueries([commentsQueryKey, page])}
+                    onDelete={() => queryClient.invalidateQueries([commentsQueryKey])}
+                  />
+                ))
               ))}
           </div>
           {(data?.totalPages ?? 0) > 1 && (
