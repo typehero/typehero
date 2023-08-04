@@ -1,7 +1,6 @@
 'use client';
 
 import Text from '~/components/ui/typography/typography';
-import { UserData } from './index';
 import { type User } from '@prisma/client';
 import ReportDialog from '~/components/report';
 import { ActionMenu } from '~/components/ui/action-menu';

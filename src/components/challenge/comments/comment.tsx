@@ -1,24 +1,23 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { Pencil, Reply, Share, Trash2 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { useEffect, useRef, useState } from 'react';
 import { z } from 'zod';
-import type { ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import ReportDialog from '~/components/report';
 import { Markdown } from '~/components/ui/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 import { toast } from '~/components/ui/use-toast';
 import { UserBadge } from '~/components/ui/user-badge';
 import { getRelativeTime } from '~/utils/relativeTime';
-import { CommentDeleteDialog } from './delete';
 import { CommentInput } from './comment-input';
-import { updateComment } from './comment.action';
-import { useQueryClient } from '@tanstack/react-query';
+import { updateComment, type CommentsByChallengeId } from './comment.action';
+import { CommentDeleteDialog } from './delete';
 
 interface CommentProps {
-  comment: ChallengeRouteData['comment'][number];
+  comment: CommentsByChallengeId[number];
   queryKey?: (string | number)[];
   readonly?: boolean;
 }

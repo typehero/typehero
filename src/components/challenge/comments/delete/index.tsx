@@ -1,7 +1,6 @@
 import { type DialogTriggerProps } from '@radix-ui/react-dialog';
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import { TypographyP } from '~/components//ui/paragraph';
 import { Button } from '~/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '~/components/ui/dialog';
@@ -9,10 +8,10 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip
 import { TypographyLarge } from '~/components/ui/typography/large';
 import { toast } from '~/components/ui/use-toast';
 import { getRelativeTime } from '~/utils/relativeTime';
-import { deleteComment } from '../comment.action';
+import { deleteComment, type CommentsByChallengeId } from '../comment.action';
 
 interface CommentDeleteDialogProps extends DialogTriggerProps {
-  comment: ChallengeRouteData['comment'][number];
+  comment: CommentsByChallengeId[number];
   queryKey?: (string | number)[];
 }
 
