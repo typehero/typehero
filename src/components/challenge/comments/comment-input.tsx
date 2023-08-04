@@ -26,6 +26,11 @@ export function CommentInput({ mode, onCancel, onChange, value, placeholder, onS
   useAutosizeTextArea(textAreaRef, value, commentMode);
 
   const handleEnterKey = async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (isSubmitting) {
+      e.preventDefault();
+      return;
+    }
+
     if (e.shiftKey && e.key === 'Enter') {
       e.preventDefault();
       if (!session?.user) {
