@@ -52,9 +52,11 @@ export async function getPaginatedComments({
 
   const totalPages = Math.ceil(totalComments / PAGESIZE);
 
+  const totalReplies = comments.reduce((a, c) => a + c._count.replies, 0);
+
   return {
+    totalComments: totalReplies + totalComments,
     totalPages,
-    totalComments,
     hasMore: page < totalPages,
     comments,
   };

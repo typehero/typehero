@@ -2,21 +2,21 @@
 
 import { type CommentRoot } from '@prisma/client';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
-import clsx from 'clsx';
-import { Pencil, Reply, Share, Trash2 } from 'lucide-react';
+import { ChevronDown, ChevronUp, Pencil, Reply, Share, Trash2 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { useEffect, useRef, useState } from 'react';
 import { z } from 'zod';
 import ReportDialog from '~/components/report';
-import { Markdown } from '~/components/ui/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 import { toast } from '~/components/ui/use-toast';
 import { UserBadge } from '~/components/ui/user-badge';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { CommentInput } from './comment-input';
-import { replyComment, updateComment } from './comment.action';
+import { replyComment, updateComment, type CommentsByChallengeId } from './comment.action';
 import { CommentDeleteDialog } from './delete';
-import { getPaginatedComments, type PaginatedComments } from './getCommentRouteData';
+import { getPaginatedComments } from './getCommentRouteData';
+import clsx from 'clsx';
+import { Markdown } from '~/components/ui/markdown';
 
 interface SingleCommentProps {
   comment: CommentsByChallengeId[number];
@@ -24,6 +24,7 @@ interface SingleCommentProps {
   isReply?: boolean;
   onClickReply?: () => void;
   queryKey?: (string | number)[];
+  replyQueryKey?: (string | number)[];
 }
 
 type CommentProps = SingleCommentProps & {
@@ -52,16 +53,16 @@ const commentReportSchema = z
 
 export type CommentReportSchemaType = z.infer<typeof commentReportSchema>;
 
-export const Comment = ({ comment, readonly = false, rootId, type }: CommentProps) => {
+export const Comment = ({ comment, readonly = false, rootId, type, queryKey }: CommentProps) => {
   const [showReplies, setShowReplies] = useState(false);
 
   const [isReplying, setIsReplying] = useState(false);
   const [replyText, setReplyText] = useState('');
   const queryClient = useQueryClient();
 
-  const replyQueryKey = `${comment.id}-comment-replies`;
+  const replyQueryKey = [`${comment.id}-comment-replies`];
   const { data, fetchNextPage, isFetching } = useInfiniteQuery({
-    queryKey: [replyQueryKey],
+    queryKey: replyQueryKey,
     queryFn: ({ pageParam = 1 }) =>
       getPaginatedComments({ rootId, rootType: type, page: pageParam, parentId: comment.id }),
     getNextPageParam: (_, pages) => pages?.length + 1,
@@ -90,7 +91,8 @@ export const Comment = ({ comment, readonly = false, rootId, type }: CommentProp
         });
       }
       setReplyText('');
-      queryClient.invalidateQueries([replyQueryKey]);
+      queryClient.invalidateQueries(replyQueryKey);
+      queryClient.invalidateQueries(queryKey);
       setShowReplies(true);
     } catch (e) {
       toast({
@@ -106,11 +108,7 @@ export const Comment = ({ comment, readonly = false, rootId, type }: CommentProp
 
   return (
     <div className="flex flex-col p-2">
-      <SingleComment
-        comment={comment}
-        readonly={readonly}
-        onClickReply={toggleIsReplying}
-      />
+      <SingleComment comment={comment} readonly={readonly} onClickReply={toggleIsReplying} />
       {isReplying && (
         <div className="pb-2 pl-6">
           <CommentInput
@@ -132,7 +130,7 @@ export const Comment = ({ comment, readonly = false, rootId, type }: CommentProp
           className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
           onClick={toggleReplies}
         >
-          {!showReplies ? <ChevronDown size={18} /> : <ChevronUp size={18} />}
+          {showReplies ? <ChevronDown size={18} /> : <ChevronUp size={18} />}
           <div className="text-xs">
             {comment._count.replies == 1 ? '1 reply' : `${comment._count.replies} replies`}
           </div>
@@ -142,11 +140,8 @@ export const Comment = ({ comment, readonly = false, rootId, type }: CommentProp
         <div className="flex flex-col gap-0.5 p-2 pl-6 pr-0">
           {data?.pages.flatMap((page) =>
             page.comments.map((reply) => (
-              <SingleComment
-                key={comment.id}
-                comment={reply}
-                isReply
-              />
+              // this is a reply
+              <SingleComment key={comment.id} comment={reply} isReply replyQueryKey={replyQueryKey} />
             )),
           )}
         </div>
@@ -168,6 +163,8 @@ const SingleComment = ({
   readonly = false,
   onClickReply,
   isReply,
+  queryKey,
+  replyQueryKey
 }: SingleCommentProps) => {
   const queryClient = useQueryClient();
   const [text, setText] = useState(comment.text);
@@ -187,7 +184,8 @@ const SingleComment = ({
           description: <p>You need to be signed in to post a comment.</p>,
         });
       }
-      queryClient.invalidateQueries([`challenge-${comment.rootChallengeId}-comments`]);
+      queryClient.invalidateQueries(queryKey);
+      queryClient.invalidateQueries(replyQueryKey);
     } catch (e) {
       toast({
         title: 'Unauthorized',
@@ -272,7 +270,7 @@ const SingleComment = ({
                 </button>
               )}
               {isAuthor ? (
-                <CommentDeleteDialog comment={comment} onDelete={onDelete} asChild>
+                <CommentDeleteDialog comment={comment} asChild>
                   <button className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300">
                     <Trash2 className="h-3 w-3" />
                     <div className="hidden text-[0.8rem] sm:block">Delete</div>
@@ -309,5 +307,47 @@ const SingleComment = ({
         )}
       </div>
     </>
+  );
+};
+
+const ExpandableContent = ({ content }: { content: string }) => {
+  const [expanded, setExpanded] = useState(true);
+  const contentWrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if ((contentWrapperRef.current?.clientHeight ?? 0) > 300) {
+        setExpanded(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [content]);
+
+  return (
+    <div
+      className={clsx(
+        { 'h-full': expanded, 'max-h-[300px]': !expanded },
+        'relative w-full overflow-hidden break-words pl-[1px] text-sm',
+      )}
+      ref={contentWrapperRef}
+    >
+      <Markdown>{content}</Markdown>
+      {!expanded && (
+        <div
+          className="absolute top-0 flex h-full w-full cursor-pointer items-end bg-gradient-to-b from-transparent to-white dark:to-zinc-800"
+          onClick={() => setExpanded(true)}
+        >
+          <div className="text-md text-label-1 dark:text-dark-label-1 flex w-full items-center justify-center hover:bg-transparent">
+            Read more
+          </div>
+        </div>
+      )}
+    </div>
   );
 };

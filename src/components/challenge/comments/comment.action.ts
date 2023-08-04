@@ -109,6 +109,11 @@ export async function getCommentsByChallengeId(id: number) {
     },
     include: {
       user: true,
+      _count: {
+        select: {
+          replies: true,
+        },
+      },
     },
     orderBy: [
       {
