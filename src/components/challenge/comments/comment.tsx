@@ -1,7 +1,7 @@
 'use client';
 
 import { type CommentRoot } from '@prisma/client';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { ChevronDown, ChevronUp, Pencil, Reply, Share, Trash2 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
@@ -63,17 +63,17 @@ export const Comment = ({
   onDelete,
 }: CommentProps) => {
   const [showReplies, setShowReplies] = useState(false);
-  const [page, setPage] = useState(1);
 
   const [isReplying, setIsReplying] = useState(false);
   const [replyText, setReplyText] = useState('');
   const queryClient = useQueryClient();
 
   const replyQueryKey = `${comment.id}-comment-replies`;
-  const { status, data: replies } = useQuery({
-    queryKey: [replyQueryKey, page],
-    queryFn: () => getPaginatedComments({ rootId, rootType: type, page, parentId: comment.id }),
-    keepPreviousData: true,
+  const { data, fetchNextPage, isFetching } = useInfiniteQuery({
+    queryKey: [replyQueryKey],
+    queryFn: ({ pageParam = 1 }) =>
+      getPaginatedComments({ rootId, rootType: type, page: pageParam, parentId: comment.id }),
+    getNextPageParam: (_, pages) => pages?.length + 1,
     staleTime: 5000,
   });
 
@@ -99,7 +99,7 @@ export const Comment = ({
         });
       }
       setReplyText('');
-      queryClient.invalidateQueries([replyQueryKey, page]);
+      queryClient.invalidateQueries([replyQueryKey]);
       setShowReplies(true);
     } catch (e) {
       toast({
@@ -123,10 +123,7 @@ export const Comment = ({
         comment={comment}
         readonly={readonly}
         onClickReply={toggleIsReplying}
-        onDelete={() => {
-          if (onDelete) onDelete();
-          queryClient.invalidateQueries([replyQueryKey]);
-        }}
+        onDelete={onDelete}
       />
       {isReplying && (
         <div className="pb-2 pl-6">
@@ -155,13 +152,30 @@ export const Comment = ({
           </div>
         </button>
       )}
-      {/* TODO: add loading more/pagination functionality to the replies */}
       {showReplies && (
         <div className="flex flex-col gap-0.5 p-2 pl-6 pr-0">
-          {replies?.comments.map((reply) => (
-            <SingleComment key={comment.id} comment={reply} isReply />
-          ))}
+          {data?.pages.flatMap((page) =>
+            page.comments.map((reply) => (
+              <SingleComment
+                key={comment.id}
+                comment={reply}
+                isReply
+                onDelete={() => {
+                  if (onDelete) onDelete();
+                  queryClient.invalidateQueries([replyQueryKey]);
+                }}
+              />
+            )),
+          )}
         </div>
+      )}
+      {!isFetching && showReplies && data?.pages.at(-1)?.hasMore && (
+        <button
+          className="flex cursor-pointer items-center gap-1 pl-6 text-xs text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
+          onClick={() => fetchNextPage()}
+        >
+          Load more
+        </button>
       )}
     </div>
   );
@@ -219,13 +233,6 @@ const SingleComment = ({
       });
     }
   }
-
-  const handleEnterKey = async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.shiftKey && e.key === 'Enter') {
-      e.preventDefault();
-      await updateChallengeComment();
-    }
-  };
 
   async function copyCommentUrlToClipboard() {
     await navigator.clipboard.writeText(`${window.location.href}/comment/${comment.id}`);
