@@ -41,6 +41,7 @@ export async function getPaginatedComments({
 
   return {
     totalPages,
+    totalComments,
     hasMore: page < totalPages,
     comments,
   };

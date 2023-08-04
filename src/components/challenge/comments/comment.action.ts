@@ -72,3 +72,24 @@ export async function deleteComment(comment_id: number) {
     },
   });
 }
+
+export type CommentsByChallengeId = NonNullable<
+  Awaited<ReturnType<typeof getCommentsByChallengeId>>
+>;
+export async function getCommentsByChallengeId(id: number) {
+  return await prisma.comment.findMany({
+    where: {
+      rootType: 'CHALLENGE',
+      rootChallengeId: id,
+      visible: true,
+    },
+    include: {
+      user: true,
+    },
+    orderBy: [
+      {
+        createdAt: 'desc',
+      },
+    ],
+  });
+}

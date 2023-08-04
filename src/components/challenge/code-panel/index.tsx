@@ -6,7 +6,7 @@ import { Loader2, Settings } from 'lucide-react';
 import type * as monaco from 'monaco-editor';
 import { useSession } from 'next-auth/react';
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import { Button } from '~/components/ui/button';
@@ -27,6 +27,7 @@ import { SettingsForm } from '../settings-form';
 import { USER_CODE_START, USER_CODE_START_REGEX } from './constants';
 import { libSource } from './editor-types';
 import { createTwoslashInlayProvider } from './twoslash';
+import lzstring from 'lz-string';
 
 const VimStatusBar = dynamic(() => import('./vimMode').then((v) => v.VimStatusBar), {
   ssr: false,
@@ -52,6 +53,7 @@ export type TsErrors = [
 ];
 
 export const CodePanel = (props: Props) => {
+  const params = useSearchParams();
   const router = useRouter();
   const { toast } = useToast();
   const { data: session } = useSession();
@@ -62,14 +64,19 @@ export const CodePanel = (props: Props) => {
     '',
   );
 
+  const defaultCode =
+    lzstring.decompressFromEncodedURIComponent(params.get('code') ?? '') ?? localStorageCode;
+
   const getDefaultCode = () => {
-    if (!localStorageCode) {
+    if (!defaultCode) {
       return props.challenge.prompt;
     }
 
+    console.log({ defaultCode });
+
     const [appendSolutionToThis, separator] = props.challenge.prompt.split(USER_CODE_START_REGEX);
 
-    return `${appendSolutionToThis ?? ''}${separator ?? ''}${localStorageCode}`;
+    return `${appendSolutionToThis ?? ''}${separator ?? ''}${defaultCode}`;
   };
 
   const [code, setCode] = useState(() => getDefaultCode());
