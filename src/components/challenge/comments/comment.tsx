@@ -66,13 +66,16 @@ export const Comment = ({
   const [page, setPage] = useState(1);
 
   const [isReplying, setIsReplying] = useState(false);
-  const [replyText, setReplyText] = useState(comment.text);
+  const [replyText, setReplyText] = useState('');
   const queryClient = useQueryClient();
 
   const replyQueryKey = `${comment.id}-comment-replies`;
   const { status, data: replies } = useQuery({
     queryKey: [replyQueryKey, page],
     queryFn: () => getPaginatedComments({ rootId, rootType: type, page, parentId: comment.id }),
+    onSuccess(data) {
+      console.log(data);
+    },
     keepPreviousData: true,
     staleTime: 5000,
   });
@@ -136,7 +139,7 @@ export const Comment = ({
         }}
       />
       {isReplying && (
-        <div className="pl-3">
+        <div className="pb-2 pl-6">
           <CommentInput
             value={replyText}
             onCancel={() => {
@@ -163,15 +166,11 @@ export const Comment = ({
           </div>
         </button>
       )}
-      {/* ADD PAGINATION IN THE REPLIES */}
+      {/* TODO: add loading more functionality to the replies */}
       {showReplies && (
         <div className="flex flex-col gap-0.5 p-2 pl-6 pr-0">
           {replies?.comments.map((reply) => (
-            <SingleComment
-              key={comment.id}
-              comment={reply}
-              readonly={loggedinUser.data?.user?.id === comment.user.id}
-            />
+            <SingleComment key={comment.id} comment={reply} isReply />
           ))}
         </div>
       )}
@@ -277,10 +276,15 @@ const SingleComment = ({
                 <div className="hidden text-[0.8rem] sm:block">Share</div>
               </div>
               {/* TODO: make dis work */}
-              <button className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300">
-                <Reply className="h-4 w-4" />
-                <div className="hidden text-[0.8rem] sm:block">Reply</div>
-              </button>
+              {!isReply && (
+                <button
+                  className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
+                  onClick={onClickReply}
+                >
+                  <Reply className="h-4 w-4" />
+                  <div className="hidden text-[0.8rem] sm:block">Reply</div>
+                </button>
+              )}
               {isAuthor && (
                 <button
                   onClick={() => setIsEditing(!isEditing)}
@@ -292,7 +296,7 @@ const SingleComment = ({
               )}
               {/* TODO: make dis work */}
               {isAuthor ? (
-                <CommentDeleteDialog comment={comment} asChild>
+                <CommentDeleteDialog comment={comment} onDelete={onDelete} asChild>
                   <button className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300">
                     <Trash2 className="h-3 w-3" />
                     <div className="hidden text-[0.8rem] sm:block">Delete</div>
@@ -329,53 +333,6 @@ const SingleComment = ({
           </div>
         )}
       </div>
-      <>
-        {!readonly && (
-          <div className="flex items-center gap-4 py-2">
-            <div
-              onClick={() => {
-                copyPathNotifyUser();
-              }}
-              className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
-            >
-              <Share size={16} />
-              <div className="text-xs">Share</div>
-            </div>
-            {!isReply && (
-              <button
-                className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
-                onClick={onClickReply}
-              >
-                <Reply size={18} />
-                <div className="text-xs">Reply</div>
-              </button>
-            )}
-            {isAuthor && (
-              <button
-                onClick={() => setIsEditing(!isEditing)}
-                className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
-              >
-                <Pencil size={16} />
-                <div className="text-xs">Edit</div>
-              </button>
-            )}
-            {isAuthor ? (
-              <CommentDeleteDialog comment={comment} onDelete={onDelete} asChild>
-                <button className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300">
-                  <Trash2 size={16} />
-                  <div className="text-xs">Delete</div>
-                </button>
-              </CommentDeleteDialog>
-            ) : (
-              <ReportDialog reportType="COMMENT" commentId={comment.id}>
-                <button className="flex cursor-pointer items-center text-sm text-neutral-400 duration-200 hover:text-neutral-500 dark:text-neutral-600 dark:hover:text-neutral-500">
-                  Report
-                </button>
-              </ReportDialog>
-            )}
-          </div>
-        )}
-      </>
     </>
   );
 };

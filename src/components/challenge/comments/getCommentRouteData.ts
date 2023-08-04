@@ -44,7 +44,7 @@ export async function getPaginatedComments({
       user: true,
       _count: {
         select: {
-          replies: parentId == null,
+          replies: true,
         },
       },
       rootChallenge: true,
