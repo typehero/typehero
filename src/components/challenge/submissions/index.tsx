@@ -6,7 +6,7 @@ import { getRelativeTime } from '~/utils/relativeTime';
 
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
-import type { ChallengeSubmissions } from '~/app/challenge/[id]/submissions/page';
+import type { ChallengeSubmissions } from '~/app/challenge/[id]/submissions/getChallengeSubmissions';
 import NoSubmissions from './nosubmissions';
 
 interface Props {

@@ -5,10 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui
 import { getRelativeTime } from '~/utils/relativeTime';
 import { Select, SelectContent, SelectItem, SelectTrigger } from '~/components/ui/select';
 import { type Difficulty } from '@prisma/client';
-import { type TagTypes } from '@prisma/client';
 import { Button } from '../ui/button';
 import { DifficultyBadge } from '../ui/difficulty-badge';
-import { TagBadge } from '../ui/tag-badge';
 
 // NOTE: this does not have hover: effects from explore-card
 const GRADIENTS_BY_DIFFICULTY = {
@@ -26,8 +24,6 @@ interface Props {
   name: string;
   setName: (name: string) => void;
   difficulty: Difficulty | 'BEGINNER';
-  tagtypes: TagTypes | 'GENERICS';
-  setTagTypes: (tagtypes: TagTypes | 'GENERICS') => void;
   setDifficulty: (difficulty: Difficulty | 'BEGINNER') => void;
   shortDescription: string;
   setShortDescription: (shortDescription: string) => void;
@@ -37,8 +33,6 @@ const ExploreCardInputs = ({
   setName,
   difficulty,
   setDifficulty,
-  tagtypes,
-  setTagTypes,
   shortDescription,
   setShortDescription,
 }: Props) => {
@@ -68,16 +62,6 @@ const ExploreCardInputs = ({
               <SelectItem value="MEDIUM">MEDIUM</SelectItem>
               <SelectItem value="HARD">HARD</SelectItem>
               <SelectItem value="EXTREME">EXTREME</SelectItem>
-            </SelectContent>
-          </Select>
-          <Select onValueChange={(value: TagTypes) => setTagTypes(value)} value={tagtypes}>
-            <SelectTrigger className="h-8 max-w-fit border-0 p-0 focus:ring-0 focus:ring-offset-0 focus-visible:border-0 focus-visible:ring-0 focus-visible:ring-offset-0">
-              <TagBadge tagtypes={tagtypes || 'GENERICS'} />
-            </SelectTrigger>
-            <SelectContent className="border-zinc-300 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900">
-              <SelectItem value="GENERICS">GENERICS</SelectItem>
-              <SelectItem value="UNIONS">UNIONS</SelectItem>
-              <SelectItem value="TRANSFORMATIONS">TRANSFORMATIONS</SelectItem>
             </SelectContent>
           </Select>
           <div className="flex items-center gap-2 text-sm">

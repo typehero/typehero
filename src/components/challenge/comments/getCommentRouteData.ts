@@ -1,26 +1,34 @@
 'use server';
+import type { CommentRoot } from '@prisma/client';
 import { prisma } from '~/server/db';
 
-export type ChallengeRouteData = NonNullable<Awaited<ReturnType<typeof getInfiniteComments>>>;
+export type PaginatedComments = NonNullable<Awaited<ReturnType<typeof getPaginatedComments>>>;
 
-interface QueryParams {
-  challengeId: number;
-  take?: number;
-  lastCursor?: number;
-}
-
-export async function getInfiniteComments({ challengeId, lastCursor }: QueryParams) {
-  const results = await prisma.comment.findMany({
+export async function getPaginatedComments({
+  page,
+  rootId,
+  rootType,
+}: {
+  rootId: number;
+  rootType: CommentRoot;
+  page: number;
+}) {
+  const totalComments = await prisma.comment.count({
     where: {
-      rootType: 'CHALLENGE',
-      rootChallengeId: challengeId,
+      rootType,
+      visible: true,
+      ...(rootType === 'CHALLENGE' ? { rootChallengeId: rootId } : { rootSolutionId: rootId }),
     },
-    ...(lastCursor && {
-      skip: 1,
-      cursor: {
-        id: lastCursor,
-      },
-    }),
+  });
+
+  const comments = await prisma.comment.findMany({
+    skip: (page - 1) * 10,
+    take: 10,
+    where: {
+      rootType,
+      ...(rootType === 'CHALLENGE' ? { rootChallengeId: rootId } : { rootSolutionId: rootId }),
+      visible: true,
+    },
     orderBy: {
       createdAt: 'desc',
     },
@@ -29,26 +37,11 @@ export async function getInfiniteComments({ challengeId, lastCursor }: QueryPara
     },
   });
 
-  const last = results.at(-1);
-  const hasNextPage =
-    last && last.id
-      ? await prisma.comment
-          .findMany({
-            where: {
-              rootChallengeId: challengeId,
-            },
-            cursor: {
-              id: last.id,
-            },
-          })
-          .then((f) => f.length > 0)
-      : false;
+  const totalPages = Math.ceil(totalComments / 10);
 
   return {
-    data: results,
-    metaData: {
-      lastCursor: last ? last.id : null,
-      hasNextPage,
-    },
+    totalPages,
+    hasMore: page < totalPages,
+    comments,
   };
 }

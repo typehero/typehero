@@ -1,4 +1,6 @@
 'use client';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import {
   Table,
@@ -8,17 +10,14 @@ import {
   TableHeader,
   TableRow,
 } from '~/components/ui/table';
-import { useRouter } from 'next/navigation';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { getInfiniteReports, type InfiniteReports, type ReportsData } from '../report/report.action';
+import { getInfiniteReports, type InfiniteReports } from '../report/report.action';
 import Pagination from '../ui/pagination';
 
 export interface ReportsProps {
   initialReports: InfiniteReports;
 }
 
-export default function Reports2({ initialReports }: ReportsProps) {
-
+export function Reports({ initialReports }: ReportsProps) {
   const router = useRouter();
 
   const [page, setPage] = React.useState(0);
@@ -38,12 +37,10 @@ export default function Reports2({ initialReports }: ReportsProps) {
         b,
       ) => (a?.metadata.hasNextPage ? a?.metadata?.lastCursor : false),
       initialData: {
-        pages: [
-          initialReports
-        ],
-        pageParams: [null]
+        pages: [initialReports],
+        pageParams: [null],
       },
-      enabled: enableInfinite
+      enabled: enableInfinite,
     },
   );
 
@@ -53,18 +50,6 @@ export default function Reports2({ initialReports }: ReportsProps) {
 
   return (
     <section className="data-table">
-      <header className="flex justify-end">
-        <Pagination
-          onChange={(e) => {
-            if(!e.detail.pageLoaded)
-              fetchNextPage().then(() => setPage(e.detail.page - 1));
-            else setPage(e.detail.page - 1);
-          }}
-          totalPages={data?.pages.length}
-          hasNextPage={hasNextPage}
-          currentPage={0 + 1}
-        />
-      </header>
       <Table>
         <TableHeader>
           <TableRow>
@@ -87,7 +72,9 @@ export default function Reports2({ initialReports }: ReportsProps) {
               <TableCell>
                 <div className="flex flex-wrap gap-2">
                   {tr.issues.map((i) => (
-                    <div key={`issues-${i.id}`} className="rounded-full bg-zinc-800 px-3 py-1">{i.type}</div>
+                    <div key={`issues-${i.id}`} className="rounded-full bg-zinc-800 px-3 py-1">
+                      {i.type}
+                    </div>
                   ))}
                 </div>
               </TableCell>

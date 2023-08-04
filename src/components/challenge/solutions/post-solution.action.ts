@@ -7,6 +7,7 @@ interface Args {
   title: string;
   userId: string;
 }
+
 export async function postSolution({ challengeId, description, title, userId }: Args) {
   await prisma.sharedSolution.create({
     data: {

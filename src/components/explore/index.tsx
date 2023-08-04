@@ -30,13 +30,18 @@ export async function Explore() {
   );
 }
 
-export type ExploreChallengeData = Awaited<ReturnType<typeof getEasyChallenges>>;
+export type ExploreChallengeFetcher = typeof getEasyChallenges;
 // TODO: this is trash
 async function getEasyChallenges() {
   return prisma.challenge.findMany({
     where: {
-      visibility: 'VISIBLE',
+      status: 'ACTIVE',
       difficulty: { in: ['EASY'] },
+      user: {
+        NOT: {
+          status: 'BANNED',
+        },
+      },
     },
     include: {
       _count: {
@@ -52,8 +57,13 @@ async function getEasyChallenges() {
 async function getMediumChallenges() {
   return prisma.challenge.findMany({
     where: {
-      visibility: 'VISIBLE',
+      status: 'ACTIVE',
       difficulty: { in: ['MEDIUM'] },
+      user: {
+        NOT: {
+          status: 'BANNED',
+        },
+      },
     },
     include: {
       _count: {
@@ -69,8 +79,13 @@ async function getMediumChallenges() {
 async function getHardChallenges() {
   return prisma.challenge.findMany({
     where: {
-      visibility: 'VISIBLE',
+      status: 'ACTIVE',
       difficulty: { in: ['HARD'] },
+      user: {
+        NOT: {
+          status: 'BANNED',
+        },
+      },
     },
     include: {
       _count: {

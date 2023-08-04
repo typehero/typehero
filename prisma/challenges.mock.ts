@@ -1,4 +1,4 @@
-import { type Difficulty } from '@prisma/client';
+import { ChallengeStatus, type Difficulty } from '@prisma/client';
 import { gId, trashId } from './seed';
 import url from 'url';
 import { parse } from 'yaml';
@@ -66,6 +66,7 @@ export async function loadChallengesFromTypeChallenge() {
       id: idNum,
       name: title,
       description: README,
+      status: Math.floor(Math.random() * 2) > 0 ? ChallengeStatus.PENDING : ChallengeStatus.ACTIVE,
       prompt: `// TEST CASE START\n${testData}\n\n// CODE START\n${prompt}`,
       difficulty: difficulty === 'warm' ? 'BEGINNER' : (difficulty.toUpperCase() as Difficulty),
       shortDescription: README.slice(0, 100),

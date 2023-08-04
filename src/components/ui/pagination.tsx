@@ -31,7 +31,7 @@ export default function Pagination({
       ];
     }
     return initial;
-  }, [currentPage, totalPages, hasNextPage]);
+  }, [currentPage, totalPages]);
 
   return (
     <div className="pagination justify-baseline flex gap-2">

@@ -29,12 +29,12 @@ enum RoleTypes {
   USER
   ADMIN
   MODERATOR
+  CREATOR
 }
 
 enum UserStatus {
   BANNED
   ACTIVE // can post, comment, vote, etc
-  PENDING // must finish x number of challenges to be active
 }
 
 enum ReportStatus {
@@ -43,9 +43,11 @@ enum ReportStatus {
   DISMISSED
 }
 
-enum Visibility {
-  VISIBLE
-  HIDDEN
+enum ChallengeStatus {
+  DECLINED
+  BANNED
+  PENDING
+  ACTIVE
 }
 
 // Necessary for Next auth
@@ -100,7 +102,6 @@ model UserLink {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
 }
 
 model User {
@@ -117,7 +118,7 @@ model User {
   /// this is the twitter URL that shows up on the profile page
   userLinks UserLink[]
 
-  status    UserStatus @default(PENDING)
+  status    UserStatus @default(ACTIVE)
   banReason String?    @db.MediumText
 
   accounts   Account[]
@@ -126,19 +127,17 @@ model User {
   vote       Vote[]
   submission Submission[]
 
-  challengeReports          ChallengeReport[] @relation(name: "authored_challenge_reports")
-  moderatedChallengeReports ChallengeReport[] @relation(name: "moderated_challenge_reports")
-
-  bookmark        Bookmark[]
-  sharedSolution  SharedSolution[]
-  comment Comment[]
+  bookmark       Bookmark[]
+  sharedSolution SharedSolution[]
+  comment        Comment[]
 
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   reports      Report[] @relation("reporter")
   reportsAbout Report[] @relation("reported_user")
-  moderated Report[] @relation("report_moderator")
-  
+  moderated    Report[] @relation("report_moderator")
+
+  imageUpload ImageUpload[]
 }
 
 model VerificationToken {
@@ -150,18 +149,18 @@ model VerificationToken {
 }
 
 model Challenge {
-  id               Int        @id @default(autoincrement())
-  createdAt        DateTime   @default(now())
-  updatedAt        DateTime   @updatedAt
+  id               Int             @id @default(autoincrement())
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
   difficulty       Difficulty
   name             String
   /// this is the description to describe the challenge on description panel
-  description      String     @db.MediumText
+  description      String          @db.MediumText
   /// this is a short blue thats shown on the explore card
   shortDescription String
   /// this is the test cases + default starter code
-  prompt           String     @db.MediumText
-  visibility       Visibility @default(VISIBLE)
+  prompt           String          @db.MediumText
+  status           ChallengeStatus @default(PENDING)
 
   user   User   @relation(fields: [userId], references: [id])
   userId String
@@ -169,12 +168,9 @@ model Challenge {
   vote           Vote[]
   submission     Submission[]
   comment        Comment[]
-  report         ChallengeReport[]
   bookmark       Bookmark[]
   sharedSolution SharedSolution[]
-  Report         Report[]           @relation("report_challenge")
-  tags           Tag[]
-  tagtypes       TagTypes
+  Report         Report[]         @relation("report_challenge")
 
   @@index([userId])
 }
@@ -198,14 +194,14 @@ model Vote {
 
 /// This is a public solution created by a user for a challenge
 model SharedSolution {
-  id              Int               @id @default(autoincrement())
-  createdAt       DateTime          @default(now())
+  id              Int        @id @default(autoincrement())
+  createdAt       DateTime   @default(now())
   title           String
-  description     String            @db.MediumText
+  description     String     @db.MediumText
   vote            Vote[]
-  user            User?             @relation(fields: [userId], references: [id])
+  user            User?      @relation(fields: [userId], references: [id])
   userId          String?
-  challenge       Challenge?        @relation(fields: [challengeId], references: [id])
+  challenge       Challenge? @relation(fields: [challengeId], references: [id])
   challengeId     Int?
   solutionComment Comment[]
   Report          Report[]
@@ -228,36 +224,6 @@ model Submission {
 
   @@index([userId])
   @@index([challengeId])
-}
-
-model ChallengeReport {
-  id Int @id @default(autoincrement())
-
-  // meta information
-  text   String       @db.MediumText
-  status ReportStatus @default(PENDING)
-
-  // report types
-  derogatory Boolean @default(false)
-  unclear    Boolean @default(false)
-
-  // user infor
-  author      User    @relation(fields: [authorId], references: [id], name: "authored_challenge_reports")
-  authorId    String
-  moderator   User?   @relation(fields: [moderatorId], references: [id], name: "moderated_challenge_reports")
-  moderatorId String?
-
-  // attached challenge.
-  challenge   Challenge @relation(fields: [challengeId], references: [id])
-  challengeId Int
-
-  // time
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([authorId])
-  @@index([challengeId])
-  @@index([moderatorId])
 }
 
 model Bookmark {
@@ -327,7 +293,7 @@ model Report {
   solution   SharedSolution? @relation(fields: [solutionId], references: [id])
 
   moderatorId String?
-  moderator User? @relation("report_moderator", fields: [moderatorId], references: [id])
+  moderator   User?   @relation("report_moderator", fields: [moderatorId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -347,8 +313,9 @@ enum CommentRoot {
 }
 
 model Comment {
-  id       Int    @id @default(autoincrement())
-  text     String @db.MediumText
+  id       Int     @id @default(autoincrement())
+  text     String  @db.MediumText
+  visible  Boolean @default(true)
   parentId Int?
 
   userId String
@@ -370,3 +337,36 @@ model Comment {
   @@index([rootChallengeId])
   @@index([userId])
 }
+
+enum WaitlistIntention {
+  BUILDER // interested in building challenges for the community
+  USER // interested in solving challenges
+  BOTH
+}
+
+model Waitlist {
+  id        Int               @id @default(autoincrement())
+  name      String
+  email     String
+  intention WaitlistIntention
+}
+
+model ImageUpload {
+  /// the id of the db row
+  id String @id @default(uuid())
+
+  /// the user id fk
+  userId String
+
+  /// The user that this is related to
+  user User @relation(fields: [userId], references: [id])
+
+  /// the url to the s3 uploaded assets
+  url String @db.VarChar(256)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+

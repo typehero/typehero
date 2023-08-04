@@ -125,6 +125,7 @@ export function SolutionEditor({ dismiss, challenge }: Props) {
                 value={field.value}
                 // non-split-screen by default
                 onChange={field.onChange}
+                allowImageUpload
               />
             )}
           />

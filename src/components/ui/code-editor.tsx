@@ -37,8 +37,6 @@ export function CodeEditor({ onChange, onMount, options, value, ...props }: Prop
     };
   }, [options, settings]);
 
-  console.log({ value });
-
   return (
     <Editor
       {...props}

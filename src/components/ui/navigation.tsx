@@ -17,7 +17,6 @@ import {
   DropdownMenuTrigger,
 } from './dropdown-menu';
 import { RoleTypes } from '@prisma/client';
-import { isProd } from '~/utils/featureFlags';
 
 export function Navigation() {
   const [mounted, setMounted] = useState(false);
@@ -52,8 +51,6 @@ export function Navigation() {
   }, []);
 
   const renderLoginDetails = (): JSX.Element | null => {
-    if (isProd()) return null;
-
     return session ? (
       <>
         <button
@@ -129,17 +126,19 @@ export function Navigation() {
   };
 
   return (
-    <header className="w-full">
+    <header className="z-10 w-full">
       <nav
         className={`flex h-14 items-center ${
-          pathname.includes('/challenge') ? 'px-4' : 'container  '
+          pathname.startsWith('/challenge') || pathname.startsWith('/admin/challenge')
+            ? 'px-4'
+            : 'container  '
         }`}
       >
         <div className="flex w-full items-center justify-between">
           <div className="relative flex gap-3">
             <a className="flex items-center space-x-2 duration-300" href="/">
               <svg
-                className="h-6 w-6 rounded-md bg-[#3178C6] p-[2px]"
+                className="h-8 w-8 rounded-md bg-[#3178C6] p-[2px]"
                 viewBox="0 0 512 512"
                 xmlns="http://www.w3.org/2000/svg"
               >
@@ -173,11 +172,9 @@ export function Navigation() {
               </span>
             </a>
 
-            {!isProd() && (
-              <Link href="/explore">
-                <span className={navigationMenuTriggerStyle()}>Explore</span>
-              </Link>
-            )}
+            <Link href="/explore">
+              <span className={navigationMenuTriggerStyle()}>Explore</span>
+            </Link>
           </div>
           <div className="flex">
             <div className="flex items-center justify-end gap-2">
