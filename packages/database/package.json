@@ -1,0 +1,31 @@
+{
+  "name": "@typehero/database",
+  "version": "0.1.0",
+  "scripts": {
+    "reset": "pnpm with-env prisma db push --force-reset",
+    "refresh": "pnpm with-env pnpm reset && pnpm prisma db seed",
+    "db-seed": "pnpm with-env prisma db seed",
+    "db-generate": "pnpm with-env prisma generate",
+    "db-studio": "pnpm with-env prisma studio",
+    "with-env": "dotenv -e ../../.env"
+  },
+  "type": "module",
+  "prisma": {
+    "schema": "./prisma/schema.prisma",
+    "seed": "tsx ./seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "5.0.0",
+    "server-only": "^0.0.1",
+    "simple-git": "^3.19.1",
+    "yaml": "^2.3.1"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
+    "@typehero/config": "workspace:*",
+    "dotenv-cli": "^7.2.1",
+    "prisma": "5.0.0",
+    "tsx": "^3.12.7",
+    "uuid-by-string": "^4.0.0"
+  }
+}

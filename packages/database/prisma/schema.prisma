@@ -1,0 +1,358 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+enum Difficulty {
+  BEGINNER
+  EASY
+  MEDIUM
+  HARD
+  EXTREME
+}
+
+enum RoleTypes {
+  USER
+  ADMIN
+  MODERATOR
+  CREATOR
+}
+
+enum UserStatus {
+  BANNED
+  ACTIVE // can post, comment, vote, etc
+}
+
+enum ReportStatus {
+  PENDING
+  CLEARED
+  DISMISSED
+}
+
+enum ChallengeStatus {
+  DECLINED
+  BANNED
+  PENDING
+  ACTIVE
+}
+
+// Necessary for Next auth
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? // @db.Text
+  access_token      String? // @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? // @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Role {
+  id   String    @id @default(uuid())
+  user User[]
+  role RoleTypes @unique
+}
+
+/// This is a table that contains all the user links they can add to profile
+model UserLink {
+  id   String @id @default(uuid())
+  user User[]
+  url  String @db.VarChar(256)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  id String @id @default(uuid())
+
+  name          String
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  roles         Role[]
+
+  /// this is the bio that shows up on the profile page
+  bio       String     @default("") @db.VarChar(256)
+  /// this is the twitter URL that shows up on the profile page
+  userLinks UserLink[]
+
+  status    UserStatus @default(ACTIVE)
+  banReason String?    @db.MediumText
+
+  accounts   Account[]
+  sessions   Session[]
+  challenge  Challenge[]
+  vote       Vote[]
+  submission Submission[]
+
+  bookmark       Bookmark[]
+  sharedSolution SharedSolution[]
+  comment        Comment[]
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  reports      Report[] @relation("reporter")
+  reportsAbout Report[] @relation("reported_user")
+  moderated    Report[] @relation("report_moderator")
+
+  imageUpload ImageUpload[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Challenge {
+  id               Int             @id @default(autoincrement())
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  difficulty       Difficulty
+  name             String
+  /// this is the description to describe the challenge on description panel
+  description      String          @db.MediumText
+  /// this is a short blue thats shown on the explore card
+  shortDescription String
+  /// this is the test cases + default starter code
+  prompt           String          @db.MediumText
+  status           ChallengeStatus @default(PENDING)
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  vote           Vote[]
+  submission     Submission[]
+  comment        Comment[]
+  bookmark       Bookmark[]
+  sharedSolution SharedSolution[]
+  Report         Report[]         @relation("report_challenge")
+
+  @@index([userId])
+}
+
+model Vote {
+  id               Int             @id @default(autoincrement())
+  user             User            @relation(fields: [userId], references: [id])
+  userId           String
+  challenge        Challenge?      @relation(fields: [challengeId], references: [id])
+  challengeId      Int?
+  submission       Submission?     @relation(fields: [submissionId], references: [id])
+  submissionId     Int?
+  sharedSolution   SharedSolution? @relation(fields: [sharedSolutionId], references: [id])
+  sharedSolutionId Int?
+
+  @@index([userId])
+  @@index([challengeId])
+  @@index([submissionId])
+  @@index([sharedSolutionId])
+}
+
+/// This is a public solution created by a user for a challenge
+model SharedSolution {
+  id              Int        @id @default(autoincrement())
+  createdAt       DateTime   @default(now())
+  title           String
+  description     String     @db.MediumText
+  vote            Vote[]
+  user            User?      @relation(fields: [userId], references: [id])
+  userId          String?
+  challenge       Challenge? @relation(fields: [challengeId], references: [id])
+  challengeId     Int?
+  solutionComment Comment[]
+  Report          Report[]
+
+  @@index([userId])
+  @@index([challengeId])
+}
+
+/// Every attempt a user makes to a challenge is stored here
+model Submission {
+  id           Int       @id @default(autoincrement())
+  code         String    @db.MediumText
+  createdAt    DateTime  @default(now())
+  isSuccessful Boolean
+  user         User      @relation(fields: [userId], references: [id])
+  userId       String
+  challenge    Challenge @relation(fields: [challengeId], references: [id])
+  challengeId  Int
+  vote         Vote[]
+
+  @@index([userId])
+  @@index([challengeId])
+}
+
+model Bookmark {
+  id          Int        @id @default(autoincrement())
+  user        User       @relation(fields: [userId], references: [id])
+  userId      String
+  challenge   Challenge? @relation(fields: [challengeId], references: [id])
+  challengeId Int?
+
+  @@index([userId])
+  @@index([challengeId])
+}
+
+enum ReportType {
+  CHALLENGE
+  USER
+  COMMENT
+  SOLUTION
+}
+
+enum IssueType {
+  DEROGATORY
+  OTHER
+  UNCLEAR
+  BULLYING
+  SPAM
+  HATESPEECH
+  THREAT
+}
+
+model ReportIssue {
+  id       Int       @id @default(autoincrement())
+  reportId Int
+  report   Report    @relation(fields: [reportId], references: [id])
+  type     IssueType
+
+  @@unique([id])
+  @@index([reportId])
+}
+
+model Report {
+  // Base table info
+  id Int @id @default(autoincrement())
+
+  text String @db.MediumText
+
+  type   ReportType
+  status ReportStatus
+  issues ReportIssue[]
+
+  // Reporter information
+  reporterId String
+  reporter   User   @relation("reporter", fields: [reporterId], references: [id])
+
+  // reported User Info
+  userId String?
+  user   User?   @relation("reported_user", fields: [userId], references: [id])
+
+  // reported Challenge Info
+  challengeId Int?
+  challenge   Challenge? @relation("report_challenge", fields: [challengeId], references: [id])
+
+  commentId Int?
+  comment   Comment? @relation("report_comment", fields: [commentId], references: [id])
+
+  solutionId Int?
+  solution   SharedSolution? @relation(fields: [solutionId], references: [id])
+
+  moderatorId String?
+  moderator   User?   @relation("report_moderator", fields: [moderatorId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([id])
+  @@index([commentId])
+  @@index([reporterId])
+  @@index([userId])
+  @@index([challengeId])
+  @@index([solutionId])
+  @@index([moderatorId])
+}
+
+enum CommentRoot {
+  SOLUTION
+  CHALLENGE
+}
+
+model Comment {
+  id       Int     @id @default(autoincrement())
+  text     String  @db.MediumText
+  visible  Boolean @default(true)
+  parentId Int?
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  rootType CommentRoot @default(CHALLENGE)
+
+  rootChallengeId Int?
+  rootChallenge   Challenge? @relation(fields: [rootChallengeId], references: [id])
+
+  rootSolutionId Int?
+  rootSolution   SharedSolution? @relation(fields: [rootSolutionId], references: [id])
+  Report         Report[]        @relation("report_comment")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([rootSolutionId])
+  @@index([rootChallengeId])
+  @@index([userId])
+}
+
+enum WaitlistIntention {
+  BUILDER // interested in building challenges for the community
+  USER // interested in solving challenges
+  BOTH
+}
+
+model Waitlist {
+  id        Int               @id @default(autoincrement())
+  name      String
+  email     String
+  intention WaitlistIntention
+}
+
+model ImageUpload {
+  /// the id of the db row
+  id String @id @default(uuid())
+
+  /// the user id fk
+  userId String
+
+  /// The user that this is related to
+  user User @relation(fields: [userId], references: [id])
+
+  /// the url to the s3 uploaded assets
+  url String @db.VarChar(256)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+

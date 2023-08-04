@@ -1,0 +1,9 @@
+{
+  "name": "@typehero/config",
+  "version": "1.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "@t3-oss/env-nextjs": "^0.6.0",
+    "zod": "^3.21.4"
+  }
+}
