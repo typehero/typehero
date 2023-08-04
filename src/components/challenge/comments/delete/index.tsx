@@ -13,9 +13,15 @@ import { deleteComment } from '../comment.action';
 
 interface CommentDeleteDialogProps extends DialogTriggerProps {
   comment: ChallengeRouteData['comment'][number];
+  queryKey?: (string | number)[];
 }
 
-export const CommentDeleteDialog = ({ children, comment, ...props }: CommentDeleteDialogProps) => {
+export const CommentDeleteDialog = ({
+  children,
+  comment,
+  queryKey,
+  ...props
+}: CommentDeleteDialogProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const queryClient = useQueryClient();
 
@@ -36,7 +42,7 @@ export const CommentDeleteDialog = ({ children, comment, ...props }: CommentDele
         description: 'An error occurred while trying to delete the comment.',
       });
     } finally {
-      queryClient.invalidateQueries([`challenge-${comment.rootChallengeId}-comments`]);
+      queryClient.invalidateQueries(queryKey);
       setIsOpen(!isOpen);
     }
   }

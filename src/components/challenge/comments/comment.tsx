@@ -19,6 +19,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 interface CommentProps {
   comment: ChallengeRouteData['comment'][number];
+  queryKey?: (string | number)[];
   readonly?: boolean;
 }
 
@@ -43,7 +44,7 @@ const commentReportSchema = z
 
 export type CommentReportSchemaType = z.infer<typeof commentReportSchema>;
 
-export const Comment = ({ comment, readonly = false }: CommentProps) => {
+export const Comment = ({ comment, queryKey, readonly = false }: CommentProps) => {
   const queryClient = useQueryClient();
   const [text, setText] = useState(comment.text);
   const [isEditing, setIsEditing] = useState(false);
@@ -86,7 +87,7 @@ export const Comment = ({ comment, readonly = false }: CommentProps) => {
           description: <p>You need to be signed in to post a comment.</p>,
         });
       }
-      queryClient.invalidateQueries([`challenge-${comment.rootChallengeId}-comments`]);
+      queryClient.invalidateQueries(queryKey);
     } catch (e) {
       toast({
         title: 'Unauthorized',
@@ -149,7 +150,7 @@ export const Comment = ({ comment, readonly = false }: CommentProps) => {
               )}
               {/* TODO: make dis work */}
               {isAuthor ? (
-                <CommentDeleteDialog comment={comment} asChild>
+                <CommentDeleteDialog comment={comment} queryKey={queryKey} asChild>
                   <button className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300">
                     <Trash2 className="h-3 w-3" />
                     <div className="hidden text-[0.8rem] sm:block">Delete</div>
