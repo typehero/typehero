@@ -59,11 +59,13 @@ export const Comment = ({ comment, readonly = false, rootId, type }: CommentProp
   const queryClient = useQueryClient();
 
   const replyQueryKey = `${comment.id}-comment-replies`;
-  const { data, fetchNextPage, isFetching } = useInfiniteQuery({
-    queryKey: [replyQueryKey],
-    queryFn: ({ pageParam = 1 }) =>
-      getPaginatedComments({ rootId, rootType: type, page: pageParam, parentId: comment.id }),
-    getNextPageParam: (_, pages) => pages?.length + 1,
+  const { status, data: replies } = useQuery({
+    queryKey: [replyQueryKey, page],
+    queryFn: () => getPaginatedComments({ rootId, rootType: type, page, parentId: comment.id }),
+    onSuccess(data) {
+      console.log(data);
+    },
+    keepPreviousData: true,
     staleTime: 5000,
   });
 
@@ -97,10 +99,6 @@ export const Comment = ({ comment, readonly = false, rootId, type }: CommentProp
         variant: 'destructive',
         description: <p>You need to be signed in to post a comment.</p>,
       });
-    } finally {
-      if (onReply) {
-        onReply();
-      }
     }
   }
 
@@ -141,67 +139,12 @@ export const Comment = ({ comment, readonly = false, rootId, type }: CommentProp
           </div>
         </button>
       )}
+      {/* TODO: add loading more functionality to the replies */}
       {showReplies && (
         <div className="flex flex-col gap-0.5 p-2 pl-6 pr-0">
-          {data?.pages.flatMap((page) =>
-            page.comments.map((reply) => (
-              <SingleComment
-                key={comment.id}
-                comment={reply}
-                isReply
-              />
-            )),
-          )}
-        </div>
-      )}
-      {!isFetching && showReplies && data?.pages.at(-1)?.hasMore && (
-        <button
-          className="flex cursor-pointer items-center gap-1 pl-6 text-xs text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
-          onClick={() => fetchNextPage()}
-        >
-          Load more
-        </button>
-      )}
-    </div>
-  );
-};
-
-const ExpandableContent = ({ content }: { content: string }) => {
-  const [expanded, setExpanded] = useState(true);
-  const contentWrapperRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if ((contentWrapperRef.current?.clientHeight ?? 0) > 300) {
-        setExpanded(false);
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-    handleResize();
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [content]);
-
-  return (
-    <div
-      className={clsx(
-        { 'h-full': expanded, 'max-h-[300px]': !expanded },
-        'relative w-full overflow-hidden break-words pl-[1px] text-sm',
-      )}
-      ref={contentWrapperRef}
-    >
-      <Markdown>{content}</Markdown>
-      {!expanded && (
-        <div
-          className="absolute top-0 flex h-full w-full cursor-pointer items-end bg-gradient-to-b from-transparent to-white dark:to-zinc-800"
-          onClick={() => setExpanded(true)}
-        >
-          <div className="text-md text-label-1 dark:text-dark-label-1 flex w-full items-center justify-center hover:bg-transparent">
-            Read more
-          </div>
+          {replies?.comments.map((reply) => (
+            <SingleComment key={reply.id} comment={reply} isReply />
+          ))}
         </div>
       )}
     </div>
@@ -300,7 +243,7 @@ const SingleComment = ({
               {/* TODO: make dis work */}
               {!isReply && (
                 <button
-                  className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 disabled:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300"
+                  className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
                   onClick={onClickReply}
                 >
                   <Reply className="h-4 w-4" />
@@ -317,7 +260,7 @@ const SingleComment = ({
                 </button>
               )}
               {isAuthor ? (
-                <CommentDeleteDialog comment={comment} asChild>
+                <CommentDeleteDialog comment={comment} onDelete={onDelete} asChild>
                   <button className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300">
                     <Trash2 className="h-3 w-3" />
                     <div className="hidden text-[0.8rem] sm:block">Delete</div>
