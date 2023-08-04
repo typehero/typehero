@@ -6,11 +6,14 @@ import { Balancer } from 'react-wrap-balancer';
 
 const Features = () => {
   return (
-    <section className="relative overflow-hidden">
+    <section id="features" className="relative overflow-hidden">
       <div className="container mb-[64px] grid items-center justify-center">
         <div className="flex flex-col items-center justify-center gap-16">
           <div className="flex flex-col gap-3 text-center">
-            <div className="mx-auto rounded-full bg-gradient-to-r from-[#31bdc6] to-[#3178c6] p-[1px] brightness-90 contrast-150 dark:brightness-125 dark:contrast-100">
+            <a
+              href="#features"
+              className="mx-auto rounded-full bg-gradient-to-r from-[#31bdc6] to-[#3178c6] p-[1px] brightness-90 contrast-150 dark:brightness-125 dark:contrast-100"
+            >
               <div className="rounded-full bg-white/80 px-3 py-1 dark:bg-black/80">
                 <span className="bg-gradient-to-r from-[#31bdc6] to-[#3178c6] bg-clip-text text-transparent">
                   <svg
@@ -23,7 +26,7 @@ const Features = () => {
                   many features, wow
                 </span>
               </div>
-            </div>
+            </a>
             <h1 className="text-4xl font-bold">
               <Balancer>What&apos;s in TypeHero?</Balancer>
             </h1>
