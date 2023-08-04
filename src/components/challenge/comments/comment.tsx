@@ -1,6 +1,7 @@
 'use client';
 
-import { useQueryClient, useInfiniteQuery } from '@tanstack/react-query';
+import { type CommentRoot } from '@prisma/client';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { Pencil, Reply, Share, Trash2 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
@@ -59,10 +60,11 @@ export const Comment = ({ comment, readonly = false, rootId, type }: CommentProp
   const queryClient = useQueryClient();
 
   const replyQueryKey = `${comment.id}-comment-replies`;
-  const { status, data: replies } = useQuery({
-    queryKey: [replyQueryKey, page],
-    queryFn: () => getPaginatedComments({ rootId, rootType: type, page, parentId: comment.id }),
-    keepPreviousData: true,
+  const { data, fetchNextPage, isFetching } = useInfiniteQuery({
+    queryKey: [replyQueryKey],
+    queryFn: ({ pageParam = 1 }) =>
+      getPaginatedComments({ rootId, rootType: type, page: pageParam, parentId: comment.id }),
+    getNextPageParam: (_, pages) => pages?.length + 1,
     staleTime: 5000,
   });
 
@@ -136,13 +138,26 @@ export const Comment = ({ comment, readonly = false, rootId, type }: CommentProp
           </div>
         </button>
       )}
-      {/* TODO: add loading more/pagination functionality to the replies */}
       {showReplies && (
         <div className="flex flex-col gap-0.5 p-2 pl-6 pr-0">
-          {replies?.comments.map((reply) => (
-            <SingleComment key={reply.id} comment={reply} isReply />
-          ))}
+          {data?.pages.flatMap((page) =>
+            page.comments.map((reply) => (
+              <SingleComment
+                key={comment.id}
+                comment={reply}
+                isReply
+              />
+            )),
+          )}
         </div>
+      )}
+      {!isFetching && showReplies && data?.pages.at(-1)?.hasMore && (
+        <button
+          className="flex cursor-pointer items-center gap-1 pl-6 text-xs text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
+          onClick={() => fetchNextPage()}
+        >
+          Load more
+        </button>
       )}
     </div>
   );
