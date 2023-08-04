@@ -302,7 +302,7 @@ model Comment {
   id            Int       @id @default(autoincrement())
   text          String    @db.MediumText
   visible       Boolean   @default(true)
-  parentId      Int?      @unique
+  parentId      Int?
   parentComment Comment?  @relation("reply_comments", fields: [parentId], references: [id], onUpdate: NoAction, onDelete: NoAction)
   replies       Comment[] @relation("reply_comments")
 
