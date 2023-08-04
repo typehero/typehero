@@ -17,11 +17,10 @@ import NoComments from './nocomments';
 
 interface Props {
   rootId: number;
-  commentCount: number;
   type: CommentRoot;
 }
 
-export const Comments = ({ rootId, commentCount, type }: Props) => {
+export const Comments = ({ rootId, type }: Props) => {
   const [showComments, setShowComments] = useState(false);
   const [text, setText] = useState('');
   const commentContainerRef = useRef<HTMLDivElement>(null);
@@ -30,11 +29,10 @@ export const Comments = ({ rootId, commentCount, type }: Props) => {
 
   const [page, setPage] = useState(1);
 
-  const queryKey =
-    type === 'CHALLENGE' ? `challenge-${rootId}-comments` : `solution-${rootId}-comments`;
+  const queryKey = [`${type.toLowerCase()}-${rootId}-comments`, page];
 
   const { status, data } = useQuery({
-    queryKey: [queryKey, page],
+    queryKey,
     queryFn: () => getPaginatedComments({ rootId, page, rootType: type }),
     keepPreviousData: true,
     staleTime: 5000,
@@ -66,7 +64,7 @@ export const Comments = ({ rootId, commentCount, type }: Props) => {
         });
       }
       setText('');
-      queryClient.invalidateQueries([queryKey, page]);
+      queryClient.invalidateQueries(queryKey);
     } catch (e) {
       toast({
         title: 'Unauthorized',
@@ -102,7 +100,8 @@ export const Comments = ({ rootId, commentCount, type }: Props) => {
         >
           <div className="flex items-center gap-2">
             <MessageCircle className="h-5 w-5" />
-            Comments ({commentCount})
+            Comments
+            {data?.totalComments != null && <span>({data?.totalComments})</span>}
           </div>
           <ChevronDown
             className={clsx('h-4 w-4 duration-300', {
@@ -136,7 +135,9 @@ export const Comments = ({ rootId, commentCount, type }: Props) => {
               (data.comments.length === 0 ? (
                 <NoComments />
               ) : (
-                data?.comments?.map((comment) => <Comment key={comment.id} comment={comment} />)
+                data?.comments?.map((comment) => (
+                  <Comment key={comment.id} comment={comment} queryKey={queryKey} />
+                ))
               ))}
           </div>
           {(data?.totalPages ?? 0) > 1 && (

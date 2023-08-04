@@ -91,11 +91,7 @@ export function SolutionDetails({ solution }: Props) {
           <Markdown>{solution.description || ''}</Markdown>
         </div>
       </div>
-      <Comments
-        rootId={solution.id as number}
-        commentCount={solution.jimComments.length}
-        type="SOLUTION"
-      />
+      <Comments rootId={solution.id as number} type="SOLUTION" />
     </div>
   );
 }

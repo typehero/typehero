@@ -6,6 +6,7 @@
     "checkJs": false,
     "skipLibCheck": true,
     "strict": true,
+    "verbatimModuleSyntax": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
