@@ -21,7 +21,8 @@ export default async function Challenges({ params: { id } }: Props) {
   return (
     <div className="relative h-full">
       <Description challenge={challenge}></Description>
-      <Comments challengeId={challenge.id} commentCount={challenge.comment.length} />
+      {/* BUG: comment length wont update when adding/deleting a comment */}
+      <Comments rootId={challenge.id} commentCount={challenge.comment.length} type="CHALLENGE" />
     </div>
   );
 }

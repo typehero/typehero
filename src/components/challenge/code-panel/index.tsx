@@ -101,7 +101,7 @@ export const CodePanel = (props: Props) => {
         variant: 'success',
         title: 'Good job!',
         description: 'You completed this challenge.',
-        action: <ToastAction altText="Try again">Dismiss</ToastAction>,
+        action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
       });
     }
   };

@@ -50,7 +50,7 @@ export const FeatureCard = ({
 
   return (
     <motion.div
-      className="animated-feature-cards h-full w-full drop-shadow-[0_0_15px_rgba(49,49,49,0.2)] dark:drop-shadow-[0_0_15px_rgba(49,49,49,0.2)]"
+      className="animated-feature-cards relative w-full drop-shadow-[0_0_15px_rgba(49,49,49,0.2)] dark:drop-shadow-[0_0_15px_rgba(49,49,49,0.2)]"
       onMouseMove={handleMouseMove}
       style={
         {
@@ -59,7 +59,7 @@ export const FeatureCard = ({
         } as WrapperStyle
       }
     >
-      <motion.div className="group b-black/90 relative h-full w-full overflow-hidden rounded-xl border bg-gradient-to-b from-neutral-50/90 to-neutral-100/90 backdrop-blur-2xl transition duration-300 hover:border-transparent dark:from-neutral-950/90 dark:to-neutral-800/90">
+      <motion.div className="b-black/90 group relative w-full overflow-hidden rounded-xl border bg-gradient-to-b from-neutral-50/90 to-neutral-100/90 backdrop-blur-2xl transition duration-300 hover:border-transparent dark:from-neutral-950/90 dark:to-neutral-800/90">
         <div className="mx-10 my-10 min-h-[450px] w-full">
           <div className="flex w-4/6 flex-col gap-3">
             <h2 className="text-xl font-bold tracking-tight md:text-xl">{title}</h2>
