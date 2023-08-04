@@ -1,9 +1,8 @@
 'use server';
 
-import { prisma } from '~/server/db';
-import type { FormValues } from '../challenge/description';
-import { type Report, type Prisma } from '@prisma/client';
+import { type Prisma, type Report } from '@prisma/client';
 import { getServerAuthSession } from '~/server/auth';
+import { prisma } from '~/server/db';
 
 export type ReportBase = {
   issues: Prisma.ReportIssueCreateWithoutReportInput[];
@@ -188,6 +187,13 @@ export async function getReportedUserInformation(userId: string) {
         take: 10,
         include: {
           user: true,
+          _count: {
+            select: {
+              replies: true,
+            },
+          },
+          rootChallenge: true,
+          rootSolution: true,
         },
         orderBy: {
           createdAt: 'desc',

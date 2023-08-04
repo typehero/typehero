@@ -14,6 +14,8 @@ interface UserReportProps {
 export default async function UserReportUi({ report }: UserReportProps) {
   if (!report.userId) return null;
   const userInfo = await getReportedUserInformation(report.userId);
+  const commentRootId = report?.comment?.rootChallengeId ?? report?.comment?.rootSolutionId ?? -1;
+
   return (
     <div>
       <Text intent="h3">
@@ -22,9 +24,12 @@ export default async function UserReportUi({ report }: UserReportProps) {
 
       <div className="mt-4 flex flex-col gap-4">
         {userInfo.comment &&
-          userInfo.comment.map((m) => (
-            <div key={`comment-${m.id}`} className="rounded border border-zinc-700 bg-zinc-800 p-2">
-              <Comment readonly comment={m} />
+          userInfo.comment.map((comment) => (
+            <div
+              key={`comment-${comment.id}`}
+              className="rounded border border-zinc-700 bg-zinc-800 p-2"
+            >
+              <Comment readonly comment={comment} rootId={commentRootId} type={comment.rootType} />
             </div>
           ))}
 

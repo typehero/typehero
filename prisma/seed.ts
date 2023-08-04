@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { type Prisma, PrismaClient } from '@prisma/client';
+import { PrismaClient, type Prisma } from '@prisma/client';
 import uuidByString from 'uuid-by-string';
 import { loadChallengesFromTypeChallenge } from './challenges.mock';
 import CommentMock from './comment.mock';
@@ -40,7 +40,11 @@ export const trashId = uuidByString('trash');
 export const gId = uuidByString('g');
 
 try {
-  const someChallenge = await prisma.challenge.findFirst();
+  const someChallenge = await prisma.challenge.findFirst({
+    where: {
+      status: 'ACTIVE',
+    },
+  });
 
   await prisma.user.upsert({
     where: { id: trashId },

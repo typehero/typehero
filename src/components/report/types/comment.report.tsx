@@ -4,6 +4,7 @@ import { Comment } from '~/components/challenge/comments/comment';
 
 export default function CommentReport({ report }: { report: NonNullable<ReportWithInfo> }) {
   if (report.type !== 'COMMENT' || report.commentId === null || !report.comment) return null;
+  const rootId = report.comment.rootChallengeId ?? report.comment.rootSolutionId ?? -1;
 
   return (
     <div>
@@ -24,7 +25,7 @@ export default function CommentReport({ report }: { report: NonNullable<ReportWi
         </Link>
       </header>
       <section className="mt-4 rounded-lg bg-zinc-800">
-        <Comment comment={report.comment} readonly />
+        <Comment rootId={rootId} type={report.comment.rootType} comment={report.comment} readonly />
       </section>
     </div>
   );

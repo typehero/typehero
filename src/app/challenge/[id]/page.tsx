@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation';
+import { Comments } from '~/components/challenge/comments';
 import { Description } from '~/components/challenge/description';
 import { getServerAuthSession } from '~/server/auth';
 import { getChallengeRouteData } from './getChallengeRouteData';
-import { Comments } from '~/components/challenge/comments';
 
 interface Props {
   params: {
