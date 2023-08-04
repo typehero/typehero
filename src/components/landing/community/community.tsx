@@ -8,6 +8,7 @@ import { GitBranch } from 'lucide-react';
 
 import styles from '~/components/landing/community/community.module.css';
 import { clsx } from 'clsx';
+import { type CSSProperties } from 'react';
 
 const Community = async function () {
   // async function getOcto() {
@@ -38,22 +39,24 @@ const Community = async function () {
   // }
   // const avatars = await getOcto();
   //
+  type WrapperStyle = CSSProperties & {
+    '--bottom': string;
+  };
 
   return (
     <>
-      {/* <div className="flex">
-        <div className="relative mx-auto rounded-full bg-gradient-to-br from-[#31bdc6] to-[#3178c6] p-[1px]">
-          <div className="absolute left-1/2 top-1/2 -z-10 h-[1px] w-[50vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-[#31bdc6] to-[#3178c6]"></div>
-          <div className="rounded-full bg-white/80 px-3 py-1 dark:bg-black/80">
-            <span className="flex items-center bg-gradient-to-r from-[#31bdc6] to-[#3178c6] bg-clip-text text-transparent">
-              <GitBranch className="mr-2 h-4 w-4 stroke-[#31bdc6] stroke-2" /> By developers, for
-              developers
-            </span>
-          </div>
-        </div>
-      </div> */}
+      <div className="containerthing -z-10 flex rotate-180 opacity-50 dark:opacity-100">
+        <div
+          className="thething translate-z-0 translate-y-[-200px] rotate-180 scale-[2] duration-1000"
+          style={
+            {
+              '--bottom': 'hsl(211,60%,48%)',
+            } as WrapperStyle
+          }
+        ></div>
+      </div>
       {/* backdrop styles don't apply for the last pixel row of the elment for some reason no there's p and m offsets*/}
-      <section className={clsx(styles.backdrop, 'relative -mb-[1px] overflow-hidden pb-[1px]')}>
+      <section className={clsx(styles.backdrop, 'relative -mb-[1px] pb-[1px]')}>
         <div className="backdrop-blur-md">
           <div className="container flex flex-col justify-center pt-[128px] md:pb-[128px] lg:flex-row lg:items-center">
             <div className="flex flex-1 flex-col items-center gap-6 pb-36 lg:items-start lg:pb-0">
@@ -68,9 +71,6 @@ const Community = async function () {
               <h2 className="mt-2 text-center text-4xl font-bold lg:text-left">
                 Built by the community
               </h2>
-              {/* <span className="text-neutral-400 dark:text-neutral-600">
-          By developers, for developers
-          </span> */}
               <p className="max-w-[55ch] bg-transparent px-8 text-center leading-8 text-black/50 dark:text-white/50 lg:px-0 lg:text-left">
                 TypeHero is free, open-source, and built by developers just like you. These are some
                 of the contributors who made this possible so far.

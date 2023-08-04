@@ -35,12 +35,6 @@ const TypeHeroLogo = () => {
 
 const Hero = () => (
   <section className="-mt-[56px] min-h-[calc(100vh)] overflow-hidden lg:min-h-0 lg:pt-[56px]">
-    {/* <svg className="pointer-events-none mix-blend-soft-light opacity-50 z-10 absolute left-0 top-0 h-full w-full" id="grain">
-    <filter id="noise">
-      <feTurbulence type="fractalNoise" baseFrequency="1" numOctaves="5" stitchTiles="stitch"></feTurbulence>
-    </filter>
-    <rect width="100%" height="100%" filter="url(#noise)"></rect>
-  </svg> */}
     <div className="container grid min-h-screen items-center justify-center lg:min-h-0 lg:grid-cols-2">
       <div className="flex w-full flex-col items-center justify-center gap-10 lg:items-start">
         <div className="relative flex w-full items-center justify-center gap-4 lg:justify-start">

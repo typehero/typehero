@@ -3,7 +3,7 @@
   background: linear-gradient(
       -3deg,
       hsla(var(--background) / 0.75) 0%,
-      hsl(var(--background) / 0.95) 33%,
+      hsla(var(--background) / 0.95) 33%,
       hsl(var(--background)) 50%
     ),
     url('../../../assets/images/background_pattern_flipped.png');
@@ -38,7 +38,7 @@
     background: linear-gradient(
         -3deg,
         hsla(var(--background) / 0.75) 0%,
-        hsl(var(--background) / 0.95) 15%,
+        hsla(var(--background) / 0.95) 15%,
         hsl(var(--background)) 30%
       ),
       url('../../../assets/images/background_pattern_flipped.png');

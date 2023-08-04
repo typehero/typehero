@@ -34,7 +34,7 @@ const Features = () => {
               <Balancer>All you need to become a TypeScript menace</Balancer>
             </p>
           </div>
-          <div className="relative grid w-full gap-8 lg:grid-cols-2">
+          <div className="relative z-10 grid w-full gap-8 lg:grid-cols-2">
             <FeatureCard
               title="Learn & Excel"
               description="Create new challenges with a built-in challenge editor and choose accepted solutions"
