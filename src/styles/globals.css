@@ -253,3 +253,33 @@ main {
     --gradient-angle: 0deg;
   }
 }
+
+#thething {
+  width: 50vw;
+  height: 400px;
+  pointer-events: none;
+  user-select: none;
+  --first: conic-gradient(from 90deg at 80% 50%, #000212, #31bdc6);
+  --second: conic-gradient(from 270deg at 20% 50%, #31bdc6, #000212);
+  mask-image: radial-gradient(100% 50% at center center, black, transparent);
+  background-image: ;
+  background-attachment: ;
+  background-origin: ;
+  background-clip: ;
+  background-color: ;
+  background-position-x: 1%, 99%;
+  background-position-y: 0%, 0%;
+  background-size: 50% 100%, 50% 100%;
+  opacity: 1;
+  transform-origin: center center;
+  background-repeat: no-repeat;
+  transform: translateY(-200px) rotate(180deg) scale(2) translateZ(0px) !important;
+}
+
+#thething::after {
+  position: absolute;
+  inset: 0px 0px 50%;
+  overflow: hidden;
+  opacity: 1;
+  mask-image: radial-gradient(140px 50% at 50% 100%, black, transparent);
+}

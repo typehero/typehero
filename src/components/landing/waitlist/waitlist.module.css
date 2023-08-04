@@ -23,6 +23,7 @@
   background: linear-gradient(
       3deg,
       hsl(var(--background)) 50%,
+      hsl(var(--background) / 0.75) 66%,
       hsl(var(--background) / 0.5) 77%,
       rgba(0, 0, 0, 0) 100%
     ),

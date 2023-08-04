@@ -12,7 +12,7 @@ const Features = () => {
           <div className="flex flex-col gap-3 text-center">
             <a
               href="#features"
-              className="mx-auto rounded-full bg-gradient-to-r from-[#31bdc6] to-[#3178c6] p-[1px] brightness-90 contrast-150 dark:brightness-125 dark:contrast-100"
+              className="mx-auto hidden rounded-full bg-gradient-to-r from-[#31bdc6] to-[#3178c6] p-[1px] brightness-90 contrast-150 dark:brightness-125 dark:contrast-100 sm:block"
             >
               <div className="rounded-full bg-white/80 px-3 py-1 dark:bg-black/80">
                 <span className="bg-gradient-to-r from-[#31bdc6] to-[#3178c6] bg-clip-text text-transparent">
