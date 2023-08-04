@@ -62,9 +62,6 @@ export const Comment = ({ comment, readonly = false, rootId, type }: CommentProp
   const { status, data: replies } = useQuery({
     queryKey: [replyQueryKey, page],
     queryFn: () => getPaginatedComments({ rootId, rootType: type, page, parentId: comment.id }),
-    onSuccess(data) {
-      console.log(data);
-    },
     keepPreviousData: true,
     staleTime: 5000,
   });
@@ -139,7 +136,7 @@ export const Comment = ({ comment, readonly = false, rootId, type }: CommentProp
           </div>
         </button>
       )}
-      {/* TODO: add loading more functionality to the replies */}
+      {/* TODO: add loading more/pagination functionality to the replies */}
       {showReplies && (
         <div className="flex flex-col gap-0.5 p-2 pl-6 pr-0">
           {replies?.comments.map((reply) => (
@@ -243,7 +240,7 @@ const SingleComment = ({
               {/* TODO: make dis work */}
               {!isReply && (
                 <button
-                  className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
+                  className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 disabled:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300"
                   onClick={onClickReply}
                 >
                   <Reply className="h-4 w-4" />
