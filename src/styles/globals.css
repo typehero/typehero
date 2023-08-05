@@ -332,3 +332,8 @@ main {
   opacity: 0.1;
   -webkit-mask-image: radial-gradient(140px 50% at 50% 100%, black, transparent);
 }
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome Safari */
+  scrollbar-width: none; /* Firefox */
+}
