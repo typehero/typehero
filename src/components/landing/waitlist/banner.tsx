@@ -11,8 +11,8 @@ const Waitlist = () => {
   return (
     <section className={clsx(styles.backdrop, 'relative overflow-hidden')}>
       <div className="container relative grid grid-cols-1 items-center justify-center py-[64px] md:grid-cols-2">
-        <div className="flex flex-col gap-8 pb-4 pt-48 sm:px-16 sm:pt-24 md:px-0 md:pt-16">
-          <h1 className="text-4xl font-bold">
+        <div className="flex flex-col gap-8 pb-8 pt-48 sm:px-16 sm:pt-20 md:px-0 md:pb-0 md:pt-16">
+          <h1 className="max-w-[13ch] text-4xl font-bold md:max-w-none">
             <Balancer>Early birds get the perks</Balancer>
           </h1>
           <p className="leading-8 text-black/50 dark:text-white/50">
