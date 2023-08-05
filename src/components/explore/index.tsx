@@ -8,8 +8,8 @@ export const dynamic = 'force-dynamic';
 
 export async function Explore() {
   return (
-    <div className="container flex flex-col items-start gap-6 py-5">
-      <p className="max-w-[66ch] text-lg leading-10 text-neutral-600 dark:text-neutral-400 md:text-start">
+    <div className="container flex flex-col items-center gap-8 py-5 md:gap-20">
+      <p className="max-w-[66ch] px-4 text-lg leading-10 text-neutral-600 dark:text-neutral-400 md:text-center">
         Explore the challenges. Embrace the opportunity to grow, learn, and showcase your
         programming abilities. We hope you find the{' '}
         <span className="font-semibold dark:text-neutral-200">perfect</span> challenge!

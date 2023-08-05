@@ -44,17 +44,17 @@ export async function ExploreSection({ title, fetcher }: Props) {
       )}
       {challenges[0]?.difficulty === 'EASY' && (
         <>
-          <div className="absolute h-80 w-80 -translate-x-24 -translate-y-28 -rotate-45 rounded-[3rem] bg-green-500/10 "></div>
-          <div className="absolute h-[24rem] w-[24rem] -translate-x-24 -translate-y-32 -rotate-45 rounded-[4rem] bg-green-500/10"></div>
-          <Diamond className="absolute -right-5 -top-10 h-24 w-24 origin-top-right stroke-1 text-white/10 duration-300 group-hover:scale-90 dark:group-hover:text-black/30"></Diamond>
-          <Diamond className="absolute right-16 top-24 h-24 w-24 origin-top-right stroke-1 text-white/10 duration-300 group-hover:scale-90 dark:group-hover:text-black/30"></Diamond>
-          <Diamond className="absolute -top-10 right-48 h-24 w-24 origin-top-right stroke-1 text-white/10 duration-300 group-hover:scale-90 dark:group-hover:text-black/30"></Diamond>
-          <Diamond className="absolute -right-5 -top-10 h-24 w-24 origin-top-right translate-y-64 stroke-1 text-white/10 duration-300 group-hover:scale-90 dark:group-hover:text-black/30"></Diamond>
-          <Diamond className="absolute right-16 top-24 h-24 w-24 origin-top-right translate-y-64 stroke-1 text-white/10 duration-300 group-hover:scale-90 dark:group-hover:text-black/30"></Diamond>
-          <Diamond className="absolute -top-10 right-48 h-24 w-24 origin-top-right translate-y-64 stroke-1 text-white/10 duration-300 group-hover:scale-90 dark:group-hover:text-black/30"></Diamond>
-          <Diamond className="absolute -right-5 -top-10 h-24 w-24 origin-top-right -translate-x-80 translate-y-[7.5rem] stroke-1 text-white/10 duration-300 group-hover:scale-90 dark:group-hover:text-black/30"></Diamond>
-          <Diamond className="absolute right-16 top-24 h-24 w-24 origin-top-right -translate-x-80 translate-y-[7.5rem] stroke-1 text-white/10 duration-300 group-hover:scale-90 dark:group-hover:text-black/30"></Diamond>
-          <Diamond className="absolute -top-10 right-48 h-24 w-24 origin-top-right -translate-x-80 translate-y-[7.5rem] stroke-1 text-white/10 duration-300 group-hover:scale-90 dark:group-hover:text-black/30"></Diamond>
+          {/* <div className="absolute bottom-0 h-80 w-80 -translate-x-24 translate-y-28 -rotate-45 rounded-[3rem] bg-green-500/10 "></div>
+          <div className="absolute bottom-0 h-[24rem] w-[24rem] -translate-x-24 translate-y-32 -rotate-45 rounded-[4rem] bg-green-500/10 "></div> */}
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 origin-top-right stroke-1 text-green-500/10 duration-300 group-hover:scale-90  dark:group-hover:text-black/30"></Diamond>
+          <Diamond className="absolute right-16 top-24 h-24 w-24 origin-top-right stroke-1 text-green-500/10 duration-300 group-hover:scale-90  dark:group-hover:text-black/30"></Diamond>
+          <Diamond className="absolute -top-10 right-48 h-24 w-24 origin-top-right stroke-1 text-green-500/10 duration-300 group-hover:scale-90  dark:group-hover:text-black/30"></Diamond>
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 origin-top-right translate-y-64 stroke-1 text-green-500/10 duration-300 group-hover:scale-90  dark:group-hover:text-black/30"></Diamond>
+          <Diamond className="absolute right-16 top-24 h-24 w-24 origin-top-right translate-y-64 stroke-1 text-green-500/10 duration-300 group-hover:scale-90  dark:group-hover:text-black/30"></Diamond>
+          <Diamond className="absolute -top-10 right-48 h-24 w-24 origin-top-right translate-y-64 stroke-1 text-green-500/10 duration-300 group-hover:scale-90  dark:group-hover:text-black/30"></Diamond>
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 origin-top-right -translate-x-80 translate-y-[7.5rem] stroke-1 text-green-500/10 duration-300 group-hover:scale-90  dark:group-hover:text-black/30"></Diamond>
+          <Diamond className="absolute right-16 top-24 h-24 w-24 origin-top-right -translate-x-80 translate-y-[7.5rem] stroke-1 text-green-500/10 duration-300 group-hover:scale-90  dark:group-hover:text-black/30"></Diamond>
+          <Diamond className="absolute -top-10 right-48 h-24 w-24 origin-top-right -translate-x-80 translate-y-[7.5rem] stroke-1 text-green-500/10 duration-300 group-hover:scale-90  dark:group-hover:text-black/30"></Diamond>
         </>
       )}
       {challenges[0]?.difficulty === 'MEDIUM' && (
@@ -75,12 +75,16 @@ export async function ExploreSection({ title, fetcher }: Props) {
           <Sparkle className="absolute -right-12 -top-20 h-48 w-48 origin-top-right stroke-1 text-white/40 duration-300 group-hover:scale-50 dark:group-hover:text-black/30"></Sparkle>
         </>
       )}
-      <div className="flex items-center justify-between p-4 pb-0 pl-6">
+      <div className="flex items-center justify-between p-5 pb-0 pl-7">
         {/* <div className="hidden w-[117px] md:block"></div> */}
-        <h2 className={`z-10 text-3xl font-bold tracking-tight`}>{title}</h2>
+        <h2
+          className={`z-10 bg-gradient-to-r from-green-600 to-green-300 bg-clip-text text-3xl font-bold tracking-tight text-transparent`}
+        >
+          {title}
+        </h2>
         <Button
           variant="ghost"
-          className="group z-10 items-center rounded-full bg-black/10 py-2 pl-3 pr-2 hover:bg-black/20 dark:bg-white/10 dark:hover:bg-white/20"
+          className="group z-10 items-center whitespace-nowrap rounded-full bg-green-500/20 py-2 pl-3 pr-2 text-green-700 hover:bg-green-500/30 dark:bg-green-300/10 dark:text-green-300 dark:hover:bg-green-300/20"
         >
           view more
           <ChevronRight className="ml-1 h-4 w-4 duration-300 group-hover:translate-x-1" />
