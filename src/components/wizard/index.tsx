@@ -116,20 +116,14 @@ export function Wizard() {
     if (isUserACreator) {
       router.push(`/challenge/${id}`);
     } else {
-      router.push(`/explore}`);
+      router.push(`/explore`);
     }
   }
 
   return (
     <div className="flex h-full flex-col gap-4 pb-4 pt-4 lg:gap-6 lg:pb-8">
       {/* we cant nest this in the form because it causes the editor to resize inifinitely hence the onSubmit(wtf..) */}
-      <Steps
-        steps={steps}
-        current={step}
-        onChange={(idx) => setStep(idx)}
-        onNext={handleNextClick}
-        onSubmit={form.handleSubmit(onSubmit)}
-      />
+      <Steps steps={steps} current={step} onChange={(idx) => setStep(idx)} />
       {rendered && (
         <Form {...form}>
           <form
@@ -147,7 +141,6 @@ export function Wizard() {
         </Form>
       )}
       <NextBack
-        steps={steps}
         current={step}
         onChange={(idx) => setStep(idx)}
         onNext={handleNextClick}

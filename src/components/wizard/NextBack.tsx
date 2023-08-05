@@ -1,16 +1,14 @@
-import { Check } from 'lucide-react';
 import { STEPS, type Step } from '.';
 import { Button } from '../ui/button';
 
 interface Props<T extends Step> {
   current: number;
-  steps: T[];
   onChange: (index: number) => void;
   onNext: () => void;
   onSubmit: () => Promise<void>;
 }
 
-export function NextBack<T extends Step>({ steps, current, onChange, onNext, onSubmit }: Props<T>) {
+export function NextBack<T extends Step>({ current, onChange, onNext, onSubmit }: Props<T>) {
   return (
     <div className={`flex justify-center gap-3 ${current === STEPS.Summary && ''}`}>
       <>

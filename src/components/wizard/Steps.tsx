@@ -1,16 +1,13 @@
 import { Check } from 'lucide-react';
-import { STEPS, type Step } from '.';
-import { Button } from '../ui/button';
+import { type Step } from '.';
 
 interface Props<T extends Step> {
   current: number;
   steps: T[];
   onChange: (index: number) => void;
-  onNext: () => void;
-  onSubmit: () => Promise<void>;
 }
 
-export function Steps<T extends Step>({ steps, current, onChange, onNext, onSubmit }: Props<T>) {
+export function Steps<T extends Step>({ steps, current, onChange }: Props<T>) {
   return (
     <nav className="flex justify-center px-4 lg:-mt-[56px]" aria-label="Progress">
       <ol
@@ -59,51 +56,9 @@ export function Steps<T extends Step>({ steps, current, onChange, onNext, onSubm
                 </span>
               </span>
             )}
-
-            {stepIdx !== steps.length - 1 ? (
-              <>
-                {/* Arrow separator for lg screens and up */}
-                {/* <div
-                  className="absolute right-0 top-0 hidden h-full w-5 md:block"
-                  aria-hidden="true"
-                >
-                  <svg
-                    className="h-full w-full text-zinc-300 dark:text-zinc-700"
-                    viewBox="0 0 22 80"
-                    fill="none"
-                    preserveAspectRatio="none"
-                  >
-                    <path
-                      d="M0 -2L20 40L0 82"
-                      vectorEffect="non-scaling-stroke"
-                      stroke="currentcolor"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </div> */}
-              </>
-            ) : null}
           </li>
         ))}
       </ol>
-      {/* <div className="flex justify-end gap-3">
-        <>
-          {current > STEPS.ChallengeCard && (
-            <Button variant="ghost" onClick={() => onChange(current - 1)}>
-              Back
-            </Button>
-          )}
-          {current === STEPS.Summary ? (
-            <Button className="w-[79px]" onClick={onSubmit}>
-              Submit
-            </Button>
-          ) : (
-            <Button onClick={onNext} className="w-[79px]">
-              Next
-            </Button>
-          )}
-        </>
-      </div> */}
     </nav>
   );
 }
