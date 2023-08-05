@@ -1,7 +1,6 @@
 'use client';
 
-import clsx from 'clsx';
-import { useRef, useEffect, type ReactNode } from 'react';
+import { useEffect, useRef, type ReactNode } from 'react';
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -33,10 +32,9 @@ export const useLayoutSettingsStore = create<State>()(
 export interface ChallengeLayoutProps {
   left: ReactNode;
   right: ReactNode;
-  skeleton?: boolean;
 }
 
-export function ChallengeLayout({ left, right, skeleton = false }: ChallengeLayoutProps) {
+export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
   const parent = useRef<HTMLDivElement>(null);
   const resizer = useRef<HTMLDivElement>(null);
   const leftSide = useRef<HTMLDivElement>(null);
@@ -47,15 +45,6 @@ export function ChallengeLayout({ left, right, skeleton = false }: ChallengeLayo
     const ref = resizer.current as HTMLDivElement;
     const leftRef = leftSide.current as HTMLDivElement;
     const rightRef = rightSide.current as HTMLDivElement;
-    const parentRef = parent.current as HTMLDivElement;
-
-    if (skeleton) {
-      window.innerWidth > 1025
-        ? (leftRef.style.width = settings.width)
-        : (leftRef.style.height = settings.height);
-      parentRef.classList.remove('opacity-0');
-      return;
-    }
 
     // resize width on desktop, height on mobile
     window.innerWidth > 1025
@@ -165,45 +154,26 @@ export function ChallengeLayout({ left, right, skeleton = false }: ChallengeLayo
       ref?.removeEventListener('mousedown', mouseDownHandler);
       ref?.removeEventListener('touchstart', mouseDownHandler);
     };
-  }, [settings, updateSettings, skeleton]);
+  }, [settings, updateSettings]);
 
   return (
     <div
       ref={parent}
-      className={clsx('flex flex-col px-4 pb-4 lg:flex-row', skeleton && 'opacity-0')}
+      className="flex flex-col px-4 pb-4 lg:flex-row"
       style={{ height: 'calc(100dvh - 3.5rem)' }}
     >
       <div
         ref={leftSide}
-        className={clsx(
-          'min-h-[318px] w-full overflow-hidden rounded-l-2xl rounded-r-xl border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 lg:min-w-[500px]',
-          skeleton && 'animate-pulse',
-        )}
+        className="min-h-[318px] w-full overflow-hidden rounded-l-2xl rounded-r-xl border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 lg:min-w-[500px]"
       >
         {left}
       </div>
-      <div
-        ref={resizer}
-        className={clsx(
-          'resizer relative p-2',
-          !skeleton && 'group cursor-row-resize lg:cursor-col-resize',
-        )}
-      >
-        <div
-          className={clsx(
-            'absolute left-1/2 top-1/2 h-1 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-400 lg:h-24 lg:w-1',
-            skeleton
-              ? 'dark:bg-neutral-700'
-              : 'duration-300 group-hover:bg-neutral-600 group-active:bg-emerald-400 group-active:duration-75 dark:bg-neutral-700 group-hover:dark:bg-neutral-500',
-          )}
-        />
+      <div ref={resizer} className="resizer relative p-2">
+        <div className="absolute left-1/2 top-1/2 h-1 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-400 duration-300 group-hover:bg-neutral-600 group-active:bg-emerald-400 group-active:duration-75 dark:bg-neutral-700 group-hover:dark:bg-neutral-500 lg:h-24 lg:w-1" />
       </div>
       <div
         ref={rightSide}
-        className={clsx(
-          'flex flex-1 flex-col overflow-hidden rounded-l-xl rounded-r-2xl border border-zinc-300 dark:border-zinc-700 lg:min-w-[500px]',
-          skeleton ? 'items-center justify-center pb-3 dark:bg-[#1e1e1e]' : 'min-h-[90px] w-full',
-        )}
+        className="flex min-h-[90px] w-full flex-1 flex-col overflow-hidden rounded-l-xl rounded-r-2xl border border-zinc-300 dark:border-zinc-700 lg:min-w-[500px]"
       >
         {right}
       </div>
