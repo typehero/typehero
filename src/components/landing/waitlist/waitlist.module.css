@@ -1,8 +1,6 @@
 /* The module for the Waitlist page background */
 .waitlistBackground {
-  position: relative;
   top: -56px;
-  min-height: calc(100vh - 56px);
   background: linear-gradient(0deg, hsl(var(--background)) 0%, rgba(9, 9, 11, 0) 100%),
     linear-gradient(
       270deg,
@@ -16,6 +14,14 @@
       rgba(59, 182, 199, 0.17) 67.78%,
       rgba(49, 189, 198, 0.3) 100%
     );
+}
+
+.mybg {
+  background: url('../../../assets/images/waitlist-bg.png');
+  background-position-y: 33%;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: 100% 200%;
 }
 
 /* The module for the background of the banner on the landing page */

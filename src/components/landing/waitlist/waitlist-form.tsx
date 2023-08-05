@@ -52,7 +52,7 @@ export default function WaitlistForm() {
   }
 
   return (
-    <div className="w-full py-4 md:w-[350px]">
+    <div className="w-full md:w-[350px]">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <FormField
@@ -63,8 +63,9 @@ export default function WaitlistForm() {
                 <FormControl>
                   <Input
                     className={clsx({
-                      'border border-red-600 dark:border-red-400': form.formState.errors.name,
-                      'border-zinc-300 bg-neutral-50 dark:border-zinc-700 dark:bg-neutral-950':
+                      'rounded-xl border border-red-600 bg-white/50 backdrop-blur-md dark:border-red-400 dark:bg-neutral-950/50':
+                        form.formState.errors.name,
+                      'rounded-xl border-black/30 bg-white/20 backdrop-blur-md dark:border-white/30 dark:bg-neutral-950/20':
                         !form.formState.errors.name,
                     })}
                     {...field}
@@ -85,8 +86,9 @@ export default function WaitlistForm() {
                 <FormControl>
                   <Input
                     className={clsx({
-                      'border border-red-600 dark:border-red-400': form.formState.errors.email,
-                      'border-zinc-300 bg-neutral-50 dark:border-zinc-700 dark:bg-neutral-950':
+                      'rounded-xl border border-red-600 bg-white/50 backdrop-blur-md dark:border-red-400 dark:bg-neutral-950/50':
+                        form.formState.errors.email,
+                      'rounded-xl border-black/30 bg-white/20 backdrop-blur-md dark:border-white/30 dark:bg-neutral-950/20':
                         !form.formState.errors.email,
                     })}
                     {...field}
@@ -108,19 +110,28 @@ export default function WaitlistForm() {
                   <FormControl>
                     <SelectTrigger
                       className={clsx({
-                        'border border-red-600 dark:border-red-400':
+                        'rounded-xl border border-red-600 bg-white/50 backdrop-blur-md dark:border-red-400 dark:bg-neutral-950/50':
                           form.formState.errors.intention,
-                        'border-zinc-300 bg-neutral-50 dark:border-zinc-700 dark:bg-neutral-950':
+                        'rounded-xl border-black/30 bg-white/20 backdrop-blur-md dark:border-white/30 dark:bg-neutral-950/20':
                           !form.formState.errors.intention,
                       })}
                     >
                       <SelectValue placeholder="Why are you interested in TypeHero?" />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
-                    <SelectItem value="user">I want to solve type challenges</SelectItem>
-                    <SelectItem value="builder">I want to build type challenges</SelectItem>
-                    <SelectItem value="both">Both</SelectItem>
+                  <SelectContent className="rounded-xl bg-white/50 backdrop-blur-md dark:bg-black/50">
+                    <SelectItem className="cursor-pointer rounded-lg brightness-200" value="user">
+                      I want to solve type challenges
+                    </SelectItem>
+                    <SelectItem
+                      className="cursor-pointer rounded-lg brightness-200"
+                      value="builder"
+                    >
+                      I want to build type challenges
+                    </SelectItem>
+                    <SelectItem className="cursor-pointer rounded-lg brightness-200" value="both">
+                      Both
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </FormItem>
@@ -130,9 +141,9 @@ export default function WaitlistForm() {
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="font-boldtransition-shadow group relative w-full overflow-hidden rounded-xl bg-gradient-to-bl from-blue-400 to-emerald-400 px-[2px] py-[2px] duration-200"
+            className="wl-form-button group relative w-full overflow-hidden rounded-xl px-[2px] py-[2px] font-bold transition-shadow duration-300 hover:shadow-[0_0.5rem_2rem_-0.75rem_#3178c6] dark:hover:shadow-[0_0.5rem_2rem_-0.75rem_#5198f6]"
           >
-            <span className="h-full w-full rounded-[10px] bg-white px-4 py-2 text-center font-bold text-black transition-colors duration-200 group-hover:bg-neutral-100 dark:bg-black dark:text-white group-hover:dark:bg-neutral-900">
+            <span className="h-full w-full rounded-[10px] bg-white px-4 py-2 text-center font-bold text-black transition-colors duration-300 group-hover:bg-blue-100 dark:bg-black dark:text-white group-hover:dark:bg-cyan-950">
               {isSubmitting ? 'Submitting...' : 'Join the waitlist'}
             </span>
           </Button>

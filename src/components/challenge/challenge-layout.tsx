@@ -50,10 +50,10 @@ export function ChallengeLayout({ left, right, skeleton = false }: ChallengeLayo
     const parentRef = parent.current as HTMLDivElement;
 
     if (skeleton) {
-      parentRef.classList.remove('opacity-0');
       window.innerWidth > 1025
         ? (leftRef.style.width = settings.width)
         : (leftRef.style.height = settings.height);
+      parentRef.classList.remove('opacity-0');
       return;
     }
 

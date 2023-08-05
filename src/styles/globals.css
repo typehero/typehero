@@ -225,10 +225,10 @@ main {
 .hero-join-button {
   background: linear-gradient(
     var(--gradient-angle),
-    hsla(211, 60%, 48%, 0.5),
-    hsla(211, 60%, 48%, 0.1),
+    hsla(211, 60%, 48%, 0.7),
+    hsla(211, 60%, 48%, 0.3),
     #3178c6,
-    hsla(211, 60%, 48%, 0.3)
+    hsla(211, 60%, 48%, 0.5)
   );
   animation: gradient-rotate 5s linear infinite reverse;
 }
@@ -241,6 +241,11 @@ main {
     #fff,
     hsla(0, 0%, 100%, 0.3)
   ) !important;
+  animation: gradient-rotate 5s linear infinite reverse;
+}
+
+.wl-form-button {
+  background: linear-gradient(var(--gradient-angle), #34d399, #60a5fa, #ff88ff, #ff8844);
   animation: gradient-rotate 5s linear infinite reverse;
 }
 
@@ -292,41 +297,26 @@ main {
   opacity: 1;
   transform-origin: center center;
   background-repeat: no-repeat;
-  /* animation: glitchy-blink 5s linear infinite; */
+  animation: plink 15s ease infinite;
 }
 
-@keyframes glitchy-blink {
+@keyframes plink {
   0% {
     opacity: 1;
   }
-  49% {
+  69% {
     opacity: 1;
-  }
-  60% {
-    opacity: 1;
-  }
-  62% {
-    opacity: 0.7;
-  }
-  63% {
-    opacity: 0.9;
-  }
-  64% {
-    opacity: 0.3;
   }
   70% {
-    opacity: 1;
+    opacity: 0.7;
   }
   71% {
-    opacity: 0;
+    opacity: 1;
   }
-  73% {
-    opacity: 0.5;
+  72% {
+    opacity: 0.3;
   }
-  74% {
-    opacity: 0;
-  }
-  75% {
+  80% {
     opacity: 1;
   }
   100% {
