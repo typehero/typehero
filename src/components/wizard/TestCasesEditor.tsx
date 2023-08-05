@@ -69,15 +69,15 @@ export function TestCasesEditor({ form, hasTsErrors, setTsErrors }: Props) {
   );
 
   return (
-    <div className="flex h-full flex-col py-6">
-      <TypographyH3 className="mb-6">Create Test Cases</TypographyH3>
+    <div className="flex h-full flex-1 flex-col">
+      <TypographyH3 className="mx-auto mb-4 lg:mb-6">Create Test Cases</TypographyH3>
       <FormField
         control={form.control}
         name="prompt"
         render={({ field }) => {
           return (
             <FormItem className="h-full">
-              <div className="flex h-full flex-col">
+              <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-300 dark:border-zinc-700">
                 <div className="sticky top-0 flex h-[40px] flex-row-reverse items-center border-b border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
                   <Dialog>
                     <DialogTrigger>
