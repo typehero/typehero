@@ -4,53 +4,27 @@ import { contributors } from '../../../../public/contributors';
 
 import { GitBranch } from 'lucide-react';
 
-import styles from '~/components/landing/community/community.module.css';
 import { clsx } from 'clsx';
-import { useRef, type CSSProperties, useState, useEffect } from 'react';
+import { type CSSProperties } from 'react';
+import { useInView } from 'react-intersection-observer';
+import styles from '~/components/landing/community/community.module.css';
 
 const Community = function () {
   type WrapperStyle = CSSProperties & {
     '--bottom': string;
   };
 
-  const lamp = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          // If the element is intersecting (in view)
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-            // observer.unobserve(entry.target);
-          } else {
-            setIsVisible(false);
-          }
-        });
-      },
-      {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1, // Adjust the threshold as per your requirement
-      },
-    );
-
-    if (lamp.current) {
-      observer.observe(lamp.current);
-    }
-
-    // Cleanup observer when the component unmounts
-    return () => observer.disconnect();
-  }, []);
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+  });
 
   return (
     <>
       <div className="containerthing -z-10 flex rotate-180 opacity-50 dark:opacity-100">
         <div
-          ref={lamp}
+          ref={ref}
           className={clsx(
-            { 'scale-[3] md:scale-[2] 2xl:scale-[1.75]': isVisible },
+            { 'scale-[3] md:scale-[2] 2xl:scale-[1.75]': inView },
             'thething translate-z-0 translate-y-[-180px] rotate-180 scale-50 animate-none duration-1000',
           )}
           style={
