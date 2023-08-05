@@ -1,7 +1,7 @@
 import { FeatureCard } from '~/components/landing/feature-card';
 
-import FeatureCardChallengeDark from '~/assets/images/feature_card_challenge_dark.png';
-import FeatureCardChallengeLight from '~/assets/images/feature_card_challenge_light.png';
+import FeatureCardChallengeDark from '~/assets/images/feature_card_challenge_dark.webp';
+import FeatureCardChallengeLight from '~/assets/images/feature_card_challenge_light.webp';
 import { Balancer } from 'react-wrap-balancer';
 
 const Features = () => {
