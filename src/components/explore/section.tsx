@@ -102,7 +102,7 @@ export async function ExploreSection({ title, fetcher }: Props) {
           )
           .map((challenge) => (
             <Link
-              className="group snap-center focus:outline-none sm:w-[332px]"
+              className="group snap-center focus:outline-none sm:w-[382px]"
               href={`/challenge/${challenge.id}`}
               key={challenge.id}
             >
