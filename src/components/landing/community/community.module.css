@@ -6,7 +6,7 @@
       hsla(var(--background) / 0.95) 33%,
       hsl(var(--background)) 50%
     ),
-    url('../../../assets/images/background_pattern_flipped.png');
+    url('../../../assets/images/background_pattern_flipped.webp');
   background-size: cover;
   background-position-y: bottom;
   background-position-x: center;
@@ -41,7 +41,7 @@
         hsla(var(--background) / 0.95) 15%,
         hsl(var(--background)) 30%
       ),
-      url('../../../assets/images/background_pattern_flipped.png');
+      url('../../../assets/images/background_pattern_flipped.webp');
     background-size: 1800px;
 
     background-position-y: bottom;

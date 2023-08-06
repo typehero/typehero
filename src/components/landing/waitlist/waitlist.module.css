@@ -17,7 +17,7 @@
 }
 
 .mybg {
-  background: url('../../../assets/images/waitlist-bg.png');
+  background: url('../../../assets/images/waitlist-bg.webp');
   background-position-y: 33%;
   background-position-x: center;
   background-repeat: no-repeat;
@@ -39,7 +39,7 @@
       rgba(59, 131, 199, 0.17) 75.5%,
       rgba(49, 120, 198, 0.3) 100%
     ),
-    url('../../../assets/images/background_pattern.png');
+    url('../../../assets/images/background_pattern.webp');
   background-size: cover;
   background-position-x: center;
   background-repeat: no-repeat;

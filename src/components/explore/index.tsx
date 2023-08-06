@@ -8,12 +8,11 @@ export const dynamic = 'force-dynamic';
 
 export async function Explore() {
   return (
-    <div className="container   flex h-full flex-col items-center">
-      <p className="max-w-[66ch] px-4 pt-5 text-lg leading-10 text-neutral-600 dark:text-neutral-400 md:text-center">
-        <span className="text-xl font-bold text-[#3178c6] dark:text-[#4e99ea]">Explore</span> the
-        challenges. Embrace the opportunity to grow, learn, and showcase your programming abilities.
-        We hope you find the <span className="font-semibold dark:text-neutral-200">perfect</span>{' '}
-        challenge!
+    <div className="container flex flex-col items-center gap-8 py-5 md:gap-20 md:pb-20">
+      <p className="max-w-[66ch] px-4 text-lg leading-10 text-neutral-600 dark:text-neutral-400 md:text-center">
+        Explore the challenges. Embrace the opportunity to grow, learn, and showcase your
+        programming abilities. We hope you find the{' '}
+        <span className="font-semibold dark:text-neutral-200">perfect</span> challenge!
       </p>
       <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection title="Great for Beginners" fetcher={getEasyChallenges} />
