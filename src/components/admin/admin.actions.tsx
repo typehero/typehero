@@ -191,8 +191,8 @@ export async function banUser(userId: string, reportId: number, banReason?: stri
       },
       data: {
         visible: false,
-      }
-    })
+      },
+    }),
   ]);
 }
 /**

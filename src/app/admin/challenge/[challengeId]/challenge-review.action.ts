@@ -3,7 +3,11 @@
 import { RoleTypes } from '@prisma/client';
 import { prisma } from '~/server/db';
 
-export async function approveChallenge(challengeId: number, userId: string, isUserACreator: boolean) {
+export async function approveChallenge(
+  challengeId: number,
+  userId: string,
+  isUserACreator: boolean,
+) {
   return prisma.$transaction([
     prisma.challenge.update({
       where: {

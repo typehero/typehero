@@ -26,7 +26,7 @@ async function getChallengeToReview(id: number) {
       },
     },
     orderBy: {
-      createdAt: 'desc'
-    }
+      createdAt: 'desc',
+    },
   });
 }

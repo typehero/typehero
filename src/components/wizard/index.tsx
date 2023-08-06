@@ -28,6 +28,7 @@ export const enum STEPS {
 const testCaseRegex = new RegExp('(?:\n|^)s*(?:Equal|Extends|NotEqual|Expect)<');
 const createExploreCardSchema = z.object({
   difficulty: z.enum(['BEGINNER', 'EASY', 'MEDIUM', 'HARD', 'EXTREME']),
+  tags: z.string(),
   name: z
     .string()
     .min(3, 'The name must be longer than 3 characters')
@@ -94,8 +95,8 @@ export function Wizard() {
   }, []);
 
   const handleNextClick = async () => {
-    const { success } = steps[step]!.schema.safeParse(form.getValues());
-    if (success) {
+    const fuckingwhat = steps[step]!.schema.safeParse(form.getValues());
+    if (fuckingwhat.success) {
       // if they are currently on test cases do not let them go to next step
       // until a type error exists
       if (step === STEPS.TestCases) {
@@ -104,7 +105,7 @@ export function Wizard() {
       setStep((step) => step + 1);
     } else {
       await form.trigger();
-      console.error(success);
+      console.error('is this the bitch', fuckingwhat.error);
     }
   };
 

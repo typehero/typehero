@@ -1,14 +1,15 @@
 import { Circle, Diamond, MessageCircle, Plus, Sparkle, ThumbsUp, Triangle } from 'lucide-react';
 
 import { getRelativeTime } from '~/utils/relativeTime';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card';
 import { type ExploreChallengeFetcher } from './';
 import { DifficultyBadge } from '../ui/difficulty-badge';
+import ChallengeTag from '../ui/challenge-tag';
 
 interface ExploreCardProps {
   challenge: Pick<
     Awaited<ReturnType<ExploreChallengeFetcher>>[0],
-    'difficulty' | 'name' | 'shortDescription' | 'user' | '_count' | 'updatedAt'
+    'difficulty' | 'name' | 'shortDescription' | 'user' | '_count' | 'updatedAt' | 'tags' | 'id'
   >;
 }
 
@@ -112,6 +113,17 @@ export const ExploreCard = ({ challenge }: ExploreCardProps) => {
           <div className="pointer-events-none absolute inset-0 h-full w-full shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card))] duration-300 group-hover:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))] group-focus:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))]" />
           {challenge?.shortDescription}
         </CardDescription>
+        <CardFooter className="p-2 pb-4">
+          <div className="flex flex-wrap gap-2">
+            {challenge.tags
+              .split(',')
+              .slice(0, 3)
+              .map(
+                (tag) =>
+                  tag && <ChallengeTag value={tag} key={`challenge-${challenge.id}-${tag}`} />,
+              )}
+          </div>
+        </CardFooter>
       </CardContent>
     </Card>
   );

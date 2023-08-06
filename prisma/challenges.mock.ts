@@ -33,10 +33,12 @@ export async function loadChallengesFromTypeChallenge() {
   );
 
   const arr = [];
+  const allTags = new Set<string>();
+
   for (const dir of folders) {
     const infoFile = resolve('./tmp/type-challenges/questions', dir.name, 'info.yml');
     const contents = await readFile(infoFile).then((r) => r.toString());
-    const { title, difficulty } = parse(contents) as InfoFile;
+    const { title, difficulty, tags } = parse(contents) as InfoFile;
 
     const README = await readFile(resolve(QUESTIONS_PATH, dir.name, 'README.md')).then((r) =>
       r.toString().replace(/<!--info-(header|footer)-start-->.*?<!--info-\1-end-->/g, ''),
@@ -61,6 +63,11 @@ export async function loadChallengesFromTypeChallenge() {
       continue;
     }
 
+    const tagParts = Array.isArray(tags) ? tags : tags?.split(',')?.map(t => t.trim());
+
+    if(tagParts) tagParts.forEach(tag => allTags.add(tag.toLowerCase()));
+    console.info('TAG PARTS', allTags);
+
     arr.push({
       id: idNum,
       name: title,
@@ -69,8 +76,10 @@ export async function loadChallengesFromTypeChallenge() {
       prompt: `// TEST CASE START\n${testData}\n\n// CODE START\n${prompt}`,
       difficulty: difficulty === 'warm' ? 'BEGINNER' : (difficulty.toUpperCase() as Difficulty),
       shortDescription: README.slice(0, 100),
+      tags: Array.isArray(tags) ? tags.join(',') : tags || '',
     });
   }
+
 
   // Cleanup
   await rm('./tmp', {
@@ -110,6 +119,7 @@ export const CHALLENGE_MAP: Record<
     shortDescription: faker.lorem.lines({ min: 1, max: 2 }),
     prompt: loadChallengeSync('beginner/prompt'),
     difficulty: 'BEGINNER',
+    tags: ''
   }),
   EASY: () => ({
     name: faker.hacker.phrase(),
@@ -119,6 +129,7 @@ export const CHALLENGE_MAP: Record<
     shortDescription: faker.lorem.lines({ min: 1, max: 2 }),
     prompt: loadChallengeSync('easy/prompt'),
     difficulty: 'EASY',
+    tags: ''
   }),
   MEDIUM: () => ({
     name: faker.hacker.phrase(),
@@ -128,6 +139,7 @@ export const CHALLENGE_MAP: Record<
     shortDescription: faker.lorem.lines({ min: 1, max: 2 }),
     prompt: loadChallengeSync('medium/prompt'),
     difficulty: 'MEDIUM',
+    tags: ''
   }),
   HARD: () => ({
     name: faker.hacker.phrase(),
@@ -137,6 +149,7 @@ export const CHALLENGE_MAP: Record<
     shortDescription: faker.lorem.lines({ min: 1, max: 2 }),
     prompt: loadChallengeSync('hard/prompt'),
     difficulty: 'HARD',
+    tags: ''
   }),
   EXTREME: () => ({
     name: faker.hacker.phrase(),
@@ -146,5 +159,6 @@ export const CHALLENGE_MAP: Record<
     shortDescription: faker.lorem.lines({ min: 1, max: 2 }),
     prompt: loadChallengeSync('extreme/prompt'),
     difficulty: 'EXTREME',
+    tags: ''
   }),
 };

@@ -148,6 +148,9 @@ model Challenge {
   prompt           String          @db.MediumText
   status           ChallengeStatus @default(PENDING)
 
+  /// Comma separated list of tags.
+  tags String
+
   user   User   @relation(fields: [userId], references: [id])
   userId String
 

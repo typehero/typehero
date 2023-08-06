@@ -21,11 +21,12 @@ export function ChallengeCardEditor({ form }: Props) {
 
   const data: Pick<
     Awaited<ReturnType<ExploreChallengeFetcher>>[0],
-    'difficulty' | 'name' | 'shortDescription' | 'user' | '_count' | 'updatedAt'
+    'difficulty' | 'name' | 'shortDescription' | 'user' | '_count' | 'updatedAt' | 'tags' | 'id'
   > = {
     difficulty,
     name: title || 'Your Title Here',
     shortDescription: shortDescription || 'Your Short Description Here',
+    tags: '',
     user: {
       name: 'You',
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -36,6 +37,7 @@ export function ChallengeCardEditor({ form }: Props) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any,
     updatedAt: new Date(),
+    id: -1,
   };
   return (
     <>
@@ -115,6 +117,18 @@ export function ChallengeCardEditor({ form }: Props) {
                   />
                 </FormControl>
                 <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="tags"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Tags</FormLabel>
+                <FormControl>
+                  <Input placeholder="union, template literal, etc" {...field} />
+                </FormControl>
               </FormItem>
             )}
           />
