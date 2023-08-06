@@ -21,13 +21,31 @@ const difficultyToNumber: Record<Difficulty, number> = {
 };
 
 const COLORS_BY_DIFFICULTY = {
-  BEGINNER: 'bg-pink-500/10',
-  EASY: 'bg-green-500/10',
-  MEDIUM: 'bg-yellow-500/10',
-  HARD: 'bg-red-500/10',
-  EXTREME: 'bg-orange-500/10',
+  BEGINNER: 'bg-gradient-to-r from-50% from-pink-600/10 dark:from-pink-500/10',
+  EASY: 'bg-gradient-to-r from-50% from-green-600/10 dark:from-green-500/10',
+  MEDIUM: 'bg-gradient-to-r from-50% from-yellow-600/10 dark:from-yellow-500/10',
+  HARD: 'bg-gradient-to-r from-50% from-red-600/10 dark:from-red-500/10',
+  EXTREME: 'bg-gradient-to-r from-50% from-orange-600/10 dark:from-orange-500/10',
 };
 
+const TITLES_BY_DIFFICULTY = {
+  BEGINNER: 'bg-gradient-to-r from-pink-500 to-pink-500 dark:from-pink-500 dark:to-pink-200',
+  EASY: 'bg-gradient-to-r from-green-500 to-green-500 dark:from-green-500 dark:to-green-200',
+  MEDIUM: 'bg-gradient-to-r from-yellow-500 to-yellow-600 dark:from-yellow-500 dark:to-yellow-200',
+  HARD: 'bg-gradient-to-r from-red-500 to-red-500 dark:from-red-500 dark:to-red-200',
+  EXTREME: 'bg-gradient-to-r from-orange-500 to-orange-500 dark:from-orange-500 dark:to-orange-200',
+};
+
+const BUTTONS_BY_DIFFICULTY = {
+  BEGINNER:
+    'bg-pink-500/10 text-pink-700 hover:text-pink-700 dark:text-pink-300 dark:bg-pink-300/10 hover:bg-pink-500/20 dark:hover:bg-pink-300/20',
+  EASY: 'bg-green-500/10 text-green-700 hover:text-green-700 dark:text-green-300 dark:bg-green-300/10 hover:bg-green-500/20 dark:hover:bg-green-300/20',
+  MEDIUM:
+    'bg-yellow-500/10 text-yellow-700 hover:text-yellow-700 dark:text-yellow-300 dark:bg-yellow-300/10 hover:bg-yellow-500/20 dark:hover:bg-yellow-300/20',
+  HARD: 'bg-red-500/10 text-red-700 hover:text-red-700 dark:text-red-300 dark:bg-red-300/10 hover:bg-red-500/20 dark:hover:bg-red-300/20',
+  EXTREME:
+    'bg-orange-500/10 text-orange-700 hover:text-orange-700 dark:text-orange-300 dark:bg-orange-300/10 hover:bg-orange-500/20 dark:hover:bg-orange-300/20',
+};
 export async function ExploreSection({ title, fetcher }: Props) {
   const challenges = await fetcher();
   return (
@@ -36,62 +54,46 @@ export async function ExploreSection({ title, fetcher }: Props) {
         COLORS_BY_DIFFICULTY[challenges[0]?.difficulty || 'BEGINNER']
       }`}
     >
-      {challenges[0]?.difficulty === 'BEGINNER' && (
-        <>
-          <Circle className="absolute -right-4 -top-8 h-24 w-24 origin-top-right stroke-1 text-white/30 duration-300 group-hover:scale-90 dark:group-hover:text-black/30"></Circle>
-          <Circle className="absolute -right-4 -top-8 h-32 w-32 origin-top-right stroke-1 text-white/30 duration-500 group-hover:scale-90 dark:group-hover:text-black/30"></Circle>
-        </>
-      )}
       {challenges[0]?.difficulty === 'EASY' && (
         <>
-          {/* <div className="absolute bottom-0 h-80 w-80 -translate-x-24 translate-y-28 -rotate-45 rounded-[3rem] bg-green-500/10 "></div>
-          <div className="absolute bottom-0 h-[24rem] w-[24rem] -translate-x-24 translate-y-32 -rotate-45 rounded-[4rem] bg-green-500/10 "></div> */}
-          <Diamond className="absolute -right-5 -top-10 h-24 w-24 origin-top-right stroke-1 text-green-500/10 duration-300 group-hover:scale-90  dark:group-hover:text-black/30"></Diamond>
-          <Diamond className="absolute right-16 top-24 h-24 w-24 origin-top-right stroke-1 text-green-500/10 duration-300 group-hover:scale-90  dark:group-hover:text-black/30"></Diamond>
-          <Diamond className="absolute -top-10 right-48 h-24 w-24 origin-top-right stroke-1 text-green-500/10 duration-300 group-hover:scale-90  dark:group-hover:text-black/30"></Diamond>
-          <Diamond className="absolute -right-5 -top-10 h-24 w-24 origin-top-right translate-y-64 stroke-1 text-green-500/10 duration-300 group-hover:scale-90  dark:group-hover:text-black/30"></Diamond>
-          <Diamond className="absolute right-16 top-24 h-24 w-24 origin-top-right translate-y-64 stroke-1 text-green-500/10 duration-300 group-hover:scale-90  dark:group-hover:text-black/30"></Diamond>
-          <Diamond className="absolute -top-10 right-48 h-24 w-24 origin-top-right translate-y-64 stroke-1 text-green-500/10 duration-300 group-hover:scale-90  dark:group-hover:text-black/30"></Diamond>
-          <Diamond className="absolute -right-5 -top-10 h-24 w-24 origin-top-right -translate-x-80 translate-y-[7.5rem] stroke-1 text-green-500/10 duration-300 group-hover:scale-90  dark:group-hover:text-black/30"></Diamond>
-          <Diamond className="absolute right-16 top-24 h-24 w-24 origin-top-right -translate-x-80 translate-y-[7.5rem] stroke-1 text-green-500/10 duration-300 group-hover:scale-90  dark:group-hover:text-black/30"></Diamond>
-          <Diamond className="absolute -top-10 right-48 h-24 w-24 origin-top-right -translate-x-80 translate-y-[7.5rem] stroke-1 text-green-500/10 duration-300 group-hover:scale-90  dark:group-hover:text-black/30"></Diamond>
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10"></Diamond>
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[5%] translate-y-[255%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10"></Diamond>
+
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[130%] translate-y-[130%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10"></Diamond>
+
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[265%] translate-y-[5%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10"></Diamond>
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[260%] translate-y-[260%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10"></Diamond>
+
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[395%] translate-y-[135%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10"></Diamond>
+
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[525%] translate-y-[265%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10"></Diamond>
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[535%] translate-y-[15%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10"></Diamond>
+
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[665%] translate-y-[145%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10"></Diamond>
+
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[795%] translate-y-[275%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10"></Diamond>
         </>
       )}
-      {challenges[0]?.difficulty === 'MEDIUM' && (
-        <>
-          <Triangle className="absolute -right-4 -top-6 h-20 w-20 rotate-[40deg] stroke-2 text-white/50 duration-200 group-hover:rotate-0 group-hover:scale-50 dark:group-hover:text-black/30"></Triangle>
-          <Triangle className="absolute -right-12 -top-14 h-36 w-36 rotate-45 stroke-1 text-white/50 duration-300 group-hover:h-32 group-hover:w-32 group-hover:rotate-[20deg] dark:group-hover:text-black/30"></Triangle>
-        </>
-      )}
-      {challenges[0]?.difficulty === 'HARD' && (
-        <>
-          <Plus className="absolute -right-4 -top-8 h-24 w-24 stroke-1 text-white/30 duration-300 group-hover:scale-0 dark:group-hover:text-black/30"></Plus>
-          <Plus className="absolute -right-4 -top-8 h-32 w-32 stroke-1 text-white/30 duration-500 group-hover:scale-[3] dark:group-hover:text-black/30"></Plus>
-        </>
-      )}
-      {challenges[0]?.difficulty === 'EXTREME' && (
-        <>
-          <Sparkle className="absolute -right-4 -top-10 h-24 w-24 stroke-1 text-white/40 duration-500 group-hover:-translate-x-4 group-hover:translate-y-10 group-hover:-rotate-[125deg] dark:group-hover:text-black/30"></Sparkle>
-          <Sparkle className="absolute -right-12 -top-20 h-48 w-48 origin-top-right stroke-1 text-white/40 duration-300 group-hover:scale-50 dark:group-hover:text-black/30"></Sparkle>
-        </>
-      )}
+
       <div className="flex items-center justify-between p-5 pb-0 pl-7">
         {/* <div className="hidden w-[117px] md:block"></div> */}
         <h2
-          className={`z-10 bg-gradient-to-r from-green-600 to-green-300 bg-clip-text text-3xl font-bold tracking-tight text-transparent`}
+          className={`bg-clip-text text-3xl font-bold tracking-tight text-transparent ${
+            TITLES_BY_DIFFICULTY[challenges[0]?.difficulty || 'BEGINNER']
+          }`}
         >
           {title}
         </h2>
         <Button
           variant="ghost"
-          className="group z-10 items-center whitespace-nowrap rounded-full bg-green-500/20 py-2 pl-3 pr-2 text-green-700 hover:bg-green-500/30 dark:bg-green-300/10 dark:text-green-300 dark:hover:bg-green-300/20"
+          className={`group items-center whitespace-nowrap rounded-full py-2 pl-4 pr-3 backdrop-blur-sm
+          ${BUTTONS_BY_DIFFICULTY[challenges[0]?.difficulty || 'BEGINNER']}`}
         >
           view more
-          <ChevronRight className="ml-1 h-4 w-4 duration-300 group-hover:translate-x-1" />
+          <ChevronRight className="ml-2 h-4 w-4 stroke-[3] duration-300 group-hover:translate-x-1" />
         </Button>
       </div>
-      <div className="hide-scrollbar flex w-full snap-x flex-nowrap gap-4 overflow-x-scroll p-4">
-        {/* <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"> */}
+      <div className="hide-scrollbar flex w-full snap-x flex-nowrap gap-4 overflow-x-scroll p-5">
         {challenges
           .sort((a, b) =>
             difficultyToNumber[a.difficulty] !== difficultyToNumber[b.difficulty]
@@ -99,24 +101,14 @@ export async function ExploreSection({ title, fetcher }: Props) {
               : a.name.localeCompare(b.name),
           )
           .map((challenge) => (
-            <>
-              <Link
-                className="group w-[400px] snap-center focus:outline-none"
-                href={`/challenge/${challenge.id}`}
-                key={challenge.id}
-              >
-                <ExploreCard key={`challenge-${challenge.id}`} challenge={challenge} />
-              </Link>
-              <Link
-                className="group w-[400px] snap-center focus:outline-none"
-                href={`/challenge/${challenge.id}`}
-                key={challenge.id}
-              >
-                <ExploreCard key={`challenge-${challenge.id}`} challenge={challenge} />
-              </Link>
-            </>
+            <Link
+              className="group snap-center focus:outline-none sm:w-[332px]"
+              href={`/challenge/${challenge.id}`}
+              key={challenge.id}
+            >
+              <ExploreCard key={`challenge-${challenge.id}`} challenge={challenge} />
+            </Link>
           ))}
-        {/* </div> */}
       </div>
     </section>
   );

@@ -47,7 +47,7 @@ const GRADIENTS_BY_DIFFICULTY = {
 export const ExploreCard = ({ challenge }: ExploreCardProps) => {
   return (
     <Card
-      className={`group relative overflow-hidden duration-300
+      className={`group relative overflow-hidden duration-300 sm:min-w-[332px]
       ${GRADIENTS_BY_DIFFICULTY[challenge.difficulty]}
       ${SHADOWS_BY_DIFFICULTY[challenge.difficulty]} 
       ${BORDERS_BY_DIFFICULTY[challenge.difficulty]}
@@ -61,8 +61,8 @@ export const ExploreCard = ({ challenge }: ExploreCardProps) => {
       )}
       {challenge.difficulty === 'EASY' && (
         <>
-          <Diamond className="absolute -right-5 -top-10 h-24 w-24 origin-top-right stroke-1 text-white/30 duration-500 group-hover:rotate-6 group-hover:scale-90 dark:group-hover:text-black/30"></Diamond>
-          <Diamond className="absolute -right-6 -top-12 h-36 w-36 rotate-12 stroke-[0.75] text-white/30 duration-500 group-hover:-translate-y-2 group-hover:translate-x-3 group-hover:rotate-6 group-hover:scale-90 dark:group-hover:text-black/30"></Diamond>
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 origin-top-right stroke-1 text-white/30 duration-300 group-hover:rotate-6 group-hover:scale-90 dark:group-hover:text-black/30"></Diamond>
+          <Diamond className="absolute -right-6 -top-12 h-36 w-36 rotate-12 stroke-[0.75] text-white/30 duration-300 group-hover:-translate-y-2 group-hover:translate-x-3 group-hover:rotate-6 group-hover:scale-90 dark:group-hover:text-black/30"></Diamond>
         </>
       )}
       {challenge.difficulty === 'MEDIUM' && (
