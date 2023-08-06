@@ -1,11 +1,11 @@
 'use client';
 
-import { Balancer } from 'react-wrap-balancer';
-import { Github, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Button } from '~/components/ui/button';
-import { FakeChallengeCard } from '~/components/landing/fake-challenge-card';
+import { Github, Mail } from 'lucide-react';
 import Link from 'next/link';
+import { Balancer } from 'react-wrap-balancer';
+import { HeroChallengeCard } from '~/components/landing/hero-challenge-card';
+import { Button } from '~/components/ui/button';
 
 const TypeHeroLogo = () => {
   return (
@@ -51,7 +51,7 @@ const Hero = () => (
         <p className="max-w-[55ch] bg-transparent px-8 text-center font-medium leading-8 text-black/50 dark:text-white/50 lg:px-0 lg:text-left">
           <Balancer>
             Connect, collaborate, and grow with a community of TypeScript developers. Elevate your
-            skills trough interactive coding challenges, discussions, and knowledge sharing
+            skills through interactive coding challenges, discussions, and knowledge sharing
           </Balancer>
         </p>
         <div className="flex gap-3">
@@ -123,10 +123,11 @@ const Hero = () => (
           }}
           className="group"
         >
-          <FakeChallengeCard
-            difficulty="EASY"
+          <HeroChallengeCard
+            difficulty="BEGINNER"
             className="absolute"
-            title="Implement a generic type"
+            title="Implement union type of number and string"
+            prompt="Implement a union type of number and string"
           />
         </motion.div>
         <motion.div
@@ -145,7 +146,12 @@ const Hero = () => (
           }}
           className="group"
         >
-          <FakeChallengeCard className="absolute" title="Implement a JSON parser type" />
+          <HeroChallengeCard
+            difficulty="HARD"
+            className="absolute"
+            title="String to Number"
+            prompt="Convert a string literal to a number"
+          />
         </motion.div>
       </div>
     </div>

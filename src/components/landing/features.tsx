@@ -36,8 +36,8 @@ const Features = () => {
           </div>
           <div className="relative z-10 grid w-full gap-8 lg:grid-cols-2">
             <FeatureCard
-              title="Learn & Excel"
-              description="Create new challenges with a built-in challenge editor and choose accepted solutions"
+              title="Type Challenges"
+              description="Engage in TypeScript challenges to strengthen your grasp of the type system and advanced features"
               className="left-[35px] top-[35%] w-[150%] transition-transform duration-300 group-hover:scale-105 sm:left-[35px] sm:top-[30%] sm:w-[110%]"
               image={{
                 dark: FeatureCardChallengeDark,
@@ -47,8 +47,30 @@ const Features = () => {
             />
 
             <FeatureCard
-              title="Learn & Excel"
-              description="Create new challenges with a built-in challenge editor and choose accepted solutions"
+              title="Collaborative Environment"
+              description="Developers can share solutions and engage in discussions through commenting"
+              className="left-[35px] top-[35%] w-[150%] transition-transform duration-300 group-hover:scale-105 sm:left-[35px] sm:top-[30%] sm:w-[110%]"
+              image={{
+                dark: FeatureCardChallengeDark,
+                light: FeatureCardChallengeLight,
+                alt: 'Something',
+              }}
+            />
+
+            <FeatureCard
+              title="Challenge Creation"
+              description="Craft your own coding challenges to share with the Typehero community"
+              className="left-[35px] top-[35%] w-[150%] transition-transform duration-300 group-hover:scale-105 sm:left-[35px] sm:top-[30%] sm:w-[110%]"
+              image={{
+                dark: FeatureCardChallengeDark,
+                light: FeatureCardChallengeLight,
+                alt: 'Something',
+              }}
+            />
+
+            <FeatureCard
+              title="Track Your Progress"
+              description="Keep tabs on your coding journey with the ability to track your progress on your user profile"
               className="left-[35px] top-[35%] w-[150%] transition-transform duration-300 group-hover:scale-105 sm:left-[35px] sm:top-[30%] sm:w-[110%]"
               image={{
                 dark: FeatureCardChallengeDark,
