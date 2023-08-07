@@ -157,6 +157,7 @@ model Challenge {
   bookmark       Bookmark[]
   sharedSolution SharedSolution[]
   Report         Report[]         @relation("report_challenge")
+  TrackChallenge TrackChallenge[]
 
   @@index([userId])
 }
@@ -357,4 +358,24 @@ model ImageUpload {
   updatedAt DateTime @updatedAt
 
   @@index([userId])
+}
+
+model TrackChallenge {
+  id          Int       @id @default(autoincrement())
+  orderId     Int
+  challengeId Int
+  challenge   Challenge @relation(fields: [challengeId], references: [id])
+  trackId     Int
+  track       Track     @relation(fields: [trackId], references: [id])
+
+  @@index([challengeId])
+  @@index([trackId])
+}
+
+model Track {
+  id             Int              @id @default(autoincrement())
+  title          String
+  description    String
+  visible        Boolean          @default(true)
+  trackChallenge TrackChallenge[]
 }
