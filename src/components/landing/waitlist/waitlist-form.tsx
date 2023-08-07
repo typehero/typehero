@@ -120,16 +120,16 @@ export default function WaitlistForm() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent className="rounded-xl bg-white/50 backdrop-blur-md dark:bg-black/50">
-                    <SelectItem className="cursor-pointer rounded-lg brightness-200" value="user">
+                    <SelectItem className="cursor-pointer rounded-lg brightness-150" value="user">
                       I want to solve type challenges
                     </SelectItem>
                     <SelectItem
-                      className="cursor-pointer rounded-lg brightness-200"
+                      className="cursor-pointer rounded-lg brightness-150"
                       value="builder"
                     >
                       I want to build type challenges
                     </SelectItem>
-                    <SelectItem className="cursor-pointer rounded-lg brightness-200" value="both">
+                    <SelectItem className="cursor-pointer rounded-lg brightness-150" value="both">
                       Both
                     </SelectItem>
                   </SelectContent>
