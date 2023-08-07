@@ -66,7 +66,7 @@ const Hero = () => (
             asChild
           >
             <Link href="/waitlist">
-              <span className="inline-flex h-full w-fit items-center gap-1 rounded-xl bg-white px-4 py-2 text-[#3178c6] transition-all duration-300">
+              <span className="inline-flex h-full w-fit items-center gap-1 rounded-[10px] bg-white px-4 py-2 text-[#3178c6] transition-all duration-300">
                 <Mail className="mr-1 h-4 w-4 stroke-[3]" />
                 Join the Waitlist
               </span>
