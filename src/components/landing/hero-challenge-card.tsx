@@ -1,5 +1,7 @@
+import type { Difficulty } from '@prisma/client';
 import { clsx } from 'clsx';
 import { motion, type SVGMotionProps } from 'framer-motion';
+import type { ReactNode } from 'react';
 
 function getRandomWidth() {
   const min = 100;
@@ -14,7 +16,8 @@ function getRandomWidth() {
 export type FakeChallengeCardProps = {
   title: string;
   className?: string;
-  difficulty?: 'EASY' | 'MEDIUM' | 'HARD';
+  difficulty: Difficulty;
+  prompt: ReactNode;
 };
 
 const COLORS_BY_DIFFICULTY = {
@@ -33,7 +36,12 @@ const codeLineProps = {
   transition: { duration: 0.5, delay: 0.15 },
 } as SVGMotionProps<SVGRectElement>;
 
-export const FakeChallengeCard = ({ title, className, difficulty }: FakeChallengeCardProps) => {
+export const HeroChallengeCard = ({
+  prompt,
+  title,
+  className,
+  difficulty,
+}: FakeChallengeCardProps) => {
   return (
     <div
       className={clsx(className, {
@@ -54,9 +62,7 @@ export const FakeChallengeCard = ({ title, className, difficulty }: FakeChalleng
           @you
         </div>
       </div>
-      <div className="translate-x-1 text-xs">
-        Implement the built-in <code>Pick</code> type.
-      </div>
+      <div className="translate-x-1 text-xs">{prompt}</div>
       <div className="mt-4 h-56 flex-grow rounded-xl bg-zinc-300/70 p-4 duration-300 group-hover/card:-translate-x-1 group-hover/card:-translate-y-3 group-hover/card:shadow-[1rem_1rem_2.5rem_-1rem_#0008] dark:bg-zinc-800/70">
         <svg
           width="256"

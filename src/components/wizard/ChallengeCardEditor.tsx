@@ -38,32 +38,45 @@ export function ChallengeCardEditor({ form }: Props) {
     updatedAt: new Date(),
   };
   return (
-    <div className="h-full py-6">
-      <TypographyH3 className="mb-6">Create Challenge Card</TypographyH3>
-      <div className="flex items-start gap-12">
-        <div className="flex w-1/3 flex-col gap-3">
+    <>
+      <TypographyH3 className="mx-auto mb-4 max-w-fit lg:mb-6">Create Challenge Card</TypographyH3>
+      <div className="flex flex-wrap items-start justify-center gap-4 xl:px-24">
+        <div className="w-full sm:w-2/3 lg:w-[333px] xl:w-[392px]">
+          <ExploreCard challenge={data} />
+        </div>
+        <div className="flex w-full flex-col gap-1 rounded-3xl border border-neutral-200 bg-neutral-100 p-4 pt-[0.8rem] dark:border-neutral-800 dark:bg-neutral-900 sm:w-2/3 lg:w-[calc(333px+79px+16px)] xl:w-[calc(392px+79px+16px)]">
           <FormField
             control={form.control}
             name="difficulty"
             render={({ field }) => {
               return (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel className="mt-2">Difficulty: </FormLabel>
                   <Select
                     onValueChange={field.onChange as (value: string) => void}
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger>
+                      <SelectTrigger className="rounded-xl bg-neutral-200 dark:bg-neutral-800">
                         <SelectValue placeholder="Select a difficulty for your challenge" />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent>
-                      <SelectItem value="BEGINNER">BEGINNER</SelectItem>
-                      <SelectItem value="EASY">EASY</SelectItem>
-                      <SelectItem value="MEDIUM">MEDIUM</SelectItem>
-                      <SelectItem value="HARD">HARD</SelectItem>
-                      <SelectItem value="EXTREME">EXTREME</SelectItem>
+                    <SelectContent className="rounded-xl border border-neutral-300 bg-neutral-200 shadow-[0_0_2rem_#0008] dark:border-neutral-700 dark:bg-neutral-800">
+                      <SelectItem className="rounded-t-lg brightness-150" value="BEGINNER">
+                        BEGINNER
+                      </SelectItem>
+                      <SelectItem className="brightness-150" value="EASY">
+                        EASY
+                      </SelectItem>
+                      <SelectItem className="brightness-150" value="MEDIUM">
+                        MEDIUM
+                      </SelectItem>
+                      <SelectItem className="brightness-150" value="HARD">
+                        HARD
+                      </SelectItem>
+                      <SelectItem className="rounded-b-lg brightness-150" value="EXTREME">
+                        EXTREME
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -76,9 +89,13 @@ export function ChallengeCardEditor({ form }: Props) {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Challenge Title</FormLabel>
+                <FormLabel>Challenge Title:</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter a Challenge Title" {...field} />
+                  <Input
+                    className="rounded-xl bg-neutral-200 dark:bg-neutral-800"
+                    placeholder="Enter a Challenge Title"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -89,11 +106,11 @@ export function ChallengeCardEditor({ form }: Props) {
             name="shortDescription"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Short Description</FormLabel>
+                <FormLabel>Short Description:</FormLabel>
                 <FormControl>
                   <Textarea
                     placeholder="Enter a Short Description"
-                    className="resize-none"
+                    className="resize-none rounded-xl bg-neutral-200 dark:bg-neutral-800"
                     {...field}
                   />
                 </FormControl>
@@ -102,10 +119,7 @@ export function ChallengeCardEditor({ form }: Props) {
             )}
           />
         </div>
-        <div className="w-[392px]">
-          <ExploreCard challenge={data} />
-        </div>
       </div>
-    </div>
+    </>
   );
 }

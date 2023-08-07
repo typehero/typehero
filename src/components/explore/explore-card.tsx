@@ -47,7 +47,7 @@ const GRADIENTS_BY_DIFFICULTY = {
 export const ExploreCard = ({ challenge }: ExploreCardProps) => {
   return (
     <Card
-      className={`group relative overflow-hidden duration-300
+      className={`group relative overflow-hidden duration-300 sm:min-w-[300px] xl:min-w-[382px]
       ${GRADIENTS_BY_DIFFICULTY[challenge.difficulty]}
       ${SHADOWS_BY_DIFFICULTY[challenge.difficulty]} 
       ${BORDERS_BY_DIFFICULTY[challenge.difficulty]}
@@ -61,20 +61,20 @@ export const ExploreCard = ({ challenge }: ExploreCardProps) => {
       )}
       {challenge.difficulty === 'EASY' && (
         <>
-          <Diamond className="absolute -right-5 -top-10 h-24 w-24 origin-top-right stroke-1 text-white/30 duration-300 group-hover:scale-90 dark:group-hover:text-black/30"></Diamond>
-          <Diamond className="absolute -right-5 -top-10 h-32 w-32 rotate-12 stroke-1 text-white/30 duration-300 group-hover:-translate-y-2 group-hover:translate-x-2 group-hover:-rotate-12 group-hover:scale-90 dark:group-hover:text-black/30"></Diamond>
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 origin-top-right stroke-1 text-white/30 duration-300 group-hover:rotate-6 group-hover:scale-90 dark:group-hover:text-black/30"></Diamond>
+          <Diamond className="absolute -right-6 -top-12 h-36 w-36 rotate-12 stroke-[0.75] text-white/30 duration-300 group-hover:-translate-y-2 group-hover:translate-x-3 group-hover:rotate-6 group-hover:scale-90 dark:group-hover:text-black/30"></Diamond>
         </>
       )}
       {challenge.difficulty === 'MEDIUM' && (
         <>
-          <Triangle className="absolute -right-4 -top-6 h-20 w-20 rotate-[40deg] stroke-2 text-white/50 duration-200 group-hover:rotate-0 group-hover:scale-50 dark:group-hover:text-black/30"></Triangle>
-          <Triangle className="absolute -right-12 -top-14 h-36 w-36 rotate-45 stroke-1 text-white/50 duration-300 group-hover:h-32 group-hover:w-32 group-hover:rotate-[20deg] dark:group-hover:text-black/30"></Triangle>
+          <Triangle className="absolute -right-5 -top-5 h-16 w-16 rotate-0 stroke-2 text-white/50 duration-500 group-hover:-translate-x-10 group-hover:translate-y-10 group-hover:rotate-[90deg] dark:group-hover:text-black/30"></Triangle>
+          <Triangle className="absolute -right-14 -top-16 h-36 w-36 rotate-0 stroke-1 text-white/50 duration-300 group-hover:translate-x-3 group-hover:rotate-[30deg] group-hover:scale-50 group-hover:stroke-2 dark:group-hover:text-black/30"></Triangle>
         </>
       )}
       {challenge.difficulty === 'HARD' && (
         <>
           <Plus className="absolute -right-4 -top-8 h-24 w-24 stroke-1 text-white/30 duration-300 group-hover:scale-0 dark:group-hover:text-black/30"></Plus>
-          <Plus className="absolute -right-4 -top-8 h-32 w-32 stroke-1 text-white/30 duration-500 group-hover:scale-[3] dark:group-hover:text-black/30"></Plus>
+          <Plus className="absolute -right-4 -top-8 h-32 w-32 stroke-1 text-white/30 duration-500 group-hover:-translate-y-5 group-hover:translate-x-5 group-hover:-rotate-90 group-hover:scale-75 dark:group-hover:text-black/30"></Plus>
         </>
       )}
       {challenge.difficulty === 'EXTREME' && (

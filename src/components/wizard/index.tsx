@@ -10,6 +10,7 @@ import { USER_CODE_START, USER_CODE_START_REGEX } from '../challenge/code-panel/
 import { ChallengeCardEditor } from './ChallengeCardEditor';
 import { DescriptionEditor } from './DescriptionEditor';
 import { Steps } from './Steps';
+import { NextBack } from './NextBack';
 import { Summary } from './Summary';
 import { TestCasesEditor } from './TestCasesEditor';
 import { uploadChallenge } from './create.action';
@@ -115,34 +116,36 @@ export function Wizard() {
     if (isUserACreator) {
       router.push(`/challenge/${id}`);
     } else {
-      router.push(`/explore}`);
+      router.push(`/explore`);
     }
   }
 
   return (
-    <div className="container h-full pb-6">
-      <div className="flex h-full flex-col">
-        {/* we cant nest this in the form because it causes the editor to resize inifinitely hence the onSubmit(wtf..) */}
-        <Steps
-          steps={steps}
-          current={step}
-          onChange={(idx) => setStep(idx)}
-          onNext={handleNextClick}
-          onSubmit={form.handleSubmit(onSubmit)}
-        />
-        {rendered && (
-          <Form {...form}>
-            <form className="flex-1">
-              {step === STEPS.ChallengeCard && <ChallengeCardEditor form={form} />}
-              {step === STEPS.Description && <DescriptionEditor form={form} />}
-              {step === STEPS.TestCases && (
-                <TestCasesEditor form={form} hasTsErrors={hasTsErrors} setTsErrors={setTsErrors} />
-              )}
-              {step === 3 && <Summary isUserACreator={isUserACreator} />}
-            </form>
-          </Form>
-        )}
-      </div>
+    <div className="flex h-full flex-col gap-4 pb-4 pt-4 lg:gap-6 lg:pb-8">
+      {/* we cant nest this in the form because it causes the editor to resize inifinitely hence the onSubmit(wtf..) */}
+      <Steps steps={steps} current={step} onChange={(idx) => setStep(idx)} />
+      {rendered && (
+        <Form {...form}>
+          <form
+            className={`container ${
+              (step === STEPS.Description || step === STEPS.TestCases) && 'h-full'
+            }`}
+          >
+            {step === STEPS.ChallengeCard && <ChallengeCardEditor form={form} />}
+            {step === STEPS.Description && <DescriptionEditor form={form} />}
+            {step === STEPS.TestCases && (
+              <TestCasesEditor form={form} hasTsErrors={hasTsErrors} setTsErrors={setTsErrors} />
+            )}
+            {step === 3 && <Summary isUserACreator={isUserACreator} />}
+          </form>
+        </Form>
+      )}
+      <NextBack
+        current={step}
+        onChange={(idx) => setStep(idx)}
+        onNext={handleNextClick}
+        onSubmit={form.handleSubmit(onSubmit)}
+      />
     </div>
   );
 }

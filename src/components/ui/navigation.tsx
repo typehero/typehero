@@ -53,13 +53,6 @@ export function Navigation() {
   const renderLoginDetails = (): JSX.Element | null => {
     return session ? (
       <>
-        <button
-          type="button"
-          className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none"
-        >
-          <Bell className="h-5 w-5" aria-hidden="true" />
-        </button>
-
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">

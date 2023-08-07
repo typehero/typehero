@@ -1,25 +1,35 @@
+'use client';
 // eslint-disable-next-line no-restricted-imports
 import { contributors } from '../../../../public/contributors';
 
 import { GitBranch } from 'lucide-react';
 
-import styles from '~/components/landing/community/community.module.css';
 import { clsx } from 'clsx';
 import { type CSSProperties } from 'react';
+import { useInView } from 'react-intersection-observer';
+import styles from '~/components/landing/community/community.module.css';
 
-const Community = async function () {
+const Community = function () {
   type WrapperStyle = CSSProperties & {
     '--bottom': string;
   };
+
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+  });
 
   return (
     <>
       <div className="containerthing -z-10 flex rotate-180 opacity-50 dark:opacity-100">
         <div
-          className="thething translate-z-0 translate-y-[-200px] rotate-180 scale-[2] duration-1000"
+          ref={ref}
+          className={clsx(
+            { 'scale-[3] md:scale-[2] 2xl:scale-[1.75]': inView },
+            'thething translate-z-0 translate-y-[-180px] rotate-180 scale-50 animate-none duration-1000',
+          )}
           style={
             {
-              '--bottom': 'hsl(211,60%,48%)',
+              '--bottom': '#4188e6',
             } as WrapperStyle
           }
         ></div>
@@ -27,7 +37,7 @@ const Community = async function () {
       {/* backdrop styles don't apply for the last pixel row of the elment for some reason no there's p and m offsets*/}
       <section className={clsx(styles.backdrop, 'relative -mb-[1px] pb-[1px]')}>
         <div className="backdrop-blur-md">
-          <div className="container flex flex-col justify-center pt-[128px] md:pb-[128px] lg:flex-row lg:items-center">
+          <div className="container flex flex-col justify-center pt-[128px] lg:flex-row lg:items-center lg:pb-[148px]">
             <div className="flex flex-1 flex-col items-center gap-6 pb-36 lg:items-start lg:pb-0">
               <div className="rounded-full bg-gradient-to-r from-[#31bdc6] to-[#3178c6] p-[1px] brightness-90 contrast-150 dark:brightness-125 dark:contrast-100">
                 <div className="rounded-full bg-white/80 px-3 py-1 dark:bg-black/80">

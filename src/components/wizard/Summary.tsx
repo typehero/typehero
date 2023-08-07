@@ -3,12 +3,18 @@ interface Props {
 }
 export function Summary({ isUserACreator }: Props) {
   return (
-    <div className="flex h-full flex-col items-center justify-center">
-      <div className="mb-5 text-center text-5xl font-bold text-gray-900 dark:text-gray-100">
+    <div className="flex flex-col items-center justify-center pb-8 pt-12">
+      <div className="mb-3 max-w-[20ch] text-center text-3xl font-bold text-gray-900 dark:text-gray-100 md:text-5xl">
         {isUserACreator ? (
-          <>Thanks for creating a challenge! Submit it to share with the community.</>
+          <>
+            🎉 <br />
+            <br /> Thanks for creating a challenge! Submit it to share with the community.
+          </>
         ) : (
-          <>Thanks for creating a challenge! Submit it to the community for review.</>
+          <>
+            🎉 <br /> <br />
+            Thanks for creating a challenge! Submit it to the community for review.
+          </>
         )}
       </div>
     </div>

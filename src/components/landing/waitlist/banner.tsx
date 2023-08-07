@@ -11,15 +11,15 @@ const Waitlist = () => {
   return (
     <section className={clsx(styles.backdrop, 'relative overflow-hidden')}>
       <div className="container relative grid grid-cols-1 items-center justify-center py-[64px] md:grid-cols-2">
-        <div className="flex flex-col gap-8 pb-4 pt-48 sm:px-16 sm:pt-24 md:px-0 md:pt-16">
-          <h1 className="text-4xl font-bold">
-            <Balancer>Early birds get the perks</Balancer>
+        <div className="flex flex-col gap-8 pb-8 pt-48 sm:px-16 sm:pt-20 md:px-0 md:pb-0 md:pt-16">
+          <h1 className="max-w-[13ch] text-4xl font-bold md:max-w-none">
+            <Balancer>Be the First to Know</Balancer>
           </h1>
           <p className="leading-8 text-black/50 dark:text-white/50">
             <Balancer>
               We’re currently working hard to make TypeHero the perfect place for TypeScript
               enthusiasts and learners. If you believe TypeHero can help you become a better
-              TypeScript developer in the future, consider joining our waitlist.
+              TypeScript developer in the future, consider joining our waitlist to get updates on our progress.
             </Balancer>
           </p>
         </div>

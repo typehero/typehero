@@ -1,9 +1,5 @@
 'use client';
 
-import Image from 'next/image';
-import { type StaticImageData } from 'next/image';
-import { useTheme } from 'next-themes';
-import { useEffect, type CSSProperties, type MouseEvent, useState } from 'react';
 import {
   motion,
   useMotionTemplate,
@@ -11,6 +7,9 @@ import {
   type MotionStyle,
   type MotionValue,
 } from 'framer-motion';
+import { useTheme } from 'next-themes';
+import Image, { type StaticImageData } from 'next/image';
+import { useEffect, useState, type MouseEvent } from 'react';
 
 type WrapperStyle = MotionStyle & {
   '--x': MotionValue<string>;
