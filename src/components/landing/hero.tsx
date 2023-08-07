@@ -124,7 +124,7 @@ const Hero = () => (
           className="group"
         >
           <HeroChallengeCard
-            difficulty="BEGINNER"
+            difficulty="EASY"
             className="absolute"
             title="Implement a union type of number and string"
             prompt="Implement a union type of number and string"
