@@ -19,7 +19,8 @@ const Waitlist = () => {
             <Balancer>
               We’re currently working hard to make TypeHero the perfect place for TypeScript
               enthusiasts and learners. If you believe TypeHero can help you become a better
-              TypeScript developer in the future, consider joining our waitlist to get updates on our progress.
+              TypeScript developer in the future, consider joining our waitlist to get updates on
+              our progress.
             </Balancer>
           </p>
         </div>
@@ -28,7 +29,7 @@ const Waitlist = () => {
           asChild
         >
           <Link href="/waitlist">
-            <span className="inline-flex h-full w-fit items-center gap-1 rounded-xl bg-white/90 px-4 py-2 text-black transition-all duration-300 group-hover:rounded-3xl group-hover:bg-white/0 group-hover:text-white dark:bg-black/80 dark:text-white group-hover:dark:bg-black/0 dark:group-hover:text-black">
+            <span className="inline-flex h-full w-fit items-center gap-1 rounded-[10px] bg-white/90 px-4 py-2 text-black transition-all duration-300 group-hover:rounded-3xl group-hover:bg-white/0 group-hover:text-white dark:bg-black/80 dark:text-white group-hover:dark:bg-black/0 dark:group-hover:text-black">
               <Mail className="mr-1 h-4 w-4 stroke-[3]" />
               Join the Waitlist
             </span>
