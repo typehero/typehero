@@ -126,7 +126,7 @@ const Hero = () => (
           <HeroChallengeCard
             difficulty="BEGINNER"
             className="absolute"
-            title="Implement union type of number and string"
+            title="Implement a union type of number and string"
             prompt="Implement a union type of number and string"
           />
         </motion.div>
