@@ -9,7 +9,7 @@ export function middleware(req: NextRequest) {
       const authValue = basicAuth.split(' ')[1];
       const [user, pwd] = atob(authValue ?? '').split(':');
 
-      if (user === 'trash' && pwd === 'isg0d') {
+      if (user === 'trash_dev' && pwd === 'trash') {
         return NextResponse.next();
       }
     }
