@@ -47,7 +47,7 @@ const GRADIENTS_BY_DIFFICULTY = {
 export const ExploreCard = ({ challenge }: ExploreCardProps) => {
   return (
     <Card
-      className={`group relative overflow-hidden duration-300 sm:min-w-[300px] xl:min-w-[382px]
+      className={`group relative overflow-hidden duration-300 sm:min-w-[300px] xl:min-w-[333px]
       ${GRADIENTS_BY_DIFFICULTY[challenge.difficulty]}
       ${SHADOWS_BY_DIFFICULTY[challenge.difficulty]} 
       ${BORDERS_BY_DIFFICULTY[challenge.difficulty]}

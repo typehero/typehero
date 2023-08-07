@@ -54,7 +54,7 @@ export default function WaitlistForm() {
   return (
     <div className="w-full md:w-[350px]">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col">
           <FormField
             control={form.control}
             name="name"
@@ -63,9 +63,9 @@ export default function WaitlistForm() {
                 <FormControl>
                   <Input
                     className={clsx({
-                      'rounded-xl border border-red-600 bg-white/50 backdrop-blur-md dark:border-red-400 dark:bg-neutral-950/50':
+                      'rounded-b-none rounded-t-xl border border-b-0 border-red-600 bg-white/50 backdrop-blur-md dark:border-red-400 dark:bg-neutral-950/50':
                         form.formState.errors.name,
-                      'rounded-xl border-black/30 bg-white/20 backdrop-blur-md dark:border-white/30 dark:bg-neutral-950/20':
+                      'rounded-b-none rounded-t-xl border-b-0 border-black/30 bg-white/20 backdrop-blur-md dark:border-white/30 dark:bg-neutral-950/20':
                         !form.formState.errors.name,
                     })}
                     {...field}
@@ -86,9 +86,9 @@ export default function WaitlistForm() {
                 <FormControl>
                   <Input
                     className={clsx({
-                      'rounded-xl border border-red-600 bg-white/50 backdrop-blur-md dark:border-red-400 dark:bg-neutral-950/50':
+                      'rounded-none border border-red-600 bg-white/50 backdrop-blur-md dark:border-red-400 dark:bg-neutral-950/50':
                         form.formState.errors.email,
-                      'rounded-xl border-black/30 bg-white/20 backdrop-blur-md dark:border-white/30 dark:bg-neutral-950/20':
+                      'rounded-none border-black/30 bg-white/20 backdrop-blur-md dark:border-white/30 dark:bg-neutral-950/20':
                         !form.formState.errors.email,
                     })}
                     {...field}
@@ -110,9 +110,9 @@ export default function WaitlistForm() {
                   <FormControl>
                     <SelectTrigger
                       className={clsx({
-                        'rounded-xl border border-red-600 bg-white/50 backdrop-blur-md dark:border-red-400 dark:bg-neutral-950/50':
+                        'rounded-b-xl rounded-t-none border border-t-0 border-red-600 bg-white/50 backdrop-blur-md dark:border-red-400 dark:bg-neutral-950/50':
                           form.formState.errors.intention,
-                        'rounded-xl border-black/30 bg-white/20 backdrop-blur-md dark:border-white/30 dark:bg-neutral-950/20':
+                        'rounded-b-xl rounded-t-none border-t-0 border-black/30 bg-white/20 backdrop-blur-md dark:border-white/30 dark:bg-neutral-950/20':
                           !form.formState.errors.intention,
                       })}
                     >
@@ -120,16 +120,16 @@ export default function WaitlistForm() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent className="rounded-xl bg-white/50 backdrop-blur-md dark:bg-black/50">
-                    <SelectItem className="cursor-pointer rounded-lg brightness-200" value="user">
+                    <SelectItem className="cursor-pointer rounded-lg brightness-150" value="user">
                       I want to solve type challenges
                     </SelectItem>
                     <SelectItem
-                      className="cursor-pointer rounded-lg brightness-200"
+                      className="cursor-pointer rounded-lg brightness-150"
                       value="builder"
                     >
                       I want to build type challenges
                     </SelectItem>
-                    <SelectItem className="cursor-pointer rounded-lg brightness-200" value="both">
+                    <SelectItem className="cursor-pointer rounded-lg brightness-150" value="both">
                       Both
                     </SelectItem>
                   </SelectContent>
@@ -141,7 +141,7 @@ export default function WaitlistForm() {
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="wl-form-button group relative w-full overflow-hidden rounded-xl px-[2px] py-[2px] font-bold transition-shadow duration-300 hover:shadow-[0_0.5rem_2rem_-0.75rem_#3178c6] dark:hover:shadow-[0_0.5rem_2rem_-0.75rem_#5198f6]"
+            className="wl-form-button group relative mt-6 w-full overflow-hidden rounded-xl px-[2px] py-[2px] font-bold transition-shadow duration-300 hover:shadow-[0_0.5rem_2rem_-0.75rem_#3178c6] dark:hover:shadow-[0_0.5rem_2rem_-0.75rem_#5198f6]"
           >
             <span className="h-full w-full rounded-[10px] bg-white px-4 py-2 text-center font-bold text-black transition-colors duration-300 group-hover:bg-blue-100 dark:bg-black dark:text-white group-hover:dark:bg-cyan-950">
               {isSubmitting ? 'Submitting...' : 'Join the waitlist'}

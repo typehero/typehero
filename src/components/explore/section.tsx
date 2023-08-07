@@ -1,24 +1,12 @@
-import Link from 'next/link';
-
-import { ExploreCard } from './explore-card';
-
 import type { ExploreChallengeFetcher } from '.';
-import type { Difficulty } from '@prisma/client';
 import { Button } from '../ui/button';
-import { ChevronRight, Circle, Diamond, Plus, Sparkle, Triangle } from 'lucide-react';
+import { ChevronRight, Diamond } from 'lucide-react';
+import { ExploreCarousel } from './section-carousel';
 
 interface Props {
   title: string;
   fetcher: ExploreChallengeFetcher;
 }
-
-const difficultyToNumber: Record<Difficulty, number> = {
-  BEGINNER: 0,
-  EASY: 1,
-  MEDIUM: 2,
-  HARD: 3,
-  EXTREME: 4,
-};
 
 const COLORS_BY_DIFFICULTY = {
   BEGINNER: 'bg-gradient-to-r from-50% from-pink-600/10 dark:from-pink-500/10',
@@ -75,7 +63,7 @@ export async function ExploreSection({ title, fetcher }: Props) {
         </>
       )}
 
-      <div className="flex items-center justify-between p-5 pb-0 pl-7">
+      <div className="flex items-center justify-between gap-3 p-5 pb-0 pl-7">
         {/* <div className="hidden w-[117px] md:block"></div> */}
         <h2
           className={`bg-clip-text text-3xl font-bold tracking-tight text-transparent ${
@@ -93,23 +81,7 @@ export async function ExploreSection({ title, fetcher }: Props) {
           <ChevronRight className="ml-2 h-4 w-4 stroke-[3] duration-300 group-hover:translate-x-1" />
         </Button>
       </div>
-      <div className="hide-scrollbar flex w-full snap-x flex-nowrap gap-4 overflow-x-scroll p-5">
-        {challenges
-          .sort((a, b) =>
-            difficultyToNumber[a.difficulty] !== difficultyToNumber[b.difficulty]
-              ? difficultyToNumber[a.difficulty] - difficultyToNumber[b.difficulty]
-              : a.name.localeCompare(b.name),
-          )
-          .map((challenge) => (
-            <Link
-              className="group snap-center focus:outline-none sm:w-[330px] xl:w-[382px]"
-              href={`/challenge/${challenge.id}`}
-              key={challenge.id}
-            >
-              <ExploreCard key={`challenge-${challenge.id}`} challenge={challenge} />
-            </Link>
-          ))}
-      </div>
+      <ExploreCarousel challenges={challenges} />
     </section>
   );
 }
