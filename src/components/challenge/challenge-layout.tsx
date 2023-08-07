@@ -2,6 +2,33 @@
 
 import { useEffect, useRef, type ReactNode } from 'react';
 
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+
+export const DEFAULT_SETTINGS = {
+  width: '500px',
+  height: '300px',
+};
+
+type Settings = typeof DEFAULT_SETTINGS;
+
+interface State {
+  settings: Settings;
+  updateSettings: (settings: Settings) => void;
+}
+
+export const useLayoutSettingsStore = create<State>()(
+  persist(
+    (set, get) => ({
+      settings: DEFAULT_SETTINGS,
+      updateSettings: (settings) => set({ settings: { ...get().settings, ...settings } }),
+    }),
+    {
+      name: 'challenge-layout-settings',
+    },
+  ),
+);
+
 export interface ChallengeLayoutProps {
   left: ReactNode;
   right: ReactNode;
@@ -12,11 +39,17 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
   const resizer = useRef<HTMLDivElement>(null);
   const leftSide = useRef<HTMLDivElement>(null);
   const rightSide = useRef<HTMLDivElement>(null);
+  const { settings, updateSettings } = useLayoutSettingsStore();
 
   useEffect(() => {
     const ref = resizer.current as HTMLDivElement;
     const leftRef = leftSide.current as HTMLDivElement;
     const rightRef = rightSide.current as HTMLDivElement;
+
+    // resize width on desktop, height on mobile
+    window.innerWidth > 1025
+      ? (leftRef.style.width = settings.width)
+      : (leftRef.style.height = settings.height);
 
     // The current position of mouse
     let x = 0;
@@ -99,16 +132,29 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
       document.removeEventListener('mousemove', mouseMoveHandler);
       document.removeEventListener('touchend', mouseUpHandler);
       document.removeEventListener('mouseup', mouseUpHandler);
+
+      window.innerWidth > 1025
+        ? updateSettings({ width: `${leftRef.offsetWidth}px`, height: settings.height })
+        : updateSettings({ width: settings.width, height: `${leftRef.offsetHeight}px` });
     };
 
+    // handle window resize
+    const resizeHandler = () => {
+      window.innerWidth > 1025
+        ? ((leftRef.style.width = settings.width), (leftRef.style.height = 'auto'))
+        : ((leftRef.style.height = settings.height), (leftRef.style.width = 'auto'));
+    };
+
+    window.addEventListener('resize', resizeHandler);
     ref?.addEventListener('mousedown', mouseDownHandler);
     ref?.addEventListener('touchstart', mouseDownHandler, false);
 
     return () => {
+      window.removeEventListener('resize', resizeHandler);
       ref?.removeEventListener('mousedown', mouseDownHandler);
       ref?.removeEventListener('touchstart', mouseDownHandler);
     };
-  }, []);
+  }, [settings, updateSettings]);
 
   return (
     <div
@@ -118,11 +164,11 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
     >
       <div
         ref={leftSide}
-        className="min-h-[318px] w-full lg:w-1/4 overflow-hidden rounded-l-2xl rounded-r-xl border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 lg:min-w-[500px]"
+        className="min-h-[318px] w-full overflow-hidden rounded-l-2xl rounded-r-xl border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 lg:min-w-[500px]"
       >
         {left}
       </div>
-      <div ref={resizer} className="resizer relative cursor-ew-resize p-2">
+      <div ref={resizer} className="resizer relative p-2">
         <div className="absolute left-1/2 top-1/2 h-1 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-400 duration-300 group-hover:bg-neutral-600 group-active:bg-emerald-400 group-active:duration-75 dark:bg-neutral-700 group-hover:dark:bg-neutral-500 lg:h-24 lg:w-1" />
       </div>
       <div
