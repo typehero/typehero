@@ -37,6 +37,30 @@ export async function addComment(comment: CommentToCreate) {
   });
 }
 
+export async function replyComment(comment: CommentToCreate, parentId: number) {
+  const session = await getServerAuthSession();
+
+  if (!session?.user.id) return 'unauthorized';
+  if (comment.text.length === 0) return 'text_is_empty';
+  if (!session?.user.id) return 'unauthorized';
+  if (comment.text.length === 0) return 'text_is_empty';
+
+  const { rootId, ...commentToCreate } = {
+    ...comment,
+    ...(comment.rootType === 'CHALLENGE'
+      ? { rootChallengeId: comment.rootId }
+      : { rootSolutionId: comment.rootId }),
+  };
+
+  return await prisma.comment.create({
+    data: {
+      ...commentToCreate,
+      parentId,
+      userId: session.user.id,
+    },
+  });
+}
+
 export async function updateComment(text: string, id: number) {
   const session = await getServerAuthSession();
 
@@ -85,6 +109,11 @@ export async function getCommentsByChallengeId(id: number) {
     },
     include: {
       user: true,
+      _count: {
+        select: {
+          replies: true,
+        },
+      },
     },
     orderBy: [
       {

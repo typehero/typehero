@@ -9,7 +9,6 @@ import { useRef, useState } from 'react';
 
 import { Bookmark as BookmarkIcon, Share, ThumbsUp } from 'lucide-react';
 import { Button } from '~/components/ui/button';
-import { UserBadge } from '~/components/ui/user-badge';
 import {
   Dialog,
   DialogContent,
@@ -17,18 +16,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '~/components/ui/dialog';
+import { DifficultyBadge } from '~/components/ui/difficulty-badge';
+import { Markdown } from '~/components/ui/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 import { TypographyH3 } from '~/components/ui/typography/h3';
-import { DifficultyBadge } from '~/components/ui/difficulty-badge';
-import { ActionMenu } from '~/components/ui/action-menu';
-import { Markdown } from '~/components/ui/markdown';
+import { UserBadge } from '~/components/ui/user-badge';
 import { ShareForm } from '../share-form';
 
 import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
+import ReportDialog from '~/components/report';
+import { ActionMenu } from '~/components/ui/action-menu';
+import { getRelativeTime } from '~/utils/relativeTime';
 import { addOrRemoveBookmark } from '../bookmark.action';
 import { incrementOrDecrementUpvote } from '../increment.action';
-import ReportDialog from '~/components/report';
-import { getRelativeTime } from '~/utils/relativeTime';
 
 interface Props {
   challenge: ChallengeRouteData;

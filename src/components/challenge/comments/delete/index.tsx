@@ -1,5 +1,4 @@
 import { type DialogTriggerProps } from '@radix-ui/react-dialog';
-import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { TypographyP } from '~/components//ui/paragraph';
 import { Button } from '~/components/ui/button';
@@ -9,6 +8,7 @@ import { TypographyLarge } from '~/components/ui/typography/large';
 import { toast } from '~/components/ui/use-toast';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { deleteComment, type CommentsByChallengeId } from '../comment.action';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface CommentDeleteDialogProps extends DialogTriggerProps {
   comment: CommentsByChallengeId[number];
@@ -21,8 +21,8 @@ export const CommentDeleteDialog = ({
   queryKey,
   ...props
 }: CommentDeleteDialogProps) => {
-  const [isOpen, setIsOpen] = useState(false);
   const queryClient = useQueryClient();
+  const [isOpen, setIsOpen] = useState(false);
 
   async function handleDeleteComment() {
     try {

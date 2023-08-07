@@ -299,10 +299,12 @@ enum CommentRoot {
 }
 
 model Comment {
-  id       Int     @id @default(autoincrement())
-  text     String  @db.MediumText
-  visible  Boolean @default(true)
-  parentId Int?
+  id            Int       @id @default(autoincrement())
+  text          String    @db.MediumText
+  visible       Boolean   @default(true)
+  parentId      Int?
+  parentComment Comment?  @relation("reply_comments", fields: [parentId], references: [id], onUpdate: NoAction, onDelete: NoAction)
+  replies       Comment[] @relation("reply_comments")
 
   userId String
   user   User   @relation(fields: [userId], references: [id])
@@ -321,6 +323,7 @@ model Comment {
 
   @@index([rootSolutionId])
   @@index([rootChallengeId])
+  @@index([parentId])
   @@index([userId])
 }
 
@@ -355,4 +358,3 @@ model ImageUpload {
 
   @@index([userId])
 }
-

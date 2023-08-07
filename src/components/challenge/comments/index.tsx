@@ -4,7 +4,6 @@ import type { CommentRoot } from '@prisma/client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { ChevronDown, ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { Comment } from '~/components/challenge/comments/comment';
 import { Button } from '~/components/ui/button';
@@ -25,7 +24,6 @@ export const Comments = ({ rootId, type }: Props) => {
   const [text, setText] = useState('');
   const commentContainerRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
-  const router = useRouter();
 
   const [page, setPage] = useState(1);
 
@@ -37,13 +35,6 @@ export const Comments = ({ rootId, type }: Props) => {
     keepPreviousData: true,
     staleTime: 5000,
   });
-
-  const handleEnterKey = async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.shiftKey && e.key === 'Enter') {
-      e.preventDefault();
-      await createChallengeComment();
-    }
-  };
 
   async function createChallengeComment() {
     try {
@@ -71,8 +62,6 @@ export const Comments = ({ rootId, type }: Props) => {
         variant: 'destructive',
         description: <p>You need to be signed in to post a comment.</p>,
       });
-    } finally {
-      router.refresh();
     }
   }
 
@@ -87,7 +76,7 @@ export const Comments = ({ rootId, type }: Props) => {
   return (
     <div
       className={clsx(
-        'sticky bottom-0 overflow-hidden border-t border-zinc-300 bg-background/90 shadow-[0_0_3rem_-0.25rem_#0004] backdrop-blur-sm duration-300 dark:border-zinc-700 dark:border-b-muted dark:bg-muted/90 dark:shadow-[0_0_3rem_-0.25rem_#0008]',
+        'absolute bottom-0 w-full overflow-hidden border-t border-zinc-300 bg-background/90 shadow-[0_0_3rem_-0.25rem_#0004] backdrop-blur-sm duration-300 dark:border-zinc-700 dark:border-b-muted dark:bg-muted/90 dark:shadow-[0_0_3rem_-0.25rem_#0008]',
         {
           'lg:border-t-none': showComments,
         },
@@ -124,7 +113,6 @@ export const Comments = ({ rootId, type }: Props) => {
             <CommentInput
               onChange={setText}
               value={text}
-              onKeyDown={handleEnterKey}
               onSubmit={createChallengeComment}
               mode="create"
             />
@@ -136,7 +124,13 @@ export const Comments = ({ rootId, type }: Props) => {
                 <NoComments />
               ) : (
                 data?.comments?.map((comment) => (
-                  <Comment key={comment.id} comment={comment} queryKey={queryKey} />
+                  <Comment
+                    key={comment.id}
+                    comment={comment}
+                    rootId={rootId}
+                    type={type}
+                    queryKey={queryKey}
+                  />
                 ))
               ))}
           </div>
