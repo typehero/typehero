@@ -9,11 +9,10 @@ import {
   DropdownMenuItem,
 } from './dropdown-menu';
 
-import * as AllIcons from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
+import { MoreHorizontal, type LucideIcon } from 'lucide-react';
 
 export type ActionMenuItem = {
-  icon?: keyof typeof AllIcons;
+  icon?: LucideIcon;
   label: string;
   key: string;
 };
@@ -23,17 +22,15 @@ export interface ActionMenuProps {
   onChange: (e: ActionMenuItem) => void;
 }
 
-type OptionalIcon = LucideIcon | null;
-
 export function ActionMenu(props: ActionMenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <AllIcons.MoreHorizontal className="cursor-pointer text-neutral-500" size={16} />
+        <MoreHorizontal className="cursor-pointer text-neutral-500" size={16} />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="mt-2 rounded-xl rounded-tr-sm p-0 invert">
         {props.items.map((item) => {
-          const Icon = (item.icon ? AllIcons[item.icon] : null) as OptionalIcon;
+          const Icon = item.icon;
           return (
             <DropdownMenuItem
               onClick={() => props.onChange(item)}

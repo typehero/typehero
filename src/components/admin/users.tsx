@@ -8,6 +8,7 @@ import { Badge } from '../ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import { TypographyH3 } from '../ui/typography/h3';
 import { toast } from '../ui/use-toast';
+import { Unlock } from 'lucide-react';
 
 interface BannedUsersProps {
   data: AdminBannedUsers;
@@ -84,7 +85,7 @@ export const BannedUsers = ({ data }: BannedUsersProps) => {
                       {
                         key: 'unban',
                         label: 'Unban',
-                        icon: 'Unlock',
+                        icon: Unlock,
                       },
                     ]}
                     onChange={(item) => {

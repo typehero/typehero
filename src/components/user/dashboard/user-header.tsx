@@ -4,6 +4,7 @@ import Text from '~/components/ui/typography/typography';
 import { type User } from '@prisma/client';
 import ReportDialog from '~/components/report';
 import { ActionMenu } from '~/components/ui/action-menu';
+import { Flag } from 'lucide-react';
 
 export interface UserHeaderProps {
   user: User;
@@ -19,7 +20,7 @@ export default function UserHeader({ user }: UserHeaderProps) {
             {
               key: 'report',
               label: 'Report',
-              icon: 'Flag',
+              icon: Flag,
             },
           ]}
           onChange={() => {

@@ -1,6 +1,6 @@
 'use client';
 
-import { Calendar, Share, X } from 'lucide-react';
+import { Calendar, Flag, Share, X } from 'lucide-react';
 import Link from 'next/link';
 import type { ChallengeSolution } from '~/app/challenge/[id]/solutions/[solutionId]/page';
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
@@ -68,7 +68,7 @@ export function SolutionDetails({ solution }: Props) {
                       {
                         key: 'report',
                         label: 'Report',
-                        icon: 'Flag',
+                        icon: Flag,
                       },
                     ]}
                     onChange={() => {
