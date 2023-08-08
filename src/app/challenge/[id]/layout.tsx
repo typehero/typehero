@@ -1,4 +1,5 @@
 import { ChallengeLayout } from '~/components/challenge/challenge-layout';
+import { ForceRenderUntilClient } from '~/components/ui/force-render-until-client';
 import { getServerAuthSession } from '~/server/auth';
 import { getChallengeRouteData } from './getChallengeRouteData';
 import { LeftWrapper } from './left-wrapper';
@@ -15,9 +16,11 @@ export default async function LayoutData({
   const challenge = await getChallengeRouteData(id, session);
 
   return (
-    <ChallengeLayout
-      left={<LeftWrapper challengeId={challenge.id}>{children}</LeftWrapper>}
-      right={<Wrapper challenge={challenge} />}
-    />
+    <ForceRenderUntilClient>
+      <ChallengeLayout
+        left={<LeftWrapper challengeId={challenge.id}>{children}</LeftWrapper>}
+        right={<Wrapper challenge={challenge} />}
+      />
+    </ForceRenderUntilClient>
   );
 }
