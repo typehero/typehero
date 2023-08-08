@@ -131,7 +131,6 @@ function LoginButton() {
   };
   const handleSignOut = async () => {
     await signOut({ redirect: false });
-    router.push('/');
   };
 
   return session ? (

@@ -27,6 +27,11 @@ declare module 'next-auth' {
 
 export const authOptions: NextAuthOptions = {
   callbacks: {
+    redirect: async ({ url, baseUrl }) => {
+      if (url.startsWith('/')) return `${baseUrl}${url}`;
+      else if (new URL(url).origin === baseUrl) return url;
+      return baseUrl;
+    },
     session: async ({ session, user }) => {
       // 1. State
       let userRoles: RoleTypes[] = [];
