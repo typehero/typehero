@@ -37,5 +37,10 @@ const config = {
     ],
   },
   swcMinify: true,
+  modularizeImports: {
+    'lucide-react': {
+      transform: 'lucide-react/dist/esm/icons/{{ kebabCase member }}',
+    },
+  },
 };
 export default config;

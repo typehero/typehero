@@ -7,7 +7,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 
-import { Bookmark as BookmarkIcon, Share, ThumbsUp } from 'lucide-react';
+import { Bookmark as BookmarkIcon, Flag, Share, ThumbsUp } from 'lucide-react';
 import { Button } from '~/components/ui/button';
 import {
   Dialog,
@@ -198,7 +198,7 @@ export function Description({ challenge }: Props) {
               {
                 key: 'feedback',
                 label: 'Feedback',
-                icon: 'Flag',
+                icon: Flag,
               },
             ]}
             onChange={() => {

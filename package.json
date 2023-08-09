@@ -120,7 +120,8 @@
     "patchedDependencies": {
       "next-auth@4.22.1": "patches/next-auth@4.22.1.patch",
       "@monaco-editor/react@4.5.1": "patches/@monaco-editor__react@4.5.1.patch",
-      "monaco-vim@0.4.0": "patches/monaco-vim@0.4.0.patch"
+      "monaco-vim@0.4.0": "patches/monaco-vim@0.4.0.patch",
+      "lucide-react@0.260.0": "patches/lucide-react@0.260.0.patch"
     }
   },
   "lint-staged": {

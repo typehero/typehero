@@ -1,4 +1,4 @@
-import { Github, LinkIcon, Linkedin, Twitter, Youtube } from 'lucide-react';
+import { Github, Link as LinkIcon, Linkedin, Twitter, Youtube } from 'lucide-react';
 
 // TODO: this could be more robust
 // it's not accounting for subdomains like the boomer www and stuff
