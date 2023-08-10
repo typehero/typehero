@@ -148,6 +148,7 @@ model Challenge {
   prompt           String          @db.MediumText
   status           ChallengeStatus @default(PENDING)
 
+
   /// Comma separated list of tags.
   tags String
 
@@ -160,6 +161,7 @@ model Challenge {
   bookmark       Bookmark[]
   sharedSolution SharedSolution[]
   Report         Report[]         @relation("report_challenge")
+  ChallengeTags  ChallengeTags[]
 
   @@index([userId])
 }
@@ -360,4 +362,24 @@ model ImageUpload {
   updatedAt DateTime @updatedAt
 
   @@index([userId])
+}
+
+model Tag {
+  id            Int             @id @default(autoincrement())
+  name          String
+  color         String          @db.TinyText
+  ChallengeTags ChallengeTags[]
+}
+
+model ChallengeTags {
+  id Int @id @default(autoincrement())
+
+  challengeId Int
+  challenge   Challenge @relation(fields: [challengeId], references: [id])
+
+  tagId Int
+  tag   Tag @relation(fields: [tagId], references: [id])
+
+  @@index([challengeId])
+  @@index([tagId])
 }

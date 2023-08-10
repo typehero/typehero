@@ -1,9 +1,11 @@
-const { fontFamily } =
-  // eslint-disable-next-line
-  require('tailwindcss/defaultTheme') as typeof import('tailwindcss/defaultTheme');
+import defaultTheme from 'tailwindcss/defaultTheme';
+
+import tailwindAnimate from 'tailwindcss-animate';
+import twindTypography from '@tailwindcss/typography';
+import twindContainers from '@tailwindcss/container-queries';
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+const config = {
   darkMode: ['class'],
   content: ['./app/**/*.{js,ts,jsx,tsx,mdx}', 'src/**/*.{ts,tsx}'],
   theme: {
@@ -54,7 +56,7 @@ module.exports = {
         sm: 'calc(var(--radius) - 4px)',
       },
       fontFamily: {
-        sans: ['var(--font-sans)', ...fontFamily.sans],
+        sans: ['var(--font-sans)', ...defaultTheme.fontFamily.sans],
       },
       keyframes: {
         'accordion-down': {
@@ -73,8 +75,10 @@ module.exports = {
     },
   },
   plugins: [
-    require('tailwindcss-animate'),
-    require('@tailwindcss/typography'),
-    require('@tailwindcss/container-queries'),
+    tailwindAnimate,
+    twindTypography,
+    twindContainers,
   ],
 };
+
+export default config;

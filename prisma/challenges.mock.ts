@@ -66,8 +66,6 @@ export async function loadChallengesFromTypeChallenge() {
     const tagParts = Array.isArray(tags) ? tags : tags?.split(',')?.map(t => t.trim());
 
     if(tagParts) tagParts.forEach(tag => allTags.add(tag.toLowerCase()));
-    console.info('TAG PARTS', allTags);
-
     arr.push({
       id: idNum,
       name: title,
@@ -79,6 +77,8 @@ export async function loadChallengesFromTypeChallenge() {
       tags: Array.isArray(tags) ? tags.join(',') : tags || '',
     });
   }
+
+  console.info('TAG PARTS', allTags);
 
 
   // Cleanup

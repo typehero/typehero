@@ -4,6 +4,7 @@ import uuidByString from 'uuid-by-string';
 import { loadChallengesFromTypeChallenge } from './challenges.mock';
 import CommentMock from './comment.mock';
 import UserMock from './user.mock';
+import { seedBaseTags } from './tags.mock';
 
 const prisma = new PrismaClient();
 
@@ -35,6 +36,7 @@ await prisma.challenge.createMany({
     userId: faker.helpers.arrayElement(users),
   })),
 });
+await seedBaseTags(prisma);
 
 export const trashId = uuidByString('trash');
 export const gId = uuidByString('g');
