@@ -27,13 +27,11 @@
     },
     "lint": {
       "outputs": ["node_modules/.cache/.eslintcache"],
-      "dependsOn": ["^topo"],
-      "outputMode": "new-only"
+      "dependsOn": ["^topo"]
     },
     "typecheck": {
       "dependsOn": ["^topo"],
-      "outputs": ["node_modules/.cache/tsbuildinfo.json"],
-      "outputMode": "errors-only"
+      "outputs": ["node_modules/.cache/tsbuildinfo.json"]
     },
     "test": {
       "dependsOn": ["^topo"],

@@ -233,6 +233,9 @@ importers:
       '@faker-js/faker':
         specifier: ^8.0.2
         version: 8.0.2
+      '@repo/tsconfig':
+        specifier: workspace:*
+        version: link:../../tooling/config-typescript
       '@tailwindcss/container-queries':
         specifier: ^0.1.1
         version: 0.1.1(tailwindcss@3.3.3)
@@ -345,9 +348,6 @@ importers:
       '@next/eslint-plugin-next':
         specifier: canary
         version: 13.4.13-canary.6
-      '@repo/tsconfig':
-        specifier: workspace:*
-        version: link:../config-typescript
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.59.1
         version: 5.59.1(@typescript-eslint/parser@5.62.0)(eslint@8.45.0)(typescript@5.1.6)

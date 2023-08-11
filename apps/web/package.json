@@ -80,6 +80,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
+    "@repo/tsconfig": "workspace:*",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/typography": "^0.5.9",
     "@types/eslint": "^8.44.0",
