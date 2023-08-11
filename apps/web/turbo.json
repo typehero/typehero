@@ -1,8 +1,8 @@
 {
   "extends": ["//"],
   "pipeline": {
-    "build": {
-      "env": ["VERCEL_ENV", "NODE_ENV"]
+    "start": {
+      "cache": false
     }
   }
 }
