@@ -1,14 +1,14 @@
 import { Button } from '../ui/button';
-import { STEPS, type Step } from '.';
+import { STEPS } from '.';
 
-interface Props<T extends Step> {
+interface Props {
   current: number;
   onChange: (index: number) => void;
   onNext: () => void;
   onSubmit: () => Promise<void>;
 }
 
-export function NextBack<T extends Step>({ current, onChange, onNext, onSubmit }: Props<T>) {
+export function NextBack({ current, onChange, onNext, onSubmit }: Props) {
   return (
     <div className={`flex justify-center gap-3 ${current === STEPS.Summary && ''}`}>
       {current > STEPS.ChallengeCard && (

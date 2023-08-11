@@ -5,7 +5,7 @@ import { RoleTypes } from '@prisma/client';
 import { Loader2, LogIn, Moon, Plus, Settings, Settings2, Sun, User } from 'lucide-react';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Button } from './button';
 import {
@@ -111,7 +111,6 @@ function ThemeButton() {
 function LoginButton() {
   const [loading, setLoading] = useState(false);
   const { data: session, status } = useSession();
-  const router = useRouter();
 
   const isAdmin = session?.user.role.includes(RoleTypes.ADMIN);
   const isMod = session?.user.role.includes(RoleTypes.MODERATOR);

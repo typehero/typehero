@@ -1,11 +1,10 @@
-import { Providers } from './providers';
-
 import '../styles/globals.css';
 
 import { Inter } from 'next/font/google';
+import type { Metadata } from 'next';
+import { Providers } from './providers';
 import { Navigation } from '~/components/ui/navigation';
 import { Toaster } from '~/components/ui/toaster';
-import type { Metadata } from 'next';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -33,7 +32,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html suppressHydrationWarning>
+    <html suppressHydrationWarning lang="en">
       <head>
         <title>Type Hero</title>
         <meta

@@ -37,7 +37,7 @@ export function RichMarkdownEditor({
 
   const { theme } = useTheme();
   useEffect(() => {
-    theme == 'dark'
+    theme === 'dark'
       ? document.documentElement.setAttribute('data-color-mode', 'dark')
       : document.documentElement.setAttribute('data-color-mode', 'light');
   }, [theme]);
@@ -174,11 +174,11 @@ export function RichMarkdownEditor({
         height="100%"
         onChange={onChange}
         onPaste={(event) => handlePasta(event)}
+        ref={editorRef}
+        // non-split-screen by default
         value={value}
         // @ts-ignore
         preview="edit"
-        // non-split-screen by default
-        ref={editorRef}
         visibleDragbar={false}
         // @ts-ignore
         commands={myCommands}

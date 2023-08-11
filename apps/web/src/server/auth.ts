@@ -2,7 +2,6 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import type { Role, RoleTypes } from '@prisma/client';
 import { getServerSession, type DefaultSession, type NextAuthOptions } from 'next-auth';
 import GitHubProvider from 'next-auth/providers/github';
-import { env } from '~/env.js';
 import { prisma } from '~/server/db';
 
 /**
@@ -27,7 +26,7 @@ declare module 'next-auth' {
 
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    redirect: async ({ url, baseUrl }) => {
+    redirect: ({ url, baseUrl }) => {
       if (url.startsWith('/')) return `${baseUrl}${url}`;
       else if (new URL(url).origin === baseUrl) return url;
       return baseUrl;
@@ -87,8 +86,8 @@ export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GitHubProvider({
-      clientId: env.GITHUB_ID,
-      clientSecret: env.GITHUB_SECRET,
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
     }),
   ],
 };

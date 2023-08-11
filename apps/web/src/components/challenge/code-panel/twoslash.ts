@@ -14,7 +14,6 @@ export const createTwoslashInlayProvider = (
       if (model.isDisposed()) {
         return {
           hints: [],
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
           dispose: () => {},
         };
       }
@@ -28,7 +27,6 @@ export const createTwoslashInlayProvider = (
         if (cancel.isCancellationRequested) {
           return {
             hints: [],
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
             dispose: () => {},
           };
         }
@@ -58,7 +56,6 @@ export const createTwoslashInlayProvider = (
 
       return {
         hints: results,
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
         dispose: () => {},
       };
     },

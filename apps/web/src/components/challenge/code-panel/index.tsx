@@ -214,7 +214,6 @@ export function CodePanel(props: Props) {
                 disabled={!initialTypecheckDone || !session?.user}
                 size="sm"
                 className="cursor-pointer rounded-lg bg-emerald-600 duration-300 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
-                // eslint-disable-next-line @typescript-eslint/no-misused-promises
                 onClick={handleSubmit}
               >
                 {!initialTypecheckDone && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

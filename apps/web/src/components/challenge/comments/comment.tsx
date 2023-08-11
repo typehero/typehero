@@ -132,7 +132,7 @@ export function Comment({ comment, readonly = false, rootId, type, queryKey }: C
         >
           {showReplies ? <ChevronDown size={18} /> : <ChevronUp size={18} />}
           <div className="text-xs">
-            {comment._count.replies == 1 ? '1 reply' : `${comment._count.replies} replies`}
+            {comment._count.replies === 1 ? '1 reply' : `${comment._count.replies} replies`}
           </div>
         </button>
       )}

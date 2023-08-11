@@ -76,13 +76,12 @@ export function SolutionEditor({ dismiss, challenge }: Props) {
   };
 
   const { theme } = useTheme();
-  theme == 'dark'
+  theme === 'dark'
     ? document.documentElement.setAttribute('data-color-mode', 'dark')
     : document.documentElement.setAttribute('data-color-mode', 'light');
 
   return (
     <Form {...form}>
-      {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
       <form className="relative flex h-full flex-col" onSubmit={form.handleSubmit(onSubmit)}>
         <div className="bg-background/90 dark:bg-muted/90 sticky right-0 top-0 z-10 flex w-full items-center justify-between gap-2 border-b border-zinc-300 bg-opacity-20 p-1 pr-2 backdrop-blur-sm dark:border-zinc-700">
           <div className="flex-1">
@@ -119,7 +118,6 @@ export function SolutionEditor({ dismiss, challenge }: Props) {
             control={form.control}
             name="content"
             render={({ field }) => (
-              // @ts-expect-error
               <RichMarkdownEditor
                 allowImageUpload
                 value={field.value}
