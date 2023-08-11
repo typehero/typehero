@@ -68,6 +68,7 @@
     "react-syntax-highlighter": "^15.5.0",
     "react-wrap-balancer": "^1.0.0",
     "remark-gfm": "^3.0.1",
+    "simple-git": "^3.19.1",
     "superjson": "1.12.4",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.6",
