@@ -1,0 +1,11 @@
+{
+  "extends": "@repo/tsconfig/base.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "module": "ESNext",
+    "target": "ESNext",
+    "checkJs": true,
+    "resolveJsonModule": true
+  },
+  "exclude": ["node_modules"]
+}
