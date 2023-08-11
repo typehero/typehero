@@ -4,6 +4,10 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
+    "db:push": "turbo db:push",
+    "db:reset": "turbo db:reset",
+    "db:seed": "turbo db:seed",
+    "db:studio": "turbo db:studio",
     "dev": "turbo dev",
     "dl-monaco": "tsx scripts/dl-monaco.ts",
     "format": "turbo format format-root --continue -- --cache",
@@ -15,7 +19,6 @@
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache'",
     "prepare": "husky install",
     "refresh": "pnpm reset && pnpm prisma db seed",
-    "reset": "prisma db push --force-reset",
     "typecheck": "turbo typecheck --continue"
   },
   "devDependencies": {

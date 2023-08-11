@@ -19,16 +19,6 @@
     "topo": {
       "dependsOn": ["@repo/db#db:generate", "^topo"]
     },
-    "db:generate": {
-      "outputs": ["../../node_modules/.prisma/**"],
-      "outputMode": "new-only"
-    },
-    "db:deploy": {
-      "cache": false
-    },
-    "db:push": {
-      "cache": false
-    },
     "//#format-root": {
       "dependsOn": ["^topo"],
       "outputMode": "new-only"
@@ -44,17 +34,9 @@
       "dependsOn": ["^topo"],
       "outputs": ["node_modules/.cache/tsbuildinfo.json"]
     },
-    "test": {
-      "dependsOn": ["^topo"],
-      "outputs": ["coverage/**"]
-    },
     "dev": {
       "dependsOn": ["db:generate"],
       "persistent": true,
-      "cache": false
-    },
-    "seed": {
-      "dependsOn": ["db:generate"],
       "cache": false
     }
   }

@@ -2,6 +2,7 @@
   "name": "@repo/db",
   "version": "0.1.1",
   "private": true,
+  "type": "module",
   "exports": {
     ".": "./src/index.ts"
   },
@@ -15,6 +16,9 @@
   "scripts": {
     "db:format": "prisma format",
     "db:generate": "prisma generate",
+    "db:push": "dotenv prisma db push",
+    "db:reset": "prisma db push --force-reset",
+    "db:seed": "dotenv tsx --transpile-only ./seed/index.ts",
     "db:studio": "prisma studio",
     "format": "prettier \"**/*.{ts,tsx,md,mdx,json}\" --check",
     "postinstall": "prisma generate",
@@ -29,6 +33,7 @@
     "@repo/lint": "workspace:*",
     "@repo/tsconfig": "workspace:*",
     "@types/node": "^16.18.11",
+    "dotenv-cli": "^7.2.1",
     "eslint": "^8.42.0",
     "prisma": "^5.0.0",
     "simple-git": "^3.19.1",
