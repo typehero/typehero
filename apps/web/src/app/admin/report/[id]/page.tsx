@@ -63,7 +63,7 @@ const Report = async function (props: Props) {
         {' '}
         <ChevronLeft /> <span>Back to reports</span>
       </Link>
-      <div className="sticky top-0 z-50 flex items-center justify-between bg-background/80">
+      <div className="bg-background/80 sticky top-0 z-50 flex items-center justify-between">
         <Text intent="h1" color="primary">
           {title}
         </Text>

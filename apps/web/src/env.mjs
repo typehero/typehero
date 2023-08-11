@@ -21,9 +21,9 @@ export const env = createEnv({
       process.env.VERCEL ? z.string().min(1) : z.string().url(),
     ),
 
-    // upload thing 
+    // upload thing
     UPLOADTHING_SECRET: z.string(),
-    UPLOADTHING_APP_ID: z.string()
+    UPLOADTHING_APP_ID: z.string(),
   },
 
   /**

@@ -29,7 +29,7 @@ export function LeftWrapper({ challengeId, children }: Props) {
 
   return (
     <Tabs defaultValue={selectedTab} className="flex h-full w-full flex-col overflow-hidden">
-      <TabsList className="sticky top-0 z-10 grid h-auto w-full grid-cols-3 rounded-none rounded-tl-2xl rounded-tr-xl border-b border-zinc-300 bg-background/90 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
+      <TabsList className="bg-background/90 dark:bg-muted/90 sticky top-0 z-10 grid h-auto w-full grid-cols-3 rounded-none rounded-tl-2xl rounded-tr-xl border-b border-zinc-300 backdrop-blur-sm dark:border-zinc-700">
         <TabsTrigger
           value="description"
           className="rounded-md rounded-tl-xl duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"

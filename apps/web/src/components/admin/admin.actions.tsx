@@ -191,8 +191,8 @@ export async function banUser(userId: string, reportId: number, banReason?: stri
       },
       data: {
         visible: false,
-      }
-    })
+      },
+    }),
   ]);
 }
 /**
@@ -239,7 +239,6 @@ export async function getChallenge(id: number) {
   });
 }
 
-
 /**
  * The function fetches the last 100 uploaded images.
  */
@@ -248,6 +247,6 @@ export async function getUploadedImages() {
     take: 100,
     orderBy: {
       createdAt: 'asc',
-    }
+    },
   });
 }

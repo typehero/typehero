@@ -211,11 +211,11 @@ export function Description({ challenge }: Props) {
       <div className="mb-6 flex items-center gap-4">
         <DifficultyBadge difficulty={challenge.difficulty} />
         <UserBadge username={challenge.user.name} />
-        <span className="-ml-1 text-xs text-muted-foreground">
+        <span className="text-muted-foreground -ml-1 text-xs">
           {getRelativeTime(challenge.updatedAt)}
         </span>
       </div>
-      <div className="prose-invert leading-8 prose-h3:text-xl">
+      <div className="prose-invert prose-h3:text-xl leading-8">
         <Markdown>{challenge.description}</Markdown>
       </div>
     </div>

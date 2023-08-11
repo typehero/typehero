@@ -16,7 +16,7 @@ export default function CommentReport({ report }: { report: NonNullable<ReportWi
             report.comment.rootChallengeId || report.comment.rootSolutionId
           }`}
         >
-          <div className="mr-2 inline-block rounded-full bg-primary-foreground px-2 text-white">
+          <div className="bg-primary-foreground mr-2 inline-block rounded-full px-2 text-white">
             {report.comment.rootType}
           </div>
           {report.comment.rootType === 'CHALLENGE'

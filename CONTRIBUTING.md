@@ -10,15 +10,18 @@ cp .env.example .env
 ```
 
 ### 2 Configure your database
+
 You can either use planetscale or a local docker container to run your database.
 Use either 2.a or 2.b for the next step.
 
 ### 2.a Docker local DB
 
 Starting the docker container
+
 ```
 docker compose up -d
 ```
+
 ### 2.b Planetscale cloud DB
 
 [Follow the planetscale quick start guide to get you connection string][planetscale-quick-start]
@@ -30,9 +33,8 @@ docker compose up -d
 3. Click "Get connection strings".
    <br/><img width="429" alt="Screenshot 2023-06-30 at 3 46 45 PM" src="https://github.com/bautistaaa/typehero/assets/31113245/c06a5829-92e6-417f-a5e6-083b7690923f">
 
-4. Switch to "Connect with Prisma" and copy the `DATABASE_URL` for `.env` (replace ******* with password)
+4. Switch to "Connect with Prisma" and copy the `DATABASE_URL` for `.env` (replace **\*\*\*** with password)
    <br/><img width="344" alt="Screenshot 2023-06-30 at 3 49 03 PM" src="https://github.com/bautistaaa/typehero/assets/31113245/4c9694ef-b954-47a8-9954-c2b677a1123a">
-
 
 ### 3. Create a new GitHub OAuth Application
 

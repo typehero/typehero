@@ -110,7 +110,7 @@ export function TestCasesEditor({ form, hasTsErrors, setTsErrors }: Props) {
                 </div>
                 <FormMessage />
                 {!hasTsErrors && (
-                  <div className="text-sm text-destructive">You must have failing test cases</div>
+                  <div className="text-destructive text-sm">You must have failing test cases</div>
                 )}
               </div>
             </FormItem>

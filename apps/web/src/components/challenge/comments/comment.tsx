@@ -141,7 +141,12 @@ export const Comment = ({ comment, readonly = false, rootId, type, queryKey }: C
           {data?.pages.flatMap((page) =>
             page.comments.map((reply) => (
               // this is a reply
-              <SingleComment key={comment.id} comment={reply} isReply replyQueryKey={replyQueryKey} />
+              <SingleComment
+                key={comment.id}
+                comment={reply}
+                isReply
+                replyQueryKey={replyQueryKey}
+              />
             )),
           )}
         </div>
@@ -164,7 +169,7 @@ const SingleComment = ({
   onClickReply,
   isReply,
   queryKey,
-  replyQueryKey
+  replyQueryKey,
 }: SingleCommentProps) => {
   const queryClient = useQueryClient();
   const [text, setText] = useState(comment.text);

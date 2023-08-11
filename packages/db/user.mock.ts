@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { type Prisma, UserStatus } from '@prisma/client';
 
 /**
- * 
+ *
  * @returns Creates a mock user.
  */
 export default function UserMock(): Prisma.UserCreateManyInput {

@@ -99,13 +99,13 @@ export function ExploreCarousel({ challenges }: Props) {
           </Link>
         ))}
       <button
-        className="absolute -right-5 top-1/2 hidden -translate-y-1/2 rounded-[5rem] bg-background p-4 pl-1 duration-300 active:scale-95 sm:block"
+        className="bg-background absolute -right-5 top-1/2 hidden -translate-y-1/2 rounded-[5rem] p-4 pl-1 duration-300 active:scale-95 sm:block"
         id="slideRight"
       >
         <ChevronRight className="h-4 w-4" />
       </button>
       <button
-        className="absolute -left-5 top-1/2 hidden -translate-y-1/2 rounded-[5rem] bg-background p-4 pr-1 duration-300 active:scale-95 sm:block"
+        className="bg-background absolute -left-5 top-1/2 hidden -translate-y-1/2 rounded-[5rem] p-4 pr-1 duration-300 active:scale-95 sm:block"
         id="slideLeft"
       >
         <ChevronRight className="h-4 w-4 rotate-180 transform" />

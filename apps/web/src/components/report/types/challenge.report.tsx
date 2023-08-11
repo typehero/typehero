@@ -14,7 +14,7 @@ export default async function ChallengeReport({ report }: ChallengeReportProps) 
   const challengeInfo = await getChallenge(report.challengeId);
   return (
     <section className="mt-6 flex flex-grow flex-col gap-4 overflow-auto md:flex-nowrap">
-      <div className="w-full rounded-lg p-4 dark:bg-muted/90">
+      <div className="dark:bg-muted/90 w-full rounded-lg p-4">
         <Text intent="h3">{report.challenge.name}</Text>
         <Text className="mt-2">
           Created at:{' '}

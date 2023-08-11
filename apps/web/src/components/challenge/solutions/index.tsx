@@ -31,7 +31,7 @@ export function Solutions({ challenge }: Props) {
         <>
           {challenge.sharedSolution.length !== 0 ? (
             <>
-              <div className="absolute right-0 top-0 flex w-full justify-end border-b border-zinc-300 bg-background/70 p-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/70">
+              <div className="bg-background/70 dark:bg-muted/70 absolute right-0 top-0 flex w-full justify-end border-b border-zinc-300 p-2 backdrop-blur-sm dark:border-zinc-700">
                 <SubmitSolution disabled={Boolean(!loggedInUserHasSolution)} setView={setView} />
               </div>
               <div className="custom-scrollable-element h-full overflow-y-auto pt-12">

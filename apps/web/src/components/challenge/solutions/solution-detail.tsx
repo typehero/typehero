@@ -32,7 +32,7 @@ export function SolutionDetails({ solution }: Props) {
   return (
     <div className="relative h-full">
       <div className="relative flex h-full flex-col">
-        <div className="sticky right-0 top-0 flex w-full border-b border-zinc-300 bg-background/90 p-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
+        <div className="bg-background/90 dark:bg-muted/90 sticky right-0 top-0 flex w-full border-b border-zinc-300 p-2 backdrop-blur-sm dark:border-zinc-700">
           <Link href={`/challenge/${solution.challengeId}/solutions`}>
             <X size={20} className="stroke-gray-500 hover:stroke-gray-400" />
           </Link>

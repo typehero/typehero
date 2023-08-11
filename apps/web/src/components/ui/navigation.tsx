@@ -96,7 +96,7 @@ function ThemeButton() {
       {mounted && (
         <button
           type="button"
-          className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none"
+          className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none"
           onClick={() => {
             setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
           }}
@@ -137,7 +137,7 @@ function LoginButton() {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
+          <button className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none">
             <User className="h-5 w-5" />
           </button>
         </DropdownMenuTrigger>
@@ -146,26 +146,26 @@ function LoginButton() {
           className="mt-[0.33rem] w-56 rounded-xl bg-white/50 backdrop-blur-sm dark:bg-neutral-950/50"
         >
           <Link className="block" href="/wizard">
-            <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none dark:hover:bg-neutral-700/50">
+            <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
               <Plus className="mr-2 h-4 w-4" />
               <span>Create a Challenge</span>
             </DropdownMenuItem>
           </Link>
           <Link className="block" href={`/@${session.user.name}`}>
-            <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none dark:hover:bg-neutral-700/50">
+            <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
               <User className="mr-2 h-4 w-4" />
               <span>Profile</span>
             </DropdownMenuItem>
           </Link>
           <Link className="block" href="/settings">
-            <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
+            <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none">
               <Settings2 className="mr-2 h-4 w-4" />
               <span>Settings</span>
             </DropdownMenuItem>
           </Link>
           {isAdminOrMod && (
             <Link className="block" href="/admin">
-              <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none dark:hover:bg-neutral-700/50">
+              <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
                 <Settings className="mr-2 h-4 w-4" />
                 <span>Admin</span>
               </DropdownMenuItem>
@@ -186,7 +186,7 @@ function LoginButton() {
     <Button
       disabled={loading || status === 'loading'}
       onClick={handleSignIn}
-      className="w-20 rounded-lg bg-transparent p-2 text-black duration-300 hover:bg-gray-200 focus:bg-accent focus:outline-none dark:text-white hover:dark:bg-gray-800"
+      className="focus:bg-accent w-20 rounded-lg bg-transparent p-2 text-black duration-300 hover:bg-gray-200 focus:outline-none dark:text-white hover:dark:bg-gray-800"
     >
       {loading || status === 'loading' ? (
         <Loader2 className="h-5 w-5 animate-spin" />

@@ -4,10 +4,10 @@ For example
 
 ```ts
 interface Todo {
-  readonly title: string
-  readonly description: string
-  completed: boolean
+  readonly title: string;
+  readonly description: string;
+  completed: boolean;
 }
 
-type Keys = GetReadonlyKeys<Todo> // expected to be "title" | "description"
+type Keys = GetReadonlyKeys<Todo>; // expected to be "title" | "description"
 ```

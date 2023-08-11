@@ -12,7 +12,7 @@ export function SolutionsSkeleton() {
         <Skeleton className="w-6/6 h-1  rounded-lg bg-zinc-300 dark:bg-zinc-700"></Skeleton>
       </div>
       {/* SOLUTIONS */}
-      <div className="prose-invert flex flex-col space-y-2 prose-h3:text-xl">
+      <div className="prose-invert prose-h3:text-xl flex flex-col space-y-2">
         <Skeleton className="h-10 rounded-lg bg-zinc-300 dark:bg-zinc-700"></Skeleton>
         <Skeleton className="w-6/6 h-10 rounded-lg bg-zinc-300 dark:bg-zinc-700"></Skeleton>
         <Skeleton className="w-6/6 h-10 rounded-lg bg-zinc-300 dark:bg-zinc-700"></Skeleton>

@@ -72,7 +72,7 @@ const files = [
   ],
   [
     './vs/base/browser/ui/codicons/codicon/codicon.ttf',
-    './public/vs/base/browser/ui/codicons/codicon/codicon.ttf'
+    './public/vs/base/browser/ui/codicons/codicon/codicon.ttf',
   ],
 ] as const;
 
@@ -89,7 +89,7 @@ async function isTSversionCorrect(path: string) {
   }
 }
 
-// check if the force flag is present 
+// check if the force flag is present
 const force = process.argv.includes('--force');
 
 // get the path to the root monaco-editor.d.ts file

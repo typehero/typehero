@@ -9,12 +9,12 @@ type ValidFileTypes = 'image' | 'video' | 'audio' | 'blob';
 type FileRouterInput =
   | ValidFileTypes[]
   | {
-    // @ts-ignore fixed by typehero god
-    [key: ValidFileTypes]: {
-      maxFileSize?: string;
-      maxFileCount?: number;
+      // @ts-ignore fixed by typehero god
+      [key: ValidFileTypes]: {
+        maxFileSize?: string;
+        maxFileCount?: number;
+      };
     };
-  };
 
 // control the file sizes for all image types
 const DEFAULT_IMAGE_UPLOAD_PARAMS: FileRouterInput = { maxFileSize: '4MB', maxFiles: 1 };

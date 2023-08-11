@@ -19,17 +19,17 @@ const instance = SimpleVue({
       firstname: 'Type',
       lastname: 'Challenges',
       amount: 10,
-    }
+    };
   },
   computed: {
     fullname() {
-      return this.firstname + ' ' + this.lastname
-    }
+      return this.firstname + ' ' + this.lastname;
+    },
   },
   methods: {
     hi() {
-      alert(this.fullname.toLowerCase())
-    }
-  }
-})
+      alert(this.fullname.toLowerCase());
+    },
+  },
+});
 ```

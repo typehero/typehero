@@ -75,7 +75,7 @@ const ExploreCardInputs = ({
         </div>
       </CardHeader>
 
-      <CardContent className="relative flex flex-col justify-between gap-2 rounded-xl bg-background p-6 pb-0 duration-300 group-hover:bg-card-hovered">
+      <CardContent className="bg-background group-hover:bg-card-hovered relative flex flex-col justify-between gap-2 rounded-xl p-6 pb-0 duration-300">
         <div className="flex items-center gap-2">
           <Button
             size="sm"
@@ -83,7 +83,7 @@ const ExploreCardInputs = ({
           >
             @you
           </Button>
-          <div className="text-sm text-muted-foreground">{getRelativeTime(new Date())}</div>
+          <div className="text-muted-foreground text-sm">{getRelativeTime(new Date())}</div>
         </div>
         <CardDescription className="relative h-20 overflow-hidden pb-4">
           <div className="pointer-events-none absolute inset-0 h-full w-full shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card))] duration-300 group-hover:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))] group-focus:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))]" />

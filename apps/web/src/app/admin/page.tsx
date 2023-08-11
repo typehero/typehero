@@ -56,27 +56,27 @@ const View = async () => {
         </div>
         <div className="flex flex-col space-y-2">
           <Tabs defaultValue="reports" className="space-x-4">
-            <TabsList className="rounded-full border border-border bg-background">
+            <TabsList className="border-border bg-background rounded-full border">
               <TabsTrigger
-                className="rounded-l-2xl rounded-r-lg duration-300 data-[state=active]:bg-border"
+                className="data-[state=active]:bg-border rounded-l-2xl rounded-r-lg duration-300"
                 value="reports"
               >
                 Reports
               </TabsTrigger>
               <TabsTrigger
-                className="duration-300 data-[state=active]:bg-border"
+                className="data-[state=active]:bg-border duration-300"
                 value="challengeReviews"
               >
                 Challenge Reviews
               </TabsTrigger>
               <TabsTrigger
-                className="rounded-l-lg rounded-r-2xl duration-300 data-[state=active]:bg-border"
+                className="data-[state=active]:bg-border rounded-l-lg rounded-r-2xl duration-300"
                 value="users"
               >
                 Users
               </TabsTrigger>
               <TabsTrigger
-                className="rounded-l-2xl rounded-r-lg duration-300 data-[state=active]:bg-border"
+                className="data-[state=active]:bg-border rounded-l-2xl rounded-r-lg duration-300"
                 value="images"
               >
                 Images

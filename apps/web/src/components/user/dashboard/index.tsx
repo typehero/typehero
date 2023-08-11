@@ -115,28 +115,28 @@ export default async function Dashboard({ user }: Props) {
         )}
 
         <Tabs defaultValue="in-progress" className="space-y-4">
-          <TabsList className="rounded-full border border-border bg-background">
+          <TabsList className="border-border bg-background rounded-full border">
             <TabsTrigger
-              className="rounded-lg rounded-l-2xl duration-300 data-[state=active]:bg-border"
+              className="data-[state=active]:bg-border rounded-lg rounded-l-2xl duration-300"
               value="in-progress"
             >
               In-Progress
             </TabsTrigger>
             <TabsTrigger
-              className="rounded-lg duration-300 data-[state=active]:bg-border"
+              className="data-[state=active]:bg-border rounded-lg duration-300"
               value="solutions"
             >
               Solutions
             </TabsTrigger>
             <TabsTrigger
-              className="rounded-lg duration-300 data-[state=active]:bg-border"
+              className="data-[state=active]:bg-border rounded-lg duration-300"
               value="bookmarks"
               disabled
             >
               Bookmarks
             </TabsTrigger>
             <TabsTrigger
-              className="rounded-l-lg rounded-r-full duration-300 data-[state=active]:bg-border"
+              className="data-[state=active]:bg-border rounded-l-lg rounded-r-full duration-300"
               value="comments"
               disabled
             >

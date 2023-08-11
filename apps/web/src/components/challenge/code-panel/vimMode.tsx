@@ -7,7 +7,7 @@ import { type VimMode, initVimMode } from 'monaco-vim';
 
 interface VimStatusBarProps {
   editor: monaco.editor.IStandaloneCodeEditor;
-};
+}
 
 export const VimStatusBar = ({ editor }: VimStatusBarProps) => {
   const statusBarRef = useRef<HTMLDivElement | null>(null);
@@ -30,7 +30,10 @@ export const VimStatusBar = ({ editor }: VimStatusBarProps) => {
 
   return (
     <div className="flex w-full">
-      <div ref={statusBarRef} className="text-sm font-mono gap-2 [&>*:first-child]:mr-2 [&_input]:bg-transparent [&_input]:border-none [&_input]:outline-none" />
+      <div
+        ref={statusBarRef}
+        className="gap-2 font-mono text-sm [&>*:first-child]:mr-2 [&_input]:border-none [&_input]:bg-transparent [&_input]:outline-none"
+      />
     </div>
   );
 };

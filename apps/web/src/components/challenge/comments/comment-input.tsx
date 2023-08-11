@@ -49,7 +49,7 @@ export function CommentInput({ mode, onCancel, onChange, value, placeholder, onS
   };
 
   return (
-    <div className="flex flex-col rounded-xl rounded-br-lg bg-background/90 bg-neutral-100 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-700/90">
+    <div className="bg-background/90 flex flex-col rounded-xl rounded-br-lg bg-neutral-100 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-700/90">
       {commentMode === 'editor' && (
         <Textarea
           autoFocus
