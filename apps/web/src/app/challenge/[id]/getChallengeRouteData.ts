@@ -1,5 +1,5 @@
 'use server';
-import { type Session } from '@repo/auth';
+import { type Session } from '@repo/auth/server';
 import { cache } from 'react';
 import { prisma } from '@repo/db';
 

@@ -101,10 +101,10 @@ export const CHALLENGE_MAP: Record<
     updatedAt: faker.date.between({ from: '2023-05-01', to: new Date() }),
     bookmark: faker.datatype.boolean()
       ? {
-          create: {
-            userId: faker.datatype.boolean() ? trashId : gId,
-          },
-        }
+        create: {
+          userId: faker.datatype.boolean() ? trashId : gId,
+        },
+      }
       : undefined,
     description: loadChallengeSync('beginner/desc'),
     shortDescription: faker.lorem.lines({ min: 1, max: 2 }),

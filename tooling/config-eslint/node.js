@@ -6,10 +6,9 @@ const project = resolve(process.cwd(), 'tsconfig.json');
 module.exports = {
   extends: [
     'turbo',
-    ...[
-      '@vercel/style-guide/eslint/node',
-      '@vercel/style-guide/eslint/typescript',
-    ].map((config) => require.resolve(config)),
+    ...['@vercel/style-guide/eslint/node', '@vercel/style-guide/eslint/typescript'].map((config) =>
+      require.resolve(config),
+    ),
   ],
   ignorePatterns: ['node_modules/', 'dist/'],
   overrides: [
@@ -23,12 +22,7 @@ module.exports = {
       },
     },
     {
-      files: [
-        'jest.config.*',
-        'vite.config.*',
-        'tsup.config.*',
-        'drizzle.config.ts',
-      ],
+      files: ['jest.config.*', 'vite.config.*', 'tsup.config.*', 'drizzle.config.ts'],
       rules: {
         'import/no-default-export': 'off',
       },
@@ -45,11 +39,11 @@ module.exports = {
   },
   root: true,
   rules,
-  settings: {
-    'import/resolver': {
-      typescript: {
-        project,
-      },
-    },
-  },
+  // settings: {
+  //   'import/resolver': {
+  //     typescript: {
+  //       project,
+  //     },
+  //   },
+  // },
 };

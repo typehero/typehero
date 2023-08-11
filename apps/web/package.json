@@ -68,19 +68,16 @@
     "react-syntax-highlighter": "^15.5.0",
     "react-wrap-balancer": "^1.0.0",
     "remark-gfm": "^3.0.1",
-    "simple-git": "^3.19.1",
     "superjson": "1.12.4",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.6",
     "unified": "^10.1.2",
     "unist-util-visit": "^5.0.0",
     "uploadthing": "^5.2.1",
-    "uuid-by-string": "^4.0.0",
     "zod": "^3.21.4",
     "zustand": "^4.3.9"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.0.2",
     "@repo/tsconfig": "workspace:*",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/typography": "^0.5.9",
@@ -105,8 +102,7 @@
     "raw-loader": "^4.0.2",
     "tailwindcss": "^3.3.3",
     "tsx": "^3.12.7",
-    "typescript": "^5.1.6",
-    "yaml": "^2.3.1"
+    "typescript": "^5.1.6"
   },
   "ct3aMetadata": {
     "initVersion": "7.13.1"

@@ -1,4 +1,4 @@
-import type { Session } from '@repo/auth';
+import type { Session } from '@repo/auth/server';
 import { notFound } from 'next/navigation';
 import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';

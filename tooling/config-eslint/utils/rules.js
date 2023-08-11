@@ -15,6 +15,7 @@ module.exports = {
     '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/no-misused-promises': 'off',
     '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
+    '@typescript-eslint/unbound-method': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/no-shadow': 'off',
     '@typescript-eslint/no-unsafe-argument': 'off',
