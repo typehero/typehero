@@ -1,0 +1,59 @@
+{
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
+      "env": []
+    },
+    "topo": {
+      "dependsOn": ["@repo/prisma#db:generate", "^topo"]
+    },
+    "db:generate": {
+      "outputs": ["../../node_modules/.prisma/**"],
+      "outputMode": "new-only"
+    },
+    "db:deploy": {
+      "cache": false
+    },
+    "db:push": {
+      "cache": false
+    },
+    "//#format-root": {
+      "dependsOn": ["^topo"],
+      "outputMode": "new-only"
+    },
+    "format": {
+      "outputMode": "new-only"
+    },
+    "lint": {
+      "outputs": ["node_modules/.cache/.eslintcache"],
+      "dependsOn": ["^topo"],
+      "outputMode": "new-only"
+    },
+    "typecheck": {
+      "dependsOn": ["^topo"],
+      "outputs": ["node_modules/.cache/tsbuildinfo.json"],
+      "outputMode": "errors-only"
+    },
+    "test": {
+      "dependsOn": ["^topo"],
+      "outputs": ["coverage/**"]
+    },
+    "dev": {
+      "dependsOn": ["db:generate"],
+      "persistent": true,
+      "cache": false
+    },
+    "seed": {
+      "dependsOn": ["db:generate"],
+      "cache": false
+    },
+    "start": {
+      "dependsOn": ["^build", "build"]
+    },
+    "e2e": {
+      "env": ["PLAYWRIGHT_USER_PASSWORD"],
+      "cache": false
+    }
+  }
+}

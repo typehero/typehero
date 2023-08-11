@@ -5,24 +5,25 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
-    "postinstall": "prisma generate && pnpm dl-monaco -w web",
-    "lint": "turbo lint",
-    "reset": "prisma db push --force-reset",
+    "dl-monaco": "tsx scripts/dl-monaco.ts",
     "format": "turbo format",
+    "postinstall": "pnpm dl-monaco",
+    "lint": "turbo lint",
+    "prepare": "husky install",
     "refresh": "pnpm reset && pnpm prisma db seed",
-    "prepare": "husky install"
+    "reset": "prisma db push --force-reset"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx,css}": "prettier --write"
   },
   "devDependencies": {
-    "turbo": "^1.10.12",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.3",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.4.1",
     "tsx": "^3.12.7",
+    "turbo": "^1.10.12",
     "typescript": "^5.1.6"
-  },
-  "lint-staged": {
-    "src/**/*.{ts,tsx,css}": "prettier --write"
   },
   "packageManager": "pnpm@8.6.9",
   "pnpm": {

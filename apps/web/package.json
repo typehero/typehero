@@ -2,18 +2,19 @@
   "name": "web",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "lint": "next lint",
+    "dl-git": "tsx ../scripts/contributors.ts",
+    "dl-monaco": "tsx ../scripts/dl-monaco.ts",
+    "dl-monaco:force": "tsx ../scripts/dl-monaco.ts --force",
     "format": "prettier -w \"src/**/*.{ts,tsx,css,cjs,mjs,json}\"",
+    "lint": "next lint",
+    "postinstalll": "pnpm dl-monaco",
     "start": "next start",
-    "typecheck": "tsc --noEmit",
-    "dl-git": "tsx scripts/contributors.ts",
-    "dl-monaco": "tsx scripts/dl-monaco.ts",
-    "dl-monaco:force": "tsx scripts/dl-monaco.ts --force"
+    "typecheck": "tsc --noEmit"
   },
-  "type": "module",
   "dependencies": {
     "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^3.1.1",
