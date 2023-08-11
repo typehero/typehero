@@ -1,14 +1,14 @@
-import { ChallengeStatus, type Difficulty, type Prisma } from '@prisma/client';
-import { gId, trashId } from './seed';
-import url from 'url';
+import url from 'node:url';
+import { readdir, readFile, rm } from 'node:fs/promises';
+import fs from 'node:fs';
+import { resolve } from 'node:path';
 import { parse } from 'yaml';
-import { readdir, readFile, rm } from 'fs/promises';
-import fs from 'fs';
 import { faker } from '@faker-js/faker';
 import { simpleGit } from 'simple-git';
-import { resolve } from 'path';
+import { ChallengeStatus, type Difficulty, type Prisma } from '@prisma/client';
+import { gId, trashId } from '../seed';
 
-export type InfoFile = {
+export interface InfoFile {
   title: string;
   author: {
     name: string;
@@ -16,8 +16,8 @@ export type InfoFile = {
     github: string;
   };
   tags: string;
-  difficulty: 'easy' | 'medium' | 'warm' | 'hard' | 'extreme';
-};
+  difficulty: 'easy' | 'extreme' | 'hard' | 'medium' | 'warm';
+}
 
 /**
  * @description clones the type-challenges repo and extracts our necessary data from them

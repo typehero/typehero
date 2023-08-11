@@ -17,7 +17,7 @@
       ]
     },
     "topo": {
-      "dependsOn": ["@repo/prisma#db:generate", "^topo"]
+      "dependsOn": ["@repo/db#db:generate", "^topo"]
     },
     "db:generate": {
       "outputs": ["../../node_modules/.prisma/**"],

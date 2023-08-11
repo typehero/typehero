@@ -1,9 +1,9 @@
 import { faker } from '@faker-js/faker';
 import { PrismaClient, type Prisma } from '@prisma/client';
 import uuidByString from 'uuid-by-string';
-import { loadChallengesFromTypeChallenge } from './challenges.mock';
-import CommentMock from './comment.mock';
-import UserMock from './user.mock';
+import { loadChallengesFromTypeChallenge } from '../mocks/challenges.mock';
+import CommentMock from '../mocks/comment.mock';
+import UserMock from '../mocks/user.mock';
 
 const prisma = new PrismaClient();
 

@@ -1,5 +1,5 @@
 import { type Prisma } from '@prisma/client';
-import { trashId } from './seed';
+import { trashId } from '../seed';
 
 /**
  *
@@ -9,6 +9,6 @@ export default function CommentMock(parentId?: number): Prisma.CommentCreateMany
   return {
     text: 'here is a comment',
     userId: trashId,
-    parentId: parentId,
+    parentId,
   };
 }
