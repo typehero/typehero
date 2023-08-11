@@ -1,4 +1,17 @@
 {
-	"typescript.tsdk": "node_modules/typescript/lib",
-	"prettier.prettierPath": "./node_modules/prettier"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "prettier.prettierPath": "./node_modules/prettier",
+  "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.next": true,
+    "**/.output": true,
+    "**/.turbo": true,
+    "**/.vercel": true,
+    "**/dist": true
+  },
+  "tailwindCSS.experimental.classRegex": [["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]],
+  "editor.quickSuggestions": {
+    "strings": true
+  }
 }
