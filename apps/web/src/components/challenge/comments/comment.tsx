@@ -3,7 +3,7 @@
 import { type CommentRoot } from '@prisma/client';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { ChevronDown, ChevronUp, Pencil, Reply, Share, Trash2 } from 'lucide-react';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@repo/auth/react';
 import { useEffect, useRef, useState } from 'react';
 import { z } from 'zod';
 import clsx from 'clsx';

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@repo/auth/react';
 import { useMemo } from 'react';
 import { approveChallenge, denyChallenge } from './challenge-review.action';
 import type { ChallengeToReview } from './page';

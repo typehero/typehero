@@ -2,7 +2,7 @@
 
 import { clsx } from 'clsx';
 import { debounce } from 'lodash';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@repo/auth/react';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { Bookmark as BookmarkIcon, Flag, Share, ThumbsUp } from 'lucide-react';

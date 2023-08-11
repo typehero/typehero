@@ -4,7 +4,7 @@ import { loader } from '@monaco-editor/react';
 import clsx from 'clsx';
 import { Loader2, Settings } from 'lucide-react';
 import type * as monaco from 'monaco-editor';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@repo/auth/react';
 import dynamic from 'next/dynamic';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useRef, useState } from 'react';

@@ -11,7 +11,6 @@
     "format:fix": "turbo format format-root --continue -- --write --cache",
     "postinstall": "pnpm dl-monaco",
     "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache'",
-    "lint-staged": "lint-staged",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache'",
     "prepare": "husky install",
     "refresh": "pnpm reset && pnpm prisma db seed",
@@ -20,10 +19,8 @@
   },
   "devDependencies": {
     "husky": "^8.0.3",
-    "lint-staged": "^13.2.2",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.4.1",
-    "shell-quote": "^1.8.1",
     "tsx": "^3.12.7",
     "turbo": "^1.10.12",
     "typescript": "^5.1.6"

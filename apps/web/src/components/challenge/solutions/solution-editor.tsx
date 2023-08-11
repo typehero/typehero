@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@repo/auth/react';
 import { useTheme } from 'next-themes';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';

@@ -1,5 +1,5 @@
 import { Loader2 } from 'lucide-react';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@repo/auth/react';
 import { useEffect, useRef, useState, type RefObject } from 'react';
 import { Button } from '~/components/ui/button';
 import { Markdown } from '~/components/ui/markdown';

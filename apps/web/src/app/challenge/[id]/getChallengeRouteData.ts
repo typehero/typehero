@@ -1,5 +1,5 @@
 'use server';
-import { type Session } from 'next-auth';
+import { type Session } from '@repo/auth';
 import { cache } from 'react';
 import { prisma } from '~/server/db';
 

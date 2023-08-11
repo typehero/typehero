@@ -1,4 +1,4 @@
-import { getServerSession } from 'next-auth';
+import { getServerSession } from '@repo/auth';
 import { Settings } from '~/components/settings';
 import { authOptions } from '~/server/auth';
 import { prisma } from '~/server/db';

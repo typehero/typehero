@@ -1,5 +1,5 @@
 import { createUploadthing, type FileRouter } from 'uploadthing/next';
-import { getServerSession } from 'next-auth';
+import { getServerSession } from '@repo/auth';
 import { prisma } from '~/server/db';
 import { authOptions } from '~/server/auth';
 

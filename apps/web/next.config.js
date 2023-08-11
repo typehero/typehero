@@ -11,7 +11,6 @@ const config = {
   experimental: {
     serverActions: true,
   },
-
   typescript: {
     ignoreBuildErrors: false,
   },

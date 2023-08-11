@@ -1,6 +1,6 @@
 'use server';
 
-import { getServerSession } from 'next-auth';
+import { getServerSession } from '@repo/auth';
 import { revalidatePath } from 'next/cache';
 import type { FormSchema } from '.';
 import { prisma } from '~/server/db';
@@ -12,7 +12,7 @@ import { authOptions } from '~/server/auth';
  */
 // TODO: add transactions to this update #GFI
 export async function updateProfile(profileData: FormSchema) {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
 
   // 1. Checks that the user is logged in
   if (!session?.user.id) return 'unauthorized';

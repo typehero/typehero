@@ -1,8 +1,14 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import type { Role, RoleTypes } from '@prisma/client';
-import { getServerSession, type DefaultSession, type NextAuthOptions } from 'next-auth';
+import type { Role, RoleTypes } from '@repo/db';
+import {
+  getServerSession as getServerAuthSession,
+  type DefaultSession,
+  type NextAuthOptions,
+} from 'next-auth';
 import GitHubProvider from 'next-auth/providers/github';
-import { prisma } from '~/server/db';
+import { prisma } from '@repo/db';
+
+export type { Session, DefaultSession } from 'next-auth';
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -22,6 +28,14 @@ declare module 'next-auth' {
     createdAt: Date;
     roles: Role[];
   }
+}
+
+if (!process.env.GITHUB_ID) {
+  throw new Error('No GITHUB_ID has been provided.');
+}
+
+if (!process.env.GITHUB_SECRET) {
+  throw new Error('No GITHUB_SECRET has been provided.');
 }
 
 export const authOptions: NextAuthOptions = {
@@ -97,6 +111,6 @@ export const authOptions: NextAuthOptions = {
  *
  * @see https://next-auth.js.org/configuration/nextjs
  */
-export const getServerAuthSession = () => {
-  return getServerSession(authOptions);
+export const getServerSession = () => {
+  return getServerAuthSession(authOptions);
 };

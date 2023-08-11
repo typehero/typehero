@@ -1,4 +1,4 @@
-import type { Session } from 'next-auth';
+import type { Session } from '@repo/auth';
 import { notFound } from 'next/navigation';
 import { Solutions } from '~/components/challenge/solutions';
 import { getServerAuthSession } from '~/server/auth';

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { useForm, type UseFormReturn } from 'react-hook-form';
 import { z } from 'zod';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@repo/auth/react';
 import { USER_CODE_START, USER_CODE_START_REGEX } from '../challenge/code-panel/constants';
 import type { TsErrors } from '../challenge/code-panel';
 import { ChallengeCardEditor } from './ChallengeCardEditor';
@@ -74,8 +74,8 @@ export function Wizard() {
   const [tsErrors, setTsErrors] = useState<TsErrors>([[], [], [], []]);
 
   const isUserACreator = useMemo(
-    () => session?.user.role.includes('CREATOR') ?? false,
-    [session?.user.role],
+    () => session?.user?.role.includes('CREATOR') ?? false,
+    [session?.user?.role],
   );
 
   const hasTsErrors = useMemo(() => tsErrors.some((e) => e.length), [tsErrors]);

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import type { User } from '@prisma/client';
 import Link from 'next/link';
-import { getServerSession } from 'next-auth';
+import { getServerSession } from '@repo/auth';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import { Overview } from './overview';
 import { InProgressTab } from './in-progress-tab';

@@ -1,6 +1,6 @@
 'use client';
 import { ArrowUp, MessageCircle } from 'lucide-react';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@repo/auth/react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { SolutionEditor } from './solution-editor';
