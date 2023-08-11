@@ -1,5 +1,5 @@
-import { ChallengeReview } from './challenge-review';
 import { prisma } from '@repo/db';
+import { ChallengeReview } from './challenge-review';
 
 interface Props {
   params: {

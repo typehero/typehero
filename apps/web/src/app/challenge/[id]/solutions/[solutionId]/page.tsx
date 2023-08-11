@@ -1,5 +1,5 @@
-import { SolutionDetails } from '~/components/challenge/solutions/solution-detail';
 import { prisma } from '@repo/db';
+import { SolutionDetails } from '~/components/challenge/solutions/solution-detail';
 
 interface Props {
   params: {

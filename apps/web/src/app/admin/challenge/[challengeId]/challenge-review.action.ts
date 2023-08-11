@@ -19,17 +19,17 @@ export async function approveChallenge(
     }),
     ...(isUserACreator
       ? [
-        prisma.role.create({
-          data: {
-            user: {
-              connect: {
-                id: userId,
+          prisma.role.create({
+            data: {
+              user: {
+                connect: {
+                  id: userId,
+                },
               },
+              role: RoleTypes.ADMIN,
             },
-            role: RoleTypes.ADMIN,
-          },
-        }),
-      ]
+          }),
+        ]
       : []),
   ]);
 }
