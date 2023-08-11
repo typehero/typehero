@@ -14,10 +14,10 @@ const config = {
   typescript: {
     ignoreBuildErrors: false,
   },
-
   eslint: {
     ignoreDuringBuilds: true,
   },
+  transpilePackages: ['@repo/db', '@repo/auth'],
   images: {
     remotePatterns: [
       {
