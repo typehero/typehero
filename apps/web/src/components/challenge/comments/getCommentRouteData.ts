@@ -20,7 +20,7 @@ export async function getPaginatedComments({
   const totalComments = await prisma.comment.count({
     where: {
       rootType,
-      parentId: parentId,
+      parentId,
       visible: true,
       ...(rootType === 'CHALLENGE' ? { rootChallengeId: rootId } : { rootSolutionId: rootId }),
     },
@@ -31,7 +31,7 @@ export async function getPaginatedComments({
     take: PAGESIZE,
     where: {
       rootType,
-      parentId: parentId,
+      parentId,
       ...(rootType === 'CHALLENGE' ? { rootChallengeId: rootId } : { rootSolutionId: rootId }),
       visible: true,
     },

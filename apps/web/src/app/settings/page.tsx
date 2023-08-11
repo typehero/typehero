@@ -2,12 +2,13 @@ import { getServerSession } from 'next-auth';
 import { Settings } from '~/components/settings';
 import { authOptions } from '~/server/auth';
 import { prisma } from '~/server/db';
+
 export default async function SettingsPage() {
   // NOTE: what's weird about this API is that it should have the
   // param to be required but it's not for some reason
   const session = await getServerSession(authOptions);
 
-  if (!session?.user || !session?.user.name) {
+  if (!session?.user || !session.user.name) {
     return null;
   }
 

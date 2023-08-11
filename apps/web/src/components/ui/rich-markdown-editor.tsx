@@ -1,10 +1,9 @@
 import { useTheme } from 'next-themes';
 import { useContext, useEffect, useRef, useState } from 'react';
-
 import MDEditor, { EditorContext, commands, type ICommand } from '@uiw/react-md-editor';
+import { toast } from './use-toast';
 import { insertText } from '~/utils/domUtils';
 import { useUploadThing } from '~/utils/useUploadthing';
-import { toast } from './use-toast';
 
 const codePreview: ICommand = {
   name: 'preview',
@@ -50,11 +49,11 @@ export function RichMarkdownEditor({
     keyCommand: 'image',
     buttonProps: { 'aria-label': 'Insert title3' },
     icon: (
-      <svg width="12" height="12" viewBox="0 0 20 20">
+      <svg height="12" viewBox="0 0 20 20" width="12">
         <path
-          fill="currentColor"
           d="M15 9c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm4-7H1c-.55 0-1 .45-1 1v14c0 .55.45 1 1 1h18c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zm-1 13l-6-5-2 2-4-5-4 8V4h16v11z"
-        ></path>
+          fill="currentColor"
+        />
       </svg>
     ),
     execute: async () => {
@@ -62,7 +61,7 @@ export function RichMarkdownEditor({
 
       if (!ref) return;
 
-      // @ts-ignore
+      // @ts-expect-error
       ref.value = null;
       ref.click();
     },
@@ -87,7 +86,7 @@ export function RichMarkdownEditor({
       // insert string at cursor position by calling on change
       insertText(
         `![${uploadedFile?.fileKey}](${uploadedFile?.fileUrl})`,
-        // @ts-ignore
+        // @ts-expect-error
         editorRef.current.textarea,
       );
 
@@ -132,7 +131,7 @@ export function RichMarkdownEditor({
     // only allow image if it's enabled
     if (!allowImageUpload) return;
 
-    const items = event.clipboardData?.items;
+    const items = event.clipboardData.items;
     if (!items) return;
     // upload the image to and endpoint
     for (const item of items) {
@@ -152,18 +151,6 @@ export function RichMarkdownEditor({
   return (
     <div className="h-full flex-1">
       <MDEditor
-        ref={editorRef}
-        height="100%"
-        value={value}
-        // non-split-screen by default
-        preview="edit"
-        visibleDragbar={false}
-        extraCommands={extraCommands}
-        commands={myCommands}
-        // @ts-ignore
-        onChange={onChange}
-        // @ts-ignore
-        onPaste={(event) => handlePasta(event)}
         components={{
           toolbar: (command) => {
             // toolbar: (command, disabled, executeCommand) => {
@@ -183,15 +170,27 @@ export function RichMarkdownEditor({
             }
           },
         }}
+        extraCommands={extraCommands}
+        height="100%"
+        onChange={onChange}
+        onPaste={(event) => handlePasta(event)}
+        value={value}
+        // @ts-ignore
+        preview="edit"
+        // non-split-screen by default
+        ref={editorRef}
+        visibleDragbar={false}
+        // @ts-ignore
+        commands={myCommands}
       />
-      {isImageUploading && (
+      {isImageUploading ? (
         <div className="absolute bottom-0 flex w-full items-center bg-neutral-100 p-2 pl-3 dark:bg-zinc-700 dark:text-white">
           <div role="status">
             <svg
               aria-hidden="true"
               className="mr-3 h-5 w-5 animate-spin fill-black text-gray-300 dark:fill-white dark:text-neutral-500"
-              viewBox="0 0 100 101"
               fill="none"
+              viewBox="0 0 100 101"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
@@ -207,8 +206,8 @@ export function RichMarkdownEditor({
           </div>
           <div>Uploading image...</div>
         </div>
-      )}
-      <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
+      ) : null}
+      <input className="hidden" onChange={handleFileChange} ref={fileInputRef} type="file" />
     </div>
   );
 }
@@ -225,13 +224,13 @@ function PreviewToggle() {
       // TODO: styles don't work for some reason
       <button
         className="mr-2 w-10 px-2 font-bold"
+        onClick={click}
         style={{
           width: '4rem !important',
           padding: '0.25rem 1rem !important',
           fontWeight: 'bold !important',
         }}
         type="button"
-        onClick={click}
       >
         Preview
       </button>
@@ -241,13 +240,13 @@ function PreviewToggle() {
     // TODO: styles don't work for some reason
     <button
       className="mr-2 w-10 px-2 font-bold"
+      onClick={click}
       style={{
         width: '4rem !important',
         padding: '0.25rem 1rem !important',
         fontWeight: 'bold !important',
       }}
       type="button"
-      onClick={click}
     >
       Edit
     </button>

@@ -20,12 +20,12 @@ export default function CommentReport({ report }: { report: NonNullable<ReportWi
             {report.comment.rootType}
           </div>
           {report.comment.rootType === 'CHALLENGE'
-            ? report.comment?.rootChallenge?.name
-            : report.comment?.rootSolution?.title}
+            ? report.comment.rootChallenge?.name
+            : report.comment.rootSolution?.title}
         </Link>
       </header>
       <section className="mt-4 rounded-lg bg-zinc-800">
-        <Comment rootId={rootId} type={report.comment.rootType} comment={report.comment} readonly />
+        <Comment comment={report.comment} readonly rootId={rootId} type={report.comment.rootType} />
       </section>
     </div>
   );

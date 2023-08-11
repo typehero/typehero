@@ -40,12 +40,12 @@ export function CodeEditor({ onChange, onMount, options, value, ...props }: Prop
   return (
     <Editor
       {...props}
-      theme={editorTheme}
-      options={editorOptions}
       defaultLanguage="typescript"
-      onMount={onMount}
-      value={value}
       onChange={onChange}
+      onMount={onMount}
+      options={editorOptions}
+      theme={editorTheme}
+      value={value}
       {...props}
     />
   );

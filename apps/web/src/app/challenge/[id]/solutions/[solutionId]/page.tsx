@@ -18,7 +18,7 @@ export default async function SolutionPage({ params: { solutionId } }: Props) {
 async function getSolution(solutionId: string) {
   const solution = await prisma.sharedSolution.findFirst({
     where: {
-      id: +solutionId,
+      id: Number(solutionId),
     },
     include: {
       challenge: true,
@@ -29,7 +29,7 @@ async function getSolution(solutionId: string) {
   const f = await prisma.comment.findMany({
     where: {
       rootType: 'SOLUTION',
-      rootSolutionId: +solutionId,
+      rootSolutionId: Number(solutionId),
     },
   });
 

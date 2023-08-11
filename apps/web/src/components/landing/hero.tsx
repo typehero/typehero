@@ -7,12 +7,12 @@ import { Balancer } from 'react-wrap-balancer';
 import { HeroChallengeCard } from '~/components/landing/hero-challenge-card';
 import { Button } from '~/components/ui/button';
 
-const TypeHeroLogo = () => {
+function TypeHeroLogo() {
   return (
     <svg
+      className="h-28 w-28 rounded-3xl sm:h-44 sm:w-44 sm:rounded-[2rem]"
       fill="none"
       viewBox="0 0 164 164"
-      className="h-28 w-28 rounded-3xl sm:h-44 sm:w-44 sm:rounded-[2rem]"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
@@ -20,10 +20,10 @@ const TypeHeroLogo = () => {
         fill="#3178C6"
       />
       <path
-        fillRule="evenodd"
         clipRule="evenodd"
         d="M71.4351 80.307H91.9394V67.0909H34.7879V80.307H55.1919V139.152H71.4351V80.307Z"
         fill="white"
+        fillRule="evenodd"
       />
       <path
         d="M91.9394 139.152V67.0909H106.946V96.9549H129.078V67.0909H144.121V139.152H129.078V109.182H106.946V139.152H91.9394Z"
@@ -31,130 +31,132 @@ const TypeHeroLogo = () => {
       />
     </svg>
   );
-};
+}
 
-const Hero = () => (
-  <section className="-mt-[56px] min-h-[calc(100vh)] overflow-hidden lg:min-h-0 lg:pt-[56px]">
-    <div className="container grid min-h-screen items-center justify-center lg:min-h-0 lg:grid-cols-2">
-      <div className="flex w-full flex-col items-center justify-center gap-10 lg:items-start">
-        <div className="relative flex w-full items-center justify-center gap-4 lg:justify-start">
-          <div className="absolute left-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-x-[15%] -translate-y-[50%] rounded-full bg-slate-400/10 blur-3xl dark:block"></div>
-          <div className="absolute right-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-y-[40%] rounded-full bg-[#3178c6]/20 blur-3xl dark:block"></div>
-          <TypeHeroLogo />
-          <h1 className="bg-gradient-to-r from-[#3178c6] to-black bg-clip-text text-6xl font-extrabold text-transparent dark:to-white sm:text-8xl sm:leading-[5.5rem]">
-            type
-            <br />
-            hero
-          </h1>
-        </div>
+function Hero() {
+  return (
+    <section className="-mt-[56px] min-h-[calc(100vh)] overflow-hidden lg:min-h-0 lg:pt-[56px]">
+      <div className="container grid min-h-screen items-center justify-center lg:min-h-0 lg:grid-cols-2">
+        <div className="flex w-full flex-col items-center justify-center gap-10 lg:items-start">
+          <div className="relative flex w-full items-center justify-center gap-4 lg:justify-start">
+            <div className="absolute left-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-x-[15%] -translate-y-[50%] rounded-full bg-slate-400/10 blur-3xl dark:block" />
+            <div className="absolute right-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-y-[40%] rounded-full bg-[#3178c6]/20 blur-3xl dark:block" />
+            <TypeHeroLogo />
+            <h1 className="bg-gradient-to-r from-[#3178c6] to-black bg-clip-text text-6xl font-extrabold text-transparent dark:to-white sm:text-8xl sm:leading-[5.5rem]">
+              type
+              <br />
+              hero
+            </h1>
+          </div>
 
-        <p className="max-w-[55ch] bg-transparent px-8 text-center font-medium leading-8 text-black/50 dark:text-white/50 lg:px-0 lg:text-left">
-          <Balancer>
-            Connect, collaborate, and grow with a community of TypeScript developers. Elevate your
-            skills through interactive coding challenges, discussions, and knowledge sharing
-          </Balancer>
-        </p>
-        <div className="flex gap-3">
-          {/* <Button
+          <p className="max-w-[55ch] bg-transparent px-8 text-center font-medium leading-8 text-black/50 dark:text-white/50 lg:px-0 lg:text-left">
+            <Balancer>
+              Connect, collaborate, and grow with a community of TypeScript developers. Elevate your
+              skills through interactive coding challenges, discussions, and knowledge sharing
+            </Balancer>
+          </p>
+          <div className="flex gap-3">
+            {/* <Button
             className="relative flex items-center gap-2 overflow-hidden rounded-xl px-4 py-2 font-bold"
             asChild
           >
             <Link href="/explore">Explore challenges</Link>
           </Button> */}
-          <Button
-            className="hero-join-button group relative mx-auto w-fit overflow-hidden rounded-xl p-[2px] font-bold transition-all duration-300 hover:bg-transparent hover:shadow-[0_0_2rem_-0.5rem_#3178c6] dark:hidden md:mr-0 lg:mr-auto"
-            asChild
-          >
-            <Link href="/waitlist">
-              <span className="inline-flex h-full w-fit items-center gap-1 rounded-[10px] bg-white px-4 py-2 text-[#3178c6] transition-all duration-300">
-                <Mail className="mr-1 h-4 w-4 stroke-[3]" />
-                Join the Waitlist
-              </span>
-            </Link>
-          </Button>
-          <Button
-            className="hero-join-button-dark group relative mx-auto hidden w-fit overflow-hidden rounded-xl p-[1px] font-bold transition-all duration-300 dark:block dark:hover:shadow-[0_0_2rem_-0.5rem_#fff8] md:mr-0 lg:mr-auto"
-            asChild
-          >
-            <Link href="/waitlist">
-              <span className="inline-flex h-full w-fit items-center gap-1 rounded-xl px-4 py-2 transition-all duration-300 dark:bg-neutral-900 dark:text-white group-hover:dark:bg-black">
-                <Mail className="mr-1 h-4 w-4 stroke-[3]" />
-                Join the Waitlist
-              </span>
-            </Link>
-          </Button>
-          <Button
-            className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
-            asChild
-            variant="outline"
-          >
-            <a className="inline-flex gap-1" href="https://github.com/">
-              <Github className="h-4 w-4" />
-              GitHub
-            </a>
-          </Button>
-        </div>
-      </div>
-
-      <div className="relative hidden h-[800px] overflow-visible rounded-full lg:block">
-        <div className="absolute -inset-40 top-1/2 -z-30 -translate-y-1/2 translate-x-[-30px] overflow-hidden rounded-full">
-          <div className="relative h-full w-full">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="moving-grid-background absolute h-[200%] w-full"
-            />
-            <div className="shadow-background absolute h-full w-full rounded-full shadow-[inset_0_0_5rem_3rem]" />
+            <Button
+              asChild
+              className="hero-join-button group relative mx-auto w-fit overflow-hidden rounded-xl p-[2px] font-bold transition-all duration-300 hover:bg-transparent hover:shadow-[0_0_2rem_-0.5rem_#3178c6] dark:hidden md:mr-0 lg:mr-auto"
+            >
+              <Link href="/waitlist">
+                <span className="inline-flex h-full w-fit items-center gap-1 rounded-[10px] bg-white px-4 py-2 text-[#3178c6] transition-all duration-300">
+                  <Mail className="mr-1 h-4 w-4 stroke-[3]" />
+                  Join the Waitlist
+                </span>
+              </Link>
+            </Button>
+            <Button
+              asChild
+              className="hero-join-button-dark group relative mx-auto hidden w-fit overflow-hidden rounded-xl p-[1px] font-bold transition-all duration-300 dark:block dark:hover:shadow-[0_0_2rem_-0.5rem_#fff8] md:mr-0 lg:mr-auto"
+            >
+              <Link href="/waitlist">
+                <span className="inline-flex h-full w-fit items-center gap-1 rounded-xl px-4 py-2 transition-all duration-300 dark:bg-neutral-900 dark:text-white group-hover:dark:bg-black">
+                  <Mail className="mr-1 h-4 w-4 stroke-[3]" />
+                  Join the Waitlist
+                </span>
+              </Link>
+            </Button>
+            <Button
+              asChild
+              className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
+              variant="outline"
+            >
+              <a className="inline-flex gap-1" href="https://github.com/">
+                <Github className="h-4 w-4" />
+                GitHub
+              </a>
+            </Button>
           </div>
         </div>
-        <motion.div
-          initial={{
-            y: 150,
-            x: 180,
-            opacity: 0,
-          }}
-          animate={{
-            y: 140,
-            opacity: 1,
-            transition: {
-              duration: 0.4,
-            },
-          }}
-          className="group"
-        >
-          <HeroChallengeCard
-            difficulty="EASY"
-            className="absolute"
-            title="Implement a union type of number and string"
-            prompt="Implement a union type of number and string"
-          />
-        </motion.div>
-        <motion.div
-          initial={{
-            opacity: 0,
-            y: 270,
-            x: 80,
-          }}
-          animate={{
-            y: 260,
-            opacity: 1,
-            transition: {
-              duration: 0.4,
-              delay: 0.1,
-            },
-          }}
-          className="group"
-        >
-          <HeroChallengeCard
-            difficulty="HARD"
-            className="absolute"
-            title="String to Number"
-            prompt="Convert a string literal to a number"
-          />
-        </motion.div>
+
+        <div className="relative hidden h-[800px] overflow-visible rounded-full lg:block">
+          <div className="absolute -inset-40 top-1/2 -z-30 -translate-y-1/2 translate-x-[-30px] overflow-hidden rounded-full">
+            <div className="relative h-full w-full">
+              <motion.div
+                animate={{ opacity: 1 }}
+                className="moving-grid-background absolute h-[200%] w-full"
+                initial={{ opacity: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+              />
+              <div className="shadow-background absolute h-full w-full rounded-full shadow-[inset_0_0_5rem_3rem]" />
+            </div>
+          </div>
+          <motion.div
+            animate={{
+              y: 140,
+              opacity: 1,
+              transition: {
+                duration: 0.4,
+              },
+            }}
+            className="group"
+            initial={{
+              y: 150,
+              x: 180,
+              opacity: 0,
+            }}
+          >
+            <HeroChallengeCard
+              className="absolute"
+              difficulty="EASY"
+              prompt="Implement a union type of number and string"
+              title="Implement a union type of number and string"
+            />
+          </motion.div>
+          <motion.div
+            animate={{
+              y: 260,
+              opacity: 1,
+              transition: {
+                duration: 0.4,
+                delay: 0.1,
+              },
+            }}
+            className="group"
+            initial={{
+              opacity: 0,
+              y: 270,
+              x: 80,
+            }}
+          >
+            <HeroChallengeCard
+              className="absolute"
+              difficulty="HARD"
+              prompt="Convert a string literal to a number"
+              title="String to Number"
+            />
+          </motion.div>
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+}
 export default Hero;

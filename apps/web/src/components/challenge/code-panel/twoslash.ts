@@ -43,7 +43,7 @@ export const createTwoslashInlayProvider = (
           .map((d: { text: string }) => d.text)
           .join('')
           .replace(/\r?\n\s*/g, ' ');
-        if (text.length > 120) text = text.slice(0, 119) + '...';
+        if (text.length > 120) text = `${text.slice(0, 119)}...`;
 
         const inlay: monaco.languages.InlayHint = {
           // @ts-expect-error undocumented kind

@@ -6,16 +6,16 @@ import { ChevronDown, ChevronUp, Pencil, Reply, Share, Trash2 } from 'lucide-rea
 import { useSession } from 'next-auth/react';
 import { useEffect, useRef, useState } from 'react';
 import { z } from 'zod';
+import clsx from 'clsx';
+import { CommentInput } from './comment-input';
+import { replyComment, updateComment, type CommentsByChallengeId } from './comment.action';
+import { CommentDeleteDialog } from './delete';
+import { getPaginatedComments } from './getCommentRouteData';
 import ReportDialog from '~/components/report';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 import { toast } from '~/components/ui/use-toast';
 import { UserBadge } from '~/components/ui/user-badge';
 import { getRelativeTime } from '~/utils/relativeTime';
-import { CommentInput } from './comment-input';
-import { replyComment, updateComment, type CommentsByChallengeId } from './comment.action';
-import { CommentDeleteDialog } from './delete';
-import { getPaginatedComments } from './getCommentRouteData';
-import clsx from 'clsx';
 import { Markdown } from '~/components/ui/markdown';
 
 interface SingleCommentProps {
@@ -23,8 +23,8 @@ interface SingleCommentProps {
   readonly?: boolean;
   isReply?: boolean;
   onClickReply?: () => void;
-  queryKey?: (string | number)[];
-  replyQueryKey?: (string | number)[];
+  queryKey?: (number | string)[];
+  replyQueryKey?: (number | string)[];
 }
 
 type CommentProps = SingleCommentProps & {
@@ -53,7 +53,7 @@ const commentReportSchema = z
 
 export type CommentReportSchemaType = z.infer<typeof commentReportSchema>;
 
-export const Comment = ({ comment, readonly = false, rootId, type, queryKey }: CommentProps) => {
+export function Comment({ comment, readonly = false, rootId, type, queryKey }: CommentProps) {
   const [showReplies, setShowReplies] = useState(false);
 
   const [isReplying, setIsReplying] = useState(false);
@@ -65,7 +65,7 @@ export const Comment = ({ comment, readonly = false, rootId, type, queryKey }: C
     queryKey: replyQueryKey,
     queryFn: ({ pageParam = 1 }) =>
       getPaginatedComments({ rootId, rootType: type, page: pageParam, parentId: comment.id }),
-    getNextPageParam: (_, pages) => pages?.length + 1,
+    getNextPageParam: (_, pages) => pages.length + 1,
     staleTime: 5000,
   });
 
@@ -108,11 +108,11 @@ export const Comment = ({ comment, readonly = false, rootId, type, queryKey }: C
 
   return (
     <div className="flex flex-col p-2">
-      <SingleComment comment={comment} readonly={readonly} onClickReply={toggleIsReplying} />
-      {isReplying && (
+      <SingleComment comment={comment} onClickReply={toggleIsReplying} readonly={readonly} />
+      {isReplying ? (
         <div className="pb-2 pl-6">
           <CommentInput
-            value={replyText}
+            mode="edit"
             onCancel={() => {
               setIsReplying(false);
             }}
@@ -121,10 +121,10 @@ export const Comment = ({ comment, readonly = false, rootId, type, queryKey }: C
               await createChallengeCommentReply();
               setIsReplying(false);
             }}
-            mode="edit"
+            value={replyText}
           />
         </div>
-      )}
+      ) : null}
       {comment._count.replies > 0 && (
         <button
           className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
@@ -136,41 +136,41 @@ export const Comment = ({ comment, readonly = false, rootId, type, queryKey }: C
           </div>
         </button>
       )}
-      {showReplies && (
+      {showReplies ? (
         <div className="flex flex-col gap-0.5 p-2 pl-6 pr-0">
           {data?.pages.flatMap((page) =>
             page.comments.map((reply) => (
               // this is a reply
               <SingleComment
-                key={comment.id}
                 comment={reply}
                 isReply
+                key={comment.id}
                 replyQueryKey={replyQueryKey}
               />
             )),
           )}
         </div>
-      )}
-      {!isFetching && showReplies && data?.pages.at(-1)?.hasMore && (
+      ) : null}
+      {!isFetching && showReplies && data?.pages.at(-1)?.hasMore ? (
         <button
           className="flex cursor-pointer items-center gap-1 pl-6 text-xs text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
           onClick={() => fetchNextPage()}
         >
           Load more
         </button>
-      )}
+      ) : null}
     </div>
   );
-};
+}
 
-const SingleComment = ({
+function SingleComment({
   comment,
   readonly = false,
   onClickReply,
   isReply,
   queryKey,
   replyQueryKey,
-}: SingleCommentProps) => {
+}: SingleCommentProps) {
   const queryClient = useQueryClient();
   const [text, setText] = useState(comment.text);
   const [isEditing, setIsEditing] = useState(false);
@@ -224,7 +224,7 @@ const SingleComment = ({
 
   const loggedinUser = useSession();
 
-  const isAuthor = loggedinUser.data?.user?.id === comment.user.id;
+  const isAuthor = loggedinUser.data?.user.id === comment.user.id;
 
   return (
     <>
@@ -237,7 +237,7 @@ const SingleComment = ({
                 {getRelativeTime(comment.createdAt)}
               </span>
             </TooltipTrigger>
-            <TooltipContent align="start" className="rounded-xl" alignOffset={-55}>
+            <TooltipContent align="start" alignOffset={-55} className="rounded-xl">
               <span className="text-xs text-white">{comment.createdAt.toLocaleString()}</span>
             </TooltipContent>
           </Tooltip>
@@ -247,10 +247,10 @@ const SingleComment = ({
           {!readonly && (
             <>
               <div
+                className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
                 onClick={() => {
                   copyPathNotifyUser();
                 }}
-                className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
               >
                 <Share className="h-3 w-3" />
                 <div className="hidden text-[0.8rem] sm:block">Share</div>
@@ -265,24 +265,24 @@ const SingleComment = ({
                   <div className="hidden text-[0.8rem] sm:block">Reply</div>
                 </button>
               )}
-              {isAuthor && (
+              {isAuthor ? (
                 <button
-                  onClick={() => setIsEditing(!isEditing)}
                   className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
+                  onClick={() => setIsEditing(!isEditing)}
                 >
                   <Pencil className="h-3 w-3" />
                   <div className="hidden text-[0.8rem] sm:block">Edit</div>
                 </button>
-              )}
+              ) : null}
               {isAuthor ? (
-                <CommentDeleteDialog comment={comment} asChild>
+                <CommentDeleteDialog asChild comment={comment}>
                   <button className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300">
                     <Trash2 className="h-3 w-3" />
                     <div className="hidden text-[0.8rem] sm:block">Delete</div>
                   </button>
                 </CommentDeleteDialog>
               ) : (
-                <ReportDialog reportType="COMMENT" commentId={comment.id}>
+                <ReportDialog commentId={comment.id} reportType="COMMENT">
                   <button className="flex cursor-pointer items-center text-[0.8rem] text-neutral-400 duration-200 hover:text-neutral-500 dark:text-neutral-600 dark:hover:text-neutral-500">
                     Report
                   </button>
@@ -294,10 +294,10 @@ const SingleComment = ({
       </div>
       <div>
         {!isEditing && <ExpandableContent content={comment.text} />}
-        {isEditing && (
+        {isEditing ? (
           <div className="my-2">
             <CommentInput
-              value={text}
+              mode="edit"
               onCancel={() => {
                 setIsEditing(false);
               }}
@@ -306,16 +306,16 @@ const SingleComment = ({
                 await updateChallengeComment();
                 setIsEditing(false);
               }}
-              mode="edit"
+              value={text}
             />
           </div>
-        )}
+        ) : null}
       </div>
     </>
   );
-};
+}
 
-const ExpandableContent = ({ content }: { content: string }) => {
+function ExpandableContent({ content }: { content: string }) {
   const [expanded, setExpanded] = useState(true);
   const contentWrapperRef = useRef<HTMLDivElement>(null);
 
@@ -355,4 +355,4 @@ const ExpandableContent = ({ content }: { content: string }) => {
       )}
     </div>
   );
-};
+}

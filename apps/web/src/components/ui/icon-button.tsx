@@ -1,4 +1,3 @@
-/* eslint-disable import/namespace */
 'use client';
 
 import type { LucideIcon } from 'lucide-react';
@@ -7,7 +6,7 @@ import { Button, type ButtonProps } from './button';
 
 export interface IconButtonProps extends ButtonProps {
   icon: LucideIcon;
-  iconSize?: string | number;
+  iconSize?: number | string;
 }
 
 export function IconButton({ icon: Icon, iconSize, ...props }: IconButtonProps) {

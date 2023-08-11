@@ -1,20 +1,20 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { unbanUser, type AdminBannedUsers } from '~/components/admin/admin.actions';
-import { getRelativeTime } from '~/utils/relativeTime';
+import { Unlock } from 'lucide-react';
 import { ActionMenu } from '../ui/action-menu';
 import { Badge } from '../ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import { TypographyH3 } from '../ui/typography/h3';
 import { toast } from '../ui/use-toast';
-import { Unlock } from 'lucide-react';
+import { getRelativeTime } from '~/utils/relativeTime';
+import { unbanUser, type AdminBannedUsers } from '~/components/admin/admin.actions';
 
 interface BannedUsersProps {
   data: AdminBannedUsers;
 }
 
-export const BannedUsers = ({ data }: BannedUsersProps) => {
+export function BannedUsers({ data }: BannedUsersProps) {
   // State
   const router = useRouter();
 
@@ -52,7 +52,7 @@ export const BannedUsers = ({ data }: BannedUsersProps) => {
             <TableHead>Status</TableHead>
             <TableHead>At</TableHead>
             <TableHead>Reason</TableHead>
-            <TableHead></TableHead>
+            <TableHead />
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -103,4 +103,4 @@ export const BannedUsers = ({ data }: BannedUsersProps) => {
       </Table>
     </div>
   );
-};
+}

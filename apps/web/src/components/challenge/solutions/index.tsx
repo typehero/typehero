@@ -1,24 +1,23 @@
 'use client';
 import { ArrowUp, MessageCircle } from 'lucide-react';
-
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useState } from 'react';
-import type { ChallengeSolutionsRouteData } from '~/app/challenge/[id]/solutions/page';
-import { getRelativeTime } from '~/utils/relativeTime';
 import { SolutionEditor } from './solution-editor';
-import { UserBadge } from '~/components/ui/user-badge';
 import NoSolutions from './nosolutions';
 import SubmitSolution from './submit-solution';
+import type { ChallengeSolutionsRouteData } from '~/app/challenge/[id]/solutions/page';
+import { getRelativeTime } from '~/utils/relativeTime';
+import { UserBadge } from '~/components/ui/user-badge';
 import { Button } from '~/components/ui/button';
 
 interface Props {
   challenge: ChallengeSolutionsRouteData;
 }
-type View = 'editor' | 'list' | 'details';
+type View = 'details' | 'editor' | 'list';
 export function Solutions({ challenge }: Props) {
   const [view, setView] = useState<View>('list');
-  const loggedInUserHasSolution = challenge?.submission?.length;
+  const loggedInUserHasSolution = challenge.submission.length;
   const session = useSession();
 
   return (
@@ -35,22 +34,22 @@ export function Solutions({ challenge }: Props) {
                 <SubmitSolution disabled={Boolean(!loggedInUserHasSolution)} setView={setView} />
               </div>
               <div className="custom-scrollable-element h-full overflow-y-auto pt-12">
-                {challenge?.sharedSolution.map((solution) => (
+                {challenge.sharedSolution.map((solution) => (
                   <SolutionRow
-                    key={solution.id}
-                    solution={solution}
                     handleClick={() => {
                       setView('details');
                     }}
+                    key={solution.id}
+                    solution={solution}
                   />
                 ))}
               </div>
             </>
           ) : (
             <NoSolutions
+              loggedInUser={Boolean(session.data?.user)}
+              loggedInUserHasSolution={loggedInUserHasSolution > 0}
               setView={setView}
-              loggedInUser={session?.data?.user ? true : false}
-              loggedInUserHasSolution={loggedInUserHasSolution > 0 ? true : false}
             />
           )}
         </>

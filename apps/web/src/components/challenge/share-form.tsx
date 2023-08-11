@@ -4,8 +4,8 @@ import { CheckCircle2 as CheckCircle2Icon, Clipboard as ClipboardIcon } from 'lu
 import lzstring from 'lz-string';
 import { useParams } from 'next/navigation';
 import { useCallback, useState } from 'react';
-import { useLocalStorage } from '~/utils/useLocalStorage';
 import { DialogFooter } from '../ui/dialog';
+import { useLocalStorage } from '~/utils/useLocalStorage';
 
 export function ShareForm() {
   const { id: challengeId } = useParams();

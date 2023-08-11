@@ -5,11 +5,10 @@ import { getServerAuthSession } from '~/server/auth';
 import { prisma } from '~/server/db';
 
 // FML this was obnoxious to do
-export type ChallengeInfo = { type: 'CHALLENGE' } & Omit<
-  Report,
-  'id' | 'userId' | 'type' | 'status'
->;
-export type UserInfo = { type: 'USER' } & Omit<Report, 'id' | 'challengeId' | 'type' | 'status'>;
+export type ChallengeInfo = Omit<Report, 'id' | 'status' | 'type' | 'userId'> & {
+  type: 'CHALLENGE';
+};
+export type UserInfo = Omit<Report, 'challengeId' | 'id' | 'status' | 'type'> & { type: 'USER' };
 
 /**
  *
@@ -159,12 +158,12 @@ export async function banUser(userId: string, reportId: number, banReason?: stri
       },
       data: {
         status: 'BANNED',
-        banReason: banReason,
+        banReason,
       },
     }),
     prisma.challenge.updateMany({
       where: {
-        userId: userId,
+        userId,
       },
       data: {
         status: 'BANNED',
@@ -172,7 +171,7 @@ export async function banUser(userId: string, reportId: number, banReason?: stri
     }),
     prisma.session.deleteMany({
       where: {
-        userId: userId,
+        userId,
       },
     }),
     prisma.report.update({
@@ -187,7 +186,7 @@ export async function banUser(userId: string, reportId: number, banReason?: stri
     }),
     prisma.comment.updateMany({
       where: {
-        userId: userId,
+        userId,
       },
       data: {
         visible: false,
@@ -205,7 +204,7 @@ export async function unbanUser(userId: string) {
   return prisma.$transaction([
     prisma.challenge.updateMany({
       where: {
-        userId: userId,
+        userId,
       },
       data: {
         status: 'ACTIVE',

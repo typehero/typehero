@@ -1,11 +1,35 @@
-const path = require('path');
+const { quote } = require('shell-quote');
+const { ESLint } = require('eslint');
 
-const buildEslintCommand = (filenames) =>
-  `next lint --fix --file ${filenames
-    .map((f) => path.relative(process.cwd(), f))
-    .join(' --file ')}`;
+const eslint = new ESLint();
+const isWin = process.platform === 'win32';
 
 module.exports = {
-  '*.{js,jsx,ts,tsx}': [buildEslintCommand],
-  '**/*.ts?(x)': () => 'tsc -p tsconfig.json --noEmit',
+  '**/*.{js,jsx,mjs,ts,tsx,mts}': (filenames) => {
+    const escapedFileNames = filenames
+      .map((filename) => (isWin ? filename : escape([filename])))
+      .join(' ');
+    return [
+      `prettier --with-node-modules --ignore-path .prettierignore_staged --write ${escapedFileNames}`,
+      `eslint --no-ignore --max-warnings=0 --fix ${filenames
+        .filter((file) => !eslint.isPathIgnored(file))
+        .map((f) => `"${f}"`)
+        .join(' ')}`,
+      `git add ${escapedFileNames}`,
+    ];
+  },
+  '**/*.{json,md,mdx,css,html,yml,yaml,scss}': (filenames) => {
+    const escapedFileNames = filenames
+      .map((filename) => (isWin ? filename : escape([filename])))
+      .join(' ');
+    return [
+      `prettier --with-node-modules --ignore-path .prettierignore_staged --write ${escapedFileNames}`,
+      `git add ${escapedFileNames}`,
+    ];
+  },
 };
+
+function escape(str) {
+  const escaped = quote(str);
+  return escaped.replace(/\\@/g, '@');
+}

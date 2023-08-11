@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
-import { prisma } from '~/server/db';
-import Dashboard from './dashboard';
 import type { Metadata } from 'next';
+import Dashboard from './dashboard';
+import { prisma } from '~/server/db';
 
 interface Props {
   username: string;

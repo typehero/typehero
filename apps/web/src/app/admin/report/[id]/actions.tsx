@@ -1,6 +1,9 @@
 'use client';
 
 import { type User } from '@prisma/client';
+import { useRouter } from 'next/navigation';
+import { useMemo, useState } from 'react';
+import { type ReportWithInfo } from './report.action';
 import {
   Dialog,
   DialogContent,
@@ -9,8 +12,6 @@ import {
   DialogFooter,
   DialogHeader,
 } from '~/components/ui/dialog';
-import { useRouter } from 'next/navigation';
-import { useMemo, useState } from 'react';
 import {
   banUser,
   deleteComment,
@@ -22,7 +23,6 @@ import { Button } from '~/components/ui/button';
 import { Label } from '~/components/ui/label';
 import { Textarea } from '~/components/ui/textarea';
 import { toast } from '~/components/ui/use-toast';
-import { type ReportWithInfo } from './report.action';
 
 export interface ReportActionsProps {
   report: NonNullable<ReportWithInfo>;
@@ -42,13 +42,13 @@ export default function ReportActions({ report }: ReportActionsProps) {
   const user = useMemo(() => {
     switch (report.type) {
       case 'USER':
-        return report.user as User;
+        return report.user;
       case 'CHALLENGE':
-        return report?.challenge?.user as User;
+        return report.challenge?.user;
       case 'COMMENT':
-        return report?.comment?.user as User;
+        return report.comment?.user;
       case 'SOLUTION':
-        return report.solution?.user as User;
+        return report.solution?.user;
     }
   }, [report]);
 
@@ -84,7 +84,7 @@ export default function ReportActions({ report }: ReportActionsProps) {
 
   async function handleBanUser(userId: string, reportId: number, banReason?: string) {
     try {
-      await banUser(report.userId as string, reportId, banReason);
+      await banUser(report.userId!, reportId, banReason);
       toast({
         title: 'Success',
         description: <p>User banned successfully.</p>,
@@ -135,17 +135,17 @@ export default function ReportActions({ report }: ReportActionsProps) {
   return (
     <div className="flex gap-2">
       <Button
-        variant="destructive"
         disabled={report.moderatorId !== null}
         onClick={() => setBan(true)}
+        variant="destructive"
       >
-        Ban @{user.name}
+        Ban @{user?.name ?? 'unknown user'}
       </Button>
 
       {report.type === 'CHALLENGE' && (
         <Button
           disabled={report.moderatorId !== null}
-          onClick={() => handleDisableChallenge(report.challengeId as number, report.id)}
+          onClick={() => handleDisableChallenge(report.challengeId!, report.id)}
         >
           Disable Challenge
         </Button>
@@ -154,7 +154,7 @@ export default function ReportActions({ report }: ReportActionsProps) {
       {report.type === 'SOLUTION' && (
         <Button
           disabled={report.moderator !== null}
-          onClick={() => handleRemoveSolution(report.solutionId as number)}
+          onClick={() => handleRemoveSolution(report.solutionId!)}
         >
           Remove Solution
         </Button>
@@ -163,7 +163,7 @@ export default function ReportActions({ report }: ReportActionsProps) {
       {report.type === 'COMMENT' && (
         <Button
           disabled={report.moderatorId !== null}
-          onClick={() => handleDeleteComment(report.commentId as number, report.id)}
+          onClick={() => handleDeleteComment(report.commentId!, report.id)}
           variant="destructive"
         >
           Delete Comment
@@ -174,7 +174,7 @@ export default function ReportActions({ report }: ReportActionsProps) {
         Dismiss Report
       </Button>
 
-      <Dialog open={ban} onOpenChange={() => setBan(false)}>
+      <Dialog onOpenChange={() => setBan(false)} open={ban}>
         <DialogContent className="sm:max-w-[425px]">
           <form
             onSubmit={(e) => {
@@ -192,12 +192,12 @@ export default function ReportActions({ report }: ReportActionsProps) {
               <Label htmlFor="reason">Reason</Label>
               <Textarea
                 id="reason"
-                value={banReason}
                 onChange={(e) => setBanReason(e.target.value)}
+                value={banReason}
               />
             </div>
             <DialogFooter>
-              <Button type="button" variant="secondary" onClick={() => setBan(false)}>
+              <Button onClick={() => setBan(false)} type="button" variant="secondary">
                 Cancel
               </Button>
               <Button type="submit" variant="destructive">

@@ -2,6 +2,14 @@ import type { OnChange } from '@monaco-editor/react';
 import { Settings } from 'lucide-react';
 import type * as monaco from 'monaco-editor';
 import { useCallback } from 'react';
+import { LIB_URI, type TsErrors } from '../challenge/code-panel';
+import { libSource } from '../challenge/code-panel/editor-types';
+import { SettingsForm } from '../challenge/settings-form';
+import { CodeEditor } from '../ui/code-editor';
+import { FormField, FormItem, FormMessage } from '../ui/form';
+import { TypographyH3 } from '../ui/typography/h3';
+import type { WizardForm } from '.';
+import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 import {
   Dialog,
   DialogContent,
@@ -9,14 +17,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '~/components/ui/dialog';
-import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
-import type { WizardForm } from '.';
-import { LIB_URI, type TsErrors } from '../challenge/code-panel';
-import { libSource } from '../challenge/code-panel/editor-types';
-import { SettingsForm } from '../challenge/settings-form';
-import { CodeEditor } from '../ui/code-editor';
-import { FormField, FormItem, FormMessage } from '../ui/form';
-import { TypographyH3 } from '../ui/typography/h3';
 
 interface Props {
   form: WizardForm;
@@ -84,8 +84,8 @@ export function TestCasesEditor({ form, hasTsErrors, setTsErrors }: Props) {
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <Settings
-                            size={20}
                             className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400"
+                            size={20}
                           />
                         </TooltipTrigger>
                         <TooltipContent className="px-2 py-1">Settings</TooltipContent>
@@ -103,9 +103,9 @@ export function TestCasesEditor({ form, hasTsErrors, setTsErrors }: Props) {
                 </div>
                 <div className="w-full flex-1">
                   <CodeEditor
+                    onChange={field.onChange as OnChange}
                     onMount={onMount(setTsErrors)}
                     value={field.value}
-                    onChange={field.onChange as OnChange}
                   />
                 </div>
                 <FormMessage />

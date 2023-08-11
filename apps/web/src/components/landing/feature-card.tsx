@@ -16,7 +16,7 @@ type WrapperStyle = MotionStyle & {
   '--y': MotionValue<string>;
 };
 
-export const FeatureCard = ({
+export function FeatureCard({
   title,
   description,
   className,
@@ -30,7 +30,7 @@ export const FeatureCard = ({
     light: StaticImageData;
     alt: string;
   };
-}) => {
+}) {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const mouseX = useMotionValue(0);
@@ -64,13 +64,13 @@ export const FeatureCard = ({
             <h2 className="text-xl font-bold tracking-tight md:text-xl">{title}</h2>
             <p className="text-base leading-7 text-zinc-600 dark:text-zinc-400">{description}</p>
           </div>
-          {mounted && (
+          {mounted ? (
             <>
               {resolvedTheme === 'light' && (
                 <Image
-                  src={image.light}
                   alt={image.alt}
                   className={className}
+                  src={image.light}
                   style={{
                     position: 'absolute',
                     userSelect: 'none',
@@ -80,9 +80,9 @@ export const FeatureCard = ({
               )}
               {resolvedTheme === 'dark' && (
                 <Image
-                  src={image.dark}
                   alt={image.alt}
                   className={className}
+                  src={image.dark}
                   style={{
                     position: 'absolute',
                     userSelect: 'none',
@@ -91,9 +91,9 @@ export const FeatureCard = ({
                 />
               )}
             </>
-          )}
+          ) : null}
         </div>
       </motion.div>
     </motion.div>
   );
-};
+}

@@ -1,12 +1,12 @@
-import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip';
 import Link from 'next/link';
+import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip';
 import { Button } from '~/components/ui/button';
 
 export interface UserBadgeProps {
   username: string;
 }
 
-const UserBadge = (props: UserBadgeProps) => {
+function UserBadge(props: UserBadgeProps) {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
@@ -28,6 +28,6 @@ const UserBadge = (props: UserBadgeProps) => {
       </TooltipContent>
     </Tooltip>
   );
-};
+}
 
 export { UserBadge };

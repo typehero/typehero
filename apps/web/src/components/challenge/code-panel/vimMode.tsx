@@ -2,14 +2,14 @@
 
 import type * as monaco from 'monaco-editor';
 import { useEffect, useRef } from 'react';
-import { useEditorSettingsStore } from '../settings-store';
 import { type VimMode, initVimMode } from 'monaco-vim';
+import { useEditorSettingsStore } from '../settings-store';
 
 interface VimStatusBarProps {
   editor: monaco.editor.IStandaloneCodeEditor;
 }
 
-export const VimStatusBar = ({ editor }: VimStatusBarProps) => {
+export function VimStatusBar({ editor }: VimStatusBarProps) {
   const statusBarRef = useRef<HTMLDivElement | null>(null);
   const vimModeRef = useRef<VimMode>();
   const { settings } = useEditorSettingsStore();
@@ -31,9 +31,9 @@ export const VimStatusBar = ({ editor }: VimStatusBarProps) => {
   return (
     <div className="flex w-full">
       <div
-        ref={statusBarRef}
         className="gap-2 font-mono text-sm [&>*:first-child]:mr-2 [&_input]:border-none [&_input]:bg-transparent [&_input]:outline-none"
+        ref={statusBarRef}
       />
     </div>
   );
-};
+}

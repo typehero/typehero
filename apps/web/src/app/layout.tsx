@@ -37,10 +37,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <title>Type Hero</title>
         <meta
-          name="description"
           content="Level up your typescript skills with interactive exercises"
+          name="description"
         />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
       <body className={`${inter.className} flex flex-col`}>
         <Providers>

@@ -55,7 +55,7 @@ const View = async () => {
           </p>
         </div>
         <div className="flex flex-col space-y-2">
-          <Tabs defaultValue="reports" className="space-x-4">
+          <Tabs className="space-x-4" defaultValue="reports">
             <TabsList className="border-border bg-background rounded-full border">
               <TabsTrigger
                 className="data-[state=active]:bg-border rounded-l-2xl rounded-r-lg duration-300"

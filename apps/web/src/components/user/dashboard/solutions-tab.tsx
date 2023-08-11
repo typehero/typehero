@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import type { UserData } from '.';
 import {
   Table,
   TableBody,
@@ -7,8 +9,6 @@ import {
   TableHeader,
   TableRow,
 } from '~/components/ui/table';
-import type { UserData } from '.';
-import Link from 'next/link';
 
 export function SolutionsTab({ submissions = [] }: { submissions: UserData['submission'] }) {
   return (

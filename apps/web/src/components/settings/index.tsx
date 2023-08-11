@@ -3,14 +3,14 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
 import * as z from 'zod';
+import Link from 'next/link';
 import { Button } from '../ui/button';
 import { Form, FormField, FormItem, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
 import { RichMarkdownEditor } from '../ui/rich-markdown-editor';
 import { toast } from '../ui/use-toast';
-import { updateProfile } from './settings.action';
-import Link from 'next/link';
 import { MagicIcon } from '../ui/magic-icon';
+import { updateProfile } from './settings.action';
 
 export interface UserLinkType {
   id: string | null;
@@ -29,13 +29,7 @@ const formSchema = z.object({
 
 export type FormSchema = z.infer<typeof formSchema>;
 
-export const Settings = ({
-  profileData,
-  username,
-}: {
-  profileData: FormSchema;
-  username: string;
-}) => {
+export function Settings({ profileData, username }: { profileData: FormSchema; username: string }) {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -78,8 +72,8 @@ export const Settings = ({
           <h4 className="mb-4 mt-6 text-xl font-bold">Bio</h4>
         </div>
 
-        <Link href={`@${username}`} className="mb-6">
-          <Button variant="outline" type="button">
+        <Link className="mb-6" href={`@${username}`}>
+          <Button type="button" variant="outline">
             View profile
           </Button>
         </Link>
@@ -93,7 +87,7 @@ export const Settings = ({
               name="bio"
               render={({ field }) => (
                 <FormItem className="h-[300px] w-[600px]">
-                  <RichMarkdownEditor value={field.value as string} onChange={field.onChange} />
+                  <RichMarkdownEditor onChange={field.onChange} value={field.value!} />
                   <FormMessage />
                 </FormItem>
               )}
@@ -105,27 +99,27 @@ export const Settings = ({
               return (
                 <FormItem className="mb-3" key={`url-link-${i}`}>
                   <div className="flex items-center gap-2">
-                    <MagicIcon url={userLinks?.[i]?.url ?? ''} />
+                    <MagicIcon url={userLinks[i]?.url ?? ''} />
                     <Input
-                      defaultValue={val?.url}
-                      placeholder="Link to social profile"
                       className="w-64"
+                      defaultValue={val.url}
+                      placeholder="Link to social profile"
                       {...register(`userLinks.${i}.url`)}
                     />
-                    {errors.userLinks?.[i]?.url?.message && (
-                      <div className="text-destructive">{errors.userLinks?.[i]?.url?.message}</div>
-                    )}
+                    {errors.userLinks?.[i]?.url?.message ? (
+                      <div className="text-destructive">{errors.userLinks[i]?.url?.message}</div>
+                    ) : null}
                   </div>
                 </FormItem>
               );
             })}
           </div>
 
-          <Button type="submit" className="mt-6">
+          <Button className="mt-6" type="submit">
             Save
           </Button>
         </form>
       </Form>
     </div>
   );
-};
+}

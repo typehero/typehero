@@ -2,12 +2,12 @@ import React from 'react';
 import { cva } from 'class-variance-authority';
 import { cn } from '~/utils/cn';
 
-export type Intent = 'body' | 'leading' | 'title' | 'h1' | 'h2' | 'h3';
+export type Intent = 'body' | 'h1' | 'h2' | 'h3' | 'leading' | 'title';
 
 export interface TextProps<T extends TagOptions = 'text'> {
   intent?: Intent;
-  weight?: 'bold' | 'semi' | 'medium' | 'default';
-  color?: 'primary' | 'default';
+  weight?: 'bold' | 'default' | 'medium' | 'semi';
+  color?: 'default' | 'primary';
   tag?: T;
 }
 

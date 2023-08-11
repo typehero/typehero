@@ -2,12 +2,13 @@
 
 import { clsx } from 'clsx';
 import { debounce } from 'lodash';
-
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
-
 import { Bookmark as BookmarkIcon, Flag, Share, ThumbsUp } from 'lucide-react';
+import { ShareForm } from '../share-form';
+import { addOrRemoveBookmark } from '../bookmark.action';
+import { incrementOrDecrementUpvote } from '../increment.action';
 import { Button } from '~/components/ui/button';
 import {
   Dialog,
@@ -21,25 +22,21 @@ import { Markdown } from '~/components/ui/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 import { TypographyH3 } from '~/components/ui/typography/h3';
 import { UserBadge } from '~/components/ui/user-badge';
-import { ShareForm } from '../share-form';
-
 import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import ReportDialog from '~/components/report';
 import { ActionMenu } from '~/components/ui/action-menu';
 import { getRelativeTime } from '~/utils/relativeTime';
-import { addOrRemoveBookmark } from '../bookmark.action';
-import { incrementOrDecrementUpvote } from '../increment.action';
 
 interface Props {
   challenge: ChallengeRouteData;
 }
 
-export type FormValues = {
+export interface FormValues {
   comments: string;
   examples: boolean;
   derogatory: boolean;
   other: boolean;
-};
+}
 
 export function Description({ challenge }: Props) {
   const router = useRouter();
@@ -83,9 +80,8 @@ export function Description({ challenge }: Props) {
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
-              variant="ghost"
               className="p-1"
-              disabled={!session?.data?.user?.id}
+              disabled={!session.data?.user.id}
               onClick={() => {
                 let shouldBookmark = false;
                 if (hasBookmarked) {
@@ -95,14 +91,13 @@ export function Description({ challenge }: Props) {
                   shouldBookmark = true;
                   setHasBookmarked(true);
                 }
-                debouncedBookmark(
-                  challenge.id,
-                  session?.data?.user?.id as string,
-                  shouldBookmark,
-                )?.catch((e) => {
-                  console.error(e);
-                });
+                debouncedBookmark(challenge.id, session.data?.user.id!, shouldBookmark)?.catch(
+                  (e) => {
+                    console.error(e);
+                  },
+                );
               }}
+              variant="ghost"
             >
               <BookmarkIcon
                 className={clsx(
@@ -116,7 +111,7 @@ export function Description({ challenge }: Props) {
             </Button>
           </TooltipTrigger>
           <TooltipContent>
-            <p>{session?.data?.user?.id ? 'Bookmark' : 'Login to Bookmark'}</p>
+            <p>{session.data?.user.id ? 'Bookmark' : 'Login to Bookmark'}</p>
           </TooltipContent>
         </Tooltip>
         <Dialog>
@@ -143,8 +138,7 @@ export function Description({ challenge }: Props) {
           <TooltipTrigger asChild>
             <Button
               className="group gap-2 rounded-xl px-2 py-1"
-              variant="ghost"
-              disabled={!session?.data?.user?.id}
+              disabled={!session.data?.user.id}
               onClick={() => {
                 let shouldIncrement = false;
                 if (hasVoted) {
@@ -156,14 +150,13 @@ export function Description({ challenge }: Props) {
                   shouldIncrement = true;
                   setHasVoted(true);
                 }
-                debouncedSearch(
-                  challenge.id,
-                  session?.data?.user?.id as string,
-                  shouldIncrement,
-                )?.catch((e) => {
-                  console.error(e);
-                });
+                debouncedSearch(challenge.id, session.data?.user.id!, shouldIncrement)?.catch(
+                  (e) => {
+                    console.error(e);
+                  },
+                );
               }}
+              variant="ghost"
             >
               <ThumbsUp
                 className={clsx(
@@ -189,10 +182,10 @@ export function Description({ challenge }: Props) {
             </Button>
           </TooltipTrigger>
           <TooltipContent>
-            <p>{session?.data?.user?.id ? 'Upvote' : 'Login to Upvote'}</p>
+            <p>{session.data?.user.id ? 'Upvote' : 'Login to Upvote'}</p>
           </TooltipContent>
         </Tooltip>
-        <ReportDialog reportType="CHALLENGE" challengeId={challenge.id}>
+        <ReportDialog challengeId={challenge.id} reportType="CHALLENGE">
           <ActionMenu
             items={[
               {

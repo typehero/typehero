@@ -1,5 +1,4 @@
 import { Balancer } from 'react-wrap-balancer';
-
 import WaitlistForm from '~/components/landing/waitlist/waitlist-form';
 import styles from '~/components/landing/waitlist/waitlist.module.css';
 

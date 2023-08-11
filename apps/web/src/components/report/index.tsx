@@ -1,5 +1,6 @@
 import { type IssueType } from '@prisma/client';
 import React from 'react';
+import { useForm } from 'react-hook-form';
 import {
   type ChallengeReport,
   type UserReport,
@@ -17,7 +18,6 @@ import {
   DialogTrigger,
 } from '~/components/ui/dialog';
 import { Button } from '~/components/ui/button';
-import { useForm } from 'react-hook-form';
 import { FormField, FormItem } from '~/components/ui/form';
 import { Checkbox } from '~/components/ui/checkbox';
 import { Textarea } from '~/components/ui/textarea';
@@ -54,10 +54,10 @@ export default function ReportDialog({
   reportType = 'COMMENT',
   ...props
 }: React.PropsWithChildren<
-  | ReportUserDialogProps
   | ReportChallengeDialogProps
   | ReportCommentDialogProps
   | ReportSolutionDialogProps
+  | ReportUserDialogProps
 >) {
   const {
     handleSubmit,
@@ -97,16 +97,16 @@ export default function ReportDialog({
 
   return (
     <Dialog
-      open={show}
       onOpenChange={(e) => {
         setShow(e);
       }}
+      open={show}
     >
       <DialogTrigger asChild={triggerAsChild}>{children}</DialogTrigger>
       <DialogContent>
         <form
           onSubmit={handleSubmit(async (e) => {
-            let args = {} as UserReport | ChallengeReport | CommentReport | SolutionReport;
+            let args = {} as ChallengeReport | CommentReport | SolutionReport | UserReport;
             switch (reportType) {
               case 'CHALLENGE':
                 args = {
@@ -138,14 +138,14 @@ export default function ReportDialog({
             }
 
             // This shit is like... extra jank.
-            const issues = Object.entries(e).reduce((all, [key, value]) => {
+            const issues = Object.entries(e).reduce<{ type: IssueType }[]>((all, [key, value]) => {
               if (key === 'comments') return all;
               if (value)
                 all.push({
                   type: key.toUpperCase() as IssueType,
                 });
               return all;
-            }, [] as { type: IssueType }[]);
+            }, []);
 
             const value = await addReport({
               ...args,
@@ -183,6 +183,7 @@ export default function ReportDialog({
           <div className="mt-4 flex flex-col gap-2">
             <Text intent="leading">Please select all that apply:</Text>
             <FormField
+              control={control}
               name="derogatory"
               render={({ field }) => (
                 <FormItem>
@@ -196,9 +197,9 @@ export default function ReportDialog({
                   </div>
                 </FormItem>
               )}
-              control={control}
             />
             <FormField
+              control={control}
               name="derogatory"
               render={({ field }) => (
                 <FormItem>
@@ -212,9 +213,9 @@ export default function ReportDialog({
                   </div>
                 </FormItem>
               )}
-              control={control}
             />
             <FormField
+              control={control}
               name="hateSpeech"
               render={({ field }) => (
                 <FormItem>
@@ -228,9 +229,9 @@ export default function ReportDialog({
                   </div>
                 </FormItem>
               )}
-              control={control}
             />
             <FormField
+              control={control}
               name="spam"
               render={({ field }) => (
                 <FormItem>
@@ -244,9 +245,9 @@ export default function ReportDialog({
                   </div>
                 </FormItem>
               )}
-              control={control}
             />
             <FormField
+              control={control}
               name="threat"
               render={({ field }) => (
                 <FormItem>
@@ -260,10 +261,10 @@ export default function ReportDialog({
                   </div>
                 </FormItem>
               )}
-              control={control}
             />
             {reportType === 'CHALLENGE' && (
               <FormField
+                control={control}
                 name="unclear"
                 render={({ field }) => (
                   <FormItem>
@@ -277,11 +278,11 @@ export default function ReportDialog({
                     </div>
                   </FormItem>
                 )}
-                control={control}
               />
             )}
 
             <FormField
+              control={control}
               name="comments"
               render={({ field }) => (
                 <FormItem className="my-3">
@@ -294,17 +295,16 @@ export default function ReportDialog({
                   </div>
                 </FormItem>
               )}
-              control={control}
             />
           </div>
 
           <DialogFooter>
             <Button
-              variant="outline"
               onClick={(e) => {
                 e.preventDefault();
                 setShow(false);
               }}
+              variant="outline"
             >
               Cancel
             </Button>

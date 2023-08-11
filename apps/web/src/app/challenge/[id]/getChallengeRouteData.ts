@@ -9,7 +9,7 @@ export type ChallengeRouteData = NonNullable<Awaited<ReturnType<typeof getChalle
 export const getChallengeRouteData = cache((id: string, session: Session | null) => {
   return prisma.challenge.findFirstOrThrow({
     where: {
-      id: +id,
+      id: Number(id),
       status: 'ACTIVE',
     },
     include: {

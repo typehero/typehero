@@ -1,18 +1,18 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { useMemo } from 'react';
+import { approveChallenge, denyChallenge } from './challenge-review.action';
+import type { ChallengeToReview } from './page';
 import { Button } from '~/components/ui/button';
 import { CodeEditor } from '~/components/ui/code-editor';
 import { DifficultyBadge } from '~/components/ui/difficulty-badge';
 import { Markdown } from '~/components/ui/markdown';
 import Text from '~/components/ui/typography/typography';
 import { UserBadge } from '~/components/ui/user-badge';
-import { approveChallenge, denyChallenge } from './challenge-review.action';
-import type { ChallengeToReview } from './page';
 import { useToast } from '~/components/ui/use-toast';
-import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
-import { useMemo } from 'react';
 
 interface Props {
   challenge: ChallengeToReview;
@@ -81,7 +81,7 @@ export function ChallengeReview({ challenge }: Props) {
         <Link href="/admin">
           <Button variant="ghost">Cancel</Button>
         </Link>
-        <Button variant="destructive" onClick={handleDenyChallenge}>
+        <Button onClick={handleDenyChallenge} variant="destructive">
           Deny
         </Button>
         <Button className="bg-green-300 dark:bg-green-700" onClick={handleApproveChallenge}>

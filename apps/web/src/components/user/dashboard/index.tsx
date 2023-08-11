@@ -1,18 +1,18 @@
 import Image from 'next/image';
-import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
-import { Overview } from '../dashboard/overview';
-import { InProgressTab } from '../dashboard/in-progress-tab';
-import { SolutionsTab } from '../dashboard/solutions-tab';
 import type { User } from '@prisma/client';
-import { getRelativeTime } from '~/utils/relativeTime';
-import { prisma } from '~/server/db';
-import UserHeader from './user-header';
-import { Button } from '~/components/ui/button';
 import Link from 'next/link';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '~/server/auth';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
+import { Overview } from './overview';
+import { InProgressTab } from './in-progress-tab';
+import { SolutionsTab } from './solutions-tab';
+import UserHeader from './user-header';
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
+import { getRelativeTime } from '~/utils/relativeTime';
+import { prisma } from '~/server/db';
+import { Button } from '~/components/ui/button';
+import { authOptions } from '~/server/auth';
 import { MagicIcon } from '~/components/ui/magic-icon';
 import { stripProtocolAndWWW } from '~/utils/stringUtils';
 
@@ -63,11 +63,11 @@ export default async function Dashboard({ user }: Props) {
         <div className="flex gap-4">
           <div className="pace-x-2 flex">
             <Image
-              className="rounded-3xl"
               alt="user avatar"
-              width="100"
+              className="rounded-3xl"
               height="100"
               src={user.image ?? '/avatar.jpeg'}
+              width="100"
             />
           </div>
           <div className="flex w-full justify-between">
@@ -104,8 +104,8 @@ export default async function Dashboard({ user }: Props) {
                   <a
                     className="hover:text-zinc-400"
                     href={link.url}
-                    target="_blank"
                     rel="noopener noreferrer"
+                    target="_blank"
                   >
                     {stripProtocolAndWWW(link.url)}
                   </a>
@@ -114,7 +114,7 @@ export default async function Dashboard({ user }: Props) {
           </div>
         )}
 
-        <Tabs defaultValue="in-progress" className="space-y-4">
+        <Tabs className="space-y-4" defaultValue="in-progress">
           <TabsList className="border-border bg-background rounded-full border">
             <TabsTrigger
               className="data-[state=active]:bg-border rounded-lg rounded-l-2xl duration-300"
@@ -130,20 +130,20 @@ export default async function Dashboard({ user }: Props) {
             </TabsTrigger>
             <TabsTrigger
               className="data-[state=active]:bg-border rounded-lg duration-300"
-              value="bookmarks"
               disabled
+              value="bookmarks"
             >
               Bookmarks
             </TabsTrigger>
             <TabsTrigger
               className="data-[state=active]:bg-border rounded-l-lg rounded-r-full duration-300"
-              value="comments"
               disabled
+              value="comments"
             >
               Comments
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="overview" className="space-y-4">
+          <TabsContent className="space-y-4" value="overview">
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
               <Card className="col-span-4">
                 <CardHeader>
@@ -155,7 +155,7 @@ export default async function Dashboard({ user }: Props) {
               </Card>
             </div>
           </TabsContent>
-          <TabsContent value="in-progress" className="space-y-4">
+          <TabsContent className="space-y-4" value="in-progress">
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
               <Card className="col-span-4">
                 <CardHeader>
@@ -167,7 +167,7 @@ export default async function Dashboard({ user }: Props) {
               </Card>
             </div>
           </TabsContent>
-          <TabsContent value="solutions" className="space-y-4">
+          <TabsContent className="space-y-4" value="solutions">
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
               <Card className="col-span-4">
                 <CardHeader>

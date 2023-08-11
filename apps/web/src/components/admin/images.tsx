@@ -8,21 +8,21 @@ interface ImageUploadProps {
   data: ImageUpload;
 }
 
-export const ImageUploadReport = ({ data }: ImageUploadProps) => {
+export function ImageUploadReport({ data }: ImageUploadProps) {
   return (
     <div className="flex flex-col gap-2">
       <div>
         {data.map((image) => (
           <Image
+            alt={`${image.id}`}
+            className="rounded-lg"
+            height="300"
             key={image.id}
             src={image.url}
             width="300"
-            height="300"
-            alt={`${image.id}`}
-            className="rounded-lg"
           />
         ))}
       </div>
     </div>
   );
-};
+}

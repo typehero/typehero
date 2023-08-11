@@ -5,21 +5,21 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { ChevronDown, ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react';
 import { useRef, useState } from 'react';
-import { Comment } from '~/components/challenge/comments/comment';
-import { Button } from '~/components/ui/button';
-import { toast } from '~/components/ui/use-toast';
 import { CommentInput } from './comment-input';
 import { CommentSkeleton } from './comment-skeleton';
 import { addComment } from './comment.action';
 import { getPaginatedComments } from './getCommentRouteData';
 import NoComments from './nocomments';
+import { toast } from '~/components/ui/use-toast';
+import { Button } from '~/components/ui/button';
+import { Comment } from '~/components/challenge/comments/comment';
 
 interface Props {
   rootId: number;
   type: CommentRoot;
 }
 
-export const Comments = ({ rootId, type }: Props) => {
+export function Comments({ rootId, type }: Props) {
   const [showComments, setShowComments] = useState(false);
   const [text, setText] = useState('');
   const commentContainerRef = useRef<HTMLDivElement>(null);
@@ -90,7 +90,7 @@ export const Comments = ({ rootId, type }: Props) => {
           <div className="flex items-center gap-2">
             <MessageCircle className="h-5 w-5" />
             Comments
-            {data?.totalComments != null && <span>({data?.totalComments})</span>}
+            {data?.totalComments != null && <span>({data.totalComments})</span>}
           </div>
           <ChevronDown
             className={clsx('h-4 w-4 duration-300', {
@@ -99,7 +99,6 @@ export const Comments = ({ rootId, type }: Props) => {
           />
         </button>
         <div
-          ref={commentContainerRef}
           className={clsx(
             'custom-scrollable-element flex flex-col overscroll-contain duration-300',
             {
@@ -108,13 +107,14 @@ export const Comments = ({ rootId, type }: Props) => {
               'overflow-y-auto': showComments && data?.comments.length !== 0,
             },
           )}
+          ref={commentContainerRef}
         >
           <div className="m-2 mt-0">
             <CommentInput
-              onChange={setText}
-              value={text}
-              onSubmit={createChallengeComment}
               mode="create"
+              onChange={setText}
+              onSubmit={createChallengeComment}
+              value={text}
             />
           </div>
           {status === 'loading' && <CommentSkeleton />}
@@ -123,13 +123,13 @@ export const Comments = ({ rootId, type }: Props) => {
               (data.comments.length === 0 ? (
                 <NoComments />
               ) : (
-                data?.comments?.map((comment) => (
+                data.comments.map((comment) => (
                   <Comment
-                    key={comment.id}
                     comment={comment}
+                    key={comment.id}
+                    queryKey={queryKey}
                     rootId={rootId}
                     type={type}
-                    queryKey={queryKey}
                   />
                 ))
               ))}
@@ -138,8 +138,8 @@ export const Comments = ({ rootId, type }: Props) => {
             <div className="mt-2 flex justify-center">
               <Pagination
                 currentPage={page}
-                totalPages={data?.totalPages ?? 0}
                 onClick={handleChangePage}
+                totalPages={data?.totalPages ?? 0}
               />
             </div>
           )}
@@ -147,7 +147,7 @@ export const Comments = ({ rootId, type }: Props) => {
       </div>
     </div>
   );
-};
+}
 
 function Pagination({
   currentPage,
@@ -156,7 +156,7 @@ function Pagination({
 }: {
   totalPages: number;
   currentPage: number;
-  onClick(page: number): void;
+  onClick: (page: number) => void;
 }) {
   const maxVisiblePages = 5;
   const halfVisiblePages = Math.floor(maxVisiblePages / 2);
@@ -179,26 +179,26 @@ function Pagination({
   return (
     <nav className="justify-space-between flex items-center gap-2">
       <Button
-        variant="ghost"
         disabled={currentPage === 1}
         onClick={() => onClick(Math.max(0, currentPage - 1))}
+        variant="ghost"
       >
         <ChevronLeft />
       </Button>
       {pages.map((page) => (
         <Button
-          variant="ghost"
-          key={`pagination-${page}`}
           className={clsx({ 'border border-black dark:border-white/30 ': page === currentPage })}
+          key={`pagination-${page}`}
           onClick={() => onClick(page)}
+          variant="ghost"
         >
           {page}
         </Button>
       ))}
       <Button
-        variant="ghost"
         disabled={currentPage === totalPages}
         onClick={() => onClick(Math.min(totalPages, currentPage + 1))}
+        variant="ghost"
       >
         <ChevronRight />
       </Button>

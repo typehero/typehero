@@ -1,9 +1,9 @@
 'use client';
 import Link from 'next/link';
-import { ExploreCard } from './explore-card';
 import type { Difficulty } from '@prisma/client';
 import { useEffect, useRef, useState } from 'react';
 import { ChevronRight } from 'lucide-react';
+import { ExploreCard } from './explore-card';
 import type { ExploreChallengeFetcher } from '.';
 
 interface Props {
@@ -79,9 +79,9 @@ export function ExploreCarousel({ challenges }: Props) {
 
   return (
     <div
+      className="hide-scrollbar flex w-full snap-x flex-nowrap gap-4 overflow-x-scroll scroll-smooth p-6"
       id="container"
       ref={containerRef}
-      className="hide-scrollbar flex w-full snap-x flex-nowrap gap-4 overflow-x-scroll scroll-smooth p-6"
     >
       {challenges
         .sort((a, b) =>
@@ -95,7 +95,7 @@ export function ExploreCarousel({ challenges }: Props) {
             href={`/challenge/${challenge.id}`}
             key={challenge.id}
           >
-            <ExploreCard key={`challenge-${challenge.id}`} challenge={challenge} />
+            <ExploreCard challenge={challenge} key={`challenge-${challenge.id}`} />
           </Link>
         ))}
       <button

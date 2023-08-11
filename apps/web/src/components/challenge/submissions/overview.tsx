@@ -40,13 +40,13 @@ export function SubmissionOverview({ submissionId }: Props) {
     <>
       <div className="sticky top-0 flex h-[40px] items-center justify-between border-b border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
         <Link href={`/challenge/${submission.challengeId}/submissions`}>
-          <X size={20} className="stroke-gray-500 hover:stroke-gray-400" />
+          <X className="stroke-gray-500 hover:stroke-gray-400" size={20} />
         </Link>
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" onClick={copyToClipboard}>
-                <Copy size={20} className="stroke-gray-500 hover:stroke-gray-400" />
+              <Button onClick={copyToClipboard} variant="ghost">
+                <Copy className="stroke-gray-500 hover:stroke-gray-400" size={20} />
               </Button>
             </TooltipTrigger>
             <TooltipContent>

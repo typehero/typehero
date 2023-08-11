@@ -6,7 +6,7 @@ import Text from '~/components/ui/typography/typography';
 export default function Error({ reset }: { reset: () => void }) {
   return (
     <div className="container flex h-full flex-col items-center justify-center">
-      <Text intent="h2" className="mb-6">
+      <Text className="mb-6" intent="h2">
         Something went wrong!
       </Text>
       <Button

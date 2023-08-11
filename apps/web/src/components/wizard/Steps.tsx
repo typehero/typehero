@@ -9,22 +9,22 @@ interface Props<T extends Step> {
 
 export function Steps<T extends Step>({ steps, current, onChange }: Props<T>) {
   return (
-    <nav className="flex justify-center px-4 lg:-mt-[56px]" aria-label="Progress">
+    <nav aria-label="Progress" className="flex justify-center px-4 lg:-mt-[56px]">
       <ol
-        role="list"
         className="flex w-full flex-wrap items-start justify-start gap-2 divide-y sm:justify-center md:w-10/12 md:divide-y-0"
+        role="list"
       >
         {steps.map((step, stepIdx) => (
           <li
-            key={step.name}
             className={`relative rounded-full ${
               current > stepIdx ? 'bg-emerald-500/20' : 'bg-gray-500/10'
             } py-1 pl-[0.4rem] pr-3 md:flex`}
+            key={step.name}
           >
             {current > stepIdx ? (
               <a
-                href={'#'}
                 className="group flex w-full items-center"
+                href="#"
                 onClick={() => onChange(stepIdx)}
               >
                 <span className="flex items-center gap-2 text-sm font-medium">
@@ -40,7 +40,7 @@ export function Steps<T extends Step>({ steps, current, onChange }: Props<T>) {
                 </span>
               </a>
             ) : current === stepIdx ? (
-              <span className="flex items-center gap-2 text-sm font-medium" aria-current="step">
+              <span aria-current="step" className="flex items-center gap-2 text-sm font-medium">
                 <span className="flex h-5 w-8 flex-shrink-0 items-center justify-center rounded-full bg-gray-500/30 p-2 dark:bg-gray-500/50">
                   <span className="text-xs">{step.id}</span>
                 </span>

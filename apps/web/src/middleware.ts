@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from 'next/server';
 
-let thing = 'string';
+const thing = 'string';
 
 export function middleware(req: NextRequest) {
   if (process.env.NODE_ENV === 'production') {

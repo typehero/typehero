@@ -4,68 +4,72 @@ import { type Prisma, type Report } from '@prisma/client';
 import { getServerAuthSession } from '~/server/auth';
 import { prisma } from '~/server/db';
 
-export type ReportBase = {
+export interface ReportBase {
   issues: Prisma.ReportIssueCreateWithoutReportInput[];
-};
+}
 
 export type ChallengeReport = Omit<
   Report,
-  | 'id'
-  | 'type'
-  | 'userId'
   | 'commentId'
-  | 'reporterId'
-  | 'status'
-  | 'solutionId'
-  | 'updatedAt'
   | 'createdAt'
-> & { type: 'CHALLENGE' } & ReportBase;
+  | 'id'
+  | 'reporterId'
+  | 'solutionId'
+  | 'status'
+  | 'type'
+  | 'updatedAt'
+  | 'userId'
+> &
+  ReportBase & { type: 'CHALLENGE' };
 
 export type UserReport = Omit<
   Report,
-  | 'id'
-  | 'type'
   | 'challengeId'
   | 'commentId'
-  | 'reporterId'
-  | 'status'
-  | 'solutionId'
-  | 'updatedAt'
   | 'createdAt'
-> & { type: 'USER' } & ReportBase;
+  | 'id'
+  | 'reporterId'
+  | 'solutionId'
+  | 'status'
+  | 'type'
+  | 'updatedAt'
+> &
+  ReportBase & { type: 'USER' };
 
 export type CommentReport = Omit<
   Report,
-  | 'id'
-  | 'type'
   | 'challengeId'
-  | 'userId'
-  | 'reporterId'
-  | 'status'
-  | 'solutionId'
-  | 'updatedAt'
   | 'createdAt'
-> & { type: 'COMMENT' } & ReportBase;
+  | 'id'
+  | 'reporterId'
+  | 'solutionId'
+  | 'status'
+  | 'type'
+  | 'updatedAt'
+  | 'userId'
+> &
+  ReportBase & { type: 'COMMENT' };
 
 export type SolutionReport = Omit<
   Report,
-  | 'id'
-  | 'type'
   | 'challengeId'
-  | 'userId'
+  | 'commentId'
+  | 'createdAt'
+  | 'id'
   | 'reporterId'
   | 'status'
-  | 'commentId'
+  | 'type'
   | 'updatedAt'
-  | 'createdAt'
-> & { type: 'SOLUTION' } & ReportBase;
+  | 'userId'
+> &
+  ReportBase & { type: 'SOLUTION' };
 
 /**
  * @param report a report object specific to a user, challenge, or comment report type
  * @returns 'created' if successful, 'not_logged_in' if the user is not logged in, and 'already_exists' if there's a pending report of the same type by the same user.
  */
 export async function addReport(
-  report: ChallengeReport | UserReport | CommentReport | SolutionReport,
+  report: ChallengeReport | CommentReport | SolutionReport | UserReport,
 ) {
   const reporter = await getServerAuthSession();
   if (!reporter?.user.id) return 'not_logged_in';

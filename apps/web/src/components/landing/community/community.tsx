@@ -1,15 +1,13 @@
 'use client';
-// eslint-disable-next-line no-restricted-imports
-import { contributors } from '../../../../public/contributors';
 
 import { GitBranch } from 'lucide-react';
-
 import { clsx } from 'clsx';
 import { type CSSProperties } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { contributors } from '../../../../public/contributors';
 import styles from '~/components/landing/community/community.module.css';
 
-const Community = function () {
+function Community() {
   type WrapperStyle = CSSProperties & {
     '--bottom': string;
   };
@@ -22,17 +20,17 @@ const Community = function () {
     <>
       <div className="containerthing -z-10 flex rotate-180 opacity-50 dark:opacity-100">
         <div
-          ref={ref}
           className={clsx(
             { 'scale-[3] md:scale-[2] 2xl:scale-[1.75]': inView },
             'thething translate-z-0 translate-y-[-180px] rotate-180 scale-50 animate-none duration-1000',
           )}
+          ref={ref}
           style={
             {
               '--bottom': '#4188e6',
             } as WrapperStyle
           }
-        ></div>
+        />
       </div>
       {/* backdrop styles don't apply for the last pixel row of the elment for some reason no there's p and m offsets*/}
       <section className={clsx(styles.backdrop, 'relative -mb-[1px] pb-[1px]')}>
@@ -58,8 +56,8 @@ const Community = function () {
                 <button className="group mx-auto flex items-center gap-2 rounded-xl bg-neutral-200 px-3 py-2 text-sm font-bold duration-300 hover:bg-[#5865F2] hover:text-white dark:bg-neutral-800 dark:hover:bg-[#5865F2]">
                   <svg
                     className="h-4 w-4 fill-current group-hover:rotate-[360deg]"
-                    style={{ transition: 'color 0s, transform 0.3s' }}
                     role="img"
+                    style={{ transition: 'color 0s, transform 0.3s' }}
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -71,8 +69,8 @@ const Community = function () {
                 <button className="group flex items-center gap-2 rounded-xl bg-neutral-200 px-3 py-2 text-sm font-bold duration-300 hover:bg-black hover:text-white dark:bg-neutral-800 dark:hover:bg-white dark:hover:text-black">
                   <svg
                     className="h-4 w-4 fill-current group-hover:-rotate-[360deg]"
-                    style={{ transition: 'color 0s, transform 0.3s' }}
                     role="img"
+                    style={{ transition: 'color 0s, transform 0.3s' }}
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -91,14 +89,15 @@ const Community = function () {
                 {contributors.map((contributor) => (
                   <a
                     className="group rounded-full duration-300 hover:scale-125 active:scale-105 active:duration-100"
-                    key={contributor.id}
-                    target="_blank"
                     href={contributor.html_url}
+                    key={contributor.id}
+                    rel="noopener"
+                    target="_blank"
                   >
                     <div
-                      style={{ backgroundImage: `url('${contributor.avatar_url}')` }}
                       className="honeycombchild h-16 w-16 rounded-3xl bg-cover duration-300 group-hover:rounded-[2rem] group-active:rounded-3xl group-active:duration-100"
-                    ></div>
+                      style={{ backgroundImage: `url('${contributor.avatar_url}')` }}
+                    />
                   </a>
                 ))}
               </div>
@@ -108,5 +107,5 @@ const Community = function () {
       </section>
     </>
   );
-};
+}
 export default Community;

@@ -1,10 +1,10 @@
 'use client';
 
-import Text from '~/components/ui/typography/typography';
 import { type User } from '@prisma/client';
+import { Flag } from 'lucide-react';
+import Text from '~/components/ui/typography/typography';
 import ReportDialog from '~/components/report';
 import { ActionMenu } from '~/components/ui/action-menu';
-import { Flag } from 'lucide-react';
 
 export interface UserHeaderProps {
   user: User;

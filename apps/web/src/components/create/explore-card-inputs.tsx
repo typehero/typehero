@@ -1,12 +1,12 @@
 'use client';
 // TODO: unify this with the explore card into single component (maybe? idk how that'd work, too many changes)
 import { MessageCircle, ThumbsUp } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { getRelativeTime } from '~/utils/relativeTime';
-import { Select, SelectContent, SelectItem, SelectTrigger } from '~/components/ui/select';
 import { type Difficulty } from '@prisma/client';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
 import { DifficultyBadge } from '../ui/difficulty-badge';
+import { getRelativeTime } from '~/utils/relativeTime';
+import { Select, SelectContent, SelectItem, SelectTrigger } from '~/components/ui/select';
 
 // NOTE: this does not have hover: effects from explore-card
 const GRADIENTS_BY_DIFFICULTY = {
@@ -28,14 +28,14 @@ interface Props {
   shortDescription: string;
   setShortDescription: (shortDescription: string) => void;
 }
-const ExploreCardInputs = ({
+function ExploreCardInputs({
   name,
   setName,
   difficulty,
   setDifficulty,
   shortDescription,
   setShortDescription,
-}: Props) => {
+}: Props) {
   return (
     <Card
       className={`overflow-hidden duration-300
@@ -46,10 +46,10 @@ const ExploreCardInputs = ({
         <CardTitle className="pb-4 pt-0 text-3xl dark:text-white">
           <input
             className="bg-transparent placeholder-black/50 focus:outline-none dark:placeholder-white/70"
+            onChange={(ev) => setName(ev.currentTarget.value)}
+            placeholder="Enter Challenge Title"
             style={{ textShadow: '0 0 0.5rem #0003' }}
             value={name}
-            placeholder="Enter Challenge Title"
-            onChange={(ev) => setName(ev.currentTarget.value)}
           />
         </CardTitle>
         <div className="flex items-center gap-6 text-center text-white duration-300 dark:group-hover:text-black">
@@ -78,8 +78,8 @@ const ExploreCardInputs = ({
       <CardContent className="bg-background group-hover:bg-card-hovered relative flex flex-col justify-between gap-2 rounded-xl p-6 pb-0 duration-300">
         <div className="flex items-center gap-2">
           <Button
-            size="sm"
             className="-ml-[0.33rem] flex h-auto w-fit items-center rounded-full bg-transparent py-1 pl-[0.33rem] pr-2 text-xs font-bold text-neutral-700 hover:bg-black/10 dark:text-white dark:hover:bg-white/20"
+            size="sm"
           >
             @you
           </Button>
@@ -89,14 +89,14 @@ const ExploreCardInputs = ({
           <div className="pointer-events-none absolute inset-0 h-full w-full shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card))] duration-300 group-hover:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))] group-focus:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))]" />
           <textarea
             className="w-full resize-none bg-transparent placeholder-black/70 focus:outline-none dark:text-white dark:placeholder-white/70"
-            value={shortDescription}
-            placeholder="Enter Short Description"
             onChange={(ev) => setShortDescription(ev.currentTarget.value)}
+            placeholder="Enter Short Description"
+            value={shortDescription}
           />
         </CardDescription>
       </CardContent>
     </Card>
   );
-};
+}
 
 export default ExploreCardInputs;

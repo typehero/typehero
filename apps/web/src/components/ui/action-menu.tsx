@@ -1,7 +1,7 @@
-/* eslint-disable import/namespace */
 'use client';
 
 import React from 'react';
+import { MoreHorizontal, type LucideIcon } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -9,13 +9,11 @@ import {
   DropdownMenuItem,
 } from './dropdown-menu';
 
-import { MoreHorizontal, type LucideIcon } from 'lucide-react';
-
-export type ActionMenuItem = {
+export interface ActionMenuItem {
   icon?: LucideIcon;
   label: string;
   key: string;
-};
+}
 
 export interface ActionMenuProps {
   items: ActionMenuItem[];
@@ -33,9 +31,9 @@ export function ActionMenu(props: ActionMenuProps) {
           const Icon = item.icon;
           return (
             <DropdownMenuItem
-              onClick={() => props.onChange(item)}
-              key={item.key}
               className="flex items-center gap-2 py-2 pl-3 pr-0"
+              key={item.key}
+              onClick={() => props.onChange(item)}
             >
               <div>{Icon ? <Icon size={16} /> : null}</div>
               <div>{item.label}</div>

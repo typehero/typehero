@@ -1,5 +1,7 @@
 import { type DialogTriggerProps } from '@radix-ui/react-dialog';
 import { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { deleteComment, type CommentsByChallengeId } from '../comment.action';
 import { TypographyP } from '~/components//ui/paragraph';
 import { Button } from '~/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '~/components/ui/dialog';
@@ -7,20 +9,18 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip
 import { TypographyLarge } from '~/components/ui/typography/large';
 import { toast } from '~/components/ui/use-toast';
 import { getRelativeTime } from '~/utils/relativeTime';
-import { deleteComment, type CommentsByChallengeId } from '../comment.action';
-import { useQueryClient } from '@tanstack/react-query';
 
 interface CommentDeleteDialogProps extends DialogTriggerProps {
   comment: CommentsByChallengeId[number];
-  queryKey?: (string | number)[];
+  queryKey?: (number | string)[];
 }
 
-export const CommentDeleteDialog = ({
+export function CommentDeleteDialog({
   children,
   comment,
   queryKey,
   ...props
-}: CommentDeleteDialogProps) => {
+}: CommentDeleteDialogProps) {
   const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -47,7 +47,7 @@ export const CommentDeleteDialog = ({
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={() => setIsOpen(!isOpen)}>
+    <Dialog onOpenChange={() => setIsOpen(!isOpen)} open={isOpen}>
       <DialogTrigger {...props}>{children}</DialogTrigger>
       <DialogContent className="flex flex-col space-y-2">
         <TypographyLarge>Are you sure?</TypographyLarge>
@@ -80,14 +80,14 @@ export const CommentDeleteDialog = ({
         </div>
         <TypographyP>The following comment will be permanently deleted.</TypographyP>
         <div className="flex flex-row gap-2">
-          <Button variant={'outline'} onClick={() => setIsOpen(!isOpen)}>
+          <Button onClick={() => setIsOpen(!isOpen)} variant="outline">
             Cancel
           </Button>
           <Button
-            variant={'destructive'}
             onClick={() => {
               void handleDeleteComment();
             }}
+            variant="destructive"
           >
             Delete
           </Button>
@@ -95,6 +95,6 @@ export const CommentDeleteDialog = ({
       </DialogContent>
     </Dialog>
   );
-};
+}
 
 export default CommentDeleteDialog;

@@ -29,7 +29,7 @@ export type ReportWithInfo = Awaited<ReturnType<typeof getReport>>;
 export async function getReport(idNum: number) {
   return prisma.report.findFirst({
     where: {
-      id: +idNum,
+      id: Number(idNum),
     },
     orderBy: {
       type: 'asc',

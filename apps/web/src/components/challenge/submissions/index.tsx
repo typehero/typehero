@@ -2,18 +2,17 @@
 
 import type { Submission } from '@prisma/client';
 import clsx from 'clsx';
-import { getRelativeTime } from '~/utils/relativeTime';
-
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
-import type { ChallengeSubmissions } from '~/app/challenge/[id]/submissions/getChallengeSubmissions';
 import NoSubmissions from './nosubmissions';
+import type { ChallengeSubmissions } from '~/app/challenge/[id]/submissions/getChallengeSubmissions';
+import { getRelativeTime } from '~/utils/relativeTime';
 
 interface Props {
   submissions: ChallengeSubmissions;
 }
 
-type Status = 'all' | 'accepted' | 'rejected';
+type Status = 'accepted' | 'all' | 'rejected';
 export function Submissions({ submissions }: Props) {
   const [selectedStatus, setSelectStatus] = useState<Status>('all');
 
@@ -70,8 +69,8 @@ export function Submissions({ submissions }: Props) {
           return (
             <SubmissionRow
               challengeId={submission.challengeId}
-              submission={submission}
               key={submission.id}
+              submission={submission}
             />
           );
         })}
@@ -80,7 +79,6 @@ export function Submissions({ submissions }: Props) {
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function SubmissionRow({
   challengeId,
   submission,

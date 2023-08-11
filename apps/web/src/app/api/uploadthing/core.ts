@@ -1,20 +1,20 @@
 import { createUploadthing, type FileRouter } from 'uploadthing/next';
-import { prisma } from '~/server/db';
 import { getServerSession } from 'next-auth';
+import { prisma } from '~/server/db';
 import { authOptions } from '~/server/auth';
 
 const f = createUploadthing();
 
-type ValidFileTypes = 'image' | 'video' | 'audio' | 'blob';
+type ValidFileTypes = 'audio' | 'blob' | 'image' | 'video';
 type FileRouterInput =
-  | ValidFileTypes[]
-  | {
-      // @ts-ignore fixed by typehero god
-      [key: ValidFileTypes]: {
+  | Record<
+      ValidFileTypes,
+      {
         maxFileSize?: string;
         maxFileCount?: number;
-      };
-    };
+      }
+    >
+  | ValidFileTypes[];
 
 // control the file sizes for all image types
 const DEFAULT_IMAGE_UPLOAD_PARAMS: FileRouterInput = { maxFileSize: '4MB', maxFiles: 1 };

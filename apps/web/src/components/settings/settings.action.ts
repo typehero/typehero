@@ -1,11 +1,10 @@
 'use server';
 
 import { getServerSession } from 'next-auth';
-
+import { revalidatePath } from 'next/cache';
+import type { FormSchema } from '.';
 import { prisma } from '~/server/db';
 import { authOptions } from '~/server/auth';
-import type { FormSchema } from '.';
-import { revalidatePath } from 'next/cache';
 
 /**
  * This will only let you update your own profile
@@ -20,7 +19,7 @@ export async function updateProfile(profileData: FormSchema) {
 
   // 2. Update the user bio field in the db
   await prisma.user.update({
-    where: { id: session?.user.id },
+    where: { id: session.user.id },
     data: { bio: profileData.bio },
   });
 
@@ -32,7 +31,7 @@ export async function updateProfile(profileData: FormSchema) {
         update: { url: link.url },
         create: {
           url: link.url,
-          user: { connect: { id: session?.user.id } },
+          user: { connect: { id: session.user.id } },
         },
       }),
     ),

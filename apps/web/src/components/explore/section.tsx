@@ -1,7 +1,7 @@
-import type { ExploreChallengeFetcher } from '.';
-import { Button } from '../ui/button';
 import { ChevronRight, Diamond } from 'lucide-react';
+import { Button } from '../ui/button';
 import { ExploreCarousel } from './section-carousel';
+import type { ExploreChallengeFetcher } from '.';
 
 interface Props {
   title: string;
@@ -44,22 +44,22 @@ export async function ExploreSection({ title, fetcher }: Props) {
     >
       {challenges[0]?.difficulty === 'EASY' && (
         <>
-          <Diamond className="absolute -right-5 -top-10 h-24 w-24 stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10"></Diamond>
-          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[5%] translate-y-[255%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10"></Diamond>
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10" />
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[5%] translate-y-[255%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10" />
 
-          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[130%] translate-y-[130%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10"></Diamond>
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[130%] translate-y-[130%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10" />
 
-          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[265%] translate-y-[5%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10"></Diamond>
-          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[260%] translate-y-[260%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10"></Diamond>
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[265%] translate-y-[5%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10" />
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[260%] translate-y-[260%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10" />
 
-          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[395%] translate-y-[135%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10"></Diamond>
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[395%] translate-y-[135%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10" />
 
-          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[525%] translate-y-[265%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10"></Diamond>
-          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[535%] translate-y-[15%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10"></Diamond>
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[525%] translate-y-[265%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10" />
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[535%] translate-y-[15%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10" />
 
-          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[665%] translate-y-[145%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10"></Diamond>
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[665%] translate-y-[145%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10" />
 
-          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[795%] translate-y-[275%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10"></Diamond>
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 -translate-x-[795%] translate-y-[275%] stroke-1 text-green-600/10 duration-300 group-hover:scale-90 dark:text-green-500/10" />
         </>
       )}
 
@@ -73,9 +73,9 @@ export async function ExploreSection({ title, fetcher }: Props) {
           {title}
         </h2>
         <Button
-          variant="ghost"
           className={`group items-center whitespace-nowrap rounded-full py-2 pl-4 pr-3 backdrop-blur-sm
           ${BUTTONS_BY_DIFFICULTY[challenges[0]?.difficulty || 'BEGINNER']}`}
+          variant="ghost"
         >
           view more
           <ChevronRight className="ml-2 h-4 w-4 stroke-[3] duration-300 group-hover:translate-x-1" />

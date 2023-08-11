@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation';
+import { getChallengeRouteData } from './getChallengeRouteData';
 import { Comments } from '~/components/challenge/comments';
 import { Description } from '~/components/challenge/description';
 import { getServerAuthSession } from '~/server/auth';
-import { getChallengeRouteData } from './getChallengeRouteData';
 
 interface Props {
   params: {
@@ -20,7 +20,7 @@ export default async function Challenges({ params: { id } }: Props) {
 
   return (
     <div className="relative h-full">
-      <Description challenge={challenge}></Description>
+      <Description challenge={challenge} />
       <Comments rootId={challenge.id} type="CHALLENGE" />
     </div>
   );

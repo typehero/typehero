@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
-import { prisma } from '~/server/db';
 import { ExploreSection } from './section';
 import { ExploreSectionSkeleton } from './section-skeleton';
+import { prisma } from '~/server/db';
 
 // CI fails without this
 export const dynamic = 'force-dynamic';
@@ -15,15 +15,15 @@ export async function Explore() {
         <span className="font-semibold dark:text-neutral-200">perfect</span> challenge!
       </p>
       <Suspense fallback={<ExploreSectionSkeleton />}>
-        <ExploreSection title="Great for Beginners" fetcher={getEasyChallenges} />
+        <ExploreSection fetcher={getEasyChallenges} title="Great for Beginners" />
       </Suspense>
 
       <Suspense fallback={<ExploreSectionSkeleton />}>
-        <ExploreSection title="Great for Enthusiasts" fetcher={getMediumChallenges} />
+        <ExploreSection fetcher={getMediumChallenges} title="Great for Enthusiasts" />
       </Suspense>
 
       <Suspense fallback={<ExploreSectionSkeleton />}>
-        <ExploreSection title="For the Experts" fetcher={getHardChallenges} />
+        <ExploreSection fetcher={getHardChallenges} title="For the Experts" />
       </Suspense>
     </div>
   );

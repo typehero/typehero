@@ -1,13 +1,11 @@
 import Link from 'next/link';
 import { clsx } from 'clsx';
-
 import { Mail } from 'lucide-react';
 import { Balancer } from 'react-wrap-balancer';
-
 import { Button } from '~/components/ui/button';
 import styles from '~/components/landing/waitlist/waitlist.module.css';
 
-const Waitlist = () => {
+function Waitlist() {
   return (
     <section className={clsx(styles.backdrop, 'relative overflow-hidden')}>
       <div className="container relative grid grid-cols-1 items-center justify-center py-[64px] md:grid-cols-2">
@@ -25,8 +23,8 @@ const Waitlist = () => {
           </p>
         </div>
         <Button
-          className="group relative w-fit overflow-hidden rounded-xl bg-gradient-to-bl from-indigo-400 via-blue-400 to-emerald-400 p-[2px] font-bold transition-all duration-300 hover:rounded-3xl active:rounded-xl active:duration-150 sm:mx-16 md:mx-auto md:mr-0 lg:mr-auto lg:scale-[1.5] lg:hover:scale-[1.6] lg:active:scale-[1.5]"
           asChild
+          className="group relative w-fit overflow-hidden rounded-xl bg-gradient-to-bl from-indigo-400 via-blue-400 to-emerald-400 p-[2px] font-bold transition-all duration-300 hover:rounded-3xl active:rounded-xl active:duration-150 sm:mx-16 md:mx-auto md:mr-0 lg:mr-auto lg:scale-[1.5] lg:hover:scale-[1.6] lg:active:scale-[1.5]"
         >
           <Link href="/waitlist">
             <span className="inline-flex h-full w-fit items-center gap-1 rounded-[10px] bg-white/90 px-4 py-2 text-black transition-all duration-300 group-hover:rounded-3xl group-hover:bg-white/0 group-hover:text-white dark:bg-black/80 dark:text-white group-hover:dark:bg-black/0 dark:group-hover:text-black">
@@ -38,6 +36,6 @@ const Waitlist = () => {
       </div>
     </section>
   );
-};
+}
 
 export default Waitlist;

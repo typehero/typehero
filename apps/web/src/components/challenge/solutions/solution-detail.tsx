@@ -2,6 +2,7 @@
 
 import { Calendar, Flag, Share, X } from 'lucide-react';
 import Link from 'next/link';
+import { Comments } from '../comments';
 import type { ChallengeSolution } from '~/app/challenge/[id]/solutions/[solutionId]/page';
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
 import { Button } from '~/components/ui/button';
@@ -11,7 +12,6 @@ import { toast } from '~/components/ui/use-toast';
 import { UserBadge } from '~/components/ui/user-badge';
 import ReportDialog from '~/components/report';
 import { ActionMenu } from '~/components/ui/action-menu';
-import { Comments } from '../comments';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 
 interface Props {
@@ -34,7 +34,7 @@ export function SolutionDetails({ solution }: Props) {
       <div className="relative flex h-full flex-col">
         <div className="bg-background/90 dark:bg-muted/90 sticky right-0 top-0 flex w-full border-b border-zinc-300 p-2 backdrop-blur-sm dark:border-zinc-700">
           <Link href={`/challenge/${solution.challengeId}/solutions`}>
-            <X size={20} className="stroke-gray-500 hover:stroke-gray-400" />
+            <X className="stroke-gray-500 hover:stroke-gray-400" size={20} />
           </Link>
         </div>
         <div className="custom-scrollable-element flex-1 overflow-y-auto px-4 py-3">
@@ -42,7 +42,7 @@ export function SolutionDetails({ solution }: Props) {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Avatar>
-                  <AvatarImage src={solution.user?.image ?? ''} alt="github profile picture" />
+                  <AvatarImage alt="github profile picture" src={solution.user?.image ?? ''} />
                   <AvatarFallback>{solution.user?.name}</AvatarFallback>
                 </Avatar>
                 <TypographyLarge>{solution.title}</TypographyLarge>
@@ -51,9 +51,9 @@ export function SolutionDetails({ solution }: Props) {
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
-                      variant="ghost"
-                      onClick={handleShareClick}
                       className="group p-0 text-gray-500 group-hover:text-gray-400"
+                      onClick={handleShareClick}
+                      variant="ghost"
                     >
                       <Share className="mr-2 h-4 w-4 stroke-gray-500 group-hover:stroke-gray-400" />
                     </Button>
@@ -62,7 +62,7 @@ export function SolutionDetails({ solution }: Props) {
                     <p>Share challenge</p>
                   </TooltipContent>
                 </Tooltip>
-                <ReportDialog reportType="SOLUTION" solutionId={solution.id as number}>
+                <ReportDialog reportType="SOLUTION" solutionId={solution.id!}>
                   <ActionMenu
                     items={[
                       {
@@ -83,7 +83,7 @@ export function SolutionDetails({ solution }: Props) {
               <div className="flex items-center">
                 <Calendar className="mr-2 h-4 w-4 stroke-gray-400" />
                 <span className="text-xs text-gray-400">
-                  {solution?.createdAt?.toLocaleString()}
+                  {solution.createdAt?.toLocaleString()}
                 </span>
               </div>
             </div>
@@ -91,7 +91,7 @@ export function SolutionDetails({ solution }: Props) {
           <Markdown>{solution.description || ''}</Markdown>
         </div>
       </div>
-      <Comments rootId={solution.id as number} type="SOLUTION" />
+      <Comments rootId={solution.id!} type="SOLUTION" />
     </div>
   );
 }

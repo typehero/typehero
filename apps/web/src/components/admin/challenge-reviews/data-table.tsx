@@ -13,7 +13,6 @@ import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import type { ChallengeReviewData } from '~/app/api/challenge-reviews/route';
 import { Button } from '~/components/ui/button';
-
 import {
   Table,
   TableBody,
@@ -53,9 +52,9 @@ export function DataTable({ columns }: Props) {
   );
 
   const table = useReactTable({
-    data: data?.data?.[1] ?? [],
+    data: data.data?.[1] ?? [],
     columns,
-    pageCount: data?.data?.[0] ?? -1,
+    pageCount: data.data?.[0] ?? -1,
     getCoreRowModel: getCoreRowModel(),
     state: {
       pagination,
@@ -85,11 +84,11 @@ export function DataTable({ columns }: Props) {
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows?.length ? (
+          {table.getRowModel().rows.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
-                key={row.id}
                 data-state={row.getIsSelected() && 'selected'}
+                key={row.id}
                 onClick={() => router.push(`/admin/challenge/${row.original.id}`)}
               >
                 {row.getVisibleCells().map((cell) => (
@@ -101,7 +100,7 @@ export function DataTable({ columns }: Props) {
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
+              <TableCell className="h-24 text-center" colSpan={columns.length}>
                 No results.
               </TableCell>
             </TableRow>
@@ -117,18 +116,18 @@ export function DataTable({ columns }: Props) {
         </div>
         <div className="space-x-2">
           <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
+            onClick={() => table.previousPage()}
+            size="sm"
+            variant="outline"
           >
             Previous
           </Button>
           <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
+            onClick={() => table.nextPage()}
+            size="sm"
+            variant="outline"
           >
             Next
           </Button>

@@ -8,6 +8,12 @@ import { useSession } from 'next-auth/react';
 import dynamic from 'next/dynamic';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useRef, useState } from 'react';
+import lzstring from 'lz-string';
+import { saveSubmission } from '../save-submission.action';
+import { SettingsForm } from '../settings-form';
+import { USER_CODE_START, USER_CODE_START_REGEX } from './constants';
+import { libSource } from './editor-types';
+import { createTwoslashInlayProvider } from './twoslash';
 import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import { Button } from '~/components/ui/button';
 import { CodeEditor } from '~/components/ui/code-editor';
@@ -22,12 +28,6 @@ import { ToastAction } from '~/components/ui/toast';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 import { useToast } from '~/components/ui/use-toast';
 import { useLocalStorage } from '~/utils/useLocalStorage';
-import { saveSubmission } from '../save-submission.action';
-import { SettingsForm } from '../settings-form';
-import { USER_CODE_START, USER_CODE_START_REGEX } from './constants';
-import { libSource } from './editor-types';
-import { createTwoslashInlayProvider } from './twoslash';
-import lzstring from 'lz-string';
 
 const VimStatusBar = dynamic(() => import('./vimMode').then((v) => v.VimStatusBar), {
   ssr: false,
@@ -41,9 +41,9 @@ loader.config({
 
 export const LIB_URI = 'ts:filename/checking.d.ts';
 
-type Props = {
+interface Props {
   challenge: ChallengeRouteData;
-};
+}
 
 export type TsErrors = [
   SemanticDiagnostics: monaco.languages.typescript.Diagnostic[],
@@ -52,7 +52,7 @@ export type TsErrors = [
   CompilerOptionsDiagnostics: monaco.languages.typescript.Diagnostic[],
 ];
 
-export const CodePanel = (props: Props) => {
+export function CodePanel(props: Props) {
   const params = useSearchParams();
   const router = useRouter();
   const { toast } = useToast();
@@ -60,7 +60,7 @@ export const CodePanel = (props: Props) => {
   const [tsErrors, setTsErrors] = useState<TsErrors>([[], [], [], []]);
   const [initialTypecheckDone, setInitialTypecheckDone] = useState(false);
   const [localStorageCode, setLocalStorageCode] = useLocalStorage(
-    `challenge-${props.challenge?.id}`,
+    `challenge-${props.challenge.id}`,
     '',
   );
 
@@ -89,12 +89,7 @@ export const CodePanel = (props: Props) => {
     const [, solution] = code.split(USER_CODE_START);
     const hasErrors = tsErrors.some((e) => e.length);
 
-    await saveSubmission(
-      props.challenge.id,
-      session?.user?.id as string,
-      solution ?? '',
-      !hasErrors,
-    );
+    await saveSubmission(props.challenge.id, session?.user.id!, solution ?? '', !hasErrors);
     router.refresh();
 
     if (hasErrors) {
@@ -176,7 +171,7 @@ export const CodePanel = (props: Props) => {
           <DialogTrigger>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Settings size={20} className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" />
+                <Settings className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" size={20} />
               </TooltipTrigger>
               <TooltipContent className="px-2 py-1">Settings</TooltipContent>
             </Tooltip>
@@ -193,14 +188,14 @@ export const CodePanel = (props: Props) => {
       </div>
       <div className="w-full flex-1">
         <CodeEditor
-          onMount={onMount(code, setTsErrors)}
-          value={code}
           onChange={(code) => {
             setCode(code ?? '');
             // we we only want to save whats after the comment
             const [, , storeThiseCode] = (code ?? '').split(USER_CODE_START_REGEX);
             setLocalStorageCode(storeThiseCode ?? '');
           }}
+          onMount={onMount(code, setTsErrors)}
+          value={code}
         />
       </div>
       <div
@@ -211,16 +206,16 @@ export const CodePanel = (props: Props) => {
           'sticky bottom-0 flex items-center justify-end p-2 dark:bg-[#1e1e1e]',
         )}
       >
-        {editorState && <VimStatusBar editor={editorState} />}
+        {editorState ? <VimStatusBar editor={editorState} /> : null}
         <div className="flex items-center justify-center gap-4">
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
+                disabled={!initialTypecheckDone || !session?.user}
                 size="sm"
                 className="cursor-pointer rounded-lg bg-emerald-600 duration-300 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
                 // eslint-disable-next-line @typescript-eslint/no-misused-promises
                 onClick={handleSubmit}
-                disabled={!initialTypecheckDone || !session?.user}
               >
                 {!initialTypecheckDone && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Submit
@@ -234,4 +229,4 @@ export const CodePanel = (props: Props) => {
       </div>
     </>
   );
-};
+}

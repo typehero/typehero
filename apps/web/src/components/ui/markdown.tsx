@@ -4,7 +4,6 @@ import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import remarkGfm from 'remark-gfm';
 import { vs, vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
-
 import clsx from 'clsx';
 import { visit, SKIP, type BuildVisitor } from 'unist-util-visit';
 import type { Transformer } from 'unified';
@@ -44,7 +43,6 @@ export function Markdown({ children, className }: { children: string; className?
   return (
     <ReactMarkdown
       className={className}
-      remarkPlugins={[removeHtmlComments, remarkGfm]}
       components={{
         a: ({ className, ...props }) => (
           <a className={clsx(className, 'text-blue-500')} {...props} />
@@ -66,10 +64,10 @@ export function Markdown({ children, className }: { children: string; className?
           const match = /language-(\w+)/.exec(className || '');
           return !inline && match ? (
             <SyntaxHighlighter
-              style={syntaxHighlighterTheme} // theme
+              PreTag="section" // parent tag
               className={clsx(className, 'rounded-xl dark:rounded-md')}
               language={match[1]}
-              PreTag="section" // parent tag
+              style={syntaxHighlighterTheme} // theme
               {...props}
             >
               {String(children).replace(/\n$/, '')}
@@ -81,6 +79,7 @@ export function Markdown({ children, className }: { children: string; className?
           );
         },
       }}
+      remarkPlugins={[removeHtmlComments, remarkGfm]}
     >
       {children}
     </ReactMarkdown>

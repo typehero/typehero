@@ -5,8 +5,9 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { useForm, type UseFormReturn } from 'react-hook-form';
 import { z } from 'zod';
-import { Form } from '~/components/ui/form';
+import { useSession } from 'next-auth/react';
 import { USER_CODE_START, USER_CODE_START_REGEX } from '../challenge/code-panel/constants';
+import type { TsErrors } from '../challenge/code-panel';
 import { ChallengeCardEditor } from './ChallengeCardEditor';
 import { DescriptionEditor } from './DescriptionEditor';
 import { Steps } from './Steps';
@@ -16,8 +17,7 @@ import { TestCasesEditor } from './TestCasesEditor';
 import { uploadChallenge } from './create.action';
 import DEFAULT_CHALLENGE_TEMPLATE from './default-challenge.md';
 import DEFAULT_DESCRIPTION from './default-description.md';
-import type { TsErrors } from '../challenge/code-panel';
-import { useSession } from 'next-auth/react';
+import { Form } from '~/components/ui/form';
 
 export const enum STEPS {
   ChallengeCard,
@@ -123,8 +123,8 @@ export function Wizard() {
   return (
     <div className="flex h-full flex-col gap-4 pb-4 pt-4 lg:gap-6 lg:pb-8">
       {/* we cant nest this in the form because it causes the editor to resize inifinitely hence the onSubmit(wtf..) */}
-      <Steps steps={steps} current={step} onChange={(idx) => setStep(idx)} />
-      {rendered && (
+      <Steps current={step} onChange={(idx) => setStep(idx)} steps={steps} />
+      {rendered ? (
         <Form {...form}>
           <form
             className={`container ${
@@ -139,7 +139,7 @@ export function Wizard() {
             {step === 3 && <Summary isUserACreator={isUserACreator} />}
           </form>
         </Form>
-      )}
+      ) : null}
       <NextBack
         current={step}
         onChange={(idx) => setStep(idx)}

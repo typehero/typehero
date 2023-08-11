@@ -5,8 +5,8 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { AlertCircle, MailCheck } from 'lucide-react';
+import clsx from 'clsx';
 import { Alert, AlertDescription } from '~/components/ui/alert';
-
 import { uploadWaitlistEntry } from '~/components/landing/waitlist/create.action';
 import { Button } from '~/components/ui/button';
 import { Form, FormControl, FormField, FormItem } from '~/components/ui/form';
@@ -18,7 +18,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/ui/select';
-import clsx from 'clsx';
 
 const waitlistFormSchema = z.object({
   name: z.string().min(1, 'Please enter your name'),
@@ -29,7 +28,7 @@ const waitlistFormSchema = z.object({
 export type WaitlistFormSchema = z.infer<typeof waitlistFormSchema>;
 
 export default function WaitlistForm() {
-  const [state, setState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [state, setState] = useState<'error' | 'idle' | 'submitting' | 'success'>('idle');
 
   const isSubmitting = state === 'submitting';
 
@@ -54,7 +53,7 @@ export default function WaitlistForm() {
   return (
     <div className="w-full md:w-[350px]">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col">
+        <form className="flex flex-col" onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
             control={form.control}
             name="name"
@@ -69,8 +68,8 @@ export default function WaitlistForm() {
                         !form.formState.errors.name,
                     })}
                     {...field}
-                    id="name"
                     autoComplete="name"
+                    id="name"
                     placeholder="Your name"
                   />
                 </FormControl>
@@ -92,8 +91,8 @@ export default function WaitlistForm() {
                         !form.formState.errors.email,
                     })}
                     {...field}
-                    id="email"
                     autoComplete="email"
+                    id="email"
                     placeholder="Your email address"
                   />
                 </FormControl>
@@ -106,7 +105,7 @@ export default function WaitlistForm() {
             name="intention"
             render={({ field }) => (
               <FormItem>
-                <Select onValueChange={field.onChange} defaultValue={field.value} {...field}>
+                <Select defaultValue={field.value} onValueChange={field.onChange} {...field}>
                   <FormControl>
                     <SelectTrigger
                       className={clsx({
@@ -139,9 +138,9 @@ export default function WaitlistForm() {
           />
 
           <Button
-            type="submit"
-            disabled={isSubmitting}
             className="wl-form-button group relative mt-6 w-full overflow-hidden rounded-xl px-[2px] py-[2px] font-bold transition-shadow duration-300 hover:shadow-[0_0.5rem_2rem_-0.75rem_#3178c6] dark:hover:shadow-[0_0.5rem_2rem_-0.75rem_#5198f6]"
+            disabled={isSubmitting}
+            type="submit"
           >
             <span className="h-full w-full rounded-[10px] bg-white px-4 py-2 text-center font-bold text-black transition-colors duration-300 group-hover:bg-blue-100 dark:bg-black dark:text-white group-hover:dark:bg-cyan-950">
               {isSubmitting ? 'Submitting...' : 'Join the waitlist'}
@@ -161,7 +160,7 @@ export function AlertDestructive() {
   // destructive:
   //   'destructive group border-destructive bg-destructive text-destructive-foreground',
   return (
-    <Alert variant="destructive" className="dark:bg-[#230808]">
+    <Alert className="dark:bg-[#230808]" variant="destructive">
       <AlertCircle className="h-4 w-4" />
       <AlertDescription className="text-left text-black dark:text-white">
         Something went wrong. Please try again.
@@ -176,7 +175,12 @@ export function AlertSuccess() {
       <MailCheck className="h-4 w-4" />
       <AlertDescription className="text-left text-black dark:text-white">
         Thanks for signing up for the waitlist! Consider{' '}
-        <a target="_blank" className="underline" href="https://twitter.com/typeheroapp">
+        <a
+          className="underline"
+          href="https://twitter.com/typeheroapp"
+          rel="noopener"
+          target="_blank"
+        >
           following us on twitter
         </a>{' '}
         for general updates.

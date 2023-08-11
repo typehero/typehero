@@ -1,11 +1,11 @@
 'use client';
 
 import { useWatch } from 'react-hook-form';
-import { type WizardForm } from '.';
 import { FormField, FormItem, FormMessage } from '../ui/form';
 import { Markdown } from '../ui/markdown';
 import { RichMarkdownEditor } from '../ui/rich-markdown-editor';
 import { TypographyH3 } from '../ui/typography/h3';
+import { type WizardForm } from '.';
 
 interface Props {
   form: WizardForm;
@@ -25,9 +25,9 @@ export function DescriptionEditor({ form }: Props) {
               return (
                 <FormItem className="h-full">
                   <RichMarkdownEditor
-                    value={field.value as string}
-                    onChange={field.onChange}
                     dismissPreview
+                    onChange={field.onChange}
+                    value={field.value}
                   />
                   <FormMessage />
                 </FormItem>

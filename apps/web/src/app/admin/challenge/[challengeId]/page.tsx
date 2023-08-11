@@ -1,5 +1,5 @@
-import { prisma } from '~/server/db';
 import { ChallengeReview } from './challenge-review';
+import { prisma } from '~/server/db';
 
 interface Props {
   params: {
@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default async function ChallengeReviewPage({ params: { challengeId } }: Props) {
-  const challenge = await getChallengeToReview(+challengeId);
+  const challenge = await getChallengeToReview(Number(challengeId));
   return <ChallengeReview challenge={challenge} />;
 }
 

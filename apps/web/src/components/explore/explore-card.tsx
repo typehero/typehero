@@ -1,14 +1,13 @@
 import { Circle, Diamond, MessageCircle, Plus, Sparkle, ThumbsUp, Triangle } from 'lucide-react';
-
-import { getRelativeTime } from '~/utils/relativeTime';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { type ExploreChallengeFetcher } from './';
 import { DifficultyBadge } from '../ui/difficulty-badge';
+import { type ExploreChallengeFetcher } from '.';
+import { getRelativeTime } from '~/utils/relativeTime';
 
 interface ExploreCardProps {
   challenge: Pick<
     Awaited<ReturnType<ExploreChallengeFetcher>>[0],
-    'difficulty' | 'name' | 'shortDescription' | 'user' | '_count' | 'updatedAt'
+    '_count' | 'difficulty' | 'name' | 'shortDescription' | 'updatedAt' | 'user'
   >;
 }
 
@@ -44,7 +43,7 @@ const GRADIENTS_BY_DIFFICULTY = {
     'bg-gradient-to-br hover:bg-[right_-2px_bottom] bg-[length:200%_200%] bg-left-top dark:from-orange-950 dark:via-orange-500 dark:to-orange-300 dark:via-30% from-orange-400 via-orange-600 via-30% to-orange-600',
 };
 
-export const ExploreCard = ({ challenge }: ExploreCardProps) => {
+export function ExploreCard({ challenge }: ExploreCardProps) {
   return (
     <Card
       className={`group relative overflow-hidden duration-300 sm:min-w-[300px] xl:min-w-[333px]
@@ -55,32 +54,32 @@ export const ExploreCard = ({ challenge }: ExploreCardProps) => {
     >
       {challenge.difficulty === 'BEGINNER' && (
         <>
-          <Circle className="absolute -right-4 -top-8 h-24 w-24 origin-top-right stroke-1 text-white/30 duration-300 group-hover:scale-90 dark:group-hover:text-black/30"></Circle>
-          <Circle className="absolute -right-4 -top-8 h-32 w-32 origin-top-right stroke-1 text-white/30 duration-500 group-hover:scale-90 dark:group-hover:text-black/30"></Circle>
+          <Circle className="absolute -right-4 -top-8 h-24 w-24 origin-top-right stroke-1 text-white/30 duration-300 group-hover:scale-90 dark:group-hover:text-black/30" />
+          <Circle className="absolute -right-4 -top-8 h-32 w-32 origin-top-right stroke-1 text-white/30 duration-500 group-hover:scale-90 dark:group-hover:text-black/30" />
         </>
       )}
       {challenge.difficulty === 'EASY' && (
         <>
-          <Diamond className="absolute -right-5 -top-10 h-24 w-24 origin-top-right stroke-1 text-white/30 duration-300 group-hover:rotate-6 group-hover:scale-90 dark:group-hover:text-black/30"></Diamond>
-          <Diamond className="absolute -right-6 -top-12 h-36 w-36 rotate-12 stroke-[0.75] text-white/30 duration-300 group-hover:-translate-y-2 group-hover:translate-x-3 group-hover:rotate-6 group-hover:scale-90 dark:group-hover:text-black/30"></Diamond>
+          <Diamond className="absolute -right-5 -top-10 h-24 w-24 origin-top-right stroke-1 text-white/30 duration-300 group-hover:rotate-6 group-hover:scale-90 dark:group-hover:text-black/30" />
+          <Diamond className="absolute -right-6 -top-12 h-36 w-36 rotate-12 stroke-[0.75] text-white/30 duration-300 group-hover:-translate-y-2 group-hover:translate-x-3 group-hover:rotate-6 group-hover:scale-90 dark:group-hover:text-black/30" />
         </>
       )}
       {challenge.difficulty === 'MEDIUM' && (
         <>
-          <Triangle className="absolute -right-5 -top-5 h-16 w-16 rotate-0 stroke-2 text-white/50 duration-500 group-hover:-translate-x-10 group-hover:translate-y-10 group-hover:rotate-[90deg] dark:group-hover:text-black/30"></Triangle>
-          <Triangle className="absolute -right-14 -top-16 h-36 w-36 rotate-0 stroke-1 text-white/50 duration-300 group-hover:translate-x-3 group-hover:rotate-[30deg] group-hover:scale-50 group-hover:stroke-2 dark:group-hover:text-black/30"></Triangle>
+          <Triangle className="absolute -right-5 -top-5 h-16 w-16 rotate-0 stroke-2 text-white/50 duration-500 group-hover:-translate-x-10 group-hover:translate-y-10 group-hover:rotate-[90deg] dark:group-hover:text-black/30" />
+          <Triangle className="absolute -right-14 -top-16 h-36 w-36 rotate-0 stroke-1 text-white/50 duration-300 group-hover:translate-x-3 group-hover:rotate-[30deg] group-hover:scale-50 group-hover:stroke-2 dark:group-hover:text-black/30" />
         </>
       )}
       {challenge.difficulty === 'HARD' && (
         <>
-          <Plus className="absolute -right-4 -top-8 h-24 w-24 stroke-1 text-white/30 duration-300 group-hover:scale-0 dark:group-hover:text-black/30"></Plus>
-          <Plus className="absolute -right-4 -top-8 h-32 w-32 stroke-1 text-white/30 duration-500 group-hover:-translate-y-5 group-hover:translate-x-5 group-hover:-rotate-90 group-hover:scale-75 dark:group-hover:text-black/30"></Plus>
+          <Plus className="absolute -right-4 -top-8 h-24 w-24 stroke-1 text-white/30 duration-300 group-hover:scale-0 dark:group-hover:text-black/30" />
+          <Plus className="absolute -right-4 -top-8 h-32 w-32 stroke-1 text-white/30 duration-500 group-hover:-translate-y-5 group-hover:translate-x-5 group-hover:-rotate-90 group-hover:scale-75 dark:group-hover:text-black/30" />
         </>
       )}
       {challenge.difficulty === 'EXTREME' && (
         <>
-          <Sparkle className="absolute -right-4 -top-10 h-24 w-24 stroke-1 text-white/40 duration-500 group-hover:-translate-x-4 group-hover:translate-y-10 group-hover:-rotate-[125deg] dark:group-hover:text-black/30"></Sparkle>
-          <Sparkle className="absolute -right-12 -top-20 h-48 w-48 origin-top-right stroke-1 text-white/40 duration-300 group-hover:scale-50 dark:group-hover:text-black/30"></Sparkle>
+          <Sparkle className="absolute -right-4 -top-10 h-24 w-24 stroke-1 text-white/40 duration-500 group-hover:-translate-x-4 group-hover:translate-y-10 group-hover:-rotate-[125deg] dark:group-hover:text-black/30" />
+          <Sparkle className="absolute -right-12 -top-20 h-48 w-48 origin-top-right stroke-1 text-white/40 duration-300 group-hover:scale-50 dark:group-hover:text-black/30" />
         </>
       )}
       <CardHeader className="relative flex flex-col items-start gap-1 py-5">
@@ -110,11 +109,11 @@ export const ExploreCard = ({ challenge }: ExploreCardProps) => {
         </div>
         <CardDescription className="relative h-20 overflow-hidden pb-4">
           <div className="pointer-events-none absolute inset-0 h-full w-full shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card))] duration-300 group-hover:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))] group-focus:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))]" />
-          {challenge?.shortDescription}
+          {challenge.shortDescription}
         </CardDescription>
       </CardContent>
     </Card>
   );
-};
+}
 
 export default ExploreCard;

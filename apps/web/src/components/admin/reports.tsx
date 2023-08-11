@@ -2,6 +2,8 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { getInfiniteReports, type InfiniteReports } from '../report/report.action';
+import Pagination from '../ui/pagination';
 import {
   Table,
   TableBody,
@@ -10,8 +12,6 @@ import {
   TableHeader,
   TableRow,
 } from '~/components/ui/table';
-import { getInfiniteReports, type InfiniteReports } from '../report/report.action';
-import Pagination from '../ui/pagination';
 
 export interface ReportsProps {
   initialReports: InfiniteReports;
@@ -35,7 +35,7 @@ export function Reports({ initialReports }: ReportsProps) {
         a,
 
         b,
-      ) => (a?.metadata.hasNextPage ? a?.metadata?.lastCursor : false),
+      ) => (a.metadata.hasNextPage ? a.metadata.lastCursor : false),
       initialData: {
         pages: [initialReports],
         pageParams: [null],
@@ -63,7 +63,7 @@ export function Reports({ initialReports }: ReportsProps) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data?.pages?.[page]?.data.map((tr) => (
+          {data?.pages[page]?.data.map((tr) => (
             <TableRow key={`report-${tr.id}`} onClick={() => router.push(`/admin/report/${tr.id}`)}>
               <TableCell>{tr.type}</TableCell>
               <TableCell>{tr.reporter.name}</TableCell>
@@ -72,7 +72,7 @@ export function Reports({ initialReports }: ReportsProps) {
               <TableCell>
                 <div className="flex flex-wrap gap-2">
                   {tr.issues.map((i) => (
-                    <div key={`issues-${i.id}`} className="rounded-full bg-zinc-800 px-3 py-1">
+                    <div className="rounded-full bg-zinc-800 px-3 py-1" key={`issues-${i.id}`}>
                       {i.type}
                     </div>
                   ))}

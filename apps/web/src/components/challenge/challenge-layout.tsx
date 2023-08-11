@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, type ReactNode } from 'react';
-
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -42,9 +41,9 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
   const { settings, updateSettings } = useLayoutSettingsStore();
 
   useEffect(() => {
-    const ref = resizer.current as HTMLDivElement;
-    const leftRef = leftSide.current as HTMLDivElement;
-    const rightRef = rightSide.current as HTMLDivElement;
+    const ref = resizer.current!;
+    const leftRef = leftSide.current!;
+    const rightRef = rightSide.current!;
 
     // resize width on desktop, height on mobile
     window.innerWidth > 1025
@@ -67,12 +66,12 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
         dy = e.clientY - y;
       } else if (e instanceof TouchEvent) {
         // How far the finger has been moved
-        dx = e?.changedTouches?.[0]?.clientX ? e.changedTouches[0].clientX - x : 0;
-        dy = e?.changedTouches?.[0]?.clientY ? e.changedTouches[0].clientY - y : 0;
+        dx = e.changedTouches[0]?.clientX ? e.changedTouches[0].clientX - x : 0;
+        dy = e.changedTouches[0]?.clientY ? e.changedTouches[0].clientY - y : 0;
       }
 
-      const divideByW = parent?.current?.getBoundingClientRect().width as number | 1;
-      const divideByH = parent?.current?.getBoundingClientRect().height as number | 1;
+      const divideByW = parent.current?.getBoundingClientRect().width!;
+      const divideByH = parent.current?.getBoundingClientRect().height!;
       const newLeftWidth = ((leftWidth + dx) * 100) / divideByW;
       const newTopHeight = ((topHeight + dy) * 100) / divideByH;
 
@@ -99,13 +98,13 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
       } else if (e instanceof TouchEvent) {
         // Get the current finger position
         window.innerWidth > 1025
-          ? (x = e?.touches?.[0]?.clientX ?? 0)
-          : (y = e?.touches?.[0]?.clientY ?? 0);
+          ? (x = e.touches[0]?.clientX ?? 0)
+          : (y = e.touches[0]?.clientY ?? 0);
       }
 
       window.innerWidth > 1025
-        ? (leftWidth = leftSide?.current?.getBoundingClientRect().width as number | 0)
-        : (topHeight = leftSide?.current?.getBoundingClientRect().height as number | 0);
+        ? (leftWidth = leftSide.current?.getBoundingClientRect().width!)
+        : (topHeight = leftSide.current?.getBoundingClientRect().height!);
 
       // Attach the listeners to `document`
       if (e instanceof MouseEvent) {
@@ -146,34 +145,34 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
     };
 
     window.addEventListener('resize', resizeHandler);
-    ref?.addEventListener('mousedown', mouseDownHandler);
-    ref?.addEventListener('touchstart', mouseDownHandler, false);
+    ref.addEventListener('mousedown', mouseDownHandler);
+    ref.addEventListener('touchstart', mouseDownHandler, false);
 
     return () => {
       window.removeEventListener('resize', resizeHandler);
-      ref?.removeEventListener('mousedown', mouseDownHandler);
-      ref?.removeEventListener('touchstart', mouseDownHandler);
+      ref.removeEventListener('mousedown', mouseDownHandler);
+      ref.removeEventListener('touchstart', mouseDownHandler);
     };
   }, [settings, updateSettings]);
 
   return (
     <div
-      ref={parent}
       className="flex flex-col px-4 pb-4 lg:flex-row"
+      ref={parent}
       style={{ height: 'calc(100dvh - 3.5rem)' }}
     >
       <div
-        ref={leftSide}
         className="min-h-[318px] w-full overflow-hidden rounded-l-2xl rounded-r-xl border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 lg:min-w-[500px]"
+        ref={leftSide}
       >
         {left}
       </div>
-      <div ref={resizer} className="resizer relative p-2">
+      <div className="resizer relative p-2" ref={resizer}>
         <div className="absolute left-1/2 top-1/2 h-1 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-400 duration-300 group-hover:bg-neutral-600 group-active:bg-emerald-400 group-active:duration-75 dark:bg-neutral-700 group-hover:dark:bg-neutral-500 lg:h-24 lg:w-1" />
       </div>
       <div
-        ref={rightSide}
         className="flex min-h-[90px] w-full flex-1 flex-col overflow-hidden rounded-l-xl rounded-r-2xl border border-zinc-300 dark:border-zinc-700 lg:min-w-[500px]"
+        ref={rightSide}
       >
         {right}
       </div>

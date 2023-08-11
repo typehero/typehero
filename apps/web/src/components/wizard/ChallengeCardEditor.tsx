@@ -1,7 +1,6 @@
 'use client';
 
 import { useWatch } from 'react-hook-form';
-import type { WizardForm } from '.';
 import type { ExploreChallengeFetcher } from '../explore';
 import { ExploreCard } from '../explore/explore-card';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
@@ -9,6 +8,7 @@ import { Input } from '../ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Textarea } from '../ui/textarea';
 import { TypographyH3 } from '../ui/typography/h3';
+import type { WizardForm } from '.';
 
 interface Props {
   form: WizardForm;
@@ -21,7 +21,7 @@ export function ChallengeCardEditor({ form }: Props) {
 
   const data: Pick<
     Awaited<ReturnType<ExploreChallengeFetcher>>[0],
-    'difficulty' | 'name' | 'shortDescription' | 'user' | '_count' | 'updatedAt'
+    '_count' | 'difficulty' | 'name' | 'shortDescription' | 'updatedAt' | 'user'
   > = {
     difficulty,
     name: title || 'Your Title Here',
@@ -53,8 +53,8 @@ export function ChallengeCardEditor({ form }: Props) {
                 <FormItem>
                   <FormLabel className="mt-2">Difficulty: </FormLabel>
                   <Select
-                    onValueChange={field.onChange as (value: string) => void}
                     defaultValue={field.value}
+                    onValueChange={field.onChange as (value: string) => void}
                   >
                     <FormControl>
                       <SelectTrigger className="rounded-xl bg-neutral-200 dark:bg-neutral-800">
@@ -109,8 +109,8 @@ export function ChallengeCardEditor({ form }: Props) {
                 <FormLabel>Short Description:</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Enter a Short Description"
                     className="resize-none rounded-xl bg-neutral-200 dark:bg-neutral-800"
+                    placeholder="Enter a Short Description"
                     {...field}
                   />
                 </FormControl>

@@ -13,12 +13,12 @@ function getRandomWidth() {
   return rand;
 }
 
-export type FakeChallengeCardProps = {
+export interface FakeChallengeCardProps {
   title: string;
   className?: string;
   difficulty: Difficulty;
   prompt: ReactNode;
-};
+}
 
 const COLORS_BY_DIFFICULTY = {
   BEGINNER: 'dark:bg-pink-300 bg-pink-600',
@@ -36,12 +36,12 @@ const codeLineProps = {
   transition: { duration: 0.5, delay: 0.15 },
 } as SVGMotionProps<SVGRectElement>;
 
-export const HeroChallengeCard = ({
+export function HeroChallengeCard({
   prompt,
   title,
   className,
   difficulty,
-}: FakeChallengeCardProps) => {
+}: FakeChallengeCardProps) {
   return (
     <div
       className={clsx(className, {
@@ -65,75 +65,75 @@ export const HeroChallengeCard = ({
       <div className="translate-x-1 text-xs">{prompt}</div>
       <div className="mt-4 h-56 flex-grow rounded-xl bg-zinc-300/70 p-4 duration-300 group-hover/card:-translate-x-1 group-hover/card:-translate-y-3 group-hover/card:shadow-[1rem_1rem_2.5rem_-1rem_#0008] dark:bg-zinc-800/70">
         <svg
-          width="256"
+          fill="none"
           height="193"
           viewBox="0 0 256 193"
-          fill="none"
+          width="256"
           xmlns="http://www.w3.org/2000/svg"
         >
           <motion.rect
             {...codeLineProps}
             animate={{ width: getRandomWidth() }}
+            fill="#2B2B32"
             y="0"
-            fill="#2B2B32"
           />
           <motion.rect
             {...codeLineProps}
             animate={{ width: getRandomWidth() }}
+            fill="#544048"
             y="19"
-            fill="#544048"
           />
           <motion.rect
             {...codeLineProps}
             animate={{ width: getRandomWidth() }}
+            fill="#544048"
             y="38"
-            fill="#544048"
           />
           <motion.rect
             {...codeLineProps}
             animate={{ width: getRandomWidth() }}
-            y="57"
             fill="#404F54"
+            y="57"
           />
           <motion.rect
             {...codeLineProps}
             animate={{ width: getRandomWidth() }}
+            fill="#2B2B32"
             y="90"
-            fill="#2B2B32"
           />
           <motion.rect
             {...codeLineProps}
             animate={{ width: getRandomWidth() }}
+            fill="#2B2B32"
             y="109"
-            fill="#2B2B32"
           />
           <motion.rect
             {...codeLineProps}
             animate={{ width: getRandomWidth() }}
+            fill="#544048"
             transition={{ delay: 0.3, duration: 0.5 }}
             y="128"
-            fill="#544048"
           />
           <motion.rect
             {...codeLineProps}
             animate={{ width: getRandomWidth() }}
+            fill="#544048"
             y="147"
-            fill="#544048"
           />
           <motion.rect
             {...codeLineProps}
             animate={{ width: getRandomWidth() }}
+            fill="#404F54"
             y="166"
-            fill="#404F54"
           />
           <motion.rect
             {...codeLineProps}
             animate={{ width: getRandomWidth() }}
-            y="184"
             fill="#404F54"
+            y="184"
           />
         </svg>
       </div>
     </div>
   );
-};
+}

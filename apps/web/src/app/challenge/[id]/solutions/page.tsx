@@ -24,7 +24,7 @@ export default async function SolutionPage({ params: { id } }: Props) {
 export type ChallengeSolutionsRouteData = NonNullable<Awaited<ReturnType<typeof getSolutionsData>>>;
 export async function getSolutionsData(challengeId: string, session: Session | null) {
   const data = await prisma.challenge.findFirst({
-    where: { id: +challengeId },
+    where: { id: Number(challengeId) },
     select: {
       id: true,
       // we just want their most recent solution

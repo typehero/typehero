@@ -4,7 +4,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-
+import { useToast } from '../ui/use-toast';
+import { DialogFooter } from '../ui/dialog';
+import { useEditorSettingsStore } from './settings-store';
 import { Button } from '~/components/ui/button';
 import {
   Form,
@@ -21,9 +23,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/ui/select';
-import { useEditorSettingsStore } from './settings-store';
-import { useToast } from '../ui/use-toast';
-import { DialogFooter } from '../ui/dialog';
 
 const formSchema = z.object({
   fontSize: z.string(),
@@ -69,7 +68,7 @@ export function SettingsForm() {
           render={({ field }) => (
             <FormItem className="mb-3">
               <FormLabel>Font Size</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select defaultValue={field.value} onValueChange={field.onChange}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a font size" />
@@ -98,7 +97,7 @@ export function SettingsForm() {
           render={({ field }) => (
             <FormItem className="mb-3">
               <FormLabel>Key Bindings</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select defaultValue={field.value} onValueChange={field.onChange}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a font size" />
@@ -119,7 +118,7 @@ export function SettingsForm() {
           render={({ field }) => (
             <FormItem className="mb-3">
               <FormLabel>Tab Size</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select defaultValue={field.value} onValueChange={field.onChange}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a tab size" />

@@ -19,7 +19,7 @@ export async function addComment(comment: CommentToCreate) {
 
   if (!session?.user.id) return 'unauthorized';
   if (comment.text.length === 0) return 'text_is_empty';
-  if (!session?.user.id) return 'unauthorized';
+  if (!session.user.id) return 'unauthorized';
   if (comment.text.length === 0) return 'text_is_empty';
 
   const { rootId, ...commentToCreate } = {
@@ -42,7 +42,7 @@ export async function replyComment(comment: CommentToCreate, parentId: number) {
 
   if (!session?.user.id) return 'unauthorized';
   if (comment.text.length === 0) return 'text_is_empty';
-  if (!session?.user.id) return 'unauthorized';
+  if (!session.user.id) return 'unauthorized';
   if (comment.text.length === 0) return 'text_is_empty';
 
   const { rootId, ...commentToCreate } = {
@@ -66,7 +66,7 @@ export async function updateComment(text: string, id: number) {
 
   if (!session?.user.id) return 'unauthorized';
   if (text.length === 0) return 'text_is_empty';
-  if (!session?.user.id) return 'unauthorized';
+  if (!session.user.id) return 'unauthorized';
 
   return await prisma.comment.update({
     where: {

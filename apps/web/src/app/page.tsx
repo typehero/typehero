@@ -12,10 +12,10 @@ export default async function Index() {
       <Head>
         <title>Typehero</title>
         <meta
-          name="description"
           content="Level up your typescript skills with interactive exercises"
+          name="description"
         />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </Head>
       <BalancerProvider>
         <Hero />

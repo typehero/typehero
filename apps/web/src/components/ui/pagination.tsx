@@ -55,7 +55,7 @@ export default function Pagination({
       {fuck.map((page, i) => (
         <button key={`pagination-${page}`}>
           {page}
-          {i === fuck.length - 1 && hasNextPage && '+'}
+          {i === fuck.length - 1 && hasNextPage ? '+' : null}
         </button>
       ))}
       <div className="next">

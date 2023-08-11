@@ -4,12 +4,11 @@ import { useTheme } from 'next-themes';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { postSolution } from './post-solution.action';
 import { Button } from '~/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '~/components/ui/form';
 import { Input } from '~/components/ui/input';
 import { useToast } from '~/components/ui/use-toast';
-import { postSolution } from './post-solution.action';
-
 import type { ChallengeSolutionsRouteData } from '~/app/challenge/[id]/solutions/page';
 import { RichMarkdownEditor } from '~/components/ui/rich-markdown-editor';
 
@@ -56,7 +55,7 @@ export function SolutionEditor({ dismiss, challenge }: Props) {
         challengeId: challenge.id,
         description: data.content ?? '',
         title: data.title ?? '',
-        userId: session?.data?.user?.id as string,
+        userId: session.data?.user.id!,
       });
 
       toast({
@@ -106,8 +105,8 @@ export function SolutionEditor({ dismiss, challenge }: Props) {
           </div>
           <Button
             className="h-8 rounded-lg bg-white px-3 py-2 text-black hover:bg-zinc-200 focus-visible:bg-zinc-200 focus-visible:ring-offset-0 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:focus-visible:bg-zinc-700"
-            type="button"
             onClick={dismiss}
+            type="button"
           >
             Cancel
           </Button>
@@ -120,12 +119,12 @@ export function SolutionEditor({ dismiss, challenge }: Props) {
             control={form.control}
             name="content"
             render={({ field }) => (
-              // @ts-ignore
+              // @ts-expect-error
               <RichMarkdownEditor
+                allowImageUpload
                 value={field.value}
                 // non-split-screen by default
                 onChange={field.onChange}
-                allowImageUpload
               />
             )}
           />

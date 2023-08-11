@@ -27,8 +27,8 @@ export default async function SolutionReport({ report }: { report: NonNullable<R
         <Link
           className="text-blue-600 dark:text-blue-400"
           href={`/challenge/${challenge.id}`}
-          target="_blank"
           rel="noreferrer"
+          target="_blank"
         >
           {challenge.name}
         </Link>{' '}
