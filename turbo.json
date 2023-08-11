@@ -3,7 +3,17 @@
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
-      "env": []
+      "env": [
+        "VERCEL_URL",
+        "NODE_ENV",
+        "DATABASE_URL",
+        "GITHUB_ID",
+        "GITHUB_SECRET",
+        "UPLOADTHING_SECRET",
+        "UPLOADTHING_APP_ID",
+        "NEXTAUTH_SECRET",
+        "NEXTAUTH_URL"
+      ]
     },
     "topo": {
       "dependsOn": ["@repo/prisma#db:generate", "^topo"]
@@ -44,13 +54,6 @@
     },
     "seed": {
       "dependsOn": ["db:generate"],
-      "cache": false
-    },
-    "start": {
-      "dependsOn": ["^build", "build"]
-    },
-    "e2e": {
-      "env": ["PLAYWRIGHT_USER_PASSWORD"],
       "cache": false
     }
   }

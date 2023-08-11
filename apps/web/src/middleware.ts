@@ -1,7 +1,5 @@
 import { type NextRequest, NextResponse } from 'next/server';
 
-const thing = 'string';
-
 export function middleware(req: NextRequest) {
   if (process.env.NODE_ENV === 'production') {
     const basicAuth = req.headers.get('authorization');
