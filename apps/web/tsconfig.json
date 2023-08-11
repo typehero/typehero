@@ -19,7 +19,7 @@
     "noUncheckedIndexedAccess": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["apps/web/src/*"]
     },
     "plugins": [
       {
@@ -33,10 +33,10 @@
     "global.d.ts",
     "*.ts",
     "./scripts/*.ts",
-    "./src/**/*.ts",
-    "./src/**/*.tsx",
+    "apps/web/src/**/*.ts",
+    "apps/web/src/**/*.tsx",
     ".next/types/**/*.ts",
-    "./prisma/*.ts"
+    "packages/db/prisma/*.ts"
   ],
   "exclude": ["node_modules", ".next"]
 }

@@ -1,0 +1,14 @@
+{
+  "name": "@repo/prettier",
+  "version": "0.0.0",
+  "private": true,
+  "files": [
+    "index.js"
+  ],
+  "devDependencies": {
+    "@types/prettier": "^2.7.2",
+    "@vercel/style-guide": "4.0.2",
+    "prettier": "3.0.0",
+    "prettier-plugin-packagejson": "^2.4.3"
+  }
+}
