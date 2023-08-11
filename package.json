@@ -9,6 +9,7 @@
     "format": "turbo format format-root --continue -- --cache",
     "format-root": "prettier \"**/*.{ts,tsx,md,mdx,json}\" \"!apps/**\" \"!packages/**\" --check",
     "format:fix": "turbo format format-root --continue -- --write --cache",
+    "format:precommit": "turbo format format-root --continue -- --write --cache --loglevel=warn",
     "postinstall": "pnpm dl-monaco",
     "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache'",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache'",
