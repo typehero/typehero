@@ -1,10 +1,10 @@
 'use server';
 
 import Link from 'next/link';
+import { prisma } from '@repo/db';
 import { type ReportWithInfo } from '~/app/admin/report/[id]/report.action';
 import { Markdown } from '~/components/ui/markdown';
 import Text from '~/components/ui/typography/typography';
-import { prisma } from '~/server/db';
 
 async function getSolutionChallenge(challengeId: number) {
   return prisma.challenge.findFirstOrThrow({

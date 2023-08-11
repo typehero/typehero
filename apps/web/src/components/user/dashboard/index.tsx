@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import type { User } from '@prisma/client';
 import Link from 'next/link';
-import { getServerSession } from '@repo/auth';
+import { getServerAuthSession } from '@repo/auth/server';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
+import { prisma } from '@repo/db';
 import { Overview } from './overview';
 import { InProgressTab } from './in-progress-tab';
 import { SolutionsTab } from './solutions-tab';
@@ -10,9 +11,7 @@ import UserHeader from './user-header';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { getRelativeTime } from '~/utils/relativeTime';
-import { prisma } from '~/server/db';
 import { Button } from '~/components/ui/button';
-import { authOptions } from '~/server/auth';
 import { MagicIcon } from '~/components/ui/magic-icon';
 import { stripProtocolAndWWW } from '~/utils/stringUtils';
 
@@ -50,7 +49,7 @@ async function getUserdata(id: string) {
 
 export default async function Dashboard({ user }: Props) {
   const userData = await getUserdata(user.id);
-  const session = await getServerSession(authOptions);
+  const session = await getServerAuthSession();
 
   // TODO: this seems sus
   if (!userData) {

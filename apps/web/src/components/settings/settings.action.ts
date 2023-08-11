@@ -1,10 +1,9 @@
 'use server';
 
-import { getServerSession } from '@repo/auth';
+import { getServerAuthSession } from '@repo/auth/server';
 import { revalidatePath } from 'next/cache';
+import { prisma } from '@repo/db';
 import type { FormSchema } from '.';
-import { prisma } from '~/server/db';
-import { authOptions } from '~/server/auth';
 
 /**
  * This will only let you update your own profile
@@ -12,7 +11,7 @@ import { authOptions } from '~/server/auth';
  */
 // TODO: add transactions to this update #GFI
 export async function updateProfile(profileData: FormSchema) {
-  const session = await getServerSession();
+  const session = await getServerAuthSession();
 
   // 1. Checks that the user is logged in
   if (!session?.user.id) return 'unauthorized';

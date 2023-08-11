@@ -1,5 +1,5 @@
 'use server';
-import { prisma } from '~/server/db';
+import { prisma } from '@repo/db';
 
 interface Args {
   challengeId: number;

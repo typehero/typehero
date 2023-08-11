@@ -1,5 +1,5 @@
 import { cache } from 'react';
-import { prisma } from '~/server/db';
+import { prisma } from '@repo/db';
 
 export type ChallengeSubmissions = NonNullable<Awaited<ReturnType<typeof getChallengeSubmissions>>>;
 export const getChallengeSubmissions = cache(async (userId: string, challengeId: string) => {

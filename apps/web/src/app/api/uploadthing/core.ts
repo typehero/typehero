@@ -1,19 +1,18 @@
 import { createUploadthing, type FileRouter } from 'uploadthing/next';
-import { getServerSession } from '@repo/auth';
-import { prisma } from '~/server/db';
-import { authOptions } from '~/server/auth';
+import { getServerAuthSession, authOptions } from '@repo/auth/server';
+import { prisma } from '@repo/db';
 
 const f = createUploadthing();
 
 type ValidFileTypes = 'audio' | 'blob' | 'image' | 'video';
 type FileRouterInput =
   | Record<
-      ValidFileTypes,
-      {
-        maxFileSize?: string;
-        maxFileCount?: number;
-      }
-    >
+    ValidFileTypes,
+    {
+      maxFileSize?: string;
+      maxFileCount?: number;
+    }
+  >
   | ValidFileTypes[];
 
 // control the file sizes for all image types
@@ -28,7 +27,7 @@ export const ourFileRouter = {
   })
     // Set permissions and file types for this FileRoute
     .middleware(async () => {
-      const session = await getServerSession(authOptions);
+      const session = await getServerAuthSession();
 
       // If you throw, the user will not be able to upload
       if (!session?.user.id) throw new Error('Unauthorized');

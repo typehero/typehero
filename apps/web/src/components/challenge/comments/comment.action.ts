@@ -1,8 +1,8 @@
 'use server';
 
 import type { CommentRoot } from '@prisma/client';
-import { getServerAuthSession } from '~/server/auth';
-import { prisma } from '~/server/db';
+import { prisma } from '@repo/db';
+import { getServerAuthSession } from '@repo/auth/server';
 
 /**
  *

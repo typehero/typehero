@@ -1,7 +1,7 @@
 'use server';
 
 import { RoleTypes } from '@prisma/client';
-import { prisma } from '~/server/db';
+import { prisma } from '@repo/db';
 
 export async function approveChallenge(
   challengeId: number,
@@ -19,17 +19,17 @@ export async function approveChallenge(
     }),
     ...(isUserACreator
       ? [
-          prisma.role.create({
-            data: {
-              user: {
-                connect: {
-                  id: userId,
-                },
+        prisma.role.create({
+          data: {
+            user: {
+              connect: {
+                id: userId,
               },
-              role: RoleTypes.ADMIN,
             },
-          }),
-        ]
+            role: RoleTypes.ADMIN,
+          },
+        }),
+      ]
       : []),
   ]);
 }

@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { ExploreSection } from './section';
 import { ExploreSectionSkeleton } from './section-skeleton';
-import { prisma } from '~/server/db';
+import { prisma } from '@repo/db';
 
 // CI fails without this
 export const dynamic = 'force-dynamic';

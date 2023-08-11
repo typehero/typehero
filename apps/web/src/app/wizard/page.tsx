@@ -1,10 +1,9 @@
-import { getServerSession } from '@repo/auth';
+import { getServerAuthSession } from '@repo/auth/server';
 import { TypographyH2 } from '~/components/ui/typography/h2';
 import { Wizard } from '~/components/wizard';
-import { authOptions } from '~/server/auth';
 
 export default async function Page() {
-  const session = await getServerSession(authOptions);
+  const session = await getServerAuthSession();
 
   if (!session?.user) {
     return (

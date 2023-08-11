@@ -1,6 +1,6 @@
 'use server';
 
-import { prisma } from '~/server/db';
+import { prisma } from '@repo/db';
 import { type WaitlistFormSchema } from '~/components/landing/waitlist/waitlist-form';
 
 export async function uploadWaitlistEntry(data: WaitlistFormSchema) {

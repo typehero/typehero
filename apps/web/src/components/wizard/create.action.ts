@@ -1,8 +1,8 @@
 'use server';
 
+import { prisma } from '@repo/db';
+import { getServerAuthSession } from '@repo/auth/server';
 import { type CreateChallengeSchema } from '.';
-import { prisma } from '~/server/db';
-import { getServerAuthSession } from '~/server/auth';
 
 export async function uploadChallenge(data: CreateChallengeSchema, isUserACreator: boolean) {
   const session = await getServerAuthSession();

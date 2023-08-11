@@ -1,4 +1,4 @@
-import { prisma } from '~/server/db';
+import { prisma } from '@repo/db';
 
 export async function getReports() {
   const challengeReports = await prisma.report.findMany({

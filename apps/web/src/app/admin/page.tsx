@@ -2,6 +2,7 @@
 import { RoleTypes } from '@prisma/client';
 import { Lock } from 'lucide-react';
 import React from 'react';
+import { getServerAuthSession } from '@repo/auth/server';
 import { ChallengeReviews } from '~/components/admin/challenge-reviews';
 import { getBannedUsers, getUploadedImages } from '~/components/admin/admin.actions';
 import { ImageUploadReport } from '~/components/admin/images';
@@ -9,7 +10,6 @@ import { ImageUploadReport } from '~/components/admin/images';
 import { BannedUsers } from '~/components/admin/users';
 import { getInfiniteReports } from '~/components/report/report.action';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
-import { getServerAuthSession } from '~/server/auth';
 
 async function Admin() {
   const session = await getServerAuthSession();

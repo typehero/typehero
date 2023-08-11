@@ -1,7 +1,7 @@
 'use server';
 import { type Session } from '@repo/auth';
 import { cache } from 'react';
-import { prisma } from '~/server/db';
+import { prisma } from '@repo/db';
 
 export type ChallengeRouteData = NonNullable<Awaited<ReturnType<typeof getChallengeRouteData>>>;
 

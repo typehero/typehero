@@ -1,8 +1,8 @@
 import type { Session } from '@repo/auth';
 import { notFound } from 'next/navigation';
+import { getServerAuthSession } from '@repo/auth/server';
+import { prisma } from '@repo/db';
 import { Solutions } from '~/components/challenge/solutions';
-import { getServerAuthSession } from '~/server/auth';
-import { prisma } from '~/server/db';
 
 interface Props {
   params: {

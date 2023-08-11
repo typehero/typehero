@@ -1,6 +1,6 @@
 'use server';
 import type { CommentRoot } from '@prisma/client';
-import { prisma } from '~/server/db';
+import { prisma } from '@repo/db';
 
 const PAGESIZE = 10;
 
