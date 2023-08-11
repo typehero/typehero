@@ -1,4 +1,5 @@
 import { useTheme } from 'next-themes';
+import type { ChangeEvent } from 'react';
 import { useContext, useEffect, useRef, useState } from 'react';
 import MDEditor, { EditorContext, commands, type ICommand } from '@uiw/react-md-editor';
 import { toast } from './use-toast';
@@ -14,7 +15,7 @@ const codePreview: ICommand = {
 
 interface Props {
   value: string;
-  onChange: (v: string) => void;
+  onChange: (v: ChangeEvent | string) => void;
   dismissPreview?: boolean;
   /**
    * This will allow images to be uploaded to CDN
@@ -127,7 +128,7 @@ export function RichMarkdownEditor({
     };
   }, [startUpload, allowImageUpload]);
 
-  const handlePasta = async (event: React.ClipboardEvent<HTMLTextAreaElement>) => {
+  const handlePasta = async (event: React.ClipboardEvent<HTMLDivElement>) => {
     // only allow image if it's enabled
     if (!allowImageUpload) return;
 
@@ -172,7 +173,7 @@ export function RichMarkdownEditor({
         }}
         extraCommands={extraCommands}
         height="100%"
-        onChange={onChange}
+        onChange={(e) => onChange(e ?? '')}
         onPaste={(event) => handlePasta(event)}
         ref={editorRef}
         // non-split-screen by default
