@@ -6,9 +6,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "dl-git": "tsx ../scripts/contributors.ts",
-    "dl-monaco": "tsx ../scripts/dl-monaco.ts",
-    "dl-monaco:force": "tsx ../scripts/dl-monaco.ts --force",
+    "dl-git": "tsx ../../scripts/contributors.ts",
     "format": "prettier -w \"src/**/*.{ts,tsx,css,cjs,mjs,json}\"",
     "lint": "next lint",
     "postinstalll": "pnpm dl-monaco",

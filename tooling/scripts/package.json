@@ -1,0 +1,16 @@
+{
+  "name": "scripts",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dl-git": "tsx contributors.ts",
+    "dl-monaco": "tsx dl-monaco.ts",
+    "dl-monaco:force": "tsx dl-monaco.ts --force"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "@types/node-fetch": "^2.6.4",
+    "node-fetch": "^3.3.2",
+    "tsx": "^3.12.7"
+  }
+}
