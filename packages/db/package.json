@@ -21,7 +21,6 @@
     "db:seed": "dotenv tsx --transpile-only ./seed/index.ts",
     "db:studio": "prisma studio",
     "format": "prettier \"**/*.{ts,tsx,md,mdx,json}\" --check",
-    "postinstall": "prisma generate",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
