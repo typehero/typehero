@@ -5,6 +5,7 @@ import { faker } from '@faker-js/faker'
 import type { Config } from 'tailwindcss';
 import tailwindConfig from '../tailwind.config';
 import type { RecursiveKeyValuePair } from 'tailwindcss/types/config';
+import { writeFile } from 'fs/promises';
 
 export function makeTag(): Prisma.TagCreateInput {
   return {
@@ -14,7 +15,6 @@ export function makeTag(): Prisma.TagCreateInput {
 }
 
 const config = resolveConfig(tailwindConfig as unknown as Config);
-console.info(config.theme?.colors);
 
 let allColors: string[] = [];
 
@@ -31,10 +31,6 @@ function flattenTwindColors(value: RecursiveKeyValuePair<string, string>): strin
 if(config.theme?.colors) {
   allColors = flattenTwindColors(config.theme.colors);
 }
-
-console.info('allColors!', allColors);
-
-
 
 /**
  * 
