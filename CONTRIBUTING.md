@@ -6,7 +6,7 @@ machine. Below are the steps to follow in order for you to get dotfyle to run on
 ### 1. Make a copy of `.env` from the example file `.env.example`.
 
 ```
-cp .env.example .env
+cp apps/web/.env.example apps/web/.env
 ```
 
 ### 2 Configure your database
@@ -68,20 +68,10 @@ Use `pnpm` to install dependencies.
 pnpm install
 ```
 
-### 6. Push Schema Changes
-
-Run the prisma push command to sync db schemas:
+### 6. Push and Seed Database
 
 ```
-pnpx prisma db push
-```
-
-### 7. Seed the database
-
-Run the prisma seed command to add mock data
-
-```
-pnpx prisma db seed
+turbo seed
 ```
 
 ### Running the dev server
@@ -89,7 +79,7 @@ pnpx prisma db seed
 Finally, you can run the dev server:
 
 ```
-pnpm dev
+turbo dev
 ```
 
 ### Sync data

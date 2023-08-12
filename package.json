@@ -18,7 +18,7 @@
     "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache'",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache'",
     "prepare": "husky install",
-    "refresh": "pnpm reset && pnpm prisma db seed",
+    "refresh": "pnpm reset && turbo db:seed",
     "typecheck": "turbo typecheck --continue"
   },
   "devDependencies": {
