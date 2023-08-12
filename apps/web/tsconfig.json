@@ -22,5 +22,5 @@
     "next.config.mjs",
     "postcss.config.cjs"
   ],
-  "exclude": ["node_modules", ".next"]
+  "exclude": ["node_modules", ".next", "public"]
 }

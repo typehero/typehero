@@ -1,8 +1,8 @@
 import 'dotenv/config';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { Octokit } from 'octokit';
 import { fileURLToPath } from 'node:url';
+import { Octokit } from 'octokit';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

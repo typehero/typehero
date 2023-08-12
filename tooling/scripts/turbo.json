@@ -1,5 +1,6 @@
 {
   "extends": ["//"],
+  "globalEnv": ["GITHUB_TOKEN"],
   "pipeline": {
     "dl-monaco": {
       "cache": false
