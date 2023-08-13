@@ -3,10 +3,18 @@
 To contribute you will first need to fork the repo and make some adjustments to get it up and running on your local
 machine. Below are the steps to follow in order for you to get dotfyle to run on your local machine.
 
-### 1. Make a copy of `.env` from the example file `.env.example`.
+### 1. `.env` files
+
+You'll need one for your web application:
 
 ```
 cp apps/web/.env.example apps/web/.env
+```
+
+And one for your Prisma package:
+
+```
+cp packages/db/.env.example packages/db/.env
 ```
 
 ### 2 Configure your database
@@ -68,7 +76,7 @@ Use `pnpm` to install dependencies.
 pnpm install
 ```
 
-### 6. Push and Seed Database
+### 6. Push Database Schema and Seed
 
 ```
 turbo seed
