@@ -36,7 +36,7 @@ export default async function ChallengeReport({ report }: ChallengeReportProps) 
         </div>
         <Markdown className="mt-4">{report.challenge.description}</Markdown>
       </div>
-      <CodeEditor height="50vh" value={report.challenge.prompt} />
+      <CodeEditor height="50vh" value={report.challenge.tests} />
     </section>
   );
 }

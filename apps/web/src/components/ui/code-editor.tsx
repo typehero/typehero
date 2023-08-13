@@ -46,7 +46,6 @@ export function CodeEditor({ onChange, onMount, options, value, ...props }: Prop
       options={editorOptions}
       theme={editorTheme}
       value={value}
-      {...props}
     />
   );
 }

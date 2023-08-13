@@ -1,6 +1,6 @@
 'use client';
 
-import { loader } from '@monaco-editor/react';
+import { loader, useMonaco } from '@monaco-editor/react';
 import clsx from 'clsx';
 import { Loader2, Settings } from 'lucide-react';
 import type * as monaco from 'monaco-editor';
@@ -16,7 +16,6 @@ import { libSource } from './editor-types';
 import { createTwoslashInlayProvider } from './twoslash';
 import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import { Button } from '~/components/ui/button';
-import { CodeEditor } from '~/components/ui/code-editor';
 import {
   Dialog,
   DialogContent,
@@ -28,6 +27,7 @@ import { ToastAction } from '~/components/ui/toast';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 import { useToast } from '~/components/ui/use-toast';
 import { useLocalStorage } from '~/utils/useLocalStorage';
+import BitchinEditor from '~/components/ui/bitchin-editor';
 
 const VimStatusBar = dynamic(() => import('./vimMode').then((v) => v.VimStatusBar), {
   ssr: false,
@@ -68,13 +68,11 @@ export function CodePanel(props: Props) {
     lzstring.decompressFromEncodedURIComponent(params.get('code') ?? '') ?? localStorageCode;
 
   const getDefaultCode = () => {
-    if (!defaultCode) {
-      return props.challenge.prompt;
+    if (!localStorageCode) {
+      return props.challenge.code;
     }
 
-    console.log({ defaultCode });
-
-    const [appendSolutionToThis, separator] = props.challenge.prompt.split(USER_CODE_START_REGEX);
+    const [appendSolutionToThis, separator] = props.challenge.code.split(USER_CODE_START_REGEX);
 
     return `${appendSolutionToThis ?? ''}${separator ?? ''}${defaultCode}`;
   };
@@ -163,7 +161,7 @@ export function CodePanel(props: Props) {
         createTwoslashInlayProvider(monaco, ts),
       );
     };
-
+  const m = useMonaco();
   return (
     <>
       <div className="sticky top-0 flex h-[40px] flex-row-reverse items-center border-b border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
@@ -187,14 +185,35 @@ export function CodePanel(props: Props) {
         </Dialog>
       </div>
       <div className="w-full flex-1">
-        <CodeEditor
-          onChange={(code) => {
-            setCode(code ?? '');
-            // we we only want to save whats after the comment
-            const [, , storeThiseCode] = (code ?? '').split(USER_CODE_START_REGEX);
-            setLocalStorageCode(storeThiseCode ?? '');
+        <BitchinEditor
+          tests={props.challenge.tests}
+          challenge={props.challenge.code}
+          onMount={{ tests: onMount(code, setTsErrors) }}
+          onChange={{
+            user: async (code) => {
+              if (!m) return null;
+              setCode(code ?? '');
+              // we we only want to save whats after the comment
+              const [, , storeThiseCode] = (code ?? '').split(USER_CODE_START_REGEX);
+
+              // Wow this is just... remarkably jank.
+
+              const getModel = await m.languages.typescript.getTypeScriptWorker();
+              const filename = 'file:///user.ts';
+              const mm = m.editor.getModel(m.Uri.parse('file:///user.ts'));
+              if (!mm) return null;
+              const model = await getModel(mm.uri);
+
+              const errors = await Promise.all([
+                model.getSemanticDiagnostics(filename),
+                model.getSyntacticDiagnostics(filename),
+                model.getSuggestionDiagnostics(filename),
+                model.getCompilerOptionsDiagnostics(filename),
+              ] as const);
+              setTsErrors(errors);
+              setLocalStorageCode(storeThiseCode ?? '');
+            },
           }}
-          onMount={onMount(code, setTsErrors)}
           value={code}
         />
       </div>
