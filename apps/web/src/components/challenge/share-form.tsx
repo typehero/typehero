@@ -1,6 +1,6 @@
 'use client';
 
-import { CheckCircle2 as CheckCircle2Icon, Clipboard as ClipboardIcon } from 'lucide-react';
+import { CheckCircle2 as CheckCircle2Icon, Clipboard as ClipboardIcon } from '@repo/ui/icons';
 import lzstring from 'lz-string';
 import { useParams } from 'next/navigation';
 import { useCallback, useState } from 'react';

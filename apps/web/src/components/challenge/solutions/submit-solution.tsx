@@ -1,4 +1,4 @@
-import { Plus } from 'lucide-react';
+import { Plus } from '@repo/ui/icons';
 import { Button } from '@repo/ui';
 
 interface Props {

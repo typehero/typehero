@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { AlertCircle, MailCheck } from 'lucide-react';
+import { AlertCircle, MailCheck } from '@repo/ui/icons';
 import clsx from 'clsx';
 import {
   Alert,

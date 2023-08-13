@@ -1,4 +1,4 @@
-import { AlertCircle, ChevronLeft } from 'lucide-react';
+import { AlertCircle, ChevronLeft } from '@repo/ui/icons';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { Text, Alert, AlertDescription, AlertTitle } from '@repo/ui';

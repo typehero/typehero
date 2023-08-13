@@ -2,7 +2,7 @@
 
 import { type CommentRoot } from '@repo/db/types';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
-import { ChevronDown, ChevronUp, Pencil, Reply, Share, Trash2 } from 'lucide-react';
+import { ChevronDown, ChevronUp, Pencil, Reply, Share, Trash2 } from '@repo/ui/icons';
 import { useSession } from '@repo/auth/react';
 import { useEffect, useRef, useState } from 'react';
 import { z } from 'zod';

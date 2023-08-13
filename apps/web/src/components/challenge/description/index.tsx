@@ -5,7 +5,7 @@ import { debounce } from 'lodash';
 import { useSession } from '@repo/auth/react';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
-import { Bookmark as BookmarkIcon, Flag, Share, ThumbsUp } from 'lucide-react';
+import { Bookmark as BookmarkIcon, Flag, Share, ThumbsUp } from '@repo/ui/icons';
 import {
   Button,
   Dialog,

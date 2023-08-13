@@ -1,6 +1,6 @@
 'use client';
 // TODO: unify this with the explore card into single component (maybe? idk how that'd work, too many changes)
-import { MessageCircle, ThumbsUp } from 'lucide-react';
+import { MessageCircle, ThumbsUp } from '@repo/ui/icons';
 import { type Difficulty } from '@repo/db/types';
 import {
   Select,

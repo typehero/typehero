@@ -1,4 +1,4 @@
-import { Loader2 } from 'lucide-react';
+import { Loader2 } from '@repo/ui/icons';
 import { useSession } from '@repo/auth/react';
 import { useEffect, useRef, useState, type RefObject } from 'react';
 import { Button, Textarea, ToastAction, useToast } from '@repo/ui';

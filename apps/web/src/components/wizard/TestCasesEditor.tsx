@@ -1,5 +1,5 @@
 import type { OnChange } from '@monaco-editor/react';
-import { Settings } from 'lucide-react';
+import { Settings } from '@repo/ui/icons';
 import type * as monaco from 'monaco-editor';
 import { useCallback } from 'react';
 import {

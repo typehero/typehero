@@ -1,6 +1,6 @@
 'use server';
 import { RoleTypes } from '@repo/db/types';
-import { Lock } from 'lucide-react';
+import { Lock } from '@repo/ui/icons';
 import React from 'react';
 import { getServerAuthSession } from '@repo/auth/server';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui';

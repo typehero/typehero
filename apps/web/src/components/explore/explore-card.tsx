@@ -1,4 +1,4 @@
-import { Circle, Diamond, MessageCircle, Plus, Sparkle, ThumbsUp, Triangle } from 'lucide-react';
+import { Circle, Diamond, MessageCircle, Plus, Sparkle, ThumbsUp, Triangle } from '@repo/ui/icons';
 import {
   Card,
   CardContent,

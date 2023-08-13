@@ -1,4 +1,4 @@
-import { Loader as LoaderIcon } from 'lucide-react';
+import { Loader as LoaderIcon } from '@repo/ui/icons';
 
 export default function ReportIdLoading() {
   return (

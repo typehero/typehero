@@ -1,4 +1,4 @@
-import { Check } from 'lucide-react';
+import { Check } from '@repo/ui/icons';
 import { type Step } from '.';
 
 interface Props<T extends Step> {

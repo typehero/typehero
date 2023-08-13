@@ -2,7 +2,7 @@
 
 import { loader } from '@monaco-editor/react';
 import clsx from 'clsx';
-import { Loader2, Settings } from 'lucide-react';
+import { Loader2, Settings } from '@repo/ui/icons';
 import type * as monaco from 'monaco-editor';
 import { useSession } from '@repo/auth/react';
 import dynamic from 'next/dynamic';

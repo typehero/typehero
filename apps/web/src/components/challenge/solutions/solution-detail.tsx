@@ -1,6 +1,6 @@
 'use client';
 
-import { Calendar, Flag, Share, X } from 'lucide-react';
+import { Calendar, Flag, Share, X } from '@repo/ui/icons';
 import Link from 'next/link';
 import {
   Avatar,

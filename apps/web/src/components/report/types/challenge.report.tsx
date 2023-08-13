@@ -1,4 +1,4 @@
-import { ThumbsUp } from 'lucide-react';
+import { ThumbsUp } from '@repo/ui/icons';
 import { Text, UserBadge } from '@repo/ui';
 import Link from 'next/link';
 import { type ReportWithInfo } from '~/app/admin/report/[id]/report.action';

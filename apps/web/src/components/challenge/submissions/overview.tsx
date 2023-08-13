@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Copy, X } from 'lucide-react';
+import { Copy, X } from '@repo/ui/icons';
 import Link from 'next/link';
 import { Button, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, toast } from '@repo/ui';
 import { Markdown } from '~/components/ui/markdown';

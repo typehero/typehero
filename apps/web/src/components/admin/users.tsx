@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { Unlock } from 'lucide-react';
+import { Unlock } from '@repo/ui/icons';
 import {
   ActionMenu,
   Badge,

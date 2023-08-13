@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Github, Mail } from 'lucide-react';
+import { Github, Mail } from '@repo/ui/icons';
 import Link from 'next/link';
 import { Balancer } from 'react-wrap-balancer';
 import { Button } from '@repo/ui';

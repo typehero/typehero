@@ -1,5 +1,5 @@
 'use client';
-import { ArrowUp, MessageCircle } from 'lucide-react';
+import { ArrowUp, MessageCircle } from '@repo/ui/icons';
 import { useSession } from '@repo/auth/react';
 import Link from 'next/link';
 import { useState } from 'react';
