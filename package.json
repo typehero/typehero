@@ -5,7 +5,6 @@
   "scripts": {
     "build": "turbo build",
     "db:push": "turbo db:push",
-    "db:reset": "turbo db:reset",
     "db:seed": "turbo db:seed",
     "db:studio": "turbo db:studio",
     "dev": "turbo dev",
@@ -19,7 +18,7 @@
     "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache'",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache'",
     "prepare": "husky install",
-    "refresh": "pnpm reset && turbo db:seed",
+    "refresh": "turbo db:reset",
     "typecheck": "turbo typecheck --continue"
   },
   "devDependencies": {
