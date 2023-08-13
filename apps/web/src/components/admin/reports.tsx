@@ -2,10 +2,7 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import {
-  getInfiniteReports,
-  type InfiniteReports
-} from '../report/report.action';
+import { getInfiniteReports, type InfiniteReports } from '../report/report.action';
 import Pagination from '../ui/pagination';
 import {
   Table,

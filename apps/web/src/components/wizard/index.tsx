@@ -46,7 +46,7 @@ const createTestCasesSchema = z.object({
     .min(20, 'The test cases must be longer than 20 characters')
     .max(65536)
     .regex(testCaseRegex, 'You need to have test cases in your challenge'),
-  code: z.string()
+  code: z.string(),
 });
 
 const createChallengeSchema = createExploreCardSchema

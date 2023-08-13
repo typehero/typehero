@@ -97,8 +97,8 @@ export default function BitchinEditor({
                 ).reduce((a, b) => a.concat(b));
 
                 const markers = diagnostics.map((d) => {
-                  const start = model.getPositionAt(d.start as number);
-                  const end = model.getPositionAt((d.start as number) + (d.length as number));
+                  const start = model.getPositionAt(d.start!);
+                  const end = model.getPositionAt(d.start! + d.length!);
                   let f: editor.IMarkerData;
                   return {
                     severity: monaco.MarkerSeverity.Error,

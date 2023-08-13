@@ -145,7 +145,6 @@ export const CHALLENGE_MAP: Record<
     tests: loadChallengeSync('hard/prompt'),
     code: '',
     difficulty: 'HARD',
-
   }),
   EXTREME: () => ({
     name: faker.hacker.phrase(),
