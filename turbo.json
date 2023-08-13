@@ -1,0 +1,44 @@
+{
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
+      "env": [
+        "VERCEL_URL",
+        "NODE_ENV",
+        "DATABASE_URL",
+        "GITHUB_ID",
+        "GITHUB_SECRET",
+        "UPLOADTHING_SECRET",
+        "UPLOADTHING_APP_ID",
+        "NEXTAUTH_SECRET",
+        "NEXTAUTH_URL",
+        "PORT"
+      ]
+    },
+    "topo": {
+      "dependsOn": ["@repo/db#db:generate", "^topo"]
+    },
+    "//#format-root": {
+      "dependsOn": ["^topo"],
+      "outputMode": "new-only"
+    },
+    "format": {
+      "outputMode": "new-only"
+    },
+    "lint": {
+      "outputs": ["node_modules/.cache/.eslintcache"],
+      "dependsOn": ["^topo"]
+    },
+    "typecheck": {
+      "dependsOn": ["^topo"],
+      "outputs": ["node_modules/.cache/tsbuildinfo.json"],
+      "outputMode": "errors-only"
+    },
+    "dev": {
+      "dependsOn": ["@repo/db#db:generate"],
+      "persistent": true,
+      "cache": false
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "name": "@repo/auth",
+  "version": "0.1.1",
+  "private": true,
+  "exports": {
+    "./react": "./src/react.ts",
+    "./server": "./src/server.ts",
+    "./next-auth": "./src/next-auth.ts"
+  },
+  "typesVersions": {
+    "*": {
+      "react": [
+        "./src/react.ts"
+      ],
+      "server": [
+        "./src/server.ts"
+      ],
+      "next-auth": [
+        "./src/next-auth.ts"
+      ]
+    }
+  },
+  "scripts": {
+    "format": "prettier \"**/*.{ts,tsx,md,mdx,json}\" --check",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@next-auth/prisma-adapter": "^1.0.7",
+    "@repo/db": "workspace:*",
+    "next-auth": "^4.22.1"
+  },
+  "devDependencies": {
+    "@repo/lint": "workspace:*",
+    "@repo/tsconfig": "workspace:*",
+    "@types/node": "^16.18.11",
+    "eslint": "^8.42.0",
+    "prisma": "^5.0.0",
+    "tsup": "5.12.0",
+    "typescript": "^5.1.3"
+  }
+}

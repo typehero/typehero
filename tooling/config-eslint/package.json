@@ -1,0 +1,22 @@
+{
+  "name": "@repo/lint",
+  "version": "0.0.0",
+  "type": "commonjs",
+  "files": [
+    "node.js",
+    "next.js"
+  ],
+  "scripts": {
+    "format": "prettier \"**/*.{ts,tsx,md,mdx,json}\" --check"
+  },
+  "dependencies": {
+    "@next/eslint-plugin-next": "canary",
+    "@repo/tsconfig": "workspace:*",
+    "@typescript-eslint/eslint-plugin": "^5.59.1",
+    "@typescript-eslint/parser": "^5.59.1",
+    "@vercel/style-guide": "^4.0.2",
+    "eslint": "^8.40.0",
+    "eslint-config-turbo": "^1.10.12",
+    "typescript": "^5.1.3"
+  }
+}
