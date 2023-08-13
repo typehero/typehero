@@ -1,6 +1,6 @@
 'use client';
 
-import type { CommentRoot } from '@repo/db';
+import type { CommentRoot } from '@repo/db/types';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { ChevronDown, ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react';

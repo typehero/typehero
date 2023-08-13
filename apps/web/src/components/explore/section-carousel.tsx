@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import type { Difficulty } from '@repo/db';
+import type { Difficulty } from '@repo/db/types';
 import { useEffect, useRef, useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { ExploreCard } from './explore-card';

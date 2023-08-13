@@ -1,6 +1,6 @@
 'use client';
 
-import type { Challenge } from '@repo/db';
+import type { Challenge } from '@repo/db/types';
 import { type ColumnDef } from '@tanstack/react-table';
 
 export const columns: ColumnDef<Challenge>[] = [

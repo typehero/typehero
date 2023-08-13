@@ -1,6 +1,6 @@
 'use client';
 
-import { type User } from '@repo/db';
+import { type User } from '@repo/db/types';
 import { Flag } from 'lucide-react';
 import Text from '~/components/ui/typography/typography';
 import ReportDialog from '~/components/report';

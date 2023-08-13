@@ -1,5 +1,5 @@
 import type { DefaultSession } from 'next-auth';
-import type { RoleTypes } from '@repo/db/*';
+import type { RoleTypes } from '@repo/db/types';
 import type { SessionContextValue } from 'next-auth/react';
 import { useSession as useAuthSession } from 'next-auth/react';
 

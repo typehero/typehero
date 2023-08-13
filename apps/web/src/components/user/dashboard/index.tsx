@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import type { User } from '@repo/db';
+import type { User } from '@repo/db/types';
 import Link from 'next/link';
 import { getServerAuthSession } from '@repo/auth/server';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';

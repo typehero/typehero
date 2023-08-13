@@ -1,4 +1,4 @@
-import type { Difficulty } from '@repo/db';
+import type { Difficulty } from '@repo/db/types';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
