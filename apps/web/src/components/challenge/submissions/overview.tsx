@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { Copy, X } from 'lucide-react';
 import Link from 'next/link';
-import { Button, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, toast } from '';
+import { Button, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, toast } from '@repo/ui';
 import { Markdown } from '~/components/ui/markdown';
 import { getBaseUrl } from '~/utils/getBaseUrl';
 import { getRelativeTime } from '~/utils/relativeTime';

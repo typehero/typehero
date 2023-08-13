@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import { z } from 'zod';
 import clsx from 'clsx';
 import { Tooltip, TooltipContent, TooltipTrigger, toast, UserBadge } from '@repo/ui';
+import Link from 'next/link';
 import { CommentInput } from './comment-input';
 import { replyComment, updateComment, type CommentsByChallengeId } from './comment.action';
 import { CommentDeleteDialog } from './delete';
@@ -228,7 +229,7 @@ function SingleComment({
     <>
       <div className="flex items-start justify-between gap-4 pr-[0.4rem]">
         <div className="flex items-center gap-1">
-          <UserBadge username={comment.user.name ?? ''} />
+          <UserBadge username={comment.user.name ?? ''} linkComponent={Link} />
           <Tooltip delayDuration={0.05}>
             <TooltipTrigger asChild>
               <span className="whitespace-nowrap text-[0.8rem] text-neutral-500 dark:text-neutral-400">
