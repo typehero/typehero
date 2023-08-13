@@ -1,5 +1,5 @@
-import type { Difficulty, Tags } from '@prisma/client';
 import { prisma } from '@repo/db';
+import type { Difficulty, Tags } from '@repo/db/types';
 import Link from 'next/link';
 import { TypographyH3 } from '../ui/typography/h3';
 import ExploreCard from './explore-card';
@@ -86,7 +86,9 @@ export async function getChallangesByTagOrDifficulty(str: string) {
  * Is the given string a tag?
  */
 function isTag(str: string): str is Tags {
-  return str === 'POPULAR' || str === 'NEWEST';
+  // have to manually update types each time Tags are updated. is there not some typescript magic? :(
+  const allTags = ['POPULAR', 'NEWEST'];
+  return allTags.includes(str);
 }
 
 /**

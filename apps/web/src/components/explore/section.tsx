@@ -14,7 +14,7 @@ interface Props {
    * - Make sure it's either a `DIFFICULTY` or `TAGS`. Anything else will return in not found.
    * - Case doesn't matter since we trim & uppercase before querying db.
    */
-  more_route: string;
+  moreRoute: string;
 }
 
 const COLORS_BY_DIFFICULTY = {
@@ -43,7 +43,7 @@ const BUTTONS_BY_DIFFICULTY = {
   EXTREME:
     'bg-orange-500/10 text-orange-700 hover:text-orange-700 dark:text-orange-300 dark:bg-orange-300/10 hover:bg-orange-500/20 dark:hover:bg-orange-300/20',
 };
-export function ExploreSection({ title, challenges, more_route }: Props) {
+export function ExploreSection({ title, challenges, moreRoute: more_route }: Props) {
   const router = useRouter();
   return (
     <section

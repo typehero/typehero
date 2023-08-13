@@ -1,6 +1,6 @@
+import { prisma } from '@repo/db';
 import type { Difficulty, Tags } from '@repo/db/types';
 import { Suspense } from 'react';
-import { prisma } from '@repo/db';
 import { ExploreSection } from './section';
 import { ExploreSectionSkeleton } from './section-skeleton';
 
@@ -19,28 +19,28 @@ export async function Explore() {
         <ExploreSection
           title="Most Popular"
           challenges={await getChallengesByTags('POPULAR')}
-          more_route="popular"
+          moreRoute="popular"
         />
       </Suspense>
       <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection
           title="Newest"
           challenges={await getChallengesByTags('NEWEST')}
-          more_route="newest"
+          moreRoute="newest"
         />
       </Suspense>
       <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection
           title="Great for Beginners"
           challenges={await getChallengesByDifficulty('EASY')}
-          more_route="easy"
+          moreRoute="easy"
         />
       </Suspense>
       <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection
           title="Great for Enthusiasts"
           challenges={await getChallengesByDifficulty('MEDIUM')}
-          more_route="medium"
+          moreRoute="medium"
         />
       </Suspense>
 
@@ -48,7 +48,7 @@ export async function Explore() {
         <ExploreSection
           title="For the Experts"
           challenges={await getChallengesByDifficulty('HARD')}
-          more_route="hard"
+          moreRoute="hard"
         />
       </Suspense>
     </div>
