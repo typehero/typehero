@@ -10,6 +10,13 @@ interface Props {
   };
 }
 
+export async function generateMetadata({ params: { id } }: Props) {
+  const challenge = await getChallengeRouteData(id, null);
+  return {
+    title: challenge.name,
+    description: challenge.shortDescription,
+  };
+}
 export default async function Challenges({ params: { id } }: Props) {
   const session = await getServerAuthSession();
   const challenge = await getChallengeRouteData(id, session);
