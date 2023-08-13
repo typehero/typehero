@@ -1,3 +1,4 @@
+import type { Difficulty, Tags } from '@prisma/client';
 import { Suspense } from 'react';
 import { prisma } from '~/server/db';
 import { ExploreSection } from './section';
@@ -15,27 +16,57 @@ export async function Explore() {
         <span className="font-semibold dark:text-neutral-200">perfect</span> challenge!
       </p>
       <Suspense fallback={<ExploreSectionSkeleton />}>
-        <ExploreSection title="Great for Beginners" fetcher={getEasyChallenges} />
+        <ExploreSection
+          title="Most Popular"
+          challenges={await getChallengesByTags('POPULAR')}
+          more_route="popular"
+        />
+      </Suspense>
+      <Suspense fallback={<ExploreSectionSkeleton />}>
+        <ExploreSection
+          title="Newest"
+          challenges={await getChallengesByTags('NEWEST')}
+          more_route="newest"
+        />
+      </Suspense>
+      <Suspense fallback={<ExploreSectionSkeleton />}>
+        <ExploreSection
+          title="Great for Beginners"
+          challenges={await getChallengesByDifficulty('EASY')}
+          more_route="easy"
+        />
+      </Suspense>
+      <Suspense fallback={<ExploreSectionSkeleton />}>
+        <ExploreSection
+          title="Great for Enthusiasts"
+          challenges={await getChallengesByDifficulty('MEDIUM')}
+          more_route="medium"
+        />
       </Suspense>
 
       <Suspense fallback={<ExploreSectionSkeleton />}>
-        <ExploreSection title="Great for Enthusiasts" fetcher={getMediumChallenges} />
-      </Suspense>
-
-      <Suspense fallback={<ExploreSectionSkeleton />}>
-        <ExploreSection title="For the Experts" fetcher={getHardChallenges} />
+        <ExploreSection
+          title="For the Experts"
+          challenges={await getChallengesByDifficulty('HARD')}
+          more_route="hard"
+        />
       </Suspense>
     </div>
   );
 }
 
-export type ExploreChallengeFetcher = typeof getEasyChallenges;
-// TODO: this is trash
-async function getEasyChallenges() {
+export type ExploreChallengeData =
+  | Awaited<ReturnType<typeof getChallengesByDifficulty>>
+  | Awaited<ReturnType<typeof getChallengesByTags>>;
+
+/**
+ * Fetch challenges by given difficulty.
+ */
+async function getChallengesByDifficulty(difficulty: Difficulty) {
   return prisma.challenge.findMany({
     where: {
       status: 'ACTIVE',
-      difficulty: { in: ['EASY'] },
+      difficulty: { in: [difficulty] },
       user: {
         NOT: {
           status: 'BANNED',
@@ -52,11 +83,18 @@ async function getEasyChallenges() {
   });
 }
 
-async function getMediumChallenges() {
+/**
+ * Fetch challenges by tags.
+ */
+async function getChallengesByTags(tags: Tags) {
   return prisma.challenge.findMany({
     where: {
       status: 'ACTIVE',
-      difficulty: { in: ['MEDIUM'] },
+      tags: {
+        every: {
+          tag: tags,
+        },
+      },
       user: {
         NOT: {
           status: 'BANNED',
@@ -65,28 +103,7 @@ async function getMediumChallenges() {
     },
     include: {
       _count: {
-        select: { vote: true, comment: true },
-      },
-      user: true,
-    },
-    take: 6,
-  });
-}
-
-async function getHardChallenges() {
-  return prisma.challenge.findMany({
-    where: {
-      status: 'ACTIVE',
-      difficulty: { in: ['HARD'] },
-      user: {
-        NOT: {
-          status: 'BANNED',
-        },
-      },
-    },
-    include: {
-      _count: {
-        select: { vote: true, comment: true },
+        select: { vote: true, comment: true, tags: true },
       },
       user: true,
     },

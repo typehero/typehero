@@ -1,11 +1,20 @@
-import type { ExploreChallengeFetcher } from '.';
-import { Button } from '../ui/button';
+'use client';
+
 import { ChevronRight, Diamond } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import type { ExploreChallengeData } from '.';
+import { Button } from '../ui/button';
 import { ExploreCarousel } from './section-carousel';
 
 interface Props {
   title: string;
-  fetcher: ExploreChallengeFetcher;
+  challenges: ExploreChallengeData;
+  /**
+   * Slug for querying challenges on `/explore/<slug>`.
+   * - Make sure it's either a `DIFFICULTY` or `TAGS`. Anything else will return in not found.
+   * - Case doesn't matter since we trim & uppercase before querying db.
+   */
+  more_route: string;
 }
 
 const COLORS_BY_DIFFICULTY = {
@@ -34,8 +43,8 @@ const BUTTONS_BY_DIFFICULTY = {
   EXTREME:
     'bg-orange-500/10 text-orange-700 hover:text-orange-700 dark:text-orange-300 dark:bg-orange-300/10 hover:bg-orange-500/20 dark:hover:bg-orange-300/20',
 };
-export async function ExploreSection({ title, fetcher }: Props) {
-  const challenges = await fetcher();
+export function ExploreSection({ title, challenges, more_route }: Props) {
+  const router = useRouter();
   return (
     <section
       className={`relative flex w-full flex-col overflow-hidden rounded-[2.5rem] ${
@@ -76,6 +85,9 @@ export async function ExploreSection({ title, fetcher }: Props) {
           variant="ghost"
           className={`group items-center whitespace-nowrap rounded-full py-2 pl-4 pr-3 backdrop-blur-sm
           ${BUTTONS_BY_DIFFICULTY[challenges[0]?.difficulty || 'BEGINNER']}`}
+          onClick={() => {
+            router.push(`/explore/${more_route}`);
+          }}
         >
           view more
           <ChevronRight className="ml-2 h-4 w-4 stroke-[3] duration-300 group-hover:translate-x-1" />

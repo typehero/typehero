@@ -1,13 +1,13 @@
 'use client';
-import Link from 'next/link';
-import { ExploreCard } from './explore-card';
 import type { Difficulty } from '@prisma/client';
-import { useEffect, useRef, useState } from 'react';
 import { ChevronRight } from 'lucide-react';
-import type { ExploreChallengeFetcher } from '.';
+import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
+import type { ExploreChallengeData } from '.';
+import { ExploreCard } from './explore-card';
 
 interface Props {
-  challenges: Awaited<ReturnType<ExploreChallengeFetcher>>;
+  challenges: ExploreChallengeData;
 }
 
 const difficultyToNumber: Record<Difficulty, number> = {

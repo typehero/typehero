@@ -2,12 +2,12 @@ import { Circle, Diamond, MessageCircle, Plus, Sparkle, ThumbsUp, Triangle } fro
 
 import { getRelativeTime } from '~/utils/relativeTime';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { type ExploreChallengeFetcher } from './';
 import { DifficultyBadge } from '../ui/difficulty-badge';
+import { type ExploreChallengeData } from './';
 
 interface ExploreCardProps {
   challenge: Pick<
-    Awaited<ReturnType<ExploreChallengeFetcher>>[0],
+    ExploreChallengeData[0],
     'difficulty' | 'name' | 'shortDescription' | 'user' | '_count' | 'updatedAt'
   >;
 }

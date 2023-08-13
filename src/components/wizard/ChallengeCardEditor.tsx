@@ -2,7 +2,7 @@
 
 import { useWatch } from 'react-hook-form';
 import type { WizardForm } from '.';
-import type { ExploreChallengeFetcher } from '../explore';
+import type { ExploreChallengeData } from '../explore';
 import { ExploreCard } from '../explore/explore-card';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
@@ -20,7 +20,7 @@ export function ChallengeCardEditor({ form }: Props) {
   const shortDescription = useWatch({ control: form.control, name: 'shortDescription' });
 
   const data: Pick<
-    Awaited<ReturnType<ExploreChallengeFetcher>>[0],
+    ExploreChallengeData[0],
     'difficulty' | 'name' | 'shortDescription' | 'user' | '_count' | 'updatedAt'
   > = {
     difficulty,
