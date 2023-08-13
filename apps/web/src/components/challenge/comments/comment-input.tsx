@@ -1,11 +1,8 @@
-import { Loader2 } from 'lucide-react';
+import { Loader2 } from '@repo/ui/icons';
 import { useSession } from '@repo/auth/react';
 import { useEffect, useRef, useState, type RefObject } from 'react';
-import { Button } from '~/components/ui/button';
+import { Button, Textarea, ToastAction, useToast } from '@repo/ui';
 import { Markdown } from '~/components/ui/markdown';
-import { Textarea } from '~/components/ui/textarea';
-import { ToastAction } from '~/components/ui/toast';
-import { useToast } from '~/components/ui/use-toast';
 
 interface Props {
   mode: 'create' | 'edit' | 'reply';

@@ -1,12 +1,19 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { Unlock } from 'lucide-react';
-import { ActionMenu } from '../ui/action-menu';
-import { Badge } from '../ui/badge';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
-import { TypographyH3 } from '../ui/typography/h3';
-import { toast } from '../ui/use-toast';
+import { Unlock } from '@repo/ui/icons';
+import {
+  ActionMenu,
+  Badge,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  TypographyH3,
+  toast,
+} from '@repo/ui';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { unbanUser, type AdminBannedUsers } from '~/components/admin/admin.actions';
 

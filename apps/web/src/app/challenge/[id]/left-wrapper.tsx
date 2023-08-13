@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 import { useMemo, type ReactNode } from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui';
 
 type Tab = 'description' | 'solutions' | 'submissions';
 interface Props {

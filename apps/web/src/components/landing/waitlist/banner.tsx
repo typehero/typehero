@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { clsx } from 'clsx';
-import { Mail } from 'lucide-react';
+import { Mail } from '@repo/ui/icons';
 import { Balancer } from 'react-wrap-balancer';
-import { Button } from '~/components/ui/button';
+import { Button } from '@repo/ui';
 import styles from '~/components/landing/waitlist/waitlist.module.css';
 
 function Waitlist() {

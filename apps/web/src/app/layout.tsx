@@ -2,9 +2,9 @@ import '../styles/globals.css';
 
 import { Inter } from 'next/font/google';
 import type { Metadata } from 'next';
+import { Toaster } from '@repo/ui';
 import { Providers } from './providers';
 import { Navigation } from '~/components/ui/navigation';
-import { Toaster } from '~/components/ui/toaster';
 
 const inter = Inter({ subsets: ['latin'] });
 

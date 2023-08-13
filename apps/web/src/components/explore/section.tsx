@@ -1,5 +1,5 @@
-import { ChevronRight, Diamond } from 'lucide-react';
-import { Button } from '../ui/button';
+import { ChevronRight, Diamond } from '@repo/ui/icons';
+import { Button } from '@repo/ui';
 import { ExploreCarousel } from './section-carousel';
 import type { ExploreChallengeFetcher } from '.';
 

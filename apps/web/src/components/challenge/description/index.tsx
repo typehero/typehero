@@ -5,26 +5,29 @@ import { debounce } from 'lodash';
 import { useSession } from '@repo/auth/react';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
-import { Bookmark as BookmarkIcon, Flag, Share, ThumbsUp } from 'lucide-react';
-import { ShareForm } from '../share-form';
-import { addOrRemoveBookmark } from '../bookmark.action';
-import { incrementOrDecrementUpvote } from '../increment.action';
-import { Button } from '~/components/ui/button';
+import { Bookmark as BookmarkIcon, Flag, Share, ThumbsUp } from '@repo/ui/icons';
 import {
+  Button,
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '~/components/ui/dialog';
-import { DifficultyBadge } from '~/components/ui/difficulty-badge';
+  DifficultyBadge,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  TypographyH3,
+  UserBadge,
+  ActionMenu,
+} from '@repo/ui';
+import Link from 'next/link';
+import { ShareForm } from '../share-form';
+import { addOrRemoveBookmark } from '../bookmark.action';
+import { incrementOrDecrementUpvote } from '../increment.action';
 import { Markdown } from '~/components/ui/markdown';
-import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
-import { TypographyH3 } from '~/components/ui/typography/h3';
-import { UserBadge } from '~/components/ui/user-badge';
 import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import ReportDialog from '~/components/report';
-import { ActionMenu } from '~/components/ui/action-menu';
 import { getRelativeTime } from '~/utils/relativeTime';
 
 interface Props {
@@ -203,7 +206,7 @@ export function Description({ challenge }: Props) {
 
       <div className="mb-6 flex items-center gap-4">
         <DifficultyBadge difficulty={challenge.difficulty} />
-        <UserBadge username={challenge.user.name} />
+        <UserBadge username={challenge.user.name} linkComponent={Link} />
         <span className="text-muted-foreground -ml-1 text-xs">
           {getRelativeTime(challenge.updatedAt)}
         </span>

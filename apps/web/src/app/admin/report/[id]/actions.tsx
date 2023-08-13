@@ -3,7 +3,6 @@
 import { type User } from '@repo/db/types';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
-import { type ReportWithInfo } from './report.action';
 import {
   Dialog,
   DialogContent,
@@ -11,7 +10,12 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
-} from '~/components/ui/dialog';
+  Button,
+  Label,
+  Textarea,
+  toast,
+} from '@repo/ui';
+import { type ReportWithInfo } from './report.action';
 import {
   banUser,
   deleteComment,
@@ -19,10 +23,6 @@ import {
   banChallenge,
   dismissReport,
 } from '~/components/admin/admin.actions';
-import { Button } from '~/components/ui/button';
-import { Label } from '~/components/ui/label';
-import { Textarea } from '~/components/ui/textarea';
-import { toast } from '~/components/ui/use-toast';
 
 export interface ReportActionsProps {
   report: NonNullable<ReportWithInfo>;

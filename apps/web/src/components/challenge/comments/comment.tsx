@@ -2,21 +2,20 @@
 
 import { type CommentRoot } from '@repo/db/types';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
-import { ChevronDown, ChevronUp, Pencil, Reply, Share, Trash2 } from 'lucide-react';
+import { ChevronDown, ChevronUp, Pencil, Reply, Share, Trash2 } from '@repo/ui/icons';
 import { useSession } from '@repo/auth/react';
 import { useEffect, useRef, useState } from 'react';
 import { z } from 'zod';
 import clsx from 'clsx';
+import { Tooltip, TooltipContent, TooltipTrigger, toast, UserBadge } from '@repo/ui';
+import Link from 'next/link';
 import { CommentInput } from './comment-input';
 import { replyComment, updateComment, type CommentsByChallengeId } from './comment.action';
 import { CommentDeleteDialog } from './delete';
 import { getPaginatedComments } from './getCommentRouteData';
-import ReportDialog from '~/components/report';
-import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
-import { toast } from '~/components/ui/use-toast';
-import { UserBadge } from '~/components/ui/user-badge';
-import { getRelativeTime } from '~/utils/relativeTime';
 import { Markdown } from '~/components/ui/markdown';
+import ReportDialog from '~/components/report';
+import { getRelativeTime } from '~/utils/relativeTime';
 
 interface SingleCommentProps {
   comment: CommentsByChallengeId[number];
@@ -230,7 +229,7 @@ function SingleComment({
     <>
       <div className="flex items-start justify-between gap-4 pr-[0.4rem]">
         <div className="flex items-center gap-1">
-          <UserBadge username={comment.user.name ?? ''} />
+          <UserBadge username={comment.user.name ?? ''} linkComponent={Link} />
           <Tooltip delayDuration={0.05}>
             <TooltipTrigger asChild>
               <span className="whitespace-nowrap text-[0.8rem] text-neutral-500 dark:text-neutral-400">

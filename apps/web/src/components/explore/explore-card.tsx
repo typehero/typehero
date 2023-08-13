@@ -1,6 +1,12 @@
-import { Circle, Diamond, MessageCircle, Plus, Sparkle, ThumbsUp, Triangle } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { DifficultyBadge } from '../ui/difficulty-badge';
+import { Circle, Diamond, MessageCircle, Plus, Sparkle, ThumbsUp, Triangle } from '@repo/ui/icons';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  DifficultyBadge,
+} from '@repo/ui';
 import { type ExploreChallengeFetcher } from '.';
 import { getRelativeTime } from '~/utils/relativeTime';
 
@@ -48,7 +54,7 @@ export function ExploreCard({ challenge }: ExploreCardProps) {
     <Card
       className={`group relative overflow-hidden duration-300 sm:min-w-[300px] xl:min-w-[333px]
       ${GRADIENTS_BY_DIFFICULTY[challenge.difficulty]}
-      ${SHADOWS_BY_DIFFICULTY[challenge.difficulty]} 
+      ${SHADOWS_BY_DIFFICULTY[challenge.difficulty]}
       ${BORDERS_BY_DIFFICULTY[challenge.difficulty]}
       `}
     >

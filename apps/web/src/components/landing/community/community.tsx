@@ -1,6 +1,6 @@
 'use client';
 
-import { GitBranch } from 'lucide-react';
+import { GitBranch } from '@repo/ui/icons';
 import { clsx } from 'clsx';
 import { type CSSProperties } from 'react';
 import { useInView } from 'react-intersection-observer';
