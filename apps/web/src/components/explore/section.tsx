@@ -2,9 +2,9 @@
 
 import { ChevronRight, Diamond } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import type { ExploreChallengeData } from '.';
 import { Button } from '../ui/button';
 import { ExploreCarousel } from './section-carousel';
+import type { ExploreChallengeData } from '.';
 
 interface Props {
   title: string;

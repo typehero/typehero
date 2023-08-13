@@ -1,8 +1,8 @@
 import { prisma } from '@repo/db';
-import type { Difficulty, Tags } from '@repo/db/types';
+import { Tags, type Difficulty } from '@repo/db/types';
 import Link from 'next/link';
 import { TypographyH3 } from '../ui/typography/h3';
-import ExploreCard from './explore-card';
+import { ExploreCard } from './explore-card';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,7 +13,7 @@ interface ExploreSlugProps {
 /**
  * todo: paginate the challenges. also make em look nice.
  */
-export const ExploreSlug = async ({ slug }: ExploreSlugProps) => {
+export async function ExploreSlug({ slug }: ExploreSlugProps) {
   let challenges: Awaited<ReturnType<typeof getChallangesByTagOrDifficulty>>;
 
   try {
@@ -47,9 +47,7 @@ export const ExploreSlug = async ({ slug }: ExploreSlugProps) => {
       </div>
     </div>
   );
-};
-
-export default ExploreSlug;
+}
 
 /**
  * Fetches challenges either by tag or difficulty.
@@ -67,7 +65,7 @@ export async function getChallangesByTagOrDifficulty(str: string) {
       // OR didn't work. so this workaround is fine because IT WORKS :3
       ...(isTag(formattedStr)
         ? {
-            tags: { every: { tag: formattedStr as Tags } },
+            tags: { every: { tag: formattedStr } },
           }
         : {
             difficulty: { in: [formattedStr as Difficulty] },
@@ -82,13 +80,10 @@ export async function getChallangesByTagOrDifficulty(str: string) {
   });
 }
 
-/**
- * Is the given string a tag?
- */
+const allTags: Tags[] = Object.values(Tags);
+
 function isTag(str: string): str is Tags {
-  // have to manually update types each time Tags are updated. is there not some typescript magic? :(
-  const allTags = ['POPULAR', 'NEWEST'];
-  return allTags.includes(str);
+  return allTags.includes(str as keyof typeof Tags);
 }
 
 /**

@@ -21,7 +21,7 @@ export function ChallengeCardEditor({ form }: Props) {
 
   const data: Pick<
     ExploreChallengeData[0],
-    'difficulty' | 'name' | 'shortDescription' | 'user' | '_count' | 'updatedAt'
+    '_count' | 'difficulty' | 'name' | 'shortDescription' | 'updatedAt' | 'user'
   > = {
     difficulty,
     name: title || 'Your Title Here',

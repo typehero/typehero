@@ -3,8 +3,8 @@ import type { Difficulty } from '@repo/db/types';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import type { ExploreChallengeData } from '.';
 import { ExploreCard } from './explore-card';
+import type { ExploreChallengeData } from '.';
 
 interface Props {
   challenges: ExploreChallengeData;

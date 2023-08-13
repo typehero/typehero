@@ -1,13 +1,13 @@
 import { Circle, Diamond, MessageCircle, Plus, Sparkle, ThumbsUp, Triangle } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { DifficultyBadge } from '../ui/difficulty-badge';
-import { type ExploreChallengeData } from './';
+import { type ExploreChallengeData } from '.';
 import { getRelativeTime } from '~/utils/relativeTime';
 
 interface ExploreCardProps {
   challenge: Pick<
     ExploreChallengeData[0],
-    'difficulty' | 'name' | 'shortDescription' | 'user' | '_count' | 'updatedAt'
+    '_count' | 'difficulty' | 'name' | 'shortDescription' | 'updatedAt' | 'user'
   >;
 }
 
