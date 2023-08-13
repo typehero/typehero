@@ -7,15 +7,15 @@ import { signIn, signOut, useSession } from '@repo/auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { Button } from './button';
+import { Button } from '@repo/ui/src/components/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from './dropdown-menu';
-import { navigationMenuTriggerStyle } from './navigation-menu';
+} from '@repo/ui';
+import { navigationMenuTriggerStyle } from '@repo/ui/src/components/navigation-menu';
 
 export function Navigation() {
   const pathname = usePathname();
