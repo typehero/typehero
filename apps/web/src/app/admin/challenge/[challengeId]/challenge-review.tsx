@@ -59,7 +59,7 @@ export function ChallengeReview({ challenge }: Props) {
         <Text intent="h2">{challenge.name}</Text>
         <div className="mb-3 flex gap-4">
           <DifficultyBadge difficulty={challenge.difficulty} />
-          <UserBadge username={challenge.user.name} />
+          <UserBadge username={challenge.user.name} linkComponent={Link} />
         </div>
         <div className="font-semibold">Short Description</div>
         <div>{challenge.shortDescription}</div>
