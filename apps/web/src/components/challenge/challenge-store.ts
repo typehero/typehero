@@ -1,4 +1,4 @@
-import type { Difficulty } from '@prisma/client';
+import type { Difficulty } from '@repo/db';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 

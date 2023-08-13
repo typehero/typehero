@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import type { Difficulty } from '@prisma/client';
+import type { Difficulty } from '@repo/db';
 import { useEffect, useRef, useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { ExploreCard } from './explore-card';

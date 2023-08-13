@@ -1,7 +1,7 @@
 'use client';
 
 import { useTheme } from 'next-themes';
-import { RoleTypes } from '@prisma/client';
+import { RoleTypes } from '@repo/db';
 import { Loader2, LogIn, Moon, Plus, Settings, Settings2, Sun, User } from 'lucide-react';
 import { signIn, signOut, useSession } from '@repo/auth/react';
 import Link from 'next/link';

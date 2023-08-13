@@ -1,6 +1,6 @@
 'use server';
 
-import { type Report, type Prisma } from '@prisma/client';
+import { type Report, type Prisma } from '@repo/db';
 import { prisma } from '@repo/db';
 import { getServerAuthSession } from '@repo/auth/server';
 

@@ -7,7 +7,7 @@
     "build": "next build",
     "dev": "next dev",
     "format": "prettier -w \"src/**/*.{ts,tsx,css,cjs,mjs,json}\"",
-    "lint": "next lint",
+    "lint": "eslint .",
     "start": "next start",
     "typecheck": "tsc --noEmit"
   },

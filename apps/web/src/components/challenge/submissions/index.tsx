@@ -1,6 +1,6 @@
 'use client';
 
-import type { Submission } from '@prisma/client';
+import type { Submission } from '@repo/db';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';

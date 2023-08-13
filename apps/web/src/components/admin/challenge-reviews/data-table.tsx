@@ -1,6 +1,6 @@
 'use client';
 
-import type { Challenge } from '@prisma/client';
+import type { Challenge } from '@repo/db';
 import { useQuery } from '@tanstack/react-query';
 import {
   type PaginationState,

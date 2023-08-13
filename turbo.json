@@ -28,10 +28,10 @@
     },
     "lint": {
       "outputs": ["node_modules/.cache/.eslintcache"],
-      "dependsOn": ["@repo/db#db:generate", "^topo"]
+      "dependsOn": ["^topo"]
     },
     "typecheck": {
-      "dependsOn": ["@repo/db#db:generate", "^topo"],
+      "dependsOn": ["^topo"],
       "outputs": ["node_modules/.cache/tsbuildinfo.json"],
       "outputMode": "errors-only"
     },

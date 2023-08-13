@@ -1,5 +1,5 @@
 'use server';
-import { RoleTypes } from '@prisma/client';
+import { RoleTypes } from '@repo/db';
 import { Lock } from 'lucide-react';
 import React from 'react';
 import { getServerAuthSession } from '@repo/auth/server';

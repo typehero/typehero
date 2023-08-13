@@ -1,4 +1,4 @@
-import { type IssueType } from '@prisma/client';
+import { type IssueType } from '@repo/db';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import {

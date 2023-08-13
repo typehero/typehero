@@ -11,7 +11,7 @@ module.exports = {
       '@vercel/style-guide/eslint/typescript',
     ].map((config) => require.resolve(config)),
   ],
-  ignorePatterns: ['**/.next/**', '**/.eslintrc.js'],
+  ignorePatterns: ['**/.next/**', '**/.eslintrc.cjs', '**/node_modules/**', 'public/**'],
   overrides: [
     {
       files: ['**/route.tsx'],

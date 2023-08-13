@@ -1,7 +1,6 @@
 'use server';
 
-import { RoleTypes } from '@prisma/client';
-import { prisma } from '@repo/db';
+import { RoleTypes, prisma } from '@repo/db';
 
 export async function approveChallenge(
   challengeId: number,
