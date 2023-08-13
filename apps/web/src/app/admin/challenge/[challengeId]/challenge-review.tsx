@@ -4,15 +4,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useSession } from '@repo/auth/react';
 import { useMemo } from 'react';
-import { approveChallenge, denyChallenge } from './challenge-review.action';
+import { Button, DifficultyBadge, Text, useToast, UserBadge } from '@repo/ui';
 import type { ChallengeToReview } from './page';
-import { Button } from '~/components/ui/button';
-import { CodeEditor } from '~/components/ui/code-editor';
-import { DifficultyBadge } from '~/components/ui/difficulty-badge';
+import { approveChallenge, denyChallenge } from './challenge-review.action';
 import { Markdown } from '~/components/ui/markdown';
-import Text from '~/components/ui/typography/typography';
-import { UserBadge } from '~/components/ui/user-badge';
-import { useToast } from '~/components/ui/use-toast';
+import { CodeEditor } from '~/components/ui/code-editor';
 
 interface Props {
   challenge: ChallengeToReview;

@@ -2,9 +2,8 @@
 
 import { type User } from '@repo/db/types';
 import { Flag } from 'lucide-react';
-import Text from '~/components/ui/typography/typography';
+import { ActionMenu, Text } from '@repo/ui';
 import ReportDialog from '~/components/report';
-import { ActionMenu } from '~/components/ui/action-menu';
 
 export interface UserHeaderProps {
   user: User;

@@ -5,13 +5,12 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { ChevronDown, ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react';
 import { useRef, useState } from 'react';
+import { toast, Button } from '@repo/ui';
 import { CommentInput } from './comment-input';
 import { CommentSkeleton } from './comment-skeleton';
 import { addComment } from './comment.action';
 import { getPaginatedComments } from './getCommentRouteData';
 import NoComments from './nocomments';
-import { toast } from '~/components/ui/use-toast';
-import { Button } from '~/components/ui/button';
 import { Comment } from '~/components/challenge/comments/comment';
 
 interface Props {

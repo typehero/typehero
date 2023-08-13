@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import { prisma } from '@repo/db';
-import { type ReportWithInfo } from '~/app/admin/report/[id]/report.action';
+import { Text } from '@repo/ui';
 import { Markdown } from '~/components/ui/markdown';
-import Text from '~/components/ui/typography/typography';
+import { type ReportWithInfo } from '~/app/admin/report/[id]/report.action';
 
 async function getSolutionChallenge(challengeId: number) {
   return prisma.challenge.findFirstOrThrow({

@@ -9,24 +9,26 @@ import dynamic from 'next/dynamic';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useRef, useState } from 'react';
 import lzstring from 'lz-string';
-import { saveSubmission } from '../save-submission.action';
-import { SettingsForm } from '../settings-form';
-import { USER_CODE_START, USER_CODE_START_REGEX } from './constants';
-import { libSource } from './editor-types';
-import { createTwoslashInlayProvider } from './twoslash';
-import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
-import { Button } from '~/components/ui/button';
-import { CodeEditor } from '~/components/ui/code-editor';
 import {
+  Button,
+  ToastAction,
+  useToast,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '~/components/ui/dialog';
-import { ToastAction } from '~/components/ui/toast';
-import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
-import { useToast } from '~/components/ui/use-toast';
+} from '@repo/ui';
+import { saveSubmission } from '../save-submission.action';
+import { SettingsForm } from '../settings-form';
+import { USER_CODE_START, USER_CODE_START_REGEX } from './constants';
+import { libSource } from './editor-types';
+import { createTwoslashInlayProvider } from './twoslash';
+import { CodeEditor } from '~/components/ui/code-editor';
+import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import { useLocalStorage } from '~/utils/useLocalStorage';
 
 const VimStatusBar = dynamic(() => import('./vimMode').then((v) => v.VimStatusBar), {

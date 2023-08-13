@@ -7,16 +7,14 @@ import { useSession } from '@repo/auth/react';
 import { useEffect, useRef, useState } from 'react';
 import { z } from 'zod';
 import clsx from 'clsx';
+import { Tooltip, TooltipContent, TooltipTrigger, toast, UserBadge } from '@repo/ui';
 import { CommentInput } from './comment-input';
 import { replyComment, updateComment, type CommentsByChallengeId } from './comment.action';
 import { CommentDeleteDialog } from './delete';
 import { getPaginatedComments } from './getCommentRouteData';
-import ReportDialog from '~/components/report';
-import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
-import { toast } from '~/components/ui/use-toast';
-import { UserBadge } from '~/components/ui/user-badge';
-import { getRelativeTime } from '~/utils/relativeTime';
 import { Markdown } from '~/components/ui/markdown';
+import ReportDialog from '~/components/report';
+import { getRelativeTime } from '~/utils/relativeTime';
 
 interface SingleCommentProps {
   comment: CommentsByChallengeId[number];

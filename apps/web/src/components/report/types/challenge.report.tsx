@@ -1,10 +1,9 @@
 import { ThumbsUp } from 'lucide-react';
+import { Text, UserBadge } from '@repo/ui';
 import { type ReportWithInfo } from '~/app/admin/report/[id]/report.action';
 import { getChallenge } from '~/components/admin/admin.actions';
 import { CodeEditor } from '~/components/ui/code-editor';
 import { Markdown } from '~/components/ui/markdown';
-import Text from '~/components/ui/typography/typography';
-import { UserBadge } from '~/components/ui/user-badge';
 
 export interface ChallengeReportProps {
   report: NonNullable<ReportWithInfo>;

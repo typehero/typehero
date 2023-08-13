@@ -4,8 +4,8 @@ import { motion } from 'framer-motion';
 import { Github, Mail } from 'lucide-react';
 import Link from 'next/link';
 import { Balancer } from 'react-wrap-balancer';
+import { Button } from '@repo/ui';
 import { HeroChallengeCard } from '~/components/landing/hero-challenge-card';
-import { Button } from '~/components/ui/button';
 
 function TypeHeroLogo() {
   return (

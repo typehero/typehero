@@ -3,13 +3,13 @@ import { RoleTypes } from '@repo/db/types';
 import { Lock } from 'lucide-react';
 import React from 'react';
 import { getServerAuthSession } from '@repo/auth/server';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui';
 import { ChallengeReviews } from '~/components/admin/challenge-reviews';
 import { getBannedUsers, getUploadedImages } from '~/components/admin/admin.actions';
 import { ImageUploadReport } from '~/components/admin/images';
 // import Reports2 from '~/components/admin/reports';
 import { BannedUsers } from '~/components/admin/users';
 import { getInfiniteReports } from '~/components/report/report.action';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 
 async function Admin() {
   const session = await getServerAuthSession();

@@ -11,7 +11,6 @@ export * from './components/dialog';
 export * from './components/difficulty-badge';
 export * from './components/dropdown-menu';
 export * from './components/expandable';
-export * from './components/footsies';
 export * from './components/force-render-until-client';
 export * from './components/form';
 export * from './components/icon-button';

@@ -1,8 +1,7 @@
 'use client'; // Error components must be Client Components
 
 import Link from 'next/link';
-import { Button } from '~/components/ui/button';
-import Text from '~/components/ui/typography/typography';
+import { Button, Text } from '@repo/ui';
 
 export default function Error() {
   return (

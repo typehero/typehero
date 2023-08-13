@@ -1,13 +1,19 @@
 import { type DialogTriggerProps } from '@radix-ui/react-dialog';
 import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  TypographyP,
+  TypographyLarge,
+  toast,
+} from '@repo/ui';
 import { deleteComment, type CommentsByChallengeId } from '../comment.action';
-import { TypographyP } from '~/components//ui/paragraph';
-import { Button } from '~/components/ui/button';
-import { Dialog, DialogContent, DialogTrigger } from '~/components/ui/dialog';
-import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
-import { TypographyLarge } from '~/components/ui/typography/large';
-import { toast } from '~/components/ui/use-toast';
 import { getRelativeTime } from '~/utils/relativeTime';
 
 interface CommentDeleteDialogProps extends DialogTriggerProps {

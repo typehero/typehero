@@ -60,7 +60,7 @@ export type CorrectProps<T extends keyof JSX.IntrinsicElements = keyof JSX.Intri
 
 export type Combined<T, U> = T & U;
 
-export default function Text<T extends TagOptions>({
+export function Text<T extends TagOptions>({
   intent = 'body',
   weight,
   tag,

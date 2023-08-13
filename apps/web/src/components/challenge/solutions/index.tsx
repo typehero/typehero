@@ -3,13 +3,12 @@ import { ArrowUp, MessageCircle } from 'lucide-react';
 import { useSession } from '@repo/auth/react';
 import Link from 'next/link';
 import { useState } from 'react';
+import { Button } from '@repo/ui';
 import { SolutionEditor } from './solution-editor';
 import NoSolutions from './nosolutions';
 import SubmitSolution from './submit-solution';
 import type { ChallengeSolutionsRouteData } from '~/app/challenge/[id]/solutions/page';
 import { getRelativeTime } from '~/utils/relativeTime';
-import { UserBadge } from '~/components/ui/user-badge';
-import { Button } from '~/components/ui/button';
 
 interface Props {
   challenge: ChallengeSolutionsRouteData;

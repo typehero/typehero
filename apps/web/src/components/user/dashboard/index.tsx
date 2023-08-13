@@ -4,15 +4,23 @@ import Link from 'next/link';
 import { getServerAuthSession } from '@repo/auth/server';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import { prisma } from '@repo/db';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+  Button,
+  MagicIcon,
+} from '@repo/ui';
 import { Overview } from './overview';
 import { InProgressTab } from './in-progress-tab';
 import { SolutionsTab } from './solutions-tab';
 import UserHeader from './user-header';
-import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { getRelativeTime } from '~/utils/relativeTime';
-import { Button } from '~/components/ui/button';
-import { MagicIcon } from '~/components/ui/magic-icon';
 import { stripProtocolAndWWW } from '~/utils/stringUtils';
 
 interface Props {

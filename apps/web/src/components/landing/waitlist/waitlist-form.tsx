@@ -6,18 +6,22 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { AlertCircle, MailCheck } from 'lucide-react';
 import clsx from 'clsx';
-import { Alert, AlertDescription } from '~/components/ui/alert';
-import { uploadWaitlistEntry } from '~/components/landing/waitlist/create.action';
-import { Button } from '~/components/ui/button';
-import { Form, FormControl, FormField, FormItem } from '~/components/ui/form';
-import { Input } from '~/components/ui/input';
 import {
+  Alert,
+  AlertDescription,
+  Button,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  Input,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '~/components/ui/select';
+} from '@repo/ui';
+import { uploadWaitlistEntry } from '~/components/landing/waitlist/create.action';
 
 const waitlistFormSchema = z.object({
   name: z.string().min(1, 'Please enter your name'),
