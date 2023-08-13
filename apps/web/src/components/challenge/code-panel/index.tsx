@@ -199,9 +199,10 @@ export function CodePanel(props: Props) {
               // Wow this is just... remarkably jank.
 
               const getModel = await m.languages.typescript.getTypeScriptWorker();
-              const filename = 'file:///user.ts';
-              const mm = m.editor.getModel(m.Uri.parse('file:///user.ts'));
+              const filename = 'file:///tests.ts';
+              const mm = m.editor.getModel(m.Uri.parse('file:///tests.ts'));
               if (!mm) return null;
+              console.info(mm.getValue());
               const model = await getModel(mm.uri);
 
               const errors = await Promise.all([
