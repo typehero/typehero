@@ -1,4 +1,4 @@
-import { type Difficulty } from '@repo/db';
+import { type Difficulty } from '@repo/db/types';
 import { Badge } from './badge';
 
 interface Props {

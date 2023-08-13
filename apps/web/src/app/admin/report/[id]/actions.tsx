@@ -1,6 +1,6 @@
 'use client';
 
-import { type User } from '@repo/db';
+import { type User } from '@repo/db/types';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { type ReportWithInfo } from './report.action';

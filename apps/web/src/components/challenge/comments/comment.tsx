@@ -1,6 +1,6 @@
 'use client';
 
-import { type CommentRoot } from '@repo/db';
+import { type CommentRoot } from '@repo/db/types';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { ChevronDown, ChevronUp, Pencil, Reply, Share, Trash2 } from 'lucide-react';
 import { useSession } from '@repo/auth/react';

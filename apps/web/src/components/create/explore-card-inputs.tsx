@@ -1,7 +1,7 @@
 'use client';
 // TODO: unify this with the explore card into single component (maybe? idk how that'd work, too many changes)
 import { MessageCircle, ThumbsUp } from 'lucide-react';
-import { type Difficulty } from '@repo/db';
+import { type Difficulty } from '@repo/db/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
 import { DifficultyBadge } from '../ui/difficulty-badge';

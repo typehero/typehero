@@ -1,6 +1,6 @@
 'use client';
 
-import type { Challenge } from '@repo/db';
+import type { Challenge } from '@repo/db/types';
 import { useQuery } from '@tanstack/react-query';
 import {
   type PaginationState,

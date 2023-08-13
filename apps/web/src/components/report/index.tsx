@@ -1,4 +1,4 @@
-import { type IssueType } from '@repo/db';
+import { type IssueType } from '@repo/db/types';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import {

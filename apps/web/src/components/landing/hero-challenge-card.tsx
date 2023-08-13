@@ -1,4 +1,4 @@
-import type { Difficulty } from '@repo/db';
+import type { Difficulty } from '@repo/db/types';
 import { clsx } from 'clsx';
 import { motion, type SVGMotionProps } from 'framer-motion';
 import type { ReactNode } from 'react';
