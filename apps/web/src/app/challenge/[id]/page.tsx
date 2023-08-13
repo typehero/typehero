@@ -14,10 +14,6 @@ export default async function Challenges({ params: { id } }: Props) {
   const session = await getServerAuthSession();
   const challenge = await getChallengeRouteData(id, session);
 
-  if (!challenge) {
-    return notFound();
-  }
-
   return (
     <div className="relative h-full">
       <Description challenge={challenge} />
