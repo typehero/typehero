@@ -1,12 +1,15 @@
-import Link from 'next/link';
+import type { NextjsLinkComponentType } from '../types';
 import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip';
 import { Button } from './button';
 
 export interface UserBadgeProps {
   username: string;
+  linkComponent: NextjsLinkComponentType;
 }
 
 function UserBadge(props: UserBadgeProps) {
+  const Link = props.linkComponent;
+
   return (
     <Tooltip>
       <TooltipTrigger asChild>

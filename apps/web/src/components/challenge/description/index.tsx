@@ -6,10 +6,10 @@ import { useSession } from '@repo/auth/react';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { Bookmark as BookmarkIcon, Flag, Share, ThumbsUp } from 'lucide-react';
+import { Button } from '@repo/ui';
 import { ShareForm } from '../share-form';
 import { addOrRemoveBookmark } from '../bookmark.action';
 import { incrementOrDecrementUpvote } from '../increment.action';
-import { Button } from '~/components/ui/button';
 import {
   Dialog,
   DialogContent,
