@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { prisma } from '@repo/db';
+import { getChallangesByTagOrDifficulty } from './explore.action';
 import { ExploreSection } from './section';
 import { ExploreSectionSkeleton } from './section-skeleton';
 
@@ -15,81 +15,41 @@ export async function Explore() {
         <span className="font-semibold dark:text-neutral-200">perfect</span> challenge!
       </p>
       <Suspense fallback={<ExploreSectionSkeleton />}>
-        <ExploreSection fetcher={getEasyChallenges} title="Great for Beginners" />
+        <ExploreSection
+          title="Most Popular"
+          fetcher={getChallangesByTagOrDifficulty}
+          moreRoute="popular"
+        />
+      </Suspense>
+      <Suspense fallback={<ExploreSectionSkeleton />}>
+        <ExploreSection
+          title="Newest"
+          fetcher={getChallangesByTagOrDifficulty}
+          moreRoute="newest"
+        />
+      </Suspense>
+      <Suspense fallback={<ExploreSectionSkeleton />}>
+        <ExploreSection
+          title="Great for Beginners"
+          fetcher={getChallangesByTagOrDifficulty}
+          moreRoute="easy"
+        />
+      </Suspense>
+      <Suspense fallback={<ExploreSectionSkeleton />}>
+        <ExploreSection
+          title="Great for Enthusiasts"
+          fetcher={getChallangesByTagOrDifficulty}
+          moreRoute="medium"
+        />
       </Suspense>
 
       <Suspense fallback={<ExploreSectionSkeleton />}>
-        <ExploreSection fetcher={getMediumChallenges} title="Great for Enthusiasts" />
-      </Suspense>
-
-      <Suspense fallback={<ExploreSectionSkeleton />}>
-        <ExploreSection fetcher={getHardChallenges} title="For the Experts" />
+        <ExploreSection
+          title="For the Experts"
+          fetcher={getChallangesByTagOrDifficulty}
+          moreRoute="hard"
+        />
       </Suspense>
     </div>
   );
-}
-
-export type ExploreChallengeFetcher = typeof getEasyChallenges;
-// TODO: this is trash
-async function getEasyChallenges() {
-  return prisma.challenge.findMany({
-    where: {
-      status: 'ACTIVE',
-      difficulty: { in: ['EASY'] },
-      user: {
-        NOT: {
-          status: 'BANNED',
-        },
-      },
-    },
-    include: {
-      _count: {
-        select: { vote: true, comment: true },
-      },
-      user: true,
-    },
-    take: 6,
-  });
-}
-
-async function getMediumChallenges() {
-  return prisma.challenge.findMany({
-    where: {
-      status: 'ACTIVE',
-      difficulty: { in: ['MEDIUM'] },
-      user: {
-        NOT: {
-          status: 'BANNED',
-        },
-      },
-    },
-    include: {
-      _count: {
-        select: { vote: true, comment: true },
-      },
-      user: true,
-    },
-    take: 6,
-  });
-}
-
-async function getHardChallenges() {
-  return prisma.challenge.findMany({
-    where: {
-      status: 'ACTIVE',
-      difficulty: { in: ['HARD'] },
-      user: {
-        NOT: {
-          status: 'BANNED',
-        },
-      },
-    },
-    include: {
-      _count: {
-        select: { vote: true, comment: true },
-      },
-      user: true,
-    },
-    take: 6,
-  });
 }

@@ -1,6 +1,5 @@
 'use client';
 
-import { useWatch } from 'react-hook-form';
 import {
   FormControl,
   FormField,
@@ -16,8 +15,9 @@ import {
   Textarea,
   TypographyH3,
 } from '@repo/ui';
+import { useWatch } from 'react-hook-form';
 import { ExploreCard } from '../explore/explore-card';
-import type { ExploreChallengeFetcher } from '../explore';
+import type { ExploreChallengeData } from '../explore/explore.action';
 import type { WizardForm } from '.';
 
 interface Props {
@@ -30,7 +30,7 @@ export function ChallengeCardEditor({ form }: Props) {
   const shortDescription = useWatch({ control: form.control, name: 'shortDescription' });
 
   const data: Pick<
-    Awaited<ReturnType<ExploreChallengeFetcher>>[0],
+    Awaited<ExploreChallengeData>[0],
     '_count' | 'difficulty' | 'name' | 'shortDescription' | 'updatedAt' | 'user'
   > = {
     difficulty,

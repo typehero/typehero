@@ -1,4 +1,3 @@
-import { notFound } from 'next/navigation';
 import { getServerAuthSession } from '@repo/auth/server';
 import { getChallengeRouteData } from './getChallengeRouteData';
 import { Comments } from '~/components/challenge/comments';

@@ -1,13 +1,13 @@
 'use client';
-import Link from 'next/link';
 import type { Difficulty } from '@repo/db/types';
-import { useEffect, useRef, useState } from 'react';
 import { ChevronRight } from '@repo/ui/icons';
+import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
 import { ExploreCard } from './explore-card';
-import type { ExploreChallengeFetcher } from '.';
+import type { ExploreChallengeData } from './explore.action';
 
 interface Props {
-  challenges: Awaited<ReturnType<ExploreChallengeFetcher>>;
+  challenges: Awaited<ExploreChallengeData>;
 }
 
 const difficultyToNumber: Record<Difficulty, number> = {

@@ -1,12 +1,7 @@
 'use client';
 
-import { useTheme } from 'next-themes';
-import { RoleTypes } from '@repo/db/types';
-import { Loader2, LogIn, Moon, Plus, Settings, Settings2, Sun, User } from '@repo/ui/icons';
 import { signIn, signOut, useSession } from '@repo/auth/react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { RoleTypes } from '@repo/db/types';
 import {
   Button,
   DropdownMenu,
@@ -16,6 +11,11 @@ import {
   DropdownMenuTrigger,
   navigationMenuTriggerStyle,
 } from '@repo/ui';
+import { Loader2, LogIn, Moon, Plus, Settings, Settings2, Sun, User } from '@repo/ui/icons';
+import { useTheme } from 'next-themes';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export function Navigation() {
   const pathname = usePathname();

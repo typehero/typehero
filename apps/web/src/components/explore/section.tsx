@@ -1,11 +1,17 @@
-import { ChevronRight, Diamond } from '@repo/ui/icons';
-import { Button } from '@repo/ui';
+import { Diamond } from '@repo/ui/icons';
+import type { ExploreChallengeData } from './explore.action';
 import { ExploreCarousel } from './section-carousel';
-import type { ExploreChallengeFetcher } from '.';
+import { ViewMoreButton } from './view-more-button';
 
 interface Props {
   title: string;
-  fetcher: ExploreChallengeFetcher;
+  fetcher: (tagOrDifficulty: string, take: number) => ExploreChallengeData;
+  /**
+   * Slug for querying challenges on `/explore/<slug>`.
+   * - Make sure it's either a `DIFFICULTY` or `TAGS`. Anything else will return in not found.
+   * - Case doesn't matter since we trim & uppercase before querying db.
+   */
+  moreRoute: string;
 }
 
 const COLORS_BY_DIFFICULTY = {
@@ -24,18 +30,8 @@ const TITLES_BY_DIFFICULTY = {
   EXTREME: 'bg-gradient-to-r from-orange-500 to-orange-500 dark:from-orange-500 dark:to-orange-200',
 };
 
-const BUTTONS_BY_DIFFICULTY = {
-  BEGINNER:
-    'bg-pink-500/10 text-pink-700 hover:text-pink-700 dark:text-pink-300 dark:bg-pink-300/10 hover:bg-pink-500/20 dark:hover:bg-pink-300/20',
-  EASY: 'bg-green-500/10 text-green-700 hover:text-green-700 dark:text-green-300 dark:bg-green-300/10 hover:bg-green-500/20 dark:hover:bg-green-300/20',
-  MEDIUM:
-    'bg-yellow-500/10 text-yellow-700 hover:text-yellow-700 dark:text-yellow-300 dark:bg-yellow-300/10 hover:bg-yellow-500/20 dark:hover:bg-yellow-300/20',
-  HARD: 'bg-red-500/10 text-red-700 hover:text-red-700 dark:text-red-300 dark:bg-red-300/10 hover:bg-red-500/20 dark:hover:bg-red-300/20',
-  EXTREME:
-    'bg-orange-500/10 text-orange-700 hover:text-orange-700 dark:text-orange-300 dark:bg-orange-300/10 hover:bg-orange-500/20 dark:hover:bg-orange-300/20',
-};
-export async function ExploreSection({ title, fetcher }: Props) {
-  const challenges = await fetcher();
+export async function ExploreSection({ title, fetcher, moreRoute }: Props) {
+  const challenges = await fetcher(moreRoute.trim().toUpperCase(), 6);
   return (
     <section
       className={`relative flex w-full flex-col overflow-hidden rounded-[2.5rem] ${
@@ -72,14 +68,7 @@ export async function ExploreSection({ title, fetcher }: Props) {
         >
           {title}
         </h2>
-        <Button
-          className={`group items-center whitespace-nowrap rounded-full py-2 pl-4 pr-3 backdrop-blur-sm
-          ${BUTTONS_BY_DIFFICULTY[challenges[0]?.difficulty || 'BEGINNER']}`}
-          variant="ghost"
-        >
-          view more
-          <ChevronRight className="ml-2 h-4 w-4 stroke-[3] duration-300 group-hover:translate-x-1" />
-        </Button>
+        <ViewMoreButton challenges={challenges} moreRoute={moreRoute} />
       </div>
       <ExploreCarousel challenges={challenges} />
     </section>

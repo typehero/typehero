@@ -11,6 +11,11 @@ datasource db {
   relationMode = "prisma"
 }
 
+enum Tags {
+  POPULAR
+  NEWEST
+}
+
 enum Difficulty {
   BEGINNER
   EASY
@@ -134,6 +139,12 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+model Tag {
+  id         String      @id @default(uuid())
+  tag        Tags        @unique
+  challenges Challenge[]
+}
+
 model Challenge {
   id               Int             @id @default(autoincrement())
   createdAt        DateTime        @default(now())
@@ -151,6 +162,7 @@ model Challenge {
   user   User   @relation(fields: [userId], references: [id])
   userId String
 
+  tags           Tag[]
   vote           Vote[]
   submission     Submission[]
   comment        Comment[]

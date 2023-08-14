@@ -1,4 +1,3 @@
-import { Circle, Diamond, MessageCircle, Plus, Sparkle, ThumbsUp, Triangle } from '@repo/ui/icons';
 import {
   Card,
   CardContent,
@@ -7,12 +6,13 @@ import {
   CardTitle,
   DifficultyBadge,
 } from '@repo/ui';
-import { type ExploreChallengeFetcher } from '.';
+import { Circle, Diamond, MessageCircle, Plus, Sparkle, ThumbsUp, Triangle } from '@repo/ui/icons';
+import type { ExploreChallengeData } from './explore.action';
 import { getRelativeTime } from '~/utils/relativeTime';
 
 interface ExploreCardProps {
   challenge: Pick<
-    Awaited<ReturnType<ExploreChallengeFetcher>>[0],
+    Awaited<ExploreChallengeData>[0],
     '_count' | 'difficulty' | 'name' | 'shortDescription' | 'updatedAt' | 'user'
   >;
 }
