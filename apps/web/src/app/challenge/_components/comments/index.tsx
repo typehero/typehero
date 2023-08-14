@@ -16,9 +16,11 @@ import { Comment } from './comment';
 interface Props {
   rootId: number;
   type: CommentRoot;
+  expanded?: boolean;
+  idToSelect?: number;
 }
 
-export function Comments({ rootId, type }: Props) {
+export function Comments({ rootId, type, expanded, idToSelect }: Props) {
   const [showComments, setShowComments] = useState(false);
   const [text, setText] = useState('');
   const commentContainerRef = useRef<HTMLDivElement>(null);
@@ -34,6 +36,11 @@ export function Comments({ rootId, type }: Props) {
     keepPreviousData: true,
     staleTime: 5000,
   });
+
+  // TODO: Check w/ a senior
+  if (expanded) {
+    setShowComments;
+  }
 
   async function createChallengeComment() {
     try {
