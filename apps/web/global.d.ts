@@ -10,5 +10,6 @@ declare namespace NodeJS {
     GITHUB_ID: string;
     GITHUB_SECRET: string;
     PORT: number;
+    RESEND_API_KEY: string;
   }
 }

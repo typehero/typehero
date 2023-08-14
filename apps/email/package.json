@@ -1,15 +1,21 @@
 {
-  "name": "emails",
+  "name": "@repo/emails",
   "version": "0.0.18",
   "private": true,
   "workspaces": [
     ".react-email"
   ],
+  "export": {
+    ".": {
+      "import": "email/index.ts"
+    }
+  },
   "scripts": {
     "dev": "email dev -p 6969",
     "clean": "rm -rf node_modules .react-email",
     "build": "email export"
   },
+  "files": [],
   "dependencies": {
     "@react-email/components": "0.0.6",
     "react-email": "1.9.3"

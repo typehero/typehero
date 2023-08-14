@@ -13,6 +13,7 @@
         "UPLOADTHING_APP_ID",
         "NEXTAUTH_SECRET",
         "NEXTAUTH_URL",
+        "RESEND_API_KEY",
         "PORT"
       ]
     },

@@ -12,13 +12,11 @@ import {
 } from '@react-email/components';
 import * as React from 'react';
 
-interface VercelInviteUserEmailProps {}
-
 // This means we'd deploy all the email assets to a static host
 // so that we can access them from a CDN
 const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '';
 
-export const VercelInviteUserEmail = ({}: VercelInviteUserEmailProps) => {
+export const UserSignupEmail = () => {
   return (
     <Html>
       <Head />
@@ -58,4 +56,4 @@ export const VercelInviteUserEmail = ({}: VercelInviteUserEmailProps) => {
   );
 };
 
-export default VercelInviteUserEmail;
+export default UserSignupEmail;
