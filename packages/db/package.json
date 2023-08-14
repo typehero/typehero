@@ -21,7 +21,7 @@
     "db:format": "dotenv -e ../../.env prisma format",
     "db:generate": "dotenv -e ../../.env prisma generate",
     "db:push": "dotenv -e ../../.env prisma db push",
-    "db:reset": "dotenv -e ../../.env prisma db push --force-reset",
+    "db:reset": "dotenv -e ../../.env prisma db push -- --force-reset",
     "db:seed": "dotenv -e ../../.env tsx ./seed/index.ts",
     "db:studio": "dotenv -e ../../.env prisma studio",
     "format": "prettier \"**/*.{ts,tsx,md,mdx,json}\" --check",
