@@ -184,10 +184,7 @@ main {
   );
   z-index: -1;
   content: '';
-  top: -1px;
-  bottom: -1px;
-  left: -1px;
-  right: -1px;
+  inset: -1px;
 }
 
 @keyframes movingbackground {
