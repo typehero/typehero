@@ -69,17 +69,17 @@ const View = async () => {
               >
                 Challenge Reviews
               </TabsTrigger>
-              <TabsTrigger
-                className="data-[state=active]:bg-border rounded-l-lg rounded-r-2xl duration-300"
-                value="users"
-              >
+              <TabsTrigger className="data-[state=active]:bg-border duration-300" value="users">
                 Users
               </TabsTrigger>
-              <TabsTrigger
-                className="data-[state=active]:bg-border rounded-l-2xl rounded-r-lg duration-300"
-                value="images"
-              >
+              <TabsTrigger className="data-[state=active]:bg-border duration-300" value="images">
                 Images
+              </TabsTrigger>
+              <TabsTrigger
+                className="data-[state=active]:bg-border rounded-l-lg rounded-r-2xl duration-300"
+                value="tracks"
+              >
+                Tracks
               </TabsTrigger>
             </TabsList>
             <TabsContent value="reports">
@@ -95,6 +95,9 @@ const View = async () => {
             </TabsContent>
             <TabsContent value="images">
               <ImageUploadReport data={uploadedimages} />
+            </TabsContent>
+            <TabsContent value="tracks">
+              <ManageTracks />
             </TabsContent>
           </Tabs>
         </div>
