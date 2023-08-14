@@ -17,7 +17,7 @@ import {
 } from '@repo/ui';
 import { Comments } from '../comments';
 import { Markdown } from '~/components/ui/markdown';
-import ReportDialog from '~/components/report';
+import { ReportDialog } from '~/components/report';
 import type { ChallengeSolution } from '~/app/challenge/[id]/solutions/[solutionId]/page';
 
 interface Props {

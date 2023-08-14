@@ -14,7 +14,7 @@ import { replyComment, updateComment, type CommentsByChallengeId } from './comme
 import { CommentDeleteDialog } from './delete';
 import { getPaginatedComments } from './getCommentRouteData';
 import { Markdown } from '~/components/ui/markdown';
-import ReportDialog from '~/components/report';
+import { ReportDialog } from '~/components/report';
 import { getRelativeTime } from '~/utils/relativeTime';
 
 interface SingleCommentProps {
@@ -282,9 +282,9 @@ function SingleComment({
                 </CommentDeleteDialog>
               ) : (
                 <ReportDialog commentId={comment.id} reportType="COMMENT">
-                  <button className="flex cursor-pointer items-center text-[0.8rem] text-neutral-400 duration-200 hover:text-neutral-500 dark:text-neutral-600 dark:hover:text-neutral-500">
+                  <div className="flex cursor-pointer items-center text-[0.8rem] text-neutral-400 duration-200 hover:text-neutral-500 dark:text-neutral-600 dark:hover:text-neutral-500">
                     Report
-                  </button>
+                  </div>
                 </ReportDialog>
               )}
             </>

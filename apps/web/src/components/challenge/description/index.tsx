@@ -27,7 +27,7 @@ import { addOrRemoveBookmark } from '../bookmark.action';
 import { incrementOrDecrementUpvote } from '../increment.action';
 import { Markdown } from '~/components/ui/markdown';
 import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
-import ReportDialog from '~/components/report';
+import { ReportDialog } from '~/components/report';
 import { getRelativeTime } from '~/utils/relativeTime';
 
 interface Props {

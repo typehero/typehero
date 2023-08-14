@@ -1,5 +1,1 @@
-import Waitlist from '~/components/landing/waitlist';
-
-export default async function WaitlistPage() {
-  return <Waitlist />;
-}
+export { Waitlist as default } from '~/components/landing/waitlist';

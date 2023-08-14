@@ -31,7 +31,7 @@ const waitlistFormSchema = z.object({
 
 export type WaitlistFormSchema = z.infer<typeof waitlistFormSchema>;
 
-export default function WaitlistForm() {
+export function WaitlistForm() {
   const [state, setState] = useState<'error' | 'idle' | 'submitting' | 'success'>('idle');
 
   const isSubmitting = state === 'submitting';

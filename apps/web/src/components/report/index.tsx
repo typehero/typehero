@@ -49,7 +49,7 @@ export interface ReportSolutionDialogProps extends ReportDialogPropsBase {
   solutionId: number;
 }
 
-export default function ReportDialog({
+export function ReportDialog({
   children,
   triggerAsChild = false,
   reportType = 'COMMENT',

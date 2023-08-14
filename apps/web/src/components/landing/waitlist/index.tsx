@@ -1,8 +1,8 @@
 import { Balancer } from 'react-wrap-balancer';
-import WaitlistForm from '~/components/landing/waitlist/waitlist-form';
+import { WaitlistForm } from '~/components/landing/waitlist/waitlist-form';
 import styles from '~/components/landing/waitlist/waitlist.module.css';
 
-export default function WaitlistPage() {
+export function Waitlist() {
   return (
     <main className="relative min-h-[calc(100vh-56px)] sm:px-16 md:px-0">
       <div className={`${styles.waitlistBackground} fixed left-0 top-0 -z-10 h-full w-full`} />
