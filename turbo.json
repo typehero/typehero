@@ -35,6 +35,9 @@
       "outputs": ["node_modules/.cache/tsbuildinfo.json"],
       "outputMode": "errors-only"
     },
+    "clean": {
+      "cache": false
+    },
     "dev": {
       "dependsOn": ["@repo/db#db:generate"],
       "persistent": true,
