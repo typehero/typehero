@@ -1,8 +1,8 @@
 'use client';
 
+import { Button } from '@repo/ui';
 import { ChevronRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { Button } from '../ui/button';
 import type { ExploreChallengeData } from './explore.action';
 
 const BUTTONS_BY_DIFFICULTY = {

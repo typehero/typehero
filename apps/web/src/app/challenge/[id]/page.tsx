@@ -1,5 +1,4 @@
 import { getServerAuthSession } from '@repo/auth/server';
-import { notFound } from 'next/navigation';
 import { getChallengeRouteData } from './getChallengeRouteData';
 import { Comments } from '~/components/challenge/comments';
 import { Description } from '~/components/challenge/description';
