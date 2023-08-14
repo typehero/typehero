@@ -1,5 +1,5 @@
 import { getServerAuthSession, type Session } from '@repo/auth/server';
-import { prisma } from '@repo/db/*';
+import { prisma } from '@repo/db';
 
 export async function Tracks() {
   const session = await getServerAuthSession();

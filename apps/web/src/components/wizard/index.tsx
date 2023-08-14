@@ -51,7 +51,7 @@ const createTestCasesSchema = z.object({
       `You need to have the line \`${USER_CODE_START}\` to signify the non-editable part`,
     ),
 });
-const createChallengeSchema = createExploreCardSchema
+export const createChallengeSchema = createExploreCardSchema
   .merge(createDescriptionSchema)
   .merge(createTestCasesSchema);
 const steps = [

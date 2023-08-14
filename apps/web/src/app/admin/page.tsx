@@ -10,6 +10,7 @@ import { ImageUploadReport } from '~/components/admin/images';
 // import Reports2 from '~/components/admin/reports';
 import { BannedUsers } from '~/components/admin/users';
 import { getInfiniteReports } from '~/components/report/report.action';
+import { ManageTracks } from './_components/tracks';
 
 async function Admin() {
   const session = await getServerAuthSession();

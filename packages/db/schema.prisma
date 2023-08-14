@@ -386,13 +386,13 @@ model TrackChallenge {
 }
 
 model Track {
-  id             Int              @id @default(autoincrement())
-  title          String
-  description    String
-  visible        Boolean          @default(true)
-  trackChallenge TrackChallenge[]
-  user           User?            @relation(fields: [userId], references: [id])
-  userId         String?
+  id              Int              @id @default(autoincrement())
+  title           String
+  description     String
+  visible         Boolean          @default(true)
+  trackChallenges TrackChallenge[]
+  user            User?            @relation(fields: [userId], references: [id])
+  userId          String?
 
   @@index([userId])
 }

@@ -5,24 +5,26 @@ import { type ColumnDef } from '@tanstack/react-table';
 
 export const columns: ColumnDef<Track>[] = [
   {
-    accessorKey: 'name',
-    header: 'Name',
+    accessorKey: 'title',
+    header: 'Tit;e',
   },
   {
-    accessorKey: 'difficulty',
-    header: 'Difficulty',
-  },
-  {
-    accessorKey: 'shortDescription',
+    accessorKey: 'description',
     header: 'Description',
   },
   {
-    accessorKey: 'user.name',
-    header: 'Created By',
+    accessorKey: 'visible',
+    header: 'Visible',
+    cell: (info) => (info.getValue() ? 'Yes' : 'No'),
   },
   {
-    accessorKey: 'createdAt',
-    header: 'Created On',
-    cell: (info) => new Date(info.getValue() as Date).toLocaleDateString(),
+    accessorKey: 'trackChallenges',
+    header: 'No. of challenges',
+    cell: ({ cell, row }) => {
+      console.log({ og: row.original });
+
+      // @ts-ignore
+      return <pre>{row.original.trackChallenges?.length ?? 0}</pre>;
+    },
   },
 ];

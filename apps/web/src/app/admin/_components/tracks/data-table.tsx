@@ -1,22 +1,21 @@
 'use client';
 
-import type { Challenge } from '@repo/db/types';
+import type { Track } from '@repo/db/types';
+import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@repo/ui';
 import { useQuery } from '@tanstack/react-query';
 import {
-  type PaginationState,
   flexRender,
   getCoreRowModel,
   useReactTable,
   type ColumnDef,
+  type PaginationState,
 } from '@tanstack/react-table';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
-import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@repo/ui';
-import type { ChallengeReviewData } from '~/app/api/challenge-reviews/route';
-import { getBaseUrl } from '~/utils/getBaseUrl';
+import { getTracks } from './tracks.actions';
 
 interface Props {
-  columns: ColumnDef<Challenge>[];
+  columns: ColumnDef<Track>[];
 }
 
 export function DataTable({ columns }: Props) {
@@ -31,7 +30,7 @@ export function DataTable({ columns }: Props) {
     size: pageSize,
   };
 
-  const data = useQuery(['data', fetchDataOptions], () => getChallengeReviews(fetchDataOptions), {
+  const data = useQuery(['tracks', fetchDataOptions], () => getTracks(fetchDataOptions), {
     keepPreviousData: true,
   });
 
@@ -43,6 +42,7 @@ export function DataTable({ columns }: Props) {
     [pageIndex, pageSize],
   );
 
+  console.log({ data: data.data });
   const table = useReactTable({
     data: data.data?.[1] ?? [],
     columns,
@@ -127,13 +127,4 @@ export function DataTable({ columns }: Props) {
       </div>
     </div>
   );
-}
-
-async function getChallengeReviews(options: {
-  page: number;
-  size: number;
-}): Promise<ChallengeReviewData> {
-  return fetch(
-    `${getBaseUrl()}/api/challenge-reviews?page=${options.page}&size=${options.size}`,
-  ).then((res) => res.json());
 }
