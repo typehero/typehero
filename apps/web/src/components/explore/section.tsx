@@ -1,4 +1,4 @@
-import { Diamond } from 'lucide-react';
+import { Diamond } from '@repo/ui/icons';
 import type { ExploreChallengeData } from './explore.action';
 import { ExploreCarousel } from './section-carousel';
 import { ViewMoreButton } from './view-more-button';

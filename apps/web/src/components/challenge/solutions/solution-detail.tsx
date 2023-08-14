@@ -1,18 +1,24 @@
 'use client';
 
-import { Calendar, Flag, Share, X } from 'lucide-react';
+import { Calendar, Flag, Share, X } from '@repo/ui/icons';
 import Link from 'next/link';
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Button,
+  TypographyLarge,
+  toast,
+  UserBadge,
+  ActionMenu,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@repo/ui';
 import { Comments } from '../comments';
-import type { ChallengeSolution } from '~/app/challenge/[id]/solutions/[solutionId]/page';
-import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
-import { Button } from '~/components/ui/button';
 import { Markdown } from '~/components/ui/markdown';
-import { TypographyLarge } from '~/components/ui/typography/large';
-import { toast } from '~/components/ui/use-toast';
-import { UserBadge } from '~/components/ui/user-badge';
 import ReportDialog from '~/components/report';
-import { ActionMenu } from '~/components/ui/action-menu';
-import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
+import type { ChallengeSolution } from '~/app/challenge/[id]/solutions/[solutionId]/page';
 
 interface Props {
   solution: ChallengeSolution;
@@ -79,7 +85,7 @@ export function SolutionDetails({ solution }: Props) {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <UserBadge username={solution.user?.name ?? ''} />
+              <UserBadge username={solution.user?.name ?? ''} linkComponent={Link} />
               <div className="flex items-center">
                 <Calendar className="mr-2 h-4 w-4 stroke-gray-400" />
                 <span className="text-xs text-gray-400">

@@ -1,12 +1,21 @@
 'use client';
 // TODO: unify this with the explore card into single component (maybe? idk how that'd work, too many changes)
-import { MessageCircle, ThumbsUp } from 'lucide-react';
+import { MessageCircle, ThumbsUp } from '@repo/ui/icons';
 import { type Difficulty } from '@repo/db/types';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { Button } from '../ui/button';
-import { DifficultyBadge } from '../ui/difficulty-badge';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  Button,
+  DifficultyBadge,
+} from '@repo/ui';
 import { getRelativeTime } from '~/utils/relativeTime';
-import { Select, SelectContent, SelectItem, SelectTrigger } from '~/components/ui/select';
 
 // NOTE: this does not have hover: effects from explore-card
 const GRADIENTS_BY_DIFFICULTY = {

@@ -1,10 +1,10 @@
-import { ThumbsUp } from 'lucide-react';
+import { ThumbsUp } from '@repo/ui/icons';
+import { Text, UserBadge } from '@repo/ui';
+import Link from 'next/link';
 import { type ReportWithInfo } from '~/app/admin/report/[id]/report.action';
 import { getChallenge } from '~/components/admin/admin.actions';
 import { CodeEditor } from '~/components/ui/code-editor';
 import { Markdown } from '~/components/ui/markdown';
-import Text from '~/components/ui/typography/typography';
-import { UserBadge } from '~/components/ui/user-badge';
 
 export interface ChallengeReportProps {
   report: NonNullable<ReportWithInfo>;
@@ -30,7 +30,10 @@ export default async function ChallengeReport({ report }: ChallengeReportProps) 
             timeStyle: 'medium',
           })}
         </Text>
-        <UserBadge username={report.challenge.user.name || 'No author found'} />
+        <UserBadge
+          username={report.challenge.user.name || 'No author found'}
+          linkComponent={Link}
+        />
         <div className="my-2 flex gap-4">
           <ThumbsUp /> {challengeInfo._count.vote}
         </div>

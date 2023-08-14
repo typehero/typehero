@@ -1,13 +1,13 @@
 'use client';
 import type { Difficulty } from '@repo/db/types';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight } from '@repo/ui/icons';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { ExploreCard } from './explore-card';
-import type { ExploreChallengeData } from '.';
+import type { ExploreChallengeData } from './explore.action';
 
 interface Props {
-  challenges: ExploreChallengeData;
+  challenges: Awaited<ExploreChallengeData>;
 }
 
 const difficultyToNumber: Record<Difficulty, number> = {

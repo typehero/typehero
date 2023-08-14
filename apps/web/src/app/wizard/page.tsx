@@ -1,5 +1,5 @@
 import { getServerAuthSession } from '@repo/auth/server';
-import { TypographyH2 } from '~/components/ui/typography/h2';
+import { TypographyH2 } from '@repo/ui';
 import { Wizard } from '~/components/wizard';
 
 export default async function Page() {

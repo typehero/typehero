@@ -1,5 +1,5 @@
-import { Plus } from 'lucide-react';
-import { Button } from '~/components/ui/button';
+import { Plus } from '@repo/ui/icons';
+import { Button } from '@repo/ui';
 
 interface Props {
   disabled: boolean;

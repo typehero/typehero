@@ -4,12 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
 import * as z from 'zod';
 import Link from 'next/link';
-import { Button } from '../ui/button';
-import { Form, FormField, FormItem, FormMessage } from '../ui/form';
-import { Input } from '../ui/input';
+import { Button, Form, FormField, FormItem, FormMessage, Input, toast, MagicIcon } from '@repo/ui';
 import { RichMarkdownEditor } from '../ui/rich-markdown-editor';
-import { toast } from '../ui/use-toast';
-import { MagicIcon } from '../ui/magic-icon';
 import { updateProfile } from './settings.action';
 
 export interface UserLinkType {

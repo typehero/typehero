@@ -1,11 +1,10 @@
-import { AlertCircle, ChevronLeft } from 'lucide-react';
+import { AlertCircle, ChevronLeft } from '@repo/ui/icons';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import { Text, Alert, AlertDescription, AlertTitle } from '@repo/ui';
 import ReportActions from './actions';
 import { getReport, type ReportWithInfo } from './report.action';
-import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert';
 import { Markdown } from '~/components/ui/markdown';
-import Text from '~/components/ui/typography/typography';
 import ChallengeReport from '~/components/report/types/challenge.report';
 import CommentReport from '~/components/report/types/comment.report';
 import UserReportUi from '~/components/report/types/user.report';

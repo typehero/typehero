@@ -1,4 +1,4 @@
-import { Button } from '../ui/button';
+import { Button } from '@repo/ui';
 import { STEPS } from '.';
 
 interface Props {

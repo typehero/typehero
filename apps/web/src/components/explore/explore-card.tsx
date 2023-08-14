@@ -1,6 +1,12 @@
-import { Circle, Diamond, MessageCircle, Plus, Sparkle, ThumbsUp, Triangle } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { DifficultyBadge } from '../ui/difficulty-badge';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  DifficultyBadge,
+} from '@repo/ui';
+import { Circle, Diamond, MessageCircle, Plus, Sparkle, ThumbsUp, Triangle } from '@repo/ui/icons';
 import type { ExploreChallengeData } from './explore.action';
 import { getRelativeTime } from '~/utils/relativeTime';
 
