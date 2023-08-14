@@ -8,6 +8,7 @@
     "dev": "dotenv -e ../../.env next dev",
     "format": "prettier -w \"src/**/*.{ts,tsx,css,cjs,mjs,json}\"",
     "lint": "eslint .",
+    "clean": "rm -rf .next dist node_modules",
     "start": "next start",
     "typecheck": "tsc --noEmit"
   },

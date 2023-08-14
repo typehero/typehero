@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
+    "clean": "turbo clean && rm -rf node_modules",
     "db:push": "turbo db:push",
     "db:seed": "turbo db:seed",
     "db:studio": "turbo db:studio",
