@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { TypographyH3 } from '@repo/ui';
 import { ExploreCard } from './explore-card';
-import { getChallangesByTagOrDifficulty } from './explore.action';
+import { getChallengesByTagOrDifficulty } from './explore.action';
 
 interface ExploreSlugProps {
   slug: string;
@@ -11,7 +11,7 @@ interface ExploreSlugProps {
  * todo: paginate the challenges. also make em look nice.
  */
 export async function ExploreSlug({ slug }: ExploreSlugProps) {
-  const challenges = await getChallangesByTagOrDifficulty(slug);
+  const challenges = await getChallengesByTagOrDifficulty(slug);
 
   return (
     <div className="container flex flex-col items-center gap-8 py-5 md:gap-20 md:pb-20">

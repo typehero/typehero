@@ -1,4 +1,5 @@
 import { Diamond } from '@repo/ui/icons';
+import type { Difficulty, Tags } from '@repo/db/types';
 import type { ExploreChallengeData } from './explore.action';
 import { ExploreCarousel } from './section-carousel';
 import { ViewMoreButton } from './view-more-button';
@@ -11,7 +12,7 @@ interface Props {
    * - Make sure it's either a `DIFFICULTY` or `TAGS`. Anything else will return in not found.
    * - Case doesn't matter since we trim & uppercase before querying db.
    */
-  moreRoute: string;
+  moreRoute: Difficulty | Tags;
 }
 
 const COLORS_BY_DIFFICULTY = {

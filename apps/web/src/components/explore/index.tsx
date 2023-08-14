@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { getChallangesByTagOrDifficulty } from './explore.action';
+import { getChallengesByTagOrDifficulty } from './explore.action';
 import { ExploreSection } from './section';
 import { ExploreSectionSkeleton } from './section-skeleton';
 
@@ -17,37 +17,37 @@ export async function Explore() {
       <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection
           title="Most Popular"
-          fetcher={getChallangesByTagOrDifficulty}
-          moreRoute="popular"
+          fetcher={getChallengesByTagOrDifficulty}
+          moreRoute="POPULAR"
         />
       </Suspense>
       <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection
           title="Newest"
-          fetcher={getChallangesByTagOrDifficulty}
-          moreRoute="newest"
+          fetcher={getChallengesByTagOrDifficulty}
+          moreRoute="NEWEST"
         />
       </Suspense>
       <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection
           title="Great for Beginners"
-          fetcher={getChallangesByTagOrDifficulty}
-          moreRoute="easy"
+          fetcher={getChallengesByTagOrDifficulty}
+          moreRoute="EASY"
         />
       </Suspense>
       <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection
           title="Great for Enthusiasts"
-          fetcher={getChallangesByTagOrDifficulty}
-          moreRoute="medium"
+          fetcher={getChallengesByTagOrDifficulty}
+          moreRoute="MEDIUM"
         />
       </Suspense>
 
       <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection
           title="For the Experts"
-          fetcher={getChallangesByTagOrDifficulty}
-          moreRoute="hard"
+          fetcher={getChallengesByTagOrDifficulty}
+          moreRoute="HARD"
         />
       </Suspense>
     </div>
