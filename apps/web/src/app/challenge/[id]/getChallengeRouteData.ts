@@ -27,6 +27,16 @@ export const getChallengeRouteData = cache((id: string, session: Session | null)
           userId: session?.user.id || '',
         },
       },
+      comment: {
+        orderBy: [
+          {
+            createdAt: 'desc',
+          },
+        ],
+        include: {
+          user: true,
+        },
+      },
     },
   });
 });
