@@ -143,7 +143,7 @@ export function Comment({ comment, readonly = false, rootId, type, queryKey }: C
               <SingleComment
                 comment={reply}
                 isReply
-                key={comment.id}
+                key={reply.id}
                 replyQueryKey={replyQueryKey}
               />
             )),
