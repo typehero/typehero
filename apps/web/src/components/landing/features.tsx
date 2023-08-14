@@ -35,8 +35,9 @@ function Features() {
           </div>
           <div className="relative z-10 grid w-full gap-8 lg:grid-cols-2">
             <FeatureCard
-              className="left-[35px] top-[35%] w-[150%] transition-transform duration-300 group-hover:scale-105 sm:left-[35px] sm:top-[30%] sm:w-[110%]"
+              className="pointer-events-none left-[35px] top-[35%] w-[150%] transition-transform duration-300 group-hover:scale-105 sm:left-[35px] sm:top-[30%] sm:w-[110%]"
               description="Engage in TypeScript challenges to strengthen your grasp of the type system and advanced features"
+              classNameBG="lg:bg-gradient-to-br"
               image={{
                 dark: FeatureCardChallengeDark,
                 light: FeatureCardChallengeLight,
@@ -46,8 +47,9 @@ function Features() {
             />
 
             <FeatureCard
-              className="left-[35px] top-[35%] w-[150%] transition-transform duration-300 group-hover:scale-105 sm:left-[35px] sm:top-[30%] sm:w-[110%]"
+              className="pointer-events-none left-[35px] top-[35%] w-[150%] transition-transform duration-300 group-hover:scale-105 sm:left-[35px] sm:top-[30%] sm:w-[110%]"
               description="Developers can share solutions and engage in discussions through commenting"
+              classNameBG="lg:bg-gradient-to-bl"
               image={{
                 dark: FeatureCardChallengeDark,
                 light: FeatureCardChallengeLight,
@@ -57,8 +59,9 @@ function Features() {
             />
 
             <FeatureCard
-              className="left-[35px] top-[35%] w-[150%] transition-transform duration-300 group-hover:scale-105 sm:left-[35px] sm:top-[30%] sm:w-[110%]"
+              className="pointer-events-none left-[35px] top-[35%] w-[150%] transition-transform duration-300 group-hover:scale-105 sm:left-[35px] sm:top-[30%] sm:w-[110%]"
               description="Craft your own coding challenges to share with the Typehero community"
+              classNameBG="lg:bg-gradient-to-tr"
               image={{
                 dark: FeatureCardChallengeDark,
                 light: FeatureCardChallengeLight,
@@ -68,8 +71,9 @@ function Features() {
             />
 
             <FeatureCard
-              className="left-[35px] top-[35%] w-[150%] transition-transform duration-300 group-hover:scale-105 sm:left-[35px] sm:top-[30%] sm:w-[110%]"
+              className="pointer-events-none left-[35px] top-[35%] w-[150%] transition-transform duration-300 group-hover:scale-105 sm:left-[35px] sm:top-[30%] sm:w-[110%]"
               description="Keep tabs on your coding journey with the ability to track your progress on your user profile"
+              classNameBG="lg:bg-gradient-to-tl"
               image={{
                 dark: FeatureCardChallengeDark,
                 light: FeatureCardChallengeLight,
