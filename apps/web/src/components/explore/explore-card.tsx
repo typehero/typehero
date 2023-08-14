@@ -1,12 +1,12 @@
 import { Circle, Diamond, MessageCircle, Plus, Sparkle, ThumbsUp, Triangle } from 'lucide-react';
+import { getRelativeTime } from '~/utils/relativeTime';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { DifficultyBadge } from '../ui/difficulty-badge';
-import { type ExploreChallengeData } from '.';
-import { getRelativeTime } from '~/utils/relativeTime';
+import type { ExploreChallengeData } from './explore.action';
 
 interface ExploreCardProps {
   challenge: Pick<
-    ExploreChallengeData[0],
+    Awaited<ExploreChallengeData>[0],
     '_count' | 'difficulty' | 'name' | 'shortDescription' | 'updatedAt' | 'user'
   >;
 }
