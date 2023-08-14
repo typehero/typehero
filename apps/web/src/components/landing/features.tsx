@@ -37,7 +37,7 @@ function Features() {
             <FeatureCard
               className="pointer-events-none left-[35px] top-[35%] w-[150%] transition-transform duration-300 group-hover:scale-105 sm:left-[35px] sm:top-[30%] sm:w-[110%]"
               description="Engage in TypeScript challenges to strengthen your grasp of the type system and advanced features"
-              classNameBG="bg-gradient-to-br"
+              classNameBG="lg:bg-gradient-to-br"
               image={{
                 dark: FeatureCardChallengeDark,
                 light: FeatureCardChallengeLight,
@@ -49,7 +49,7 @@ function Features() {
             <FeatureCard
               className="pointer-events-none left-[35px] top-[35%] w-[150%] transition-transform duration-300 group-hover:scale-105 sm:left-[35px] sm:top-[30%] sm:w-[110%]"
               description="Developers can share solutions and engage in discussions through commenting"
-              classNameBG="bg-gradient-to-bl"
+              classNameBG="lg:bg-gradient-to-bl"
               image={{
                 dark: FeatureCardChallengeDark,
                 light: FeatureCardChallengeLight,
@@ -61,7 +61,7 @@ function Features() {
             <FeatureCard
               className="pointer-events-none left-[35px] top-[35%] w-[150%] transition-transform duration-300 group-hover:scale-105 sm:left-[35px] sm:top-[30%] sm:w-[110%]"
               description="Craft your own coding challenges to share with the Typehero community"
-              classNameBG="bg-gradient-to-tr"
+              classNameBG="lg:bg-gradient-to-tr"
               image={{
                 dark: FeatureCardChallengeDark,
                 light: FeatureCardChallengeLight,
@@ -73,7 +73,7 @@ function Features() {
             <FeatureCard
               className="pointer-events-none left-[35px] top-[35%] w-[150%] transition-transform duration-300 group-hover:scale-105 sm:left-[35px] sm:top-[30%] sm:w-[110%]"
               description="Keep tabs on your coding journey with the ability to track your progress on your user profile"
-              classNameBG="bg-gradient-to-tl"
+              classNameBG="lg:bg-gradient-to-tl"
               image={{
                 dark: FeatureCardChallengeDark,
                 light: FeatureCardChallengeLight,
