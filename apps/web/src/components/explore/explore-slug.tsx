@@ -1,10 +1,7 @@
-import { prisma } from '@repo/db';
-import { Tags, type Difficulty } from '@repo/db/types';
 import Link from 'next/link';
 import { TypographyH3 } from '../ui/typography/h3';
 import { ExploreCard } from './explore-card';
-
-export const dynamic = 'force-dynamic';
+import { getChallangesByTagOrDifficulty } from './explore.action';
 
 interface ExploreSlugProps {
   slug: string;
@@ -14,20 +11,7 @@ interface ExploreSlugProps {
  * todo: paginate the challenges. also make em look nice.
  */
 export async function ExploreSlug({ slug }: ExploreSlugProps) {
-  let challenges: Awaited<ReturnType<typeof getChallangesByTagOrDifficulty>>;
-
-  try {
-    challenges = await getChallangesByTagOrDifficulty(slug);
-  } catch (e) {
-    console.log(e);
-    return (
-      <div className="container flex h-full flex-col items-center justify-center gap-8 py-5 md:gap-20 md:pb-20">
-        <div className="flex space-y-2">
-          <TypographyH3>Oops! We couldn&apos;t find the {slug.toString()} challenges</TypographyH3>
-        </div>
-      </div>
-    );
-  }
+  const challenges = await getChallangesByTagOrDifficulty(slug);
 
   return (
     <div className="container flex flex-col items-center gap-8 py-5 md:gap-20 md:pb-20">
@@ -50,45 +34,8 @@ export async function ExploreSlug({ slug }: ExploreSlugProps) {
 }
 
 /**
- * Fetches challenges either by tag or difficulty.
- */
-export async function getChallangesByTagOrDifficulty(str: string) {
-  const formattedStr = str.trim().toUpperCase();
-  return prisma.challenge.findMany({
-    where: {
-      status: 'ACTIVE',
-      user: {
-        NOT: {
-          status: 'BANNED',
-        },
-      },
-      // OR didn't work. so this workaround is fine because IT WORKS :3
-      ...(isTag(formattedStr)
-        ? {
-            tags: { every: { tag: formattedStr } },
-          }
-        : {
-            difficulty: { in: [formattedStr as Difficulty] },
-          }),
-    },
-    include: {
-      _count: {
-        select: { vote: true, comment: true },
-      },
-      user: true,
-    },
-  });
-}
-
-const allTags: Tags[] = Object.values(Tags);
-
-function isTag(str: string): str is Tags {
-  return allTags.includes(str as keyof typeof Tags);
-}
-
-/**
  * Converts the string to PascalCase.
  */
-function toPascalCase(str: string) {
+export function toPascalCase(str: string) {
   return `${str.charAt(0).toUpperCase()}${str.substring(1, str.length)}`;
 }
