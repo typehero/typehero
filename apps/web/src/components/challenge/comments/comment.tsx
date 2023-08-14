@@ -140,12 +140,7 @@ export function Comment({ comment, readonly = false, rootId, type, queryKey }: C
           {data?.pages.flatMap((page) =>
             page.comments.map((reply) => (
               // this is a reply
-              <SingleComment
-                comment={reply}
-                isReply
-                key={reply.id}
-                replyQueryKey={replyQueryKey}
-              />
+              <SingleComment comment={reply} isReply key={reply.id} replyQueryKey={replyQueryKey} />
             )),
           )}
         </div>
