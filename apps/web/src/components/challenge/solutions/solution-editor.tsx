@@ -4,13 +4,19 @@ import { useTheme } from 'next-themes';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import {
+  Button,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+  Input,
+  useToast,
+} from '@repo/ui';
 import { postSolution } from './post-solution.action';
-import { Button } from '~/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '~/components/ui/form';
-import { Input } from '~/components/ui/input';
-import { useToast } from '~/components/ui/use-toast';
-import type { ChallengeSolutionsRouteData } from '~/app/challenge/[id]/solutions/page';
 import { RichMarkdownEditor } from '~/components/ui/rich-markdown-editor';
+import type { ChallengeSolutionsRouteData } from '~/app/challenge/[id]/solutions/page';
 
 const getDefaultMarkdown = (solution: string) => `
 ## Thoughts

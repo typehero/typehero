@@ -1,8 +1,9 @@
 'use server';
 import { RoleTypes } from '@repo/db/types';
-import { Lock } from 'lucide-react';
+import { Lock } from '@repo/ui/icons';
 import React from 'react';
 import { getServerAuthSession } from '@repo/auth/server';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui';
 import { ChallengeReviews } from '~/components/admin/challenge-reviews';
 import { getBannedUsers, getUploadedImages } from '~/components/admin/admin.actions';
 import { ImageUploadReport } from '~/components/admin/images';

@@ -1,5 +1,5 @@
 'use client';
-import { Binary } from 'lucide-react';
+import { Binary } from '@repo/ui/icons';
 
 export function Footsies() {
   return (

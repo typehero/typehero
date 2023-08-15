@@ -11,16 +11,8 @@ import {
 } from '@tanstack/react-table';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
+import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@repo/ui';
 import type { ChallengeReviewData } from '~/app/api/challenge-reviews/route';
-import { Button } from '~/components/ui/button';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '~/components/ui/table';
 import { getBaseUrl } from '~/utils/getBaseUrl';
 
 interface Props {

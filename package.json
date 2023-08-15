@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
+    "clean": "turbo clean && rm -rf node_modules",
     "db:push": "turbo db:push",
     "db:seed": "turbo db:seed",
     "db:studio": "turbo db:studio",
@@ -18,7 +19,7 @@
     "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache'",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache'",
     "prepare": "husky install",
-    "refresh": "turbo db:reset",
+    "refresh": "turbo db:reset db:seed --concurrency=1",
     "typecheck": "turbo typecheck --continue"
   },
   "devDependencies": {

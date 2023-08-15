@@ -1,10 +1,9 @@
 'use client';
 
 import { useWatch } from 'react-hook-form';
-import { FormField, FormItem, FormMessage } from '../ui/form';
+import { FormField, FormItem, FormMessage, TypographyH3 } from '@repo/ui';
 import { Markdown } from '../ui/markdown';
 import { RichMarkdownEditor } from '../ui/rich-markdown-editor';
-import { TypographyH3 } from '../ui/typography/h3';
 import { type WizardForm } from '.';
 
 interface Props {

@@ -1,4 +1,4 @@
-import { Skeleton } from '../ui/skeleton';
+import { Skeleton } from '@repo/ui';
 import { ExploreCardSkeleton } from './explore-card-skeleton';
 
 export function ExploreSectionSkeleton() {

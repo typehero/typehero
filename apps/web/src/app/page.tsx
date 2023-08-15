@@ -1,22 +1,20 @@
-import Head from 'next/head';
+import type { Metadata } from 'next';
 import { Provider as BalancerProvider } from 'react-wrap-balancer';
-import Hero from '~/components/landing/hero';
-import Features from '~/components/landing/features';
 import Community from '~/components/landing/community/community';
+import Features from '~/components/landing/features';
+import Hero from '~/components/landing/hero';
 import Waitlist from '~/components/landing/waitlist/banner';
 import { Footsies } from '~/components/ui/footsies';
+
+export const metadata: Metadata = {
+  title: 'Typehero',
+  description:
+    'Connect, collaborate, and grow with a community of TypeScript developers. Elevate your skills through interactive coding challenges, discussions, and knowledge sharing',
+};
 
 export default async function Index() {
   return (
     <>
-      <Head>
-        <title>Typehero</title>
-        <meta
-          content="Level up your typescript skills with interactive exercises"
-          name="description"
-        />
-        <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
-      </Head>
       <BalancerProvider>
         <Hero />
         <Features />

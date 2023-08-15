@@ -1,22 +1,26 @@
 import type { OnChange } from '@monaco-editor/react';
-import { Settings } from 'lucide-react';
+import { Settings } from '@repo/ui/icons';
 import type * as monaco from 'monaco-editor';
 import { useCallback } from 'react';
-import { LIB_URI, type TsErrors } from '../challenge/code-panel';
-import { libSource } from '../challenge/code-panel/editor-types';
-import { SettingsForm } from '../challenge/settings-form';
-import { CodeEditor } from '../ui/code-editor';
-import { FormField, FormItem, FormMessage } from '../ui/form';
-import { TypographyH3 } from '../ui/typography/h3';
-import type { WizardForm } from '.';
-import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 import {
+  FormField,
+  FormItem,
+  FormMessage,
+  TypographyH3,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '~/components/ui/dialog';
+} from '@repo/ui';
+import { LIB_URI, type TsErrors } from '../challenge/code-panel';
+import { libSource } from '../challenge/code-panel/editor-types';
+import { SettingsForm } from '../challenge/settings-form';
+import { CodeEditor } from '../ui/code-editor';
+import type { WizardForm } from '.';
 
 interface Props {
   form: WizardForm;

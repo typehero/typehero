@@ -1,13 +1,23 @@
 'use client';
 
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Input,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Textarea,
+  TypographyH3,
+} from '@repo/ui';
 import { useWatch } from 'react-hook-form';
-import type { ExploreChallengeFetcher } from '../explore';
 import { ExploreCard } from '../explore/explore-card';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
-import { Input } from '../ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import { Textarea } from '../ui/textarea';
-import { TypographyH3 } from '../ui/typography/h3';
+import type { ExploreChallengeData } from '../explore/explore.action';
 import type { WizardForm } from '.';
 
 interface Props {
@@ -20,7 +30,7 @@ export function ChallengeCardEditor({ form }: Props) {
   const shortDescription = useWatch({ control: form.control, name: 'shortDescription' });
 
   const data: Pick<
-    Awaited<ReturnType<ExploreChallengeFetcher>>[0],
+    Awaited<ExploreChallengeData>[0],
     '_count' | 'difficulty' | 'name' | 'shortDescription' | 'updatedAt' | 'user'
   > = {
     difficulty,

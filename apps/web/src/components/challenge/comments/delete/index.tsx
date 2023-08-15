@@ -1,14 +1,21 @@
 import { type DialogTriggerProps } from '@radix-ui/react-dialog';
 import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  TypographyP,
+  TypographyLarge,
+  toast,
+} from '@repo/ui';
 import { deleteComment, type CommentsByChallengeId } from '../comment.action';
-import { TypographyP } from '~/components//ui/paragraph';
-import { Button } from '~/components/ui/button';
-import { Dialog, DialogContent, DialogTrigger } from '~/components/ui/dialog';
-import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
-import { TypographyLarge } from '~/components/ui/typography/large';
-import { toast } from '~/components/ui/use-toast';
 import { getRelativeTime } from '~/utils/relativeTime';
+import { Markdown } from '~/components/ui/markdown';
 
 interface CommentDeleteDialogProps extends DialogTriggerProps {
   comment: CommentsByChallengeId[number];
@@ -72,11 +79,9 @@ export function CommentDeleteDialog({
               </Tooltip>
             </div>
           </div>
-          <p className="w-full break-words pl-[1px] text-sm">
-            {/* TODO: <code></code> is <Markdown /> does not wrap long lines causing overflow */}
-            {/* <Markdown>{comment.text}</Markdown> */}
-            {comment.text}
-          </p>
+          <div className="w-full break-words pl-[1px] text-sm">
+            <Markdown>{comment.text}</Markdown>
+          </div>
         </div>
         <TypographyP>The following comment will be permanently deleted.</TypographyP>
         <div className="flex flex-row gap-2">

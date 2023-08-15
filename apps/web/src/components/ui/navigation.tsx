@@ -1,21 +1,21 @@
 'use client';
 
-import { useTheme } from 'next-themes';
-import { RoleTypes } from '@repo/db/types';
-import { Loader2, LogIn, Moon, Plus, Settings, Settings2, Sun, User } from 'lucide-react';
 import { signIn, signOut, useSession } from '@repo/auth/react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { Button } from './button';
+import { RoleTypes } from '@repo/db/types';
 import {
+  Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from './dropdown-menu';
-import { navigationMenuTriggerStyle } from './navigation-menu';
+  navigationMenuTriggerStyle,
+} from '@repo/ui';
+import { Loader2, LogIn, Moon, Plus, Settings, Settings2, Sun, User } from '@repo/ui/icons';
+import { useTheme } from 'next-themes';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export function Navigation() {
   const pathname = usePathname();
@@ -23,9 +23,9 @@ export function Navigation() {
     <header className="z-10 w-full">
       <nav
         className={`flex h-14 items-center ${
-          pathname.startsWith('/challenge') || pathname.startsWith('/admin/challenge')
+          pathname?.startsWith('/challenge') || pathname?.startsWith('/admin/challenge')
             ? 'px-4'
-            : 'container  '
+            : 'container'
         }`}
       >
         <div className="flex w-full items-center justify-between">

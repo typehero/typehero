@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useForm, type UseFormReturn } from 'react-hook-form';
 import { z } from 'zod';
 import { useSession } from '@repo/auth/react';
+import { Form } from '@repo/ui';
 import { USER_CODE_START, USER_CODE_START_REGEX } from '../challenge/code-panel/constants';
 import type { TsErrors } from '../challenge/code-panel';
 import { ChallengeCardEditor } from './ChallengeCardEditor';
@@ -18,7 +19,6 @@ import { uploadChallenge } from './create.action';
 import DEFAULT_CHALLENGE_TEMPLATE from './default-challenge.md';
 import DEFAULT_TEST_CASES from './default-tests.md';
 import DEFAULT_DESCRIPTION from './default-description.md';
-import { Form } from '~/components/ui/form';
 
 export const enum STEPS {
   ChallengeCard,
