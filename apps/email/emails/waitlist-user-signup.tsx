@@ -26,10 +26,10 @@ export const UserSignupEmail = () => {
           <Container className="mx-auto my-[40px] w-[465px] rounded border border-solid border-[#eaeaea] p-[20px]">
             <Section className="mt-[32px]">
               <Img
-                src={`${baseUrl}/static/typehero.png`}
+                src={`${baseUrl}/typehero.png`}
                 width="40"
                 height="37"
-                alt="Vercel"
+                alt="Typehero"
                 className="mx-auto my-0"
               />
             </Section>
@@ -41,8 +41,8 @@ export const UserSignupEmail = () => {
               Thank you so much for signing up for the typehero waitlist, we really apperciate it.
             </Text>
             <Img
-              src={`${baseUrl}/static/signup.gif`}
-              alt="Vercel"
+              src={`${baseUrl}/signup.gif`}
+              alt="Nods Yes Gif"
               className="mx-auto my-0"
             />
             <Text className="text-[14px] leading-[24px] text-black">
