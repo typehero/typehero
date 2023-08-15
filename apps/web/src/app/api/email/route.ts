@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
 
   try {
     const data = await resend.emails.send({
-      from: 'Typehero <noreply@vercel.lol>',
+      from: 'Typehero <noreply@email.typehero.dev>',
       to: [to],
       subject: '🔥 Thanks for signing up to Typehero!',
       react: UserSignupEmail(),
