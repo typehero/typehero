@@ -16,6 +16,7 @@ import { Summary } from './Summary';
 import { TestCasesEditor } from './TestCasesEditor';
 import { uploadChallenge } from './create.action';
 import DEFAULT_CHALLENGE_TEMPLATE from './default-challenge.md';
+import DEFAULT_TEST_CASES from './default-tests.md';
 import DEFAULT_DESCRIPTION from './default-description.md';
 import { Form } from '~/components/ui/form';
 
@@ -83,7 +84,8 @@ export function Wizard() {
       name: '',
       difficulty: 'BEGINNER',
       description: DEFAULT_DESCRIPTION,
-      tests: DEFAULT_CHALLENGE_TEMPLATE,
+      tests: DEFAULT_TEST_CASES,
+      code: DEFAULT_CHALLENGE_TEMPLATE,
     },
   });
 
