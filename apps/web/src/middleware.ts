@@ -15,7 +15,7 @@ export function middleware(req: NextRequest) {
     }
 
     // Make the user get some damn creds
-    url.pathname = '/api/creds';
+    url.pathname = '/api/auth/creds';
 
     return NextResponse.rewrite(url);
   }
