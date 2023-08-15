@@ -14,7 +14,7 @@ import * as React from 'react';
 
 // This means we'd deploy all the email assets to a static host
 // so that we can access them from a CDN
-const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '';
+const baseUrl = process.env.NODE_ENV === "production" ? `https://email.typehero.dev` : 'http://localhost:3000';
 
 export const UserSignupEmail = () => {
   return (
