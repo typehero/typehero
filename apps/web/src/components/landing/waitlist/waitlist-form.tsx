@@ -51,6 +51,8 @@ export function WaitlistForm() {
       setState('success');
     } catch (e) {
       setState('error');
+    } finally {
+      form.reset();
     }
   }
 
