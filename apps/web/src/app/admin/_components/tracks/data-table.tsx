@@ -55,7 +55,7 @@ export function DataTable({ columns }: Props) {
     manualPagination: true,
   });
 
-  if (data.isLoading) return null;
+  if (data.isLoading) return <div>Loading...</div>;
 
   return (
     <div className="w-full rounded-md border">
@@ -81,7 +81,7 @@ export function DataTable({ columns }: Props) {
               <TableRow
                 data-state={row.getIsSelected() && 'selected'}
                 key={row.id}
-                onClick={() => router.push(`/admin/challenge/${row.original.id}`)}
+                onClick={() => router.push(`/admin/track/${row.original.id}`)}
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>

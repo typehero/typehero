@@ -7,10 +7,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui';
 import { ChallengeReviews } from '~/components/admin/challenge-reviews';
 import { getBannedUsers, getUploadedImages } from '~/components/admin/admin.actions';
 import { ImageUploadReport } from '~/components/admin/images';
-// import Reports2 from '~/components/admin/reports';
 import { BannedUsers } from '~/components/admin/users';
 import { getInfiniteReports } from '~/components/report/report.action';
 import { ManageTracks } from './_components/tracks';
+import { Reports } from '~/components/admin/reports';
 
 async function Admin() {
   const session = await getServerAuthSession();
@@ -85,7 +85,7 @@ const View = async () => {
             </TabsList>
             <TabsContent value="reports">
               <React.Suspense fallback={<>Loading...</>}>
-                {/* <Reports2 initialReports={firstPage} /> */}
+                <Reports initialReports={firstPage} />
               </React.Suspense>
             </TabsContent>
             <TabsContent value="users">

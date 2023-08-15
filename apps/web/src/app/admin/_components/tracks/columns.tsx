@@ -6,7 +6,7 @@ import { type ColumnDef } from '@tanstack/react-table';
 export const columns: ColumnDef<Track>[] = [
   {
     accessorKey: 'title',
-    header: 'Tit;e',
+    header: 'Title',
   },
   {
     accessorKey: 'description',
