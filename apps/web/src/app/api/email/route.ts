@@ -11,11 +11,20 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const to = searchParams.get('to') ?? 'test@example.com';
 
+  // TODO: this is not working yet but we can do this once resend supports CID
+  // const imageData = await fetch('https://email.typehero.dev/signup.gif').then((res) => res.arrayBuffer());
+
   try {
     const data = await resend.emails.send({
       from: 'Typehero <noreply@email.typehero.dev>',
       to: [to],
       subject: '🔥 Thanks for signing up to Typehero!',
+      // attachments: [
+      //   {
+      //     filename: 'signup.gif',
+      //     content: Buffer.from(imageData),
+      //   },
+      // ],
       react: UserSignupEmail(),
     });
 
