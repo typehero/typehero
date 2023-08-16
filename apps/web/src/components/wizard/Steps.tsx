@@ -22,7 +22,7 @@ export function Steps<T extends Step>({ steps, current, onChange }: Props<T>) {
           return (
             <li
               className={clsx(
-                'relative rounded-full py-1 pl-[0.4rem] pr-3 md:flex',
+                'relative rounded-full py-1 pl-[0.4rem] pr-3 transition-all duration-300 ease-in-out md:flex',
                 isCompleted ? 'bg-emerald-500/20' : 'bg-gray-500/10',
               )}
               key={step.name}
