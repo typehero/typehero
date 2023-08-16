@@ -74,8 +74,6 @@ export function CodePanel(props: Props) {
       return props.challenge.prompt;
     }
 
-    console.log({ defaultCode });
-
     const [appendSolutionToThis, separator] = props.challenge.prompt.split(USER_CODE_START_REGEX);
 
     return `${appendSolutionToThis ?? ''}${separator ?? ''}${defaultCode}`;

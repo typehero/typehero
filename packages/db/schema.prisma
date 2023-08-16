@@ -378,8 +378,8 @@ model TrackChallenge {
   orderId     Int
   challengeId Int
   challenge   Challenge @relation(fields: [challengeId], references: [id])
-  trackId     Int
-  track       Track     @relation(fields: [trackId], references: [id])
+  Track       Track?    @relation(fields: [trackId], references: [id])
+  trackId     Int?
 
   @@index([challengeId])
   @@index([trackId])

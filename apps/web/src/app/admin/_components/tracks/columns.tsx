@@ -1,9 +1,11 @@
 'use client';
 
-import type { Track } from '@repo/db/types';
+import type { Track, TrackChallenge } from '@repo/db/types';
+import { Button } from '@repo/ui';
 import { type ColumnDef } from '@tanstack/react-table';
+import Link from 'next/link';
 
-export const columns: ColumnDef<Track>[] = [
+export const columns: ColumnDef<Track & { trackChallenges: TrackChallenge[] }>[] = [
   {
     accessorKey: 'title',
     header: 'Title',
@@ -20,11 +22,19 @@ export const columns: ColumnDef<Track>[] = [
   {
     accessorKey: 'trackChallenges',
     header: 'No. of challenges',
-    cell: ({ cell, row }) => {
-      console.log({ og: row.original });
-
-      // @ts-ignore
+    cell: ({ row }) => {
+      console.log({ row: row.original });
       return <pre>{row.original.trackChallenges?.length ?? 0}</pre>;
+    },
+  },
+  {
+    header: '...',
+    cell: ({ row }) => {
+      return (
+        <Link href={`admin/tracks/${row.original.id}`}>
+          <Button>Manage</Button>
+        </Link>
+      );
     },
   },
 ];
