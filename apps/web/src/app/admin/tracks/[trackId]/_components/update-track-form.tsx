@@ -5,6 +5,7 @@ import {
   Button,
   Checkbox,
   DialogFooter,
+  ForceRenderUntilClient,
   Form,
   FormControl,
   FormField,
@@ -113,8 +114,8 @@ export function UpdateTrackForm({ challenges, track }: Props) {
     }
   }
   return (
-    <div className="container flex flex-col gap-5">
-      <div>
+    <ForceRenderUntilClient>
+      <div className="container flex flex-col gap-5">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
@@ -208,6 +209,6 @@ export function UpdateTrackForm({ challenges, track }: Props) {
           </form>
         </Form>
       </div>
-    </div>
+    </ForceRenderUntilClient>
   );
 }
