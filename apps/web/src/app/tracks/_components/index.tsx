@@ -48,7 +48,7 @@ function getUserEnrolledTracks(session: Session | null) {
 function getTracks() {
   return prisma.track.findMany({
     include: {
-      trackChallenge: true,
+      trackChallenges: true,
       user: true,
     },
     where: {

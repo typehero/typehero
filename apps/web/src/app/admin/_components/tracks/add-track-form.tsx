@@ -21,7 +21,6 @@ const formSchema = z.object({
   title: z.string().min(3),
   description: z.string().min(10),
   visible: z.boolean(),
-  trackChallenges: z.array(z.any()).optional(),
 });
 
 export type FormSchema = z.infer<typeof formSchema>;
@@ -39,7 +38,6 @@ export function AddTrackForm({ toggle }: Props) {
       title: '',
       description: '',
       visible: false,
-      trackChallenges: [],
     },
   });
 
