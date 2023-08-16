@@ -1,15 +1,7 @@
+import clsx from 'clsx';
 import type { Identifier, XYCoord } from 'dnd-core';
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-
-const style = {
-  border: '1px dashed gray',
-  padding: '0.5rem 1rem',
-  marginBottom: '.5rem',
-  backgroundColor: 'white',
-  cursor: 'move',
-  color: 'black',
-};
 
 interface DragItem {
   index: number;
@@ -21,9 +13,9 @@ export interface Props {
   id: number;
   text: string;
   index: number;
-  moveCard: (dragIndex: number, hoverIndex: number) => void;
+  moveChallenge: (dragIndex: number, hoverIndex: number) => void;
 }
-export function Card({ id, text, index, moveCard }: Props) {
+export function DraggableChallenge({ id, text, index, moveChallenge }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [{ handlerId }, drop] = useDrop<DragItem, unknown, { handlerId: Identifier | null }>({
     accept: 'trackChallenge',
@@ -71,7 +63,7 @@ export function Card({ id, text, index, moveCard }: Props) {
       }
 
       // Time to actually perform the action
-      moveCard(dragIndex, hoverIndex);
+      moveChallenge(dragIndex, hoverIndex);
 
       // Note: we're mutating the monitor item here!
       // Generally it's better to avoid mutations,
@@ -94,7 +86,14 @@ export function Card({ id, text, index, moveCard }: Props) {
   const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
   return (
-    <div ref={ref} style={{ ...style, opacity }} data-handler-id={handlerId}>
+    <div
+      ref={ref}
+      className={clsx({
+        'opacity-0': isDragging,
+        'opacity-1': !isDragging,
+      }, 'bg-white cursor-move p-3 text-black border border-dashed my-2')}
+      data-handler-id={handlerId}
+    >
       {index + 1} {text}
     </div>
   );

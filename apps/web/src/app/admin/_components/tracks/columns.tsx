@@ -32,7 +32,7 @@ export const columns: ColumnDef<Track & { trackChallenges: TrackChallenge[] }>[]
     cell: ({ row }) => {
       return (
         <Link href={`admin/tracks/${row.original.id}`}>
-          <Button>Manage</Button>
+          <Button variant="link">Manage</Button>
         </Link>
       );
     },

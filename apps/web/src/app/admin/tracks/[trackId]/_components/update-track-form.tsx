@@ -20,7 +20,7 @@ import { z } from 'zod';
 import { useMemo } from 'react';
 import type { ChallengesForTrack, TrackToManage } from '../page';
 import { updateTrack } from '../_actions/update-track.action';
-import { Card } from './card';
+import { DraggableChallenge } from './draggable-challenge';
 
 const trackChallengeSchema = z.object({
   challengeId: z.number(),
@@ -192,12 +192,12 @@ export function UpdateTrackForm({ challenges, track }: Props) {
 
             <div className="my-3">
               {fields.map((field, index) => (
-                <Card
+                <DraggableChallenge
                   key={field.id}
                   index={index}
                   id={Number(field.id)}
                   text={challenges.find((c) => c.id === field.challengeId)?.name ?? ''}
-                  moveCard={moveCard}
+                  moveChallenge={moveCard}
                 />
               ))}
             </div>
