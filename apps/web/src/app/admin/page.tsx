@@ -4,12 +4,12 @@ import { Lock } from '@repo/ui/icons';
 import React from 'react';
 import { getServerAuthSession } from '@repo/auth/server';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui';
+import { ManageTracks } from './_components/tracks';
 import { ChallengeReviews } from '~/components/admin/challenge-reviews';
 import { getBannedUsers, getUploadedImages } from '~/components/admin/admin.actions';
 import { ImageUploadReport } from '~/components/admin/images';
 import { BannedUsers } from '~/components/admin/users';
 import { getInfiniteReports } from '~/components/report/report.action';
-import { ManageTracks } from './_components/tracks';
 import { Reports } from '~/components/admin/reports';
 
 async function Admin() {

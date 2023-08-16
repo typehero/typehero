@@ -1,8 +1,8 @@
 'use client';
 
 import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@repo/ui';
-import { AddTrackForm } from './add-track-form';
 import { useState } from 'react';
+import { AddTrackForm } from './add-track-form';
 
 export function ActionBar() {
   const [open, setOpen] = useState(false);

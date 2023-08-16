@@ -17,10 +17,10 @@ import {
 import { useFieldArray, useForm } from 'react-hook-form';
 import Select from 'react-select';
 import { z } from 'zod';
-import type { ChallengesForTrack, TrackToManage } from '../page';
-import { Card } from './card';
-import { updateTrack } from '../_actions/update-track.action';
 import { useMemo } from 'react';
+import type { ChallengesForTrack, TrackToManage } from '../page';
+import { updateTrack } from '../_actions/update-track.action';
+import { Card } from './card';
 
 const trackChallengeSchema = z.object({
   challengeId: z.number(),
