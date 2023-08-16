@@ -4,12 +4,13 @@ import { Lock } from '@repo/ui/icons';
 import React from 'react';
 import { getServerAuthSession } from '@repo/auth/server';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui';
+import { ManageTracks } from './_components/tracks';
 import { ChallengeReviews } from '~/components/admin/challenge-reviews';
 import { getBannedUsers, getUploadedImages } from '~/components/admin/admin.actions';
 import { ImageUploadReport } from '~/components/admin/images';
-// import Reports2 from '~/components/admin/reports';
 import { BannedUsers } from '~/components/admin/users';
 import { getInfiniteReports } from '~/components/report/report.action';
+import { Reports } from '~/components/admin/reports';
 
 async function Admin() {
   const session = await getServerAuthSession();
@@ -69,22 +70,22 @@ const View = async () => {
               >
                 Challenge Reviews
               </TabsTrigger>
-              <TabsTrigger
-                className="data-[state=active]:bg-border rounded-l-lg rounded-r-2xl duration-300"
-                value="users"
-              >
+              <TabsTrigger className="data-[state=active]:bg-border duration-300" value="users">
                 Users
               </TabsTrigger>
-              <TabsTrigger
-                className="data-[state=active]:bg-border rounded-l-2xl rounded-r-lg duration-300"
-                value="images"
-              >
+              <TabsTrigger className="data-[state=active]:bg-border duration-300" value="images">
                 Images
+              </TabsTrigger>
+              <TabsTrigger
+                className="data-[state=active]:bg-border rounded-l-lg rounded-r-2xl duration-300"
+                value="tracks"
+              >
+                Tracks
               </TabsTrigger>
             </TabsList>
             <TabsContent value="reports">
               <React.Suspense fallback={<>Loading...</>}>
-                {/* <Reports2 initialReports={firstPage} /> */}
+                <Reports initialReports={firstPage} />
               </React.Suspense>
             </TabsContent>
             <TabsContent value="users">
@@ -95,6 +96,9 @@ const View = async () => {
             </TabsContent>
             <TabsContent value="images">
               <ImageUploadReport data={uploadedimages} />
+            </TabsContent>
+            <TabsContent value="tracks">
+              <ManageTracks />
             </TabsContent>
           </Tabs>
         </div>

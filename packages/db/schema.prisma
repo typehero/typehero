@@ -129,6 +129,7 @@ model User {
   moderated    Report[] @relation("report_moderator")
 
   imageUpload ImageUpload[]
+  tracks      Track[]
 }
 
 model VerificationToken {
@@ -377,17 +378,21 @@ model TrackChallenge {
   orderId     Int
   challengeId Int
   challenge   Challenge @relation(fields: [challengeId], references: [id])
-  trackId     Int
-  track       Track     @relation(fields: [trackId], references: [id])
+  Track       Track?    @relation(fields: [trackId], references: [id])
+  trackId     Int?
 
   @@index([challengeId])
   @@index([trackId])
 }
 
 model Track {
-  id             Int              @id @default(autoincrement())
-  title          String
-  description    String
-  visible        Boolean          @default(true)
-  trackChallenge TrackChallenge[]
+  id              Int              @id @default(autoincrement())
+  title           String
+  description     String
+  visible         Boolean          @default(true)
+  trackChallenges TrackChallenge[]
+  user            User?            @relation(fields: [userId], references: [id])
+  userId          String?
+
+  @@index([userId])
 }

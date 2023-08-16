@@ -54,7 +54,7 @@ export function ChallengeReview({ challenge }: Props) {
   };
 
   return (
-    <div className="flex h-full flex-col  px-4">
+    <div className="flex h-full flex-col px-4">
       <div className="mb-5">
         <Text intent="h2">{challenge.name}</Text>
         <div className="mb-3 flex gap-4">
