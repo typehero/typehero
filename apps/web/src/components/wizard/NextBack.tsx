@@ -29,7 +29,7 @@ export function NextBack({ current, onChange, onNext, onSubmit }: Props) {
         </Button>
       ) : (
         <Button
-          className="w-[79px] rounded-full transition-all duration-300 ease-out hover:pl-8 active:scale-95"
+          className="w-[79px] rounded-full transition-all duration-300 ease-out active:scale-95"
           onClick={onNext}
         >
           Next
