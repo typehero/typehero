@@ -88,10 +88,13 @@ export function DraggableChallenge({ id, text, index, moveChallenge }: Props) {
   return (
     <div
       ref={ref}
-      className={clsx({
-        'opacity-0': isDragging,
-        'opacity-1': !isDragging,
-      }, 'bg-white cursor-move p-3 text-black border border-dashed my-2')}
+      className={clsx(
+        {
+          'opacity-0': isDragging,
+          'opacity-1': !isDragging,
+        },
+        'my-2 cursor-move border border-dashed bg-white p-3 text-black',
+      )}
       data-handler-id={handlerId}
     >
       {index + 1} {text}
