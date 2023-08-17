@@ -1,5 +1,6 @@
 'use client';
 
+import { DifficultyBadge } from '@repo/ui';
 import {
   motion,
   useMotionTemplate,
@@ -16,22 +17,14 @@ type WrapperStyle = MotionStyle & {
   '--y': MotionValue<string>;
 };
 
-export function FeatureCard({
+export function FeatureCard4({
   title,
   description,
-  className,
   classNameBG,
-  image,
 }: {
   title: string;
   description: string;
-  className?: string;
   classNameBG?: string;
-  image: {
-    dark: StaticImageData;
-    light: StaticImageData;
-    alt: string;
-  };
 }) {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -70,30 +63,63 @@ export function FeatureCard({
           </div>
           {mounted ? (
             <>
-              {resolvedTheme === 'light' && (
-                <Image
-                  alt={image.alt}
-                  className={className}
-                  src={image.light}
-                  style={{
-                    position: 'absolute',
-                    userSelect: 'none',
-                    maxWidth: 'unset',
-                  }}
-                />
-              )}
-              {resolvedTheme === 'dark' && (
-                <Image
-                  alt={image.alt}
-                  className={className}
-                  src={image.dark}
-                  style={{
-                    position: 'absolute',
-                    userSelect: 'none',
-                    maxWidth: 'unset',
-                  }}
-                />
-              )}
+              <div className="absolute inset-0 top-[38%] flex flex-col items-center justify-center gap-2">
+                <input className="peer/1 appearance-none" type="checkbox" id="toggle" />
+                <label
+                  htmlFor="toggle"
+                  className="flex w-[69%] cursor-pointer items-center justify-between gap-3 rounded-xl bg-zinc-200 p-4 text-zinc-700 duration-300 hover:scale-105 active:scale-100 active:duration-75 group-hover:hover:bg-neutral-500/10 peer-checked/1:bg-pink-300/50 peer-checked/1:hover:bg-pink-300/50 
+                  dark:bg-zinc-700 dark:text-zinc-300 peer-checked/1:dark:text-white"
+                >
+                  <div className="flex items-center gap-3">Awaited</div>
+                  <div className="group">
+                    <DifficultyBadge difficulty="BEGINNER" />
+                  </div>
+                </label>
+
+                <input className="peer/2 appearance-none" type="checkbox" id="toggle2" />
+                <label
+                  htmlFor="toggle2"
+                  className="flex w-[69%] cursor-pointer items-center justify-between gap-3 rounded-xl bg-zinc-200 p-4 text-zinc-700 duration-300 hover:scale-105 active:scale-100 active:duration-75 group-hover:hover:bg-neutral-500/10 peer-checked/2:bg-emerald-300/50 peer-checked/2:hover:bg-emerald-300/50 dark:bg-zinc-700 dark:text-zinc-300"
+                >
+                  <div className="flex items-center gap-3">Unshift</div>
+                  <div className="group">
+                    <DifficultyBadge difficulty="EASY" />
+                  </div>
+                </label>
+
+                <input className="peer/3 appearance-none" type="checkbox" id="toggle3" />
+                <label
+                  htmlFor="toggle3"
+                  className="flex w-[69%] cursor-pointer items-center justify-between gap-3 rounded-xl bg-zinc-200 p-4 text-zinc-700 duration-300 hover:scale-105 active:scale-100 active:duration-75 group-hover:hover:bg-neutral-500/10 peer-checked/3:bg-yellow-300/50 peer-checked/3:hover:bg-yellow-300/50 dark:bg-zinc-700 dark:text-zinc-300"
+                >
+                  <div className="flex items-center gap-3">Append Argument</div>
+                  <div className="group">
+                    <DifficultyBadge difficulty="MEDIUM" />
+                  </div>
+                </label>
+
+                <input className="peer/4 appearance-none" type="checkbox" id="toggle4" />
+                <label
+                  htmlFor="toggle4"
+                  className="flex w-[69%] cursor-pointer items-center justify-between gap-3 rounded-xl bg-zinc-200 p-4 text-zinc-700 duration-300 hover:scale-105 active:scale-100 active:duration-75 group-hover:hover:bg-neutral-500/10 peer-checked/4:bg-red-300/50 peer-checked/4:hover:bg-red-300/50 dark:bg-zinc-700 dark:text-zinc-300"
+                >
+                  <div className="flex items-center gap-3">CamelCase</div>
+                  <div className="group">
+                    <DifficultyBadge difficulty="HARD" />
+                  </div>
+                </label>
+
+                <input className="peer/5 appearance-none" type="checkbox" id="toggle5" />
+                <label
+                  htmlFor="toggle5"
+                  className="flex w-[69%] cursor-pointer items-center justify-between gap-3 rounded-xl bg-zinc-200 p-4 text-zinc-700 duration-300 hover:scale-105 active:scale-100 active:duration-75 group-hover:hover:bg-neutral-500/10 peer-checked/5:bg-orange-300/50 peer-checked/5:hover:bg-orange-300/50 dark:bg-zinc-700 dark:text-zinc-300"
+                >
+                  <div className="flex items-center gap-3">Get Readonly Keys</div>
+                  <div className="group">
+                    <DifficultyBadge difficulty="EXTREME" />
+                  </div>
+                </label>
+              </div>
             </>
           ) : null}
         </div>
