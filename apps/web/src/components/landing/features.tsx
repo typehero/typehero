@@ -72,14 +72,14 @@ function Features() {
 
             <FeatureCard
               className="pointer-events-none left-[35px] top-[35%] w-[150%] transition-transform duration-300 group-hover:scale-105 sm:left-[35px] sm:top-[30%] sm:w-[110%]"
-              description="Keep tabs on your coding journey with the ability to track your progress on your user profile"
+              description="Tracks features curated TypeScript challenges, spanning various topics and difficulty levels, to advance your TypeScript skills."
               classNameBG="lg:bg-gradient-to-tl"
               image={{
                 dark: FeatureCardChallengeDark,
                 light: FeatureCardChallengeLight,
                 alt: 'Something',
               }}
-              title="Track Your Progress"
+              title="Curated Tracks"
             />
           </div>
         </div>
