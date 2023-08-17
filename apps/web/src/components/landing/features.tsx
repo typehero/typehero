@@ -79,9 +79,9 @@ function Features() {
             />
 
             <FeatureCard4
-              description="Keep tabs on your coding journey with the ability to track your progress on your user profile"
+              description="Tracks features curated TypeScript challenges, spanning various topics and difficulty levels, to advance your TypeScript skills."
               classNameBG="lg:bg-gradient-to-tl"
-              title="Track Your Progress"
+              title="Curated Tracks"
             />
           </div>
         </div>
