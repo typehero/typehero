@@ -16,24 +16,20 @@ type WrapperStyle = MotionStyle & {
   '--y': MotionValue<string>;
 };
 
-export function FeatureCard({
+export function FeatureCard3({
   title,
   description,
   className,
-  className2,
   classNameBG,
   image,
 }: {
   title: string;
   description: string;
   className?: string;
-  className2?: string;
   classNameBG?: string;
   image: {
     dark: StaticImageData;
-    dark2: StaticImageData;
     light: StaticImageData;
-    light2: StaticImageData;
     alt: string;
   };
 }) {
@@ -75,52 +71,28 @@ export function FeatureCard({
           {mounted ? (
             <>
               {resolvedTheme === 'light' && (
-                <>
-                  <Image
-                    alt={image.alt}
-                    className={className}
-                    src={image.light}
-                    style={{
-                      position: 'absolute',
-                      userSelect: 'none',
-                      maxWidth: 'unset',
-                    }}
-                  />
-                  <Image
-                    alt={image.alt}
-                    className={className2}
-                    src={image.light2}
-                    style={{
-                      position: 'absolute',
-                      userSelect: 'none',
-                      maxWidth: 'unset',
-                    }}
-                  />
-                </>
+                <Image
+                  alt={image.alt}
+                  className={className}
+                  src={image.light}
+                  style={{
+                    position: 'absolute',
+                    userSelect: 'none',
+                    maxWidth: 'unset',
+                  }}
+                />
               )}
               {resolvedTheme === 'dark' && (
-                <>
-                  <Image
-                    alt={image.alt}
-                    className={className}
-                    src={image.dark}
-                    style={{
-                      position: 'absolute',
-                      userSelect: 'none',
-                      maxWidth: 'unset',
-                    }}
-                  />
-                  <Image
-                    alt={image.alt}
-                    className={className2}
-                    src={image.dark2}
-                    style={{
-                      position: 'absolute',
-                      userSelect: 'none',
-                      maxWidth: 'unset',
-                    }}
-                  />
-                </>
+                <Image
+                  alt={image.alt}
+                  className={className}
+                  src={image.dark}
+                  style={{
+                    position: 'absolute',
+                    userSelect: 'none',
+                    maxWidth: 'unset',
+                  }}
+                />
               )}
             </>
           ) : null}
