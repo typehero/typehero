@@ -6,6 +6,10 @@ import { useRouter } from 'next/navigation';
 import type { ExploreChallengeData } from './explore.action';
 
 const BUTTONS_BY_DIFFICULTY = {
+  POPULAR:
+    'bg-neutral-500/10 text-neutral-700 hover:text-neutral-700 dark:text-neutral-300 dark:bg-neutral-300/10 hover:bg-neutral-500/20 dark:hover:bg-neutral-300/20',
+  NEWEST:
+    'bg-neutral-500/10 text-neutral-700 hover:text-neutral-700 dark:text-neutral-300 dark:bg-neutral-300/10 hover:bg-neutral-500/20 dark:hover:bg-neutral-300/20',
   BEGINNER:
     'bg-pink-500/10 text-pink-700 hover:text-pink-700 dark:text-pink-300 dark:bg-pink-300/10 hover:bg-pink-500/20 dark:hover:bg-pink-300/20',
   EASY: 'bg-green-500/10 text-green-700 hover:text-green-700 dark:text-green-300 dark:bg-green-300/10 hover:bg-green-500/20 dark:hover:bg-green-300/20',
@@ -18,7 +22,7 @@ const BUTTONS_BY_DIFFICULTY = {
 
 interface ViewMoreButtonProps {
   challenges: Awaited<ExploreChallengeData>;
-  moreRoute: string;
+  moreRoute: keyof typeof BUTTONS_BY_DIFFICULTY;
 }
 
 export function ViewMoreButton({ challenges, moreRoute }: ViewMoreButtonProps) {
@@ -26,7 +30,7 @@ export function ViewMoreButton({ challenges, moreRoute }: ViewMoreButtonProps) {
   return (
     <Button
       className={`group items-center whitespace-nowrap rounded-full py-2 pl-4 pr-3 backdrop-blur-sm
-  ${BUTTONS_BY_DIFFICULTY[challenges[0]?.difficulty || 'BEGINNER']}`}
+  ${BUTTONS_BY_DIFFICULTY[moreRoute]}`}
       onClick={() => {
         router.push(`/explore/${moreRoute}`);
       }}
