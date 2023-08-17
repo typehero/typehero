@@ -1,19 +1,18 @@
 'use client';
 
 import type { Challenge } from '@repo/db/types';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@repo/ui';
 import { useQuery } from '@tanstack/react-query';
 import {
-  type PaginationState,
   flexRender,
   getCoreRowModel,
+  getPaginationRowModel,
   useReactTable,
   type ColumnDef,
 } from '@tanstack/react-table';
 import { useRouter } from 'next/navigation';
-import { useMemo, useState } from 'react';
-import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@repo/ui';
-import type { ChallengeReviewData } from '~/app/api/challenge-reviews/route';
-import { getBaseUrl } from '~/utils/getBaseUrl';
+import { getPendingChallenges } from './challenge-reviews.action';
+import { DataTablePagination } from './data-table-pagination';
 
 interface Props {
   columns: ColumnDef<Challenge>[];
@@ -21,41 +20,17 @@ interface Props {
 
 export function DataTable({ columns }: Props) {
   const router = useRouter();
-  const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: 20,
-  });
 
-  const fetchDataOptions = {
-    page: pageIndex,
-    size: pageSize,
-  };
-
-  const data = useQuery(['data', fetchDataOptions], () => getChallengeReviews(fetchDataOptions), {
-    keepPreviousData: true,
-  });
-
-  const pagination = useMemo(
-    () => ({
-      pageIndex,
-      pageSize,
-    }),
-    [pageIndex, pageSize],
-  );
+  const { data, isLoading } = useQuery(['challenge-reviews'], () => getPendingChallenges());
 
   const table = useReactTable({
-    data: data.data?.[1] ?? [],
+    data: data ?? [],
     columns,
-    pageCount: data.data?.[0] ?? -1,
     getCoreRowModel: getCoreRowModel(),
-    state: {
-      pagination,
-    },
-    onPaginationChange: setPagination,
-    manualPagination: true,
+    getPaginationRowModel: getPaginationRowModel(),
   });
 
-  if (data.isLoading) return null;
+  if (isLoading) return null;
 
   return (
     <div className="w-full rounded-md border">
@@ -99,41 +74,7 @@ export function DataTable({ columns }: Props) {
           )}
         </TableBody>
       </Table>
-      <div className="flex items-center justify-between p-4">
-        <div className="flex items-center gap-1">
-          <div>Page</div>
-          <strong>
-            {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
-          </strong>
-        </div>
-        <div className="space-x-2">
-          <Button
-            disabled={!table.getCanPreviousPage()}
-            onClick={() => table.previousPage()}
-            size="sm"
-            variant="outline"
-          >
-            Previous
-          </Button>
-          <Button
-            disabled={!table.getCanNextPage()}
-            onClick={() => table.nextPage()}
-            size="sm"
-            variant="outline"
-          >
-            Next
-          </Button>
-        </div>
-      </div>
+      <DataTablePagination table={table} />
     </div>
   );
-}
-
-async function getChallengeReviews(options: {
-  page: number;
-  size: number;
-}): Promise<ChallengeReviewData> {
-  return fetch(
-    `${getBaseUrl()}/api/challenge-reviews?page=${options.page}&size=${options.size}`,
-  ).then((res) => res.json());
 }
