@@ -1,14 +1,15 @@
 import { Balancer } from 'react-wrap-balancer';
 import { FeatureCard } from '~/components/landing/feature-card';
 import { FeatureCard2 } from '~/components/landing/feature-card2';
-import { FeatureCard3 } from '~/components/landing/feature-card3';
 import { FeatureCard4 } from '~/components/landing/feature-card4';
 import FeatureCardChallengeDark1 from '~/assets/images/feature_card_challenge_dark1.png';
 import FeatureCardChallengeDark2 from '~/assets/images/feature_card_challenge_dark2.png';
 import FeatureCardChallengeLight1 from '~/assets/images/feature_card_challenge_light1.png';
 import FeatureCardChallengeLight2 from '~/assets/images/feature_card_challenge_light2.png';
-import FeatureCardCreateLight from '~/assets/images/feature_card_create_light.png';
-import FeatureCardCreateDark from '~/assets/images/feature_card_create_dark.png';
+import FeatureCardCreateLight1 from '~/assets/images/feature_card_create_light1.png';
+import FeatureCardCreateLight2 from '~/assets/images/feature_card_create_light2.png';
+import FeatureCardCreateDark1 from '~/assets/images/feature_card_create_dark1.png';
+import FeatureCardCreateDark2 from '~/assets/images/feature_card_create_dark2.png';
 
 function Features() {
   return (
@@ -62,13 +63,16 @@ function Features() {
               title="Collaborative Environment"
             />
 
-            <FeatureCard3
-              className="pointer-events-none bottom-[10%] left-[10%] w-[80%] rounded-3xl opacity-0 transition-transform duration-300 group-hover:scale-105"
+            <FeatureCard
+              className="pointer-events-none left-[35px] top-[30%] w-[50%] rounded-t-xl border border-zinc-300 opacity-80 transition-transform duration-500 group-hover:translate-y-2 dark:border-zinc-700"
+              className2="pointer-events-none rounded-t-xl border border-zinc-300 dark:border-zinc-700 left-[calc(50%+35px+1rem)] top-[30%] w-[150%] ransition-transform duration-500 group-hover:-translate-y-6 opacity-80 backdrop-blur-md rounded-xl overflow-hidden"
               description="Craft your own coding challenges to share with the Typehero community"
               classNameBG="lg:bg-gradient-to-tr"
               image={{
-                dark: FeatureCardCreateDark,
-                light: FeatureCardCreateLight,
+                dark: FeatureCardCreateDark1,
+                dark2: FeatureCardCreateDark2,
+                light: FeatureCardCreateLight1,
+                light2: FeatureCardCreateLight2,
                 alt: 'Something',
               }}
               title="Challenge Creation"
