@@ -10,7 +10,6 @@ import {
 } from 'framer-motion';
 import { Check, Minus, Triangle, X } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import Image, { type StaticImageData } from 'next/image';
 import { useEffect, useState, type MouseEvent } from 'react';
 
 type WrapperStyle = MotionStyle & {
