@@ -86,10 +86,9 @@ export function CodePanel(props: Props) {
   const [editorState, setEditorState] = useState<monaco.editor.IStandaloneCodeEditor>();
 
   const handleSubmit = async () => {
-    const [, solution] = code.split(USER_CODE_START);
     const hasErrors = tsErrors.some((e) => e.length);
 
-    await saveSubmission(props.challenge.id, session?.user.id!, solution ?? '', !hasErrors);
+    await saveSubmission(props.challenge.id, session?.user.id!, code ?? '', !hasErrors);
     router.refresh();
 
     if (hasErrors) {

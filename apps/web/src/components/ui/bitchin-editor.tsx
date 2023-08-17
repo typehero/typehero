@@ -59,7 +59,7 @@ export default function BitchinEditor({
         {footerExpanded ? 'hide' : 'show'} all
       </button>
       {footerExpanded ? (
-        <footer
+        <header
           className={clsx('flex-shrink-0 overflow-hidden transition-all', {
             'min-h-[30vh]': footerExpanded,
             'min-h-0': !footerExpanded,
@@ -73,9 +73,9 @@ export default function BitchinEditor({
             onChange={onChange?.tests}
             onValidate={onValidate?.tests}
           />
-        </footer>
+        </header>
       ) : null}
-      <section className="flex-grow">
+      <section className="flex-grow flex-shrink">
         <CodeEditor
           defaultPath="file:///user.ts"
           onMount={onMount?.user}
