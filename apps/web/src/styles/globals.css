@@ -188,7 +188,6 @@ main {
   inset: -1px;
 }
 
-//TODO: disable hover effects on mobile
 @media (max-width: 768px) {
   .animated-feature-cards::before {
     background: none !important;

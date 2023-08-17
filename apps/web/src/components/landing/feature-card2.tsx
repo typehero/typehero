@@ -27,7 +27,6 @@ export function FeatureCard2({
   description: string;
   classNameBG?: string;
 }) {
-  // @ts-ignore
   const solutionComment = `\`\`\`ts
 // CODE START
 type Get<T, K> = string
@@ -87,7 +86,7 @@ type Get<T, K> = string
               <div className="relative ml-12 rounded-tl-3xl bg-neutral-500/10 p-4 pt-3 duration-150 hover:bg-neutral-500/20">
                 <Reply className="absolute -left-8 h-4 w-4 opacity-50" />
                 <div className="flex items-center gap-2">
-                  <UserBadge username="69" linkComponent={} />
+                  <UserBadge username="69" linkComponent={Link} />
                   <div className="text-xs text-neutral-500">just now</div>
                 </div>
                 <svg
