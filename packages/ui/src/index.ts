@@ -7,6 +7,8 @@ export * from './components/calendar';
 export * from './components/card';
 export * from './components/checkbox';
 export * from './components/command';
+export * from './components/data-table';
+export * from './components/data-table-pagination';
 export * from './components/dialog';
 export * from './components/difficulty-badge';
 export * from './components/dropdown-menu';
