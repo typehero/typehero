@@ -4,13 +4,13 @@ import { RoleTypes } from '@repo/db/types';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui';
 import { Lock } from '@repo/ui/icons';
 import React from 'react';
+import { ChallengeReviews } from './_components/challenge-reviews';
+import { ManageTracks } from './_components/tracks';
 import { getBannedUsers, getUploadedImages } from '~/components/admin/admin.actions';
 import { ImageUploadReport } from '~/components/admin/images';
 import { Reports } from '~/components/admin/reports';
 import { BannedUsers } from '~/components/admin/users';
 import { getInfiniteReports } from '~/components/report/report.action';
-import { ChallengeReviews } from './_components/challenge-reviews';
-import { ManageTracks } from './_components/tracks';
 
 async function Admin() {
   const session = await getServerAuthSession();
