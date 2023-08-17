@@ -22,7 +22,7 @@ const BUTTONS_BY_DIFFICULTY = {
 
 interface ViewMoreButtonProps {
   challenges: Awaited<ExploreChallengeData>;
-  moreRoute: string;
+  moreRoute: keyof typeof BUTTONS_BY_DIFFICULTY;
 }
 
 export function ViewMoreButton({ challenges, moreRoute }: ViewMoreButtonProps) {
