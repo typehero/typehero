@@ -16,6 +16,9 @@ interface Props {
 }
 
 const COLORS_BY_DIFFICULTY = {
+  POPULAR:
+    'bg-gradient-to-r from-50% from-zinc-100 to-zinc-100 dark:from-zinc-900 dark:to-zinc-900',
+  NEWEST: 'bg-gradient-to-r from-50% from-zinc-100 to-zinc-100 dark:from-zinc-900 dark:to-zinc-900',
   BEGINNER: 'bg-gradient-to-r from-50% from-pink-600/10 dark:from-pink-500/10',
   EASY: 'bg-gradient-to-r from-50% from-green-600/10 dark:from-green-500/10',
   MEDIUM: 'bg-gradient-to-r from-50% from-yellow-600/10 dark:from-yellow-500/10',
@@ -24,6 +27,8 @@ const COLORS_BY_DIFFICULTY = {
 };
 
 const TITLES_BY_DIFFICULTY = {
+  POPULAR: 'bg-gradient-to-r from-indigo-400 via-blue-400 to-cyan-400',
+  NEWEST: 'bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500',
   BEGINNER: 'bg-gradient-to-r from-pink-500 to-pink-500 dark:from-pink-500 dark:to-pink-200',
   EASY: 'bg-gradient-to-r from-green-500 to-green-500 dark:from-green-500 dark:to-green-200',
   MEDIUM: 'bg-gradient-to-r from-yellow-500 to-yellow-600 dark:from-yellow-500 dark:to-yellow-200',
@@ -35,9 +40,7 @@ export async function ExploreSection({ title, fetcher, moreRoute }: Props) {
   const challenges = await fetcher(moreRoute.trim().toUpperCase(), 6);
   return (
     <section
-      className={`relative flex w-full flex-col overflow-hidden rounded-[2.5rem] ${
-        COLORS_BY_DIFFICULTY[challenges[0]?.difficulty || 'BEGINNER']
-      }`}
+      className={`relative flex w-full flex-col overflow-hidden rounded-[2.5rem] ${COLORS_BY_DIFFICULTY[moreRoute]}`}
     >
       {challenges[0]?.difficulty === 'EASY' && (
         <>
@@ -63,9 +66,7 @@ export async function ExploreSection({ title, fetcher, moreRoute }: Props) {
       <div className="flex items-center justify-between gap-3 p-5 pb-0 pl-7">
         {/* <div className="hidden w-[117px] md:block"></div> */}
         <h2
-          className={`bg-clip-text text-3xl font-bold tracking-tight text-transparent ${
-            TITLES_BY_DIFFICULTY[challenges[0]?.difficulty || 'BEGINNER']
-          }`}
+          className={`bg-clip-text text-3xl font-bold tracking-tight text-transparent ${TITLES_BY_DIFFICULTY[moreRoute]}`}
         >
           {title}
         </h2>

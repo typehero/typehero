@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dl-git": "tsx contributors.ts",
+    "dl-git": "dotenv -e ../../.env tsx contributors.ts",
     "dl-monaco": "tsx dl-monaco.ts",
     "dl-monaco:force": "tsx dl-monaco.ts --force",
     "lint": "eslint .",
@@ -15,6 +15,7 @@
     "@types/node": "^18.0.0",
     "@types/node-fetch": "^2.6.4",
     "dotenv": "^16.3.1",
+    "dotenv-cli": "^7.2.1",
     "eslint": "^8.42.0",
     "node-fetch": "^3.3.2",
     "octokit": "^3.0.0",

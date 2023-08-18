@@ -31,7 +31,7 @@ async function start() {
     ``,
   ].join('\n');
 
-  const dir = path.join(__dirname, '../../../apps/web/public');
+  const dir = path.join(__dirname, '../../apps/web/public');
   await fs.writeFile(`${dir}/contributors.ts`, text);
 }
 

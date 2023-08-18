@@ -13,7 +13,9 @@ export function middleware(req: NextRequest) {
         return NextResponse.next();
       }
     }
-    url.pathname = '/api/lol';
+
+    // Make the user get some damn creds
+    url.pathname = '/api/auth/creds';
 
     return NextResponse.rewrite(url);
   }

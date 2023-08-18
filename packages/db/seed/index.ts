@@ -59,7 +59,7 @@ try {
     },
   });
 
-  const comments = Array.from({ length: 10 }, () => CommentMock());
+  const comments = Array.from({ length: 50 }, () => CommentMock());
 
   const replies: Prisma.CommentCreateManyInput[] = [];
 

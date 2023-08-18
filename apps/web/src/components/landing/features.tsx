@@ -1,7 +1,15 @@
 import { Balancer } from 'react-wrap-balancer';
 import { FeatureCard } from '~/components/landing/feature-card';
-import FeatureCardChallengeDark from '~/assets/images/feature_card_challenge_dark.png';
-import FeatureCardChallengeLight from '~/assets/images/feature_card_challenge_light.png';
+import { FeatureCard2 } from '~/components/landing/feature-card2';
+import { FeatureCard4 } from '~/components/landing/feature-card4';
+import FeatureCardChallengeDark1 from '~/assets/images/feature_card_challenge_dark1.png';
+import FeatureCardChallengeDark2 from '~/assets/images/feature_card_challenge_dark2.png';
+import FeatureCardChallengeLight1 from '~/assets/images/feature_card_challenge_light1.png';
+import FeatureCardChallengeLight2 from '~/assets/images/feature_card_challenge_light2.png';
+import FeatureCardCreateLight1 from '~/assets/images/feature_card_create_light1.png';
+import FeatureCardCreateLight2 from '~/assets/images/feature_card_create_light2.png';
+import FeatureCardCreateDark1 from '~/assets/images/feature_card_create_dark1.png';
+import FeatureCardCreateDark2 from '~/assets/images/feature_card_create_dark2.png';
 
 function Features() {
   return (
@@ -35,51 +43,45 @@ function Features() {
           </div>
           <div className="relative z-10 grid w-full gap-8 lg:grid-cols-2">
             <FeatureCard
-              className="pointer-events-none left-[35px] top-[35%] w-[150%] transition-transform duration-300 group-hover:scale-105 sm:left-[35px] sm:top-[30%] sm:w-[110%]"
+              className="pointer-events-none -bottom-[11%] left-[35px] w-[42%] transition-transform duration-500 group-hover:translate-x-2 group-hover:scale-95 lg:w-[69%]"
+              className2="pointer-events-none left-[39%] -bottom-[12%] w-[50%] lg:w-[77%] transition-transform duration-500 group-hover:scale-105 group-hover:-translate-x-2 backdrop-blur-md rounded-xl overflow-hidden"
               description="Engage in TypeScript challenges to strengthen your grasp of the type system and advanced features"
               classNameBG="lg:bg-gradient-to-br"
               image={{
-                dark: FeatureCardChallengeDark,
-                light: FeatureCardChallengeLight,
+                dark: FeatureCardChallengeDark1,
+                dark2: FeatureCardChallengeDark2,
+                light: FeatureCardChallengeLight1,
+                light2: FeatureCardChallengeLight2,
                 alt: 'Something',
               }}
               title="Type Challenges"
             />
 
-            <FeatureCard
-              className="pointer-events-none left-[35px] top-[35%] w-[150%] transition-transform duration-300 group-hover:scale-105 sm:left-[35px] sm:top-[30%] sm:w-[110%]"
+            <FeatureCard2
               description="Developers can share solutions and engage in discussions through commenting"
               classNameBG="lg:bg-gradient-to-bl"
-              image={{
-                dark: FeatureCardChallengeDark,
-                light: FeatureCardChallengeLight,
-                alt: 'Something',
-              }}
               title="Collaborative Environment"
             />
 
             <FeatureCard
-              className="pointer-events-none left-[35px] top-[35%] w-[150%] transition-transform duration-300 group-hover:scale-105 sm:left-[35px] sm:top-[30%] sm:w-[110%]"
+              className="pointer-events-none left-[35px] top-[30%] w-[50%] rounded-t-xl border border-zinc-300 opacity-80 transition-transform duration-500 group-hover:translate-y-2 dark:border-zinc-700"
+              className2="pointer-events-none rounded-t-xl border border-zinc-300 dark:border-zinc-700 left-[calc(50%+35px+1rem)] top-[30%] w-[150%] ransition-transform duration-500 group-hover:-translate-y-6 opacity-80 backdrop-blur-md rounded-xl overflow-hidden"
               description="Craft your own coding challenges to share with the Typehero community"
               classNameBG="lg:bg-gradient-to-tr"
               image={{
-                dark: FeatureCardChallengeDark,
-                light: FeatureCardChallengeLight,
+                dark: FeatureCardCreateDark1,
+                dark2: FeatureCardCreateDark2,
+                light: FeatureCardCreateLight1,
+                light2: FeatureCardCreateLight2,
                 alt: 'Something',
               }}
               title="Challenge Creation"
             />
 
-            <FeatureCard
-              className="pointer-events-none left-[35px] top-[35%] w-[150%] transition-transform duration-300 group-hover:scale-105 sm:left-[35px] sm:top-[30%] sm:w-[110%]"
-              description="Keep tabs on your coding journey with the ability to track your progress on your user profile"
+            <FeatureCard4
+              description="Tracks features curated TypeScript challenges, spanning various topics and difficulty levels, to advance your TypeScript skills."
               classNameBG="lg:bg-gradient-to-tl"
-              image={{
-                dark: FeatureCardChallengeDark,
-                light: FeatureCardChallengeLight,
-                alt: 'Something',
-              }}
-              title="Track Your Progress"
+              title="Curated Tracks"
             />
           </div>
         </div>

@@ -49,8 +49,7 @@ const createTestCasesSchema = z.object({
     .regex(testCaseRegex, 'You need to have test cases in your challenge'),
   code: z.string(),
 });
-
-const createChallengeSchema = createExploreCardSchema
+export const createChallengeSchema = createExploreCardSchema
   .merge(createDescriptionSchema)
   .merge(createTestCasesSchema);
 const steps = [

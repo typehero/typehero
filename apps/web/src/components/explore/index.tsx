@@ -16,14 +16,14 @@ export async function Explore() {
       </p>
       <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection
-          title="Most Popular"
+          title="💕 Most Popular"
           fetcher={getChallengesByTagOrDifficulty}
           moreRoute="POPULAR"
         />
       </Suspense>
       <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection
-          title="Newest"
+          title="🔥 Newest"
           fetcher={getChallengesByTagOrDifficulty}
           moreRoute="NEWEST"
         />

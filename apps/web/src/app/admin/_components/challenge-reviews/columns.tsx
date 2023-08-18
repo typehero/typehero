@@ -1,7 +1,9 @@
 'use client';
 
 import type { Challenge } from '@repo/db/types';
+import { Button } from '@repo/ui';
 import { type ColumnDef } from '@tanstack/react-table';
+import Link from 'next/link';
 
 export const columns: ColumnDef<Challenge>[] = [
   {
@@ -24,5 +26,15 @@ export const columns: ColumnDef<Challenge>[] = [
     accessorKey: 'createdAt',
     header: 'Created On',
     cell: (info) => new Date(info.getValue() as Date).toLocaleDateString(),
+  },
+  {
+    header: '...',
+    cell: ({ row }) => {
+      return (
+        <Link href={`admin/challenge/${row.original.id}`}>
+          <Button variant="link">Manage</Button>
+        </Link>
+      );
+    },
   },
 ];
