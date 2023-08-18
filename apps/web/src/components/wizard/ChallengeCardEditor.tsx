@@ -16,9 +16,9 @@ import {
   TypographyH3,
 } from '@repo/ui';
 import { useWatch } from 'react-hook-form';
-import { ExploreCard } from '../explore/explore-card';
-import type { ExploreChallengeData } from '../explore/explore.action';
 import type { WizardForm } from '.';
+import type { ExploreChallengeData } from '~/app/explore/_components/explore.action';
+import ExploreCard from '~/app/explore/_components/explore-card';
 
 interface Props {
   form: WizardForm;

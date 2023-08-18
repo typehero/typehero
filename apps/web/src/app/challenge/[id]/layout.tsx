@@ -3,7 +3,7 @@ import { ForceRenderUntilClient } from '@repo/ui';
 import { getChallengeRouteData } from './getChallengeRouteData';
 import { LeftWrapper } from './left-wrapper';
 import { Wrapper } from './wrapper';
-import { ChallengeLayout } from '~/components/challenge/challenge-layout';
+import { ChallengeLayout } from '../_components/challenge-layout';
 
 export default async function LayoutData({
   children,
