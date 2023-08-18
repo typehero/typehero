@@ -159,7 +159,6 @@ export function CodePanel(props: Props) {
       setInitialTypecheckDone(true);
 
       editor.updateOptions({
-        // domReadOnly: true,
         readOnly: true,
         renderValidationDecorations: 'on',
       });
