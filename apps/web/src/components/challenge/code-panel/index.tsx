@@ -166,7 +166,7 @@ export function CodePanel(props: Props) {
         createTwoslashInlayProvider(monaco, ts),
       );
     };
-  const m = useMonaco();
+  const monacoInstance = useMonaco();
   return (
     <>
       <div className="sticky top-0 flex h-[40px] flex-row-reverse items-center border-b border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
@@ -196,16 +196,18 @@ export function CodePanel(props: Props) {
           onMount={{ tests: onMount(code, setTsErrors) }}
           onChange={{
             user: async (code) => {
-              if (!m) return null;
+              if (!monacoInstance) return null;
               setCode(code ?? '');
               // we we only want to save whats after the comment
               const [, , storeThiseCode] = (code ?? '').split(USER_CODE_START_REGEX);
 
               // Wow this is just... remarkably jank.
 
-              const getModel = await m.languages.typescript.getTypeScriptWorker();
+              const getModel = await monacoInstance.languages.typescript.getTypeScriptWorker();
               const filename = 'file:///tests.ts';
-              const mm = m.editor.getModel(m.Uri.parse('file:///tests.ts'));
+              const mm = monacoInstance.editor.getModel(
+                monacoInstance.Uri.parse('file:///tests.ts'),
+              );
               if (!mm) return null;
               const model = await getModel(mm.uri);
 
