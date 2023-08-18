@@ -124,6 +124,7 @@ export function CodePanel(props: Props) {
       }
 
       const model = editor.getModel();
+      console.info('MODEL', model?.uri);
 
       if (!model) {
         throw new Error();
@@ -141,7 +142,7 @@ export function CodePanel(props: Props) {
         const errors = await Promise.all([
           ts.getSemanticDiagnostics(filename),
           ts.getSyntacticDiagnostics(filename),
-          Promise.resolve([]),
+          ts.getSuggestionDiagnostics(filename),
           ts.getCompilerOptionsDiagnostics(filename),
         ] as const);
 
@@ -158,7 +159,9 @@ export function CodePanel(props: Props) {
       setInitialTypecheckDone(true);
 
       editor.updateOptions({
+        // domReadOnly: true,
         readOnly: true,
+        renderValidationDecorations: 'on',
       });
 
       monaco.languages.registerInlayHintsProvider(
