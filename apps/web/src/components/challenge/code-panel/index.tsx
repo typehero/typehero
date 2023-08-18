@@ -29,7 +29,7 @@ import { libSource } from './editor-types';
 import { createTwoslashInlayProvider } from './twoslash';
 import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import { useLocalStorage } from '~/utils/useLocalStorage';
-import BitchinEditor from '~/components/ui/bitchin-editor';
+import SplitEditor from '~/components/ui/split-editor';
 
 const VimStatusBar = dynamic(() => import('./vimMode').then((v) => v.VimStatusBar), {
   ssr: false,
@@ -141,7 +141,7 @@ export function CodePanel(props: Props) {
         const errors = await Promise.all([
           ts.getSemanticDiagnostics(filename),
           ts.getSyntacticDiagnostics(filename),
-          ts.getSuggestionDiagnostics(filename),
+          Promise.resolve([]),
           ts.getCompilerOptionsDiagnostics(filename),
         ] as const);
 
@@ -156,6 +156,10 @@ export function CodePanel(props: Props) {
 
       await typeCheck();
       setInitialTypecheckDone(true);
+
+      editor.updateOptions({
+        readOnly: true,
+      });
 
       monaco.languages.registerInlayHintsProvider(
         'typescript',
@@ -186,7 +190,7 @@ export function CodePanel(props: Props) {
         </Dialog>
       </div>
       <div className="w-full flex-1">
-        <BitchinEditor
+        <SplitEditor
           tests={props.challenge.tests}
           challenge={props.challenge.code}
           onMount={{ tests: onMount(code, setTsErrors) }}
@@ -203,13 +207,12 @@ export function CodePanel(props: Props) {
               const filename = 'file:///tests.ts';
               const mm = m.editor.getModel(m.Uri.parse('file:///tests.ts'));
               if (!mm) return null;
-              console.info(mm.getValue());
               const model = await getModel(mm.uri);
 
               const errors = await Promise.all([
                 model.getSemanticDiagnostics(filename),
                 model.getSyntacticDiagnostics(filename),
-                model.getSuggestionDiagnostics(filename),
+                Promise.resolve([]),
                 model.getCompilerOptionsDiagnostics(filename),
               ] as const);
               setTsErrors(errors);

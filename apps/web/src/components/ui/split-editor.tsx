@@ -6,7 +6,7 @@ import { editor } from 'monaco-editor';
 import { libSource } from '../challenge/code-panel/editor-types';
 import { CodeEditor } from './code-editor';
 
-export interface BitchinEditor extends Omit<React.HTMLProps<HTMLDivElement>, 'onChange'> {
+export interface SplitEditorProps extends Omit<React.HTMLProps<HTMLDivElement>, 'onChange'> {
   tests: string;
   challenge: string;
   onValidate?: {
@@ -23,14 +23,14 @@ export interface BitchinEditor extends Omit<React.HTMLProps<HTMLDivElement>, 'on
   };
 }
 
-export default function BitchinEditor({
+export default function SplitEditor({
   className,
   tests,
   challenge,
   onMount,
   onValidate,
   onChange,
-}: BitchinEditor) {
+}: SplitEditorProps) {
   const monaco = useMonaco();
 
   useEffect(() => {
@@ -75,7 +75,7 @@ export default function BitchinEditor({
           />
         </header>
       ) : null}
-      <section className="flex-grow flex-shrink">
+      <section className="flex-shrink flex-grow">
         <CodeEditor
           defaultPath="file:///user.ts"
           onMount={onMount?.user}
