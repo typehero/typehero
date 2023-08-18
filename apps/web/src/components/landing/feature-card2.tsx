@@ -67,14 +67,20 @@ type Get<T, K> = string
           </div>
           {mounted ? (
             <div className="absolute inset-0 left-[37px] top-[30%] flex w-[100%] flex-col gap-3 pt-4">
-              <div className="rounded-3xl bg-neutral-500/10 p-4 pt-3 duration-150 hover:bg-neutral-500/20">
+              <div
+                id="comment1"
+                className="rounded-3xl bg-neutral-500/10 p-4 pt-3 duration-150 hover:bg-neutral-500/20"
+              >
                 <div className="flex items-center gap-2">
                   <UserBadge username="abc" linkComponent={Link} />
                   <div className="text-xs text-neutral-500">5 years ago</div>
                 </div>
                 pls halp i give ap
               </div>
-              <div className="relative ml-12 rounded-3xl bg-neutral-500/10 p-4 pt-3 duration-150 hover:bg-neutral-500/20">
+              <div
+                id="comment2"
+                className="relative ml-12 rounded-3xl bg-neutral-500/10 p-4 pt-3 duration-150 hover:bg-neutral-500/20"
+              >
                 <Reply className="absolute -left-8 h-4 w-4 opacity-50" />
                 <div className="flex items-center gap-2">
                   <UserBadge username="defg" linkComponent={Link} />
@@ -83,13 +89,17 @@ type Get<T, K> = string
                 ez, the answer is
                 <Markdown>{solutionComment}</Markdown>
               </div>
-              <div className="relative ml-12 rounded-tl-3xl bg-neutral-500/10 p-4 pt-3 duration-150 hover:bg-neutral-500/20">
+              <div
+                id="comment3"
+                className="relative ml-12 rounded-tl-3xl bg-neutral-500/10 p-4 pt-3 duration-150 hover:bg-neutral-500/20"
+              >
                 <Reply className="absolute -left-8 h-4 w-4 opacity-50" />
                 <div className="flex items-center gap-2">
                   <UserBadge username="69" linkComponent={Link} />
                   <div className="text-xs text-neutral-500">just now</div>
                 </div>
                 <svg
+                  id="amoguwusus"
                   xmlns="http://www.w3.org/2000/svg"
                   version="1.1"
                   x="0px"

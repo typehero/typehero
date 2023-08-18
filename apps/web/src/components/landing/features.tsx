@@ -43,7 +43,7 @@ function Features() {
           </div>
           <div className="relative z-10 grid w-full gap-8 lg:grid-cols-2">
             <FeatureCard
-              className="pointer-events-none -bottom-[11%] left-[35px] w-[42%] transition-transform duration-500 group-hover:translate-x-2 group-hover:scale-95 lg:w-[69%]"
+              className="pointer-events-none -bottom-[11%] left-[35px] w-[42%] transition-transform duration-500 group-hover:-translate-y-6 group-hover:scale-105 lg:w-[69%]"
               className2="pointer-events-none left-[39%] -bottom-[12%] w-[50%] lg:w-[77%] transition-transform duration-500 group-hover:scale-105 group-hover:-translate-x-2 backdrop-blur-md rounded-xl overflow-hidden"
               description="Engage in TypeScript challenges to strengthen your grasp of the type system and advanced features"
               classNameBG="lg:bg-gradient-to-br"

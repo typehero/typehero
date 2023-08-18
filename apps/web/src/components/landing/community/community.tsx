@@ -18,11 +18,11 @@ function Community() {
 
   return (
     <>
-      <div className="containerthing -z-10 flex rotate-180 opacity-50 dark:opacity-100">
+      <div className="lampcontainer -z-10 flex rotate-180 opacity-50 dark:opacity-100">
         <div
           className={clsx(
             { 'scale-[3] md:scale-[2] 2xl:scale-[1.75]': inView },
-            'thething translate-z-0 translate-y-[-180px] rotate-180 scale-50 animate-none duration-1000',
+            'lamp translate-z-0 translate-y-[-180px] rotate-180 scale-50 animate-none duration-1000',
           )}
           ref={ref}
           style={
