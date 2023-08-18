@@ -1,4 +1,4 @@
 // CI fails without this
 export const dynamic = 'force-dynamic';
 
-export { Explore as default } from '~/components/explore';
+export { Explore as default } from './_components/';
