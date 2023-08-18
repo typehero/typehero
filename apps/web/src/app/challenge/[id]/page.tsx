@@ -1,7 +1,7 @@
 import { getServerAuthSession } from '@repo/auth/server';
-import { getChallengeRouteData } from './getChallengeRouteData';
 import { Description } from '../_components/description';
 import { Comments } from '../_components/comments';
+import { getChallengeRouteData } from './getChallengeRouteData';
 
 interface Props {
   params: {

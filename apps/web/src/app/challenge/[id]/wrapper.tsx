@@ -1,7 +1,7 @@
 'use client';
 import { useSelectedLayoutSegments } from 'next/navigation';
-import type { ChallengeRouteData } from './getChallengeRouteData';
 import { CodePanel } from '../_components/code-panel';
+import type { ChallengeRouteData } from './getChallengeRouteData';
 import { SubmissionOverview } from './submissions/_components/overview';
 
 export function Wrapper({ challenge }: { challenge: ChallengeRouteData }) {
