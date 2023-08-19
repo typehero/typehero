@@ -22,8 +22,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@repo/ui';
-import { saveSubmission } from '../save-submission.action';
 import { SettingsForm } from '../settings-form';
+import { saveSubmission } from '../../[id]/submissions/save-submission.action';
 import { USER_CODE_START, USER_CODE_START_REGEX } from './constants';
 import { libSource } from './editor-types';
 import { createTwoslashInlayProvider } from './twoslash';

@@ -1,5 +1,1 @@
-import { DescriptionSkeleton } from '~/components/challenge/description/description-skeleton';
-
-export default function Loading() {
-  return <DescriptionSkeleton />;
-}
+export { DescriptionSkeleton as default } from '../_components/description/description-skeleton';

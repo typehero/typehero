@@ -4,7 +4,7 @@ import Editor, { type EditorProps, type OnChange, type OnMount } from '@monaco-e
 import type * as monaco from 'monaco-editor';
 import { useTheme } from 'next-themes';
 import { useMemo } from 'react';
-import { useEditorSettingsStore } from '../challenge/settings-store';
+import { useEditorSettingsStore } from '~/app/challenge/_components/settings-store';
 
 const DEFAULT_OPTIONS = {
   lineNumbers: 'on',

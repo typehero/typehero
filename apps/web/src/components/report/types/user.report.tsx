@@ -4,7 +4,7 @@ import { Text, Expandable } from '@repo/ui';
 import { getReportedUserInformation } from '../report.action';
 import { Markdown } from '~/components/ui/markdown';
 import { type ReportWithInfo } from '~/app/admin/report/[id]/report.action';
-import { Comment } from '~/components/challenge/comments/comment';
+import { Comment } from '~/app/challenge/_components/comments/comment';
 
 interface UserReportProps {
   report: NonNullable<ReportWithInfo>;

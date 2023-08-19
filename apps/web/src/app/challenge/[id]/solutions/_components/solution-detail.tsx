@@ -15,7 +15,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@repo/ui';
-import { Comments } from '../comments';
+import { Comments } from '~/app/challenge/_components/comments';
 import { Markdown } from '~/components/ui/markdown';
 import { ReportDialog } from '~/components/report';
 import type { ChallengeSolution } from '~/app/challenge/[id]/solutions/[solutionId]/page';
