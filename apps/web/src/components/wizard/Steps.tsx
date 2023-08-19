@@ -20,9 +20,10 @@ export function Steps<T extends Step>({ steps, current, onChange }: Props<T>) {
           const isCurrent = current === stepIdx;
           const isFuture = !isCompleted && !isCurrent;
           return (
+            // z-50 makes it sit above navbar.tsx for pointer-events to work since the <nav> container is -mt-[56px]
             <li
               className={clsx(
-                'relative rounded-full py-1 pl-[0.4rem] pr-3 transition-all duration-300 ease-in-out md:flex',
+                'relative z-50 rounded-full py-1 pl-[0.4rem] pr-3 transition-all duration-300 ease-in-out md:flex',
                 isCompleted ? 'bg-emerald-500/20' : 'bg-gray-500/10',
               )}
               key={step.name}
@@ -30,7 +31,7 @@ export function Steps<T extends Step>({ steps, current, onChange }: Props<T>) {
               <a
                 className={clsx(
                   'group flex w-full items-center',
-                  isCompleted && 'pointer-events-none',
+                  (isFuture || isCurrent) && 'pointer-events-none',
                 )}
                 href="#"
                 onClick={() => onChange(stepIdx)}
@@ -38,9 +39,10 @@ export function Steps<T extends Step>({ steps, current, onChange }: Props<T>) {
                 <span className="flex items-center gap-2 text-sm font-medium">
                   <span
                     className={clsx(
-                      'flex flex-shrink-0 items-center justify-center rounded-full',
+                      'flex flex-shrink-0 items-center justify-center rounded-full duration-300',
                       isCompleted && 'h-4 w-4 bg-emerald-700 text-white dark:bg-emerald-400',
-                      (isCurrent || isFuture) && 'h-5 w-8 bg-gray-500/30 p-2 dark:bg-gray-500/50',
+                      isCurrent && 'h-5 w-8 bg-gray-500/30 p-2 dark:bg-gray-500/50',
+                      isFuture && 'h-5 w-5 bg-gray-500/10 p-2 dark:bg-gray-500/20',
                     )}
                   >
                     {isCompleted ? (
@@ -56,7 +58,7 @@ export function Steps<T extends Step>({ steps, current, onChange }: Props<T>) {
                   </span>
                   <span
                     className={clsx(
-                      'text-sm font-medium',
+                      'text-sm font-medium duration-300',
                       isCompleted && 'text-emerald-700 dark:text-emerald-500',
                       isFuture && 'text-gray-500',
                     )}
