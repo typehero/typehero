@@ -2,6 +2,7 @@ import { getServerAuthSession } from '@repo/auth/server';
 import { Description } from '../_components/description';
 import { Comments } from '../_components/comments';
 import { getChallengeRouteData } from './getChallengeRouteData';
+import { buildMeta } from '~/app/metadata';
 
 interface Props {
   params: {
@@ -11,10 +12,10 @@ interface Props {
 
 export async function generateMetadata({ params: { id } }: Props) {
   const challenge = await getChallengeRouteData(id, null);
-  return {
+  return buildMeta({
     title: challenge.name,
     description: challenge.shortDescription,
-  };
+  });
 }
 export default async function Challenges({ params: { id } }: Props) {
   const session = await getServerAuthSession();

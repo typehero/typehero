@@ -4,30 +4,16 @@ import { Inter } from 'next/font/google';
 import type { Metadata } from 'next';
 import { Toaster } from '@repo/ui';
 import { Providers } from './providers';
+import { buildMeta } from './metadata';
 import { Navigation } from '~/components/ui/navigation';
 
 const inter = Inter({ subsets: ['latin'] });
 
-const OG_IMAGE = '/real-og.png';
 export async function generateMetadata(): Promise<Metadata> {
-  const title = 'Type Hero';
-  const description = 'Level up your typescript skills with interactive exercises';
-  return {
-    title,
-    description,
-    openGraph: {
-      images: [OG_IMAGE],
-      description,
-      title,
-      type: 'website',
-    },
-    twitter: {
-      images: [OG_IMAGE],
-      title,
-      description,
-      card: 'summary_large_image',
-    },
-  };
+  return buildMeta({
+    title: 'Typehero',
+    description: 'This is the home page',
+  });
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
