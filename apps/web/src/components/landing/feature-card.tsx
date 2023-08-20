@@ -1,6 +1,5 @@
 'use client';
 
-import { DifficultyBadge, UserBadge } from '@repo/ui';
 import {
   motion,
   useMotionTemplate,
@@ -9,11 +8,13 @@ import {
   type MotionValue,
 } from 'framer-motion';
 import { useTheme } from 'next-themes';
+import { DifficultyBadge, UserBadge } from '@repo/ui';
 import Image, { type StaticImageData } from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState, type MouseEvent } from 'react';
 import { Check, Minus, Triangle, X, Reply } from 'lucide-react';
 import { Markdown } from '../ui/markdown';
+import { useIsMobile } from '~/utils/useIsMobile';
 
 type WrapperStyle = MotionStyle & {
   '--x': MotionValue<string>;
@@ -37,7 +38,7 @@ function FeatureCard({
   const [mounted, setMounted] = useState(false);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const isMobile = useIsMobile();
 
   function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
     if (isMobile) return;

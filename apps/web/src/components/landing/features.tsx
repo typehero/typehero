@@ -1,3 +1,5 @@
+'use client';
+
 import { Balancer } from 'react-wrap-balancer';
 import { FeatureCard1, FeatureCard2, FeatureCard3 } from '~/components/landing/feature-card';
 import FeatureCardChallengeDark1 from '~/assets/images/feature_card_challenge_dark1.png';

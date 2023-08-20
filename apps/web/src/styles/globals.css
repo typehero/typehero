@@ -289,12 +289,9 @@ main {
     hsl(var(--background)),
     hsl(var(--background))
   );
+  mask-image: radial-gradient(100% 50% at center center, black, transparent);
   -webkit-mask-image: radial-gradient(100% 50% at center center, black, transparent);
   background-image: var(--first), var(--second);
-  background-attachment: ;
-  background-origin: ;
-  background-clip: ;
-  background-color: ;
   background-position-x: 1%, 99%;
   background-position-y: 0%, 0%;
   background-size: 50% 100%, 50% 100%;
@@ -334,6 +331,7 @@ main {
   inset: 0px 0px 50%;
   overflow: hidden;
   opacity: 0.1;
+  mask-image: radial-gradient(140px 50% at 50% 100%, black, transparent);
   -webkit-mask-image: radial-gradient(140px 50% at 50% 100%, black, transparent);
 }
 
