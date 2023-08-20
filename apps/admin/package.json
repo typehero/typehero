@@ -1,0 +1,46 @@
+{
+  "name": "admin",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "next build",
+    "clean": "rm -rf .next dist node_modules",
+    "dev": "dotenv -e ../../.env next dev",
+    "format": "prettier -w \"src/**/*.{ts,tsx,css,cjs,mjs,json}\"",
+    "lint": "eslint .",
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@repo/auth": "workspace:*",
+    "@repo/db": "workspace:*",
+    "@repo/emails": "workspace:*",
+    "@repo/lint": "workspace:*",
+    "@repo/ui": "workspace:*",
+    "next": "13.4.19",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwindcss": "3.3.3"
+  },
+  "devDependencies": {
+    "@repo/tsconfig": "workspace:*",
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@tailwindcss/typography": "^0.5.9",
+    "@types/node": "^20.4.2",
+    "@types/react": "^18.2.20",
+    "@types/react-dom": "^18.2.7",
+    "@types/react-syntax-highlighter": "^15.5.7",
+    "autoprefixer": "^10.4.14",
+    "dotenv": "^16.3.1",
+    "eslint": "^8.45.0",
+    "eslint-config-next": "^13.4.10",
+    "eslint-plugin-import": "^2.27.5",
+    "postcss": "^8.4.26",
+    "prettier": "^2.8.8",
+    "prettier-plugin-tailwindcss": "^0.4.1",
+    "raw-loader": "^4.0.2",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.1.6"
+  }
+}
