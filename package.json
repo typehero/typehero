@@ -8,7 +8,7 @@
     "db:push": "turbo db:push",
     "db:seed": "turbo db:seed",
     "db:studio": "turbo db:studio",
-    "dev": "turbo dev",
+    "dev": "turbo dev --concurrency=1000",
     "dl-git": "turbo dl-git",
     "dl-monaco:force": "turbo dl-monaco --force",
     "format": "turbo format format-root --continue -- --cache --loglevel=warn",
