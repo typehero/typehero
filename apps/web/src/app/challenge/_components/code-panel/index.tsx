@@ -1,6 +1,5 @@
 'use client';
 
-import { loader } from '@monaco-editor/react';
 import clsx from 'clsx';
 import { Loader2, Settings } from '@repo/ui/icons';
 import type * as monaco from 'monaco-editor';
@@ -33,12 +32,6 @@ import { useLocalStorage } from '~/utils/useLocalStorage';
 
 const VimStatusBar = dynamic(() => import('./vimMode').then((v) => v.VimStatusBar), {
   ssr: false,
-});
-
-loader.config({
-  paths: {
-    vs: '/vs',
-  },
 });
 
 export const LIB_URI = 'ts:filename/checking.d.ts';

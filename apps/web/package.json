@@ -22,6 +22,7 @@
     "@repo/db": "workspace:*",
     "@repo/emails": "workspace:*",
     "@repo/lint": "workspace:*",
+    "@repo/monaco": "workspace:*",
     "@repo/ui": "workspace:*",
     "@t3-oss/env-nextjs": "^0.6.0",
     "@tanstack/react-query": "^4.29.25",

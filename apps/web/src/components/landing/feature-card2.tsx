@@ -97,7 +97,7 @@ type Get<T, K> = string
                   width="150px"
                   height="198px"
                   viewBox="0 0 150 198"
-                  enable-background="new 0 0 150 198"
+                  enableBackground="new 0 0 150 198"
                 >
                   <image
                     width="150"

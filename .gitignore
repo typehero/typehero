@@ -49,5 +49,5 @@ yarn-error.log*
 *vimrc*
 
 # monaco-editor dependency
-apps/web/public/vs/
-monaco-editor.d.ts
+packages/monaco/src/lib/vs/
+packages/monaco/src/monaco-editor.ts

@@ -41,7 +41,9 @@ async function downloadAndSaveFile([remoteUrl, diskPath, appendToStart = '']: re
     })
   ).text();
 
-  const pathToSave = url.fileURLToPath(path.join(import.meta.url, '../../../apps/web', diskPath));
+  const pathToSave = url.fileURLToPath(
+    path.join(import.meta.url, '../../../packages/monaco/src/lib', diskPath),
+  );
   const dir = path.join(pathToSave, '../');
   await fs.mkdir(dir, { recursive: true });
   await fs.writeFile(pathToSave, `${appendToStart}\n${textToWrite}`, {});
@@ -50,31 +52,25 @@ async function downloadAndSaveFile([remoteUrl, diskPath, appendToStart = '']: re
 const files = [
   [
     '/esm/vs/editor/editor.api.d.ts',
-    './monaco-editor.d.ts',
+    './monaco-editor.ts',
     `// GENERATED WITH TS: ${TYPESCRIPT_VERSION}\n`,
   ],
-  ['/min/vs/loader.js', './public/vs/loader.js'],
-  ['/min/vs/editor/editor.main.js', './public/vs/editor/editor.main.js'],
-  ['/min/vs/editor/editor.main.css', './public/vs/editor/editor.main.css'],
-  ['/min/vs/editor/editor.main.nls.js', './public/vs/editor/editor.main.nls.js'],
+  ['/min/vs/loader.js', './vs/loader.js'],
+  ['/min/vs/editor/editor.main.js', './vs/editor/editor.main.js'],
+  ['/min/vs/editor/editor.main.css', './vs/editor/editor.main.css'],
+  ['/min/vs/editor/editor.main.nls.js', './vs/editor/editor.main.nls.js'],
   [
     '/min/vs/basic-languages/typescript/typescript.js',
-    './public/vs/basic-languages/typescript/typescript.js',
+    './vs/basic-languages/typescript/typescript.js',
   ],
-  ['/min/vs/language/typescript/tsMode.js', './public/vs/language/typescript/tsMode.js'],
-  ['/min/vs/base/worker/workerMain.js', './public/vs/base/worker/workerMain.js'],
-  [
-    '/min/vs/base/common/worker/simpleWorker.nls.js',
-    './public/vs/base/common/worker/simpleWorker.nls.js',
-  ],
-  ['/min/vs/language/typescript/tsWorker.js', './public/vs/language/typescript/tsWorker.js'],
-  [
-    '/min/vs/base/common/worker/simpleWorker.nls.js',
-    './public/vs/base/common/worker/simpleWorker.nls.js',
-  ],
+  ['/min/vs/language/typescript/tsMode.js', './vs/language/typescript/tsMode.js'],
+  ['/min/vs/base/worker/workerMain.js', './vs/base/worker/workerMain.js'],
+  ['/min/vs/base/common/worker/simpleWorker.nls.js', './vs/base/common/worker/simpleWorker.nls.js'],
+  ['/min/vs/language/typescript/tsWorker.js', './vs/language/typescript/tsWorker.js'],
+  ['/min/vs/base/common/worker/simpleWorker.nls.js', './vs/base/common/worker/simpleWorker.nls.js'],
   [
     './vs/base/browser/ui/codicons/codicon/codicon.ttf',
-    './public/vs/base/browser/ui/codicons/codicon/codicon.ttf',
+    './vs/base/browser/ui/codicons/codicon/codicon.ttf',
   ],
 ] as const;
 

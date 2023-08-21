@@ -1,0 +1,35 @@
+{
+  "name": "@repo/monaco",
+  "version": "0.1.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./types": "./src/types.ts"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./src/index.ts"
+      ],
+      "types": [
+        "./src/types.ts"
+      ]
+    }
+  },
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@monaco-editor/loader": "^1.3.3",
+    "@monaco-editor/react": "^4.5.1",
+    "monaco-editor": "^0.40.0",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@repo/lint": "workspace:*",
+    "@repo/tsconfig": "workspace:*",
+    "eslint": "^8.42.0",
+    "typescript": "^5.1.3"
+  }
+}
