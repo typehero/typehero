@@ -13,6 +13,8 @@ import Image, { type StaticImageData } from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState, type MouseEvent } from 'react';
 import { Check, Minus, Triangle, X, Reply } from 'lucide-react';
+import clsx from 'clsx';
+import type { Difficulty } from '@repo/db/types';
 import { Markdown } from '../ui/markdown';
 import { useIsMobile } from '~/utils/useIsMobile';
 
@@ -63,7 +65,11 @@ function FeatureCard({
       }
     >
       <div
-        className={`group relative w-full overflow-hidden rounded-3xl border bg-gradient-to-b from-neutral-50/90 to-neutral-100/90 backdrop-blur-2xl transition duration-300 hover:border-transparent dark:from-neutral-950/90 dark:to-neutral-800/90 ${classNameBG}`}
+        className={clsx(
+          'group relative w-full overflow-hidden rounded-3xl border bg-gradient-to-b from-neutral-50/90 to-neutral-100/90 backdrop-blur-2xl transition duration-300 dark:from-neutral-950/90 dark:to-neutral-800/90',
+          !isMobile && 'hover:border-transparent',
+          classNameBG,
+        )}
       >
         <div className="mx-10 my-10 min-h-[450px] w-full">
           <div className="flex w-4/6 flex-col gap-3">
@@ -156,17 +162,28 @@ type Get<T, K> = string
   \`\`\``;
 
 export function FeatureCard2(props: CardProps) {
+  const isMobile = useIsMobile();
   return (
     <FeatureCard {...props}>
       <div className="absolute inset-0 left-[37px] top-[30%] flex w-[100%] flex-col gap-3 pt-4">
-        <div className="rounded-3xl bg-neutral-500/10 p-4 pt-3 duration-150 hover:bg-neutral-500/20">
+        <div
+          className={clsx(
+            'rounded-3xl bg-neutral-500/10 p-4 pt-3 duration-150',
+            !isMobile && 'hover:bg-neutral-500/20',
+          )}
+        >
           <div className="flex items-center gap-2">
             <UserBadge username="abc" linkComponent={Link} />
             <div className="text-xs text-neutral-500">5 years ago</div>
           </div>
           pls halp i give ap
         </div>
-        <div className="relative ml-12 rounded-3xl bg-neutral-500/10 p-4 pt-3 duration-150 hover:bg-neutral-500/20">
+        <div
+          className={clsx(
+            'relative ml-12 rounded-3xl bg-neutral-500/10 p-4 pt-3 duration-150',
+            !isMobile && 'hover:bg-neutral-500/20',
+          )}
+        >
           <Reply className="absolute -left-8 h-4 w-4 opacity-50" />
           <div className="flex items-center gap-2">
             <UserBadge username="defg" linkComponent={Link} />
@@ -175,7 +192,12 @@ export function FeatureCard2(props: CardProps) {
           ez, the answer is
           <Markdown>{solutionComment}</Markdown>
         </div>
-        <div className="relative ml-12 rounded-tl-3xl bg-neutral-500/10 p-4 pt-3 duration-150 hover:bg-neutral-500/20">
+        <div
+          className={clsx(
+            'relative ml-12 rounded-tl-3xl bg-neutral-500/10 p-4 pt-3 duration-150',
+            !isMobile && 'hover:bg-neutral-500/20',
+          )}
+        >
           <Reply className="absolute -left-8 h-4 w-4 opacity-50" />
           <div className="flex items-center gap-2">
             <UserBadge username="69" linkComponent={Link} />
@@ -205,7 +227,8 @@ export function FeatureCard2(props: CardProps) {
   );
 }
 
-export function FeatureCard3(props: CardProps) {
+export function CuratedTracksCard(props: CardProps) {
+  const isMobile = useIsMobile();
   return (
     <FeatureCard {...props}>
       <>
@@ -218,88 +241,79 @@ export function FeatureCard3(props: CardProps) {
               <X className="h-3 w-3" />
             </div>
           </div>
-          <input className="peer/1 appearance-none" type="checkbox" id="toggle" />
-          <label
-            htmlFor="toggle"
-            className="flex w-[69%] cursor-pointer items-center justify-between gap-3 rounded-lg bg-neutral-500/10 p-4 text-zinc-700 duration-300 hover:scale-105 hover:rounded-xl active:scale-100 active:duration-75 group-hover:hover:bg-neutral-500/20 peer-checked/1:bg-pink-300/50
-                  peer-checked/1:hover:bg-pink-300/50 dark:text-zinc-300 peer-checked/1:dark:text-white"
-          >
-            <div className="flex items-center gap-3">
-              <div className="h-4 w-4 rounded-lg">
-                <Check className="h-3 w-3" />
-              </div>
-              Awaited
-            </div>
-            <div className="group">
-              <DifficultyBadge difficulty="BEGINNER" />
-            </div>
-          </label>
 
-          <input className="peer/2 appearance-none" type="checkbox" id="toggle2" />
-          <label
-            htmlFor="toggle2"
-            className="flex w-[69%] cursor-pointer items-center justify-between gap-3 rounded-lg bg-neutral-500/10 p-4 text-zinc-700 duration-300 hover:scale-105 hover:rounded-xl active:scale-100 active:duration-75 group-hover:hover:bg-neutral-500/20 peer-checked/2:bg-emerald-300/50 peer-checked/2:hover:bg-emerald-300/50 dark:text-zinc-300"
-          >
-            <div className="flex items-center gap-3">
-              <div className="h-4 w-4 rounded-lg">
-                <Check className="h-3 w-3" />
-              </div>
-              Unshift
-            </div>
-            <div className="group">
-              <DifficultyBadge difficulty="EASY" />
-            </div>
-          </label>
-
-          <input className="peer/3 appearance-none" type="checkbox" id="toggle3" />
-          <label
-            htmlFor="toggle3"
-            className="flex w-[69%] cursor-pointer items-center justify-between gap-3 rounded-lg bg-neutral-500/10 p-4 text-zinc-700 duration-300 hover:scale-105 hover:rounded-xl active:scale-100 active:duration-75 group-hover:hover:bg-neutral-500/20 peer-checked/3:bg-yellow-300/50 peer-checked/3:hover:bg-yellow-300/50 dark:text-zinc-300"
-          >
-            <div className="flex items-center gap-3">
-              <div className="h-4 w-4 rounded-lg">
-                <Check className="h-3 w-3" />
-              </div>
-              Append Argument
-            </div>
-            <div className="group">
-              <DifficultyBadge difficulty="MEDIUM" />
-            </div>
-          </label>
-
-          <input className="peer/4 appearance-none" type="checkbox" id="toggle4" />
-          <label
-            htmlFor="toggle4"
-            className="flex w-[69%] cursor-pointer items-center justify-between gap-3 rounded-lg bg-neutral-500/10 p-4 text-zinc-700 duration-300 hover:scale-105 hover:rounded-xl active:scale-100 active:duration-75 group-hover:hover:bg-neutral-500/20 peer-checked/4:bg-red-300/50 peer-checked/4:hover:bg-red-300/50 dark:text-zinc-300"
-          >
-            <div className="flex items-center gap-3">
-              <div className="h-4 w-4 rounded-lg">
-                <Check className="h-3 w-3" />
-              </div>
-              CamelCase
-            </div>
-            <div className="group">
-              <DifficultyBadge difficulty="HARD" />
-            </div>
-          </label>
-
-          <input className="peer/5 appearance-none" type="checkbox" id="toggle5" />
-          <label
-            htmlFor="toggle5"
-            className="flex w-[69%] cursor-pointer items-center justify-between gap-3 rounded-lg bg-neutral-500/10 p-4 text-zinc-700 duration-300 hover:scale-105 hover:rounded-xl active:scale-100 active:duration-75 group-hover:hover:bg-neutral-500/20 peer-checked/5:bg-orange-300/50 peer-checked/5:hover:bg-orange-300/50 dark:text-zinc-300"
-          >
-            <div className="flex items-center gap-3">
-              <div className="h-4 w-4 rounded-lg">
-                <Check className="h-3 w-3" />
-              </div>
-              Get Readonly Keys
-            </div>
-            <div className="group">
-              <DifficultyBadge difficulty="EXTREME" />
-            </div>
-          </label>
+          {tracks.map((track) => (
+            <Track key={track.id} {...track} />
+          ))}
         </div>
       </>
     </FeatureCard>
+  );
+}
+
+interface Track {
+  className?: string;
+  difficulty: Difficulty;
+  id: string;
+  label: string;
+}
+
+const tracks: Track[] = [
+  {
+    id: '1',
+    label: 'Awaited',
+    difficulty: 'BEGINNER',
+    className: 'peer-checked/1:bg-pink-300/50 peer-checked/1:hover:bg-pink-300/50',
+  },
+  {
+    id: '2',
+    label: 'Unshift',
+    difficulty: 'EASY',
+    className: 'peer-checked/2:bg-emerald-300/50 peer-checked/2:hover:bg-emerald-300/50',
+  },
+  {
+    id: '3',
+    label: 'Append Argument',
+    difficulty: 'MEDIUM',
+    className: 'peer-checked/3:bg-yellow-300/50 peer-checked/3:hover:bg-yellow-300/50',
+  },
+  {
+    id: '4',
+    label: 'CamelCase',
+    difficulty: 'HARD',
+    className: 'peer-checked/4:bg-red-300/50 peer-checked/4:hover:bg-red-300/50',
+  },
+  {
+    id: '5',
+    label: 'Get Readonly Keys',
+    difficulty: 'EXTREME',
+    className: 'peer-checked/5:bg-orange-300/50 peer-checked/5:hover:bg-orange-300/50',
+  },
+];
+
+function Track({ className, difficulty, id, label }: Track) {
+  const isMobile = useIsMobile();
+  return (
+    <>
+      <input className={`peer/${id} appearance-none`} type="checkbox" id={id} />
+      <label
+        htmlFor={id}
+        className={clsx(
+          'flex w-[69%] cursor-pointer items-center justify-between gap-3 rounded-lg bg-neutral-500/10 p-4 text-zinc-700 duration-300 active:scale-100 active:duration-75  dark:text-zinc-300',
+          className,
+          !isMobile && 'hover:scale-105 hover:rounded-xl group-hover:hover:bg-neutral-500/20',
+        )}
+      >
+        <div className="flex items-center gap-3">
+          <div className="h-4 w-4 rounded-lg">
+            <Check className="h-3 w-3" />
+          </div>
+          {label}
+        </div>
+        <div className="group">
+          <DifficultyBadge difficulty={difficulty} />
+        </div>
+      </label>
+    </>
   );
 }

@@ -1,7 +1,8 @@
 'use client';
 
 import { Balancer } from 'react-wrap-balancer';
-import { FeatureCard1, FeatureCard2, FeatureCard3 } from '~/components/landing/feature-card';
+import clsx from 'clsx';
+import { FeatureCard1, FeatureCard2, CuratedTracksCard } from '~/components/landing/feature-card';
 import FeatureCardChallengeDark1 from '~/assets/images/feature_card_challenge_dark1.png';
 import FeatureCardChallengeDark2 from '~/assets/images/feature_card_challenge_dark2.png';
 import FeatureCardChallengeLight1 from '~/assets/images/feature_card_challenge_light1.png';
@@ -10,8 +11,10 @@ import FeatureCardCreateLight1 from '~/assets/images/feature_card_create_light1.
 import FeatureCardCreateLight2 from '~/assets/images/feature_card_create_light2.png';
 import FeatureCardCreateDark1 from '~/assets/images/feature_card_create_dark1.png';
 import FeatureCardCreateDark2 from '~/assets/images/feature_card_create_dark2.png';
+import { useIsMobile } from '~/utils/useIsMobile';
 
 function Features() {
+  const isMobile = useIsMobile();
   return (
     <section className="relative overflow-hidden" id="features">
       <div className="container mb-[64px] grid items-center justify-center">
@@ -43,8 +46,14 @@ function Features() {
           </div>
           <div className="relative z-10 grid w-full gap-8 lg:grid-cols-2">
             <FeatureCard1
-              className="pointer-events-none -bottom-[11%] left-[35px] w-[42%] transition-transform duration-500 group-hover:translate-x-2 group-hover:scale-95 lg:w-[69%]"
-              className2="pointer-events-none left-[39%] -bottom-[12%] w-[50%] lg:w-[77%] transition-transform duration-500 group-hover:scale-105 group-hover:-translate-x-2 backdrop-blur-md rounded-xl overflow-hidden"
+              className={clsx(
+                'pointer-events-none -bottom-[11%] left-[35px] w-[42%] transition-transform duration-500 lg:w-[69%]',
+                !isMobile && 'group-hover:translate-x-2 group-hover:scale-95',
+              )}
+              className2={clsx(
+                'pointer-events-none left-[39%] -bottom-[12%] w-[50%] lg:w-[77%] transition-transform duration-500 backdrop-blur-md rounded-xl overflow-hidden',
+                !isMobile && 'group-hover:scale-105 group-hover:-translate-x-2',
+              )}
               description="Engage in TypeScript challenges to strengthen your grasp of the type system and advanced features"
               classNameBG="lg:bg-gradient-to-br"
               image={{
@@ -64,8 +73,14 @@ function Features() {
             />
 
             <FeatureCard1
-              className="pointer-events-none left-[35px] top-[30%] w-[50%] rounded-t-xl border border-zinc-300 opacity-80 transition-transform duration-500 group-hover:translate-y-2 dark:border-zinc-700"
-              className2="pointer-events-none rounded-t-xl border border-zinc-300 dark:border-zinc-700 left-[calc(50%+35px+1rem)] top-[30%] w-[150%] ransition-transform duration-500 group-hover:-translate-y-6 opacity-80 backdrop-blur-md rounded-xl overflow-hidden"
+              className={clsx(
+                'pointer-events-none left-[35px] top-[30%] w-[50%] rounded-t-xl border border-zinc-300 opacity-80 transition-transform duration-500 dark:border-zinc-700',
+                !isMobile && 'group-hover:translate-y-2',
+              )}
+              className2={clsx(
+                'pointer-events-none rounded-t-xl border border-zinc-300 dark:border-zinc-700 left-[calc(50%+35px+1rem)] top-[30%] w-[150%] ransition-transform duration-500 opacity-80 backdrop-blur-md rounded-xl overflow-hidden',
+                !isMobile && 'group-hover:-translate-y-6',
+              )}
               description="Craft your own coding challenges to share with the Typehero community"
               classNameBG="lg:bg-gradient-to-tr"
               image={{
@@ -78,7 +93,7 @@ function Features() {
               title="Challenge Creation"
             />
 
-            <FeatureCard3
+            <CuratedTracksCard
               description="Tracks features curated TypeScript challenges, spanning various topics and difficulty levels, to advance your TypeScript skills."
               classNameBG="lg:bg-gradient-to-tl"
               title="Curated Tracks"
