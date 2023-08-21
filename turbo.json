@@ -9,6 +9,8 @@
         "DATABASE_URL",
         "GITHUB_ID",
         "GITHUB_SECRET",
+        "GITHUB_ADMIN_ID",
+        "GITHUB_ADMIN_SECRET",
         "UPLOADTHING_SECRET",
         "UPLOADTHING_APP_ID",
         "NEXTAUTH_SECRET",

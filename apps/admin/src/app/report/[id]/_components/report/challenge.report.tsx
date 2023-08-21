@@ -1,10 +1,8 @@
 import { ThumbsUp } from '@repo/ui/icons';
-import { Text, UserBadge } from '@repo/ui';
+import { Markdown, Text, UserBadge } from '@repo/ui';
 import Link from 'next/link';
-import { type ReportWithInfo } from '~/app/admin/report/[id]/report.action';
-import { getChallenge } from '~/components/admin/admin.actions';
-import { CodeEditor } from '~/components/ui/code-editor';
-import { Markdown } from '~/components/ui/markdown';
+import type { ReportWithInfo } from '../../report.action';
+import { getChallenge } from '~/app/_components/admin.actions';
 
 export interface ChallengeReportProps {
   report: NonNullable<ReportWithInfo>;
@@ -39,10 +37,10 @@ export default async function ChallengeReport({ report }: ChallengeReportProps) 
         </div>
         <Markdown className="mt-4">{report.challenge.description}</Markdown>
       </div>
-      <Text intent="h3">Tests Panel</Text>
+      {/* <Text intent="h3">Tests Panel</Text>
       <CodeEditor height="20vh" value={report.challenge.tests} />
       <Text intent="h3">Base code provided</Text>
-      <CodeEditor height="30vh" value={report.challenge.code} />
+      <CodeEditor height="30vh" value={report.challenge.code} /> */}
     </section>
   );
 }

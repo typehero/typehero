@@ -26,7 +26,6 @@ import { DraggableChallenge } from './draggable-challenge';
 const trackChallengeSchema = z.object({
   challengeId: z.number(),
   orderId: z.number(),
-  // trackId: z.number(),
   challenge: z.any(),
 });
 

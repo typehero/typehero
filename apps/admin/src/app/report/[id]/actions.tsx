@@ -1,28 +1,28 @@
 'use client';
 
 import { type User } from '@repo/db/types';
-import { useRouter } from 'next/navigation';
-import { useMemo, useState } from 'react';
 import {
+  Button,
   Dialog,
   DialogContent,
-  DialogTitle,
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  Button,
+  DialogTitle,
   Label,
   Textarea,
   toast,
 } from '@repo/ui';
-import { type ReportWithInfo } from './report.action';
+import { useRouter } from 'next/navigation';
+import { useMemo, useState } from 'react';
 import {
+  banChallenge,
   banUser,
   deleteComment,
   deleteSolution,
-  banChallenge,
   dismissReport,
-} from '~/components/admin/admin.actions';
+} from '../../_components/admin.actions';
+import { type ReportWithInfo } from './report.action';
 
 export interface ReportActionsProps {
   report: NonNullable<ReportWithInfo>;
