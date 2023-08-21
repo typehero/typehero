@@ -34,7 +34,21 @@ if (!process.env.GITHUB_SECRET) {
   throw new Error('No GITHUB_SECRET has been provided.');
 }
 
+const useSecureCookies = Boolean(process.env.VERCEL_URL);
+
 export const authOptions: NextAuthOptions = {
+  cookies: {
+    sessionToken: {
+      name: `${useSecureCookies ? '__Secure-' : ''}next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        domain: 'typehero.dev',
+        secure: useSecureCookies,
+      },
+    },
+  },
   callbacks: {
     redirect: ({ url, baseUrl }) => {
       if (url.startsWith('/')) return `${baseUrl}${url}`;
@@ -100,24 +114,6 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GITHUB_SECRET!,
     }),
   ],
-};
-
-const useSecureCookies = Boolean(process.env.VERCEL_URL);
-
-export const adminAuthOptions: NextAuthOptions = {
-  ...authOptions,
-  cookies: {
-    sessionToken: {
-      name: `${useSecureCookies ? '__Secure-' : ''}next-auth.session-token`,
-      options: {
-        httpOnly: true,
-        sameSite: 'lax',
-        path: '/',
-        domain: 'typehero.dev',
-        secure: useSecureCookies,
-      },
-    },
-  },
 };
 
 /**
