@@ -1,7 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { Unlock } from '@repo/ui/icons';
 import {
   ActionMenu,
   Badge,
@@ -14,8 +12,9 @@ import {
   TypographyH3,
   toast,
 } from '@repo/ui';
-import { getRelativeTime } from '~/utils/relativeTime';
-import { unbanUser, type AdminBannedUsers } from '~/components/admin/admin.actions';
+import { Unlock } from '@repo/ui/icons';
+import { useRouter } from 'next/navigation';
+import { unbanUser, type AdminBannedUsers } from './admin.actions';
 
 interface BannedUsersProps {
   data: AdminBannedUsers;
@@ -66,7 +65,6 @@ export function BannedUsers({ data }: BannedUsersProps) {
           {data.map((user, userIdx) => {
             const username = user.name;
             const status = user.status;
-            const relativeTime = getRelativeTime(user.updatedAt);
             const absoluteTime = new Intl.DateTimeFormat('en-US', {
               dateStyle: 'medium',
               timeStyle: 'medium',
@@ -78,7 +76,7 @@ export function BannedUsers({ data }: BannedUsersProps) {
                 <TableCell>
                   <Badge>{status}</Badge>
                 </TableCell>
-                <TableCell title={absoluteTime}>{relativeTime}</TableCell>
+                <TableCell title={absoluteTime}>{absoluteTime}</TableCell>
                 <TableCell title={banReason ?? ''}>
                   {banReason
                     ? banReason.length > 15

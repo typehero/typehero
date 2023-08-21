@@ -3,7 +3,7 @@
 import { type User } from '@repo/db/types';
 import { Flag } from '@repo/ui/icons';
 import { ActionMenu, Text } from '@repo/ui';
-import { ReportDialog } from '~/components/report';
+import { ReportDialog } from '~/components/ReportDialog';
 
 export interface UserHeaderProps {
   user: User;
