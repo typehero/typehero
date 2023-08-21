@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import { type ReportWithInfo } from '~/app/admin/report/[id]/report.action';
-import { Comment } from '~/app/challenge/_components/comments/comment';
+import type { ReportWithInfo } from '../../report.action';
 
 export default function CommentReport({ report }: { report: NonNullable<ReportWithInfo> }) {
   if (report.type !== 'COMMENT' || report.commentId === null || !report.comment) return null;
@@ -25,7 +24,8 @@ export default function CommentReport({ report }: { report: NonNullable<ReportWi
         </Link>
       </header>
       <section className="mt-4 rounded-lg bg-zinc-800">
-        <Comment comment={report.comment} readonly rootId={rootId} type={report.comment.rootType} />
+        <pre>{JSON.stringify(report.comment, null, 2)}</pre>
+        {/* <Comment comment={report.comment} readonly rootId={rootId} type={report.comment.rootType} />   */}
       </section>
     </div>
   );

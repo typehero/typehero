@@ -14,8 +14,8 @@ import { replyComment, updateComment, type CommentsByChallengeId } from './comme
 import { CommentDeleteDialog } from './delete';
 import { getPaginatedComments } from './getCommentRouteData';
 import { Markdown } from '~/components/ui/markdown';
-import { ReportDialog } from '~/components/report';
 import { getRelativeTime } from '~/utils/relativeTime';
+import { ReportDialog } from '~/components/ReportDialog';
 
 interface SingleCommentProps {
   comment: CommentsByChallengeId[number];
