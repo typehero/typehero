@@ -39,7 +39,10 @@ export default async function ChallengeReport({ report }: ChallengeReportProps) 
         </div>
         <Markdown className="mt-4">{report.challenge.description}</Markdown>
       </div>
-      <CodeEditor height="50vh" value={report.challenge.prompt} />
+      <Text intent="h3">Tests Panel</Text>
+      <CodeEditor height="20vh" value={report.challenge.tests} />
+      <Text intent="h3">Base code provided</Text>
+      <CodeEditor height="30vh" value={report.challenge.code} />
     </section>
   );
 }

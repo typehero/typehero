@@ -70,7 +70,7 @@ export function ChallengeReview({ challenge }: Props) {
           <Markdown>{challenge.description}</Markdown>
         </div>
         <div className="flex-1 rounded-l-xl rounded-r-2xl border border-zinc-300 dark:border-zinc-700">
-          <CodeEditor value={challenge.prompt} />
+          <CodeEditor value={challenge.tests} />
         </div>
       </div>
       <div className="flex justify-end gap-3 p-4">

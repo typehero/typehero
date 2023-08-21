@@ -32,7 +32,8 @@ export async function loadChallengesFromTypeChallenge() {
     f.filter((a) => a.isDirectory),
   );
 
-  const arr = [];
+  const arr: Omit<Prisma.ChallengeCreateManyInput, 'userId'>[] = [];
+
   for (const dir of folders) {
     const infoFile = resolve('./tmp/type-challenges/questions', dir.name, 'info.yml');
     const contents = await readFile(infoFile).then((r) => r.toString());
@@ -65,8 +66,10 @@ export async function loadChallengesFromTypeChallenge() {
       id: idNum,
       name: title,
       description: README,
-      status: Math.floor(Math.random() * 2) > 0 ? ChallengeStatus.PENDING : ChallengeStatus.ACTIVE,
-      prompt: `// TEST CASE START\n${testData}\n\n// CODE START\n${prompt}`,
+      status: ChallengeStatus.ACTIVE,
+      code: prompt,
+      tests: testData,
+      // prompt: `// TEST CASE START\n${testData}\n\n// CODE START\n${prompt}`,
       difficulty: difficulty === 'warm' ? 'BEGINNER' : (difficulty.toUpperCase() as Difficulty),
       shortDescription: README.slice(0, 100),
     });
@@ -108,7 +111,8 @@ export const CHALLENGE_MAP: Record<
       : undefined,
     description: loadChallengeSync('beginner/desc'),
     shortDescription: faker.lorem.lines({ min: 1, max: 2 }),
-    prompt: loadChallengeSync('beginner/prompt'),
+    tests: '',
+    code: '',
     difficulty: 'BEGINNER',
   }),
   EASY: () => ({
@@ -117,7 +121,8 @@ export const CHALLENGE_MAP: Record<
     updatedAt: faker.date.between({ from: '2023-05-01', to: new Date() }),
     description: loadChallengeSync('easy/desc'),
     shortDescription: faker.lorem.lines({ min: 1, max: 2 }),
-    prompt: loadChallengeSync('easy/prompt'),
+    tests: loadChallengeSync('easy/prompt'),
+    code: '',
     difficulty: 'EASY',
   }),
   MEDIUM: () => ({
@@ -127,6 +132,8 @@ export const CHALLENGE_MAP: Record<
     description: loadChallengeSync('medium/desc'),
     shortDescription: faker.lorem.lines({ min: 1, max: 2 }),
     prompt: loadChallengeSync('medium/prompt'),
+    tests: '',
+    code: '',
     difficulty: 'MEDIUM',
   }),
   HARD: () => ({
@@ -135,7 +142,8 @@ export const CHALLENGE_MAP: Record<
     updatedAt: faker.date.between({ from: '2023-05-01', to: new Date() }),
     description: loadChallengeSync('hard/desc'),
     shortDescription: faker.lorem.lines({ min: 1, max: 2 }),
-    prompt: loadChallengeSync('hard/prompt'),
+    tests: loadChallengeSync('hard/prompt'),
+    code: '',
     difficulty: 'HARD',
   }),
   EXTREME: () => ({
@@ -144,7 +152,8 @@ export const CHALLENGE_MAP: Record<
     updatedAt: faker.date.between({ from: '2023-05-01', to: new Date() }),
     description: loadChallengeSync('extreme/desc'),
     shortDescription: faker.lorem.lines({ min: 1, max: 2 }),
-    prompt: loadChallengeSync('extreme/prompt'),
+    tests: '',
+    code: '',
     difficulty: 'EXTREME',
   }),
 };

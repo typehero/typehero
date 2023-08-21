@@ -77,7 +77,7 @@ export function TestCasesEditor({ form, hasTsErrors, setTsErrors }: Props) {
       <TypographyH3 className="mx-auto mb-4 lg:mb-6">Create Test Cases</TypographyH3>
       <FormField
         control={form.control}
-        name="prompt"
+        name="tests"
         render={({ field }) => {
           return (
             <FormItem className="h-full">

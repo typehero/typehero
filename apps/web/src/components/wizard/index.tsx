@@ -15,6 +15,7 @@ import { Summary } from './Summary';
 import { TestCasesEditor } from './TestCasesEditor';
 import { uploadChallenge } from './create.action';
 import DEFAULT_CHALLENGE_TEMPLATE from './default-challenge.md';
+import DEFAULT_TEST_CASES from './default-tests.md';
 import DEFAULT_DESCRIPTION from './default-description.md';
 import type { TsErrors } from '~/app/challenge/_components/code-panel';
 import {
@@ -44,15 +45,12 @@ const createDescriptionSchema = z.object({
   description: z.string().min(20, 'The description must be longer than 20 characters').max(65536),
 });
 const createTestCasesSchema = z.object({
-  prompt: z
+  tests: z
     .string()
     .min(20, 'The test cases must be longer than 20 characters')
     .max(65536)
-    .regex(testCaseRegex, 'You need to have test cases in your challenge')
-    .regex(
-      USER_CODE_START_REGEX,
-      `You need to have the line \`${USER_CODE_START}\` to signify the non-editable part`,
-    ),
+    .regex(testCaseRegex, 'You need to have test cases in your challenge'),
+  code: z.string(),
 });
 export const createChallengeSchema = createExploreCardSchema
   .merge(createDescriptionSchema)
@@ -88,7 +86,8 @@ export function Wizard() {
       name: '',
       difficulty: 'BEGINNER',
       description: DEFAULT_DESCRIPTION,
-      prompt: DEFAULT_CHALLENGE_TEMPLATE,
+      tests: DEFAULT_TEST_CASES,
+      code: DEFAULT_CHALLENGE_TEMPLATE,
     },
   });
 

@@ -13,7 +13,7 @@ export interface PaginationProps {
   onChange: (e: CustomEvent<OnPageChangePayload>) => void;
 }
 
-export default function Pagination({
+export function Pagination({
   hasNextPage = false,
   totalPages = 1,
   currentPage = 1,
