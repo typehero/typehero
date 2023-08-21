@@ -51,11 +51,13 @@ function Features() {
           <div className="relative z-10 grid w-full gap-8 lg:grid-cols-2">
             <ImageCard
               imgClass1={clsx(
-                'pointer-events-none -bottom-[11%] left-[35px] w-[42%] transition-transform duration-500 lg:w-[69%]',
+                'pointer-events-noned transition-transform duration-500',
+                'max-sm:scale-[240%] bottom-[5%] left-[30%] w-[42%] md:-bottom-[11%] md:left-[35px] lg:w-[69%]',
                 !isMobile && 'group-hover:translate-x-2 group-hover:scale-95',
               )}
               imgClass2={clsx(
-                'pointer-events-none left-[39%] -bottom-[12%] w-[50%] lg:w-[77%] transition-transform duration-500 backdrop-blur-md rounded-xl overflow-hidden',
+                'pointer-events-none transition-transform duration-500 backdrop-blur-md rounded-xl overflow-hidden',
+                'max-sm:scale-[280%] left-[80%] -bottom-[1%] w-[50%] md:left-[39%] md:-bottom-[12%] lg:w-[77%]',
                 !isMobile && 'group-hover:scale-105 group-hover:-translate-x-2',
               )}
               description="Engage in TypeScript challenges to strengthen your grasp of the type system and advanced features"
@@ -78,11 +80,13 @@ function Features() {
 
             <ImageCard
               imgClass1={clsx(
-                'pointer-events-none left-[35px] top-[30%] w-[50%] rounded-t-xl border border-zinc-300 opacity-80 transition-transform duration-500 dark:border-zinc-700',
+                'pointer-events-none w-[50%] rounded-t-xl border border-zinc-300 opacity-80 transition-transform duration-500 dark:border-zinc-700',
+                'max-md:scale-[160%] left-[15%] top-[57%] md:left-[35px] md:top-[30%]',
                 !isMobile && 'group-hover:translate-y-2',
               )}
               imgClass2={clsx(
-                'pointer-events-none rounded-t-xl border border-zinc-300 dark:border-zinc-700 left-[calc(50%+35px+1rem)] top-[30%] w-[150%] ransition-transform duration-500 opacity-80 backdrop-blur-md rounded-xl overflow-hidden',
+                'pointer-events-none w-[150%] rounded-t-xl border border-zinc-300 dark:border-zinc-700 ransition-transform duration-500 opacity-80 backdrop-blur-md rounded-xl overflow-hidden',
+                'max-md:scale-[140%] left-[70%] top-[53%] md:top-[30%] md:left-[calc(50%+35px+1rem)]',
                 !isMobile && 'group-hover:-translate-y-6',
               )}
               description="Craft your own coding challenges to share with the Typehero community"

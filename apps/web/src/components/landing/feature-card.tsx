@@ -165,7 +165,7 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
   const isMobile = useIsMobile();
   return (
     <FeatureCard {...props}>
-      <div className="absolute inset-0 left-[37px] top-[30%] flex w-[100%] flex-col gap-3 pt-4">
+      <div className="absolute inset-0 top-[35%] flex w-[100%] flex-col gap-3 pt-4 max-md:scale-90 md:left-[37px] md:top-[30%]">
         <div
           className={clsx(
             'rounded-3xl bg-neutral-500/10 p-4 pt-3 duration-150',
@@ -228,25 +228,27 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
 }
 
 export function CuratedTracksCard(props: CardProps) {
-  const isMobile = useIsMobile();
   return (
     <FeatureCard {...props}>
-      <>
-        <div className="absolute inset-0 top-[38%] flex flex-col items-center justify-center gap-1">
-          <div className="flex w-[69%] items-center justify-between gap-3 rounded-b-lg rounded-t-2xl bg-neutral-500/10 p-2 pl-3">
-            <span className="text-sm font-medium">Track name</span>
-            <div className="flex items-center gap-3">
-              <Minus className="h-3 w-3" />
-              <Triangle className="h-3 w-3" />
-              <X className="h-3 w-3" />
-            </div>
+      <div
+        className={clsx(
+          'absolute inset-0 top-[90%] flex flex-col items-center justify-center gap-1',
+          'max-md:scale-125 md:top-[38%]',
+        )}
+      >
+        <div className="flex w-[69%] items-center justify-between gap-3 rounded-b-lg rounded-t-2xl bg-neutral-500/10 p-2 pl-3">
+          <span className="text-sm font-medium">Track name</span>
+          <div className="flex items-center gap-3">
+            <Minus className="h-3 w-3" />
+            <Triangle className="h-3 w-3" />
+            <X className="h-3 w-3" />
           </div>
-
-          {tracks.map((track) => (
-            <Track key={track.id} {...track} />
-          ))}
         </div>
-      </>
+
+        {tracks.map((track) => (
+          <Track key={track.id} {...track} />
+        ))}
+      </div>
     </FeatureCard>
   );
 }
