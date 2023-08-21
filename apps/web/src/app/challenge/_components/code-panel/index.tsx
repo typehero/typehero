@@ -1,5 +1,6 @@
 'use client';
 
+import { loader, useMonaco } from '@monaco-editor/react';
 import clsx from 'clsx';
 import { Loader2, Settings } from '@repo/ui/icons';
 import type * as monaco from 'monaco-editor';
@@ -26,13 +27,20 @@ import { saveSubmission } from '../../[id]/submissions/save-submission.action';
 import { USER_CODE_START, USER_CODE_START_REGEX } from './constants';
 import { libSource } from './editor-types';
 import { createTwoslashInlayProvider } from './twoslash';
-import { CodeEditor } from '~/components/ui/code-editor';
 import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import { useLocalStorage } from '~/utils/useLocalStorage';
+import SplitEditor from '~/components/ui/split-editor';
 
 const VimStatusBar = dynamic(() => import('./vimMode').then((v) => v.VimStatusBar), {
   ssr: false,
 });
+
+loader.config({
+  paths: {
+    vs: '/vs',
+  },
+});
+
 
 export const LIB_URI = 'ts:filename/checking.d.ts';
 
@@ -63,11 +71,11 @@ export function CodePanel(props: Props) {
     lzstring.decompressFromEncodedURIComponent(params.get('code') ?? '') ?? localStorageCode;
 
   const getDefaultCode = () => {
-    if (!defaultCode) {
-      return props.challenge.prompt;
+    if (!localStorageCode) {
+      return props.challenge.code;
     }
 
-    const [appendSolutionToThis, separator] = props.challenge.prompt.split(USER_CODE_START_REGEX);
+    const [appendSolutionToThis, separator] = props.challenge.code.split(USER_CODE_START_REGEX);
 
     return `${appendSolutionToThis ?? ''}${separator ?? ''}${defaultCode}`;
   };
@@ -79,10 +87,9 @@ export function CodePanel(props: Props) {
   const [editorState, setEditorState] = useState<monaco.editor.IStandaloneCodeEditor>();
 
   const handleSubmit = async () => {
-    const [, solution] = code.split(USER_CODE_START);
     const hasErrors = tsErrors.some((e) => e.length);
 
-    await saveSubmission(props.challenge.id, session?.user.id!, solution ?? '', !hasErrors);
+    await saveSubmission(props.challenge.id, session?.user.id!, code ?? '', !hasErrors);
     router.refresh();
 
     if (hasErrors) {
@@ -118,6 +125,7 @@ export function CodePanel(props: Props) {
       }
 
       const model = editor.getModel();
+      console.info('MODEL', model?.uri);
 
       if (!model) {
         throw new Error();
@@ -151,12 +159,17 @@ export function CodePanel(props: Props) {
       await typeCheck();
       setInitialTypecheckDone(true);
 
+      editor.updateOptions({
+        readOnly: true,
+        renderValidationDecorations: 'on',
+      });
+
       monaco.languages.registerInlayHintsProvider(
         'typescript',
         createTwoslashInlayProvider(monaco, ts),
       );
     };
-
+  const monacoInstance = useMonaco();
   return (
     <>
       <div className="sticky top-0 flex h-[40px] flex-row-reverse items-center border-b border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
@@ -180,14 +193,37 @@ export function CodePanel(props: Props) {
         </Dialog>
       </div>
       <div className="w-full flex-1">
-        <CodeEditor
-          onChange={(code) => {
-            setCode(code ?? '');
-            // we we only want to save whats after the comment
-            const [, , storeThiseCode] = (code ?? '').split(USER_CODE_START_REGEX);
-            setLocalStorageCode(storeThiseCode ?? '');
+        <SplitEditor
+          tests={props.challenge.tests}
+          challenge={props.challenge.code}
+          onMount={{ tests: onMount(code, setTsErrors) }}
+          onChange={{
+            user: async (code) => {
+              if (!monacoInstance) return null;
+              setCode(code ?? '');
+              // we we only want to save whats after the comment
+              const [, , storeThiseCode] = (code ?? '').split(USER_CODE_START_REGEX);
+
+              // Wow this is just... remarkably jank.
+
+              const getModel = await monacoInstance.languages.typescript.getTypeScriptWorker();
+              const filename = 'file:///tests.ts';
+              const mm = monacoInstance.editor.getModel(
+                monacoInstance.Uri.parse('file:///tests.ts'),
+              );
+              if (!mm) return null;
+              const model = await getModel(mm.uri);
+
+              const errors = await Promise.all([
+                model.getSemanticDiagnostics(filename),
+                model.getSyntacticDiagnostics(filename),
+                Promise.resolve([]),
+                model.getCompilerOptionsDiagnostics(filename),
+              ] as const);
+              setTsErrors(errors);
+              setLocalStorageCode(storeThiseCode ?? '');
+            },
           }}
-          onMount={onMount(code, setTsErrors)}
           value={code}
         />
       </div>
