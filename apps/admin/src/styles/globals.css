@@ -1,0 +1,180 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --gradient-angle: 360deg;
+
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+
+    --card: 0 0% 100%;
+    --card-hovered: 0 0% 98%;
+    --card-foreground: 240 10% 3.9%;
+
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: ;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --ring: 240 5% 64.9%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+
+    --card: 240 10% 3.9%;
+    --card-hovered: 240 10% 6.9%;
+    --card-foreground: 0 0% 98%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: ;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 85.7% 97.3%;
+
+    --ring: 240 3.7% 15.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+html,
+body,
+#__next,
+main {
+  scroll-padding-top: 64px;
+  scroll-behavior: smooth;
+  height: 100%;
+}
+.w-md-editor-content {
+  @apply bg-background dark:bg-muted;
+}
+
+.w-md-editor-toolbar {
+  @apply flex w-full gap-2;
+  /* border-b border-b-zinc-300 */
+  border-bottom: 1px solid rgb(212 212 216) !important;
+  /* bg-background (in light mode) */
+  background: #fff !important;
+}
+
+/* dark:border-b-zinc-300 dark:bg-muted */
+.dark .w-md-editor-toolbar {
+  border-bottom: 1px solid rgb(63 63 70) !important;
+  background: hsl(240 3.7% 15.9%) !important;
+}
+
+.w-md-editor-toolbar-divider {
+  @apply bg-zinc-300 dark:bg-zinc-700;
+  /* TODO: not aligned center vertically */
+  height: 1.5rem !important;
+}
+.w-md-editor-toolbar ul {
+  @apply flex items-center;
+}
+.w-md-editor-toolbar ul li.active button {
+  @apply text-black dark:text-white;
+}
+.w-md-editor-toolbar ul li button {
+  @apply flex h-8 w-auto min-w-[2rem] items-center justify-center rounded-md p-1 text-neutral-500 hover:bg-neutral-200 hover:text-black dark:hover:bg-zinc-700 dark:hover:text-white;
+}
+.w-md-editor-toolbar ul li button[disabled] {
+  @apply cursor-default text-neutral-700 hover:bg-transparent hover:text-neutral-700;
+}
+.w-md-editor-toolbar ul li button svg {
+  @apply h-4 w-4;
+}
+.w-md-editor {
+  background: var(--muted) !important;
+}
+
+.w-md-editor-preview {
+  padding: 1rem !important;
+  box-shadow: inset 1px 0 0 0 rgb(212 212 216) !important;
+}
+.dark .w-md-editor-preview {
+  box-shadow: inset 1px 0 0 0 rgb(63 63 70) !important;
+}
+
+.w-md-editor-preview .wmde-markdown {
+  @apply bg-muted;
+}
+
+.custom-scrollable-element::-webkit-scrollbar {
+  width: 0.6rem;
+}
+.custom-scrollable-element::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+.custom-scrollable-element::-webkit-scrollbar-thumb {
+  @apply rounded-l-xl bg-neutral-300/50 dark:bg-zinc-700/50;
+}
+
+.custom-scrollable-element::-webkit-scrollbar-thumb:hover {
+  @apply bg-neutral-300 dark:bg-zinc-600;
+}
+
+.container {
+  @apply mx-auto max-w-[1400px] px-4 md:px-24;
+}
+
+/* overrides a conflicting style on the honeycomb grid */
+@media (min-width: 1280px) {
+  .honeycomboverride > *:first-child {
+    margin-left: 2.375rem /* 38px */ !important;
+  }
+}
+
+@property --gradient-angle {
+  syntax: '<angle>'; /* <- defined as type angle for the transition to work */
+  initial-value: 360deg;
+  inherits: false;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome Safari */
+  scrollbar-width: none; /* Firefox */
+}

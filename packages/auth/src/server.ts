@@ -101,7 +101,23 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
 };
+const useSecureCookies = Boolean(process.env.VERCEL_URL);
 
+export const adminAuthOptions: NextAuthOptions = {
+  ...authOptions,
+  cookies: {
+    sessionToken: {
+      name: `${useSecureCookies ? '__Secure-' : ''}next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        domain: `${process.env.VERCEL_URL}`,
+        secure: useSecureCookies,
+      },
+    },
+  },
+};
 /**
  * Wrapper for `getServerSession` so that you don't need to import the `authOptions` in every file.
  *

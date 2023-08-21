@@ -23,7 +23,7 @@ import {
   type CommentReport,
   addReport,
   type SolutionReport,
-} from '~/components/report/report.action';
+} from './report-dialog.action';
 
 export interface ReportDialogPropsBase {
   triggerAsChild?: boolean;
