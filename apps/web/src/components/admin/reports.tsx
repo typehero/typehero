@@ -2,14 +2,22 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@repo/ui';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  Pagination,
+} from '@repo/ui';
 import { getInfiniteReports, type InfiniteReports } from '../report/report.action';
 
 export interface ReportsProps {
   initialReports: InfiniteReports;
 }
 
-export function Reports({ initialReports }: ReportsProps) {
+export default function Reports2({ initialReports }: ReportsProps) {
   const router = useRouter();
 
   const [page, setPage] = React.useState(0);
@@ -42,6 +50,17 @@ export function Reports({ initialReports }: ReportsProps) {
 
   return (
     <section className="data-table">
+      <header className="flex justify-end">
+        <Pagination
+          onChange={(e) => {
+            if (!e.detail.pageLoaded) fetchNextPage().then(() => setPage(e.detail.page - 1));
+            else setPage(e.detail.page - 1);
+          }}
+          totalPages={data?.pages.length}
+          hasNextPage={hasNextPage}
+          currentPage={0 + 1}
+        />
+      </header>
       <Table>
         <TableHeader>
           <TableRow>
@@ -64,7 +83,7 @@ export function Reports({ initialReports }: ReportsProps) {
               <TableCell>
                 <div className="flex flex-wrap gap-2">
                   {tr.issues.map((i) => (
-                    <div className="rounded-full bg-zinc-800 px-3 py-1" key={`issues-${i.id}`}>
+                    <div key={`issues-${i.id}`} className="rounded-full bg-zinc-800 px-3 py-1">
                       {i.type}
                     </div>
                   ))}

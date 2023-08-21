@@ -8,7 +8,7 @@ import { ChallengeReviews } from './_components/challenge-reviews';
 import { ManageTracks } from './_components/tracks';
 import { getBannedUsers, getUploadedImages } from '~/components/admin/admin.actions';
 import { ImageUploadReport } from '~/components/admin/images';
-import { Reports } from '~/components/admin/reports';
+import Reports from '~/components/admin/reports';
 import { BannedUsers } from '~/components/admin/users';
 import { getInfiniteReports } from '~/components/report/report.action';
 
