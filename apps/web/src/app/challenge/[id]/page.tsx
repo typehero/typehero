@@ -15,6 +15,7 @@ export async function generateMetadata({ params: { id } }: Props) {
   return buildMeta({
     title: challenge.name,
     description: challenge.shortDescription,
+    route: 'challenge',
   });
 }
 export default async function Challenges({ params: { id } }: Props) {

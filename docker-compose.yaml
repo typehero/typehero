@@ -10,13 +10,12 @@ services:
       MYSQL_ROOT_USER: dev
       MYSQL_ROOT_PASSWORD: dev
       MYSQL_DATABASE: typehero
-
     # create a volume for the docker container_name
     volumes:
-      - data:/bitnami/mysql/data
+      - typehero-data:/bitnami/mysql/data
     platform: linux/amd64
     ports:
       - 3306:3306
 volumes:
-  data:
+  typehero-data:
     driver: local

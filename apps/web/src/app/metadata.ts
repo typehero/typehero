@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { headers } from 'next/headers';
+import { challengeParam } from '@repo/og-image';
 
 const tagline = 'Level up your typescript skills with interactive exercises';
 const baseMetadata: Metadata = {
@@ -47,16 +47,51 @@ const baseMetadata: Metadata = {
 
 interface BuildMetaParams {
   title: string;
-  description?: string;
+  description: string;
   ogImage?: NonNullable<NonNullable<Metadata['openGraph']>['images']>;
+  /** we can update this so that we chose a diff template to render */
+  route?: string;
 }
 
-/** Helper to build opengraph metadata with defaults, you can override the defaults by passing in the params */
-export const buildMeta = async ({ title, description }: BuildMetaParams): Promise<Metadata> => {
-  const headersList = headers();
-  const host = headersList.get('host');
-  const appUrl = process.env.VERCEL_URL ?? host;
-  const ogImageUrl = `https://${appUrl}/api/og?title=${title}`;
+/* a list of the og image endpoints to hit based on current route
+/@Hacksore - /api/user
+/challenge - /api/challenge
+/          - /api/default
+*/
+
+/**
+ * Helper to build opengraph metadata with defaults, you can override the defaults by passing in the params
+ * @example
+ * ```
+ * const meta = await buildMeta({
+ *   title: 'My title',
+ *   description: 'My description',
+ *   route: 'challenge'
+ * });
+ * ```
+ */
+export const buildMeta = async ({
+  title,
+  description,
+  route = 'default',
+}: BuildMetaParams): Promise<Metadata> => {
+  const appUrl =
+    process.env.NODE_ENV !== 'production'
+      ? 'http://localhost:4200'
+      : 'https://og-image.typehero.dev';
+
+  // TODO: we need a typesafe way to map to each template to the zod schema in the future
+  // maybe what we do is have methods for each card like buildMetaforChallenge, buildMetaForUser, etc
+  const params = `${challengeParam.toSearchString({
+    description,
+    title,
+    // TODO: get author from db
+    author: 'Hacksore',
+    // TODO: get date from db
+    date: new Date().toISOString(),
+  })}`;
+
+  const ogImageUrl = `${appUrl}/api/${route}?${params}`;
 
   baseMetadata.openGraph!.images = ogImageUrl;
   baseMetadata.twitter!.images = ogImageUrl;
