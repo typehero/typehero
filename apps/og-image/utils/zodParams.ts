@@ -54,16 +54,6 @@ export const challengeParam = zodParams(
   z.object({
     title: truncatedWordSchema({ maxCharacters: 70 }),
     description: truncatedWordSchema({ maxCharacters: 145 }),
-    date: z
-      .string()
-      .transform((val) => new Date(val))
-      .transform((date) =>
-        Intl.DateTimeFormat('en-US', {
-          month: 'long',
-          day: 'numeric',
-          year: 'numeric',
-        }).format(date),
-      ),
     username: z.string(),
   }),
 );

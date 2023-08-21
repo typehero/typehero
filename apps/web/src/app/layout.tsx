@@ -4,16 +4,13 @@ import { Inter } from 'next/font/google';
 import type { Metadata } from 'next';
 import { Toaster } from '@repo/ui';
 import { Providers } from './providers';
-import { buildMeta } from './metadata';
+import { buildMetaForDefault } from './metadata';
 import { Navigation } from '~/components/ui/navigation';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export async function generateMetadata(): Promise<Metadata> {
-  return buildMeta({
-    title: 'Typehero',
-    description: 'This is the home page',
-  });
+  return buildMetaForDefault();
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

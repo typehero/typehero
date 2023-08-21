@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { challengeParam } from '@repo/og-image';
 
 const OG_URL =
-  process.env.NODE_ENV !== 'production' ? 'https://og.typehero.dev' : 'http://localhost:4200';
+  process.env.NODE_ENV !== 'production' ? 'http://localhost:4200' : 'https://og.typehero.dev';
 
 const tagline = 'Level up your typescript skills with interactive exercises';
 const baseMetadata: Metadata = {
@@ -46,52 +46,50 @@ const baseMetadata: Metadata = {
   },
 };
 
-interface BuildMetaParams {
+interface MetaParamsForChallenge {
   title: string;
   description: string;
-  ogImage?: NonNullable<NonNullable<Metadata['openGraph']>['images']>;
-  /** we can update this so that we chose a diff template to render */
-  route?: string;
+  username: string;
 }
 
-/* a list of the og image endpoints to hit based on current route
-/@Hacksore - /api/user
-/challenge - /api/challenge
-/          - /api/default
-*/
-
-/**
- * Helper to build opengraph metadata with defaults, you can override the defaults by passing in the params
- * @example
- * ```
- * const meta = await buildMeta({
- *   title: 'My title',
- *   description: 'My description',
- *   route: 'challenge'
- * });
- * ```
- */
-export const buildMeta = async ({
+/** Helper to build opengraph metadata for a challenge, you should call this in generateMetadata() next function */
+export const buildMetaForChallenge = async ({
   title,
   description,
-  route = 'default',
-}: BuildMetaParams): Promise<Metadata> => {
-  const appUrl =
-    process.env.NODE_ENV !== 'production' ? 'http://localhost:4200' : 'https://og.typehero.dev';
-
-  // TODO: we need a typesafe way to map to each template to the zod schema in the future
-  // maybe what we do is have methods for each card like buildMetaforChallenge, buildMetaForUser, etc
+  username,
+}: MetaParamsForChallenge): Promise<Metadata> => {
   const params = `${challengeParam.toSearchString({
     description,
     title,
-    // TODO: get author from db
-    username: 'Hacksore',
-    // TODO: get date from db
-    date: new Date().toISOString(),
+    username,
   })}`;
 
-  const ogImageUrl = `${appUrl}/api/${route}?${params}`;
+  const ogImageUrl = `${OG_URL}/api/challenge?${params}`;
 
+  return buildMeta({
+    ogImageUrl,
+    title,
+    description,
+  });
+};
+
+/** Helper to build opengraph metadata with defaults, you should call this in generateMetadata() next function */
+export const buildMetaForDefault = async (): Promise<Metadata> => {
+  return buildMeta({
+    ogImageUrl: `${OG_URL}/api/default`,
+  });
+};
+
+/** update the metadata for og */
+const buildMeta = async ({
+  ogImageUrl,
+  description,
+  title,
+}: {
+  ogImageUrl: string;
+  description?: string;
+  title?: string;
+}): Promise<Metadata> => {
   baseMetadata.openGraph!.images = ogImageUrl;
   baseMetadata.twitter!.images = ogImageUrl;
 
