@@ -2,7 +2,7 @@
 
 import { Balancer } from 'react-wrap-balancer';
 import clsx from 'clsx';
-import { FeatureCard1, FeatureCard2, CuratedTracksCard } from '~/components/landing/feature-card';
+import { ImageCard, CollaborativeEnvironmentCard, CuratedTracksCard } from '~/components/landing/feature-card';
 import FeatureCardChallengeDark1 from '~/assets/images/feature_card_challenge_dark1.png';
 import FeatureCardChallengeDark2 from '~/assets/images/feature_card_challenge_dark2.png';
 import FeatureCardChallengeLight1 from '~/assets/images/feature_card_challenge_light1.png';
@@ -45,7 +45,7 @@ function Features() {
             </p>
           </div>
           <div className="relative z-10 grid w-full gap-8 lg:grid-cols-2">
-            <FeatureCard1
+            <ImageCard
               className={clsx(
                 'pointer-events-none -bottom-[11%] left-[35px] w-[42%] transition-transform duration-500 lg:w-[69%]',
                 !isMobile && 'group-hover:translate-x-2 group-hover:scale-95',
@@ -66,13 +66,13 @@ function Features() {
               title="Type Challenges"
             />
 
-            <FeatureCard2
+            <CollaborativeEnvironmentCard
               description="Developers can share solutions and engage in discussions through commenting"
               classNameBG="lg:bg-gradient-to-bl"
               title="Collaborative Environment"
             />
 
-            <FeatureCard1
+            <ImageCard
               className={clsx(
                 'pointer-events-none left-[35px] top-[30%] w-[50%] rounded-t-xl border border-zinc-300 opacity-80 transition-transform duration-500 dark:border-zinc-700',
                 !isMobile && 'group-hover:translate-y-2',

@@ -83,7 +83,7 @@ function FeatureCard({
   );
 }
 
-export function FeatureCard1({
+export function ImageCard({
   image,
   className,
   className2,
@@ -161,7 +161,7 @@ const solutionComment = `\`\`\`ts
 type Get<T, K> = string
   \`\`\``;
 
-export function FeatureCard2(props: CardProps) {
+export function CollaborativeEnvironmentCard(props: CardProps) {
   const isMobile = useIsMobile();
   return (
     <FeatureCard {...props}>
