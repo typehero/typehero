@@ -37,7 +37,6 @@ export default function Page() {
               description: 'This is a test card that has a has a nice description',
               title: 'Inferring types is fun',
               username: 'Hacksore',
-              date: new Date().toISOString(),
             })}&random=${nonce}`}
           />
         </div>
