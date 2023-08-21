@@ -3,8 +3,8 @@ import clsx from 'clsx';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useMonaco, type OnValidate, type OnMount, type OnChange } from '@monaco-editor/react';
 import { editor } from 'monaco-editor';
-import { libSource } from '../challenge/code-panel/editor-types';
 import { CodeEditor } from './code-editor';
+import { libSource } from '~/app/challenge/_components/code-panel/editor-types';
 
 export interface SplitEditorProps extends Omit<React.HTMLProps<HTMLDivElement>, 'onChange'> {
   tests: string;
