@@ -1,8 +1,6 @@
 import { ImageResponse } from '@vercel/og';
 
-export const config = {
-  runtime: 'edge',
-};
+export const runtime = 'edge';
 
 export async function GET(req: Request) {
   return new ImageResponse(

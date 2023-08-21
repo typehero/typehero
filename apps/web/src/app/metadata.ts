@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import { challengeParam } from '@repo/og-image';
 
+const OG_URL =
+  process.env.NODE_ENV !== 'production' ? 'https://og.typehero.dev' : 'http://localhost:4200';
+
 const tagline = 'Level up your typescript skills with interactive exercises';
 const baseMetadata: Metadata = {
   metadataBase: process.env.VERCEL_URL
@@ -21,7 +24,7 @@ const baseMetadata: Metadata = {
     siteName: 'Typehero',
     images: [
       {
-        url: encodeURI(`https://${process.env.VERCEL_URL}/api/og?desc=Testing`),
+        url: `${OG_URL}/api/default`,
         width: 1920,
         height: 1080,
       },
@@ -34,7 +37,7 @@ const baseMetadata: Metadata = {
     card: 'summary_large_image',
     images: [
       {
-        url: encodeURI(`https://${process.env.VERCEL_URL}/api/og?desc=Testing`),
+        url: `${OG_URL}/api/default`,
         width: 1920,
         height: 1080,
       },

@@ -30,7 +30,6 @@
     "@types/lodash": "^4.14.195",
     "@uiw/react-md-editor": "^3.23.3",
     "@uploadthing/react": "^5.2.0",
-    "@vercel/og": "^0.5.11",
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
     "date-fns": "^2.30.0",

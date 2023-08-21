@@ -1,9 +1,7 @@
 import { ImageResponse } from '@vercel/og';
 import { challengeParam } from 'utils/zodParams';
 
-export const config = {
-  runtime: 'edge',
-};
+export const runtime = 'edge';
 
 export async function GET(req: Request) {
   const parsed = challengeParam.decodeRequest(req);
