@@ -26,13 +26,13 @@ type WrapperStyle = MotionStyle & {
 interface CardProps {
   title: string;
   description: string;
-  classNameBG?: string;
+  bgClass?: string;
 }
 
 function FeatureCard({
   title,
   description,
-  classNameBG,
+  bgClass,
   children,
 }: CardProps & {
   children: React.ReactNode;
@@ -68,7 +68,7 @@ function FeatureCard({
         className={clsx(
           'group relative w-full overflow-hidden rounded-3xl border bg-gradient-to-b from-neutral-50/90 to-neutral-100/90 backdrop-blur-2xl transition duration-300 dark:from-neutral-950/90 dark:to-neutral-800/90',
           !isMobile && 'hover:border-transparent',
-          classNameBG,
+          bgClass,
         )}
       >
         <div className="mx-10 my-10 min-h-[450px] w-full">
@@ -85,16 +85,16 @@ function FeatureCard({
 
 export function ImageCard({
   image,
-  className,
-  className2,
+  imgClass1,
+  imgClass2,
   ...props
 }: CardProps & {
-  className?: string;
-  className2?: string;
+  imgClass1?: string;
+  imgClass2?: string;
   image: {
-    dark: StaticImageData;
+    dark1: StaticImageData;
     dark2: StaticImageData;
-    light: StaticImageData;
+    light1: StaticImageData;
     light2: StaticImageData;
     alt: string;
   };
@@ -107,8 +107,8 @@ export function ImageCard({
           <>
             <Image
               alt={image.alt}
-              className={className}
-              src={image.light}
+              className={imgClass1}
+              src={image.light1}
               style={{
                 position: 'absolute',
                 userSelect: 'none',
@@ -117,7 +117,7 @@ export function ImageCard({
             />
             <Image
               alt={image.alt}
-              className={className2}
+              className={imgClass2}
               src={image.light2}
               style={{
                 position: 'absolute',
@@ -131,8 +131,8 @@ export function ImageCard({
           <>
             <Image
               alt={image.alt}
-              className={className}
-              src={image.dark}
+              className={imgClass1}
+              src={image.dark1}
               style={{
                 position: 'absolute',
                 userSelect: 'none',
@@ -141,7 +141,7 @@ export function ImageCard({
             />
             <Image
               alt={image.alt}
-              className={className2}
+              className={imgClass2}
               src={image.dark2}
               style={{
                 position: 'absolute',
