@@ -11,7 +11,7 @@ import { CommentSkeleton } from './comment-skeleton';
 import { addComment } from './comment.action';
 import { getPaginatedComments } from './getCommentRouteData';
 import NoComments from './nocomments';
-import { Comment } from '~/components/challenge/comments/comment';
+import { Comment } from './comment';
 
 interface Props {
   rootId: number;

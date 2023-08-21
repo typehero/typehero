@@ -2,7 +2,7 @@ import type { Session } from '@repo/auth/server';
 import { notFound } from 'next/navigation';
 import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
-import { Solutions } from '~/components/challenge/solutions';
+import { Solutions } from './_components';
 
 interface Props {
   params: {

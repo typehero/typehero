@@ -16,11 +16,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@repo/ui';
-import { LIB_URI, type TsErrors } from '../challenge/code-panel';
-import { libSource } from '../challenge/code-panel/editor-types';
-import { SettingsForm } from '../challenge/settings-form';
 import { CodeEditor } from '../ui/code-editor';
 import type { WizardForm } from '.';
+import { LIB_URI, type TsErrors } from '~/app/challenge/_components/code-panel';
+import { libSource } from '~/app/challenge/_components/code-panel/editor-types';
+import { SettingsForm } from '~/app/challenge/_components/settings-form';
 
 interface Props {
   form: WizardForm;

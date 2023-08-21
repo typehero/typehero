@@ -1,5 +1,1 @@
-import { SubmissionsSkeleton } from '~/components/challenge/submissions/submissions-skeleton';
-
-export default function Loading() {
-  return <SubmissionsSkeleton />;
-}
+export { SubmissionsSkeleton as default } from './_components/submissions-skeleton';

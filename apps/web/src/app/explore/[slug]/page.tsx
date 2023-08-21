@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
-import { ExploreSlug } from '~/components/explore/explore-slug';
-import { ExploreSlugSkeleton } from '~/components/explore/explore-slug-skeleton';
+import { ExploreSlugSkeleton } from '../_components/explore-slug-skeleton';
+import { ExploreSlug } from '../_components/explore-slug';
 
 export const dynamic = 'force-dynamic';
 

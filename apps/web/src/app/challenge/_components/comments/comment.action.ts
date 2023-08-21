@@ -1,8 +1,8 @@
 'use server';
 
-import type { CommentRoot } from '@repo/db/types';
-import { prisma } from '@repo/db';
 import { getServerAuthSession } from '@repo/auth/server';
+import { prisma } from '@repo/db';
+import type { Comment, CommentRoot, PrismaClient } from '@repo/db/types';
 
 /**
  *
@@ -89,10 +89,29 @@ export async function deleteComment(comment_id: number) {
   if (!session?.user.id) return 'unauthorized';
   if (!comment_id) return 'invalid_comment';
 
-  return await prisma.comment.delete({
+  const rootComment = await prisma.comment.findFirstOrThrow({
     where: {
-      userId: session.user.id,
       id: comment_id,
+    },
+  });
+
+  await deleteCommentWithChildren(prisma, rootComment);
+}
+
+async function deleteCommentWithChildren(prisma: PrismaClient, node: Comment) {
+  const children = await prisma.comment.findMany({
+    where: {
+      parentId: node.id,
+    },
+  });
+
+  for (const child of children) {
+    await deleteCommentWithChildren(prisma, child);
+  }
+
+  await prisma.comment.delete({
+    where: {
+      id: node.id,
     },
   });
 }
