@@ -5,7 +5,6 @@
   "exports": {
     ".": "./utils/zodParams.ts"
   },
-  "TODO": "we should not have to use typesVersions, there is another way to do this, but I can't figure it out.",
   "typesVersions": {
     "*": {
       "*": [

@@ -2,7 +2,7 @@
 
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { challengeParam } from 'utils/zodParams';
+import { challengeParam, userParam } from 'utils/zodParams';
 import './app.css';
 
 const ogImageUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api/landing` : '';
@@ -20,7 +20,7 @@ export default function Page() {
   return (
     <div>
       <Head>
-        <meta name="og:title" content="tRPC OG Image Playground" />
+        <meta name="og:title" content="typehero OG Image Playground" />
         <meta
           name="og:description"
           content="Playground for OG Image Generation using @vercel/og-image"
@@ -36,12 +36,21 @@ export default function Page() {
             src={`/api/challenge?${challengeParam.toSearchString({
               description: 'This is a test card that has a has a nice description',
               title: 'Inferring types is fun',
-              author: 'Hacksore',
+              username: 'Hacksore',
               date: new Date().toISOString(),
             })}&random=${nonce}`}
           />
         </div>
 
+        <div>
+          <h2>User</h2>
+          <img
+            alt="ayo"
+            src={`/api/user?${userParam.toSearchString({
+              username: 'Hacksore',
+            })}&random=${nonce}`}
+          />
+        </div>
         <div>
           <h2>Default</h2>
           <img alt="default metadata" src="/api/default" />

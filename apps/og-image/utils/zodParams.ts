@@ -64,7 +64,13 @@ export const challengeParam = zodParams(
           year: 'numeric',
         }).format(date),
       ),
-    author: z.string(),
+    username: z.string(),
+  }),
+);
+
+export const userParam = zodParams(
+  z.object({
+    username: truncatedWordSchema({ maxCharacters: 70 }),
   }),
 );
 

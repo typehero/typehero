@@ -6,9 +6,7 @@ const OG_URL =
 
 const tagline = 'Level up your typescript skills with interactive exercises';
 const baseMetadata: Metadata = {
-  metadataBase: process.env.VERCEL_URL
-    ? new URL(`https://${process.env.VERCEL_URL}`)
-    : new URL(`http://localhost:${process.env.PORT ?? 3000}`),
+  metadataBase: new URL(OG_URL),
   title: {
     default: 'Typehero',
     template: '%s | TypeHero',
@@ -79,9 +77,7 @@ export const buildMeta = async ({
   route = 'default',
 }: BuildMetaParams): Promise<Metadata> => {
   const appUrl =
-    process.env.NODE_ENV !== 'production'
-      ? 'http://localhost:4200'
-      : 'https://og-image.typehero.dev';
+    process.env.NODE_ENV !== 'production' ? 'http://localhost:4200' : 'https://og.typehero.dev';
 
   // TODO: we need a typesafe way to map to each template to the zod schema in the future
   // maybe what we do is have methods for each card like buildMetaforChallenge, buildMetaForUser, etc
@@ -89,7 +85,7 @@ export const buildMeta = async ({
     description,
     title,
     // TODO: get author from db
-    author: 'Hacksore',
+    username: 'Hacksore',
     // TODO: get date from db
     date: new Date().toISOString(),
   })}`;
