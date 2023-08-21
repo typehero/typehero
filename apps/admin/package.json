@@ -33,7 +33,7 @@
     "react-select": "^5.7.4",
     "tailwindcss": "3.3.3",
     "tailwindcss-animate": "^1.0.6",
-    "zod": "^3.22.2"
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@repo/tsconfig": "workspace:*",
