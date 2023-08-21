@@ -1,0 +1,10 @@
+body,
+html {
+  color: #fff;
+  background: #000;
+}
+
+img {
+  max-width: 100%;
+  width: 600px;
+}
