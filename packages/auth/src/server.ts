@@ -104,7 +104,7 @@ export const authOptions: NextAuthOptions = {
 
 const useSecureCookies = Boolean(process.env.VERCEL_URL);
 // ok
-const appHostname = new URL(process.env.VERCEL_URL ?? 'http://127.0.0.1').hostname;
+const appHostname = new URL(`https://${process.env.VERCEL_URL}` ?? 'http://127.0.0.1').hostname;
 
 export const adminAuthOptions: NextAuthOptions = {
   ...authOptions,
