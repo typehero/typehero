@@ -101,7 +101,9 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
 };
+
 const useSecureCookies = Boolean(process.env.VERCEL_URL);
+const appHostname = new URL(process.env.VERCEL_URL ?? 'http://127.0.0.1').hostname;
 
 export const adminAuthOptions: NextAuthOptions = {
   ...authOptions,
@@ -112,12 +114,13 @@ export const adminAuthOptions: NextAuthOptions = {
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
-        domain: `${process.env.VERCEL_URL}`,
+        domain: appHostname,
         secure: useSecureCookies,
       },
     },
   },
 };
+
 /**
  * Wrapper for `getServerSession` so that you don't need to import the `authOptions` in every file.
  *
