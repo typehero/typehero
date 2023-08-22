@@ -44,7 +44,7 @@ export const authOptions: NextAuthOptions = {
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
-        domain: 'typehero.dev',
+        domain: useSecureCookies ? 'typehero.dev' : process.env.VERCEL_URL,
         secure: useSecureCookies,
       },
     },
