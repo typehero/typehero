@@ -23,8 +23,8 @@ export function Wrapper({ challenge }: { challenge: ChallengeRouteData }) {
       saveSubmission={(code, isSuccessful) =>
         saveSubmission(challenge.id, session?.user.id!, code, isSuccessful)
       }
-			submissionDisabled={!session?.user}
-			settingsElement={<SettingsButton />}
+      submissionDisabled={!session?.user}
+      settingsElement={<SettingsButton />}
     />
   );
 }

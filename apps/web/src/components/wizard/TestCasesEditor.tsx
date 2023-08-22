@@ -1,30 +1,22 @@
 import type { OnChange } from '@monaco-editor/react';
 import type { TsErrors } from '@repo/monaco';
 import { CodeEditor, loadCheckingLib, type CodeEditorProps } from '@repo/monaco/code-editor';
-import {
-	FormField,
-	FormItem,
-	FormMessage,
-	TypographyH3
-} from '@repo/ui';
+import { FormField, FormItem, FormMessage, TypographyH3 } from '@repo/ui';
 import { useCallback } from 'react';
 import type { WizardForm } from '.';
 import { SettingsButton } from '~/app/challenge/_components/settings/settings-button';
 
 interface Props {
-  form: Pick<WizardForm, "control">;
+  form: Pick<WizardForm, 'control'>;
   hasTsErrors: boolean;
   setTsErrors: (errors: TsErrors) => void;
 }
 
 export function TestCasesEditor({ form, hasTsErrors, setTsErrors }: Props) {
   const onMount = useCallback(
-    (onError: (v: TsErrors) => void): CodeEditorProps["onMount"] =>
-      async (
-        editor,
-        monaco,
-      ) => {
-        loadCheckingLib(monaco)
+    (onError: (v: TsErrors) => void): CodeEditorProps['onMount'] =>
+      async (editor, monaco) => {
+        loadCheckingLib(monaco);
 
         const model = editor.getModel();
 

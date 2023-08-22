@@ -31,8 +31,10 @@
   },
   "packageManager": "pnpm@8.6.9",
   "pnpm": {
-		"peerDependencyRules": {
-      "ignoreMissing": ["monaco-editor"]
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "monaco-editor"
+      ]
     },
     "patchedDependencies": {
       "next-auth@4.22.1": "patches/next-auth@4.22.1.patch",

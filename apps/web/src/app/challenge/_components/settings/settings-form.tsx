@@ -20,7 +20,7 @@ import {
   useToast,
   DialogFooter,
 } from '@repo/ui';
-import { useEditorSettingsStore } from "@repo/monaco/settings-store";
+import { useEditorSettingsStore } from '@repo/monaco/settings-store';
 
 const formSchema = z.object({
   fontSize: z.string(),
