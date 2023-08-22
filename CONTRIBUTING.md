@@ -73,7 +73,8 @@ pnpm install
 ### 6. Push Database Schema and Seed
 
 ```
-turbo seed
+turbo db:push
+turbo db:seed
 ```
 
 ### Running the dev server
@@ -81,7 +82,7 @@ turbo seed
 Finally, you can run the dev server:
 
 ```
-turbo dev
+pnpm dev
 ```
 
 ### Sync data
