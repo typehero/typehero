@@ -20,6 +20,7 @@
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache'",
     "prepare": "husky install",
     "refresh": "turbo db:reset db:seed --concurrency=1",
+    "tunnel": "cloudflared tunnel --url http://localhost:3000",
     "typecheck": "turbo typecheck --continue"
   },
   "devDependencies": {

@@ -19,6 +19,7 @@ export * from './components/icon-button';
 export * from './components/input';
 export * from './components/label';
 export * from './components/magic-icon';
+export * from './components/markdown';
 export * from './components/navigation-menu';
 export * from './components/pagination';
 export * from './components/paragraph';

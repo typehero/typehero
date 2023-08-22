@@ -2,31 +2,15 @@
 
 import { signIn, signOut, useSession } from '@repo/auth/react';
 import { RoleTypes } from '@repo/db/types';
-import {
-  Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-  navigationMenuTriggerStyle,
-} from '@repo/ui';
-import { Loader2, LogIn, Moon, Plus, Settings, Settings2, Sun, User } from '@repo/ui/icons';
+import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@repo/ui';
+import { Loader2, LogIn, Moon, Sun, User } from '@repo/ui/icons';
 import { useTheme } from 'next-themes';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { getBaseUrl } from '~/utils/getBaseUrl';
 
 export function Navigation() {
-  const pathname = usePathname();
   return (
     <header className="z-10 w-full">
-      <nav
-        className={`flex h-14 items-center ${
-          pathname?.startsWith('/challenge') ? 'px-4' : 'container'
-        }`}
-      >
+      <nav className="container flex h-14 items-center">
         <div className="flex w-full items-center justify-between">
           <div className="relative flex gap-3">
             <a className="flex items-center space-x-2 duration-300" href="/">
@@ -64,10 +48,6 @@ export function Navigation() {
                 hero
               </span>
             </a>
-
-            <Link href="/explore">
-              <span className={navigationMenuTriggerStyle()}>Explore</span>
-            </Link>
           </div>
           <div className="flex">
             <div className="flex items-center justify-end gap-2">
@@ -128,6 +108,8 @@ function LoginButton() {
   };
   const handleSignOut = async () => {
     await signOut({ redirect: false });
+    // whatever
+    window.location.reload();
   };
 
   return session ? (
@@ -141,33 +123,6 @@ function LoginButton() {
         align="end"
         className="mt-[0.33rem] w-56 rounded-xl bg-white/50 backdrop-blur-sm dark:bg-neutral-950/50"
       >
-        <Link className="block" href="/wizard">
-          <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
-            <Plus className="mr-2 h-4 w-4" />
-            <span>Create a Challenge</span>
-          </DropdownMenuItem>
-        </Link>
-        <Link className="block" href={`/@${session.user.name}`}>
-          <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
-            <User className="mr-2 h-4 w-4" />
-            <span>Profile</span>
-          </DropdownMenuItem>
-        </Link>
-        <Link className="block" href="/settings">
-          <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none">
-            <Settings2 className="mr-2 h-4 w-4" />
-            <span>Settings</span>
-          </DropdownMenuItem>
-        </Link>
-        {isAdminOrMod ? (
-          <a className="block" href={`${getBaseUrl()}/admin`}>
-            <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
-              <Settings className="mr-2 h-4 w-4" />
-              <span>Admin</span>
-            </DropdownMenuItem>
-          </a>
-        ) : null}
-        <DropdownMenuSeparator />
         <Button
           className="h-8 w-full justify-start rounded-b-lg rounded-t-sm bg-opacity-50 px-2 text-red-500 hover:bg-red-500/20 hover:text-red-500"
           onClick={handleSignOut}
