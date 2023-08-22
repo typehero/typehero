@@ -8,7 +8,7 @@ module.exports = {
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     'src/**/*.{ts,tsx}',
-    '../../packages/ui/**/*.{ts,tsx}',
+    '../../packages/{ui,monaco}/**/*.{ts,tsx}',
   ],
   theme: {
     extend: {

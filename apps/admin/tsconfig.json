@@ -1,26 +1,35 @@
 {
-  "extends": "@repo/tsconfig/nextjs.json",
-  "compilerOptions": {
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
-    "baseUrl": ".",
-    "paths": {
-      "~/*": ["src/*"]
-    },
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
-  },
-  "include": [
-    "next-env.d.ts",
-    "**/*.js",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "next.config.js",
-    "next.config.mjs",
-    "postcss.config.cjs"
-  ],
-  "exclude": ["node_modules", ".next", "public"]
+	"extends": "@repo/tsconfig/nextjs.json",
+	"compilerOptions": {
+		"tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+		"baseUrl": ".",
+		"paths": {
+			"~/*": [
+				"src/*"
+			]
+		},
+		"plugins": [
+			{
+				"name": "next"
+			}
+		]
+	},
+	"include": [
+		"next-env.d.ts",
+		"**/*.js",
+		"**/*.ts",
+		"**/*.tsx",
+		".next/types/**/*.ts",
+		"next.config.js",
+		"next.config.mjs",
+		"postcss.config.cjs",
+		// to make sure `@repo/monaco` doesn't break
+		"../../packages/monaco/monaco-editor.d.ts",
+		"../../packages/monaco/monaco-vim.d.ts"
+	],
+	"exclude": [
+		"node_modules",
+		".next",
+		"public"
+	]
 }

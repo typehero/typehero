@@ -1,0 +1,8 @@
+{
+  "extends": "@repo/tsconfig/react-library.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+  },
+  "include": ["**/*.ts", "**/*.tsx", "monaco-editor.d.ts", "monaco-vim.d.ts", "../../monaco-editor.d copy.ts"],
+  "exclude": ["node_modules"]
+}
