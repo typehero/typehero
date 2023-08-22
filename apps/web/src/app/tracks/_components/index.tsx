@@ -1,5 +1,6 @@
 import { getServerAuthSession, type Session } from '@repo/auth/server';
 import { prisma } from '@repo/db';
+import { TrackCard } from '~/components/tracks/track-card';
 
 export async function Tracks() {
   const session = await getServerAuthSession();
@@ -8,7 +9,7 @@ export async function Tracks() {
   const tracks = await getTracks();
 
   return (
-    <div>
+    <div className="container flex flex-col gap-8 py-5 md:gap-20 md:pb-20">
       <div>
         {enrolledTracks?.tracks.map((et) => {
           return (
@@ -19,14 +20,11 @@ export async function Tracks() {
           );
         })}
       </div>
-      {tracks?.map((t) => {
-        return (
-          <div key={t.id}>
-            <div>{t.title}</div>
-            <div>{t.description}</div>
-          </div>
-        );
-      })}
+      <div className="flex flex-row gap-4">
+        {tracks?.map((t) => {
+          return <TrackCard key={t.id} track={t} />;
+        })}
+      </div>
     </div>
   );
 }
@@ -45,10 +43,17 @@ function getUserEnrolledTracks(session: Session | null) {
     },
   });
 }
+
+export type Tracks = Awaited<ReturnType<typeof getTracks>>;
+
 function getTracks() {
   return prisma.track.findMany({
     include: {
-      trackChallenges: true,
+      trackChallenges: {
+        include: {
+          challenge: true,
+        },
+      },
       user: true,
     },
     where: {
