@@ -21,7 +21,7 @@ export default async function CommentPage({ params: { id } }: Props) {
   return (
     <div className="relative h-full">
       <Description challenge={challenge} />
-      <Comments expanded challengeId={challenge.id} commentCount={challenge.comment.length} />
+      <Comments type="CHALLENGE" expanded rootId={challenge.id} />
     </div>
   );
 }

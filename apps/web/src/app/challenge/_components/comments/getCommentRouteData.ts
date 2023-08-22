@@ -10,10 +10,12 @@ export async function getPaginatedComments({
   page,
   rootId,
   rootType,
+  commentId,
   parentId = null,
 }: {
   page: number;
   rootId: number;
+  commentId?: number;
   rootType: CommentRoot;
   parentId?: number | null;
 }) {

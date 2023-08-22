@@ -22,12 +22,7 @@ export default async function CommentPage({ params: { id, commentId } }: Props) 
   return (
     <div className="relative h-full">
       <Description challenge={challenge} />
-      <Comments
-        expanded
-        idToSelect={Number(commentId)}
-        challengeId={challenge.id}
-        commentCount={challenge.comment.length}
-      />
+      <Comments type="CHALLENGE" expanded idToSelect={Number(commentId)} rootId={challenge.id} />
     </div>
   );
 }
