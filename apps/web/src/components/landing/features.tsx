@@ -51,12 +51,12 @@ function Features() {
           <div className="relative z-10 grid w-full gap-8 lg:grid-cols-2">
             <ImageCard
               imgClass1={clsx(
-                'pointer-events-noned transition-transform duration-500',
+                'pointer-events-noned transition-transform duration-500 bg-neutral-50/80 dark:bg-neutral-800/80',
                 'max-sm:scale-[240%] bottom-[5%] left-[30%] w-[42%] md:-bottom-[11%] md:left-[35px] lg:w-[69%]',
                 !isMobile && 'group-hover:translate-x-2 group-hover:scale-95',
               )}
               imgClass2={clsx(
-                'pointer-events-none transition-transform duration-500 backdrop-blur-md rounded-xl overflow-hidden',
+                'pointer-events-none transition-transform duration-500 rounded-xl overflow-hidden bg-neutral-50/80 dark:bg-neutral-800/80',
                 'max-sm:scale-[280%] left-[80%] -bottom-[1%] w-[50%] md:left-[39%] md:-bottom-[12%] lg:w-[77%]',
                 !isMobile && 'group-hover:scale-105 group-hover:-translate-x-2',
               )}
@@ -80,12 +80,12 @@ function Features() {
 
             <ImageCard
               imgClass1={clsx(
-                'pointer-events-none w-[50%] rounded-t-xl border border-zinc-300 opacity-80 transition-transform duration-500 dark:border-zinc-700',
+                'pointer-events-none w-[50%] rounded-t-xl border border-zinc-300 opacity-80 transition-transform duration-500 dark:border-zinc-700 bg-neutral-50/80 dark:bg-neutral-800/80',
                 'max-md:scale-[160%] left-[15%] top-[57%] md:left-[35px] md:top-[30%]',
                 !isMobile && 'group-hover:translate-y-2',
               )}
               imgClass2={clsx(
-                'pointer-events-none w-[150%] rounded-t-xl border border-zinc-300 dark:border-zinc-700 ransition-transform duration-500 opacity-80 backdrop-blur-md rounded-xl overflow-hidden',
+                'pointer-events-none w-[150%] rounded-t-xl border border-zinc-300 dark:border-zinc-700 ransition-transform duration-500 opacity-80 rounded-xl overflow-hidden bg-neutral-50/80 dark:bg-neutral-800/80',
                 'max-md:scale-[140%] left-[70%] top-[53%] md:top-[30%] md:left-[calc(50%+35px+1rem)]',
                 !isMobile && 'group-hover:-translate-y-6',
               )}
