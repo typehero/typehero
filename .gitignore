@@ -51,3 +51,6 @@ yarn-error.log*
 # monaco-editor dependency
 apps/web/public/vs/
 monaco-editor.d.ts
+
+#idea
+.idea
