@@ -1,9 +1,9 @@
 import { ThumbsUp } from '@repo/ui/icons';
 import { Text, UserBadge } from '@repo/ui';
 import Link from 'next/link';
+import { CodeEditor } from '@repo/monaco/code-editor';
 import { type ReportWithInfo } from '~/app/admin/report/[id]/report.action';
 import { getChallenge } from '~/components/admin/admin.actions';
-import { CodeEditor } from '~/components/ui/code-editor';
 import { Markdown } from '~/components/ui/markdown';
 
 export interface ChallengeReportProps {

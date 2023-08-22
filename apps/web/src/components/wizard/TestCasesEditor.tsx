@@ -1,45 +1,30 @@
 import type { OnChange } from '@monaco-editor/react';
-import { Settings } from '@repo/ui/icons';
-import type * as monaco from 'monaco-editor';
-import { useCallback } from 'react';
+import type { TsErrors } from '@repo/monaco';
+import { CodeEditor, loadCheckingLib, type CodeEditorProps } from '@repo/monaco/code-editor';
 import {
-  FormField,
-  FormItem,
-  FormMessage,
-  TypographyH3,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+	FormField,
+	FormItem,
+	FormMessage,
+	TypographyH3
 } from '@repo/ui';
-import { CodeEditor } from '../ui/code-editor';
+import { useCallback } from 'react';
 import type { WizardForm } from '.';
-import { LIB_URI, type TsErrors } from '~/app/challenge/_components/code-panel';
-import { libSource } from '~/app/challenge/_components/code-panel/editor-types';
-import { SettingsForm } from '~/app/challenge/_components/settings-form';
+import { SettingsButton } from '~/app/challenge/_components/settings/settings-button';
 
 interface Props {
-  form: WizardForm;
+  form: Pick<WizardForm, "control">;
   hasTsErrors: boolean;
   setTsErrors: (errors: TsErrors) => void;
 }
 
 export function TestCasesEditor({ form, hasTsErrors, setTsErrors }: Props) {
   const onMount = useCallback(
-    (onError: (v: TsErrors) => void) =>
+    (onError: (v: TsErrors) => void): CodeEditorProps["onMount"] =>
       async (
-        editor: monaco.editor.IStandaloneCodeEditor,
-        // eslint-disable-next-line @typescript-eslint/consistent-type-imports
-        monaco: typeof import('monaco-editor'),
+        editor,
+        monaco,
       ) => {
-        if (!monaco.editor.getModel(monaco.Uri.parse(LIB_URI))) {
-          monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, LIB_URI);
-          monaco.editor.createModel(libSource, 'typescript', monaco.Uri.parse(LIB_URI));
-        }
+        loadCheckingLib(monaco)
 
         const model = editor.getModel();
 
@@ -83,27 +68,7 @@ export function TestCasesEditor({ form, hasTsErrors, setTsErrors }: Props) {
             <FormItem className="h-full">
               <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-300 dark:border-zinc-700">
                 <div className="sticky top-0 flex h-[40px] flex-row-reverse items-center border-b border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
-                  <Dialog>
-                    <DialogTrigger>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Settings
-                            className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400"
-                            size={20}
-                          />
-                        </TooltipTrigger>
-                        <TooltipContent className="px-2 py-1">Settings</TooltipContent>
-                      </Tooltip>
-                    </DialogTrigger>
-                    <DialogContent className="w-[200px]">
-                      <DialogHeader>
-                        <DialogTitle>Settings</DialogTitle>
-                      </DialogHeader>
-                      <div className="pt-4">
-                        <SettingsForm />
-                      </div>
-                    </DialogContent>
-                  </Dialog>
+                  <SettingsButton />
                 </div>
                 <div className="w-full flex-1">
                   <CodeEditor

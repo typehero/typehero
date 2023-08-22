@@ -5,10 +5,10 @@ import { useRouter } from 'next/navigation';
 import { useSession } from '@repo/auth/react';
 import { useMemo } from 'react';
 import { Button, DifficultyBadge, Text, useToast, UserBadge } from '@repo/ui';
+import { CodeEditor } from '@repo/monaco/code-editor';
 import type { ChallengeToReview } from './page';
 import { approveChallenge, denyChallenge } from './challenge-review.action';
 import { Markdown } from '~/components/ui/markdown';
-import { CodeEditor } from '~/components/ui/code-editor';
 
 interface Props {
   challenge: ChallengeToReview;

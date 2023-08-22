@@ -2,7 +2,7 @@
 module.exports = {
   root: true,
   extends: [require.resolve('@repo/lint/node')],
-  ignorePatterns: ['monaco-editor.ts', 'src/lib/vs/*'],
+  ignorePatterns: ['*.d.ts'],
   parserOptions: {
     project: `${__dirname}/tsconfig.json`,
   },
