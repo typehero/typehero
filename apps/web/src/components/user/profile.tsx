@@ -14,20 +14,17 @@ export const metadata: Metadata = {
 
 export async function Profile({ username: usernameFromQuery }: Props) {
   const [, username] = decodeURIComponent(usernameFromQuery).split('@');
-  const user = await prisma.user.findFirst({
+
+  const user = await prisma.user.findFirstOrThrow({
     where: {
       name: {
-        equals: username,
+        equals: username ?? '',
       },
     },
     include: {
       userLinks: true,
     },
   });
-
-  if (!user || !username) {
-    notFound();
-  }
 
   return <Dashboard user={user} />;
 }

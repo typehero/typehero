@@ -1,10 +1,13 @@
-### Expectations
+[![Type Hero Logo](/logo.svg)](https://typehero.dev/)
 
-- There are none.
-- We have fun.
-- We also don't care how good you are at coding.
-- We need to add issues to track stuff.
+# TypeHero
 
-### Get Started
+Connect, collaborate, and grow with a community of TypeScript developers. Elevate your skills through interactive coding challenges, discussions, and knowledge sharing
 
-look at [`CONTRIBUTING.md`](./CONTRIBUTING.md) idiot
+## Quick Start
+
+Please see the [`CONTRIBUTING.md`](/CONTRIBUTING.md)
+
+## Tech Stack
+
+Please see the [`package.json`](/package.json)
