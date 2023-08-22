@@ -25,7 +25,7 @@ function Features() {
         <div className="flex flex-col items-center justify-center gap-16">
           <div className="flex flex-col gap-3 text-center">
             <a
-              className="mx-auto hidden rounded-full bg-gradient-to-r from-[#31bdc6] to-[#3178c6] p-[1px] brightness-90 contrast-150 dark:brightness-125 dark:contrast-100 sm:block"
+              className="mx-auto hidden rounded-full bg-gradient-to-r from-[#31bdc6] to-[#3178c6] p-[1px] brightness-90 contrast-150 focus:bg-slate-200 focus:outline-none focus-visible:outline-none dark:brightness-125 dark:contrast-100 sm:block"
               href="#features"
             >
               <div className="rounded-full bg-white/80 px-3 py-1 dark:bg-black/80">
