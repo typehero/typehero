@@ -16,7 +16,9 @@
         "NEXTAUTH_SECRET",
         "NEXTAUTH_URL",
         "RESEND_API_KEY",
-        "PORT"
+        "PORT",
+        "USERNAME",
+        "PASSWORD"
       ]
     },
     "topo": {
