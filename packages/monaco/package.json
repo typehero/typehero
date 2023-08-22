@@ -3,20 +3,20 @@
   "version": "0.1.1",
   "private": true,
   "exports": {
-    ".": "./src/index.ts",
+    ".": "./src/index.tsx",
     "./code-editor": "./src/code-editor.tsx",
-    "./settings-store": "./src/settings-store.tsx"
+    "./settings-store": "./src/settings-store.ts"
   },
   "typesVersions": {
     "*": {
       "*": [
-        "./src/index.ts"
+        "./src/index.tsx"
       ],
       "code-editor": [
         "./src/code-editor.tsx"
       ],
       "settings-store": [
-        "./src/settings-store.tsx"
+        "./src/settings-store.ts"
       ]
     }
   },
