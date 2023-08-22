@@ -6,7 +6,7 @@ machine. Below are the steps to follow in order for you to get dotfyle to run on
 ### 1. Create a `.env` file
 
 ```
-cp apps/web/.env.example apps/web/.env
+cp .env.example .env
 ```
 
 Provide your own values as needed.
