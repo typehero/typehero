@@ -13,7 +13,7 @@ export interface SplitEditorProps {
   /** the classes applied to the container div */
   className?: string;
   tests: string;
-  challenge: string;
+  userCode: string;
   onValidate?: {
     tests?: OnValidate;
     user?: OnValidate;
@@ -31,7 +31,7 @@ export interface SplitEditorProps {
 export default function SplitEditor({
   className,
   tests,
-  challenge,
+  userCode,
   onMount,
   onValidate,
   onChange,
@@ -88,8 +88,8 @@ export default function SplitEditor({
         <CodeEditor
           defaultPath={USER_CODE_PATH}
           onMount={onMount?.user}
-          defaultValue={challenge}
-          value={challenge}
+          defaultValue={userCode}
+          value={userCode}
           onValidate={onValidate?.user}
           onChange={async (e, a) => {
             // Most of this shamelessly stolen from Stackoverflow.
