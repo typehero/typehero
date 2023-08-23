@@ -1,0 +1,32 @@
+name: Feature
+description: An enhancement or feature
+title: "[Feature]: "
+labels: ["enhancement", "triage"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A step-by-step description of the suggested feature/enhancement.
+      placeholder: On the user page, you should be able to...
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: >
+        | Please include any screenshots which would help demonstrate the steps
+        and point out which parts the feature is related to
+  - type: textarea
+    id: explanation
+    attributes:
+      label: Explanation
+      description: Why would this be useful to most CONTRIBUTING.md users. You may also want to point out other projects that have solved a similar feature.
+      placeholder: Leetcode does this thing on this page...
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://typehero.dev/code_of_conduct)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
