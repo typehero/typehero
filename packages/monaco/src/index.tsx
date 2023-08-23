@@ -11,7 +11,6 @@ import lzstring from 'lz-string';
 import { Button, ToastAction, useToast, Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui';
 import { useLocalStorage } from './useLocalStorage';
 import SplitEditor, { TESTS_PATH } from './split-editor';
-import { USER_CODE_START_REGEX } from './constants';
 import { createTwoslashInlayProvider } from './twoslash';
 
 const VimStatusBar = dynamic(() => import('./vim-mode').then((v) => v.VimStatusBar), {
