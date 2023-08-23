@@ -1,14 +1,18 @@
 // based on: https://github.com/microsoft/TypeScript-Website/blob/v2/packages/playground/src/twoslashInlays.ts
 import type * as monaco from 'monaco-editor';
 
+export const TWOSLASH_INLAY_HINTS_PROVIDER = 'twoslash inlay hints provider';
+const queryRegex = /^\s*\/\/\s*\^\?$/gm;
+
 export const createTwoslashInlayProvider = (
   m: typeof monaco,
   worker: monaco.languages.typescript.TypeScriptWorker,
 ) => {
   const provider: monaco.languages.InlayHintsProvider = {
+    displayName: TWOSLASH_INLAY_HINTS_PROVIDER,
     provideInlayHints: async (model, _, cancel) => {
       const text = model.getValue();
-      const queryRegex = /^\s*\/\/\s*\^\?$/gm;
+
       let match;
       const results: monaco.languages.InlayHint[] = [];
       if (model.isDisposed()) {

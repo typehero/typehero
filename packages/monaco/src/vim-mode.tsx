@@ -6,7 +6,7 @@ import { type VimMode, initVimMode } from 'monaco-vim';
 import { useEditorSettingsStore } from './settings-store';
 
 interface VimStatusBarProps {
-	editor: monaco.editor.IStandaloneCodeEditor;
+  editor: monaco.editor.IStandaloneCodeEditor;
 }
 
 export function VimStatusBar({ editor }: VimStatusBarProps) {
@@ -16,15 +16,16 @@ export function VimStatusBar({ editor }: VimStatusBarProps) {
 
   useEffect(() => {
     if (settings.bindings === 'vim') {
-      if (!vimModeRef.current) {
-        vimModeRef.current = initVimMode(editor, statusBarRef.current);
-      }
-    } else {
-      vimModeRef.current?.dispose();
-      vimModeRef.current = undefined;
-      if (statusBarRef.current) {
-        statusBarRef.current.textContent = '';
-      }
+      vimModeRef.current = initVimMode(editor, statusBarRef.current);
+
+      return () => vimModeRef.current?.dispose();
+    }
+
+    vimModeRef.current?.dispose();
+    vimModeRef.current = undefined;
+
+    if (statusBarRef.current) {
+      statusBarRef.current.textContent = '';
     }
   }, [editor, settings.bindings]);
 
