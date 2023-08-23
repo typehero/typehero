@@ -15,9 +15,6 @@ export const metadata: Metadata = {
 export async function Profile({ username: usernameFromQuery }: Props) {
   const [, username] = decodeURIComponent(usernameFromQuery).split('@');
   
-  // This throws an error to reflect the behavior of findFirstOrThrow, ideally we will move this to notFound()
-  if(username === undefined) throw new Error("[ERROR]: Username not found, accessed profile page without @");
-
   if (!username) return notFound();
 
   const user = await prisma.user.findFirst({
