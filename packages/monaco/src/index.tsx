@@ -129,6 +129,7 @@ export function CodePanel(props: CodePanelProps) {
             user: async (code) => {
               if (!monacoInstance) return null;
               setCode(code ?? '');
+              setLocalStorageCode(code ?? '');
               const getTsWorker = await monacoInstance.languages.typescript.getTypeScriptWorker();
 
               const mm = monacoInstance.editor.getModel(monacoInstance.Uri.parse(TESTS_PATH));
@@ -144,7 +145,6 @@ export function CodePanel(props: CodePanelProps) {
               ] as const);
 
               setTsErrors(errors);
-              setLocalStorageCode(code ?? '');
             },
           }}
         />
