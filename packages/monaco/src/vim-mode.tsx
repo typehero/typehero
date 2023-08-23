@@ -2,12 +2,19 @@
 
 import type * as monaco from 'monaco-editor';
 import { useEffect, useRef } from 'react';
-import { type VimMode, initVimMode } from 'monaco-vim';
+import { VimMode, initVimMode } from 'monaco-vim';
 import { useEditorSettingsStore } from './settings-store';
 
 interface VimStatusBarProps {
   editor: monaco.editor.IStandaloneCodeEditor;
 }
+
+// `K` -> hover
+VimMode.Vim.defineAction('hover', function (ctx) {
+  // it didn't work without the set timeout, it probably handles the key after and dismisses it
+  setTimeout(() => ctx.editor.getAction('editor.action.showHover')?.run());
+});
+VimMode.Vim.mapCommand('K', 'action', 'hover');
 
 export function VimStatusBar({ editor }: VimStatusBarProps) {
   const statusBarRef = useRef<HTMLDivElement | null>(null);
