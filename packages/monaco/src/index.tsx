@@ -52,13 +52,11 @@ export function CodePanel(props: CodePanelProps) {
     lzstring.decompressFromEncodedURIComponent(params.get('code') ?? '') ?? localStorageCode;
 
   const getDefaultCode = () => {
-    if (!localStorageCode) {
+    if (!defaultCode) {
       return props.challenge.code;
     }
 
-    const [appendSolutionToThis, separator] = props.challenge.code.split(USER_CODE_START_REGEX);
-
-    return `${appendSolutionToThis ?? ''}${separator ?? ''}${defaultCode}`;
+    return defaultCode;
   };
 
   const [code, setCode] = useState(() => getDefaultCode());
@@ -98,7 +96,7 @@ export function CodePanel(props: CodePanelProps) {
       <div className="w-full flex-1">
         <SplitEditor
           tests={props.challenge.tests}
-          challenge={props.challenge.code}
+          userCode={code}
           onMount={{
             tests: (editor) => {
               setTestEditorState(editor);
@@ -114,7 +112,6 @@ export function CodePanel(props: CodePanelProps) {
               setUserEditorState(editor);
 
               const model = editor.getModel();
-              console.info('MODEL', model?.uri);
 
               if (!model) {
                 throw new Error();
@@ -132,11 +129,7 @@ export function CodePanel(props: CodePanelProps) {
             user: async (code) => {
               if (!monacoInstance) return null;
               setCode(code ?? '');
-              // we we only want to save whats after the comment
-              const [, , storeThiseCode] = (code ?? '').split(USER_CODE_START_REGEX);
-
-              // Wow this is just... remarkably jank.
-
+              setLocalStorageCode(code ?? '');
               const getTsWorker = await monacoInstance.languages.typescript.getTypeScriptWorker();
 
               const mm = monacoInstance.editor.getModel(monacoInstance.Uri.parse(TESTS_PATH));
@@ -152,7 +145,6 @@ export function CodePanel(props: CodePanelProps) {
               ] as const);
 
               setTsErrors(errors);
-              setLocalStorageCode(storeThiseCode ?? '');
             },
           }}
         />
