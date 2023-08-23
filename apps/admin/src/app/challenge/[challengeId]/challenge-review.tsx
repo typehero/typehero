@@ -73,7 +73,7 @@ export function ChallengeReview({ challenge }: Props) {
         </div>
       </div>
       <div className="flex justify-end gap-3 p-4">
-        <Link href="/admin">
+        <Link href="/?tab=challengeReviews">
           <Button variant="ghost">Cancel</Button>
         </Link>
         <Button onClick={handleDenyChallenge} variant="destructive">

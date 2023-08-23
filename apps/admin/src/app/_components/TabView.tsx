@@ -1,14 +1,15 @@
 'use client';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui';
+import { useRouter, useSearchParams } from 'next/navigation';
+import React from 'react';
 import type { InfiniteReports } from '../report/[id]/_components/report/report.action';
 import type { BannedUsers, UploadedImages } from './admin.actions';
-import React from 'react';
-import Reports from './reports';
-import { BannedUsers as BannedUserComponent } from './users';
 import { ChallengeReviews } from './challenge-reviews';
 import { ImageUploadReport } from './images';
+import Reports from './reports';
 import { ManageTracks } from './tracks';
+import { BannedUsers as BannedUserComponent } from './users';
 
 interface Props {
   reports: InfiniteReports;
@@ -17,7 +18,10 @@ interface Props {
 }
 
 export function TabView({ reports, allBannedUsers, uploadedImages }: Props) {
-  const defaultTab = 'reports';
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const tab = searchParams.get('tab') ?? 'reports';
   return (
     <div className="container m-8 flex flex-col space-y-4">
       <div className="space-y-2">
@@ -28,29 +32,50 @@ export function TabView({ reports, allBannedUsers, uploadedImages }: Props) {
           </p>
         </div>
         <div className="flex flex-col space-y-2">
-          <Tabs className="space-x-4" defaultValue={defaultTab}>
+          <Tabs className="space-x-4" defaultValue={tab}>
             <TabsList className="border-border bg-background rounded-full border">
               <TabsTrigger
                 className="data-[state=active]:bg-border rounded-l-2xl rounded-r-lg duration-300"
                 value="reports"
+                onClick={() => {
+                  router.push('/?tab=reports');
+                }}
               >
                 Reports
               </TabsTrigger>
               <TabsTrigger
                 className="data-[state=active]:bg-border duration-300"
                 value="challengeReviews"
+                onClick={() => {
+                  router.push('/?tab=challengeReviews');
+                }}
               >
                 Challenge Reviews
               </TabsTrigger>
-              <TabsTrigger className="data-[state=active]:bg-border duration-300" value="users">
+              <TabsTrigger
+                className="data-[state=active]:bg-border duration-300"
+                value="users"
+                onClick={() => {
+                  router.push('/?tab=users');
+                }}
+              >
                 Users
               </TabsTrigger>
-              <TabsTrigger className="data-[state=active]:bg-border duration-300" value="images">
+              <TabsTrigger
+                className="data-[state=active]:bg-border duration-300"
+                value="images"
+                onClick={() => {
+                  router.push('/?tab=images');
+                }}
+              >
                 Images
               </TabsTrigger>
               <TabsTrigger
                 className="data-[state=active]:bg-border rounded-l-lg rounded-r-2xl duration-300"
                 value="tracks"
+                onClick={() => {
+                  router.push('/?tab=tracks');
+                }}
               >
                 Tracks
               </TabsTrigger>
