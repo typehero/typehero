@@ -10,12 +10,11 @@ import React, { useRef, useState } from 'react';
 import lzstring from 'lz-string';
 import { Button, ToastAction, useToast, Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui';
 import { useLocalStorage } from './useLocalStorage';
-import SplitEditor from './split-editor';
+import SplitEditor, { TESTS_PATH } from './split-editor';
 import { USER_CODE_START_REGEX } from './constants';
 import { createTwoslashInlayProvider } from './twoslash';
-import { loadCheckingLib } from './code-editor';
 
-const VimStatusBar = dynamic(() => import('./vimMode').then((v) => v.VimStatusBar), {
+const VimStatusBar = dynamic(() => import('./vim-mode').then((v) => v.VimStatusBar), {
   ssr: false,
 });
 
@@ -41,12 +40,13 @@ export function CodePanel(props: CodePanelProps) {
   const params = useSearchParams();
   const router = useRouter();
   const { toast } = useToast();
-  const [tsErrors, setTsErrors] = useState<TsErrors>([[], [], [], []]);
-  const [initialTypecheckDone, setInitialTypecheckDone] = useState(false);
+  const [tsErrors, setTsErrors] = useState<TsErrors | undefined>(undefined);
   const [localStorageCode, setLocalStorageCode] = useLocalStorage(
     `challenge-${props.challenge.id}`,
     '',
   );
+
+  const initialTypecheckDone = tsErrors === undefined;
 
   const defaultCode =
     lzstring.decompressFromEncodedURIComponent(params.get('code') ?? '') ?? localStorageCode;
@@ -63,12 +63,11 @@ export function CodePanel(props: CodePanelProps) {
 
   const [code, setCode] = useState(() => getDefaultCode());
 
-  const modelRef = useRef<monaco.editor.ITextModel>();
-  // ref doesnt cause a rerender
-  const [editorState, setEditorState] = useState<monaco.editor.IStandaloneCodeEditor>();
+  const [testEditorState, setTestEditorState] = useState<monaco.editor.IStandaloneCodeEditor>();
+  const [userEditorState, setUserEditorState] = useState<monaco.editor.IStandaloneCodeEditor>();
 
   const handleSubmit = async () => {
-    const hasErrors = tsErrors.some((e) => e.length);
+    const hasErrors = tsErrors?.some((e) => e.length) ?? false;
 
     await props.saveSubmission(code ?? '', !hasErrors);
     router.refresh();
@@ -89,65 +88,8 @@ export function CodePanel(props: CodePanelProps) {
     }
   };
 
-  const onMount =
-    (value: string, onError: (v: TsErrors) => void) =>
-    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
-    async (editor: monaco.editor.IStandaloneCodeEditor, monaco: typeof import('monaco-editor')) => {
-      monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
-        ...monaco.languages.typescript.typescriptDefaults.getCompilerOptions(),
-        strict: true,
-        target: monaco.languages.typescript.ScriptTarget.ESNext,
-        strictNullChecks: true,
-      });
-
-      loadCheckingLib(monaco);
-
-      const model = editor.getModel();
-      console.info('MODEL', model?.uri);
-
-      if (!model) {
-        throw new Error();
-      }
-
-      modelRef.current = model;
-      setEditorState(editor);
-
-      const ts = await (await monaco.languages.typescript.getTypeScriptWorker())(model.uri);
-
-      const filename = model.uri.toString();
-
-      // what actually runs when checking errors
-      const typeCheck = async () => {
-        const errors = await Promise.all([
-          ts.getSemanticDiagnostics(filename),
-          ts.getSyntacticDiagnostics(filename),
-          ts.getSuggestionDiagnostics(filename),
-          ts.getCompilerOptionsDiagnostics(filename),
-        ] as const);
-
-        onError(errors);
-      };
-
-      // TODO: we prolly should use this for blocking ranges as it might not be as janky
-      // https://github.com/Pranomvignesh/constrained-editor-plugin
-      model.onDidChangeContent((e) => {
-        typeCheck().catch(console.error);
-      });
-
-      await typeCheck();
-      setInitialTypecheckDone(true);
-
-      editor.updateOptions({
-        readOnly: true,
-        renderValidationDecorations: 'on',
-      });
-
-      monaco.languages.registerInlayHintsProvider(
-        'typescript',
-        createTwoslashInlayProvider(monaco, ts),
-      );
-    };
   const monacoInstance = useMonaco();
+
   return (
     <>
       <div className="sticky top-0 flex h-[40px] flex-row-reverse items-center border-b border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
@@ -157,7 +99,35 @@ export function CodePanel(props: CodePanelProps) {
         <SplitEditor
           tests={props.challenge.tests}
           challenge={props.challenge.code}
-          onMount={{ tests: onMount(code, setTsErrors) }}
+          onMount={{
+            tests: (editor) => {
+              setTestEditorState(editor);
+            },
+            user: async (editor, monaco) => {
+              monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+                ...monaco.languages.typescript.typescriptDefaults.getCompilerOptions(),
+                strict: true,
+                target: monaco.languages.typescript.ScriptTarget.ESNext,
+                strictNullChecks: true,
+              });
+
+              setUserEditorState(editor);
+
+              const model = editor.getModel();
+              console.info('MODEL', model?.uri);
+
+              if (!model) {
+                throw new Error();
+              }
+
+              const ts = await (await monaco.languages.typescript.getTypeScriptWorker())(model.uri);
+
+              monaco.languages.registerInlayHintsProvider(
+                'typescript',
+                createTwoslashInlayProvider(monaco, ts),
+              );
+            },
+          }}
           onChange={{
             user: async (code) => {
               if (!monacoInstance) return null;
@@ -167,36 +137,35 @@ export function CodePanel(props: CodePanelProps) {
 
               // Wow this is just... remarkably jank.
 
-              const getModel = await monacoInstance.languages.typescript.getTypeScriptWorker();
-              const filename = 'file:///tests.ts';
-              const mm = monacoInstance.editor.getModel(
-                monacoInstance.Uri.parse('file:///tests.ts'),
-              );
+              const getTsWorker = await monacoInstance.languages.typescript.getTypeScriptWorker();
+
+              const mm = monacoInstance.editor.getModel(monacoInstance.Uri.parse(TESTS_PATH));
               if (!mm) return null;
-              const model = await getModel(mm.uri);
+
+              const tsWorker = await getTsWorker(mm.uri);
 
               const errors = await Promise.all([
-                model.getSemanticDiagnostics(filename),
-                model.getSyntacticDiagnostics(filename),
+                tsWorker.getSemanticDiagnostics(TESTS_PATH),
+                tsWorker.getSyntacticDiagnostics(TESTS_PATH),
                 Promise.resolve([]),
-                model.getCompilerOptionsDiagnostics(filename),
+                tsWorker.getCompilerOptionsDiagnostics(TESTS_PATH),
               ] as const);
+
               setTsErrors(errors);
               setLocalStorageCode(storeThiseCode ?? '');
             },
           }}
-          value={code}
         />
       </div>
       <div
         className={clsx(
           {
-            'justify-between': editorState,
+            'justify-between': testEditorState,
           },
           'sticky bottom-0 flex items-center justify-end p-2 dark:bg-[#1e1e1e]',
         )}
       >
-        {editorState ? <VimStatusBar editor={editorState} /> : null}
+        {userEditorState && <VimStatusBar editor={userEditorState} />}
         <div className="flex items-center justify-center gap-4">
           <Tooltip>
             <TooltipTrigger asChild>

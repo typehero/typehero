@@ -5,7 +5,9 @@
   "exports": {
     ".": "./src/index.tsx",
     "./code-editor": "./src/code-editor.tsx",
-    "./settings-store": "./src/settings-store.ts"
+    "./settings-store": "./src/settings-store.ts",
+    "./vim-mode": "./src/vim-mode.tsx",
+    "./twoslash": "./src/twoslash.ts"
   },
   "typesVersions": {
     "*": {
@@ -17,6 +19,12 @@
       ],
       "settings-store": [
         "./src/settings-store.ts"
+      ],
+      "vim-mode": [
+        "./src/vim-mode.tsx"
+      ],
+      "twoslash": [
+        "./src/twoslash.ts"
       ]
     }
   },
