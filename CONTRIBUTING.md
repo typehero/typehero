@@ -73,8 +73,8 @@ pnpm install
 ### 6. Push Database Schema and Seed
 
 ```
-turbo db:push
-turbo db:seed
+pnpm db:push
+pnpm db:seed
 ```
 
 ### Running the dev server
