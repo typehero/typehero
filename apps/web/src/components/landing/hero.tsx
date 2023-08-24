@@ -92,7 +92,6 @@ function Hero() {
               variant="outline"
             >
               <a className="inline-flex gap-1" href="https://github.com/bautistaaa/typehero">
-
                 <Github className="h-4 w-4" />
                 GitHub
               </a>
