@@ -20,7 +20,7 @@ import { useInView } from 'react-intersection-observer';
 import { Markdown } from '../ui/markdown';
 import { Steps } from '../wizard/Steps';
 import { useIsMobile } from '~/utils/useIsMobile';
-import Amog from '~/assets/images/amog.webp';
+import Amog from '~/assets/images/amog.png';
 
 type WrapperStyle = MotionStyle & {
   '--x': MotionValue<string>;
