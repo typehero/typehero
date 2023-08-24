@@ -43,15 +43,18 @@
     },
     "lint": {
       "dependsOn": ["@repo/db#db:generate", "^topo"],
-      "outputs": ["node_modules/.cache/.eslintcache"]
+      "outputs": ["node_modules/.cache/.eslintcache"],
+      "outputMode": "new-only"
     },
     "//#lint:fix": {
       "dependsOn": ["@repo/db#db:generate", "^topo"],
-      "outputs": ["node_modules/.cache/.eslintcache"]
+      "outputs": ["node_modules/.cache/.eslintcache"],
+      "outputMode": "new-only"
     },
     "lint:fix": {
       "dependsOn": ["@repo/db#db:generate", "^topo"],
-      "outputs": ["node_modules/.cache/.eslintcache"]
+      "outputs": ["node_modules/.cache/.eslintcache"],
+      "outputMode": "new-only"
     },
     "typecheck": {
       "dependsOn": ["@repo/db#db:generate", "^topo"],
