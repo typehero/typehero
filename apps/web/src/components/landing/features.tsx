@@ -5,16 +5,21 @@ import clsx from 'clsx';
 import {
   ImageCard,
   CollaborativeEnvironmentCard,
+  ChallengeCreationCard,
   CuratedTracksCard,
 } from '~/components/landing/feature-card';
 import FeatureCardChallengeDark1 from '~/assets/images/feature_card_challenge_dark1.png';
 import FeatureCardChallengeDark2 from '~/assets/images/feature_card_challenge_dark2.png';
 import FeatureCardChallengeLight1 from '~/assets/images/feature_card_challenge_light1.png';
 import FeatureCardChallengeLight2 from '~/assets/images/feature_card_challenge_light2.png';
-import FeatureCardCreateLight1 from '~/assets/images/feature_card_create_light1.png';
-import FeatureCardCreateLight2 from '~/assets/images/feature_card_create_light2.png';
-import FeatureCardCreateDark1 from '~/assets/images/feature_card_create_dark1.png';
-import FeatureCardCreateDark2 from '~/assets/images/feature_card_create_dark2.png';
+import Step1Dark1 from '~/assets/images/step1dark1.png';
+import Step1Dark2 from '~/assets/images/step1dark2.png';
+import Step2Light1 from '~/assets/images/step2light1.png';
+import Step2Light2 from '~/assets/images/step2light2.png';
+import Step2Dark1 from '~/assets/images/step2dark1.png';
+import Step2Dark2 from '~/assets/images/step2dark2.png';
+import Step3Light from '~/assets/images/step3light.png';
+import Step3Dark from '~/assets/images/step3dark.png';
 import { useIsMobile } from '~/utils/useIsMobile';
 
 function Features() {
@@ -56,7 +61,7 @@ function Features() {
                 !isMobile && 'group-hover:translate-x-2 group-hover:scale-95',
               )}
               imgClass2={clsx(
-                'pointer-events-none transition-transform duration-500 bg-neutral-50/70 dark:bg-zinc-800/70 backdrop-blur-sm translate-x-0',
+                'pointer-events-none transition-transform duration-500 bg-neutral-50/50 dark:bg-zinc-800/60 backdrop-blur-sm translate-x-0',
                 'scale-[190%] sm:scale-[150%] md:scale-100 rounded-2xl max-md:rounded-md left-[50%] top-[69%] md:top-auto w-[50%] sm:left-[39%] md:-bottom-[12%] lg:w-[77%]',
                 !isMobile && 'group-hover:scale-105 group-hover:-translate-x-2',
               )}
@@ -78,24 +83,44 @@ function Features() {
               title="Collaborative Environment"
             />
 
-            <ImageCard
-              imgClass1={clsx(
-                'pointer-events-none w-[50%] rounded-t-xl border border-zinc-300 opacity-80 transition-transform duration-500 dark:border-zinc-700 bg-neutral-50/80 dark:bg-neutral-800/80',
-                'max-md:scale-[160%] left-[15%] top-[57%] md:left-[35px] md:top-[30%]',
-                !isMobile && 'group-hover:translate-y-2',
+            {/* !isMobile && 'group-hover:translate-y-2', */}
+
+            {/* !isMobile && 'group-hover:-translate-y-6', */}
+
+            <ChallengeCreationCard
+              step1img1Class={clsx(
+                'pointer-events-none w-[50%] rounded-2xl border border-zinc-300 transition-transform duration-500 dark:border-zinc-700 bg-neutral-50/80 dark:bg-neutral-800/80',
+                'max-md:scale-[160%] left-[15%] top-[57%] md:left-[35px] md:top-[41%]',
               )}
-              imgClass2={clsx(
-                'pointer-events-none w-[150%] rounded-t-xl border border-zinc-300 dark:border-zinc-700 ransition-transform duration-500 opacity-80 rounded-xl overflow-hidden bg-neutral-50/80 dark:bg-neutral-800/80',
+              step1img2Class={clsx(
+                'pointer-events-none w-[60%] rounded-xl border border-zinc-300 dark:border-zinc-700 ransition-transform duration-500 rounded-xl overflow-hidden bg-neutral-50/80 dark:bg-neutral-800/80',
+                'max-md:scale-[140%] left-[70%] top-[53%] md:top-[40%] md:left-[calc(50%+35px+1rem)]',
+              )}
+              step2img1Class={clsx(
+                'pointer-events-none w-[50%] rounded-t-xl border border-zinc-300 transition-transform duration-500 dark:border-zinc-700 bg-neutral-50/80 dark:bg-neutral-800/80',
+                'max-md:scale-[160%] left-[15%] top-[57%] md:left-[35px] md:top-[30%]',
+              )}
+              step2img2Class={clsx(
+                'pointer-events-none w-[110%] rounded-t-xl border border-zinc-300 dark:border-zinc-700 ransition-transform duration-500 rounded-xl overflow-hidden bg-neutral-50/80 dark:bg-neutral-800/80',
                 'max-md:scale-[140%] left-[70%] top-[53%] md:top-[30%] md:left-[calc(50%+35px+1rem)]',
-                !isMobile && 'group-hover:-translate-y-6',
+              )}
+              step3imgClass={clsx(
+                'pointer-events-none w-[90%] rounded-xl border border-zinc-300 dark:border-zinc-700 ransition-transform duration-500 rounded-xl overflow-hidden bg-neutral-50/80 dark:bg-neutral-800/80',
+                'max-md:scale-[140%] left-[70%] top-[53%] md:top-[30%] md:left-1/2 md:-translate-x-1/2',
               )}
               description="Craft your own coding challenges to share with the Typehero community"
               bgClass="lg:bg-gradient-to-tr"
               image={{
-                dark1: FeatureCardCreateDark1,
-                dark2: FeatureCardCreateDark2,
-                light1: FeatureCardCreateLight1,
-                light2: FeatureCardCreateLight2,
+                step1dark1: Step1Dark1,
+                step1dark2: Step1Dark2,
+                step1light1: Step2Light1,
+                step1light2: Step2Light2,
+                step2dark1: Step2Dark1,
+                step2dark2: Step2Dark2,
+                step2light1: Step2Light1,
+                step2light2: Step2Light2,
+                step3dark: Step3Dark,
+                step3light: Step3Light,
                 alt: 'Something',
               }}
               title="Challenge Creation"

@@ -8,15 +8,17 @@ import {
   type MotionValue,
 } from 'framer-motion';
 import { useTheme } from 'next-themes';
-import { DifficultyBadge, UserBadge } from '@repo/ui';
+import { UserBadge } from '@repo/ui';
 import Image, { type StaticImageData } from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState, type MouseEvent } from 'react';
 import { Check, Reply } from 'lucide-react';
 import clsx from 'clsx';
+import { z } from 'zod';
 import type { Difficulty } from '@repo/db/types';
 import { useInView } from 'react-intersection-observer';
 import { Markdown } from '../ui/markdown';
+import { Steps } from '../wizard/Steps';
 import { useIsMobile } from '~/utils/useIsMobile';
 import Amog from '~/assets/images/amog.webp';
 
@@ -159,6 +161,231 @@ export function ImageCard({
   );
 }
 
+export function ChallengeCreationCard({
+  image,
+  step1img1Class,
+  step1img2Class,
+  step2img1Class,
+  step2img2Class,
+  step3imgClass,
+  ...props
+}: CardProps & {
+  step1img1Class?: string;
+  step1img2Class?: string;
+  step2img1Class?: string;
+  step2img2Class?: string;
+  step3imgClass?: string;
+  image: {
+    step1dark1: StaticImageData;
+    step1dark2: StaticImageData;
+    step1light1: StaticImageData;
+    step1light2: StaticImageData;
+    step2dark1: StaticImageData;
+    step2dark2: StaticImageData;
+    step2light1: StaticImageData;
+    step2light2: StaticImageData;
+    step3dark: StaticImageData;
+    step3light: StaticImageData;
+    alt: string;
+  };
+}) {
+  const { resolvedTheme } = useTheme();
+  const [step, setStep] = useState(0);
+  const steps = [
+    { id: '1', name: '🍆', schema: z.any() },
+    { id: '2', name: '🍑', schema: z.any() },
+    { id: '3', name: '🍌', schema: z.any() },
+    { id: '4', name: '💦', schema: z.any() },
+  ];
+  return (
+    <FeatureCard {...props}>
+      <div className="-mr-36 -mt-24">
+        <Steps current={step} onChange={(idx) => setStep(idx)} steps={steps} />
+      </div>
+
+      <div
+        className={clsx(
+          { 'translate-y-12 opacity-0': step !== 3 },
+          'absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col gap-12 text-center text-2xl font-bold',
+        )}
+      >
+        <div>🎉</div>
+        <div className="opacity-80">Thanks for creating a challenge!</div>
+      </div>
+      {resolvedTheme === 'light' && (
+        <>
+          {/* step 1 */}
+          <Image
+            alt={image.alt}
+            className={clsx(
+              step1img1Class,
+              { 'translate-y-12 opacity-0': step !== 0 },
+              'duration-300',
+            )}
+            src={image.step1light1}
+            style={{
+              position: 'absolute',
+              userSelect: 'none',
+              maxWidth: 'unset',
+            }}
+          />
+          <Image
+            alt={image.alt}
+            className={clsx(
+              step1img2Class,
+              { '-translate-y-12 opacity-0': step !== 0 },
+              'duration-300',
+            )}
+            src={image.step1light2}
+            style={{
+              position: 'absolute',
+              userSelect: 'none',
+              maxWidth: 'unset',
+            }}
+          />
+
+          {/* step 2 */}
+          <Image
+            alt={image.alt}
+            className={clsx(
+              step2img1Class,
+              { 'translate-y-12 opacity-0': step !== 1 },
+              'duration-300',
+            )}
+            src={image.step2light1}
+            style={{
+              position: 'absolute',
+              userSelect: 'none',
+              maxWidth: 'unset',
+            }}
+          />
+          <Image
+            alt={image.alt}
+            className={clsx(
+              step2img2Class,
+              { '-translate-y-12 opacity-0': step !== 1 },
+              'duration-300',
+            )}
+            src={image.step2light2}
+            style={{
+              position: 'absolute',
+              userSelect: 'none',
+              maxWidth: 'unset',
+            }}
+          />
+          {/* step 3 */}
+          <Image
+            alt={image.alt}
+            className={clsx(
+              step3imgClass,
+              { 'translate-y-12 opacity-0': step !== 1 },
+              'duration-300',
+            )}
+            src={image.step3dark}
+            style={{
+              position: 'absolute',
+              userSelect: 'none',
+              maxWidth: 'unset',
+            }}
+          />
+        </>
+      )}
+      {resolvedTheme === 'dark' && (
+        <>
+          {/* step 1 */}
+          <Image
+            alt={image.alt}
+            className={clsx(
+              step1img1Class,
+              { '-translate-y-12 opacity-0': step < 0 },
+              { 'translate-y-12 opacity-0': step > 0 },
+              'duration-300',
+            )}
+            src={image.step1dark1}
+            style={{
+              position: 'absolute',
+              userSelect: 'none',
+              maxWidth: 'unset',
+            }}
+          />
+          <Image
+            alt={image.alt}
+            className={clsx(
+              step1img2Class,
+              { '-translate-y-12 opacity-0': step < 0 },
+              { 'translate-y-12 opacity-0': step > 0 },
+              'duration-300',
+            )}
+            src={image.step1dark2}
+            style={{
+              position: 'absolute',
+              userSelect: 'none',
+              maxWidth: 'unset',
+            }}
+          />
+
+          {/* step 2 */}
+          <Image
+            alt={image.alt}
+            className={clsx(
+              step2img1Class,
+              { 'translate-y-12 opacity-0': step < 1 },
+              { '-translate-y-12 opacity-0': step > 1 },
+
+              'duration-300',
+            )}
+            src={image.step2dark1}
+            style={{
+              position: 'absolute',
+              userSelect: 'none',
+              maxWidth: 'unset',
+            }}
+          />
+          <Image
+            alt={image.alt}
+            className={clsx(
+              step2img2Class,
+              { '-translate-y-12 opacity-0': step < 1 },
+              { 'translate-y-12 opacity-0': step > 1 },
+
+              'duration-300',
+            )}
+            src={image.step2dark2}
+            style={{
+              position: 'absolute',
+              userSelect: 'none',
+              maxWidth: 'unset',
+            }}
+          />
+
+          {/* step 3 */}
+          <Image
+            alt={image.alt}
+            className={clsx(
+              step3imgClass,
+              { 'translate-y-12 opacity-0': step < 2 },
+              { '-translate-y-12 opacity-0': step > 2 },
+
+              'duration-300',
+            )}
+            src={image.step3dark}
+            style={{
+              position: 'absolute',
+              userSelect: 'none',
+              maxWidth: 'unset',
+            }}
+          />
+        </>
+      )}
+      {/* whole card is a "Next button" */}
+      <div
+        className="absolute left-0 top-0 z-50 h-full w-full cursor-pointer"
+        onClick={() => (step >= 3 ? setStep(0) : setStep((step) => step + 1))}
+      />
+    </FeatureCard>
+  );
+}
+
 const solutionComment = `\`\`\`ts
 // CODE START
 type Get<T, K> = string
@@ -236,7 +463,7 @@ export function CuratedTracksCard(props: CardProps) {
           'max-md:scale-110 md:top-[38%]',
         )}
       >
-        <div className="flex w-[69%] items-center justify-between gap-3 rounded-b-lg rounded-t-2xl bg-neutral-500/10 p-2 pl-3">
+        <div className="flex w-[69%] items-center justify-between gap-3 rounded-b-lg rounded-t-xl bg-neutral-500/10 p-2 pl-3">
           <span className="flex items-center gap-1 text-xs font-semibold tracking-wide">
             Array / String
           </span>
@@ -257,12 +484,23 @@ interface Track {
   label: string;
 }
 
+const COLORS_BY_DIFFICULTY = {
+  BEGINNER: 'text-pink-600 dark:text-pink-300',
+  EASY: 'text-emerald-600 dark:text-emerald-300',
+  MEDIUM: 'text-yellow-600 dark:text-yellow-300',
+  HARD: 'text-red-600 dark:text-red-300',
+  EXTREME: 'text-orange-600 dark:text-orange-300',
+};
+
+const BGS_BY_DIFFICULTY = {
+  BEGINNER: 'bg-pink-600 dark:bg-pink-300',
+  EASY: 'bg-emerald-600 dark:bg-emerald-300',
+  MEDIUM: 'bg-yellow-600 dark:bg-yellow-300',
+  HARD: 'bg-red-600 dark:bg-red-300',
+  EXTREME: 'bg-orange-600 dark:bg-orange-300',
+};
+
 const tracks: Track[] = [
-  {
-    id: '1',
-    label: 'Awaited',
-    difficulty: 'BEGINNER',
-  },
   {
     id: '2',
     label: 'Unshift',
@@ -274,25 +512,30 @@ const tracks: Track[] = [
     difficulty: 'MEDIUM',
   },
   {
+    id: '5',
+    label: 'Get Readonly Keys',
+    difficulty: 'EXTREME',
+  },
+  {
     id: '4',
     label: 'CamelCase',
     difficulty: 'HARD',
   },
   {
-    id: '5',
-    label: 'Get Readonly Keys',
-    difficulty: 'EXTREME',
+    id: '1',
+    label: 'Awaited',
+    difficulty: 'BEGINNER',
   },
 ];
 
 function Track({ className, difficulty, id, label }: Track) {
   const isMobile = useIsMobile();
   return (
-    <div className="group/challenge flex w-full flex-col items-center pt-2">
+    <div className="group/challenge flex w-full cursor-pointer flex-col items-center pt-2">
       <label
         htmlFor={id}
         className={clsx(
-          'flex w-[69%] cursor-pointer items-center justify-between gap-3 rounded-lg bg-neutral-500/10 p-4 text-zinc-700 duration-300 group-active/challenge:scale-100 group-active/challenge:duration-75 dark:text-zinc-300',
+          'flex w-[69%] cursor-pointer items-center justify-between gap-3 overflow-hidden rounded-lg bg-neutral-500/10 p-4 text-black/90 duration-300 group-active/challenge:bg-neutral-500/40 group-active/challenge:duration-75 dark:text-white/90',
           className,
           !isMobile &&
             'group-hover/challenge:scale-105 group-hover/challenge:rounded-xl group-hover/challenge:bg-neutral-500/20',
@@ -300,12 +543,18 @@ function Track({ className, difficulty, id, label }: Track) {
       >
         <div className="relative flex items-center gap-3">
           <input className="peer hidden appearance-none" type="checkbox" id={id} />
-          {/* <div className="h-5 w-5 rounded-full border-2 border-white/50 bg-white/10 peer-checked:bg-emerald-300/70" />
-          <Check className="invisible absolute left-1 my-auto h-3 w-3 peer-checked:visible" /> */}
+          <div className="h-5 w-5 rounded-full border border-black/70 bg-black/10 duration-75 peer-checked:border-transparent peer-checked:bg-green-600/80 dark:border-white/50 dark:bg-white/10 peer-checked:dark:bg-green-300/80" />
+          <Check className="absolute left-1 my-auto h-3 w-3 scale-0 stroke-[4] text-white duration-300 peer-checked:scale-100 dark:text-black" />
           {label}
         </div>
-        <div className="group">
-          <DifficultyBadge difficulty={difficulty} />
+        <div
+          className={`relative text-xs font-medium tracking-wide ${COLORS_BY_DIFFICULTY[difficulty]}`}
+        >
+          <div
+            className={`absolute right-0 top-1/2 h-12 w-12 -translate-y-1/2 blur-3xl ${BGS_BY_DIFFICULTY[difficulty]}`}
+          />
+          {difficulty[0]}
+          {difficulty.substring(1, difficulty.length).toLowerCase()}
         </div>
       </label>
     </div>
