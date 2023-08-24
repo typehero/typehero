@@ -205,8 +205,8 @@ export function ChallengeCreationCard({
 
       <div
         className={clsx(
-          { '-translate-x-[100%] opacity-0': step < 3 },
-          'absolute left-1/2 top-1/2 flex w-[80%] -translate-x-1/2 -translate-y-[33%] flex-col gap-12 text-center text-2xl font-bold',
+          { 'translate-x-0 opacity-0': step < 3 },
+          'absolute left-1/2 top-1/2 flex w-[80%] -translate-x-1/2 -translate-y-[33%] flex-col gap-12 text-center text-2xl font-bold transition-all duration-500 md:w-[50%]',
         )}
       >
         <div>🎉</div>
@@ -217,11 +217,7 @@ export function ChallengeCreationCard({
           {/* step 1 */}
           <Image
             alt={image.alt}
-            className={clsx(
-              step1img1Class,
-              { '-translate-x-36 opacity-0': step > 0 },
-              'duration-300',
-            )}
+            className={clsx(step1img1Class, { '-translate-x-36 opacity-0': step > 0 })}
             src={image.step1light1}
             style={{
               position: 'absolute',
@@ -231,11 +227,7 @@ export function ChallengeCreationCard({
           />
           <Image
             alt={image.alt}
-            className={clsx(
-              step1img2Class,
-              { '-translate-x-24 opacity-0': step > 0 },
-              'duration-500',
-            )}
+            className={clsx(step1img2Class, { '-translate-x-24 opacity-0': step > 0 })}
             src={image.step1light2}
             style={{
               position: 'absolute',
@@ -251,8 +243,6 @@ export function ChallengeCreationCard({
               step2img1Class,
               { 'translate-x-36 opacity-0': step < 1 },
               { '-translate-x-36 opacity-0': step > 1 },
-
-              'duration-300',
             )}
             src={image.step2light1}
             style={{
@@ -267,8 +257,6 @@ export function ChallengeCreationCard({
               step2img2Class,
               { 'translate-x-24 opacity-0': step < 1 },
               { '-translate-x-24 opacity-0': step > 1 },
-
-              'duration-500',
             )}
             src={image.step2light2}
             style={{
@@ -284,8 +272,7 @@ export function ChallengeCreationCard({
               step3imgClass,
               { 'translate-x-36 opacity-0': step < 2 },
               { '-translate-x-36 opacity-0': step > 2 },
-
-              'duration-300',
+              { 'opacity-90': step === 2 },
             )}
             src={image.step3light}
             style={{
@@ -301,11 +288,7 @@ export function ChallengeCreationCard({
           {/* step 1 */}
           <Image
             alt={image.alt}
-            className={clsx(
-              step1img1Class,
-              { '-translate-x-36 opacity-0': step > 0 },
-              'duration-300',
-            )}
+            className={clsx(step1img1Class, { '-translate-x-36 opacity-0': step > 0 })}
             src={image.step1dark1}
             style={{
               position: 'absolute',
@@ -315,11 +298,7 @@ export function ChallengeCreationCard({
           />
           <Image
             alt={image.alt}
-            className={clsx(
-              step1img2Class,
-              { '-translate-x-24 opacity-0': step > 0 },
-              'duration-500',
-            )}
+            className={clsx(step1img2Class, { '-translate-x-24 opacity-0': step > 0 })}
             src={image.step1dark2}
             style={{
               position: 'absolute',
@@ -335,8 +314,6 @@ export function ChallengeCreationCard({
               step2img1Class,
               { 'translate-x-36 opacity-0': step < 1 },
               { '-translate-x-36 opacity-0': step > 1 },
-
-              'duration-300',
             )}
             src={image.step2dark1}
             style={{
@@ -351,8 +328,6 @@ export function ChallengeCreationCard({
               step2img2Class,
               { 'translate-x-24 opacity-0': step < 1 },
               { '-translate-x-24 opacity-0': step > 1 },
-
-              'duration-500',
             )}
             src={image.step2dark2}
             style={{
@@ -369,8 +344,7 @@ export function ChallengeCreationCard({
               step3imgClass,
               { 'translate-x-36 opacity-0': step < 2 },
               { '-translate-x-36 opacity-0': step > 2 },
-
-              'duration-300',
+              { 'opacity-90': step === 2 },
             )}
             src={image.step3dark}
             style={{

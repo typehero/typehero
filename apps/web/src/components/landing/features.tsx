@@ -85,27 +85,27 @@ function Features() {
             />
             <ChallengeCreationCard
               step1img1Class={clsx(
-                'pointer-events-none w-[50%] max-md:rounded-xl rounded-2xl border border-zinc-300/50 transition-transform duration-500 dark:border-zinc-700/50 bg-neutral-50/80 dark:bg-neutral-800/80',
-                'max-md:scale-[160%] left-[25%] top-[57%] md:left-[35px] md:top-[41%]',
+                'pointer-events-none w-[50%] border border-zinc-300/50 transition-all duration-500 dark:border-zinc-700/50',
+                'max-md:scale-[160%] max-md:rounded-xl rounded-2xl left-[25%] top-[57%] md:left-[35px] md:top-[41%]',
                 !isMobile && 'group-hover:translate-y-2',
               )}
               step1img2Class={clsx(
-                'pointer-events-none w-[60%] rounded-xl max-md:rounded-lg border border-zinc-300/50 dark:border-zinc-700/50 ransition-transform duration-500 rounded-xl overflow-hidden bg-neutral-50/80 dark:bg-neutral-800/80',
-                'max-md:scale-[160%] left-[69%] top-[53%] md:top-[41%] md:left-[calc(50%+35px+1rem)]',
+                'pointer-events-none w-[60%] border border-zinc-300/50 dark:border-zinc-700/50 transition-all duration-500 overflow-hidden',
+                'max-md:scale-[160%] rounded-xl max-md:rounded-lg left-[69%] top-[53%] md:top-[41%] md:left-[calc(50%+35px+1rem)]',
                 !isMobile && 'group-hover:-translate-y-6',
               )}
               step2img1Class={clsx(
-                'pointer-events-none w-[50%] rounded-t-xl border border-zinc-300 transition-transform duration-500 dark:border-zinc-700 bg-neutral-50/80 dark:bg-neutral-800/80',
+                'pointer-events-none w-[50%] rounded-t-xl overflow-hidden border border-zinc-300 transition-all duration-500 dark:border-zinc-700',
                 'max-md:scale-[160%] left-[25%] top-[69%] md:left-[35px] md:top-[30%]',
                 !isMobile && 'group-hover:translate-y-2',
               )}
               step2img2Class={clsx(
-                'pointer-events-none w-[110%] rounded-t-xl border border-zinc-300 dark:border-zinc-700 ransition-transform duration-500 rounded-xl overflow-hidden bg-neutral-50/80 dark:bg-neutral-800/80 group-hover:-translate-y-6',
+                'pointer-events-none w-[110%] rounded-t-xl border border-zinc-300 dark:border-zinc-700 transition-all duration-500 rounded-xl overflow-hidden group-hover:-translate-y-6',
                 'max-md:scale-[140%] left-[70%] top-[53%] md:top-[30%] md:left-[calc(50%+35px+1rem)]',
                 !isMobile && 'group-hover:-translate-y-6',
               )}
               step3imgClass={clsx(
-                'pointer-events-none w-[90%] rounded-xl border border-zinc-300 dark:border-zinc-700 ransition-transform duration-500 rounded-xl overflow-hidden bg-neutral-50/80 dark:bg-neutral-800/80',
+                'pointer-events-none w-[90%] border border-zinc-300 dark:border-zinc-700 rounded-t-2xl transition-all duration-500 overflow-hidden',
                 'left-[5%] top-[50%] md:top-[30%] md:left-1/2 md:left-[35px]',
               )}
               description="Craft your own coding challenges to share with the Typehero community"
