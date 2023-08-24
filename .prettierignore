@@ -1,0 +1,10 @@
+# This root .prettierignore will not be in play inside of workspaces.
+# Files that need to be ignored in `./apps`, `./packages`, and `/./tooling`
+# need to be given their own .prettierignore in their workspace.
+
+.env
+.github
+node_modules
+*.log
+
+pnpm-lock.yaml

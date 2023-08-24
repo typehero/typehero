@@ -5,7 +5,11 @@ const { fontFamily } =
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ['class'],
-  content: ['./app/**/*.{js,ts,jsx,tsx,mdx}', 'src/**/*.{ts,tsx}', '../../packages/{ui,monaco}/**/*.{ts,tsx}'],
+  content: [
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    'src/**/*.{ts,tsx}',
+    '../../packages/{ui,monaco}/**/*.{ts,tsx}',
+  ],
   theme: {
     extend: {
       screens: {
