@@ -47,7 +47,6 @@ module.exports = {
     'prefer-regex-literals': 'off',
     '@typescript-eslint/naming-convention': 'off',
     'import/no-default-export': 'off',
-    '@typescript-eslint/no-unused-vars': 'off',
     '@typescript-eslint/no-unnecessary-condition': 'off',
     '@typescript-eslint/prefer-optional-chain': 'off',
     'react/jsx-no-useless-fragment': 'off',
