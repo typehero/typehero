@@ -232,12 +232,14 @@ export function CuratedTracksCard(props: CardProps) {
     <FeatureCard {...props}>
       <div
         className={clsx(
-          'absolute inset-0 top-[90%] flex flex-col items-center justify-center gap-1',
+          'absolute inset-0 top-[90%] flex flex-col items-center justify-center',
           'max-md:scale-110 md:top-[38%]',
         )}
       >
         <div className="flex w-[69%] items-center justify-between gap-3 rounded-b-lg rounded-t-2xl bg-neutral-500/10 p-2 pl-3">
-          <span className="flex items-center gap-1 text-sm">Track name</span>
+          <span className="flex items-center gap-1 text-xs font-semibold tracking-wide">
+            Array / String
+          </span>
         </div>
 
         {tracks.map((track) => (
@@ -286,25 +288,26 @@ const tracks: Track[] = [
 function Track({ className, difficulty, id, label }: Track) {
   const isMobile = useIsMobile();
   return (
-    <>
+    <div className="group/challenge flex w-full flex-col items-center pt-2">
       <label
         htmlFor={id}
         className={clsx(
-          'flex w-[69%] cursor-pointer items-center justify-between gap-3 rounded-lg bg-neutral-500/10 p-4 text-zinc-700 duration-300 active:scale-100 active:duration-75  dark:text-zinc-300',
+          'flex w-[69%] cursor-pointer items-center justify-between gap-3 rounded-lg bg-neutral-500/10 p-4 text-zinc-700 duration-300 group-active/challenge:scale-100 group-active/challenge:duration-75 dark:text-zinc-300',
           className,
-          !isMobile && 'hover:scale-105 hover:rounded-xl group-hover:hover:bg-neutral-500/20',
+          !isMobile &&
+            'group-hover/challenge:scale-105 group-hover/challenge:rounded-xl group-hover/challenge:bg-neutral-500/20',
         )}
       >
         <div className="relative flex items-center gap-3">
           <input className="peer hidden appearance-none" type="checkbox" id={id} />
-          <div className="h-5 w-5 rounded-full border-2 border-white/50 bg-white/10 peer-checked:bg-emerald-300/70" />
-          <Check className="invisible absolute left-1 my-auto h-3 w-3 peer-checked:visible" />
+          {/* <div className="h-5 w-5 rounded-full border-2 border-white/50 bg-white/10 peer-checked:bg-emerald-300/70" />
+          <Check className="invisible absolute left-1 my-auto h-3 w-3 peer-checked:visible" /> */}
           {label}
         </div>
         <div className="group">
           <DifficultyBadge difficulty={difficulty} />
         </div>
       </label>
-    </>
+    </div>
   );
 }
