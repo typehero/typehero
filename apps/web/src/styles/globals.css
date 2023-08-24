@@ -361,7 +361,7 @@ main {
 
 .amoguwusus {
   opacity: 0;
-  animation: amog 7.5s 1.6s ease-in-out infinite forwards;
+  animation: amog 7.5s 1.6s ease-in-out forwards;
 }
 
 @keyframes amog {
@@ -385,9 +385,19 @@ main {
     opacity: 1;
     transform: translateX(666px) translateY(0px);
   }
-  100% {
+  90% {
     opacity: 1;
     transform: translateX(666px) translateY(0px);
+  }
+
+  95% {
+    opacity: 1;
+    transform: translateX(0) translateY(200px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0) translateY(0px);
   }
 }
 

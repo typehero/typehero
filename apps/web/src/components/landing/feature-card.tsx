@@ -189,7 +189,7 @@ export function ChallengeCreationCard({
   };
 }) {
   const { resolvedTheme } = useTheme();
-  const [step, setStep] = useState(0);
+  const step = useNumberCycler();
   const steps = [
     { id: '1', name: '🍆', schema: z.any() },
     { id: '2', name: '🍑', schema: z.any() },
@@ -199,7 +199,7 @@ export function ChallengeCreationCard({
   return (
     <FeatureCard {...props}>
       <div className="absolute -right-4 bottom-4 w-full md:relative md:-right-16 md:bottom-0 md:-mr-36 md:-mt-24">
-        <Steps current={step} onChange={(idx) => setStep(idx)} steps={steps} />
+        <Steps current={step} onChange={() => {}} steps={steps} />
       </div>
 
       <div
@@ -354,11 +354,6 @@ export function ChallengeCreationCard({
           />
         </>
       )}
-      {/* whole card is a "Next button" */}
-      <div
-        className="absolute left-0 top-0 z-50 h-full w-full cursor-pointer"
-        onClick={() => (step >= 3 ? setStep(0) : setStep((step) => step + 1))}
-      />
     </FeatureCard>
   );
 }
@@ -540,4 +535,20 @@ function Track({ className, difficulty, id, label }: Track) {
       </div>
     </label>
   );
+}
+
+function useNumberCycler() {
+  const [currentNumber, setCurrentNumber] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentNumber((prevNumber) => (prevNumber + 1) % 4);
+    }, 5000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
+  return currentNumber;
 }
