@@ -79,7 +79,7 @@ export function ExploreCarousel({ challenges }: Props) {
 
   return (
     <div
-      className="hide-scrollbar flex w-full snap-x flex-nowrap gap-4 overflow-x-scroll scroll-smooth p-6"
+      className="hide-scrollbar flex w-full snap-x flex-nowrap gap-4 overflow-x-scroll scroll-smooth p-6 px-4 md:px-20"
       id="container"
       ref={containerRef}
     >
@@ -99,16 +99,16 @@ export function ExploreCarousel({ challenges }: Props) {
           </Link>
         ))}
       <button
-        className="bg-background absolute -right-5 top-1/2 hidden -translate-y-1/2 rounded-[5rem] p-4 pl-1 duration-300 active:scale-95 sm:block"
+        className="absolute right-5 top-1/2 hidden -translate-y-1/2 rounded-[5rem] border border-neutral-400 bg-neutral-200/50 px-2 py-4 backdrop-blur-sm duration-300 active:scale-75 dark:border-neutral-600 dark:bg-neutral-700/50 sm:block"
         id="slideRight"
       >
-        <ChevronRight className="h-4 w-4" />
+        <ChevronRight className="h-4 w-4 stroke-[3]" />
       </button>
       <button
-        className="bg-background absolute -left-5 top-1/2 hidden -translate-y-1/2 rounded-[5rem] p-4 pr-1 duration-300 active:scale-95 sm:block"
+        className="absolute left-5 top-1/2 hidden -translate-y-1/2 rounded-[5rem] border border-neutral-400 bg-neutral-200/50 px-2 py-4 backdrop-blur-sm duration-300 active:scale-75 dark:border-neutral-600 dark:bg-neutral-700/50 sm:block"
         id="slideLeft"
       >
-        <ChevronRight className="h-4 w-4 rotate-180 transform" />
+        <ChevronRight className="h-4 w-4 rotate-180 transform stroke-[3]" />
       </button>
     </div>
   );
