@@ -93,11 +93,13 @@ Once the server is running you can seed and sync data
 
 #### Tips
 
-if you ever need to blow away everything in your data and reseed run:
+If you ever need to blow away everything in your data and reseed run:
 
 ```
 pnpm refresh
 ```
+
+If you want to see if your PR will pass GitHub Checks before you push, run `pn checks`. You may also run `pn checks:fix` to let Prettier and ESLint automatically fix any issues that they can.
 
 [planetscale-quick-start]: https://planetscale.com/docs/tutorials/planetscale-quick-start-guide
 [new-oauth]: https://github.com/settings/applications/new
