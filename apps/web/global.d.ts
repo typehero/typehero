@@ -11,5 +11,6 @@ declare namespace NodeJS {
     GITHUB_SECRET: string;
     PORT: number;
     RESEND_API_KEY: string;
+    EDGE_CONFIG: string;
   }
 }

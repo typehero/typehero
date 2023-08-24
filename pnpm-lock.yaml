@@ -252,6 +252,9 @@ importers:
       '@uploadthing/react':
         specifier: ^5.2.0
         version: 5.2.0(react-dropzone@14.2.3)(react@18.2.0)(uploadthing@5.2.1)(zod@3.21.4)
+      '@vercel/edge-config':
+        specifier: ^0.2.1
+        version: 0.2.1
       clsx:
         specifier: ^2.0.0
         version: 2.0.0
@@ -3916,6 +3919,17 @@ packages:
     dependencies:
       '@uploadthing/mime-types': 0.2.0
       zod: 3.21.4
+    dev: false
+
+  /@vercel/edge-config-fs@0.1.0:
+    resolution: {integrity: sha512-NRIBwfcS0bUoUbRWlNGetqjvLSwgYH/BqKqDN7vK1g32p7dN96k0712COgaz6VFizAm9b0g6IG6hR6+hc0KCPg==}
+    dev: false
+
+  /@vercel/edge-config@0.2.1:
+    resolution: {integrity: sha512-847kYqJEbga4PGgNrctQ9XsD+2Kw/S+UjzZnIFpebQ9VbdtB0MX4anq33WetcYZYPfhZd2L0uXVnY/BcjI5dOw==}
+    engines: {node: '>=14.6'}
+    dependencies:
+      '@vercel/edge-config-fs': 0.1.0
     dev: false
 
   /@vercel/og@1.0.0:
