@@ -59,7 +59,9 @@ export function Markdown({ children, className }: { children: string; className?
         h3: ({ className, ...props }) => (
           <h3 className={clsx(className, 'mb-2 pb-2 text-xl font-bold')} {...props} />
         ),
-        p: ({ className, ...props }) => <p className={clsx(className, 'mb-4')} {...props} />,
+        p: ({ className, ...props }) => (
+          <p className={clsx(className, 'mb-4 last-of-type:mb-1.5')} {...props} />
+        ),
         code({ inline, className, children, style: _, ...props }) {
           const match = /language-(\w+)/.exec(className || '');
           return !inline && match ? (
