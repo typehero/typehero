@@ -205,7 +205,7 @@ export function ChallengeCreationCard({
 
       <div
         className={clsx(
-          { 'translate-y-12 opacity-0': step !== 3 },
+          { '-translate-x-[100%] opacity-0': step < 3 },
           'absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col gap-12 text-center text-2xl font-bold',
         )}
       >
@@ -219,7 +219,7 @@ export function ChallengeCreationCard({
             alt={image.alt}
             className={clsx(
               step1img1Class,
-              { 'translate-y-12 opacity-0': step !== 0 },
+              { 'translate-x-24 opacity-0': step !== 0 },
               'duration-300',
             )}
             src={image.step1light1}
@@ -297,8 +297,7 @@ export function ChallengeCreationCard({
             alt={image.alt}
             className={clsx(
               step1img1Class,
-              { '-translate-y-12 opacity-0': step < 0 },
-              { 'translate-y-12 opacity-0': step > 0 },
+              { '-translate-x-36 opacity-0': step > 0 },
               'duration-300',
             )}
             src={image.step1dark1}
@@ -312,9 +311,8 @@ export function ChallengeCreationCard({
             alt={image.alt}
             className={clsx(
               step1img2Class,
-              { '-translate-y-12 opacity-0': step < 0 },
-              { 'translate-y-12 opacity-0': step > 0 },
-              'duration-300',
+              { '-translate-x-24 opacity-0': step > 0 },
+              'duration-500',
             )}
             src={image.step1dark2}
             style={{
@@ -329,8 +327,8 @@ export function ChallengeCreationCard({
             alt={image.alt}
             className={clsx(
               step2img1Class,
-              { 'translate-y-12 opacity-0': step < 1 },
-              { '-translate-y-12 opacity-0': step > 1 },
+              { 'translate-x-36 opacity-0': step < 1 },
+              { '-translate-x-36 opacity-0': step > 1 },
 
               'duration-300',
             )}
@@ -345,10 +343,10 @@ export function ChallengeCreationCard({
             alt={image.alt}
             className={clsx(
               step2img2Class,
-              { '-translate-y-12 opacity-0': step < 1 },
-              { 'translate-y-12 opacity-0': step > 1 },
+              { 'translate-x-24 opacity-0': step < 1 },
+              { '-translate-x-24 opacity-0': step > 1 },
 
-              'duration-300',
+              'duration-500',
             )}
             src={image.step2dark2}
             style={{
@@ -363,8 +361,8 @@ export function ChallengeCreationCard({
             alt={image.alt}
             className={clsx(
               step3imgClass,
-              { 'translate-y-12 opacity-0': step < 2 },
-              { '-translate-y-12 opacity-0': step > 2 },
+              { 'translate-x-36 opacity-0': step < 2 },
+              { '-translate-x-36 opacity-0': step > 2 },
 
               'duration-300',
             )}
@@ -459,7 +457,7 @@ export function CuratedTracksCard(props: CardProps) {
     <FeatureCard {...props}>
       <div
         className={clsx(
-          'absolute inset-0 top-[90%] flex flex-col items-center justify-center',
+          'absolute inset-0 top-[50%] flex flex-col items-center justify-center',
           'max-md:scale-110 md:top-[38%]',
         )}
       >
@@ -535,13 +533,13 @@ function Track({ className, difficulty, id, label }: Track) {
       <label
         htmlFor={id}
         className={clsx(
-          'flex w-[69%] cursor-pointer items-center justify-between gap-3 overflow-hidden rounded-lg bg-neutral-500/10 p-4 text-black/90 duration-300 group-active/challenge:bg-neutral-500/40 group-active/challenge:duration-75 dark:text-white/90',
+          'flex w-[69%] cursor-pointer items-center justify-between gap-3 overflow-hidden rounded-lg bg-neutral-500/10 p-4 py-2 text-black/90 duration-300 group-active/challenge:bg-neutral-500/40 group-active/challenge:duration-75 dark:text-white/90 sm:py-4',
           className,
           !isMobile &&
             'group-hover/challenge:scale-105 group-hover/challenge:rounded-xl group-hover/challenge:bg-neutral-500/20',
         )}
       >
-        <div className="relative flex items-center gap-3">
+        <div className="relative flex items-center gap-3 text-xs sm:text-base">
           <input className="peer hidden appearance-none" type="checkbox" id={id} />
           <div className="h-5 w-5 rounded-full border border-black/70 bg-black/10 duration-75 peer-checked:border-transparent peer-checked:bg-green-600/80 dark:border-white/50 dark:bg-white/10 peer-checked:dark:bg-green-300/80" />
           <Check className="absolute left-1 my-auto h-3 w-3 scale-0 stroke-[4] text-white duration-300 peer-checked:scale-100 dark:text-black" />
