@@ -21,7 +21,7 @@ export async function ExploreSlug({ slug }: ExploreSlugProps) {
       <div className="flex w-full flex-wrap justify-center gap-6">
         {challenges.map((challenge) => (
           <Link
-            className="group block focus:outline-none sm:w-[330px] xl:w-[333px]"
+            className="group block w-[95%] focus:outline-none sm:w-[330px] xl:w-[333px]"
             href={`/challenge/${challenge.id}`}
             key={challenge.id}
           >
