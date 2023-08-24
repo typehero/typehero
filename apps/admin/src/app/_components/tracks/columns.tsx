@@ -23,7 +23,6 @@ export const columns: ColumnDef<Track & { trackChallenges: TrackChallenge[] }>[]
     accessorKey: 'trackChallenges',
     header: 'No. of challenges',
     cell: ({ row }) => {
-      console.log({ row: row.original });
       return <pre>{row.original.trackChallenges?.length ?? 0}</pre>;
     },
   },
