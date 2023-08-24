@@ -23,7 +23,7 @@ export const UserSignupEmail = () => {
   return (
     <Html>
       <Head />
-      <Preview>You're on the Typehero Waitlist!</Preview>
+      <Preview>🔥 You're on the Typehero Waitlist!</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-[40px] w-[465px] rounded border border-solid border-[#eaeaea] p-[20px]">
@@ -31,7 +31,7 @@ export const UserSignupEmail = () => {
               <Img src={`${baseUrl}/typehero.png`} width="64" height="auto" alt="Typehero" />
             </Section>
             <Heading className="mx-0 my-[30px] p-0 text-[24px] font-bold text-black">
-              You're on the Typehero Waitlist!
+              🔥 You're on the Typehero Waitlist!
             </Heading>
             <Text className="pb-2 text-[20px] leading-[24px] text-black">Hey there 👋</Text>
             <Text className="text-[14px] leading-[24px] text-black">
@@ -41,7 +41,7 @@ export const UserSignupEmail = () => {
               We are cooking extremely hard to bring you the best experience for doing type
               challenges.
             </Text>
-            <Container className="w-fit mx-auto pt-4">
+            <Container className="mx-auto w-fit pt-4">
               <Button
                 pX={20}
                 pY={12}
