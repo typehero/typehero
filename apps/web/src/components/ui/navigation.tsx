@@ -26,9 +26,8 @@ export function Navigation() {
   return (
     <header className="z-10 w-full">
       <nav
-        className={`flex h-14 items-center ${
-          pathname?.startsWith('/challenge') ? 'px-4' : 'container'
-        }`}
+        className={`flex h-14 items-center ${pathname?.startsWith('/challenge') ? 'px-4' : 'container'
+          }`}
       >
         <div className="flex w-full items-center justify-between">
           <div className="relative flex gap-3">
@@ -68,16 +67,16 @@ export function Navigation() {
               </span>
             </a>
 
-            {flags?.exploreButton ? (
+            {flags?.exploreButton && (
               <Link href="/explore">
                 <span className={navigationMenuTriggerStyle()}>Explore</span>
               </Link>
-            ) : null}
+            )}
           </div>
           <div className="flex">
             <div className="flex items-center justify-end gap-2">
               <ThemeButton />
-              {flags?.loginButton ? <LoginButton /> : null}
+              {flags?.loginButton && <LoginButton />}
             </div>
           </div>
         </div>

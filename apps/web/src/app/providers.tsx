@@ -20,7 +20,7 @@ export function Providers({ children }: Props) {
     fetch('/api/flags')
       .then((res) => res.json())
       .then((data) => {
-        setFlags(data.flags);
+        setFlags(data);
       });
   }, []);
 
