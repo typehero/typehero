@@ -20,7 +20,6 @@ import { useInView } from 'react-intersection-observer';
 import { Markdown } from '../ui/markdown';
 import { Steps } from '../wizard/Steps';
 import { useIsMobile } from '~/utils/useIsMobile';
-import Amog from '~/assets/images/amog.png';
 
 type WrapperStyle = MotionStyle & {
   '--x': MotionValue<string>;
@@ -424,7 +423,9 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
           <Image
             className={clsx({ amoguwusus: inView }, 'opacity-0')}
             alt="amoguwuawa"
-            src={Amog}
+            src="/Red.webp"
+            height="198"
+            width="150"
           />
         </div>
       </div>
