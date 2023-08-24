@@ -54,7 +54,10 @@ function Community() {
               </p>
               <div className="flex flex-col gap-3 sm:flex-row">
                 <button className="group mx-auto flex rounded-xl bg-neutral-200 text-sm font-bold duration-300 hover:bg-[#5865F2] hover:text-white dark:bg-neutral-800 dark:hover:bg-[#5865F2]">
-                  <a className="inline-flex px-3 py-2 gap-2 items-center" href="https://discord.gg/trashdev">
+                  <a
+                    className="inline-flex items-center gap-2 px-3 py-2"
+                    href="https://discord.gg/trashdev"
+                  >
                     <svg
                       className="h-4 w-4 fill-current group-hover:rotate-[360deg]"
                       role="img"
@@ -69,7 +72,10 @@ function Community() {
                   </a>
                 </button>
                 <button className="group flex gap-2 rounded-xl bg-neutral-200 text-sm font-bold duration-300 hover:bg-black hover:text-white dark:bg-neutral-800 dark:hover:bg-white dark:hover:text-black">
-                  <a className="inline-flex px-3 py-2 gap-2 items-center" href="https://github.com/bautistaaa/typehero/blob/main/CONTRIBUTING.md">
+                  <a
+                    className="inline-flex items-center gap-2 px-3 py-2"
+                    href="https://github.com/bautistaaa/typehero/blob/main/CONTRIBUTING.md"
+                  >
                     <svg
                       className="h-4 w-4 fill-current group-hover:-rotate-[360deg]"
                       role="img"
