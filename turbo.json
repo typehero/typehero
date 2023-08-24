@@ -24,16 +24,33 @@
     "topo": {
       "dependsOn": ["@repo/db#db:generate", "^topo"]
     },
-    "//#format-root": {
-      "dependsOn": ["^topo"],
-      "outputMode": "new-only"
+    "//#format": {
+      "outputs": ["node_modules/.cache/.prettiercache"]
     },
     "format": {
-      "outputMode": "new-only"
+      "dependsOn": ["^topo", "//#format"],
+      "outputs": ["node_modules/.cache/.prettiercache"]
+    },
+    "//#format:fix": {
+      "outputs": ["node_modules/.cache/.prettiercache"]
+    },
+    "format:fix": {
+      "dependsOn": ["^topo"],
+      "outputs": ["node_modules/.cache/.prettiercache"]
+    },
+    "//#lint": {
+      "outputs": ["node_modules/.cache/.eslintcache"]
     },
     "lint": {
-      "outputs": ["node_modules/.cache/.eslintcache"],
-      "dependsOn": ["^topo"]
+      "dependsOn": ["@repo/db#db:generate"],
+      "outputs": ["node_modules/.cache/.eslintcache"]
+    },
+    "//#lint:fix": {
+      "outputs": ["node_modules/.cache/.eslintcache"]
+    },
+    "lint:fix": {
+      "dependsOn": ["@repo/db#db:generate"],
+      "outputs": ["node_modules/.cache/.eslintcache"]
     },
     "typecheck": {
       "dependsOn": ["^topo"],
