@@ -263,14 +263,14 @@ main {
   }
 }
 
-.containerthing {
+.lampcontainer {
   position: relative;
   margin-top: -330px;
   contain: layout;
   height: 420px;
 }
 
-.thething {
+.lamp {
   width: 100%;
   height: 400px;
   position: relative;
@@ -289,9 +289,12 @@ main {
     hsl(var(--background)),
     hsl(var(--background))
   );
-  mask-image: radial-gradient(100% 50% at center center, black, transparent);
   -webkit-mask-image: radial-gradient(100% 50% at center center, black, transparent);
   background-image: var(--first), var(--second);
+  background-attachment: ;
+  background-origin: ;
+  background-clip: ;
+  background-color: ;
   background-position-x: 1%, 99%;
   background-position-y: 0%, 0%;
   background-size: 50% 100%, 50% 100%;
@@ -325,17 +328,80 @@ main {
   }
 }
 
-.thething::after {
+.lamp::after {
   content: '';
   position: absolute;
   inset: 0px 0px 50%;
   overflow: hidden;
   opacity: 0.1;
-  mask-image: radial-gradient(140px 50% at 50% 100%, black, transparent);
   -webkit-mask-image: radial-gradient(140px 50% at 50% 100%, black, transparent);
 }
 
 .hide-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome Safari */
   scrollbar-width: none; /* Firefox */
+}
+
+/* comments feature card animations */
+
+.comment1 {
+  opacity: 0;
+  animation: fadeUp 0.6s ease-in-out 1 forwards;
+}
+
+.comment2 {
+  opacity: 0;
+  animation: fadeUp 0.6s 0.9s ease-in-out 1 forwards;
+}
+
+.comment3 {
+  opacity: 0;
+  animation: fadeUp 0.6s 1.1s ease-in-out 1 forwards;
+}
+
+.amoguwusus {
+  opacity: 0;
+  animation: amog 7.5s 1.6s ease-in-out infinite forwards;
+}
+
+@keyframes amog {
+  0% {
+    opacity: 1;
+    transform: translateY(69px);
+  }
+  6% {
+    transform: translateX(0) translateY(16px);
+  }
+  20% {
+    transform: translateX(0) translateY(16px);
+  }
+  22% {
+    transform: translateX(0) translateY(0px);
+  }
+  24% {
+    transform: translateX(0) translateY(16px);
+  }
+  40% {
+    opacity: 1;
+    transform: translateX(666px) translateY(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(666px) translateY(0px);
+  }
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
 }

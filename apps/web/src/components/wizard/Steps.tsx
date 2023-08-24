@@ -28,12 +28,11 @@ export function Steps<T extends Step>({ steps, current, onChange }: Props<T>) {
               )}
               key={step.name}
             >
-              <a
+              <div
                 className={clsx(
-                  'group flex w-full items-center',
+                  'group flex w-full cursor-pointer items-center',
                   (isFuture || isCurrent) && 'pointer-events-none',
                 )}
-                href="#"
                 onClick={() => onChange(stepIdx)}
               >
                 <span className="flex items-center gap-2 text-sm font-medium">
@@ -66,7 +65,7 @@ export function Steps<T extends Step>({ steps, current, onChange }: Props<T>) {
                     {step.name}
                   </span>
                 </span>
-              </a>
+              </div>
             </li>
           );
         })}
