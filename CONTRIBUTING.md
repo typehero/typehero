@@ -6,7 +6,7 @@ machine. Below are the steps to follow in order for you to get dotfyle to run on
 ### 1. Create a `.env` file
 
 ```
-cp apps/web/.env.example apps/web/.env
+cp .env.example .env
 ```
 
 Provide your own values as needed.
@@ -73,8 +73,8 @@ pnpm install
 ### 6. Push Database Schema and Seed
 
 ```
-turbo db:push
-turbo db:seed
+pnpm db:push
+pnpm db:seed
 ```
 
 ### Running the dev server
@@ -93,11 +93,13 @@ Once the server is running you can seed and sync data
 
 #### Tips
 
-if you ever need to blow away everything in your data and reseed run:
+If you ever need to blow away everything in your data and reseed run:
 
 ```
 pnpm refresh
 ```
+
+If you want to see if your PR will pass GitHub Checks before you push, run `pn checks`. You may also run `pn checks:fix` to let Prettier and ESLint automatically fix any issues that they can.
 
 [planetscale-quick-start]: https://planetscale.com/docs/tutorials/planetscale-quick-start-guide
 [new-oauth]: https://github.com/settings/applications/new

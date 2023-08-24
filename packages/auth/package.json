@@ -21,8 +21,10 @@
     }
   },
   "scripts": {
-    "format": "prettier \"**/*.{ts,tsx,md,mdx,json}\" --check",
-    "lint": "eslint .",
+    "format": "prettier . --check --cache --cache-location=\"node_modules/.cache/prettiercache\"",
+    "format:fix": "prettier . --write --cache --cache-location=\"node_modules/.cache/prettiercache\" --loglevel=warn",
+    "lint": "eslint . --cache --cache-location 'node_modules/.cache/.eslintcache'",
+    "lint:fix": "eslint . --fix --cache --cache-location 'node_modules/.cache/.eslintcache'",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

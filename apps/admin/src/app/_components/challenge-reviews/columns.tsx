@@ -31,7 +31,7 @@ export const columns: ColumnDef<Challenge>[] = [
     header: '...',
     cell: ({ row }) => {
       return (
-        <Link href={`admin/challenge/${row.original.id}`}>
+        <Link href={`challenge/${row.original.id}`}>
           <Button variant="link">Manage</Button>
         </Link>
       );

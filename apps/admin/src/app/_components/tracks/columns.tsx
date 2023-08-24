@@ -23,7 +23,6 @@ export const columns: ColumnDef<Track & { trackChallenges: TrackChallenge[] }>[]
     accessorKey: 'trackChallenges',
     header: 'No. of challenges',
     cell: ({ row }) => {
-      console.log({ row: row.original });
       return <pre>{row.original.trackChallenges?.length ?? 0}</pre>;
     },
   },
@@ -31,7 +30,7 @@ export const columns: ColumnDef<Track & { trackChallenges: TrackChallenge[] }>[]
     header: '...',
     cell: ({ row }) => {
       return (
-        <Link href={`admin/tracks/${row.original.id}`}>
+        <Link href={`tracks/${row.original.id}`}>
           <Button variant="link">Manage</Button>
         </Link>
       );

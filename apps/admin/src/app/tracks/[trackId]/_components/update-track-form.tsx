@@ -15,12 +15,13 @@ import {
   Input,
   useToast,
 } from '@repo/ui';
+import Link from 'next/link';
+import { useMemo } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import Select from 'react-select';
 import { z } from 'zod';
-import { useMemo } from 'react';
-import type { ChallengesForTrack, TrackToManage } from '../page';
 import { updateTrack } from '../_actions/update-track.action';
+import type { ChallengesForTrack, TrackToManage } from '../page';
 import { DraggableChallenge } from './draggable-challenge';
 
 const trackChallengeSchema = z.object({
@@ -112,6 +113,7 @@ export function UpdateTrackForm({ challenges, track }: Props) {
       });
     }
   }
+
   return (
     <ForceRenderUntilClient>
       <div className="container flex flex-col gap-5">
@@ -203,6 +205,9 @@ export function UpdateTrackForm({ challenges, track }: Props) {
             </div>
 
             <DialogFooter className="py-3">
+              <Link href="/?tab=tracks">
+                <Button variant="ghost">Cancel</Button>
+              </Link>
               <Button type="submit">Save</Button>
             </DialogFooter>
           </form>
