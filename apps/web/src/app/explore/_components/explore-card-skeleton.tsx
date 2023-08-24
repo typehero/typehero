@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, Skeleton } f
 
 export function ExploreCardSkeleton() {
   return (
-    <Card className="group duration-300">
+    <Card className="group w-[330px] duration-300">
       <CardHeader className="relative grid items-start gap-4">
         <div className="flex flex-col items-start gap-2">
           <Skeleton className="h-6 w-16 rounded-full bg-zinc-300 dark:bg-zinc-700" />

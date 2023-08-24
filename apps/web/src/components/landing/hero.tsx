@@ -91,7 +91,7 @@ function Hero() {
               className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
               variant="outline"
             >
-              <a className="inline-flex gap-1" href="https://github.com/">
+              <a className="inline-flex gap-1" href="https://github.com/bautistaaa/typehero">
                 <Github className="h-4 w-4" />
                 GitHub
               </a>
