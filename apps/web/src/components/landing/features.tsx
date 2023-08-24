@@ -87,10 +87,12 @@ function Features() {
               step1img1Class={clsx(
                 'pointer-events-none w-[50%] max-md:rounded-xl rounded-2xl border border-zinc-300/50 transition-transform duration-500 dark:border-zinc-700/50 bg-neutral-50/80 dark:bg-neutral-800/80',
                 'max-md:scale-[160%] left-[25%] top-[57%] md:left-[35px] md:top-[41%]',
+                !isMobile && 'group-hover:translate-y-2',
               )}
               step1img2Class={clsx(
                 'pointer-events-none w-[60%] rounded-xl max-md:rounded-lg border border-zinc-300/50 dark:border-zinc-700/50 ransition-transform duration-500 rounded-xl overflow-hidden bg-neutral-50/80 dark:bg-neutral-800/80',
                 'max-md:scale-[160%] left-[69%] top-[53%] md:top-[41%] md:left-[calc(50%+35px+1rem)]',
+                !isMobile && 'group-hover:-translate-y-6',
               )}
               step2img1Class={clsx(
                 'pointer-events-none w-[50%] rounded-t-xl border border-zinc-300 transition-transform duration-500 dark:border-zinc-700 bg-neutral-50/80 dark:bg-neutral-800/80',
