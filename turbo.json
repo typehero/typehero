@@ -13,6 +13,7 @@
         "GITHUB_ADMIN_SECRET",
         "UPLOADTHING_SECRET",
         "UPLOADTHING_APP_ID",
+        "EDGE_CONFIG",
         "NEXTAUTH_SECRET",
         "NEXTAUTH_URL",
         "RESEND_API_KEY",

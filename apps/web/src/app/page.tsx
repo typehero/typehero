@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Provider as BalancerProvider } from 'react-wrap-balancer';
 import Community from '~/components/landing/community/community';
 import Features from '~/components/landing/features';
 import Hero from '~/components/landing/hero';
@@ -15,13 +14,11 @@ export const metadata: Metadata = {
 export default async function Index() {
   return (
     <>
-      <BalancerProvider>
-        <Hero />
-        <Features />
-        <Community />
-        <Waitlist />
-        <Footsies />
-      </BalancerProvider>
+      <Hero />
+      <Features />
+      <Community />
+      <Waitlist />
+      <Footsies />
     </>
   );
 }

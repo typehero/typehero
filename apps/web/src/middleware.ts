@@ -1,23 +1,11 @@
 import { type NextRequest, NextResponse } from 'next/server';
 
 export function middleware(req: NextRequest) {
-  if (process.env.NODE_ENV === 'production') {
-    const basicAuth = req.headers.get('authorization');
-    const url = req.nextUrl;
+  const path = req.nextUrl.pathname;
 
-    if (basicAuth) {
-      const authValue = basicAuth.split(' ')[1];
-      const [user, pwd] = atob(authValue ?? '').split(':');
-
-      if (user === process.env.USERNAME && process.env.PASSWORD === pwd) {
-        return NextResponse.next();
-      }
-    }
-
-    // Make the user get some damn creds
-    url.pathname = '/api/auth/creds';
-
-    return NextResponse.rewrite(url);
+  // if path is /explore or /challenge/* and redirect to /waitlist
+  if (path === '/explore' || path.startsWith('/challenge/')) {
+    return NextResponse.redirect(new URL('/waitlist', req.url));
   }
 
   return NextResponse.next();
