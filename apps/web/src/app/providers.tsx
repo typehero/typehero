@@ -15,17 +15,17 @@ const queryClient = new QueryClient();
 export const FeatureFlagContext = React.createContext<Record<string, boolean>>({});
 
 export function Providers({ children }: Props) {
-  const [flags, setFlags] = useState<Record<string, boolean>>({});
+  const [featureFlags, setFeatureFlags] = useState<Record<string, boolean>>({});
   useEffect(() => {
     fetch('/api/flags')
       .then((res) => res.json())
       .then((data) => {
-        setFlags(data);
+        setFeatureFlags(data);
       });
   }, []);
 
   return (
-    <FeatureFlagContext.Provider value={flags}>
+    <FeatureFlagContext.Provider value={featureFlags}>
       <BalancerProvider>
         <QueryClientProvider client={queryClient}>
           <SessionProvider>
