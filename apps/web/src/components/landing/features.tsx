@@ -14,6 +14,8 @@ import FeatureCardChallengeLight1 from '~/assets/images/feature_card_challenge_l
 import FeatureCardChallengeLight2 from '~/assets/images/feature_card_challenge_light2.png';
 import Step1Dark1 from '~/assets/images/step1dark1.png';
 import Step1Dark2 from '~/assets/images/step1dark2.png';
+import Step1Light1 from '~/assets/images/step1light1.png';
+import Step1Light2 from '~/assets/images/step1light2.png';
 import Step2Light1 from '~/assets/images/step2light1.png';
 import Step2Light2 from '~/assets/images/step2light2.png';
 import Step2Dark1 from '~/assets/images/step2dark1.png';
@@ -83,16 +85,16 @@ function Features() {
             />
             <ChallengeCreationCard
               step1img1Class={clsx(
-                'pointer-events-none w-[50%] rounded-2xl border border-zinc-300 transition-transform duration-500 dark:border-zinc-700 bg-neutral-50/80 dark:bg-neutral-800/80',
-                'max-md:scale-[160%] left-[15%] top-[57%] md:left-[35px] md:top-[41%]',
+                'pointer-events-none w-[50%] max-md:rounded-xl rounded-2xl border border-zinc-300/50 transition-transform duration-500 dark:border-zinc-700/50 bg-neutral-50/80 dark:bg-neutral-800/80',
+                'max-md:scale-[160%] left-[25%] top-[57%] md:left-[35px] md:top-[41%]',
               )}
               step1img2Class={clsx(
-                'pointer-events-none w-[60%] rounded-xl border border-zinc-300 dark:border-zinc-700 ransition-transform duration-500 rounded-xl overflow-hidden bg-neutral-50/80 dark:bg-neutral-800/80',
-                'max-md:scale-[140%] left-[70%] top-[53%] md:top-[40%] md:left-[calc(50%+35px+1rem)]',
+                'pointer-events-none w-[60%] rounded-xl max-md:rounded-lg border border-zinc-300/50 dark:border-zinc-700/50 ransition-transform duration-500 rounded-xl overflow-hidden bg-neutral-50/80 dark:bg-neutral-800/80',
+                'max-md:scale-[160%] left-[69%] top-[53%] md:top-[41%] md:left-[calc(50%+35px+1rem)]',
               )}
               step2img1Class={clsx(
                 'pointer-events-none w-[50%] rounded-t-xl border border-zinc-300 transition-transform duration-500 dark:border-zinc-700 bg-neutral-50/80 dark:bg-neutral-800/80',
-                'max-md:scale-[160%] left-[15%] top-[57%] md:left-[35px] md:top-[30%]',
+                'max-md:scale-[160%] left-[25%] top-[69%] md:left-[35px] md:top-[30%]',
                 !isMobile && 'group-hover:translate-y-2',
               )}
               step2img2Class={clsx(
@@ -102,15 +104,15 @@ function Features() {
               )}
               step3imgClass={clsx(
                 'pointer-events-none w-[90%] rounded-xl border border-zinc-300 dark:border-zinc-700 ransition-transform duration-500 rounded-xl overflow-hidden bg-neutral-50/80 dark:bg-neutral-800/80',
-                'max-md:scale-[140%] left-[70%] top-[53%] md:top-[30%] md:left-1/2 md:left-[35px]',
+                'left-[5%] top-[50%] md:top-[30%] md:left-1/2 md:left-[35px]',
               )}
               description="Craft your own coding challenges to share with the Typehero community"
               bgClass="lg:bg-gradient-to-tr"
               image={{
                 step1dark1: Step1Dark1,
                 step1dark2: Step1Dark2,
-                step1light1: Step2Light1,
-                step1light2: Step2Light2,
+                step1light1: Step1Light1,
+                step1light2: Step1Light2,
                 step2dark1: Step2Dark1,
                 step2dark2: Step2Dark2,
                 step2light1: Step2Light1,
