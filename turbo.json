@@ -25,15 +25,12 @@
       "dependsOn": ["^topo"]
     },
     "//#format": {
-      "dependsOn": ["^topo"],
       "outputs": ["node_modules/.cache/.prettiercache"]
     },
     "format": {
-      "dependsOn": ["^topo"],
       "outputs": ["node_modules/.cache/.prettiercache"]
     },
     "//#format:fix": {
-      "dependsOn": ["^topo"],
       "outputs": ["node_modules/.cache/.prettiercache"]
     },
     "format:fix": {
