@@ -23,7 +23,7 @@ function Features() {
     <section className="relative overflow-hidden" id="features">
       <div className="container mb-[64px] grid items-center justify-center">
         <div className="flex flex-col items-center justify-center gap-16">
-          <div className="flex flex-col gap-3 text-center">
+          <div className="flex flex-col gap-3 px-4 text-center sm:px-0">
             <a
               className="mx-auto hidden rounded-full bg-gradient-to-r from-[#31bdc6] to-[#3178c6] p-[1px] brightness-90 contrast-150 dark:brightness-125 dark:contrast-100 sm:block"
               href="#features"
@@ -51,22 +51,22 @@ function Features() {
           <div className="relative z-10 grid w-full gap-8 lg:grid-cols-2">
             <ImageCard
               imgClass1={clsx(
-                'pointer-events-noned transition-transform duration-500 bg-neutral-50/80 dark:bg-neutral-800/80',
-                'max-sm:scale-[240%] bottom-[5%] left-[30%] w-[42%] md:-bottom-[11%] md:left-[35px] lg:w-[69%]',
+                'pointer-events-none transition-transform duration-500 bg-neutral-50/30 dark:bg-neutral-800/30',
+                'scale-[150%] sm:scale-[110%] md:scale-100 max-md:rounded-sm rounded-xl top-[69%] left-[69px] md:top-auto w-[42%] md:-bottom-[11%] sm:left-[40px] lg:w-[69%]',
                 !isMobile && 'group-hover:translate-x-2 group-hover:scale-95',
               )}
               imgClass2={clsx(
-                'pointer-events-none transition-transform duration-500 rounded-xl overflow-hidden bg-neutral-50/80 dark:bg-neutral-800/80',
-                'max-sm:scale-[280%] left-[80%] -bottom-[1%] w-[50%] md:left-[39%] md:-bottom-[12%] lg:w-[77%]',
+                'pointer-events-none transition-transform duration-500 bg-neutral-50/70 dark:bg-zinc-800/70 backdrop-blur-sm translate-x-0',
+                'scale-[190%] sm:scale-[150%] md:scale-100 rounded-2xl max-md:rounded-md left-[50%] top-[69%] md:top-auto w-[50%] sm:left-[39%] md:-bottom-[12%] lg:w-[77%]',
                 !isMobile && 'group-hover:scale-105 group-hover:-translate-x-2',
               )}
               description="Engage in TypeScript challenges to strengthen your grasp of the type system and advanced features"
               bgClass="lg:bg-gradient-to-br"
               image={{
-                dark1: FeatureCardChallengeDark1,
-                dark2: FeatureCardChallengeDark2,
-                light1: FeatureCardChallengeLight1,
-                light2: FeatureCardChallengeLight2,
+                dark1: FeatureCardChallengeDark2,
+                dark2: FeatureCardChallengeDark1,
+                light1: FeatureCardChallengeLight2,
+                light2: FeatureCardChallengeLight1,
                 alt: 'Something',
               }}
               title="Type Challenges"
