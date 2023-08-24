@@ -6,18 +6,14 @@ import { useMemo } from 'react';
 import { useEditorSettingsStore } from './settings-store';
 import { libSource } from './editor-types';
 
-function getBaseUrl() {
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
-  }
-
-  // assume localhost
-  return `http://localhost:${process.env.PORT ?? 3000}`;
-}
+const PROD_URL = 'https://typehero.dev';
+const MONACO_URL = `${
+  process.env.NODE_ENV !== 'production' ? 'http://localhost:3000' : PROD_URL
+}/min/vs`;
 
 loader.config({
   paths: {
-    vs: `${getBaseUrl()}/min/vs`,
+    vs: MONACO_URL,
   },
 });
 
