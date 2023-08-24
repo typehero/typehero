@@ -1,5 +1,7 @@
 [![Type Hero Logo](/logo.svg)](https://typehero.dev/)
 
+[![Join the Trash Discord](https://discordapp.com/api/guilds/796594544980000808/widget.png?style=banner2)][trash-discord]
+
 <!-- do we want badge placeholders?? -->
 
 # TypeHero
@@ -25,3 +27,5 @@ Please see the [`LOCAL.md`](/LOCAL.md)
 
 We're largely a NextJS shop with TypeScript and MySQL. Checkout a full list at
 [`package.json`](/package.json)
+
+[trash-discord]: https://discord.gg/trashdev

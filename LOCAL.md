@@ -1,4 +1,8 @@
-## Local Setup
+# Local Setup
+
+[![Join the Trash Discord](https://discordapp.com/api/guilds/796594544980000808/widget.png?style=banner2)][trash-discord]
+
+[trash-discord]: https://discord.gg/trashdev
 
 To contribute you will first need to fork the repo and make some adjustments to
 get it up and running on your local machine. Below are the steps to follow in
@@ -112,7 +116,7 @@ pnpm dev
 Once the server is running you can seed and sync data
 
 1. Navigate to
-   [http://localhost:5173/api/auth/github](http://localhost:5173/api/auth/github)
+   [http://localhost:3000/api/auth/github](http://localhost:3000/api/auth/github)
    to authenticate with GitHub OAuth.
 
 [planetscale-quick-start]: https://planetscale.com/docs/tutorials/planetscale-quick-start-guide
@@ -140,6 +144,22 @@ command and then run `db:seed`.
 
 <details>
   <summary>What if I run into errors with that command?</summary>
-  If you are using the docker setup for your local environment then get into the 
+  If you are using the docker setup for your local environment then get into the container with
+
+```sh
+docker exec -it typehero-db bash
+# we are in the container from here on
+$ mysql -u dev -p -h 127.0.0.1 typehero
+> drop database typehero;
+```
+
+Exit out of the container and then run
+
+```sh
+pnpm refresh
+```
+
+This tends to resolve the issue as it entirely destroys and rebuilds + reseeds the database.
+
 </details>
 <!-- Other stuff here? I can't think of anything -->
