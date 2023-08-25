@@ -5,7 +5,9 @@
 .env
 .next
 .github
+.next
 node_modules
 *.log
+monaco-editor.d.ts
 
 pnpm-lock.yaml
