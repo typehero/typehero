@@ -190,10 +190,10 @@ export function ChallengeCreationCard({
   const { resolvedTheme } = useTheme();
   const { currentNumber: step, increment } = useNumberCycler();
   const steps = [
-    { id: '1', name: '💳 Card', schema: z.any() },
-    { id: '2', name: '📄 Prompt', schema: z.any() },
-    { id: '3', name: '📔 Tests', schema: z.any() },
-    { id: '4', name: '🚀 Submit', schema: z.any() },
+    { id: '1', name: '💳', schema: z.any() },
+    { id: '2', name: '📄', schema: z.any() },
+    { id: '3', name: '📔', schema: z.any() },
+    { id: '4', name: '🚀', schema: z.any() },
   ];
   return (
     <FeatureCard {...props}>
