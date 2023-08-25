@@ -1,6 +1,11 @@
 // NOTE: this whole package is bugged and once they fix this we can remove this workaround
 // eslint-disable-next-line import/no-unresolved
 import withVercelToolbar from '@vercel/toolbar/plugins/next';
+import million from 'million/compiler';
+
+const millionConfig = {
+  auto: { rsc: true },
+};
 
 /** @type {import("next").NextConfig} */
 const nextConfig = {
@@ -37,4 +42,4 @@ const nextConfig = {
   swcMinify: true,
 };
 
-export default withVercelToolbar()(nextConfig);
+export default million.next(withVercelToolbar()(nextConfig), millionConfig);

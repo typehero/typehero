@@ -1,3 +1,9 @@
+import million from 'million/compiler';
+
+const millionConfig = {
+  auto: true,
+};
+
 /** @type {import("next").NextConfig} */
 const config = {
   webpack: (config) => {
@@ -32,4 +38,4 @@ const config = {
   },
   swcMinify: true,
 };
-export default config;
+export default million.next(config, millionConfig);
