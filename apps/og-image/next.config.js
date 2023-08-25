@@ -1,5 +1,11 @@
+import million from 'million/compiler';
+
+const millionConfig = {
+  auto: true,
+};
+
 /** @type {import("next").NextConfig} */
-const config = {
+const nextConfig = {
   reactStrictMode: true,
   typescript: {
     ignoreBuildErrors: false,
@@ -10,5 +16,4 @@ const config = {
   },
   swcMinify: true,
 };
-export default config;
-
+export default million.next(nextConfig, millionConfig);
