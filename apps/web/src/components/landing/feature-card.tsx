@@ -191,17 +191,13 @@ export function ChallengeCreationCard({
   const { resolvedTheme } = useTheme();
   const step = useNumberCycler();
   const steps = [
-    { id: '1', name: '🍆', schema: z.any() },
-    { id: '2', name: '🍑', schema: z.any() },
-    { id: '3', name: '🍌', schema: z.any() },
-    { id: '4', name: '💦', schema: z.any() },
+    { id: '1', name: '💳 Card', schema: z.any() },
+    { id: '2', name: '📄 Prompt', schema: z.any() },
+    { id: '3', name: '📔 Tests', schema: z.any() },
+    { id: '4', name: '🚀 Submit', schema: z.any() },
   ];
   return (
     <FeatureCard {...props}>
-      <div className="absolute -right-4 bottom-4 w-full md:relative md:-right-16 md:bottom-0 md:-mr-36 md:-mt-24">
-        <Steps current={step} onChange={() => {}} steps={steps} />
-      </div>
-
       <div
         className={clsx(
           { 'translate-x-0 opacity-0': step < 3 },
@@ -352,6 +348,9 @@ export function ChallengeCreationCard({
               maxWidth: 'unset',
             }}
           />
+          <div className="absolute -right-4 bottom-4 w-full">
+            <Steps current={step} onChange={() => {}} steps={steps} />
+          </div>
         </>
       )}
     </FeatureCard>
@@ -542,7 +541,9 @@ function useNumberCycler() {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setCurrentNumber((prevNumber) => (prevNumber + 1) % 4);
+      setCurrentNumber((prevNumber) => {
+        return (prevNumber + 1) % 4;
+      });
     }, 5000);
 
     return () => {
