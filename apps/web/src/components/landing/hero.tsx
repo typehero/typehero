@@ -133,6 +133,7 @@ function Hero() {
               }}
             >
               <HeroChallengeCard
+                username="bigmang"
                 className="absolute"
                 difficulty="EASY"
                 prompt="Implement a union type of number and string"
@@ -156,6 +157,7 @@ function Hero() {
               }}
             >
               <HeroChallengeCard
+                username="matt"
                 className="absolute"
                 difficulty="HARD"
                 prompt="Convert a string literal to a number"
