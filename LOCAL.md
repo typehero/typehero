@@ -30,7 +30,9 @@ docker compose up -d
 
 After creating an account and creating a database using the steps above:
 1. Click either the big "Connect" button or the "connect to your database" Link.
-![connect](./media/connect.png)
+![connect](./media/connect.png) 
+
+
 2. Select "Connect with Prisma" and copy the `DATABASE_URL` for your `.env`
 ![getting the connection string](./media/getting-connection-string.png)  
 
