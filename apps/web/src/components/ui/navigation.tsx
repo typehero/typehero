@@ -16,8 +16,8 @@ import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
+import { FeatureFlagContext } from '~/app/feature-flag-provider';
 import { getBaseUrl } from '~/utils/getBaseUrl';
-import { FeatureFlagContext } from '~/app/providers';
 
 export function Navigation() {
   const pathname = usePathname();

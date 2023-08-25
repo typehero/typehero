@@ -188,7 +188,7 @@ export function ChallengeCreationCard({
   };
 }) {
   const { resolvedTheme } = useTheme();
-  const step = useNumberCycler();
+  const { currentNumber: step, increment } = useNumberCycler();
   const steps = [
     { id: '1', name: '💳 Card', schema: z.any() },
     { id: '2', name: '📄 Prompt', schema: z.any() },
@@ -352,6 +352,10 @@ export function ChallengeCreationCard({
           </div>
         </>
       )}
+      <div
+        className="absolute left-0 top-0 z-50 h-full w-full cursor-pointer"
+        onClick={() => increment()}
+      />
     </FeatureCard>
   );
 }
@@ -547,6 +551,15 @@ function Track({ className, difficulty, id, label }: Track) {
 
 function useNumberCycler() {
   const [currentNumber, setCurrentNumber] = useState(0);
+  const [dummy, setDummy] = useState(0);
+
+  const increment = () => {
+    setCurrentNumber((prevNumber) => {
+      return (prevNumber + 1) % 4;
+    });
+
+    setDummy((prev) => prev + 1);
+  };
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -556,9 +569,13 @@ function useNumberCycler() {
     }, 5000);
 
     return () => {
+      console.log('reset');
       clearInterval(intervalId);
     };
-  }, []);
+  }, [dummy]);
 
-  return currentNumber;
+  return {
+    increment,
+    currentNumber,
+  };
 }
