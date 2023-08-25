@@ -2,6 +2,7 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import type { Role, RoleTypes } from '@repo/db/types';
 import { getServerSession, type DefaultSession, type NextAuthOptions } from 'next-auth';
 import GitHubProvider from 'next-auth/providers/github';
+import GitlabProvider from 'next-auth/providers/gitlab';
 import { prisma } from '@repo/db';
 
 export type { Session, DefaultSession as DefaultAuthSession } from 'next-auth';
@@ -113,6 +114,10 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GITHUB_ID!,
       clientSecret: process.env.GITHUB_SECRET!,
     }),
+    GitlabProvider({
+      clientId: process.env.GITLAB_ID!,
+      clientSecret: process.env.GITLAB_SECRET!,
+    })
   ],
 };
 
