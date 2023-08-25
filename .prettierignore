@@ -3,6 +3,7 @@
 # need to be given their own .prettierignore in their workspace.
 
 .env
+.next
 .github
 node_modules
 *.log
