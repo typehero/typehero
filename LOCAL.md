@@ -31,7 +31,7 @@ docker compose up -d
 After creating an account and creating a database using the steps from the PlanetScale quickstart guide: 
 
 1. Click either the big "Connect" button or the "connect to your database" Link.
-
+![connecting to database](./media/connecting-to-db.png)
 4. Switch to "Connect with Prisma" and copy the `DATABASE_URL` for `.env`
    (replace **\*\*\*** with password)
 
