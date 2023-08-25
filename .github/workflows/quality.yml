@@ -3,7 +3,7 @@ name: Quality
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
 
 concurrency:
@@ -28,7 +28,7 @@ jobs:
         uses: ./tooling/github-actions/install
 
       - name: Run Prettier
-        run: pnpm format
+        run: turbo format
 
   eslint:
     name: ESLint
@@ -42,10 +42,10 @@ jobs:
         uses: ./tooling/github-actions/install
 
       - name: Lint
-        run: pnpm lint
+        run: turbo lint
 
   typecheck:
-    name: TypeScript
+    name: TypeCheck
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
@@ -67,4 +67,4 @@ jobs:
           restore-keys: ${{ runner.os }}-cache-typescript-tsbuildinfo-
 
       - name: Run TypeScript type check
-        run: pnpm typecheck
+        run: turbo typecheck

@@ -17,7 +17,7 @@ const config = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  transpilePackages: ['@repo/db', '@repo/auth'],
+  transpilePackages: ['@repo/db', '@repo/auth', '@repo/monaco'],
   images: {
     remotePatterns: [
       {

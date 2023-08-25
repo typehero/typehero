@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { Bookmark as BookmarkIcon, Flag, Share, ThumbsUp } from '@repo/ui/icons';
 import {
-  Button,
   Dialog,
   DialogContent,
   DialogHeader,
@@ -74,54 +73,42 @@ export function Description({ challenge }: Props) {
 
   return (
     <div className="custom-scrollable-element h-full overflow-y-auto px-4 pb-36 pt-3">
-      {/* NOTE: collapse this element */}
-      <div className="flex items-center gap-4">
-        <TypographyH3 className="mb-2 mr-auto max-w-[75%] items-center truncate text-2xl font-bold">
+      <div className="flex items-center gap-3">
+        <TypographyH3 className="mr-auto max-w-[75%] items-center truncate text-2xl font-bold">
           {challenge.name}
         </TypographyH3>
-        {/* TODO: split this mess into components, make buttons have bigger horizontal padding and decrease the gap value on container above */}
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              className="p-1"
-              disabled={!session.data?.user.id}
-              onClick={() => {
-                let shouldBookmark = false;
-                if (hasBookmarked) {
-                  shouldBookmark = false;
-                  setHasBookmarked(false);
-                } else {
-                  shouldBookmark = true;
-                  setHasBookmarked(true);
-                }
-                debouncedBookmark(challenge.id, session.data?.user.id!, shouldBookmark)?.catch(
-                  (e) => {
-                    console.error(e);
-                  },
-                );
-              }}
-              variant="ghost"
-            >
-              <BookmarkIcon
-                className={clsx(
-                  {
-                    'fill-blue-500 stroke-blue-500': hasBookmarked,
-                    'stroke-zinc-500': !hasBookmarked,
-                  },
-                  'h-4 w-4 hover:stroke-zinc-400',
-                )}
-              />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>{session.data?.user.id ? 'Bookmark' : 'Login to Bookmark'}</p>
-          </TooltipContent>
-        </Tooltip>
+        <ReportDialog challengeId={challenge.id} reportType="CHALLENGE">
+          <ActionMenu
+            items={[
+              {
+                key: 'feedback',
+                label: 'Feedback',
+                icon: Flag,
+              },
+            ]}
+            onChange={() => {
+              // do nothing
+            }}
+          />
+        </ReportDialog>
+      </div>
+      {/* Author & Time */}
+      <div className="mt-2 flex items-center gap-4">
+        <UserBadge username={challenge.user.name} linkComponent={Link} />
+        <span className="text-muted-foreground -ml-1 text-xs">
+          {getRelativeTime(challenge.updatedAt)}
+        </span>
+      </div>
+      {/* Difficulty & Action Buttons */}
+      <div className="mt-3 flex items-center gap-3">
+        <DifficultyBadge difficulty={challenge.difficulty} />
         <Dialog>
           <DialogTrigger>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Share className="h-4 w-4 stroke-zinc-500 hover:stroke-zinc-400" />
+                <button className="group flex h-6 items-center rounded-full bg-zinc-200 px-3 dark:bg-zinc-700">
+                  <Share className="h-4 w-4 stroke-zinc-500 group-hover:stroke-zinc-600 dark:stroke-zinc-300 group-hover:dark:stroke-zinc-100" />
+                </button>
               </TooltipTrigger>
               <TooltipContent>
                 <p>Share challenge</p>
@@ -139,8 +126,45 @@ export function Description({ challenge }: Props) {
         </Dialog>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button
-              className="group gap-2 rounded-xl px-2 py-1"
+            <button
+              className="group flex h-6 items-center rounded-full bg-zinc-200 px-3 disabled:cursor-not-allowed disabled:bg-zinc-100 dark:bg-zinc-700 disabled:dark:bg-zinc-700/50"
+              disabled={!session.data?.user.id}
+              onClick={() => {
+                let shouldBookmark = false;
+                if (hasBookmarked) {
+                  shouldBookmark = false;
+                  setHasBookmarked(false);
+                } else {
+                  shouldBookmark = true;
+                  setHasBookmarked(true);
+                }
+                debouncedBookmark(challenge.id, session.data?.user.id!, shouldBookmark)?.catch(
+                  (e) => {
+                    console.error(e);
+                  },
+                );
+              }}
+            >
+              <BookmarkIcon
+                className={clsx(
+                  {
+                    'fill-blue-500 stroke-blue-500': hasBookmarked,
+                    'stroke-zinc-500 group-hover:stroke-zinc-600 group-disabled:stroke-zinc-300 dark:stroke-zinc-300 group-hover:dark:stroke-zinc-100 group-disabled:dark:stroke-zinc-500/50':
+                      !hasBookmarked,
+                  },
+                  'h-4 w-4',
+                )}
+              />
+            </button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>{session.data?.user.id ? 'Bookmark' : 'Login to Bookmark'}</p>
+          </TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button
+              className="group flex h-6 items-center gap-1 rounded-full bg-zinc-200 pl-[0.675rem] pr-2 text-sm disabled:cursor-not-allowed disabled:bg-zinc-100 dark:bg-zinc-700 disabled:dark:bg-zinc-700/50"
               disabled={!session.data?.user.id}
               onClick={() => {
                 let shouldIncrement = false;
@@ -159,59 +183,39 @@ export function Description({ challenge }: Props) {
                   },
                 );
               }}
-              variant="ghost"
             >
               <ThumbsUp
                 className={clsx(
                   {
-                    'fill-emerald-600 stroke-emerald-600 group-hover:stroke-emerald-400 dark:fill-emerald-400 dark:stroke-emerald-400':
+                    'fill-emerald-600 stroke-emerald-600 group-hover:stroke-emerald-600 dark:fill-emerald-400 dark:stroke-emerald-400 group-hover:dark:stroke-emerald-400':
                       hasVoted,
-                    'stroke-zinc-500 group-hover:stroke-zinc-400': !hasVoted,
+                    'stroke-zinc-500 group-hover:stroke-zinc-600 group-disabled:stroke-zinc-300 dark:stroke-zinc-300 group-hover:dark:stroke-zinc-100 group-disabled:dark:stroke-zinc-500/50':
+                      !hasVoted,
                   },
-                  'h-4 w-4 duration-200 group-hover:scale-105 group-active:scale-95 group-active:duration-75',
+                  'h-4 w-4 duration-200',
                 )}
               />
               <span
                 className={clsx(
                   {
                     'text-emerald-600 dark:text-emerald-400': hasVoted,
-                    'text-zinc-500 group-hover:text-zinc-400': !hasVoted,
+                    'text-zinc-500 group-hover:text-zinc-600 group-disabled:text-zinc-300 dark:text-zinc-300 group-hover:dark:text-zinc-100 group-disabled:dark:text-zinc-500/50':
+                      !hasVoted,
                   },
                   'my-auto w-4 self-end duration-300',
                 )}
               >
                 {votes}
               </span>
-            </Button>
+            </button>
           </TooltipTrigger>
           <TooltipContent>
             <p>{session.data?.user.id ? 'Upvote' : 'Login to Upvote'}</p>
           </TooltipContent>
         </Tooltip>
-        <ReportDialog challengeId={challenge.id} reportType="CHALLENGE">
-          <ActionMenu
-            items={[
-              {
-                key: 'feedback',
-                label: 'Feedback',
-                icon: Flag,
-              },
-            ]}
-            onChange={() => {
-              // do nothing
-            }}
-          />
-        </ReportDialog>
       </div>
-
-      <div className="mb-6 flex items-center gap-4">
-        <DifficultyBadge difficulty={challenge.difficulty} />
-        <UserBadge username={challenge.user.name} linkComponent={Link} />
-        <span className="text-muted-foreground -ml-1 text-xs">
-          {getRelativeTime(challenge.updatedAt)}
-        </span>
-      </div>
-      <div className="prose-invert prose-h3:text-xl leading-8">
+      {/* Challenge Description */}
+      <div className="prose-invert prose-h3:text-xl mt-6 leading-8">
         <Markdown>{challenge.description}</Markdown>
       </div>
     </div>

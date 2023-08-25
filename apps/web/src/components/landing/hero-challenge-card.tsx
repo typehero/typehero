@@ -14,6 +14,7 @@ function getRandomWidth() {
 }
 
 export interface FakeChallengeCardProps {
+  username: string;
   title: string;
   className?: string;
   difficulty: Difficulty;
@@ -37,6 +38,7 @@ const codeLineProps = {
 } as SVGMotionProps<SVGRectElement>;
 
 export function HeroChallengeCard({
+  username,
   prompt,
   title,
   className,
@@ -59,7 +61,7 @@ export function HeroChallengeCard({
           {difficulty || 'HARD'}
         </div>
         <div className="flex w-fit items-center justify-center rounded-full bg-transparent bg-zinc-300 px-2.5 py-1 pl-1.5 pr-2 text-xs font-bold text-neutral-700 duration-300 group-hover/card:-translate-x-1 group-hover/card:-translate-y-1 group-hover/card:shadow-[0.5rem_0.5rem_0.25rem_-0.25rem_#0004] dark:bg-zinc-700 dark:text-white">
-          @you
+          @{username}
         </div>
       </div>
       <div className="translate-x-1 text-xs">{prompt}</div>

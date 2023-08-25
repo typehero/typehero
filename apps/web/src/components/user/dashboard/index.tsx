@@ -79,7 +79,7 @@ export default async function Dashboard({ user }: Props) {
           </div>
           <div className="flex w-full justify-between">
             <div>
-              <UserHeader user={user} />
+              <UserHeader user={user} isOwnProfile={session?.user.id === user.id} />
               <p
                 className="text-sm italic tracking-tight"
                 title={`Joined ${user.createdAt.toString()}`}

@@ -35,10 +35,10 @@ export const UserSignupEmail = () => {
             </Heading>
             <Text className="pb-2 text-[20px] leading-[24px] text-black">Hey there 👋</Text>
             <Text className="text-[14px] leading-[24px] text-black">
-              Thank you so much for signing up for the typehero waitlist, we really apperciate it.
+              Thank you so much for signing up for the typehero waitlist, we really appreciate it.
             </Text>
             <Text className="text-[14px] leading-[24px] text-black">
-              We are cooking extremelly hard to bring you the best experience for doing type
+              We are cooking extremely hard to bring you the best experience for doing type
               challenges.
             </Text>
             <Container className="w-fit mx-auto pt-4">

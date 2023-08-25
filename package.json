@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
+    "checks": "turbo format lint typecheck --continue",
+    "checks:fix": "turbo format:fix lint:fix typecheck --continue",
     "clean": "turbo clean && rm -rf node_modules",
     "db:push": "turbo db:push",
     "db:reset": "turbo db:reset",
@@ -11,21 +13,16 @@
     "db:studio": "turbo db:studio",
     "dev": "turbo dev --concurrency=1000",
     "dl-git": "turbo dl-git",
-    "dl-monaco:force": "turbo dl-monaco --force",
-    "format": "turbo format format-root --continue -- --cache --loglevel=warn",
-    "format-root": "prettier \"**/*.{ts,tsx,md,mdx,json}\" \"!apps/**\" \"!packages/**\" --check --loglevel=warn",
-    "format:fix": "turbo format format-root --continue -- --write --cache  --loglevel=warn",
-    "format:precommit": "turbo format format-root --continue -- --write --cache --loglevel=warn",
-    "postinstall": "turbo dl-monaco db:generate",
-    "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache'",
-    "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache'",
-    "prepare": "husky install",
+    "dl-monaco:force": "turbo dl-monaco",
+    "format": "prettier . \"!./apps/**\" \"!./packages/**\" \"!./tooling/**\" --check --cache --cache-location=\"node_modules/.cache/prettiercache\" ",
+    "format:fix": "prettier . \"!./apps/**\" \"!./packages/**\" \"!./tooling/**\" --write --cache --cache-location=\"node_modules/.cache/prettiercache\" --loglevel=warn",
+    "lint": "eslint . --cache --cache-location \"node_modules/.cache/.eslintcache\"",
+    "lint:fix": "eslint . --fix --cache --cache-location \"node_modules/.cache/.eslintcache\"",
     "refresh": "turbo db:reset db:seed --concurrency=1",
     "tunnel": "cloudflared tunnel --url http://localhost:3000",
     "typecheck": "turbo typecheck --continue"
   },
   "devDependencies": {
-    "husky": "^8.0.3",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.4.1",
     "turbo": "^1.10.12",
@@ -33,6 +30,11 @@
   },
   "packageManager": "pnpm@8.6.9",
   "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "monaco-editor"
+      ]
+    },
     "patchedDependencies": {
       "next-auth@4.22.1": "patches/next-auth@4.22.1.patch",
       "@monaco-editor/react@4.5.1": "patches/@monaco-editor__react@4.5.1.patch",

@@ -33,7 +33,7 @@ export async function addReport(
   });
 }
 
-export type AdminBannedUsers = Awaited<ReturnType<typeof getBannedUsers>>;
+export type BannedUsers = Awaited<ReturnType<typeof getBannedUsers>>;
 
 export async function deleteComment(commentId: number, reportId: number) {
   return prisma.$transaction([
@@ -58,6 +58,7 @@ export async function deleteComment(commentId: number, reportId: number) {
  * The function fetches all the banned
  * user's.
  */
+export type GetBannedUsers = NonNullable<Awaited<ReturnType<typeof getBannedUsers>>>;
 export async function getBannedUsers() {
   return prisma.user.findMany({
     where: {
@@ -238,6 +239,7 @@ export async function getChallenge(id: number) {
   });
 }
 
+export type UploadedImages = Awaited<ReturnType<typeof getUploadedImages>>;
 /**
  * The function fetches the last 100 uploaded images.
  */

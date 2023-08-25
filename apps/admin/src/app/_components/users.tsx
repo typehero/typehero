@@ -14,10 +14,10 @@ import {
 } from '@repo/ui';
 import { Unlock } from '@repo/ui/icons';
 import { useRouter } from 'next/navigation';
-import { unbanUser, type AdminBannedUsers } from './admin.actions';
+import { unbanUser, type BannedUsers } from './admin.actions';
 
 interface BannedUsersProps {
-  data: AdminBannedUsers;
+  data: BannedUsers;
 }
 
 export function BannedUsers({ data }: BannedUsersProps) {
