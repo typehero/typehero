@@ -31,7 +31,7 @@ export const UserSignupEmail = () => {
               <Img src={`${baseUrl}/typehero.png`} width="64" height="auto" alt="Typehero" />
             </Section>
             <Heading className="mx-0 my-[30px] p-0 text-[24px] font-bold text-black">
-              🔥 You're on the Typehero Waitlist!
+              🔥🔥 You're on the Typehero Waitlist!
             </Heading>
             <Text className="pb-2 text-[20px] leading-[24px] text-black">Hey there 👋</Text>
             <Text className="text-[14px] leading-[24px] text-black">
