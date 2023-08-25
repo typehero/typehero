@@ -301,31 +301,6 @@ main {
   opacity: 1;
   transform-origin: center center;
   background-repeat: no-repeat;
-  animation: plink 15s ease infinite;
-}
-
-@keyframes plink {
-  0% {
-    opacity: 1;
-  }
-  69% {
-    opacity: 1;
-  }
-  70% {
-    opacity: 0.7;
-  }
-  71% {
-    opacity: 1;
-  }
-  72% {
-    opacity: 0.3;
-  }
-  80% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 1;
-  }
 }
 
 .lamp::after {
@@ -335,6 +310,7 @@ main {
   overflow: hidden;
   opacity: 0.1;
   -webkit-mask-image: radial-gradient(140px 50% at 50% 100%, black, transparent);
+  mask-image: radial-gradient(140px 50% at 50% 100%, black, transparent);
 }
 
 .hide-scrollbar::-webkit-scrollbar {

@@ -1,5 +1,8 @@
 'use client';
 
+import type { Difficulty } from '@repo/db/types';
+import { Button } from '@repo/ui';
+import clsx from 'clsx';
 import {
   motion,
   useMotionTemplate,
@@ -7,16 +10,12 @@ import {
   type MotionStyle,
   type MotionValue,
 } from 'framer-motion';
-import { useTheme } from 'next-themes';
-import { UserBadge } from '@repo/ui';
-import Image, { type StaticImageData } from 'next/image';
-import Link from 'next/link';
-import { useEffect, useState, type MouseEvent } from 'react';
 import { Check, Reply } from 'lucide-react';
-import clsx from 'clsx';
-import { z } from 'zod';
-import type { Difficulty } from '@repo/db/types';
+import { useTheme } from 'next-themes';
+import Image, { type StaticImageData } from 'next/image';
+import { useEffect, useState, type MouseEvent } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { z } from 'zod';
 import { Markdown } from '../ui/markdown';
 import { Steps } from '../wizard/Steps';
 import { useIsMobile } from '~/utils/useIsMobile';
@@ -189,19 +188,15 @@ export function ChallengeCreationCard({
   };
 }) {
   const { resolvedTheme } = useTheme();
-  const [step, setStep] = useState(0);
+  const { currentNumber: step, increment } = useNumberCycler();
   const steps = [
-    { id: '1', name: '🍆', schema: z.any() },
-    { id: '2', name: '🍑', schema: z.any() },
-    { id: '3', name: '🍌', schema: z.any() },
-    { id: '4', name: '💦', schema: z.any() },
+    { id: '1', name: '💳 Card', schema: z.any() },
+    { id: '2', name: '📄 Prompt', schema: z.any() },
+    { id: '3', name: '📔 Tests', schema: z.any() },
+    { id: '4', name: '🚀 Submit', schema: z.any() },
   ];
   return (
     <FeatureCard {...props}>
-      <div className="absolute -right-4 bottom-4 w-full md:relative md:-right-16 md:bottom-0 md:-mr-36 md:-mt-24">
-        <Steps current={step} onChange={(idx) => setStep(idx)} steps={steps} />
-      </div>
-
       <div
         className={clsx(
           { 'translate-x-0 opacity-0': step < 3 },
@@ -352,22 +347,34 @@ export function ChallengeCreationCard({
               maxWidth: 'unset',
             }}
           />
+          <div className="absolute -right-4 bottom-4 w-full">
+            <Steps current={step} onChange={() => {}} steps={steps} />
+          </div>
         </>
       )}
-      {/* whole card is a "Next button" */}
       <div
         className="absolute left-0 top-0 z-50 h-full w-full cursor-pointer"
-        onClick={() => (step >= 3 ? setStep(0) : setStep((step) => step + 1))}
+        onClick={() => increment()}
       />
     </FeatureCard>
   );
 }
 
 const solutionComment = `\`\`\`ts
-// CODE START
-type Get<T, K> = string
+type MyPick<T, K extends keyof T> = { [P in K]: T[P] };
   \`\`\``;
 
+function Badge({ name }: { name: string }) {
+  return (
+    <Button
+      tabIndex={-1}
+      className="-ml-[0.33rem] flex h-auto w-fit items-center rounded-full bg-transparent py-1 pl-[0.33rem] pr-2 text-xs font-bold text-neutral-700 hover:bg-black/10 dark:text-white dark:hover:bg-white/20"
+      size="sm"
+    >
+      @{name}
+    </Button>
+  );
+}
 export function CollaborativeEnvironmentCard(props: CardProps) {
   const isMobile = useIsMobile();
   const { ref, inView } = useInView({
@@ -388,10 +395,10 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
           )}
         >
           <div className="flex items-center gap-2">
-            <UserBadge username="abc" linkComponent={Link} />
+            <Badge name="dax" />
             <div className="text-xs text-neutral-500">5 years ago</div>
           </div>
-          pls halp i give ap
+          Implementing Pick in TypeScript is hard, can anyone help?
         </div>
         <div
           className={clsx(
@@ -402,7 +409,7 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
         >
           <Reply className="absolute -left-8 h-4 w-4 opacity-50" />
           <div className="flex items-center gap-2">
-            <UserBadge username="defg" linkComponent={Link} />
+            <Badge name="trash" />
             <div className="text-xs text-neutral-500">just now</div>
           </div>
           ez, the answer is
@@ -417,7 +424,7 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
         >
           <Reply className="absolute -left-8 h-4 w-4 opacity-50" />
           <div className="flex items-center gap-2">
-            <UserBadge username="69" linkComponent={Link} />
+            <Badge name="nikita" />
             <div className="text-xs text-neutral-500">just now</div>
           </div>
           <Image
@@ -444,7 +451,7 @@ export function CuratedTracksCard(props: CardProps) {
       >
         <div className="flex w-[69%] items-center justify-between gap-3 rounded-b-lg rounded-t-xl bg-neutral-500/10 p-2 pl-3">
           <span className="flex items-center gap-1 text-xs font-semibold tracking-wide">
-            Array / String
+            Typescript Foundations
           </span>
         </div>
 
@@ -482,27 +489,27 @@ const BGS_BY_DIFFICULTY = {
 const tracks: Track[] = [
   {
     id: '2',
-    label: 'Unshift',
+    label: 'Infer',
     difficulty: 'EASY',
   },
   {
     id: '3',
-    label: 'Append Argument',
+    label: 'Map Types',
     difficulty: 'MEDIUM',
   },
   {
     id: '5',
-    label: 'Get Readonly Keys',
+    label: 'Classes',
     difficulty: 'EXTREME',
   },
   {
     id: '4',
-    label: 'CamelCase',
+    label: 'Branded Types',
     difficulty: 'HARD',
   },
   {
     id: '1',
-    label: 'Awaited',
+    label: 'Generics',
     difficulty: 'BEGINNER',
   },
 ];
@@ -540,4 +547,35 @@ function Track({ className, difficulty, id, label }: Track) {
       </div>
     </label>
   );
+}
+
+function useNumberCycler() {
+  const [currentNumber, setCurrentNumber] = useState(0);
+  const [dummy, setDummy] = useState(0);
+
+  const increment = () => {
+    setCurrentNumber((prevNumber) => {
+      return (prevNumber + 1) % 4;
+    });
+
+    setDummy((prev) => prev + 1);
+  };
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentNumber((prevNumber) => {
+        return (prevNumber + 1) % 4;
+      });
+    }, 5000);
+
+    return () => {
+      console.log('reset');
+      clearInterval(intervalId);
+    };
+  }, [dummy]);
+
+  return {
+    increment,
+    currentNumber,
+  };
 }
