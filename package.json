@@ -15,8 +15,8 @@
     "dl-monaco:force": "turbo dl-monaco",
     "format": "prettier . \"!./apps/**\" \"!./packages/**\" \"!./tooling/**\" --check --cache --cache-location=\"node_modules/.cache/prettiercache\" ",
     "format:fix": "prettier . \"!./apps/**\" \"!./packages/**\" \"!./tooling/**\" --write --cache --cache-location=\"node_modules/.cache/prettiercache\" --loglevel=warn",
-    "lint": "eslint . --cache --cache-location 'node_modules/.cache/.eslintcache'",
-    "lint:fix": "eslint . --fix --cache --cache-location 'node_modules/.cache/.eslintcache'",
+    "lint": "eslint . --cache --cache-location \"node_modules/.cache/.eslintcache\"",
+    "lint:fix": "eslint . --fix --cache --cache-location \"node_modules/.cache/.eslintcache\"",
     "refresh": "turbo db:reset db:seed --concurrency=1",
     "tunnel": "cloudflared tunnel --url http://localhost:3000",
     "typecheck": "turbo typecheck --continue"
