@@ -31,7 +31,7 @@ export function Navigation() {
         }`}
       >
         <div className="flex w-full items-center justify-between">
-          <div className="relative flex gap-3">
+          <div className="relative flex items-center gap-3">
             <a className="flex items-center space-x-2 duration-300" href="/">
               <svg
                 className="h-8 w-8 rounded-md bg-[#3178C6] p-[2px]"
@@ -70,7 +70,9 @@ export function Navigation() {
 
             {featureFlags?.exploreButton ? (
               <Link href="/explore">
-                <span className={navigationMenuTriggerStyle()}>Explore</span>
+                <div className="hover:text-foreground/80 text-foreground ml-4 transition-colors">
+                  Explore
+                </div>
               </Link>
             ) : null}
           </div>

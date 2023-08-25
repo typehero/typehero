@@ -6,10 +6,23 @@ export const FeatureFlagContext = createContext<Record<string, boolean>>({});
 interface Props {
   children: ReactNode;
 }
+
+const mockFlags = {
+  loginButton: true,
+  exploreButton: true,
+};
+
+const isProd = process.env.NODE_ENV === 'production';
 export function FeatureFlagProvider({ children }: Props) {
-  const { data: featureFlags } = useQuery(['featureFlags'], () =>
-    fetch('/api/flags').then((res) => res.json()),
-  );
+  const { data: featureFlags } = useQuery(['featureFlags'], () => getFeatureFlags());
 
   return <FeatureFlagContext.Provider value={featureFlags}>{children}</FeatureFlagContext.Provider>;
+}
+
+async function getFeatureFlags() {
+  if (isProd) {
+    return fetch('/api/flags').then((res) => res.json());
+  }
+
+  return mockFlags;
 }
