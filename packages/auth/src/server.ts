@@ -3,6 +3,7 @@ import type { Role, RoleTypes } from '@repo/db/types';
 import { getServerSession, type DefaultSession, type NextAuthOptions } from 'next-auth';
 import GitHubProvider from 'next-auth/providers/github';
 import GitlabProvider from 'next-auth/providers/gitlab';
+import DiscordProvider from 'next-auth/providers/discord';
 import { prisma } from '@repo/db';
 
 export type { Session, DefaultSession as DefaultAuthSession } from 'next-auth';
@@ -117,6 +118,10 @@ export const authOptions: NextAuthOptions = {
     GitlabProvider({
       clientId: process.env.GITLAB_ID!,
       clientSecret: process.env.GITLAB_SECRET!,
+    }),
+    DiscordProvider({
+      clientId: process.env.DISCORD_ID!,
+      clientSecret: process.env.DISCORD_CLIENT_SECRET!
     })
   ],
 };

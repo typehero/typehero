@@ -127,7 +127,7 @@ function LoginButton() {
     try {
       setLoading(true);
       // page reloads after sign in, so no need to setLoading(false), othersiwe ugly visual glitch
-      await signIn('gitlab|github', { redirect: false });
+      await signIn('gitlab|github|discord', { redirect: false });
     } catch (error) {
       // only set loading to false if there was an error and page didn't reload after sign in
       setLoading(false);
