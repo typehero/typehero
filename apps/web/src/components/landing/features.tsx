@@ -126,9 +126,9 @@ function Features() {
               title="Challenge Creation"
             />
             <CuratedTracksCard
-              description="Tracks features curated TypeScript challenges, spanning various topics and difficulty levels, to advance your TypeScript skills."
+              description="Tracks are curated challenges, spanning various topics and difficulty levels, to advance your TypeScript skills."
               bgClass="lg:bg-gradient-to-tl"
-              title="Curated Tracks"
+              title="Learning Tracks"
             />
           </div>
         </div>
