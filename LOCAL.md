@@ -5,23 +5,18 @@
 [trash-discord]: https://discord.gg/trashdev
 
 To contribute you will first need to fork the repo and make some adjustments to
-get it up and running on your local machine. Below are the steps to follow in
-order for you to get TypeHero to run on your local machine.
+get it up and running on your local machine. Below are the steps to follow for you to get TypeHero to run on your local machine.
 
 ### 1. Create a `.env` file
 
-```
-cp .env.example .env
-```
-
-Provide your own values as needed.
+Provide your values as needed.
 
 ### 2 Configure your database
 
-You can either use planetscale or a local docker container to run your database.
+You can either use PlanetScale or a local Docker container to run your database.
 Use either 2.a or 2.b for the next step.
 
-### 2.a Docker local DB
+### 2.a Local Database (using Docker)
 
 Starting the docker container
 
@@ -29,20 +24,16 @@ Starting the docker container
 docker compose up -d
 ```
 
-### 2.b Planetscale cloud DB
+### 2.b Remote Database (using PlanetScale)
 
-[Follow the planetscale quick start guide to get you connection string][planetscale-quick-start]
+[Follow the PlanetScale quick start guide to get started][planetscale-quick-start]
 
-1. Click Get Started -> Continue with GitHub
-2. Click Blue "create".
-   <br/><img width="444" alt="Screenshot 2023-06-30 at 3 44 27 PM" src="https://github.com/bautistaaa/typehero/assets/31113245/c30929fe-68ca-407d-9894-ef2ea52ced3c">
+After creating an account and creating a database using the steps from the PlanetScale quickstart guide: 
 
-3. Click "Get connection strings".
-   <br/><img width="429" alt="Screenshot 2023-06-30 at 3 46 45 PM" src="https://github.com/bautistaaa/typehero/assets/31113245/c06a5829-92e6-417f-a5e6-083b7690923f">
+1. Click either the big "Connect" button or the "connect to your database" Link.
 
 4. Switch to "Connect with Prisma" and copy the `DATABASE_URL` for `.env`
    (replace **\*\*\*** with password)
-   <br/><img width="344" alt="Screenshot 2023-06-30 at 3 49 03 PM" src="https://github.com/bautistaaa/typehero/assets/31113245/4c9694ef-b954-47a8-9954-c2b677a1123a">
 
 ### 3. Create a new GitHub OAuth Application
 
@@ -137,7 +128,7 @@ UI Library: [shadcn](https://ui.shadcn.com/)
 pnpm refresh
 ```
 
-This will cause prisma to force reset the database through the `db:reset`
+This will cause Prisma to force reset the database through the `db:reset`
 command and then run `db:seed`.
 
 </details>
