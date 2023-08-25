@@ -3,7 +3,7 @@ name: Quality
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
 
 concurrency:
@@ -45,7 +45,7 @@ jobs:
         run: turbo lint
 
   typecheck:
-    name: TypeScript
+    name: TypeCheck
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
