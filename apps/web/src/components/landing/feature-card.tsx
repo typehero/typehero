@@ -504,7 +504,7 @@ const tracks: Track[] = [
   },
   {
     id: '4',
-    label: 'Branded Types',
+    label: 'Array/Object',
     difficulty: 'HARD',
   },
   {
@@ -569,7 +569,6 @@ function useNumberCycler() {
     }, 5000);
 
     return () => {
-      console.log('reset');
       clearInterval(intervalId);
     };
   }, [dummy]);

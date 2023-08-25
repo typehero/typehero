@@ -1,16 +1,14 @@
-[![Type Hero Logo](/logo.svg)](https://typehero.dev/)
+<a href="https://discord.gg/trashdev" target="\_parent">
+  <img alt="Discord" src="https://img.shields.io/discord/796594544980000808?color=7389D8&label&logo=discord&logoColor=ffffff" />
+</a>
+<a href="https://twitter.com/typeheroapp" target="\_parent">
+  <img alt="" src="https://img.shields.io/twitter/follow/typeheroapp.svg?style=social&label=@typeheroapp" />
+</a>
 
-[![Join the Trash Discord](https://discordapp.com/api/guilds/796594544980000808/widget.png?style=banner2)][trash-discord]
+<br />
 
-<!-- do we want badge placeholders?? -->
-
-# TypeHero
-
-Connect, collaborate, and grow with a community of TypeScript developers.
-Elevate your skills through interactive coding challenges, discussions, and
-knowledge sharing
-
-## About Us
+![typehero header](./media/header.png)
+### About Us
 
 TypeScript's typing system can be very powerful when used correctly. The problem
 is that most developers or engineers don't use much more than they have to in
@@ -19,13 +17,14 @@ cut it for a use case, and they have to reach out to a community for help. We
 aim to be not only the community but the platform they can use to learn more of
 the intricacies of TypeScript's typing system.
 
-## Quick Start
+### Want to contribute?
 
-Please see the [`LOCAL.md`](/LOCAL.md)
+Please see the [`LOCAL.md`](/LOCAL.md) on how to get setup. Consider joining the [discord](https://discord.gg/trashdev) if you have any ideas/feedback. We'd love to hear from you!
 
-## Tech Stack
-
-We're largely a NextJS shop with TypeScript and MySQL. Checkout a full list at
-[`package.json`](/package.json)
-
-[trash-discord]: https://discord.gg/trashdev
+### Sponsors
+If you find the project interesting and want to support us please consider sponsoring. Your sponsorship would not only contribute to the advancement of this project but also ensure its ongoing maintenance and improvement for the benefit of the open-source community.
+<a href="https://vercel.com/?utm_source=trash-company&utm_campaign=oss">
+  <p>
+    <img src="https://images.ctfassets.net/e5382hct74si/78Olo8EZRdUlcDUFQvnzG7/fa4cdb6dc04c40fceac194134788a0e2/1618983297-powered-by-vercel.svg" alt="Powered by Vercel" title="Powered by Vercel">
+  </p>
+</a>
