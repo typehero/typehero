@@ -479,11 +479,11 @@ const COLORS_BY_DIFFICULTY = {
 };
 
 const BGS_BY_DIFFICULTY = {
-  BEGINNER: 'bg-pink-600 dark:bg-pink-300',
-  EASY: 'bg-emerald-600 dark:bg-emerald-300',
-  MEDIUM: 'bg-yellow-600 dark:bg-yellow-300',
-  HARD: 'bg-red-600 dark:bg-red-300',
-  EXTREME: 'bg-orange-600 dark:bg-orange-300',
+  BEGINNER: 'to-pink-600/20 dark:to-pink-30/20',
+  EASY: 'to-emerald-600/20 dark:to-emerald-300/20',
+  MEDIUM: 'to-yellow-600/20 dark:to-yellow-300/20',
+  HARD: 'to-red-600/20 dark:to-red-300/20',
+  EXTREME: 'to-orange-600/20 dark:to-orange-300/20',
 };
 
 const tracks: Track[] = [
@@ -523,7 +523,7 @@ function Track({ className, difficulty, id, label }: Track) {
     >
       <div
         className={clsx(
-          'flex w-full cursor-pointer items-center justify-between gap-3 overflow-hidden rounded-lg bg-neutral-500/10 p-4 py-2 text-black/90 duration-300 group-active/challenge:bg-neutral-500/40 group-active/challenge:duration-75 dark:text-white/90 sm:py-4',
+          `flex w-full cursor-pointer items-center justify-between gap-3 overflow-hidden rounded-lg bg-gradient-to-r from-neutral-500/10 ${BGS_BY_DIFFICULTY[difficulty]} from-75% to-100% p-4 py-2 text-black/90 duration-300 group-active/challenge:bg-neutral-500/40 group-active/challenge:duration-75 dark:text-white/90 sm:py-4`,
           className,
           !isMobile &&
             'group-hover/challenge:scale-105 group-hover/challenge:rounded-xl group-hover/challenge:bg-neutral-500/20',
@@ -539,7 +539,7 @@ function Track({ className, difficulty, id, label }: Track) {
           className={`relative text-xs font-medium tracking-wide ${COLORS_BY_DIFFICULTY[difficulty]}`}
         >
           <div
-            className={`absolute right-0 top-1/2 h-12 w-12 -translate-y-1/2 blur-3xl ${BGS_BY_DIFFICULTY[difficulty]}`}
+            className={`absolute right-0 top-1/2 h-12 w-12 -translate-y-1/2`}
           />
           {difficulty[0]}
           {difficulty.substring(1, difficulty.length).toLowerCase()}
