@@ -23,7 +23,7 @@ export async function Tracks() {
           tracks, offering a dynamic learning path for developers to enhance their skills.
         </p>
       </div>
-      {session && <EnrolledTrackSection title="Your Tracks" tracks={enrolledTracks} />}
+      {session !== null && <EnrolledTrackSection title="Your Tracks" tracks={enrolledTracks} />}
       <PopularTrackSection
         title="Popular"
         redirectRoute="/tracks/popular"

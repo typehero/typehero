@@ -1,9 +1,9 @@
 import type { Difficulty, Tags } from '@repo/db/types';
+import type { PopularTracks } from '.';
 import { COLORS_BY_TAGS } from '~/app/explore/_components/explore-section';
 import { ViewMoreButton } from '~/app/explore/_components/view-more-button';
 import { TrackCard } from '~/app/tracks/_components/track-card';
 import { Carousel } from '~/components/ui/carousel';
-import type { PopularTracks } from '.';
 
 interface PopularTrackSectionProps {
   title: string;
@@ -12,18 +12,18 @@ interface PopularTrackSectionProps {
   tag: Difficulty | Tags;
 }
 
-export const PopularTrackSection = ({
+export function PopularTrackSection({
   title,
   tracks,
   redirectRoute,
   tag,
-}: PopularTrackSectionProps) => {
+}: PopularTrackSectionProps) {
   return (
     <div>
       <div className="container flex items-center justify-between gap-3 px-4 pt-5">
-        <h2 className={`relative text-3xl font-bold tracking-tight`}>
+        <h2 className="relative text-3xl font-bold tracking-tight">
           <div
-            className={`absolute -left-8 -z-10 h-12 w-32 rounded-full bg-pink-300/50 blur-3xl ${COLORS_BY_TAGS['POPULAR']}`}
+            className={`absolute -left-8 -z-10 h-12 w-32 rounded-full bg-neutral-300/50 blur-3xl ${COLORS_BY_TAGS[tag]}`}
           />
           {title}
         </h2>
@@ -38,4 +38,4 @@ export const PopularTrackSection = ({
       </section>
     </div>
   );
-};
+}

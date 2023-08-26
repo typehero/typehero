@@ -5,7 +5,7 @@ interface TrackProgressProps {
   completedChallenges: number;
 }
 
-export const TrackProgress = ({ completedChallenges, totalChallenges }: TrackProgressProps) => {
+export function TrackProgress({ completedChallenges, totalChallenges }: TrackProgressProps) {
   return (
     <div className="flex w-full flex-col">
       <div className="mb-2 flex flex-row items-center justify-between">
@@ -17,4 +17,4 @@ export const TrackProgress = ({ completedChallenges, totalChallenges }: TrackPro
       <Progress value={(completedChallenges / totalChallenges) * 100} />
     </div>
   );
-};
+}

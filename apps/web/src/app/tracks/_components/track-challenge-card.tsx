@@ -45,7 +45,7 @@ export function TrackChallenge({ challenge, className, mock }: TrackChallengePro
         )}
       >
         <div className="relative flex items-center gap-3 text-xs sm:text-base">
-          {mock && (
+          {mock == true && (
             <>
               <input
                 className="peer hidden appearance-none"

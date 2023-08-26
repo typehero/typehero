@@ -29,13 +29,12 @@ docker compose up -d
 [Follow the PlanetScale quick start guide to get started][planetscale-quick-start]
 
 After creating an account and creating a database using the steps above:
-1. Click either the big "Connect" button or the "connect to your database" Link.
-![connect](./media/connect.png) 
 
+1. Click either the big "Connect" button or the "connect to your database" Link.
+   ![connect](./media/connect.png)
 
 2. Select "Connect with Prisma" and copy the `DATABASE_URL` for your `.env`
-![getting the connection string](./media/getting-connection-string.png)  
-
+   ![getting the connection string](./media/getting-connection-string.png)
 
 ### 3. Create a new GitHub OAuth Application
 

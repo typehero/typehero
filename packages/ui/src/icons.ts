@@ -39,5 +39,5 @@ export {
   ChevronRight,
   Triangle,
   Sparkle,
-  TrendingUpIcon
+  TrendingUpIcon,
 } from 'lucide-react';

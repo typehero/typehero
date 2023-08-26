@@ -16,10 +16,10 @@ import Image, { type StaticImageData } from 'next/image';
 import { useEffect, useState, type MouseEvent } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { z } from 'zod';
-import { TrackChallenge } from '~/app/tracks/_components/track-challenge-card';
-import { useIsMobile } from '~/utils/useIsMobile';
 import { Markdown } from '../ui/markdown';
 import { Steps } from '../wizard/Steps';
+import { TrackChallenge } from '~/app/tracks/_components/track-challenge-card';
+import { useIsMobile } from '~/utils/useIsMobile';
 
 type WrapperStyle = MotionStyle & {
   '--x': MotionValue<string>;
@@ -457,11 +457,7 @@ export function CuratedTracksCard(props: CardProps) {
         </div>
         <div className="flex w-[69%] flex-col">
           {mockChallenges.map((mockChallenge) => (
-            <TrackChallenge
-              key={mockChallenge.id}
-              challenge={mockChallenge as Challenge}
-              mock={true}
-            />
+            <TrackChallenge key={mockChallenge.id} challenge={mockChallenge as Challenge} mock />
           ))}
         </div>
       </div>

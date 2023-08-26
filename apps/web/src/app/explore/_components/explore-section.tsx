@@ -1,9 +1,9 @@
 import type { Difficulty, Tags } from '@repo/db/types';
 import Link from 'next/link';
-import { Carousel } from '~/components/ui/carousel';
-import ExploreCard from './explore-card';
+import  { ExploreCard } from './explore-card';
 import type { ExploreChallengeData } from './explore.action';
 import { ViewMoreButton } from './view-more-button';
+import { Carousel } from '~/components/ui/carousel';
 
 interface SectionProps {
   title: string;

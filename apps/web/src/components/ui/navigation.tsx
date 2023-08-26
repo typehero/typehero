@@ -82,7 +82,6 @@ export function Navigation() {
                 </div>
               </Link>
             ) : null}
-
           </div>
           <div className="flex">
             <div className="flex items-center justify-end gap-2">

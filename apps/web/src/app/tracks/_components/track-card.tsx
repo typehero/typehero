@@ -4,9 +4,9 @@ import { Button } from '@repo/ui';
 import { TrendingUpIcon } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
+import { TrackChallenge } from './track-challenge-card';
 import type { PopularTracks } from '~/app/tracks/_components';
 import { prettifyNumbers } from '~/utils/stringUtils';
-import { TrackChallenge } from './track-challenge-card';
 
 interface TrackProps {
   track: PopularTracks[number];
@@ -47,7 +47,7 @@ export function TrackCard({ track }: TrackProps) {
             return <TrackChallenge challenge={trackChallenge.challenge} key={trackChallenge.id} />;
           })}
         <Button
-          variant={'outline'}
+          variant="outline"
           onClick={() => {
             router.push(`/tracks/${track.id}`);
           }}
