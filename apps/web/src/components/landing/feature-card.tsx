@@ -479,7 +479,7 @@ const COLORS_BY_DIFFICULTY = {
 };
 
 const BGS_BY_DIFFICULTY = {
-  BEGINNER: 'to-pink-600/20 dark:to-pink-30/20',
+  BEGINNER: 'to-pink-600/20 dark:to-pink-300/20',
   EASY: 'to-emerald-600/20 dark:to-emerald-300/20',
   MEDIUM: 'to-yellow-600/20 dark:to-yellow-300/20',
   HARD: 'to-red-600/20 dark:to-red-300/20',
