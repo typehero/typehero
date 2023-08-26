@@ -168,7 +168,7 @@ export function AlertDestructive() {
   return (
     <Alert className="dark:bg-[#230808]" variant="destructive">
       <AlertCircle className="h-4 w-4" />
-      <AlertDescription className="text-left text-black dark:text-white">
+      <AlertDescription className="text-left text-white dark:text-white">
         Something went wrong. Please try again.
       </AlertDescription>
     </Alert>
