@@ -291,13 +291,15 @@ main {
   );
   -webkit-mask-image: radial-gradient(100% 50% at center center, black, transparent);
   background-image: var(--first), var(--second);
-  background-attachment: ;
-  background-origin: ;
-  background-clip: ;
-  background-color: ;
+  background-attachment:;
+  background-origin:;
+  background-clip:;
+  background-color:;
   background-position-x: 1%, 99%;
   background-position-y: 0%, 0%;
-  background-size: 50% 100%, 50% 100%;
+  background-size:
+    50% 100%,
+    50% 100%;
   opacity: 1;
   transform-origin: center center;
   background-repeat: no-repeat;
