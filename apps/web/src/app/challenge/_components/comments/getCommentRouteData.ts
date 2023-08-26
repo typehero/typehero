@@ -49,12 +49,23 @@ export async function getPaginatedComments({
         },
       },
       vote: {
+        select: {
+          userId: true,
+        },
         where: {
           userId: session?.user.id || '',
         },
       },
-      rootChallenge: true,
-      rootSolution: true,
+      rootChallenge: {
+        select: {
+          name: true,
+        },
+      },
+      rootSolution: {
+        select: {
+          title: true,
+        },
+      },
     },
   });
 
