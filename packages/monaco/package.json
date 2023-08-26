@@ -7,7 +7,8 @@
     "./code-editor": "./src/code-editor.tsx",
     "./settings-store": "./src/settings-store.ts",
     "./vim-mode": "./src/vim-mode.tsx",
-    "./twoslash": "./src/twoslash.ts"
+    "./twoslash": "./src/twoslash.ts",
+    "./prettier": "./src/prettier.ts"
   },
   "typesVersions": {
     "*": {
@@ -25,6 +26,9 @@
       ],
       "twoslash": [
         "./src/twoslash.ts"
+      ],
+      "prettier": [
+        "./src/prettier.ts"
       ]
     }
   },
@@ -45,6 +49,7 @@
     "monaco-vim": "^0.4.0",
     "next": "^13.4.10",
     "next-themes": "^0.2.1",
+    "prettier": "^3.0.2",
     "react": "^18.2.0",
     "react-hook-form": "^7.45.1",
     "zustand": "^4.3.9"
