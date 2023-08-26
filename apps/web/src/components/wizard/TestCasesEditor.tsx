@@ -6,6 +6,7 @@ import { useCallback, useState } from 'react';
 import type * as monaco from 'monaco-editor';
 import dynamic from 'next/dynamic';
 import { createTwoslashInlayProvider } from '@repo/monaco/twoslash';
+import { PrettierFormatProvider } from '@repo/monaco/prettier';
 import type { WizardForm } from '.';
 import { SettingsButton } from '~/app/challenge/_components/settings/settings-button';
 
@@ -24,6 +25,15 @@ export function TestCasesEditor({ form, hasTsErrors, setTsErrors }: Props) {
 
   const onMount = useCallback<NonNullable<CodeEditorProps['onMount']>>(
     async (editor, monaco) => {
+      monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+        ...monaco.languages.typescript.typescriptDefaults.getCompilerOptions(),
+        strict: true,
+        target: monaco.languages.typescript.ScriptTarget.ESNext,
+        strictNullChecks: true,
+      });
+
+      monaco.languages.registerDocumentFormattingEditProvider('typescript', PrettierFormatProvider);
+
       loadCheckingLib(monaco);
 
       const model = editor.getModel();
