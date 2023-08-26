@@ -39,5 +39,8 @@
       "@monaco-editor/react@4.5.1": "patches/@monaco-editor__react@4.5.1.patch",
       "monaco-vim@0.4.0": "patches/monaco-vim@0.4.0.patch"
     }
+  },
+  "dependencies": {
+    "million": "2.6.0-beta.7"
   }
 }

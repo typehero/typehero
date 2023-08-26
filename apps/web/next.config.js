@@ -1,5 +1,8 @@
+import million from 'million/compiler'
 /** @type {import("next").NextConfig} */
-const config = {
+
+
+const nextConfig = {
   webpack: (config) => {
     config.module.rules.push({
       test: /\.md$/,
@@ -32,4 +35,7 @@ const config = {
   },
   swcMinify: true,
 };
-export default config;
+const millionConfig={
+  auto:{rsc:true}
+}
+export default million.next(nextConfig,millionConfig);
