@@ -1,7 +1,7 @@
 import million from 'million/compiler';
 
 const millionConfig = {
-  auto: true,
+  auto: { rsc: true },
 };
 
 /** @type {import("next").NextConfig} */

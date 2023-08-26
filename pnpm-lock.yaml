@@ -167,12 +167,9 @@ importers:
       '@vercel/og':
         specifier: ^1.0.0
         version: 1.0.0
-      million:
-        specifier: 2.6.0-beta.4
-        version: 2.6.0-beta.4
       next:
         specifier: ^13.4.8
-        version: 13.4.19(@babel/core@7.22.10)(react-dom@18.2.0)(react@18.2.0)
+        version: 13.4.19(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: latest
         version: 18.2.0
