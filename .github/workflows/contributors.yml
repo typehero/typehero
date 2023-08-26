@@ -34,5 +34,6 @@ jobs:
           commit-message: 'chore: update contributors'
           title: 'chore: update contributors'
           branch: chore/update-contributors
+          base: main
           delete-branch: true
 
