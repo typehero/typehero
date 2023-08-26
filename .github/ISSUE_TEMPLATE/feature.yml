@@ -22,11 +22,3 @@ body:
       label: Explanation
       description: Why would this be useful to most CONTRIBUTING.md users. You may also want to point out other projects that have solved a similar feature.
       placeholder: Leetcode does this thing on this page...
-  - type: checkboxes
-    id: terms
-    attributes:
-      label: Code of Conduct
-      description: By submitting this issue, you agree to follow our [Code of Conduct](https://typehero.dev/code_of_conduct)
-      options:
-        - label: I agree to follow this project's Code of Conduct
-          required: true
