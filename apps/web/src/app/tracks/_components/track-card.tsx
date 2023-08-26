@@ -4,9 +4,9 @@ import { Button } from '@repo/ui';
 import { TrendingUpIcon } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
-import { TrackChallenge } from './track-challenge-card';
 import type { PopularTracks } from '~/app/tracks/_components';
 import { prettifyNumbers } from '~/utils/stringUtils';
+import { TrackChallenge } from './track-challenge-card';
 
 interface TrackProps {
   track: PopularTracks[number];
@@ -46,7 +46,12 @@ export function TrackCard({ track }: TrackProps) {
           }) // not sure how correct this is.
           .map((trackChallenge, idx) => {
             if (idx > 2) return <></>;
-            return <TrackChallenge challenge={trackChallenge.challenge} key={trackChallenge.id} />;
+            return (
+              <TrackChallenge
+                challenge={trackChallenge.challenge}
+                key={`track-challenge-${trackChallenge.id}`}
+              />
+            );
           })}
         <Button
           variant="outline"
