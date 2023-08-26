@@ -538,9 +538,6 @@ function Track({ className, difficulty, id, label }: Track) {
         <div
           className={`relative text-xs font-medium tracking-wide ${COLORS_BY_DIFFICULTY[difficulty]}`}
         >
-          <div
-            className={`absolute right-0 top-1/2 h-12 w-12 -translate-y-1/2`}
-          />
           {difficulty[0]}
           {difficulty.substring(1, difficulty.length).toLowerCase()}
         </div>
