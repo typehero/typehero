@@ -1,4 +1,4 @@
-import { createClient } from '@vercel/edge-config';
+import { createClient, type EdgeConfigItems } from '@vercel/edge-config';
 
 const edgeConfig = createClient(process.env.EDGE_CONFIG);
 /**
@@ -16,7 +16,7 @@ export async function evaluateFlag(key: string): Promise<boolean> {
   return rawValue == true;
 }
 
-export async function getAllFlags(): Promise<any> {
+export async function getAllFlags(): Promise<EdgeConfigItems> {
   const allFeatureFlag = await edgeConfig.getAll();
   return allFeatureFlag;
 }

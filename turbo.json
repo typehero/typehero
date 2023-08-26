@@ -5,6 +5,7 @@
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
       "env": [
         "VERCEL_URL",
+        "VERCEL_ENV",
         "NODE_ENV",
         "DATABASE_URL",
         "GITHUB_ID",
