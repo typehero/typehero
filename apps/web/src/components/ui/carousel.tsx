@@ -6,7 +6,7 @@ interface Props {
   children: ReactNode;
 }
 
-export function ExploreCarousel({ children }: Props) {
+export function Carousel({ children }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [showLeftButton, setShowLeftButton] = useState(false);
   const [showRightButton, setShowRightButton] = useState(true);

@@ -75,6 +75,14 @@ export function Navigation() {
                 </div>
               </Link>
             ) : null}
+            {featureFlags?.tracksButton ? (
+              <Link href="/tracks">
+                <div className="hover:text-foreground/80 text-foreground ml-4 transition-colors">
+                  Tracks
+                </div>
+              </Link>
+            ) : null}
+
           </div>
           <div className="flex">
             <div className="flex items-center justify-end gap-2">

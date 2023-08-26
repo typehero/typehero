@@ -1,19 +1,23 @@
+'use client';
+
 import { Button } from '@repo/ui';
 import { TrendingUpIcon } from '@repo/ui/icons';
 import clsx from 'clsx';
-import type { Tracks } from '~/app/tracks/_components';
+import { useRouter } from 'next/navigation';
+import type { PopularTracks } from '~/app/tracks/_components';
 import { prettifyNumbers } from '~/utils/stringUtils';
 import { TrackChallenge } from './track-challenge-card';
 
 interface TrackProps {
-  track: Tracks[number];
+  track: PopularTracks[number];
 }
 
 export function TrackCard({ track }: TrackProps) {
+  const router = useRouter();
   return (
     <div
       className={clsx(
-        'flex min-w-[350px] flex-col justify-start space-y-4 p-4',
+        'flex min-w-[400px] flex-col justify-start space-y-4 p-6',
         'max-md:scale-110',
       )}
     >
@@ -35,15 +39,22 @@ export function TrackCard({ track }: TrackProps) {
           {`${prettifyNumbers(track._count.enrolledUsers)}`}
         </span>
       </div>
-      <section className="relative flex w-full flex-col overflow-hidden rounded-[2.5rem]">
+      <div className="flex flex-col gap-2 overflow-hidden">
         {track.trackChallenges
           .sort((a, b) => (a.orderId < b.orderId ? a.orderId : b.orderId))
           .map((trackChallenge, idx) => {
             if (idx > 2) return <></>;
             return <TrackChallenge challenge={trackChallenge.challenge} key={trackChallenge.id} />;
           })}
-        <Button variant={'outline'}>More</Button>
-      </section>
+        <Button
+          variant={'outline'}
+          onClick={() => {
+            router.push(`/tracks/${track.id}`);
+          }}
+        >
+          View
+        </Button>
+      </div>
     </div>
   );
 }

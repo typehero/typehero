@@ -1,6 +1,7 @@
 import { getServerAuthSession, type Session } from '@repo/auth/server';
 import { prisma } from '@repo/db';
-import { TrackCard } from '~/components/tracks/track-card';
+import { EnrolledTrackSection } from './track-enrolled-section';
+import { PopularTrackSection } from './track-popular-section';
 
 export async function Tracks() {
   const session = await getServerAuthSession();
@@ -9,43 +10,77 @@ export async function Tracks() {
   const tracks = await getPopularTracks();
 
   return (
-    <div className="container flex flex-col gap-8 md:pb-20">
-      <div>
-        {enrolledTracks?.tracks.map((et) => {
-          return (
-            <div key={et.id}>
-              <div>{et.title}</div>
-              <div>{et.description}</div>
-            </div>
-          );
-        })}
+    <div className="flex flex-col gap-8 py-8 md:gap-10 md:py-10">
+      <div className="container">
+        <h3 className="mb-1 text-2xl font-bold tracking-wide text-neutral-900/40 dark:text-white/40">
+          Welcome to
+        </h3>
+        <h1 className="mb-8 text-4xl font-bold tracking-tight text-neutral-900 dark:text-white">
+          TypeHero Tracks
+        </h1>
+        <p className=" max-w-[69ch] text-lg leading-10 text-neutral-600 dark:text-white/50">
+          TypeHero provides a curated collection of diverse coding challenges grouped into different
+          tracks, offering a dynamic learning path for developers to enhance their skills.
+        </p>
       </div>
-      <section className="relative flex w-full flex-col overflow-hidden rounded-[2.5rem]">
-        {tracks?.map((t) => {
-          return <TrackCard key={t.id} track={t} />;
-        })}
-      </section>
+      {session && <EnrolledTrackSection title="Your Tracks" tracks={enrolledTracks} />}
+      <PopularTrackSection
+        title="Popular"
+        redirectRoute="/tracks/popular"
+        tag="POPULAR"
+        key="popular-tracks"
+        tracks={tracks}
+      />
     </div>
   );
 }
 
+export type EnrolledTracks = Awaited<ReturnType<typeof getUserEnrolledTracks>>;
+
+/**
+ * Fetches user enrolled tracks based on current session.
+ */
 function getUserEnrolledTracks(session: Session | null) {
-  return prisma.user.findFirst({
+  return prisma.track.findMany({
     where: {
-      id: session?.user.id,
-    },
-    select: {
-      tracks: {
-        orderBy: {
-          title: 'asc',
+      enrolledUsers: {
+        some: {
+          id: session?.user.id,
         },
       },
+    },
+    include: {
+      trackChallenges: {
+        include: {
+          challenge: {
+            include: {
+              submission: {
+                where: {
+                  userId: session?.user.id,
+                },
+              },
+            },
+          },
+        },
+      },
+      _count: {
+        select: {
+          enrolledUsers: true,
+        },
+      },
+    },
+    orderBy: {
+      title: 'asc',
     },
   });
 }
 
-export type Tracks = Awaited<ReturnType<typeof getPopularTracks>>;
+export type PopularTracks = Awaited<ReturnType<typeof getPopularTracks>>;
 
+/**
+ * Fetches popular tracks. Popularity is determined by number of user's enrolled in it.
+ * todo: change this behavior for now it's fine.
+ */
 function getPopularTracks() {
   return prisma.track.findMany({
     include: {

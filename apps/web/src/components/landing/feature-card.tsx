@@ -16,8 +16,8 @@ import Image, { type StaticImageData } from 'next/image';
 import { useEffect, useState, type MouseEvent } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { z } from 'zod';
+import { TrackChallenge } from '~/app/tracks/_components/track-challenge-card';
 import { useIsMobile } from '~/utils/useIsMobile';
-import { TrackChallenge } from '../tracks/track-challenge-card';
 import { Markdown } from '../ui/markdown';
 import { Steps } from '../wizard/Steps';
 
@@ -455,14 +455,15 @@ export function CuratedTracksCard(props: CardProps) {
             Typescript Foundations
           </span>
         </div>
-
-        {mockChallenges.map((mockChallenge) => (
-          <TrackChallenge
-            key={mockChallenge.id}
-            challenge={mockChallenge as Challenge}
-            mock={true}
-          />
-        ))}
+        <div className="flex w-[69%] flex-col">
+          {mockChallenges.map((mockChallenge) => (
+            <TrackChallenge
+              key={mockChallenge.id}
+              challenge={mockChallenge as Challenge}
+              mock={true}
+            />
+          ))}
+        </div>
       </div>
     </FeatureCard>
   );

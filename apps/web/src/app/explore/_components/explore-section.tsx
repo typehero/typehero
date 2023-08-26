@@ -1,19 +1,22 @@
 import type { Difficulty, Tags } from '@repo/db/types';
 import Link from 'next/link';
+import { Carousel } from '~/components/ui/carousel';
 import ExploreCard from './explore-card';
 import type { ExploreChallengeData } from './explore.action';
-import { ExploreCarousel } from './section-carousel';
 import { ViewMoreButton } from './view-more-button';
 
-interface Props {
+interface SectionProps {
   title: string;
   fetcher: (tagOrDifficulty: string, take: number) => ExploreChallengeData;
   /**
-   * Slug for querying challenges on `/explore/<slug>`.
-   * - Make sure it's either a `DIFFICULTY` or `TAGS`. Anything else will return in not found.
-   * - Case doesn't matter since we trim & uppercase before querying db.
+   * This is used by UI to apply the right colors. You still need to manually specify the
+   * `redirectRoute` for view-more button to work.
    */
-  moreRoute: Difficulty | Tags;
+  tag: Difficulty | Tags;
+  /**
+   * The route view-more button takes.
+   */
+  redirectRoute: string;
 }
 
 const difficultyToNumber: Record<Difficulty, number> = {
@@ -24,7 +27,7 @@ const difficultyToNumber: Record<Difficulty, number> = {
   EXTREME: 4,
 };
 
-const TITLES_BY_DIFFICULTY = {
+const TITLES_BY_TAG = {
   POPULAR: '',
   NEWEST: '',
   BEGINNER:
@@ -37,7 +40,7 @@ const TITLES_BY_DIFFICULTY = {
     'bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-orange-500 dark:from-orange-400 dark:to-orange-100',
 };
 
-const COLORS_BY_DIFFICULTY = {
+export const COLORS_BY_TAGS = {
   POPULAR: 'dark:bg-pink-300 bg-pink-600/50',
   NEWEST: 'dark:bg-orange-300 bg-orange-500/50',
   BEGINNER: 'dark:bg-pink-300 bg-pink-600/50',
@@ -47,23 +50,21 @@ const COLORS_BY_DIFFICULTY = {
   EXTREME: 'dark:bg-orange-300 bg-orange-600/50',
 };
 
-export async function ExploreSection({ title, fetcher, moreRoute }: Props) {
-  const challenges = await fetcher(moreRoute.trim().toUpperCase(), 6);
+export async function ExploreSection({ title, fetcher, tag, redirectRoute }: SectionProps) {
+  const challenges = await fetcher(tag.trim().toUpperCase(), 6);
   return (
     <div>
       <div className="container flex items-center justify-between gap-3 px-4 pt-5">
-        <h2
-          className={`relative text-3xl font-bold tracking-tight ${TITLES_BY_DIFFICULTY[moreRoute]}`}
-        >
+        <h2 className={`relative text-3xl font-bold tracking-tight ${TITLES_BY_TAG[tag]}`}>
           <div
-            className={`absolute -left-8 -z-10 h-12 w-32 rounded-full bg-pink-300/50 blur-3xl ${COLORS_BY_DIFFICULTY[moreRoute]}`}
+            className={`absolute -left-8 -z-10 h-12 w-32 rounded-full bg-pink-300/50 blur-3xl ${COLORS_BY_TAGS[tag]}`}
           />
           {title}
         </h2>
-        <ViewMoreButton challenges={challenges} moreRoute={moreRoute} />
+        <ViewMoreButton redirectRoute={redirectRoute} tag={tag} />
       </div>
       <section className="relative flex w-full flex-col overflow-hidden rounded-[2.5rem]">
-        <ExploreCarousel>
+        <Carousel>
           {challenges
             .sort((a, b) =>
               difficultyToNumber[a.difficulty] !== difficultyToNumber[b.difficulty]
@@ -79,7 +80,7 @@ export async function ExploreSection({ title, fetcher, moreRoute }: Props) {
                 <ExploreCard challenge={challenge} key={`challenge-${challenge.id}`} />
               </Link>
             ))}
-        </ExploreCarousel>
+        </Carousel>
       </section>
     </div>
   );
