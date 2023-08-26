@@ -32,11 +32,3 @@ body:
       label: Relevant log output
       description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
       render: zsh
-  - type: checkboxes
-    id: terms
-    attributes:
-      label: Code of Conduct
-      description: By submitting this issue, you agree to follow our [Code of Conduct](https://typehero.dev/code_of_conduct)
-      options:
-        - label: I agree to follow this project's Code of Conduct
-          required: true
