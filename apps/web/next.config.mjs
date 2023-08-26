@@ -1,6 +1,7 @@
-import { default as withVercelToolbar } from '@vercel/toolbar/plugins/next';
+import withVercelToolbar from "@vercel/toolbar/plugins/next";
+
 /** @type {import("next").NextConfig} */
-const config = {
+const nextConfig = {
   webpack: (config) => {
     config.module.rules.push({
       test: /\.md$/,
@@ -34,6 +35,4 @@ const config = {
   swcMinify: true,
 };
 
-// add the vercel toolbar for localhost
-const wrappedConfig = withVercelToolbar()(config);
-export default wrappedConfig;
+export default withVercelToolbar()(nextConfig);
