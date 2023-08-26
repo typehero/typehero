@@ -179,7 +179,7 @@ export function AlertSuccess() {
   return (
     <Alert variant="success">
       <MailCheck className="h-4 w-4" />
-      <AlertDescription className="text-left text-black dark:text-white">
+      <AlertDescription className="text-left text-white">
         Thanks for signing up for the waitlist! Consider{' '}
         <a
           className="underline"
