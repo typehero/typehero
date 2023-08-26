@@ -40,17 +40,4 @@ export async function incrementOrDecrementUpvote(
       },
     });
   }
-
-  const count = await prisma.vote.count({
-    where: {
-      rootType,
-      challengeId: rootType === 'CHALLENGE' ? id : undefined,
-      commentId: rootType === 'COMMENT' ? id : undefined,
-      sharedSolutionId: rootType === 'SHAREDSOLUTION' ? id : undefined,
-      submissionId: rootType === 'SUBMISSION' ? id : undefined,
-      userId: session?.user.id,
-    },
-  });
-
-  return count;
 }
