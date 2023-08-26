@@ -12,6 +12,7 @@ import {
   navigationMenuTriggerStyle,
 } from '@repo/ui';
 import { Loader2, LogIn, Moon, Plus, Settings, Settings2, Sun, User } from '@repo/ui/icons';
+import { useMotionValue, useScroll, useTransform, motion, useMotionTemplate } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -23,10 +24,42 @@ export function Navigation() {
   const pathname = usePathname();
   const featureFlags = useContext(FeatureFlagContext);
 
+  const clamp = (number: number, min: number, max: number) => Math.min(Math.max(number, min), max);
+
+  function useBoundedScroll(bounds: number) {
+    const { scrollY } = useScroll();
+    const scrollYBounded = useMotionValue(0);
+    const scrollYBoundedProgress = useTransform(scrollYBounded, [0, bounds], [0, 1]);
+
+    useEffect(() => {
+      return scrollY.onChange((current) => {
+        const previous = scrollY.getPrevious();
+        const diff = current - previous;
+        const newScrollYBounded = scrollYBounded.get() + diff;
+
+        scrollYBounded.set(clamp(newScrollYBounded, 0, bounds));
+      });
+    }, [bounds, scrollY, scrollYBounded]);
+
+    return { scrollYBounded, scrollYBoundedProgress };
+  }
+
+  const { scrollYBoundedProgress } = useBoundedScroll(400);
+  const scrollYBoundedProgressThrottled = useTransform(
+    scrollYBoundedProgress,
+    [0, 0.75, 1],
+    [0, 0, 1],
+  );
+
   return (
-    <header className="z-10 w-full">
+    <motion.header
+      className="fixed inset-x-0 z-20 flex w-full overflow-hidden bg-white/50 backdrop-blur-md dark:bg-black/50"
+      style={{
+        height: useTransform(scrollYBoundedProgressThrottled, [0, 1], [80, 0]),
+      }}
+    >
       <nav
-        className={`flex h-14 items-center ${
+        className={`flex  items-center ${
           pathname?.startsWith('/challenge') ? 'px-4' : 'container'
         }`}
       >
@@ -84,7 +117,7 @@ export function Navigation() {
           </div>
         </div>
       </nav>
-    </header>
+    </motion.header>
   );
 }
 
