@@ -3,8 +3,6 @@ name: Contributors
 on:
   schedule:
     - cron: '0 0 * * *'
-  # TODO: remove pull_request even before merging
-  pull_request:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
