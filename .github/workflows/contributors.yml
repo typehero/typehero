@@ -1,0 +1,38 @@
+name: Contributors
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  # TODO: remove pull_request even before merging
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
+
+env:
+  FORCE_COLOR: 3
+
+jobs:
+  update:
+    name: Update
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install
+        uses: ./tooling/github-actions/install
+
+      - name: Run contributors script
+        run: turbo dl-git
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: 'chore: update contributors'
+          title: 'chore: update contributors'
+          branch: chore/update-contributors
+          delete-branch: true
+
