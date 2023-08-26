@@ -1,17 +1,18 @@
 'use client';
 
+import { useSession } from '@repo/auth/react';
 import type { CommentRoot } from '@repo/db/types';
+import { Button, toast } from '@repo/ui';
+import { ChevronDown, ChevronLeft, ChevronRight, MessageCircle } from '@repo/ui/icons';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
-import { ChevronDown, ChevronLeft, ChevronRight, MessageCircle } from '@repo/ui/icons';
 import { useRef, useState } from 'react';
-import { toast, Button } from '@repo/ui';
+import { Comment } from './comment';
 import { CommentInput } from './comment-input';
 import { CommentSkeleton } from './comment-skeleton';
 import { addComment } from './comment.action';
 import { getPaginatedComments } from './getCommentRouteData';
 import NoComments from './nocomments';
-import { Comment } from './comment';
 
 interface Props {
   rootId: number;
@@ -23,6 +24,7 @@ export function Comments({ rootId, type }: Props) {
   const [text, setText] = useState('');
   const commentContainerRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
+  const session = useSession();
 
   const [page, setPage] = useState(1);
 

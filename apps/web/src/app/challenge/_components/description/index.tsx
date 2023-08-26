@@ -1,12 +1,8 @@
 'use client';
 
-import { clsx } from 'clsx';
-import { debounce } from 'lodash';
 import { useSession } from '@repo/auth/react';
-import { useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
-import { Bookmark as BookmarkIcon, Flag, Share, ThumbsUp } from '@repo/ui/icons';
 import {
+  ActionMenu,
   Dialog,
   DialogContent,
   DialogHeader,
@@ -18,16 +14,20 @@ import {
   TooltipTrigger,
   TypographyH3,
   UserBadge,
-  ActionMenu,
 } from '@repo/ui';
+import { Bookmark as BookmarkIcon, Flag, Share, ThumbsUp } from '@repo/ui/icons';
+import { clsx } from 'clsx';
+import { debounce } from 'lodash';
 import Link from 'next/link';
-import { ShareForm } from '../share-form';
-import { addOrRemoveBookmark } from '../bookmark.action';
-import { incrementOrDecrementUpvote } from '../increment.action';
-import { Markdown } from '~/components/ui/markdown';
+import { useRouter } from 'next/navigation';
+import { useRef, useState } from 'react';
 import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
-import { getRelativeTime } from '~/utils/relativeTime';
 import { ReportDialog } from '~/components/ReportDialog';
+import { Markdown } from '~/components/ui/markdown';
+import { getRelativeTime } from '~/utils/relativeTime';
+import { incrementOrDecrementUpvote } from '../../increment.action';
+import { addOrRemoveBookmark } from '../bookmark.action';
+import { ShareForm } from '../share-form';
 
 interface Props {
   challenge: ChallengeRouteData;
@@ -49,12 +49,10 @@ export function Description({ challenge }: Props) {
 
   const debouncedSearch = useRef(
     debounce(async (challengeId: number, userId: string, shouldIncrement: boolean) => {
-      const votes = await incrementOrDecrementUpvote(challengeId, userId, shouldIncrement);
+      const votes = await incrementOrDecrementUpvote(challengeId, 'CHALLENGE', shouldIncrement);
       if (votes !== undefined && votes !== null) {
         setVotes(votes);
       }
-
-      router.refresh();
     }, 500),
   ).current;
 

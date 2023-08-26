@@ -180,8 +180,8 @@ model Challenge {
 enum VoteType {
   CHALLENGE
   COMMENT
+  SUBMISSION
   SHAREDSOLUTION
-  SOLUTION
 }
 
 model Vote {
@@ -351,7 +351,7 @@ model Comment {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Vote      Vote[]
+  vote      Vote[]
 
   @@index([rootSolutionId])
   @@index([rootChallengeId])

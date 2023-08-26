@@ -1,21 +1,24 @@
 'use client';
 
-import { type CommentRoot } from '@repo/db/types';
-import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
-import { ChevronDown, ChevronUp, Pencil, Reply, Share, Trash2 } from '@repo/ui/icons';
 import { useSession } from '@repo/auth/react';
+import { type CommentRoot } from '@repo/db/types';
+import { Tooltip, TooltipContent, TooltipTrigger, UserBadge, toast } from '@repo/ui';
+import { ChevronDown, ChevronUp, Pencil, Reply, Share, ThumbsUp, Trash2 } from '@repo/ui/icons';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
+import clsx from 'clsx';
+import { debounce } from 'lodash';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { z } from 'zod';
-import clsx from 'clsx';
-import { Tooltip, TooltipContent, TooltipTrigger, toast, UserBadge } from '@repo/ui';
-import Link from 'next/link';
+import { ReportDialog } from '~/components/ReportDialog';
+import { Markdown } from '~/components/ui/markdown';
+import { getRelativeTime } from '~/utils/relativeTime';
+import { incrementOrDecrementUpvote } from '../../increment.action';
 import { CommentInput } from './comment-input';
 import { replyComment, updateComment, type CommentsByChallengeId } from './comment.action';
 import { CommentDeleteDialog } from './delete';
 import { getPaginatedComments } from './getCommentRouteData';
-import { Markdown } from '~/components/ui/markdown';
-import { getRelativeTime } from '~/utils/relativeTime';
-import { ReportDialog } from '~/components/ReportDialog';
 
 interface SingleCommentProps {
   comment: CommentsByChallengeId[number];
@@ -58,12 +61,18 @@ export function Comment({ comment, readonly = false, rootId, type, queryKey }: C
   const [isReplying, setIsReplying] = useState(false);
   const [replyText, setReplyText] = useState('');
   const queryClient = useQueryClient();
+  const session = useSession();
 
   const replyQueryKey = [`${comment.id}-comment-replies`];
   const { data, fetchNextPage, isFetching } = useInfiniteQuery({
     queryKey: replyQueryKey,
     queryFn: ({ pageParam = 1 }) =>
-      getPaginatedComments({ rootId, rootType: type, page: pageParam, parentId: comment.id }),
+      getPaginatedComments({
+        rootId,
+        rootType: type,
+        page: pageParam,
+        parentId: comment.id,
+      }),
     getNextPageParam: (_, pages) => pages.length + 1,
     staleTime: 5000,
   });
@@ -174,6 +183,20 @@ function SingleComment({
   const [text, setText] = useState(comment.text);
   const [isEditing, setIsEditing] = useState(false);
 
+  const router = useRouter();
+  const [votes, setVotes] = useState(comment._count.vote);
+  const [hasVoted, setHasVoted] = useState(comment.vote.length > 0);
+  const session = useSession();
+
+  const debouncedVote = useRef(
+    debounce(async (commentId: number, shouldIncrement: boolean) => {
+      const votes = await incrementOrDecrementUpvote(commentId, 'COMMENT', shouldIncrement);
+      if (votes !== undefined && votes !== null) {
+        setVotes(votes);
+      }
+    }, 500),
+  ).current;
+
   async function updateChallengeComment() {
     try {
       const res = await updateComment(text, comment.id);
@@ -244,6 +267,56 @@ function SingleComment({
         <div className="my-auto flex items-center gap-4">
           {!readonly && (
             <>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    className="group flex h-6 items-center gap-1 rounded-full bg-zinc-200 pl-[0.675rem] pr-2 text-sm disabled:cursor-not-allowed disabled:bg-zinc-100 dark:bg-zinc-700 disabled:dark:bg-zinc-700/50"
+                    disabled={!session.data?.user.id || comment.userId === session.data.user.id}
+                    onClick={() => {
+                      let shouldIncrement = false;
+                      if (hasVoted) {
+                        setVotes((v) => v - 1);
+                        shouldIncrement = false;
+                        setHasVoted(false);
+                      } else {
+                        setVotes((v) => v + 1);
+                        shouldIncrement = true;
+                        setHasVoted(true);
+                      }
+                      debouncedVote(comment.id, shouldIncrement)?.catch((e) => {
+                        console.error(e);
+                      });
+                    }}
+                  >
+                    <ThumbsUp
+                      className={clsx(
+                        {
+                          'fill-emerald-600 stroke-emerald-600 group-hover:stroke-emerald-600 dark:fill-emerald-400 dark:stroke-emerald-400 group-hover:dark:stroke-emerald-400':
+                            hasVoted,
+                          'stroke-zinc-500 group-hover:stroke-zinc-600 group-disabled:stroke-zinc-300 dark:stroke-zinc-300 group-hover:dark:stroke-zinc-100 group-disabled:dark:stroke-zinc-500/50':
+                            !hasVoted,
+                        },
+                        'h-4 w-4 duration-200',
+                      )}
+                    />
+                    <span
+                      className={clsx(
+                        {
+                          'text-emerald-600 dark:text-emerald-400': hasVoted,
+                          'text-zinc-500 group-hover:text-zinc-600 group-disabled:text-zinc-300 dark:text-zinc-300 group-hover:dark:text-zinc-100 group-disabled:dark:text-zinc-500/50':
+                            !hasVoted,
+                        },
+                        'my-auto w-4 self-end duration-300',
+                      )}
+                    >
+                      {votes}
+                    </span>
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{session.data?.user.id ? 'Upvote' : 'Login to Upvote'}</p>
+                </TooltipContent>
+              </Tooltip>
               <Reply className="absolute -left-6 h-4 w-4 opacity-50" />
               <div
                 className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
@@ -254,7 +327,6 @@ function SingleComment({
                 <Share className="h-3 w-3" />
                 <div className="hidden text-[0.8rem] sm:block">Share</div>
               </div>
-              {/* TODO: make dis work */}
               {!isReply && (
                 <button
                   className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 disabled:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300"

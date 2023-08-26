@@ -1,6 +1,7 @@
 'use server';
-import type { CommentRoot } from '@repo/db/types';
+import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
+import type { CommentRoot } from '@repo/db/types';
 
 const PAGESIZE = 10;
 
@@ -17,6 +18,7 @@ export async function getPaginatedComments({
   rootType: CommentRoot;
   parentId?: number | null;
 }) {
+  const session = await getServerAuthSession();
   const totalComments = await prisma.comment.count({
     where: {
       rootType,
@@ -43,6 +45,12 @@ export async function getPaginatedComments({
       _count: {
         select: {
           replies: true,
+          vote: true,
+        },
+      },
+      vote: {
+        where: {
+          userId: session?.user.id || '',
         },
       },
       rootChallenge: true,
