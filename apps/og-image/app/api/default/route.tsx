@@ -13,7 +13,7 @@ export async function GET() {
     ),
     {
       width: 1200,
-      height: 647,
+      height: 630,
     },
   );
 }
