@@ -14,12 +14,12 @@ import { Markdown } from '~/components/ui/markdown';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { Vote } from '../vote';
 import { CommentInput } from './comment-input';
-import { replyComment, updateComment, type CommentsByChallengeId } from './comment.action';
+import { replyComment, updateComment } from './comment.action';
 import { CommentDeleteDialog } from './delete';
-import { getPaginatedComments } from './getCommentRouteData';
+import { getPaginatedComments, type PaginatedComments } from './getCommentRouteData';
 
 interface SingleCommentProps {
-  comment: CommentsByChallengeId[number];
+  comment: PaginatedComments['comments'][number];
   readonly?: boolean;
   isReply?: boolean;
   onClickReply?: () => void;
@@ -59,7 +59,6 @@ export function Comment({ comment, readonly = false, rootId, type, queryKey }: C
   const [isReplying, setIsReplying] = useState(false);
   const [replyText, setReplyText] = useState('');
   const queryClient = useQueryClient();
-  const session = useSession();
 
   const replyQueryKey = [`${comment.id}-comment-replies`];
   const { data, fetchNextPage, isFetching } = useInfiniteQuery({
@@ -259,6 +258,16 @@ function SingleComment({
                 disabled={!session?.data?.user?.id || comment.userId === session?.data?.user?.id}
                 rootType="COMMENT"
                 rootId={comment.id}
+                onVote={(didUpvote: boolean) => {
+                  comment.vote = didUpvote
+                    ? [
+                        {
+                          userId: session?.data?.user?.id ?? '',
+                        },
+                      ]
+                    : [];
+                  comment._count.vote += didUpvote ? 1 : -1;
+                }}
               />
               <Reply className="absolute -left-6 h-4 w-4 opacity-50" />
               <div

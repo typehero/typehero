@@ -11,13 +11,21 @@ import { incrementOrDecrementUpvote } from '../increment.action';
 
 interface VoteProps {
   voteCount: number;
-  initialHasVoted: boolean;
+  initialHasVoted?: boolean;
   rootId: number;
   rootType: VoteType;
-  disabled: boolean;
+  disabled?: boolean;
+  onVote?: (didUpvote: boolean) => void;
 }
 
-export function Vote({ voteCount, initialHasVoted, rootId, rootType, disabled }: VoteProps) {
+export function Vote({
+  voteCount,
+  initialHasVoted,
+  rootId,
+  rootType,
+  disabled,
+  onVote,
+}: VoteProps) {
   const [votes, setVotes] = useState(voteCount);
   const [hasVoted, setHasVoted] = useState(initialHasVoted);
   const session = useSession();
@@ -37,6 +45,7 @@ export function Vote({ voteCount, initialHasVoted, rootId, rootType, disabled }:
           onClick={() => {
             let shouldIncrement = false;
             const previousVotes = votes;
+
             if (hasVoted) {
               setVotes((v) => v - 1);
               shouldIncrement = false;
@@ -46,6 +55,11 @@ export function Vote({ voteCount, initialHasVoted, rootId, rootType, disabled }:
               shouldIncrement = true;
               setHasVoted(true);
             }
+
+            if (onVote) {
+              onVote(shouldIncrement);
+            }
+
             debouncedIncrement(shouldIncrement)?.catch((e) => {
               setVotes(previousVotes);
               console.error(e);

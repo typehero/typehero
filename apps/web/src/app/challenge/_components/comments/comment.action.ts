@@ -115,35 +115,3 @@ async function deleteCommentWithChildren(prisma: PrismaClient, node: Comment) {
     },
   });
 }
-
-export type CommentsByChallengeId = NonNullable<
-  Awaited<ReturnType<typeof getCommentsByChallengeId>>
->;
-export async function getCommentsByChallengeId(id: number, userId: string | null) {
-  return await prisma.comment.findMany({
-    where: {
-      rootType: 'CHALLENGE',
-      rootChallengeId: id,
-      visible: true,
-    },
-    include: {
-      user: true,
-      _count: {
-        select: {
-          replies: true,
-          vote: true,
-        },
-      },
-      vote: {
-        where: {
-          userId: userId || '',
-        },
-      },
-    },
-    orderBy: [
-      {
-        createdAt: 'desc',
-      },
-    ],
-  });
-}
