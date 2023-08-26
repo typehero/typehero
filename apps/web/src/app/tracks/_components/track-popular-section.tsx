@@ -31,9 +31,9 @@ export function PopularTrackSection({
       </div>
       <section className="relative flex w-full flex-row gap-4 overflow-hidden rounded-[2.5rem]">
         <Carousel>
-          {tracks?.map((t) => {
-            return <TrackCard key={`track-${t.id}`} track={t} />;
-          })}
+          {tracks?.map((t) => (
+            <TrackCard key={`track-${t.id}`} track={t} />
+          ))}
         </Carousel>
       </section>
     </div>
