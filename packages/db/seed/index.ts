@@ -51,7 +51,6 @@ for (let i = 0; i < TRACK_AMOUNT; i++) {
       title: faker.lorem.words(2),
       description: faker.lorem.sentences(1),
       visible: true,
-      userId: trashId,
     },
   });
 

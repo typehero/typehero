@@ -1,6 +1,6 @@
 'use client';
 
-import type { Difficulty } from '@repo/db/types';
+import type { Challenge, Difficulty } from '@repo/db/types';
 import { Button } from '@repo/ui';
 import clsx from 'clsx';
 import {
@@ -10,15 +10,16 @@ import {
   type MotionStyle,
   type MotionValue,
 } from 'framer-motion';
-import { Check, Reply } from 'lucide-react';
+import { Reply } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import Image, { type StaticImageData } from 'next/image';
 import { useEffect, useState, type MouseEvent } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { z } from 'zod';
+import { useIsMobile } from '~/utils/useIsMobile';
+import { TrackChallenge } from '../tracks/track-challenge-card';
 import { Markdown } from '../ui/markdown';
 import { Steps } from '../wizard/Steps';
-import { useIsMobile } from '~/utils/useIsMobile';
 
 type WrapperStyle = MotionStyle & {
   '--x': MotionValue<string>;
@@ -455,99 +456,52 @@ export function CuratedTracksCard(props: CardProps) {
           </span>
         </div>
 
-        {tracks.map((track) => (
-          <Track key={track.id} {...track} />
+        {mockChallenges.map((mockChallenge) => (
+          <TrackChallenge
+            key={mockChallenge.id}
+            challenge={mockChallenge as Challenge}
+            mock={true}
+          />
         ))}
       </div>
     </FeatureCard>
   );
 }
 
-interface Track {
-  className?: string;
+// note: should always be a subset of Challenge Type
+interface MockTrackChallenge {
   difficulty: Difficulty;
-  id: string;
-  label: string;
+  id: number;
+  name: string;
 }
 
-const COLORS_BY_DIFFICULTY = {
-  BEGINNER: 'text-pink-600 dark:text-pink-300',
-  EASY: 'text-emerald-600 dark:text-emerald-300',
-  MEDIUM: 'text-yellow-600 dark:text-yellow-300',
-  HARD: 'text-red-600 dark:text-red-300',
-  EXTREME: 'text-orange-600 dark:text-orange-300',
-};
-
-const BGS_BY_DIFFICULTY = {
-  BEGINNER: 'bg-pink-600 dark:bg-pink-300',
-  EASY: 'bg-emerald-600 dark:bg-emerald-300',
-  MEDIUM: 'bg-yellow-600 dark:bg-yellow-300',
-  HARD: 'bg-red-600 dark:bg-red-300',
-  EXTREME: 'bg-orange-600 dark:bg-orange-300',
-};
-
-const tracks: Track[] = [
+const mockChallenges: MockTrackChallenge[] = [
   {
-    id: '2',
-    label: 'Infer',
+    id: 2,
+    name: 'Infer',
     difficulty: 'EASY',
   },
   {
-    id: '3',
-    label: 'Map Types',
+    id: 3,
+    name: 'Map Types',
     difficulty: 'MEDIUM',
   },
   {
-    id: '5',
-    label: 'Classes',
+    id: 5,
+    name: 'Classes',
     difficulty: 'EXTREME',
   },
   {
-    id: '4',
-    label: 'Array/Object',
+    id: 4,
+    name: 'Array/Object',
     difficulty: 'HARD',
   },
   {
-    id: '1',
-    label: 'Generics',
+    id: 1,
+    name: 'Generics',
     difficulty: 'BEGINNER',
   },
 ];
-
-function Track({ className, difficulty, id, label }: Track) {
-  const isMobile = useIsMobile();
-  return (
-    <label
-      htmlFor={id}
-      className="group/challenge flex w-[69%] cursor-pointer flex-col items-center pt-2"
-    >
-      <div
-        className={clsx(
-          'flex w-full cursor-pointer items-center justify-between gap-3 overflow-hidden rounded-lg bg-neutral-500/10 p-4 py-2 text-black/90 duration-300 group-active/challenge:bg-neutral-500/40 group-active/challenge:duration-75 dark:text-white/90 sm:py-4',
-          className,
-          !isMobile &&
-            'group-hover/challenge:scale-105 group-hover/challenge:rounded-xl group-hover/challenge:bg-neutral-500/20',
-        )}
-      >
-        <div className="relative flex items-center gap-3 text-xs sm:text-base">
-          <input className="peer hidden appearance-none" type="checkbox" id={id} />
-          <div className="h-5 w-5 rounded-full border border-black/70 bg-black/10 duration-75 peer-checked:border-transparent peer-checked:bg-green-600/80 dark:border-white/50 dark:bg-white/10 peer-checked:dark:bg-green-300/80" />
-          <Check className="absolute left-1 my-auto h-3 w-3 scale-0 stroke-[4] text-white duration-300 peer-checked:scale-100 dark:text-black" />
-          {label}
-        </div>
-        <div
-          className={`relative text-xs font-medium tracking-wide ${COLORS_BY_DIFFICULTY[difficulty]}`}
-        >
-          <div
-            className={`absolute right-0 top-1/2 h-12 w-12 -translate-y-1/2 blur-3xl ${BGS_BY_DIFFICULTY[difficulty]}`}
-          />
-          {difficulty[0]}
-          {difficulty.substring(1, difficulty.length).toLowerCase()}
-        </div>
-      </div>
-    </label>
-  );
-}
 
 function useNumberCycler() {
   const [currentNumber, setCurrentNumber] = useState(0);

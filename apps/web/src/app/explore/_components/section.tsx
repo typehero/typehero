@@ -1,5 +1,6 @@
-import { Diamond } from '@repo/ui/icons';
 import type { Difficulty, Tags } from '@repo/db/types';
+import Link from 'next/link';
+import ExploreCard from './explore-card';
 import type { ExploreChallengeData } from './explore.action';
 import { ExploreCarousel } from './section-carousel';
 import { ViewMoreButton } from './view-more-button';
@@ -14,6 +15,14 @@ interface Props {
    */
   moreRoute: Difficulty | Tags;
 }
+
+const difficultyToNumber: Record<Difficulty, number> = {
+  BEGINNER: 0,
+  EASY: 1,
+  MEDIUM: 2,
+  HARD: 3,
+  EXTREME: 4,
+};
 
 const TITLES_BY_DIFFICULTY = {
   POPULAR: '',
@@ -54,7 +63,23 @@ export async function ExploreSection({ title, fetcher, moreRoute }: Props) {
         <ViewMoreButton challenges={challenges} moreRoute={moreRoute} />
       </div>
       <section className="relative flex w-full flex-col overflow-hidden rounded-[2.5rem]">
-        <ExploreCarousel challenges={challenges} />
+        <ExploreCarousel>
+          {challenges
+            .sort((a, b) =>
+              difficultyToNumber[a.difficulty] !== difficultyToNumber[b.difficulty]
+                ? difficultyToNumber[a.difficulty] - difficultyToNumber[b.difficulty]
+                : a.name.localeCompare(b.name),
+            )
+            .map((challenge) => (
+              <Link
+                className="group snap-center focus:outline-none sm:w-[330px] xl:w-[333px]"
+                href={`/challenge/${challenge.id}`}
+                key={challenge.id}
+              >
+                <ExploreCard challenge={challenge} key={`challenge-${challenge.id}`} />
+              </Link>
+            ))}
+        </ExploreCarousel>
       </section>
     </div>
   );

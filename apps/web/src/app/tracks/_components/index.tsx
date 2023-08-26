@@ -6,10 +6,10 @@ export async function Tracks() {
   const session = await getServerAuthSession();
 
   const enrolledTracks = await getUserEnrolledTracks(session);
-  const tracks = await getTracks();
+  const tracks = await getPopularTracks();
 
   return (
-    <div className="container flex flex-col gap-8 py-5 md:gap-20 md:pb-20">
+    <div className="container flex flex-col gap-8 md:pb-20">
       <div>
         {enrolledTracks?.tracks.map((et) => {
           return (
@@ -20,11 +20,11 @@ export async function Tracks() {
           );
         })}
       </div>
-      <div className="flex flex-row gap-4">
+      <section className="relative flex w-full flex-col overflow-hidden rounded-[2.5rem]">
         {tracks?.map((t) => {
           return <TrackCard key={t.id} track={t} />;
         })}
-      </div>
+      </section>
     </div>
   );
 }
@@ -44,9 +44,9 @@ function getUserEnrolledTracks(session: Session | null) {
   });
 }
 
-export type Tracks = Awaited<ReturnType<typeof getTracks>>;
+export type Tracks = Awaited<ReturnType<typeof getPopularTracks>>;
 
-function getTracks() {
+function getPopularTracks() {
   return prisma.track.findMany({
     include: {
       trackChallenges: {
@@ -54,13 +54,20 @@ function getTracks() {
           challenge: true,
         },
       },
-      user: true,
+      _count: {
+        select: {
+          enrolledUsers: true,
+        },
+      },
     },
     where: {
       visible: true,
     },
     orderBy: {
-      title: 'asc',
+      enrolledUsers: {
+        _count: 'desc',
+      },
     },
+    take: 6,
   });
 }

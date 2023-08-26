@@ -1,5 +1,9 @@
-import { DifficultyBadge, TypographyH3 } from '@repo/ui';
+import { Button } from '@repo/ui';
+import { TrendingUpIcon } from '@repo/ui/icons';
+import clsx from 'clsx';
 import type { Tracks } from '~/app/tracks/_components';
+import { prettifyNumbers } from '~/utils/stringUtils';
+import { TrackChallenge } from './track-challenge-card';
 
 interface TrackProps {
   track: Tracks[number];
@@ -7,33 +11,39 @@ interface TrackProps {
 
 export function TrackCard({ track }: TrackProps) {
   return (
-    <div className="border-border flex w-[30ch] flex-col space-y-4 rounded-md border p-5">
-      <div className="flex flex-col space-y-2">
-        <TypographyH3>{track.title}</TypographyH3>
+    <div
+      className={clsx(
+        'flex min-w-[350px] flex-col justify-start space-y-4 p-4',
+        'max-md:scale-110',
+      )}
+    >
+      <div className="flex w-[69%] items-center justify-between gap-3 rounded-b-lg rounded-t-xl bg-neutral-500/10 p-2 pl-3">
+        <span className="flex items-center gap-1 text-sm font-semibold tracking-wide">
+          {track.title}
+        </span>
       </div>
-      <div className="flex flex-col space-y-2">
+      <div className="flex w-full items-center justify-between gap-3 rounded-b-lg rounded-t-xl bg-neutral-500/10 p-2 pl-3">
+        <span className="text-muted-foreground flex h-10 items-center gap-1 text-sm font-semibold tracking-wide">
+          {track.description.length > 80
+            ? `${track.description.substring(0, 80)}...`
+            : track.description}
+        </span>
+      </div>
+      <div className="flex w-full flex-row justify-start gap-3 rounded-b-lg rounded-t-xl bg-neutral-500/10 p-2 pl-3">
+        <TrendingUpIcon size={18} />
+        <span className="text-muted-foreground flex items-center gap-1 text-sm font-semibold tracking-wide">
+          {`${prettifyNumbers(track._count.enrolledUsers)}`}
+        </span>
+      </div>
+      <section className="relative flex w-full flex-col overflow-hidden rounded-[2.5rem]">
         {track.trackChallenges
           .sort((a, b) => (a.orderId < b.orderId ? a.orderId : b.orderId))
-          .map((c) => {
-            return <ChallengeTrackCard challenge={c} key={c.id} />;
+          .map((trackChallenge, idx) => {
+            if (idx > 2) return <></>;
+            return <TrackChallenge challenge={trackChallenge.challenge} key={trackChallenge.id} />;
           })}
-      </div>
-    </div>
-  );
-}
-
-interface ChallengeTrackProps {
-  challenge: Tracks[number]['trackChallenges'][number];
-}
-
-export function ChallengeTrackCard({ challenge }: ChallengeTrackProps) {
-  return (
-    <div
-      className="flex w-full cursor-pointer items-center justify-between gap-3 rounded-lg bg-neutral-500/10 p-4 text-zinc-700 duration-300 hover:scale-105 hover:rounded-xl active:scale-100 active:duration-75 group-hover:hover:bg-neutral-500/20 peer-checked/1:bg-pink-300/50
-    peer-checked/1:hover:bg-pink-300/50 dark:text-zinc-300 peer-checked/1:dark:text-white"
-    >
-      <span className="text-sm">{challenge.challenge.name}</span>
-      <DifficultyBadge difficulty={challenge.challenge.difficulty} />
+        <Button variant={'outline'}>More</Button>
+      </section>
     </div>
   );
 }
