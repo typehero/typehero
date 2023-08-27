@@ -91,7 +91,12 @@ function Hero() {
               className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
               variant="outline"
             >
-              <a className="inline-flex gap-1" href="https://github.com/bautistaaa/typehero">
+              <a
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex gap-1"
+                href="https://github.com/bautistaaa/typehero"
+              >
                 <Github className="h-4 w-4" />
                 GitHub
               </a>
@@ -128,6 +133,7 @@ function Hero() {
               }}
             >
               <HeroChallengeCard
+                username="bigmang"
                 className="absolute"
                 difficulty="EASY"
                 prompt="Implement a union type of number and string"
@@ -151,6 +157,7 @@ function Hero() {
               }}
             >
               <HeroChallengeCard
+                username="matt"
                 className="absolute"
                 difficulty="HARD"
                 prompt="Convert a string literal to a number"

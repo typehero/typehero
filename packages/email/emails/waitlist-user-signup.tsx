@@ -13,11 +13,12 @@ import {
 } from '@react-email/components';
 import * as React from 'react';
 
-// so that we can access the assets from the typehero-email vercel app that is running as a "static site"
+// so that we can access the assets from the typehero vercel app
+// but when in local most we point to the web app running on localhost
 const baseUrl =
   process.env.NODE_ENV === 'production'
-    ? `https://email.typehero.dev`
-    : 'http://127.0.0.1:6969/static';
+    ? `https://typehero.dev`
+    : 'http://127.0.0.1:3000';
 
 export const UserSignupEmail = () => {
   return (

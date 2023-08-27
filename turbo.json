@@ -5,6 +5,7 @@
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
       "env": [
         "VERCEL_URL",
+        "VERCEL_ENV",
         "NODE_ENV",
         "DATABASE_URL",
         "GITHUB_ID",
@@ -13,6 +14,7 @@
         "GITHUB_ADMIN_SECRET",
         "UPLOADTHING_SECRET",
         "UPLOADTHING_APP_ID",
+        "EDGE_CONFIG",
         "NEXTAUTH_SECRET",
         "NEXTAUTH_URL",
         "RESEND_API_KEY",

@@ -108,7 +108,7 @@ export function Comments({ rootId, type }: Props) {
           )}
           ref={commentContainerRef}
         >
-          <div className="m-2 mt-0">
+          <div className="m-2 mb-4 mt-0">
             <CommentInput
               mode="create"
               onChange={setText}

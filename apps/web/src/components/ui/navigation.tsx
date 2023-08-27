@@ -15,11 +15,14 @@ import { Loader2, LogIn, Moon, Plus, Settings, Settings2, Sun, User } from '@rep
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { FeatureFlagContext } from '~/app/feature-flag-provider';
 import { getBaseUrl } from '~/utils/getBaseUrl';
 
 export function Navigation() {
   const pathname = usePathname();
+  const featureFlags = useContext(FeatureFlagContext);
+
   return (
     <header className="z-10 w-full">
       <nav
@@ -28,11 +31,8 @@ export function Navigation() {
         }`}
       >
         <div className="flex w-full items-center justify-between">
-          <div className="relative flex gap-3">
-            <a
-              className="flex items-center space-x-2 duration-300 focus:border-0 focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-blue-600"
-              href="/"
-            >
+          <div className="relative flex items-center gap-3">
+            <a className="flex items-center space-x-2 duration-300" href="/">
               <svg
                 className="h-8 w-8 rounded-md bg-[#3178C6] p-[2px]"
                 viewBox="0 0 512 512"
@@ -67,15 +67,18 @@ export function Navigation() {
                 hero
               </span>
             </a>
-
-            <Link href="/explore" className="focus:outline-none">
-              <span className={navigationMenuTriggerStyle()}>Explore</span>
-            </Link>
+            {featureFlags?.exploreButton ? (
+              <Link href="/explore">
+                <div className="hover:text-foreground/80 text-foreground ml-4 transition-colors">
+                  Explore
+                </div>
+              </Link>
+            ) : null}
           </div>
           <div className="flex">
             <div className="flex items-center justify-end gap-2">
               <ThemeButton />
-              <LoginButton />
+              {featureFlags?.loginButton ? <LoginButton /> : null}
             </div>
           </div>
         </div>
