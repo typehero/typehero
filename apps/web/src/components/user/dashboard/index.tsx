@@ -89,7 +89,7 @@ export default async function Dashboard({ user }: Props) {
             </div>
             <div>
               {session?.user.id === user.id && (
-                <Link href="/settings">
+                <Link href="/settings" className="focus:outline-none focus-visible:outline-none">
                   <Button variant="outline">Edit Profile</Button>
                 </Link>
               )}
