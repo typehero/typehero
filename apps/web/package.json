@@ -8,9 +8,9 @@
     "clean": "rm -rf .next dist node_modules",
     "dev": "dotenv -e ../../.env next dev -- -p 3000",
     "format": "prettier . --check --cache --cache-location=\"node_modules/.cache/prettiercache\"",
-    "format:fix": "prettier . --write --cache --cache-location=\"node_modules/.cache/prettiercache\" --loglevel=warn",
-    "lint": "eslint . --cache --cache-location \"node_modules/.cache/.eslintcache\"",
-    "lint:fix": "eslint . --fix --cache --cache-location \"node_modules/.cache/.eslintcache\"",
+    "format:fix": "prettier . --write --cache --cache-location=\"node_modules/.cache/prettiercache\" --log-level=warn",
+    "lint": "eslint . --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
+    "lint:fix": "eslint . --fix --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
     "start": "next start",
     "typecheck": "tsc --noEmit"
   },
