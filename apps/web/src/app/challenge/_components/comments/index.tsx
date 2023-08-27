@@ -1,7 +1,7 @@
 'use client';
 
 import type { CommentRoot } from '@repo/db/types';
-import { Button, toast } from '@repo/ui';
+import { Button, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, toast } from '@repo/ui';
 import { ChevronDown, ChevronLeft, ChevronRight, MessageCircle } from '@repo/ui/icons';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
@@ -10,9 +10,11 @@ import { Comment } from './comment';
 import { CommentInput } from './comment-input';
 import { CommentSkeleton } from './comment-skeleton';
 import { addComment } from './comment.action';
-import { getPaginatedComments } from './getCommentRouteData';
+import { getPaginatedComments, type SortKey, type SortOrder } from './getCommentRouteData';
 import NoComments from './nocomments';
 
+const sortKeys = ["createdAt", "vote", "replies"] as const;
+const sortOrders = ["asc", "desc"] as const;
 interface Props {
   rootId: number;
   type: CommentRoot;
@@ -24,12 +26,14 @@ export function Comments({ rootId, type }: Props) {
   const commentContainerRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
+  const [sortKey, setSortKey] = useState<SortKey>("createdAt");
+  const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
 
-  const queryKey = [`${type.toLowerCase()}-${rootId}-comments`, page];
+  const queryKey = [`${type.toLowerCase()}-${rootId}-comments`, sortKey, sortOrder, page];
 
   const { status, data } = useQuery({
     queryKey,
-    queryFn: () => getPaginatedComments({ rootId, page, rootType: type }),
+    queryFn: () => getPaginatedComments({ rootId, page, rootType: type, sortKey, sortOrder }),
     keepPreviousData: true,
     staleTime: 5000,
   });
@@ -114,6 +118,22 @@ export function Comments({ rootId, type }: Props) {
               onSubmit={createChallengeComment}
               value={text}
             />
+          </div>
+          <div className="p-2">
+            <Select value={sortKey} defaultValue="createdAt" onValueChange={(value) => setSortKey(value as SortKey)}>
+              <SelectTrigger className="w-[180px] dark">
+                <SelectValue placeholder="Sort Key" />
+              </SelectTrigger>
+              <SelectContent>
+                {
+                  sortKeys.map((sortKey, index) => (
+                    <SelectItem key={index} value={sortKey} >
+                      {sortKey}
+                    </SelectItem>
+                  ))
+                }
+              </SelectContent>
+            </Select>
           </div>
           {status === 'loading' && <CommentSkeleton />}
           <div className="flex-1">

@@ -5,8 +5,8 @@ import type { CommentRoot } from '@repo/db/types';
 
 const PAGESIZE = 10;
 
-export const sortKeys = ["createdAt", "vote", "replies"] as const;
-export const sortOrders = ["asc", "desc"] as const;
+const sortKeys = ["createdAt", "vote", "replies"] as const;
+const sortOrders = ["asc", "desc"] as const;
 
 export type SortKey = typeof sortKeys[number];
 export type SortOrder = typeof sortOrders[number];
