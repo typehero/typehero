@@ -27,36 +27,41 @@
       "dependsOn": ["^topo"]
     },
     "//#format": {
-      "outputs": ["node_modules/.cache/.prettiercache"]
+      "outputs": ["node_modules/.cache/prettiercache"],
+      "outputMode": "errors-only"
     },
     "format": {
-      "outputs": ["node_modules/.cache/.prettiercache"]
+      "dependsOn": ["@repo/db#db:generate", "^topo"],
+      "outputs": ["node_modules/.cache/prettiercache"],
+      "outputMode": "errors-only"
     },
     "//#format:fix": {
-      "outputs": ["node_modules/.cache/.prettiercache"]
+      "outputs": ["node_modules/.cache/prettiercache"],
+      "outputMode": "errors-only"
     },
     "format:fix": {
-      "dependsOn": ["^topo"],
-      "outputs": ["node_modules/.cache/.prettiercache"]
+      "dependsOn": ["@repo/db#db:generate", "^topo"],
+      "outputs": ["node_modules/.cache/prettiercache"],
+      "outputMode": "errors-only"
     },
     "//#lint": {
-      "dependsOn": ["^topo"],
-      "outputs": ["node_modules/.cache/.eslintcache"]
+      "outputs": ["node_modules/.cache/.eslintcache"],
+      "outputMode": "errors-only"
     },
     "lint": {
       "dependsOn": ["@repo/db#db:generate", "^topo"],
       "outputs": ["node_modules/.cache/.eslintcache"],
-      "outputMode": "new-only"
+      "outputMode": "errors-only"
     },
     "//#lint:fix": {
       "dependsOn": ["@repo/db#db:generate", "^topo"],
       "outputs": ["node_modules/.cache/.eslintcache"],
-      "outputMode": "new-only"
+      "outputMode": "errors-only"
     },
     "lint:fix": {
       "dependsOn": ["@repo/db#db:generate", "^topo"],
       "outputs": ["node_modules/.cache/.eslintcache"],
-      "outputMode": "new-only"
+      "outputMode": "errors-only"
     },
     "typecheck": {
       "dependsOn": ["@repo/db#db:generate", "^topo"],
