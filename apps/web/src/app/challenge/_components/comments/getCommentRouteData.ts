@@ -5,11 +5,11 @@ import type { CommentRoot } from '@repo/db/types';
 
 const PAGESIZE = 10;
 
-const sortKeys = ["createdAt", "vote", "replies"] as const;
-const sortOrders = ["asc", "desc"] as const;
+export const sortKeys = ["createdAt", "vote", "replies"] as const;
+export const sortOrders = ["asc", "desc"] as const;
 
-type SortKey = typeof sortKeys[number];
-type SortOrder = typeof sortOrders[number];
+export type SortKey = typeof sortKeys[number];
+export type SortOrder = typeof sortOrders[number];
 
 function orderBy(sortKey: SortKey, sortOrder: SortOrder) {
   switch (sortKey) {
