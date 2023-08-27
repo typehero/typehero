@@ -11,13 +11,13 @@ export const metadata: Metadata = {
     'Connect, collaborate, and grow with a community of TypeScript developers. Elevate your skills through interactive coding challenges, discussions, and knowledge sharing',
 };
 
-export default async function Index() {
+export default async function Index({ searchParams }: { searchParams: Record<string, string> }) {
   return (
     <>
       <Hero />
       <Features />
       <Community />
-      <Waitlist />
+      <Waitlist ref={searchParams.ref} />
       <Footsies />
     </>
   );

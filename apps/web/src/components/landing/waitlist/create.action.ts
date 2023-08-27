@@ -28,6 +28,7 @@ export const sendUserSignupEmail = async (to: string) => {
 export async function uploadWaitlistEntry(data: WaitlistFormSchema) {
   const isUser = data.intention === 'user';
   const isBuilder = data.intention === 'builder';
+  const ref = data.ref;
 
   const existingEntry = await prisma.waitlist.findFirst({
     where: {
@@ -44,6 +45,7 @@ export async function uploadWaitlistEntry(data: WaitlistFormSchema) {
       name: data.name,
       email: data.email,
       intention: isUser ? 'USER' : isBuilder ? 'BUILDER' : 'BOTH',
+      referrer: ref,
     },
   });
 
