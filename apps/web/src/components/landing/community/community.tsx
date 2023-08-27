@@ -106,10 +106,11 @@ function Community() {
                     target="_blank"
                   >
                     <Image
-                      className="honeycombchild h-16 w-16 rounded-3xl bg-cover duration-300 group-hover:rounded-[2rem] group-active:rounded-3xl group-active:duration-100" src={contributor.avatar_url}
+                      className="honeycombchild h-16 w-16 rounded-3xl bg-cover duration-300 group-hover:rounded-[2rem] group-active:rounded-3xl group-active:duration-100"
+                      src={contributor.avatar_url}
                       width={64}
                       height={64}
-                      alt={`${contributor.login}'s avatar`}
+                      alt={`${contributor.login}'s GitHub avatar`}
                     />
                   </a>
                 ))}
