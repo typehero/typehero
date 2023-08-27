@@ -6,6 +6,7 @@ import { type CSSProperties } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { contributors } from '../../../../public/contributors';
 import styles from '~/components/landing/community/community.module.css';
+import Image from 'next/image';
 
 function Community() {
   type WrapperStyle = CSSProperties & {
@@ -104,9 +105,11 @@ function Community() {
                     rel="noopener"
                     target="_blank"
                   >
-                    <div
-                      className="honeycombchild h-16 w-16 rounded-3xl bg-cover duration-300 group-hover:rounded-[2rem] group-active:rounded-3xl group-active:duration-100"
-                      style={{ backgroundImage: `url('${contributor.avatar_url}')` }}
+                    <Image
+                      className="honeycombchild h-16 w-16 rounded-3xl bg-cover duration-300 group-hover:rounded-[2rem] group-active:rounded-3xl group-active:duration-100" src={contributor.avatar_url}
+                      width={64}
+                      height={64}
+                      alt={`${contributor.login}'s avatar`}
                     />
                   </a>
                 ))}
