@@ -1,17 +1,15 @@
 import { ImageResponse } from '@vercel/og';
-import OG from 'app/assets/og.png';
-import Image from 'next/image';
 
 export const runtime = 'edge';
 
+const HOST =
+  process.env.NODE_ENV === 'production' ? 'https://og.typehero.dev' : 'http://localhost:4200';
 export async function GET() {
   return new ImageResponse(
     (
-      <>
-        <h1 tw="text-red-500 font-bold text-3xl">test</h1>
-        {/* <Image alt="typehero" tw="w-full h-full" src={OG} /> */}
-        {/* <img alt="typehero" tw="w-full h-full" src="../og.png" /> */}
-      </>
+      <div style={{ display: 'flex' }}>
+        <img src={`${HOST}/og.png`} alt="OG" />
+      </div>
     ),
     {
       width: 1200,
