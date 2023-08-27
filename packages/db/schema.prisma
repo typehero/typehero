@@ -369,7 +369,7 @@ model Waitlist {
   id        Int               @id @default(autoincrement())
   name      String
   email     String
-  referer   String?
+  referrer   String?
   intention WaitlistIntention
 }
 
