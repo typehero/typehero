@@ -1,7 +1,7 @@
 'use server';
 import { type Session } from '@repo/auth/server';
-import { cache } from 'react';
 import { prisma } from '@repo/db';
+import { cache } from 'react';
 
 export type ChallengeRouteData = NonNullable<Awaited<ReturnType<typeof getChallengeRouteData>>>;
 
@@ -15,7 +15,13 @@ export const getChallengeRouteData = cache((id: string, session: Session | null)
     include: {
       user: true,
       _count: {
-        select: { vote: true },
+        select: {
+          vote: {
+            where: {
+              rootType: 'CHALLENGE',
+            },
+          },
+        },
       },
       vote: {
         where: {

@@ -1,24 +1,25 @@
 'use client';
 
-import { type CommentRoot } from '@repo/db/types';
-import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
-import { ChevronDown, ChevronUp, Pencil, Reply, Share, Trash2 } from '@repo/ui/icons';
 import { useSession } from '@repo/auth/react';
+import { type CommentRoot } from '@repo/db/types';
+import { Tooltip, TooltipContent, TooltipTrigger, UserBadge, toast } from '@repo/ui';
+import { ChevronDown, ChevronUp, Pencil, Reply, Share, Trash2 } from '@repo/ui/icons';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
+import clsx from 'clsx';
+import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { z } from 'zod';
-import clsx from 'clsx';
-import { Tooltip, TooltipContent, TooltipTrigger, toast, UserBadge } from '@repo/ui';
-import Link from 'next/link';
-import { CommentInput } from './comment-input';
-import { replyComment, updateComment, type CommentsByChallengeId } from './comment.action';
-import { CommentDeleteDialog } from './delete';
-import { getPaginatedComments } from './getCommentRouteData';
+import { ReportDialog } from '~/components/ReportDialog';
 import { Markdown } from '~/components/ui/markdown';
 import { getRelativeTime } from '~/utils/relativeTime';
-import { ReportDialog } from '~/components/ReportDialog';
+import { Vote } from '../vote';
+import { CommentInput } from './comment-input';
+import { replyComment, updateComment } from './comment.action';
+import { CommentDeleteDialog } from './delete';
+import { getPaginatedComments, type PaginatedComments } from './getCommentRouteData';
 
 interface SingleCommentProps {
-  comment: CommentsByChallengeId[number];
+  comment: PaginatedComments['comments'][number];
   readonly?: boolean;
   isReply?: boolean;
   onClickReply?: () => void;
@@ -63,7 +64,12 @@ export function Comment({ comment, readonly = false, rootId, type, queryKey }: C
   const { data, fetchNextPage, isFetching } = useInfiniteQuery({
     queryKey: replyQueryKey,
     queryFn: ({ pageParam = 1 }) =>
-      getPaginatedComments({ rootId, rootType: type, page: pageParam, parentId: comment.id }),
+      getPaginatedComments({
+        rootId,
+        rootType: type,
+        page: pageParam,
+        parentId: comment.id,
+      }),
     getNextPageParam: (_, pages) => pages.length + 1,
     staleTime: 5000,
   });
@@ -174,6 +180,8 @@ function SingleComment({
   const [text, setText] = useState(comment.text);
   const [isEditing, setIsEditing] = useState(false);
 
+  const session = useSession();
+
   async function updateChallengeComment() {
     try {
       const res = await updateComment(text, comment.id);
@@ -244,6 +252,23 @@ function SingleComment({
         <div className="my-auto flex items-center gap-4">
           {!readonly && (
             <>
+              <Vote
+                voteCount={comment._count.vote}
+                initialHasVoted={comment.vote.length > 0}
+                disabled={!session?.data?.user?.id || comment.userId === session?.data?.user?.id}
+                rootType="COMMENT"
+                rootId={comment.id}
+                onVote={(didUpvote: boolean) => {
+                  comment.vote = didUpvote
+                    ? [
+                        {
+                          userId: session?.data?.user?.id ?? '',
+                        },
+                      ]
+                    : [];
+                  comment._count.vote += didUpvote ? 1 : -1;
+                }}
+              />
               <Reply className="absolute -left-6 h-4 w-4 opacity-50" />
               <div
                 className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
@@ -254,7 +279,6 @@ function SingleComment({
                 <Share className="h-3 w-3" />
                 <div className="hidden text-[0.8rem] sm:block">Share</div>
               </div>
-              {/* TODO: make dis work */}
               {!isReply && (
                 <button
                   className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 disabled:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300"
