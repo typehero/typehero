@@ -1,15 +1,16 @@
+<div align=center >
+<img alt="Github" height=20 src="https://img.shields.io/github/stars/bautistaaa/typehero?style=&logo=github&logoColor=white&label=Stars&labelColor=%23111&color=%23111" />
 <a href="https://discord.gg/trashdev" target="\_parent">
-  <img alt="Discord" src="https://img.shields.io/discord/796594544980000808?color=7389D8&label&logo=discord&logoColor=ffffff" />
+<img alt="Discord" height=20 src="https://img.shields.io/discord/796594544980000808?style=&logo=discord&logoColor=white&label=%20&labelColor=%237389D8&color=%237389D8" />
 </a>
 <a href="https://twitter.com/typeheroapp" target="\_parent">
-  <img alt="" src="https://img.shields.io/twitter/follow/typeheroapp.svg?style=social&label=@typeheroapp" />
+<img alt="Twitter" height=20 src="https://img.shields.io/twitter/follow/typeheroapp.svg?style=&logo=twitter&logoColor=white&label=@typeheroapp&labelColor=%231DA1F2&color=%231DA1F2" />
 </a>
-
-<br />
+</div>
 
 ![typehero header](./media/header.png)
 
-### About Us
+### 👋 About Us
 
 TypeScript's typing system can be very powerful when used correctly. The problem
 is that most developers or engineers don't use much more than they have to in
@@ -18,16 +19,14 @@ cut it for a use case, and they have to reach out to a community for help. We
 aim to be not only the community but the platform they can use to learn more of
 the intricacies of TypeScript's typing system.
 
-### Want to contribute?
+### ✨ Want to contribute?
 
 Please see the [`LOCAL.md`](/LOCAL.md) on how to get setup. Consider joining the [discord](https://discord.gg/trashdev) if you have any ideas/feedback. We'd love to hear from you!
 
-### Sponsors
+### 💖 Sponsors
 
 If you find the project interesting and want to support us please consider sponsoring. Your sponsorship would not only contribute to the advancement of this project but also ensure its ongoing maintenance and improvement for the benefit of the open-source community.
-<a href="https://vercel.com/?utm_source=trash-company&utm_campaign=oss">
 
-  <p>
-    <img src="https://images.ctfassets.net/e5382hct74si/78Olo8EZRdUlcDUFQvnzG7/fa4cdb6dc04c40fceac194134788a0e2/1618983297-powered-by-vercel.svg" alt="Powered by Vercel" title="Powered by Vercel">
-  </p>
+<a href="https://vercel.com/?utm_source=trash-company&utm_campaign=oss" target="\_parent">
+  <img src="https://images.ctfassets.net/e5382hct74si/78Olo8EZRdUlcDUFQvnzG7/fa4cdb6dc04c40fceac194134788a0e2/1618983297-powered-by-vercel.svg" alt="Powered by Vercel" title="Powered by Vercel">
 </a>
