@@ -67,8 +67,8 @@ export async function getTrackDetails(id: number) {
         },
         // ensure's we don't leak user data other than the necessary parameters.
         select: {
-          id: true
-        }
+          id: true,
+        },
       },
     },
   });

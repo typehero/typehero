@@ -14,8 +14,8 @@ export function TrackCard({ track }: TrackProps) {
   const router = useRouter();
   // todo: help resolve max-md issue on hover.
   return (
-    <div className='relative w-full'>
-      <div className='m-2 w-full'>
+    <div className="relative w-full">
+      <div className="m-2 w-full">
         <div
           className={clsx(
             'relative inset-0 flex max-w-[400px] flex-col justify-start space-y-4 p-6',
@@ -27,8 +27,8 @@ export function TrackCard({ track }: TrackProps) {
               {track.title}
             </span>
           </div>
-          <div className="flex w-full justify-between gap-3 rounded-b-lg items-center rounded-t-xl bg-neutral-500/10 p-2 pl-3">
-            <span className="text-muted-foreground overflow-hidden flex h-10 gap-1 text-sm font-semibold tracking-wide">
+          <div className="flex w-full items-center justify-between gap-3 rounded-b-lg rounded-t-xl bg-neutral-500/10 p-2 pl-3">
+            <span className="text-muted-foreground flex h-10 gap-1 overflow-hidden text-sm font-semibold tracking-wide">
               {track.description}
             </span>
           </div>

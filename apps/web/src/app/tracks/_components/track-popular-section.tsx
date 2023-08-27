@@ -9,11 +9,7 @@ interface PopularTrackSectionProps {
   tag: Difficulty | Tags;
 }
 
-export function PopularTrackSection({
-  title,
-  tracks,
-  tag,
-}: PopularTrackSectionProps) {
+export function PopularTrackSection({ title, tracks, tag }: PopularTrackSectionProps) {
   return (
     <div>
       <div className="container flex items-center justify-between gap-3 px-4 pt-5">
@@ -24,10 +20,8 @@ export function PopularTrackSection({
           {title}
         </h2>
       </div>
-      <section className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 grid-flow-row p-8 overflow-hidden rounded-[2.5rem]">
-          {tracks?.map((t) => (
-            <TrackCard key={`popular-track-${t.id}`} track={t} />
-          ))}
+      <section className="grid w-full grid-flow-row grid-cols-1 gap-4 overflow-hidden rounded-[2.5rem] p-8 md:grid-cols-2 lg:grid-cols-3">
+        {tracks?.map((t) => <TrackCard key={`popular-track-${t.id}`} track={t} />)}
       </section>
     </div>
   );

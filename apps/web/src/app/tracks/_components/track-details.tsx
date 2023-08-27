@@ -10,11 +10,10 @@ interface TrackDetailProps {
 export async function TrackDetail({ slug }: TrackDetailProps) {
   const session = await getServerAuthSession();
   const trackId = parseInt(slug);
-  const trackChallenge =  await getTrackDetails(trackId);
+  const trackChallenge = await getTrackDetails(trackId);
   const isEnrolled = trackChallenge?.enrolledUsers.findIndex(
     (user) => user.id === session?.user.id,
   );
-
 
   return (
     <div className="container flex flex-col gap-8 py-5 md:gap-16 md:pb-20">
@@ -30,13 +29,13 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
         </p>
       </div>
 
-        <div className="flex flex-row">
-          {isEnrolled === -1 ? (
-            <EnrollButton action={enrollUserInTrack} trackId={trackId} text="Enroll" />
-          ) : (
-            <EnrollButton action={unenrollUserFromTrack} trackId={trackId} text="Unenroll" />
-          )}
-        </div>
+      <div className="flex flex-row">
+        {isEnrolled === -1 ? (
+          <EnrollButton action={enrollUserInTrack} trackId={trackId} text="Enroll" />
+        ) : (
+          <EnrollButton action={unenrollUserFromTrack} trackId={trackId} text="Unenroll" />
+        )}
+      </div>
     </div>
   );
 }

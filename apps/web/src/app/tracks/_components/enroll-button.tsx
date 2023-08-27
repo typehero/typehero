@@ -22,15 +22,16 @@ export function EnrollButton({ action, text, trackId }: EnrollButtonProps) {
             variant: 'success',
             description: <p>You're now successfully {text.toLowerCase()}ed the track.</p>,
           });
-        }
-        catch(e) {
+        } catch (e) {
           if (process.env.NODE_ENV === 'development') {
             console.log(e);
           }
           toast({
             title: 'Error',
             variant: 'destructive',
-            description: <p>There was an error trying to {text.toLowerCase()} you from the track.</p>,
+            description: (
+              <p>There was an error trying to {text.toLowerCase()} you from the track.</p>
+            ),
           });
         }
       }}
