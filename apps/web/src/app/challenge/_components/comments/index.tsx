@@ -1,6 +1,5 @@
 'use client';
 
-import { useSession } from '@repo/auth/react';
 import type { CommentRoot } from '@repo/db/types';
 import { Button, toast } from '@repo/ui';
 import { ChevronDown, ChevronLeft, ChevronRight, MessageCircle } from '@repo/ui/icons';
@@ -24,8 +23,6 @@ export function Comments({ rootId, type }: Props) {
   const [text, setText] = useState('');
   const commentContainerRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
-  const session = useSession();
-
   const [page, setPage] = useState(1);
 
   const queryKey = [`${type.toLowerCase()}-${rootId}-comments`, page];
