@@ -45,7 +45,7 @@ jobs:
         run: turbo lint --continue
 
   typecheck:
-    name: Typecheck
+    name: TypeCheck
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
