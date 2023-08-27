@@ -1,12 +1,8 @@
 'use client';
 
-import { clsx } from 'clsx';
-import { debounce } from 'lodash';
 import { useSession } from '@repo/auth/react';
-import { useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
-import { Bookmark as BookmarkIcon, Flag, Share, ThumbsUp } from '@repo/ui/icons';
 import {
+  ActionMenu,
   Dialog,
   DialogContent,
   DialogHeader,
@@ -18,16 +14,19 @@ import {
   TooltipTrigger,
   TypographyH3,
   UserBadge,
-  ActionMenu,
 } from '@repo/ui';
+import { Bookmark as BookmarkIcon, Flag, Share } from '@repo/ui/icons';
+import { clsx } from 'clsx';
+import { debounce } from 'lodash';
 import Link from 'next/link';
-import { ShareForm } from '../share-form';
-import { addOrRemoveBookmark } from '../bookmark.action';
-import { incrementOrDecrementUpvote } from '../increment.action';
-import { Markdown } from '~/components/ui/markdown';
+import { useRef, useState } from 'react';
 import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
-import { getRelativeTime } from '~/utils/relativeTime';
 import { ReportDialog } from '~/components/ReportDialog';
+import { Markdown } from '~/components/ui/markdown';
+import { getRelativeTime } from '~/utils/relativeTime';
+import { addOrRemoveBookmark } from '../bookmark.action';
+import { ShareForm } from '../share-form';
+import { Vote } from '../vote';
 
 interface Props {
   challenge: ChallengeRouteData;
@@ -41,22 +40,8 @@ export interface FormValues {
 }
 
 export function Description({ challenge }: Props) {
-  const router = useRouter();
-  const [votes, setVotes] = useState(challenge._count.vote);
-  const [hasVoted, setHasVoted] = useState(challenge.vote.length > 0);
   const [hasBookmarked, setHasBookmarked] = useState(challenge.bookmark.length > 0);
   const session = useSession();
-
-  const debouncedSearch = useRef(
-    debounce(async (challengeId: number, userId: string, shouldIncrement: boolean) => {
-      const votes = await incrementOrDecrementUpvote(challengeId, userId, shouldIncrement);
-      if (votes !== undefined && votes !== null) {
-        setVotes(votes);
-      }
-
-      router.refresh();
-    }, 500),
-  ).current;
 
   const debouncedBookmark = useRef(
     debounce(async (challengeId: number, userId: string, shouldBookmark: boolean) => {
@@ -161,58 +146,13 @@ export function Description({ challenge }: Props) {
             <p>{session.data?.user.id ? 'Bookmark' : 'Login to Bookmark'}</p>
           </TooltipContent>
         </Tooltip>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <button
-              className="group flex h-6 items-center gap-1 rounded-full bg-zinc-200 pl-[0.675rem] pr-2 text-sm disabled:cursor-not-allowed disabled:bg-zinc-100 dark:bg-zinc-700 disabled:dark:bg-zinc-700/50"
-              disabled={!session.data?.user.id}
-              onClick={() => {
-                let shouldIncrement = false;
-                if (hasVoted) {
-                  setVotes((v) => v - 1);
-                  shouldIncrement = false;
-                  setHasVoted(false);
-                } else {
-                  setVotes((v) => v + 1);
-                  shouldIncrement = true;
-                  setHasVoted(true);
-                }
-                debouncedSearch(challenge.id, session.data?.user.id!, shouldIncrement)?.catch(
-                  (e) => {
-                    console.error(e);
-                  },
-                );
-              }}
-            >
-              <ThumbsUp
-                className={clsx(
-                  {
-                    'fill-emerald-600 stroke-emerald-600 group-hover:stroke-emerald-600 dark:fill-emerald-400 dark:stroke-emerald-400 group-hover:dark:stroke-emerald-400':
-                      hasVoted,
-                    'stroke-zinc-500 group-hover:stroke-zinc-600 group-disabled:stroke-zinc-300 dark:stroke-zinc-300 group-hover:dark:stroke-zinc-100 group-disabled:dark:stroke-zinc-500/50':
-                      !hasVoted,
-                  },
-                  'h-4 w-4 duration-200',
-                )}
-              />
-              <span
-                className={clsx(
-                  {
-                    'text-emerald-600 dark:text-emerald-400': hasVoted,
-                    'text-zinc-500 group-hover:text-zinc-600 group-disabled:text-zinc-300 dark:text-zinc-300 group-hover:dark:text-zinc-100 group-disabled:dark:text-zinc-500/50':
-                      !hasVoted,
-                  },
-                  'my-auto w-4 self-end duration-300',
-                )}
-              >
-                {votes}
-              </span>
-            </button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>{session.data?.user.id ? 'Upvote' : 'Login to Upvote'}</p>
-          </TooltipContent>
-        </Tooltip>
+        <Vote
+          voteCount={challenge._count.vote}
+          initialHasVoted={challenge.vote.length > 0}
+          disabled={!session?.data?.user?.id}
+          rootType="CHALLENGE"
+          rootId={challenge?.id}
+        />
       </div>
       {/* Challenge Description */}
       <div className="prose-invert prose-h3:text-xl mt-6 leading-8">

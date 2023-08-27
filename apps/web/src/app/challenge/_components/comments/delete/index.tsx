@@ -1,6 +1,4 @@
 import { type DialogTriggerProps } from '@radix-ui/react-dialog';
-import { useState } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
 import {
   Button,
   Dialog,
@@ -9,16 +7,19 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-  TypographyP,
   TypographyLarge,
+  TypographyP,
   toast,
 } from '@repo/ui';
-import { deleteComment, type CommentsByChallengeId } from '../comment.action';
-import { getRelativeTime } from '~/utils/relativeTime';
+import { useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 import { Markdown } from '~/components/ui/markdown';
+import { getRelativeTime } from '~/utils/relativeTime';
+import { deleteComment } from '../comment.action';
+import { type PaginatedComments } from '../getCommentRouteData';
 
 interface CommentDeleteDialogProps extends DialogTriggerProps {
-  comment: CommentsByChallengeId[number];
+  comment: PaginatedComments['comments'][number];
   queryKey?: (number | string)[];
 }
 

@@ -243,6 +243,9 @@ importers:
       '@uploadthing/react':
         specifier: ^5.2.0
         version: 5.2.0(react-dropzone@14.2.3)(react@18.2.0)(uploadthing@5.2.1)(zod@3.21.4)
+      '@vercel/analytics':
+        specifier: ^1.0.2
+        version: 1.0.2
       '@vercel/edge-config':
         specifier: ^0.2.1
         version: 0.2.1
@@ -3946,6 +3949,10 @@ packages:
     dependencies:
       '@uploadthing/mime-types': 0.2.0
       zod: 3.21.4
+    dev: false
+
+  /@vercel/analytics@1.0.2:
+    resolution: {integrity: sha512-BZFxVrv24VbNNl5xMxqUojQIegEeXMI6rX3rg1uVLYUEXsuKNBSAEQf4BWEcjQDp/8aYJOj6m8V4PUA3x/cxgg==}
     dev: false
 
   /@vercel/edge-config-fs@0.1.0:
