@@ -37,7 +37,8 @@
     "patchedDependencies": {
       "next-auth@4.22.1": "patches/next-auth@4.22.1.patch",
       "@monaco-editor/react@4.5.1": "patches/@monaco-editor__react@4.5.1.patch",
-      "monaco-vim@0.4.0": "patches/monaco-vim@0.4.0.patch"
+      "monaco-vim@0.4.0": "patches/monaco-vim@0.4.0.patch",
+      "@vercel/toolbar@0.1.1": "patches/@vercel__toolbar@0.1.1.patch"
     }
   }
 }
