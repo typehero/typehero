@@ -31,7 +31,7 @@ export function Navigation() {
       >
         <div className="flex w-full items-center justify-between">
           <div className="relative flex items-center gap-3">
-            <a className="flex items-center space-x-2 duration-300 focus:outline-none focus-visible:ring-2" href="/">
+            <a className="flex items-center space-x-2 focus-visible:ring-2 focus:outline-none duration-300" href="/">
               <svg
                 className="h-8 w-8 rounded-md bg-[#3178C6] p-[2px]"
                 viewBox="0 0 512 512"
@@ -67,8 +67,8 @@ export function Navigation() {
               </span>
             </a>
             {featureFlags?.exploreButton ? (
-              <Link href="/explore">
-                <div className="hover:text-foreground/80 text-foreground ml-4 transition-colors">
+              <Link href="/explore" className="ml-4">
+                <div className="hover:text-foreground/80 text-foreground transition-colors">
                   Explore
                 </div>
               </Link>
@@ -98,7 +98,7 @@ function ThemeButton() {
     <>
       {mounted ? (
         <button
-          className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none"
+          className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none focus-visible:ring-2"
           onClick={() => {
             setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
           }}
@@ -138,7 +138,7 @@ function LoginButton() {
   return session ? (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none">
+        <button className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none focus-visible:ring-2">
           <User className="h-5 w-5" />
         </button>
       </DropdownMenuTrigger>

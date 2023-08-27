@@ -22,7 +22,7 @@
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
 
-    --primary: 240 5.9% 10%;
+    --primary: 241 5.9% 10%;
     --primary-foreground: 0 0% 98%;
 
     --secondary: 240 4.8% 95.9%;
@@ -382,4 +382,12 @@ main {
     opacity: 1;
     transform: translateY(0px);
   }
+}
+
+* {
+  @apply focus:ring-blue-600;
+}
+
+a {
+  @apply focus:outline-none focus-visible:ring-2;
 }
