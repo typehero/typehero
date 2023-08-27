@@ -68,3 +68,17 @@ jobs:
 
       - name: Run TypeScript type check
         run: turbo typecheck
+  build-test:
+    name: Testing issue with main
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install
+        uses: ./tooling/github-actions/install
+
+      - name: Run Prettier
+        run: turbo build
+
