@@ -3,6 +3,10 @@
 import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 
+/**
+ * Enrolls the session user in the track given a track id.
+ * @param id The track id.
+ */
 export async function enrollUserInTrack(id: number) {
   const session = await getServerAuthSession();
   return prisma.track.update({
@@ -19,6 +23,10 @@ export async function enrollUserInTrack(id: number) {
   });
 }
 
+/**
+ * Un-enrolls the session user in the track given a track id.
+ * @param id The track id.
+ */
 export async function unenrollUserFromTrack(id: number) {
   const session = await getServerAuthSession();
   return prisma.track.update({
@@ -35,6 +43,10 @@ export async function unenrollUserFromTrack(id: number) {
   });
 }
 
+/**
+ * Fetches the track details given a track id.
+ * @param id The track id.
+ */
 export async function getTrackDetails(id: number) {
   const session = await getServerAuthSession();
 
@@ -53,6 +65,10 @@ export async function getTrackDetails(id: number) {
         where: {
           id: session?.user.id,
         },
+        // ensure's we don't leak user data other than the necessary parameters.
+        select: {
+          id: true
+        }
       },
     },
   });

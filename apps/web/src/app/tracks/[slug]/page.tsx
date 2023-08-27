@@ -8,6 +8,7 @@ interface Props {
   };
 }
 
+// todo: write a suspense skeleton...
 export default function Page({ params }: Props) {
   return <TrackDetail slug={params.slug} />;
 }

@@ -2,11 +2,11 @@
 
 import { Check } from '@repo/ui/icons';
 import clsx from 'clsx';
-import type { PopularTracks } from '~/app/tracks/_components';
+import type { Tracks } from '~/app/tracks/_components';
 import { useIsMobile } from '~/utils/useIsMobile';
 
 interface TrackChallengeProps {
-  challenge: PopularTracks[number]['trackChallenges'][number]['challenge'];
+  challenge: Tracks[number]['trackChallenges'][number]['challenge'];
   className?: string;
   mock?: boolean;
 }
@@ -17,7 +17,7 @@ const COLORS_BY_DIFFICULTY = {
   MEDIUM: 'text-yellow-600 dark:text-yellow-300',
   HARD: 'text-red-600 dark:text-red-300',
   EXTREME: 'text-orange-600 dark:text-orange-300',
-};
+} as const;
 
 const BGS_BY_DIFFICULTY = {
   BEGINNER: 'to-pink-600/20 dark:to-pink-300/20',
@@ -25,7 +25,7 @@ const BGS_BY_DIFFICULTY = {
   MEDIUM: 'to-yellow-600/20 dark:to-yellow-300/20',
   HARD: 'to-red-600/20 dark:to-red-300/20',
   EXTREME: 'to-orange-600/20 dark:to-orange-300/20',
-};
+} as const;
 
 export function TrackChallenge({ challenge, className, mock }: TrackChallengeProps) {
   const isMobile = useIsMobile();

@@ -1,21 +1,17 @@
 import type { Difficulty, Tags } from '@repo/db/types';
-import type { PopularTracks } from '.';
 import { COLORS_BY_TAGS } from '~/app/explore/_components/explore-section';
-import { ViewMoreButton } from '~/app/explore/_components/view-more-button';
 import { TrackCard } from '~/app/tracks/_components/track-card';
-import { Carousel } from '~/components/ui/carousel';
+import type { Tracks } from '.';
 
 interface PopularTrackSectionProps {
   title: string;
-  tracks: PopularTracks;
-  redirectRoute: string;
+  tracks: Tracks;
   tag: Difficulty | Tags;
 }
 
 export function PopularTrackSection({
   title,
   tracks,
-  redirectRoute,
   tag,
 }: PopularTrackSectionProps) {
   return (
@@ -27,14 +23,11 @@ export function PopularTrackSection({
           />
           {title}
         </h2>
-        <ViewMoreButton tag={tag} redirectRoute={redirectRoute} />
       </div>
-      <section className="relative flex w-full flex-row gap-4 overflow-hidden rounded-[2.5rem]">
-        <Carousel>
+      <section className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 grid-flow-row p-8 overflow-hidden rounded-[2.5rem]">
           {tracks?.map((t) => (
             <TrackCard key={`popular-track-${t.id}`} track={t} />
           ))}
-        </Carousel>
       </section>
     </div>
   );

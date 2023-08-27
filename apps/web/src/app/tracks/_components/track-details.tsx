@@ -1,9 +1,4 @@
-'use client';
-
-import { useSession } from '@repo/auth/react';
-import { toast } from '@repo/ui';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { getServerAuthSession } from '@repo/auth/server';
 import { EnrollButton } from './enroll-button';
 import { enrollUserInTrack, getTrackDetails, unenrollUserFromTrack } from './track.action';
 
@@ -12,78 +7,14 @@ interface TrackDetailProps {
   slug: string;
 }
 
-export function TrackDetail({ slug }: TrackDetailProps) {
-  const session = useSession();
-  const router = useRouter();
+export async function TrackDetail({ slug }: TrackDetailProps) {
+  const session = await getServerAuthSession();
   const trackId = parseInt(slug);
-  const [trackChallenge, setTrackChallenge] = useState<Awaited<
-    ReturnType<typeof getTrackDetails>
-  > | null>(null);
-  const [isEnrolled, setIsEnrolled] = useState(false);
+  const trackChallenge =  await getTrackDetails(trackId);
+  const isEnrolled = trackChallenge?.enrolledUsers.findIndex(
+    (user) => user.id === session?.user.id,
+  );
 
-  // things you need to do to skip first render & call server action on client component.
-  // this is nightmare fuel.
-  // todo: find better way
-  useEffect(() => {
-    (async () => {
-      await loadPageData();
-    })();
-  }, []);
-
-  const loadPageData = async () => {
-    const trackChallenge = await getTrackDetails(trackId);
-    setTrackChallenge(trackChallenge);
-    if (session.status === 'authenticated') {
-      const isEnrolled = trackChallenge?.enrolledUsers.findIndex(
-        (user) => user.id === session.data.user.id,
-      );
-      if (isEnrolled !== -1) {
-        setIsEnrolled(true);
-      }
-    }
-  };
-
-  async function handleEnrollUserInTrack() {
-    try {
-      await enrollUserInTrack(trackId);
-      router.refresh();
-      toast({
-        title: 'Enrolled',
-        description: "You're now successfully enrolled in the track.",
-        variant: 'success',
-      });
-    } catch (e) {
-      if (process.env.NODE_ENV === 'development') {
-        console.log(e);
-      }
-      toast({
-        title: 'Oops!',
-        description: 'There was an error while trying to enroll you in the track.',
-        variant: 'destructive',
-      });
-    }
-  }
-
-  async function handleUnenrollUserFromTrack() {
-    try {
-      await unenrollUserFromTrack(trackId);
-      router.refresh();
-      toast({
-        title: 'Unenrolled',
-        description: "You're now successfully unenrolled from the track.",
-        variant: 'success',
-      });
-    } catch (e) {
-      if (process.env.NODE_ENV === 'development') {
-        console.log(e);
-      }
-      toast({
-        title: 'Oops!',
-        description: 'There was an error while trying to unenroll you in the track.',
-        variant: 'destructive',
-      });
-    }
-  }
 
   return (
     <div className="container flex flex-col gap-8 py-5 md:gap-16 md:pb-20">
@@ -98,15 +29,14 @@ export function TrackDetail({ slug }: TrackDetailProps) {
           {trackChallenge?.description}
         </p>
       </div>
-      {session.status === 'authenticated' && (
+
         <div className="flex flex-row">
-          {!isEnrolled ? (
-            <EnrollButton action={handleEnrollUserInTrack} text="Enroll" />
+          {isEnrolled === -1 ? (
+            <EnrollButton action={enrollUserInTrack} trackId={trackId} text="Enroll" />
           ) : (
-            <EnrollButton action={handleUnenrollUserFromTrack} text="Unenroll" />
+            <EnrollButton action={unenrollUserFromTrack} trackId={trackId} text="Unenroll" />
           )}
         </div>
-      )}
     </div>
   );
 }

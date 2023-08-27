@@ -1,17 +1,38 @@
 'use client';
 
-import { Button } from '@repo/ui';
+import { Button, toast } from '@repo/ui';
+import { useRouter } from 'next/navigation';
 
 interface EnrollButtonProps {
-  action: () => Promise<void>;
+  action: (...args: any) => Promise<any>;
   text: string;
+  trackId: number;
 }
 
-export function EnrollButton({ action, text }: EnrollButtonProps) {
+export function EnrollButton({ action, text, trackId }: EnrollButtonProps) {
+  const router = useRouter();
   return (
     <Button
       onClick={async () => {
-        await action();
+        try {
+          await action(trackId);
+          router.refresh();
+          toast({
+            title: 'Success',
+            variant: 'success',
+            description: <p>You're now successfully {text.toLowerCase()}ed the track.</p>,
+          });
+        }
+        catch(e) {
+          if (process.env.NODE_ENV === 'development') {
+            console.log(e);
+          }
+          toast({
+            title: 'Error',
+            variant: 'destructive',
+            description: <p>There was an error trying to {text.toLowerCase()} you from the track.</p>,
+          });
+        }
       }}
     >
       {text}

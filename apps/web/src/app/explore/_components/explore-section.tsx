@@ -19,13 +19,13 @@ interface SectionProps {
   redirectRoute: string;
 }
 
-const difficultyToNumber: Record<Difficulty, number> = {
+const difficultyToNumber = {
   BEGINNER: 0,
   EASY: 1,
   MEDIUM: 2,
   HARD: 3,
   EXTREME: 4,
-};
+} as const;
 
 const TITLES_BY_TAG = {
   POPULAR: '',
@@ -48,7 +48,7 @@ export const COLORS_BY_TAGS = {
   MEDIUM: 'dark:bg-yellow-300 bg-yellow-600/50',
   HARD: 'dark:bg-red-300 bg-red-600/50',
   EXTREME: 'dark:bg-orange-300 bg-orange-600/50',
-};
+} as const;
 
 export async function ExploreSection({ title, fetcher, tag, redirectRoute }: SectionProps) {
   const challenges = await fetcher(tag.trim().toUpperCase(), 6);

@@ -7,7 +7,7 @@ export async function Tracks() {
   const session = await getServerAuthSession();
 
   const enrolledTracks = await getUserEnrolledTracks(session);
-  const tracks = await getPopularTracks();
+  const tracks = await getTracks();
 
   return (
     <div className="flex flex-col gap-8 py-8 md:gap-10 md:py-10">
@@ -33,7 +33,6 @@ export async function Tracks() {
       <PopularTrackSection
         key="popular-track-section"
         title="Popular"
-        redirectRoute="/tracks/popular"
         tag="POPULAR"
         tracks={tracks}
       />
@@ -81,13 +80,12 @@ function getUserEnrolledTracks(session: Session | null) {
   });
 }
 
-export type PopularTracks = Awaited<ReturnType<typeof getPopularTracks>>;
+export type Tracks = Awaited<ReturnType<typeof getTracks>>;
 
 /**
- * Fetches popular tracks. Popularity is determined by number of user's enrolled in it.
- * todo: change this behavior for now it's fine.
+ * Fetches all tracks.
  */
-function getPopularTracks() {
+function getTracks() {
   return prisma.track.findMany({
     include: {
       trackChallenges: {
@@ -95,20 +93,12 @@ function getPopularTracks() {
           challenge: true,
         },
       },
-      _count: {
-        select: {
-          enrolledUsers: true,
-        },
-      },
     },
     where: {
       visible: true,
     },
     orderBy: {
-      enrolledUsers: {
-        _count: 'desc',
-      },
+      title: 'asc',
     },
-    take: 6,
   });
 }

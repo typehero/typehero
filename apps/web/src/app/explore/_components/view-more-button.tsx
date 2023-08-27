@@ -17,7 +17,7 @@ export const BUTTON_BY_TAGS = {
   HARD: 'bg-red-500/10 text-red-700 hover:text-red-700 dark:text-red-300 dark:bg-red-300/10 hover:bg-red-500/20 dark:hover:bg-red-300/20',
   EXTREME:
     'bg-orange-500/10 text-orange-700 hover:text-orange-700 dark:text-orange-300 dark:bg-orange-300/10 hover:bg-orange-500/20 dark:hover:bg-orange-300/20',
-};
+} as const;
 
 interface ViewMoreButtonProps {
   redirectRoute: string;
