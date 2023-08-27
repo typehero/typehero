@@ -177,19 +177,34 @@ model Challenge {
   @@index([userId])
 }
 
+enum VoteType {
+  CHALLENGE
+  COMMENT
+  SUBMISSION
+  SHAREDSOLUTION
+}
+
 model Vote {
-  id               Int             @id @default(autoincrement())
-  user             User            @relation(fields: [userId], references: [id])
-  userId           String
-  challenge        Challenge?      @relation(fields: [challengeId], references: [id])
-  challengeId      Int?
-  submission       Submission?     @relation(fields: [submissionId], references: [id])
-  submissionId     Int?
+  id       Int      @id @default(autoincrement())
+  user     User     @relation(fields: [userId], references: [id])
+  userId   String
+  rootType VoteType
+
+  challenge   Challenge? @relation(fields: [challengeId], references: [id])
+  challengeId Int?
+
+  comment   Comment? @relation(fields: [commentId], references: [id])
+  commentId Int?
+
+  submission   Submission? @relation(fields: [submissionId], references: [id])
+  submissionId Int?
+
   sharedSolution   SharedSolution? @relation(fields: [sharedSolutionId], references: [id])
   sharedSolutionId Int?
 
   @@index([userId])
   @@index([challengeId])
+  @@index([commentId])
   @@index([submissionId])
   @@index([sharedSolutionId])
 }
@@ -336,6 +351,7 @@ model Comment {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  vote      Vote[]
 
   @@index([rootSolutionId])
   @@index([rootChallengeId])

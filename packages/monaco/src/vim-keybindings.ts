@@ -1,10 +1,10 @@
 import { VimMode } from 'monaco-vim';
 
-type Keybind = {
+interface Keybind {
   key: string;
   action: string;
   name: string;
-};
+}
 
 function registerKeybind({ key, action, name }: Keybind) {
   VimMode.Vim.defineAction(name, function (ctx) {

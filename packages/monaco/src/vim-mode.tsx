@@ -2,7 +2,8 @@
 
 import type * as monaco from 'monaco-editor';
 import { useEffect, useRef } from 'react';
-import { VimMode, initVimMode } from 'monaco-vim';
+import type { VimMode } from 'monaco-vim';
+import { initVimMode } from 'monaco-vim';
 import { useEditorSettingsStore } from './settings-store';
 import './vim-keybindings';
 
