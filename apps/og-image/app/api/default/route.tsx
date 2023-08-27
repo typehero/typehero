@@ -1,15 +1,17 @@
 import { ImageResponse } from '@vercel/og';
-import { Logo } from 'app/components/logo';
+import OG from 'app/assets/og.png';
+import Image from 'next/image';
 
 export const runtime = 'edge';
 
 export async function GET() {
   return new ImageResponse(
     (
-      <img
-        tw="w-full h-full"
-        src="https://media.discordapp.net/attachments/1124722250294243428/1144691954257510460/image.png?width=2592&height=1397"
-      />
+      <>
+        <h1 tw="text-red-500 font-bold text-3xl">test</h1>
+        {/* <Image alt="typehero" tw="w-full h-full" src={OG} /> */}
+        {/* <img alt="typehero" tw="w-full h-full" src="../og.png" /> */}
+      </>
     ),
     {
       width: 1200,
