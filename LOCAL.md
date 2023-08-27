@@ -159,8 +159,8 @@ This tends to resolve the issue as it entirely destroys and rebuilds + reseeds t
   <summary>How do I use the `@vercel/toolbar` locally?</summary>
   If you have access to the vercel project then you can run `vercel link` (make sure you have the vercel CLI).
 
-  Follow the interactive CLI to link it to the Trash Company/typehero project.
+Follow the interactive CLI to link it to the Trash Company/typehero project.
 
-  From there on out you should be able to read and make comments while on local host for that branch.
+From there on out you should be able to read and make comments while on local host for that branch.
 
 </details>

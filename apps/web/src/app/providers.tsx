@@ -23,7 +23,7 @@ export function Providers({ children }: Props) {
       <SessionProvider>
         <ThemeProvider attribute="class">
           <TooltipProvider>{children}</TooltipProvider>
-          {shouldInjectToolbar && <VercelToolbar />}
+          {shouldInjectToolbar ? <VercelToolbar /> : null}
         </ThemeProvider>
       </SessionProvider>
     </QueryClientProvider>
