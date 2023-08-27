@@ -98,14 +98,14 @@ function Community() {
               <div className="honeycomboverride mx-auto flex w-[18.25rem] flex-wrap gap-x-3 gap-y-1 sm:w-[23rem] xl:w-[27.75rem] xl:[&>*:nth-child(11n_+_1)]:ml-[2.375rem] [&>*:nth-child(7n_+_1)]:ml-[2.375rem] sm:[&>*:nth-child(7n_+_1)]:ml-0 sm:[&>*:nth-child(9n_+_1)]:ml-[2.375rem] xl:[&>*:nth-child(9n_+_1)]:ml-0">
                 {contributors.map((contributor) => (
                   <a
-                    className="group rounded-full duration-300 hover:scale-125 focus:outline-none active:scale-105 active:duration-100"
+                    className="group rounded-full duration-300 hover:scale-125 focus:duration-0 focus:outline-none active:scale-105 active:duration-100 focus-visible:ring-0"
                     href={contributor.html_url}
                     key={contributor.id}
                     rel="noopener"
                     target="_blank"
                   >
                     <div
-                      className="honeycombchild h-16 w-16 rounded-3xl bg-cover duration-300 group-hover:rounded-[2rem] group-active:rounded-3xl group-active:duration-100"
+                      className="honeycombchild h-16 w-16 rounded-3xl bg-cover duration-300 group-hover:rounded-[2rem] group-active:rounded-3xl group-active:duration-100 group-focus:duration-0 group-focus:outline-none group-focus-visible:ring-2"
                       style={{ backgroundImage: `url('${contributor.avatar_url}')` }}
                     />
                   </a>

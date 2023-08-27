@@ -385,7 +385,7 @@ main {
 }
 
 * {
-  @apply focus:ring-blue-600;
+  @apply focus:ring-blue-600 group-focus:ring-blue-600;
 }
 
 a {
