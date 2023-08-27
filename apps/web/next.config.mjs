@@ -1,4 +1,5 @@
-// @ts-check
+// NOTE: this whole package is bugged and once they fix this we can remove this workaround
+// eslint-disable-next-line import/no-unresolved
 import withVercelToolbar from '@vercel/toolbar/plugins/next';
 
 /** @type {import("next").NextConfig} */
