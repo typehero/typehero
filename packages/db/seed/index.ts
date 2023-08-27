@@ -59,7 +59,8 @@ try {
     },
   });
 
-  const comments = Array.from({ length: 50 }, () => CommentMock());
+  let commentNum = 0;
+  const comments = Array.from({ length: 50 }, () => CommentMock(++commentNum));
 
   const replies: Prisma.CommentCreateManyInput[] = [];
 
@@ -76,7 +77,7 @@ try {
   });
 
   for (const comment of createdComments) {
-    replies.push(CommentMock(comment.id), CommentMock(comment.id));
+    replies.push(CommentMock(++commentNum, comment.id), CommentMock(++commentNum, comment.id));
   }
 
   await prisma.challenge.update({
