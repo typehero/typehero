@@ -3,7 +3,7 @@ import { WaitlistForm } from '~/components/landing/waitlist/waitlist-form';
 import styles from '~/components/landing/waitlist/waitlist.module.css';
 
 export type WaitlistPageProps = {
-  searchParams?: Record<string, string>;
+  searchParams: Record<string, string>;
 };
 
 export function Waitlist({searchParams}: WaitlistPageProps) {
