@@ -91,7 +91,7 @@ export function ExploreCarousel({ challenges }: Props) {
         )
         .map((challenge) => (
           <Link
-            className="group snap-center focus:outline-none sm:w-[330px] xl:w-[333px]"
+            className="group snap-center focus:outline-none focus-visible:ring-0 sm:w-[330px] xl:w-[333px]"
             href={`/challenge/${challenge.id}`}
             key={challenge.id}
           >
