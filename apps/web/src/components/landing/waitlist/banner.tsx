@@ -5,17 +5,15 @@ import { Balancer } from 'react-wrap-balancer';
 import { Button } from '@repo/ui';
 import styles from '~/components/landing/waitlist/waitlist.module.css';
 
-export type WaitlistProps = {
+export interface WaitlistProps {
   ref?: string;
-};
+}
 
-function Waitlist({ref}: WaitlistProps) {
-
+function Waitlist({ ref }: WaitlistProps) {
   let waitlistUrl = `/waitlist`;
-  const searchParams = new URLSearchParams(ref?{ref}:undefined).toString();
-  if (searchParams.length)
-    waitlistUrl += `?${searchParams}`;
-  
+  const searchParams = new URLSearchParams(ref ? { ref } : undefined).toString();
+  if (searchParams.length) waitlistUrl += `?${searchParams}`;
+
   return (
     <section className={clsx(styles.backdrop, 'relative overflow-hidden')}>
       <div className="container relative grid grid-cols-1 items-center justify-center py-[64px] md:grid-cols-2">
