@@ -22,9 +22,9 @@
   },
   "scripts": {
     "format": "prettier . --check --cache --cache-location=\"node_modules/.cache/prettiercache\"",
-    "format:fix": "prettier . --write --cache --cache-location=\"node_modules/.cache/prettiercache\" --loglevel=warn",
-    "lint": "eslint . --cache --cache-location \"node_modules/.cache/.eslintcache\"",
-    "lint:fix": "eslint . --fix --cache --cache-location \"node_modules/.cache/.eslintcache\"",
+    "format:fix": "prettier . --write --cache --cache-location=\"node_modules/.cache/prettiercache\" --log-level=warn",
+    "lint": "eslint . --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
+    "lint:fix": "eslint . --fix --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -41,6 +41,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
     "@radix-ui/react-toast": "^1.1.4",
+    "@radix-ui/react-toggle": "^1.0.3",
     "@radix-ui/react-tooltip": "^1.0.6",
     "@repo/db": "workspace:*",
     "@tanstack/react-table": "^8.9.3",

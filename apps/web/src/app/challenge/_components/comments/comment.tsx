@@ -1,24 +1,25 @@
 'use client';
 
-import { type CommentRoot } from '@repo/db/types';
-import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
-import { ChevronDown, ChevronUp, Pencil, Reply, Share, Trash2 } from '@repo/ui/icons';
 import { useSession } from '@repo/auth/react';
+import { type CommentRoot } from '@repo/db/types';
+import { Tooltip, TooltipContent, TooltipTrigger, UserBadge, toast } from '@repo/ui';
+import { ChevronDown, ChevronUp, Pencil, Reply, Share, Trash2 } from '@repo/ui/icons';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
+import clsx from 'clsx';
+import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { z } from 'zod';
-import clsx from 'clsx';
-import { Tooltip, TooltipContent, TooltipTrigger, toast, UserBadge } from '@repo/ui';
-import Link from 'next/link';
-import { CommentInput } from './comment-input';
-import { replyComment, updateComment, type CommentsByChallengeId } from './comment.action';
-import { CommentDeleteDialog } from './delete';
-import { getPaginatedComments } from './getCommentRouteData';
+import { ReportDialog } from '~/components/ReportDialog';
 import { Markdown } from '~/components/ui/markdown';
 import { getRelativeTime } from '~/utils/relativeTime';
-import { ReportDialog } from '~/components/ReportDialog';
+import { Vote } from '../vote';
+import { CommentInput } from './comment-input';
+import { replyComment, updateComment } from './comment.action';
+import { CommentDeleteDialog } from './delete';
+import { getPaginatedComments, type PaginatedComments } from './getCommentRouteData';
 
 interface SingleCommentProps {
-  comment: CommentsByChallengeId[number];
+  comment: PaginatedComments['comments'][number];
   readonly?: boolean;
   isReply?: boolean;
   onClickReply?: () => void;
@@ -63,7 +64,12 @@ export function Comment({ comment, readonly = false, rootId, type, queryKey }: C
   const { data, fetchNextPage, isFetching } = useInfiniteQuery({
     queryKey: replyQueryKey,
     queryFn: ({ pageParam = 1 }) =>
-      getPaginatedComments({ rootId, rootType: type, page: pageParam, parentId: comment.id }),
+      getPaginatedComments({
+        rootId,
+        rootType: type,
+        page: pageParam,
+        parentId: comment.id,
+      }),
     getNextPageParam: (_, pages) => pages.length + 1,
     staleTime: 5000,
   });
@@ -110,7 +116,7 @@ export function Comment({ comment, readonly = false, rootId, type, queryKey }: C
       <SingleComment comment={comment} onClickReply={toggleIsReplying} readonly={readonly} />
       {comment._count.replies > 0 && (
         <button
-          className="z-50 ml-2 mt-1 flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
+          className="z-50 flex cursor-pointer items-center gap-1 px-3 pt-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
           onClick={toggleReplies}
         >
           {showReplies ? <ChevronDown className="h-4 w-4" /> : <ChevronUp className="h-4 w-4" />}
@@ -120,7 +126,6 @@ export function Comment({ comment, readonly = false, rootId, type, queryKey }: C
           </div>
         </button>
       )}
-
       {isReplying ? (
         <div className="relative mt-2 pb-2 pl-8">
           <Reply className="absolute left-2 top-2 h-4 w-4 opacity-50" />
@@ -140,7 +145,7 @@ export function Comment({ comment, readonly = false, rootId, type, queryKey }: C
       ) : null}
 
       {showReplies ? (
-        <div className="-mt-1 flex flex-col gap-1 p-2 pb-8 pl-8 pr-0">
+        <div className="flex flex-col gap-1 pl-6 pt-1">
           {data?.pages.flatMap((page) =>
             page.comments.map((reply) => (
               // this is a reply
@@ -173,6 +178,8 @@ function SingleComment({
   const queryClient = useQueryClient();
   const [text, setText] = useState(comment.text);
   const [isEditing, setIsEditing] = useState(false);
+
+  const session = useSession();
 
   async function updateChallengeComment() {
     try {
@@ -226,7 +233,7 @@ function SingleComment({
   const isAuthor = loggedinUser.data?.user.id === comment.user.id;
 
   return (
-    <div className="relative rounded-xl bg-zinc-200 p-2 pl-3 dark:bg-zinc-600/30">
+    <div className="relative p-2 pl-3">
       <div className="flex items-start justify-between gap-4 pr-[0.4rem]">
         <div className="flex items-center gap-1">
           <UserBadge username={comment.user.name ?? ''} linkComponent={Link} />
@@ -244,7 +251,23 @@ function SingleComment({
         <div className="my-auto flex items-center gap-4">
           {!readonly && (
             <>
-              <Reply className="absolute -left-6 h-4 w-4 opacity-50" />
+              <Vote
+                voteCount={comment._count.vote}
+                initialHasVoted={comment.vote.length > 0}
+                disabled={!session?.data?.user?.id || comment.userId === session?.data?.user?.id}
+                rootType="COMMENT"
+                rootId={comment.id}
+                onVote={(didUpvote: boolean) => {
+                  comment.vote = didUpvote
+                    ? [
+                        {
+                          userId: session?.data?.user?.id ?? '',
+                        },
+                      ]
+                    : [];
+                  comment._count.vote += didUpvote ? 1 : -1;
+                }}
+              />
               <div
                 className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
                 onClick={() => {
@@ -254,7 +277,6 @@ function SingleComment({
                 <Share className="h-3 w-3" />
                 <div className="hidden text-[0.8rem] sm:block">Share</div>
               </div>
-              {/* TODO: make dis work */}
               {!isReply && (
                 <button
                   className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 disabled:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300"
@@ -282,7 +304,7 @@ function SingleComment({
                 </CommentDeleteDialog>
               ) : (
                 <ReportDialog commentId={comment.id} reportType="COMMENT">
-                  <div className="flex cursor-pointer items-center text-[0.8rem] text-neutral-400 duration-200 hover:text-neutral-500 dark:text-neutral-600 dark:hover:text-neutral-500">
+                  <div className="flex cursor-pointer items-center text-[0.8rem] text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300">
                     Report
                   </div>
                 </ReportDialog>
