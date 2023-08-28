@@ -69,7 +69,7 @@ function FeatureCard({
       <div
         className={clsx(
           'group relative w-full overflow-hidden rounded-3xl border bg-gradient-to-b from-neutral-50/90 to-neutral-100/90 transition duration-300 dark:from-neutral-950/90 dark:to-neutral-800/90',
-          !isMobile && 'hover:border-transparent',
+          'md:hover:border-transparent',
           bgClass,
         )}
       >
@@ -348,7 +348,7 @@ export function ChallengeCreationCard({
             }}
           />
           <div className="absolute -right-4 bottom-4 w-full">
-            <Steps current={step} onChange={() => {}} steps={steps} />
+            <Steps current={step} onChange={() => { }} steps={steps} />
           </div>
         </>
       )}
@@ -376,7 +376,6 @@ function Badge({ name }: { name: string }) {
   );
 }
 export function CollaborativeEnvironmentCard(props: CardProps) {
-  const isMobile = useIsMobile();
   const { ref, inView } = useInView({
     triggerOnce: true,
   });
@@ -391,7 +390,7 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
           className={clsx(
             { comment1: inView },
             'rounded-l-3xl bg-neutral-500/10 p-4 pt-3 opacity-0 duration-150',
-            !isMobile && 'hover:bg-neutral-500/20',
+            'md:hover:bg-neutral-500/20',
           )}
         >
           <div className="flex items-center gap-2">
@@ -404,7 +403,7 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
           className={clsx(
             { comment2: inView },
             'relative ml-12 rounded-l-3xl bg-neutral-500/10 p-4 pt-3 opacity-0 duration-150',
-            !isMobile && 'hover:bg-neutral-500/20',
+            'md:hover:bg-neutral-500/20',
           )}
         >
           <Reply className="absolute -left-8 h-4 w-4 opacity-50" />
@@ -419,7 +418,7 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
           className={clsx(
             { comment3: inView },
             'relative ml-12 rounded-tl-3xl bg-neutral-500/10 p-4 pt-3 opacity-0 duration-150',
-            !isMobile && 'hover:bg-neutral-500/20',
+            'md:hover:bg-neutral-500/20',
           )}
         >
           <Reply className="absolute -left-8 h-4 w-4 opacity-50" />
@@ -515,7 +514,6 @@ const tracks: Track[] = [
 ];
 
 function Track({ className, difficulty, id, label }: Track) {
-  const isMobile = useIsMobile();
   return (
     <label
       htmlFor={id}
@@ -525,8 +523,7 @@ function Track({ className, difficulty, id, label }: Track) {
         className={clsx(
           `flex w-full cursor-pointer items-center justify-between gap-3 overflow-hidden rounded-lg bg-gradient-to-r from-neutral-500/10 ${BGS_BY_DIFFICULTY[difficulty]} from-75% to-100% p-4 py-2 text-black/90 duration-300 group-active/challenge:bg-neutral-500/40 group-active/challenge:duration-75 dark:text-white/90 sm:py-4`,
           className,
-          !isMobile &&
-            'group-hover/challenge:scale-105 group-hover/challenge:rounded-xl group-hover/challenge:bg-neutral-500/20',
+          'md:group-hover/challenge:scale-105 md:group-hover/challenge:rounded-xl md:group-hover/challenge:bg-neutral-500/20',
         )}
       >
         <div className="relative flex items-center gap-3 text-xs sm:text-base">
