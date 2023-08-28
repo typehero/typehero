@@ -8,7 +8,7 @@
   </a>
 </p>
 
-![typehero header](./media/header.png)
+![typehero header](./media/og.png)
 
 ### 👋 About Us
 
@@ -30,3 +30,16 @@ If you find the project interesting and want to support us please consider spons
 <a href="https://vercel.com/?utm_source=trash-company&utm_campaign=oss" target="_parent">
   <img src="https://images.ctfassets.net/e5382hct74si/78Olo8EZRdUlcDUFQvnzG7/fa4cdb6dc04c40fceac194134788a0e2/1618983297-powered-by-vercel.svg" alt="Powered by Vercel" title="Powered by Vercel">
 </a>
+
+<table>
+  <tr>
+    <td>
+    Databases Provided by
+    </td>
+    <td>
+      <a href="https://planetscale.com/" target="_parent">
+        <img src="./media/ps-white.png" alt="Powered by Planetscale" title="Powered by Planetscale" width=200>
+      </a>
+    </td>
+  </tr>
+</table>
