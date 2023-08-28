@@ -91,8 +91,11 @@ export function Description({ challenge }: Props) {
           <DialogTrigger tabIndex={-1}>
             <Tooltip>
               <TooltipTrigger asChild>
-                <button className="group flex h-6 items-center rounded-full bg-zinc-200 px-3 dark:bg-zinc-700 focus:outline-none focus-visible:ring-2">
-                  <Share className="h-4 w-4 stroke-zinc-500 group-hover:stroke-zinc-600 dark:stroke-zinc-300 group-hover:dark:stroke-zinc-100" tabIndex={-1} />
+                <button className="group flex h-6 items-center rounded-full bg-zinc-200 px-3 focus:outline-none focus-visible:ring-2 dark:bg-zinc-700">
+                  <Share
+                    className="h-4 w-4 stroke-zinc-500 group-hover:stroke-zinc-600 dark:stroke-zinc-300 group-hover:dark:stroke-zinc-100"
+                    tabIndex={-1}
+                  />
                 </button>
               </TooltipTrigger>
               <TooltipContent>
@@ -112,7 +115,7 @@ export function Description({ challenge }: Props) {
         <Tooltip>
           <TooltipTrigger asChild>
             <button
-              className="group flex h-6 items-center rounded-full bg-zinc-200 px-3 disabled:cursor-not-allowed disabled:bg-zinc-100 dark:bg-zinc-700 disabled:dark:bg-zinc-700/50 focus:outline-none focus-visible:ring-2"
+              className="group flex h-6 items-center rounded-full bg-zinc-200 px-3 focus:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:bg-zinc-100 dark:bg-zinc-700 disabled:dark:bg-zinc-700/50"
               disabled={!session.data?.user.id}
               onClick={() => {
                 let shouldBookmark = false;

@@ -30,9 +30,9 @@ function Features() {
     <section className="relative overflow-hidden" id="features">
       <div className="container mb-[64px] grid items-center justify-center">
         <div className="flex flex-col items-center justify-center gap-16">
-          <div className="flex flex-col gap-3 px-4 text-center sm:px-0 mt-1">
+          <div className="mt-1 flex flex-col gap-3 px-4 text-center sm:px-0">
             <a
-              className="mx-auto hidden rounded-full bg-gradient-to-r from-[#31bdc6] to-[#3178c6] p-[1px] brightness-90 contrast-150 focus:outline-none focus-visible:ring-2 focus:ring-blue-600 dark:brightness-125 dark:contrast-100 sm:block"
+              className="mx-auto hidden rounded-full bg-gradient-to-r from-[#31bdc6] to-[#3178c6] p-[1px] brightness-90 contrast-150 focus:outline-none focus:ring-blue-600 focus-visible:ring-2 dark:brightness-125 dark:contrast-100 sm:block"
               href="#features"
             >
               <div className="rounded-full bg-white/80 px-3 py-1 dark:bg-black/80">
