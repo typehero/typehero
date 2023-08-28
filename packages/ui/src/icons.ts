@@ -40,4 +40,5 @@ export {
   Unlock,
   User,
   X,
+  RotateCcw,
 } from 'lucide-react';
