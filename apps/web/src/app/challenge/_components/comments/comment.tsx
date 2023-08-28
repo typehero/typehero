@@ -113,10 +113,10 @@ export function Comment({ comment, readonly = false, rootId, type, queryKey }: C
 
   return (
     <div className="flex flex-col px-2 py-1">
-        <SingleComment comment={comment} onClickReply={toggleIsReplying} readonly={readonly} />
-        {comment._count.replies > 0 && (
+      <SingleComment comment={comment} onClickReply={toggleIsReplying} readonly={readonly} />
+      {comment._count.replies > 0 && (
         <button
-          className="z-50 pt-1 px-3 flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
+          className="z-50 flex cursor-pointer items-center gap-1 px-3 pt-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
           onClick={toggleReplies}
         >
           {showReplies ? <ChevronDown className="h-4 w-4" /> : <ChevronUp className="h-4 w-4" />}
@@ -145,7 +145,7 @@ export function Comment({ comment, readonly = false, rootId, type, queryKey }: C
       ) : null}
 
       {showReplies ? (
-        <div className="flex flex-col gap-1 pt-1 pl-6">
+        <div className="flex flex-col gap-1 pl-6 pt-1">
           {data?.pages.flatMap((page) =>
             page.comments.map((reply) => (
               // this is a reply
