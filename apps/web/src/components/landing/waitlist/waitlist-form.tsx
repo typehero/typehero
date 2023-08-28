@@ -22,20 +22,18 @@ import {
   SelectValue,
 } from '@repo/ui';
 import { uploadWaitlistEntry } from '~/components/landing/waitlist/create.action';
-import { useSearchParams } from 'next/navigation';
 
 const waitlistFormSchema = z.object({
   name: z.string().min(1, 'Please enter your name'),
   email: z.string().email(),
   intention: z.string(),
-  referrer: z.string().optional(),
 });
 
 export type WaitlistFormSchema = z.infer<typeof waitlistFormSchema>;
 
 export function WaitlistForm() {
   const [state, setState] = useState<'error' | 'idle' | 'submitting' | 'success'>('idle');
-  const referrer = useSearchParams().get('ref') || undefined;
+
   const isSubmitting = state === 'submitting';
 
   const form = useForm<WaitlistFormSchema>({
@@ -43,7 +41,6 @@ export function WaitlistForm() {
     defaultValues: {
       email: '',
       name: '',
-      referrer,
     },
   });
 
@@ -63,7 +60,6 @@ export function WaitlistForm() {
     <div className="w-full md:w-[350px]">
       <Form {...form}>
         <form className="flex flex-col" onSubmit={form.handleSubmit(onSubmit)}>
-          <input type="hidden" name="referrer" value={referrer} />
           <FormField
             control={form.control}
             name="name"
