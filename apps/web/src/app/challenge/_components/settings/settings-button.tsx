@@ -6,7 +6,7 @@ import {
   DialogTrigger,
   Tooltip,
   TooltipContent,
-  TooltipTrigger
+  TooltipTrigger,
 } from '@repo/ui';
 import { Settings } from '@repo/ui/icons';
 import { SettingsForm } from './settings-form';
