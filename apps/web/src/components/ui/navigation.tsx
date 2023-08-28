@@ -150,6 +150,7 @@ function LoginButton() {
   };
   const handleSignOut = async () => {
     await signOut({ redirect: false });
+    window.location.reload();
   };
 
   return session ? (

@@ -39,7 +39,7 @@ export function TrackCard({ track }: TrackProps) {
               {`${prettifyNumbers(track._count.enrolledUsers)}`}
             </span>
           </div> */}
-          <div className="flex flex-col gap-2 overflow-hidden">
+          <div className="flex flex-col gap-2">
             {track.trackChallenges
               .sort((a, b) => {
                 return a.orderId - b.orderId;
