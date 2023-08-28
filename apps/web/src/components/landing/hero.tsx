@@ -7,6 +7,7 @@ import { Balancer } from 'react-wrap-balancer';
 import { Button } from '@repo/ui';
 import { HeroChallengeCard } from '~/components/landing/hero-challenge-card';
 import { useIsMobile } from '~/utils/useIsMobile';
+import { useSearchParams } from 'next/navigation';
 
 function TypeHeroLogo() {
   return (
@@ -36,6 +37,11 @@ function TypeHeroLogo() {
 
 function Hero() {
   const isMobile = useIsMobile();
+  let waitlistUrl = '/waitlist';
+  const ref = useSearchParams().get('ref');
+  const urlSearchParams = new URLSearchParams(ref ? { ref } : undefined).toString();
+  if (urlSearchParams.length > 0) waitlistUrl += `?${urlSearchParams}`;
+
   return (
     <section className="-mt-[56px] min-h-[calc(100vh)] overflow-hidden lg:min-h-0 lg:pt-[56px]">
       <div className="container grid min-h-screen items-center justify-center lg:min-h-0 lg:grid-cols-2">
@@ -68,7 +74,7 @@ function Hero() {
               asChild
               className="hero-join-button group relative mx-auto w-fit overflow-hidden rounded-xl p-[2px] font-bold transition-all duration-300 hover:bg-transparent hover:shadow-[0_0_2rem_-0.5rem_#3178c6] dark:hidden md:mr-0 lg:mr-auto"
             >
-              <Link href="/waitlist">
+              <Link href={waitlistUrl}>
                 <span className="inline-flex h-full w-fit items-center gap-1 rounded-[10px] bg-white px-4 py-2 text-[#3178c6] transition-all duration-300">
                   <Mail className="mr-1 h-4 w-4 stroke-[3]" />
                   Join the Waitlist
@@ -79,7 +85,7 @@ function Hero() {
               asChild
               className="hero-join-button-dark group relative mx-auto hidden w-fit overflow-hidden rounded-xl p-[1px] font-bold transition-all duration-300 dark:block dark:hover:shadow-[0_0_2rem_-0.5rem_#fff8] md:mr-0 lg:mr-auto"
             >
-              <Link href="/waitlist">
+              <Link href={waitlistUrl}>
                 <span className="inline-flex h-full w-fit items-center gap-1 rounded-xl px-4 py-2 transition-all duration-300 dark:bg-neutral-900 dark:text-white group-hover:dark:bg-black">
                   <Mail className="mr-1 h-4 w-4 stroke-[3]" />
                   Join the Waitlist
