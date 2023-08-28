@@ -1,14 +1,14 @@
-'use client'
+'use client';
 
 import { motion } from 'framer-motion';
 import { HeroChallengeCard } from '~/components/landing/hero-challenge-card';
 import { useIsMobile } from '~/utils/useIsMobile';
 
 export function HeroIllustration() {
-  const isMobile = useIsMobile()
+  const isMobile = useIsMobile();
 
   if (isMobile) {
-    return null
+    return null;
   }
 
   return (
@@ -72,5 +72,5 @@ export function HeroIllustration() {
         />
       </motion.div>
     </div>
-  )
+  );
 }
