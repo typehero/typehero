@@ -41,18 +41,19 @@ export function TrackCard({ track }: TrackProps) {
           </div> */}
           <div className="flex flex-col gap-2">
             {track.trackChallenges
+              // get the first 3
+              .slice(0, 3)
               .sort((a, b) => {
                 return a.orderId - b.orderId;
-              }) // not sure how correct this is.
+              })
               .map((trackChallenge, idx) => {
-                if (idx > 2) return <></>;
                 return (
                   <TrackChallenge
                     challenge={trackChallenge.challenge}
-                    key={`track-challenge-${trackChallenge.id}`}
+                    key={`track-challenge-${trackChallenge.id}-${track.id}`}
                   />
                 );
-              })}
+            })}
             <Button
               variant="outline"
               onClick={() => {
