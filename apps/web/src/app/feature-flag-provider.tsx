@@ -10,6 +10,7 @@ interface Props {
 const mockFlags = {
   loginButton: true,
   exploreButton: true,
+  tracksButton: true,
 };
 
 const isProd = process.env.NODE_ENV === 'production';
