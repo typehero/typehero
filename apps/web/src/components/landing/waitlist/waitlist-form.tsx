@@ -55,10 +55,9 @@ export function WaitlistForm() {
       } else {
         setState('success');
       }
+      form.reset();
     } catch (e) {
       setState('error');
-    } finally {
-      form.reset();
     }
   }
 
