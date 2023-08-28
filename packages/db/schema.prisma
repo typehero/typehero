@@ -370,7 +370,6 @@ model Waitlist {
   name      String
   email     String
   intention WaitlistIntention
-  referrer  String?
 }
 
 model ImageUpload {

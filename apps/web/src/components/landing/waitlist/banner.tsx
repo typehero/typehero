@@ -5,13 +5,7 @@ import { Balancer } from 'react-wrap-balancer';
 import { Button } from '@repo/ui';
 import styles from '~/components/landing/waitlist/waitlist.module.css';
 
-interface WaitlistProps {
-  referrer?: string;
-}
-function Waitlist({ referrer }: WaitlistProps) {
-  let waitlistUrl = '/waitlist';
-  const urlSearchParams = new URLSearchParams(referrer ? { ref: referrer } : undefined).toString();
-  if (urlSearchParams.length > 0) waitlistUrl += `?${urlSearchParams}`;
+function Waitlist() {
   return (
     <section className={clsx(styles.backdrop, 'relative overflow-hidden')}>
       <div className="container relative grid grid-cols-1 items-center justify-center py-[64px] md:grid-cols-2">
@@ -32,7 +26,7 @@ function Waitlist({ referrer }: WaitlistProps) {
           asChild
           className="group relative w-fit overflow-hidden rounded-xl bg-gradient-to-bl from-indigo-400 via-blue-400 to-emerald-400 p-[2px] font-bold transition-all duration-300 hover:rounded-3xl active:rounded-xl active:duration-150 sm:mx-16 md:mx-auto md:mr-0 lg:mr-auto lg:scale-[1.5] lg:hover:scale-[1.6] lg:active:scale-[1.5]"
         >
-          <Link href={waitlistUrl}>
+          <Link href="/waitlist">
             <span className="inline-flex h-full w-fit items-center gap-1 rounded-[10px] bg-white/90 px-4 py-2 text-black transition-all duration-300 group-hover:rounded-3xl group-hover:bg-white/0 group-hover:text-white dark:bg-black/80 dark:text-white group-hover:dark:bg-black/0 dark:group-hover:text-black">
               <Mail className="mr-1 h-4 w-4 stroke-[3]" />
               Join the Waitlist
