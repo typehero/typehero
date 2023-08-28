@@ -36,7 +36,7 @@ export async function uploadWaitlistEntry(data: WaitlistFormSchema) {
   });
 
   if (existingEntry) {
-    throw new Error('You are already on the waitlist!');
+    return 'duplicate';
   }
 
   await prisma.waitlist.create({
