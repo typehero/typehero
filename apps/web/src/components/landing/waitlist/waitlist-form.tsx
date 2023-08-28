@@ -27,15 +27,11 @@ const waitlistFormSchema = z.object({
   name: z.string().min(1, 'Please enter your name'),
   email: z.string().email(),
   intention: z.string(),
-  ref: z.string().optional(),
 });
 
 export type WaitlistFormSchema = z.infer<typeof waitlistFormSchema>;
-export interface WaitlistFormProps {
-  ref?: string;
-}
 
-export function WaitlistForm({ ref }: WaitlistFormProps) {
+export function WaitlistForm() {
   const [state, setState] = useState<'error' | 'idle' | 'submitting' | 'success'>('idle');
 
   const isSubmitting = state === 'submitting';
@@ -70,7 +66,6 @@ export function WaitlistForm({ ref }: WaitlistFormProps) {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <input type="hidden" name="ref" value={ref} />
                   <Input
                     className={clsx({
                       'rounded-b-none rounded-t-xl border border-b-0 border-red-600 bg-white/50 backdrop-blur-md dark:border-red-400 dark:bg-neutral-950/50':
