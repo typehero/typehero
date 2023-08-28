@@ -5,7 +5,9 @@ import { Balancer } from 'react-wrap-balancer';
 import { Button } from '@repo/ui';
 import styles from '~/components/landing/waitlist/waitlist.module.css';
 
-interface WaitlistProps { referrer?: string }
+interface WaitlistProps {
+  referrer?: string;
+}
 function Waitlist({ referrer }: WaitlistProps) {
   let waitlistUrl = '/waitlist';
   const urlSearchParams = new URLSearchParams(referrer ? { ref: referrer } : undefined).toString();
