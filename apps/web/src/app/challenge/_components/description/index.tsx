@@ -88,11 +88,11 @@ export function Description({ challenge }: Props) {
       <div className="mt-3 flex items-center gap-3">
         <DifficultyBadge difficulty={challenge.difficulty} />
         <Dialog>
-          <DialogTrigger className="focus:outline-none focus-visible:ring-0">
+          <DialogTrigger tabIndex={-1}>
             <Tooltip>
               <TooltipTrigger asChild>
                 <button className="group flex h-6 items-center rounded-full bg-zinc-200 px-3 dark:bg-zinc-700 focus:outline-none focus-visible:ring-2">
-                  <Share className="h-4 w-4 stroke-zinc-500 group-hover:stroke-zinc-600 dark:stroke-zinc-300 group-hover:dark:stroke-zinc-100 focus:outline-none focus-visible:ring-0" />
+                  <Share className="h-4 w-4 stroke-zinc-500 group-hover:stroke-zinc-600 dark:stroke-zinc-300 group-hover:dark:stroke-zinc-100" tabIndex={-1} />
                 </button>
               </TooltipTrigger>
               <TooltipContent>
