@@ -78,7 +78,7 @@ export default function Reports2({ initialReports }: ReportsProps) {
         </TableHeader>
         <TableBody>
           {data?.pages[page]?.data.map((tr) => (
-            <TableRow key={`report-${tr.id}`} onClick={() => router.push(`/admin/report/${tr.id}`)}>
+            <TableRow key={`report-${tr.id}`} onClick={() => router.push(`/report/${tr.id}`)}>
               <TableCell>{tr.type}</TableCell>
               <TableCell>{tr.reporter.name}</TableCell>
               <TableCell>{tr.status}</TableCell>

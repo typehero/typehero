@@ -28,7 +28,7 @@ jobs:
         uses: ./tooling/github-actions/install
 
       - name: Run Prettier
-        run: turbo format
+        run: turbo format --continue
 
   eslint:
     name: ESLint
@@ -42,7 +42,7 @@ jobs:
         uses: ./tooling/github-actions/install
 
       - name: Lint
-        run: turbo lint
+        run: turbo lint --continue
 
   typecheck:
     name: TypeCheck
@@ -67,4 +67,4 @@ jobs:
           restore-keys: ${{ runner.os }}-cache-typescript-tsbuildinfo-
 
       - name: Run TypeScript type check
-        run: turbo typecheck
+        run: turbo typecheck --continue

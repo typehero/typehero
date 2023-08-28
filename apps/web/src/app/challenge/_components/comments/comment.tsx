@@ -116,7 +116,7 @@ export function Comment({ comment, readonly = false, rootId, type, queryKey }: C
       <SingleComment comment={comment} onClickReply={toggleIsReplying} readonly={readonly} />
       {comment._count.replies > 0 && (
         <button
-          className="z-50 ml-2 mt-1 flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
+          className="z-50 flex cursor-pointer items-center gap-1 px-3 pt-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
           onClick={toggleReplies}
         >
           {showReplies ? <ChevronDown className="h-4 w-4" /> : <ChevronUp className="h-4 w-4" />}
@@ -126,7 +126,6 @@ export function Comment({ comment, readonly = false, rootId, type, queryKey }: C
           </div>
         </button>
       )}
-
       {isReplying ? (
         <div className="relative mt-2 pb-2 pl-8">
           <Reply className="absolute left-2 top-2 h-4 w-4 opacity-50" />
@@ -146,7 +145,7 @@ export function Comment({ comment, readonly = false, rootId, type, queryKey }: C
       ) : null}
 
       {showReplies ? (
-        <div className="-mt-1 flex flex-col gap-1 p-2 pb-8 pl-8 pr-0">
+        <div className="flex flex-col gap-1 pl-6 pt-1">
           {data?.pages.flatMap((page) =>
             page.comments.map((reply) => (
               // this is a reply
@@ -234,7 +233,7 @@ function SingleComment({
   const isAuthor = loggedinUser.data?.user.id === comment.user.id;
 
   return (
-    <div className="relative rounded-xl bg-zinc-200 p-2 pl-3 dark:bg-zinc-600/30">
+    <div className="relative p-2 pl-3">
       <div className="flex items-start justify-between gap-4 pr-[0.4rem]">
         <div className="flex items-center gap-1">
           <UserBadge username={comment.user.name ?? ''} linkComponent={Link} />
@@ -269,7 +268,6 @@ function SingleComment({
                   comment._count.vote += didUpvote ? 1 : -1;
                 }}
               />
-              <Reply className="absolute -left-6 h-4 w-4 opacity-50" />
               <div
                 className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
                 onClick={() => {
@@ -306,7 +304,7 @@ function SingleComment({
                 </CommentDeleteDialog>
               ) : (
                 <ReportDialog commentId={comment.id} reportType="COMMENT">
-                  <div className="flex cursor-pointer items-center text-[0.8rem] text-neutral-400 duration-200 hover:text-neutral-500 dark:text-neutral-600 dark:hover:text-neutral-500">
+                  <div className="flex cursor-pointer items-center text-[0.8rem] text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300">
                     Report
                   </div>
                 </ReportDialog>

@@ -9,7 +9,6 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  navigationMenuTriggerStyle,
 } from '@repo/ui';
 import { Loader2, LogIn, Moon, Plus, Settings, Settings2, Sun, User } from '@repo/ui/icons';
 import { useTheme } from 'next-themes';
@@ -17,7 +16,16 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import { FeatureFlagContext } from '~/app/feature-flag-provider';
-import { getBaseUrl } from '~/utils/getBaseUrl';
+
+export function getAdminUrl() {
+  // reference for vercel.com
+  if (process.env.VERCEL_URL) {
+    return `https://admin.typehero.dev`;
+  }
+
+  // assume localhost
+  return `http://localhost:3001`;
+}
 
 export function Navigation() {
   const pathname = usePathname();
@@ -174,7 +182,7 @@ function LoginButton() {
           </DropdownMenuItem>
         </Link>
         {isAdminOrMod ? (
-          <a className="block" href={`${getBaseUrl()}/admin`}>
+          <a className="block" href={getAdminUrl()}>
             <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
               <Settings className="mr-2 h-4 w-4" />
               <span>Admin</span>

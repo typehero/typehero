@@ -1,15 +1,12 @@
 import {
-  Button,
-  ToastAction,
-  useToast,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
 } from '@repo/ui';
 import { Settings } from '@repo/ui/icons';
 import { SettingsForm } from './settings-form';

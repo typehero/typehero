@@ -34,6 +34,7 @@ export * from './components/tabs';
 export * from './components/textarea';
 export * from './components/toast';
 export * from './components/toaster';
+export * from './components/toggle';
 export * from './components/tooltip';
 export * from './components/typography/h1';
 export * from './components/typography/h2';

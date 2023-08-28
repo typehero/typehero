@@ -32,7 +32,9 @@ const waitlistFormSchema = z.object({
 export type WaitlistFormSchema = z.infer<typeof waitlistFormSchema>;
 
 export function WaitlistForm() {
-  const [state, setState] = useState<'error' | 'idle' | 'submitting' | 'success'>('idle');
+  const [state, setState] = useState<'duplicate' | 'error' | 'idle' | 'submitting' | 'success'>(
+    'idle',
+  );
 
   const isSubmitting = state === 'submitting';
 
@@ -47,12 +49,15 @@ export function WaitlistForm() {
   async function onSubmit(data: WaitlistFormSchema) {
     try {
       setState('submitting');
-      await uploadWaitlistEntry(data);
-      setState('success');
+      const status = await uploadWaitlistEntry(data);
+      if (status === 'duplicate') {
+        setState('duplicate');
+      } else {
+        setState('success');
+      }
+      form.reset();
     } catch (e) {
       setState('error');
-    } finally {
-      form.reset();
     }
   }
 
@@ -155,6 +160,9 @@ export function WaitlistForm() {
         </form>
       </Form>
       <div className="mt-3">
+        {state === 'duplicate' && (
+          <AlertDestructive text="We already have your email. Thanks for signing up!" />
+        )}
         {state === 'success' && <AlertSuccess />}
         {state === 'error' && <AlertDestructive />}
       </div>
@@ -162,15 +170,15 @@ export function WaitlistForm() {
   );
 }
 
-export function AlertDestructive() {
-  // destructive:
-  //   'destructive group border-destructive bg-destructive text-destructive-foreground',
+export function AlertDestructive({
+  text = 'Something went wrong. Please try again.',
+}: {
+  text?: string;
+}) {
   return (
     <Alert className="dark:bg-[#230808]" variant="destructive">
       <AlertCircle className="h-4 w-4" />
-      <AlertDescription className="text-left text-black dark:text-white">
-        Something went wrong. Please try again.
-      </AlertDescription>
+      <AlertDescription className="text-left text-black dark:text-white">{text}</AlertDescription>
     </Alert>
   );
 }
