@@ -1,24 +1,12 @@
 'use client';
-import type { Difficulty } from '@repo/db/types';
 import { ChevronRight } from '@repo/ui/icons';
-import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
-import { ExploreCard } from './explore-card';
-import type { ExploreChallengeData } from './explore.action';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 
 interface Props {
-  challenges: Awaited<ExploreChallengeData>;
+  children: ReactNode;
 }
 
-const difficultyToNumber: Record<Difficulty, number> = {
-  BEGINNER: 0,
-  EASY: 1,
-  MEDIUM: 2,
-  HARD: 3,
-  EXTREME: 4,
-};
-
-export function ExploreCarousel({ challenges }: Props) {
+export function Carousel({ children }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [showLeftButton, setShowLeftButton] = useState(false);
   const [showRightButton, setShowRightButton] = useState(true);
@@ -83,21 +71,7 @@ export function ExploreCarousel({ challenges }: Props) {
       id="container"
       ref={containerRef}
     >
-      {challenges
-        .sort((a, b) =>
-          difficultyToNumber[a.difficulty] !== difficultyToNumber[b.difficulty]
-            ? difficultyToNumber[a.difficulty] - difficultyToNumber[b.difficulty]
-            : a.name.localeCompare(b.name),
-        )
-        .map((challenge) => (
-          <Link
-            className="group snap-center focus:outline-none sm:w-[330px] xl:w-[333px]"
-            href={`/challenge/${challenge.id}`}
-            key={challenge.id}
-          >
-            <ExploreCard challenge={challenge} key={`challenge-${challenge.id}`} />
-          </Link>
-        ))}
+      {children}
       <button
         className="absolute right-5 top-1/2 hidden -translate-y-1/2 rounded-[5rem] border border-neutral-400 bg-neutral-200/50 px-2 py-4 backdrop-blur-sm duration-300 active:scale-75 dark:border-neutral-600 dark:bg-neutral-700/50 sm:block"
         id="slideRight"

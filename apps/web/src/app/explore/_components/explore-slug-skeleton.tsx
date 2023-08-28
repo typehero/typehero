@@ -1,4 +1,4 @@
-import { ExploreSectionSkeleton } from './section-skeleton';
+import { ExploreSectionSkeleton } from './explore-section-skeleton';
 
 export function ExploreSlugSkeleton() {
   return (

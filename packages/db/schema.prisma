@@ -156,7 +156,7 @@ model Challenge {
   description      String          @db.MediumText
   /// this is a short blue thats shown on the explore card
   shortDescription String
-  /// Starter code for the challenge 
+  /// Starter code for the challenge
   code             String          @db.MediumText
   /// Test cases that need to be passed in order have the submission be accepted.
   tests            String          @db.MediumText
@@ -399,6 +399,7 @@ model TrackChallenge {
   Track       Track?    @relation(fields: [trackId], references: [id])
   trackId     Int?
 
+  @@unique([challengeId, orderId])
   @@index([challengeId])
   @@index([trackId])
 }
@@ -409,8 +410,5 @@ model Track {
   description     String
   visible         Boolean          @default(true)
   trackChallenges TrackChallenge[]
-  user            User?            @relation(fields: [userId], references: [id])
-  userId          String?
-
-  @@index([userId])
+  enrolledUsers   User[]
 }
