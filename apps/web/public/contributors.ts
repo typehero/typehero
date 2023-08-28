@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 113
+        "contributions": 116
     },
     {
         "login": "PickleNik",
@@ -41,7 +41,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/PickleNik/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 69
+        "contributions": 72
     },
     {
         "login": "Hacksore",
@@ -62,7 +62,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/Hacksore/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 64
+        "contributions": 65
     },
     {
         "login": "ggrandi",
@@ -149,6 +149,27 @@ export const contributors = [
         "contributions": 11
     },
     {
+        "login": "anthonyshew",
+        "id": 35677084,
+        "node_id": "MDQ6VXNlcjM1Njc3MDg0",
+        "avatar_url": "https://avatars.githubusercontent.com/u/35677084?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/anthonyshew",
+        "html_url": "https://github.com/anthonyshew",
+        "followers_url": "https://api.github.com/users/anthonyshew/followers",
+        "following_url": "https://api.github.com/users/anthonyshew/following{/other_user}",
+        "gists_url": "https://api.github.com/users/anthonyshew/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/anthonyshew/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/anthonyshew/subscriptions",
+        "organizations_url": "https://api.github.com/users/anthonyshew/orgs",
+        "repos_url": "https://api.github.com/users/anthonyshew/repos",
+        "events_url": "https://api.github.com/users/anthonyshew/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/anthonyshew/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 9
+    },
+    {
         "login": "is-it-ayush",
         "id": 36449128,
         "node_id": "MDQ6VXNlcjM2NDQ5MTI4",
@@ -170,27 +191,6 @@ export const contributors = [
         "contributions": 9
     },
     {
-        "login": "anthonyshew",
-        "id": 35677084,
-        "node_id": "MDQ6VXNlcjM1Njc3MDg0",
-        "avatar_url": "https://avatars.githubusercontent.com/u/35677084?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/anthonyshew",
-        "html_url": "https://github.com/anthonyshew",
-        "followers_url": "https://api.github.com/users/anthonyshew/followers",
-        "following_url": "https://api.github.com/users/anthonyshew/following{/other_user}",
-        "gists_url": "https://api.github.com/users/anthonyshew/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/anthonyshew/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/anthonyshew/subscriptions",
-        "organizations_url": "https://api.github.com/users/anthonyshew/orgs",
-        "repos_url": "https://api.github.com/users/anthonyshew/repos",
-        "events_url": "https://api.github.com/users/anthonyshew/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/anthonyshew/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 8
-    },
-    {
         "login": "QuiiBz",
         "id": 43268759,
         "node_id": "MDQ6VXNlcjQzMjY4NzU5",
@@ -209,7 +209,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/QuiiBz/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 7
+        "contributions": 9
     },
     {
         "login": "basokant",
@@ -230,7 +230,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/basokant/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 5
+        "contributions": 6
     },
     {
         "login": "FullStackCorm",
@@ -380,27 +380,6 @@ export const contributors = [
         "contributions": 3
     },
     {
-        "login": "laureanray",
-        "id": 22195710,
-        "node_id": "MDQ6VXNlcjIyMTk1NzEw",
-        "avatar_url": "https://avatars.githubusercontent.com/u/22195710?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/laureanray",
-        "html_url": "https://github.com/laureanray",
-        "followers_url": "https://api.github.com/users/laureanray/followers",
-        "following_url": "https://api.github.com/users/laureanray/following{/other_user}",
-        "gists_url": "https://api.github.com/users/laureanray/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/laureanray/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/laureanray/subscriptions",
-        "organizations_url": "https://api.github.com/users/laureanray/orgs",
-        "repos_url": "https://api.github.com/users/laureanray/repos",
-        "events_url": "https://api.github.com/users/laureanray/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/laureanray/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 2
-    },
-    {
         "login": "typesafegh",
         "id": 135900154,
         "node_id": "U_kgDOCBmr-g",
@@ -417,6 +396,27 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/typesafegh/repos",
         "events_url": "https://api.github.com/users/typesafegh/events{/privacy}",
         "received_events_url": "https://api.github.com/users/typesafegh/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 3
+    },
+    {
+        "login": "laureanray",
+        "id": 22195710,
+        "node_id": "MDQ6VXNlcjIyMTk1NzEw",
+        "avatar_url": "https://avatars.githubusercontent.com/u/22195710?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/laureanray",
+        "html_url": "https://github.com/laureanray",
+        "followers_url": "https://api.github.com/users/laureanray/followers",
+        "following_url": "https://api.github.com/users/laureanray/following{/other_user}",
+        "gists_url": "https://api.github.com/users/laureanray/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/laureanray/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/laureanray/subscriptions",
+        "organizations_url": "https://api.github.com/users/laureanray/orgs",
+        "repos_url": "https://api.github.com/users/laureanray/repos",
+        "events_url": "https://api.github.com/users/laureanray/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/laureanray/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 2
@@ -481,6 +481,27 @@ export const contributors = [
         "events_url": "https://api.github.com/users/NikolaRHristov/events{/privacy}",
         "received_events_url": "https://api.github.com/users/NikolaRHristov/received_events",
         "type": "User",
+        "site_admin": false,
+        "contributions": 1
+    },
+    {
+        "login": "github-actions[bot]",
+        "id": 41898282,
+        "node_id": "MDM6Qm90NDE4OTgyODI=",
+        "avatar_url": "https://avatars.githubusercontent.com/in/15368?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/github-actions%5Bbot%5D",
+        "html_url": "https://github.com/apps/github-actions",
+        "followers_url": "https://api.github.com/users/github-actions%5Bbot%5D/followers",
+        "following_url": "https://api.github.com/users/github-actions%5Bbot%5D/following{/other_user}",
+        "gists_url": "https://api.github.com/users/github-actions%5Bbot%5D/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/github-actions%5Bbot%5D/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/github-actions%5Bbot%5D/subscriptions",
+        "organizations_url": "https://api.github.com/users/github-actions%5Bbot%5D/orgs",
+        "repos_url": "https://api.github.com/users/github-actions%5Bbot%5D/repos",
+        "events_url": "https://api.github.com/users/github-actions%5Bbot%5D/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/github-actions%5Bbot%5D/received_events",
+        "type": "Bot",
         "site_admin": false,
         "contributions": 1
     }
