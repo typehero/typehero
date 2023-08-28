@@ -11,11 +11,23 @@ import { Comment } from './comment';
 import { CommentInput } from './comment-input';
 import { CommentSkeleton } from './comment-skeleton';
 import { addComment } from './comment.action';
-import { getPaginatedComments, type SortKey, type SortOrder } from './getCommentRouteData';
+import { getPaginatedComments, type SortOrder } from './getCommentRouteData';
 import NoComments from './nocomments';
 
-const sortKeys = ["createdAt", "vote", "replies"] as const;
-const sortOrders = ["asc", "desc"] as const;
+const sortKeys = [
+  {
+    label: "Created At",
+    value: "createdAt"
+  },
+  {
+    label: "# of Votes",
+    value: "vote"
+  },
+  {
+    label: "# of Replies",
+    value: "replies"
+  }
+] as const;
 interface Props {
   rootId: number;
   type: CommentRoot;
@@ -27,14 +39,14 @@ export function Comments({ rootId, type }: Props) {
   const commentContainerRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
-  const [sortKey, setSortKey] = useState<SortKey>("createdAt");
+  const [sortKey, setSortKey] = useState<typeof sortKeys[number]>(sortKeys[0]);
   const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
 
-  const queryKey = [`${type.toLowerCase()}-${rootId}-comments`, sortKey, sortOrder, page];
+  const queryKey = [`${type.toLowerCase()}-${rootId}-comments`, sortKey.value, sortOrder, page];
 
   const { status, data } = useQuery({
     queryKey,
-    queryFn: () => getPaginatedComments({ rootId, page, rootType: type, sortKey, sortOrder }),
+    queryFn: () => getPaginatedComments({ rootId, page, rootType: type, sortKey: sortKey.value, sortOrder }),
     keepPreviousData: true,
     staleTime: 5000,
   });
@@ -121,19 +133,24 @@ export function Comments({ rootId, type }: Props) {
             />
           </div>
           <div className="px-3 py-2 flex gap-2 items-center">
-            <Select value={sortKey} defaultValue="createdAt" onValueChange={(value) => {
-              setSortKey(value as SortKey);
-              setPage(1);
-            }
-            }>
+            <Select 
+              value={sortKey.value}
+              defaultValue="createdAt"
+              onValueChange={
+                (value) => {
+                  setSortKey(sortKeys.find((sk) => sk.value === value) ?? sortKeys[0]);
+                  setPage(1);
+                }
+              }
+            >
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Sort Key" />
               </SelectTrigger>
               <SelectContent>
                 {
                   sortKeys.map((sortKey, index) => (
-                    <SelectItem key={index} value={sortKey} >
-                      {sortKey}
+                    <SelectItem key={index} value={sortKey.value} >
+                      {sortKey.label}
                     </SelectItem>
                   ))
                 }
