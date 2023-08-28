@@ -13,7 +13,7 @@ import {
 import { Loader2, LogIn, Moon, Plus, Settings, Settings2, Sun, User } from '@repo/ui/icons';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import { FeatureFlagContext } from '~/app/feature-flag-provider';
 
@@ -132,6 +132,7 @@ function ThemeButton() {
 function LoginButton() {
   const [loading, setLoading] = useState(false);
   const { data: session, status } = useSession();
+  const router = useRouter();
 
   const isAdmin = session?.user.role.includes(RoleTypes.ADMIN);
   const isMod = session?.user.role.includes(RoleTypes.MODERATOR);
@@ -150,7 +151,7 @@ function LoginButton() {
   };
   const handleSignOut = async () => {
     await signOut({ redirect: false });
-    window.location.reload();
+    router.refresh();
   };
 
   return session ? (
