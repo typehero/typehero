@@ -23,13 +23,13 @@ export async function Tracks() {
           tracks, offering a dynamic learning path for developers to enhance their skills.
         </p>
       </div>
-      {session?.user && (
+      {session ? (
         <EnrolledTrackSection
           key="enrolled-track-section"
           title="Your Tracks"
           tracks={enrolledTracks}
         />
-      )}
+      ) : null}
       <PopularTrackSection
         key="popular-track-section"
         title="Popular"

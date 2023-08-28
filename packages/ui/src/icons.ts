@@ -32,7 +32,6 @@ export {
   Settings,
   Settings2,
   Share,
-  Sparkle,
   Sun,
   ThumbsUp,
   Trash2,

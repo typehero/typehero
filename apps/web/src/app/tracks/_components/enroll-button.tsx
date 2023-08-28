@@ -2,9 +2,10 @@
 
 import { Button, toast } from '@repo/ui';
 import { useRouter } from 'next/navigation';
+import { enrollUserInTrack, unenrollUserFromTrack } from './track.action';
 
 interface EnrollButtonProps {
-  action: (...args: any) => Promise<any>;
+  action: typeof enrollUserInTrack | typeof unenrollUserFromTrack;
   text: string;
   trackId: number;
 }
