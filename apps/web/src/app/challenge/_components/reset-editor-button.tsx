@@ -11,7 +11,6 @@ import {
 } from '@repo/ui';
 import { RotateCcw } from '@repo/ui/icons';
 
-
 const ResetEditorButton = () => {
   const { dispatch } = useResetEditor();
   return (
