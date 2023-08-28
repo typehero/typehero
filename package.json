@@ -8,6 +8,7 @@
     "checks:fix": "turbo format:fix lint:fix typecheck --continue",
     "clean": "turbo clean && rm -rf node_modules",
     "db:push": "turbo db:push",
+    "db:reset": "turbo db:reset",
     "db:seed": "turbo db:seed",
     "db:studio": "turbo db:studio",
     "dev": "turbo dev --concurrency=1000",

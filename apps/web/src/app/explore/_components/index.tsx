@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
+import { ExploreSection } from './explore-section';
+import { ExploreSectionSkeleton } from './explore-section-skeleton';
 import { getChallengesByTagOrDifficulty } from './explore.action';
-import { ExploreSection } from './section';
-import { ExploreSectionSkeleton } from './section-skeleton';
 import { Footsies } from '~/components/ui/footsies';
 
 // CI fails without this
@@ -27,28 +27,32 @@ export async function Explore() {
         <ExploreSection
           title="💕 Most Popular"
           fetcher={getChallengesByTagOrDifficulty}
-          moreRoute="POPULAR"
+          tag="POPULAR"
+          redirectRoute="/explore/popular"
         />
       </Suspense>
       <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection
           title="🔥 Newest"
           fetcher={getChallengesByTagOrDifficulty}
-          moreRoute="NEWEST"
+          tag="NEWEST"
+          redirectRoute="/explore/newest"
         />
       </Suspense>
       <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection
           title="Great for Beginners"
           fetcher={getChallengesByTagOrDifficulty}
-          moreRoute="EASY"
+          tag="EASY"
+          redirectRoute="/explore/easy"
         />
       </Suspense>
       <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection
           title="Great for Enthusiasts"
           fetcher={getChallengesByTagOrDifficulty}
-          moreRoute="MEDIUM"
+          tag="MEDIUM"
+          redirectRoute="/explore/medium"
         />
       </Suspense>
 
@@ -56,7 +60,8 @@ export async function Explore() {
         <ExploreSection
           title="For the Experts"
           fetcher={getChallengesByTagOrDifficulty}
-          moreRoute="HARD"
+          tag="HARD"
+          redirectRoute="/explore/hard"
         />
       </Suspense>
       <Footsies />
