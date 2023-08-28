@@ -53,7 +53,7 @@ export function TrackCard({ track }: TrackProps) {
                     key={`track-challenge-${trackChallenge.id}-${track.id}`}
                   />
                 );
-            })}
+              })}
             <Button
               variant="outline"
               onClick={() => {
