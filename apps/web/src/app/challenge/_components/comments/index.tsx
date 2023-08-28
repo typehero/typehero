@@ -1,7 +1,16 @@
 'use client';
 
 import type { CommentRoot } from '@repo/db/types';
-import { Button, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Toggle, toast } from '@repo/ui';
+import {
+  Button,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Toggle,
+  toast,
+} from '@repo/ui';
 import { ChevronDown, ChevronLeft, ChevronRight, MessageCircle } from '@repo/ui/icons';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
@@ -16,17 +25,17 @@ import NoComments from './nocomments';
 
 const sortKeys = [
   {
-    label: "Created At",
-    value: "createdAt"
+    label: 'Created At',
+    value: 'createdAt',
   },
   {
-    label: "# of Votes",
-    value: "vote"
+    label: '# of Votes',
+    value: 'vote',
   },
   {
-    label: "# of Replies",
-    value: "replies"
-  }
+    label: '# of Replies',
+    value: 'replies',
+  },
 ] as const;
 interface Props {
   rootId: number;
@@ -39,14 +48,15 @@ export function Comments({ rootId, type }: Props) {
   const commentContainerRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
-  const [sortKey, setSortKey] = useState<typeof sortKeys[number]>(sortKeys[0]);
-  const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
+  const [sortKey, setSortKey] = useState<(typeof sortKeys)[number]>(sortKeys[0]);
+  const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
 
   const queryKey = [`${type.toLowerCase()}-${rootId}-comments`, sortKey.value, sortOrder, page];
 
   const { status, data } = useQuery({
     queryKey,
-    queryFn: () => getPaginatedComments({ rootId, page, rootType: type, sortKey: sortKey.value, sortOrder }),
+    queryFn: () =>
+      getPaginatedComments({ rootId, page, rootType: type, sortKey: sortKey.value, sortOrder }),
     keepPreviousData: true,
     staleTime: 5000,
   });
@@ -132,53 +142,49 @@ export function Comments({ rootId, type }: Props) {
               value={text}
             />
           </div>
-          <div className="px-3 py-2 flex gap-2 items-center">
-            <Select 
+          <div className="flex items-center gap-2 px-3 py-2">
+            <Select
               value={sortKey.value}
               defaultValue="createdAt"
-              onValueChange={
-                (value) => {
-                  setSortKey(sortKeys.find((sk) => sk.value === value) ?? sortKeys[0]);
-                  setPage(1);
-                }
-              }
+              onValueChange={(value) => {
+                setSortKey(sortKeys.find((sk) => sk.value === value) ?? sortKeys[0]);
+                setPage(1);
+              }}
             >
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Sort Key" />
               </SelectTrigger>
               <SelectContent>
-                {
-                  sortKeys.map((sortKey, index) => (
-                    <SelectItem key={index} value={sortKey.value} >
-                      {sortKey.label}
-                    </SelectItem>
-                  ))
-                }
+                {sortKeys.map((sortKey, index) => (
+                  <SelectItem key={index} value={sortKey.value}>
+                    {sortKey.label}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
             <Toggle
               variant="outline"
               size="sm"
               aria-label="Ascending"
-              pressed={sortOrder === "asc"}
+              pressed={sortOrder === 'asc'}
               onPressedChange={() => {
-                setSortOrder("asc");
+                setSortOrder('asc');
                 setPage(1);
               }}
             >
-              <ArrowUpNarrowWide/>
+              <ArrowUpNarrowWide />
             </Toggle>
             <Toggle
               variant="outline"
               size="sm"
               aria-label="Descending"
-              pressed={sortOrder === "desc"}
+              pressed={sortOrder === 'desc'}
               onPressedChange={() => {
-                setSortOrder("desc");
+                setSortOrder('desc');
                 setPage(1);
               }}
             >
-              <ArrowDownNarrowWide/>
+              <ArrowDownNarrowWide />
             </Toggle>
           </div>
           {status === 'loading' && <CommentSkeleton />}
