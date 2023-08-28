@@ -7,6 +7,7 @@ import type { ChallengeRouteData } from './getChallengeRouteData';
 import { SubmissionOverview } from './submissions/_components/overview';
 import { saveSubmission } from './submissions/save-submission.action';
 import { FullscreenButton } from '../_components/fullscreen';
+import { ResetEditorButton } from '../_components/reset-editor-button';
 
 export function Wrapper({ challenge }: { challenge: ChallengeRouteData }) {
   const segments = useSelectedLayoutSegments();
@@ -33,6 +34,7 @@ export function Wrapper({ challenge }: { challenge: ChallengeRouteData }) {
 function SettingsElements() {
   return (
     <>
+      <ResetEditorButton />
       <FullscreenButton />
       <SettingsButton />
     </>
