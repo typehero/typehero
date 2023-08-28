@@ -12,6 +12,7 @@ import { Button, ToastAction, useToast, Tooltip, TooltipContent, TooltipTrigger 
 import { useLocalStorage } from './useLocalStorage';
 import SplitEditor, { TESTS_PATH } from './split-editor';
 import { createTwoslashInlayProvider } from './twoslash';
+import { PrettierFormatProvider } from './prettier';
 
 const VimStatusBar = dynamic(() => import('./vim-mode').then((v) => v.VimStatusBar), {
   ssr: false,
@@ -89,7 +90,7 @@ export function CodePanel(props: CodePanelProps) {
 
   return (
     <>
-      <div className="sticky top-0 flex h-[40px] flex-row-reverse items-center border-b border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
+      <div className="sticky top-0 flex h-[40px] items-center justify-end gap-4 border-b border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
         {props.settingsElement}
       </div>
       <div className="w-full flex-1">
@@ -107,6 +108,11 @@ export function CodePanel(props: CodePanelProps) {
                 target: monaco.languages.typescript.ScriptTarget.ESNext,
                 strictNullChecks: true,
               });
+
+              monaco.languages.registerDocumentFormattingEditProvider(
+                'typescript',
+                PrettierFormatProvider,
+              );
 
               setUserEditorState(editor);
 
