@@ -21,9 +21,7 @@ export function PopularTrackSection({ title, tracks, tag }: PopularTrackSectionP
         </h2>
       </div>
       <section className="grid w-full grid-flow-row grid-cols-1 gap-4 overflow-hidden rounded-[2.5rem] p-8 md:grid-cols-2 lg:grid-cols-3">
-        {tracks?.map((t) => (
-          <TrackCard key={`popular-track-${t.id}`} track={t} />
-        ))}
+        {tracks?.map((t) => <TrackCard key={`popular-track-${t.id}`} track={t} />)}
       </section>
     </div>
   );
