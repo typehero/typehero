@@ -1,10 +1,11 @@
 'use client';
 
 import type { CommentRoot } from '@repo/db/types';
-import { Button, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, toast } from '@repo/ui';
+import { Button, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Toggle, toast } from '@repo/ui';
 import { ChevronDown, ChevronLeft, ChevronRight, MessageCircle } from '@repo/ui/icons';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
+import { ArrowDownNarrowWide, ArrowUpNarrowWide } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { Comment } from './comment';
 import { CommentInput } from './comment-input';
@@ -119,9 +120,13 @@ export function Comments({ rootId, type }: Props) {
               value={text}
             />
           </div>
-          <div className="p-2">
-            <Select value={sortKey} defaultValue="createdAt" onValueChange={(value) => setSortKey(value as SortKey)}>
-              <SelectTrigger className="w-[180px] dark">
+          <div className="px-3 py-2 flex gap-2 items-center">
+            <Select value={sortKey} defaultValue="createdAt" onValueChange={(value) => {
+              setSortKey(value as SortKey);
+              setPage(1);
+            }
+            }>
+              <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Sort Key" />
               </SelectTrigger>
               <SelectContent>
@@ -134,6 +139,30 @@ export function Comments({ rootId, type }: Props) {
                 }
               </SelectContent>
             </Select>
+            <Toggle
+              variant="outline"
+              size="sm"
+              aria-label="Ascending"
+              pressed={sortOrder === "asc"}
+              onPressedChange={() => {
+                setSortOrder("asc");
+                setPage(1);
+              }}
+            >
+              <ArrowUpNarrowWide/>
+            </Toggle>
+            <Toggle
+              variant="outline"
+              size="sm"
+              aria-label="Descending"
+              pressed={sortOrder === "desc"}
+              onPressedChange={() => {
+                setSortOrder("desc");
+                setPage(1);
+              }}
+            >
+              <ArrowDownNarrowWide/>
+            </Toggle>
           </div>
           {status === 'loading' && <CommentSkeleton />}
           <div className="flex-1">
