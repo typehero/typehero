@@ -1,17 +1,33 @@
-import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui';
+import { useResetEditor } from '@repo/monaco/editor-hooks';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@repo/ui';
 import { RotateCcw } from '@repo/ui/icons';
 
-export function ResetEditorButton() {
+const ResetEditorButton = () => {
+  const { dispatch } = useResetEditor();
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <button className="focus:outline-none focus-visible:ring-2">
-          <RotateCcw className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" size={20} />
-        </button>
-      </TooltipTrigger>
-      <TooltipContent>
-        <p>Reset Editor</p>
-      </TooltipContent>
-    </Tooltip>
+    <AlertDialog>
+      <AlertDialogTrigger>
+        <RotateCcw className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" size={20} />
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Reset code?</AlertDialogTitle>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={() => dispatch('resetCode')}>Continue</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
-}
+};
+export { ResetEditorButton };
