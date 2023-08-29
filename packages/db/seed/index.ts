@@ -51,10 +51,6 @@ for (let i = 0; i < TRACK_AMOUNT; i++) {
     },
   });
 
-  console.log({
-    challengesToCreate: challenges.map((c) => c.id),
-  });
-
   await prisma.trackChallenge.createMany({
     data: challenges.map((challenge, index) => ({
       challengeId: challenge.id,
