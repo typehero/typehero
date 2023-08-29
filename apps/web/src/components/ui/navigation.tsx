@@ -13,7 +13,7 @@ import {
 import { Loader2, LogIn, Moon, Plus, Settings, Settings2, Sun, User } from '@repo/ui/icons';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import { FeatureFlagContext } from '~/app/feature-flag-provider';
 
@@ -83,6 +83,13 @@ export function Navigation() {
                 </div>
               </Link>
             ) : null}
+            {featureFlags?.tracksButton ? (
+              <Link href="/tracks">
+                <div className="hover:text-foreground/80 text-foreground ml-4 transition-colors">
+                  Tracks
+                </div>
+              </Link>
+            ) : null}
           </div>
           <div className="flex">
             <div className="flex items-center justify-end gap-2">
@@ -125,6 +132,7 @@ function ThemeButton() {
 function LoginButton() {
   const [loading, setLoading] = useState(false);
   const { data: session, status } = useSession();
+  const router = useRouter();
 
   const isAdmin = session?.user.role.includes(RoleTypes.ADMIN);
   const isMod = session?.user.role.includes(RoleTypes.MODERATOR);
@@ -143,6 +151,7 @@ function LoginButton() {
   };
   const handleSignOut = async () => {
     await signOut({ redirect: false });
+    router.refresh();
   };
 
   return session ? (

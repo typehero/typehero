@@ -24,6 +24,7 @@ export * from './components/navigation-menu';
 export * from './components/pagination';
 export * from './components/paragraph';
 export * from './components/popover';
+export * from './components/progress';
 export * from './components/scroll-area';
 export * from './components/select';
 export * from './components/separator';

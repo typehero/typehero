@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { PrismaClient, type Prisma } from '@prisma/client';
+import { PrismaClient, type Challenge, type Prisma } from '@prisma/client';
 import uuidByString from 'uuid-by-string';
 import { loadChallengesFromTypeChallenge } from '../mocks/challenges.mock';
 import CommentMock from '../mocks/comment.mock';
@@ -38,6 +38,60 @@ await prisma.challenge.createMany({
 
 export const trashId = uuidByString('trash');
 export const gId = uuidByString('g');
+
+// Seed Tracks
+const TRACK_AMOUNT = 10;
+for (let i = 0; i < TRACK_AMOUNT; i++) {
+  // Get random challenges.
+  const challenges = await getRandomChallenges();
+
+  // Create a track.
+  const track = await prisma.track.create({
+    data: {
+      title: faker.lorem.words(2),
+      description: faker.lorem.sentences(1),
+      visible: true,
+    },
+  });
+
+  // Create/Connect a Track Challenge.
+  for (const challenge of challenges) {
+    // Check if track challenge already exists with the orderId & challengeId.
+    const orderId = faker.number.int({ max: 10, min: 0 });
+    try {
+      const trackChallenge = await prisma.trackChallenge.findUnique({
+        where: {
+          challengeId_orderId: {
+            challengeId: challenge.id,
+            orderId,
+          },
+        },
+      });
+
+      await prisma.track.update({
+        where: {
+          id: track.id,
+        },
+        data: {
+          trackChallenges: {
+            connect: {
+              id: trackChallenge?.id,
+            },
+          },
+        },
+      });
+    } catch (_e) {
+      // Assume does not exist.
+      await prisma.trackChallenge.create({
+        data: {
+          challengeId: challenge.id,
+          trackId: track.id,
+          orderId,
+        },
+      });
+    }
+  }
+}
 
 try {
   const someChallenge = await prisma.challenge.findFirst({
@@ -94,4 +148,14 @@ try {
   console.error(e);
   await prisma.$disconnect();
   process.exit(1);
+}
+
+async function getRandomChallenges(): Promise<Challenge[]> {
+  const challengesCount = await prisma.challenge.count();
+  const skip = Math.floor(Math.random() * (challengesCount - 10));
+  const challenges = await prisma.challenge.findMany({
+    take: 10,
+    skip,
+  });
+  return challenges;
 }
