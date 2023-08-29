@@ -1727,9 +1727,8 @@ packages:
       glob: 7.1.7
     dev: true
 
-
-  /@next/eslint-plugin-next@13.4.13-canary.13:
-    resolution: {integrity: sha512-lEXi0QLWUuXlMQRLSk/6JUUoOcjACOKbJYPKe0R1XyF5Kf7/Czdm072UJb3betXqiWw5v54GoOOmyDaUDCn5Rw==}
+  /@next/eslint-plugin-next@13.4.4-canary.8:
+    resolution: {integrity: sha512-hgFwPEJ5vr66yjRAfYxhKXBxpgmusZF7ztS8GpBS7HsDb05NHiMho843INE+0ToTv+S+2GTGr3YQHgjBSqzE0g==}
     dependencies:
       glob: 7.1.7
     dev: false
