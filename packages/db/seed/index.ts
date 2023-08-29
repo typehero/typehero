@@ -1,9 +1,10 @@
 import { faker } from '@faker-js/faker';
-import { PrismaClient, type Prisma } from '@prisma/client';
+import { PrismaClient, type Prisma, ReportType } from '@prisma/client';
 import uuidByString from 'uuid-by-string';
 import { loadChallengesFromTypeChallenge } from '../mocks/challenges.mock';
 import CommentMock from '../mocks/comment.mock';
 import UserMock from '../mocks/user.mock';
+import { ReportMock } from '../mocks/report.mock';
 
 const prisma = new PrismaClient();
 
@@ -88,6 +89,71 @@ try {
       },
     },
   });
+
+  const allVisibleChallenges = await prisma.challenge.findMany({
+    select: {
+      id: true
+    }, 
+    where: {
+      status: {
+        notIn: ['BANNED', 'DECLINED']
+      }
+    }
+  }).then(r => r.map(v => v.id));
+
+  const allComments = await prisma.comment.findMany({
+    select: {
+      id: true,
+    },
+  }).then(r => r.map(v=> v.id));
+
+  const allSolutions = await prisma.comment.findMany({
+    select: {
+      id: true,
+    },
+    where: {
+      visible: true,
+    }
+  }).then(r => r.map(v => v.id));
+
+  const allUsers = await prisma.user.findMany({
+    select: {
+      id: true,
+    },
+    where: {
+      status: 'ACTIVE'
+    }
+  }).then(r => r.map(v => v.id ));
+
+  const reports = Array.from({ length: 50 }, (_, i) => {
+    const bob = faker.helpers.enumValue(ReportType);
+    let id: number | string = 0;
+    switch(bob) {
+      case 'CHALLENGE':
+        id = faker.helpers.arrayElement(allVisibleChallenges);
+        id satisfies number;
+        break;
+      case 'COMMENT':
+        id = faker.helpers.arrayElement(allComments)
+        id satisfies number;
+        break;
+      case 'SOLUTION':
+        id = faker.helpers.arrayElement(allSolutions)
+        id satisfies number;
+        break;
+      case 'USER':
+        id = faker.helpers.arrayElement(allUsers);
+        id satisfies string;
+        break;
+    }
+
+    return ReportMock(faker.helpers.arrayElement(allUsers), bob, id);
+
+  });
+
+  await prisma.report.createMany({
+    data: reports,
+  })
 
   await prisma.$disconnect();
 } catch (e) {
