@@ -98,7 +98,7 @@ export function CodePanel(props: CodePanelProps) {
       </div>
       <div className="w-full flex-1">
         <SplitEditor
-          monacoInstance={monacoInstance}
+          monaco={monacoInstance}
           tests={props.challenge.tests}
           userCode={code}
           onMount={{

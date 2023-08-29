@@ -3,8 +3,7 @@
 import type * as monaco from 'monaco-editor';
 import { useEffect, useRef } from 'react';
 import { VimMode, initVimMode } from 'monaco-vim';
-import { useEditorSettingsStore } from './settings-store';
-import { defaultVimConfig, sourceVimCommands } from './vim-keybindings';
+import { DEFAULT_SETTINGS, useEditorSettingsStore } from './settings-store';
 
 VimMode.Vim.defineEx('MonacoCommand', 'M', function monacoExCommand(ctx, { args }) {
   if (!args) {
@@ -21,6 +20,24 @@ VimMode.Vim.defineEx('MonacoCommand', 'M', function monacoExCommand(ctx, { args 
   ctx.editor.trigger('exCommand', args[0], null);
 });
 
+export function sourceVimCommands(cma: VimMode, vimCommands: string) {
+  VimMode.Vim.mapclear();
+
+  VimMode.Vim.maybeInitVimState_(cma);
+
+  for (const line of vimCommands.split('\n')) {
+    // skip comments
+    if (line.startsWith('"')) continue;
+
+    const trimmed = line.trim();
+
+    // skip empty lines
+    if (!trimmed) continue;
+
+    VimMode.Vim.handleEx(cma, trimmed);
+  }
+}
+
 interface VimStatusBarProps {
   editor: monaco.editor.IStandaloneCodeEditor;
 }
@@ -35,9 +52,7 @@ export function VimStatusBar({ editor }: VimStatusBarProps) {
     if (settings.bindings === 'vim') {
       vimModeRef.current = initVimMode(editor, statusBarRef.current);
 
-      VimMode.Vim.maybeInitVimState_(vimModeRef.current);
-
-      sourceVimCommands(vimModeRef.current, defaultVimConfig);
+      sourceVimCommands(vimModeRef.current, settings.vimConfig || DEFAULT_SETTINGS.vimConfig);
 
       return () => vimModeRef.current?.dispose();
     }
@@ -48,7 +63,7 @@ export function VimStatusBar({ editor }: VimStatusBarProps) {
     if (statusBarRef.current) {
       statusBarRef.current.textContent = '';
     }
-  }, [editor, settings.bindings]);
+  }, [editor, settings.bindings, settings.vimConfig]);
 
   return (
     <div className="flex w-full">
