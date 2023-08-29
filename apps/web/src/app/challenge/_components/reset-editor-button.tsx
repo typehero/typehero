@@ -1,4 +1,4 @@
-import { useResetEditor } from '@repo/monaco/EditorHooks';
+import { useResetEditor } from '@repo/monaco/editor-hooks';
 import {
   AlertDialog,
   AlertDialogAction,

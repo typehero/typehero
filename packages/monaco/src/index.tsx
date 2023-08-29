@@ -13,7 +13,7 @@ import { useLocalStorage } from './useLocalStorage';
 import SplitEditor, { TESTS_PATH } from './split-editor';
 import { createTwoslashInlayProvider } from './twoslash';
 import { PrettierFormatProvider } from './prettier';
-import { useResetEditor } from './EditorHooks';
+import { useResetEditor } from './editor-hooks';
 
 const VimStatusBar = dynamic(() => import('./vim-mode').then((v) => v.VimStatusBar), {
   ssr: false,
