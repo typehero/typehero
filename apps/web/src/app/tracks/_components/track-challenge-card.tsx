@@ -2,7 +2,7 @@
 
 import { Check } from '@repo/ui/icons';
 import clsx from 'clsx';
-import type { Tracks } from '~/app/tracks/_components';
+import type { Tracks } from '~/app/tracks/_components/track-popular-section';
 import { useIsMobile } from '~/utils/useIsMobile';
 
 interface TrackChallengeProps {

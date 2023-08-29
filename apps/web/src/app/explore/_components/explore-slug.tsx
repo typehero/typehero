@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { TypographyH3 } from '@repo/ui';
+import Link from 'next/link';
 import { ExploreCard } from './explore-card';
 import { getChallengesByTagOrDifficulty } from './explore.action';
 
