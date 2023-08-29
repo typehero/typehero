@@ -1,4 +1,3 @@
-'use client';
 import { Binary } from '@repo/ui/icons';
 
 export function Footsies() {
