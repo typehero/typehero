@@ -24,7 +24,7 @@ const ResetEditorButton = () => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={() => dispatch()}>Continue</AlertDialogAction>
+          <AlertDialogAction onClick={() => dispatch('resetCode')}>Continue</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

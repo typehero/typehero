@@ -61,7 +61,7 @@ export function CodePanel(props: CodePanelProps) {
   };
 
   const [code, setCode] = useState(() => getDefaultCode());
-  useResetEditor().add(() => {
+  useResetEditor().subscribe('resetCode', () => {
     setCode(props.challenge.code);
     setLocalStorageCode(props.challenge.code);
   });

@@ -1,20 +1,29 @@
 import { useEffect } from 'react';
 
-export function useResetEditor(): { add: (cb: () => void) => void; dispatch: () => void } {
-  const ev = new CustomEvent('resetCode');
+class EditorEvents extends EventTarget {
+  dispatch(ev: string) {
+    this.dispatchEvent(new CustomEvent(ev));
+  }
+}
 
-  function add(cb: () => void) {
+const event = new EditorEvents();
+type EventNames = 'resetCode';
+export function useResetEditor(): {
+  subscribe: (eventName: EventNames, cb: () => void) => void;
+  dispatch: (eventName: EventNames) => void;
+} {
+  function subscribe(eventName: EventNames, cb: () => void) {
     useEffect(() => {
       const fnc = () => {
         cb();
       };
-      window.addEventListener('resetCode', fnc);
-      return () => window.removeEventListener('resetCode', fnc);
+      event.addEventListener(eventName, fnc);
+      return () => event.removeEventListener(eventName, fnc);
     }, []);
   }
 
-  function dispatch() {
-    window.dispatchEvent(ev);
+  function dispatch(eventName: EventNames) {
+    event.dispatch(eventName);
   }
-  return { add, dispatch };
+  return { subscribe, dispatch };
 }
