@@ -66,7 +66,7 @@ export default async function Dashboard({ user }: Props) {
 
   return (
     <div className="container">
-      <div className="mt-10 flex-1 space-y-4">
+      <div className="mt-10">
 
         <div className="max-w-md">
           <ReactMarkdown>{user.bio}</ReactMarkdown>
@@ -92,8 +92,8 @@ export default async function Dashboard({ user }: Props) {
           </div>
         )}
 
-        <Tabs className="flex flex-wrap" defaultValue="in-progress">
-          <VerticalTabsList className="grow shrink basis-1/6 pr-2">
+        <Tabs className="flex flex-col md:flex-row gap-4" defaultValue="in-progress">
+          <VerticalTabsList className="teststuffhere">
             <div className="flex flex-col items-center justify-center">
               <Image
                 alt="user avatar"
@@ -112,40 +112,40 @@ export default async function Dashboard({ user }: Props) {
               </div>
               <div>
                 {session?.user.id === user.id && (
-                  <Link href="/settings">
+                  <Link className="hidden md:block" href="/settings">
                     <div className='p-2 data-[state=active]:bg-border rounded-3xl duration-300 border border-ring'>Settings</div>
                   </Link>
                 )}
               </div>
             <VerticalTabsTrigger
-              className="data-[state=active]:bg-border rounded-3xl duration-300 border border-ring"
+              className="hidden md:block data-[state=active]:bg-border rounded-3xl duration-300 border border-ring"
               value="in-progress"
             >
               <span className='mx-1'>button!</span>
               <span>In-Progress</span>
             </VerticalTabsTrigger>
             <VerticalTabsTrigger
-              className="data-[state=active]:bg-border rounded-lg duration-300"
+              className="hidden md:block data-[state=active]:bg-border rounded-lg duration-300"
               value="solutions"
             >
               Solutions
             </VerticalTabsTrigger>
             <VerticalTabsTrigger
-              className="data-[state=active]:bg-border rounded-lg duration-300"
+              className="hidden md:block data-[state=active]:bg-border rounded-lg duration-300"
               disabled
               value="bookmarks"
             >
               Bookmarks
             </VerticalTabsTrigger>
             <VerticalTabsTrigger
-              className="data-[state=active]:bg-border rounded-l-lg rounded-r-full duration-300"
+              className="hidden md:block data-[state=active]:bg-border rounded-l-lg rounded-r-full duration-300"
               disabled
               value="comments"
             >
               Comments
             </VerticalTabsTrigger>
           </VerticalTabsList>
-          <VerticalTabsContent className="space-y-4 grow shrink basis-5/6" value="overview">
+          <VerticalTabsContent className="space-y-4 grow shrink" value="overview">
             <div className="">
               <Card className="col-span-4">
                 <CardHeader>
@@ -157,7 +157,7 @@ export default async function Dashboard({ user }: Props) {
               </Card>
             </div>
           </VerticalTabsContent>
-          <VerticalTabsContent className="space-y-4 grow shrink basis-5/6" value="in-progress">
+          <VerticalTabsContent className="space-y-4 grow shrink" value="in-progress">
             <div className="">
               <Card className="col-span-4">
                 <CardHeader>
@@ -169,7 +169,7 @@ export default async function Dashboard({ user }: Props) {
               </Card>
             </div>
           </VerticalTabsContent>
-          <VerticalTabsContent className="space-y-4 grow shrink basis-5/6" value="solutions">
+          <VerticalTabsContent className="space-y-4 grow shrink" value="solutions">
             <div className="">
               <Card className="col-span-4">
                 <CardHeader>
