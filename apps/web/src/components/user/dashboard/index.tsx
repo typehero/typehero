@@ -10,11 +10,11 @@ import {
   CardHeader,
   CardTitle,
   Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
+  VerticalTabsContent,
+  VerticalTabsTrigger,
   Button,
   MagicIcon,
+  VerticalTabsList,
 } from '@repo/ui';
 import { Overview } from './overview';
 import { InProgressTab } from './in-progress-tab';
@@ -66,37 +66,7 @@ export default async function Dashboard({ user }: Props) {
 
   return (
     <div className="container">
-      <div className="mt-10 flex-1 space-y-4">
-        <div className="flex gap-4">
-          <div className="pace-x-2 flex">
-            <Image
-              alt="user avatar"
-              className="rounded-3xl"
-              height="100"
-              src={user.image ?? '/avatar.jpeg'}
-              width="100"
-            />
-          </div>
-          <div className="flex w-full justify-between">
-            <div>
-              <UserHeader user={user} isOwnProfile={session?.user.id === user.id} />
-              <p
-                className="text-sm italic tracking-tight"
-                title={`Joined ${user.createdAt.toString()}`}
-              >
-                Joined {getRelativeTime(user.createdAt)}
-              </p>
-            </div>
-            <div>
-              {session?.user.id === user.id && (
-                <Link href="/settings" className="focus:outline-none focus-visible:outline-none">
-                  <Button variant="outline">Edit Profile</Button>
-                </Link>
-              )}
-            </div>
-          </div>
-        </div>
-
+      <div className="mt-10">
         <div className="max-w-md">
           <ReactMarkdown>{user.bio}</ReactMarkdown>
         </div>
@@ -121,37 +91,44 @@ export default async function Dashboard({ user }: Props) {
           </div>
         )}
 
-        <Tabs className="space-y-4" defaultValue="in-progress">
-          <TabsList className="border-border bg-background rounded-full border">
-            <TabsTrigger
-              className="data-[state=active]:bg-border rounded-lg rounded-l-2xl duration-300"
-              value="in-progress"
-            >
-              In-Progress
-            </TabsTrigger>
-            <TabsTrigger
-              className="data-[state=active]:bg-border rounded-lg duration-300"
-              value="solutions"
-            >
-              Solutions
-            </TabsTrigger>
-            <TabsTrigger
-              className="data-[state=active]:bg-border rounded-lg duration-300"
-              disabled
-              value="bookmarks"
-            >
+        <Tabs className="flex flex-col gap-4 md:flex-row" defaultValue="in-progress">
+          <VerticalTabsList className="teststuffhere">
+            <div className="flex flex-col items-center justify-center">
+              <Image
+                alt="user avatar"
+                className="rounded-3xl"
+                height="100"
+                src={user.image ?? '/avatar.jpeg'}
+                width="100"
+              />
+              <UserHeader user={user} isOwnProfile={session?.user.id === user.id} />
+              <p
+                className="text-sm italic tracking-tight"
+                title={`Joined ${user.createdAt.toString()}`}
+              >
+                Joined {getRelativeTime(user.createdAt)}
+              </p>
+            </div>
+            <div>
+              {session?.user.id === user.id && (
+                <Link href="/settings">
+                  <div className="data-[state=active]:bg-border border-ring rounded-lg border p-2 text-sm font-medium duration-300">
+                    Settings
+                  </div>
+                </Link>
+              )}
+            </div>
+            <VerticalTabsTrigger value="in-progress">In-Progress</VerticalTabsTrigger>
+            <VerticalTabsTrigger value="solutions">Solutions</VerticalTabsTrigger>
+            <VerticalTabsTrigger disabled value="bookmarks">
               Bookmarks
-            </TabsTrigger>
-            <TabsTrigger
-              className="data-[state=active]:bg-border rounded-l-lg rounded-r-full duration-300"
-              disabled
-              value="comments"
-            >
+            </VerticalTabsTrigger>
+            <VerticalTabsTrigger disabled value="comments">
               Comments
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent className="space-y-4" value="overview">
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+            </VerticalTabsTrigger>
+          </VerticalTabsList>
+          <VerticalTabsContent className="shrink grow space-y-4" value="overview">
+            <div className="">
               <Card className="col-span-4">
                 <CardHeader>
                   <CardTitle>Overview</CardTitle>
@@ -161,9 +138,9 @@ export default async function Dashboard({ user }: Props) {
                 </CardContent>
               </Card>
             </div>
-          </TabsContent>
-          <TabsContent className="space-y-4" value="in-progress">
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+          </VerticalTabsContent>
+          <VerticalTabsContent className="shrink grow space-y-4" value="in-progress">
+            <div className="">
               <Card className="col-span-4">
                 <CardHeader>
                   <CardTitle>In-Progress</CardTitle>
@@ -173,9 +150,9 @@ export default async function Dashboard({ user }: Props) {
                 </CardContent>
               </Card>
             </div>
-          </TabsContent>
-          <TabsContent className="space-y-4" value="solutions">
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+          </VerticalTabsContent>
+          <VerticalTabsContent className="shrink grow space-y-4" value="solutions">
+            <div className="">
               <Card className="col-span-4">
                 <CardHeader>
                   <CardTitle>Solutions</CardTitle>
@@ -185,7 +162,7 @@ export default async function Dashboard({ user }: Props) {
                 </CardContent>
               </Card>
             </div>
-          </TabsContent>
+          </VerticalTabsContent>
         </Tabs>
       </div>
     </div>
