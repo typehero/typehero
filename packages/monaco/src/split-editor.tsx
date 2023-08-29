@@ -26,6 +26,8 @@ export interface SplitEditorProps {
     tests?: OnChange;
     user?: OnChange;
   };
+  onlyTests?: boolean;
+  monacoInstance: typeof import('monaco-editor') | undefined;
 }
 
 export default function SplitEditor({
@@ -35,23 +37,22 @@ export default function SplitEditor({
   onMount,
   onValidate,
   onChange,
+  monacoInstance,
 }: SplitEditorProps) {
-  const monaco = useMonaco();
-
   useEffect(() => {
-    if (monaco) {
-      const libUri = monaco.Uri.parse(LIB_URI);
+    if (monacoInstance) {
+      const libUri = monacoInstance.Uri.parse(LIB_URI);
 
-      monaco.languages.typescript.typescriptDefaults.setEagerModelSync(true);
+      monacoInstance.languages.typescript.typescriptDefaults.setEagerModelSync(true);
 
-      if (!monaco.editor.getModel(libUri)) {
-        monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, LIB_URI);
-        monaco.editor
+      if (!monacoInstance.editor.getModel(libUri)) {
+        monacoInstance.languages.typescript.javascriptDefaults.addExtraLib(libSource, LIB_URI);
+        monacoInstance.editor
           .createModel(libSource, 'typescript', libUri)
-          .setEOL(monaco.editor.EndOfLineSequence.LF);
+          .setEOL(monacoInstance.editor.EndOfLineSequence.LF);
       }
     }
-  }, [monaco]);
+  }, [monacoInstance]);
 
   const [footerExpanded, setFooterExpanded] = useState(false);
 
@@ -93,9 +94,9 @@ export default function SplitEditor({
           onValidate={onValidate?.user}
           onChange={async (e, a) => {
             // Most of this shamelessly stolen from Stackoverflow.
-            if (monaco) {
-              const models = monaco.editor.getModels();
-              const getWorker = await monaco.languages.typescript.getTypeScriptWorker();
+            if (monacoInstance) {
+              const models = monacoInstance.editor.getModels();
+              const getWorker = await monacoInstance.languages.typescript.getTypeScriptWorker();
 
               for (const model of models) {
                 const worker = await getWorker(model.uri);
@@ -111,7 +112,7 @@ export default function SplitEditor({
                   const end = model.getPositionAt(d.start! + d.length!);
 
                   return {
-                    severity: monaco.MarkerSeverity.Error,
+                    severity: monacoInstance.MarkerSeverity.Error,
                     startLineNumber: start.lineNumber,
                     endLineNumber: end.lineNumber,
                     startColumn: start.column,
@@ -120,7 +121,7 @@ export default function SplitEditor({
                   } satisfies editor.IMarkerData;
                 });
 
-                monaco.editor.setModelMarkers(model, model.getLanguageId(), markers);
+                monacoInstance.editor.setModelMarkers(model, model.getLanguageId(), markers);
               }
             }
 
