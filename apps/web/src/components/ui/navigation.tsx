@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@repo/ui';
 import { Loader2, LogIn, Moon, Plus, Settings, Settings2, Sun, User } from '@repo/ui/icons';
+import clsx from 'clsx';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -80,14 +81,22 @@ export function Navigation() {
             </a>
             {featureFlags?.exploreButton ? (
               <Link href="/explore" className="ml-4">
-                <div className="hover:text-foreground text-foreground/80 transition-colors">
+                <div
+                  className={clsx('hover:text-foreground text-foreground/80 transition-colors', {
+                    '!text-foreground': pathname === '/explore',
+                  })}
+                >
                   Explore
                 </div>
               </Link>
             ) : null}
             {featureFlags?.tracksButton ? (
               <Link href="/tracks" className="ml-4">
-                <div className="hover:text-foreground text-foreground/80 transition-colors">
+                <div
+                  className={clsx('hover:text-foreground text-foreground/80 transition-colors', {
+                    '!text-foreground': pathname === '/tracks',
+                  })}
+                >
                   Tracks
                 </div>
               </Link>
