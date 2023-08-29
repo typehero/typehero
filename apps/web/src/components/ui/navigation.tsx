@@ -34,7 +34,7 @@ export function Navigation() {
   return (
     <header className="z-10 w-full">
       <nav
-        className={`flex h-14 items-center ${
+        className={`flex h-14 items-center text-sm font-medium ${
           pathname?.startsWith('/challenge') ? 'px-4' : 'container'
         }`}
       >
@@ -78,14 +78,14 @@ export function Navigation() {
 
             {featureFlags?.exploreButton ? (
               <Link href="/explore">
-                <div className="hover:text-foreground/80 text-foreground ml-4 transition-colors">
+                <div className="hover:text-foreground text-foreground/80 ml-4 transition-colors">
                   Explore
                 </div>
               </Link>
             ) : null}
             {featureFlags?.tracksButton ? (
               <Link href="/tracks">
-                <div className="hover:text-foreground/80 text-foreground ml-4 transition-colors">
+                <div className="hover:text-foreground text-foreground/80 ml-4 transition-colors">
                   Tracks
                 </div>
               </Link>

@@ -2,8 +2,8 @@
 
 import { Check } from '@repo/ui/icons';
 import clsx from 'clsx';
-import type { Tracks } from '~/app/tracks/_components/track-popular-section';
 import { useIsMobile } from '~/utils/useIsMobile';
+import type { Tracks } from './track-grid';
 
 interface TrackChallengeProps {
   challenge: Tracks[number]['trackChallenges'][number]['challenge'];
@@ -36,7 +36,7 @@ export function TrackChallenge({ challenge, className, mock }: TrackChallengePro
     >
       <div
         className={clsx(
-          `flex w-full cursor-pointer items-center justify-between gap-3 overflow-hidden rounded-lg bg-gradient-to-r from-neutral-500/10 ${
+          `flex w-full items-center justify-between gap-3 overflow-hidden rounded-lg bg-gradient-to-r from-neutral-500/10 ${
             BGS_BY_DIFFICULTY[challenge.difficulty]
           } from-75% to-100% p-4 py-2 text-black/90 duration-300 group-active/challenge:bg-neutral-500/40 group-active/challenge:duration-75 dark:text-white/90 sm:py-4`,
           className,
