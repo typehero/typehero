@@ -56,10 +56,11 @@ export function SubmissionOverview({ submissionId }: Props) {
       <div className="p-2">
         <div className="mb-5">
           <div
-            className={`inline-block rounded-xl px-4 py-1 ${submission.isSuccessful
+            className={`inline-block rounded-xl px-4 py-1 ${
+              submission.isSuccessful
                 ? 'bg-emerald-600/10 text-emerald-600  dark:bg-emerald-400/10 dark:text-emerald-400 '
                 : 'bg-rose-600/10 text-rose-600 dark:bg-rose-400/10 dark:text-rose-400 '
-              }`}
+            }`}
           >
             {submission.isSuccessful ? 'Accepted' : 'Rejected'}
           </div>
