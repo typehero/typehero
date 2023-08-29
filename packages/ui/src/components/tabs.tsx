@@ -25,14 +25,7 @@ const VerticalTabsList = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.List>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
 >(({ className, ...props }, ref) => (
-  <TabsPrimitive.List
-    className={cn(
-      'flex flex-col gap-4',
-      className
-    )}
-    ref={ref}
-    {...props}
-  />
+  <TabsPrimitive.List className={cn('flex flex-col gap-4', className)} ref={ref} {...props} />
 ));
 VerticalTabsList.displayName = TabsPrimitive.List.displayName;
 
@@ -57,7 +50,7 @@ const VerticalTabsTrigger = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <TabsPrimitive.Trigger
     className={cn(
-      'data-[state=active]:bg-border duration-300 rounded-lg ring-offset-background border border-ring focus-visible:ring-ring data-[state=active]:text-foreground inline-flex whitespace-nowrap p-2 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm',
+      'data-[state=active]:bg-border ring-offset-background border-ring focus-visible:ring-ring data-[state=active]:text-foreground inline-flex whitespace-nowrap rounded-lg border p-2 text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm',
       className,
     )}
     ref={ref}
@@ -96,4 +89,12 @@ const VerticalTabsContent = React.forwardRef<
 ));
 VerticalTabsContent.displayName = TabsPrimitive.Content.displayName;
 
-export { Tabs, TabsList, VerticalTabsList, TabsTrigger, VerticalTabsTrigger, TabsContent, VerticalTabsContent };
+export {
+  Tabs,
+  TabsList,
+  VerticalTabsList,
+  TabsTrigger,
+  VerticalTabsTrigger,
+  TabsContent,
+  VerticalTabsContent,
+};
