@@ -8,9 +8,9 @@ export async function Tracks() {
   return (
     <div className="flex flex-col gap-8 py-8 md:gap-10 md:py-10">
       <div className="container">
-        <h3 className="mb-1 text-2xl font-bold tracking-wide text-neutral-900/40 dark:text-white/40">
+        <div className="mb-1 text-2xl font-bold tracking-wide text-neutral-900/40 dark:text-white/40">
           Welcome to
-        </h3>
+        </div>
         <h1 className="mb-8 text-4xl font-bold tracking-tight text-neutral-900 dark:text-white">
           TypeHero Tracks
         </h1>

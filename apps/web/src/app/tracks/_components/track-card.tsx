@@ -15,10 +15,10 @@ export function TrackCard({ track }: TrackProps) {
   // todo: help resolve max-md issue on hover.
   return (
     <div className="relative w-full">
-      <div className="m-2 w-full">
+      <div className="w-full">
         <div
           className={clsx(
-            'relative inset-0 flex max-w-[400px] flex-col justify-start space-y-4 p-6',
+            'relative inset-0 flex max-w-[400px] flex-col justify-start space-y-4',
             'max-md:scale-110',
           )}
         >
