@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { Loader2 } from '@repo/ui/icons';
+import { ChevronDown, ChevronUp, Loader2 } from '@repo/ui/icons';
 import type * as monaco from 'monaco-editor';
 import dynamic from 'next/dynamic';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -40,6 +40,7 @@ export function CodePanel(props: CodePanelProps) {
   const router = useRouter();
   const { toast } = useToast();
   const [tsErrors, setTsErrors] = useState<TsErrors>();
+  const [isTestPanelExpanded, setIsTestPanelExpanded] = useState(false);
   const [localStorageCode, setLocalStorageCode] = useLocalStorage(
     `challenge-${props.challenge.id}`,
     '',
@@ -98,6 +99,7 @@ export function CodePanel(props: CodePanelProps) {
       <div className="w-full flex-1">
         <SplitEditor
           monaco={monacoInstance}
+          expandTestPanel={isTestPanelExpanded}
           tests={props.challenge.tests}
           userCode={code}
           onMount={{
@@ -164,11 +166,23 @@ export function CodePanel(props: CodePanelProps) {
           {
             'justify-between': testEditorState,
           },
-          'sticky bottom-0 flex items-center justify-end p-2 dark:bg-[#1e1e1e]',
+          'sticky bottom-0 flex items-center justify-between p-2 dark:bg-[#1e1e1e]',
         )}
       >
-        {userEditorState && <VimStatusBar editor={userEditorState} />}
-        <div className="flex items-center justify-center gap-4">
+        <div className="flex items-center gap-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              setIsTestPanelExpanded((tp) => !tp);
+            }}
+          >
+            Test
+            {isTestPanelExpanded ? <ChevronDown size={16} /> : <ChevronUp size={16} />}
+          </Button>
+          {userEditorState && <VimStatusBar editor={userEditorState} />}
+        </div>
+        <div className="flex items-center justify-between gap-4">
           <Tooltip>
             <TooltipTrigger asChild>
               <Button

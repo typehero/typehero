@@ -1,8 +1,8 @@
 'use client';
+import { useMonaco, type OnChange, type OnMount, type OnValidate } from '@monaco-editor/react';
 import clsx from 'clsx';
-import React, { useCallback, useEffect, useState } from 'react';
-import { useMonaco, type OnValidate, type OnMount, type OnChange } from '@monaco-editor/react';
 import type { editor } from 'monaco-editor';
+import { useEffect, useState } from 'react';
 import { CodeEditor, LIB_URI } from './code-editor';
 import { libSource } from './editor-types';
 
@@ -12,6 +12,7 @@ export const USER_CODE_PATH = 'file:///user.ts';
 export interface SplitEditorProps {
   /** the classes applied to the container div */
   className?: string;
+  expandTestPanel: boolean;
   tests: string;
   userCode: string;
   onValidate?: {
@@ -32,6 +33,7 @@ export interface SplitEditorProps {
 // million-ignore
 export default function SplitEditor({
   className,
+  expandTestPanel,
   tests,
   userCode,
   onMount,
@@ -54,18 +56,13 @@ export default function SplitEditor({
     }
   }, [monaco]);
 
-  const [footerExpanded, setFooterExpanded] = useState(false);
-
   return (
     <div className={clsx('flex h-full flex-col gap-2', className)}>
-      <button onClick={() => setFooterExpanded(!footerExpanded)}>
-        {footerExpanded ? 'hide' : 'show'} all
-      </button>
-      {footerExpanded ? (
+      {expandTestPanel ? (
         <header
           className={clsx('flex-shrink-0 overflow-hidden transition-all', {
-            'min-h-[30vh]': footerExpanded,
-            'min-h-0': !footerExpanded,
+            'min-h-[30vh]': expandTestPanel,
+            'min-h-0': !expandTestPanel,
           })}
         >
           <CodeEditor
