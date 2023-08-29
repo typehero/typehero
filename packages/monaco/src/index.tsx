@@ -6,13 +6,14 @@ import { Loader2 } from '@repo/ui/icons';
 import type * as monaco from 'monaco-editor';
 import dynamic from 'next/dynamic';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import lzstring from 'lz-string';
 import { Button, ToastAction, useToast, Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui';
 import { useLocalStorage } from './useLocalStorage';
 import SplitEditor, { TESTS_PATH } from './split-editor';
 import { createTwoslashInlayProvider } from './twoslash';
 import { PrettierFormatProvider } from './prettier';
+import { useResetEditor } from './editor-hooks';
 
 const VimStatusBar = dynamic(() => import('./vim-mode').then((v) => v.VimStatusBar), {
   ssr: false,
@@ -60,6 +61,10 @@ export function CodePanel(props: CodePanelProps) {
   };
 
   const [code, setCode] = useState(() => getDefaultCode());
+  useResetEditor().subscribe('resetCode', () => {
+    setCode(props.challenge.code);
+    setLocalStorageCode(props.challenge.code);
+  });
 
   const [testEditorState, setTestEditorState] = useState<monaco.editor.IStandaloneCodeEditor>();
   const [userEditorState, setUserEditorState] = useState<monaco.editor.IStandaloneCodeEditor>();
