@@ -67,35 +67,6 @@ export default async function Dashboard({ user }: Props) {
   return (
     <div className="container">
       <div className="mt-10 flex-1 space-y-4">
-        <div className="flex gap-4">
-          <div className="pace-x-2 flex">
-            <Image
-              alt="user avatar"
-              className="rounded-3xl"
-              height="100"
-              src={user.image ?? '/avatar.jpeg'}
-              width="100"
-            />
-          </div>
-          <div className="flex w-full justify-between">
-            <div>
-              <UserHeader user={user} isOwnProfile={session?.user.id === user.id} />
-              <p
-                className="text-sm italic tracking-tight"
-                title={`Joined ${user.createdAt.toString()}`}
-              >
-                Joined {getRelativeTime(user.createdAt)}
-              </p>
-            </div>
-            <div>
-              {session?.user.id === user.id && (
-                <Link href="/settings">
-                  <Button variant="outline">Edit Profile</Button>
-                </Link>
-              )}
-            </div>
-          </div>
-        </div>
 
         <div className="max-w-md">
           <ReactMarkdown>{user.bio}</ReactMarkdown>
@@ -123,6 +94,29 @@ export default async function Dashboard({ user }: Props) {
 
         <Tabs className="flex flex-wrap" defaultValue="in-progress">
           <VerticalTabsList className="grow shrink basis-1/6 pr-2">
+            <div className="flex flex-col items-center justify-center">
+              <Image
+                alt="user avatar"
+                className="rounded-3xl"
+                height="100"
+                src={user.image ?? '/avatar.jpeg'}
+                width="100"
+              />
+                <UserHeader user={user} isOwnProfile={session?.user.id === user.id} />
+                <p
+                  className="text-sm italic tracking-tight"
+                  title={`Joined ${user.createdAt.toString()}`}
+                >
+                  Joined {getRelativeTime(user.createdAt)}
+                </p>
+              </div>
+              <div>
+                {session?.user.id === user.id && (
+                  <Link href="/settings">
+                    <div className='p-2 data-[state=active]:bg-border rounded-3xl duration-300 border border-ring'>Settings</div>
+                  </Link>
+                )}
+              </div>
             <VerticalTabsTrigger
               className="data-[state=active]:bg-border rounded-3xl duration-300 border border-ring"
               value="in-progress"
