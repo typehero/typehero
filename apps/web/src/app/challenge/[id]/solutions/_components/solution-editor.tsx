@@ -98,7 +98,7 @@ export function SolutionEditor({ dismiss, challenge }: Props) {
                 <FormItem>
                   <FormControl>
                     <Input
-                      className="rounded-xl border-zinc-300 bg-zinc-100 focus-visible:ring-0 focus-visible:ring-offset-0 dark:border-zinc-700 dark:bg-zinc-900"
+                      className="rounded-xl border-zinc-300 bg-zinc-100 focus-visible:ring-0 dark:border-zinc-700 dark:bg-zinc-900"
                       {...field}
                       placeholder="Enter a title for your solution."
                     />
@@ -109,7 +109,7 @@ export function SolutionEditor({ dismiss, challenge }: Props) {
             />
           </div>
           <Button
-            className="h-8 rounded-lg bg-white px-3 py-2 text-black hover:bg-zinc-200 focus-visible:bg-zinc-200 focus-visible:ring-offset-0 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:focus-visible:bg-zinc-700"
+            className="h-8 rounded-lg bg-white px-3 py-2 text-black hover:bg-zinc-200 focus-visible:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:focus-visible:bg-zinc-700"
             onClick={dismiss}
             type="button"
           >
