@@ -15,6 +15,7 @@ import {
   TabsTrigger,
   Button,
   MagicIcon,
+  VerticalTabsList,
 } from '@repo/ui';
 import { Overview } from './overview';
 import { InProgressTab } from './in-progress-tab';
@@ -121,8 +122,8 @@ export default async function Dashboard({ user }: Props) {
           </div>
         )}
 
-        <Tabs className="space-y-4" defaultValue="in-progress">
-          <TabsList className="border-border bg-background rounded-full border">
+        <Tabs className="flex flex-wrap" defaultValue="in-progress">
+          <VerticalTabsList className="grow shrink basis-1/4">
             <TabsTrigger
               className="data-[state=active]:bg-border rounded-lg rounded-l-2xl duration-300"
               value="in-progress"
@@ -149,9 +150,9 @@ export default async function Dashboard({ user }: Props) {
             >
               Comments
             </TabsTrigger>
-          </TabsList>
-          <TabsContent className="space-y-4" value="overview">
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+          </VerticalTabsList>
+          <TabsContent className="space-y-4 grow shrink basis-3/4" value="overview">
+            <div className="">
               <Card className="col-span-4">
                 <CardHeader>
                   <CardTitle>Overview</CardTitle>
@@ -162,8 +163,8 @@ export default async function Dashboard({ user }: Props) {
               </Card>
             </div>
           </TabsContent>
-          <TabsContent className="space-y-4" value="in-progress">
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+          <TabsContent className="space-y-4 grow shrink basis-3/4" value="in-progress">
+            <div className="">
               <Card className="col-span-4">
                 <CardHeader>
                   <CardTitle>In-Progress</CardTitle>
@@ -174,8 +175,8 @@ export default async function Dashboard({ user }: Props) {
               </Card>
             </div>
           </TabsContent>
-          <TabsContent className="space-y-4" value="solutions">
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+          <TabsContent className="space-y-4 grow shrink basis-3/4" value="solutions">
+            <div className="">
               <Card className="col-span-4">
                 <CardHeader>
                   <CardTitle>Solutions</CardTitle>
