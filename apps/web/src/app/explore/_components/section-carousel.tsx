@@ -1,8 +1,10 @@
 'use client';
+
 import type { Difficulty } from '@repo/db/types';
-import { ChevronRight } from '@repo/ui/icons';
+import { ChevronLeft, ChevronRight } from '@repo/ui/icons';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import clsx from 'clsx';
 import { ExploreCard } from './explore-card';
 import type { ExploreChallengeData } from './explore.action';
 
@@ -99,16 +101,26 @@ export function ExploreCarousel({ challenges }: Props) {
           </Link>
         ))}
       <button
-        className="bg-background absolute -right-5 top-1/2 hidden -translate-y-1/2 rounded-[5rem] p-4 pl-1 duration-300 active:scale-95 sm:block"
+        className={clsx(
+          'bg-background absolute -left-5 top-1/2 hidden -translate-y-1/2 rounded-[5rem] p-4 pr-1 duration-300 active:scale-95',
+          showLeftButton && 'sm:block',
+        )}
+        aria-hidden={!showLeftButton}
+        aria-label="Scroll carousel of challenges to the left"
+        id="slideLeft"
+      >
+        <ChevronLeft className="h-4 w-4" />
+      </button>
+      <button
+        className={clsx(
+          'bg-background absolute -right-5 top-1/2 hidden -translate-y-1/2 rounded-[5rem] p-4 pl-1 duration-300 active:scale-95',
+          showRightButton && 'sm:block',
+        )}
+        aria-hidden={!showRightButton}
+        aria-label="Scroll carousel of challenges to the right"
         id="slideRight"
       >
         <ChevronRight className="h-4 w-4" />
-      </button>
-      <button
-        className="bg-background absolute -left-5 top-1/2 hidden -translate-y-1/2 rounded-[5rem] p-4 pr-1 duration-300 active:scale-95 sm:block"
-        id="slideLeft"
-      >
-        <ChevronRight className="h-4 w-4 rotate-180 transform" />
       </button>
     </div>
   );
