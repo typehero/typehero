@@ -5,7 +5,7 @@
   "scripts": {
     "build": "turbo build",
     "checks": "turbo format lint typecheck --continue",
-    "checks:fix": "turbo format:fix lint:fix typecheck --continue",
+    "checks:fix": "turbo format:fix lint:fix typecheck --continue --force",
     "clean": "turbo clean && rm -rf node_modules",
     "db:push": "turbo db:push",
     "db:reset": "turbo db:reset",
