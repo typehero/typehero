@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@repo/ui';
 import { TrendingUpIcon } from '@repo/ui/icons';
 import clsx from 'clsx';
-import type { EnrolledTracks } from '.';
+import type { EnrolledTracks } from './track-enrolled-section';
 import { TrackProgress } from './track-progress';
 
 interface PersonalTrackCardProps {

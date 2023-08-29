@@ -3,7 +3,7 @@
 import { Button } from '@repo/ui';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
-import type { Tracks } from '~/app/tracks/_components';
+import type { Tracks } from '~/app/tracks/_components/track-popular-section';
 import { TrackChallenge } from './track-challenge-card';
 
 interface TrackProps {
