@@ -383,3 +383,11 @@ main {
     transform: translateY(0px);
   }
 }
+
+* {
+  @apply focus:ring-blue-600 group-focus:ring-blue-600;
+}
+
+a {
+  @apply focus:outline-none focus-visible:ring-2;
+}

@@ -30,7 +30,7 @@ export function Steps<T extends Step>({ steps, current, onChange }: Props<T>) {
             >
               <div
                 className={clsx(
-                  'group flex w-full cursor-pointer items-center',
+                  'group flex w-full cursor-pointer items-center focus:outline-none focus-visible:ring-2',
                   (isFuture || isCurrent) && 'pointer-events-none',
                 )}
                 onClick={() => onChange(stepIdx)}
