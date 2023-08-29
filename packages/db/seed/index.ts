@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { PrismaClient, type Prisma } from '@prisma/client';
+import { PrismaClient, type Challenge, type Prisma } from '@prisma/client';
 import uuidByString from 'uuid-by-string';
 import { loadChallengesFromTypeChallenge } from '../mocks/challenges.mock';
 import CommentMock from '../mocks/comment.mock';
@@ -39,6 +39,27 @@ await prisma.challenge.createMany({
 export const trashId = uuidByString('trash');
 export const gId = uuidByString('g');
 
+const TRACK_AMOUNT = 10;
+for (let i = 0; i < TRACK_AMOUNT; i++) {
+  const challenges = await getRandomChallenges(i);
+
+  const track = await prisma.track.create({
+    data: {
+      title: faker.lorem.words(2),
+      description: faker.lorem.sentences(1),
+      visible: true,
+    },
+  });
+
+  await prisma.trackChallenge.createMany({
+    data: challenges.map((challenge, index) => ({
+      challengeId: challenge.id,
+      trackId: track.id,
+      orderId: index,
+    })),
+  });
+}
+
 try {
   const someChallenge = await prisma.challenge.findFirst({
     where: {
@@ -59,7 +80,8 @@ try {
     },
   });
 
-  const comments = Array.from({ length: 50 }, () => CommentMock());
+  let commentNum = 0;
+  const comments = Array.from({ length: 50 }, () => CommentMock(++commentNum));
 
   const replies: Prisma.CommentCreateManyInput[] = [];
 
@@ -76,7 +98,7 @@ try {
   });
 
   for (const comment of createdComments) {
-    replies.push(CommentMock(comment.id), CommentMock(comment.id));
+    replies.push(CommentMock(++commentNum, comment.id), CommentMock(++commentNum, comment.id));
   }
 
   await prisma.challenge.update({
@@ -93,4 +115,12 @@ try {
   console.error(e);
   await prisma.$disconnect();
   process.exit(1);
+}
+
+async function getRandomChallenges(iteration: number): Promise<Challenge[]> {
+  const challenges = await prisma.challenge.findMany({
+    take: 10,
+    skip: 10 * iteration,
+  });
+  return challenges;
 }

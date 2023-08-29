@@ -29,9 +29,9 @@ async function fetchFile({
   return fileResponse;
 }
 
-async function downloadAndSaveFile([remoteUrl, diskPath, appendToStart = '']: readonly [
+async function downloadAndSaveFile([remoteUrl, diskPath = remoteUrl, appendToStart = '']: readonly [
   remoteUrl: string,
-  diskPath: string,
+  diskPath?: string,
   appendToStart?: string,
 ]) {
   const textToWrite = await (
@@ -41,7 +41,9 @@ async function downloadAndSaveFile([remoteUrl, diskPath, appendToStart = '']: re
     })
   ).text();
 
-  const pathToSave = url.fileURLToPath(path.join(import.meta.url, '../../../apps/web', diskPath));
+  const pathToSave = url.fileURLToPath(
+    path.join(import.meta.url, '../../../apps/web/public', diskPath),
+  );
   const dir = path.join(pathToSave, '../');
   await fs.mkdir(dir, { recursive: true });
   await fs.writeFile(pathToSave, `${appendToStart}\n${textToWrite}`, {});
@@ -50,63 +52,42 @@ async function downloadAndSaveFile([remoteUrl, diskPath, appendToStart = '']: re
 const files = [
   [
     '/esm/vs/editor/editor.api.d.ts',
-    './monaco-editor.d.ts',
+    '../../../monaco-editor.d.ts',
     `// GENERATED WITH TS: ${TYPESCRIPT_VERSION}\n`,
   ],
-  ['/min/vs/loader.js', './public/vs/loader.js'],
-  ['/min/vs/editor/editor.main.js', './public/vs/editor/editor.main.js'],
-  ['/min/vs/editor/editor.main.css', './public/vs/editor/editor.main.css'],
-  ['/min/vs/editor/editor.main.nls.js', './public/vs/editor/editor.main.nls.js'],
-  [
-    '/min/vs/basic-languages/typescript/typescript.js',
-    './public/vs/basic-languages/typescript/typescript.js',
-  ],
-  ['/min/vs/language/typescript/tsMode.js', './public/vs/language/typescript/tsMode.js'],
-  ['/min/vs/base/worker/workerMain.js', './public/vs/base/worker/workerMain.js'],
-  [
-    '/min/vs/base/common/worker/simpleWorker.nls.js',
-    './public/vs/base/common/worker/simpleWorker.nls.js',
-  ],
-  ['/min/vs/language/typescript/tsWorker.js', './public/vs/language/typescript/tsWorker.js'],
-  [
-    '/min/vs/base/common/worker/simpleWorker.nls.js',
-    './public/vs/base/common/worker/simpleWorker.nls.js',
-  ],
-  [
-    './vs/base/browser/ui/codicons/codicon/codicon.ttf',
-    './public/vs/base/browser/ui/codicons/codicon/codicon.ttf',
-  ],
+
+  ['/min/vs/loader.js'],
+  ['/min-maps/vs/loader.js.map'],
+
+  ['/min/vs/editor/editor.main.js'],
+  ['/min-maps/vs/editor/editor.main.js.map'],
+
+  ['/min/vs/editor/editor.main.css'],
+
+  ['/min/vs/editor/editor.main.nls.js'],
+  ['/min-maps/vs/editor/editor.main.nls.js.map'],
+
+  ['/min/vs/basic-languages/typescript/typescript.js'],
+  ['/min-maps/vs/basic-languages/typescript/typescript.js.map'],
+
+  ['/min/vs/language/typescript/tsMode.js'],
+  ['/min-maps/vs/language/typescript/tsMode.js.map'],
+
+  ['/min/vs/base/worker/workerMain.js'],
+  ['/min-maps/vs/base/worker/workerMain.js.map'],
+
+  ['/min/vs/base/common/worker/simpleWorker.nls.js'],
+  ['/min-maps/vs/base/common/worker/simpleWorker.nls.js.map'],
+
+  ['/min/vs/language/typescript/tsWorker.js'],
+  ['/min-maps/vs/language/typescript/tsWorker.js.map'],
+
+  ['/min/vs/base/common/worker/simpleWorker.nls.js'],
+  ['/min-maps/vs/base/common/worker/simpleWorker.nls.js.map'],
+
+  ['/min/vs/base/browser/ui/codicons/codicon/codicon.ttf'],
 ] as const;
 
-async function isTSversionCorrect(path: string) {
-  try {
-    const f = await fs.open(path, 'r');
-
-    const fileReadBuffer = (await f.read({ length: files[0][2].length })).buffer;
-    await f.close();
-
-    return fileReadBuffer.toString().startsWith(files[0][2]);
-  } catch {
-    return false;
-  }
-}
-
-// check if the force flag is present
-const force = process.argv.includes('--force');
-
-// get the path to the root monaco-editor.d.ts file
-const dTSPath = url.fileURLToPath(path.join(import.meta.url, '../../', files[0][1]));
-
-// is the version existing && correct
-const isCorrectVersionInstalled = await isTSversionCorrect(dTSPath);
-
-if (force || !isCorrectVersionInstalled) {
-  if (force) {
-    console.log(`🚨 Using force overwrites public/vs and monaco-editor.d.ts`);
-  }
-  console.log(`🌍 Downloading monaco-editor with typescript: ${TYPESCRIPT_VERSION}`);
-  await Promise.all(files.map(downloadAndSaveFile));
-  process.exit(0);
-}
-
-console.log(`✅ monaco-editor with typescript: ${TYPESCRIPT_VERSION} already installed`);
+console.log(`🌍 Downloading monaco-editor with typescript: ${TYPESCRIPT_VERSION}`);
+await Promise.all(files.map(downloadAndSaveFile));
+process.exit(0);

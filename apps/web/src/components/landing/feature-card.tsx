@@ -1,5 +1,8 @@
 'use client';
 
+import type { Challenge, Difficulty } from '@repo/db/types';
+import { Button } from '@repo/ui';
+import clsx from 'clsx';
 import {
   motion,
   useMotionTemplate,
@@ -7,16 +10,16 @@ import {
   type MotionStyle,
   type MotionValue,
 } from 'framer-motion';
+import { Reply } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import { DifficultyBadge, UserBadge } from '@repo/ui';
 import Image, { type StaticImageData } from 'next/image';
-import Link from 'next/link';
 import { useEffect, useState, type MouseEvent } from 'react';
-import { Check, Minus, Triangle, X, Reply } from 'lucide-react';
-import clsx from 'clsx';
-import type { Difficulty } from '@repo/db/types';
-import { Markdown } from '../ui/markdown';
+import { useInView } from 'react-intersection-observer';
+import { z } from 'zod';
+import { TrackChallenge } from '~/app/tracks/_components/track-challenge-card';
 import { useIsMobile } from '~/utils/useIsMobile';
+import { Markdown } from '../ui/markdown';
+import { Steps } from '../wizard/Steps';
 
 type WrapperStyle = MotionStyle & {
   '--x': MotionValue<string>;
@@ -67,7 +70,7 @@ function FeatureCard({
       <div
         className={clsx(
           'group relative w-full overflow-hidden rounded-3xl border bg-gradient-to-b from-neutral-50/90 to-neutral-100/90 transition duration-300 dark:from-neutral-950/90 dark:to-neutral-800/90',
-          !isMobile && 'hover:border-transparent',
+          'md:hover:border-transparent',
           bgClass,
         )}
       >
@@ -115,6 +118,7 @@ export function ImageCard({
                 maxWidth: 'unset',
               }}
             />
+
             <Image
               alt={image.alt}
               className={imgClass2}
@@ -156,37 +160,256 @@ export function ImageCard({
   );
 }
 
-const solutionComment = `\`\`\`ts
-// CODE START
-type Get<T, K> = string
-  \`\`\``;
-
-export function CollaborativeEnvironmentCard(props: CardProps) {
-  const isMobile = useIsMobile();
+export function ChallengeCreationCard({
+  image,
+  step1img1Class,
+  step1img2Class,
+  step2img1Class,
+  step2img2Class,
+  step3imgClass,
+  ...props
+}: CardProps & {
+  step1img1Class?: string;
+  step1img2Class?: string;
+  step2img1Class?: string;
+  step2img2Class?: string;
+  step3imgClass?: string;
+  image: {
+    step1dark1: StaticImageData;
+    step1dark2: StaticImageData;
+    step1light1: StaticImageData;
+    step1light2: StaticImageData;
+    step2dark1: StaticImageData;
+    step2dark2: StaticImageData;
+    step2light1: StaticImageData;
+    step2light2: StaticImageData;
+    step3dark: StaticImageData;
+    step3light: StaticImageData;
+    alt: string;
+  };
+}) {
+  const { resolvedTheme } = useTheme();
+  const { currentNumber: step, increment } = useNumberCycler();
+  const steps = [
+    { id: '1', name: '💳', schema: z.any() },
+    { id: '2', name: '📄', schema: z.any() },
+    { id: '3', name: '📔', schema: z.any() },
+    { id: '4', name: '🚀', schema: z.any() },
+  ];
   return (
     <FeatureCard {...props}>
-      <div className="absolute inset-0 top-[35%] flex w-[100%] flex-col gap-3 pt-4 max-md:scale-90 md:left-[37px] md:top-[30%]">
+      <div
+        className={clsx(
+          { 'translate-x-0 opacity-0': step < 3 },
+          'absolute left-1/2 top-1/2 flex w-[80%] -translate-x-1/2 -translate-y-[33%] flex-col gap-12 text-center text-2xl font-bold transition-all duration-500 md:w-[50%]',
+        )}
+      >
+        <div>🎉</div>
+        <div className="opacity-80">Thanks for creating a challenge!</div>
+      </div>
+      {resolvedTheme === 'light' && (
+        <>
+          {/* step 1 */}
+          <Image
+            alt={image.alt}
+            className={clsx(step1img1Class, { '-translate-x-36 opacity-0': step > 0 })}
+            src={image.step1light1}
+            style={{
+              position: 'absolute',
+              userSelect: 'none',
+              maxWidth: 'unset',
+            }}
+          />
+          <Image
+            alt={image.alt}
+            className={clsx(step1img2Class, { '-translate-x-24 opacity-0': step > 0 })}
+            src={image.step1light2}
+            style={{
+              position: 'absolute',
+              userSelect: 'none',
+              maxWidth: 'unset',
+            }}
+          />
+
+          {/* step 2 */}
+          <Image
+            alt={image.alt}
+            className={clsx(
+              step2img1Class,
+              { 'translate-x-36 opacity-0': step < 1 },
+              { '-translate-x-36 opacity-0': step > 1 },
+            )}
+            src={image.step2light1}
+            style={{
+              position: 'absolute',
+              userSelect: 'none',
+              maxWidth: 'unset',
+            }}
+          />
+          <Image
+            alt={image.alt}
+            className={clsx(
+              step2img2Class,
+              { 'translate-x-24 opacity-0': step < 1 },
+              { '-translate-x-24 opacity-0': step > 1 },
+            )}
+            src={image.step2light2}
+            style={{
+              position: 'absolute',
+              userSelect: 'none',
+              maxWidth: 'unset',
+            }}
+          />
+          {/* step 3 */}
+          <Image
+            alt={image.alt}
+            className={clsx(
+              step3imgClass,
+              { 'translate-x-36 opacity-0': step < 2 },
+              { '-translate-x-36 opacity-0': step > 2 },
+              { 'opacity-90': step === 2 },
+            )}
+            src={image.step3light}
+            style={{
+              position: 'absolute',
+              userSelect: 'none',
+              maxWidth: 'unset',
+            }}
+          />
+        </>
+      )}
+      {resolvedTheme === 'dark' && (
+        <>
+          {/* step 1 */}
+          <Image
+            alt={image.alt}
+            className={clsx(step1img1Class, { '-translate-x-36 opacity-0': step > 0 })}
+            src={image.step1dark1}
+            style={{
+              position: 'absolute',
+              userSelect: 'none',
+              maxWidth: 'unset',
+            }}
+          />
+          <Image
+            alt={image.alt}
+            className={clsx(step1img2Class, { '-translate-x-24 opacity-0': step > 0 })}
+            src={image.step1dark2}
+            style={{
+              position: 'absolute',
+              userSelect: 'none',
+              maxWidth: 'unset',
+            }}
+          />
+
+          {/* step 2 */}
+          <Image
+            alt={image.alt}
+            className={clsx(
+              step2img1Class,
+              { 'translate-x-36 opacity-0': step < 1 },
+              { '-translate-x-36 opacity-0': step > 1 },
+            )}
+            src={image.step2dark1}
+            style={{
+              position: 'absolute',
+              userSelect: 'none',
+              maxWidth: 'unset',
+            }}
+          />
+          <Image
+            alt={image.alt}
+            className={clsx(
+              step2img2Class,
+              { 'translate-x-24 opacity-0': step < 1 },
+              { '-translate-x-24 opacity-0': step > 1 },
+            )}
+            src={image.step2dark2}
+            style={{
+              position: 'absolute',
+              userSelect: 'none',
+              maxWidth: 'unset',
+            }}
+          />
+
+          {/* step 3 */}
+          <Image
+            alt={image.alt}
+            className={clsx(
+              step3imgClass,
+              { 'translate-x-36 opacity-0': step < 2 },
+              { '-translate-x-36 opacity-0': step > 2 },
+              { 'opacity-90': step === 2 },
+            )}
+            src={image.step3dark}
+            style={{
+              position: 'absolute',
+              userSelect: 'none',
+              maxWidth: 'unset',
+            }}
+          />
+          <div className="absolute -right-4 bottom-4 w-full">
+            <Steps current={step} onChange={() => {}} steps={steps} />
+          </div>
+        </>
+      )}
+      <div
+        className="absolute left-0 top-0 z-50 h-full w-full cursor-pointer"
+        onClick={() => increment()}
+      />
+    </FeatureCard>
+  );
+}
+
+const solutionComment = `\`\`\`ts
+type MyPick<T, K extends keyof T> = { [P in K]: T[P] };
+  \`\`\``;
+
+function Badge({ name }: { name: string }) {
+  return (
+    <Button
+      tabIndex={-1}
+      className="-ml-[0.33rem] flex h-auto w-fit items-center rounded-full bg-transparent py-1 pl-[0.33rem] pr-2 text-xs font-bold text-neutral-700 hover:bg-black/10 dark:text-white dark:hover:bg-white/20"
+      size="sm"
+    >
+      @{name}
+    </Button>
+  );
+}
+export function CollaborativeEnvironmentCard(props: CardProps) {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+  });
+
+  return (
+    <FeatureCard {...props}>
+      <div
+        ref={ref}
+        className="absolute inset-0 left-[23px] top-[35%] flex w-[100%] flex-col gap-3 pt-4 max-md:scale-90 md:left-[37px] md:top-[30%]"
+      >
         <div
           className={clsx(
-            'rounded-3xl bg-neutral-500/10 p-4 pt-3 duration-150',
-            !isMobile && 'hover:bg-neutral-500/20',
+            { comment1: inView },
+            'rounded-l-3xl bg-neutral-500/10 p-4 pt-3 opacity-0 duration-150',
+            'md:hover:bg-neutral-500/20',
           )}
         >
           <div className="flex items-center gap-2">
-            <UserBadge username="abc" linkComponent={Link} />
+            <Badge name="dax" />
             <div className="text-xs text-neutral-500">5 years ago</div>
           </div>
-          pls halp i give ap
+          Implementing Pick in TypeScript is hard, can anyone help?
         </div>
         <div
           className={clsx(
-            'relative ml-12 rounded-3xl bg-neutral-500/10 p-4 pt-3 duration-150',
-            !isMobile && 'hover:bg-neutral-500/20',
+            { comment2: inView },
+            'relative ml-12 rounded-l-3xl bg-neutral-500/10 p-4 pt-3 opacity-0 duration-150',
+            'md:hover:bg-neutral-500/20',
           )}
         >
           <Reply className="absolute -left-8 h-4 w-4 opacity-50" />
           <div className="flex items-center gap-2">
-            <UserBadge username="defg" linkComponent={Link} />
+            <Badge name="trash" />
             <div className="text-xs text-neutral-500">just now</div>
           </div>
           ez, the answer is
@@ -194,33 +417,23 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
         </div>
         <div
           className={clsx(
-            'relative ml-12 rounded-tl-3xl bg-neutral-500/10 p-4 pt-3 duration-150',
-            !isMobile && 'hover:bg-neutral-500/20',
+            { comment3: inView },
+            'relative ml-12 rounded-tl-3xl bg-neutral-500/10 p-4 pt-3 opacity-0 duration-150',
+            'md:hover:bg-neutral-500/20',
           )}
         >
           <Reply className="absolute -left-8 h-4 w-4 opacity-50" />
           <div className="flex items-center gap-2">
-            <UserBadge username="69" linkComponent={Link} />
+            <Badge name="nikita" />
             <div className="text-xs text-neutral-500">just now</div>
           </div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            version="1.1"
-            x="0px"
-            y="0px"
-            width="150px"
-            height="198px"
-            viewBox="0 0 150 198"
-            enableBackground="new 0 0 150 198"
-          >
-            <image
-              width="150"
-              height="198"
-              x="0"
-              y="0"
-              href="data:image/png;base64,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"
-            />
-          </svg>
+          <Image
+            className={clsx({ amoguwusus: inView }, 'opacity-0')}
+            alt="amoguwuawa"
+            src="/Red.webp"
+            height="198"
+            width="150"
+          />
         </div>
       </div>
     </FeatureCard>
@@ -232,90 +445,90 @@ export function CuratedTracksCard(props: CardProps) {
     <FeatureCard {...props}>
       <div
         className={clsx(
-          'absolute inset-0 top-[90%] flex flex-col items-center justify-center gap-1',
-          'max-md:scale-125 md:top-[38%]',
+          'absolute inset-0 top-[50%] flex flex-col items-center justify-center',
+          'max-md:scale-110 md:top-[38%]',
         )}
       >
-        <div className="flex w-[69%] items-center justify-between gap-3 rounded-b-lg rounded-t-2xl bg-neutral-500/10 p-2 pl-3">
-          <span className="text-sm font-medium">Track name</span>
-          <div className="flex items-center gap-3">
-            <Minus className="h-3 w-3" />
-            <Triangle className="h-3 w-3" />
-            <X className="h-3 w-3" />
-          </div>
+        <div className="flex w-[69%] items-center justify-between gap-3 rounded-b-lg rounded-t-xl bg-neutral-500/10 p-2 pl-3">
+          <span className="flex items-center gap-1 text-xs font-semibold tracking-wide">
+            Typescript Foundations
+          </span>
         </div>
-
-        {tracks.map((track) => (
-          <Track key={track.id} {...track} />
-        ))}
+        <div className="flex w-[69%] flex-col">
+          {mockChallenges.map((mockChallenge) => (
+            <TrackChallenge
+              key={`mock-${mockChallenge.id}`}
+              challenge={mockChallenge as Challenge}
+              mock
+            />
+          ))}
+        </div>
       </div>
     </FeatureCard>
   );
 }
 
-interface Track {
-  className?: string;
+// note: should always be a subset of Challenge Type
+interface MockTrackChallenge {
   difficulty: Difficulty;
-  id: string;
-  label: string;
+  id: number;
+  name: string;
 }
 
-const tracks: Track[] = [
+const mockChallenges: MockTrackChallenge[] = [
   {
-    id: '1',
-    label: 'Awaited',
-    difficulty: 'BEGINNER',
-    className: 'peer-checked/1:bg-pink-300/50 peer-checked/1:hover:bg-pink-300/50',
-  },
-  {
-    id: '2',
-    label: 'Unshift',
+    id: 2,
+    name: 'Infer',
     difficulty: 'EASY',
-    className: 'peer-checked/2:bg-emerald-300/50 peer-checked/2:hover:bg-emerald-300/50',
   },
   {
-    id: '3',
-    label: 'Append Argument',
+    id: 3,
+    name: 'Map Types',
     difficulty: 'MEDIUM',
-    className: 'peer-checked/3:bg-yellow-300/50 peer-checked/3:hover:bg-yellow-300/50',
   },
   {
-    id: '4',
-    label: 'CamelCase',
-    difficulty: 'HARD',
-    className: 'peer-checked/4:bg-red-300/50 peer-checked/4:hover:bg-red-300/50',
-  },
-  {
-    id: '5',
-    label: 'Get Readonly Keys',
+    id: 5,
+    name: 'Classes',
     difficulty: 'EXTREME',
-    className: 'peer-checked/5:bg-orange-300/50 peer-checked/5:hover:bg-orange-300/50',
+  },
+  {
+    id: 4,
+    name: 'Array/Object',
+    difficulty: 'HARD',
+  },
+  {
+    id: 1,
+    name: 'Generics',
+    difficulty: 'BEGINNER',
   },
 ];
 
-function Track({ className, difficulty, id, label }: Track) {
-  const isMobile = useIsMobile();
-  return (
-    <>
-      <input className={`peer/${id} appearance-none`} type="checkbox" id={id} />
-      <label
-        htmlFor={id}
-        className={clsx(
-          'flex w-[69%] cursor-pointer items-center justify-between gap-3 rounded-lg bg-neutral-500/10 p-4 text-zinc-700 duration-300 active:scale-100 active:duration-75  dark:text-zinc-300',
-          className,
-          !isMobile && 'hover:scale-105 hover:rounded-xl group-hover:hover:bg-neutral-500/20',
-        )}
-      >
-        <div className="flex items-center gap-3">
-          <div className="h-4 w-4 rounded-lg">
-            <Check className="h-3 w-3" />
-          </div>
-          {label}
-        </div>
-        <div className="group">
-          <DifficultyBadge difficulty={difficulty} />
-        </div>
-      </label>
-    </>
-  );
+function useNumberCycler() {
+  const [currentNumber, setCurrentNumber] = useState(0);
+  const [dummy, setDummy] = useState(0);
+
+  const increment = () => {
+    setCurrentNumber((prevNumber) => {
+      return (prevNumber + 1) % 4;
+    });
+
+    setDummy((prev) => prev + 1);
+  };
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentNumber((prevNumber) => {
+        return (prevNumber + 1) % 4;
+      });
+    }, 5000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [dummy]);
+
+  return {
+    increment,
+    currentNumber,
+  };
 }

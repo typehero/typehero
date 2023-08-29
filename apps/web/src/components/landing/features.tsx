@@ -1,31 +1,34 @@
-'use client';
-
 import { Balancer } from 'react-wrap-balancer';
 import clsx from 'clsx';
 import {
   ImageCard,
   CollaborativeEnvironmentCard,
+  ChallengeCreationCard,
   CuratedTracksCard,
 } from '~/components/landing/feature-card';
 import FeatureCardChallengeDark1 from '~/assets/images/feature_card_challenge_dark1.png';
 import FeatureCardChallengeDark2 from '~/assets/images/feature_card_challenge_dark2.png';
 import FeatureCardChallengeLight1 from '~/assets/images/feature_card_challenge_light1.png';
 import FeatureCardChallengeLight2 from '~/assets/images/feature_card_challenge_light2.png';
-import FeatureCardCreateLight1 from '~/assets/images/feature_card_create_light1.png';
-import FeatureCardCreateLight2 from '~/assets/images/feature_card_create_light2.png';
-import FeatureCardCreateDark1 from '~/assets/images/feature_card_create_dark1.png';
-import FeatureCardCreateDark2 from '~/assets/images/feature_card_create_dark2.png';
-import { useIsMobile } from '~/utils/useIsMobile';
+import Step1Dark1 from '~/assets/images/step1dark1.png';
+import Step1Dark2 from '~/assets/images/step1dark2.png';
+import Step1Light1 from '~/assets/images/step1light1.png';
+import Step1Light2 from '~/assets/images/step1light2.png';
+import Step2Light1 from '~/assets/images/step2light1.png';
+import Step2Light2 from '~/assets/images/step2light2.png';
+import Step2Dark1 from '~/assets/images/step2dark1.png';
+import Step2Dark2 from '~/assets/images/step2dark2.png';
+import Step3Light from '~/assets/images/step3light.png';
+import Step3Dark from '~/assets/images/step3dark.png';
 
 function Features() {
-  const isMobile = useIsMobile();
   return (
     <section className="relative overflow-hidden" id="features">
       <div className="container mb-[64px] grid items-center justify-center">
         <div className="flex flex-col items-center justify-center gap-16">
-          <div className="flex flex-col gap-3 text-center">
+          <div className="mt-1 flex flex-col gap-3 px-4 text-center sm:px-0">
             <a
-              className="mx-auto hidden rounded-full bg-gradient-to-r from-[#31bdc6] to-[#3178c6] p-[1px] brightness-90 contrast-150 dark:brightness-125 dark:contrast-100 sm:block"
+              className="mx-auto hidden rounded-full bg-gradient-to-r from-[#31bdc6] to-[#3178c6] p-[1px] brightness-90 contrast-150 focus:outline-none focus:ring-blue-600 focus-visible:ring-2 dark:brightness-125 dark:contrast-100 sm:block"
               href="#features"
             >
               <div className="rounded-full bg-white/80 px-3 py-1 dark:bg-black/80">
@@ -51,60 +54,77 @@ function Features() {
           <div className="relative z-10 grid w-full gap-8 lg:grid-cols-2">
             <ImageCard
               imgClass1={clsx(
-                'pointer-events-noned transition-transform duration-500 bg-neutral-50/80 dark:bg-neutral-800/80',
-                'max-sm:scale-[240%] bottom-[5%] left-[30%] w-[42%] md:-bottom-[11%] md:left-[35px] lg:w-[69%]',
-                !isMobile && 'group-hover:translate-x-2 group-hover:scale-95',
+                'pointer-events-none transition-transform duration-500 bg-neutral-50/30 dark:bg-neutral-800/30',
+                'scale-[150%] sm:scale-[110%] md:scale-100 max-md:rounded-sm rounded-xl top-[69%] left-[69px] md:top-auto w-[42%] md:-bottom-[11%] sm:left-[40px] lg:w-[69%]',
+                'md:group-hover:translate-x-2 md:group-hover:scale-95',
               )}
               imgClass2={clsx(
-                'pointer-events-none transition-transform duration-500 rounded-xl overflow-hidden bg-neutral-50/80 dark:bg-neutral-800/80',
-                'max-sm:scale-[280%] left-[80%] -bottom-[1%] w-[50%] md:left-[39%] md:-bottom-[12%] lg:w-[77%]',
-                !isMobile && 'group-hover:scale-105 group-hover:-translate-x-2',
+                'pointer-events-none transition-transform duration-500 bg-neutral-50/50 dark:bg-zinc-800/60 backdrop-blur-sm translate-x-0',
+                'scale-[190%] sm:scale-[150%] md:scale-100 rounded-2xl max-md:rounded-md left-[50%] top-[69%] md:top-auto w-[50%] sm:left-[39%] md:-bottom-[12%] lg:w-[77%]',
+                'md:group-hover:scale-105 md:group-hover:-translate-x-2',
               )}
               description="Engage in TypeScript challenges to strengthen your grasp of the type system and advanced features"
               bgClass="lg:bg-gradient-to-br"
               image={{
-                dark1: FeatureCardChallengeDark1,
-                dark2: FeatureCardChallengeDark2,
-                light1: FeatureCardChallengeLight1,
-                light2: FeatureCardChallengeLight2,
+                dark1: FeatureCardChallengeDark2,
+                dark2: FeatureCardChallengeDark1,
+                light1: FeatureCardChallengeLight2,
+                light2: FeatureCardChallengeLight1,
                 alt: 'Something',
               }}
               title="Type Challenges"
             />
-
             <CollaborativeEnvironmentCard
               description="Developers can share solutions and engage in discussions through commenting"
               bgClass="lg:bg-gradient-to-bl"
               title="Collaborative Environment"
             />
-
-            <ImageCard
-              imgClass1={clsx(
-                'pointer-events-none w-[50%] rounded-t-xl border border-zinc-300 opacity-80 transition-transform duration-500 dark:border-zinc-700 bg-neutral-50/80 dark:bg-neutral-800/80',
-                'max-md:scale-[160%] left-[15%] top-[57%] md:left-[35px] md:top-[30%]',
-                !isMobile && 'group-hover:translate-y-2',
+            <ChallengeCreationCard
+              step1img1Class={clsx(
+                'pointer-events-none w-[50%] border border-zinc-300/50 transition-all duration-500 dark:border-zinc-700/50',
+                'max-md:scale-[160%] max-md:rounded-xl rounded-2xl left-[25%] top-[57%] md:left-[35px] md:top-[41%]',
+                'md:group-hover:translate-y-2',
               )}
-              imgClass2={clsx(
-                'pointer-events-none w-[150%] rounded-t-xl border border-zinc-300 dark:border-zinc-700 ransition-transform duration-500 opacity-80 rounded-xl overflow-hidden bg-neutral-50/80 dark:bg-neutral-800/80',
+              step1img2Class={clsx(
+                'pointer-events-none w-[60%] border border-zinc-300/50 dark:border-zinc-700/50 transition-all duration-500 overflow-hidden',
+                'max-md:scale-[160%] rounded-xl max-md:rounded-lg left-[69%] top-[53%] md:top-[41%] md:left-[calc(50%+35px+1rem)]',
+                'md:group-hover:-translate-y-6',
+              )}
+              step2img1Class={clsx(
+                'pointer-events-none w-[50%] rounded-t-xl overflow-hidden border border-zinc-300 transition-all duration-500 dark:border-zinc-700',
+                'max-md:scale-[160%] left-[25%] top-[69%] md:left-[35px] md:top-[30%]',
+                'md:group-hover:translate-y-2',
+              )}
+              step2img2Class={clsx(
+                'pointer-events-none w-[110%] rounded-t-xl border border-zinc-300 dark:border-zinc-700 transition-all duration-500 rounded-xl overflow-hidden group-hover:-translate-y-6',
                 'max-md:scale-[140%] left-[70%] top-[53%] md:top-[30%] md:left-[calc(50%+35px+1rem)]',
-                !isMobile && 'group-hover:-translate-y-6',
+                'md:group-hover:-translate-y-6',
+              )}
+              step3imgClass={clsx(
+                'pointer-events-none w-[90%] border border-zinc-300 dark:border-zinc-700 rounded-t-2xl transition-all duration-500 overflow-hidden',
+                'left-[5%] top-[50%] md:top-[30%] md:left-1/2 md:left-[35px]',
               )}
               description="Craft your own coding challenges to share with the Typehero community"
               bgClass="lg:bg-gradient-to-tr"
               image={{
-                dark1: FeatureCardCreateDark1,
-                dark2: FeatureCardCreateDark2,
-                light1: FeatureCardCreateLight1,
-                light2: FeatureCardCreateLight2,
+                step1dark1: Step1Dark1,
+                step1dark2: Step1Dark2,
+                step1light1: Step1Light1,
+                step1light2: Step1Light2,
+                step2dark1: Step2Dark1,
+                step2dark2: Step2Dark2,
+                step2light1: Step2Light1,
+                step2light2: Step2Light2,
+                step3dark: Step3Dark,
+                step3light: Step3Light,
                 alt: 'Something',
               }}
               title="Challenge Creation"
             />
-
             <CuratedTracksCard
-              description="Tracks features curated TypeScript challenges, spanning various topics and difficulty levels, to advance your TypeScript skills."
+              description="Tracks are curated challenges, spanning various topics and difficulty levels, to advance your TypeScript skills."
               bgClass="lg:bg-gradient-to-tl"
-              title="Curated Tracks"
+              title="Learning Tracks"
             />
           </div>
         </div>

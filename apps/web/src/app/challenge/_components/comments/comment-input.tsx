@@ -46,11 +46,11 @@ export function CommentInput({ mode, onCancel, onChange, value, placeholder, onS
   };
 
   return (
-    <div className="bg-background/90 flex flex-col rounded-xl rounded-br-lg bg-neutral-100 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-700/90">
+    <div className="flex flex-col rounded-xl rounded-br-lg bg-neutral-100 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-700/90">
       {commentMode === 'editor' && (
         <Textarea
           autoFocus
-          className="resize-none border-0 px-3 py-2 focus-visible:ring-0 focus-visible:ring-offset-0 md:max-h-[calc(100vh_-_232px)]"
+          className="resize-none border-0 px-3 py-2 focus-visible:ring-0 md:max-h-[calc(100vh_-_232px)]"
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={handleEnterKey}
           placeholder={placeholder ?? 'Enter your comment here.'}

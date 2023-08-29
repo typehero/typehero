@@ -1,3 +1,5 @@
+import { Analytics } from '@vercel/analytics/react';
+
 import '../styles/globals.css';
 
 import { Inter } from 'next/font/google';
@@ -27,11 +29,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${inter.className} flex flex-col`}>
         <Providers>
           <Navigation />
-          <main className="flex-1">
-            <div className="h-full">{children}</div>
-          </main>
+          <main className="flex-1">{children}</main>
           <Toaster />
         </Providers>
+        <Analytics />
       </body>
     </html>
   );

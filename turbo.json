@@ -1,10 +1,11 @@
 {
   "pipeline": {
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^build", "@repo/db#db:generate"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
       "env": [
         "VERCEL_URL",
+        "VERCEL_ENV",
         "NODE_ENV",
         "DATABASE_URL",
         "GITHUB_ID",
@@ -13,6 +14,7 @@
         "GITHUB_ADMIN_SECRET",
         "UPLOADTHING_SECRET",
         "UPLOADTHING_APP_ID",
+        "EDGE_CONFIG",
         "NEXTAUTH_SECRET",
         "NEXTAUTH_URL",
         "RESEND_API_KEY",
@@ -22,21 +24,47 @@
       ]
     },
     "topo": {
-      "dependsOn": ["@repo/db#db:generate", "^topo"]
-    },
-    "//#format-root": {
-      "dependsOn": ["^topo"],
-      "outputMode": "new-only"
-    },
-    "format": {
-      "outputMode": "new-only"
-    },
-    "lint": {
-      "outputs": ["node_modules/.cache/.eslintcache"],
       "dependsOn": ["^topo"]
     },
+    "//#format": {
+      "outputs": ["node_modules/.cache/prettiercache"],
+      "outputMode": "errors-only"
+    },
+    "format": {
+      "dependsOn": ["@repo/db#db:generate", "^topo"],
+      "outputs": ["node_modules/.cache/prettiercache"],
+      "outputMode": "errors-only"
+    },
+    "//#format:fix": {
+      "outputs": ["node_modules/.cache/prettiercache"],
+      "outputMode": "errors-only"
+    },
+    "format:fix": {
+      "dependsOn": ["@repo/db#db:generate", "^topo"],
+      "outputs": ["node_modules/.cache/prettiercache"],
+      "outputMode": "errors-only"
+    },
+    "//#lint": {
+      "outputs": ["node_modules/.cache/.eslintcache"],
+      "outputMode": "errors-only"
+    },
+    "lint": {
+      "dependsOn": ["@repo/db#db:generate", "^topo"],
+      "outputs": ["node_modules/.cache/.eslintcache"],
+      "outputMode": "errors-only"
+    },
+    "//#lint:fix": {
+      "dependsOn": ["@repo/db#db:generate", "^topo"],
+      "outputs": ["node_modules/.cache/.eslintcache"],
+      "outputMode": "errors-only"
+    },
+    "lint:fix": {
+      "dependsOn": ["@repo/db#db:generate", "^topo"],
+      "outputs": ["node_modules/.cache/.eslintcache"],
+      "outputMode": "errors-only"
+    },
     "typecheck": {
-      "dependsOn": ["^topo"],
+      "dependsOn": ["@repo/db#db:generate", "^topo"],
       "outputs": ["node_modules/.cache/tsbuildinfo.json"],
       "outputMode": "errors-only"
     },

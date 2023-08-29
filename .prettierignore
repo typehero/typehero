@@ -1,0 +1,17 @@
+# This root .prettierignore will not be in play inside of workspaces.
+# Files that need to be ignored in `./apps`, `./packages`, and `/./tooling`
+# need to be given their own .prettierignore in their workspace.
+
+.env
+.next
+.github
+.next
+node_modules
+*.log
+monaco-editor.d.ts
+
+pnpm-lock.yaml
+
+!apps/**
+!packages/**
+!tooling/**

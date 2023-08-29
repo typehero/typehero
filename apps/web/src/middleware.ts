@@ -1,23 +1,17 @@
-import { type NextRequest, NextResponse } from 'next/server';
+import { NextResponse, type NextRequest } from 'next/server';
 
+const STAGING_DOMAIN = 'web-staging';
 export function middleware(req: NextRequest) {
-  if (process.env.NODE_ENV === 'production') {
-    const basicAuth = req.headers.get('authorization');
-    const url = req.nextUrl;
+  // skip blocking the request if we are on staging or local
+  if (!process.env.VERCEL_ENV || process.env.VERCEL_URL?.includes(STAGING_DOMAIN)) {
+    return NextResponse.next();
+  }
 
-    if (basicAuth) {
-      const authValue = basicAuth.split(' ')[1];
-      const [user, pwd] = atob(authValue ?? '').split(':');
+  const path = req.nextUrl.pathname;
 
-      if (user === process.env.USERNAME && process.env.PASSWORD === pwd) {
-        return NextResponse.next();
-      }
-    }
-
-    // Make the user get some damn creds
-    url.pathname = '/api/auth/creds';
-
-    return NextResponse.rewrite(url);
+  // if path is /explore or /challenge/* and redirect to /waitlist
+  if (path === '/explore' || path.startsWith('/challenge/') || path.startsWith('/tracks/')) {
+    return NextResponse.redirect(new URL('/waitlist', req.url));
   }
 
   return NextResponse.next();
