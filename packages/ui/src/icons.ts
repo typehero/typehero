@@ -10,6 +10,7 @@ export {
   ChevronLeft,
   ChevronRight,
   ChevronUp,
+  Command,
   Circle,
   Clipboard,
   Copy,
