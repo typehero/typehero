@@ -20,9 +20,7 @@ interface State {
 export const useLayoutSettingsStore = create<State>()(
   persist(
     (set, get) => ({
-      settings: {
-        ...DEFAULT_SETTINGS,
-      },
+      settings: DEFAULT_SETTINGS,
       updateSettings: (settings) => set({ settings: { ...get().settings, ...settings } }),
       toggleFullscreen: () => {
         const currentFullscreen = get().settings.isFullscreen;
