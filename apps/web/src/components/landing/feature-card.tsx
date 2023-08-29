@@ -70,7 +70,7 @@ function FeatureCard({
       <div
         className={clsx(
           'group relative w-full overflow-hidden rounded-3xl border bg-gradient-to-b from-neutral-50/90 to-neutral-100/90 transition duration-300 dark:from-neutral-950/90 dark:to-neutral-800/90',
-          !isMobile && 'hover:border-transparent',
+          'md:hover:border-transparent',
           bgClass,
         )}
       >
@@ -377,7 +377,6 @@ function Badge({ name }: { name: string }) {
   );
 }
 export function CollaborativeEnvironmentCard(props: CardProps) {
-  const isMobile = useIsMobile();
   const { ref, inView } = useInView({
     triggerOnce: true,
   });
@@ -392,7 +391,7 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
           className={clsx(
             { comment1: inView },
             'rounded-l-3xl bg-neutral-500/10 p-4 pt-3 opacity-0 duration-150',
-            !isMobile && 'hover:bg-neutral-500/20',
+            'md:hover:bg-neutral-500/20',
           )}
         >
           <div className="flex items-center gap-2">
@@ -405,7 +404,7 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
           className={clsx(
             { comment2: inView },
             'relative ml-12 rounded-l-3xl bg-neutral-500/10 p-4 pt-3 opacity-0 duration-150',
-            !isMobile && 'hover:bg-neutral-500/20',
+            'md:hover:bg-neutral-500/20',
           )}
         >
           <Reply className="absolute -left-8 h-4 w-4 opacity-50" />
@@ -420,7 +419,7 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
           className={clsx(
             { comment3: inView },
             'relative ml-12 rounded-tl-3xl bg-neutral-500/10 p-4 pt-3 opacity-0 duration-150',
-            !isMobile && 'hover:bg-neutral-500/20',
+            'md:hover:bg-neutral-500/20',
           )}
         >
           <Reply className="absolute -left-8 h-4 w-4 opacity-50" />
