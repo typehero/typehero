@@ -112,33 +112,28 @@ export default async function Dashboard({ user }: Props) {
               </div>
               <div>
                 {session?.user.id === user.id && (
-                  <Link className="hidden md:block" href="/settings">
-                    <div className='p-2 data-[state=active]:bg-border rounded-3xl duration-300 border border-ring'>Settings</div>
+                  <Link href="/settings">
+                    <div className='p-2 text-sm font-medium data-[state=active]:bg-border rounded-lg duration-300 border border-ring'>Settings</div>
                   </Link>
                 )}
               </div>
             <VerticalTabsTrigger
-              className="hidden md:block data-[state=active]:bg-border rounded-3xl duration-300 border border-ring"
               value="in-progress"
             >
-              <span className='mx-1'>button!</span>
-              <span>In-Progress</span>
+              In-Progress
             </VerticalTabsTrigger>
             <VerticalTabsTrigger
-              className="hidden md:block data-[state=active]:bg-border rounded-lg duration-300"
               value="solutions"
             >
               Solutions
             </VerticalTabsTrigger>
             <VerticalTabsTrigger
-              className="hidden md:block data-[state=active]:bg-border rounded-lg duration-300"
               disabled
               value="bookmarks"
             >
               Bookmarks
             </VerticalTabsTrigger>
             <VerticalTabsTrigger
-              className="hidden md:block data-[state=active]:bg-border rounded-l-lg rounded-r-full duration-300"
               disabled
               value="comments"
             >
