@@ -39,13 +39,10 @@ await prisma.challenge.createMany({
 export const trashId = uuidByString('trash');
 export const gId = uuidByString('g');
 
-// Seed Tracks
 const TRACK_AMOUNT = 10;
 for (let i = 0; i < TRACK_AMOUNT; i++) {
-  // Get random challenges.
-  const challenges = await getRandomChallenges();
+  const challenges = await getRandomChallenges(i);
 
-  // Create a track.
   const track = await prisma.track.create({
     data: {
       title: faker.lorem.words(2),
@@ -54,43 +51,17 @@ for (let i = 0; i < TRACK_AMOUNT; i++) {
     },
   });
 
-  // Create/Connect a Track Challenge.
-  for (const challenge of challenges) {
-    // Check if track challenge already exists with the orderId & challengeId.
-    const orderId = faker.number.int({ max: 10, min: 0 });
-    try {
-      const trackChallenge = await prisma.trackChallenge.findUnique({
-        where: {
-          challengeId_orderId: {
-            challengeId: challenge.id,
-            orderId,
-          },
-        },
-      });
+  console.log({
+    challengesToCreate: challenges.map((c) => c.id),
+  });
 
-      await prisma.track.update({
-        where: {
-          id: track.id,
-        },
-        data: {
-          trackChallenges: {
-            connect: {
-              id: trackChallenge?.id,
-            },
-          },
-        },
-      });
-    } catch (_e) {
-      // Assume does not exist.
-      await prisma.trackChallenge.create({
-        data: {
-          challengeId: challenge.id,
-          trackId: track.id,
-          orderId,
-        },
-      });
-    }
-  }
+  await prisma.trackChallenge.createMany({
+    data: challenges.map((challenge, index) => ({
+      challengeId: challenge.id,
+      trackId: track.id,
+      orderId: index,
+    })),
+  });
 }
 
 try {
@@ -150,12 +121,10 @@ try {
   process.exit(1);
 }
 
-async function getRandomChallenges(): Promise<Challenge[]> {
-  const challengesCount = await prisma.challenge.count();
-  const skip = Math.floor(Math.random() * (challengesCount - 10));
+async function getRandomChallenges(iteration: number): Promise<Challenge[]> {
   const challenges = await prisma.challenge.findMany({
     take: 10,
-    skip,
+    skip: 10 * iteration,
   });
   return challenges;
 }
