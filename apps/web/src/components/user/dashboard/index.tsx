@@ -10,8 +10,7 @@ import {
   CardHeader,
   CardTitle,
   Tabs,
-  TabsContent,
-  TabsList,
+  VerticalTabsContent,
   TabsTrigger,
   Button,
   MagicIcon,
@@ -151,7 +150,7 @@ export default async function Dashboard({ user }: Props) {
               Comments
             </TabsTrigger>
           </VerticalTabsList>
-          <TabsContent className="space-y-4 grow shrink basis-3/4" value="overview">
+          <VerticalTabsContent className="space-y-4 grow shrink basis-3/4" value="overview">
             <div className="">
               <Card className="col-span-4">
                 <CardHeader>
@@ -162,8 +161,8 @@ export default async function Dashboard({ user }: Props) {
                 </CardContent>
               </Card>
             </div>
-          </TabsContent>
-          <TabsContent className="space-y-4 grow shrink basis-3/4" value="in-progress">
+          </VerticalTabsContent>
+          <VerticalTabsContent className="space-y-4 grow shrink basis-3/4" value="in-progress">
             <div className="">
               <Card className="col-span-4">
                 <CardHeader>
@@ -174,8 +173,8 @@ export default async function Dashboard({ user }: Props) {
                 </CardContent>
               </Card>
             </div>
-          </TabsContent>
-          <TabsContent className="space-y-4 grow shrink basis-3/4" value="solutions">
+          </VerticalTabsContent>
+          <VerticalTabsContent className="space-y-4 grow shrink basis-3/4" value="solutions">
             <div className="">
               <Card className="col-span-4">
                 <CardHeader>
@@ -186,7 +185,7 @@ export default async function Dashboard({ user }: Props) {
                 </CardContent>
               </Card>
             </div>
-          </TabsContent>
+          </VerticalTabsContent>
         </Tabs>
       </div>
     </div>

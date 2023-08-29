@@ -66,4 +66,19 @@ const TabsContent = React.forwardRef<
 ));
 TabsContent.displayName = TabsPrimitive.Content.displayName;
 
-export { Tabs, VerticalTabsList, TabsList, TabsTrigger, TabsContent };
+const VerticalTabsContent = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
+>(({ className, ...props }, ref) => (
+  <TabsPrimitive.Content
+    className={cn(
+      'ring-offset-background focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+      className,
+    )}
+    ref={ref}
+    {...props}
+  />
+));
+VerticalTabsContent.displayName = TabsPrimitive.Content.displayName;
+
+export { Tabs, TabsList, VerticalTabsList, TabsTrigger, TabsContent, VerticalTabsContent };
