@@ -5,7 +5,7 @@
   "scripts": {
     "build": "turbo build",
     "checks": "turbo format lint typecheck --continue",
-    "checks:fix": "turbo format:fix lint:fix typecheck --continue",
+    "checks:fix": "turbo format:fix lint:fix typecheck --continue --force",
     "clean": "turbo clean && rm -rf node_modules",
     "db:push": "turbo db:push",
     "db:reset": "turbo db:reset",
@@ -15,7 +15,7 @@
     "dl-git": "turbo dl-git",
     "dl-monaco:force": "turbo dl-monaco",
     "format": "prettier . \"!./apps/**\" \"!./packages/**\" \"!./tooling/**\" --check --cache --cache-location=\"node_modules/.cache/prettiercache\"",
-    "format:fix": "prettier . \"!./apps/**\" \"!./packages/**\" \"!./tooling/**\" --write --cache --cache-location=\"node_modules/.cache/prettiercache\" --log-level=warn",
+    "format:fix": "prettier . \"!./apps/**\" \"!./packages/**\" \"!./tooling/**\" --write --cache --cache-location=\"node_modules/.cache/prettiercache\" --loglevel=warn",
     "lint": "eslint . --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
     "lint:fix": "eslint . --fix --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
     "refresh": "turbo db:reset db:seed --concurrency=1",
