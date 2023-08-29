@@ -67,7 +67,6 @@ export default async function Dashboard({ user }: Props) {
   return (
     <div className="container">
       <div className="mt-10">
-
         <div className="max-w-md">
           <ReactMarkdown>{user.bio}</ReactMarkdown>
         </div>
@@ -92,7 +91,7 @@ export default async function Dashboard({ user }: Props) {
           </div>
         )}
 
-        <Tabs className="flex flex-col md:flex-row gap-4" defaultValue="in-progress">
+        <Tabs className="flex flex-col gap-4 md:flex-row" defaultValue="in-progress">
           <VerticalTabsList className="teststuffhere">
             <div className="flex flex-col items-center justify-center">
               <Image
@@ -102,45 +101,33 @@ export default async function Dashboard({ user }: Props) {
                 src={user.image ?? '/avatar.jpeg'}
                 width="100"
               />
-                <UserHeader user={user} isOwnProfile={session?.user.id === user.id} />
-                <p
-                  className="text-sm italic tracking-tight"
-                  title={`Joined ${user.createdAt.toString()}`}
-                >
-                  Joined {getRelativeTime(user.createdAt)}
-                </p>
-              </div>
-              <div>
-                {session?.user.id === user.id && (
-                  <Link href="/settings">
-                    <div className='p-2 text-sm font-medium data-[state=active]:bg-border rounded-lg duration-300 border border-ring'>Settings</div>
-                  </Link>
-                )}
-              </div>
-            <VerticalTabsTrigger
-              value="in-progress"
-            >
-              In-Progress
-            </VerticalTabsTrigger>
-            <VerticalTabsTrigger
-              value="solutions"
-            >
-              Solutions
-            </VerticalTabsTrigger>
-            <VerticalTabsTrigger
-              disabled
-              value="bookmarks"
-            >
+              <UserHeader user={user} isOwnProfile={session?.user.id === user.id} />
+              <p
+                className="text-sm italic tracking-tight"
+                title={`Joined ${user.createdAt.toString()}`}
+              >
+                Joined {getRelativeTime(user.createdAt)}
+              </p>
+            </div>
+            <div>
+              {session?.user.id === user.id && (
+                <Link href="/settings">
+                  <div className="data-[state=active]:bg-border border-ring rounded-lg border p-2 text-sm font-medium duration-300">
+                    Settings
+                  </div>
+                </Link>
+              )}
+            </div>
+            <VerticalTabsTrigger value="in-progress">In-Progress</VerticalTabsTrigger>
+            <VerticalTabsTrigger value="solutions">Solutions</VerticalTabsTrigger>
+            <VerticalTabsTrigger disabled value="bookmarks">
               Bookmarks
             </VerticalTabsTrigger>
-            <VerticalTabsTrigger
-              disabled
-              value="comments"
-            >
+            <VerticalTabsTrigger disabled value="comments">
               Comments
             </VerticalTabsTrigger>
           </VerticalTabsList>
-          <VerticalTabsContent className="space-y-4 grow shrink" value="overview">
+          <VerticalTabsContent className="shrink grow space-y-4" value="overview">
             <div className="">
               <Card className="col-span-4">
                 <CardHeader>
@@ -152,7 +139,7 @@ export default async function Dashboard({ user }: Props) {
               </Card>
             </div>
           </VerticalTabsContent>
-          <VerticalTabsContent className="space-y-4 grow shrink" value="in-progress">
+          <VerticalTabsContent className="shrink grow space-y-4" value="in-progress">
             <div className="">
               <Card className="col-span-4">
                 <CardHeader>
@@ -164,7 +151,7 @@ export default async function Dashboard({ user }: Props) {
               </Card>
             </div>
           </VerticalTabsContent>
-          <VerticalTabsContent className="space-y-4 grow shrink" value="solutions">
+          <VerticalTabsContent className="shrink grow space-y-4" value="solutions">
             <div className="">
               <Card className="col-span-4">
                 <CardHeader>
