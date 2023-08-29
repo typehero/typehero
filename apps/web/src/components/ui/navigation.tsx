@@ -13,7 +13,7 @@ import {
 import { Loader2, LogIn, Moon, Plus, Settings, Settings2, Sun, User } from '@repo/ui/icons';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import { FeatureFlagContext } from '~/app/feature-flag-provider';
 
@@ -34,7 +34,7 @@ export function Navigation() {
   return (
     <header className="z-10 w-full">
       <nav
-        className={`flex h-14 items-center ${
+        className={`flex h-14 items-center text-sm font-medium ${
           pathname?.startsWith('/challenge') ? 'px-4' : 'container'
         }`}
       >
@@ -80,8 +80,15 @@ export function Navigation() {
             </a>
             {featureFlags?.exploreButton ? (
               <Link href="/explore" className="ml-4">
-                <div className="hover:text-foreground/80 text-foreground transition-colors">
+                <div className="hover:text-foreground text-foreground/80 transition-colors">
                   Explore
+                </div>
+              </Link>
+            ) : null}
+            {featureFlags?.tracksButton ? (
+              <Link href="/tracks" className="ml-4">
+                <div className="hover:text-foreground text-foreground/80 transition-colors">
+                  Tracks
                 </div>
               </Link>
             ) : null}
@@ -127,6 +134,7 @@ function ThemeButton() {
 function LoginButton() {
   const [loading, setLoading] = useState(false);
   const { data: session, status } = useSession();
+  const router = useRouter();
 
   const isAdmin = session?.user.role.includes(RoleTypes.ADMIN);
   const isMod = session?.user.role.includes(RoleTypes.MODERATOR);
@@ -145,6 +153,7 @@ function LoginButton() {
   };
   const handleSignOut = async () => {
     await signOut({ redirect: false });
+    router.refresh();
   };
 
   return session ? (

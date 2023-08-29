@@ -1,13 +1,16 @@
-import { type NextRequest, NextResponse } from 'next/server';
+import { NextResponse, type NextRequest } from 'next/server';
 
+const STAGING_DOMAIN = 'web-staging';
 export function middleware(req: NextRequest) {
-  if (!process.env.VERCEL_ENV) {
+  // skip blocking the request if we are on staging or local
+  if (!process.env.VERCEL_ENV || process.env.VERCEL_URL?.includes(STAGING_DOMAIN)) {
     return NextResponse.next();
   }
+
   const path = req.nextUrl.pathname;
 
   // if path is /explore or /challenge/* and redirect to /waitlist
-  if (path === '/explore' || path.startsWith('/challenge/')) {
+  if (path === '/explore' || path.startsWith('/challenge/') || path.startsWith('/tracks/')) {
     return NextResponse.redirect(new URL('/waitlist', req.url));
   }
 

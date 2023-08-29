@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
+import { ExploreSection } from './explore-section';
+import { ExploreSectionSkeleton } from './explore-section-skeleton';
 import { getChallengesByTagOrDifficulty } from './explore.action';
-import { ExploreSection } from './section';
-import { ExploreSectionSkeleton } from './section-skeleton';
 import { Footsies } from '~/components/ui/footsies';
 
 // CI fails without this
@@ -11,9 +11,6 @@ export async function Explore() {
   return (
     <div className="flex flex-col gap-8 py-8 md:gap-10 md:py-10">
       <div className="container">
-        <h3 className="mb-1 text-2xl font-bold tracking-wide text-neutral-900/40 dark:text-white/40">
-          Welcome to
-        </h3>
         <h1 className="mb-8 text-4xl font-bold tracking-tight text-neutral-900 dark:text-white">
           TypeHero Explore
         </h1>
@@ -27,28 +24,32 @@ export async function Explore() {
         <ExploreSection
           title="💕 Most Popular"
           fetcher={getChallengesByTagOrDifficulty}
-          moreRoute="POPULAR"
+          tag="POPULAR"
+          redirectRoute="/explore/popular"
         />
       </Suspense>
       <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection
           title="🔥 Newest"
           fetcher={getChallengesByTagOrDifficulty}
-          moreRoute="NEWEST"
+          tag="NEWEST"
+          redirectRoute="/explore/newest"
         />
       </Suspense>
       <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection
           title="Great for Beginners"
           fetcher={getChallengesByTagOrDifficulty}
-          moreRoute="EASY"
+          tag="EASY"
+          redirectRoute="/explore/easy"
         />
       </Suspense>
       <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection
           title="Great for Enthusiasts"
           fetcher={getChallengesByTagOrDifficulty}
-          moreRoute="MEDIUM"
+          tag="MEDIUM"
+          redirectRoute="/explore/medium"
         />
       </Suspense>
 
@@ -56,7 +57,8 @@ export async function Explore() {
         <ExploreSection
           title="For the Experts"
           fetcher={getChallengesByTagOrDifficulty}
-          moreRoute="HARD"
+          tag="HARD"
+          redirectRoute="/explore/hard"
         />
       </Suspense>
       <Footsies />
