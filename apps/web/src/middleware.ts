@@ -1,9 +1,12 @@
 import { NextResponse, type NextRequest } from 'next/server';
 
+const STAGING_DOMAIN = 'staging.typehero.dev';
 export function middleware(req: NextRequest) {
-  if (!process.env.VERCEL_ENV) {
+  // skip blocking the request if we are on staging or local
+  if (!process.env.VERCEL_ENV || process.env.VERCEL_URL === STAGING_DOMAIN) {
     return NextResponse.next();
   }
+
   const path = req.nextUrl.pathname;
 
   // if path is /explore or /challenge/* and redirect to /waitlist
