@@ -27,7 +27,7 @@ const VerticalTabsList = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <TabsPrimitive.List
     className={cn(
-      'flex flex-col',
+      'flex flex-col gap-4',
       className
     )}
     ref={ref}
@@ -50,6 +50,21 @@ const TabsTrigger = React.forwardRef<
   />
 ));
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
+
+const VerticalTabsTrigger = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
+>(({ className, ...props }, ref) => (
+  <TabsPrimitive.Trigger
+    className={cn(
+      'ring-offset-background focus-visible:ring-ring data-[state=active]:bg-background data-[state=active]:text-foreground inline-flex whitespace-nowrap rounded-sm p-2 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm',
+      className,
+    )}
+    ref={ref}
+    {...props}
+  />
+));
+VerticalTabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
 
 const TabsContent = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Content>,
@@ -81,4 +96,4 @@ const VerticalTabsContent = React.forwardRef<
 ));
 VerticalTabsContent.displayName = TabsPrimitive.Content.displayName;
 
-export { Tabs, TabsList, VerticalTabsList, TabsTrigger, TabsContent, VerticalTabsContent };
+export { Tabs, TabsList, VerticalTabsList, TabsTrigger, VerticalTabsTrigger, TabsContent, VerticalTabsContent };

@@ -11,7 +11,7 @@ import {
   CardTitle,
   Tabs,
   VerticalTabsContent,
-  TabsTrigger,
+  VerticalTabsTrigger,
   Button,
   MagicIcon,
   VerticalTabsList,
@@ -122,35 +122,36 @@ export default async function Dashboard({ user }: Props) {
         )}
 
         <Tabs className="flex flex-wrap" defaultValue="in-progress">
-          <VerticalTabsList className="grow shrink basis-1/4">
-            <TabsTrigger
-              className="data-[state=active]:bg-border rounded-lg rounded-l-2xl duration-300"
+          <VerticalTabsList className="grow shrink basis-1/6 pr-2">
+            <VerticalTabsTrigger
+              className="data-[state=active]:bg-border rounded-3xl duration-300 border border-ring"
               value="in-progress"
             >
-              In-Progress
-            </TabsTrigger>
-            <TabsTrigger
+              <span className='mx-1'>button!</span>
+              <span>In-Progress</span>
+            </VerticalTabsTrigger>
+            <VerticalTabsTrigger
               className="data-[state=active]:bg-border rounded-lg duration-300"
               value="solutions"
             >
               Solutions
-            </TabsTrigger>
-            <TabsTrigger
+            </VerticalTabsTrigger>
+            <VerticalTabsTrigger
               className="data-[state=active]:bg-border rounded-lg duration-300"
               disabled
               value="bookmarks"
             >
               Bookmarks
-            </TabsTrigger>
-            <TabsTrigger
+            </VerticalTabsTrigger>
+            <VerticalTabsTrigger
               className="data-[state=active]:bg-border rounded-l-lg rounded-r-full duration-300"
               disabled
               value="comments"
             >
               Comments
-            </TabsTrigger>
+            </VerticalTabsTrigger>
           </VerticalTabsList>
-          <VerticalTabsContent className="space-y-4 grow shrink basis-3/4" value="overview">
+          <VerticalTabsContent className="space-y-4 grow shrink basis-5/6" value="overview">
             <div className="">
               <Card className="col-span-4">
                 <CardHeader>
@@ -162,7 +163,7 @@ export default async function Dashboard({ user }: Props) {
               </Card>
             </div>
           </VerticalTabsContent>
-          <VerticalTabsContent className="space-y-4 grow shrink basis-3/4" value="in-progress">
+          <VerticalTabsContent className="space-y-4 grow shrink basis-5/6" value="in-progress">
             <div className="">
               <Card className="col-span-4">
                 <CardHeader>
@@ -174,7 +175,7 @@ export default async function Dashboard({ user }: Props) {
               </Card>
             </div>
           </VerticalTabsContent>
-          <VerticalTabsContent className="space-y-4 grow shrink basis-3/4" value="solutions">
+          <VerticalTabsContent className="space-y-4 grow shrink basis-5/6" value="solutions">
             <div className="">
               <Card className="col-span-4">
                 <CardHeader>
