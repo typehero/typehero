@@ -91,7 +91,7 @@ export default async function Dashboard({ user }: Props) {
           </div>
         )}
 
-        <Tabs className="flex flex-col gap-10 md:flex-row" defaultValue="in-progress">
+        <Tabs className="flex flex-col md:flex-row gap-10" defaultValue="in-progress">
           <VerticalTabsList>
             <div className="flex flex-col items-center justify-center">
               <Image
@@ -112,18 +112,18 @@ export default async function Dashboard({ user }: Props) {
             <div>
               {session?.user.id === user.id && (
                 <Link href="/settings">
-                  <div className="data-[state=active]:bg-border border-ring rounded-lg border p-2 text-sm font-medium duration-300">
+                  <div className="hidden md:block data-[state=active]:bg-border border-ring rounded-lg border p-2 text-sm font-medium duration-300">
                     Settings
                   </div>
                 </Link>
               )}
             </div>
-            <VerticalTabsTrigger value="in-progress">In-Progress</VerticalTabsTrigger>
-            <VerticalTabsTrigger value="solutions">Solutions</VerticalTabsTrigger>
-            <VerticalTabsTrigger disabled value="bookmarks">
+            <VerticalTabsTrigger className="hidden md:block" value="in-progress">In-Progress</VerticalTabsTrigger>
+            <VerticalTabsTrigger className="hidden md:block" value="solutions">Solutions</VerticalTabsTrigger>
+            <VerticalTabsTrigger className="hidden md:block" disabled value="bookmarks">
               Bookmarks
             </VerticalTabsTrigger>
-            <VerticalTabsTrigger disabled value="comments">
+            <VerticalTabsTrigger className="hidden md:block" disabled value="comments">
               Comments
             </VerticalTabsTrigger>
           </VerticalTabsList>
