@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 patchedDependencies:
   '@monaco-editor/react@4.5.1':
     hash: xep4qb27qzc6gvlhv2fxe3r2ka
@@ -17,6 +21,10 @@ patchedDependencies:
 importers:
 
   .:
+    dependencies:
+      '@vercel/spaces':
+        specifier: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701
+        version: '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701'
     devDependencies:
       prettier:
         specifier: ^3.0.2
@@ -121,6 +129,9 @@ importers:
       '@types/react-syntax-highlighter':
         specifier: ^15.5.7
         version: 15.5.7
+      '@vercel/spaces':
+        specifier: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701
+        version: '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701'
       autoprefixer:
         specifier: ^10.4.14
         version: 10.4.14(postcss@8.4.26)
@@ -182,6 +193,9 @@ importers:
       '@types/react':
         specifier: ^18.2.8
         version: 18.2.20
+      '@vercel/spaces':
+        specifier: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701
+        version: '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701'
       typescript:
         specifier: ^5.1.3
         version: 5.1.6
@@ -363,6 +377,9 @@ importers:
       '@types/react-syntax-highlighter':
         specifier: ^15.5.7
         version: 15.5.7
+      '@vercel/spaces':
+        specifier: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701
+        version: '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701'
       autoprefixer:
         specifier: ^10.4.14
         version: 10.4.14(postcss@8.4.26)
@@ -418,6 +435,9 @@ importers:
       '@types/node':
         specifier: ^16.18.11
         version: 16.18.11
+      '@vercel/spaces':
+        specifier: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701
+        version: '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701'
       eslint:
         specifier: ^8.42.0
         version: 8.45.0
@@ -449,6 +469,9 @@ importers:
       '@types/node':
         specifier: ^16.18.11
         version: 16.18.11
+      '@vercel/spaces':
+        specifier: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701
+        version: '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701'
       dotenv-cli:
         specifier: ^7.2.1
         version: 7.2.1
@@ -485,6 +508,10 @@ importers:
       react-email:
         specifier: 1.9.3
         version: 1.9.3
+    devDependencies:
+      '@vercel/spaces':
+        specifier: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701
+        version: '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701'
 
   packages/monaco:
     dependencies:
@@ -534,6 +561,9 @@ importers:
       '@repo/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/config-typescript
+      '@vercel/spaces':
+        specifier: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701
+        version: '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701'
       eslint:
         specifier: ^8.42.0
         version: 8.45.0
@@ -652,6 +682,9 @@ importers:
       '@types/react':
         specifier: ^18.2.20
         version: 18.2.20
+      '@vercel/spaces':
+        specifier: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701
+        version: '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701'
       eslint:
         specifier: ^8.42.0
         version: 8.45.0
@@ -663,7 +696,7 @@ importers:
     dependencies:
       '@next/eslint-plugin-next':
         specifier: canary
-        version: 13.4.4-canary.8
+        version: 13.4.20-canary.0
       '@repo/tsconfig':
         specifier: workspace:*
         version: link:../config-typescript
@@ -675,7 +708,7 @@ importers:
         version: 5.62.0(eslint@8.45.0)(typescript@5.1.6)
       '@vercel/style-guide':
         specifier: ^4.0.2
-        version: 4.0.2(@next/eslint-plugin-next@13.4.4-canary.8)(eslint@8.45.0)(prettier@3.0.2)(typescript@5.1.6)
+        version: 4.0.2(@next/eslint-plugin-next@13.4.20-canary.0)(eslint@8.45.0)(prettier@3.0.2)(typescript@5.1.6)
       eslint:
         specifier: ^8.40.0
         version: 8.45.0
@@ -685,17 +718,28 @@ importers:
       typescript:
         specifier: ^5.1.3
         version: 5.1.6
+    devDependencies:
+      '@vercel/spaces':
+        specifier: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701
+        version: '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701'
 
   tooling/config-tailwind:
     devDependencies:
       '@tailwindcss/typography':
         specifier: ^0.5.9
         version: 0.5.9(tailwindcss@3.3.3)
+      '@vercel/spaces':
+        specifier: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701
+        version: '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701'
       tailwindcss:
         specifier: ^3.2.4
         version: 3.3.3
 
-  tooling/config-typescript: {}
+  tooling/config-typescript:
+    devDependencies:
+      '@vercel/spaces':
+        specifier: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701
+        version: '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701'
 
   tooling/scripts:
     devDependencies:
@@ -711,6 +755,9 @@ importers:
       '@types/node-fetch':
         specifier: ^2.6.4
         version: 2.6.4
+      '@vercel/spaces':
+        specifier: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701
+        version: '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701'
       dotenv:
         specifier: ^16.3.1
         version: 16.3.1
@@ -1508,6 +1555,15 @@ packages:
       eslint: 8.45.0
       eslint-visitor-keys: 3.4.1
 
+  /@eslint-community/eslint-utils@4.4.0(eslint@8.48.0):
+    resolution: {integrity: sha512-1/sA4dwrzBAyeUoQ6oxahHKmrZvsnLCg4RfxW3ZFGGmQkSNQPFNLV9CUEFQP1x9EYXHTo5p6xdhZM1Ne9p/AfA==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    peerDependencies:
+      eslint: ^6.0.0 || ^7.0.0 || >=8.0.0
+    dependencies:
+      eslint: 8.48.0
+      eslint-visitor-keys: 3.4.1
+
   /@eslint-community/regexpp@4.5.1:
     resolution: {integrity: sha512-Z5ba73P98O1KUYCCJTUeVpja9RcGoMdncZ6T49FCUl2lN38JtCJ+3WgIDBv0AuY4WChU5PmtJmOCTlN6FZTFKQ==}
     engines: {node: ^12.0.0 || ^14.0.0 || >=16.0.0}
@@ -1535,6 +1591,10 @@ packages:
 
   /@eslint/js@8.44.0:
     resolution: {integrity: sha512-Ag+9YM4ocKQx9AarydN0KY2j0ErMHNIocPDrVo8zAE44xLTjEtz81OdR68/cydGtk6m6jDb5Za3r2useMzYmSw==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
+  /@eslint/js@8.48.0:
+    resolution: {integrity: sha512-ZSjtmelB7IJfWD2Fvb7+Z+ChTIKWq6kjda95fLcQKNS5aheVHn4IkfgRQE3sIIzTcSLwLcLZUD9UBt+V7+h+Pw==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
   /@faker-js/faker@8.0.2:
@@ -1727,8 +1787,8 @@ packages:
       glob: 7.1.7
     dev: true
 
-  /@next/eslint-plugin-next@13.4.4-canary.8:
-    resolution: {integrity: sha512-hgFwPEJ5vr66yjRAfYxhKXBxpgmusZF7ztS8GpBS7HsDb05NHiMho843INE+0ToTv+S+2GTGr3YQHgjBSqzE0g==}
+  /@next/eslint-plugin-next@13.4.20-canary.0:
+    resolution: {integrity: sha512-vFC1meiw/awh2xJZMWaoECsfZbgkt2fF3HIg8f2fSM/w41Z86L1SS7SjKmpbbD87yq3tiqgqHmFv0JCych4g4g==}
     dependencies:
       glob: 7.1.7
     dev: false
@@ -4141,7 +4201,7 @@ packages:
       yoga-wasm-web: 0.3.0
     dev: false
 
-  /@vercel/style-guide@4.0.2(@next/eslint-plugin-next@13.4.4-canary.8)(eslint@8.45.0)(prettier@3.0.2)(typescript@5.1.6):
+  /@vercel/style-guide@4.0.2(@next/eslint-plugin-next@13.4.20-canary.0)(eslint@8.45.0)(prettier@3.0.2)(typescript@5.1.6):
     resolution: {integrity: sha512-FroL+oOePzhw7n/I+f7zr4WNroGHT/+2TlW6WH9+CVSjMNsEyu7Qstj2mI5gWIBjT1Y2ZImKPppCzI2cIYmNZw==}
     engines: {node: '>=16'}
     peerDependencies:
@@ -4161,14 +4221,14 @@ packages:
     dependencies:
       '@babel/core': 7.22.10
       '@babel/eslint-parser': 7.22.10(@babel/core@7.22.10)(eslint@8.45.0)
-      '@next/eslint-plugin-next': 13.4.4-canary.8
+      '@next/eslint-plugin-next': 13.4.20-canary.0
       '@rushstack/eslint-patch': 1.3.2
       '@typescript-eslint/eslint-plugin': 5.59.1(@typescript-eslint/parser@5.62.0)(eslint@8.45.0)(typescript@5.1.6)
       '@typescript-eslint/parser': 5.62.0(eslint@8.45.0)(typescript@5.1.6)
       eslint: 8.45.0
       eslint-config-prettier: 8.10.0(eslint@8.45.0)
       eslint-import-resolver-alias: 1.1.2(eslint-plugin-import@2.27.5)
-      eslint-import-resolver-typescript: 3.5.5(@typescript-eslint/parser@5.62.0)(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.27.5)(eslint@8.45.0)
+      eslint-import-resolver-typescript: 3.5.5(@typescript-eslint/parser@5.62.0)(eslint-plugin-import@2.27.5)(eslint@8.45.0)
       eslint-plugin-eslint-comments: 3.2.0(eslint@8.45.0)
       eslint-plugin-import: 2.27.5(@typescript-eslint/parser@5.62.0)(eslint-import-resolver-typescript@3.5.5)(eslint@8.45.0)
       eslint-plugin-jest: 27.2.3(@typescript-eslint/eslint-plugin@5.59.1)(eslint@8.45.0)(typescript@5.1.6)
@@ -5765,6 +5825,30 @@ packages:
       - eslint-import-resolver-webpack
       - supports-color
 
+  /eslint-import-resolver-typescript@3.5.5(@typescript-eslint/parser@5.62.0)(eslint-plugin-import@2.27.5)(eslint@8.45.0):
+    resolution: {integrity: sha512-TdJqPHs2lW5J9Zpe17DZNQuDnox4xo2o+0tE7Pggain9Rbc19ik8kFtXdxZ250FVx2kF4vlt2RSf4qlUpG7bhw==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    peerDependencies:
+      eslint: '*'
+      eslint-plugin-import: '*'
+    dependencies:
+      debug: 4.3.4
+      enhanced-resolve: 5.15.0
+      eslint: 8.45.0
+      eslint-module-utils: 2.8.0(@typescript-eslint/parser@5.62.0)(eslint-import-resolver-typescript@3.5.5)(eslint@8.45.0)
+      eslint-plugin-import: 2.27.5(@typescript-eslint/parser@5.62.0)(eslint-import-resolver-typescript@3.5.5)(eslint@8.45.0)
+      get-tsconfig: 4.6.2
+      globby: 13.2.2
+      is-core-module: 2.12.1
+      is-glob: 4.0.3
+      synckit: 0.8.5
+    transitivePeerDependencies:
+      - '@typescript-eslint/parser'
+      - eslint-import-resolver-node
+      - eslint-import-resolver-webpack
+      - supports-color
+    dev: false
+
   /eslint-module-utils@2.8.0(@typescript-eslint/parser@5.62.0)(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.5.5)(eslint@8.45.0):
     resolution: {integrity: sha512-aWajIYfsqCKRDgUfjEXNN/JlrzauMuSEy5sbd7WXbtW3EH6A6MpwEh42c7qD+MqQo9QMJ6fWLAeIJynx0g6OAw==}
     engines: {node: '>=4'}
@@ -5793,6 +5877,35 @@ packages:
       eslint-import-resolver-typescript: 3.5.5(@typescript-eslint/parser@5.62.0)(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.27.5)(eslint@8.45.0)
     transitivePeerDependencies:
       - supports-color
+
+  /eslint-module-utils@2.8.0(@typescript-eslint/parser@5.62.0)(eslint-import-resolver-typescript@3.5.5)(eslint@8.45.0):
+    resolution: {integrity: sha512-aWajIYfsqCKRDgUfjEXNN/JlrzauMuSEy5sbd7WXbtW3EH6A6MpwEh42c7qD+MqQo9QMJ6fWLAeIJynx0g6OAw==}
+    engines: {node: '>=4'}
+    peerDependencies:
+      '@typescript-eslint/parser': '*'
+      eslint: '*'
+      eslint-import-resolver-node: '*'
+      eslint-import-resolver-typescript: '*'
+      eslint-import-resolver-webpack: '*'
+    peerDependenciesMeta:
+      '@typescript-eslint/parser':
+        optional: true
+      eslint:
+        optional: true
+      eslint-import-resolver-node:
+        optional: true
+      eslint-import-resolver-typescript:
+        optional: true
+      eslint-import-resolver-webpack:
+        optional: true
+    dependencies:
+      '@typescript-eslint/parser': 5.62.0(eslint@8.45.0)(typescript@5.1.6)
+      debug: 3.2.7
+      eslint: 8.45.0
+      eslint-import-resolver-typescript: 3.5.5(@typescript-eslint/parser@5.62.0)(eslint-plugin-import@2.27.5)(eslint@8.45.0)
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /eslint-plugin-eslint-comments@3.2.0(eslint@8.45.0):
     resolution: {integrity: sha512-0jkOl0hfojIHHmEHgmNdqv4fmh7300NdpA9FFpF7zaoLvB/QeXOGNLIo86oAveJFrfB1p05kC8hpEMHM8DwWVQ==}
@@ -6034,6 +6147,51 @@ packages:
       '@eslint-community/regexpp': 4.6.2
       '@eslint/eslintrc': 2.1.2
       '@eslint/js': 8.44.0
+      '@humanwhocodes/config-array': 0.11.10
+      '@humanwhocodes/module-importer': 1.0.1
+      '@nodelib/fs.walk': 1.2.8
+      ajv: 6.12.6
+      chalk: 4.1.2
+      cross-spawn: 7.0.3
+      debug: 4.3.4
+      doctrine: 3.0.0
+      escape-string-regexp: 4.0.0
+      eslint-scope: 7.2.2
+      eslint-visitor-keys: 3.4.3
+      espree: 9.6.1
+      esquery: 1.5.0
+      esutils: 2.0.3
+      fast-deep-equal: 3.1.3
+      file-entry-cache: 6.0.1
+      find-up: 5.0.0
+      glob-parent: 6.0.2
+      globals: 13.20.0
+      graphemer: 1.4.0
+      ignore: 5.2.4
+      imurmurhash: 0.1.4
+      is-glob: 4.0.3
+      is-path-inside: 3.0.3
+      js-yaml: 4.1.0
+      json-stable-stringify-without-jsonify: 1.0.1
+      levn: 0.4.1
+      lodash.merge: 4.6.2
+      minimatch: 3.1.2
+      natural-compare: 1.4.0
+      optionator: 0.9.3
+      strip-ansi: 6.0.1
+      text-table: 0.2.0
+    transitivePeerDependencies:
+      - supports-color
+
+  /eslint@8.48.0:
+    resolution: {integrity: sha512-sb6DLeIuRXxeM1YljSe1KEx9/YYeZFQWcV8Rq9HfigmdDEugjLEVEa1ozDjL6YDjBpQHPJxJzze+alxi4T3OLg==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    hasBin: true
+    dependencies:
+      '@eslint-community/eslint-utils': 4.4.0(eslint@8.48.0)
+      '@eslint-community/regexpp': 4.6.2
+      '@eslint/eslintrc': 2.1.2
+      '@eslint/js': 8.48.0
       '@humanwhocodes/config-array': 0.11.10
       '@humanwhocodes/module-importer': 1.0.1
       '@nodelib/fs.walk': 1.2.8
@@ -7498,6 +7656,9 @@ packages:
       '@types/mdast': 3.0.12
     dev: false
 
+  /mdn-data@2.1.0:
+    resolution: {integrity: sha512-dbAWH6A+2NGuVJlQFrTKHJc07Vqn5frnhyTOGz+7BsK7V2hHdoBcwoiyV3QVhLHYpM/zqe2OSUn5ZWbVXLBB8A==}
+
   /memoize-one@6.0.0:
     resolution: {integrity: sha512-rkpe71W0N0c0Xz6QD0eJETuWAJGnJ9afsl1srmwPrI+yBCkge5EycXXbYRyvL29zZVUWQCY7InPRCv3GDXuZNw==}
     dev: false
@@ -8586,6 +8747,10 @@ packages:
   /process-nextick-args@2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
     dev: false
+
+  /progress@2.0.3:
+    resolution: {integrity: sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==}
+    engines: {node: '>=0.4.0'}
 
   /prop-types@15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
@@ -10445,6 +10610,16 @@ packages:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: false
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
+  '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701':
+    resolution: {tarball: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701}
+    name: '@vercel/spaces'
+    version: 0.9.0
+    engines: {node: '>=16.18'}
+    hasBin: true
+    dependencies:
+      enhanced-resolve: 5.15.0
+      eslint: 8.48.0
+      mdn-data: 2.1.0
+      progress: 2.0.3
+    transitivePeerDependencies:
+      - supports-color

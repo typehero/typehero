@@ -1,0 +1,195 @@
+{
+  "testName": "NO_DANGEROUS_HTML",
+  "categories": ["security"],
+  "description": "Prevent the unsafe creation of DOM via HTML methods in your application which could lead to security vulnerabilities.",
+  "severity": "major",
+  "entries": [
+    {
+      "testName": "NO_DANGEROUS_HTML",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "HTML was dangerously set or created with 'innerHTML'. This is deemed an unsafe coding practice as the HTML might result in security vulnerabilities. It is recommended to instead use alternative approaches for HTML construction - such as 'document.createElement()' or a HTML sanitizer.",
+      "location": {
+        "workspace": "web",
+        "filePath": "apps/web/public/min/vs/editor/editor.main.js",
+        "lineStart": 7,
+        "lineEnd": 7
+      }
+    },
+    {
+      "testName": "NO_DANGEROUS_HTML",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "HTML was dangerously set or created with 'parseFromString'. This is deemed an unsafe coding practice as the HTML might result in security vulnerabilities. It is recommended to instead use alternative approaches for HTML construction - such as 'document.createElement()' or a HTML sanitizer.",
+      "location": {
+        "workspace": "web",
+        "filePath": "apps/web/public/min/vs/editor/editor.main.js",
+        "lineStart": 7,
+        "lineEnd": 7
+      }
+    },
+    {
+      "testName": "NO_DANGEROUS_HTML",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "HTML was dangerously set or created with 'outerHTML'. This is deemed an unsafe coding practice as the HTML might result in security vulnerabilities. It is recommended to instead use alternative approaches for HTML construction - such as 'document.createElement()' or a HTML sanitizer.",
+      "location": {
+        "workspace": "web",
+        "filePath": "apps/web/public/min/vs/editor/editor.main.js",
+        "lineStart": 7,
+        "lineEnd": 7
+      }
+    },
+    {
+      "testName": "NO_DANGEROUS_HTML",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "HTML was dangerously set or created with 'innerHTML'. This is deemed an unsafe coding practice as the HTML might result in security vulnerabilities. It is recommended to instead use alternative approaches for HTML construction - such as 'document.createElement()' or a HTML sanitizer.",
+      "location": {
+        "workspace": "web",
+        "filePath": "apps/web/public/min/vs/editor/editor.main.js",
+        "lineStart": 192,
+        "lineEnd": 192
+      }
+    },
+    {
+      "testName": "NO_DANGEROUS_HTML",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "HTML was dangerously set or created with 'parseFromString'. This is deemed an unsafe coding practice as the HTML might result in security vulnerabilities. It is recommended to instead use alternative approaches for HTML construction - such as 'document.createElement()' or a HTML sanitizer.",
+      "location": {
+        "workspace": "web",
+        "filePath": "apps/web/public/min/vs/editor/editor.main.js",
+        "lineStart": 192,
+        "lineEnd": 192
+      }
+    },
+    {
+      "testName": "NO_DANGEROUS_HTML",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "HTML was dangerously set or created with 'innerHTML'. This is deemed an unsafe coding practice as the HTML might result in security vulnerabilities. It is recommended to instead use alternative approaches for HTML construction - such as 'document.createElement()' or a HTML sanitizer.",
+      "location": {
+        "workspace": "web",
+        "filePath": "apps/web/public/min/vs/editor/editor.main.js",
+        "lineStart": 201,
+        "lineEnd": 201
+      }
+    },
+    {
+      "testName": "NO_DANGEROUS_HTML",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "HTML was dangerously set or created with 'innerHTML'. This is deemed an unsafe coding practice as the HTML might result in security vulnerabilities. It is recommended to instead use alternative approaches for HTML construction - such as 'document.createElement()' or a HTML sanitizer.",
+      "location": {
+        "workspace": "web",
+        "filePath": "apps/web/public/min/vs/editor/editor.main.js",
+        "lineStart": 573,
+        "lineEnd": 573
+      }
+    },
+    {
+      "testName": "NO_DANGEROUS_HTML",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "HTML was dangerously set or created with 'insertAdjacentHTML'. This is deemed an unsafe coding practice as the HTML might result in security vulnerabilities. It is recommended to instead use alternative approaches for HTML construction - such as 'document.createElement()' or a HTML sanitizer.",
+      "location": {
+        "workspace": "web",
+        "filePath": "apps/web/public/min/vs/editor/editor.main.js",
+        "lineStart": 573,
+        "lineEnd": 573
+      }
+    },
+    {
+      "testName": "NO_DANGEROUS_HTML",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "HTML was dangerously set or created with 'innerHTML'. This is deemed an unsafe coding practice as the HTML might result in security vulnerabilities. It is recommended to instead use alternative approaches for HTML construction - such as 'document.createElement()' or a HTML sanitizer.",
+      "location": {
+        "workspace": "web",
+        "filePath": "apps/web/public/min/vs/editor/editor.main.js",
+        "lineStart": 573,
+        "lineEnd": 573
+      }
+    },
+    {
+      "testName": "NO_DANGEROUS_HTML",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "HTML was dangerously set or created with 'innerHTML'. This is deemed an unsafe coding practice as the HTML might result in security vulnerabilities. It is recommended to instead use alternative approaches for HTML construction - such as 'document.createElement()' or a HTML sanitizer.",
+      "location": {
+        "workspace": "web",
+        "filePath": "apps/web/public/min/vs/editor/editor.main.js",
+        "lineStart": 573,
+        "lineEnd": 573
+      }
+    },
+    {
+      "testName": "NO_DANGEROUS_HTML",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "HTML was dangerously set or created with 'innerHTML'. This is deemed an unsafe coding practice as the HTML might result in security vulnerabilities. It is recommended to instead use alternative approaches for HTML construction - such as 'document.createElement()' or a HTML sanitizer.",
+      "location": {
+        "workspace": "web",
+        "filePath": "apps/web/public/min/vs/editor/editor.main.js",
+        "lineStart": 591,
+        "lineEnd": 591
+      }
+    },
+    {
+      "testName": "NO_DANGEROUS_HTML",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "HTML was dangerously set or created with 'innerHTML'. This is deemed an unsafe coding practice as the HTML might result in security vulnerabilities. It is recommended to instead use alternative approaches for HTML construction - such as 'document.createElement()' or a HTML sanitizer.",
+      "location": {
+        "workspace": "web",
+        "filePath": "apps/web/public/min/vs/editor/editor.main.js",
+        "lineStart": 592,
+        "lineEnd": 592
+      }
+    },
+    {
+      "testName": "NO_DANGEROUS_HTML",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "HTML was dangerously set or created with 'innerHTML'. This is deemed an unsafe coding practice as the HTML might result in security vulnerabilities. It is recommended to instead use alternative approaches for HTML construction - such as 'document.createElement()' or a HTML sanitizer.",
+      "location": {
+        "workspace": "web",
+        "filePath": "apps/web/public/min/vs/editor/editor.main.js",
+        "lineStart": 617,
+        "lineEnd": 617
+      }
+    },
+    {
+      "testName": "NO_DANGEROUS_HTML",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "HTML was dangerously set or created with 'insertAdjacentHTML'. This is deemed an unsafe coding practice as the HTML might result in security vulnerabilities. It is recommended to instead use alternative approaches for HTML construction - such as 'document.createElement()' or a HTML sanitizer.",
+      "location": {
+        "workspace": "web",
+        "filePath": "apps/web/public/min/vs/editor/editor.main.js",
+        "lineStart": 629,
+        "lineEnd": 629
+      }
+    },
+    {
+      "testName": "NO_DANGEROUS_HTML",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "HTML was dangerously set or created with 'insertAdjacentHTML'. This is deemed an unsafe coding practice as the HTML might result in security vulnerabilities. It is recommended to instead use alternative approaches for HTML construction - such as 'document.createElement()' or a HTML sanitizer.",
+      "location": {
+        "workspace": "web",
+        "filePath": "apps/web/public/min/vs/editor/editor.main.js",
+        "lineStart": 629,
+        "lineEnd": 629
+      }
+    },
+    {
+      "testName": "NO_DANGEROUS_HTML",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "HTML was dangerously set or created with 'innerHTML'. This is deemed an unsafe coding practice as the HTML might result in security vulnerabilities. It is recommended to instead use alternative approaches for HTML construction - such as 'document.createElement()' or a HTML sanitizer.",
+      "location": {
+        "workspace": "web",
+        "filePath": "apps/web/public/min/vs/editor/editor.main.js",
+        "lineStart": 657,
+        "lineEnd": 657
+      }
+    },
+    {
+      "testName": "NO_DANGEROUS_HTML",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "HTML was dangerously set or created with 'innerHTML'. This is deemed an unsafe coding practice as the HTML might result in security vulnerabilities. It is recommended to instead use alternative approaches for HTML construction - such as 'document.createElement()' or a HTML sanitizer.",
+      "location": {
+        "workspace": "web",
+        "filePath": "apps/web/public/min/vs/editor/editor.main.js",
+        "lineStart": 684,
+        "lineEnd": 684
+      }
+    }
+  ]
+}

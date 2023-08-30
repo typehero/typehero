@@ -1,0 +1,16 @@
+{
+  "testName": "ESLINT_CONFIGURATION",
+  "categories": ["code-health"],
+  "description": "Requires that a workspace package is configured with ESLint.",
+  "severity": "minor",
+  "entries": [
+    {
+      "testName": "ESLINT_CONFIGURATION",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "apps/og-image/package.json must contain a command in 'scripts' to run ESLint.",
+      "location": {
+        "filePath": "apps/og-image/package.json"
+      }
+    }
+  ]
+}

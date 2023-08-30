@@ -1,0 +1,193 @@
+{
+  "testName": "PACKAGE_MANAGEMENT_NO_CIRCULAR_IMPORTS",
+  "categories": ["code-health"],
+  "description": "Circular imports between two files are not allowed.",
+  "severity": "minor",
+  "entries": [
+    {
+      "testName": "PACKAGE_MANAGEMENT_NO_CIRCULAR_IMPORTS",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "'src/app/challenge/[id]/solutions/_components/index.tsx' and 'src/app/challenge/[id]/solutions/_components/solution-editor.tsx' have a circular import. Please decouple the dependencies, such as creating a new file, to remove the circular import. Cycle: src/app/challenge/[id]/solutions/_components/solution-editor.tsx src/app/challenge/[id]/solutions/page.tsx src/app/challenge/[id]/solutions/_components/index.tsx",
+      "location": {
+        "filePath": "apps/web/src/app/challenge/[id]/solutions/_components/index.tsx",
+        "lineStart": 7,
+        "lineEnd": 7
+      },
+      "details": {
+        "cycle": "src/app/challenge/[id]/solutions/_components/solution-editor.tsx->src/app/challenge/[id]/solutions/page.tsx->src/app/challenge/[id]/solutions/_components/index.tsx"
+      }
+    },
+    {
+      "testName": "PACKAGE_MANAGEMENT_NO_CIRCULAR_IMPORTS",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "'src/app/challenge/[id]/solutions/[solutionId]/page.tsx' and 'src/app/challenge/[id]/solutions/_components/solution-detail.tsx' have a circular import. Please decouple the dependencies, such as creating a new file, to remove the circular import. Cycle: src/app/challenge/[id]/solutions/_components/solution-detail.tsx src/app/challenge/[id]/solutions/[solutionId]/page.tsx",
+      "location": {
+        "filePath": "apps/web/src/app/challenge/[id]/solutions/[solutionId]/page.tsx",
+        "lineStart": 2,
+        "lineEnd": 2
+      },
+      "details": {
+        "cycle": "src/app/challenge/[id]/solutions/_components/solution-detail.tsx->src/app/challenge/[id]/solutions/[solutionId]/page.tsx"
+      }
+    },
+    {
+      "testName": "PACKAGE_MANAGEMENT_NO_CIRCULAR_IMPORTS",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "'src/app/challenge/[id]/solutions/page.tsx' and 'src/app/challenge/[id]/solutions/_components/index.tsx' have a circular import. Please decouple the dependencies, such as creating a new file, to remove the circular import. Cycle: src/app/challenge/[id]/solutions/_components/index.tsx src/app/challenge/[id]/solutions/page.tsx",
+      "location": {
+        "filePath": "apps/web/src/app/challenge/[id]/solutions/page.tsx"
+      },
+      "details": {
+        "cycle": "src/app/challenge/[id]/solutions/_components/index.tsx->src/app/challenge/[id]/solutions/page.tsx"
+      }
+    },
+    {
+      "testName": "PACKAGE_MANAGEMENT_NO_CIRCULAR_IMPORTS",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "'src/app/tracks/_components/track-card.tsx' and 'src/app/tracks/_components/track-challenge-card.tsx' have a circular import. Please decouple the dependencies, such as creating a new file, to remove the circular import. Cycle: src/app/tracks/_components/track-challenge-card.tsx src/app/tracks/_components/track-grid.tsx src/app/tracks/_components/track-card.tsx",
+      "location": {
+        "filePath": "apps/web/src/app/tracks/_components/track-card.tsx",
+        "lineStart": 6,
+        "lineEnd": 6
+      },
+      "details": {
+        "cycle": "src/app/tracks/_components/track-challenge-card.tsx->src/app/tracks/_components/track-grid.tsx->src/app/tracks/_components/track-card.tsx"
+      }
+    },
+    {
+      "testName": "PACKAGE_MANAGEMENT_NO_CIRCULAR_IMPORTS",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "'src/app/tracks/_components/track-enrolled-section.tsx' and 'src/app/tracks/_components/personal-track-card.tsx' have a circular import. Please decouple the dependencies, such as creating a new file, to remove the circular import. Cycle: src/app/tracks/_components/personal-track-card.tsx src/app/tracks/_components/track-enrolled-section.tsx",
+      "location": {
+        "filePath": "apps/web/src/app/tracks/_components/track-enrolled-section.tsx",
+        "lineStart": 5,
+        "lineEnd": 5
+      },
+      "details": {
+        "cycle": "src/app/tracks/_components/personal-track-card.tsx->src/app/tracks/_components/track-enrolled-section.tsx"
+      }
+    },
+    {
+      "testName": "PACKAGE_MANAGEMENT_NO_CIRCULAR_IMPORTS",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "'src/app/tracks/_components/track-grid.tsx' and 'src/app/tracks/_components/track-card.tsx' have a circular import. Please decouple the dependencies, such as creating a new file, to remove the circular import. Cycle: src/app/tracks/_components/track-card.tsx src/app/tracks/_components/track-grid.tsx",
+      "location": {
+        "filePath": "apps/web/src/app/tracks/_components/track-grid.tsx"
+      },
+      "details": {
+        "cycle": "src/app/tracks/_components/track-card.tsx->src/app/tracks/_components/track-grid.tsx"
+      }
+    },
+    {
+      "testName": "PACKAGE_MANAGEMENT_NO_CIRCULAR_IMPORTS",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "'src/components/landing/waitlist/create.action.ts' and 'src/components/landing/waitlist/waitlist-form.tsx' have a circular import. Please decouple the dependencies, such as creating a new file, to remove the circular import. Cycle: src/components/landing/waitlist/waitlist-form.tsx src/components/landing/waitlist/create.action.ts",
+      "location": {
+        "filePath": "apps/web/src/components/landing/waitlist/create.action.ts"
+      },
+      "details": {
+        "cycle": "src/components/landing/waitlist/waitlist-form.tsx->src/components/landing/waitlist/create.action.ts"
+      }
+    },
+    {
+      "testName": "PACKAGE_MANAGEMENT_NO_CIRCULAR_IMPORTS",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "'src/components/settings/index.tsx' and 'src/components/settings/settings.action.ts' have a circular import. Please decouple the dependencies, such as creating a new file, to remove the circular import. Cycle: src/components/settings/settings.action.ts src/components/settings/index.tsx",
+      "location": {
+        "filePath": "apps/web/src/components/settings/index.tsx",
+        "lineStart": 9,
+        "lineEnd": 9
+      },
+      "details": {
+        "cycle": "src/components/settings/settings.action.ts->src/components/settings/index.tsx"
+      }
+    },
+    {
+      "testName": "PACKAGE_MANAGEMENT_NO_CIRCULAR_IMPORTS",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "'src/components/user/dashboard/index.tsx' and 'src/components/user/dashboard/solutions-tab.tsx' have a circular import. Please decouple the dependencies, such as creating a new file, to remove the circular import. Cycle: src/components/user/dashboard/solutions-tab.tsx src/components/user/dashboard/index.tsx",
+      "location": {
+        "filePath": "apps/web/src/components/user/dashboard/index.tsx",
+        "lineStart": 21,
+        "lineEnd": 21
+      },
+      "details": {
+        "cycle": "src/components/user/dashboard/solutions-tab.tsx->src/components/user/dashboard/index.tsx"
+      }
+    },
+    {
+      "testName": "PACKAGE_MANAGEMENT_NO_CIRCULAR_IMPORTS",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "'src/components/wizard/create.action.ts' and 'src/components/wizard/index.tsx' have a circular import. Please decouple the dependencies, such as creating a new file, to remove the circular import. Cycle: src/components/wizard/index.tsx src/components/wizard/create.action.ts",
+      "location": {
+        "filePath": "apps/web/src/components/wizard/create.action.ts"
+      },
+      "details": {
+        "cycle": "src/components/wizard/index.tsx->src/components/wizard/create.action.ts"
+      }
+    },
+    {
+      "testName": "PACKAGE_MANAGEMENT_NO_CIRCULAR_IMPORTS",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "'src/components/wizard/DescriptionEditor.tsx' and 'src/components/wizard/index.tsx' have a circular import. Please decouple the dependencies, such as creating a new file, to remove the circular import. Cycle: src/components/wizard/index.tsx src/components/wizard/DescriptionEditor.tsx",
+      "location": {
+        "filePath": "apps/web/src/components/wizard/DescriptionEditor.tsx"
+      },
+      "details": {
+        "cycle": "src/components/wizard/index.tsx->src/components/wizard/DescriptionEditor.tsx"
+      }
+    },
+    {
+      "testName": "PACKAGE_MANAGEMENT_NO_CIRCULAR_IMPORTS",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "'src/components/wizard/index.tsx' and 'src/components/wizard/ChallengeCardEditor.tsx' have a circular import. Please decouple the dependencies, such as creating a new file, to remove the circular import. Cycle: src/components/wizard/ChallengeCardEditor.tsx src/components/wizard/index.tsx",
+      "location": {
+        "filePath": "apps/web/src/components/wizard/index.tsx",
+        "lineStart": 11,
+        "lineEnd": 11
+      },
+      "details": {
+        "cycle": "src/components/wizard/ChallengeCardEditor.tsx->src/components/wizard/index.tsx"
+      }
+    },
+    {
+      "testName": "PACKAGE_MANAGEMENT_NO_CIRCULAR_IMPORTS",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "'src/components/wizard/index.tsx' and 'src/components/wizard/Steps.tsx' have a circular import. Please decouple the dependencies, such as creating a new file, to remove the circular import. Cycle: src/components/wizard/Steps.tsx src/components/wizard/index.tsx",
+      "location": {
+        "filePath": "apps/web/src/components/wizard/index.tsx",
+        "lineStart": 13,
+        "lineEnd": 13
+      },
+      "details": {
+        "cycle": "src/components/wizard/Steps.tsx->src/components/wizard/index.tsx"
+      }
+    },
+    {
+      "testName": "PACKAGE_MANAGEMENT_NO_CIRCULAR_IMPORTS",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "'src/components/wizard/index.tsx' and 'src/components/wizard/NextBack.tsx' have a circular import. Please decouple the dependencies, such as creating a new file, to remove the circular import. Cycle: src/components/wizard/NextBack.tsx src/components/wizard/index.tsx",
+      "location": {
+        "filePath": "apps/web/src/components/wizard/index.tsx",
+        "lineStart": 14,
+        "lineEnd": 14
+      },
+      "details": {
+        "cycle": "src/components/wizard/NextBack.tsx->src/components/wizard/index.tsx"
+      }
+    },
+    {
+      "testName": "PACKAGE_MANAGEMENT_NO_CIRCULAR_IMPORTS",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "'src/components/wizard/index.tsx' and 'src/components/wizard/TestCasesEditor.tsx' have a circular import. Please decouple the dependencies, such as creating a new file, to remove the circular import. Cycle: src/components/wizard/TestCasesEditor.tsx src/components/wizard/index.tsx",
+      "location": {
+        "filePath": "apps/web/src/components/wizard/index.tsx",
+        "lineStart": 16,
+        "lineEnd": 16
+      },
+      "details": {
+        "cycle": "src/components/wizard/TestCasesEditor.tsx->src/components/wizard/index.tsx"
+      }
+    }
+  ]
+}
