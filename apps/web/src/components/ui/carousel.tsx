@@ -13,9 +13,6 @@ export function Carousel({ children }: Props) {
   const containerElement = containerRef.current;
 
   const size = useResizeObserver(containerRef);
-  const isContainerScrollable = size?.width
-    ? size.width < containerRef.current!.scrollWidth
-    : false;
 
   const [showLeftButton, setShowLeftButton] = useState(false);
   const [showRightButton, setShowRightButton] = useState(false);
