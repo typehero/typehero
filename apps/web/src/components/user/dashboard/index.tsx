@@ -91,8 +91,8 @@ export default async function Dashboard({ user }: Props) {
           </div>
         )}
 
-        <Tabs className="flex flex-col gap-4 md:flex-row" defaultValue="in-progress">
-          <VerticalTabsList className="teststuffhere">
+        <Tabs className="flex flex-col gap-10 md:flex-row" defaultValue="in-progress">
+          <VerticalTabsList>
             <div className="flex flex-col items-center justify-center">
               <Image
                 alt="user avatar"
