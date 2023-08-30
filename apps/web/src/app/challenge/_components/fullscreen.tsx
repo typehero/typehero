@@ -1,6 +1,7 @@
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui';
 import { Maximize2 } from '@repo/ui/icons';
 import { Minimize2 } from 'lucide-react';
+import { useEffect } from 'react';
 import { create } from 'zustand';
 
 export const FS_SETTINGS = {
@@ -31,14 +32,15 @@ export function FullscreenButton() {
     updateFSSettings({ ...fssettings, isFullscreen: !fssettings.isFullscreen });
   };
 
-  // exiting fullscreen thru Esc key
-  const fullscreenchanged = () => {
-    if (!document.fullscreenElement) {
-      updateFSSettings({ ...fssettings, isFullscreen: false });
-    }
-  };
-
-  document.addEventListener('fullscreenchange', fullscreenchanged);
+  useEffect(() => {
+    const fullscreenchanged = () => {
+      if (!document.fullscreenElement) {
+        updateFSSettings({ ...fssettings, isFullscreen: false });
+      }
+    };
+    document.addEventListener('fullscreenchange', fullscreenchanged);
+    return () => document.removeEventListener('fullscreenchange', fullscreenchanged);
+  }, [fssettings, updateFSSettings]);
 
   return (
     <Tooltip>
