@@ -12,7 +12,7 @@ import {
   Tabs,
   VerticalTabsContent,
   VerticalTabsTrigger,
-  Button,
+  Sheet,
   MagicIcon,
   VerticalTabsList,
 } from '@repo/ui';
