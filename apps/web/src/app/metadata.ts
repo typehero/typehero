@@ -76,7 +76,7 @@ export const buildMetaForChallenge = async ({
 /** Helper to build opengraph metadata with defaults, you should call this in generateMetadata() next function */
 export const buildMetaForDefault = async (): Promise<Metadata> => {
   return buildMeta({
-    ogImageUrl: `${OG_URL}/api/default`,
+    ogImageUrl: `${OG_URL}/api/default?cache-bust=${new Date().getDate()}`,
   });
 };
 

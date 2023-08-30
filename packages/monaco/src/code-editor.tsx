@@ -28,7 +28,7 @@ const DEFAULT_OPTIONS = {
 } as const satisfies EditorProps['options'];
 
 export const LIB_URI = 'file:///asserts.d.ts';
-// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+
 export function loadCheckingLib(monaco: typeof import('monaco-editor')) {
   if (!monaco.editor.getModel(monaco.Uri.parse(LIB_URI))) {
     monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, LIB_URI);

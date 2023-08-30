@@ -1,0 +1,16 @@
+{
+  "testName": "PACKAGE_JSON_DESCRIPTION_REQUIRED",
+  "categories": ["code-health"],
+  "description": "Requires that every `package.json` file has the `description` field set.",
+  "severity": "minor",
+  "entries": [
+    {
+      "testName": "PACKAGE_JSON_DESCRIPTION_REQUIRED",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "'apps/og-image/package.json' is required to have a description field. This field is used to describe the workspace's purpose within the monorepo.",
+      "location": {
+        "filePath": "apps/og-image/package.json"
+      }
+    }
+  ]
+}

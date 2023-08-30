@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Balancer } from 'react-wrap-balancer';
 import { Button } from '@repo/ui';
 import { HeroIllustration } from './hero-illustration';
+import { Twitter } from 'lucide-react';
 
 function TypeHeroLogo() {
   return (
@@ -52,13 +53,7 @@ function Hero() {
               skills through interactive coding challenges, discussions, and knowledge sharing
             </Balancer>
           </p>
-          <div className="flex gap-3">
-            {/* <Button
-            className="relative flex items-center gap-2 overflow-hidden rounded-xl px-4 py-2 font-bold"
-            asChild
-          >
-            <Link href="/explore">Explore challenges</Link>
-          </Button> */}
+          <div className="flex flex-col gap-3 md:flex-row">
             <Button
               asChild
               className="hero-join-button group relative mx-auto w-fit overflow-hidden rounded-xl p-[2px] font-bold transition-all duration-300 hover:bg-transparent hover:shadow-[0_0_2rem_-0.5rem_#3178c6] dark:hidden md:mr-0 lg:mr-auto"
@@ -89,11 +84,26 @@ function Hero() {
               <a
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex gap-1"
+                className="gap-1 md:inline-flex"
                 href="https://github.com/bautistaaa/typehero"
               >
                 <Github className="h-4 w-4" />
                 GitHub
+              </a>
+            </Button>
+            <Button
+              asChild
+              className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
+              variant="outline"
+            >
+              <a
+                target="_blank"
+                rel="noreferrer"
+                className="gap-1 md:inline-flex"
+                href="https://twitter.com/typeheroapp"
+              >
+                <Twitter className="h-4 w-4" />
+                Twitter
               </a>
             </Button>
           </div>

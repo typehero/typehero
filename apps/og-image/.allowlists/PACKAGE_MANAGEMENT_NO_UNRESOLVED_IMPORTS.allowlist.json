@@ -1,0 +1,21 @@
+{
+  "testName": "PACKAGE_MANAGEMENT_NO_UNRESOLVED_IMPORTS",
+  "categories": ["code-health"],
+  "description": "Checks for imports in the workspace that are not explicitly added to the package.json file.",
+  "severity": "minor",
+  "entries": [
+    {
+      "testName": "PACKAGE_MANAGEMENT_NO_UNRESOLVED_IMPORTS",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "Could not resolve import 'utils/zodParams' in source file 'app/page.tsx'.           Please make sure that this import is valid and if external, is installed in your 'package.json' file.",
+      "location": {
+        "filePath": "apps/og-image/app/page.tsx",
+        "lineStart": 5,
+        "lineEnd": 5
+      },
+      "details": {
+        "import": "utils/zodParams"
+      }
+    }
+  ]
+}

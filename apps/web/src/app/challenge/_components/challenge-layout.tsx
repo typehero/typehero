@@ -7,13 +7,13 @@ import { persist } from 'zustand/middleware';
 export const DEFAULT_SETTINGS = {
   width: '500px',
   height: '300px',
+  isFullscreen: false,
 };
 
 type Settings = typeof DEFAULT_SETTINGS;
-
 interface State {
   settings: Settings;
-  updateSettings: (settings: Settings) => void;
+  updateSettings: (settings: Partial<Settings>) => void;
 }
 
 export const useLayoutSettingsStore = create<State>()(
@@ -41,9 +41,13 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
   const { settings, updateSettings } = useLayoutSettingsStore();
 
   useEffect(() => {
-    const ref = resizer.current!;
-    const leftRef = leftSide.current!;
-    const rightRef = rightSide.current!;
+    if (!leftSide.current || !rightSide.current || !resizer.current) {
+      return;
+    }
+
+    const ref = resizer.current;
+    const leftRef = leftSide.current;
+    const rightRef = rightSide.current;
 
     // resize width on desktop, height on mobile
     window.innerWidth > 1025
@@ -161,15 +165,19 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
       ref={parent}
       style={{ height: 'calc(100dvh - 3.5rem)' }}
     >
-      <div
-        className="min-h-[318px] w-full overflow-hidden rounded-l-2xl rounded-r-xl border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 lg:min-w-[500px]"
-        ref={leftSide}
-      >
-        {left}
-      </div>
-      <div className="resizer relative p-2" ref={resizer}>
-        <div className="absolute left-1/2 top-1/2 h-1 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-400 duration-300 group-hover:bg-neutral-600 group-active:bg-emerald-400 group-active:duration-75 dark:bg-neutral-700 group-hover:dark:bg-neutral-500 lg:h-24 lg:w-1" />
-      </div>
+      {!settings.isFullscreen && (
+        <>
+          <div
+            className="min-h-[318px] w-full overflow-hidden rounded-l-2xl rounded-r-xl border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 lg:min-w-[500px]"
+            ref={leftSide}
+          >
+            {left}
+          </div>
+          <div className="resizer relative p-2" ref={resizer}>
+            <div className="absolute left-1/2 top-1/2 h-1 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-400 duration-300 group-hover:bg-neutral-600 group-active:bg-emerald-400 group-active:duration-75 dark:bg-neutral-700 group-hover:dark:bg-neutral-500 lg:h-24 lg:w-1" />
+          </div>
+        </>
+      )}
       <div
         className="flex min-h-[90px] w-full flex-1 flex-col overflow-hidden rounded-l-xl rounded-r-2xl border border-zinc-300 dark:border-zinc-700 lg:min-w-[500px]"
         ref={rightSide}

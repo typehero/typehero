@@ -5,6 +5,7 @@ module.exports = {
     'no-floating-decimal': 'warn',
     'react/no-unescaped-entities': 'off',
     'unicorn/filename-case': 'off',
+    '@typescript-eslint/consistent-type-imports': ['warn', { disallowTypeAnnotations: false }],
     // Rules below here can be re-enabled when the team wants to address them.
     // When this repo was first monorepo'ed and given tighter checks,
     // there were too many issues to address all at once.
