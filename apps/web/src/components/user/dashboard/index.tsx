@@ -111,7 +111,7 @@ export default async function Dashboard({ user }: Props) {
             </div>
             <div>
               {session?.user.id === user.id && (
-                <div className='px-4 flex gap-2 border-border dark:border-ring border data-[state=active]:bg-border p-2 duration-300 focus-visible:ring-offset-2 rounded-3xl ring-offset-background focus-visible:ring-ring data-[state=active]:text-foreground whitespace-nowrap px-3 py-1.5 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm'>
+                <div className='flex gap-3 border-border dark:border-ring border data-[state=active]:bg-border duration-300 focus-visible:ring-offset-2 rounded-3xl ring-offset-background focus-visible:ring-ring data-[state=active]:text-foreground whitespace-nowrap px-3 py-1.5 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm'>
                   <Settings width={18} height={18} />
                   <Link href="/settings">
                       Settings
@@ -119,15 +119,15 @@ export default async function Dashboard({ user }: Props) {
                   </div>
               )}
             </div>
-            <VerticalTabsTrigger className="px-4 flex gap-2" value="in-progress">
+            <VerticalTabsTrigger className="px-4 flex gap-3" value="in-progress">
               <Play width={18} height={18} />
               <div className=''>In-Progress</div>
             </VerticalTabsTrigger>
-            <VerticalTabsTrigger className='px-4 flex gap-2' value="solutions">Solutions</VerticalTabsTrigger>
-            <VerticalTabsTrigger className='px-4 flex gap-2' disabled value="bookmarks">
+            <VerticalTabsTrigger className='px-4 flex gap-3' value="solutions">Solutions</VerticalTabsTrigger>
+            <VerticalTabsTrigger className='px-4 flex gap-3' disabled value="bookmarks">
               Bookmarks
             </VerticalTabsTrigger>
-            <VerticalTabsTrigger className="px-4 flex gap-2" disabled value="comments">
+            <VerticalTabsTrigger className="px-4 flex gap-3" disabled value="comments">
               Comments
             </VerticalTabsTrigger>
           </VerticalTabsList>
