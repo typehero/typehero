@@ -36,9 +36,9 @@ function SettingsElements() {
   return (
     <>
       <ResetEditorButton />
-      <FullscreenButton />
-      <SettingsButton />
       <EditorShortcutsButton />
+      <SettingsButton />
+      <FullscreenButton />
     </>
   );
 }
