@@ -1,6 +1,5 @@
 'use client';
 
-import { useMonaco } from '@monaco-editor/react';
 import clsx from 'clsx';
 import { Loader2 } from '@repo/ui/icons';
 import type * as monaco from 'monaco-editor';
@@ -68,6 +67,7 @@ export function CodePanel(props: CodePanelProps) {
 
   const [testEditorState, setTestEditorState] = useState<monaco.editor.IStandaloneCodeEditor>();
   const [userEditorState, setUserEditorState] = useState<monaco.editor.IStandaloneCodeEditor>();
+  const [monacoInstance, setMonacoInstance] = useState<typeof monaco>();
 
   const handleSubmit = async () => {
     const hasErrors = tsErrors?.some((e) => e.length) ?? false;
@@ -91,8 +91,6 @@ export function CodePanel(props: CodePanelProps) {
     }
   };
 
-  const monacoInstance = useMonaco();
-
   return (
     <>
       <div className="sticky top-0 flex h-[40px] items-center justify-end gap-4 border-b border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
@@ -100,6 +98,7 @@ export function CodePanel(props: CodePanelProps) {
       </div>
       <div className="w-full flex-1">
         <SplitEditor
+          monaco={monacoInstance}
           tests={props.challenge.tests}
           userCode={code}
           onMount={{
@@ -107,6 +106,8 @@ export function CodePanel(props: CodePanelProps) {
               setTestEditorState(editor);
             },
             user: async (editor, monaco) => {
+              setMonacoInstance(monaco);
+
               monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
                 ...monaco.languages.typescript.typescriptDefaults.getCompilerOptions(),
                 strict: true,
