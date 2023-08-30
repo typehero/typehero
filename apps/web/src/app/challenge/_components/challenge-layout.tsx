@@ -14,17 +14,15 @@ type Settings = typeof DEFAULT_SETTINGS;
 interface State {
   settings: Settings;
   updateSettings: (settings: Partial<Settings>) => void;
-  toggleFullscreen: () => void;
 }
 
 export const useLayoutSettingsStore = create<State>()(
   persist(
     (set, get) => ({
       settings: DEFAULT_SETTINGS,
-      updateSettings: (settings) => set({ settings: { ...get().settings, ...settings } }),
-      toggleFullscreen: () => {
-        const currentFullscreen = get().settings.isFullscreen;
-        set({ settings: { ...get().settings, isFullscreen: !currentFullscreen } });
+      updateSettings: (newSettings) => {
+        const currentSettings = get().settings;
+        set({ settings: { ...currentSettings, ...newSettings } });
       },
     }),
     {
