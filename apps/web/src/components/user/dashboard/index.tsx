@@ -12,7 +12,6 @@ import {
   Tabs,
   VerticalTabsContent,
   VerticalTabsTrigger,
-  Sheet,
   MagicIcon,
   VerticalTabsList,
 } from '@repo/ui';
@@ -109,9 +108,7 @@ export default async function Dashboard({ user }: Props) {
                 Joined {getRelativeTime(user.createdAt)}
               </p>
             </div>
-            <div className="md:hidden">
-              Holy Sheet!
-            </div>
+            <div className="block md:hidden">Mobile nav idea here!</div>
             <div>
               {session?.user.id === user.id && (
                 <Link href="/settings">
