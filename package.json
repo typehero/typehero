@@ -7,6 +7,7 @@
     "checks": "turbo format lint typecheck --continue",
     "checks:fix": "turbo format:fix lint:fix typecheck --continue --force",
     "clean": "turbo clean && rm -rf node_modules",
+    "conformance": "turbo root-conformance conformance --continue",
     "db:push": "turbo db:push",
     "db:reset": "turbo db:reset",
     "db:seed": "turbo db:seed",
@@ -19,17 +20,19 @@
     "lint": "eslint . --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
     "lint:fix": "eslint . --fix --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
     "refresh": "turbo db:reset db:seed --concurrency=1",
+    "root-conformance": "spaces conformance",
     "tunnel": "cloudflared tunnel --url http://localhost:3000",
-    "typecheck": "turbo typecheck --continue",
-    "conformance": "turbo root-conformance conformance --continue",
-    "root-conformance": "spaces conformance"
+    "typecheck": "turbo typecheck --continue"
+  },
+  "dependencies": {
+    "@vercel/spaces": "https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701"
   },
   "devDependencies": {
+    "@vercel/spaces": "https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701",
     "prettier": "^3.0.2",
     "prettier-plugin-tailwindcss": "^0.4.1",
     "turbo": "^1.10.13",
-    "typescript": "^5.1.6",
-    "@vercel/spaces": "https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701"
+    "typescript": "^5.1.6"
   },
   "packageManager": "pnpm@8.6.9",
   "pnpm": {
@@ -44,8 +47,5 @@
       "monaco-vim@0.4.0": "patches/monaco-vim@0.4.0.patch",
       "@vercel/toolbar@0.1.1": "patches/@vercel__toolbar@0.1.1.patch"
     }
-  },
-  "dependencies": {
-    "@vercel/spaces": "https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701"
   }
 }
