@@ -1,15 +1,9 @@
-{"experimentalSpaces":{"id":"space_jbAxBIO7uk9BRo7nAYLdKycp"},
+{
+  "experimentalSpaces": { "id": "space_jbAxBIO7uk9BRo7nAYLdKycp" },
   "pipeline": {
     "build": {
-      "dependsOn": [
-        "^build",
-        "@repo/db#db:generate"
-      ],
-      "outputs": [
-        "dist/**",
-        ".next/**",
-        "!.next/cache/**"
-      ],
+      "dependsOn": ["^build", "@repo/db#db:generate"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
       "env": [
         "VERCEL_URL",
         "VERCEL_ENV",
@@ -31,102 +25,60 @@
       ]
     },
     "topo": {
-      "dependsOn": [
-        "^topo"
-      ]
+      "dependsOn": ["^topo"]
     },
     "//#format": {
-      "outputs": [
-        "node_modules/.cache/prettiercache"
-      ],
+      "outputs": ["node_modules/.cache/prettiercache"],
       "outputMode": "errors-only"
     },
     "format": {
-      "dependsOn": [
-        "@repo/db#db:generate",
-        "^topo"
-      ],
-      "outputs": [
-        "node_modules/.cache/prettiercache"
-      ],
+      "dependsOn": ["@repo/db#db:generate", "^topo"],
+      "outputs": ["node_modules/.cache/prettiercache"],
       "outputMode": "errors-only"
     },
     "//#format:fix": {
-      "outputs": [
-        "node_modules/.cache/prettiercache"
-      ],
+      "outputs": ["node_modules/.cache/prettiercache"],
       "outputMode": "errors-only"
     },
     "format:fix": {
-      "dependsOn": [
-        "@repo/db#db:generate",
-        "^topo"
-      ],
-      "outputs": [
-        "node_modules/.cache/prettiercache"
-      ],
+      "dependsOn": ["@repo/db#db:generate", "^topo"],
+      "outputs": ["node_modules/.cache/prettiercache"],
       "outputMode": "errors-only"
     },
     "//#lint": {
-      "outputs": [
-        "node_modules/.cache/.eslintcache"
-      ],
+      "outputs": ["node_modules/.cache/.eslintcache"],
       "outputMode": "errors-only"
     },
     "lint": {
-      "dependsOn": [
-        "@repo/db#db:generate",
-        "^topo"
-      ],
-      "outputs": [
-        "node_modules/.cache/.eslintcache"
-      ],
+      "dependsOn": ["@repo/db#db:generate", "^topo"],
+      "outputs": ["node_modules/.cache/.eslintcache"],
       "outputMode": "errors-only"
     },
     "//#lint:fix": {
-      "dependsOn": [
-        "@repo/db#db:generate",
-        "^topo"
-      ],
-      "outputs": [
-        "node_modules/.cache/.eslintcache"
-      ],
+      "dependsOn": ["@repo/db#db:generate", "^topo"],
+      "outputs": ["node_modules/.cache/.eslintcache"],
       "outputMode": "errors-only"
     },
     "lint:fix": {
-      "dependsOn": [
-        "@repo/db#db:generate",
-        "^topo"
-      ],
-      "outputs": [
-        "node_modules/.cache/.eslintcache"
-      ],
+      "dependsOn": ["@repo/db#db:generate", "^topo"],
+      "outputs": ["node_modules/.cache/.eslintcache"],
       "outputMode": "errors-only"
     },
     "typecheck": {
-      "dependsOn": [
-        "@repo/db#db:generate",
-        "^topo"
-      ],
-      "outputs": [
-        "node_modules/.cache/tsbuildinfo.json"
-      ],
+      "dependsOn": ["@repo/db#db:generate", "^topo"],
+      "outputs": ["node_modules/.cache/tsbuildinfo.json"],
       "outputMode": "errors-only"
     },
     "clean": {
       "cache": false
     },
     "dev": {
-      "dependsOn": [
-        "@repo/db#db:generate"
-      ],
+      "dependsOn": ["@repo/db#db:generate"],
       "persistent": true,
       "cache": false
     },
     "conformance": {
-      "dependsOn": [
-        "^build"
-      ]
+      "dependsOn": ["^build"]
     },
     // Allows running `conformance` for both the root and all workspaces, while also passing through any arguments.
     "root-conformance": {},
