@@ -20,10 +20,7 @@ export const useLayoutSettingsStore = create<State>()(
   persist(
     (set, get) => ({
       settings: DEFAULT_SETTINGS,
-      updateSettings: (newSettings) => {
-        const currentSettings = get().settings;
-        set({ settings: { ...currentSettings, ...newSettings } });
-      },
+      updateSettings: (settings) => set({ settings: { ...get().settings, ...settings } }),
     }),
     {
       name: 'challenge-layout-settings',
