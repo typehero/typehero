@@ -5,27 +5,31 @@ interface Size {
   height: number;
 }
 
-const useResizeObserver = (ref: React.RefObject<HTMLElement>): Size | undefined => {
-  const [size, setSize] = useState<Size>();
+const useResizeObserver = (
+  ref: React.RefObject<HTMLElement>,
+  callback: (size: Size) => unknown,
+) => {
+  const [attached, setAttached] = useState(false);
 
   const handleResize = useCallback(
     (entries: ResizeObserverEntry[]) => {
       for (const entry of entries) {
         if (entry.target === ref.current) {
-          setSize({
+          callback({
             width: entry.contentRect.width,
             height: entry.contentRect.height,
           });
         }
       }
     },
-    [ref],
+    [ref, callback],
   );
 
   useEffect(() => {
     if (ref.current) {
       const resizeObserver = new ResizeObserver(handleResize);
       resizeObserver.observe(ref.current);
+      setAttached(true);
 
       return () => {
         resizeObserver.disconnect();
@@ -33,7 +37,7 @@ const useResizeObserver = (ref: React.RefObject<HTMLElement>): Size | undefined 
     }
   }, [ref, handleResize]);
 
-  return size;
+  return attached;
 };
 
 export default useResizeObserver;
