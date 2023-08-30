@@ -13,11 +13,15 @@
   "scripts": {
     "dev": "email dev -p 6969",
     "clean": "rm -rf node_modules .react-email",
-    "build": "email export"
+    "build": "email export",
+    "conformance": "spaces conformance"
   },
   "files": [],
   "dependencies": {
     "@react-email/components": "0.0.6",
     "react-email": "1.9.3"
+  },
+  "devDependencies": {
+    "@vercel/spaces": "https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701"
   }
 }

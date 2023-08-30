@@ -1,0 +1,36 @@
+{
+  "testName": "PACKAGE_JSON_DUPLICATE_DEPENDENCIES",
+  "categories": ["code-health"],
+  "description": "Found duplicate dependencies between the list of `dependencies` and `devDependencies` or `peerDependencies` in a `package.json` file.",
+  "severity": "minor",
+  "entries": [
+    {
+      "testName": "PACKAGE_JSON_DUPLICATE_DEPENDENCIES",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "'tailwindcss' is duplicated in dependencies and devDependencies.",
+      "location": {
+        "filePath": "apps/admin/package.json",
+        "lineStart": 38,
+        "lineEnd": 38
+      },
+      "details": {
+        "dependencyName": "tailwindcss",
+        "dependencyTypes": ["dependencies", "devDependencies"]
+      }
+    },
+    {
+      "testName": "PACKAGE_JSON_DUPLICATE_DEPENDENCIES",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "'tailwindcss' is duplicated in dependencies and devDependencies.",
+      "location": {
+        "filePath": "apps/admin/package.json",
+        "lineStart": 59,
+        "lineEnd": 59
+      },
+      "details": {
+        "dependencyName": "tailwindcss",
+        "dependencyTypes": ["dependencies", "devDependencies"]
+      }
+    }
+  ]
+}
