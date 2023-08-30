@@ -1,0 +1,72 @@
+{
+  "testName": "TYPESCRIPT_ONLY",
+  "categories": ["code-health"],
+  "description": "Requires that a workspace package may only contain TypeScript files and no JavaScript or JSX files.",
+  "severity": "minor",
+  "entries": [
+    {
+      "testName": "TYPESCRIPT_ONLY",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "JavaScript files are not allowed. Please convert the file to TypeScript.",
+      "location": {
+        "filePath": "apps/web/public/min/vs/base/common/worker/simpleWorker.nls.js"
+      }
+    },
+    {
+      "testName": "TYPESCRIPT_ONLY",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "JavaScript files are not allowed. Please convert the file to TypeScript.",
+      "location": {
+        "filePath": "apps/web/public/min/vs/base/worker/workerMain.js"
+      }
+    },
+    {
+      "testName": "TYPESCRIPT_ONLY",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "JavaScript files are not allowed. Please convert the file to TypeScript.",
+      "location": {
+        "filePath": "apps/web/public/min/vs/basic-languages/typescript/typescript.js"
+      }
+    },
+    {
+      "testName": "TYPESCRIPT_ONLY",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "JavaScript files are not allowed. Please convert the file to TypeScript.",
+      "location": {
+        "filePath": "apps/web/public/min/vs/editor/editor.main.js"
+      }
+    },
+    {
+      "testName": "TYPESCRIPT_ONLY",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "JavaScript files are not allowed. Please convert the file to TypeScript.",
+      "location": {
+        "filePath": "apps/web/public/min/vs/editor/editor.main.nls.js"
+      }
+    },
+    {
+      "testName": "TYPESCRIPT_ONLY",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "JavaScript files are not allowed. Please convert the file to TypeScript.",
+      "location": {
+        "filePath": "apps/web/public/min/vs/language/typescript/tsMode.js"
+      }
+    },
+    {
+      "testName": "TYPESCRIPT_ONLY",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "JavaScript files are not allowed. Please convert the file to TypeScript.",
+      "location": {
+        "filePath": "apps/web/public/min/vs/language/typescript/tsWorker.js"
+      }
+    },
+    {
+      "testName": "TYPESCRIPT_ONLY",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "JavaScript files are not allowed. Please convert the file to TypeScript.",
+      "location": {
+        "filePath": "apps/web/public/min/vs/loader.js"
+      }
+    }
+  ]
+}

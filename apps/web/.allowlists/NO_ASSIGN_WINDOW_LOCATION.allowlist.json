@@ -1,0 +1,19 @@
+{
+  "testName": "NO_ASSIGN_WINDOW_LOCATION",
+  "categories": ["security", "code-health"],
+  "description": "Prevent unsafe assignment to `window.location.href` in your application.",
+  "severity": "major",
+  "entries": [
+    {
+      "testName": "NO_ASSIGN_WINDOW_LOCATION",
+      "reason": "TODO: Add reason why this violation is allowed to be ignored.",
+      "error": "Direct assignments to 'window.location.href' or 'window.location' should be avoided due to possible XSS attacks that can occur from lack of sanitization of input to the 'href'. Instead, it is recommended that developers use their own 'redirectTo' function that handles URLs that might be internal, and thus use 'router.push' to do a client side navigation or with a full-page navigation with a santized 'window.location.ref'.",
+      "location": {
+        "workspace": "web",
+        "filePath": "apps/web/public/min/vs/editor/editor.main.js",
+        "lineStart": 599,
+        "lineEnd": 599
+      }
+    }
+  ]
+}
