@@ -42,7 +42,7 @@ interface VimStatusBarProps {
   editor: monaco.editor.IStandaloneCodeEditor;
 }
 
-export function VimStatusBar({ editor }: VimStatusBarProps) {
+export default function VimStatusBar({ editor }: VimStatusBarProps) {
   const statusBarRef = useRef<HTMLDivElement>(null);
   // NOTE: Maybe doesn't need to be a ref anymore?
   const vimModeRef = useRef<VimMode>();
