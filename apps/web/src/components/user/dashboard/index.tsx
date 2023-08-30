@@ -109,6 +109,9 @@ export default async function Dashboard({ user }: Props) {
                 Joined {getRelativeTime(user.createdAt)}
               </p>
             </div>
+            <div className="md:hidden">
+              Holy Sheet!
+            </div>
             <div>
               {session?.user.id === user.id && (
                 <Link href="/settings">
