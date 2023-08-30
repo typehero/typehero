@@ -21,6 +21,7 @@ import { SolutionsTab } from './solutions-tab';
 import UserHeader from './user-header';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { stripProtocolAndWWW } from '~/utils/stringUtils';
+import { Play, Settings } from 'lucide-react';
 
 interface Props {
   // TODO: how do do this union type with just letting prisma halp
@@ -90,7 +91,7 @@ export default async function Dashboard({ user }: Props) {
           </div>
         )}
 
-        <Tabs className="flex flex-col md:flex-row gap-10" defaultValue="in-progress">
+        <Tabs className="flex flex-row gap-10" defaultValue="in-progress">
           <VerticalTabsList>
             <div className="flex flex-col items-center justify-center">
               <Image
@@ -108,22 +109,25 @@ export default async function Dashboard({ user }: Props) {
                 Joined {getRelativeTime(user.createdAt)}
               </p>
             </div>
-            <div className="block md:hidden">Mobile nav idea here!</div>
             <div>
               {session?.user.id === user.id && (
-                <Link href="/settings">
-                  <div className="hidden md:block data-[state=active]:bg-border border-ring rounded-lg border p-2 text-sm font-medium duration-300">
-                    Settings
+                <div className='px-4 flex gap-2 border-border dark:border-ring border data-[state=active]:bg-border p-2 duration-300 focus-visible:ring-offset-2 rounded-3xl ring-offset-background focus-visible:ring-ring data-[state=active]:text-foreground whitespace-nowrap px-3 py-1.5 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm'>
+                  <Settings width={18} height={18} />
+                  <Link href="/settings">
+                      Settings
+                  </Link>
                   </div>
-                </Link>
               )}
             </div>
-            <VerticalTabsTrigger className="hidden md:block" value="in-progress">In-Progress</VerticalTabsTrigger>
-            <VerticalTabsTrigger className="hidden md:block" value="solutions">Solutions</VerticalTabsTrigger>
-            <VerticalTabsTrigger className="hidden md:block" disabled value="bookmarks">
+            <VerticalTabsTrigger className="px-4 flex gap-2" value="in-progress">
+              <Play width={18} height={18} />
+              <div className=''>In-Progress</div>
+            </VerticalTabsTrigger>
+            <VerticalTabsTrigger className='px-4 flex gap-2' value="solutions">Solutions</VerticalTabsTrigger>
+            <VerticalTabsTrigger className='px-4 flex gap-2' disabled value="bookmarks">
               Bookmarks
             </VerticalTabsTrigger>
-            <VerticalTabsTrigger className="hidden md:block" disabled value="comments">
+            <VerticalTabsTrigger className="px-4 flex gap-2" disabled value="comments">
               Comments
             </VerticalTabsTrigger>
           </VerticalTabsList>
