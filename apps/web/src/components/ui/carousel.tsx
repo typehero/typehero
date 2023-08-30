@@ -1,7 +1,8 @@
 'use client';
 import { ChevronLeft, ChevronRight } from '@repo/ui/icons';
 import clsx from 'clsx';
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode, useCallback } from 'react';
+import useResizeObserver from '~/utils/useResizeObserver';
 
 interface Props {
   children: ReactNode;
@@ -9,12 +10,28 @@ interface Props {
 
 export function Carousel({ children }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const containerElement = containerRef.current;
+
+  const size = useResizeObserver(containerRef);
+  const isContainerScrollable = size?.width
+    ? size.width < containerRef.current!.scrollWidth
+    : false;
+
   const [showLeftButton, setShowLeftButton] = useState(false);
-  const [showRightButton, setShowRightButton] = useState(true);
+  const [showRightButton, setShowRightButton] = useState(false);
+
+  const handleScroll = useCallback(() => {
+    if (containerElement) {
+      const scrollLeft = containerElement.scrollLeft;
+      const scrollWidth = containerElement.scrollWidth;
+      const clientWidth = containerElement.clientWidth;
+
+      setShowLeftButton(scrollLeft > 0);
+      setShowRightButton(scrollLeft + clientWidth < scrollWidth);
+    }
+  }, [containerElement]);
 
   useEffect(() => {
-    const containerElement = containerRef.current;
-
     const handleSlideRight = () => {
       if (containerElement) {
         containerElement.scrollLeft += 330;
@@ -24,17 +41,6 @@ export function Carousel({ children }: Props) {
     const handleSlideLeft = () => {
       if (containerElement) {
         containerElement.scrollLeft -= 330;
-      }
-    };
-
-    const handleScroll = () => {
-      if (containerElement) {
-        const scrollLeft = containerElement.scrollLeft;
-        const scrollWidth = containerElement.scrollWidth;
-        const clientWidth = containerElement.clientWidth;
-
-        setShowLeftButton(scrollLeft > 0);
-        setShowRightButton(scrollLeft + clientWidth < scrollWidth);
       }
     };
 
@@ -53,6 +59,8 @@ export function Carousel({ children }: Props) {
       buttonLeft.addEventListener('click', handleSlideLeft);
     }
 
+    handleScroll();
+
     return () => {
       if (containerElement) {
         containerElement.removeEventListener('scroll', handleScroll);
@@ -64,7 +72,9 @@ export function Carousel({ children }: Props) {
         buttonLeft.removeEventListener('click', handleSlideLeft);
       }
     };
-  }, []);
+  }, [handleScroll, containerElement]);
+
+  useEffect(() => handleScroll(), [size, handleScroll]);
 
   return (
     <div
