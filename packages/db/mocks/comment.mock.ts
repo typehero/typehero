@@ -1,5 +1,6 @@
 import { type Prisma } from '@prisma/client';
 import { trashId } from '../seed';
+import { faker } from '@faker-js/faker';
 
 /**
  *
@@ -10,7 +11,7 @@ export default function CommentMock(
   parentId?: number,
 ): Prisma.CommentCreateManyInput {
   return {
-    text: `here is a comment ${
+    text: `${faker.lorem.sentences()} ${
       !parentId ? commentNumber : `reply ${commentNumber} to parent ${parentId}`
     }`,
     userId: trashId,
