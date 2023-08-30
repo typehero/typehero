@@ -12,7 +12,10 @@ export function FullscreenButton() {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <button className="focus:outline-none focus-visible:ring-2" onClick={handleToggleFullscreen}>
+        <button
+          className="focus:outline-none focus-visible:ring-2"
+          onClick={handleToggleFullscreen}
+        >
           <Maximize2 className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" size={20} />
         </button>
       </TooltipTrigger>
