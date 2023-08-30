@@ -52,11 +52,11 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
     // resize width on desktop, height on mobile
     if (settings.isFullscreen) {
       leftRef.style.width = '0';
-  } else {
+    } else {
       window.innerWidth > 1025
-          ? (leftRef.style.width = settings.width)
-          : (leftRef.style.height = settings.height);
-  }
+        ? (leftRef.style.width = settings.width)
+        : (leftRef.style.height = settings.height);
+    }
 
     // The current position of mouse
     let x = 0;
@@ -144,7 +144,7 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
         ? updateSettings({ width: `${leftRef.offsetWidth}px`, height: settings.height })
         : updateSettings({ width: settings.width, height: `${leftRef.offsetHeight}px` });
 
-      if(settings.isFullscreen){
+      if (settings.isFullscreen) {
         updateSettings({ isFullscreen: false });
       }
     };
@@ -173,18 +173,19 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
       ref={parent}
       style={{ height: 'calc(100dvh - 3.5rem)' }}
     >
-        <>
-              <div
-        className={`min-h-[318px] w-full overflow-hidden rounded-l-2xl rounded-r-xl border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 ${settings.isFullscreen ? '' : 'lg:min-w-[500px]'}`}
-        ref={leftSide}
+      <>
+        <div
+          className={`min-h-[318px] w-full overflow-hidden rounded-l-2xl rounded-r-xl border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 ${
+            settings.isFullscreen ? '' : 'lg:min-w-[500px]'
+          }`}
+          ref={leftSide}
         >
-
-            {left}
-          </div>
-          <div className="resizer relative p-2" ref={resizer}>
-            <div className="absolute left-1/2 top-1/2 h-1 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-400 duration-300 group-hover:bg-neutral-600 group-active:bg-emerald-400 group-active:duration-75 dark:bg-neutral-700 group-hover:dark:bg-neutral-500 lg:h-24 lg:w-1" />
-          </div>
-        </>
+          {left}
+        </div>
+        <div className="resizer relative p-2" ref={resizer}>
+          <div className="absolute left-1/2 top-1/2 h-1 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-400 duration-300 group-hover:bg-neutral-600 group-active:bg-emerald-400 group-active:duration-75 dark:bg-neutral-700 group-hover:dark:bg-neutral-500 lg:h-24 lg:w-1" />
+        </div>
+      </>
       <div
         className="flex min-h-[90px] w-full flex-1 flex-col overflow-hidden rounded-l-xl rounded-r-2xl border border-zinc-300 dark:border-zinc-700 lg:min-w-[500px]"
         ref={rightSide}
