@@ -12,8 +12,6 @@ export function Carousel({ children }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const containerElement = containerRef.current;
 
-  const size = useResizeObserver(containerRef);
-
   const [showLeftButton, setShowLeftButton] = useState(
     containerElement && containerElement.scrollLeft > 0,
   );
@@ -32,6 +30,9 @@ export function Carousel({ children }: Props) {
       setShowRightButton(scrollLeft + clientWidth < scrollWidth);
     }
   }, [containerElement]);
+
+  // observe and handle resizing
+  useResizeObserver(containerRef, handleScroll);
 
   useEffect(() => {
     const handleSlideRight = () => {
@@ -61,6 +62,8 @@ export function Carousel({ children }: Props) {
       buttonLeft.addEventListener('click', handleSlideLeft);
     }
 
+    handleScroll();
+
     return () => {
       if (containerElement) {
         containerElement.removeEventListener('scroll', handleScroll);
@@ -73,8 +76,6 @@ export function Carousel({ children }: Props) {
       }
     };
   }, [handleScroll, containerElement]);
-
-  useEffect(() => handleScroll(), [size, handleScroll]);
 
   return (
     <div
