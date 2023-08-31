@@ -14,7 +14,7 @@ import { createTwoslashInlayProvider } from './twoslash';
 import { PrettierFormatProvider } from './prettier';
 import { useResetEditor } from './editor-hooks';
 
-const VimStatusBar = dynamic(() => import('./vim-mode').then((v) => v.VimStatusBar), {
+const VimStatusBar = dynamic(() => import('./vim-mode'), {
   ssr: false,
 });
 
@@ -40,13 +40,13 @@ export function CodePanel(props: CodePanelProps) {
   const params = useSearchParams();
   const router = useRouter();
   const { toast } = useToast();
-  const [tsErrors, setTsErrors] = useState<TsErrors | undefined>(undefined);
+  const [tsErrors, setTsErrors] = useState<TsErrors>();
   const [localStorageCode, setLocalStorageCode] = useLocalStorage(
     `challenge-${props.challenge.id}`,
     '',
   );
 
-  const initialTypecheckDone = tsErrors === undefined;
+  const showSubmitSpinner = props.submissionDisabled || tsErrors === undefined;
 
   const defaultCode =
     lzstring.decompressFromEncodedURIComponent(params.get('code') ?? '') ?? localStorageCode;
@@ -104,6 +104,7 @@ export function CodePanel(props: CodePanelProps) {
           onMount={{
             tests: (editor) => {
               setTestEditorState(editor);
+              setTsErrors([[], [], [], []]);
             },
             user: async (editor, monaco) => {
               setMonacoInstance(monaco);
@@ -173,13 +174,13 @@ export function CodePanel(props: CodePanelProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                disabled={!initialTypecheckDone || props.submissionDisabled}
+                disabled={showSubmitSpinner}
                 size="sm"
                 className="cursor-pointer rounded-lg bg-emerald-600 duration-300 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
                 onClick={handleSubmit}
               >
-                {!initialTypecheckDone && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Submit
+                {showSubmitSpinner && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                Submit{tsErrors === undefined && ' (open test cases)'}
               </Button>
             </TooltipTrigger>
             <TooltipContent>
