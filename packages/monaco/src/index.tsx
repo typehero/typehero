@@ -47,7 +47,6 @@ export function CodePanel(props: CodePanelProps) {
   );
 
   const showSubmitSpinner = props.submissionDisabled || tsErrors === undefined;
-  console.log(props.submissionDisabled, tsErrors === undefined);
 
   const defaultCode =
     lzstring.decompressFromEncodedURIComponent(params.get('code') ?? '') ?? localStorageCode;
