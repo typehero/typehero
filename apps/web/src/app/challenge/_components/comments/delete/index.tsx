@@ -9,11 +9,11 @@ import {
   TooltipTrigger,
   TypographyLarge,
   TypographyP,
+  Markdown,
   toast,
 } from '@repo/ui';
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import { Markdown } from '~/components/ui/markdown';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { deleteComment } from '../comment.action';
 import { type PaginatedComments } from '../getCommentRouteData';

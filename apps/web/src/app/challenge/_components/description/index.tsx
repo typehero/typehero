@@ -14,6 +14,7 @@ import {
   TooltipTrigger,
   TypographyH3,
   UserBadge,
+  Markdown,
 } from '@repo/ui';
 import { Bookmark as BookmarkIcon, Flag, Share } from '@repo/ui/icons';
 import { clsx } from 'clsx';
@@ -22,7 +23,6 @@ import Link from 'next/link';
 import { useRef, useState } from 'react';
 import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import { ReportDialog } from '~/components/ReportDialog';
-import { Markdown } from '~/components/ui/markdown';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { addOrRemoveBookmark } from '../bookmark.action';
 import { ShareForm } from '../share-form';

@@ -1,7 +1,7 @@
 'use client';
 
 import type { Challenge, Difficulty } from '@repo/db/types';
-import { Button } from '@repo/ui';
+import { Button, Markdown } from '@repo/ui';
 import clsx from 'clsx';
 import {
   motion,
@@ -18,7 +18,6 @@ import { useInView } from 'react-intersection-observer';
 import { z } from 'zod';
 import { TrackChallenge } from '~/app/tracks/_components/track-challenge-card';
 import { useIsMobile } from '~/utils/useIsMobile';
-import { Markdown } from '../ui/markdown';
 import { Steps } from '../wizard/Steps';
 
 type WrapperStyle = MotionStyle & {
