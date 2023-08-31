@@ -1,9 +1,8 @@
 'use client';
 
 import clsx from 'clsx';
-import { ChevronDown, ChevronUp, Loader2 } from '@repo/ui/icons';
+import { ChevronDown, ChevronUp, Loader2, XCircle, CheckCircle2 } from '@repo/ui/icons';
 import type * as monaco from 'monaco-editor';
-import dynamic from 'next/dynamic';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 import lzstring from 'lz-string';
@@ -13,10 +12,6 @@ import SplitEditor, { TESTS_PATH } from './split-editor';
 import { createTwoslashInlayProvider } from './twoslash';
 import { PrettierFormatProvider } from './prettier';
 import { useResetEditor } from './editor-hooks';
-
-const VimStatusBar = dynamic(() => import('./vim-mode'), {
-  ssr: false,
-});
 
 export interface CodePanelProps {
   challenge: {
@@ -90,77 +85,91 @@ export function CodePanel(props: CodePanelProps) {
       });
     }
   };
+  const hasFailingTest = tsErrors?.some((e) => e.length) ?? false;
 
   return (
     <>
-      <div className="sticky top-0 flex h-[40px] items-center justify-end gap-4 border-b border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
+      <div className="sticky top-0 flex h-[40px] shrink-0 items-center justify-end gap-4 border-b border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
         {props.settingsElement}
       </div>
-      <div className="w-full flex-1">
-        <SplitEditor
-          monaco={monacoInstance}
-          expandTestPanel={isTestPanelExpanded}
-          tests={props.challenge.tests}
-          userCode={code}
-          onMount={{
-            tests: (editor) => {
-              setTestEditorState(editor);
-              setTsErrors([[], [], []]);
-            },
-            user: async (editor, monaco) => {
-              setMonacoInstance(monaco);
+      <SplitEditor
+        userEditorState={userEditorState}
+        monaco={monacoInstance}
+        expandTestPanel={isTestPanelExpanded}
+        tests={props.challenge.tests}
+        userCode={code}
+        onMount={{
+          tests: async (editor) => {
+            if (!monacoInstance) return null;
 
-              monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
-                ...monaco.languages.typescript.typescriptDefaults.getCompilerOptions(),
-                strict: true,
-                target: monaco.languages.typescript.ScriptTarget.ESNext,
-                strictNullChecks: true,
-              });
+            const getTsWorker = await monacoInstance.languages.typescript.getTypeScriptWorker();
 
-              monaco.languages.registerDocumentFormattingEditProvider(
-                'typescript',
-                PrettierFormatProvider,
-              );
+            const mm = monacoInstance.editor.getModel(monacoInstance.Uri.parse(TESTS_PATH));
+            if (!mm) return null;
 
-              setUserEditorState(editor);
+            const tsWorker = await getTsWorker(mm.uri);
+            const errors = await Promise.all([
+              tsWorker.getSemanticDiagnostics(TESTS_PATH),
+              tsWorker.getSyntacticDiagnostics(TESTS_PATH),
+              tsWorker.getCompilerOptionsDiagnostics(TESTS_PATH),
+            ] as const);
 
-              const model = editor.getModel();
+            setTsErrors(errors);
+            setTestEditorState(editor);
+          },
+          user: async (editor, monaco) => {
+            setMonacoInstance(monaco);
 
-              if (!model) {
-                throw new Error();
-              }
+            monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+              ...monaco.languages.typescript.typescriptDefaults.getCompilerOptions(),
+              strict: true,
+              target: monaco.languages.typescript.ScriptTarget.ESNext,
+              strictNullChecks: true,
+            });
 
-              const ts = await (await monaco.languages.typescript.getTypeScriptWorker())(model.uri);
+            monaco.languages.registerDocumentFormattingEditProvider(
+              'typescript',
+              PrettierFormatProvider,
+            );
 
-              monaco.languages.registerInlayHintsProvider(
-                'typescript',
-                createTwoslashInlayProvider(monaco, ts),
-              );
-            },
-          }}
-          onChange={{
-            user: async (code) => {
-              if (!monacoInstance) return null;
-              setCode(code ?? '');
-              setLocalStorageCode(code ?? '');
-              const getTsWorker = await monacoInstance.languages.typescript.getTypeScriptWorker();
+            setUserEditorState(editor);
 
-              const mm = monacoInstance.editor.getModel(monacoInstance.Uri.parse(TESTS_PATH));
-              if (!mm) return null;
+            const model = editor.getModel();
 
-              const tsWorker = await getTsWorker(mm.uri);
+            if (!model) {
+              throw new Error();
+            }
 
-              const errors = await Promise.all([
-                tsWorker.getSemanticDiagnostics(TESTS_PATH),
-                tsWorker.getSyntacticDiagnostics(TESTS_PATH),
-                tsWorker.getCompilerOptionsDiagnostics(TESTS_PATH),
-              ] as const);
+            const ts = await (await monaco.languages.typescript.getTypeScriptWorker())(model.uri);
 
-              setTsErrors(errors);
-            },
-          }}
-        />
-      </div>
+            monaco.languages.registerInlayHintsProvider(
+              'typescript',
+              createTwoslashInlayProvider(monaco, ts),
+            );
+          },
+        }}
+        onChange={{
+          user: async (code) => {
+            if (!monacoInstance) return null;
+            setCode(code ?? '');
+            setLocalStorageCode(code ?? '');
+            const getTsWorker = await monacoInstance.languages.typescript.getTypeScriptWorker();
+
+            const mm = monacoInstance.editor.getModel(monacoInstance.Uri.parse(TESTS_PATH));
+            if (!mm) return null;
+
+            const tsWorker = await getTsWorker(mm.uri);
+
+            const errors = await Promise.all([
+              tsWorker.getSemanticDiagnostics(TESTS_PATH),
+              tsWorker.getSyntacticDiagnostics(TESTS_PATH),
+              tsWorker.getCompilerOptionsDiagnostics(TESTS_PATH),
+            ] as const);
+
+            setTsErrors(errors);
+          },
+        }}
+      />
       <div
         className={clsx(
           {
@@ -169,18 +178,20 @@ export function CodePanel(props: CodePanelProps) {
           'sticky bottom-0 flex items-center justify-between p-2 dark:bg-[#1e1e1e]',
         )}
       >
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
           <Button
+            className="flex items-center gap-1"
             variant="ghost"
             size="sm"
             onClick={() => {
               setIsTestPanelExpanded((tp) => !tp);
             }}
           >
-            Test
+            Tests
             {isTestPanelExpanded ? <ChevronDown size={16} /> : <ChevronUp size={16} />}
           </Button>
-          {userEditorState && <VimStatusBar editor={userEditorState} />}
+          {hasFailingTest && <XCircle className="stroke-red-600 dark:stroke-red-300" />}
+          {!hasFailingTest && <CheckCircle2 className="stroke-green-600 dark:stroke-green-300" />}
         </div>
         <div className="flex items-center justify-between gap-4">
           <Tooltip>
