@@ -2,7 +2,7 @@
 
 import { useSession } from '@repo/auth/react';
 import { type CommentRoot } from '@repo/db/types';
-import { Tooltip, TooltipContent, TooltipTrigger, UserBadge, toast } from '@repo/ui';
+import { Tooltip, TooltipContent, Markdown, TooltipTrigger, UserBadge, toast } from '@repo/ui';
 import { ChevronDown, ChevronUp, Pencil, Reply, Share, Trash2 } from '@repo/ui/icons';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
@@ -10,7 +10,6 @@ import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { z } from 'zod';
 import { ReportDialog } from '~/components/ReportDialog';
-import { Markdown } from '~/components/ui/markdown';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { Vote } from '../vote';
 import { CommentInput } from './comment-input';
@@ -260,10 +259,10 @@ function SingleComment({
                 onVote={(didUpvote: boolean) => {
                   comment.vote = didUpvote
                     ? [
-                        {
-                          userId: session?.data?.user?.id ?? '',
-                        },
-                      ]
+                      {
+                        userId: session?.data?.user?.id ?? '',
+                      },
+                    ]
                     : [];
                   comment._count.vote += didUpvote ? 1 : -1;
                 }}
@@ -340,7 +339,7 @@ function SingleComment({
 
 function ExpandableContent({ content }: { content: string }) {
   const [expanded, setExpanded] = useState(true);
-  const contentWrapperRef = useRef<HTMLDivElement>(null);
+  const contentWrapperRef = useRef < HTMLDivElement > (null);
 
   useEffect(() => {
     const handleResize = () => {
