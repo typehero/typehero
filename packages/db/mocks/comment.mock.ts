@@ -9,12 +9,13 @@ import { faker } from '@faker-js/faker';
 export default function CommentMock(
   commentNumber: number,
   parentId?: number,
+  userId?: string,
 ): Prisma.CommentCreateManyInput {
   return {
     text: `${faker.lorem.sentences()} ${
       !parentId ? commentNumber : `reply ${commentNumber} to parent ${parentId}`
     }`,
-    userId: trashId,
+    userId: userId ?? trashId,
     parentId,
   };
 }

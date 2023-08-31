@@ -50,6 +50,7 @@ export async function getReport(idNum: number) {
           },
           rootChallenge: true,
           rootSolution: true,
+          parentComment: true,
         },
       },
       issues: true,

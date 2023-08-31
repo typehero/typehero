@@ -47,48 +47,16 @@ try {
     },
   });
 
-  await prisma.user.upsert({
-    where: { id: trashId },
-    update: {},
-    create: {
-      id: trashId,
-      email: 'chris@typehero.dev',
-      name: 'chris',
-      sharedSolution: {
-        create: alotOfSharedSolutions(someChallenge?.id ?? 2),
-      },
+  const allUsers = await prisma.user.findMany({
+    select: {
+      id: true,
     },
-  });
+    where: {
+      status: 'ACTIVE'
+    }
+  }).then(r => r.map(v => v.id ));
 
-  let commentNum = 0;
-  const comments = Array.from({ length: 50 }, () => CommentMock(++commentNum));
-
-  const replies: Prisma.CommentCreateManyInput[] = [];
-
-  const { comment: createdComments } = await prisma.challenge.update({
-    where: { id: someChallenge?.id },
-    include: {
-      comment: true,
-    },
-    data: {
-      comment: {
-        create: comments,
-      },
-    },
-  });
-
-  for (const comment of createdComments) {
-    replies.push(CommentMock(++commentNum, comment.id), CommentMock(++commentNum, comment.id));
-  }
-
-  await prisma.challenge.update({
-    where: { id: someChallenge?.id },
-    data: {
-      comment: {
-        create: replies,
-      },
-    },
-  });
+  const user = faker.helpers.arrayElement(allUsers);
 
   const allVisibleChallenges = await prisma.challenge.findMany({
     select: {
@@ -100,6 +68,58 @@ try {
       }
     }
   }).then(r => r.map(v => v.id));
+
+  await prisma.sharedSolution.createMany({
+    data: alotOfSharedSolutions(faker.helpers.arrayElement(allVisibleChallenges)).map(c => ({
+      ...c,
+      userId: faker.helpers.arrayElement(allUsers)
+    }) as Prisma.SharedSolutionCreateManyInput)
+  })
+
+  await prisma.user.upsert({
+    where: { id: user },
+    update: {},
+    create: {
+      id: user,
+      email: 'chris@typehero.dev',
+      name: 'chris',
+      sharedSolution: {
+        create: alotOfSharedSolutions(someChallenge?.id ?? 2),
+      },
+    },
+  });
+
+  let commentNum = 0;
+  const comments = Array.from({ length: 50 }, () => CommentMock(++commentNum, undefined, faker.helpers.arrayElement(allUsers)));
+
+  const replies: Prisma.CommentCreateManyInput[] = [];
+  
+  const sc = faker.helpers.arrayElement(allVisibleChallenges);
+
+  const { comment: createdComments } = await prisma.challenge.update({
+    where: { id: sc },
+    include: {
+      comment: true,
+    },
+    data: {
+      comment: {
+        create: comments,
+      },
+    },
+  });
+
+  for (const comment of createdComments) {
+    replies.push(CommentMock(++commentNum, comment.id, faker.helpers.arrayElement(allUsers)), CommentMock(++commentNum, comment.id, faker.helpers.arrayElement(allUsers)));
+  }
+
+  await prisma.challenge.update({
+    where: { id: sc},
+    data: {
+      comment: {
+        create: replies,
+      },
+    },
+  });
 
   const allComments = await prisma.comment.findMany({
     select: {
@@ -115,15 +135,6 @@ try {
       visible: true,
     }
   }).then(r => r.map(v => v.id));
-
-  const allUsers = await prisma.user.findMany({
-    select: {
-      id: true,
-    },
-    where: {
-      status: 'ACTIVE'
-    }
-  }).then(r => r.map(v => v.id ));
 
   const reports = Array.from({ length: 50 }, (_, i) => {
     const bob = faker.helpers.enumValue(ReportType);
