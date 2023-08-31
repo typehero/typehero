@@ -5,8 +5,12 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useFullscreenSettingsStore } from './fullscreen';
 
+const MOBILE_BREAKPOINT = 1025;
+const LEFT_PANEL_BREAKPOINT = 500;
+const DEFAULT_WIDTH = `${LEFT_PANEL_BREAKPOINT}px`;
+
 export const DEFAULT_SETTINGS = {
-  width: '500px',
+  width: DEFAULT_WIDTH,
   height: '300px',
 };
 
@@ -51,7 +55,7 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
     const rightRef = rightSide.current;
 
     // resize width on desktop, height on mobile
-    window.innerWidth > 1025
+    window.innerWidth > MOBILE_BREAKPOINT
       ? (leftRef.style.width = settings.width)
       : (leftRef.style.height = settings.height);
 
@@ -80,20 +84,22 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
       const newLeftWidth = ((leftWidth + dx) * 100) / divideByW;
       const newTopHeight = ((topHeight + dy) * 100) / divideByH;
 
-      if (window.innerWidth > 1025) {
-        if (leftRef.style.width === '0%' && dx > 10) {
+      if (window.innerWidth > MOBILE_BREAKPOINT) {
+        const buffer = 10;
+        if (leftRef.style.width === '0%' && dx > buffer) {
           // Detect a 10px movement to the right from 0%
-          leftRef.style.minWidth = '500px';
-          return;
+          leftRef.style.minWidth = DEFAULT_WIDTH;
         }
 
-        if (newLeftWidth < (500 / divideByW) * 100) {
+        if (newLeftWidth < (LEFT_PANEL_BREAKPOINT / divideByW) * 100) {
           leftRef.style.minWidth = '0px';
           leftRef.style.width = '0%';
+          leftRef.style.border = 'none';
         } else {
           leftRef.style.width = `${newLeftWidth}%`;
-          if (newLeftWidth > (500 / divideByW) * 100) {
+          if (newLeftWidth > (LEFT_PANEL_BREAKPOINT / divideByW) * 100) {
             leftRef.style.removeProperty('min-width');
+            leftRef.style.removeProperty('border');
           }
         }
       } else {
@@ -101,7 +107,7 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
       }
 
       // prevent cursor from blinking when you move mouse too fast (leaving resizer area)
-      window.innerWidth > 1025
+      window.innerWidth > MOBILE_BREAKPOINT
         ? (document.body.style.cursor = 'col-resize')
         : (document.body.style.cursor = 'row-resize');
 
@@ -115,15 +121,15 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
     const mouseDownHandler = (e: MouseEvent | TouchEvent) => {
       if (e instanceof MouseEvent) {
         // Get the current mouse position
-        window.innerWidth > 1025 ? (x = e.clientX) : (y = e.clientY);
+        window.innerWidth > MOBILE_BREAKPOINT ? (x = e.clientX) : (y = e.clientY);
       } else if (e instanceof TouchEvent) {
         // Get the current finger position
-        window.innerWidth > 1025
+        window.innerWidth > MOBILE_BREAKPOINT
           ? (x = e.touches[0]?.clientX ?? 0)
           : (y = e.touches[0]?.clientY ?? 0);
       }
 
-      window.innerWidth > 1025
+      window.innerWidth > MOBILE_BREAKPOINT
         ? (leftWidth = leftSide.current?.getBoundingClientRect().width!)
         : (topHeight = leftSide.current?.getBoundingClientRect().height!);
 
@@ -153,14 +159,14 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
       document.removeEventListener('touchend', mouseUpHandler);
       document.removeEventListener('mouseup', mouseUpHandler);
 
-      window.innerWidth > 1025
+      window.innerWidth > MOBILE_BREAKPOINT
         ? updateSettings({ width: `${leftRef.offsetWidth}px`, height: settings.height })
         : updateSettings({ width: settings.width, height: `${leftRef.offsetHeight}px` });
     };
 
     // handle window resize
     const resizeHandler = () => {
-      window.innerWidth > 1025
+      window.innerWidth > MOBILE_BREAKPOINT
         ? ((leftRef.style.width = settings.width), (leftRef.style.height = 'auto'))
         : ((leftRef.style.height = settings.height), (leftRef.style.width = 'auto'));
     };
