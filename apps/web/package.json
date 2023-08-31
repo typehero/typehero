@@ -23,7 +23,6 @@
     "@repo/auth": "workspace:*",
     "@repo/db": "workspace:*",
     "@repo/emails": "workspace:*",
-    "@repo/lint": "workspace:*",
     "@repo/monaco": "workspace:*",
     "@repo/og-image": "workspace:*",
     "@repo/ui": "workspace:*",
@@ -68,7 +67,6 @@
     "zustand": "^4.3.9"
   },
   "devDependencies": {
-    "@repo/tsconfig": "workspace:*",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/typography": "^0.5.9",
     "@types/node": "^20.4.2",

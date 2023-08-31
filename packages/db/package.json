@@ -35,8 +35,6 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
-    "@repo/lint": "workspace:*",
-    "@repo/tsconfig": "workspace:*",
     "@types/node": "^16.18.11",
     "dotenv-cli": "^7.2.1",
     "eslint": "^8.42.0",

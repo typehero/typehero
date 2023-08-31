@@ -61,8 +61,6 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
-    "@repo/lint": "workspace:*",
-    "@repo/tsconfig": "workspace:*",
     "@types/react": "^18.2.20",
     "eslint": "^8.42.0",
     "typescript": "^5.1.3"
