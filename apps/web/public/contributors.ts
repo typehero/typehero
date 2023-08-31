@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 121
+        "contributions": 126
     },
     {
         "login": "PickleNik",
@@ -41,7 +41,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/PickleNik/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 73
+        "contributions": 74
     },
     {
         "login": "Hacksore",
@@ -65,27 +65,6 @@ export const contributors = [
         "contributions": 68
     },
     {
-        "login": "jhechtf",
-        "id": 8152471,
-        "node_id": "MDQ6VXNlcjgxNTI0NzE=",
-        "avatar_url": "https://avatars.githubusercontent.com/u/8152471?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/jhechtf",
-        "html_url": "https://github.com/jhechtf",
-        "followers_url": "https://api.github.com/users/jhechtf/followers",
-        "following_url": "https://api.github.com/users/jhechtf/following{/other_user}",
-        "gists_url": "https://api.github.com/users/jhechtf/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/jhechtf/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/jhechtf/subscriptions",
-        "organizations_url": "https://api.github.com/users/jhechtf/orgs",
-        "repos_url": "https://api.github.com/users/jhechtf/repos",
-        "events_url": "https://api.github.com/users/jhechtf/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/jhechtf/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 20
-    },
-    {
         "login": "ggrandi",
         "id": 49359646,
         "node_id": "MDQ6VXNlcjQ5MzU5NjQ2",
@@ -102,6 +81,27 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/ggrandi/repos",
         "events_url": "https://api.github.com/users/ggrandi/events{/privacy}",
         "received_events_url": "https://api.github.com/users/ggrandi/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 21
+    },
+    {
+        "login": "jhechtf",
+        "id": 8152471,
+        "node_id": "MDQ6VXNlcjgxNTI0NzE=",
+        "avatar_url": "https://avatars.githubusercontent.com/u/8152471?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/jhechtf",
+        "html_url": "https://github.com/jhechtf",
+        "followers_url": "https://api.github.com/users/jhechtf/followers",
+        "following_url": "https://api.github.com/users/jhechtf/following{/other_user}",
+        "gists_url": "https://api.github.com/users/jhechtf/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/jhechtf/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/jhechtf/subscriptions",
+        "organizations_url": "https://api.github.com/users/jhechtf/orgs",
+        "repos_url": "https://api.github.com/users/jhechtf/repos",
+        "events_url": "https://api.github.com/users/jhechtf/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/jhechtf/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 20
@@ -401,6 +401,27 @@ export const contributors = [
         "contributions": 3
     },
     {
+        "login": "jproberson",
+        "id": 50461518,
+        "node_id": "MDQ6VXNlcjUwNDYxNTE4",
+        "avatar_url": "https://avatars.githubusercontent.com/u/50461518?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/jproberson",
+        "html_url": "https://github.com/jproberson",
+        "followers_url": "https://api.github.com/users/jproberson/followers",
+        "following_url": "https://api.github.com/users/jproberson/following{/other_user}",
+        "gists_url": "https://api.github.com/users/jproberson/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/jproberson/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/jproberson/subscriptions",
+        "organizations_url": "https://api.github.com/users/jproberson/orgs",
+        "repos_url": "https://api.github.com/users/jproberson/repos",
+        "events_url": "https://api.github.com/users/jproberson/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/jproberson/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 3
+    },
+    {
         "login": "laureanray",
         "id": 22195710,
         "node_id": "MDQ6VXNlcjIyMTk1NzEw",
@@ -441,27 +462,6 @@ export const contributors = [
         "type": "User",
         "site_admin": false,
         "contributions": 3
-    },
-    {
-        "login": "jproberson",
-        "id": 50461518,
-        "node_id": "MDQ6VXNlcjUwNDYxNTE4",
-        "avatar_url": "https://avatars.githubusercontent.com/u/50461518?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/jproberson",
-        "html_url": "https://github.com/jproberson",
-        "followers_url": "https://api.github.com/users/jproberson/followers",
-        "following_url": "https://api.github.com/users/jproberson/following{/other_user}",
-        "gists_url": "https://api.github.com/users/jproberson/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/jproberson/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/jproberson/subscriptions",
-        "organizations_url": "https://api.github.com/users/jproberson/orgs",
-        "repos_url": "https://api.github.com/users/jproberson/repos",
-        "events_url": "https://api.github.com/users/jproberson/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/jproberson/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 2
     },
     {
         "login": "thecornisians",
