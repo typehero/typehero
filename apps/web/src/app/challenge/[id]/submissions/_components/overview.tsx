@@ -1,7 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 import { Copy, X } from '@repo/ui/icons';
 import Link from 'next/link';
-import { Markdown, Button, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, toast } from '@repo/ui';
+import {
+  Markdown,
+  Button,
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+  toast,
+} from '@repo/ui';
 import { getBaseUrl } from '~/utils/getBaseUrl';
 import { getRelativeTime } from '~/utils/relativeTime';
 

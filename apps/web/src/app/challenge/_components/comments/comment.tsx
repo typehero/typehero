@@ -259,10 +259,10 @@ function SingleComment({
                 onVote={(didUpvote: boolean) => {
                   comment.vote = didUpvote
                     ? [
-                      {
-                        userId: session?.data?.user?.id ?? '',
-                      },
-                    ]
+                        {
+                          userId: session?.data?.user?.id ?? '',
+                        },
+                      ]
                     : [];
                   comment._count.vote += didUpvote ? 1 : -1;
                 }}
@@ -339,7 +339,7 @@ function SingleComment({
 
 function ExpandableContent({ content }: { content: string }) {
   const [expanded, setExpanded] = useState(true);
-  const contentWrapperRef = useRef < HTMLDivElement > (null);
+  const contentWrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleResize = () => {
