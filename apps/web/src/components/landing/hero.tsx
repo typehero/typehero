@@ -53,7 +53,7 @@ function Hero() {
               skills through interactive coding challenges, discussions, and knowledge sharing
             </Balancer>
           </p>
-          <div className="flex flex-col md:flex-row gap-3">
+          <div className="flex flex-col gap-3 md:flex-row">
             <Button
               asChild
               className="hero-join-button group relative mx-auto w-fit overflow-hidden rounded-xl p-[2px] font-bold transition-all duration-300 hover:bg-transparent hover:shadow-[0_0_2rem_-0.5rem_#3178c6] dark:hidden md:mr-0 lg:mr-auto"
@@ -84,7 +84,7 @@ function Hero() {
               <a
                 target="_blank"
                 rel="noreferrer"
-                className="md:inline-flex gap-1"
+                className="gap-1 md:inline-flex"
                 href="https://github.com/bautistaaa/typehero"
               >
                 <Github className="h-4 w-4" />
@@ -99,7 +99,7 @@ function Hero() {
               <a
                 target="_blank"
                 rel="noreferrer"
-                className="md:inline-flex gap-1"
+                className="gap-1 md:inline-flex"
                 href="https://twitter.com/typeheroapp"
               >
                 <Twitter className="h-4 w-4" />
