@@ -54,3 +54,10 @@ yarn-error.log*
 
 #idea
 .idea
+
+# direnv
+.direnv
+
+# devenv
+.devenv
+result

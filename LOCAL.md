@@ -11,10 +11,10 @@ get it up and running on your local machine. Below are the steps to follow for y
 
 Provide your values as needed.
 
-### 2 Configure your database
+### 2. Configure your database
 
 You can either use PlanetScale or a local Docker container to run your database.
-Use either 2.a or 2.b for the next step.
+Use either 2.a, 2.b or 2.c for the next step.
 
 ### 2.a Local Database (using Docker)
 
@@ -24,7 +24,17 @@ Starting the docker container
 docker compose up -d
 ```
 
-### 2.b Remote Database (using PlanetScale)
+### 2.b Local Database (using Nix flakes + direnv + devenv)
+Allow the `.envrc` file to be loaded with direnv
+```
+direnv allow
+```
+Run processes and services with devenv (the MySQL server)
+```
+devenv up
+```
+
+### 2.c Remote Database (using PlanetScale)
 
 [Follow the PlanetScale quick start guide to get started][planetscale-quick-start]
 
