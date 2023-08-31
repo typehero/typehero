@@ -21,7 +21,7 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  transpilePackages: ['@repo/db', '@repo/auth', '@repo/monaco'],
+  transpilePackages: ['@repo/db', '@repo/ui', '@repo/auth', '@repo/monaco'],
   images: {
     remotePatterns: [
       {

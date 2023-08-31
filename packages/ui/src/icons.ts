@@ -28,6 +28,7 @@ export {
   MessageCircle,
   Moon,
   Pencil,
+  Play,
   Plus,
   Reply,
   Settings,

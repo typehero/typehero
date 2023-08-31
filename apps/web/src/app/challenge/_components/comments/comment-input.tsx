@@ -1,8 +1,7 @@
 import { Loader2 } from '@repo/ui/icons';
 import { useSession } from '@repo/auth/react';
 import { useEffect, useRef, useState, type RefObject } from 'react';
-import { Button, Textarea, ToastAction, useToast } from '@repo/ui';
-import { Markdown } from '~/components/ui/markdown';
+import { Button, Textarea, Markdown, ToastAction, useToast } from '@repo/ui';
 
 interface Props {
   mode: 'create' | 'edit' | 'reply';
