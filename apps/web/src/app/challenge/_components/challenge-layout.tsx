@@ -81,23 +81,24 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
       const newTopHeight = ((topHeight + dy) * 100) / divideByH;
 
       if (window.innerWidth > 1025) {
-        if (leftRef.style.width === '0%' && dx > 10) { // Detect a 10px movement to the right from 0%
+        if (leftRef.style.width === '0%' && dx > 10) {
+          // Detect a 10px movement to the right from 0%
           leftRef.style.minWidth = '500px';
           return;
-      }
+        }
 
-      if (newLeftWidth < (500 / divideByW * 100)) {
-        leftRef.style.minWidth = '0px';  
-        leftRef.style.width = '0%';
-      } else {
+        if (newLeftWidth < (500 / divideByW) * 100) {
+          leftRef.style.minWidth = '0px';
+          leftRef.style.width = '0%';
+        } else {
           leftRef.style.width = `${newLeftWidth}%`;
-          if (newLeftWidth > (500 / divideByW * 100)) {
-              leftRef.style.removeProperty('min-width');
+          if (newLeftWidth > (500 / divideByW) * 100) {
+            leftRef.style.removeProperty('min-width');
           }
-      }
-    } else {
+        }
+      } else {
         leftRef.style.height = `${newTopHeight}%`;
-    }
+      }
 
       // prevent cursor from blinking when you move mouse too fast (leaving resizer area)
       window.innerWidth > 1025
