@@ -21,7 +21,8 @@
   background-position-y: 33%;
   background-position-x: center;
   background-repeat: no-repeat;
-  background-size: 100% 200%;
+  background-size: 111% 200%;
+  filter: blur(69px);
 }
 
 /* The module for the background of the banner on the landing page */
