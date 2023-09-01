@@ -1,1 +1,1 @@
-export { Waitlist as default } from '~/components/landing/waitlist';
+export { Waitlist as default } from './_components';

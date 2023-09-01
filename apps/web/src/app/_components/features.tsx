@@ -1,12 +1,6 @@
 import { Balancer } from 'react-wrap-balancer';
 import clsx from 'clsx';
 import Image from 'next/image';
-import {
-  ImageCard,
-  CollaborativeEnvironmentCard,
-  ChallengeCreationCard,
-  CuratedTracksCard,
-} from '~/components/landing/feature-card';
 import DogeSmile from '~/assets/images/doge.webp';
 import FeatureCardChallengeDark1 from '~/assets/images/feature_card_challenge_dark1.png';
 import FeatureCardChallengeDark2 from '~/assets/images/feature_card_challenge_dark2.png';
@@ -22,6 +16,12 @@ import Step2Dark1 from '~/assets/images/step2dark1.png';
 import Step2Dark2 from '~/assets/images/step2dark2.png';
 import Step3Light from '~/assets/images/step3light.png';
 import Step3Dark from '~/assets/images/step3dark.png';
+import {
+  ImageCard,
+  CollaborativeEnvironmentCard,
+  ChallengeCreationCard,
+  CuratedTracksCard,
+} from './feature-card';
 
 function Features() {
   return (

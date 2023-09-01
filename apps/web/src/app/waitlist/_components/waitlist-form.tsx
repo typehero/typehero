@@ -21,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@repo/ui';
-import { uploadWaitlistEntry } from '~/components/landing/waitlist/create.action';
+import { uploadWaitlistEntry } from './create.action';
 
 const waitlistFormSchema = z.object({
   name: z.string().min(1, 'Please enter your name'),
@@ -116,7 +116,7 @@ export function WaitlistForm() {
             name="intention"
             render={({ field }) => (
               <FormItem>
-                <Select defaultValue={field.value} onValueChange={field.onChange} {...field}>
+                <Select defaultValue={field.value} onValueChange={field.onChange}>
                   <FormControl>
                     <SelectTrigger
                       className={clsx({
