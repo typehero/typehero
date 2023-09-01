@@ -5,6 +5,7 @@ import {
   CardHeader,
   CardTitle,
   DifficultyBadge,
+  Markdown,
 } from '@repo/ui';
 import { Circle, Diamond, MessageCircle, Plus, Sparkle, ThumbsUp, Triangle } from '@repo/ui/icons';
 import type { ExploreChallengeData } from './explore.action';
@@ -104,7 +105,7 @@ export function ExploreCard({ challenge }: ExploreCardProps) {
         </div>
         <CardDescription className="relative h-20 overflow-hidden pb-4">
           <div className="pointer-events-none absolute inset-0 h-full w-full shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card))] duration-300 group-hover/card:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))] group-focus:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))]" />
-          {challenge.shortDescription}
+          <Markdown>{challenge.shortDescription}</Markdown>
         </CardDescription>
       </CardContent>
     </Card>
