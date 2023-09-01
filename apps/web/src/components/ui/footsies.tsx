@@ -8,7 +8,9 @@ export function Footsies() {
           Built with <Binary className="inline-block h-5 w-5 text-[#31bdc6]" /> by the Trash Devs
           community.
         </div>
-        <div className="dark:text-neutral-400 text-neutral-500">© {new Date().getFullYear()} Type Hero</div>
+        <div className="text-neutral-500 dark:text-neutral-400">
+          © {new Date().getFullYear()} Type Hero
+        </div>
       </div>
     </footer>
   );

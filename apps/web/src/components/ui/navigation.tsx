@@ -173,7 +173,10 @@ function LoginButton() {
   return session ? (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button aria-label="profile button" className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none focus-visible:ring-2">
+        <button
+          aria-label="profile button"
+          className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none focus-visible:ring-2"
+        >
           <User className="h-5 w-5" />
         </button>
       </DropdownMenuTrigger>
