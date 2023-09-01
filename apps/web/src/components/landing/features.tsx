@@ -7,7 +7,7 @@ import {
   ChallengeCreationCard,
   CuratedTracksCard,
 } from '~/components/landing/feature-card';
-import DogeSmile from '~/assets/images/doge-smile-smile.png';
+import DogeSmile from '~/assets/images/doge.webp';
 import FeatureCardChallengeDark1 from '~/assets/images/feature_card_challenge_dark1.png';
 import FeatureCardChallengeDark2 from '~/assets/images/feature_card_challenge_dark2.png';
 import FeatureCardChallengeLight1 from '~/assets/images/feature_card_challenge_light1.png';
