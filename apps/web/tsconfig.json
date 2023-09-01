@@ -4,9 +4,7 @@
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
     "baseUrl": ".",
     "paths": {
-      "~/*": [
-        "src/*"
-      ]
+      "~/*": ["src/*"]
     },
     "plugins": [
       {
@@ -28,9 +26,5 @@
     "../../packages/monaco/monaco-editor.d.ts",
     "../../packages/monaco/monaco-vim.d.ts"
   ],
-  "exclude": [
-    "node_modules",
-    ".next",
-    "public"
-  ]
+  "exclude": ["node_modules", ".next", "public"]
 }
