@@ -10,6 +10,7 @@ module.exports = {
       '@vercel/style-guide/eslint/next',
       '@vercel/style-guide/eslint/typescript',
     ].map((config) => require.resolve(config)),
+    'plugin:prettier/recommended',
   ],
   ignorePatterns: ['**/.next/**', '**/.eslintrc.cjs', '**/node_modules/**', 'public/**'],
   overrides: [

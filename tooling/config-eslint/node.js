@@ -6,6 +6,7 @@ module.exports = {
     ...['@vercel/style-guide/eslint/node', '@vercel/style-guide/eslint/typescript'].map((config) =>
       require.resolve(config),
     ),
+    'plugin:prettier/recommended',
   ],
   ignorePatterns: ['node_modules/', 'dist/'],
   overrides: [
