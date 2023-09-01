@@ -47,7 +47,7 @@ function Hero() {
             </h1>
           </div>
 
-          <p className="max-w-[55ch] bg-transparent px-8 text-center font-medium leading-8 text-black/50 dark:text-white/50 lg:px-0 lg:text-left">
+          <p className="max-w-[55ch] bg-transparent px-8 text-center font-medium leading-8 text-black/60 dark:text-white/50 lg:px-0 lg:text-left">
             <Balancer>
               Connect, collaborate, and grow with a community of TypeScript developers. Elevate your
               skills through interactive coding challenges, discussions, and knowledge sharing
