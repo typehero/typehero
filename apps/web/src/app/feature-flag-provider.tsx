@@ -14,6 +14,7 @@ const mockFlags = {
 };
 
 const isProd = process.env.NODE_ENV === 'production';
+const isPreview = process.env.VERCEL_ENV === 'preview';
 export function FeatureFlagProvider({ children }: Props) {
   const { data: featureFlags } = useQuery(['featureFlags'], () => getFeatureFlags());
 
@@ -21,7 +22,7 @@ export function FeatureFlagProvider({ children }: Props) {
 }
 
 async function getFeatureFlags() {
-  if (isProd) {
+  if (isProd && !isPreview) {
     return fetch('/api/flags').then((res) => res.json());
   }
 

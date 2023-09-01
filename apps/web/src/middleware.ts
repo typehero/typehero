@@ -4,7 +4,11 @@ const STAGING_DOMAIN = 'web-staging';
 export function middleware(req: NextRequest) {
   console.log({ VERCEL_ENV: process.env.VERCEL_ENV, VERCEL_URL: process.env.VERCEL_URL });
   // skip blocking the request if we are on staging or local
-  if (!process.env.VERCEL_ENV || process.env.VERCEL_URL?.includes(STAGING_DOMAIN)) {
+  if (
+    !process.env.VERCEL_ENV ||
+    process.env.VERCEL_ENV === 'preview' ||
+    process.env.VERCEL_URL?.includes(STAGING_DOMAIN)
+  ) {
     return NextResponse.next();
   }
 
