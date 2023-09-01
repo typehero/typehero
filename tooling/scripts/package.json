@@ -7,8 +7,7 @@
     "dl-monaco": "tsx dl-monaco.ts",
     "dl-monaco:force": "tsx dl-monaco.ts --force",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
-    "conformance": "spaces conformance"
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@repo/lint": "workspace:*",
@@ -21,7 +20,6 @@
     "node-fetch": "^3.3.2",
     "octokit": "^3.0.0",
     "tsx": "^3.12.7",
-    "typescript": "^5.1.6",
-    "@vercel/spaces": "https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701"
+    "typescript": "^5.1.6"
   }
 }
