@@ -130,7 +130,7 @@ function ThemeButton() {
     <>
       {mounted ? (
         <button
-          aria-label="light/dark button"
+          aria-label="theme button"
           className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none focus-visible:ring-2"
           onClick={() => {
             setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
