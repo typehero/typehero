@@ -41,7 +41,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/PickleNik/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 74
+        "contributions": 75
     },
     {
         "login": "Hacksore",
@@ -62,7 +62,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/Hacksore/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 68
+        "contributions": 69
     },
     {
         "login": "ggrandi",
@@ -83,7 +83,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/ggrandi/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 21
+        "contributions": 23
     },
     {
         "login": "jhechtf",
@@ -480,6 +480,27 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/thecornisians/repos",
         "events_url": "https://api.github.com/users/thecornisians/events{/privacy}",
         "received_events_url": "https://api.github.com/users/thecornisians/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 1
+    },
+    {
+        "login": "kseikyo",
+        "id": 29212286,
+        "node_id": "MDQ6VXNlcjI5MjEyMjg2",
+        "avatar_url": "https://avatars.githubusercontent.com/u/29212286?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kseikyo",
+        "html_url": "https://github.com/kseikyo",
+        "followers_url": "https://api.github.com/users/kseikyo/followers",
+        "following_url": "https://api.github.com/users/kseikyo/following{/other_user}",
+        "gists_url": "https://api.github.com/users/kseikyo/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/kseikyo/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/kseikyo/subscriptions",
+        "organizations_url": "https://api.github.com/users/kseikyo/orgs",
+        "repos_url": "https://api.github.com/users/kseikyo/repos",
+        "events_url": "https://api.github.com/users/kseikyo/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/kseikyo/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 1
