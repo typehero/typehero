@@ -16,7 +16,12 @@ import Step2Dark1 from '~/assets/images/step2dark1.png';
 import Step2Dark2 from '~/assets/images/step2dark2.png';
 import Step3Light from '~/assets/images/step3light.png';
 import Step3Dark from '~/assets/images/step3dark.png';
-import { ImageCard, CollaborativeEnvironmentCard, ChallengeCreationCard, CuratedTracksCard } from './feature-card';
+import {
+  ImageCard,
+  CollaborativeEnvironmentCard,
+  ChallengeCreationCard,
+  CuratedTracksCard,
+} from './feature-card';
 
 function Features() {
   return (
