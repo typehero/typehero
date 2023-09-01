@@ -3,9 +3,9 @@ import { clsx } from 'clsx';
 import { Mail } from '@repo/ui/icons';
 import { Balancer } from 'react-wrap-balancer';
 import { Button } from '@repo/ui';
-import styles from '~/components/landing/waitlist/waitlist.module.css';
+import styles from './waitlist.module.css';
 
-function Waitlist() {
+export function WaitlistBanner() {
   return (
     <section className={clsx(styles.backdrop, 'relative overflow-hidden')}>
       <div className="container relative grid grid-cols-1 items-center justify-center py-[64px] md:grid-cols-2">
@@ -37,5 +37,3 @@ function Waitlist() {
     </section>
   );
 }
-
-export default Waitlist;

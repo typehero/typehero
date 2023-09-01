@@ -1,8 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { HeroChallengeCard } from '~/components/landing/hero-challenge-card';
 import { useIsMobile } from '~/utils/useIsMobile';
+import { HeroChallengeCard } from './hero-challenge-card';
 
 export function HeroIllustration() {
   const isMobile = useIsMobile();
