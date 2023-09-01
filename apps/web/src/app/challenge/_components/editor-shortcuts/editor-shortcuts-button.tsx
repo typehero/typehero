@@ -19,12 +19,12 @@ export function EditorShortcutsButton() {
           <TooltipTrigger asChild>
             <Command className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" size={20} />
           </TooltipTrigger>
-          <TooltipContent className="px-2 py-1">Settings</TooltipContent>
+          <TooltipContent className="px-2 py-1">Shortcuts</TooltipContent>
         </Tooltip>
       </DialogTrigger>
       <DialogContent className="w-[200px]">
         <DialogHeader>
-          <DialogTitle>Settings</DialogTitle>
+          <DialogTitle>Shortcuts</DialogTitle>
         </DialogHeader>
         <div className="pt-4">
           <EditorShortcuts />
