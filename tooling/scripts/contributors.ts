@@ -20,7 +20,9 @@ async function getOcto() {
   });
 
   // put all avatar urls in a list and exclude bots
-  return response.data.map((contributor) => contributor).filter(contributor => contributor.type !== 'Bot');
+  return response.data
+    .map((contributor) => contributor)
+    .filter((contributor) => contributor.type !== 'Bot');
 }
 
 async function start() {
