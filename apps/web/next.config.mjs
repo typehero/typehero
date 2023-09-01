@@ -1,7 +1,7 @@
 // NOTE: this whole package is bugged and once they fix this we can remove this workaround
 // eslint-disable-next-line import/no-unresolved
 import vercelToolbar from '@vercel/toolbar/plugins/next';
-import bundleAnalyzer from '@next/bundle-analyzer'
+import bundleAnalyzer from '@next/bundle-analyzer';
 
 /** @type {import("next").NextConfig} */
 const nextConfig = {
@@ -40,8 +40,8 @@ const nextConfig = {
 
 const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
-})
+});
 
-const withVercelToolbar = vercelToolbar()
+const withVercelToolbar = vercelToolbar();
 
 export default withBundleAnalyzer(withVercelToolbar(nextConfig));
