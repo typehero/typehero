@@ -73,6 +73,7 @@ function ThemeButton() {
     <>
       {mounted ? (
         <button
+          aria-label="theme button"
           className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none"
           onClick={() => {
             setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
@@ -115,7 +116,7 @@ function LoginButton() {
   return session ? (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none">
+        <button aria-label="profile button" className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none">
           <User className="h-5 w-5" />
         </button>
       </DropdownMenuTrigger>
