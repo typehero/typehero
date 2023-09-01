@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "dotenv -e ../../.env next build",
+    "build": "next build",
     "clean": "rm -rf .next dist node_modules",
     "dev": "dotenv -e ../../.env next dev -- -p 3000",
     "format": "prettier . --check --cache --cache-location=\"node_modules/.cache/prettiercache\"",
@@ -12,8 +12,7 @@
     "lint": "eslint . --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
     "lint:fix": "eslint . --fix --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
     "start": "next start",
-    "typecheck": "tsc --noEmit",
-    "conformance": "spaces conformance"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@hookform/error-message": "^2.0.1",

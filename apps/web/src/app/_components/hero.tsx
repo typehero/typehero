@@ -85,7 +85,7 @@ function Hero() {
                 target="_blank"
                 rel="noreferrer"
                 className="gap-1 md:inline-flex"
-                href="https://github.com/bautistaaa/typehero"
+                href="https://github.com/typehero/typehero"
               >
                 <Github className="h-4 w-4" />
                 GitHub
