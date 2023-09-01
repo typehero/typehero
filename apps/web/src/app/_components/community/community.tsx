@@ -5,7 +5,7 @@ import { clsx } from 'clsx';
 import { type CSSProperties } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { contributors } from '../../../../public/contributors';
-import styles from '~/components/landing/community/community.module.css';
+import styles from './community.module.css';
 import Image from 'next/image';
 
 function Community() {

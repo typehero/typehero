@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
-import Community from '~/components/landing/community/community';
-import Features from '~/components/landing/features';
-import Hero from '~/components/landing/hero';
-import Waitlist from '~/components/landing/waitlist/banner';
 import { Footsies } from '~/components/ui/footsies';
+import Community from './_components/community/community';
+import Features from './_components/features';
+import Hero from './_components/hero';
+import { WaitlistBanner } from './_components/waitlist-banner';
 
 export const metadata: Metadata = {
   title: 'Typehero',
@@ -17,7 +17,7 @@ export default async function Index() {
       <Hero />
       <Features />
       <Community />
-      <Waitlist />
+      <WaitlistBanner />
       <Footsies />
     </>
   );
