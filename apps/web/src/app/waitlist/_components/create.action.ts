@@ -3,7 +3,7 @@
 import { prisma } from '@repo/db';
 import { Resend } from 'resend';
 import { UserSignupEmail } from '@repo/emails/emails/index';
-import { type WaitlistFormSchema } from '~/components/landing/waitlist/waitlist-form';
+import type { WaitlistFormSchema } from './waitlist-form';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 

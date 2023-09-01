@@ -17,8 +17,8 @@ import { useEffect, useState, type MouseEvent } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { z } from 'zod';
 import { TrackChallenge } from '~/app/tracks/_components/track-challenge-card';
+import { Steps } from '~/components/wizard/Steps';
 import { useIsMobile } from '~/utils/useIsMobile';
-import { Steps } from '../wizard/Steps';
 
 type WrapperStyle = MotionStyle & {
   '--x': MotionValue<string>;
