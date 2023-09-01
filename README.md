@@ -1,5 +1,5 @@
 <p align=center >
-  <img alt="Github" height=20 src="https://img.shields.io/github/stars/bautistaaa/typehero?style=&logo=github&logoColor=white&label=Stars&labelColor=%23111&color=%23111" />
+  <img alt="Github" height=20 src="https://img.shields.io/github/stars/typehero/typehero?style=&logo=github&logoColor=white&label=Stars&labelColor=%23111&color=%23111" />
   <a href="https://discord.gg/trashdev" target="_parent">
     <img alt="Discord" height=20 src="https://img.shields.io/discord/796594544980000808?style=&logo=discord&logoColor=white&label=%20&labelColor=%237389D8&color=%237389D8" />
   </a>
