@@ -135,15 +135,13 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
     const mouseDownHandler = (e: MouseEvent | TouchEvent) => {
       if (e instanceof MouseEvent) {
         // Get the current mouse position
-        window.innerWidth > MOBILE_BREAKPOINT ? (x = e.clientX) : (y = e.clientY);
+        isDesktop ? (x = e.clientX) : (y = e.clientY);
       } else if (e instanceof TouchEvent) {
         // Get the current finger position
-        window.innerWidth > MOBILE_BREAKPOINT
-          ? (x = e.touches[0]?.clientX ?? 0)
-          : (y = e.touches[0]?.clientY ?? 0);
+        isDesktop ? (x = e.touches[0]?.clientX ?? 0) : (y = e.touches[0]?.clientY ?? 0);
       }
 
-      window.innerWidth > MOBILE_BREAKPOINT
+      isDesktop
         ? (leftWidth = leftSide.current?.getBoundingClientRect().width!)
         : (topHeight = leftSide.current?.getBoundingClientRect().height!);
 
@@ -173,7 +171,7 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
       document.removeEventListener('touchend', mouseUpHandler);
       document.removeEventListener('mouseup', mouseUpHandler);
 
-      window.innerWidth > MOBILE_BREAKPOINT
+      isDesktop
         ? updateSettings({ width: `${leftRef.offsetWidth}px`, height: settings.height })
         : updateSettings({ width: settings.width, height: `${leftRef.offsetHeight}px` });
     };
