@@ -82,7 +82,7 @@ export default async function Dashboard({ user }: Props) {
               Joined {getRelativeTime(user.createdAt)}
             </p>
             <div className="mb-4 mt-2 w-full text-center text-sm md:w-64 md:text-start">
-              <ReactMarkdown>{user.bio}</ReactMarkdown> 
+              <ReactMarkdown>{user.bio}</ReactMarkdown>
             </div>
 
             {user.userLinks.length > 0 && (
