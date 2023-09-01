@@ -21,11 +21,10 @@ patchedDependencies:
 importers:
 
   .:
-    dependencies:
+    devDependencies:
       '@vercel/spaces':
         specifier: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701
         version: '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701'
-    devDependencies:
       prettier:
         specifier: ^3.0.2
         version: 3.0.2
@@ -129,9 +128,6 @@ importers:
       '@types/react-syntax-highlighter':
         specifier: ^15.5.7
         version: 15.5.7
-      '@vercel/spaces':
-        specifier: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701
-        version: '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701'
       autoprefixer:
         specifier: ^10.4.14
         version: 10.4.14(postcss@8.4.26)
@@ -193,9 +189,6 @@ importers:
       '@types/react':
         specifier: ^18.2.8
         version: 18.2.20
-      '@vercel/spaces':
-        specifier: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701
-        version: '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701'
       typescript:
         specifier: ^5.1.3
         version: 5.1.6
@@ -380,9 +373,6 @@ importers:
       '@types/react-syntax-highlighter':
         specifier: ^15.5.7
         version: 15.5.7
-      '@vercel/spaces':
-        specifier: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701
-        version: '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701'
       autoprefixer:
         specifier: ^10.4.14
         version: 10.4.14(postcss@8.4.26)
@@ -438,9 +428,6 @@ importers:
       '@types/node':
         specifier: ^16.18.11
         version: 16.18.11
-      '@vercel/spaces':
-        specifier: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701
-        version: '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701'
       eslint:
         specifier: ^8.42.0
         version: 8.45.0
@@ -472,9 +459,6 @@ importers:
       '@types/node':
         specifier: ^16.18.11
         version: 16.18.11
-      '@vercel/spaces':
-        specifier: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701
-        version: '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701'
       dotenv-cli:
         specifier: ^7.2.1
         version: 7.2.1
@@ -511,10 +495,6 @@ importers:
       react-email:
         specifier: 1.9.3
         version: 1.9.3
-    devDependencies:
-      '@vercel/spaces':
-        specifier: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701
-        version: '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701'
 
   packages/monaco:
     dependencies:
@@ -564,9 +544,6 @@ importers:
       '@repo/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/config-typescript
-      '@vercel/spaces':
-        specifier: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701
-        version: '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701'
       eslint:
         specifier: ^8.42.0
         version: 8.45.0
@@ -685,9 +662,6 @@ importers:
       '@types/react':
         specifier: ^18.2.20
         version: 18.2.20
-      '@vercel/spaces':
-        specifier: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701
-        version: '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701'
       eslint:
         specifier: ^8.42.0
         version: 8.45.0
@@ -721,28 +695,17 @@ importers:
       typescript:
         specifier: ^5.1.3
         version: 5.1.6
-    devDependencies:
-      '@vercel/spaces':
-        specifier: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701
-        version: '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701'
 
   tooling/config-tailwind:
     devDependencies:
       '@tailwindcss/typography':
         specifier: ^0.5.9
         version: 0.5.9(tailwindcss@3.3.3)
-      '@vercel/spaces':
-        specifier: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701
-        version: '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701'
       tailwindcss:
         specifier: ^3.2.4
         version: 3.3.3
 
-  tooling/config-typescript:
-    devDependencies:
-      '@vercel/spaces':
-        specifier: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701
-        version: '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701'
+  tooling/config-typescript: {}
 
   tooling/scripts:
     devDependencies:
@@ -758,9 +721,6 @@ importers:
       '@types/node-fetch':
         specifier: ^2.6.4
         version: 2.6.4
-      '@vercel/spaces':
-        specifier: https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701
-        version: '@spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701'
       dotenv:
         specifier: ^16.3.1
         version: 16.3.1
@@ -1566,6 +1526,7 @@ packages:
     dependencies:
       eslint: 8.48.0
       eslint-visitor-keys: 3.4.1
+    dev: true
 
   /@eslint-community/regexpp@4.5.1:
     resolution: {integrity: sha512-Z5ba73P98O1KUYCCJTUeVpja9RcGoMdncZ6T49FCUl2lN38JtCJ+3WgIDBv0AuY4WChU5PmtJmOCTlN6FZTFKQ==}
@@ -1599,6 +1560,7 @@ packages:
   /@eslint/js@8.48.0:
     resolution: {integrity: sha512-ZSjtmelB7IJfWD2Fvb7+Z+ChTIKWq6kjda95fLcQKNS5aheVHn4IkfgRQE3sIIzTcSLwLcLZUD9UBt+V7+h+Pw==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    dev: true
 
   /@faker-js/faker@8.0.2:
     resolution: {integrity: sha512-Uo3pGspElQW91PCvKSIAXoEgAUlRnH29sX2/p89kg7sP1m2PzCufHINd0FhTXQf6DYGiUlVncdSPa2F9wxed2A==}
@@ -5009,7 +4971,7 @@ packages:
     dev: false
 
   /concat-map@0.0.1:
-    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
+    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
   /condense-newlines@0.2.1:
     resolution: {integrity: sha512-P7X+QL9Hb9B/c8HI5BFFKmjgBu2XpQuF98WZ9XkO+dBGgk5XgwiQz7o1SmpglNWId3581UcS0SFAWfoIhMHPfg==}
@@ -6257,6 +6219,7 @@ packages:
       text-table: 0.2.0
     transitivePeerDependencies:
       - supports-color
+    dev: true
 
   /espree@9.6.1:
     resolution: {integrity: sha512-oruZaFkjorTpF32kDSI5/75ViwGeZginGGy2NoOSg3Q9bnwlnmDm4HLnkl0RE3n+njDXR037aY1+x58Z/zFdwQ==}
@@ -7695,6 +7658,7 @@ packages:
 
   /mdn-data@2.1.0:
     resolution: {integrity: sha512-dbAWH6A+2NGuVJlQFrTKHJc07Vqn5frnhyTOGz+7BsK7V2hHdoBcwoiyV3QVhLHYpM/zqe2OSUn5ZWbVXLBB8A==}
+    dev: true
 
   /memoize-one@6.0.0:
     resolution: {integrity: sha512-rkpe71W0N0c0Xz6QD0eJETuWAJGnJ9afsl1srmwPrI+yBCkge5EycXXbYRyvL29zZVUWQCY7InPRCv3GDXuZNw==}
@@ -8798,6 +8762,7 @@ packages:
   /progress@2.0.3:
     resolution: {integrity: sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==}
     engines: {node: '>=0.4.0'}
+    dev: true
 
   /prop-types@15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
@@ -10716,3 +10681,4 @@ packages:
       progress: 2.0.3
     transitivePeerDependencies:
       - supports-color
+    dev: true

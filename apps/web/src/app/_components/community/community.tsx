@@ -75,7 +75,7 @@ function Community() {
                 <a
                   target="_blank"
                   rel="noreferrer"
-                  href="https://github.com/bautistaaa/typehero/blob/main/CONTRIBUTING.md"
+                  href="https://github.com/typehero/typehero/blob/main/CONTRIBUTING.md"
                   className="group flex items-center gap-2 rounded-xl bg-neutral-200 px-3 py-2 text-sm font-bold duration-300 hover:bg-black hover:text-white dark:bg-neutral-800 dark:hover:bg-white dark:hover:text-black"
                 >
                   <svg
