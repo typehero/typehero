@@ -115,7 +115,7 @@ export function SettingsForm() {
               <Select defaultValue={field.value} onValueChange={field.onChange}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a font size" />
+                    <SelectValue placeholder="Select Key Binding Style" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
