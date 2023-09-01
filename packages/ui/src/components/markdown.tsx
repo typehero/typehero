@@ -73,7 +73,7 @@ export function Markdown({ children, className }: { children: string; className?
               {String(children).replace(/\n$/, '')}
             </SyntaxHighlighter>
           ) : (
-            <code className="rounded-md border border-gray-700 bg-neutral-200 p-1 font-mono dark:border-gray-700 dark:bg-black">
+            <code className="rounded-md border border-gray-700 bg-neutral-200 p-1 font-mono dark:border-gray-300 dark:bg-black">
               {children}
             </code>
           );
