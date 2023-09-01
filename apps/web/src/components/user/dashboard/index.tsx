@@ -82,8 +82,6 @@ export default async function Dashboard({ user }: Props) {
               Joined {getRelativeTime(user.createdAt)}
             </p>
             <div className="mb-4 mt-2 w-full text-center text-sm md:w-64 md:text-start">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima temporibus maiores
-              nesciunt hic dolores aspernatur corrupti laboriosam consectetur. Vitae, consectetur?
               <ReactMarkdown>{user.bio}</ReactMarkdown>
             </div>
 
