@@ -116,7 +116,7 @@ export function WaitlistForm() {
             name="intention"
             render={({ field }) => (
               <FormItem>
-                <Select defaultValue={field.value} onValueChange={field.onChange}>
+                <Select defaultValue={field.value} onValueChange={field.onChange} {...field}>
                   <FormControl>
                     <SelectTrigger
                       className={clsx({
