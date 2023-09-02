@@ -51,6 +51,31 @@ module.exports = {
           hovered: 'hsl(var(--card-hovered))',
           foreground: 'hsl(var(--card-foreground))',
         },
+
+        difficultyBeginner: 'var(--difficulty-beginner)',
+        difficultyEasy: 'var(--difficulty-easy)',
+        difficultyMedium: 'var(--difficulty-medium)',
+        difficultyHard: 'var(--difficulty-hard)',
+        difficultyExtreme: 'var(--difficulty-extreme)',
+
+        difficultyBeginnerDark: 'var(--difficulty-beginner-dark)',
+        difficultyEasyDark: 'var(--difficulty-easy-dark)',
+        difficultyMediumDark: 'var(--difficulty-medium-dark)',
+        difficultyHardDark: 'var(--difficulty-hard-dark)',
+        difficultyExtremeDark: 'var(--difficulty-extreme-dark)',
+      },
+      boxShadow: {
+        beginner: '0 0 1rem -0.15rem var(--difficulty-beginner)',
+        easy: '0 0 1rem -0.15rem var(--difficulty-easy)',
+        medium: '0 0 1rem -0.15rem var(--difficulty-medium)',
+        hard: '0 0 1rem -0.15rem var(--difficulty-hard)',
+        extreme: '0 0 1rem -0.15rem var(--difficulty-extreme)',
+
+        beginnerDark: '0 0 1rem -0.15rem var(--difficulty-beginner-dark)',
+        easyDark: '0 0 1rem -0.15rem var(--difficulty-easy-dark)',
+        mediumDark: '0 0 1rem -0.15rem var(--difficulty-medium-dark)',
+        hardDark: '0 0 1rem -0.15rem var(--difficulty-hard-dark)',
+        extremeDark: '0 0 1rem -0.15rem var(--difficulty-extreme-dark)',
       },
       borderRadius: {
         lg: 'var(--radius)',

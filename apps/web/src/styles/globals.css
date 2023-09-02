@@ -37,6 +37,18 @@
     --ring: 240 5% 64.9%;
 
     --radius: 0.5rem;
+
+    --difficulty-beginner: #85c9e9;
+    --difficulty-easy: #008140;
+    --difficulty-medium: #c48e03;
+    --difficulty-hard: #f87171;
+    --difficulty-extreme: #dc2626;
+
+    --difficulty-beginner-dark: #85c9e9;
+    --difficulty-easy-dark: #30c730;
+    --difficulty-medium-dark: #c48e03;
+    --difficulty-hard-dark: #f87171;
+    --difficulty-extreme-dark: #dc2626;
   }
 
   .dark {

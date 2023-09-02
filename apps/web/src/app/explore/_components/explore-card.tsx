@@ -20,24 +20,24 @@ interface ExploreCardProps {
 
 const BORDERS_BY_DIFFICULTY = {
   BEGINNER:
-    'dark:hover:border-pink-300 hover:border-pink-500 dark:group-focus:border-pink-300 group-focus:border-pink-500',
-  EASY: 'dark:hover:border-green-300 hover:border-green-500 dark:group-focus:border-green-300 group-focus:border-green-500',
+    'dark:hover:border-difficultyBeginnerDark hover:border-difficultyBeginner dark:group-focus:border-difficultyBeginnerDark group-focus:border-difficultyBeginner',
+  EASY: 'dark:hover:border-difficultyEasyDark hover:border-difficultyEasy dark:group-focus:border-difficultyEasyDark group-focus:border-difficultyEasy',
   MEDIUM:
-    'dark:hover:border-yellow-300 hover:border-yellow-500 dark:group-focus:border-yellow-300 group-focus:border-yellow-500',
-  HARD: 'dark:hover:border-red-300 hover:border-red-500 dark:group-focus:border-red-300 group-focus:border-red-500',
+    'dark:hover:border-difficultyMediumDark hover:border-difficultyMedium dark:group-focus:border-difficultyMediumDark group-focus:border-difficultyMedium',
+  HARD: 'dark:hover:border-difficultyHardDark hover:border-difficultyHard dark:group-focus:border-difficultyHardDark group-focus:border-difficultyHard',
   EXTREME:
-    'dark:hover:border-orange-300 hover:border-orange-500 dark:group-focus:border-orange-300 group-focus:border-orange-500',
+    'dark:hover:border-difficultyExtremeDark hover:border-difficultyExtreme dark:group-focus:border-difficultyExtremeDark group-focus:border-difficultyExtreme',
 };
 
 const SHADOWS_BY_DIFFICULTY = {
   BEGINNER:
-    'hover:shadow-[0_0_1rem_-0.15rem_#f9a8d4] group-focus:shadow-[0_0_1rem_-0.15rem_#f9a8d4]',
-  EASY: 'hover:shadow-[0_0_1rem_-0.15rem_#86efac] group-focus:shadow-[0_0_1rem_-0.15rem_#86efac]',
+    'hover:shadow-beginner group-focus:shadow-beginner dark:hover:shadow-beginnerDark dark:group-focus:shadow-beginnerDark',
+  EASY: 'hover:shadow-easy group-focus:shadow-easy dark:hover:shadow-easyDark dark:group-focus:shadow-easyDark',
   MEDIUM:
-    'hover:shadow-[0_0_1rem_-0.15rem_#ca8a04] group-focus:shadow-[0_0_1rem_-0.15rem_#fde047] dark:hover:shadow-[0_0_1rem_-0.15rem_#fde047]',
-  HARD: 'hover:shadow-[0_0_1rem_-0.15rem_#fca5a5] group-focus:shadow-[0_0_1rem_-0.15rem_#fca5a5]',
+    'hover:shadow-medium group-focus:shadow-medium dark:hover:shadow-mediumDark dark:group-focus:shadow-mediumDark',
+  HARD: 'hover:shadow-hard group-focus:shadow-hard dark:hover:shadow-hardDark dark:group-focus:shadow-hardDark',
   EXTREME:
-    'hover:shadow-[0_0_1rem_-0.15rem_#fdba74] group-focus:shadow-[0_0_1rem_-0.15rem_#fdba74]',
+    'hover:shadow-extreme group-focus:shadow-extreme dark:hover:shadow-extremeDark dark:group-focus:shadow-extremeDark',
 };
 
 export function ExploreCard({ challenge }: ExploreCardProps) {
@@ -50,32 +50,32 @@ export function ExploreCard({ challenge }: ExploreCardProps) {
     >
       {challenge.difficulty === 'BEGINNER' && (
         <>
-          <Circle className="absolute -right-4 -top-8 h-24 w-24 origin-top-right stroke-[0.5] text-black/10 duration-300 group-hover/card:scale-90 group-hover/card:text-pink-500/80 dark:text-white/10 dark:group-hover/card:text-pink-300/80" />
-          <Circle className="absolute -right-4 -top-8 h-32 w-32 origin-top-right stroke-[0.4] text-black/10 duration-500 group-hover/card:scale-90 group-hover/card:text-pink-500/80 dark:text-white/10 dark:group-hover/card:text-pink-300/80" />
+          <Circle className="group-hover/card:text-difficultyBeginner dark:group-hover/card:text-difficultyBeginnerDark absolute -right-4 -top-8 h-24 w-24 origin-top-right stroke-[0.5] text-black/10 duration-300 group-hover/card:scale-90 dark:text-white/10" />
+          <Circle className="group-hover/card:text-difficultyBeginner dark:group-hover/card:text-difficultyBeginnerDark absolute -right-4 -top-8 h-32 w-32 origin-top-right stroke-[0.4] text-black/10 duration-500 group-hover/card:scale-90 dark:text-white/10" />
         </>
       )}
       {challenge.difficulty === 'EASY' && (
         <>
-          <Diamond className="absolute -right-5 -top-10 h-24 w-24 origin-top-right stroke-[0.66] text-black/10 duration-300 group-hover/card:rotate-6 group-hover/card:scale-90 group-hover/card:text-green-400/90 dark:text-white/10 dark:group-hover/card:text-green-300/90" />
-          <Diamond className="absolute -right-6 -top-12 h-36 w-36 rotate-12 stroke-[0.44] text-black/10 duration-500 group-hover/card:-translate-y-2 group-hover/card:translate-x-3 group-hover/card:rotate-6 group-hover/card:scale-90 group-hover/card:text-green-400/90 dark:text-white/10 dark:group-hover/card:text-green-300/90" />
+          <Diamond className="group-hover/card:text-difficultyEasy dark:group-hover/card:text-difficultyEasyDark absolute -right-5 -top-10 h-24 w-24 origin-top-right stroke-[0.66] text-black/10 duration-300 group-hover/card:rotate-6 group-hover/card:scale-90 dark:text-white/10" />
+          <Diamond className="group-hover/card:text-difficultyEasy dark:group-hover/card:text-difficultyEasyDark absolute -right-6 -top-12 h-36 w-36 rotate-12 stroke-[0.44] text-black/10 duration-500 group-hover/card:-translate-y-2 group-hover/card:translate-x-3 group-hover/card:rotate-6 group-hover/card:scale-90 dark:text-white/10" />
         </>
       )}
       {challenge.difficulty === 'MEDIUM' && (
         <>
-          <Triangle className="absolute -right-5 -top-5 h-16 w-16 rotate-0 stroke-[0.75] text-black/10 duration-500 group-hover/card:-translate-x-10 group-hover/card:translate-y-10 group-hover/card:rotate-[90deg] group-hover/card:text-yellow-500 dark:text-white/10 dark:group-hover/card:text-yellow-300/80" />
-          <Triangle className="absolute -right-14 -top-16 h-36 w-36 rotate-12 stroke-[0.4] text-black/10 duration-300 group-hover/card:translate-x-3 group-hover/card:rotate-[30deg] group-hover/card:scale-50 group-hover/card:stroke-[0.66] group-hover/card:text-yellow-500 dark:text-white/10 dark:group-hover/card:text-yellow-300/80" />
+          <Triangle className="group-hover/card:text-difficultyMedium dark:group-hover/card:text-difficultyMediumDark absolute -right-5 -top-5 h-16 w-16 rotate-0 stroke-[0.75] text-black/10 duration-500 group-hover/card:-translate-x-10 group-hover/card:translate-y-10 group-hover/card:rotate-[90deg] dark:text-white/10" />
+          <Triangle className="group-hover/card:text-difficultyMedium dark:group-hover/card:text-difficultyMediumDark absolute -right-14 -top-16 h-36 w-36 rotate-12 stroke-[0.4] text-black/10 duration-300 group-hover/card:translate-x-3 group-hover/card:rotate-[30deg] group-hover/card:scale-50 group-hover/card:stroke-[0.66] dark:text-white/10" />
         </>
       )}
       {challenge.difficulty === 'HARD' && (
         <>
-          <Plus className="absolute -right-4 -top-8 h-24 w-24 stroke-[0.5] text-black/10 duration-300 group-hover/card:scale-0 group-hover/card:text-red-500/80 dark:text-white/10 dark:group-hover/card:text-red-300/80" />
-          <Plus className="absolute -right-4 -top-8 h-32 w-32 stroke-[0.5] text-black/10 duration-500 group-hover/card:-translate-y-5 group-hover/card:translate-x-9 group-hover/card:-rotate-90 group-hover/card:scale-75 group-hover/card:text-red-500/80 dark:text-white/10 dark:group-hover/card:text-red-300/80" />
+          <Plus className="group-hover/card:text-difficultyHard dark:group-hover/card:text-difficultyHardDark absolute -right-4 -top-8 h-24 w-24 stroke-[0.5] text-black/10 duration-300 group-hover/card:scale-0 dark:text-white/10" />
+          <Plus className="group-hover/card:text-difficultyHard dark:group-hover/card:text-difficultyHardDark absolute -right-4 -top-8 h-32 w-32 stroke-[0.5] text-black/10 duration-500 group-hover/card:-translate-y-5 group-hover/card:translate-x-9 group-hover/card:-rotate-90 group-hover/card:scale-75 dark:text-white/10" />
         </>
       )}
       {challenge.difficulty === 'EXTREME' && (
         <>
-          <Sparkle className="absolute -right-4 -top-10 h-24 w-24 stroke-[0.5] text-black/10 duration-500 group-hover/card:-translate-x-4 group-hover/card:translate-y-10 group-hover/card:-rotate-[125deg] group-hover/card:text-orange-500/80 dark:text-white/10 dark:group-hover/card:text-orange-300/90" />
-          <Sparkle className="absolute -right-14 -top-24 h-48 w-48 origin-top-right -rotate-3 stroke-[0.33] text-black/10 duration-300 group-hover/card:scale-50 group-hover/card:text-orange-500/80 dark:text-white/10 dark:group-hover/card:text-orange-300/90" />
+          <Sparkle className="group-hover/card:text-difficultyExtreme dark:group-hover/card:text-difficultyExtremeDark absolute -right-4 -top-10 h-24 w-24 stroke-[0.5] text-black/10 duration-500 group-hover/card:-translate-x-4 group-hover/card:translate-y-10 group-hover/card:-rotate-[125deg] dark:text-white/10" />
+          <Sparkle className="group-hover/card:text-difficultyExtreme dark:group-hover/card:text-difficultyExtremeDark absolute -right-14 -top-24 h-48 w-48 origin-top-right -rotate-3 stroke-[0.33] text-black/10 duration-300 group-hover/card:scale-50 dark:text-white/10" />
         </>
       )}
       <CardHeader className="relative flex flex-col items-start gap-1 py-5">
