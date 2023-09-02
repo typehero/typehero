@@ -113,7 +113,7 @@ function Features() {
                 'pointer-events-none w-[90%] border border-zinc-300 dark:border-zinc-700 rounded-t-2xl transition-all duration-500 overflow-hidden',
                 'left-[5%] top-[50%] md:top-[30%] md:left-1/2 md:left-[35px]',
               )}
-              description="Craft your own coding challenges to share with the Typehero community"
+              description="Craft your own coding challenges to share with the TypeHero community"
               bgClass="lg:bg-gradient-to-tr"
               image={{
                 step1dark1: Step1Dark1,

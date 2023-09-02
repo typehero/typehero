@@ -13,9 +13,9 @@ const resend = new Resend(process.env.RESEND_API_KEY);
  */
 export const sendUserSignupEmail = async (to: string) => {
   const data = await resend.emails.send({
-    from: 'Typehero <noreply@email.typehero.dev>',
+    from: 'TypeHero <noreply@email.typehero.dev>',
     to: [to],
-    subject: '🔥 Thanks for signing up to Typehero!',
+    subject: '🔥 Thanks for signing up to TypeHero!',
     react: UserSignupEmail(),
   });
 
