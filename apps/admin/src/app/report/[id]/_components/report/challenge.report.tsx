@@ -1,8 +1,8 @@
-import { ThumbsUp } from '@repo/ui/icons';
 import { Markdown, Text, UserBadge } from '@repo/ui';
+import { ThumbsUp } from '@repo/ui/icons';
 import Link from 'next/link';
-import type { ReportWithInfo } from '../../report.action';
 import { getChallenge } from '~/app/_components/admin.actions';
+import type { ReportWithInfo } from '../../report.action';
 
 export interface ChallengeReportProps {
   report: NonNullable<ReportWithInfo>;

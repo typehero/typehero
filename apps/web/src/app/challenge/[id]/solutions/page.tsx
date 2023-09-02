@@ -1,7 +1,7 @@
 import type { Session } from '@repo/auth/server';
-import { notFound } from 'next/navigation';
 import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
+import { notFound } from 'next/navigation';
 import { Solutions } from './_components';
 import { getChallengeRouteData } from '../getChallengeRouteData';
 import { buildMetaForChallenge } from '~/app/metadata';
@@ -57,7 +57,11 @@ export async function getSolutionsData(challengeId: string, session: Session | n
           },
         ],
         include: {
-          user: true,
+          user: {
+            select: {
+              name: true,
+            },
+          },
           _count: {
             select: { vote: true, solutionComment: true },
           },
