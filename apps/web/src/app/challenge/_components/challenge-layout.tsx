@@ -5,15 +5,20 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useFullscreenSettingsStore } from './fullscreen';
 
+const MOBILE_BREAKPOINT = 1025;
+const LEFT_PANEL_BREAKPOINT = 500;
+const COLLAPSE_BREAKPOINT = 300;
+const DEFAULT_WIDTH_PX = `${LEFT_PANEL_BREAKPOINT}px`;
+
 export const DEFAULT_SETTINGS = {
-  width: '500px',
+  width: DEFAULT_WIDTH_PX,
   height: '300px',
 };
 
 type Settings = typeof DEFAULT_SETTINGS;
 interface State {
   settings: Settings;
-  updateSettings: (settings: Partial<Settings>) => void;
+  updateSettings: (settings: Settings) => void;
 }
 
 export const useLayoutSettingsStore = create<State>()(
@@ -33,6 +38,20 @@ export interface ChallengeLayoutProps {
   right: ReactNode;
 }
 
+const isDesktop = window.innerWidth > MOBILE_BREAKPOINT;
+
+const collapseLeftPanel = (element: HTMLDivElement) => {
+  element.style.width = '0%';
+  element.style.minWidth = '0%';
+  element.style.opacity = '0%';
+};
+
+const expandLeftPanel = (element: HTMLDivElement) => {
+  element.style.width = DEFAULT_WIDTH_PX;
+  element.style.minWidth = DEFAULT_WIDTH_PX;
+  element.style.opacity = '100%';
+};
+
 export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
   const parent = useRef<HTMLDivElement>(null);
   const resizer = useRef<HTMLDivElement>(null);
@@ -40,20 +59,23 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
   const rightSide = useRef<HTMLDivElement>(null);
   const { settings, updateSettings } = useLayoutSettingsStore();
   const { fssettings, updateFSSettings } = useFullscreenSettingsStore();
+  const leftStyle = isDesktop
+    ? { width: settings.width, minWidth: LEFT_PANEL_BREAKPOINT }
+    : { height: settings.height };
 
   useEffect(() => {
-    if (!leftSide.current || !rightSide.current || !resizer.current) {
-      return;
-    }
-
     const ref = resizer.current;
     const leftRef = leftSide.current;
     const rightRef = rightSide.current;
 
-    // resize width on desktop, height on mobile
-    window.innerWidth > 1025
-      ? (leftRef.style.width = settings.width)
-      : (leftRef.style.height = settings.height);
+    if (!leftRef || !rightRef || !ref) return;
+
+    // initialize
+    if (isDesktop) {
+      leftRef.style.width = settings.width;
+    } else {
+      leftRef.style.height = settings.height;
+    }
 
     // The current position of mouse
     let x = 0;
@@ -65,14 +87,18 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
     const mouseMoveHandler = (e: MouseEvent | TouchEvent) => {
       let dx = 0;
       let dy = 0;
+      let currX = 0;
+
       if (e instanceof MouseEvent) {
         // How far the mouse has been moved
         dx = e.clientX - x;
         dy = e.clientY - y;
+        currX = e.clientX;
       } else if (e instanceof TouchEvent) {
         // How far the finger has been moved
         dx = e.changedTouches[0]?.clientX ? e.changedTouches[0].clientX - x : 0;
         dy = e.changedTouches[0]?.clientY ? e.changedTouches[0].clientY - y : 0;
+        currX = e.changedTouches[0]?.clientX ? e.changedTouches[0]?.clientX : 0;
       }
 
       const divideByW = parent.current?.getBoundingClientRect().width!;
@@ -80,16 +106,26 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
       const newLeftWidth = ((leftWidth + dx) * 100) / divideByW;
       const newTopHeight = ((topHeight + dy) * 100) / divideByH;
 
-      window.innerWidth > 1025
-        ? (leftRef.style.width = `${newLeftWidth}%`)
-        : (leftRef.style.height = `${newTopHeight}%`);
+      if (isDesktop) {
+        if (currX <= COLLAPSE_BREAKPOINT) {
+          collapseLeftPanel(leftRef);
+        } else if (leftRef.style.width === '0%') {
+          expandLeftPanel(leftRef);
+        } else {
+          const pixelWidth = (newLeftWidth / 100) * divideByW;
+          if (pixelWidth < LEFT_PANEL_BREAKPOINT) {
+            leftRef.style.width = `${(LEFT_PANEL_BREAKPOINT / divideByW) * 100}%`;
+          } else {
+            leftRef.style.width = `${newLeftWidth}%`;
+          }
+        }
+      } else {
+        leftRef.style.height = `${newTopHeight}%`;
+      }
 
       // prevent cursor from blinking when you move mouse too fast (leaving resizer area)
-      window.innerWidth > 1025
-        ? (document.body.style.cursor = 'col-resize')
-        : (document.body.style.cursor = 'row-resize');
+      document.body.style.cursor = isDesktop ? 'col-resize' : 'row-resize';
 
-      // prevent unexpected text selection while resizing
       rightRef.style.pointerEvents = 'none';
       leftRef.style.pointerEvents = 'none';
       rightRef.style.userSelect = 'none';
@@ -99,15 +135,13 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
     const mouseDownHandler = (e: MouseEvent | TouchEvent) => {
       if (e instanceof MouseEvent) {
         // Get the current mouse position
-        window.innerWidth > 1025 ? (x = e.clientX) : (y = e.clientY);
+        isDesktop ? (x = e.clientX) : (y = e.clientY);
       } else if (e instanceof TouchEvent) {
         // Get the current finger position
-        window.innerWidth > 1025
-          ? (x = e.touches[0]?.clientX ?? 0)
-          : (y = e.touches[0]?.clientY ?? 0);
+        isDesktop ? (x = e.touches[0]?.clientX ?? 0) : (y = e.touches[0]?.clientY ?? 0);
       }
 
-      window.innerWidth > 1025
+      isDesktop
         ? (leftWidth = leftSide.current?.getBoundingClientRect().width!)
         : (topHeight = leftSide.current?.getBoundingClientRect().height!);
 
@@ -137,55 +171,57 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
       document.removeEventListener('touchend', mouseUpHandler);
       document.removeEventListener('mouseup', mouseUpHandler);
 
-      window.innerWidth > 1025
+      isDesktop
         ? updateSettings({ width: `${leftRef.offsetWidth}px`, height: settings.height })
         : updateSettings({ width: settings.width, height: `${leftRef.offsetHeight}px` });
     };
 
     // handle window resize
     const resizeHandler = () => {
-      window.innerWidth > 1025
-        ? ((leftRef.style.width = settings.width), (leftRef.style.height = 'auto'))
-        : ((leftRef.style.height = settings.height), (leftRef.style.width = 'auto'));
+      if (isDesktop) {
+        leftRef.style.width = settings.width;
+        leftRef.style.height = 'auto';
+      } else {
+        leftRef.style.height = settings.height;
+        leftRef.style.width = 'auto';
+      }
+    };
+
+    const handleResizerDoubleClick = () => {
+      if (!leftSide.current) return;
+
+      if (parseInt(leftSide.current.style.width) < LEFT_PANEL_BREAKPOINT) {
+        expandLeftPanel(leftSide.current);
+        updateSettings({ width: DEFAULT_WIDTH_PX, height: settings.height });
+      } else {
+        collapseLeftPanel(leftSide.current);
+        updateSettings({ width: '0px', height: settings.height });
+      }
     };
 
     window.addEventListener('resize', resizeHandler);
     ref.addEventListener('mousedown', mouseDownHandler);
     ref.addEventListener('touchstart', mouseDownHandler, false);
+    ref.addEventListener('dblclick', handleResizerDoubleClick);
 
     return () => {
       window.removeEventListener('resize', resizeHandler);
       ref.removeEventListener('mousedown', mouseDownHandler);
       ref.removeEventListener('touchstart', mouseDownHandler);
+      ref.removeEventListener('dblclick', handleResizerDoubleClick);
     };
   }, [settings, updateSettings]);
-
-  // TODO apply different logic on resizer ref on top if fssettings.isFullscreen
-  // useEffect(() => {
-  //   if (!parent.current || !leftSide.current) {
-  //     return;
-  //   }
-  //   const parentRef = parent.current;
-  //   const leftRef = leftSide.current;
-  //   if (fssettings.isFullscreen) {
-  //     leftRef.classList.remove('lg:min-w-[500px]');
-  //     leftRef.style.width = '0%';
-  //     parentRef.style.height = '100vh';
-  //   } else {
-  //     leftRef.classList.add('lg:min-w-[500px]');
-  //     parentRef.style.height = 'calc(100dvh - 3.5rem)';
-  //   }
-  // }, [fssettings, updateFSSettings]);
 
   return (
     <div
       className="flex flex-col px-4 pb-4 lg:flex-row"
       ref={parent}
-      style={{ height: fssettings.isFullscreen ? '100vh' : 'calc(100dvh - 3.5rem)' }}
+      style={{ height: fssettings.isFullscreen ? '100vh' : 'calc(100vh - 3.5rem)' }}
     >
       <div
-        className="min-h-[318px] w-full overflow-hidden rounded-l-2xl rounded-r-xl border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 lg:min-w-[500px]"
+        className="min-h-[318px] w-full overflow-hidden rounded-l-2xl rounded-r-xl border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800"
         ref={leftSide}
+        style={{ ...leftStyle }}
       >
         {left}
       </div>

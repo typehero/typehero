@@ -82,7 +82,12 @@ export async function getPaginatedComments({
     },
     orderBy: orderBy(sortKey, sortOrder),
     include: {
-      user: true,
+      user: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
       _count: {
         select: {
           replies: true,

@@ -1,9 +1,10 @@
 import { NextResponse, type NextRequest } from 'next/server';
 
-const STAGING_DOMAIN = 'web-staging';
 export function middleware(req: NextRequest) {
-  // skip blocking the request if we are on staging or local
-  if (!process.env.VERCEL_ENV || process.env.VERCEL_URL?.includes(STAGING_DOMAIN)) {
+  const { VERCEL_ENV: vercelEnv, STAGING: staging = false } = process.env;
+
+  // skip blocking the request if local or preview or staging
+  if (!vercelEnv || staging) {
     return NextResponse.next();
   }
 
