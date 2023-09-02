@@ -19,7 +19,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html suppressHydrationWarning lang="en">
       <head>
-        <title>Type Hero</title>
         <meta
           content="Level up your typescript skills with interactive exercises"
           name="description"
@@ -29,9 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${inter.className} flex flex-col`}>
         <Providers>
           <Navigation />
-          <main className="flex-1">
-            <div className="h-full">{children}</div>
-          </main>
+          <main className="flex-1">{children}</main>
           <Toaster />
         </Providers>
         <Analytics />

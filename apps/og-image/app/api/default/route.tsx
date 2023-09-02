@@ -8,7 +8,7 @@ export async function GET() {
   return new ImageResponse(
     (
       <div style={{ display: 'flex' }}>
-        <img src={`${HOST}/og.png`} alt="OG" />
+        <img src={`${HOST}/og.png?cache-bust=${new Date().getDate()}`} alt="OG" />
       </div>
     ),
     {

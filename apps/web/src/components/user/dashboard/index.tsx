@@ -10,11 +10,10 @@ import {
   CardHeader,
   CardTitle,
   Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-  Button,
+  VerticalTabsContent,
+  VerticalTabsTrigger,
   MagicIcon,
+  VerticalTabsList,
 } from '@repo/ui';
 import { Overview } from './overview';
 import { InProgressTab } from './in-progress-tab';
@@ -22,6 +21,7 @@ import { SolutionsTab } from './solutions-tab';
 import UserHeader from './user-header';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { stripProtocolAndWWW } from '~/utils/stringUtils';
+import { Bookmark, ChevronRightSquare, MessagesSquare, Play, Settings } from 'lucide-react';
 
 interface Props {
   // TODO: how do do this union type with just letting prisma halp
@@ -66,128 +66,120 @@ export default async function Dashboard({ user }: Props) {
 
   return (
     <div className="container">
-      <div className="mt-10 flex-1 space-y-4">
-        <div className="flex gap-4">
-          <div className="pace-x-2 flex">
-            <Image
-              alt="user avatar"
-              className="rounded-3xl"
-              height="100"
-              src={user.image ?? '/avatar.jpeg'}
-              width="100"
+      {/* // TODO: GFI: make each page a subroute, put settings into this same layout */}
+      <Tabs className="flex flex-col gap-8 py-8 md:flex-row" defaultValue="in-progress">
+        <VerticalTabsList>
+          <div className="mb-2 flex flex-col items-center md:items-start">
+            <div
+              className="mb-10 h-32 w-32 rounded-3xl bg-cover bg-center bg-no-repeat md:h-64 md:w-64"
+              style={{ backgroundImage: `url(${user.image ?? '/avatar.jpeg'})` }}
             />
-          </div>
-          <div className="flex w-full justify-between">
-            <div>
-              <UserHeader user={user} isOwnProfile={session?.user.id === user.id} />
-              <p
-                className="text-sm italic tracking-tight"
-                title={`Joined ${user.createdAt.toString()}`}
-              >
-                Joined {getRelativeTime(user.createdAt)}
-              </p>
+            <UserHeader user={user} isOwnProfile={session?.user.id === user.id} />
+            <p
+              className="text-sm italic tracking-tight text-neutral-500"
+              title={`Joined ${user.createdAt.toString()}`}
+            >
+              Joined {getRelativeTime(user.createdAt)}
+            </p>
+            <div className="mb-4 mt-2 w-full text-center text-sm md:w-64 md:text-start">
+              <ReactMarkdown>{user.bio}</ReactMarkdown>
             </div>
+
+            {user.userLinks.length > 0 && (
+              <div className="flex flex-col gap-2">
+                {user.userLinks
+                  .filter((item) => item.url !== '')
+                  .map((link) => (
+                    <div className="flex items-center gap-2" key={link.id}>
+                      <MagicIcon url={link.url} />
+                      <a
+                        className="text-xs text-neutral-400 hover:text-neutral-600 dark:text-neutral-600 dark:hover:text-neutral-400"
+                        href={link.url}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        {stripProtocolAndWWW(link.url)}
+                      </a>
+                    </div>
+                  ))}
+              </div>
+            )}
+          </div>
+          <div className="flex gap-4 pr-6 md:flex-col">
+            <VerticalTabsTrigger
+              className="flex items-center justify-center gap-3 px-2 md:justify-normal md:px-3"
+              value="in-progress"
+            >
+              <Play className="h-4 w-4" />
+              <span className="hidden md:block">In-Progress</span>
+            </VerticalTabsTrigger>
+            <VerticalTabsTrigger
+              className="flex items-center justify-center gap-3 px-2 md:justify-normal md:px-3"
+              value="solutions"
+            >
+              <ChevronRightSquare className="h-4 w-4" />
+              <span className="hidden md:block">Solutions</span>
+            </VerticalTabsTrigger>
+            <VerticalTabsTrigger
+              className="flex items-center justify-center gap-3 px-2 md:justify-normal md:px-3"
+              disabled
+              value="bookmarks"
+            >
+              <Bookmark className="h-4 w-4" />
+              <span className="hidden md:block">Bookmarks</span>
+            </VerticalTabsTrigger>
+            <VerticalTabsTrigger
+              className="flex items-center justify-center gap-3 px-2 md:justify-normal md:px-3"
+              disabled
+              value="comments"
+            >
+              <MessagesSquare className="h-4 w-4" />
+              <span className="hidden md:block">Comments</span>
+            </VerticalTabsTrigger>
             <div>
               {session?.user.id === user.id && (
-                <Link href="/settings">
-                  <Button variant="outline">Edit Profile</Button>
+                <Link
+                  href="/settings"
+                  className="border-border dark:border-ring data-[state=active]:bg-border ring-offset-background focus-visible:ring-ring data-[state=active]:text-foreground flex items-center justify-center gap-3 whitespace-nowrap rounded-xl border px-1.5 py-1.5 text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm md:justify-normal md:px-3"
+                >
+                  <Settings width={18} height={18} />
+                  <span className="hidden md:block">Settings</span>
                 </Link>
               )}
             </div>
           </div>
-        </div>
-
-        <div className="max-w-md">
-          <ReactMarkdown>{user.bio}</ReactMarkdown>
-        </div>
-
-        {user.userLinks.length > 0 && (
-          <div>
-            {user.userLinks
-              .filter((item) => item.url !== '')
-              .map((link) => (
-                <div className="flex gap-2" key={link.id}>
-                  <MagicIcon url={link.url} />
-                  <a
-                    className="hover:text-zinc-400"
-                    href={link.url}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    {stripProtocolAndWWW(link.url)}
-                  </a>
-                </div>
-              ))}
-          </div>
-        )}
-
-        <Tabs className="space-y-4" defaultValue="in-progress">
-          <TabsList className="border-border bg-background rounded-full border">
-            <TabsTrigger
-              className="data-[state=active]:bg-border rounded-lg rounded-l-2xl duration-300"
-              value="in-progress"
-            >
-              In-Progress
-            </TabsTrigger>
-            <TabsTrigger
-              className="data-[state=active]:bg-border rounded-lg duration-300"
-              value="solutions"
-            >
-              Solutions
-            </TabsTrigger>
-            <TabsTrigger
-              className="data-[state=active]:bg-border rounded-lg duration-300"
-              disabled
-              value="bookmarks"
-            >
-              Bookmarks
-            </TabsTrigger>
-            <TabsTrigger
-              className="data-[state=active]:bg-border rounded-l-lg rounded-r-full duration-300"
-              disabled
-              value="comments"
-            >
-              Comments
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent className="space-y-4" value="overview">
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-              <Card className="col-span-4">
-                <CardHeader>
-                  <CardTitle>Overview</CardTitle>
-                </CardHeader>
-                <CardContent className="pl-2">
-                  <Overview />
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-          <TabsContent className="space-y-4" value="in-progress">
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-              <Card className="col-span-4">
-                <CardHeader>
-                  <CardTitle>In-Progress</CardTitle>
-                </CardHeader>
-                <CardContent className="pl-2">
-                  <InProgressTab />
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-          <TabsContent className="space-y-4" value="solutions">
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-              <Card className="col-span-4">
-                <CardHeader>
-                  <CardTitle>Solutions</CardTitle>
-                </CardHeader>
-                <CardContent className="pl-2">
-                  <SolutionsTab submissions={userData.submission} />
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-        </Tabs>
-      </div>
+        </VerticalTabsList>
+        <VerticalTabsContent className="shrink grow space-y-4" value="overview">
+          <Card className="col-span-4 min-h-[calc(100vh_-_56px_-_6rem)]">
+            <CardHeader>
+              <CardTitle>Overview</CardTitle>
+            </CardHeader>
+            <CardContent className="pl-2">
+              <Overview />
+            </CardContent>
+          </Card>
+        </VerticalTabsContent>
+        <VerticalTabsContent className="shrink grow space-y-4" value="in-progress">
+          <Card className="col-span-4 min-h-[calc(100vh_-_56px_-_6rem)]">
+            <CardHeader>
+              <CardTitle>In-Progress</CardTitle>
+            </CardHeader>
+            <CardContent className="pl-2">
+              <InProgressTab />
+            </CardContent>
+          </Card>
+        </VerticalTabsContent>
+        <VerticalTabsContent className="shrink grow space-y-4" value="solutions">
+          <Card className="col-span-4 min-h-[calc(100vh_-_56px_-_6rem)]">
+            <CardHeader>
+              <CardTitle>Solutions</CardTitle>
+            </CardHeader>
+            <CardContent className="pl-2">
+              <SolutionsTab submissions={userData.submission} />
+            </CardContent>
+          </Card>
+        </VerticalTabsContent>
+      </Tabs>
     </div>
   );
 }

@@ -142,51 +142,53 @@ export function Comments({ rootId, type }: Props) {
               value={text}
             />
           </div>
-          <div className="flex items-center gap-2 px-3 py-2">
-            <Select
-              value={sortKey.value}
-              defaultValue="createdAt"
-              onValueChange={(value) => {
-                setSortKey(sortKeys.find((sk) => sk.value === value) ?? sortKeys[0]);
-                setPage(1);
-              }}
-            >
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Sort Key" />
-              </SelectTrigger>
-              <SelectContent>
-                {sortKeys.map((sortKey, index) => (
-                  <SelectItem key={index} value={sortKey.value}>
-                    {sortKey.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Toggle
-              variant="outline"
-              size="sm"
-              aria-label="Ascending"
-              pressed={sortOrder === 'asc'}
-              onPressedChange={() => {
-                setSortOrder('asc');
-                setPage(1);
-              }}
-            >
-              <ArrowUpNarrowWide />
-            </Toggle>
-            <Toggle
-              variant="outline"
-              size="sm"
-              aria-label="Descending"
-              pressed={sortOrder === 'desc'}
-              onPressedChange={() => {
-                setSortOrder('desc');
-                setPage(1);
-              }}
-            >
-              <ArrowDownNarrowWide />
-            </Toggle>
-          </div>
+          {data?.comments.length !== 0 && (
+            <div className="flex items-center gap-2 px-3 py-2">
+              <Select
+                value={sortKey.value}
+                defaultValue="createdAt"
+                onValueChange={(value) => {
+                  setSortKey(sortKeys.find((sk) => sk.value === value) ?? sortKeys[0]);
+                  setPage(1);
+                }}
+              >
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Sort Key" />
+                </SelectTrigger>
+                <SelectContent>
+                  {sortKeys.map((sortKey, index) => (
+                    <SelectItem key={index} value={sortKey.value}>
+                      {sortKey.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Toggle
+                variant="outline"
+                size="sm"
+                aria-label="Ascending"
+                pressed={sortOrder === 'asc'}
+                onPressedChange={() => {
+                  setSortOrder('asc');
+                  setPage(1);
+                }}
+              >
+                <ArrowUpNarrowWide />
+              </Toggle>
+              <Toggle
+                variant="outline"
+                size="sm"
+                aria-label="Descending"
+                pressed={sortOrder === 'desc'}
+                onPressedChange={() => {
+                  setSortOrder('desc');
+                  setPage(1);
+                }}
+              >
+                <ArrowDownNarrowWide />
+              </Toggle>
+            </div>
+          )}
           {status === 'loading' && <CommentSkeleton />}
           <div className="flex-1">
             {status === 'success' &&

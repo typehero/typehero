@@ -19,22 +19,19 @@ import {
   SelectValue,
   useToast,
   DialogFooter,
+  Textarea,
 } from '@repo/ui';
-import { useEditorSettingsStore } from '@repo/monaco/settings-store';
+import { DEFAULT_SETTINGS, useEditorSettingsStore } from '@repo/monaco/settings-store';
 
 const formSchema = z.object({
   fontSize: z.string(),
   bindings: z.string(),
   tabSize: z.string(),
+  vimConfig: z.string(),
 });
 
 export type FormSchema = z.infer<typeof formSchema>;
 
-export const DEFAULT_SETTINGS = {
-  fontSize: '12',
-  bindings: 'standard',
-  tabSize: '2',
-};
 export function SettingsForm() {
   const { toast } = useToast();
 
@@ -90,6 +87,27 @@ export function SettingsForm() {
         />
         <FormField
           control={form.control}
+          name="tabSize"
+          render={({ field }) => (
+            <FormItem className="mb-3">
+              <FormLabel>Tab Size</FormLabel>
+              <Select defaultValue={field.value} onValueChange={field.onChange}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a tab size" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="2">2 spaces</SelectItem>
+                  <SelectItem value="4">4 spaces</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="bindings"
           render={({ field }) => (
             <FormItem className="mb-3">
@@ -111,21 +129,15 @@ export function SettingsForm() {
         />
         <FormField
           control={form.control}
-          name="tabSize"
-          render={({ field }) => (
+          name="vimConfig"
+          render={({ field: { value, ...field } }) => (
             <FormItem className="mb-3">
-              <FormLabel>Tab Size</FormLabel>
-              <Select defaultValue={field.value} onValueChange={field.onChange}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a tab size" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="2">2 spaces</SelectItem>
-                  <SelectItem value="4">4 spaces</SelectItem>
-                </SelectContent>
-              </Select>
+              <FormLabel>Vim Config</FormLabel>
+              <Textarea
+                value={value || DEFAULT_SETTINGS.vimConfig}
+                className="resize-none font-mono"
+                {...field}
+              />
               <FormMessage />
             </FormItem>
           )}

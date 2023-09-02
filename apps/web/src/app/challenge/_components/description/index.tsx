@@ -14,6 +14,7 @@ import {
   TooltipTrigger,
   TypographyH3,
   UserBadge,
+  Markdown,
 } from '@repo/ui';
 import { Bookmark as BookmarkIcon, Flag, Share } from '@repo/ui/icons';
 import { clsx } from 'clsx';
@@ -22,7 +23,6 @@ import Link from 'next/link';
 import { useRef, useState } from 'react';
 import { type ChallengeRouteData } from '~/app/challenge/[id]/getChallengeRouteData';
 import { ReportDialog } from '~/components/ReportDialog';
-import { Markdown } from '~/components/ui/markdown';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { addOrRemoveBookmark } from '../bookmark.action';
 import { ShareForm } from '../share-form';
@@ -88,11 +88,14 @@ export function Description({ challenge }: Props) {
       <div className="mt-3 flex items-center gap-3">
         <DifficultyBadge difficulty={challenge.difficulty} />
         <Dialog>
-          <DialogTrigger>
+          <DialogTrigger tabIndex={-1}>
             <Tooltip>
               <TooltipTrigger asChild>
-                <button className="group flex h-6 items-center rounded-full bg-zinc-200 px-3 dark:bg-zinc-700">
-                  <Share className="h-4 w-4 stroke-zinc-500 group-hover:stroke-zinc-600 dark:stroke-zinc-300 group-hover:dark:stroke-zinc-100" />
+                <button className="group flex h-6 items-center rounded-full bg-zinc-200 px-3 focus:outline-none focus-visible:ring-2 dark:bg-zinc-700">
+                  <Share
+                    className="h-4 w-4 stroke-zinc-500 group-hover:stroke-zinc-600 dark:stroke-zinc-300 group-hover:dark:stroke-zinc-100"
+                    tabIndex={-1}
+                  />
                 </button>
               </TooltipTrigger>
               <TooltipContent>
@@ -112,7 +115,7 @@ export function Description({ challenge }: Props) {
         <Tooltip>
           <TooltipTrigger asChild>
             <button
-              className="group flex h-6 items-center rounded-full bg-zinc-200 px-3 disabled:cursor-not-allowed disabled:bg-zinc-100 dark:bg-zinc-700 disabled:dark:bg-zinc-700/50"
+              className="group flex h-6 items-center rounded-full bg-zinc-200 px-3 focus:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:bg-zinc-100 dark:bg-zinc-700 disabled:dark:bg-zinc-700/50"
               disabled={!session.data?.user.id}
               onClick={() => {
                 let shouldBookmark = false;

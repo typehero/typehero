@@ -10,7 +10,7 @@ import { PrettierFormatProvider } from '@repo/monaco/prettier';
 import type { WizardForm } from '.';
 import { SettingsButton } from '~/app/challenge/_components/settings/settings-button';
 
-const VimStatusBar = dynamic(() => import('@repo/monaco/vim-mode').then((v) => v.VimStatusBar), {
+const VimStatusBar = dynamic(() => import('@repo/monaco/vim-mode'), {
   ssr: false,
 });
 

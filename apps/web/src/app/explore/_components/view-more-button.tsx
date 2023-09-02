@@ -3,9 +3,8 @@
 import { Button } from '@repo/ui';
 import { ChevronRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import type { ExploreChallengeData } from './explore.action';
 
-const BUTTONS_BY_DIFFICULTY = {
+export const BUTTON_BY_TAGS = {
   POPULAR:
     'bg-neutral-500/10 text-neutral-700 hover:text-neutral-700 dark:text-neutral-300 dark:bg-neutral-300/10 hover:bg-neutral-500/20 dark:hover:bg-neutral-300/20',
   NEWEST:
@@ -18,21 +17,21 @@ const BUTTONS_BY_DIFFICULTY = {
   HARD: 'bg-red-500/10 text-red-700 hover:text-red-700 dark:text-red-300 dark:bg-red-300/10 hover:bg-red-500/20 dark:hover:bg-red-300/20',
   EXTREME:
     'bg-orange-500/10 text-orange-700 hover:text-orange-700 dark:text-orange-300 dark:bg-orange-300/10 hover:bg-orange-500/20 dark:hover:bg-orange-300/20',
-};
+} as const;
 
 interface ViewMoreButtonProps {
-  challenges: Awaited<ExploreChallengeData>;
-  moreRoute: keyof typeof BUTTONS_BY_DIFFICULTY;
+  redirectRoute: string;
+  tag: keyof typeof BUTTON_BY_TAGS;
 }
 
-export function ViewMoreButton({ challenges, moreRoute }: ViewMoreButtonProps) {
+export function ViewMoreButton({ redirectRoute, tag }: ViewMoreButtonProps) {
   const router = useRouter();
   return (
     <Button
       className={`group items-center whitespace-nowrap rounded-full py-2 pl-4 pr-3 backdrop-blur-sm
-  ${BUTTONS_BY_DIFFICULTY[moreRoute]}`}
+  ${BUTTON_BY_TAGS[tag]}`}
       onClick={() => {
-        router.push(`/explore/${moreRoute}`);
+        router.push(redirectRoute);
       }}
       variant="ghost"
     >

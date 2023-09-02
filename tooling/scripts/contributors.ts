@@ -10,15 +10,17 @@ const __dirname = path.dirname(__filename);
 async function getOcto() {
   if (!process.env.GITHUB_TOKEN) {
     console.error('No GitHub token provided. Please set GITHUB_TOKEN env var.');
-    return [];
+    process.exit(1);
   }
+
   const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
   const response = await octokit.request('GET /repos/{owner}/{repo}/contributors', {
-    owner: 'bautistaaa',
+    owner: 'typehero',
     repo: 'typehero',
   });
-  // put all avatar urls in a list
-  return response.data.map((contributor) => contributor);
+
+  // put all avatar urls in a list and exclude bots
+  return response.data.map((contributor) => contributor).filter(contributor => contributor.type !== 'Bot');
 }
 
 async function start() {

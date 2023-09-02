@@ -103,7 +103,9 @@ export function ReportDialog({
       }}
       open={show}
     >
-      <DialogTrigger asChild={triggerAsChild}>{children}</DialogTrigger>
+      <DialogTrigger asChild={triggerAsChild} className="focus:outline-none focus-visible:ring-2">
+        {children}
+      </DialogTrigger>
       <DialogContent>
         <form
           onSubmit={handleSubmit(async (e) => {

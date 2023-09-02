@@ -5,9 +5,11 @@
   "scripts": {
     "build": "turbo build",
     "checks": "turbo format lint typecheck --continue",
-    "checks:fix": "turbo format:fix lint:fix typecheck --continue",
+    "checks:fix": "turbo format:fix lint:fix typecheck --continue --force",
     "clean": "turbo clean && rm -rf node_modules",
+    "conformance": "turbo root-conformance conformance --continue",
     "db:push": "turbo db:push",
+    "db:reset": "turbo db:reset",
     "db:seed": "turbo db:seed",
     "db:studio": "turbo db:studio",
     "dev": "turbo dev --concurrency=1000",
@@ -18,10 +20,12 @@
     "lint": "eslint . --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
     "lint:fix": "eslint . --fix --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
     "refresh": "turbo db:reset db:seed --concurrency=1",
+    "root-conformance": "spaces conformance",
     "tunnel": "cloudflared tunnel --url http://localhost:3000",
     "typecheck": "turbo typecheck --continue"
   },
   "devDependencies": {
+    "@vercel/spaces": "https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701",
     "prettier": "^3.0.2",
     "prettier-plugin-tailwindcss": "^0.4.1",
     "turbo": "^1.10.13",

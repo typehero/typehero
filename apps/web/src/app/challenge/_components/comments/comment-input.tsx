@@ -1,8 +1,7 @@
 import { Loader2 } from '@repo/ui/icons';
 import { useSession } from '@repo/auth/react';
 import { useEffect, useRef, useState, type RefObject } from 'react';
-import { Button, Textarea, ToastAction, useToast } from '@repo/ui';
-import { Markdown } from '~/components/ui/markdown';
+import { Button, Textarea, Markdown, ToastAction, useToast } from '@repo/ui';
 
 interface Props {
   mode: 'create' | 'edit' | 'reply';
@@ -50,7 +49,7 @@ export function CommentInput({ mode, onCancel, onChange, value, placeholder, onS
       {commentMode === 'editor' && (
         <Textarea
           autoFocus
-          className="resize-none border-0 px-3 py-2 focus-visible:ring-0 focus-visible:ring-offset-0 md:max-h-[calc(100vh_-_232px)]"
+          className="resize-none border-0 px-3 py-2 focus-visible:ring-0 md:max-h-[calc(100vh_-_232px)]"
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={handleEnterKey}
           placeholder={placeholder ?? 'Enter your comment here.'}
