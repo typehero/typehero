@@ -62,7 +62,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/Hacksore/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 71
+        "contributions": 73
     },
     {
         "login": "ggrandi",
