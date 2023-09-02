@@ -38,17 +38,17 @@
 
     --radius: 0.5rem;
 
-    --difficulty-beginner: #85c9e9;
-    --difficulty-easy: #008140;
-    --difficulty-medium: #c48e03;
-    --difficulty-hard: #f87171;
-    --difficulty-extreme: #dc2626;
+    --difficulty-beginner: hsl(201, 96%, 32%);
+    --difficulty-easy: hsl(150, 100%, 25%);
+    --difficulty-medium: hsl(35, 92%, 33%);
+    --difficulty-hard: hsl(0, 72%, 51%);
+    --difficulty-extreme: hsl(262, 83%, 58%);
 
-    --difficulty-beginner-dark: #85c9e9;
-    --difficulty-easy-dark: #30c730;
-    --difficulty-medium-dark: #c48e03;
-    --difficulty-hard-dark: #f87171;
-    --difficulty-extreme-dark: #dc2626;
+    --difficulty-beginner-dark: hsl(199, 69%, 72%);
+    --difficulty-easy-dark: hsl(142, 77%, 73%);
+    --difficulty-medium-dark: hsl(31, 86%, 60%);
+    --difficulty-hard-dark: hsl(0, 91%, 71%);
+    --difficulty-extreme-dark: hsl(269, 97%, 85%);
   }
 
   .dark {

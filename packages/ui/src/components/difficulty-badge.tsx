@@ -6,11 +6,11 @@ interface Props {
 }
 
 const COLORS_BY_DIFFICULTY = {
-  BEGINNER: 'dark:bg-difficultyBeginnerDark bg-difficultyBeginner',
-  EASY: 'dark:bg-difficultyEasyDark bg-difficultyEasy',
-  MEDIUM: 'dark:bg-difficultyMediumDark bg-difficultyMedium',
-  HARD: 'dark:bg-difficultyHardDark bg-difficultyHard',
-  EXTREME: 'dark:bg-difficultyExtremeDark bg-difficultyExtreme',
+  BEGINNER: 'dark:bg-difficulty-beginner-dark bg-difficulty-beginner',
+  EASY: 'dark:bg-difficulty-easy-dark bg-difficulty-easy',
+  MEDIUM: 'dark:bg-diffuculty-medium-dark bg-diffuculty-medium',
+  HARD: 'dark:bg-difficulty-hard-dark bg-difficulty-hard',
+  EXTREME: 'dark:bg-difficulty-extreme-dark bg-difficulty-extreme',
 };
 
 export function DifficultyBadge({ difficulty }: Props) {

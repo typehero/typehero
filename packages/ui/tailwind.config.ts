@@ -6,17 +6,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        difficultyBeginner: 'var(--difficulty-beginner)',
-        difficultyEasy: 'var(--difficulty-easy)',
-        difficultyMedium: 'var(--difficulty-medium)',
-        difficultyHard: 'var(--difficulty-hard)',
-        difficultyExtreme: 'var(--difficulty-extreme)',
+        'difficulty-beginner': 'var(--difficulty-beginner)',
+        'difficulty-easy': 'var(--difficulty-easy)',
+        'diffuculty-medium': 'var(--difficulty-medium)',
+        'difficulty-hard': 'var(--difficulty-hard)',
+        'difficulty-extreme': 'var(--difficulty-extreme)',
 
-        difficultyBeginnerDark: 'var(--difficulty-beginner-dark)',
-        difficultyEasyDark: 'var(--difficulty-easy-dark)',
-        difficultyMediumDark: 'var(--difficulty-medium-dark)',
-        difficultyHardDark: 'var(--difficulty-hard-dark)',
-        difficultyExtremeDark: 'var(--difficulty-extreme-dark)',
+        'difficulty-beginner-dark': 'var(--difficulty-beginner-dark)',
+        'difficulty-easy-dark': 'var(--difficulty-easy-dark)',
+        'diffuculty-medium-dark': 'var(--difficulty-medium-dark)',
+        'difficulty-hard-dark': 'var(--difficulty-hard-dark)',
+        'difficulty-extreme-dark': 'var(--difficulty-extreme-dark)',
       },
     },
   },
