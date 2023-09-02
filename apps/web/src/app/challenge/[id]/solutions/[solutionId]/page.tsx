@@ -22,7 +22,12 @@ async function getSolution(solutionId: string) {
     },
     include: {
       challenge: true,
-      user: true,
+      user: {
+        select: {
+          name: true,
+          image: true,
+        },
+      },
     },
   });
 

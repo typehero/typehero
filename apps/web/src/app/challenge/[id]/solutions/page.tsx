@@ -1,7 +1,7 @@
 import type { Session } from '@repo/auth/server';
-import { notFound } from 'next/navigation';
 import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
+import { notFound } from 'next/navigation';
 import { Solutions } from './_components';
 
 interface Props {
@@ -46,7 +46,11 @@ export async function getSolutionsData(challengeId: string, session: Session | n
           },
         ],
         include: {
-          user: true,
+          user: {
+            select: {
+              name: true,
+            },
+          },
           _count: {
             select: { vote: true, solutionComment: true },
           },
