@@ -58,6 +58,7 @@
     "react-markdown": "^8.0.7",
     "react-select": "^5.7.4",
     "react-syntax-highlighter": "^15.5.0",
+    "react-use-measure": "^2.1.1",
     "react-wrap-balancer": "^1.0.0",
     "remark-gfm": "^3.0.1",
     "resend": "^0.17.2",
