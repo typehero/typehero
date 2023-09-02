@@ -191,12 +191,10 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
       if (!leftSide.current) return;
 
       if (parseInt(leftSide.current.style.width) < LEFT_PANEL_BREAKPOINT) {
-        leftSide.current.style.minWidth = DEFAULT_WIDTH_PX;
-        leftSide.current.style.opacity = '100%';
+        expandLeftPanel(leftSide.current);
         updateSettings({ width: DEFAULT_WIDTH_PX, height: settings.height });
       } else {
-        leftSide.current.style.minWidth = '0%';
-        leftSide.current.style.opacity = '0%';
+        collapseLeftPanel(leftSide.current);
         updateSettings({ width: '0px', height: settings.height });
       }
     };
