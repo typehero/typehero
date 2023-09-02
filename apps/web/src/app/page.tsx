@@ -6,7 +6,7 @@ import Hero from './_components/hero';
 import { WaitlistBanner } from './_components/waitlist-banner';
 
 export const metadata: Metadata = {
-  title: 'Typehero',
+  title: 'TypeHero',
   description:
     'Connect, collaborate, and grow with a community of TypeScript developers. Elevate your skills through interactive coding challenges, discussions, and knowledge sharing',
 };

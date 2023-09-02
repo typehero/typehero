@@ -19,7 +19,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html suppressHydrationWarning lang="en">
       <head>
-        <title>Type Hero</title>
         <meta
           content="Level up your typescript skills with interactive exercises"
           name="description"
