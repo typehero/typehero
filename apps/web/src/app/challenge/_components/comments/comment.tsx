@@ -21,7 +21,9 @@ interface SingleCommentProps {
   comment: PaginatedComments['comments'][number];
   readonly?: boolean;
   isReply?: boolean;
+  isToggleReply?: boolean;
   onClickReply?: () => void;
+  onClickToggleReply?: () => void;
   queryKey?: (number | string)[];
   replyQueryKey?: (number | string)[];
 }
@@ -112,19 +114,13 @@ export function Comment({ comment, readonly = false, rootId, type, queryKey }: C
 
   return (
     <div className="flex flex-col px-2 py-1">
-      <SingleComment comment={comment} onClickReply={toggleIsReplying} readonly={readonly} />
-      {comment._count.replies > 0 && (
-        <button
-          className="z-50 flex cursor-pointer items-center gap-1 px-3 pt-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
-          onClick={toggleReplies}
-        >
-          {showReplies ? <ChevronDown className="h-4 w-4" /> : <ChevronUp className="h-4 w-4" />}
-
-          <div className="text-xs">
-            {comment._count.replies === 1 ? '1 reply' : `${comment._count.replies} replies`}
-          </div>
-        </button>
-      )}
+      <SingleComment
+        comment={comment}
+        isToggleReply={showReplies}
+        onClickReply={toggleIsReplying}
+        onClickToggleReply={toggleReplies}
+        readonly={readonly}
+      />
       {isReplying ? (
         <div className="relative mt-2 pb-2 pl-8">
           <Reply className="absolute left-2 top-2 h-4 w-4 opacity-50" />
@@ -170,7 +166,9 @@ function SingleComment({
   comment,
   readonly = false,
   onClickReply,
+  onClickToggleReply,
   isReply,
+  isToggleReply,
   queryKey,
   replyQueryKey,
 }: SingleCommentProps) {
@@ -329,6 +327,22 @@ function SingleComment({
                   Report
                 </div>
               </ReportDialog>
+            )}
+            {comment._count.replies > 0 && (
+              <button
+                className="z-50 flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
+                onClick={onClickToggleReply}
+              >
+                {isToggleReply ? (
+                  <ChevronDown className="h-4 w-4" />
+                ) : (
+                  <ChevronUp className="h-4 w-4" />
+                )}
+
+                <div className="text-xs">
+                  {comment._count.replies === 1 ? '1 reply' : `${comment._count.replies} replies`}
+                </div>
+              </button>
             )}
           </>
         )}
