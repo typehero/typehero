@@ -38,7 +38,6 @@ jobs:
           commit-message: 'chore: update contributors'
           title: 'chore: update contributors'
           branch: chore/update-contributors
-          committer: 'github-actions[bot] <noreply@noreply.github.com>'
           author: 'github-actions[bot] <noreply@noreply.github.com>'
           base: main
           delete-branch: true
