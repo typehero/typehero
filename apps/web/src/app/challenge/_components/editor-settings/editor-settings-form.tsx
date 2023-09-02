@@ -128,7 +128,7 @@ export function SettingsForm() {
             </FormItem>
           )}
         />
-        {isVimBindings && (
+        {isVimBindings ? (
           <FormField
             control={form.control}
             name="vimConfig"
@@ -144,7 +144,7 @@ export function SettingsForm() {
               </FormItem>
             )}
           />
-        )}
+        ) : null}
 
         <DialogFooter className="mt-3">
           <DialogPrimitive.Close asChild>
