@@ -33,7 +33,11 @@ export async function getChallengesByTagOrDifficulty(str: string, take?: number)
       _count: {
         select: { vote: true, comment: true },
       },
-      user: true,
+      user: {
+        select: {
+          name: true,
+        },
+      },
     },
     ...(take && {
       take,

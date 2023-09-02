@@ -1,6 +1,6 @@
-import { notFound } from 'next/navigation';
-import type { Metadata } from 'next';
 import { prisma } from '@repo/db';
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import Dashboard from './dashboard';
 
 interface Props {
@@ -23,7 +23,12 @@ export async function Profile({ username: usernameFromQuery }: Props) {
         equals: username,
       },
     },
-    include: {
+    select: {
+      id: true,
+      createdAt: true,
+      bio: true,
+      image: true,
+      name: true,
       userLinks: true,
     },
   });

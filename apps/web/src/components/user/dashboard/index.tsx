@@ -1,31 +1,32 @@
-import Image from 'next/image';
-import type { User } from '@repo/db/types';
-import Link from 'next/link';
 import { getServerAuthSession } from '@repo/auth/server';
-import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import { prisma } from '@repo/db';
+import type { User } from '@repo/db/types';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
+  MagicIcon,
   Tabs,
   VerticalTabsContent,
-  VerticalTabsTrigger,
-  MagicIcon,
   VerticalTabsList,
+  VerticalTabsTrigger,
 } from '@repo/ui';
-import { Overview } from './overview';
-import { InProgressTab } from './in-progress-tab';
-import { SolutionsTab } from './solutions-tab';
-import UserHeader from './user-header';
+import { Bookmark, ChevronRightSquare, MessagesSquare, Play, Settings } from 'lucide-react';
+import Link from 'next/link';
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { stripProtocolAndWWW } from '~/utils/stringUtils';
-import { Bookmark, ChevronRightSquare, MessagesSquare, Play, Settings } from 'lucide-react';
+import { InProgressTab } from './in-progress-tab';
+import { Overview } from './overview';
+import { SolutionsTab } from './solutions-tab';
+import UserHeader from './user-header';
 
 interface Props {
   // TODO: how do do this union type with just letting prisma halp
-  user: User & { userLinks: { id: string | null; url: string }[] };
+  user: Pick<User, 'bio' | 'createdAt' | 'id' | 'image' | 'name'> & {
+    userLinks: { id: string | null; url: string }[];
+  };
 }
 
 export type UserData = NonNullable<Awaited<ReturnType<typeof getUserdata>>>;
@@ -34,7 +35,7 @@ async function getUserdata(id: string) {
     where: {
       id,
     },
-    include: {
+    select: {
       submission: {
         where: {
           userId: id,

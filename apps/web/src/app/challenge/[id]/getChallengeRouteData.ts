@@ -13,7 +13,11 @@ export const getChallengeRouteData = cache((id: string, session: Session | null)
       status: 'ACTIVE',
     },
     include: {
-      user: true,
+      user: {
+        select: {
+          name: true,
+        },
+      },
       _count: {
         select: {
           vote: {
