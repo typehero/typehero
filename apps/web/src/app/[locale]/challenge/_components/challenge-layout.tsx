@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useEffect, useRef, type ReactNode, useState } from 'react';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useFullscreenSettingsStore } from './fullscreen';
@@ -38,30 +38,50 @@ export interface ChallengeLayoutProps {
   right: ReactNode;
 }
 
-const isDesktop = window.innerWidth > MOBILE_BREAKPOINT;
-
-const collapseLeftPanel = (element: HTMLDivElement) => {
-  element.style.width = '0%';
-  element.style.minWidth = '0%';
-  element.style.opacity = '0%';
+const collapseLeftPanel = (
+  leftElement: HTMLDivElement,
+  rightElement: HTMLDivElement,
+  isDesktop: boolean,
+) => {
+  if (isDesktop) {
+    leftElement.style.width = '0%';
+    leftElement.style.minWidth = '0%';
+    rightElement.style.flexGrow = '1'; // Make right side grow
+  } else {
+    leftElement.style.height = '0%';
+    leftElement.style.minHeight = '0%';
+  }
+  leftElement.style.opacity = '0%';
 };
 
-const expandLeftPanel = (element: HTMLDivElement) => {
-  element.style.width = DEFAULT_WIDTH_PX;
-  element.style.minWidth = DEFAULT_WIDTH_PX;
-  element.style.opacity = '100%';
+const expandLeftPanel = (
+  leftElement: HTMLDivElement,
+  rightElement: HTMLDivElement,
+  isDesktop: boolean,
+) => {
+  if (isDesktop) {
+    leftElement.style.width = DEFAULT_WIDTH_PX;
+    leftElement.style.minWidth = DEFAULT_WIDTH_PX;
+    rightElement.style.flexGrow = '0';
+  } else {
+    leftElement.style.height = DEFAULT_WIDTH_PX;
+    leftElement.style.minHeight = DEFAULT_WIDTH_PX;
+  }
+  leftElement.style.opacity = '100%';
 };
 
 export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
   const parent = useRef<HTMLDivElement>(null);
   const resizer = useRef<HTMLDivElement>(null);
-  const leftSide = useRef<HTMLDivElement>(null);
-  const rightSide = useRef<HTMLDivElement>(null);
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth > MOBILE_BREAKPOINT);
   const { settings, updateSettings } = useLayoutSettingsStore();
   const { fssettings, updateFSSettings } = useFullscreenSettingsStore();
   const leftStyle = isDesktop
     ? { width: settings.width, minWidth: LEFT_PANEL_BREAKPOINT }
     : { height: settings.height };
+
+  const leftSide = useRef<HTMLDivElement>(null);
+  const rightSide = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ref = resizer.current;
@@ -87,40 +107,48 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
     const mouseMoveHandler = (e: MouseEvent | TouchEvent) => {
       let dx = 0;
       let dy = 0;
-      let currX = 0;
+      let currPos = 0;
 
       if (e instanceof MouseEvent) {
         // How far the mouse has been moved
         dx = e.clientX - x;
         dy = e.clientY - y;
-        currX = e.clientX;
+        currPos = isDesktop ? e.clientX : e.clientY;
       } else if (e instanceof TouchEvent) {
         // How far the finger has been moved
         dx = e.changedTouches[0]?.clientX ? e.changedTouches[0].clientX - x : 0;
         dy = e.changedTouches[0]?.clientY ? e.changedTouches[0].clientY - y : 0;
-        currX = e.changedTouches[0]?.clientX ? e.changedTouches[0]?.clientX : 0;
+        currPos = isDesktop ? e.changedTouches[0]?.clientX || 0 : e.changedTouches[0]?.clientY || 0;
       }
 
-      const divideByW = parent.current?.getBoundingClientRect().width!;
-      const divideByH = parent.current?.getBoundingClientRect().height!;
-      const newLeftWidth = ((leftWidth + dx) * 100) / divideByW;
-      const newTopHeight = ((topHeight + dy) * 100) / divideByH;
+      const { width: divideByW, height: divideByH } = parent.current?.getBoundingClientRect() || {
+        width: 0,
+        height: 0,
+      };
+      const newDimensionValue = isDesktop
+        ? ((leftWidth + dx) * 100) / divideByW
+        : ((topHeight + dy) * 100) / divideByH;
 
-      if (isDesktop) {
-        if (currX <= COLLAPSE_BREAKPOINT) {
-          collapseLeftPanel(leftRef);
-        } else if (leftRef.style.width === '0%') {
-          expandLeftPanel(leftRef);
-        } else {
-          const pixelWidth = (newLeftWidth / 100) * divideByW;
-          if (pixelWidth < LEFT_PANEL_BREAKPOINT) {
-            leftRef.style.width = `${(LEFT_PANEL_BREAKPOINT / divideByW) * 100}%`;
-          } else {
-            leftRef.style.width = `${newLeftWidth}%`;
-          }
-        }
+      if (currPos <= COLLAPSE_BREAKPOINT) {
+        collapseLeftPanel(leftRef, rightRef, isDesktop);
+      } else if (
+        (isDesktop && leftRef.style.width === '0%') ||
+        (!isDesktop && leftRef.style.height === '0%')
+      ) {
+        expandLeftPanel(leftRef, rightRef, isDesktop);
       } else {
-        leftRef.style.height = `${newTopHeight}%`;
+        const pixelSize = (newDimensionValue / 100) * (isDesktop ? divideByW : divideByH);
+        const breakpointSize = (LEFT_PANEL_BREAKPOINT / (isDesktop ? divideByW : divideByH)) * 100;
+
+        if (pixelSize < LEFT_PANEL_BREAKPOINT) {
+          isDesktop
+            ? (leftRef.style.width = `${breakpointSize}%`)
+            : (leftRef.style.height = `${breakpointSize}%`);
+        } else {
+          isDesktop
+            ? (leftRef.style.width = `${newDimensionValue}%`)
+            : (leftRef.style.height = `${newDimensionValue}%`);
+        }
       }
 
       // prevent cursor from blinking when you move mouse too fast (leaving resizer area)
@@ -178,6 +206,8 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
 
     // handle window resize
     const resizeHandler = () => {
+      setIsDesktop(window.innerWidth > MOBILE_BREAKPOINT);
+
       if (isDesktop) {
         leftRef.style.width = settings.width;
         leftRef.style.height = 'auto';
@@ -188,14 +218,30 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
     };
 
     const handleResizerDoubleClick = () => {
-      if (!leftSide.current) return;
+      if (!leftSide.current || !rightSide.current) return;
 
-      if (parseInt(leftSide.current.style.width) < LEFT_PANEL_BREAKPOINT) {
-        expandLeftPanel(leftSide.current);
-        updateSettings({ width: DEFAULT_WIDTH_PX, height: settings.height });
+      const currentSize = isDesktop
+        ? parseInt(getComputedStyle(leftSide.current).width)
+        : parseInt(getComputedStyle(leftSide.current).height);
+
+      if (currentSize < LEFT_PANEL_BREAKPOINT) {
+        expandLeftPanel(leftSide.current, rightSide.current, isDesktop);
+        if (isDesktop) {
+          leftSide.current.style.width = DEFAULT_WIDTH_PX;
+          rightSide.current.style.flexGrow = '0';
+        } else {
+          leftSide.current.style.height = settings.height;
+          rightSide.current.style.height = `calc(100% - ${settings.height})`;
+        }
       } else {
-        collapseLeftPanel(leftSide.current);
-        updateSettings({ width: '0px', height: settings.height });
+        collapseLeftPanel(leftSide.current, rightSide.current, isDesktop);
+        if (isDesktop) {
+          leftSide.current.style.width = '0px';
+          rightSide.current.style.flexGrow = '1';
+        } else {
+          leftSide.current.style.height = '0px';
+          rightSide.current.style.height = '100%';
+        }
       }
     };
 
@@ -210,7 +256,7 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
       ref.removeEventListener('touchstart', mouseDownHandler);
       ref.removeEventListener('dblclick', handleResizerDoubleClick);
     };
-  }, [settings, updateSettings]);
+  }, [isDesktop, settings, updateSettings]);
 
   return (
     <div
@@ -225,11 +271,18 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
       >
         {left}
       </div>
-      <div className="resizer relative cursor-col-resize p-2" ref={resizer}>
+      <div
+        className={
+          isDesktop
+            ? 'resizer relative cursor-col-resize p-2'
+            : 'resizer relative cursor-row-resize p-2'
+        }
+        ref={resizer}
+      >
         <div className="absolute left-1/2 top-1/2 h-1 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-400 duration-300 group-hover:bg-neutral-600 group-active:bg-emerald-400 group-active:duration-75 dark:bg-neutral-700 group-hover:dark:bg-neutral-500 lg:h-24 lg:w-1" />
       </div>
       <div
-        className="flex min-h-[90px] w-full flex-1 flex-col overflow-hidden rounded-l-xl rounded-r-2xl border border-zinc-300 dark:border-zinc-700 lg:min-w-[500px]"
+        className="flew-grow flex min-h-[90px] w-full flex-1 flex-col overflow-hidden rounded-l-xl rounded-r-2xl border border-zinc-300 dark:border-zinc-700 lg:min-w-[500px]"
         ref={rightSide}
       >
         {right}
