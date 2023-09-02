@@ -9,7 +9,7 @@ export function Footsies() {
           community.
         </div>
         <div className="text-neutral-500 dark:text-neutral-400">
-          © {new Date().getFullYear()} Type Hero
+          © {new Date().getFullYear()} TypeHero
         </div>
       </div>
     </footer>

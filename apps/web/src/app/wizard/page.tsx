@@ -1,5 +1,6 @@
 import { getServerAuthSession } from '@repo/auth/server';
 import { TypographyH2 } from '@repo/ui';
+import type { Metadata } from 'next';
 import { Wizard } from '~/components/wizard';
 
 export default async function Page() {
@@ -14,4 +15,9 @@ export default async function Page() {
   }
 
   return <Wizard />;
+}
+
+export const metadata: Metadata = {
+  title: 'Create a Challenge | TypeHero',
+  description: 'Create a challenge on TypeHero and share it with the world!',
 }

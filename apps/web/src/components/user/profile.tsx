@@ -8,8 +8,8 @@ interface Props {
 }
 
 export const metadata: Metadata = {
-  title: 'Profile',
-  description: 'A users profile',
+  title: "Profile | TypeHero",
+  description: "View this profile on TypeHero."
 };
 
 export async function Profile({ username: usernameFromQuery }: Props) {

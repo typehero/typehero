@@ -13,11 +13,12 @@ interface Props {
 export async function generateMetadata({ params: { id } }: Props) {
   const challenge = await getChallengeRouteData(id, null);
   return buildMetaForChallenge({
-    title: challenge.name,
-    description: challenge.shortDescription,
+    title: challenge.name + " | TypeHero",
+    description: challenge.shortDescription + " Can you solve it?",
     username: challenge.user.name,
   });
 }
+
 export default async function Challenges({ params: { id } }: Props) {
   const session = await getServerAuthSession();
   const challenge = await getChallengeRouteData(id, session);

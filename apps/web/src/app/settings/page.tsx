@@ -1,5 +1,6 @@
 import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
+import type { Metadata } from 'next';
 import { Settings } from '~/components/settings';
 
 export default async function SettingsPage() {
@@ -43,4 +44,9 @@ export default async function SettingsPage() {
       username={profileData.name}
     />
   );
+}
+
+export const metadata: Metadata = {
+  title: 'Settings | TypeHero',
+  description: 'Change your settings on TypeHero.',
 }
