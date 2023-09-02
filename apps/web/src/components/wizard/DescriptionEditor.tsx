@@ -24,6 +24,7 @@ export function DescriptionEditor({ form }: Props) {
                 <FormItem className="h-full">
                   <RichMarkdownEditor
                     dismissPreview
+                    allowImageUpload
                     onChange={field.onChange}
                     value={field.value}
                   />
