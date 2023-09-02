@@ -1,13 +1,16 @@
 'use client';
 
 import ReactMarkdown from 'react-markdown';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { PrismAsyncLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import remarkGfm from 'remark-gfm';
 import { vs, vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import clsx from 'clsx';
 import { visit, SKIP, type BuildVisitor } from 'unist-util-visit';
 import type { Transformer } from 'unified';
 import { useTheme } from 'next-themes';
+import typescript from 'react-syntax-highlighter/dist/esm/languages/prism/typescript';
+
+SyntaxHighlighter.registerLanguage('typescript', typescript);
 
 const HTML_COMMENT_REGEX = new RegExp('<!--([\\s\\S]*?)-->', 'g');
 
@@ -68,12 +71,14 @@ export function Markdown({ children, className }: { children: string; className?
               className={clsx(className, 'rounded-xl dark:rounded-md')}
               language={match[1]}
               style={syntaxHighlighterTheme} // theme
+              wrapLines
+              wrapLongLines
               {...props}
             >
               {String(children).replace(/\n$/, '')}
             </SyntaxHighlighter>
           ) : (
-            <code className="rounded-md border border-zinc-300 bg-neutral-200 p-1 font-mono text-zinc-600 dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-300">
+            <code className="rounded-md border border-zinc-300 bg-neutral-200 px-1 py-[0.10rem] font-mono text-xs text-zinc-600 dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-300">
               {children}
             </code>
           );

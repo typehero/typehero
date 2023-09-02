@@ -1,31 +1,32 @@
-import Image from 'next/image';
-import type { User } from '@repo/db/types';
-import Link from 'next/link';
 import { getServerAuthSession } from '@repo/auth/server';
-import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import { prisma } from '@repo/db';
+import type { User } from '@repo/db/types';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
+  MagicIcon,
   Tabs,
   VerticalTabsContent,
-  VerticalTabsTrigger,
-  MagicIcon,
   VerticalTabsList,
+  VerticalTabsTrigger,
 } from '@repo/ui';
-import { Overview } from './overview';
-import { InProgressTab } from './in-progress-tab';
-import { SolutionsTab } from './solutions-tab';
-import UserHeader from './user-header';
+import { Bookmark, ChevronRightSquare, MessagesSquare, Play, Settings } from 'lucide-react';
+import Link from 'next/link';
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { stripProtocolAndWWW } from '~/utils/stringUtils';
-import { Bookmark, ChevronRightSquare, MessagesSquare, Play, Settings } from 'lucide-react';
+import { InProgressTab } from './in-progress-tab';
+import { Overview } from './overview';
+import { SolutionsTab } from './solutions-tab';
+import UserHeader from './user-header';
 
 interface Props {
   // TODO: how do do this union type with just letting prisma halp
-  user: User & { userLinks: { id: string | null; url: string }[] };
+  user: Pick<User, 'bio' | 'createdAt' | 'id' | 'image' | 'name'> & {
+    userLinks: { id: string | null; url: string }[];
+  };
 }
 
 export type UserData = NonNullable<Awaited<ReturnType<typeof getUserdata>>>;
@@ -34,7 +35,7 @@ async function getUserdata(id: string) {
     where: {
       id,
     },
-    include: {
+    select: {
       submission: {
         where: {
           userId: id,
@@ -82,8 +83,6 @@ export default async function Dashboard({ user }: Props) {
               Joined {getRelativeTime(user.createdAt)}
             </p>
             <div className="mb-4 mt-2 w-full text-center text-sm md:w-64 md:text-start">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima temporibus maiores
-              nesciunt hic dolores aspernatur corrupti laboriosam consectetur. Vitae, consectetur?
               <ReactMarkdown>{user.bio}</ReactMarkdown>
             </div>
 
