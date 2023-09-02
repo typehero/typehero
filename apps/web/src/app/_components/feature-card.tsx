@@ -275,6 +275,9 @@ export function ChallengeCreationCard({
               maxWidth: 'unset',
             }}
           />
+          <div className="absolute -right-4 bottom-4 w-full">
+            <Steps current={step} onChange={() => {}} steps={steps} />
+          </div>
         </>
       )}
       {resolvedTheme === 'dark' && (
