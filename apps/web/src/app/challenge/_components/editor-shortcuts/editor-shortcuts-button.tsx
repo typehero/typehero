@@ -9,7 +9,7 @@ import {
   TooltipTrigger,
 } from '@repo/ui';
 import { EditorShortcuts } from './editor-shortcuts-form';
-import { SquareSlash } from 'lucide-react';
+import { SquareSlash } from '@repo/ui/icons';
 
 export function EditorShortcutsButton() {
   return (

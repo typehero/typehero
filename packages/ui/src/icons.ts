@@ -34,6 +34,7 @@ export {
   Settings,
   Settings2,
   Share,
+  SquareSlash,
   Sun,
   ThumbsUp,
   Trash2,
