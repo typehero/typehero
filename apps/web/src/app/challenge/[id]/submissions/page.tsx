@@ -21,7 +21,7 @@ export async function generateMetadata({ params: { id } }: Props): Promise<Metad
   }
 
   return {
-    title: submissions.length + ' Submission' + (submissions.length == 1 ? '' : 's') + ' | TypeHero',
+    title: `${submissions.length} Submission${submissions.length == 1 ? '' : 's'} | TypeHero`,
     description: 'View all of your submissions to this challenge on TypeHero.',
   };
 }

@@ -49,4 +49,4 @@ export default async function SettingsPage() {
 export const metadata: Metadata = {
   title: 'Settings | TypeHero',
   description: 'Change your settings on TypeHero.',
-}
+};

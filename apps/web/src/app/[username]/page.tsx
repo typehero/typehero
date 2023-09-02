@@ -15,7 +15,7 @@ export async function generateMetadata({ params: { username } }: Props) {
   const name = username.substring(3);
 
   return {
-    title: name + "'s profile | TypeHero",
-    description: 'View the profile of ' + name + ' on TypeHero.',
+    title: `${name}'s profile | TypeHero`,
+    description: `View the profile of ${name} on TypeHero.`,
   };
-};
+}

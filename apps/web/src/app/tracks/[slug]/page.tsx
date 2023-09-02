@@ -25,7 +25,7 @@ export async function generateMetadata({ params: { slug } }: Props) {
   }
 
   return {
-    title: track.title + ' Track | TypeHero',
-    description: "View the details of the " + track.title + " track on TypeHero. " + track.description,
+    title: `${track.title} Track | TypeHero`,
+    description: `View the details of the ${track.title} track on TypeHero. ${track.description}`,
   };
 }

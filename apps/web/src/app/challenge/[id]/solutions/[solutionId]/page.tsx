@@ -20,10 +20,10 @@ export async function generateMetadata({ params: { solutionId } }: Props) {
   if (!solution) return null;
 
   return {
-    title: solution.title + ", solution to " + solution.challenge?.name + " | TypeHero",
-    description: "View this solution to " + solution.challenge?.name + " on TypeHero."
+    title: `${solution.title}, solution to ${solution.challenge?.name} | TypeHero`,
+    description: `View this solution to ${solution.challenge?.name} on TypeHero.`,
   };
-};
+}
 
 async function getSolution(solutionId: string) {
   const solution = await prisma.sharedSolution.findFirst({

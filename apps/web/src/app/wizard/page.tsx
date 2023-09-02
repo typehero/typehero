@@ -20,4 +20,4 @@ export default async function Page() {
 export const metadata: Metadata = {
   title: 'Create a Challenge | TypeHero',
   description: 'Create a challenge on TypeHero and share it with the world!',
-}
+};

@@ -15,7 +15,7 @@ interface Props {
 export async function generateMetadata({ params: { id } }: Props) {
   const challenge = await getChallengeRouteData(id, null);
   return buildMetaForChallenge({
-    title: "Solutions to " + challenge.name + " | TypeHero",
+    title: `Solutions to ${challenge.name} | TypeHero`,
     description: challenge.shortDescription,
     username: challenge.user.name,
   });
