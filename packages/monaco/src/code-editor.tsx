@@ -7,8 +7,13 @@ import { useEditorSettingsStore } from './settings-store';
 import { libSource } from './editor-types';
 
 const PROD_URL = 'https://typehero.dev';
+const STAGING_URL = 'https://staging.typehero.dev';
 const MONACO_URL = `${
-  process.env.NODE_ENV !== 'production' ? 'http://localhost:3000' : PROD_URL
+  process.env.NODE_ENV !== 'production'
+    ? 'http://localhost:3000'
+    : process.env.STAGING
+    ? STAGING_URL
+    : PROD_URL
 }/min/vs`;
 
 loader.config({
