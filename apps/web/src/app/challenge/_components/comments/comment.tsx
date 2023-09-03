@@ -21,7 +21,9 @@ interface SingleCommentProps {
   comment: PaginatedComments['comments'][number];
   readonly?: boolean;
   isReply?: boolean;
+  isToggleReply?: boolean;
   onClickReply?: () => void;
+  onClickToggleReply?: () => void;
   queryKey?: (number | string)[];
   replyQueryKey?: (number | string)[];
 }
@@ -112,19 +114,13 @@ export function Comment({ comment, readonly = false, rootId, type, queryKey }: C
 
   return (
     <div className="flex flex-col px-2 py-1">
-      <SingleComment comment={comment} onClickReply={toggleIsReplying} readonly={readonly} />
-      {comment._count.replies > 0 && (
-        <button
-          className="z-50 flex cursor-pointer items-center gap-1 px-3 pt-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
-          onClick={toggleReplies}
-        >
-          {showReplies ? <ChevronDown className="h-4 w-4" /> : <ChevronUp className="h-4 w-4" />}
-
-          <div className="text-xs">
-            {comment._count.replies === 1 ? '1 reply' : `${comment._count.replies} replies`}
-          </div>
-        </button>
-      )}
+      <SingleComment
+        comment={comment}
+        isToggleReply={showReplies}
+        onClickReply={toggleIsReplying}
+        onClickToggleReply={toggleReplies}
+        readonly={readonly}
+      />
       {isReplying ? (
         <div className="relative mt-2 pb-2 pl-8">
           <Reply className="absolute left-2 top-2 h-4 w-4 opacity-50" />
@@ -170,7 +166,9 @@ function SingleComment({
   comment,
   readonly = false,
   onClickReply,
+  onClickToggleReply,
   isReply,
+  isToggleReply,
   queryKey,
   replyQueryKey,
 }: SingleCommentProps) {
@@ -234,7 +232,7 @@ function SingleComment({
   return (
     <div className="relative p-2 pl-3">
       <div className="flex items-start justify-between gap-4 pr-[0.4rem]">
-        <div className="flex items-center gap-1">
+        <div className="flex w-full items-center justify-between gap-1">
           <UserBadge username={comment.user.name ?? ''} linkComponent={Link} />
           <Tooltip delayDuration={0.05}>
             <TooltipTrigger asChild>
@@ -247,70 +245,6 @@ function SingleComment({
             </TooltipContent>
           </Tooltip>
         </div>
-        <div className="my-auto flex items-center gap-4">
-          {!readonly && (
-            <>
-              <Vote
-                voteCount={comment._count.vote}
-                initialHasVoted={comment.vote.length > 0}
-                disabled={!session?.data?.user?.id || comment.userId === session?.data?.user?.id}
-                rootType="COMMENT"
-                rootId={comment.id}
-                onVote={(didUpvote: boolean) => {
-                  comment.vote = didUpvote
-                    ? [
-                        {
-                          userId: session?.data?.user?.id ?? '',
-                        },
-                      ]
-                    : [];
-                  comment._count.vote += didUpvote ? 1 : -1;
-                }}
-              />
-              <div
-                className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
-                onClick={() => {
-                  copyPathNotifyUser();
-                }}
-              >
-                <Share className="h-3 w-3" />
-                <div className="hidden text-[0.8rem] sm:block">Share</div>
-              </div>
-              {!isReply && (
-                <button
-                  className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 disabled:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300"
-                  onClick={onClickReply}
-                >
-                  <Reply className="h-4 w-4" />
-                  <div className="hidden text-[0.8rem] sm:block">Reply</div>
-                </button>
-              )}
-              {isAuthor ? (
-                <button
-                  className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
-                  onClick={() => setIsEditing(!isEditing)}
-                >
-                  <Pencil className="h-3 w-3" />
-                  <div className="hidden text-[0.8rem] sm:block">Edit</div>
-                </button>
-              ) : null}
-              {isAuthor ? (
-                <CommentDeleteDialog asChild comment={comment}>
-                  <button className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300">
-                    <Trash2 className="h-3 w-3" />
-                    <div className="hidden text-[0.8rem] sm:block">Delete</div>
-                  </button>
-                </CommentDeleteDialog>
-              ) : (
-                <ReportDialog commentId={comment.id} reportType="COMMENT">
-                  <div className="flex cursor-pointer items-center text-[0.8rem] text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300">
-                    Report
-                  </div>
-                </ReportDialog>
-              )}
-            </>
-          )}
-        </div>
       </div>
       {!isEditing && (
         <div className="-mb-1">
@@ -318,7 +252,7 @@ function SingleComment({
         </div>
       )}
       {isEditing ? (
-        <div className="-mx-2 -mb-2">
+        <div className=" mb-2">
           <CommentInput
             mode="edit"
             onCancel={() => {
@@ -333,6 +267,86 @@ function SingleComment({
           />
         </div>
       ) : null}
+      <div className="my-auto flex items-center gap-4">
+        {!readonly && (
+          <>
+            <Vote
+              voteCount={comment._count.vote}
+              initialHasVoted={comment.vote.length > 0}
+              disabled={!session?.data?.user?.id || comment.userId === session?.data?.user?.id}
+              rootType="COMMENT"
+              rootId={comment.id}
+              onVote={(didUpvote: boolean) => {
+                comment.vote = didUpvote
+                  ? [
+                      {
+                        userId: session?.data?.user?.id ?? '',
+                      },
+                    ]
+                  : [];
+                comment._count.vote += didUpvote ? 1 : -1;
+              }}
+            />
+            <div
+              className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
+              onClick={() => {
+                copyPathNotifyUser();
+              }}
+            >
+              <Share className="h-3 w-3" />
+              <div className="hidden text-[0.8rem] sm:block">Share</div>
+            </div>
+            {!isReply && (
+              <button
+                className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 disabled:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300"
+                onClick={onClickReply}
+              >
+                <Reply className="h-4 w-4" />
+                <div className="hidden text-[0.8rem] sm:block">Reply</div>
+              </button>
+            )}
+            {isAuthor ? (
+              <button
+                className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
+                onClick={() => setIsEditing(!isEditing)}
+              >
+                <Pencil className="h-3 w-3" />
+                <div className="hidden text-[0.8rem] sm:block">Edit</div>
+              </button>
+            ) : null}
+            {isAuthor ? (
+              <CommentDeleteDialog asChild comment={comment}>
+                <button className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300">
+                  <Trash2 className="h-3 w-3" />
+                  <div className="hidden text-[0.8rem] sm:block">Delete</div>
+                </button>
+              </CommentDeleteDialog>
+            ) : (
+              <ReportDialog commentId={comment.id} reportType="COMMENT">
+                <div className="flex cursor-pointer items-center text-[0.8rem] text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300">
+                  Report
+                </div>
+              </ReportDialog>
+            )}
+            {comment._count.replies > 0 && (
+              <button
+                className="z-50 flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
+                onClick={onClickToggleReply}
+              >
+                {isToggleReply ? (
+                  <ChevronDown className="h-4 w-4" />
+                ) : (
+                  <ChevronUp className="h-4 w-4" />
+                )}
+
+                <div className="text-xs">
+                  {comment._count.replies === 1 ? '1 reply' : `${comment._count.replies} replies`}
+                </div>
+              </button>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }

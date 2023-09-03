@@ -275,6 +275,9 @@ export function ChallengeCreationCard({
               maxWidth: 'unset',
             }}
           />
+          <div className="absolute -right-4 bottom-4 w-full">
+            <Steps current={step} onChange={() => {}} steps={steps} />
+          </div>
         </>
       )}
       {resolvedTheme === 'dark' && (
@@ -476,6 +479,11 @@ interface MockTrackChallenge {
 
 const mockChallenges: MockTrackChallenge[] = [
   {
+    id: 1,
+    name: 'Generics',
+    difficulty: 'BEGINNER',
+  },
+  {
     id: 2,
     name: 'Infer',
     difficulty: 'EASY',
@@ -486,19 +494,14 @@ const mockChallenges: MockTrackChallenge[] = [
     difficulty: 'MEDIUM',
   },
   {
-    id: 5,
-    name: 'Classes',
-    difficulty: 'EXTREME',
-  },
-  {
     id: 4,
     name: 'Array/Object',
     difficulty: 'HARD',
   },
   {
-    id: 1,
-    name: 'Generics',
-    difficulty: 'BEGINNER',
+    id: 5,
+    name: 'Classes',
+    difficulty: 'EXTREME',
   },
 ];
 

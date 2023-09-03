@@ -1,5 +1,4 @@
 {
-  "experimentalSpaces": { "id": "space_jbAxBIO7uk9BRo7nAYLdKycp" },
   "pipeline": {
     "build": {
       "dependsOn": ["^build", "@repo/db#db:generate"],
@@ -7,6 +6,7 @@
       "env": [
         "VERCEL_URL",
         "VERCEL_ENV",
+        "STAGING",
         "NODE_ENV",
         "DATABASE_URL",
         "GITHUB_ID",
@@ -76,13 +76,6 @@
       "dependsOn": ["@repo/db#db:generate"],
       "persistent": true,
       "cache": false
-    },
-    "conformance": {
-      "dependsOn": ["^build"]
-    },
-    // Allows running `conformance` for both the root and all workspaces, while also passing through any arguments.
-    "root-conformance": {},
-    // Allows running `conformance` on just the root.
-    "//#root-conformance": {}
+    }
   }
 }

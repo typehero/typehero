@@ -65,7 +65,6 @@ export async function getTrackDetails(id: number) {
         where: {
           id: session?.user.id,
         },
-        // ensure's we don't leak user data other than the necessary parameters.
         select: {
           id: true,
         },

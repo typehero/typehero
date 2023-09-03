@@ -24,15 +24,15 @@ export const UserSignupEmail = () => {
   return (
     <Html>
       <Head />
-      <Preview>You're on the Typehero Waitlist!</Preview>
+      <Preview>You're on the TypeHero Waitlist!</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-[40px] w-[465px] rounded border border-solid border-[#eaeaea] p-[20px]">
             <Section className="mt-[32px]">
-              <Img src={`${baseUrl}/typehero.png`} width="64" height="auto" alt="Typehero" />
+              <Img src={`${baseUrl}/typehero.png`} width="64" height="auto" alt="TypeHero" />
             </Section>
             <Heading className="mx-0 my-[30px] p-0 text-[24px] font-bold text-black">
-              You're on the Typehero Waitlist!
+              You're on the TypeHero Waitlist!
             </Heading>
             <Text className="pb-2 text-[20px] leading-[24px] text-black">Hey there 👋</Text>
             <Text className="text-[14px] leading-[24px] text-black">
