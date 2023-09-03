@@ -12,7 +12,7 @@ import {
   VerticalTabsList,
   VerticalTabsTrigger,
 } from '@repo/ui';
-import { Bookmark, ChevronRightSquare, MessagesSquare, Play, Settings } from 'lucide-react';
+import { Bookmark, ChevronRightSquare, MessagesSquare, Play, Settings } from '@repo/ui/icons';
 import Link from 'next/link';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import { getRelativeTime } from '~/utils/relativeTime';
