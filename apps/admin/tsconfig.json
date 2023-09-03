@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "incremental": true,
     "baseUrl": ".",
+    "esModuleInterop": true,
+    "jsx": "preserve",
     "paths": {
       "~/*": ["src/*"]
     },
