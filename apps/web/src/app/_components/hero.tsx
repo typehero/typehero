@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Balancer } from 'react-wrap-balancer';
 import { Button } from '@repo/ui';
 import { HeroIllustration } from './hero-illustration';
-import { Twitter } from 'lucide-react';
+import { Twitter } from '@repo/ui/icons';
 
 function TypeHeroLogo() {
   return (

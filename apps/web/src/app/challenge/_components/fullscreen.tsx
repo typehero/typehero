@@ -1,6 +1,6 @@
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui';
 import { Maximize2 } from '@repo/ui/icons';
-import { Minimize2 } from 'lucide-react';
+import { Minimize2 } from '@repo/ui/icons';
 import { useEffect } from 'react';
 import { create } from 'zustand';
 

@@ -14,7 +14,7 @@ import {
 import { ChevronDown, ChevronLeft, ChevronRight, MessageCircle } from '@repo/ui/icons';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
-import { ArrowDownNarrowWide, ArrowUpNarrowWide } from 'lucide-react';
+import { ArrowDownNarrowWide, ArrowUpNarrowWide } from '@repo/ui/icons';
 import { useRef, useState } from 'react';
 import { Comment } from './comment';
 import { CommentInput } from './comment-input';
