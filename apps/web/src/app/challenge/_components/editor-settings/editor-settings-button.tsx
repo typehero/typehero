@@ -9,7 +9,7 @@ import {
   TooltipTrigger,
 } from '@repo/ui';
 import { Settings } from '@repo/ui/icons';
-import { SettingsForm } from './settings-form';
+import { SettingsForm } from './editor-settings-form';
 
 export function SettingsButton() {
   return (

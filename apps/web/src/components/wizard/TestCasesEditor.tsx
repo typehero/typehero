@@ -8,7 +8,7 @@ import dynamic from 'next/dynamic';
 import { createTwoslashInlayProvider } from '@repo/monaco/twoslash';
 import { PrettierFormatProvider } from '@repo/monaco/prettier';
 import type { WizardForm } from '.';
-import { SettingsButton } from '~/app/challenge/_components/settings/settings-button';
+import { SettingsButton } from '~/app/challenge/_components/editor-settings/editor-settings-button';
 
 const VimStatusBar = dynamic(() => import('@repo/monaco/vim-mode'), {
   ssr: false,
