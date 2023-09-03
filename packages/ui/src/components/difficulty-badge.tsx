@@ -8,7 +8,7 @@ interface Props {
 const COLORS_BY_DIFFICULTY = {
   BEGINNER: 'dark:bg-difficulty-beginner-dark bg-difficulty-beginner',
   EASY: 'dark:bg-difficulty-easy-dark bg-difficulty-easy',
-  MEDIUM: 'dark:bg-diffuculty-medium-dark bg-diffuculty-medium',
+  MEDIUM: 'dark:bg-difficulty-medium-dark bg-difficulty-medium',
   HARD: 'dark:bg-difficulty-hard-dark bg-difficulty-hard',
   EXTREME: 'dark:bg-difficulty-extreme-dark bg-difficulty-extreme',
 };

@@ -12,19 +12,19 @@ interface TrackChallengeProps {
 }
 
 const COLORS_BY_DIFFICULTY = {
-  BEGINNER: 'text-pink-600 dark:text-pink-300',
-  EASY: 'text-emerald-600 dark:text-emerald-300',
-  MEDIUM: 'text-yellow-600 dark:text-yellow-300',
-  HARD: 'text-red-600 dark:text-red-300',
-  EXTREME: 'text-orange-600 dark:text-orange-300',
+  BEGINNER: 'text-difficulty-beginner dark:text-difficulty-beginner-dark',
+  EASY: 'text-difficulty-easy dark:text-difficulty-easy-dark',
+  MEDIUM: 'text-difficulty-medium dark:text-difficulty-medium-dark',
+  HARD: 'text-difficulty-hard dark:text-difficulty-hard-dark',
+  EXTREME: 'text-difficulty-extreme dark:text-difficulty-extreme-dark',
 } as const;
 
 const BGS_BY_DIFFICULTY = {
-  BEGINNER: 'to-pink-600/20 dark:to-pink-300/20',
-  EASY: 'to-emerald-600/20 dark:to-emerald-300/20',
-  MEDIUM: 'to-yellow-600/20 dark:to-yellow-300/20',
-  HARD: 'to-red-600/20 dark:to-red-300/20',
-  EXTREME: 'to-orange-600/20 dark:to-orange-300/20',
+  BEGINNER: 'to-difficulty-beginner/20 dark:to-difficulty-beginner-dark/20',
+  EASY: 'to-difficulty-easy/20 dark:to-difficulty-easy-dark/20',
+  MEDIUM: 'to-difficulty-medium/20 dark:to-difficulty-medium-dark/20',
+  HARD: 'to-difficulty-hard/20 dark:to-difficulty-hard-dark/20',
+  EXTREME: 'to-difficulty-extreme/20 dark:to-difficulty-extreme-dark/20',
 } as const;
 
 export function TrackChallenge({ challenge, className, mock }: TrackChallengeProps) {
@@ -36,9 +36,11 @@ export function TrackChallenge({ challenge, className, mock }: TrackChallengePro
     >
       <div
         className={clsx(
-          `flex w-full items-center justify-between gap-3 overflow-hidden rounded-lg bg-gradient-to-r from-neutral-500/10 ${
+          `flex w-full items-center justify-between gap-3 overflow-hidden rounded-lg`,
+          `bg-gradient-to-r from-neutral-500/10 from-70% ${
             BGS_BY_DIFFICULTY[challenge.difficulty]
-          } from-75% to-100% p-4 py-2 text-black/90 duration-300 group-active/challenge:bg-neutral-500/40 group-active/challenge:duration-75 dark:text-white/90 sm:py-4`,
+          } to-100% dark:from-neutral-500/20`,
+          ` p-4 py-2 text-black/90 duration-300 group-active/challenge:bg-neutral-500/40 group-active/challenge:duration-75 dark:text-white/90 sm:py-4`,
           className,
           !isMobile &&
             'group-hover/challenge:scale-105 group-hover/challenge:rounded-xl group-hover/challenge:bg-neutral-500/20',
@@ -61,7 +63,7 @@ export function TrackChallenge({ challenge, className, mock }: TrackChallengePro
         <div
           className={`relative text-xs font-medium tracking-wide ${
             COLORS_BY_DIFFICULTY[challenge.difficulty]
-          }`}
+          } text-background`}
         >
           <div
             className={`absolute right-0 top-1/2 h-12 w-12 -translate-y-1/2 blur-3xl ${

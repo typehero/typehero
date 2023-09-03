@@ -6,17 +6,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'difficulty-beginner': 'var(--difficulty-beginner)',
-        'difficulty-easy': 'var(--difficulty-easy)',
-        'diffuculty-medium': 'var(--difficulty-medium)',
-        'difficulty-hard': 'var(--difficulty-hard)',
-        'difficulty-extreme': 'var(--difficulty-extreme)',
+        'difficulty-beginner': 'hsl(var(--difficulty-beginner) / <alpha-value>)',
+        'difficulty-easy': 'hsl(var(--difficulty-easy) / <alpha-value>)',
+        'difficulty-medium': 'hsl(var(--difficulty-medium) / <alpha-value>)',
+        'difficulty-hard': 'hsl(var(--difficulty-hard) / <alpha-value>)',
+        'difficulty-extreme': 'hsl(var(--difficulty-extreme) / <alpha-value>)',
 
-        'difficulty-beginner-dark': 'var(--difficulty-beginner-dark)',
-        'difficulty-easy-dark': 'var(--difficulty-easy-dark)',
-        'diffuculty-medium-dark': 'var(--difficulty-medium-dark)',
-        'difficulty-hard-dark': 'var(--difficulty-hard-dark)',
-        'difficulty-extreme-dark': 'var(--difficulty-extreme-dark)',
+        'difficulty-beginner-dark': 'hsl(var(--difficulty-beginner-dark) / <alpha-value>)',
+        'difficulty-easy-dark': 'hsl(var(--difficulty-easy-dark) / <alpha-value>)',
+        'difficulty-medium-dark': 'hsl(var(--difficulty-medium-dark) / <alpha-value>)',
+        'difficulty-hard-dark': 'hsl(var(--difficulty-hard-dark) / <alpha-value>)',
+        'difficulty-extreme-dark': 'hsl(var(--difficulty-extreme-dark) / <alpha-value>)',
       },
     },
   },

@@ -23,7 +23,7 @@ const BORDERS_BY_DIFFICULTY = {
     'dark:hover:border-difficulty-beginner-dark hover:border-difficulty-beginner dark:group-focus:border-difficulty-beginner-dark group-focus:border-difficulty-beginner',
   EASY: 'dark:hover:border-difficulty-easy-dark hover:border-difficulty-easy dark:group-focus:border-difficulty-easy-dark group-focus:border-difficulty-easy',
   MEDIUM:
-    'dark:hover:border-diffuculty-medium-dark hover:border-diffuculty-medium dark:group-focus:border-diffuculty-medium-dark group-focus:border-diffuculty-medium',
+    'dark:hover:border-difficulty-medium-dark hover:border-difficulty-medium dark:group-focus:border-difficulty-medium-dark group-focus:border-difficulty-medium',
   HARD: 'dark:hover:border-difficulty-hard-dark hover:border-difficulty-hard dark:group-focus:border-difficulty-hard-dark group-focus:border-difficulty-hard',
   EXTREME:
     'dark:hover:border-difficulty-extreme-dark hover:border-difficulty-extreme dark:group-focus:border-difficulty-extreme-dark group-focus:border-difficulty-extreme',
@@ -62,8 +62,8 @@ export function ExploreCard({ challenge }: ExploreCardProps) {
       )}
       {challenge.difficulty === 'MEDIUM' && (
         <>
-          <Triangle className="group-hover/card:text-diffuculty-medium dark:group-hover/card:text-diffuculty-medium-dark absolute -right-5 -top-5 h-16 w-16 rotate-0 stroke-[0.75] text-black/10 duration-500 group-hover/card:-translate-x-10 group-hover/card:translate-y-10 group-hover/card:rotate-[90deg] dark:text-white/10" />
-          <Triangle className="group-hover/card:text-diffuculty-medium dark:group-hover/card:text-diffuculty-medium-dark absolute -right-14 -top-16 h-36 w-36 rotate-12 stroke-[0.4] text-black/10 duration-300 group-hover/card:translate-x-3 group-hover/card:rotate-[30deg] group-hover/card:scale-50 group-hover/card:stroke-[0.66] dark:text-white/10" />
+          <Triangle className="group-hover/card:text-difficulty-medium dark:group-hover/card:text-difficulty-medium-dark absolute -right-5 -top-5 h-16 w-16 rotate-0 stroke-[0.75] text-black/10 duration-500 group-hover/card:-translate-x-10 group-hover/card:translate-y-10 group-hover/card:rotate-[90deg] dark:text-white/10" />
+          <Triangle className="group-hover/card:text-difficulty-medium dark:group-hover/card:text-difficulty-medium-dark absolute -right-14 -top-16 h-36 w-36 rotate-12 stroke-[0.4] text-black/10 duration-300 group-hover/card:translate-x-3 group-hover/card:rotate-[30deg] group-hover/card:scale-50 group-hover/card:stroke-[0.66] dark:text-white/10" />
         </>
       )}
       {challenge.difficulty === 'HARD' && (
