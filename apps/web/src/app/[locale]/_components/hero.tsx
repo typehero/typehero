@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Balancer } from 'react-wrap-balancer';
 import { Button } from '@repo/ui';
 import { HeroIllustration } from './hero-illustration';
+import { getScopedI18n } from '~/locales/server';
 
 function TypeHeroLogo() {
   return (
@@ -30,7 +31,9 @@ function TypeHeroLogo() {
   );
 }
 
-function Hero() {
+async function Hero() {
+  const t = await getScopedI18n('landing.hero')
+
   return (
     <section className="-mt-[56px] min-h-[calc(100vh)] overflow-hidden lg:min-h-0 lg:pt-[56px]">
       <div className="container grid min-h-screen items-center justify-center lg:min-h-0 lg:grid-cols-2">
@@ -48,8 +51,7 @@ function Hero() {
 
           <p className="max-w-[55ch] bg-transparent px-8 text-center font-medium leading-8 text-black/60 dark:text-white/50 lg:px-0 lg:text-left">
             <Balancer>
-              Connect, collaborate, and grow with a community of TypeScript developers. Elevate your
-              skills through interactive coding challenges, discussions, and knowledge sharing
+              {t('description')}
             </Balancer>
           </p>
           <div className="flex flex-col gap-3 md:flex-row">
@@ -60,7 +62,7 @@ function Hero() {
               <Link href="/waitlist">
                 <span className="inline-flex h-full w-fit items-center gap-1 rounded-[10px] bg-white px-4 py-2 text-[#3178c6] transition-all duration-300">
                   <Mail className="mr-1 h-4 w-4 stroke-[3]" />
-                  Join the Waitlist
+                  {t('buttons.waitlist')}
                 </span>
               </Link>
             </Button>
@@ -71,7 +73,7 @@ function Hero() {
               <Link href="/waitlist">
                 <span className="inline-flex h-full w-fit items-center gap-1 rounded-xl px-4 py-2 transition-all duration-300 dark:bg-neutral-900 dark:text-white group-hover:dark:bg-black">
                   <Mail className="mr-1 h-4 w-4 stroke-[3]" />
-                  Join the Waitlist
+                  {t('buttons.waitlist')}
                 </span>
               </Link>
             </Button>
