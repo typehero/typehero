@@ -116,7 +116,7 @@ export default function SplitEditor({
       {userEditorState && settings.bindings === 'vim' && <VimStatusBar editor={userEditorState} />}
       <div
         className={clsx('transition-all', {
-          'h-[30vh]': expandTestPanel,
+          'h-[30vh] border-t dark:border-zinc-700 border-zinc-300': expandTestPanel,
           'hidden': !expandTestPanel,
         })}
       >
