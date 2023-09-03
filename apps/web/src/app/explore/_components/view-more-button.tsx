@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@repo/ui';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight } from '@repo/ui/icons';
 import { useRouter } from 'next/navigation';
 
 export const BUTTON_BY_TAGS = {
