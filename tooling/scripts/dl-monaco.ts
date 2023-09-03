@@ -34,19 +34,33 @@ async function downloadAndSaveFile([remoteUrl, diskPath = remoteUrl, appendToSta
   diskPath?: string,
   appendToStart?: (dl: string) => string,
 ]) {
-  const textToWrite = await (
+  // if it's a ttf use blob
+  const isBinary = remoteUrl.endsWith('.ttf');
+
+  const fileArrayData = await (
     await fetchFile({
       url: new URL(TS_CDN_BASE_URL + remoteUrl),
       retries: 5,
     })
-  ).text();
+  )[isBinary ? 'blob' : 'text']();
 
   const pathToSave = url.fileURLToPath(
     path.join(import.meta.url, '../../../apps/web/public', diskPath),
   );
   const dir = path.join(pathToSave, '../');
   await fs.mkdir(dir, { recursive: true });
-  await fs.writeFile(pathToSave, appendToStart?.(textToWrite) ?? textToWrite, {});
+
+  // TODO: fix this if someone fucks up the options
+  if (isBinary) {
+    const data = Buffer.from(await (fileArrayData as Blob).arrayBuffer());
+    await fs.writeFile(pathToSave, data);
+  } else {
+    await fs.writeFile(
+      pathToSave,
+      appendToStart?.(fileArrayData as string) ?? (fileArrayData as string),
+      {},
+    );
+  }
 }
 
 const files = [

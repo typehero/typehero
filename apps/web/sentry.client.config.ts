@@ -22,6 +22,12 @@ Sentry.init({
   // in development and sample at a lower rate in production
   replaysSessionSampleRate: 0.1,
 
+  enabled: process.env.NODE_ENV === 'production',
+  environment:
+    window.origin.includes('staging') || window.origin.includes('vercel.app')
+      ? 'Staging'
+      : 'Production',
+
   // You can remove this option if you're not planning to use the Sentry Session Replay feature:
   integrations: [
     new Sentry.Replay({

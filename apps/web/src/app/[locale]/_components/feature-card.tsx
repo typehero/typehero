@@ -76,7 +76,9 @@ function FeatureCard({
         <div className="mx-10 my-10 min-h-[450px] w-full">
           <div className="flex w-4/6 flex-col gap-3">
             <h2 className="text-xl font-bold tracking-tight md:text-xl">{title}</h2>
-            <p className="text-base leading-7 text-zinc-600 dark:text-zinc-400">{description}</p>
+            <p className="text-sm leading-5 text-zinc-600 dark:text-zinc-400 sm:text-base sm:leading-7">
+              {description}
+            </p>
           </div>
           {mounted ? children : null}
         </div>
@@ -387,7 +389,7 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
     <FeatureCard {...props}>
       <div
         ref={ref}
-        className="absolute inset-0 left-[23px] top-[35%] flex w-[100%] flex-col gap-3 pt-4 max-md:scale-90 md:left-[37px] md:top-[30%]"
+        className="absolute inset-0 left-[23px] top-[30%] flex w-[100%] flex-col gap-3 pt-4 max-md:scale-90 sm:top-[35%] md:left-[37px] md:top-[30%]"
       >
         <div
           className={clsx(

@@ -1,5 +1,6 @@
 'use client';
 
+import { For } from 'million/react';
 import { GitBranch } from '@repo/ui/icons';
 import { clsx } from 'clsx';
 import { type CSSProperties } from 'react';
@@ -96,24 +97,26 @@ function Community() {
               {/* mobile width = w-16(4rem) * 4items  +  gap-x-3(0.75rem) * 3gaps */}
               {/* medium width = 4rem * 5items + 0.75rem * 4gaps = 23rem  */}
               {/* large width = 4rem * 6items + 0.75rem * 5gaps =  */}
-              <div className="honeycomboverride mx-auto flex w-[18.25rem] flex-wrap gap-x-3 gap-y-1 sm:w-[23rem] xl:w-[27.75rem] xl:[&>*:nth-child(11n_+_1)]:ml-[2.375rem] [&>*:nth-child(7n_+_1)]:ml-[2.375rem] sm:[&>*:nth-child(7n_+_1)]:ml-0 sm:[&>*:nth-child(9n_+_1)]:ml-[2.375rem] xl:[&>*:nth-child(9n_+_1)]:ml-0">
-                {contributors.map((contributor) => (
-                  <a
-                    className="group rounded-full duration-300 hover:scale-125 focus:outline-none focus:duration-0 focus-visible:ring-0 active:scale-105 active:duration-100"
-                    href={contributor.html_url}
-                    key={contributor.id}
-                    rel="noopener"
-                    target="_blank"
-                  >
-                    <Image
-                      className="honeycombchild h-16 w-16 rounded-3xl bg-cover duration-300 group-hover:rounded-[2rem] group-focus:outline-none group-focus:duration-0 group-focus-visible:ring-2 group-active:rounded-3xl group-active:duration-100"
-                      src={contributor.avatar_url}
-                      width={64}
-                      height={64}
-                      alt={`${contributor.login}'s GitHub avatar`}
-                    />
-                  </a>
-                ))}
+              <div className="honeycomboverride mx-auto flex w-[18.25rem] flex-wrap gap-x-3 gap-y-1 sm:w-[23rem] xl:w-[27.75rem] xl:[&>*>*>*>*:nth-child(11n_+_1)]:ml-[2.375rem] [&>*>*>*>*:nth-child(7n_+_1)]:ml-[2.375rem] sm:[&>*>*>*>*:nth-child(7n_+_1)]:ml-0 sm:[&>*>*>*>*:nth-child(9n_+_1)]:ml-[2.375rem] xl:[&>*>*>*>*:nth-child(9n_+_1)]:ml-0">
+                <For each={contributors}>
+                  {(contributor) => (
+                    <a
+                      className="group rounded-full duration-300 hover:scale-125 focus:outline-none focus:duration-0 focus-visible:ring-0 active:scale-105 active:duration-100"
+                      href={contributor.html_url}
+                      key={contributor.id}
+                      rel="noopener"
+                      target="_blank"
+                    >
+                      <Image
+                        className="honeycombchild h-16 w-16 rounded-3xl bg-cover duration-300 group-hover:rounded-[2rem] group-focus:outline-none group-focus:duration-0 group-focus-visible:ring-2 group-active:rounded-3xl group-active:duration-100"
+                        src={contributor.avatar_url}
+                        width={64}
+                        height={64}
+                        alt={`${contributor.login}'s GitHub avatar`}
+                      />
+                    </a>
+                  )}
+                </For>
               </div>
             </div>
           </div>
