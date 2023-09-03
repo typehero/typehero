@@ -10,7 +10,7 @@ import {
   type MotionStyle,
   type MotionValue,
 } from 'framer-motion';
-import { Reply } from 'lucide-react';
+import { Reply } from '@repo/ui/icons';
 import { useTheme } from 'next-themes';
 import Image, { type StaticImageData } from 'next/image';
 import { useEffect, useState, type MouseEvent } from 'react';

@@ -44,4 +44,10 @@ export {
   User,
   X,
   RotateCcw,
+  Twitter,
+  Minimize2,
+  ArrowDownNarrowWide,
+  ArrowUpNarrowWide,
+  ChevronRightSquare,
+  MessagesSquare,
 } from 'lucide-react';

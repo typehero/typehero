@@ -1,9 +1,8 @@
-import { Github, Mail } from '@repo/ui/icons';
+import { Github, Mail, Twitter } from '@repo/ui/icons';
 import Link from 'next/link';
 import { Balancer } from 'react-wrap-balancer';
 import { Button } from '@repo/ui';
 import { HeroIllustration } from './hero-illustration';
-import { Twitter } from 'lucide-react';
 
 function TypeHeroLogo() {
   return (
