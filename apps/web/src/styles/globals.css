@@ -227,7 +227,7 @@ main {
 
 /* overrides a conflicting style on the honeycomb grid */
 @media (min-width: 1280px) {
-  .honeycomboverride > *:first-child {
+  .honeycomboverride > * > * > * > *:first-child {
     margin-left: 2.375rem /* 38px */ !important;
   }
 }
