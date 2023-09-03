@@ -1,5 +1,5 @@
 import { prisma } from '@repo/db';
-import { TrackCard } from '~/app/tracks/_components/track-card';
+import { TrackCard } from './track-card';
 
 export async function TrackGrid() {
   const tracks = await getTracks();

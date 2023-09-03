@@ -7,7 +7,7 @@ import { Button } from '@repo/ui';
 import { SolutionEditor } from './solution-editor';
 import NoSolutions from './nosolutions';
 import SubmitSolution from './submit-solution';
-import type { ChallengeSolutionsRouteData } from '~/app/challenge/[id]/solutions/page';
+import type { ChallengeSolutionsRouteData } from '~/app/[locale]/challenge/[id]/solutions/page';
 import { getRelativeTime } from '~/utils/relativeTime';
 
 interface Props {

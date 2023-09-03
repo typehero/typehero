@@ -2,13 +2,13 @@
 import { useSelectedLayoutSegments } from 'next/navigation';
 import { CodePanel } from '@repo/monaco';
 import { useSession } from '@repo/auth/react';
-import { SettingsButton } from '../_components/editor-settings/editor-settings-button';
 import type { ChallengeRouteData } from './getChallengeRouteData';
 import { SubmissionOverview } from './submissions/_components/overview';
 import { saveSubmission } from './submissions/save-submission.action';
 import { FullscreenButton } from '../_components/fullscreen';
 import { ResetEditorButton } from '../_components/reset-editor-button';
 import { EditorShortcutsButton } from '../_components/editor-shortcuts/editor-shortcuts-button';
+import { SettingsButton } from '../_components/settings/settings-button';
 
 export function Wrapper({ challenge }: { challenge: ChallengeRouteData }) {
   const segments = useSelectedLayoutSegments();

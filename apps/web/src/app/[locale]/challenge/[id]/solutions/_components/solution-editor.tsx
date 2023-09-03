@@ -16,7 +16,7 @@ import {
 } from '@repo/ui';
 import { postSolution } from './post-solution.action';
 import { RichMarkdownEditor } from '~/components/ui/rich-markdown-editor';
-import type { ChallengeSolutionsRouteData } from '~/app/challenge/[id]/solutions/page';
+import type { ChallengeSolutionsRouteData } from '~/app/[locale]/challenge/[id]/solutions/page';
 
 const getDefaultMarkdown = (solution: string) => `
 ## Thoughts

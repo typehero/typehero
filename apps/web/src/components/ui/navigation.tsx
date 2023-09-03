@@ -17,7 +17,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import { FeatureFlagContext } from '~/app/feature-flag-provider';
-import { useFullscreenSettingsStore } from '../../app/challenge/_components/fullscreen';
+import { useFullscreenSettingsStore } from '../../app/[locale]/challenge/_components/fullscreen';
 
 export function getAdminUrl() {
   // reference for vercel.com
@@ -38,9 +38,8 @@ export function Navigation() {
     <header className="z-10 w-full">
       {!fssettings.isFullscreen && (
         <nav
-          className={`flex h-14 items-center text-sm font-medium ${
-            pathname?.startsWith('/challenge') ? 'px-4' : 'container'
-          }`}
+          className={`flex h-14 items-center text-sm font-medium ${pathname?.startsWith('/challenge') ? 'px-4' : 'container'
+            }`}
         >
           <div className="flex w-full items-center justify-between">
             <div className="relative flex items-center gap-3">

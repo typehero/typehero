@@ -4,7 +4,7 @@ import { GitBranch } from '@repo/ui/icons';
 import { clsx } from 'clsx';
 import { type CSSProperties } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { contributors } from '../../../../public/contributors';
+import { contributors } from '../../../../../public/contributors';
 import styles from './community.module.css';
 import Image from 'next/image';
 

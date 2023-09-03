@@ -14,7 +14,7 @@
       hsla(var(--background) / 0.95) 33%,
       hsl(var(--background)) 50%
     ),
-    url('../../../assets/images/background_pattern.webp');
+    url('../../../../assets/images/background_pattern.webp');
   background-size: cover;
   background-position-y: top;
   background-position-x: center;
@@ -50,7 +50,7 @@
         hsla(var(--background) / 0.95) 15%,
         hsl(var(--background)) 30%
       ),
-      url('../../../assets/images/background_pattern.webp');
+      url('../../../../assets/images/background_pattern.webp');
     background-size: 1800px;
 
     background-position-y: top;
