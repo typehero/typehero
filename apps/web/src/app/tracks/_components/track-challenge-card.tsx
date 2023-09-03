@@ -3,12 +3,14 @@
 import { Check } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { useIsMobile } from '~/utils/useIsMobile';
+
 import type { Tracks } from './track-grid';
 
 interface TrackChallengeProps {
   challenge: Tracks[number]['trackChallenges'][number]['challenge'];
   className?: string;
   mock?: boolean;
+  showDescriptionOnHover?: boolean
 }
 
 const COLORS_BY_DIFFICULTY = {
@@ -27,7 +29,7 @@ const BGS_BY_DIFFICULTY = {
   EXTREME: 'to-orange-600/20 dark:to-orange-300/20',
 } as const;
 
-export function TrackChallenge({ challenge, className, mock }: TrackChallengeProps) {
+export function TrackChallenge({ challenge, className, mock, showDescriptionOnHover }: TrackChallengeProps) {
   const isMobile = useIsMobile();
   return (
     <label
@@ -44,19 +46,22 @@ export function TrackChallenge({ challenge, className, mock }: TrackChallengePro
             'group-hover/challenge:scale-105 group-hover/challenge:rounded-xl group-hover/challenge:bg-neutral-500/20',
         )}
       >
-        <div className="relative flex items-center gap-3 text-xs sm:text-base">
-          {mock == true && (
-            <>
-              <input
-                className="peer hidden appearance-none"
-                type="checkbox"
-                id={challenge.id.toString()}
-              />
-              <div className="h-5 w-5 rounded-full border border-black/70 bg-black/10 duration-75 peer-checked:border-transparent peer-checked:bg-green-600/80 dark:border-white/50 dark:bg-white/10 peer-checked:dark:bg-green-300/80" />
-              <Check className="absolute left-1 my-auto h-3 w-3 scale-0 stroke-[4] text-white duration-300 peer-checked:scale-100 dark:text-black" />
-            </>
-          )}
-          {challenge.name}
+        <div className="relative flex flex-col gap-3 text-xs sm:text-base">
+          <div className="relative flex items-center gap-3 text-xs sm:text-base">
+            {mock == true && (
+              <>
+                <input
+                  className="peer hidden appearance-none"
+                  type="checkbox"
+                  id={challenge.id.toString()}
+                />
+                <div className="h-5 w-5 rounded-full border border-black/70 bg-black/10 duration-75 peer-checked:border-transparent peer-checked:bg-green-600/80 dark:border-white/50 dark:bg-white/10 peer-checked:dark:bg-green-300/80" />
+                <Check className="absolute left-1 my-auto h-3 w-3 scale-0 stroke-[4] text-white duration-300 peer-checked:scale-100 dark:text-black" />
+              </>
+            )}
+            {challenge.name}
+          </div>
+          {showDescriptionOnHover == true && <p className="opacity-0 h-0 group-hover/challenge:opacity-100 group-hover/challenge:h-auto transition-all duration-200 ease-in text-sm">{challenge.shortDescription}</p>}
         </div>
         <div
           className={`relative text-xs font-medium tracking-wide ${

@@ -60,7 +60,7 @@ export async function getTrackDetails(id: number) {
           enrolledUsers: true,
         },
       },
-      trackChallenges: {include: {challenge: true}},
+      trackChallenges: { include: { challenge: { include: { submission: true } } } },
       enrolledUsers: {
         where: {
           id: session?.user.id,

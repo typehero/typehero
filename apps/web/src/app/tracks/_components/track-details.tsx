@@ -1,7 +1,13 @@
 import { getServerAuthSession } from '@repo/auth/server';
+
 import { EnrollButton } from './enroll-button';
-import { enrollUserInTrack, getTrackDetails, unenrollUserFromTrack } from './track.action';
 import { TrackChallenge } from './track-challenge-card';
+import { TrackProgress } from './track-progress';
+import {
+  enrollUserInTrack,
+  getTrackDetails,
+  unenrollUserFromTrack,
+} from './track.action';
 
 interface TrackDetailProps {
   // trackid
@@ -19,11 +25,23 @@ const difficultyToNumber = {
 export async function TrackDetail({ slug }: TrackDetailProps) {
   const session = await getServerAuthSession();
   const trackId = parseInt(slug);
-  const trackChallenge = await getTrackDetails(trackId);
-  const challenges = trackChallenge?.trackChallenges.map(x => x.challenge) ?? []
-  const isEnrolled = trackChallenge?.enrolledUsers.findIndex(
+  const track = await getTrackDetails(trackId);
+  const challenges = track?.trackChallenges.map(x => x.challenge) ?? []
+  const isEnrolled = track?.enrolledUsers.findIndex(
     (user) => user.id === session?.user.id,
   );
+  // Calculates the total number of successful challenges.
+  function calulcateCompletedChallenges(): number {
+    let completedChallenges = 0;
+    for (const trackChallenge of track!.trackChallenges) {
+      for (const submission of trackChallenge.challenge.submission) {
+        if (submission.isSuccessful) {
+          completedChallenges++;
+        }
+      }
+    }
+    return completedChallenges;
+  }
 
   return (
     <div className="container flex flex-col gap-8 py-5 md:gap-16 md:pb-20">
@@ -34,11 +52,17 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
               Track
             </h3>
             <h1 className="mb-8 text-4xl font-bold tracking-tight text-neutral-900 dark:text-white">
-              {trackChallenge?.title}
+              {track?.title}
             </h1>
             <p className=" max-w-[69ch] text-lg leading-10 text-neutral-600 dark:text-white/50">
-              {trackChallenge?.description}
+              {track?.description}
             </p>
+            {isEnrolled !== -1 && <div className="my-3">
+              <TrackProgress
+                completedChallenges={calulcateCompletedChallenges()}
+                totalChallenges={challenges.length}
+              />
+            </div>}
           </div>
           <div className="flex flex-row items-center">
             {isEnrolled === -1 ? (
@@ -56,7 +80,7 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
                 : a.name.localeCompare(b.name),
             )
             .map((challenge) => (
-                <TrackChallenge challenge={challenge} key={challenge.id} mock/>
+                <TrackChallenge challenge={challenge} key={challenge.id} mock showDescriptionOnHover/>
             ))}
         </div>
       </div>
