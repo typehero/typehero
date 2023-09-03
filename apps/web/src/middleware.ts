@@ -1,11 +1,11 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { createI18nMiddleware } from 'next-international/middleware'
+import { createI18nMiddleware } from 'next-international/middleware';
 
 const I18nMiddleware = createI18nMiddleware({
   locales: ['en'],
   defaultLocale: 'en',
   urlMappingStrategy: 'rewrite',
-})
+});
 
 export function middleware(req: NextRequest) {
   const { VERCEL_ENV: vercelEnv, STAGING: staging = false } = process.env;
@@ -26,5 +26,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!api|static|.*\\..*|_next|favicon.ico|robots.txt).*)']
-}
+  matcher: ['/((?!api|static|.*\\..*|_next|favicon.ico|robots.txt).*)'],
+};

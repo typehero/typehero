@@ -1,1 +1,1 @@
-export default {} as const
+export default {} as const;

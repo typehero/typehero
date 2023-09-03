@@ -25,9 +25,7 @@ export function Providers({ children }: Props) {
         <ThemeProvider attribute="class">
           <FeatureFlagProvider>
             <TooltipProvider>
-              <I18nProviderClient fallbackLocale={en}>
-                {children}
-              </I18nProviderClient>
+              <I18nProviderClient fallbackLocale={en}>{children}</I18nProviderClient>
             </TooltipProvider>
           </FeatureFlagProvider>
           {shouldInjectToolbar ? <VercelToolbar /> : null}
