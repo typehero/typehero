@@ -117,7 +117,7 @@ export default function SplitEditor({
       <div
         className={clsx('transition-all', {
           'h-[30vh]': expandTestPanel,
-          'h-0': !expandTestPanel,
+          'hidden': !expandTestPanel,
         })}
       >
         <CodeEditor
