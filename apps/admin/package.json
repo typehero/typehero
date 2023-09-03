@@ -26,7 +26,7 @@
     "@tanstack/react-query": "^4.29.25",
     "@tanstack/react-table": "^8.9.3",
     "clsx": "^2.0.0",
-    "million": "2.6.0-beta.11",
+    "million": "2.6.0-beta.12",
     "next": "13.4.19",
     "next-auth": "^4.22.1",
     "next-themes": "^0.2.1",
