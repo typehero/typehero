@@ -32,7 +32,7 @@ function TypeHeroLogo() {
 }
 
 async function Hero() {
-  const t = await getScopedI18n('landing.hero')
+  const t = await getScopedI18n('landing.hero');
 
   return (
     <section className="-mt-[56px] min-h-[calc(100vh)] overflow-hidden lg:min-h-0 lg:pt-[56px]">
@@ -50,9 +50,7 @@ async function Hero() {
           </div>
 
           <p className="max-w-[55ch] bg-transparent px-8 text-center font-medium leading-8 text-black/60 dark:text-white/50 lg:px-0 lg:text-left">
-            <Balancer>
-              {t('description')}
-            </Balancer>
+            <Balancer>{t('description')}</Balancer>
           </p>
           <div className="flex flex-col gap-3 md:flex-row">
             <Button
