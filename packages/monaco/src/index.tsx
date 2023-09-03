@@ -190,8 +190,11 @@ export function CodePanel(props: CodePanelProps) {
             Tests
             {isTestPanelExpanded ? <ChevronDown size={16} /> : <ChevronUp size={16} />}
           </Button>
-          {hasFailingTest && <XCircle className="stroke-red-600 dark:stroke-red-300" />}
-          {!hasFailingTest && <CheckCircle2 className="stroke-green-600 dark:stroke-green-300" />}
+          {hasFailingTest ? (
+            <XCircle className="stroke-red-600 dark:stroke-red-300" />
+          ) : (
+            <CheckCircle2 className="stroke-green-600 dark:stroke-green-300" />
+          )}
         </div>
         <div className="flex items-center justify-between gap-4">
           <Tooltip>

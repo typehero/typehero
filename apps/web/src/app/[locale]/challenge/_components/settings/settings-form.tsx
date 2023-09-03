@@ -42,8 +42,6 @@ export function SettingsForm() {
   });
   const isVimBindings = form.getValues().bindings === 'vim';
 
-  console.log(form.formState.errors);
-
   function onSubmit(data: FormSchema) {
     updateSettings(data);
     toast({
