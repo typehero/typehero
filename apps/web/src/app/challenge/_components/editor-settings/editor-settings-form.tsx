@@ -40,6 +40,7 @@ export function SettingsForm() {
     resolver: zodResolver(formSchema),
     defaultValues: settings,
   });
+  const isVimBindings = form.getValues().bindings === 'vim';
 
   function onSubmit(data: FormSchema) {
     updateSettings(data);
@@ -55,12 +56,12 @@ export function SettingsForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <FormField
           control={form.control}
           name="fontSize"
           render={({ field }) => (
-            <FormItem className="mb-3">
+            <FormItem>
               <FormLabel>Font Size</FormLabel>
               <Select defaultValue={field.value} onValueChange={field.onChange}>
                 <FormControl>
@@ -89,7 +90,7 @@ export function SettingsForm() {
           control={form.control}
           name="tabSize"
           render={({ field }) => (
-            <FormItem className="mb-3">
+            <FormItem>
               <FormLabel>Tab Size</FormLabel>
               <Select defaultValue={field.value} onValueChange={field.onChange}>
                 <FormControl>
@@ -110,12 +111,12 @@ export function SettingsForm() {
           control={form.control}
           name="bindings"
           render={({ field }) => (
-            <FormItem className="mb-3">
+            <FormItem>
               <FormLabel>Key Bindings</FormLabel>
               <Select defaultValue={field.value} onValueChange={field.onChange}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a font size" />
+                    <SelectValue placeholder="Select Key Binding Style" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -127,23 +128,25 @@ export function SettingsForm() {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="vimConfig"
-          render={({ field: { value, ...field } }) => (
-            <FormItem className="mb-3">
-              <FormLabel>Vim Config</FormLabel>
-              <Textarea
-                value={value || DEFAULT_SETTINGS.vimConfig}
-                className="resize-none font-mono"
-                {...field}
-              />
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {isVimBindings ? (
+          <FormField
+            control={form.control}
+            name="vimConfig"
+            render={({ field: { value, ...field } }) => (
+              <FormItem>
+                <FormLabel>Vim Config</FormLabel>
+                <Textarea
+                  value={value || DEFAULT_SETTINGS.vimConfig}
+                  className="h-60 resize-none font-mono"
+                  {...field}
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        ) : null}
 
-        <DialogFooter>
+        <DialogFooter className="mt-3">
           <DialogPrimitive.Close asChild>
             <Button type="submit">Save</Button>
           </DialogPrimitive.Close>
