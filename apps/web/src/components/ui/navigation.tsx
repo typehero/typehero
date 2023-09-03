@@ -17,7 +17,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import { FeatureFlagContext } from '~/app/feature-flag-provider';
-import { useFullscreenSettingsStore } from '../../app/challenge/_components/fullscreen';
+import { useFullscreenSettingsStore } from '../../app/[locale]/challenge/_components/fullscreen';
 
 export function getAdminUrl() {
   // reference for vercel.com
