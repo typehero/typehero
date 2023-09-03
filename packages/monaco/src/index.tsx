@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { ChevronDown, ChevronUp, Loader2, XCircle, CheckCircle2 } from '@repo/ui/icons';
+import { ChevronUp, Loader2, XCircle, CheckCircle2 } from '@repo/ui/icons';
 import type * as monaco from 'monaco-editor';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
@@ -188,7 +188,7 @@ export function CodePanel(props: CodePanelProps) {
             }}
           >
             Tests
-            {isTestPanelExpanded ? <ChevronDown size={16} /> : <ChevronUp size={16} />}
+            {isTestPanelExpanded ? <ChevronUp className="transform transition rotate-180" size={16} /> : <ChevronUp className="transform transition" size={16} />}
           </Button>
           {hasFailingTest ? (
             <XCircle className="stroke-red-600 dark:stroke-red-300" />
