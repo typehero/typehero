@@ -2,7 +2,7 @@
 import { useSelectedLayoutSegments } from 'next/navigation';
 import { CodePanel } from '@repo/monaco';
 import { useSession } from '@repo/auth/react';
-import { SettingsButton } from '../_components/settings/settings-button';
+import { SettingsButton } from '../_components/editor-settings/editor-settings-button';
 import type { ChallengeRouteData } from './getChallengeRouteData';
 import { SubmissionOverview } from './submissions/_components/overview';
 import { saveSubmission } from './submissions/save-submission.action';

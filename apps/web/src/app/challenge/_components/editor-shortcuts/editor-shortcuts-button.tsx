@@ -8,8 +8,8 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@repo/ui';
-import { Command } from '@repo/ui/icons';
 import { EditorShortcuts } from './editor-shortcuts-form';
+import { SquareSlash } from '@repo/ui/icons';
 
 export function EditorShortcutsButton() {
   return (
@@ -17,7 +17,7 @@ export function EditorShortcutsButton() {
       <DialogTrigger>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Command className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" size={20} />
+            <SquareSlash className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" size={20} />
           </TooltipTrigger>
           <TooltipContent className="px-2 py-1">Shortcuts</TooltipContent>
         </Tooltip>
