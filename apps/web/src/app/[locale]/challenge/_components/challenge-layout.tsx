@@ -39,7 +39,6 @@ const MOBILE_BREAKPOINT = 1025;
 export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
   const parent = useRef<HTMLDivElement>(null);
   const resizer = useRef<HTMLDivElement>(null);
-  // const leftSide = useRef<HTMLDivElement>(null);
   const rightSide = useRef<HTMLDivElement>(null);
 
   const { settings, updateSettings } = useLayoutSettingsStore();
