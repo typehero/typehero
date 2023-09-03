@@ -11,28 +11,26 @@ const usePanelAdjustments = (
     if (!leftSide.current) return;
 
     if (isDesktop) {
-        leftSide.current.style.width = DEFAULT_DESKTOP_WIDTH_PX;
-        leftSide.current.style.minWidth = DEFAULT_DESKTOP_WIDTH_PX;
+      leftSide.current.style.width = DEFAULT_DESKTOP_WIDTH_PX;
+      leftSide.current.style.minWidth = DEFAULT_DESKTOP_WIDTH_PX;
     } else {
-        leftSide.current.style.height = DEFAULT_DESKTOP_WIDTH_PX;
-        leftSide.current.style.minHeight = DEFAULT_DESKTOP_WIDTH_PX;
+      leftSide.current.style.height = DEFAULT_DESKTOP_WIDTH_PX;
+      leftSide.current.style.minHeight = DEFAULT_DESKTOP_WIDTH_PX;
     }
     leftSide.current.style.opacity = '100%';
-}, [DEFAULT_DESKTOP_WIDTH_PX, isDesktop]);
+  }, [DEFAULT_DESKTOP_WIDTH_PX, isDesktop]);
 
-const collapsePanel = useCallback(() => {
-    
+  const collapsePanel = useCallback(() => {
     if (!leftSide.current) return;
     if (isDesktop) {
-        leftSide.current.style.width = '0px';
-        leftSide.current.style.minWidth = '0px';
+      leftSide.current.style.width = '0px';
+      leftSide.current.style.minWidth = '0px';
     } else {
-        leftSide.current.style.height = '0px';
-        leftSide.current.style.minHeight = '0px';
+      leftSide.current.style.height = '0px';
+      leftSide.current.style.minHeight = '0px';
     }
     leftSide.current.style.opacity = '0%';
-}, [isDesktop]);
-
+  }, [isDesktop]);
 
   const isLeftPanelCollapsed = useCallback(() => {
     if (!leftSide.current) return false;
@@ -44,8 +42,6 @@ const collapsePanel = useCallback(() => {
       (isDesktop && actualWidthInPixels < LEFT_PANEL_BREAKPOINT) ||
       (!isDesktop && actualHeightInPixels < LEFT_PANEL_BREAKPOINT)
     );
-
-    
   }, [LEFT_PANEL_BREAKPOINT, isDesktop]);
 
   const adjustPanelSize = useCallback(
@@ -70,15 +66,15 @@ const collapsePanel = useCallback(() => {
         ? (leftSide.current.style.width = `${sizeValue}%`)
         : (leftSide.current.style.height = `${sizeValue}%`);
     },
-    [LEFT_PANEL_BREAKPOINT, expandPanel, isDesktop, isLeftPanelCollapsed]
+    [LEFT_PANEL_BREAKPOINT, expandPanel, isDesktop, isLeftPanelCollapsed],
   );
 
   return {
     leftSide,
     adjustPanelSize,
-    expandPanel, 
+    expandPanel,
     collapsePanel,
-    isLeftPanelCollapsed
+    isLeftPanelCollapsed,
   };
 };
 
