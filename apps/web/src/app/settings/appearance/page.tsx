@@ -1,6 +1,6 @@
 import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
-import { NewSettings } from '~/components/settings/new-settings';
+import { Appearance } from '~/components/settings/appearance';
 
 export default async function SettingsPage() {
   const session = await getServerAuthSession();
@@ -34,7 +34,7 @@ export default async function SettingsPage() {
 
   return (
     <>
-      <NewSettings user={profileData} />
+      <Appearance user={profileData} />
     </>
   );
 }
