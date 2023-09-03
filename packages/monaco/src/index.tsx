@@ -188,7 +188,11 @@ export function CodePanel(props: CodePanelProps) {
             }}
           >
             Tests
-            {isTestPanelExpanded ? <ChevronUp className="transform transition rotate-180" size={16} /> : <ChevronUp className="transform transition" size={16} />}
+            {isTestPanelExpanded ? (
+              <ChevronUp className="rotate-180 transform transition" size={16} />
+            ) : (
+              <ChevronUp className="transform transition" size={16} />
+            )}
           </Button>
           {hasFailingTest ? (
             <XCircle className="stroke-red-600 dark:stroke-red-300" />
