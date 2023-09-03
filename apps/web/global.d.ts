@@ -13,5 +13,6 @@ declare namespace NodeJS {
     PORT: number;
     RESEND_API_KEY: string;
     EDGE_CONFIG: string;
+    STAGING?: string;
   }
 }

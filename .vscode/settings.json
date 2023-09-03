@@ -1,6 +1,5 @@
 {
   "typescript.tsdk": "node_modules/typescript/lib",
-  "prettier.prettierPath": "./node_modules/prettier",
   "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
   "json.schemas": [
     {

@@ -1,14 +1,9 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "@repo/tsconfig/react-library.json",
   "compilerOptions": {
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "monaco-editor.d.ts",
-    "monaco-vim.d.ts",
-    "../../monaco-editor.d copy.ts"
-  ],
+  "include": ["**/*.ts", "**/*.tsx", "monaco-editor.d.ts", "monaco-vim.d.ts"],
   "exclude": ["node_modules"]
 }
