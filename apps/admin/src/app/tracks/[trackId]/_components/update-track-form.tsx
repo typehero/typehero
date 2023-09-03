@@ -179,10 +179,6 @@ export function UpdateTrackForm({ challenges, track }: Props) {
                   console.log(base.backgroundColor);
                   return {
                     ...base,
-                    // ':hover': {
-                    //   ...base[':hover'],
-                    //   backgroundColor: 'hsl(var(--secondary))',
-                    // },
                     ':active': {
                       ...base[':active'],
                       backgroundColor: 'hsl(var(--secondary))',
