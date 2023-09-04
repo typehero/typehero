@@ -52,6 +52,9 @@ importers:
       '@repo/emails':
         specifier: workspace:*
         version: link:../../packages/email
+      '@repo/lint':
+        specifier: workspace:*
+        version: link:../../tooling/config-eslint
       '@repo/monaco':
         specifier: workspace:*
         version: link:../../packages/monaco

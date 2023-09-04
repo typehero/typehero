@@ -21,6 +21,7 @@
     "@repo/emails": "workspace:*",
     "@repo/monaco": "workspace:*",
     "@repo/ui": "workspace:*",
+    "@repo/lint": "workspace:*",
     "@tanstack/react-query": "^4.29.25",
     "@tanstack/react-table": "^8.9.3",
     "clsx": "^2.0.0",
