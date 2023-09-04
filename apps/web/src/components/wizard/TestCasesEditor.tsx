@@ -51,7 +51,6 @@ export function TestCasesEditor({ form, hasTsErrors, setTsErrors }: Props) {
         const errors = await Promise.all([
           ts.getSemanticDiagnostics(filename),
           ts.getSyntacticDiagnostics(filename),
-          ts.getSuggestionDiagnostics(filename),
           ts.getCompilerOptionsDiagnostics(filename),
         ] as const);
 
