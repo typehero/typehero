@@ -1,0 +1,12 @@
+.highlighted {
+  border-radius: 3px;
+  animation: highlight 3000ms ease-out;
+}
+@keyframes highlight {
+  0% {
+    background-color: #f7d100;
+  }
+  100% {
+    background-color: transparent;
+  }
+}

@@ -1,6 +1,6 @@
 'use client';
 
-import type { CommentRoot } from '@repo/db/types';
+import type { Comment as CommentType, CommentRoot } from '@repo/db/types';
 import {
   Button,
   Select,
@@ -11,23 +11,18 @@ import {
   Toggle,
   toast,
 } from '@repo/ui';
-import {
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  MessageCircle,
-  ArrowDownNarrowWide,
-  ArrowUpNarrowWide,
-} from '@repo/ui/icons';
+import { ChevronDown, ChevronLeft, ChevronRight, MessageCircle } from '@repo/ui/icons';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
-import { useRef, useState } from 'react';
+import { ArrowDownNarrowWide, ArrowUpNarrowWide } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 import { Comment } from './comment';
 import { CommentInput } from './comment-input';
 import { CommentSkeleton } from './comment-skeleton';
 import { addComment } from './comment.action';
-import { getPaginatedComments, type SortOrder } from './getCommentRouteData';
+import { getPaginatedComments, getSkeletonComments, type SortOrder } from './getCommentRouteData';
 import NoComments from './nocomments';
+import { COMMENT_PAGESIZE } from '~/app/constants';
 
 const sortKeys = [
   {
@@ -43,29 +38,122 @@ const sortKeys = [
     value: 'replies',
   },
 ] as const;
+
 interface Props {
   rootId: number;
   type: CommentRoot;
+  selectedComment?: CommentType | null;
 }
 
-export function Comments({ rootId, type }: Props) {
-  const [showComments, setShowComments] = useState(false);
+export function Comments({ rootId, type, selectedComment }: Props) {
+  const [showComments, setShowComments] = useState<boolean>(selectedComment != null);
   const [text, setText] = useState('');
   const commentContainerRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(selectedComment ? 0 : 1);
   const [sortKey, setSortKey] = useState<(typeof sortKeys)[number]>(sortKeys[0]);
   const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
+  const [selectedCommentIndex, setSelectedCommentIndex] = useState({
+    commentIndex: -1,
+    replyIndex: -1,
+  });
 
   const queryKey = [`${type.toLowerCase()}-${rootId}-comments`, sortKey.value, sortOrder, page];
 
-  const { status, data } = useQuery({
-    queryKey,
+  const skeletonQueryKey = [
+    `${type.toLowerCase()}-${rootId}-comments-skeleton`,
+    sortKey.value,
+    sortOrder,
+    page,
+  ];
+  const skeletonData = useQuery({
+    queryKey: skeletonQueryKey,
     queryFn: () =>
-      getPaginatedComments({ rootId, page, rootType: type, sortKey: sortKey.value, sortOrder }),
+      getSkeletonComments({ rootId, rootType: type, sortKey: sortKey.value, sortOrder }),
     keepPreviousData: true,
     staleTime: 5000,
   });
+
+  const p = page < 1 ? 1 : page;
+  const { status, data } = useQuery({
+    queryKey,
+    queryFn: () =>
+      getPaginatedComments({ rootId, page: p, rootType: type, sortKey: sortKey.value, sortOrder }),
+    keepPreviousData: true,
+    staleTime: 5000,
+  });
+
+  useEffect(() => {
+    function calculateSelectedCommentIndex() {
+      if (!selectedComment) return;
+      if (!skeletonData) return;
+      if (skeletonData.data == undefined) return;
+
+      // only re-calculate the index of selectedComment if it's not already correct
+      if (
+        skeletonData.data[selectedCommentIndex.commentIndex]?.id == selectedComment.id ||
+        skeletonData.data[selectedCommentIndex.commentIndex]?.replies[
+          selectedCommentIndex.replyIndex
+        ]?.id == selectedComment.id
+      )
+        return;
+
+      // get index of selectedComment
+      // due to different sortKey s, we have to iterate over the entire array to find
+      // the page index of selectedComment, there's no closed form
+      for (let i = 0; i < skeletonData.data.length; i++) {
+        const currentComment = skeletonData.data[i];
+        if (currentComment?.id == selectedComment.id) {
+          return setSelectedCommentIndex({
+            commentIndex: i,
+            replyIndex: -1,
+          });
+        }
+        if (selectedComment?.parentId != null) {
+          // for the typescript
+          if (currentComment == undefined) continue;
+
+          for (let j = 0; j < currentComment.replies.length; j++) {
+            const reply = currentComment.replies[j];
+            if (reply?.id == selectedComment.id) {
+              if (!reply?.visible) {
+                // TODO: moarbetter words
+                toast({
+                  title: "Can't show this comment.",
+                  description: <p>We can't display this comment.</p>,
+                });
+
+                return setSelectedCommentIndex({
+                  commentIndex: -1,
+                  replyIndex: -1,
+                });
+              }
+
+              return setSelectedCommentIndex({
+                commentIndex: i,
+                replyIndex: j,
+              });
+            }
+          }
+        }
+      }
+
+      // comment isn't found, UB
+      // toast to alert the user, but apart from that idk what to do
+      toast({
+        title: '404 - Not Found',
+        variant: 'destructive',
+        description: <p>We couldn't find the comment you're looking for.</p>,
+      });
+    }
+
+    calculateSelectedCommentIndex();
+
+    if (selectedCommentIndex.commentIndex > 0 && page < 1) {
+      console.log(selectedCommentIndex);
+      setPage(Math.floor(selectedCommentIndex.commentIndex / COMMENT_PAGESIZE) + 1);
+    }
+  }, [skeletonData, selectedComment, selectedCommentIndex]);
 
   async function createChallengeComment() {
     try {
@@ -87,6 +175,7 @@ export function Comments({ rootId, type }: Props) {
       }
       setText('');
       queryClient.invalidateQueries(queryKey);
+      queryClient.invalidateQueries(skeletonQueryKey);
     } catch (e) {
       toast({
         title: 'Unauthorized',
@@ -201,15 +290,27 @@ export function Comments({ rootId, type }: Props) {
               (data.comments.length === 0 ? (
                 <NoComments />
               ) : (
-                data.comments.map((comment) => (
-                  <Comment
-                    comment={comment}
-                    key={comment.id}
-                    queryKey={queryKey}
-                    rootId={rootId}
-                    type={type}
-                  />
-                ))
+                data.comments.map((comment, index) => {
+                  console.log(index, page);
+                  const offset = COMMENT_PAGESIZE * (page - 1);
+                  console.log(offset);
+
+                  return (
+                    <Comment
+                      selected={{
+                        isSelected: index + offset == selectedCommentIndex.commentIndex,
+                        isReplySelected: selectedCommentIndex.replyIndex != -1,
+                        replyIndex: selectedCommentIndex.replyIndex,
+                      }}
+                      comment={comment}
+                      key={comment.id}
+                      queryKey={queryKey}
+                      skeletonQueryKey={skeletonQueryKey}
+                      rootId={rootId}
+                      type={type}
+                    />
+                  );
+                })
               ))}
           </div>
           {(data?.totalPages ?? 0) > 1 && (

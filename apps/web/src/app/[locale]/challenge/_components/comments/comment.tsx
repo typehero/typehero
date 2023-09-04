@@ -21,6 +21,7 @@ import {
   type SelectedCommentProps,
 } from './getCommentRouteData';
 import { COMMENT_PAGESIZE } from '~/app/constants';
+import classes from './highlight.module.css';
 
 interface SingleCommentProps {
   comment: PaginatedComments['comments'][number];
@@ -30,6 +31,7 @@ interface SingleCommentProps {
   onClickReply?: () => void;
   onClickToggleReply?: () => void;
   queryKey?: (number | string)[];
+  skeletonQueryKey?: (number | string)[];
   replyQueryKey?: (number | string)[];
   highlight?: boolean | undefined;
 }
@@ -68,9 +70,12 @@ export function Comment({
   rootId,
   type,
   queryKey,
+  skeletonQueryKey,
   selected,
 }: CommentProps) {
-  const [showReplies, setShowReplies] = useState(false);
+  const [showReplies, setShowReplies] = useState(
+    selected && selected.isSelected && selected.isReplySelected,
+  );
 
   const [isReplying, setIsReplying] = useState(false);
   const [replyText, setReplyText] = useState('');
@@ -118,6 +123,7 @@ export function Comment({
       setReplyText('');
       queryClient.invalidateQueries(replyQueryKey);
       queryClient.invalidateQueries(queryKey);
+      if (skeletonQueryKey) queryClient.invalidateQueries(skeletonQueryKey);
       setShowReplies(true);
     } catch (e) {
       toast({
@@ -131,6 +137,8 @@ export function Comment({
   const toggleReplies = () => setShowReplies(!showReplies);
   const toggleIsReplying = () => setIsReplying(!isReplying);
 
+  console.log(selected);
+
   return (
     <div className="flex flex-col px-2 py-1">
       <SingleComment
@@ -139,7 +147,7 @@ export function Comment({
         onClickReply={toggleIsReplying}
         onClickToggleReply={toggleReplies}
         readonly={readonly}
-        highlight={selected && selected.isSelected ? !selected.isReplySelected : null}
+        highlight={selected ? (selected.isSelected ? !selected.isReplySelected : false) : false}
       />
       {isReplying ? (
         <div className="relative mt-2 pb-2 pl-8">
@@ -159,23 +167,34 @@ export function Comment({
         </div>
       ) : null}
 
-      {showReplies || (selected && selected.isSelected && selected.isReplySelected) ? (
+      {showReplies ? (
         <div className="flex flex-col gap-1 pl-6 pt-1">
           {data?.pages.flatMap((page) =>
-            page.comments.map((reply, index) => (
+            page.comments.map((reply, index) => {
+              let indexOfSelectedReplyOnPage = -1;
+              // reply 0 is rendered last, so reverse the index in a funny way
+              if (selected) {
+                indexOfSelectedReplyOnPage = COMMENT_PAGESIZE - selected.replyIndex;
+                if (indexOfSelectedReplyOnPage >= page.comments.length)
+                  indexOfSelectedReplyOnPage = page.comments.length - 1 - selected.replyIndex;
+              }
+
               // this is a reply
-              <SingleComment
-                comment={reply}
-                isReply
-                key={reply.id}
-                replyQueryKey={replyQueryKey}
-                highlight={
-                  selected &&
-                  selected.isSelected &&
-                  selected.isReplySelected ? selected.replyIndex == page.pageIndex * COMMENT_PAGESIZE + index : null
-                }
-              />
-            )),
+              return (
+                <SingleComment
+                  comment={reply}
+                  isReply
+                  key={reply.id}
+                  replyQueryKey={replyQueryKey}
+                  highlight={
+                    selected && selected.isSelected && selected.isReplySelected
+                      ? indexOfSelectedReplyOnPage ==
+                        (page.pageIndex - 1) * COMMENT_PAGESIZE + index
+                      : false
+                  }
+                />
+              );
+            }),
           )}
         </div>
       ) : null}
@@ -200,12 +219,26 @@ function SingleComment({
   isReply,
   isToggleReply,
   queryKey,
+  skeletonQueryKey,
   replyQueryKey,
   highlight,
 }: SingleCommentProps) {
   const queryClient = useQueryClient();
   const [text, setText] = useState(comment.text);
   const [isEditing, setIsEditing] = useState(false);
+  const [hasHighlighted, setHasHighlighted] = useState(false);
+
+  useEffect(() => {
+    if (!hasHighlighted && highlight) {
+      // wait 3 seconds, then remove highlight
+      const timeout = setTimeout(() => {
+        setHasHighlighted(true);
+      }, 3000);
+      return () => {
+        if (timeout) clearTimeout(timeout);
+      };
+    }
+  }, []);
 
   const session = useSession();
 
@@ -225,6 +258,7 @@ function SingleComment({
       }
       queryClient.invalidateQueries(queryKey);
       queryClient.invalidateQueries(replyQueryKey);
+      if (skeletonQueryKey) queryClient.invalidateQueries(skeletonQueryKey);
     } catch (e) {
       toast({
         title: 'Unauthorized',
@@ -275,9 +309,12 @@ function SingleComment({
 
   const isAuthor = loggedinUser.data?.user.id === comment.user.id;
 
-  // TODO: animate bg
   return (
-    <div className={`relative rounded-lg p-2 pl-3 ${  highlight ? 'bg-yellow-400' : ''}`}>
+    <div
+      className={`relative rounded-2xl p-2 pl-3 ${
+        highlight && !hasHighlighted ? classes.highlighted : ''
+      }`}
+    >
       <div className="flex items-start justify-between gap-4 pr-[0.4rem]">
         <div className="flex w-full items-center justify-between gap-1">
           <UserBadge username={comment.user.name ?? ''} linkComponent={Link} />
