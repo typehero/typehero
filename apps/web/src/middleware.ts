@@ -18,7 +18,13 @@ export function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
 
   // if path is /explore or /challenge/* and redirect to /waitlist
-  if (path === '/explore' || path.startsWith('/challenge') || path.startsWith('/challenge/') || path.startsWith('/tracks') || path.startsWith('/tracks/')) {
+  if (
+    path === '/explore' ||
+    path.startsWith('/challenge') ||
+    path.startsWith('/challenge/') ||
+    path.startsWith('/tracks') ||
+    path.startsWith('/tracks/')
+  ) {
     return NextResponse.redirect(new URL('/waitlist', req.url));
   }
 
