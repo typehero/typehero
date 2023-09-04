@@ -1,6 +1,8 @@
 {
+  "extends": "@repo/tsconfig/nextjs.json",
   "compilerOptions": {
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "skipLibCheck": true,
     "incremental": true,
     "jsx": "preserve",
     "esModuleInterop": true,

@@ -4,6 +4,7 @@
     "incremental": true,
     "baseUrl": ".",
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "jsx": "preserve",
     "paths": {
       "~/*": ["src/*"]
