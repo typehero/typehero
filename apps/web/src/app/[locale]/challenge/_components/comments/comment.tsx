@@ -211,6 +211,9 @@ export function Comment({
   );
 }
 
+// don't re-highlight on rerender
+let hasHighlighted = false;
+
 function SingleComment({
   comment,
   readonly = false,
@@ -226,19 +229,21 @@ function SingleComment({
   const queryClient = useQueryClient();
   const [text, setText] = useState(comment.text);
   const [isEditing, setIsEditing] = useState(false);
-  const [hasHighlighted, setHasHighlighted] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!hasHighlighted && highlight) {
       // wait 3 seconds, then remove highlight
       const timeout = setTimeout(() => {
-        setHasHighlighted(true);
+        hasHighlighted = true;
       }, 3000);
       return () => {
         if (timeout) clearTimeout(timeout);
       };
     }
-  }, []);
+    const ref = containerRef.current;
+    if (!hasHighlighted) ref?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, [containerRef.current, highlight]);
 
   const session = useSession();
 
@@ -311,6 +316,7 @@ function SingleComment({
 
   return (
     <div
+      ref={containerRef}
       className={`relative rounded-2xl p-2 pl-3 ${
         highlight && !hasHighlighted ? classes.highlighted : ''
       }`}
