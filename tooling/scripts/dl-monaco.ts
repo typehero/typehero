@@ -4,7 +4,7 @@ import path from 'node:path';
 import fetch from 'node-fetch';
 
 /** @link https://typescript.azureedge.net/indexes/releases.json */
-const TYPESCRIPT_VERSION = '5.1.6';
+const TYPESCRIPT_VERSION = '5.2.2';
 
 /** @link https://github.com/microsoft/TypeScript-Make-Monaco-Builds */
 const TS_CDN_BASE_URL = `https://typescript.azureedge.net/cdn/${TYPESCRIPT_VERSION}/monaco`;
@@ -29,31 +29,72 @@ async function fetchFile({
   return fileResponse;
 }
 
-async function downloadAndSaveFile([remoteUrl, diskPath = remoteUrl, appendToStart = '']: readonly [
+async function downloadAndSaveFile([remoteUrl, diskPath = remoteUrl, appendToStart]: readonly [
   remoteUrl: string,
   diskPath?: string,
-  appendToStart?: string,
+  appendToStart?: (dl: string) => string,
 ]) {
-  const textToWrite = await (
+  // if it's a ttf use blob
+  const isBinary = remoteUrl.endsWith('.ttf');
+
+  const fileArrayData = await (
     await fetchFile({
       url: new URL(TS_CDN_BASE_URL + remoteUrl),
       retries: 5,
     })
-  ).text();
+  )[isBinary ? 'blob' : 'text']();
 
   const pathToSave = url.fileURLToPath(
     path.join(import.meta.url, '../../../apps/web/public', diskPath),
   );
   const dir = path.join(pathToSave, '../');
   await fs.mkdir(dir, { recursive: true });
-  await fs.writeFile(pathToSave, `${appendToStart}\n${textToWrite}`, {});
+
+  // TODO: fix this if someone fucks up the options
+  if (isBinary) {
+    const data = Buffer.from(await (fileArrayData as Blob).arrayBuffer());
+    await fs.writeFile(pathToSave, data);
+  } else {
+    await fs.writeFile(
+      pathToSave,
+      appendToStart?.(fileArrayData as string) ?? (fileArrayData as string),
+      {},
+    );
+  }
 }
 
 const files = [
   [
     '/esm/vs/editor/editor.api.d.ts',
-    '../../../monaco-editor.d.ts',
-    `// GENERATED WITH TS: ${TYPESCRIPT_VERSION}\n`,
+    '../../../packages/monaco/monaco-editor.d.ts',
+    (file) => {
+      // removes the global scope modifications since they need to be changed
+      const module = file.slice(837);
+
+      // adds back the global modifications
+      return `// GENERATED WITH TS: ${TYPESCRIPT_VERSION}
+/*!-----------------------------------------------------------
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Type definitions for monaco-editor
+ * Released under the MIT license
+*-----------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+${/* needs to import from monaco-editor to access the Environment type */ ''}
+declare let MonacoEnvironment: import("monaco-editor").Environment | undefined;
+
+
+interface Window {
+    MonacoEnvironment?: import("monaco-editor").Environment | undefined;
+}
+
+declare module "monaco-editor" {
+${module}
+}
+`;
+    },
   ],
 
   ['/min/vs/loader.js'],
@@ -86,7 +127,7 @@ const files = [
   ['/min-maps/vs/base/common/worker/simpleWorker.nls.js.map'],
 
   ['/min/vs/base/browser/ui/codicons/codicon/codicon.ttf'],
-] as const;
+] as const satisfies readonly Parameters<typeof downloadAndSaveFile>[0][];
 
 console.log(`🌍 Downloading monaco-editor with typescript: ${TYPESCRIPT_VERSION}`);
 await Promise.all(files.map(downloadAndSaveFile));
