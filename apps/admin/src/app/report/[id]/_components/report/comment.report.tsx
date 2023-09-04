@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { ReportWithInfo } from '../../report.action';
 
-export default function CommentReport({ report }: { report: NonNullable<ReportWithInfo> }) {
+export function CommentReport({ report }: { report: NonNullable<ReportWithInfo> }) {
   if (report.type !== 'COMMENT' || report.commentId === null || !report.comment) return null;
   const rootId = report.comment.rootChallengeId ?? report.comment.rootSolutionId ?? -1;
 
