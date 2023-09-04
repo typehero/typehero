@@ -1,4 +1,4 @@
-import SubmitSolution from './submit-solution';
+import { SubmitSolution } from './submit-solution';
 
 interface Props {
   loggedInUser: boolean;
