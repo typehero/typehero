@@ -2,7 +2,7 @@
 import { ChevronLeft, ChevronRight } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { useEffect, useRef, useState, type ReactNode, useCallback } from 'react';
-import useResizeObserver from '~/utils/useResizeObserver';
+import { useResizeObserver } from '~/utils/useResizeObserver';
 
 interface Props {
   children: ReactNode;

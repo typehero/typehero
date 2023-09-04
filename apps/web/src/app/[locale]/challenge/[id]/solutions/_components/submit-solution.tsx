@@ -6,7 +6,7 @@ interface Props {
   setView: (view: 'editor' | 'list') => void;
 }
 
-function SubmitSolution({ disabled, setView }: Props) {
+export function SubmitSolution({ disabled, setView }: Props) {
   return (
     <Button
       className="h-8 rounded-lg bg-emerald-600 px-3 py-2 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
@@ -17,5 +17,3 @@ function SubmitSolution({ disabled, setView }: Props) {
     </Button>
   );
 }
-
-export default SubmitSolution;

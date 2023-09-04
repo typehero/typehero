@@ -18,7 +18,7 @@ import {
 import { useWatch } from 'react-hook-form';
 import type { WizardForm } from '.';
 import type { ExploreChallengeData } from '~/app/[locale]/explore/_components/explore.action';
-import ExploreCard from '~/app/[locale]/explore/_components/explore-card';
+import { ExploreCard } from '~/app/[locale]/explore/_components/explore-card';
 
 interface Props {
   form: WizardForm;

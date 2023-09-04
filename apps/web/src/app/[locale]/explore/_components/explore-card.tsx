@@ -111,5 +111,3 @@ export function ExploreCard({ challenge }: ExploreCardProps) {
     </Card>
   );
 }
-
-export default ExploreCard;

@@ -56,7 +56,7 @@ async function getUserdata(id: string) {
   return userData;
 }
 
-export default async function Dashboard({ user }: Props) {
+export async function Dashboard({ user }: Props) {
   const userData = await getUserdata(user.id);
   const session = await getServerAuthSession();
 
