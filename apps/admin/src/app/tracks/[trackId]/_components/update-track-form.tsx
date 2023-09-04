@@ -193,7 +193,7 @@ export function UpdateTrackForm({ challenges, track }: Props) {
                     borderRadius: '4px',
                     borderStyle: 'dashed',
                     overflow: 'hidden',
-                    backgroundColor: 'var(--background)',
+                    backgroundColor: 'hsl(var(--background))',
                   };
                 },
                 menu: (base) => {
@@ -206,7 +206,7 @@ export function UpdateTrackForm({ challenges, track }: Props) {
                 valueContainer: (base) => {
                   return {
                     ...base,
-                    backgroundColor: 'var(--background)',
+                    backgroundColor: 'hsl(var(--background))',
                   };
                 },
               }}
