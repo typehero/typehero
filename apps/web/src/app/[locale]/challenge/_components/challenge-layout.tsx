@@ -1,17 +1,13 @@
 'use client';
 
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useEffect, useRef, type ReactNode, useState, useCallback } from 'react';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useFullscreenSettingsStore } from './fullscreen';
-
-const MOBILE_BREAKPOINT = 1025;
-const LEFT_PANEL_BREAKPOINT = 500;
-const COLLAPSE_BREAKPOINT = 300;
-const DEFAULT_WIDTH_PX = `${LEFT_PANEL_BREAKPOINT}px`;
+import usePanelAdjustments from './usePanelAdjustments';
 
 export const DEFAULT_SETTINGS = {
-  width: DEFAULT_WIDTH_PX,
+  width: '500px',
   height: '300px',
 };
 
@@ -38,30 +34,28 @@ export interface ChallengeLayoutProps {
   right: ReactNode;
 }
 
-const isDesktop = window.innerWidth > MOBILE_BREAKPOINT;
-
-const collapseLeftPanel = (element: HTMLDivElement) => {
-  element.style.width = '0%';
-  element.style.minWidth = '0%';
-  element.style.opacity = '0%';
-};
-
-const expandLeftPanel = (element: HTMLDivElement) => {
-  element.style.width = DEFAULT_WIDTH_PX;
-  element.style.minWidth = DEFAULT_WIDTH_PX;
-  element.style.opacity = '100%';
-};
+const MOBILE_BREAKPOINT = 1025;
 
 export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
   const parent = useRef<HTMLDivElement>(null);
   const resizer = useRef<HTMLDivElement>(null);
-  const leftSide = useRef<HTMLDivElement>(null);
   const rightSide = useRef<HTMLDivElement>(null);
+
   const { settings, updateSettings } = useLayoutSettingsStore();
   const { fssettings, updateFSSettings } = useFullscreenSettingsStore();
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth > MOBILE_BREAKPOINT);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const LEFT_PANEL_BREAKPOINT = isDesktop ? 500 : 318;
+  const COLLAPSE_BREAKPOINT = isCollapsed ? 50 : 300;
+  const DEFAULT_DESKTOP_WIDTH_PX = `${LEFT_PANEL_BREAKPOINT}px`;
+
   const leftStyle = isDesktop
     ? { width: settings.width, minWidth: LEFT_PANEL_BREAKPOINT }
-    : { height: settings.height };
+    : { height: settings.height, minHeight: LEFT_PANEL_BREAKPOINT };
+
+  const { leftSide, adjustPanelSize, expandPanel, collapsePanel, isLeftPanelCollapsed } =
+    usePanelAdjustments(DEFAULT_DESKTOP_WIDTH_PX, LEFT_PANEL_BREAKPOINT, isDesktop);
 
   useEffect(() => {
     const ref = resizer.current;
@@ -84,52 +78,57 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
     let leftWidth = 0;
     let topHeight = 0;
 
-    const mouseMoveHandler = (e: MouseEvent | TouchEvent) => {
-      let dx = 0;
-      let dy = 0;
-      let currX = 0;
-
+    const getEventDeltas = (e: MouseEvent | TouchEvent) => {
       if (e instanceof MouseEvent) {
-        // How far the mouse has been moved
-        dx = e.clientX - x;
-        dy = e.clientY - y;
-        currX = e.clientX;
-      } else if (e instanceof TouchEvent) {
-        // How far the finger has been moved
-        dx = e.changedTouches[0]?.clientX ? e.changedTouches[0].clientX - x : 0;
-        dy = e.changedTouches[0]?.clientY ? e.changedTouches[0].clientY - y : 0;
-        currX = e.changedTouches[0]?.clientX ? e.changedTouches[0]?.clientX : 0;
+        return {
+          dx: e.clientX - x,
+          dy: e.clientY - y,
+          currPos: isDesktop ? e.clientX : e.clientY,
+        };
       }
 
-      const divideByW = parent.current?.getBoundingClientRect().width!;
-      const divideByH = parent.current?.getBoundingClientRect().height!;
-      const newLeftWidth = ((leftWidth + dx) * 100) / divideByW;
-      const newTopHeight = ((topHeight + dy) * 100) / divideByH;
+      const touch = e.changedTouches[0];
+      if (!touch) {
+        return {
+          dx: 0,
+          dy: 0,
+          currPos: 0,
+        };
+      }
 
-      if (isDesktop) {
-        if (currX <= COLLAPSE_BREAKPOINT) {
-          collapseLeftPanel(leftRef);
-        } else if (leftRef.style.width === '0%') {
-          expandLeftPanel(leftRef);
-        } else {
-          const pixelWidth = (newLeftWidth / 100) * divideByW;
-          if (pixelWidth < LEFT_PANEL_BREAKPOINT) {
-            leftRef.style.width = `${(LEFT_PANEL_BREAKPOINT / divideByW) * 100}%`;
-          } else {
-            leftRef.style.width = `${newLeftWidth}%`;
-          }
-        }
+      return {
+        dx: touch.clientX - x,
+        dy: touch.clientY - y,
+        currPos: isDesktop ? touch.clientX : touch.clientY,
+      };
+    };
+
+    const mouseMoveHandler = (e: MouseEvent | TouchEvent) => {
+      const { dx, dy, currPos } = getEventDeltas(e);
+      const { width: divideByW, height: divideByH } = parent.current?.getBoundingClientRect() || {
+        width: 0,
+        height: 0,
+      };
+
+      const newDimensionValue = isDesktop
+        ? ((leftWidth + dx) * 100) / divideByW
+        : ((topHeight + dy) * 100) / divideByH;
+
+      if (currPos <= COLLAPSE_BREAKPOINT) {
+        collapsePanel();
       } else {
-        leftRef.style.height = `${newTopHeight}%`;
+        adjustPanelSize(divideByW, divideByH, newDimensionValue);
       }
 
       // prevent cursor from blinking when you move mouse too fast (leaving resizer area)
-      document.body.style.cursor = isDesktop ? 'col-resize' : 'row-resize';
+      const cursorStyle = isDesktop ? 'col-resize' : 'row-resize';
 
-      rightRef.style.pointerEvents = 'none';
-      leftRef.style.pointerEvents = 'none';
-      rightRef.style.userSelect = 'none';
-      leftRef.style.userSelect = 'none';
+      document.body.style.cursor = cursorStyle;
+
+      [rightRef, leftRef].forEach((ref) => {
+        ref.style.pointerEvents = 'none';
+        ref.style.userSelect = 'none';
+      });
     };
 
     const mouseDownHandler = (e: MouseEvent | TouchEvent) => {
@@ -156,6 +155,8 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
     };
 
     const mouseUpHandler = function () {
+      setIsCollapsed(isLeftPanelCollapsed());
+
       // undo cursor col-resize from above
       document.body.style.removeProperty('cursor');
 
@@ -178,6 +179,8 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
 
     // handle window resize
     const resizeHandler = () => {
+      setIsDesktop(window.innerWidth > MOBILE_BREAKPOINT);
+
       if (isDesktop) {
         leftRef.style.width = settings.width;
         leftRef.style.height = 'auto';
@@ -188,14 +191,26 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
     };
 
     const handleResizerDoubleClick = () => {
-      if (!leftSide.current) return;
+      if (!leftSide.current || !rightSide.current) return;
 
-      if (parseInt(leftSide.current.style.width) < LEFT_PANEL_BREAKPOINT) {
-        expandLeftPanel(leftSide.current);
-        updateSettings({ width: DEFAULT_WIDTH_PX, height: settings.height });
+      const currentSize = isDesktop
+        ? parseInt(getComputedStyle(leftSide.current).width)
+        : parseInt(getComputedStyle(leftSide.current).height);
+
+      if (currentSize < LEFT_PANEL_BREAKPOINT) {
+        expandPanel();
+        if (isDesktop) {
+          leftSide.current.style.width = DEFAULT_DESKTOP_WIDTH_PX;
+        } else {
+          leftSide.current.style.height = settings.height;
+        }
       } else {
-        collapseLeftPanel(leftSide.current);
-        updateSettings({ width: '0px', height: settings.height });
+        collapsePanel();
+        if (isDesktop) {
+          leftSide.current.style.width = '0px';
+        } else {
+          leftSide.current.style.height = '0px';
+        }
       }
     };
 
@@ -210,7 +225,20 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
       ref.removeEventListener('touchstart', mouseDownHandler);
       ref.removeEventListener('dblclick', handleResizerDoubleClick);
     };
-  }, [settings, updateSettings]);
+  }, [
+    COLLAPSE_BREAKPOINT,
+    DEFAULT_DESKTOP_WIDTH_PX,
+    LEFT_PANEL_BREAKPOINT,
+    adjustPanelSize,
+    collapsePanel,
+    expandPanel,
+    isCollapsed,
+    isDesktop,
+    isLeftPanelCollapsed,
+    leftSide,
+    settings,
+    updateSettings,
+  ]);
 
   return (
     <div
@@ -225,11 +253,18 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
       >
         {left}
       </div>
-      <div className="resizer relative cursor-col-resize p-2" ref={resizer}>
+      <div
+        className={
+          isDesktop
+            ? 'resizer relative cursor-col-resize p-2'
+            : 'resizer relative cursor-row-resize p-2'
+        }
+        ref={resizer}
+      >
         <div className="absolute left-1/2 top-1/2 h-1 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-400 duration-300 group-hover:bg-neutral-600 group-active:bg-emerald-400 group-active:duration-75 dark:bg-neutral-700 group-hover:dark:bg-neutral-500 lg:h-24 lg:w-1" />
       </div>
       <div
-        className="flex min-h-[90px] w-full flex-1 flex-col overflow-hidden rounded-l-xl rounded-r-2xl border border-zinc-300 dark:border-zinc-700 lg:min-w-[500px]"
+        className="flex min-h-[90px] w-full flex-1 flex-grow flex-col overflow-hidden rounded-l-xl rounded-r-2xl border border-zinc-300 dark:border-zinc-700 lg:min-w-[500px]"
         ref={rightSide}
       >
         {right}
