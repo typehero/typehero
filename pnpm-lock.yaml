@@ -352,6 +352,9 @@ importers:
       '@repo/lint':
         specifier: workspace:^
         version: link:../../tooling/config-eslint
+      '@repo/tsconfig':
+        specifier: workspace:^
+        version: link:../../tooling/config-typescript
       '@tailwindcss/container-queries':
         specifier: ^0.1.1
         version: 0.1.1(tailwindcss@3.3.3)
@@ -1529,7 +1532,7 @@ packages:
       eslint: ^6.0.0 || ^7.0.0 || >=8.0.0
     dependencies:
       eslint: 8.48.0
-      eslint-visitor-keys: 3.4.3
+      eslint-visitor-keys: 3.4.1
     dev: true
 
   /@eslint-community/regexpp@4.6.2:
