@@ -15,7 +15,12 @@ import { Vote } from '../vote';
 import { CommentInput } from './comment-input';
 import { replyComment, updateComment } from './comment.action';
 import { CommentDeleteDialog } from './delete';
-import { getPaginatedComments, type PaginatedComments } from './getCommentRouteData';
+import {
+  getPaginatedComments,
+  type PaginatedComments,
+  type SelectedCommentProps,
+} from './getCommentRouteData';
+import { COMMENT_PAGESIZE } from '~/app/constants';
 
 interface SingleCommentProps {
   comment: PaginatedComments['comments'][number];
@@ -26,11 +31,14 @@ interface SingleCommentProps {
   onClickToggleReply?: () => void;
   queryKey?: (number | string)[];
   replyQueryKey?: (number | string)[];
+  highlight?: boolean | undefined;
 }
 
 type CommentProps = SingleCommentProps & {
   rootId: number;
   type: CommentRoot;
+  // TODO: not any
+  selected?: SelectedCommentProps;
 };
 
 const commentReportSchema = z
@@ -54,7 +62,14 @@ const commentReportSchema = z
 
 export type CommentReportSchemaType = z.infer<typeof commentReportSchema>;
 
-export function Comment({ comment, readonly = false, rootId, type, queryKey }: CommentProps) {
+export function Comment({
+  comment,
+  readonly = false,
+  rootId,
+  type,
+  queryKey,
+  selected,
+}: CommentProps) {
   const [showReplies, setShowReplies] = useState(false);
 
   const [isReplying, setIsReplying] = useState(false);
@@ -64,7 +79,11 @@ export function Comment({ comment, readonly = false, rootId, type, queryKey }: C
   const replyQueryKey = [`${comment.id}-comment-replies`];
   const { data, fetchNextPage, isFetching } = useInfiniteQuery({
     queryKey: replyQueryKey,
-    queryFn: ({ pageParam = 1 }) =>
+    queryFn: ({
+      pageParam = selected && selected.isReplySelected
+        ? Math.floor(selected.replyIndex / COMMENT_PAGESIZE) + 1
+        : 1,
+    }) =>
       getPaginatedComments({
         rootId,
         rootType: type,
@@ -120,6 +139,7 @@ export function Comment({ comment, readonly = false, rootId, type, queryKey }: C
         onClickReply={toggleIsReplying}
         onClickToggleReply={toggleReplies}
         readonly={readonly}
+        highlight={selected && selected.isSelected ? !selected.isReplySelected : null}
       />
       {isReplying ? (
         <div className="relative mt-2 pb-2 pl-8">
@@ -139,12 +159,22 @@ export function Comment({ comment, readonly = false, rootId, type, queryKey }: C
         </div>
       ) : null}
 
-      {showReplies ? (
+      {showReplies || (selected && selected.isSelected && selected.isReplySelected) ? (
         <div className="flex flex-col gap-1 pl-6 pt-1">
           {data?.pages.flatMap((page) =>
-            page.comments.map((reply) => (
+            page.comments.map((reply, index) => (
               // this is a reply
-              <SingleComment comment={reply} isReply key={reply.id} replyQueryKey={replyQueryKey} />
+              <SingleComment
+                comment={reply}
+                isReply
+                key={reply.id}
+                replyQueryKey={replyQueryKey}
+                highlight={
+                  selected &&
+                  selected.isSelected &&
+                  selected.isReplySelected ? selected.replyIndex == page.pageIndex * COMMENT_PAGESIZE + index : null
+                }
+              />
             )),
           )}
         </div>
@@ -171,6 +201,7 @@ function SingleComment({
   isToggleReply,
   queryKey,
   replyQueryKey,
+  highlight,
 }: SingleCommentProps) {
   const queryClient = useQueryClient();
   const [text, setText] = useState(comment.text);
@@ -222,15 +253,31 @@ function SingleComment({
   }
 
   async function copyCommentUrlToClipboard() {
-    await navigator.clipboard.writeText(`${window.location.href}/comment/${comment.id}`);
+    // "Memory: beats 0.0059% of users with TypeScript"
+    let textToCopy = window.location.href;
+    if (textToCopy.endsWith('/')) textToCopy = textToCopy.substring(0, textToCopy.length - 1);
+    const parts = textToCopy.split('/');
+    if (parts[parts.length - 2] == 'comment') {
+      // suppress ts warning with || ''
+      textToCopy =
+        textToCopy.substring(0, textToCopy.length - (parts[parts.length - 1] || '').length) +
+        comment.id;
+    } else if (parts[parts.length - 1] == 'comment') {
+      // edgy edge case
+      textToCopy += `/${comment.id}`;
+    } else if (parts[parts.length - 2] == 'challenge') {
+      textToCopy += `/comment/${comment.id}`;
+    }
+    await navigator.clipboard.writeText(textToCopy);
   }
 
   const loggedinUser = useSession();
 
   const isAuthor = loggedinUser.data?.user.id === comment.user.id;
 
+  // TODO: animate bg
   return (
-    <div className="relative p-2 pl-3">
+    <div className={`relative rounded-lg p-2 pl-3 ${  highlight ? 'bg-yellow-400' : ''}`}>
       <div className="flex items-start justify-between gap-4 pr-[0.4rem]">
         <div className="flex w-full items-center justify-between gap-1">
           <UserBadge username={comment.user.name ?? ''} linkComponent={Link} />
@@ -241,7 +288,7 @@ function SingleComment({
               </span>
             </TooltipTrigger>
             <TooltipContent align="start" alignOffset={-55} className="rounded-xl">
-              <span className="text-xs text-white">{comment.createdAt.toLocaleString()}</span>
+              <span className="text-foreground text-xs">{comment.createdAt.toLocaleString()}</span>
             </TooltipContent>
           </Tooltip>
         </div>

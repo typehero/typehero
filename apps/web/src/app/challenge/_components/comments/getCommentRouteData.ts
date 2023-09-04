@@ -2,8 +2,7 @@
 import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import type { CommentRoot } from '@repo/db/types';
-
-const PAGESIZE = 10;
+import { COMMENT_PAGESIZE } from '~/app/constants';
 
 const sortKeys = ['createdAt', 'vote', 'replies'] as const;
 const sortOrders = ['asc', 'desc'] as const;
@@ -72,8 +71,8 @@ export async function getPaginatedComments({
   });
 
   const comments = await prisma.comment.findMany({
-    skip: (page - 1) * PAGESIZE,
-    take: PAGESIZE,
+    skip: (page - 1) * COMMENT_PAGESIZE,
+    take: COMMENT_PAGESIZE,
     where: {
       rootType,
       parentId,
@@ -115,12 +114,53 @@ export async function getPaginatedComments({
     },
   });
 
-  const totalPages = Math.ceil(totalComments / PAGESIZE);
+  const totalPages = Math.ceil(totalComments / COMMENT_PAGESIZE);
 
   return {
     totalComments: totalReplies + totalComments,
     totalPages,
+    pageIndex: page,
     hasMore: page < totalPages,
     comments,
   };
+}
+
+export interface SelectedCommentProps {
+  isSelected: boolean;
+  isReplySelected: boolean;
+  replyIndex: number;
+}
+
+export async function getSkeletonComments({
+  rootId,
+  rootType,
+  parentId = null,
+  sortKey = 'createdAt',
+  sortOrder = 'desc',
+}: {
+  rootId: number;
+  rootType: CommentRoot;
+  parentId?: number | null;
+  sortKey?: SortKey;
+  sortOrder?: SortOrder;
+}) {
+  const comments = await prisma.comment.findMany({
+    where: {
+      rootType,
+      parentId,
+      ...(rootType === 'CHALLENGE' ? { rootChallengeId: rootId } : { rootSolutionId: rootId }),
+    },
+    orderBy: orderBy(sortKey, sortOrder),
+    select: {
+      id: true,
+      replies: {
+        select: {
+          id: true,
+          visible: true,
+        },
+      },
+    },
+  });
+
+  return comments;
 }

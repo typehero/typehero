@@ -11,7 +11,7 @@ export default function Page({ params }: Props) {
 }
 
 export async function generateMetadata({ params: { username } }: Props) {
-  // remove the %40 from the username
+  // remove the "%40" (url encoding of "@") from the username
   const name = username.substring(3);
 
   return {
