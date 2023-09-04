@@ -23,7 +23,7 @@ import {
   CuratedTracksCard,
 } from './feature-card';
 
-function Features() {
+export function Features() {
   return (
     <section className="relative overflow-hidden" id="features">
       <div className="container mb-[64px] grid items-center justify-center">
@@ -141,4 +141,3 @@ function Features() {
     </section>
   );
 }
-export default Features;

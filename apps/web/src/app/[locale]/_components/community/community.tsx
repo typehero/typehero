@@ -9,7 +9,7 @@ import { contributors } from '../../../../../public/contributors';
 import styles from './community.module.css';
 import Image from 'next/image';
 
-function Community() {
+export function Community() {
   type WrapperStyle = CSSProperties & {
     '--bottom': string;
   };
@@ -125,4 +125,3 @@ function Community() {
     </>
   );
 }
-export default Community;

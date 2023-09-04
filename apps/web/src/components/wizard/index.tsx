@@ -68,7 +68,7 @@ export function Wizard() {
   const { data: session } = useSession();
   const [step, setStep] = useState(0);
   const [rendered, setRendered] = useState(false);
-  const [tsErrors, setTsErrors] = useState<TsErrors>([[], [], [], []]);
+  const [tsErrors, setTsErrors] = useState<TsErrors>([[], [], []]);
 
   const isUserACreator = useMemo(
     () => session?.user?.role.includes('CREATOR') ?? false,

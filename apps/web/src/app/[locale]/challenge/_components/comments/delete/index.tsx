@@ -102,5 +102,3 @@ export function CommentDeleteDialog({
     </Dialog>
   );
 }
-
-export default CommentDeleteDialog;

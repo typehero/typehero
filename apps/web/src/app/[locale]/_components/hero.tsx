@@ -31,7 +31,7 @@ function TypeHeroLogo() {
   );
 }
 
-async function Hero() {
+export async function Hero() {
   const t = await getScopedI18n('landing.hero');
 
   return (
@@ -113,4 +113,3 @@ async function Hero() {
     </section>
   );
 }
-export default Hero;
