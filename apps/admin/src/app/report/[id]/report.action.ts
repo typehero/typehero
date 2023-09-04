@@ -1,5 +1,6 @@
 import { prisma } from '@repo/db';
 
+// todo: remove this. it's not used.
 export async function getReports() {
   const challengeReports = await prisma.report.findMany({
     where: {
@@ -35,14 +36,22 @@ export async function getReport(idNum: number) {
       type: 'asc',
     },
     include: {
+      user: {
+        select: {
+          name: true,
+        },
+      },
       challenge: {
         include: {
-          user: true,
+          user: {
+            select: {
+              name: true,
+            },
+          },
         },
       },
       comment: {
         include: {
-          user: true,
           _count: {
             select: {
               replies: true,
@@ -50,17 +59,33 @@ export async function getReport(idNum: number) {
           },
           rootChallenge: true,
           rootSolution: true,
+          user: {
+            select: {
+              name: true,
+            },
+          },
         },
       },
       issues: true,
-      reporter: true,
-      solution: {
-        include: {
-          user: true,
+      reporter: {
+        select: {
+          name: true,
         },
       },
-      user: true,
-      moderator: true,
+      solution: {
+        include: {
+          user: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+      moderator: {
+        select: {
+          name: true,
+        },
+      },
     },
   });
 }
@@ -70,7 +95,7 @@ export async function getReportedUserInformation(userId: string) {
     where: {
       id: userId,
     },
-    include: {
+    select: {
       comment: {
         take: 10,
         orderBy: {

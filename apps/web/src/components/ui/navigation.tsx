@@ -17,6 +17,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import { FeatureFlagContext } from '~/app/feature-flag-provider';
+import { useFullscreenSettingsStore } from '../../app/[locale]/challenge/_components/fullscreen';
 
 export function getAdminUrl() {
   // reference for vercel.com
@@ -29,87 +30,90 @@ export function getAdminUrl() {
 }
 
 export function Navigation() {
+  const { fssettings } = useFullscreenSettingsStore();
   const pathname = usePathname();
   const featureFlags = useContext(FeatureFlagContext);
 
   return (
     <header className="z-10 w-full">
-      <nav
-        className={`flex h-14 items-center text-sm font-medium ${
-          pathname?.startsWith('/challenge') ? 'px-4' : 'container'
-        }`}
-      >
-        <div className="flex w-full items-center justify-between">
-          <div className="relative flex items-center gap-3">
-            <a
-              className="flex items-center space-x-2 focus:outline-none focus-visible:ring-2"
-              href="/"
-            >
-              <svg
-                className="h-8 w-8 rounded-md bg-[#3178C6] p-[2px]"
-                viewBox="0 0 512 512"
-                xmlns="http://www.w3.org/2000/svg"
+      {!fssettings.isFullscreen && (
+        <nav
+          className={`flex h-14 items-center text-sm font-medium ${
+            pathname?.startsWith('/challenge') ? 'px-4' : 'container'
+          }`}
+        >
+          <div className="flex w-full items-center justify-between">
+            <div className="relative flex items-center gap-3">
+              <a
+                className="flex items-center space-x-2 focus:outline-none focus-visible:ring-2"
+                href="/"
               >
-                <g clipPath="url(#clip0_1_2)">
-                  <path
-                    d="M462 0H50C22.3858 0 0 22.3858 0 50V462C0 489.614 22.3858 512 50 512H462C489.614 512 512 489.614 512 462V50C512 22.3858 489.614 0 462 0Z"
-                    fill="#3178C6"
-                  />
-                  <path
-                    clipRule="evenodd"
-                    d="M239.78 284.082H304V243H125V284.082H188.906V467H239.78V284.082Z"
-                    fill="white"
-                    fillRule="evenodd"
-                  />
-                  <path
-                    d="M303.13 466.986V242.986H349.72V335.818H418.427V242.986H465.13V466.986H418.427V373.827H349.72V466.986H303.13Z"
-                    fill="white"
-                  />
-                </g>
-                <defs>
-                  <clipPath id="clip0_1_2">
-                    <rect fill="white" height="512" width="512" />
-                  </clipPath>
-                </defs>
-              </svg>
+                <svg
+                  className="h-8 w-8 rounded-md bg-[#3178C6] p-[2px]"
+                  viewBox="0 0 512 512"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g clipPath="url(#clip0_1_2)">
+                    <path
+                      d="M462 0H50C22.3858 0 0 22.3858 0 50V462C0 489.614 22.3858 512 50 512H462C489.614 512 512 489.614 512 462V50C512 22.3858 489.614 0 462 0Z"
+                      fill="#3178C6"
+                    />
+                    <path
+                      clipRule="evenodd"
+                      d="M239.78 284.082H304V243H125V284.082H188.906V467H239.78V284.082Z"
+                      fill="white"
+                      fillRule="evenodd"
+                    />
+                    <path
+                      d="M303.13 466.986V242.986H349.72V335.818H418.427V242.986H465.13V466.986H418.427V373.827H349.72V466.986H303.13Z"
+                      fill="white"
+                    />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_1_2">
+                      <rect fill="white" height="512" width="512" />
+                    </clipPath>
+                  </defs>
+                </svg>
 
-              <span className="font-bold leading-3">
-                type
-                <br />
-                hero
-              </span>
-            </a>
-            {featureFlags?.exploreButton ? (
-              <Link href="/explore" className="ml-4">
-                <div
-                  className={clsx('hover:text-foreground text-foreground/80 transition-colors', {
-                    '!text-foreground': pathname === '/explore',
-                  })}
-                >
-                  Explore
-                </div>
-              </Link>
-            ) : null}
-            {featureFlags?.tracksButton ? (
-              <Link href="/tracks" className="ml-4">
-                <div
-                  className={clsx('hover:text-foreground text-foreground/80 transition-colors', {
-                    '!text-foreground': pathname === '/tracks',
-                  })}
-                >
-                  Tracks
-                </div>
-              </Link>
-            ) : null}
-          </div>
-          <div className="flex">
-            <div className="flex items-center justify-end gap-2">
-              <ThemeButton />
-              {featureFlags?.loginButton ? <LoginButton /> : null}
+                <span className="font-bold leading-3">
+                  type
+                  <br />
+                  hero
+                </span>
+              </a>
+              {featureFlags?.exploreButton ? (
+                <Link href="/explore" className="ml-4">
+                  <div
+                    className={clsx('hover:text-foreground text-foreground/80 transition-colors', {
+                      '!text-foreground': pathname === '/explore',
+                    })}
+                  >
+                    Explore
+                  </div>
+                </Link>
+              ) : null}
+              {featureFlags?.tracksButton ? (
+                <Link href="/tracks" className="ml-4">
+                  <div
+                    className={clsx('hover:text-foreground text-foreground/80 transition-colors', {
+                      '!text-foreground': pathname === '/tracks',
+                    })}
+                  >
+                    Tracks
+                  </div>
+                </Link>
+              ) : null}
+            </div>
+            <div className="flex">
+              <div className="flex items-center justify-end gap-2">
+                <ThemeButton />
+                {featureFlags?.loginButton ? <LoginButton /> : null}
+              </div>
             </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+      )}
     </header>
   );
 }
@@ -126,6 +130,7 @@ function ThemeButton() {
     <>
       {mounted ? (
         <button
+          aria-label="theme button"
           className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none focus-visible:ring-2"
           onClick={() => {
             setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
@@ -168,7 +173,10 @@ function LoginButton() {
   return session ? (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none focus-visible:ring-2">
+        <button
+          aria-label="profile button"
+          className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none focus-visible:ring-2"
+        >
           <User className="h-5 w-5" />
         </button>
       </DropdownMenuTrigger>

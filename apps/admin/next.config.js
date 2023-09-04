@@ -1,3 +1,10 @@
+// eslint-disable-next-line import/no-unresolved
+import million from 'million/compiler';
+
+const millionConfig = {
+  auto: { rsc: true },
+};
+
 /** @type {import("next").NextConfig} */
 const config = {
   webpack: (config) => {
@@ -32,4 +39,4 @@ const config = {
   },
   swcMinify: true,
 };
-export default config;
+export default million.next(config, millionConfig);
