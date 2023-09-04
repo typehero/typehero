@@ -176,7 +176,6 @@ export function UpdateTrackForm({ challenges, track }: Props) {
               isMulti
               styles={{
                 option: (base, { data, isDisabled, isFocused, isSelected }) => {
-                  console.log(base.backgroundColor);
                   return {
                     ...base,
                     ':active': {
