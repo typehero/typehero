@@ -1,4 +1,5 @@
 import { getServerAuthSession } from '@repo/auth/server';
+import Link from 'next/link';
 
 import { EnrollButton } from './enroll-button';
 import { TrackChallenge } from './track-challenge-card';
@@ -44,35 +45,30 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
   }
 
   return (
-    <div className="container flex flex-col gap-8 py-5 md:gap-16 md:pb-20">
+    <div className="container flex flex-col items-center gap-8 py-5 md:gap-16 md:pb-20">
       <div className="container">
-        <div className="flex flex-row justify-between w-full">
-          <div className="container">
-            <h3 className="mb-1 text-2xl font-bold tracking-wide text-neutral-900/40 dark:text-white/40">
-              Track
-            </h3>
-            <h1 className="mb-8 text-4xl font-bold tracking-tight text-neutral-900 dark:text-white">
-              {track?.title}
-            </h1>
-            <p className=" max-w-[69ch] text-lg leading-10 text-neutral-600 dark:text-white/50">
-              {track?.description}
-            </p>
-            {isEnrolled !== -1 && <div className="my-3">
-              <TrackProgress
-                completedChallenges={calulcateCompletedChallenges()}
-                totalChallenges={challenges.length}
-              />
-            </div>}
-          </div>
-          <div className="flex flex-row items-center">
-            {isEnrolled === -1 ? (
-              <EnrollButton action={enrollUserInTrack} trackId={trackId} text="Enroll" />
-            ) : (
-              <EnrollButton action={unenrollUserFromTrack} trackId={trackId} text="Unenroll" />
-            )}
-          </div>
+        <h3 className="mb-1 text-2xl font-bold tracking-wide text-neutral-900/40 dark:text-white/40">
+          Track
+        </h3>
+        <h1 className="mb-8 text-4xl font-bold tracking-tight text-neutral-900 dark:text-white">
+          {track?.title}
+        </h1>
+        <p className=" max-w-[69ch] text-lg leading-10 text-neutral-600 dark:text-white/50">
+          {track?.description}
+        </p>
+        {isEnrolled !== -1 && <div className="my-3">
+          <TrackProgress
+            completedChallenges={calulcateCompletedChallenges()}
+            totalChallenges={challenges.length}
+          />
+        </div>}
+        {isEnrolled === -1 ? (
+          <EnrollButton action={enrollUserInTrack} trackId={trackId} text="Enroll" />
+        ) : (
+          <EnrollButton action={unenrollUserFromTrack} trackId={trackId} text="Unenroll" />
+        )}
       </div>
-        <div className="flex flex-col w-full">
+      <div className="flex flex-col min-w-[50%] max-w-xl">
         {challenges
             .sort((a, b) =>
               difficultyToNumber[a.difficulty] !== difficultyToNumber[b.difficulty]
@@ -80,11 +76,10 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
                 : a.name.localeCompare(b.name),
             )
             .map((challenge) => (
-                <TrackChallenge challenge={challenge} key={challenge.id} mock showDescriptionOnHover/>
+              <Link  key={challenge.id} href={`/challenge/${challenge.id}`}>
+                <TrackChallenge challenge={challenge} challengeInProgress={challenge.submission.length > 0 && !challenge.submission.some(submission => submission.isSuccessful)} mock showDescriptionOnHover/></Link>
             ))}
-        </div>
       </div>
-
     </div>
   );
 }

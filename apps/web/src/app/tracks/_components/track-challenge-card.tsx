@@ -8,6 +8,7 @@ import type { Tracks } from './track-grid';
 
 interface TrackChallengeProps {
   challenge: Tracks[number]['trackChallenges'][number]['challenge'];
+  challengeInProgress?: boolean;
   className?: string;
   mock?: boolean;
   showDescriptionOnHover?: boolean
@@ -29,7 +30,7 @@ const BGS_BY_DIFFICULTY = {
   EXTREME: 'to-orange-600/20 dark:to-orange-300/20',
 } as const;
 
-export function TrackChallenge({ challenge, className, mock, showDescriptionOnHover }: TrackChallengeProps) {
+export function TrackChallenge({ challenge, className, mock, showDescriptionOnHover, challengeInProgress }: TrackChallengeProps) {
   const isMobile = useIsMobile();
   return (
     <label
@@ -73,8 +74,7 @@ export function TrackChallenge({ challenge, className, mock, showDescriptionOnHo
               BGS_BY_DIFFICULTY[challenge.difficulty]
             }`}
           />
-          {challenge.difficulty[0]}
-          {challenge.difficulty.substring(1, challenge.difficulty.length).toLowerCase()}
+          {challengeInProgress ? "In Progress" : `${challenge.difficulty[0]}${challenge.difficulty.substring(1, challenge.difficulty.length).toLowerCase()}`}
         </div>
       </div>
     </label>
