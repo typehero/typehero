@@ -32,7 +32,6 @@ export interface CodePanelProps {
 export type TsErrors = [
   SemanticDiagnostics: monaco.languages.typescript.Diagnostic[],
   SyntacticDiagnostics: monaco.languages.typescript.Diagnostic[],
-  SuggestionDiagnostics: monaco.languages.typescript.Diagnostic[],
   CompilerOptionsDiagnostics: monaco.languages.typescript.Diagnostic[],
 ];
 
@@ -104,7 +103,7 @@ export function CodePanel(props: CodePanelProps) {
           onMount={{
             tests: (editor) => {
               setTestEditorState(editor);
-              setTsErrors([[], [], [], []]);
+              setTsErrors([[], [], []]);
             },
             user: async (editor, monaco) => {
               setMonacoInstance(monaco);
@@ -152,7 +151,6 @@ export function CodePanel(props: CodePanelProps) {
               const errors = await Promise.all([
                 tsWorker.getSemanticDiagnostics(TESTS_PATH),
                 tsWorker.getSyntacticDiagnostics(TESTS_PATH),
-                Promise.resolve([]),
                 tsWorker.getCompilerOptionsDiagnostics(TESTS_PATH),
               ] as const);
 
