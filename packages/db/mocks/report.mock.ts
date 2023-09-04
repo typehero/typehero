@@ -1,4 +1,4 @@
-import { type Report, type Prisma, ReportType, ReportStatus, IssueType } from '@prisma/client';
+import { type Report, type Prisma, type ReportType, ReportStatus} from '@prisma/client';
 import { faker } from '@faker-js/faker';
 
 export function ReportMock(
