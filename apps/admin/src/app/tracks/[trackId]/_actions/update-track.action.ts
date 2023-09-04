@@ -20,6 +20,7 @@ export async function updateTrack(data: FormSchema & { trackId: number }) {
         ...rest,
         trackChallenges: {
           createMany: {
+            // @ts-ignore
             data: data.trackChallenges.map((tc) => {
               const { challenge, ...rest } = tc;
               return { ...rest };

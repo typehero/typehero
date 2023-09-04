@@ -41,7 +41,7 @@ export function AddTrackForm({ toggle }: Props) {
     },
   });
 
-  async function onSubmit(data: FormSchema) {
+  async function onSubmit(data: Required<FormSchema>) {
     try {
       await createTrack(data);
       queryClient.invalidateQueries(['tracks']);
