@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 131
+        "contributions": 132
     },
     {
         "login": "Hacksore",
@@ -83,7 +83,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/ggrandi/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 24
+        "contributions": 25
     },
     {
         "login": "jhechtf",
@@ -104,7 +104,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/jhechtf/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 20
+        "contributions": 21
     },
     {
         "login": "creativenull",
@@ -254,6 +254,27 @@ export const contributors = [
         "contributions": 7
     },
     {
+        "login": "Tylopilus",
+        "id": 45148577,
+        "node_id": "MDQ6VXNlcjQ1MTQ4NTc3",
+        "avatar_url": "https://avatars.githubusercontent.com/u/45148577?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/Tylopilus",
+        "html_url": "https://github.com/Tylopilus",
+        "followers_url": "https://api.github.com/users/Tylopilus/followers",
+        "following_url": "https://api.github.com/users/Tylopilus/following{/other_user}",
+        "gists_url": "https://api.github.com/users/Tylopilus/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/Tylopilus/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/Tylopilus/subscriptions",
+        "organizations_url": "https://api.github.com/users/Tylopilus/orgs",
+        "repos_url": "https://api.github.com/users/Tylopilus/repos",
+        "events_url": "https://api.github.com/users/Tylopilus/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/Tylopilus/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 6
+    },
+    {
         "login": "jproberson",
         "id": 50461518,
         "node_id": "MDQ6VXNlcjUwNDYxNTE4",
@@ -270,6 +291,27 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/jproberson/repos",
         "events_url": "https://api.github.com/users/jproberson/events{/privacy}",
         "received_events_url": "https://api.github.com/users/jproberson/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 6
+    },
+    {
+        "login": "falcon-head",
+        "id": 32938743,
+        "node_id": "MDQ6VXNlcjMyOTM4NzQz",
+        "avatar_url": "https://avatars.githubusercontent.com/u/32938743?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/falcon-head",
+        "html_url": "https://github.com/falcon-head",
+        "followers_url": "https://api.github.com/users/falcon-head/followers",
+        "following_url": "https://api.github.com/users/falcon-head/following{/other_user}",
+        "gists_url": "https://api.github.com/users/falcon-head/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/falcon-head/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/falcon-head/subscriptions",
+        "organizations_url": "https://api.github.com/users/falcon-head/orgs",
+        "repos_url": "https://api.github.com/users/falcon-head/repos",
+        "events_url": "https://api.github.com/users/falcon-head/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/falcon-head/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 5
@@ -333,48 +375,6 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/emalineg/repos",
         "events_url": "https://api.github.com/users/emalineg/events{/privacy}",
         "received_events_url": "https://api.github.com/users/emalineg/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 4
-    },
-    {
-        "login": "Tylopilus",
-        "id": 45148577,
-        "node_id": "MDQ6VXNlcjQ1MTQ4NTc3",
-        "avatar_url": "https://avatars.githubusercontent.com/u/45148577?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/Tylopilus",
-        "html_url": "https://github.com/Tylopilus",
-        "followers_url": "https://api.github.com/users/Tylopilus/followers",
-        "following_url": "https://api.github.com/users/Tylopilus/following{/other_user}",
-        "gists_url": "https://api.github.com/users/Tylopilus/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/Tylopilus/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/Tylopilus/subscriptions",
-        "organizations_url": "https://api.github.com/users/Tylopilus/orgs",
-        "repos_url": "https://api.github.com/users/Tylopilus/repos",
-        "events_url": "https://api.github.com/users/Tylopilus/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/Tylopilus/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 4
-    },
-    {
-        "login": "falcon-head",
-        "id": 32938743,
-        "node_id": "MDQ6VXNlcjMyOTM4NzQz",
-        "avatar_url": "https://avatars.githubusercontent.com/u/32938743?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/falcon-head",
-        "html_url": "https://github.com/falcon-head",
-        "followers_url": "https://api.github.com/users/falcon-head/followers",
-        "following_url": "https://api.github.com/users/falcon-head/following{/other_user}",
-        "gists_url": "https://api.github.com/users/falcon-head/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/falcon-head/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/falcon-head/subscriptions",
-        "organizations_url": "https://api.github.com/users/falcon-head/orgs",
-        "repos_url": "https://api.github.com/users/falcon-head/repos",
-        "events_url": "https://api.github.com/users/falcon-head/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/falcon-head/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 4
