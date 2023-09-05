@@ -118,7 +118,10 @@ Enhancement suggestions are tracked as [GitHub issues](/issues).
    the overall purpose of the work and the ticket is referenced either in the PR
    or the body of the commit message. See [Commits](#commits) for example
    commits.
-5. When ready, put up a PR that links from your fork.
+5. When ready, put up a PR that links from your fork. For UI based changes
+   append `?template=ui.md` to the URL, and for non-UI based changes append
+   `?template=other.md` to the URL. This will pre-populate some fields for you
+   to fill in to assist our reviewers when looking over your PR.
 
 ## References
 
