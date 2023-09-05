@@ -12,15 +12,16 @@ import {
   toast,
 } from '@repo/ui';
 import {
+  ArrowDownNarrowWide,
+  ArrowUpNarrowWide,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
   MessageCircle,
-  ArrowDownNarrowWide,
-  ArrowUpNarrowWide,
 } from '@repo/ui/icons';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { Comment } from './comment';
 import { CommentInput } from './comment-input';
@@ -49,7 +50,6 @@ interface Props {
 }
 
 export function Comments({ rootId, type }: Props) {
-  const [showComments, setShowComments] = useState(false);
   const [text, setText] = useState('');
   const commentContainerRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
@@ -66,6 +66,11 @@ export function Comments({ rootId, type }: Props) {
     keepPreviousData: true,
     staleTime: 5000,
   });
+
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const showComments = searchParams.has('showComments');
+  const router = useRouter();
 
   async function createChallengeComment() {
     try {
@@ -116,7 +121,15 @@ export function Comments({ rootId, type }: Props) {
       <div className="relative">
         <button
           className="flex w-full items-center justify-between gap-2 p-3 font-medium text-neutral-500 duration-300 hover:text-neutral-700 focus:outline-none dark:hover:text-zinc-300"
-          onClick={() => setShowComments(!showComments)}
+          onClick={() => {
+            const current = new URLSearchParams(Array.from(searchParams.entries()));
+            if (showComments) {
+              current.delete('showComments');
+            } else {
+              current.set('showComments', 'true');
+            }
+            router.push(`${pathname}?${current.toString()}`);
+          }}
         >
           <div className="flex items-center gap-2">
             <MessageCircle className="h-5 w-5" />
