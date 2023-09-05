@@ -23,11 +23,14 @@ behavior to <placeholder@typehero.dev>
 > of the content, that you have the necessary rights to the content and that the
 > content you contribute may be provided under the project's license.
 
-**NOTE:** For any mostly-UI based changes, please include relevant screenshots.
-Reviewers are not always able to pull down the changes directly, and seeing the
-changes in screenshots can serve as a good starting point for a reviewer to
-determine whether or not the code needs to be pulled down and examined more
-closely.
+**NOTE:** For UI-based pull requests please use the
+[UI Pull Request Template](.github/PULL_REQUEST_TEMPLATE/ui.md), and ensure that
+you attach some screen shots to show any reviewers your changes. Reviewers are
+not always able to pull down changes directly, and seeing the changes in
+screenshots can serve as a good starting point for a reviewer to determine
+whether or not the code needs to be pulled down and examined more closely.
+
+For non-UI Pull Requests, please utilize the [Other](.github/PULL_REQUEST_TEMPLATE/other.md) template when creating your PR. Please be as thorough as possible.
 
 ### Reporting Bugs
 
