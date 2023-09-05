@@ -18,6 +18,7 @@ loader.config({
 });
 
 const DEFAULT_OPTIONS = {
+  fixedOverflowWidgets:true,
   lineNumbers: 'on',
   tabSize: 2,
   insertSpaces: false,
