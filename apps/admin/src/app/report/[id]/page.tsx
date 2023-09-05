@@ -2,11 +2,11 @@ import { Alert, AlertDescription, AlertTitle, Markdown, Text } from '@repo/ui';
 import { AlertCircle, ChevronLeft } from '@repo/ui/icons';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import ChallengeReport from './_components/report/challenge.report';
-import CommentReport from './_components/report/comment.report';
-import SolutionReport from './_components/report/solution.report';
-import UserReportUi from './_components/report/user.report';
-import ReportActions from './actions';
+import { ChallengeReport } from './_components/report/challenge.report';
+import { CommentReport } from './_components/report/comment.report';
+import { SolutionReport } from './_components/report/solution.report';
+import { UserReport } from './_components/report/user.report';
+import { ReportActions } from './actions';
 import { getReport, type ReportWithInfo } from './report.action';
 
 export interface Props {
@@ -52,7 +52,7 @@ const Report = async function (props: Props) {
       case 'SOLUTION':
         return <SolutionReport report={report} />;
       case 'USER':
-        return <UserReportUi report={report} />;
+        return <UserReport report={report} />;
     }
   }
 

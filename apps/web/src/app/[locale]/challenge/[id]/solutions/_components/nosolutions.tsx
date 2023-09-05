@@ -1,4 +1,4 @@
-import SubmitSolution from './submit-solution';
+import { SubmitSolution } from './submit-solution';
 
 interface Props {
   loggedInUser: boolean;
@@ -6,7 +6,7 @@ interface Props {
   setView: (view: 'editor' | 'list') => void;
 }
 
-function NoSolutions({ setView, loggedInUser, loggedInUserHasSolution }: Props) {
+export function NoSolutions({ setView, loggedInUser, loggedInUserHasSolution }: Props) {
   return (
     <div className="flex h-full items-center justify-center">
       <p className="flex flex-col items-center gap-2 text-center text-neutral-500 dark:text-zinc-400">
@@ -63,5 +63,3 @@ function NoSolutions({ setView, loggedInUser, loggedInUserHasSolution }: Props) 
     </div>
   );
 }
-
-export default NoSolutions;

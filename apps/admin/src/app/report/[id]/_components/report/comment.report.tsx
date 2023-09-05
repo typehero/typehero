@@ -3,7 +3,7 @@ import { ExternalLink } from 'lucide-react';
 import type { ReportWithInfo } from '../../report.action';
 import { Markdown } from '@repo/ui';
 
-export default function CommentReport({ report }: { report: NonNullable<ReportWithInfo> }) {
+export function CommentReport({ report }: { report: NonNullable<ReportWithInfo> }) {
   if (report.type !== 'COMMENT' || report.commentId === null || !report.comment) return null;
   const rootId = report.comment.rootChallengeId ?? report.comment.rootSolutionId ?? -1;
 

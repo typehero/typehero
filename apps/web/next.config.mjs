@@ -18,7 +18,7 @@ const nextConfig = {
       ? [
           {
             // allow CORS only on dev for admin site to get monaco files
-            source: 'min/vs/(.*)',
+            source: '/min/vs/(.*)',
             headers: [
               { key: 'Access-Control-Allow-Origin', value: '*' },
               { key: 'Access-Control-Allow-Methods', value: 'GET' },

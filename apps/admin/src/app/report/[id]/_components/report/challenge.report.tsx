@@ -7,7 +7,7 @@ import type { ReportWithInfo } from '../../report.action';
 export interface ChallengeReportProps {
   report: NonNullable<ReportWithInfo>;
 }
-export default async function ChallengeReport({ report }: ChallengeReportProps) {
+export async function ChallengeReport({ report }: ChallengeReportProps) {
   if (!report.challenge || !report.challengeId) return null;
   const challengeInfo = await getChallenge(report.challengeId);
   return (

@@ -5,10 +5,10 @@ interface Size {
   height: number;
 }
 
-const useResizeObserver = (
+export function useResizeObserver(
   ref: React.RefObject<HTMLElement>,
   callback: (size: Size) => unknown,
-) => {
+) {
   const [attached, setAttached] = useState(false);
 
   const handleResize = useCallback(
@@ -38,6 +38,4 @@ const useResizeObserver = (
   }, [ref, handleResize]);
 
   return attached;
-};
-
-export default useResizeObserver;
+}
