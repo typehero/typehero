@@ -1,15 +1,15 @@
-import { notFound } from 'next/navigation';
-import type { Metadata } from 'next';
 import { prisma } from '@repo/db';
-import Dashboard from './dashboard';
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { Dashboard } from './dashboard';
 
 interface Props {
   username: string;
 }
 
 export const metadata: Metadata = {
-  title: 'Profile',
-  description: 'A users profile',
+  title: 'Profile | TypeHero',
+  description: 'View this profile on TypeHero.',
 };
 
 export async function Profile({ username: usernameFromQuery }: Props) {
@@ -23,7 +23,12 @@ export async function Profile({ username: usernameFromQuery }: Props) {
         equals: username,
       },
     },
-    include: {
+    select: {
+      id: true,
+      createdAt: true,
+      bio: true,
+      image: true,
+      name: true,
       userLinks: true,
     },
   });

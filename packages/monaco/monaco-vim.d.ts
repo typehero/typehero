@@ -48,7 +48,7 @@ declare module 'monaco-vim' {
         name: string,
         prefix: string | undefined,
         fn: (
-          ctx: Ctx,
+          ctx: CMAdapter,
           data: {
             commandName: string;
             input: string;
@@ -64,7 +64,7 @@ declare module 'monaco-vim' {
       ): void;
 
       /** clears user created mappings */
-      mapclear(ctx?: VimMode): void;
+      mapclear(ctx?: VimModes): void;
 
       /** call this before `VimMode.Vim.handleKey` */
       maybeInitVimState_(cma: CMAdapter): void;

@@ -12,7 +12,8 @@
     "db:reset": "turbo db:reset",
     "db:seed": "turbo db:seed",
     "db:studio": "turbo db:studio",
-    "dev": "turbo dev --concurrency=1000",
+    "dev": "turbo dev --filter=!@repo/emails --concurrency=1000",
+    "dev:email": "turbo dev --filter @repo/emails",
     "dl-git": "turbo dl-git",
     "dl-monaco:force": "turbo dl-monaco",
     "format": "prettier . \"!./apps/**\" \"!./packages/**\" \"!./tooling/**\" --check --cache --cache-location=\"node_modules/.cache/prettiercache\"",
@@ -23,9 +24,6 @@
     "root-conformance": "spaces conformance",
     "tunnel": "cloudflared tunnel --url http://localhost:3000",
     "typecheck": "turbo typecheck --continue"
-  },
-  "dependencies": {
-    "@vercel/spaces": "https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701"
   },
   "devDependencies": {
     "@vercel/spaces": "https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701",

@@ -6,7 +6,7 @@ import { ActionMenu, Text } from '@repo/ui';
 import { ReportDialog } from '~/components/ReportDialog';
 
 export interface UserHeaderProps {
-  user: User;
+  user: Pick<User, 'id' | 'name'>;
   isOwnProfile: boolean;
 }
 

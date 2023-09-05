@@ -29,6 +29,7 @@ export interface SplitEditorProps {
   monaco: typeof import('monaco-editor') | undefined;
 }
 
+// million-ignore
 export default function SplitEditor({
   className,
   tests,

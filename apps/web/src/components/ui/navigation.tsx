@@ -17,7 +17,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import { FeatureFlagContext } from '~/app/feature-flag-provider';
-import { useFullscreenSettingsStore } from '../../app/challenge/_components/fullscreen';
+import { useFullscreenSettingsStore } from '../../app/[locale]/challenge/_components/fullscreen';
 
 export function getAdminUrl() {
   // reference for vercel.com
@@ -130,6 +130,7 @@ function ThemeButton() {
     <>
       {mounted ? (
         <button
+          aria-label="theme button"
           className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none focus-visible:ring-2"
           onClick={() => {
             setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
@@ -172,7 +173,10 @@ function LoginButton() {
   return session ? (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none focus-visible:ring-2">
+        <button
+          aria-label="profile button"
+          className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none focus-visible:ring-2"
+        >
           <User className="h-5 w-5" />
         </button>
       </DropdownMenuTrigger>
