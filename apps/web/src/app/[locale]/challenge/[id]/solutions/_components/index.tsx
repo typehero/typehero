@@ -81,9 +81,13 @@ function SolutionRow({
         <div className="mr-auto text-sm text-neutral-500">
           {getRelativeTime(solution.createdAt)}
         </div>
-        <button className="mr-2 flex cursor-pointer items-center gap-2 rounded-full bg-neutral-100 px-2 py-1 text-sm  duration-300 hover:bg-neutral-200 dark:bg-zinc-700 dark:hover:bg-zinc-600">
-          <MessageCircle className="h-4 w-4 stroke-1" /> {solution._count.solutionComment}
-        </button>
+        <Link
+          href={`/challenge/${solution.challengeId}/solutions/${solution.id}?showComments=true`}
+        >
+          <button className="mr-2 flex cursor-pointer items-center gap-2 rounded-full bg-neutral-100 px-2 py-1 text-sm  duration-300 hover:bg-neutral-200 dark:bg-zinc-700 dark:hover:bg-zinc-600">
+            <MessageCircle className="h-4 w-4 stroke-1" /> {solution._count.solutionComment}
+          </button>
+        </Link>
         {/* TODO: voted state */}
         {/* bg-emerald-600/10 text-emerald-600 duration-300 hover:bg-emerald-600/20 dark:bg-emerald-400/20 dark:text-emerald-400 dark:hover:bg-emerald-400/40*/}
         <button className="flex cursor-pointer items-center gap-2 rounded-full bg-neutral-100 px-2 py-1 text-sm duration-300 hover:bg-neutral-200 dark:bg-zinc-700 dark:hover:bg-zinc-600 ">
