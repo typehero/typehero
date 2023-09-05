@@ -1,20 +1,20 @@
 'use client';
 
-import { useMonaco } from '@monaco-editor/react';
 import clsx from 'clsx';
 import { Loader2 } from '@repo/ui/icons';
 import type * as monaco from 'monaco-editor';
 import dynamic from 'next/dynamic';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import lzstring from 'lz-string';
 import { Button, ToastAction, useToast, Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui';
 import { useLocalStorage } from './useLocalStorage';
 import SplitEditor, { TESTS_PATH } from './split-editor';
 import { createTwoslashInlayProvider } from './twoslash';
 import { PrettierFormatProvider } from './prettier';
+import { useResetEditor } from './editor-hooks';
 
-const VimStatusBar = dynamic(() => import('./vim-mode').then((v) => v.VimStatusBar), {
+const VimStatusBar = dynamic(() => import('./vim-mode'), {
   ssr: false,
 });
 
@@ -32,7 +32,6 @@ export interface CodePanelProps {
 export type TsErrors = [
   SemanticDiagnostics: monaco.languages.typescript.Diagnostic[],
   SyntacticDiagnostics: monaco.languages.typescript.Diagnostic[],
-  SuggestionDiagnostics: monaco.languages.typescript.Diagnostic[],
   CompilerOptionsDiagnostics: monaco.languages.typescript.Diagnostic[],
 ];
 
@@ -40,13 +39,13 @@ export function CodePanel(props: CodePanelProps) {
   const params = useSearchParams();
   const router = useRouter();
   const { toast } = useToast();
-  const [tsErrors, setTsErrors] = useState<TsErrors | undefined>(undefined);
+  const [tsErrors, setTsErrors] = useState<TsErrors>();
   const [localStorageCode, setLocalStorageCode] = useLocalStorage(
     `challenge-${props.challenge.id}`,
     '',
   );
 
-  const initialTypecheckDone = tsErrors === undefined;
+  const showSubmitSpinner = props.submissionDisabled || tsErrors === undefined;
 
   const defaultCode =
     lzstring.decompressFromEncodedURIComponent(params.get('code') ?? '') ?? localStorageCode;
@@ -60,9 +59,14 @@ export function CodePanel(props: CodePanelProps) {
   };
 
   const [code, setCode] = useState(() => getDefaultCode());
+  useResetEditor().subscribe('resetCode', () => {
+    setCode(props.challenge.code);
+    setLocalStorageCode(props.challenge.code);
+  });
 
   const [testEditorState, setTestEditorState] = useState<monaco.editor.IStandaloneCodeEditor>();
   const [userEditorState, setUserEditorState] = useState<monaco.editor.IStandaloneCodeEditor>();
+  const [monacoInstance, setMonacoInstance] = useState<typeof monaco>();
 
   const handleSubmit = async () => {
     const hasErrors = tsErrors?.some((e) => e.length) ?? false;
@@ -86,8 +90,6 @@ export function CodePanel(props: CodePanelProps) {
     }
   };
 
-  const monacoInstance = useMonaco();
-
   return (
     <>
       <div className="sticky top-0 flex h-[40px] items-center justify-end gap-4 border-b border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
@@ -95,13 +97,17 @@ export function CodePanel(props: CodePanelProps) {
       </div>
       <div className="w-full flex-1">
         <SplitEditor
+          monaco={monacoInstance}
           tests={props.challenge.tests}
           userCode={code}
           onMount={{
             tests: (editor) => {
               setTestEditorState(editor);
+              setTsErrors([[], [], []]);
             },
             user: async (editor, monaco) => {
+              setMonacoInstance(monaco);
+
               monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
                 ...monaco.languages.typescript.typescriptDefaults.getCompilerOptions(),
                 strict: true,
@@ -145,7 +151,6 @@ export function CodePanel(props: CodePanelProps) {
               const errors = await Promise.all([
                 tsWorker.getSemanticDiagnostics(TESTS_PATH),
                 tsWorker.getSyntacticDiagnostics(TESTS_PATH),
-                Promise.resolve([]),
                 tsWorker.getCompilerOptionsDiagnostics(TESTS_PATH),
               ] as const);
 
@@ -167,13 +172,13 @@ export function CodePanel(props: CodePanelProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                disabled={!initialTypecheckDone || props.submissionDisabled}
+                disabled={showSubmitSpinner}
                 size="sm"
                 className="cursor-pointer rounded-lg bg-emerald-600 duration-300 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
                 onClick={handleSubmit}
               >
-                {!initialTypecheckDone && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Submit
+                {showSubmitSpinner && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                Submit{tsErrors === undefined && ' (open test cases)'}
               </Button>
             </TooltipTrigger>
             <TooltipContent>

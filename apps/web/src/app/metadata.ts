@@ -8,8 +8,8 @@ const tagline = 'Level up your typescript skills with interactive exercises';
 const baseMetadata: Metadata = {
   metadataBase: new URL(OG_URL),
   title: {
-    default: 'Typehero',
-    template: '%s | TypeHero',
+    default: 'TypeHero',
+    template: '%s',
   },
   robots: {
     index: true,
@@ -17,9 +17,9 @@ const baseMetadata: Metadata = {
   },
   description: tagline,
   openGraph: {
-    title: 'Typehero',
+    title: 'TypeHero',
     description: tagline,
-    siteName: 'Typehero',
+    siteName: 'TypeHero',
     images: [
       {
         url: `${OG_URL}/api/default`,
@@ -31,7 +31,7 @@ const baseMetadata: Metadata = {
     type: 'website',
   },
   twitter: {
-    title: 'Typehero',
+    title: 'TypeHero',
     card: 'summary_large_image',
     images: [
       {
@@ -76,7 +76,7 @@ export const buildMetaForChallenge = async ({
 /** Helper to build opengraph metadata with defaults, you should call this in generateMetadata() next function */
 export const buildMetaForDefault = async (): Promise<Metadata> => {
   return buildMeta({
-    ogImageUrl: `${OG_URL}/api/default`,
+    ogImageUrl: `${OG_URL}/api/default?cache-bust=${new Date().getDate()}`,
   });
 };
 

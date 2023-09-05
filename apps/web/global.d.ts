@@ -3,6 +3,7 @@ declare module '*.md' {
   export default text;
 }
 declare module '*.png';
+declare module '*.webp';
 
 declare namespace NodeJS {
   interface ProcessEnv {
@@ -12,5 +13,6 @@ declare namespace NodeJS {
     PORT: number;
     RESEND_API_KEY: string;
     EDGE_CONFIG: string;
+    STAGING?: string;
   }
 }

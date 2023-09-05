@@ -8,7 +8,7 @@ interface UserReportProps {
   report: NonNullable<ReportWithInfo>;
 }
 
-export default async function UserReportUi({ report }: UserReportProps) {
+export async function UserReport({ report }: UserReportProps) {
   if (!report.userId) return null;
   const userInfo = await getReportedUserInformation(report.userId);
   const commentRootId = report.comment?.rootChallengeId ?? report.comment?.rootSolutionId ?? -1;

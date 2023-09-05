@@ -20,7 +20,7 @@ export interface ReportsProps {
   initialReports: InfiniteReports;
 }
 
-export default function Reports2({ initialReports }: ReportsProps) {
+export function Reports({ initialReports }: ReportsProps) {
   const router = useRouter();
 
   const [page, setPage] = React.useState(0);

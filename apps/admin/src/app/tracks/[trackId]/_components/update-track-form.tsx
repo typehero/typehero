@@ -118,7 +118,7 @@ export function UpdateTrackForm({ challenges, track }: Props) {
     <ForceRenderUntilClient>
       <div className="container flex flex-col gap-5">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
               name="title"
@@ -175,9 +175,38 @@ export function UpdateTrackForm({ challenges, track }: Props) {
             <Select
               isMulti
               styles={{
-                option: () => {
+                option: (base, { data, isDisabled, isFocused, isSelected }) => {
                   return {
-                    color: 'black',
+                    ...base,
+                    ':active': {
+                      ...base[':active'],
+                      backgroundColor: 'hsl(var(--secondary))',
+                    },
+                    backgroundColor:
+                      isSelected || isFocused ? 'hsl(var(--secondary))' : base.backgroundColor,
+                  };
+                },
+                control: (base) => {
+                  return {
+                    ...base,
+                    borderColor: 'hsl(var(--border))',
+                    borderRadius: '4px',
+                    borderStyle: 'dashed',
+                    overflow: 'hidden',
+                    backgroundColor: 'hsl(var(--background))',
+                  };
+                },
+                menu: (base) => {
+                  return {
+                    ...base,
+                    color: 'var(--text)',
+                    backgroundColor: 'hsl(var(--background))',
+                  };
+                },
+                valueContainer: (base) => {
+                  return {
+                    ...base,
+                    backgroundColor: 'hsl(var(--background))',
                   };
                 },
               }}

@@ -6,8 +6,9 @@ import { TooltipProvider } from '@repo/ui';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from 'next-themes';
 import React from 'react';
-import { Provider as BalancerProvider } from 'react-wrap-balancer';
 import { FeatureFlagProvider } from './feature-flag-provider';
+import { I18nProviderClient } from '~/locales/client';
+import en from '~/locales/en';
 
 interface Props {
   children: React.ReactNode;
@@ -23,7 +24,9 @@ export function Providers({ children }: Props) {
       <SessionProvider>
         <ThemeProvider attribute="class">
           <FeatureFlagProvider>
-            <TooltipProvider>{children}</TooltipProvider>
+            <TooltipProvider>
+              <I18nProviderClient fallbackLocale={en}>{children}</I18nProviderClient>
+            </TooltipProvider>
           </FeatureFlagProvider>
           {shouldInjectToolbar ? <VercelToolbar /> : null}
         </ThemeProvider>

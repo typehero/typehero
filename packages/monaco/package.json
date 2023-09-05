@@ -8,7 +8,8 @@
     "./settings-store": "./src/settings-store.ts",
     "./vim-mode": "./src/vim-mode.tsx",
     "./twoslash": "./src/twoslash.ts",
-    "./prettier": "./src/prettier.ts"
+    "./prettier": "./src/prettier.ts",
+    "./editor-hooks": "./src/editor-hooks.ts"
   },
   "typesVersions": {
     "*": {
@@ -29,6 +30,9 @@
       ],
       "prettier": [
         "./src/prettier.ts"
+      ],
+      "editor-hooks": [
+        "./src/editor-hooks.ts"
       ]
     }
   },

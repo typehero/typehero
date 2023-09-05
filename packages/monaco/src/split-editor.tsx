@@ -26,8 +26,10 @@ export interface SplitEditorProps {
     tests?: OnChange;
     user?: OnChange;
   };
+  monaco: typeof import('monaco-editor') | undefined;
 }
 
+// million-ignore
 export default function SplitEditor({
   className,
   tests,
@@ -35,9 +37,8 @@ export default function SplitEditor({
   onMount,
   onValidate,
   onChange,
+  monaco,
 }: SplitEditorProps) {
-  const monaco = useMonaco();
-
   useEffect(() => {
     if (monaco) {
       const libUri = monaco.Uri.parse(LIB_URI);

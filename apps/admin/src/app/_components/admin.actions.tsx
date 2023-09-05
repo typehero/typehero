@@ -1,8 +1,8 @@
 'use server';
 
-import { type Report, type Prisma } from '@repo/db/types';
-import { prisma } from '@repo/db';
 import { getServerAuthSession } from '@repo/auth/server';
+import { prisma } from '@repo/db';
+import { type Prisma, type Report } from '@repo/db/types';
 
 // FML this was obnoxious to do
 export type ChallengeInfo = Omit<Report, 'id' | 'status' | 'type' | 'userId'> & {
@@ -233,6 +233,11 @@ export async function getChallenge(id: number) {
           vote: true,
           bookmark: true,
           comment: true,
+        },
+      },
+      user: {
+        select: {
+          name: true,
         },
       },
     },
