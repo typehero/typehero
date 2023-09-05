@@ -23,6 +23,12 @@ behavior to <placeholder@typehero.dev>
 > of the content, that you have the necessary rights to the content and that the
 > content you contribute may be provided under the project's license.
 
+**NOTE:** For any mostly-UI based changes, please include relevant screenshots.
+Reviewers are not always able to pull down the changes directly, and seeing the
+changes in screenshots can serve as a good starting point for a reviewer to
+determine whether or not the code needs to be pulled down and examined more
+closely.
+
 ### Reporting Bugs
 
 #### Before Submitting a Bug Report
@@ -82,7 +88,8 @@ the community to understand your suggestion and find related suggestions.
 
 Enhancement suggestions are tracked as [GitHub issues](/issues).
 
-- Use a **clear and descriptive title** for the issue to identify the suggestion.
+- Use a **clear and descriptive title** for the issue to identify the
+  suggestion.
 - Provide a **step-by-step description of the suggested enhancement** in as much
   detail as possible.
 - **Describe the current behavior** and **explain which behavior you expected to
