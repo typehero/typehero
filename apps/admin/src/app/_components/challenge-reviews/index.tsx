@@ -1,6 +1,6 @@
 'use client';
 
-import { DataTable } from '@repo/ui';
+import { DataTable } from '@repo/ui/components/data-table';
 import { useQuery } from '@tanstack/react-query';
 import { getPendingChallenges } from './challenge-reviews.action';
 import { columns } from './columns';
