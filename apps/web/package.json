@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "next build",
+    "build": "dotenv -e ../../.env next build",
     "clean": "rm -rf .next dist node_modules",
     "dev": "dotenv -e ../../.env next dev -- -p 3000",
     "format": "prettier . --check --cache --cache-location=\"node_modules/.cache/prettiercache\"",
