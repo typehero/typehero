@@ -3,7 +3,6 @@
 import { type OnChange, type OnMount, type OnValidate } from '@monaco-editor/react';
 import clsx from 'clsx';
 import type * as monaco from 'monaco-editor';
-import type { editor } from 'monaco-editor';
 import { useEffect } from 'react';
 import { CodeEditor, LIB_URI } from './code-editor';
 import { libSource } from './editor-types';
@@ -101,7 +100,7 @@ export default function SplitEditor({
                     startColumn: start.column,
                     endColumn: end.column,
                     message: d.messageText as string,
-                  } satisfies editor.IMarkerData;
+                  } satisfies monaco.editor.IMarkerData;
                 });
 
                 monaco.editor.setModelMarkers(model, model.getLanguageId(), markers);
