@@ -279,7 +279,7 @@ export function ChallengeCreationCard({
             }}
           />
           <div className="absolute -right-4 bottom-4 w-full">
-            <Steps current={step} onChange={() => { }} steps={steps} />
+            <Steps current={step} onChange={() => {}} steps={steps} />
           </div>
         </>
       )}
@@ -354,7 +354,7 @@ export function ChallengeCreationCard({
             }}
           />
           <div className="absolute -right-4 bottom-4 w-full">
-            <Steps current={step} onChange={() => { }} steps={steps} />
+            <Steps current={step} onChange={() => {}} steps={steps} />
           </div>
         </>
       )}

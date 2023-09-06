@@ -60,9 +60,9 @@ const steps: Step[] = [
 ];
 
 export interface Step {
-  id: string
-  name: string
-  schema?: z.ZodSchema
+  id: string;
+  name: string;
+  schema?: z.ZodSchema;
 }
 
 export type CreateChallengeSchema = z.infer<typeof createChallengeSchema>;
@@ -133,8 +133,9 @@ export function Wizard() {
       {rendered ? (
         <Form {...form}>
           <form
-            className={`container ${(step === STEPS.Description || step === STEPS.TestCases) && 'h-full'
-              }`}
+            className={`container ${
+              (step === STEPS.Description || step === STEPS.TestCases) && 'h-full'
+            }`}
           >
             {step === STEPS.ChallengeCard && <ChallengeCardEditor form={form} />}
             {step === STEPS.Description && <DescriptionEditor form={form} />}
