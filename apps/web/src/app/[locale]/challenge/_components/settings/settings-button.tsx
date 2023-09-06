@@ -14,15 +14,10 @@ import { SettingsForm } from './settings-form';
 export function SettingsButton() {
   return (
     <Dialog>
-      <DialogTrigger tabIndex={-1} className="focus:outline-none focus-visible:ring-0">
+      <DialogTrigger>
         <Tooltip>
           <TooltipTrigger asChild>
-            <button className="items-centerdark:bg-zinc-700 group flex focus:outline-none focus-visible:ring-2">
-              <Settings
-                className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400 focus:outline-none focus-visible:ring-0"
-                size={20}
-              />
-            </button>
+            <Settings className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" size={20} />
           </TooltipTrigger>
           <TooltipContent className="px-2 py-1">Settings</TooltipContent>
         </Tooltip>
