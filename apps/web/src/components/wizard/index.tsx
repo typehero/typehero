@@ -51,13 +51,19 @@ const createTestCasesSchema = z.object({
 export const createChallengeSchema = createExploreCardSchema
   .merge(createDescriptionSchema)
   .merge(createTestCasesSchema);
-const steps = [
+
+const steps: Step[] = [
   { id: '1', name: 'Challenge Card', schema: createExploreCardSchema },
   { id: '2', name: 'Description', schema: createDescriptionSchema },
   { id: '3', name: 'Test Cases', schema: createTestCasesSchema },
-  { id: '4', name: 'Summary', schema: z.any() },
+  { id: '4', name: 'Summary' },
 ];
-export type Step = (typeof steps)[0];
+
+export interface Step {
+  id: string;
+  name: string;
+  schema?: z.ZodSchema;
+}
 
 export type CreateChallengeSchema = z.infer<typeof createChallengeSchema>;
 
@@ -92,7 +98,9 @@ export function Wizard() {
   }, []);
 
   const handleNextClick = async () => {
-    const { success } = steps[step]!.schema.safeParse(form.getValues());
+    const schema = steps[step]!.schema;
+    const success = schema ? schema.safeParse(form.getValues()).success : true;
+
     if (success) {
       // if they are currently on test cases do not let them go to next step
       // until a type error exists
