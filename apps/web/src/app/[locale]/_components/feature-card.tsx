@@ -15,7 +15,6 @@ import { useTheme } from 'next-themes';
 import Image, { type StaticImageData } from 'next/image';
 import { useEffect, useState, type MouseEvent } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { z } from 'zod';
 import { Steps } from '~/components/wizard/Steps';
 import { useIsMobile } from '~/utils/useIsMobile';
 import { TrackChallenge } from '../tracks/_components/track-challenge-card';
@@ -161,6 +160,13 @@ export function ImageCard({
   );
 }
 
+const steps = [
+  { id: '1', name: '💳' },
+  { id: '2', name: '📄' },
+  { id: '3', name: '📔' },
+  { id: '4', name: '🚀' },
+];
+
 export function ChallengeCreationCard({
   image,
   step1img1Class,
@@ -191,12 +197,7 @@ export function ChallengeCreationCard({
 }) {
   const { resolvedTheme } = useTheme();
   const { currentNumber: step, increment } = useNumberCycler();
-  const steps = [
-    { id: '1', name: '💳', schema: z.any() },
-    { id: '2', name: '📄', schema: z.any() },
-    { id: '3', name: '📔', schema: z.any() },
-    { id: '4', name: '🚀', schema: z.any() },
-  ];
+
   return (
     <FeatureCard {...props}>
       <div
