@@ -1,7 +1,7 @@
 'use client';
 
 import { signIn, signOut, useSession } from '@repo/auth/react';
-import { RoleTypes } from '@repo/db/types';
+import { type RoleTypes } from '@repo/db/types';
 import {
   Button,
   DropdownMenu,
@@ -28,6 +28,13 @@ export function getAdminUrl() {
   // assume localhost
   return `http://localhost:3001`;
 }
+
+const roleTypes: typeof RoleTypes = {
+  USER: 'USER',
+  ADMIN: 'ADMIN',
+  MODERATOR: 'MODERATOR',
+  CREATOR: 'CREATOR',
+};
 
 export function Navigation() {
   const { fssettings } = useFullscreenSettingsStore();
@@ -150,8 +157,8 @@ function LoginButton() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  const isAdmin = session?.user.role.includes(RoleTypes.ADMIN);
-  const isMod = session?.user.role.includes(RoleTypes.MODERATOR);
+  const isAdmin = session?.user.role.includes(roleTypes.ADMIN);
+  const isMod = session?.user.role.includes(roleTypes.MODERATOR);
   const isAdminOrMod = isAdmin || isMod;
 
   // NOTE: 1. loading == true -> 2. signIn() -> 3. session status == 'loading' (loading == false)
