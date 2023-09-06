@@ -77,7 +77,6 @@ export default function SplitEditor({
           value={userCode}
           onValidate={onValidate?.user}
           onChange={async (e, a) => {
-            // Most of this shamelessly stolen from Stackoverflow.
             if (monaco) {
               const models = monaco.editor.getModels();
               const getWorker = await monaco.languages.typescript.getTypeScriptWorker();

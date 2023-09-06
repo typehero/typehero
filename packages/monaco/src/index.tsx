@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 import lzstring from 'lz-string';
 import { Button, ToastAction, useToast, Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui';
 import { useLocalStorage } from './useLocalStorage';
-import SplitEditor, { TESTS_PATH } from './split-editor';
+import SplitEditor, { TESTS_PATH, USER_CODE_PATH } from './split-editor';
 import { createTwoslashInlayProvider } from './twoslash';
 import { PrettierFormatProvider } from './prettier';
 import { useResetEditor } from './editor-hooks';
@@ -99,12 +99,10 @@ export function CodePanel(props: CodePanelProps) {
         tests={props.challenge.tests}
         userCode={code}
         onMount={{
-          tests: async (editor) => {
-            if (!monacoInstance) return null;
+          tests: async (editor, monaco) => {
+            const getTsWorker = await monaco.languages.typescript.getTypeScriptWorker();
 
-            const getTsWorker = await monacoInstance.languages.typescript.getTypeScriptWorker();
-
-            const mm = monacoInstance.editor.getModel(monacoInstance.Uri.parse(TESTS_PATH));
+            const mm = monaco.editor.getModel(monaco.Uri.parse(TESTS_PATH));
             if (!mm) return null;
 
             const tsWorker = await getTsWorker(mm.uri);
@@ -113,6 +111,8 @@ export function CodePanel(props: CodePanelProps) {
               tsWorker.getSyntacticDiagnostics(TESTS_PATH),
               tsWorker.getCompilerOptionsDiagnostics(TESTS_PATH),
             ] as const);
+
+            console.log({ errors });
 
             setTsErrors(errors);
             setTestEditorState(editor);
@@ -141,6 +141,14 @@ export function CodePanel(props: CodePanelProps) {
             }
 
             const ts = await (await monaco.languages.typescript.getTypeScriptWorker())(model.uri);
+
+            const errors = await Promise.all([
+              ts.getSemanticDiagnostics(USER_CODE_PATH),
+              ts.getSyntacticDiagnostics(USER_CODE_PATH),
+              ts.getCompilerOptionsDiagnostics(USER_CODE_PATH),
+            ] as const);
+
+            setTsErrors(errors);
 
             monaco.languages.registerInlayHintsProvider(
               'typescript',
