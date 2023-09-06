@@ -89,7 +89,7 @@ declare function NotEqual<A, B>(
 declare function Extends<A, B>(
   ...args: [
     ...([a: A, b: B] | []),
-    ...(A extends B ? [] : [msg: [A, "doesn't extend", B]])
+    ...([A] extends [B] ? [] : [msg: [A, "doesn't extend", B]])
   ]
 ): void;
 `;

@@ -6,19 +6,24 @@ import { useMemo } from 'react';
 import { useEditorSettingsStore } from './settings-store';
 import { libSource } from './editor-types';
 
-const PROD_URL = 'https://typehero.dev';
-const STAGING_URL = 'https://staging.typehero.dev';
-const MONACO_URL = `${
-  process.env.NODE_ENV !== 'production'
-    ? 'http://localhost:3000'
-    : process.env.STAGING
-    ? STAGING_URL
-    : PROD_URL
-}/min/vs`;
+const ADMIN_HOST = 'admin.typehero.dev';
+const getBaseUrl = () => {
+  if (typeof globalThis.window === 'undefined') return '';
+  const isProd = process.env.NODE_ENV === 'production';
+  if (isProd && window?.location?.hostname === ADMIN_HOST) {
+    return 'https://typehero.dev';
+  }
+
+  if (!isProd && window?.location?.port === '3001') {
+    return 'http://localhost:3000';
+  }
+
+  return '';
+};
 
 loader.config({
   paths: {
-    vs: MONACO_URL,
+    vs: `${getBaseUrl()}/min/vs`,
   },
 });
 

@@ -13,7 +13,7 @@ async function getSolutionChallenge(challengeId: number) {
   });
 }
 
-export default async function SolutionReport({ report }: { report: NonNullable<ReportWithInfo> }) {
+export async function SolutionReport({ report }: { report: NonNullable<ReportWithInfo> }) {
   if (report.type !== 'SOLUTION' || !report.solution) return null;
 
   const challenge = await getSolutionChallenge(report.solution.challengeId || -1);
