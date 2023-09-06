@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 132
+        "contributions": 133
     },
     {
         "login": "Hacksore",
@@ -104,7 +104,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/jhechtf/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 21
+        "contributions": 22
     },
     {
         "login": "creativenull",

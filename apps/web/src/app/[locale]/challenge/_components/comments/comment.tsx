@@ -54,6 +54,7 @@ const commentReportSchema = z
 
 export type CommentReportSchemaType = z.infer<typeof commentReportSchema>;
 
+// million-ignore
 export function Comment({ comment, readonly = false, rootId, type, queryKey }: CommentProps) {
   const [showReplies, setShowReplies] = useState(false);
 
