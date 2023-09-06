@@ -1,12 +1,6 @@
 import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import { NewSettings } from '~/components/settings/new-settings';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Settings | TypeHero',
-  description: 'Change your settings on TypeHero.',
-};
 
 export default async function SettingsPage() {
   const session = await getServerAuthSession();

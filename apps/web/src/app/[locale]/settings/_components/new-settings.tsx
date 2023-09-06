@@ -7,6 +7,9 @@ import Link from 'next/link';
 import UserHeader from '~/components/user/dashboard/user-header';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { ProfileSettings } from './profile';
+import { Notifications } from './notifications';
+import { Appearances } from './appearance';
+import { usePathname } from 'next/navigation';
 
 interface Props {
   user: User & { userLinks: { id: string | null; url: string }[] };
@@ -40,9 +43,23 @@ export const links = [
 ];
 
 export const NewSettings = ({ user }: Props) => {
+  const path = usePathname();
+  let selectedTabValue: string;
+  if (path === '/settings') {
+    selectedTabValue = 'profile';
+  } else if (path === '/settings/connections') {
+    selectedTabValue = 'connections';
+  } else if (path === '/settings/notifications') {
+    selectedTabValue = 'notifications';
+  } else if (path === '/settings/appearance') {
+    selectedTabValue = 'appearance';
+  } else {
+    // TODO: 404
+    selectedTabValue = 'profile';
+  }
   return (
     <div className="container">
-      <Tabs className="flex flex-col gap-8 py-8 md:flex-row" defaultValue="profile">
+      <Tabs className="flex flex-col gap-8 py-8 md:flex-row" defaultValue={selectedTabValue}>
         <VerticalTabsList>
           <div className="mb-2 flex flex-col items-center md:items-start">
             <div
@@ -57,8 +74,7 @@ export const NewSettings = ({ user }: Props) => {
               Joined {getRelativeTime(user.createdAt)}
             </p>
             <div className="mb-4 mt-2 w-full text-center text-sm md:w-64 md:text-start">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima temporibus maiores
-              nesciunt hic dolores aspernatur corrupti laboriosam consectetur. Vitae, consectetur?
+              {user.bio}
             </div>
           </div>
           <div className="flex gap-4 pr-6 md:flex-col">
@@ -77,9 +93,12 @@ export const NewSettings = ({ user }: Props) => {
             ))}
           </div>
         </VerticalTabsList>
-        <VerticalTabsContent className="shrink grow space-y-4" value="profile">
+        <VerticalTabsContent className="shrink grow space-y-4" value={selectedTabValue}>
           <Card className="col-span-4 min-h-[calc(100vh_-_56px_-_6rem)]">
-            <ProfileSettings />
+            {selectedTabValue === 'profile' && <ProfileSettings user={user} />}
+            {selectedTabValue === 'connections' && <div>Connections</div>}
+            {selectedTabValue === 'notifications' && <Notifications user={user} />}
+            {selectedTabValue === 'appearance' && <Appearances user={user} />}
           </Card>
         </VerticalTabsContent>
       </Tabs>
