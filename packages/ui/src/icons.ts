@@ -44,6 +44,7 @@ export {
   Unlock,
   User,
   X,
+  XCircle,
   RotateCcw,
   Twitter,
   Minimize2,

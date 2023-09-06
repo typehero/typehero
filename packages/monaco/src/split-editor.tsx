@@ -1,10 +1,17 @@
 'use client';
+
+import { type OnChange, type OnMount, type OnValidate } from '@monaco-editor/react';
 import clsx from 'clsx';
-import React, { useCallback, useEffect, useState } from 'react';
-import { useMonaco, type OnValidate, type OnMount, type OnChange } from '@monaco-editor/react';
-import type { editor } from 'monaco-editor';
+import type * as monaco from 'monaco-editor';
+import { useEffect } from 'react';
 import { CodeEditor, LIB_URI } from './code-editor';
 import { libSource } from './editor-types';
+import dynamic from 'next/dynamic';
+import { useEditorSettingsStore } from './settings-store';
+
+const VimStatusBar = dynamic(() => import('./vim-mode'), {
+  ssr: false,
+});
 
 export const TESTS_PATH = 'file:///tests.ts';
 export const USER_CODE_PATH = 'file:///user.ts';
@@ -12,6 +19,7 @@ export const USER_CODE_PATH = 'file:///user.ts';
 export interface SplitEditorProps {
   /** the classes applied to the container div */
   className?: string;
+  expandTestPanel: boolean;
   tests: string;
   userCode: string;
   onValidate?: {
@@ -27,11 +35,14 @@ export interface SplitEditorProps {
     user?: OnChange;
   };
   monaco: typeof import('monaco-editor') | undefined;
+  userEditorState?: monaco.editor.IStandaloneCodeEditor;
 }
 
 // million-ignore
 export default function SplitEditor({
   className,
+  userEditorState,
+  expandTestPanel,
   tests,
   userCode,
   onMount,
@@ -39,6 +50,7 @@ export default function SplitEditor({
   onChange,
   monaco,
 }: SplitEditorProps) {
+  const { settings } = useEditorSettingsStore();
   useEffect(() => {
     if (monaco) {
       const libUri = monaco.Uri.parse(LIB_URI);
@@ -54,38 +66,9 @@ export default function SplitEditor({
     }
   }, [monaco]);
 
-  const [footerExpanded, setFooterExpanded] = useState(false);
-
   return (
-    <div className={clsx('flex h-full flex-col gap-2', className)}>
-      <button onClick={() => setFooterExpanded(!footerExpanded)}>
-        {footerExpanded ? 'hide' : 'show'} all
-      </button>
-      {footerExpanded ? (
-        <header
-          className={clsx('flex-shrink-0 overflow-hidden transition-all', {
-            'min-h-[30vh]': footerExpanded,
-            'min-h-0': !footerExpanded,
-          })}
-        >
-          <CodeEditor
-            onMount={(editor, monaco) => {
-              editor.updateOptions({
-                readOnly: true,
-                renderValidationDecorations: 'on',
-              });
-
-              onMount?.tests?.(editor, monaco);
-            }}
-            defaultPath={TESTS_PATH}
-            value={tests}
-            defaultValue={tests}
-            onChange={onChange?.tests}
-            onValidate={onValidate?.tests}
-          />
-        </header>
-      ) : null}
-      <section className="flex-shrink flex-grow">
+    <div className={clsx('flex h-[calc(100%-_90px)] flex-col', className)}>
+      <section className="min-h-0 flex-grow">
         <CodeEditor
           defaultPath={USER_CODE_PATH}
           onMount={onMount?.user}
@@ -93,7 +76,6 @@ export default function SplitEditor({
           value={userCode}
           onValidate={onValidate?.user}
           onChange={async (e, a) => {
-            // Most of this shamelessly stolen from Stackoverflow.
             if (monaco) {
               const models = monaco.editor.getModels();
               const getWorker = await monaco.languages.typescript.getTypeScriptWorker();
@@ -118,7 +100,7 @@ export default function SplitEditor({
                     startColumn: start.column,
                     endColumn: end.column,
                     message: d.messageText as string,
-                  } satisfies editor.IMarkerData;
+                  } satisfies monaco.editor.IMarkerData;
                 });
 
                 monaco.editor.setModelMarkers(model, model.getLanguageId(), markers);
@@ -129,6 +111,32 @@ export default function SplitEditor({
           }}
         />
       </section>
+      {userEditorState && settings.bindings === 'vim' && <VimStatusBar editor={userEditorState} />}
+      <div
+        className={clsx('transition-all', {
+          'h-[30vh] border-t border-zinc-300 dark:border-zinc-700': expandTestPanel,
+          hidden: !expandTestPanel,
+        })}
+      >
+        <CodeEditor
+          options={{
+            lineNumbers: 'off',
+          }}
+          onMount={(editor, monaco) => {
+            editor.updateOptions({
+              readOnly: true,
+              renderValidationDecorations: 'on',
+            });
+
+            onMount?.tests?.(editor, monaco);
+          }}
+          defaultPath={TESTS_PATH}
+          value={tests}
+          defaultValue={tests}
+          onChange={onChange?.tests}
+          onValidate={onValidate?.tests}
+        />
+      </div>
     </div>
   );
 }

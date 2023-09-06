@@ -48,6 +48,7 @@ interface Props {
   type: CommentRoot;
 }
 
+// million-ignore
 export function Comments({ rootId, type }: Props) {
   const [showComments, setShowComments] = useState(false);
   const [text, setText] = useState('');

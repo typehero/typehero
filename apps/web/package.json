@@ -78,7 +78,6 @@
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "@types/react-syntax-highlighter": "^15.5.7",
-    "@vercel/spaces": "https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701",
     "autoprefixer": "^10.4.14",
     "dotenv": "^16.3.1",
     "eslint": "^8.45.0",
