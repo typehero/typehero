@@ -628,9 +628,6 @@ importers:
       clsx:
         specifier: ^2.0.0
         version: 2.0.0
-      cmdk:
-        specifier: ^0.2.0
-        version: 0.2.0(@types/react@18.2.20)(react-dom@18.2.0)(react@18.2.0)
       lucide-react:
         specifier: ^0.260.0
         version: 0.260.0(react@18.2.0)
@@ -1562,7 +1559,7 @@ packages:
       eslint: ^6.0.0 || ^7.0.0 || >=8.0.0
     dependencies:
       eslint: 8.48.0
-      eslint-visitor-keys: 3.4.3
+      eslint-visitor-keys: 3.4.1
     dev: true
 
   /@eslint-community/regexpp@4.5.1:
