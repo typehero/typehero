@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import type { User } from '@repo/db/types';
 import {
   Button,
   Form,
@@ -50,8 +51,11 @@ const profileFormSchema = z.object({
 });
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
+interface Props {
+  user: User & { userLinks: { id: string | null; url: string }[] };
+}
 
-export function ProfileSettings() {
+export function ProfileSettings({ user }: Props) {
   return (
     <div className="space-y-8 p-8">
       <div className="mb-4">

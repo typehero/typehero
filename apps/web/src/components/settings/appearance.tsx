@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import type { User } from '@repo/db/types';
 import {
   Button,
-  Card,
   Form,
   FormControl,
   FormDescription,
@@ -15,75 +14,19 @@ import {
   RadioGroup,
   RadioGroupItem,
   Separator,
-  Tabs,
-  VerticalTabsContent,
-  VerticalTabsList,
-  VerticalTabsTrigger,
   buttonVariants,
   cn,
   toast,
 } from '@repo/ui';
 import { ChevronDownIcon } from 'lucide-react';
-import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import UserHeader from '~/components/user/dashboard/user-header';
-import { getRelativeTime } from '~/utils/relativeTime';
-import { links } from './new-settings';
 
 interface Props {
   user: User & { userLinks: { id: string | null; url: string }[] };
 }
 
-export const Appearance = ({ user }: Props) => {
-  return (
-    <div className="container">
-      <Tabs className="flex flex-col gap-8 py-8 md:flex-row" defaultValue="appearance">
-        <VerticalTabsList>
-          <div className="mb-2 flex flex-col items-center md:items-start">
-            <div
-              className="mb-10 h-32 w-32 rounded-3xl bg-cover bg-center bg-no-repeat md:h-64 md:w-64"
-              style={{ backgroundImage: `url(${user.image ?? '/avatar.jpeg'})` }}
-            />
-            <UserHeader user={user} isOwnProfile />
-            <p
-              className="text-sm italic tracking-tight text-neutral-500"
-              title={`Joined ${user.createdAt.toString()}`}
-            >
-              Joined {getRelativeTime(user.createdAt)}
-            </p>
-            <div className="mb-4 mt-2 w-full text-center text-sm md:w-64 md:text-start">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima temporibus maiores
-              nesciunt hic dolores aspernatur corrupti laboriosam consectetur. Vitae, consectetur?
-            </div>
-          </div>
-          <div className="flex gap-4 pr-6 md:flex-col">
-            {links.map(({ icon: Icon, name, link, disabled }) => (
-              <Link href={link} key={name} className="w-full">
-                <VerticalTabsTrigger
-                  className="flex w-full items-center justify-center gap-3 px-2 md:justify-normal md:px-3"
-                  value={name.toLowerCase()}
-                  key={name}
-                  disabled={disabled}
-                >
-                  <Icon className="h-4 w-4" />
-                  <span className="hidden md:block">{name}</span>
-                </VerticalTabsTrigger>
-              </Link>
-            ))}
-          </div>
-        </VerticalTabsList>
-        <VerticalTabsContent className="shrink grow space-y-4" value="appearance">
-          <Card className="col-span-4 min-h-[calc(100vh_-_56px_-_6rem)]">
-            <Appearances />
-          </Card>
-        </VerticalTabsContent>
-      </Tabs>
-    </div>
-  );
-};
-
-function Appearances() {
+export function Appearances({ user }: Props) {
   return (
     <div className="max-w-lg space-y-6 p-8">
       <div className="mb-4">
