@@ -2,15 +2,16 @@
 
 import type { CommentRoot } from '@repo/db/types';
 import {
+  ArrowDownNarrowWide,
+  ArrowUpNarrowWide,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
   MessageCircle,
-  ArrowDownNarrowWide,
-  ArrowUpNarrowWide,
 } from '@repo/ui/icons';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
+import { usePathname, useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { Comment } from './comment';
 import { CommentInput } from './comment-input';
@@ -44,19 +45,23 @@ const sortKeys = [
   },
 ] as const;
 interface Props {
+  expanded?: boolean;
   rootId: number;
   type: CommentRoot;
 }
 
 // million-ignore
-export function Comments({ rootId, type }: Props) {
-  const [showComments, setShowComments] = useState(false);
+export function Comments({ expanded = false, rootId, type }: Props) {
+  const [showComments, setShowComments] = useState(expanded);
   const [text, setText] = useState('');
   const commentContainerRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
+  const router = useRouter();
+  const pathname = usePathname();
   const [page, setPage] = useState(1);
   const [sortKey, setSortKey] = useState<(typeof sortKeys)[number]>(sortKeys[0]);
   const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
+  const isCommentsActive = pathname.split('/').at(-1) === 'comments';
 
   const queryKey = [`${type.toLowerCase()}-${rootId}-comments`, sortKey.value, sortOrder, page];
 
@@ -65,7 +70,8 @@ export function Comments({ rootId, type }: Props) {
     queryFn: () =>
       getPaginatedComments({ rootId, page, rootType: type, sortKey: sortKey.value, sortOrder }),
     keepPreviousData: true,
-    staleTime: 5000,
+    staleTime: 60000, // one minute
+    refetchOnWindowFocus: false,
   });
 
   async function createChallengeComment() {
@@ -117,7 +123,14 @@ export function Comments({ rootId, type }: Props) {
       <div className="relative">
         <button
           className="flex w-full items-center justify-between gap-2 p-3 font-medium text-neutral-500 duration-300 hover:text-neutral-700 focus:outline-none dark:hover:text-zinc-300"
-          onClick={() => setShowComments(!showComments)}
+          onClick={() => {
+            setShowComments(!showComments);
+            if (isCommentsActive) {
+              router.push(pathname.split('/').slice(0, -1).join('/'));
+            } else {
+              router.push(`${pathname}/comments`);
+            }
+          }}
         >
           <div className="flex items-center gap-2">
             <MessageCircle className="h-5 w-5" />
@@ -136,7 +149,7 @@ export function Comments({ rootId, type }: Props) {
             {
               'h-64 pb-4 md:h-[calc(100vh_-_164px)]': showComments,
               'h-0 overflow-y-hidden': !showComments,
-              'overflow-y-auto': showComments && data?.comments.length !== 0,
+              'overflow-y-auto': showComments && (data?.comments.length ?? 0) > 0,
             },
           )}
           ref={commentContainerRef}
@@ -149,7 +162,7 @@ export function Comments({ rootId, type }: Props) {
               value={text}
             />
           </div>
-          {data?.comments.length !== 0 && (
+          {(data?.comments.length ?? 0) > 0 && (
             <div className="flex items-center gap-2 px-3 py-2">
               <Select
                 value={sortKey.value}
