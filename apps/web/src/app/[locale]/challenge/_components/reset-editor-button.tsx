@@ -1,17 +1,15 @@
 import { useResetEditor } from '@repo/monaco/editor-hooks';
 import {
   AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
+  AlertDialogTrigger,
   AlertDialogContent,
-  AlertDialogFooter,
+  AlertDialogCancel,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '@repo/ui';
+  AlertDialogAction,
+  AlertDialogFooter,
+} from '@repo/ui/components/alert-dialog';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { RotateCcw } from '@repo/ui/icons';
 
 const ResetEditorButton = () => {

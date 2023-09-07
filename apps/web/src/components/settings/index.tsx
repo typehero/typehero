@@ -1,12 +1,16 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useFieldArray, useForm, useWatch } from 'react-hook-form';
+import { Form, useFieldArray, useForm, useWatch } from 'react-hook-form';
 import * as z from 'zod';
 import Link from 'next/link';
-import { Button, Form, FormField, FormItem, FormMessage, Input, toast, MagicIcon } from '@repo/ui';
 import { RichMarkdownEditor } from '../ui/rich-markdown-editor';
 import { updateProfile } from './settings.action';
+import { toast } from '@repo/ui/components/use-toast';
+import { Button } from '@repo/ui/components/button';
+import { FormField, FormItem, FormMessage } from '@repo/ui/components/form';
+import { MagicIcon } from '@repo/ui/components/magic-icon';
+import { Input } from '@repo/ui/components/input';
 
 export interface UserLinkType {
   id: string | null;

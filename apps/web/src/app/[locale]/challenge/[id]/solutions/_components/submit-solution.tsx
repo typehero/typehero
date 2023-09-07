@@ -1,5 +1,5 @@
+import { Button } from '@repo/ui/components/button';
 import { Plus } from '@repo/ui/icons';
-import { Button } from '@repo/ui';
 
 interface Props {
   disabled: boolean;
