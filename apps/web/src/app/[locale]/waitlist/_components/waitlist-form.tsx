@@ -3,12 +3,12 @@
 import { useState } from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Form, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { AlertCircle, MailCheck } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { uploadWaitlistEntry } from './create.action';
 import { Alert, AlertDescription } from '@repo/ui/components/alert';
-import { FormControl, FormField, FormItem } from '@repo/ui/components/form';
+import { Form, FormControl, FormField, FormItem } from '@repo/ui/components/form';
 import { Input } from '@repo/ui/components/input';
 import {
   Select,
