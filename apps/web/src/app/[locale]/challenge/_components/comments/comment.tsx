@@ -226,7 +226,7 @@ function SingleComment({
   }
 
   async function copyCommentUrlToClipboard() {
-    await navigator.clipboard.writeText(`${window.location.href}/comment/${comment.id}`);
+    await navigator.clipboard.writeText(`${window.location.href}/${comment.id}`);
   }
 
   const loggedinUser = useSession();

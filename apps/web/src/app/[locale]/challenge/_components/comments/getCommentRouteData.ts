@@ -33,7 +33,39 @@ function orderBy(sortKey: SortKey, sortOrder: SortOrder) {
 }
 
 export type PaginatedComments = NonNullable<Awaited<ReturnType<typeof getPaginatedComments>>>;
+export type PreselectedCommentMetadata = NonNullable<
+  Awaited<ReturnType<typeof getPreselectedCommentMetadata>>
+>;
 
+export async function getPreselectedCommentMetadata(challengeId: number, commentId: number) {
+  const challengeComments = await prisma.comment.findMany({
+    where: {
+      rootType: 'CHALLENGE',
+      rootChallengeId: challengeId,
+      visible: true,
+      parentId: null,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+    select: {
+      id: true,
+      parentId: true,
+    },
+  });
+
+  const index = challengeComments.findIndex((comment) => comment.id === commentId);
+  const selectedComment = challengeComments[index];
+  const page = Math.ceil((index + 1) / PAGESIZE);
+
+  return {
+    page,
+    selectedComment,
+    isReply: selectedComment?.parentId !== null,
+    index,
+    challengeComments: challengeComments.map((comment) => comment.id),
+  };
+}
 export async function getPaginatedComments({
   page,
   rootId,
@@ -49,6 +81,7 @@ export async function getPaginatedComments({
   sortKey?: SortKey;
   sortOrder?: SortOrder;
 }) {
+  console.log({ page });
   const session = await getServerAuthSession();
 
   const totalComments = await prisma.comment.count({

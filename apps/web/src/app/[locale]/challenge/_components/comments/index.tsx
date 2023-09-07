@@ -17,7 +17,11 @@ import { Comment } from './comment';
 import { CommentInput } from './comment-input';
 import { CommentSkeleton } from './comment-skeleton';
 import { addComment } from './comment.action';
-import { getPaginatedComments, type SortOrder } from './getCommentRouteData';
+import {
+  getPaginatedComments,
+  type PreselectedCommentMetadata,
+  type SortOrder,
+} from './getCommentRouteData';
 import NoComments from './nocomments';
 import { Button } from '@repo/ui/components/button';
 import { Toggle } from '@repo/ui/components/toggle';
@@ -45,26 +49,28 @@ const sortKeys = [
   },
 ] as const;
 interface Props {
+  preselectedCommentMetadata?: PreselectedCommentMetadata;
   expanded?: boolean;
   rootId: number;
   type: CommentRoot;
 }
 
 // million-ignore
-export function Comments({ expanded = false, rootId, type }: Props) {
+export function Comments({ preselectedCommentMetadata, rootId, type, expanded = false }: Props) {
   const [showComments, setShowComments] = useState(expanded);
   const [text, setText] = useState('');
   const commentContainerRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
   const router = useRouter();
   const pathname = usePathname();
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(preselectedCommentMetadata?.page ?? 1);
   const [sortKey, setSortKey] = useState<(typeof sortKeys)[number]>(sortKeys[0]);
   const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
   const isCommentsActive = pathname.split('/').at(-1) === 'comments';
 
   const queryKey = [`${type.toLowerCase()}-${rootId}-comments`, sortKey.value, sortOrder, page];
 
+  // we need to know the page number to feed to this query.
   const { status, data } = useQuery({
     queryKey,
     queryFn: () =>
