@@ -1,6 +1,6 @@
 import '../styles/globals.css';
 
-import { Toaster } from '@repo/ui';
+import { Toaster } from '@repo/ui/components/toaster';
 import { Inter } from 'next/font/google';
 import { Providers } from './providers';
 import { Navigation } from '~/components/navigation';

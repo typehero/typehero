@@ -1,7 +1,8 @@
 import type { OnChange } from '@monaco-editor/react';
 import type { TsErrors } from '@repo/monaco';
 import { CodeEditor, loadCheckingLib, type CodeEditorProps } from '@repo/monaco/code-editor';
-import { FormField, FormItem, FormMessage, TypographyH3 } from '@repo/ui';
+import { FormField, FormItem, FormMessage } from '@repo/ui/components/form';
+import { TypographyH3 } from '@repo/ui/components/typography/h3';
 import { useCallback, useState } from 'react';
 import type * as monaco from 'monaco-editor';
 import dynamic from 'next/dynamic';

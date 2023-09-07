@@ -4,24 +4,26 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
+import { DEFAULT_SETTINGS, useEditorSettingsStore } from '@repo/monaco/settings-store';
+import { useToast } from '@repo/ui/components/use-toast';
 import {
-  Button,
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
+} from '@repo/ui/components/form';
+import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-  useToast,
-  DialogFooter,
-  Textarea,
-} from '@repo/ui';
-import { DEFAULT_SETTINGS, useEditorSettingsStore } from '@repo/monaco/settings-store';
+} from '@repo/ui/components/select';
+import { DialogFooter } from '@repo/ui/components/dialog';
+import { Button } from '@repo/ui/components/button';
+import { Textarea } from '@repo/ui/components/textarea';
 
 const formSchema = z.object({
   fontSize: z.string(),

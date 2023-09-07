@@ -2,16 +2,6 @@
 
 import type { CommentRoot } from '@repo/db/types';
 import {
-  Button,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  Toggle,
-  toast,
-} from '@repo/ui';
-import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
@@ -28,6 +18,16 @@ import { CommentSkeleton } from './comment-skeleton';
 import { addComment } from './comment.action';
 import { getPaginatedComments, type SortOrder } from './getCommentRouteData';
 import NoComments from './nocomments';
+import { Button } from '@repo/ui/components/button';
+import { Toggle } from '@repo/ui/components/toggle';
+import { toast } from '@repo/ui/components/use-toast';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@repo/ui/components/select';
 
 const sortKeys = [
   {
