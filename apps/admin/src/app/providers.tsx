@@ -3,7 +3,7 @@
 import { SessionProvider } from '@repo/auth/react';
 import { ThemeProvider } from 'next-themes';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { TooltipProvider } from '@repo/ui';
+import { TooltipProvider } from '@repo/ui/components/tooltip';
 
 interface Props {
   children: React.ReactNode;
