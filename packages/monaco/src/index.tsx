@@ -11,10 +11,10 @@ import SplitEditor, { TESTS_PATH, USER_CODE_PATH } from './split-editor';
 import { createTwoslashInlayProvider } from './twoslash';
 import { PrettierFormatProvider } from './prettier';
 import { useResetEditor } from './editor-hooks';
-import { useToast } from '@repo/ui/components/use-toast'
+import { useToast } from '@repo/ui/components/use-toast';
 import { ToastAction } from '@repo/ui/components/toast';
-import { Button } from '@repo/ui/components/button'
-import { Tooltip, TooltipTrigger, TooltipContent } from '@repo/ui/components/tooltip'
+import { Button } from '@repo/ui/components/button';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@repo/ui/components/tooltip';
 
 export interface CodePanelProps {
   challenge: {
