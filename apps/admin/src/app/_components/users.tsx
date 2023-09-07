@@ -1,20 +1,20 @@
 'use client';
 
 import {
-  ActionMenu,
-  Badge,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-  TypographyH3,
-  toast,
-} from '@repo/ui';
+} from '@repo/ui/components/table';
 import { Unlock } from '@repo/ui/icons';
 import { useRouter } from 'next/navigation';
 import { unbanUser, type BannedUsers } from './admin.actions';
+import { toast } from '@repo/ui/components/use-toast';
+import { TypographyH3 } from '@repo/ui/components/typography/h3';
+import { Badge } from '@repo/ui/components/badge';
+import { ActionMenu } from '@repo/ui/components/action-menu';
 
 interface BannedUsersProps {
   data: BannedUsers;
