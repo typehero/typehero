@@ -8,6 +8,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
 } from '@repo/ui';
 import { RotateCcw } from '@repo/ui/icons';
 
@@ -16,7 +19,14 @@ const ResetEditorButton = () => {
   return (
     <AlertDialog>
       <AlertDialogTrigger>
-        <RotateCcw className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" size={20} />
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <RotateCcw className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" size={20} />
+          </TooltipTrigger>
+          <TooltipContent side="left">
+            <p>Reset to default code definition</p>
+          </TooltipContent>
+        </Tooltip>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
