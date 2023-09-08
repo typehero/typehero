@@ -23,6 +23,7 @@ import { toast } from '@repo/ui/components/use-toast';
 import { UserBadge } from '@repo/ui/components/user-badge';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { Markdown } from '@repo/ui/components/markdown';
+import { usePathname } from 'next/navigation';
 
 interface SingleCommentProps {
   comment: PaginatedComments['comments'][number];
@@ -206,6 +207,7 @@ function SingleComment({
     ? Number(preselectedCommentMetadata?.replyId) === comment.id
     : preselectedCommentMetadata?.selectedComment?.id === comment.id;
   const queryClient = useQueryClient();
+  const pathname = usePathname();
   const [text, setText] = useState(comment.text);
   const [isEditing, setIsEditing] = useState(false);
   const elRef = useRef<HTMLDivElement | null>(null);
@@ -257,8 +259,13 @@ function SingleComment({
 
   async function copyCommentUrlToClipboard(isReply: boolean) {
     const commentId = isReply ? comment.parentId : comment.id;
+    const paramsObj = { replyId: String(comment.id) };
+    const searchParams = new URLSearchParams(paramsObj);
+    const commentPath = pathname.split('/').slice(0, -1).join('/');
     await navigator.clipboard.writeText(
-      `${window.location.href}/${commentId}${isReply ? `?replyId=${comment.id}` : ''}`,
+      `${window.location.origin}${commentPath}/${commentId}${
+        isReply ? `?${searchParams.toString()}` : ''
+      }`,
     );
   }
 

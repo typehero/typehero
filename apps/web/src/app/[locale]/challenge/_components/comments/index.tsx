@@ -68,8 +68,7 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
   const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
   const isCommentsActive = pathname.split('/').at(-1) === 'comments';
   const queryKey = [`${type.toLowerCase()}-${rootId}-comments`, sortKey.value, sortOrder, page];
-  //
-  // we need to know the page number to feed to this query.
+
   const { status, data } = useQuery({
     queryKey,
     queryFn: () =>
