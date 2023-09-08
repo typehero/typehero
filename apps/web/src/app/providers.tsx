@@ -2,7 +2,7 @@
 
 import { VercelToolbar } from '@vercel/toolbar/next';
 import { SessionProvider } from '@repo/auth/react';
-import { TooltipProvider } from '@repo/ui';
+import { TooltipProvider } from '@repo/ui/components/tooltip';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from 'next-themes';
 import React from 'react';

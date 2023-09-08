@@ -1,9 +1,9 @@
 import { getServerAuthSession } from '@repo/auth/server';
-import { ForceRenderUntilClient } from '@repo/ui';
 import { ChallengeLayout } from '../_components/challenge-layout';
 import { getChallengeRouteData } from './getChallengeRouteData';
 import { LeftWrapper } from './left-wrapper';
 import { Wrapper } from './wrapper';
+import { ForceRenderUntilClient } from '@repo/ui/components/force-render-until-client';
 
 export default async function LayoutData({
   children,

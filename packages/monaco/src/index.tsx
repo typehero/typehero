@@ -6,12 +6,15 @@ import type * as monaco from 'monaco-editor';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 import lzstring from 'lz-string';
-import { Button, ToastAction, useToast, Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui';
 import { useLocalStorage } from './useLocalStorage';
 import SplitEditor, { TESTS_PATH, USER_CODE_PATH } from './split-editor';
 import { createTwoslashInlayProvider } from './twoslash';
 import { PrettierFormatProvider } from './prettier';
 import { useResetEditor } from './editor-hooks';
+import { useToast } from '@repo/ui/components/use-toast';
+import { ToastAction } from '@repo/ui/components/toast';
+import { Button } from '@repo/ui/components/button';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@repo/ui/components/tooltip';
 
 export interface CodePanelProps {
   challenge: {

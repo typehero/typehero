@@ -1,5 +1,5 @@
 import { getServerAuthSession } from '@repo/auth/server';
-import { TypographyH2 } from '@repo/ui';
+import { TypographyH2 } from '@repo/ui/components/typography/h2';
 import type { Metadata } from 'next';
 import { Wizard } from '~/components/wizard';
 

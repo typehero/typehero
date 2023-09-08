@@ -1,15 +1,13 @@
+import { Settings } from '@repo/ui/icons';
+import { SettingsForm } from './settings-form';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '@repo/ui';
-import { Settings } from '@repo/ui/icons';
-import { SettingsForm } from './settings-form';
+} from '@repo/ui/components/dialog';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 
 export function SettingsButton() {
   return (

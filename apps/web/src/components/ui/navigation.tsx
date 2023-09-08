@@ -2,14 +2,6 @@
 
 import { signIn, signOut, useSession } from '@repo/auth/react';
 import { type RoleTypes } from '@repo/db/types';
-import {
-  Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@repo/ui';
 import { Loader2, LogIn, Moon, Plus, Settings, Settings2, Sun, User } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { useTheme } from 'next-themes';
@@ -18,6 +10,14 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import { FeatureFlagContext } from '~/app/feature-flag-provider';
 import { useFullscreenSettingsStore } from '../../app/[locale]/challenge/_components/fullscreen';
+import { Button } from '@repo/ui/components/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@repo/ui/components/dropdown-menu';
 
 export function getAdminUrl() {
   // reference for vercel.com

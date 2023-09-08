@@ -2,8 +2,9 @@
 
 import { type User } from '@repo/db/types';
 import { Flag } from '@repo/ui/icons';
-import { ActionMenu, Text } from '@repo/ui';
 import { ReportDialog } from '~/components/ReportDialog';
+import { ActionMenu } from '@repo/ui/components/action-menu';
+import { Text } from '@repo/ui/components/typography/typography';
 
 export interface UserHeaderProps {
   user: Pick<User, 'id' | 'name'>;
