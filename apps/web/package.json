@@ -38,6 +38,7 @@
     "@vercel/analytics": "^1.0.2",
     "@vercel/edge-config": "^0.2.1",
     "@vercel/toolbar": "^0.1.1",
+    "bad-words": "^3.0.4",
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
     "date-fns": "^2.30.0",
