@@ -37,11 +37,7 @@ export type PreselectedCommentMetadata = NonNullable<
   Awaited<ReturnType<typeof getPreselectedCommentMetadata>>
 >;
 
-export async function getPreselectedCommentMetadata(
-  challengeId: number,
-  commentId: number,
-  replyId?: string,
-) {
+export async function getPreselectedCommentMetadata(challengeId: number, commentId: number) {
   const challengeComments = await prisma.comment.findMany({
     where: {
       rootType: 'CHALLENGE',
@@ -58,8 +54,6 @@ export async function getPreselectedCommentMetadata(
     },
   });
 
-  // if its a reply, find the page based on parentId
-  // find parent and expand replies and hightlight
   const index = challengeComments.findIndex((comment) => comment.id === commentId);
   const selectedComment = challengeComments[index];
   const page = Math.ceil((index + 1) / PAGESIZE);
@@ -67,8 +61,6 @@ export async function getPreselectedCommentMetadata(
   return {
     page,
     selectedComment,
-    isReply: Boolean(replyId),
-    replyId,
     index,
     challengeComments: challengeComments.map((comment) => comment.id),
   };

@@ -1,4 +1,3 @@
-import { useParams } from 'next/navigation';
 import { Comments } from '../../../_components/comments';
 import { getPreselectedCommentMetadata } from '../../../_components/comments/getCommentRouteData';
 
@@ -7,19 +6,12 @@ interface Props {
     id: string;
     commentId: string;
   };
-  searchParams: {
-    replyId: string;
-  };
 }
 
-export default async function CommentPage({
-  params: { id, commentId },
-  searchParams: { replyId },
-}: Props) {
+export default async function CommentPage({ params: { id, commentId } }: Props) {
   const preselectedCommentMetadata = await getPreselectedCommentMetadata(
     Number(id),
     Number(commentId),
-    replyId,
   );
 
   return (

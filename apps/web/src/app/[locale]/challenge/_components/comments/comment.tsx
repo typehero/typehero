@@ -2,10 +2,15 @@
 
 import { useSession } from '@repo/auth/react';
 import { type CommentRoot } from '@repo/db/types';
+import { Markdown } from '@repo/ui/components/markdown';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
+import { toast } from '@repo/ui/components/use-toast';
+import { UserBadge } from '@repo/ui/components/user-badge';
 import { ChevronDown, ChevronUp, Pencil, Reply, Share, Trash2 } from '@repo/ui/icons';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { z } from 'zod';
 import { ReportDialog } from '~/components/ReportDialog';
@@ -19,11 +24,6 @@ import {
   type PaginatedComments,
   type PreselectedCommentMetadata,
 } from './getCommentRouteData';
-import { toast } from '@repo/ui/components/use-toast';
-import { UserBadge } from '@repo/ui/components/user-badge';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
-import { Markdown } from '@repo/ui/components/markdown';
-import { usePathname } from 'next/navigation';
 
 interface SingleCommentProps {
   comment: PaginatedComments['comments'][number];
@@ -73,9 +73,10 @@ export function Comment({
   type,
   queryKey,
 }: CommentProps) {
+  const params = useSearchParams();
+  const replyId = params.get('replyId');
   const [showReplies, setShowReplies] = useState(
-    preselectedCommentMetadata?.selectedComment?.id === comment.id &&
-      preselectedCommentMetadata.isReply,
+    preselectedCommentMetadata?.selectedComment?.id === comment.id && Boolean(replyId),
   );
 
   const [isReplying, setIsReplying] = useState(false);
@@ -203,16 +204,17 @@ function SingleComment({
   replyQueryKey,
   preselectedCommentMetadata,
 }: SingleCommentProps) {
-  const isHighlighted = preselectedCommentMetadata?.isReply
-    ? Number(preselectedCommentMetadata?.replyId) === comment.id
-    : preselectedCommentMetadata?.selectedComment?.id === comment.id;
+  const params = useSearchParams();
+  const replyId = params.get('replyId');
   const queryClient = useQueryClient();
-  const pathname = usePathname();
   const [text, setText] = useState(comment.text);
   const [isEditing, setIsEditing] = useState(false);
   const elRef = useRef<HTMLDivElement | null>(null);
-
   const session = useSession();
+
+  const isHighlighted = replyId
+    ? Number(replyId) === comment.id
+    : preselectedCommentMetadata?.selectedComment?.id === comment.id;
 
   async function updateChallengeComment() {
     try {
