@@ -14,7 +14,11 @@ import { Vote } from '../vote';
 import { CommentInput } from './comment-input';
 import { replyComment, updateComment } from './comment.action';
 import { CommentDeleteDialog } from './delete';
-import { getPaginatedComments, type PaginatedComments } from './getCommentRouteData';
+import {
+  getPaginatedComments,
+  type PaginatedComments,
+  type PreselectedCommentMetadata,
+} from './getCommentRouteData';
 import { toast } from '@repo/ui/components/use-toast';
 import { UserBadge } from '@repo/ui/components/user-badge';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
@@ -29,9 +33,11 @@ interface SingleCommentProps {
   onClickToggleReply?: () => void;
   queryKey?: (number | string)[];
   replyQueryKey?: (number | string)[];
+  preselectedCommentMetadata?: PreselectedCommentMetadata;
 }
 
 type CommentProps = SingleCommentProps & {
+  preselectedCommentMetadata?: PreselectedCommentMetadata;
   rootId: number;
   type: CommentRoot;
 };
@@ -58,8 +64,18 @@ const commentReportSchema = z
 export type CommentReportSchemaType = z.infer<typeof commentReportSchema>;
 
 // million-ignore
-export function Comment({ comment, readonly = false, rootId, type, queryKey }: CommentProps) {
-  const [showReplies, setShowReplies] = useState(false);
+export function Comment({
+  comment,
+  preselectedCommentMetadata,
+  readonly = false,
+  rootId,
+  type,
+  queryKey,
+}: CommentProps) {
+  const [showReplies, setShowReplies] = useState(
+    preselectedCommentMetadata?.selectedComment?.id === comment.id &&
+      preselectedCommentMetadata.isReply,
+  );
 
   const [isReplying, setIsReplying] = useState(false);
   const [replyText, setReplyText] = useState('');
@@ -119,6 +135,7 @@ export function Comment({ comment, readonly = false, rootId, type, queryKey }: C
   return (
     <div className="flex flex-col px-2 py-1">
       <SingleComment
+        preselectedCommentMetadata={preselectedCommentMetadata}
         comment={comment}
         isToggleReply={showReplies}
         onClickReply={toggleIsReplying}
@@ -148,7 +165,13 @@ export function Comment({ comment, readonly = false, rootId, type, queryKey }: C
           {data?.pages.flatMap((page) =>
             page.comments.map((reply) => (
               // this is a reply
-              <SingleComment comment={reply} isReply key={reply.id} replyQueryKey={replyQueryKey} />
+              <SingleComment
+                comment={reply}
+                isReply
+                key={reply.id}
+                replyQueryKey={replyQueryKey}
+                preselectedCommentMetadata={preselectedCommentMetadata}
+              />
             )),
           )}
         </div>
@@ -166,19 +189,26 @@ export function Comment({ comment, readonly = false, rootId, type, queryKey }: C
   );
 }
 
+const SELECTED_CLASSES = 'rounded-md bg-sky-300/20';
+
 function SingleComment({
   comment,
-  readonly = false,
-  onClickReply,
-  onClickToggleReply,
   isReply,
   isToggleReply,
+  onClickReply,
+  onClickToggleReply,
   queryKey,
+  readonly = false,
   replyQueryKey,
+  preselectedCommentMetadata,
 }: SingleCommentProps) {
+  const isHighlighted = preselectedCommentMetadata?.isReply
+    ? Number(preselectedCommentMetadata?.replyId) === comment.id
+    : preselectedCommentMetadata?.selectedComment?.id === comment.id;
   const queryClient = useQueryClient();
   const [text, setText] = useState(comment.text);
   const [isEditing, setIsEditing] = useState(false);
+  const elRef = useRef<HTMLDivElement | null>(null);
 
   const session = useSession();
 
@@ -207,9 +237,9 @@ function SingleComment({
     }
   }
 
-  async function copyPathNotifyUser() {
+  async function copyPathNotifyUser(isReply: boolean) {
     try {
-      await copyCommentUrlToClipboard();
+      await copyCommentUrlToClipboard(isReply);
       toast({
         title: 'Success!',
         variant: 'success',
@@ -225,16 +255,39 @@ function SingleComment({
     }
   }
 
-  async function copyCommentUrlToClipboard() {
-    await navigator.clipboard.writeText(`${window.location.href}/${comment.id}`);
+  async function copyCommentUrlToClipboard(isReply: boolean) {
+    const commentId = isReply ? comment.parentId : comment.id;
+    await navigator.clipboard.writeText(
+      `${window.location.href}/${commentId}${isReply ? `?replyId=${comment.id}` : ''}`,
+    );
   }
 
   const loggedinUser = useSession();
 
   const isAuthor = loggedinUser.data?.user.id === comment.user.id;
 
+  useEffect(() => {
+    if (!isHighlighted) return;
+    const timeout = setTimeout(() => {
+      elRef.current?.classList.remove(...SELECTED_CLASSES.split(' '));
+    }, 5000);
+    window.requestAnimationFrame(() => elRef.current?.scrollIntoView());
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [isHighlighted]);
+
   return (
-    <div className="relative p-2 pl-3">
+    <div
+      id={`comment-${comment.id}`}
+      className={clsx(
+        'relative p-2 pl-3',
+        isHighlighted && SELECTED_CLASSES,
+        'transition-colors',
+        'duration-150',
+      )}
+      ref={elRef}
+    >
       <div className="flex items-start justify-between gap-4 pr-[0.4rem]">
         <div className="flex w-full items-center justify-between gap-1">
           <UserBadge username={comment.user.name ?? ''} linkComponent={Link} />
@@ -294,7 +347,7 @@ function SingleComment({
             <div
               className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
               onClick={() => {
-                copyPathNotifyUser();
+                copyPathNotifyUser(isReply);
               }}
             >
               <Share className="h-3 w-3" />

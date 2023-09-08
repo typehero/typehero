@@ -115,8 +115,6 @@ export function CodePanel(props: CodePanelProps) {
               tsWorker.getCompilerOptionsDiagnostics(TESTS_PATH),
             ] as const);
 
-            console.log({ errors });
-
             setTsErrors(errors);
             setTestEditorState(editor);
           },

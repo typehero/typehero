@@ -1,6 +1,16 @@
 'use client';
 
 import type { CommentRoot } from '@repo/db/types';
+import { Button } from '@repo/ui/components/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@repo/ui/components/select';
+import { Toggle } from '@repo/ui/components/toggle';
+import { toast } from '@repo/ui/components/use-toast';
 import {
   ArrowDownNarrowWide,
   ArrowUpNarrowWide,
@@ -23,16 +33,6 @@ import {
   type SortOrder,
 } from './getCommentRouteData';
 import NoComments from './nocomments';
-import { Button } from '@repo/ui/components/button';
-import { Toggle } from '@repo/ui/components/toggle';
-import { toast } from '@repo/ui/components/use-toast';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@repo/ui/components/select';
 
 const sortKeys = [
   {
@@ -67,9 +67,8 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
   const [sortKey, setSortKey] = useState<(typeof sortKeys)[number]>(sortKeys[0]);
   const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
   const isCommentsActive = pathname.split('/').at(-1) === 'comments';
-
   const queryKey = [`${type.toLowerCase()}-${rootId}-comments`, sortKey.value, sortOrder, page];
-
+  //
   // we need to know the page number to feed to this query.
   const { status, data } = useQuery({
     queryKey,
@@ -223,6 +222,7 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
               ) : (
                 data.comments.map((comment) => (
                   <Comment
+                    preselectedCommentMetadata={preselectedCommentMetadata}
                     comment={comment}
                     key={comment.id}
                     queryKey={queryKey}

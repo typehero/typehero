@@ -1,3 +1,4 @@
+import { useParams } from 'next/navigation';
 import { Comments } from '../../../_components/comments';
 import { getPreselectedCommentMetadata } from '../../../_components/comments/getCommentRouteData';
 
@@ -6,16 +7,21 @@ interface Props {
     id: string;
     commentId: string;
   };
+  searchParams: {
+    replyId: string;
+  };
 }
 
-export default async function CommentPage({ params: { id, commentId } }: Props) {
-  // this will have all the needed data to feed into the paginated query.
-  // specifically the initial page
+export default async function CommentPage({
+  params: { id, commentId },
+  searchParams: { replyId },
+}: Props) {
   const preselectedCommentMetadata = await getPreselectedCommentMetadata(
     Number(id),
     Number(commentId),
+    replyId,
   );
-  console.log({ preselectedCommentMetadata });
+
   return (
     <div className="relative h-full">
       <Comments
