@@ -31,7 +31,7 @@ const BGS_BY_DIFFICULTY = {
   EXTREME: 'to-difficulty-extreme/20 dark:to-difficulty-extreme-dark/20',
 } as const;
 
-const MockComponent: FC<MockComponentProps> = ({ challenge }) => (
+const MockComponent = ({ challenge }: MockComponentProps) => (
   <>
     <input className="peer hidden appearance-none" type="checkbox" id={challenge.id.toString()} />
     <div className="h-5 w-5 rounded-full border border-black/70 bg-black/10 duration-75 peer-checked:border-transparent peer-checked:bg-green-600/80 dark:border-white/50 dark:bg-white/10 peer-checked:dark:bg-green-300/80" />
