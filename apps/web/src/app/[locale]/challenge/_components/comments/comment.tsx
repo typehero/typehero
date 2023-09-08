@@ -261,9 +261,8 @@ function SingleComment({
     const commentId = isReply ? comment.parentId : comment.id;
     const paramsObj = { replyId: String(comment.id) };
     const searchParams = new URLSearchParams(paramsObj);
-    const commentPath = pathname.split('/').slice(0, -1).join('/');
     await navigator.clipboard.writeText(
-      `${window.location.origin}${commentPath}/${commentId}${
+      `${window.location.origin}/challenge/${comment.rootChallengeId}/comments/${commentId}${
         isReply ? `?${searchParams.toString()}` : ''
       }`,
     );
@@ -354,7 +353,7 @@ function SingleComment({
             <div
               className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
               onClick={() => {
-                copyPathNotifyUser(isReply);
+                copyPathNotifyUser(Boolean(isReply));
               }}
             >
               <Share className="h-3 w-3" />
