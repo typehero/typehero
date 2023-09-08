@@ -1,8 +1,8 @@
 'use client';
 
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui/components/tabs';
 import { usePathname, useRouter } from 'next/navigation';
 import { useMemo, type ReactNode } from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui';
 
 type Tab = 'description' | 'solutions' | 'submissions';
 interface Props {

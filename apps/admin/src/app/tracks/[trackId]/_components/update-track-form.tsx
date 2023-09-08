@@ -2,19 +2,13 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
-  Button,
-  Checkbox,
-  DialogFooter,
-  ForceRenderUntilClient,
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  Input,
-  useToast,
-} from '@repo/ui';
+} from '@repo/ui/components/form';
 import Link from 'next/link';
 import { useMemo } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
@@ -23,6 +17,12 @@ import { z } from 'zod';
 import { updateTrack } from '../_actions/update-track.action';
 import type { ChallengesForTrack, TrackToManage } from '../page';
 import { DraggableChallenge } from './draggable-challenge';
+import { useToast } from '@repo/ui/components/use-toast';
+import { Input } from '@repo/ui/components/input';
+import { Checkbox } from '@repo/ui/components/checkbox';
+import { DialogFooter } from '@repo/ui/components/dialog';
+import { Button } from '@repo/ui/components/button';
+import { ForceRenderUntilClient } from '@repo/ui/components/force-render-until-client';
 
 const trackChallengeSchema = z.object({
   challengeId: z.number(),

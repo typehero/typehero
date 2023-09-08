@@ -1,8 +1,9 @@
 'use client';
 
-import { Button, toast } from '@repo/ui';
 import { useRouter } from 'next/navigation';
 import type { enrollUserInTrack, unenrollUserFromTrack } from './track.action';
+import { Button } from '@repo/ui/components/button';
+import { toast } from '@repo/ui/components/use-toast';
 
 interface EnrollButtonProps {
   action: typeof enrollUserInTrack | typeof unenrollUserFromTrack;

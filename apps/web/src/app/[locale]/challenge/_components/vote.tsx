@@ -2,12 +2,12 @@
 
 import { useSession } from '@repo/auth/react';
 import type { VoteType } from '@repo/db/types';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui';
 import { ThumbsUp } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { debounce } from 'lodash';
 import { useRef, useState } from 'react';
 import { incrementOrDecrementUpvote } from '../increment.action';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 
 interface VoteProps {
   voteCount: number;

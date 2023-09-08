@@ -1,15 +1,15 @@
+import { Circle, Diamond, MessageCircle, Plus, Sparkle, ThumbsUp, Triangle } from '@repo/ui/icons';
+import type { ExploreChallengeData } from './explore.action';
+import { getRelativeTime } from '~/utils/relativeTime';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-  DifficultyBadge,
-  Markdown,
-} from '@repo/ui';
-import { Circle, Diamond, MessageCircle, Plus, Sparkle, ThumbsUp, Triangle } from '@repo/ui/icons';
-import type { ExploreChallengeData } from './explore.action';
-import { getRelativeTime } from '~/utils/relativeTime';
+} from '@repo/ui/components/card';
+import { DifficultyBadge } from '@repo/ui/components/difficulty-badge';
+import { Markdown } from '@repo/ui/components/markdown';
 
 interface ExploreCardProps {
   challenge: Pick<

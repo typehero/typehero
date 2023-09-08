@@ -4,7 +4,7 @@ import '../styles/globals.css';
 
 import { Inter } from 'next/font/google';
 import type { Metadata } from 'next';
-import { Toaster } from '@repo/ui';
+import { Toaster } from '@repo/ui/components/toaster';
 import { Providers } from './providers';
 import { buildMetaForDefault } from './metadata';
 import { Navigation } from '~/components/ui/navigation';

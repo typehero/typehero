@@ -1,7 +1,7 @@
 import { Github, Mail, Twitter } from '@repo/ui/icons';
 import Link from 'next/link';
 import { Balancer } from 'react-wrap-balancer';
-import { Button } from '@repo/ui';
+import { Button } from '@repo/ui/components/button';
 import { HeroIllustration } from './hero-illustration';
 import { getScopedI18n } from '~/locales/server';
 

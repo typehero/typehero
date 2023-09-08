@@ -7,7 +7,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@repo/ui';
+} from '@repo/ui/components/table';
 import type { UserData } from '.';
 
 export function SolutionsTab({ submissions = [] }: { submissions: UserData['submission'] }) {

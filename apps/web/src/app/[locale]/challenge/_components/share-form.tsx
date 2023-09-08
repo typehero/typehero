@@ -1,10 +1,10 @@
 'use client';
 
+import { DialogFooter } from '@repo/ui/components/dialog';
 import { CheckCircle2 as CheckCircle2Icon, Clipboard as ClipboardIcon } from '@repo/ui/icons';
 import lzstring from 'lz-string';
 import { useParams } from 'next/navigation';
 import { useCallback, useState } from 'react';
-import { DialogFooter } from '@repo/ui';
 import { useLocalStorage } from '~/utils/useLocalStorage';
 
 export function ShareForm() {
