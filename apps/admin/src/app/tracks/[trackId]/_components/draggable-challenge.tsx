@@ -93,7 +93,7 @@ export function DraggableChallenge({ id, text, index, moveChallenge }: Props) {
           'opacity-0': isDragging,
           'opacity-1': !isDragging,
         },
-        'my-2 cursor-move border border-dashed bg-white p-3 text-black',
+        'dark:bg-background my-2 cursor-move rounded-sm border border-dashed bg-white p-3 text-black dark:text-white',
       )}
       data-handler-id={handlerId}
     >

@@ -294,6 +294,9 @@ importers:
       next:
         specifier: ^13.4.19
         version: 13.4.19(@babel/core@7.22.10)(react-dom@18.2.0)(react@18.2.0)
+      next-international:
+        specifier: 1.0.0-rc.4
+        version: 1.0.0-rc.4
       next-themes:
         specifier: ^0.2.1
         version: 0.2.1(next@13.4.19)(react-dom@18.2.0)(react@18.2.0)
@@ -631,9 +634,6 @@ importers:
       clsx:
         specifier: ^2.0.0
         version: 2.0.0
-      cmdk:
-        specifier: ^0.2.0
-        version: 0.2.0(@types/react@18.2.20)(react-dom@18.2.0)(react@18.2.0)
       lucide-react:
         specifier: ^0.260.0
         version: 0.260.0(react@18.2.0)
@@ -5246,7 +5246,7 @@ packages:
     dev: false
 
   /concat-map@0.0.1:
-    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
+    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
 
   /condense-newlines@0.2.1:
     resolution: {integrity: sha512-P7X+QL9Hb9B/c8HI5BFFKmjgBu2XpQuF98WZ9XkO+dBGgk5XgwiQz7o1SmpglNWId3581UcS0SFAWfoIhMHPfg==}
@@ -7282,6 +7282,10 @@ packages:
       has: 1.0.3
       side-channel: 1.0.4
 
+  /international-types@0.8.0:
+    resolution: {integrity: sha512-cJwagIBzMG0FTK81TABeSBU0eReIXWmvW18m/URn8ZA+GLoWIcdL43kfjArwHVmZJ1n+IFchsBj8tQLYUqmwnA==}
+    dev: false
+
   /interpret@1.4.0:
     resolution: {integrity: sha512-agE4QfB2Lkp9uICn7BAqoscw4SZP9kTE2hxiFI3jBPmXJfdqiahTbUuKGsMoN2GtqL9AxhYioAcVvgsb1HvRbA==}
     engines: {node: '>= 0.10'}
@@ -8393,6 +8397,14 @@ packages:
       uuid: 8.3.2
     dev: false
     patched: true
+
+  /next-international@1.0.0-rc.4:
+    resolution: {integrity: sha512-okY1xqSixMiRCfpSdt4or7Lup9pwVAITEC1rPdt/wfqkbK15gJwxbc087tYXiHzAlLaL9IszaUjHnJwBQnrISg==}
+    dependencies:
+      client-only: 0.0.1
+      international-types: 0.8.0
+      server-only: 0.0.1
+    dev: false
 
   /next-themes@0.2.1(next@13.4.19)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-B+AKNfYNIzh0vqQQKqQItTS8evEouKD7H5Hj3kmuPERwddR2TxvDSFZuTj6T7Jfn1oyeUyJMydPl1Bkxkh0W7A==}
@@ -9866,6 +9878,10 @@ packages:
     resolution: {integrity: sha512-owoXEFjWRllis8/M1Q+Cw5k8ZH40e3zhp/ovX+Xr/vi1qj6QesbyXXViFbpNvWvPNAD62SutwEXavefrLJWj7w==}
     dependencies:
       randombytes: 2.1.0
+
+  /server-only@0.0.1:
+    resolution: {integrity: sha512-qepMx2JxAa5jjfzxG79yPPq+8BuFToHd1hm7kI+Z4zAq1ftQiP7HcxMhDDItrbtwVeLg/cY2JnKnrcFkmiswNA==}
+    dev: false
 
   /setimmediate@1.0.5:
     resolution: {integrity: sha512-MATJdZp8sLqDl/68LfQmbP8zKPLQNV6BIZoIgrscFDQ+RsvK/BxeDQOgyxKKoh0y/8h3BqVFnCqQ/gd+reiIXA==}

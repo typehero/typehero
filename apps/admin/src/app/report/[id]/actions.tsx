@@ -34,7 +34,7 @@ export interface ReportActionsBase {
   user: User;
 }
 
-export default function ReportActions({ report }: ReportActionsProps) {
+export function ReportActions({ report }: ReportActionsProps) {
   const [banReason, setBanReason] = useState('');
   const [ban, setBan] = useState(false);
   const router = useRouter();

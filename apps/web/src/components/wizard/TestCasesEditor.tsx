@@ -8,7 +8,7 @@ import dynamic from 'next/dynamic';
 import { createTwoslashInlayProvider } from '@repo/monaco/twoslash';
 import { PrettierFormatProvider } from '@repo/monaco/prettier';
 import type { WizardForm } from '.';
-import { SettingsButton } from '~/app/challenge/_components/editor-settings/editor-settings-button';
+import { SettingsButton } from '~/app/[locale]/challenge/_components/settings/settings-button';
 
 const VimStatusBar = dynamic(() => import('@repo/monaco/vim-mode'), {
   ssr: false,
@@ -51,7 +51,6 @@ export function TestCasesEditor({ form, hasTsErrors, setTsErrors }: Props) {
         const errors = await Promise.all([
           ts.getSemanticDiagnostics(filename),
           ts.getSyntacticDiagnostics(filename),
-          ts.getSuggestionDiagnostics(filename),
           ts.getCompilerOptionsDiagnostics(filename),
         ] as const);
 

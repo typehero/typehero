@@ -7,7 +7,7 @@ import type { InfiniteReports } from '../report/[id]/_components/report/report.a
 import type { BannedUsers, UploadedImages } from './admin.actions';
 import { ChallengeReviews } from './challenge-reviews';
 import { ImageUploadReport } from './images';
-import Reports from './reports';
+import { Reports } from './reports';
 import { ManageTracks } from './tracks';
 import { BannedUsers as BannedUserComponent } from './users';
 
