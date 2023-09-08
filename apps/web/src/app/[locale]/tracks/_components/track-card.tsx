@@ -1,10 +1,10 @@
 'use client';
 
-import { Button } from '@repo/ui';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import { TrackChallenge } from './track-challenge-card';
 import type { Tracks } from './track-grid';
+import { Button } from '@repo/ui/components/button';
 
 interface TrackProps {
   track: Tracks[number];

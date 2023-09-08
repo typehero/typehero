@@ -1,4 +1,4 @@
-import { Progress } from '@repo/ui';
+import { Progress } from '@repo/ui/components/progress';
 
 interface TrackProgressProps {
   totalChallenges: number;

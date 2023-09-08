@@ -1,4 +1,6 @@
-import { Alert, AlertDescription, AlertTitle, Markdown, Text } from '@repo/ui';
+import { Alert, AlertDescription, AlertTitle } from '@repo/ui/components/alert';
+import { Text } from '@repo/ui/components/typography/typography';
+import { Markdown } from '@repo/ui/components/markdown';
 import { AlertCircle, ChevronLeft } from '@repo/ui/icons';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';

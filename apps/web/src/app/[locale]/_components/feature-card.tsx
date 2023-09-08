@@ -1,7 +1,6 @@
 'use client';
 
 import type { Challenge, Difficulty } from '@repo/db/types';
-import { Button, Markdown } from '@repo/ui';
 import clsx from 'clsx';
 import {
   motion,
@@ -18,6 +17,8 @@ import { useInView } from 'react-intersection-observer';
 import { Steps } from '~/components/wizard/Steps';
 import { useIsMobile } from '~/utils/useIsMobile';
 import { TrackChallenge } from '../tracks/_components/track-challenge-card';
+import { Button } from '@repo/ui/components/button';
+import { Markdown } from '@repo/ui/components/markdown';
 
 type WrapperStyle = MotionStyle & {
   '--x': MotionValue<string>;

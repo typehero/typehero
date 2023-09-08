@@ -2,23 +2,17 @@
 
 import { Calendar, Flag, Share, X } from '@repo/ui/icons';
 import Link from 'next/link';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-  Button,
-  TypographyLarge,
-  toast,
-  UserBadge,
-  ActionMenu,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-  Markdown,
-} from '@repo/ui';
 import { Comments } from '~/app/[locale]/challenge/_components/comments';
 import type { ChallengeSolution } from '~/app/[locale]/challenge/[id]/solutions/[solutionId]/page';
 import { ReportDialog } from '~/components/ReportDialog';
+import { ActionMenu } from '@repo/ui/components/action-menu';
+import { Avatar, AvatarImage, AvatarFallback } from '@repo/ui/components/avatar';
+import { Button } from '@repo/ui/components/button';
+import { toast } from '@repo/ui/components/use-toast';
+import { TypographyLarge } from '@repo/ui/components/typography/large';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
+import { Markdown } from '@repo/ui/components/markdown';
+import { UserBadge } from '@repo/ui/components/user-badge';
 
 interface Props {
   solution: ChallengeSolution;

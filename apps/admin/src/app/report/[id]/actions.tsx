@@ -2,17 +2,13 @@
 
 import { type User } from '@repo/db/types';
 import {
-  Button,
   Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  Label,
-  Textarea,
-  toast,
-} from '@repo/ui';
+} from '@repo/ui/components/dialog';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import {
@@ -23,6 +19,10 @@ import {
   dismissReport,
 } from '../../_components/admin.actions';
 import { type ReportWithInfo } from './report.action';
+import { toast } from '@repo/ui/components/use-toast';
+import { Button } from '@repo/ui/components/button';
+import { Label } from '@repo/ui/components/label';
+import { Textarea } from '@repo/ui/components/textarea';
 
 export interface ReportActionsProps {
   report: NonNullable<ReportWithInfo>;

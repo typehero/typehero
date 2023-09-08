@@ -2,28 +2,27 @@ import { type IssueType } from '@repo/db/types';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogFooter,
-  DialogTitle,
-  DialogDescription,
-  DialogTrigger,
-  Button,
-  FormField,
-  FormItem,
-  Text,
-  Checkbox,
-  Textarea,
-  toast,
-} from '@repo/ui';
-import {
   type ChallengeReport,
   type UserReport,
   type CommentReport,
   addReport,
   type SolutionReport,
 } from './report-dialog.action';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@repo/ui/components/dialog';
+import { toast } from '@repo/ui/components/use-toast';
+import { Text } from '@repo/ui/components/typography/typography';
+import { FormField, FormItem } from '@repo/ui/components/form';
+import { Checkbox } from '@repo/ui/components/checkbox';
+import { Textarea } from '@repo/ui/components/textarea';
+import { Button } from '@repo/ui/components/button';
 
 export interface ReportDialogPropsBase {
   triggerAsChild?: boolean;

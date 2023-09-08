@@ -1,17 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
 import { Copy, X } from '@repo/ui/icons';
 import Link from 'next/link';
+import { getBaseUrl } from '~/utils/getBaseUrl';
+import { getRelativeTime } from '~/utils/relativeTime';
+import { Button } from '@repo/ui/components/button';
+import { toast } from '@repo/ui/components/use-toast';
 import {
-  Markdown,
-  Button,
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-  toast,
-} from '@repo/ui';
-import { getBaseUrl } from '~/utils/getBaseUrl';
-import { getRelativeTime } from '~/utils/relativeTime';
+} from '@repo/ui/components/tooltip';
+import { Markdown } from '@repo/ui/components/markdown';
 
 interface Props {
   submissionId: string;

@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { clsx } from 'clsx';
 import { Mail } from '@repo/ui/icons';
 import { Balancer } from 'react-wrap-balancer';
-import { Button } from '@repo/ui';
 import styles from './waitlist.module.css';
+import { Button } from '@repo/ui/components/button';
 
 export function WaitlistBanner() {
   return (
