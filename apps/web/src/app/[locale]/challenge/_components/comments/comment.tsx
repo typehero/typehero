@@ -245,7 +245,7 @@ function SingleComment({
               </span>
             </TooltipTrigger>
             <TooltipContent align="start" alignOffset={-55} className="rounded-xl">
-              <span className="text-xs text-white">{comment.createdAt.toLocaleString()}</span>
+              <span className="text-foreground text-xs">{comment.createdAt.toLocaleString()}</span>
             </TooltipContent>
           </Tooltip>
         </div>

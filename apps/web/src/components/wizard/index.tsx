@@ -27,7 +27,6 @@ export const enum STEPS {
   Summary,
 }
 
-
 const testCaseRegex = new RegExp('(?:\n|^)s*(?:Equal|Extends|NotEqual|Expect)<');
 const createExploreCardSchema = z.object({
   difficulty: z.enum(['BEGINNER', 'EASY', 'MEDIUM', 'HARD', 'EXTREME']),
@@ -35,17 +34,18 @@ const createExploreCardSchema = z.object({
     .string()
     .min(3, 'The name must be longer than 3 characters')
     .max(30, 'The name must be shorter than 30 characters')
-    .refine((str: string) => !containsProfanity(str), "The name must not contain bad words."),
+    .refine((str: string) => !containsProfanity(str), 'The name must not contain bad words.'),
   shortDescription: z
     .string()
     .min(10, 'The short description must be longer than 10 characters')
     .max(191, 'The short description must be shorter than 191 characters')
-    .refine((str: string) => !containsProfanity(str), "The description must not contain bad words."),
+    .refine(
+      (str: string) => !containsProfanity(str),
+      'The description must not contain bad words.',
+    ),
 });
 const createDescriptionSchema = z.object({
-  description: z.string()
-    .min(20, 'The description must be longer than 20 characters')
-    .max(65536),
+  description: z.string().min(20, 'The description must be longer than 20 characters').max(65536),
 });
 const createTestCasesSchema = z.object({
   tests: z
