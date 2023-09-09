@@ -29,12 +29,12 @@
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",
-    "@repo/db": "*",
+    "@repo/db": "workspace:*",
     "next-auth": "^4.22.1"
   },
   "devDependencies": {
-    "@repo/lint": "*",
-    "@repo/tsconfig": "*",
+    "@repo/lint": "workspace:*",
+    "@repo/tsconfig": "workspace:*",
     "@types/node": "^16.18.11",
     "eslint": "^8.42.0",
     "prisma": "^5.0.0",

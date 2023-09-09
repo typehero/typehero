@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@next/eslint-plugin-next": "canary",
-    "@repo/tsconfig": "*",
+    "@repo/tsconfig": "workspace:*",
     "@typescript-eslint/eslint-plugin": "^5.59.1",
     "@typescript-eslint/parser": "^5.59.1",
     "@vercel/style-guide": "^4.0.2",
