@@ -99,6 +99,7 @@ export function CodePanel(props: CodePanelProps) {
         userEditorState={userEditorState}
         monaco={monacoInstance}
         expandTestPanel={isTestPanelExpanded}
+        setIsTestPanelExpanded={setIsTestPanelExpanded}
         tests={props.challenge.tests}
         userCode={code}
         onMount={{
