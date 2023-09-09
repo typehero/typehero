@@ -465,6 +465,7 @@ export function CuratedTracksCard(props: CardProps) {
             <TrackChallenge
               key={`mock-${mockChallenge.id}`}
               challenge={mockChallenge as Challenge}
+              mock
             />
           ))}
         </div>

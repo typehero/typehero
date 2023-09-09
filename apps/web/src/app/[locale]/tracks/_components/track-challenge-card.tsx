@@ -8,10 +8,12 @@ import type { Tracks } from './track-grid';
 interface TrackChallengeProps {
   challenge: Tracks[number]['trackChallenges'][number]['challenge'];
   className?: string;
+  mock?: boolean;
 }
 
 interface MockComponentProps {
   challenge: TrackChallengeProps['challenge'];
+  mock?: TrackChallengeProps['mock'];
 }
 
 const COLORS_BY_DIFFICULTY = {
@@ -30,13 +32,21 @@ const BGS_BY_DIFFICULTY = {
   EXTREME: 'to-difficulty-extreme/20 dark:to-difficulty-extreme-dark/20',
 } as const;
 
-const MockComponent = ({ challenge }: MockComponentProps) => (
-  <>
-    <input className="peer hidden appearance-none" type="checkbox" id={challenge.id.toString()} />
-    <div className="h-5 w-5 rounded-full border border-black/70 bg-black/10 duration-75 peer-checked:border-transparent peer-checked:bg-green-600/80 dark:border-white/50 dark:bg-white/10 peer-checked:dark:bg-green-300/80" />
-    <Check className="absolute left-1 my-auto h-3 w-3 scale-0 stroke-[4] text-white duration-300 peer-checked:scale-100 dark:text-black" />
-  </>
-);
+const MockComponent = ({ challenge, mock }: MockComponentProps) => {
+  if (mock) {
+    return (
+      <>
+        <input
+          className="peer hidden appearance-none"
+          type="checkbox"
+          id={challenge.id.toString()}
+        />
+        <div className="h-5 w-5 rounded-full border border-black/70 bg-black/10 duration-75 peer-checked:border-transparent peer-checked:bg-green-600/80 dark:border-white/50 dark:bg-white/10 peer-checked:dark:bg-green-300/80" />
+        <Check className="absolute left-1 my-auto h-3 w-3 scale-0 stroke-[4] text-white duration-300 peer-checked:scale-100 dark:text-black" />
+      </>
+    );
+  }
+};
 
 export function TrackChallenge({ challenge, className }: TrackChallengeProps) {
   const isMobile = useIsMobile();
@@ -59,7 +69,7 @@ export function TrackChallenge({ challenge, className }: TrackChallengeProps) {
         )}
       >
         <div className="relative flex items-center gap-3 text-xs sm:text-base">
-          <MockComponent challenge={challenge} />
+          <MockComponent challenge={challenge} mock />
           <div>{challenge.name}</div>
         </div>
         <div
