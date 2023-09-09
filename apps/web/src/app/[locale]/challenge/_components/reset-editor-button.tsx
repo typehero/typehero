@@ -1,14 +1,15 @@
 import { useResetEditor } from '@repo/monaco/editor-hooks';
 import {
   AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
+  AlertDialogTrigger,
   AlertDialogContent,
-  AlertDialogFooter,
+  AlertDialogCancel,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@repo/ui';
+  AlertDialogAction,
+  AlertDialogFooter,
+} from '@repo/ui/components/alert-dialog';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { RotateCcw } from '@repo/ui/icons';
 
 const ResetEditorButton = () => {
@@ -16,7 +17,14 @@ const ResetEditorButton = () => {
   return (
     <AlertDialog>
       <AlertDialogTrigger>
-        <RotateCcw className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" size={20} />
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <RotateCcw className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" size={20} />
+          </TooltipTrigger>
+          <TooltipContent side="left">
+            <p>Reset to default code definition</p>
+          </TooltipContent>
+        </Tooltip>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

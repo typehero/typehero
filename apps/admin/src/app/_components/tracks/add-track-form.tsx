@@ -1,21 +1,21 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  Button,
-  Checkbox,
-  DialogFooter,
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  Input,
-  useToast,
-} from '@repo/ui';
 import { useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { createTrack } from './tracks.actions';
+import { useToast } from '@repo/ui/components/use-toast';
+import {
+  Form,
+  FormItem,
+  FormField,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from '@repo/ui/components/form';
+import { Input } from '@repo/ui/components/input';
+import { Checkbox } from '@repo/ui/components/checkbox';
+import { DialogFooter } from '@repo/ui/components/dialog';
+import { Button } from '@repo/ui/components/button';
 
 const formSchema = z.object({
   title: z.string().min(3),

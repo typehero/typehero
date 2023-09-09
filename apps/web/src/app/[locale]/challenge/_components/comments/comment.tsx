@@ -2,7 +2,6 @@
 
 import { useSession } from '@repo/auth/react';
 import { type CommentRoot } from '@repo/db/types';
-import { Tooltip, TooltipContent, Markdown, TooltipTrigger, UserBadge, toast } from '@repo/ui';
 import { ChevronDown, ChevronUp, Pencil, Reply, Share, Trash2 } from '@repo/ui/icons';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
@@ -16,6 +15,10 @@ import { CommentInput } from './comment-input';
 import { replyComment, updateComment } from './comment.action';
 import { CommentDeleteDialog } from './delete';
 import { getPaginatedComments, type PaginatedComments } from './getCommentRouteData';
+import { toast } from '@repo/ui/components/use-toast';
+import { UserBadge } from '@repo/ui/components/user-badge';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
+import { Markdown } from '@repo/ui/components/markdown';
 
 interface SingleCommentProps {
   comment: PaginatedComments['comments'][number];

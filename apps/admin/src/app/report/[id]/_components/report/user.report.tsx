@@ -1,7 +1,9 @@
 'use server';
 
-import { Expandable, Markdown, Text } from '@repo/ui';
 // import { Comment } from '~/app/challenge/_components/comments/comment';
+import { Text } from '@repo/ui/components/typography/typography';
+import { Markdown } from '@repo/ui/components/markdown';
+import { Expandable } from '@repo/ui/components/expandable';
 import { getReportedUserInformation, type ReportWithInfo } from '../../report.action';
 
 interface UserReportProps {

@@ -1,4 +1,5 @@
 {
+  "experimentalSpaces": { "id": "space_CWwpUyi1jEpIayj8iSDdz2Ze" },
   "pipeline": {
     "build": {
       "dependsOn": ["^build", "@repo/db#db:generate"],

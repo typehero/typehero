@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import { prisma } from '@repo/db';
-import { Markdown, Text } from '@repo/ui';
+import { Text } from '@repo/ui/components/typography/typography';
+import { Markdown } from '@repo/ui/components/markdown';
 import type { ReportWithInfo } from '../../report.action';
 
 async function getSolutionChallenge(challengeId: number) {

@@ -4,12 +4,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '@repo/ui';
+} from '@repo/ui/components/dialog';
 import { EditorShortcuts } from './editor-shortcuts-form';
 import { SquareSlash } from '@repo/ui/icons';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 
 export function EditorShortcutsButton() {
   return (
@@ -22,7 +20,7 @@ export function EditorShortcutsButton() {
           <TooltipContent className="px-2 py-1">Shortcuts</TooltipContent>
         </Tooltip>
       </DialogTrigger>
-      <DialogContent className="w-[200px]">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>Shortcuts</DialogTitle>
         </DialogHeader>

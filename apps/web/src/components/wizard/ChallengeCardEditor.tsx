@@ -1,24 +1,20 @@
 'use client';
 
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  Input,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  Textarea,
-  TypographyH3,
-} from '@repo/ui';
 import { useWatch } from 'react-hook-form';
 import type { WizardForm } from '.';
 import type { ExploreChallengeData } from '~/app/[locale]/explore/_components/explore.action';
 import { ExploreCard } from '~/app/[locale]/explore/_components/explore-card';
+import { TypographyH3 } from '@repo/ui/components/typography/h3';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@repo/ui/components/form';
+import { Textarea } from '@repo/ui/components/textarea';
+import {
+  Select,
+  SelectItem,
+  SelectContent,
+  SelectTrigger,
+  SelectValue,
+} from '@repo/ui/components/select';
+import { Input } from '@repo/ui/components/input';
 
 interface Props {
   form: WizardForm;
