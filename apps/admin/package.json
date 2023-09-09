@@ -16,12 +16,12 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.1.1",
-    "@repo/auth": "workspace:*",
-    "@repo/db": "workspace:*",
-    "@repo/emails": "workspace:*",
-    "@repo/lint": "workspace:*",
-    "@repo/monaco": "workspace:*",
-    "@repo/ui": "workspace:*",
+    "@repo/auth": "*",
+    "@repo/db": "*",
+    "@repo/emails": "*",
+    "@repo/lint": "*",
+    "@repo/monaco": "*",
+    "@repo/ui": "*",
     "@tanstack/react-query": "^4.29.25",
     "@tanstack/react-table": "^8.9.3",
     "clsx": "^2.0.0",
@@ -40,7 +40,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@repo/tsconfig": "workspace:*",
+    "@repo/tsconfig": "*",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/typography": "^0.5.9",
     "@types/node": "^20.4.2",

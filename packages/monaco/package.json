@@ -59,8 +59,8 @@
     "zustand": "^4.3.9"
   },
   "devDependencies": {
-    "@repo/lint": "workspace:*",
-    "@repo/tsconfig": "workspace:*",
+    "@repo/lint": "*",
+    "@repo/tsconfig": "*",
     "eslint": "^8.42.0",
     "typescript": "^5.1.3"
   }
