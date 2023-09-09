@@ -70,7 +70,7 @@ export function TrackChallenge({ challenge, className }: TrackChallengeProps) {
       >
         <div className="relative flex items-center gap-3 text-xs sm:text-base">
           <MockComponent challenge={challenge} mock />
-          <div>{challenge.name}</div>
+          {challenge.name}
         </div>
         <div
           className={`relative text-xs font-medium tracking-wide ${
