@@ -89,10 +89,9 @@ export default function SplitEditor({
       const { dy } = getEventDeltas(e, { x: 0, y });
 
       const height = initialHeight - dy;
-      const maxHeight = wrapperRef.offsetHeight - MIN_HEIGHT;
 
-      if (height >= MIN_HEIGHT && height <= maxHeight) {
-        testPanelRef.style.height = `${height}px`;
+      if (height >= MIN_HEIGHT) {
+        testPanelRef.style.height = `${Math.min(height, wrapperRef.offsetHeight)}px`;
         setIsTestPanelExpanded(true);
       } else if (height < COLLAPSE_THRESHOLD) {
         setIsTestPanelExpanded(false);
@@ -136,7 +135,8 @@ export default function SplitEditor({
 
       updateSettings({
         ...settings,
-        testPanelHeight: testPanelRef.offsetHeight || MIN_HEIGHT,
+        testPanelHeight:
+          testPanelRef.offsetHeight < MIN_HEIGHT ? MIN_HEIGHT : testPanelRef.offsetHeight,
       });
     };
 
@@ -166,7 +166,7 @@ export default function SplitEditor({
 
   return (
     <div className={clsx('flex h-[calc(100%-_90px)] flex-col', className)} ref={wrapper}>
-      <section className="min-h-0 flex-grow">
+      <section className="min-h-0 flex-grow overflow-hidden">
         <CodeEditor
           defaultPath={USER_CODE_PATH}
           onMount={onMount?.user}
@@ -211,14 +211,14 @@ export default function SplitEditor({
       </section>
       {userEditorState && settings.bindings === 'vim' && <VimStatusBar editor={userEditorState} />}
       <div
-        className="transition-all"
+        className="border-t border-zinc-300 transition-all dark:border-zinc-700"
         style={{
           height: `${expandTestPanel ? settings.testPanelHeight || MIN_HEIGHT : 0}px`,
         }}
         ref={testPanel}
       >
         <div
-          className="cursor-row-resize border-y border-zinc-300 bg-zinc-800 p-2 dark:border-zinc-700"
+          className="cursor-row-resize border-b border-zinc-300 bg-zinc-800 p-2 dark:border-zinc-700"
           ref={resizer}
         >
           <div className="m-auto h-1 w-24 rounded-full bg-zinc-700" />
