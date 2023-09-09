@@ -20,13 +20,11 @@ export function SettingsButton() {
           <TooltipContent className="px-2 py-1">Settings</TooltipContent>
         </Tooltip>
       </DialogTrigger>
-      <DialogContent className="w-[200px]">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>Settings</DialogTitle>
         </DialogHeader>
-        <div className="pt-4">
-          <SettingsForm />
-        </div>
+        <SettingsForm />
       </DialogContent>
     </Dialog>
   );
