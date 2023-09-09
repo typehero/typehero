@@ -21,12 +21,12 @@ const Report = async function (props: Props) {
   const idNum = Number(props.params.id);
   // Double check that we have a number, redirect out if we don't
   if (isNaN(idNum)) {
-    return redirect('/admin');
+    return redirect('/');
   }
 
   const report = await getReport(idNum);
 
-  if (!report) return redirect('/admin');
+  if (!report) return redirect('/');
 
   let title = '';
 
@@ -60,7 +60,7 @@ const Report = async function (props: Props) {
 
   return (
     <div className="container  ">
-      <Link className="inline-flex gap-2" href="/admin">
+      <Link className="inline-flex gap-2" href="/">
         {' '}
         <ChevronLeft /> <span>Back to reports</span>
       </Link>
