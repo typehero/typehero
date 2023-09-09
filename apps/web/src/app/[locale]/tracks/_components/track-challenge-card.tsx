@@ -4,7 +4,6 @@ import { Check } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { useIsMobile } from '~/utils/useIsMobile';
 import type { Tracks } from './track-grid';
-import type { FC } from 'react';
 
 interface TrackChallengeProps {
   challenge: Tracks[number]['trackChallenges'][number]['challenge'];
