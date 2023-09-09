@@ -5,7 +5,8 @@ import { useTheme } from 'next-themes';
 import { useMemo } from 'react';
 import { useEditorSettingsStore } from './settings-store';
 import { libSource } from './editor-types';
-import type * as MonacoEditor from 'monaco-editor';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import * as MonacoEditor from 'monaco-editor';
 
 const ADMIN_HOST = 'admin.typehero.dev';
 const getBaseUrl = () => {
