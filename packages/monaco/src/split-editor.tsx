@@ -140,10 +140,21 @@ export default function SplitEditor({
       });
     };
 
+    const resizeHandler = () => {
+      if (testPanelRef.offsetHeight >= MIN_HEIGHT) {
+        testPanelRef.style.height = `${Math.min(testPanelRef.offsetHeight, wrapperRef.offsetHeight)}px`;
+        setIsTestPanelExpanded(true);
+      } else {
+        setIsTestPanelExpanded(false);
+      }
+    };
+
+    window.addEventListener('resize', resizeHandler);
     resizerRef.addEventListener('mousedown', mouseDownHandler);
     resizerRef.addEventListener('touchstart', mouseDownHandler);
 
     return () => {
+      window.removeEventListener('resize', resizeHandler);
       resizerRef.removeEventListener('mousedown', mouseDownHandler);
       resizerRef.removeEventListener('touchstart', mouseDownHandler);
     };
