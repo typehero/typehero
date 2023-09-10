@@ -1,4 +1,5 @@
-import { z } from 'zod';
+import { ZodString, z } from 'zod';
+import { containsProfanity } from '../../web/src/utils/profanity';
 
 type Primitives = string | number | boolean | null;
 type JsonValue = Primitives | JsonValue[] | { [key: string]: JsonValue };
@@ -36,10 +37,23 @@ function truncateWordsFn(str: string, maxCharacters: number) {
   // break at closest word
   const truncated = str.slice(0, maxCharacters);
   const lastSpace = truncated.lastIndexOf(' ');
-  return truncated.slice(0, lastSpace) + ' …';
+  return truncated.slice(0, lastSpace) + '…';
 }
-function truncatedWordSchema(opts: { maxCharacters: number }) {
-  return z.string().transform((str) => truncateWordsFn(str, opts.maxCharacters));
+
+
+// throws if string contains profanity, uses custom validate function
+export function createNoProfanitySchemaWithValidate(validate: (zodString: ZodString) => ZodString) {
+  return validate(z.string()).refine((str: any) => !containsProfanity(str), "Don't use profanity.");
+}
+
+// throws if string contains profanity, no other checks
+export function createNoProfanitySchema() {
+  return z.string().refine((str: any) => !containsProfanity(str), "Don't use profanity.");
+}
+
+// truncates to maxCharacters, throws if string contains profanity
+export function truncateSchema(opts: { maxCharacters: number }) {
+  return createNoProfanitySchema().transform((str) => truncateWordsFn(str, opts.maxCharacters));
 }
 
 export const fontParams = zodParams(
@@ -52,15 +66,15 @@ export const fontParams = zodParams(
 
 export const challengeParam = zodParams(
   z.object({
-    title: truncatedWordSchema({ maxCharacters: 70 }),
-    description: truncatedWordSchema({ maxCharacters: 145 }),
-    username: z.string(),
+    title: truncateSchema({ maxCharacters: 70 }),
+    description: truncateSchema({ maxCharacters: 145 }),
+    username: truncateSchema({ maxCharacters: 70 }),
   }),
 );
 
 export const userParam = zodParams(
   z.object({
-    username: truncatedWordSchema({ maxCharacters: 70 }),
+    username: truncateSchema({ maxCharacters: 70 }),
   }),
 );
 

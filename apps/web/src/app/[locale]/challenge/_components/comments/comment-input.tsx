@@ -7,6 +7,12 @@ import { ToastAction } from '@repo/ui/components/toast';
 import { Textarea } from '@repo/ui/components/textarea';
 import { Markdown } from '@repo/ui/components/markdown';
 import { containsProfanity } from '~/utils/profanity';
+import { createNoProfanitySchemaWithValidate } from '@repo/og-image';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Form, FormField, FormItem, FormMessage } from '@repo/ui/components/form';
+import { singleFieldSchema, type SingleFieldSchema } from '~/utils/zodSingleStringField';
 
 interface Props {
   mode: 'create' | 'edit' | 'reply';
@@ -22,8 +28,13 @@ export function CommentInput({ mode, onCancel, onChange, value, placeholder, onS
   const { toast } = useToast();
   const [commentMode, setCommentMode] = useState<'editor' | 'preview'>('editor');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submittable, setSubmittable] = useState(true);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+  const form = useForm<SingleFieldSchema>({
+    resolver: zodResolver(singleFieldSchema),
+    defaultValues: { text: '' },
+  });
+  const formValid = form.formState.isValid;
 
   useAutosizeTextArea(textAreaRef, value, commentMode);
 
@@ -34,12 +45,9 @@ export function CommentInput({ mode, onCancel, onChange, value, placeholder, onS
     }
 
     if (e.shiftKey && e.key === 'Enter') {
-      if (containsProfanity(value)) {
-        toast({
-          variant: 'destructive',
-          title: "Don't use profanity.",
-          action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
-        });
+      const success = singleFieldSchema.safeParse(form.getValues()).success;
+      if (!success) {
+        form.trigger();
         return;
       }
 
@@ -59,84 +67,92 @@ export function CommentInput({ mode, onCancel, onChange, value, placeholder, onS
     }
   };
 
-  const buttons = (
-    <div className="flex gap-2 p-2 pl-0">
-      <Button
-        className="h-8"
-        disabled={isSubmitting || value.length === 0}
-        onClick={() => setCommentMode(commentMode === 'editor' ? 'preview' : 'editor')}
-        variant={mode === 'create' ? 'secondary' : 'ghost'}
-      >
-        {commentMode === 'editor' ? 'Preview' : 'Edit'}
-      </Button>
-      {mode !== 'create' && (
-        <Button className="h-8" onClick={() => onCancel?.()} variant="secondary">
-          Cancel
-        </Button>
-      )}
-      <Button
-        className="h-8 w-[5.5rem] rounded-lg rounded-br-sm bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
-        disabled={value.length === 0 || isSubmitting || !submittable}
-        onClick={async () => {
-          try {
-            if (!session?.user) {
-              toast({
-                variant: 'destructive',
-                title: 'You need to be logged in to comment.',
-                action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
-              });
+  const submitComment = async () => {
+    const success = singleFieldSchema.safeParse(form.getValues()).success;
+    if (!success) {
+      form.trigger();
+      return;
+    }
 
-              return;
-            }
+    try {
+      if (!session?.user) {
+        toast({
+          variant: 'destructive',
+          title: 'You need to be logged in to comment.',
+          action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
+        });
 
-            if (!submittable) {
-              toast({
-                variant: 'destructive',
-                title: "Don't use profanity.",
-                action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
-              });
-              return;
-            }
+        return;
+      }
 
-            setIsSubmitting(true);
+      setIsSubmitting(true);
 
-            await onSubmit();
-          } catch (e) {
-            console.error(e);
-          } finally {
-            setIsSubmitting(false);
-            setCommentMode('editor');
-          }
-        }}
-      >
-        {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Comment'}
-      </Button>
-    </div>
-  );
+      await onSubmit();
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsSubmitting(false);
+      setCommentMode('editor');
+    }
+  };
 
   return (
-    <div className="flex flex-col rounded-xl rounded-br-lg bg-neutral-100 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-700/90">
+    <div className="relative flex flex-col rounded-xl rounded-br-lg bg-neutral-100 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-700/90">
       {commentMode === 'editor' && (
-        <Textarea
-          autoFocus
-          className="resize-none border-0 px-3 py-2 focus-visible:ring-0 md:max-h-[calc(100vh_-_232px)]"
-          onChange={(e) => onChange(e.target.value)}
-          onKeyDown={handleEnterKey}
-          placeholder={placeholder ?? 'Enter your comment here.'}
-          ref={textAreaRef}
-          value={value}
-          setSubmittable={setSubmittable}
-          submittable={submittable}
-        >
-          {buttons}
-        </Textarea>
+        <Form {...form}>
+          <FormField
+            control={form.control}
+            name="text"
+            render={({ field }) => (
+              <FormItem>
+                <Textarea
+                  autoFocus
+                  className="resize-none border-0 px-3 py-2 focus-visible:ring-0 md:max-h-[calc(100vh_-_232px)]"
+                  onChange={(e) => {
+                    field.onChange(e);
+                    onChange(e.target.value);
+                    form.trigger();
+                  }}
+                  onKeyDown={handleEnterKey}
+                  placeholder={placeholder ?? 'Enter your comment here.'}
+                  ref={textAreaRef}
+                  value={value}
+                />
+                <FormMessage className="absolute h-8 pl-3 leading-8" />
+              </FormItem>
+            )}
+          />
+        </Form>
       )}
       {commentMode === 'preview' && (
         <div className="min-h-[5rem] overflow-y-auto break-words px-3 pt-2 text-sm md:max-h-[calc(100vh_-_232px)]">
           <Markdown>{value}</Markdown>
-          <div className="flex justify-end">{buttons}</div>
         </div>
       )}
+      <div className="flex justify-end">
+        <div className="flex gap-2 p-2 pl-0">
+          <Button
+            className="h-8"
+            disabled={isSubmitting || value.length === 0}
+            onClick={() => setCommentMode(commentMode === 'editor' ? 'preview' : 'editor')}
+            variant={mode === 'create' ? 'secondary' : 'ghost'}
+          >
+            {commentMode === 'editor' ? 'Preview' : 'Edit'}
+          </Button>
+          {mode !== 'create' && (
+            <Button className="h-8" onClick={() => onCancel?.()} variant="secondary">
+              Cancel
+            </Button>
+          )}
+          <Button
+            className="h-8 w-[5.5rem] rounded-lg rounded-br-sm bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
+            disabled={value.length === 0 || isSubmitting || !formValid}
+            onClick={submitComment}
+          >
+            {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Comment'}
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }

@@ -97,9 +97,11 @@ export function TestCasesEditor({ form, hasTsErrors, setTsErrors }: Props) {
                 <div className="sticky bottom-0 flex items-center justify-end p-2 dark:bg-[#1e1e1e]">
                   {editorState ? <VimStatusBar editor={editorState} /> : null}
                 </div>
-                <FormMessage />
+                <FormMessage className="pl-2" />
                 {!hasTsErrors && (
-                  <div className="text-destructive text-sm">You must have failing test cases</div>
+                  <div className="text-destructive pl-2 text-sm font-medium">
+                    You must have failing test cases
+                  </div>
                 )}
               </div>
             </FormItem>
