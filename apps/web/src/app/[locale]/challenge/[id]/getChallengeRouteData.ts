@@ -20,11 +20,7 @@ export const getChallengeRouteData = cache((id: string, session: Session | null)
       },
       _count: {
         select: {
-          vote: {
-            where: {
-              rootType: 'CHALLENGE',
-            },
-          },
+          vote: true,
         },
       },
       vote: {
