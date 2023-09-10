@@ -31,7 +31,7 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
   }
 
   return (
-    <div className="container flex flex-col items-center gap-8 py-5 md:gap-16 md:pb-20">
+    <div className="container flex min-h-screen flex-col items-center gap-8 py-5 md:gap-16 md:pb-20">
       <div className="container">
         <h3 className="mb-1 text-2xl font-bold tracking-wide text-neutral-900/40 dark:text-white/40">
           Track
@@ -56,20 +56,24 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
           <EnrollButton action={unenrollUserFromTrack} trackId={trackId} text="Unenroll" />
         )}
       </div>
-      <div className="flex min-w-[50%] max-w-xl flex-col">
+      <div className="grid-col grid grid-cols-1 gap-x-4 self-stretch md:grid-cols-2">
         {trackChallenges
           .sort((a, b) => a.orderId - b.orderId)
           .map((x) => x.challenge)
           .map((challenge) => (
             <Link key={challenge.id} href={`/challenge/${challenge.id}`}>
               <TrackChallenge
+                className="max-w-lg"
                 challenge={challenge}
+                challengeCompleted
+                // challengeCompleted={
+                //   challenge.submission.length > 0 &&
+                //   challenge.submission.some((submission) => submission.isSuccessful)
+                // }
                 challengeInProgress={
                   challenge.submission.length > 0 &&
                   !challenge.submission.some((submission) => submission.isSuccessful)
                 }
-                mock
-                showDescriptionOnHover
               />
             </Link>
           ))}

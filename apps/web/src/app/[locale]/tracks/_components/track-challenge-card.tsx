@@ -3,14 +3,15 @@
 import { Check } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { useIsMobile } from '~/utils/useIsMobile';
+
 import type { Tracks } from './track-grid';
 
 interface TrackChallengeProps {
   challenge: Tracks[number]['trackChallenges'][number]['challenge'];
   challengeInProgress?: boolean;
+  challengeCompleted?: boolean;
   className?: string;
   mock?: boolean;
-  showDescriptionOnHover?: boolean
 }
 
 const COLORS_BY_DIFFICULTY = {
@@ -29,7 +30,13 @@ const BGS_BY_DIFFICULTY = {
   EXTREME: 'to-difficulty-extreme/20 dark:to-difficulty-extreme-dark/20',
 } as const;
 
-export function TrackChallenge({ challenge, className, mock, showDescriptionOnHover, challengeInProgress }: TrackChallengeProps) {
+export function TrackChallenge({
+  challenge,
+  className,
+  mock,
+  challengeInProgress = false,
+  challengeCompleted = false,
+}: TrackChallengeProps) {
   const isMobile = useIsMobile();
   return (
     <label
@@ -62,8 +69,13 @@ export function TrackChallenge({ challenge, className, mock, showDescriptionOnHo
               </>
             )}
             {challenge.name}
+            {challengeCompleted ? (
+              <p className="text-xs">
+                {' '}
+                - <span className="text-green-600/80 dark:text-green-300/80">Done</span>
+              </p>
+            ) : null}
           </div>
-          {showDescriptionOnHover == true && <p className="opacity-0 h-0 group-hover/challenge:opacity-100 group-hover/challenge:h-auto transition-all duration-200 ease-in text-sm">{challenge.shortDescription}</p>}
         </div>
         <div
           className={`relative text-xs font-medium tracking-wide ${
@@ -75,7 +87,11 @@ export function TrackChallenge({ challenge, className, mock, showDescriptionOnHo
               BGS_BY_DIFFICULTY[challenge.difficulty]
             }`}
           />
-          {challengeInProgress ? "In Progress" : `${challenge.difficulty[0]}${challenge.difficulty.substring(1, challenge.difficulty.length).toLowerCase()}`}
+          {challengeInProgress
+            ? 'In Progress'
+            : `${challenge.difficulty[0]}${challenge.difficulty
+                .substring(1, challenge.difficulty.length)
+                .toLowerCase()}`}
         </div>
       </div>
     </label>
