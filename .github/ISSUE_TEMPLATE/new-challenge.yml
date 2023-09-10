@@ -16,6 +16,8 @@ body:
         - Medium
         - Hard
         - Extreme
+    validations:
+      required: true
   - type: dropdown
     id: track
     attributes:
@@ -50,6 +52,8 @@ body:
       description: Provide some code your challenge will need to build on top off to complete the challenge
       value: |
         ```ts // your code here```
+    validations:
+      required: true
   - type: textarea
     id: tests
     attributes:
@@ -57,6 +61,8 @@ body:
       description: Provide some test cases that should be passing in order to complete the challenge
       value: |
         See [playground](https://tsplay.dev/mpQMMW) for examples on how to use our test utils
+    validations:
+      required: true
   - type: textarea
     id: please
     attributes:
@@ -64,3 +70,5 @@ body:
       description: Please provide a TS Playground so reviewers can review more in depth if needed.
       value: |
         Use the [playground](https://tsplay.dev/mpQMMW) to build off of.
+    validations:
+      required: true
