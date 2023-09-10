@@ -14,7 +14,7 @@ export default async function ChallengeReviewPage({ params: { challengeId } }: P
 }
 
 export type ChallengeToReview = NonNullable<Awaited<ReturnType<typeof getChallengeToReview>>>;
- const getChallengeToReview= cache(async(id: number) => {
+const getChallengeToReview = cache(async (id: number) => {
   return prisma.challenge.findFirstOrThrow({
     where: {
       id,
@@ -30,4 +30,4 @@ export type ChallengeToReview = NonNullable<Awaited<ReturnType<typeof getChallen
       createdAt: 'desc',
     },
   });
-})
+});

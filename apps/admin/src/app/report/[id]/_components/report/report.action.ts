@@ -62,7 +62,7 @@ export async function getReports(lastCursor?: number, take = 3) {
   });
 }
 
-export const getReportedUserInformation= cache(async(userId: string) => {
+export const getReportedUserInformation = cache(async (userId: string) => {
   return await prisma.user.findFirstOrThrow({
     where: {
       id: userId,
@@ -102,4 +102,4 @@ export const getReportedUserInformation= cache(async(userId: string) => {
       },
     },
   });
-})
+});
