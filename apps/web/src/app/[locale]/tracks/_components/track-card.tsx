@@ -1,56 +1,65 @@
 'use client';
 
-import clsx from 'clsx';
-import { useRouter } from 'next/navigation';
-import { TrackChallenge } from './track-challenge-card';
 import type { Tracks } from './track-grid';
-import { Button } from '@repo/ui/components/button';
+import { Card, CardContent } from '@repo/ui/components/card';
+import { Badge } from '@repo/ui/components/badge';
+import Link from 'next/link';
+import { clsx } from 'clsx';
+import { Swords } from '@repo/ui/icons';
 
 interface TrackProps {
+  index: number;
   track: Tracks[number];
 }
 
-export function TrackCard({ track }: TrackProps) {
-  const router = useRouter();
+const BGS_BY_TRACK: Record<number, string> = {
+  0: 'to-difficulty-beginner/30 dark:to-difficulty-beginner-dark/20',
+  1: 'to-difficulty-easy/30 dark:to-difficulty-easy-dark/20',
+  2: 'to-difficulty-medium/30 dark:to-difficulty-medium-dark/20',
+  3: 'to-difficulty-hard/30 dark:to-difficulty-hard-dark/20',
+  4: 'to-difficulty-extreme/30 dark:to-difficulty-extreme-dark/20',
+  5: 'to-difficulty-hard/10 dark:to-difficulty-hard-dark/10',
+  6: 'to-difficulty-medium/10 dark:to-difficulty-medium-dark/10',
+  7: 'to-difficulty-easy/10 dark:to-difficulty-easy-dark/10',
+  8: 'to-difficulty-beginner/10 dark:to-difficulty-beginner-dark/10',
+  9: 'to-difficulty-extreme/10 dark:to-difficulty-extreme-dark/10',
+} as const;
+
+export function TrackCard({ track, index }: TrackProps) {
   return (
-    <div className="relative w-full">
-      <div className="w-full">
-        <div
-          className={clsx(
-            'relative inset-0 flex max-w-[400px] flex-col justify-start space-y-4',
-            'max-md:scale-110',
-          )}
-        >
-          <div className="flex w-[69%] items-center justify-between gap-3 rounded-b-lg rounded-t-xl bg-neutral-500/10 p-2 pl-3">
-            <span className="flex items-center gap-1 text-sm font-semibold tracking-wide">
-              {track.title}
-            </span>
+    <Link href={`/tracks/${track.id}`} className="group">
+      <Card
+        className={clsx(
+          'group-hover:border-blue-300 group-focus:border-blue-300',
+          'dark:group-hover:border-white dark:group-hover:border-opacity-20 dark:group-focus:border-white dark:group-focus:border-opacity-20',
+          'transition-colors duration-300',
+        )}
+      >
+        <CardContent className="flex items-center gap-5 p-2 pr-4">
+          <div
+            className={clsx(
+              `bg-gradient-to-r from-neutral-500/10 from-10% ${BGS_BY_TRACK[index]} relative to-100% dark:from-neutral-500/20`,
+              'flex h-24 w-24 flex-none items-center justify-center rounded-2xl',
+            )}
+          >
+            <Swords
+              size={50}
+              className="opacity-50 transition-opacity duration-300 group-hover:opacity-100 group-focus:opacity-100"
+            />
           </div>
-          <div className="flex w-full items-center justify-between gap-3 rounded-b-lg rounded-t-xl bg-neutral-500/10 p-2 pl-3">
-            <span className="text-muted-foreground flex h-10 gap-1 overflow-hidden text-sm font-semibold tracking-wide">
+
+          <div className="flex-1">
+            <div className="flex items-center justify-between gap-2">
+              <span className="font-semibold capitalize tracking-wide">{track.title}</span>
+              <Badge className="flex-none">{track._count.trackChallenges} Challenges</Badge>
+            </div>
+
+            <span className="text-muted-foreground mt-3 line-clamp-3 block h-8 text-xs tracking-wide">
               {track.description}
             </span>
           </div>
-          <div className="flex flex-col gap-2">
-            {track.trackChallenges.map((trackChallenge) => {
-              return (
-                <TrackChallenge
-                  challenge={trackChallenge.challenge}
-                  key={`track-challenge-${trackChallenge.id}-${track.id}`}
-                />
-              );
-            })}
-            <Button
-              variant="outline"
-              onClick={() => {
-                router.push(`/tracks/${track.id}`);
-              }}
-            >
-              View
-            </Button>
-          </div>
-        </div>
-      </div>
-    </div>
+        </CardContent>
+      </Card>
+    </Link>
   );
 }
