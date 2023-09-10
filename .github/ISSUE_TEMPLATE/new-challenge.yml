@@ -3,6 +3,8 @@ name: Submit a Challenge
 description: Submit a Challenge for Review
 title: "[Challenge]: "
 labels: ["challenge"]
+assignees:
+  - bautistaaa
 body:
   - type: dropdown
     id: difficulty
@@ -24,7 +26,7 @@ body:
         - For The Experts
         - JS Built In Methods
         - Understanding Typescript Syntax
-        - Typescript Foundations(unions|extends|infer|annotations|array|readonly|map types|etc)
+        - Typescript Foundations(unions|extends|infer|etc)
   - type: textarea
     id: description
     attributes:
