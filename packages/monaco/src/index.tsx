@@ -187,7 +187,7 @@ export function CodePanel(props: CodePanelProps) {
           {
             'justify-between': testEditorState,
           },
-          'sticky bottom-0 flex items-center justify-between p-2 dark:bg-[#1e1e1e]',
+          'sticky bottom-0 flex items-center justify-between border-t border-zinc-300 p-2 dark:border-zinc-700 dark:bg-[#1e1e1e]',
         )}
       >
         <div className="flex items-center gap-4">

@@ -147,7 +147,7 @@ export default function SplitEditor({
       resizerRef.removeEventListener('mousedown', mouseDownHandler);
       resizerRef.removeEventListener('touchstart', mouseDownHandler);
     };
-  }, []);
+  }, [settings, updateSettings, setIsTestPanelExpanded]);
 
   useEffect(() => {
     if (monaco) {
@@ -166,8 +166,10 @@ export default function SplitEditor({
 
   return (
     <div className={clsx('flex h-[calc(100%-_90px)] flex-col', className)} ref={wrapper}>
-      <section className="min-h-0 flex-grow overflow-hidden">
+      <section className="h-full overflow-hidden">
         <CodeEditor
+          className="overflow-hidden"
+          height={userEditorState && settings.bindings === 'vim' ? 'calc(100% - 36px)' : '100%'}
           defaultPath={USER_CODE_PATH}
           onMount={onMount?.user}
           defaultValue={userCode}
@@ -208,17 +210,19 @@ export default function SplitEditor({
             onChange?.user?.(e, a);
           }}
         />
+        {userEditorState && settings.bindings === 'vim' && (
+          <VimStatusBar editor={userEditorState} />
+        )}
       </section>
-      {userEditorState && settings.bindings === 'vim' && <VimStatusBar editor={userEditorState} />}
       <div
-        className="border-t border-zinc-300 transition-all dark:border-zinc-700"
+        className="transition-all"
         style={{
           height: `${expandTestPanel ? settings.testPanelHeight || MIN_HEIGHT : 0}px`,
         }}
         ref={testPanel}
       >
         <div
-          className="cursor-row-resize border-b border-zinc-300 bg-zinc-800 p-2 dark:border-zinc-700"
+          className="cursor-row-resize border-y border-zinc-300 bg-zinc-800 p-2 dark:border-zinc-700"
           ref={resizer}
         >
           <div className="m-auto h-1 w-24 rounded-full bg-zinc-700" />
