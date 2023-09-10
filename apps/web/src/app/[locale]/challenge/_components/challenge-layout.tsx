@@ -5,6 +5,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useFullscreenSettingsStore } from './fullscreen';
 import usePanelAdjustments from './usePanelAdjustments';
+import { getEventDeltas } from '@repo/monaco/utils';
 
 export const DEFAULT_SETTINGS = {
   width: '500px',
@@ -78,33 +79,9 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
     let leftWidth = 0;
     let topHeight = 0;
 
-    const getEventDeltas = (e: MouseEvent | TouchEvent) => {
-      if (e instanceof MouseEvent) {
-        return {
-          dx: e.clientX - x,
-          dy: e.clientY - y,
-          currPos: isDesktop ? e.clientX : e.clientY,
-        };
-      }
-
-      const touch = e.changedTouches[0];
-      if (!touch) {
-        return {
-          dx: 0,
-          dy: 0,
-          currPos: 0,
-        };
-      }
-
-      return {
-        dx: touch.clientX - x,
-        dy: touch.clientY - y,
-        currPos: isDesktop ? touch.clientX : touch.clientY,
-      };
-    };
-
     const mouseMoveHandler = (e: MouseEvent | TouchEvent) => {
-      const { dx, dy, currPos } = getEventDeltas(e);
+      const { dx, dy, currPosX, currPosY } = getEventDeltas(e, { x, y });
+      const currPos = isDesktop ? currPosX : currPosY;
       const { width: divideByW, height: divideByH } = parent.current?.getBoundingClientRect() || {
         width: 0,
         height: 0,

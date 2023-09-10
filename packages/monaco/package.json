@@ -9,7 +9,8 @@
     "./vim-mode": "./src/vim-mode.tsx",
     "./twoslash": "./src/twoslash.ts",
     "./prettier": "./src/prettier.ts",
-    "./editor-hooks": "./src/editor-hooks.ts"
+    "./editor-hooks": "./src/editor-hooks.ts",
+    "./utils": "./src/utils.ts"
   },
   "typesVersions": {
     "*": {
@@ -33,6 +34,9 @@
       ],
       "editor-hooks": [
         "./src/editor-hooks.ts"
+      ],
+      "utils": [
+        "./src/utils.ts"
       ]
     }
   },
