@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import { type Prisma } from '@prisma/client';
 import { trashId } from '../seed';
 
@@ -15,5 +16,6 @@ export default function CommentMock(
     }`,
     userId: trashId,
     parentId,
+    createdAt: faker.date.past(),
   };
 }

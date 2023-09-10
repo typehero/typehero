@@ -2,10 +2,15 @@
 
 import { useSession } from '@repo/auth/react';
 import { type CommentRoot } from '@repo/db/types';
+import { Markdown } from '@repo/ui/components/markdown';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
+import { toast } from '@repo/ui/components/use-toast';
+import { UserBadge } from '@repo/ui/components/user-badge';
 import { ChevronDown, ChevronUp, Pencil, Reply, Share, Trash2 } from '@repo/ui/icons';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { z } from 'zod';
 import { ReportDialog } from '~/components/ReportDialog';
@@ -14,11 +19,11 @@ import { Vote } from '../vote';
 import { CommentInput } from './comment-input';
 import { replyComment, updateComment } from './comment.action';
 import { CommentDeleteDialog } from './delete';
-import { getPaginatedComments, type PaginatedComments } from './getCommentRouteData';
-import { toast } from '@repo/ui/components/use-toast';
-import { UserBadge } from '@repo/ui/components/user-badge';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
-import { Markdown } from '@repo/ui/components/markdown';
+import {
+  getPaginatedComments,
+  type PaginatedComments,
+  type PreselectedCommentMetadata,
+} from './getCommentRouteData';
 
 interface SingleCommentProps {
   comment: PaginatedComments['comments'][number];
@@ -29,9 +34,11 @@ interface SingleCommentProps {
   onClickToggleReply?: () => void;
   queryKey?: (number | string)[];
   replyQueryKey?: (number | string)[];
+  preselectedCommentMetadata?: PreselectedCommentMetadata;
 }
 
 type CommentProps = SingleCommentProps & {
+  preselectedCommentMetadata?: PreselectedCommentMetadata;
   rootId: number;
   type: CommentRoot;
 };
@@ -58,8 +65,19 @@ const commentReportSchema = z
 export type CommentReportSchemaType = z.infer<typeof commentReportSchema>;
 
 // million-ignore
-export function Comment({ comment, readonly = false, rootId, type, queryKey }: CommentProps) {
-  const [showReplies, setShowReplies] = useState(false);
+export function Comment({
+  comment,
+  preselectedCommentMetadata,
+  readonly = false,
+  rootId,
+  type,
+  queryKey,
+}: CommentProps) {
+  const params = useSearchParams();
+  const replyId = params.get('replyId');
+  const [showReplies, setShowReplies] = useState(
+    preselectedCommentMetadata?.selectedComment?.id === comment.id && Boolean(replyId),
+  );
 
   const [isReplying, setIsReplying] = useState(false);
   const [replyText, setReplyText] = useState('');
@@ -119,6 +137,7 @@ export function Comment({ comment, readonly = false, rootId, type, queryKey }: C
   return (
     <div className="flex flex-col px-2 py-1">
       <SingleComment
+        preselectedCommentMetadata={preselectedCommentMetadata}
         comment={comment}
         isToggleReply={showReplies}
         onClickReply={toggleIsReplying}
@@ -148,7 +167,13 @@ export function Comment({ comment, readonly = false, rootId, type, queryKey }: C
           {data?.pages.flatMap((page) =>
             page.comments.map((reply) => (
               // this is a reply
-              <SingleComment comment={reply} isReply key={reply.id} replyQueryKey={replyQueryKey} />
+              <SingleComment
+                comment={reply}
+                isReply
+                key={reply.id}
+                replyQueryKey={replyQueryKey}
+                preselectedCommentMetadata={preselectedCommentMetadata}
+              />
             )),
           )}
         </div>
@@ -166,21 +191,30 @@ export function Comment({ comment, readonly = false, rootId, type, queryKey }: C
   );
 }
 
+const SELECTED_CLASSES = 'rounded-md bg-sky-300/20';
+
 function SingleComment({
   comment,
-  readonly = false,
-  onClickReply,
-  onClickToggleReply,
   isReply,
   isToggleReply,
+  onClickReply,
+  onClickToggleReply,
   queryKey,
+  readonly = false,
   replyQueryKey,
+  preselectedCommentMetadata,
 }: SingleCommentProps) {
+  const params = useSearchParams();
+  const replyId = params.get('replyId');
   const queryClient = useQueryClient();
   const [text, setText] = useState(comment.text);
   const [isEditing, setIsEditing] = useState(false);
-
+  const elRef = useRef<HTMLDivElement | null>(null);
   const session = useSession();
+
+  const isHighlighted = replyId
+    ? Number(replyId) === comment.id
+    : preselectedCommentMetadata?.selectedComment?.id === comment.id;
 
   async function updateChallengeComment() {
     try {
@@ -207,9 +241,9 @@ function SingleComment({
     }
   }
 
-  async function copyPathNotifyUser() {
+  async function copyPathNotifyUser(isReply: boolean) {
     try {
-      await copyCommentUrlToClipboard();
+      await copyCommentUrlToClipboard(isReply);
       toast({
         title: 'Success!',
         variant: 'success',
@@ -225,16 +259,43 @@ function SingleComment({
     }
   }
 
-  async function copyCommentUrlToClipboard() {
-    await navigator.clipboard.writeText(`${window.location.href}/comment/${comment.id}`);
+  async function copyCommentUrlToClipboard(isReply: boolean) {
+    const commentId = isReply ? comment.parentId : comment.id;
+    const paramsObj = { replyId: String(comment.id) };
+    const searchParams = new URLSearchParams(paramsObj);
+    await navigator.clipboard.writeText(
+      `${window.location.origin}/challenge/${comment.rootChallengeId}/comments/${commentId}${
+        isReply ? `?${searchParams.toString()}` : ''
+      }`,
+    );
   }
 
   const loggedinUser = useSession();
 
   const isAuthor = loggedinUser.data?.user.id === comment.user.id;
 
+  useEffect(() => {
+    if (!isHighlighted) return;
+    const timeout = setTimeout(() => {
+      elRef.current?.classList.remove(...SELECTED_CLASSES.split(' '));
+    }, 5000);
+    window.requestAnimationFrame(() => elRef.current?.scrollIntoView());
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [isHighlighted]);
+
   return (
-    <div className="relative p-2 pl-3">
+    <div
+      id={`comment-${comment.id}`}
+      className={clsx(
+        'relative p-2 pl-3',
+        isHighlighted && SELECTED_CLASSES,
+        'transition-colors',
+        'duration-150',
+      )}
+      ref={elRef}
+    >
       <div className="flex items-start justify-between gap-4 pr-[0.4rem]">
         <div className="flex w-full items-center justify-between gap-1">
           <UserBadge username={comment.user.name ?? ''} linkComponent={Link} />
@@ -294,7 +355,7 @@ function SingleComment({
             <div
               className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
               onClick={() => {
-                copyPathNotifyUser();
+                copyPathNotifyUser(Boolean(isReply));
               }}
             >
               <Share className="h-3 w-3" />
