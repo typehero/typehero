@@ -4,7 +4,11 @@ import Link from 'next/link';
 import { EnrollButton } from './enroll-button';
 import { TrackChallenge } from './track-challenge-card';
 import { TrackProgress } from './track-progress';
-import { enrollUserInTrack, getTrackDetails, unenrollUserFromTrack } from './track.action';
+import {
+  enrollUserInTrack,
+  getTrackDetails,
+  unenrollUserFromTrack,
+} from './track.action';
 
 interface TrackDetailProps {
   // trackid
@@ -65,11 +69,10 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
               <TrackChallenge
                 className="max-w-lg"
                 challenge={challenge}
-                challengeCompleted
-                // challengeCompleted={
-                //   challenge.submission.length > 0 &&
-                //   challenge.submission.some((submission) => submission.isSuccessful)
-                // }
+                challengeCompleted={
+                  challenge.submission.length > 0 &&
+                  challenge.submission.some((submission) => submission.isSuccessful)
+                }
                 challengeInProgress={
                   challenge.submission.length > 0 &&
                   !challenge.submission.some((submission) => submission.isSuccessful)
