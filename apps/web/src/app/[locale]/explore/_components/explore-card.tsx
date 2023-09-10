@@ -46,8 +46,8 @@ export function ExploreCard({ challenge, tabIndex }: ExploreCardProps) {
     <Card
       tabIndex={tabIndex}
       className={`
-      focus:outline-none focus-visible:ring-2
-group/card bg-background hover:bg-card-hovered relative overflow-hidden duration-300 sm:min-w-[300px] xl:min-w-[333px]
+      group/card bg-background
+hover:bg-card-hovered relative overflow-hidden duration-300 focus:outline-none focus-visible:ring-2 sm:min-w-[300px] xl:min-w-[333px]
       ${SHADOWS_BY_DIFFICULTY[challenge.difficulty]}
       ${BORDERS_BY_DIFFICULTY[challenge.difficulty]}
       `}

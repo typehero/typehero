@@ -21,7 +21,8 @@ import { Button } from '@repo/ui/components/button';
 import { Markdown } from '@repo/ui/components/markdown';
 
 type WrapperStyle = MotionStyle & {
-  '--x': MotionValue<string>; '--y': MotionValue<string>;
+  '--x': MotionValue<string>;
+  '--y': MotionValue<string>;
 };
 
 interface CardProps {
@@ -76,7 +77,7 @@ function FeatureCard({
           'group relative w-full overflow-hidden rounded-3xl border bg-gradient-to-b from-neutral-50/90 to-neutral-100/90 transition duration-300 dark:from-neutral-950/90 dark:to-neutral-800/90',
           'md:hover:border-transparent',
           bgClass,
-          'focus:outline-none focus-visible:ring-2'
+          'focus:outline-none focus-visible:ring-2',
         )}
       >
         <div className="mx-10 my-10 min-h-[450px] w-full">
@@ -206,11 +207,15 @@ export function ChallengeCreationCard({
   const { currentNumber: step, increment } = useNumberCycler();
 
   return (
-    <FeatureCard {...props} tabIndex={0} onKeyDown={(event) => {
-      if (event.key === 'Enter') {
-        increment();
-      }
-    }}>
+    <FeatureCard
+      {...props}
+      tabIndex={0}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter') {
+          increment();
+        }
+      }}
+    >
       <div
         className={clsx(
           { 'translate-x-0 opacity-0': step < 3 },
@@ -290,7 +295,7 @@ export function ChallengeCreationCard({
             }}
           />
           <div className="absolute -right-4 bottom-4 w-full">
-            <Steps current={step} onChange={() => { }} steps={steps} />
+            <Steps current={step} onChange={() => {}} steps={steps} />
           </div>
         </>
       )}
@@ -365,7 +370,7 @@ export function ChallengeCreationCard({
             }}
           />
           <div className="absolute -right-4 bottom-4 w-full">
-            <Steps current={step} onChange={() => { }} steps={steps} />
+            <Steps current={step} onChange={() => {}} steps={steps} />
           </div>
         </>
       )}

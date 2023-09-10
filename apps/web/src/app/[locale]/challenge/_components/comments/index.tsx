@@ -122,7 +122,7 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
     >
       <div className="relative">
         <button
-          className="flex w-full items-center justify-between gap-2 p-3 font-medium text-neutral-500 duration-300 hover:text-neutral-700 dark:hover:text-zinc-300 focus:outline-none focus-visible:scale-95 focus-visible:ring-2"
+          className="flex w-full items-center justify-between gap-2 p-3 font-medium text-neutral-500 duration-300 hover:text-neutral-700 focus:outline-none focus-visible:scale-95 focus-visible:ring-2 dark:hover:text-zinc-300"
           onClick={() => {
             setShowComments(!showComments);
           }}
