@@ -44,7 +44,7 @@ export function CodePanel(props: CodePanelProps) {
     '',
   );
 
-  const showSubmitSpinner = props.submissionDisabled || tsErrors === undefined;
+  const disabled = props.submissionDisabled || tsErrors === undefined;
 
   const defaultCode =
     lzstring.decompressFromEncodedURIComponent(params.get('code') ?? '') ?? localStorageCode;
@@ -114,8 +114,6 @@ export function CodePanel(props: CodePanelProps) {
               tsWorker.getSyntacticDiagnostics(TESTS_PATH),
               tsWorker.getCompilerOptionsDiagnostics(TESTS_PATH),
             ] as const);
-
-            console.log({ errors });
 
             setTsErrors(errors);
             setTestEditorState(editor);
@@ -215,12 +213,11 @@ export function CodePanel(props: CodePanelProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                disabled={showSubmitSpinner}
+                disabled={disabled}
                 size="sm"
                 className="cursor-pointer rounded-lg bg-emerald-600 duration-300 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
                 onClick={handleSubmit}
               >
-                {showSubmitSpinner && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Submit{tsErrors === undefined && ' (open test cases)'}
               </Button>
             </TooltipTrigger>
