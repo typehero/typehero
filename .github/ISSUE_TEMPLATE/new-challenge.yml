@@ -1,0 +1,64 @@
+
+name: Submit a Challenge
+description: Submit a Challenge for Review
+title: "[Challenge]: "
+labels: ["challenge"]
+body:
+  - type: dropdown
+    id: difficulty
+    attributes:
+      label: What difficulty do you think this challenge is?
+      options:
+        - Beginner
+        - Easy
+        - Medium
+        - Hard
+        - Extreme
+  - type: dropdown
+    id: track
+    attributes:
+      multiple: true
+      label: Is there a track this challenge is a good fit for?
+      options:
+        - Build Built In Utility Types
+        - For The Experts
+        - JS Built In Methods
+        - Understanding Typescript Syntax
+        - Typescript Foundations(unions|extends|infer|annotations|array|readonly|map types|etc)
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Quick overview of what you will cover in your challenge
+      placeholder: This challenge will be covering conditional types...
+    validations:
+      required: true
+  - type: textarea
+    id: prompt
+    attributes:
+      label: Prompt
+      description: Instructions the challenger will be reading prior to attempting your challenge
+      placeholder: You will need to create a typed util function that...
+    validations:
+      required: true
+  - type: textarea
+    id: starter
+    attributes:
+      label: Starter
+      description: Provide some code your challenge will need to build on top off to complete the challenge
+      value: |
+        ```ts // your code here```
+  - type: textarea
+    id: tests
+    attributes:
+      label: Test Cases
+      description: Provide some test cases that should be passing in order to complete the challenge
+      value: |
+        See [playground](https://tsplay.dev/mpQMMW) for examples on how to use our test utils
+  - type: textarea
+    id: please
+    attributes:
+      label: Please provide a TS Playground!
+      description: Please provide a TS Playground so reviewers can review more in depth if needed.
+      value: |
+        Use the [playground](https://tsplay.dev/mpQMMW) to build off of.
