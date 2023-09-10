@@ -15,7 +15,7 @@ export function ShareForm() {
   const url = `${window.location.origin}/challenge/${challengeId}`;
 
   const copyToClipboard = useCallback(async () => {
-    const url = window.location.href;
+    const url = `${window.location.origin}/challenge/${challengeId}`;
 
     try {
       if (navigator.clipboard && !copied) {
@@ -27,11 +27,11 @@ export function ShareForm() {
       console.error('copyToClipboard', e);
       setCopied(false);
     }
-  }, [copied]);
+  }, [challengeId, copied]);
 
   const copyToClipboardWithCode = useCallback(async () => {
     const compressedCode = lzstring.compressToEncodedURIComponent(codeToCompress);
-    const url = `${window.location.href}?code=${compressedCode}`;
+    const url = `${window.location.origin}/challenge/${challengeId}/?code=${compressedCode}`;
 
     try {
       if (navigator.clipboard && !copiedWithCode) {
@@ -43,7 +43,7 @@ export function ShareForm() {
       console.error('copyToClipboard', e);
       setCopiedWithCode(false);
     }
-  }, [copiedWithCode, codeToCompress]);
+  }, [challengeId, copiedWithCode, codeToCompress]);
 
   return (
     <div className="flex flex-col space-y-4">
