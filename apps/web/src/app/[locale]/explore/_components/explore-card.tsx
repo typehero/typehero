@@ -12,6 +12,7 @@ import { DifficultyBadge } from '@repo/ui/components/difficulty-badge';
 import { Markdown } from '@repo/ui/components/markdown';
 
 interface ExploreCardProps {
+  tabIndex?: number;
   challenge: Pick<
     Awaited<ExploreChallengeData>[0],
     '_count' | 'difficulty' | 'name' | 'shortDescription' | 'updatedAt' | 'user'
@@ -40,10 +41,13 @@ const SHADOWS_BY_DIFFICULTY = {
     'hover:shadow-extreme group-focus:shadow-extreme dark:hover:shadow-extreme-dark dark:group-focus:shadow-extreme-dark',
 };
 
-export function ExploreCard({ challenge }: ExploreCardProps) {
+export function ExploreCard({ challenge, tabIndex }: ExploreCardProps) {
   return (
     <Card
-      className={`group/card bg-background hover:bg-card-hovered relative overflow-hidden duration-300 sm:min-w-[300px] xl:min-w-[333px]
+      tabIndex={tabIndex}
+      className={`
+      focus:outline-none focus-visible:ring-2
+group/card bg-background hover:bg-card-hovered relative overflow-hidden duration-300 sm:min-w-[300px] xl:min-w-[333px]
       ${SHADOWS_BY_DIFFICULTY[challenge.difficulty]}
       ${BORDERS_BY_DIFFICULTY[challenge.difficulty]}
       `}

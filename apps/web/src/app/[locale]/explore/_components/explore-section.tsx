@@ -73,11 +73,12 @@ export async function ExploreSection({ title, fetcher, tag, redirectRoute }: Sec
             )
             .map((challenge) => (
               <Link
-                className="group snap-center focus:outline-none sm:w-[330px] xl:w-[333px]"
+                className="group snap-center focus:outline-none sm:w-[330px] xl:w-[333px] "
                 href={`/challenge/${challenge.id}`}
                 key={challenge.id}
+                tabIndex={-1}
               >
-                <ExploreCard challenge={challenge} key={`challenge-${challenge.id}`} />
+                <ExploreCard tabIndex={0} challenge={challenge} key={`challenge-${challenge.id}`} />
               </Link>
             ))}
         </Carousel>
