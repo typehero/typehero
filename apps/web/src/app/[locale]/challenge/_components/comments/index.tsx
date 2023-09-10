@@ -1,13 +1,23 @@
 'use client';
 
 import type { CommentRoot } from '@repo/db/types';
+import { Button } from '@repo/ui/components/button';
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@repo/ui/components/select';
+import { Toggle } from '@repo/ui/components/toggle';
+import { toast } from '@repo/ui/components/use-toast';
+import {
+  ArrowDownNarrowWide,
+  ArrowUpNarrowWide,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
   MessageCircle,
-  ArrowDownNarrowWide,
-  ArrowUpNarrowWide,
 } from '@repo/ui/icons';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
@@ -16,18 +26,12 @@ import { Comment } from './comment';
 import { CommentInput } from './comment-input';
 import { CommentSkeleton } from './comment-skeleton';
 import { addComment } from './comment.action';
-import { getPaginatedComments, type SortOrder } from './getCommentRouteData';
-import NoComments from './nocomments';
-import { Button } from '@repo/ui/components/button';
-import { Toggle } from '@repo/ui/components/toggle';
-import { toast } from '@repo/ui/components/use-toast';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@repo/ui/components/select';
+  getPaginatedComments,
+  type PreselectedCommentMetadata,
+  type SortOrder,
+} from './getCommentRouteData';
+import NoComments from './nocomments';
 
 const sortKeys = [
   {
@@ -44,20 +48,21 @@ const sortKeys = [
   },
 ] as const;
 interface Props {
+  preselectedCommentMetadata?: PreselectedCommentMetadata;
+  expanded?: boolean;
   rootId: number;
   type: CommentRoot;
 }
 
 // million-ignore
-export function Comments({ rootId, type }: Props) {
-  const [showComments, setShowComments] = useState(false);
+export function Comments({ preselectedCommentMetadata, rootId, type, expanded = false }: Props) {
+  const [showComments, setShowComments] = useState(expanded);
   const [text, setText] = useState('');
   const commentContainerRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(preselectedCommentMetadata?.page ?? 1);
   const [sortKey, setSortKey] = useState<(typeof sortKeys)[number]>(sortKeys[0]);
   const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
-
   const queryKey = [`${type.toLowerCase()}-${rootId}-comments`, sortKey.value, sortOrder, page];
 
   const { status, data } = useQuery({
@@ -65,7 +70,8 @@ export function Comments({ rootId, type }: Props) {
     queryFn: () =>
       getPaginatedComments({ rootId, page, rootType: type, sortKey: sortKey.value, sortOrder }),
     keepPreviousData: true,
-    staleTime: 5000,
+    staleTime: 60000, // one minute
+    refetchOnWindowFocus: false,
   });
 
   async function createChallengeComment() {
@@ -117,7 +123,9 @@ export function Comments({ rootId, type }: Props) {
       <div className="relative">
         <button
           className="flex w-full items-center justify-between gap-2 p-3 font-medium text-neutral-500 duration-300 hover:text-neutral-700 focus:outline-none dark:hover:text-zinc-300"
-          onClick={() => setShowComments(!showComments)}
+          onClick={() => {
+            setShowComments(!showComments);
+          }}
         >
           <div className="flex items-center gap-2">
             <MessageCircle className="h-5 w-5" />
@@ -136,7 +144,7 @@ export function Comments({ rootId, type }: Props) {
             {
               'h-64 pb-4 md:h-[calc(100vh_-_164px)]': showComments,
               'h-0 overflow-y-hidden': !showComments,
-              'overflow-y-auto': showComments && data?.comments.length !== 0,
+              'overflow-y-auto': showComments && (data?.comments.length ?? 0) > 0,
             },
           )}
           ref={commentContainerRef}
@@ -149,7 +157,7 @@ export function Comments({ rootId, type }: Props) {
               value={text}
             />
           </div>
-          {data?.comments.length !== 0 && (
+          {(data?.comments.length ?? 0) > 0 && (
             <div className="flex items-center gap-2 px-3 py-2">
               <Select
                 value={sortKey.value}
@@ -204,6 +212,7 @@ export function Comments({ rootId, type }: Props) {
               ) : (
                 data.comments.map((comment) => (
                   <Comment
+                    preselectedCommentMetadata={preselectedCommentMetadata}
                     comment={comment}
                     key={comment.id}
                     queryKey={queryKey}
