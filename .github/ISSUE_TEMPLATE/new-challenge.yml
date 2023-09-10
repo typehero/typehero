@@ -1,0 +1,46 @@
+
+name: Submit a Challenge
+description: Submit a Challenge for Review
+title: "[Challenge]: "
+labels: ["challenge"]
+body:
+  - type: dropdown
+    id: difficulty
+    attributes:
+      label: What difficulty do you think this challenge is?
+      options:
+        - Beginner
+        - Easy
+        - Medium
+        - Hard
+        - Extreme
+  - type: dropdown
+    id: track
+    attributes:
+      multiple: true
+      label: Is there a track this challenge is a good fit for?
+      options:
+        - Build Built In Utility Types
+        - For The Experts
+        - JS Built In Methods
+        - Understanding Typescript Syntax
+        - Typescript Foundations(unions|extends|infer|annotations|array|readonly|map types|etc)
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Quick overview of what you will cover in your challenge
+      placeholder: This challenge will be covering conditional types...
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: >
+        | Please include any screenshots which would help demonstrate the steps
+        and point out which parts the feature is related to
+  - type: textarea
+    id: explanation
+    attributes:
+      label: Explanation
+      description: Why would this be useful to most CONTRIBUTING.md users. You may also want to point out other projects that have solved a similar feature.
+      placeholder: Leetcode does this thing on this page...
