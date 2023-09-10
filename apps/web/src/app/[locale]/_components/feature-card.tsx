@@ -207,7 +207,6 @@ export function ChallengeCreationCard({
 
   return (
     <FeatureCard {...props} tabIndex={0} onKeyDown={(event) => {
-      // event.preventDefault();
       if (event.key === 'Enter') {
         increment();
       }
