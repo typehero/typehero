@@ -15,6 +15,7 @@ export {
   Clipboard,
   Copy,
   Diamond,
+  ExternalLink,
   Flag,
   GitBranch,
   Github,

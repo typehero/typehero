@@ -1,30 +1,5 @@
 import { prisma } from '@repo/db';
 
-// todo: remove this. it's not used.
-export async function getReports() {
-  const challengeReports = await prisma.report.findMany({
-    where: {
-      type: 'CHALLENGE',
-    },
-    include: {
-      challenge: {
-        include: {
-          user: true,
-        },
-      },
-    },
-  });
-  const otherReports = await prisma.report.findMany({
-    where: {
-      type: { not: 'CHALLENGE' },
-    },
-  });
-  return {
-    challengeReports,
-    otherReports,
-  };
-}
-
 export type ReportWithInfo = Awaited<ReturnType<typeof getReport>>;
 
 export async function getReport(idNum: number) {
