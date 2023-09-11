@@ -167,7 +167,7 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
                   setPage(1);
                 }}
               >
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-[150px]">
                   <SelectValue placeholder="Sort Key" />
                 </SelectTrigger>
                 <SelectContent>

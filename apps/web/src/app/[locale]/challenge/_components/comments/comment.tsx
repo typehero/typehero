@@ -24,6 +24,7 @@ import {
   type PaginatedComments,
   type PreselectedCommentMetadata,
 } from './getCommentRouteData';
+import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
 
 interface SingleCommentProps {
   comment: PaginatedComments['comments'][number];
@@ -193,6 +194,7 @@ export function Comment({
 
 const SELECTED_CLASSES = 'rounded-md bg-sky-300/20';
 
+// million-ignore
 function SingleComment({
   comment,
   isReply,
@@ -297,8 +299,16 @@ function SingleComment({
       ref={elRef}
     >
       <div className="flex items-start justify-between gap-4 pr-[0.4rem]">
-        <div className="flex w-full items-center justify-between gap-1">
-          <UserBadge username={comment.user.name ?? ''} linkComponent={Link} />
+        <div className="mb-2 flex w-full items-center justify-between gap-1">
+          <div className="flex items-center gap-2">
+            <Avatar className="h-7 w-7">
+              <AvatarImage alt="github profile picture" src={comment.user?.image ?? ''} />
+              <AvatarFallback className="border border-zinc-300 dark:border-zinc-600">
+                {comment.user?.name.substring(0, 1)}
+              </AvatarFallback>
+            </Avatar>
+            <UserBadge username={comment.user.name ?? ''} linkComponent={Link} />
+          </div>
           <Tooltip delayDuration={0.05}>
             <TooltipTrigger asChild>
               <span className="whitespace-nowrap text-[0.8rem] text-neutral-500 dark:text-neutral-400">
@@ -332,7 +342,7 @@ function SingleComment({
           />
         </div>
       ) : null}
-      <div className="my-auto mt-1 flex items-center gap-4">
+      <div className="my-auto mt-3 flex items-center gap-4">
         {!readonly && (
           <>
             <Vote

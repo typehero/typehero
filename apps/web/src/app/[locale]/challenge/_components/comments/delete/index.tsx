@@ -1,20 +1,16 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-  type DialogTriggerProps,
-} from '@radix-ui/react-dialog';
+import type { DialogTriggerProps } from '@radix-ui/react-dialog';
+import { Button } from '@repo/ui/components/button';
+import { Dialog, DialogContent, DialogTrigger } from '@repo/ui/components/dialog';
+import { Markdown } from '@repo/ui/components/markdown';
+import { TypographyP } from '@repo/ui/components/paragraph';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
+import { TypographyLarge } from '@repo/ui/components/typography/large';
+import { toast } from '@repo/ui/components/use-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { deleteComment } from '../comment.action';
 import { type PaginatedComments } from '../getCommentRouteData';
-import { Button } from '@repo/ui/components/button';
-import { TypographyLarge } from '@repo/ui/components/typography/large';
-import { TypographyP } from '@repo/ui/components/paragraph';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
-import { Markdown } from '@repo/ui/components/markdown';
-import { toast } from '@repo/ui/components/use-toast';
 
 interface CommentDeleteDialogProps extends DialogTriggerProps {
   comment: PaginatedComments['comments'][number];
