@@ -13,11 +13,14 @@ import { TypographyLarge } from '@repo/ui/components/typography/large';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { Markdown } from '@repo/ui/components/markdown';
 import { UserBadge } from '@repo/ui/components/user-badge';
+import { Vote } from '../../../_components/vote';
+import { useSession } from '@repo/auth/react';
 
 interface Props {
   solution: ChallengeSolution;
 }
 export function SolutionDetails({ solution }: Props) {
+  const { data: session } = useSession();
   const handleShareClick = async () => {
     if (navigator.clipboard) {
       const url = window.location.href;
@@ -41,9 +44,11 @@ export function SolutionDetails({ solution }: Props) {
           <div className="mb-5 flex flex-col gap-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Avatar>
+                <Avatar className="h-7 w-7">
                   <AvatarImage alt="github profile picture" src={solution.user?.image ?? ''} />
-                  <AvatarFallback>{solution.user?.name}</AvatarFallback>
+                  <AvatarFallback className="border border-zinc-300 dark:border-zinc-600">
+                    {solution.user?.name.substring(0, 1)}
+                  </AvatarFallback>
                 </Avatar>
                 <TypographyLarge>{solution.title}</TypographyLarge>
               </div>
@@ -86,6 +91,23 @@ export function SolutionDetails({ solution }: Props) {
                   {solution.createdAt?.toLocaleString()}
                 </span>
               </div>
+              <Vote
+                voteCount={solution._count.vote}
+                initialHasVoted={solution.vote.length > 0}
+                disabled={!session?.user?.id || solution.userId === session?.user?.id}
+                rootType="SHAREDSOLUTION"
+                rootId={solution.id}
+                onVote={(didUpvote: boolean) => {
+                  solution.vote = didUpvote
+                    ? [
+                        {
+                          userId: session?.user?.id ?? '',
+                        },
+                      ]
+                    : [];
+                  solution._count.vote += didUpvote ? 1 : -1;
+                }}
+              />
             </div>
           </div>
           <Markdown>{solution.description || ''}</Markdown>
