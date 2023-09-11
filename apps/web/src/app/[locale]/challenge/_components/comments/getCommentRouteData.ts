@@ -117,6 +117,7 @@ export async function getPaginatedComments({
         select: {
           id: true,
           name: true,
+          image: true,
         },
       },
       _count: {
