@@ -236,10 +236,10 @@ export default function SplitEditor({
         ref={testPanel}
       >
         <div
-          className="cursor-row-resize border-y border-zinc-300 bg-zinc-800 p-2 dark:border-zinc-700"
+          className="cursor-row-resize border-y border-zinc-200 bg-zinc-100 p-2 dark:border-zinc-700 dark:bg-zinc-800"
           ref={resizer}
         >
-          <div className="m-auto h-1 w-24 rounded-full bg-zinc-700" />
+          <div className="m-auto h-1 w-24 rounded-full  bg-zinc-300 dark:bg-zinc-700" />
         </div>
         <CodeEditor
           options={{
