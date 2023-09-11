@@ -59,7 +59,7 @@ export function ReportActions({ report }: ReportActionsProps) {
         title: 'Success',
         description: <p>Comment deleted successfully</p>,
       });
-      router.push('/admin');
+      router.push('/?tab=reports');
     } catch (e) {
       toast({
         title: 'Error',
@@ -72,7 +72,7 @@ export function ReportActions({ report }: ReportActionsProps) {
   async function handleDisableChallenge(challengeId: number, reportId: number) {
     try {
       await banChallenge(challengeId, reportId);
-      router.push('/admin');
+      router.push('/?tab=reports');
     } catch (e) {
       toast({
         title: 'Error',
@@ -89,7 +89,7 @@ export function ReportActions({ report }: ReportActionsProps) {
         title: 'Success',
         description: <p>User banned successfully.</p>,
       });
-      router.push('/admin');
+      router.push('/?tab=reports');
     } catch (e) {
       toast({
         title: 'Error',
@@ -106,7 +106,7 @@ export function ReportActions({ report }: ReportActionsProps) {
         title: 'Success',
         description: <p>Dismissed successfully.</p>,
       });
-      router.push('/admin');
+      router.push('/?tab=reports');
     } catch (e) {
       console.error(e);
       toast({
@@ -123,7 +123,7 @@ export function ReportActions({ report }: ReportActionsProps) {
       toast({
         title: 'Successfully removed solution',
       });
-      router.push('/admin');
+      router.push('/?tab=reports');
     } else {
       toast({
         title: 'Error',
