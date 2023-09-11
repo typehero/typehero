@@ -317,7 +317,7 @@ function SingleComment({
         </div>
       )}
       {isEditing ? (
-        <div className=" mb-2">
+        <div className="mb-2">
           <CommentInput
             mode="edit"
             onCancel={() => {
@@ -332,7 +332,7 @@ function SingleComment({
           />
         </div>
       ) : null}
-      <div className="my-auto flex items-center gap-4">
+      <div className="my-auto mt-1 flex items-center gap-4">
         {!readonly && (
           <>
             <Vote

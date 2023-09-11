@@ -1,5 +1,6 @@
 import { prisma } from '@repo/db';
 import { SolutionDetails } from '../_components/solution-detail';
+import { getServerAuthSession, type Session } from '@repo/auth/server';
 
 interface Props {
   params: {
@@ -9,15 +10,25 @@ interface Props {
 
 export type ChallengeSolution = NonNullable<Awaited<ReturnType<typeof getSolution>>>;
 export default async function SolutionPage({ params: { solutionId } }: Props) {
-  const solution = await getSolution(solutionId);
-  if (!solution) return null;
+  const session = await getServerAuthSession();
+  const solution = await getSolution(solutionId, session);
 
   return <SolutionDetails solution={solution} />;
 }
 
 export async function generateMetadata({ params: { solutionId } }: Props) {
-  const solution = await getSolution(solutionId);
-  if (!solution) return null;
+  const solution = await prisma.sharedSolution.findFirstOrThrow({
+    where: {
+      id: Number(solutionId),
+    },
+    include: {
+      challenge: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  });
 
   return {
     title: `${solution.title}, solution to ${solution.challenge?.name} | TypeHero`,
@@ -25,31 +36,31 @@ export async function generateMetadata({ params: { solutionId } }: Props) {
   };
 }
 
-async function getSolution(solutionId: string) {
-  const solution = await prisma.sharedSolution.findFirst({
+async function getSolution(solutionId: string, session: Session | null) {
+  const solution = await prisma.sharedSolution.findFirstOrThrow({
     where: {
       id: Number(solutionId),
     },
     include: {
-      challenge: true,
       user: {
         select: {
           name: true,
           image: true,
         },
       },
+      _count: {
+        select: { vote: true },
+      },
+      vote: {
+        where: {
+          userId: session?.user.id || '',
+        },
+        select: {
+          userId: true,
+        },
+      },
     },
   });
 
-  const f = await prisma.comment.findMany({
-    where: {
-      rootType: 'SOLUTION',
-      rootSolutionId: Number(solutionId),
-    },
-  });
-
-  return {
-    ...solution,
-    jimComments: f,
-  };
+  return solution;
 }

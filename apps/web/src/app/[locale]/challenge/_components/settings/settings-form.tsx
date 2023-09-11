@@ -45,7 +45,7 @@ export function SettingsForm() {
   const isVimBindings = form.getValues().bindings === 'vim';
 
   function onSubmit(data: FormSchema) {
-    updateSettings(data);
+    updateSettings({ ...settings, ...data });
     toast({
       title: 'Settings updated!',
       description: (
