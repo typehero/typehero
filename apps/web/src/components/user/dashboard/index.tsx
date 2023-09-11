@@ -18,6 +18,7 @@ import { InProgressTab } from './in-progress-tab';
 import { Overview } from './overview';
 import { SolutionsTab } from './solutions-tab';
 import UserHeader from './user-header';
+import { cache } from 'react';
 
 interface Props {
   // TODO: how do do this union type with just letting prisma halp
@@ -27,7 +28,7 @@ interface Props {
 }
 
 export type UserData = NonNullable<Awaited<ReturnType<typeof getUserdata>>>;
-async function getUserdata(id: string) {
+const getUserdata = cache(async (id: string) => {
   const userData = await prisma.user.findFirst({
     where: {
       id,
@@ -51,7 +52,7 @@ async function getUserdata(id: string) {
   });
 
   return userData;
-}
+});
 
 export async function Dashboard({ user }: Props) {
   const userData = await getUserdata(user.id);
