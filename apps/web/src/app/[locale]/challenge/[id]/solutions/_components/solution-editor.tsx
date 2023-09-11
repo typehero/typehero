@@ -2,14 +2,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from '@repo/auth/react';
 import { useTheme } from 'next-themes';
 import { useRouter } from 'next/navigation';
-import { Form, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { postSolution } from './post-solution.action';
 import { RichMarkdownEditor } from '~/components/ui/rich-markdown-editor';
 import type { ChallengeSolutionsRouteData } from '~/app/[locale]/challenge/[id]/solutions/page';
 import { Button } from '@repo/ui/components/button';
 import { useToast } from '@repo/ui/components/use-toast';
-import { FormControl, FormField, FormItem, FormMessage } from '@repo/ui/components/form';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@repo/ui/components/form';
 import { Input } from '@repo/ui/components/input';
 
 const getDefaultMarkdown = (solution: string) => `
