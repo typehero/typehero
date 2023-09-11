@@ -9,16 +9,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@repo/ui/components/select';
-import { Toggle } from '@repo/ui/components/toggle';
 import { toast } from '@repo/ui/components/use-toast';
-import {
-  ArrowDownNarrowWide,
-  ArrowUpNarrowWide,
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  MessageCircle,
-} from '@repo/ui/icons';
+import { ChevronDown, ChevronLeft, ChevronRight, MessageCircle } from '@repo/ui/icons';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { useRef, useState } from 'react';
@@ -26,27 +18,36 @@ import { Comment } from './comment';
 import { CommentInput } from './comment-input';
 import { CommentSkeleton } from './comment-skeleton';
 import { addComment } from './comment.action';
-import {
-  getPaginatedComments,
-  type PreselectedCommentMetadata,
-  type SortOrder,
-} from './getCommentRouteData';
+import { getPaginatedComments, type PreselectedCommentMetadata } from './getCommentRouteData';
 import NoComments from './nocomments';
 
 const sortKeys = [
   {
-    label: 'Created At',
-    value: 'createdAt',
+    label: 'Newest Comments',
+    value: 'newest',
+    key: 'createdAt',
+    order: 'desc',
   },
   {
-    label: '# of Votes',
-    value: 'vote',
+    label: 'Oldest Comments',
+    value: 'oldest',
+    key: 'createdAt',
+    order: 'asc',
   },
   {
-    label: '# of Replies',
+    label: 'Most Votes',
+    value: 'votes',
+    key: 'vote',
+    order: 'desc',
+  },
+  {
+    label: 'Most Replies',
     value: 'replies',
+    key: 'replies',
+    order: 'desc',
   },
 ] as const;
+
 interface Props {
   preselectedCommentMetadata?: PreselectedCommentMetadata;
   expanded?: boolean;
@@ -62,13 +63,18 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
   const queryClient = useQueryClient();
   const [page, setPage] = useState(preselectedCommentMetadata?.page ?? 1);
   const [sortKey, setSortKey] = useState<(typeof sortKeys)[number]>(sortKeys[0]);
-  const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
-  const queryKey = [`${type.toLowerCase()}-${rootId}-comments`, sortKey.value, sortOrder, page];
+  const queryKey = [`${type.toLowerCase()}-${rootId}-comments`, sortKey.value, page];
 
   const { status, data } = useQuery({
     queryKey,
     queryFn: () =>
-      getPaginatedComments({ rootId, page, rootType: type, sortKey: sortKey.value, sortOrder }),
+      getPaginatedComments({
+        rootId,
+        page,
+        rootType: type,
+        sortKey: sortKey.key,
+        sortOrder: sortKey.order,
+      }),
     keepPreviousData: true,
     staleTime: 60000, // one minute
     refetchOnWindowFocus: false,
@@ -161,13 +167,13 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
             <div className="flex items-center gap-2 px-3 py-2">
               <Select
                 value={sortKey.value}
-                defaultValue="createdAt"
+                defaultValue="newest"
                 onValueChange={(value) => {
                   setSortKey(sortKeys.find((sk) => sk.value === value) ?? sortKeys[0]);
                   setPage(1);
                 }}
               >
-                <SelectTrigger className="w-[150px]">
+                <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Sort Key" />
                 </SelectTrigger>
                 <SelectContent>
@@ -178,30 +184,6 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
                   ))}
                 </SelectContent>
               </Select>
-              <Toggle
-                variant="outline"
-                size="sm"
-                aria-label="Ascending"
-                pressed={sortOrder === 'asc'}
-                onPressedChange={() => {
-                  setSortOrder('asc');
-                  setPage(1);
-                }}
-              >
-                <ArrowUpNarrowWide />
-              </Toggle>
-              <Toggle
-                variant="outline"
-                size="sm"
-                aria-label="Descending"
-                pressed={sortOrder === 'desc'}
-                onPressedChange={() => {
-                  setSortOrder('desc');
-                  setPage(1);
-                }}
-              >
-                <ArrowDownNarrowWide />
-              </Toggle>
             </div>
           )}
           {status === 'loading' && <CommentSkeleton />}
