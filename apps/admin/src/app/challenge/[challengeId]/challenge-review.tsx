@@ -32,7 +32,7 @@ export function ChallengeReview({ challenge }: Props) {
         variant: 'success',
         title: 'Challenge Approved Successfully',
       });
-      router.push('/admin');
+      router.push('/?tab=challengeReviews');
     } catch {
       toast({
         variant: 'destructive',
@@ -48,7 +48,7 @@ export function ChallengeReview({ challenge }: Props) {
         variant: 'success',
         title: 'Challenge Denied Successfully',
       });
-      router.push('/admin');
+      router.push('/?tab=challengeReviews');
     } catch {
       toast({
         variant: 'destructive',
