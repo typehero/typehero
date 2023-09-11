@@ -25,6 +25,7 @@ import {
 } from '@repo/ui/components/dialog';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { Markdown } from '@repo/ui/components/markdown';
+import { Button } from '@repo/ui/components/button';
 
 interface Props {
   challenge: ChallengeRouteData;
@@ -107,7 +108,7 @@ export function Description({ challenge }: Props) {
         </Dialog>
         <Tooltip>
           <TooltipTrigger asChild>
-            <button
+            <Button
               className="group flex h-6 items-center rounded-full bg-zinc-200 px-3 focus:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:bg-zinc-100 dark:bg-zinc-700 disabled:dark:bg-zinc-700/50"
               disabled={!session.data?.user.id}
               onClick={() => {
@@ -136,7 +137,7 @@ export function Description({ challenge }: Props) {
                   'h-4 w-4',
                 )}
               />
-            </button>
+            </Button>
           </TooltipTrigger>
           <TooltipContent>
             <p>{session.data?.user.id ? 'Bookmark' : 'Login to Bookmark'}</p>
