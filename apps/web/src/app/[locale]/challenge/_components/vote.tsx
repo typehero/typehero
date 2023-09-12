@@ -70,7 +70,7 @@ export function Vote({
           <ThumbsUp
             className={clsx(
               {
-                'fill-emerald-600 stroke-emerald-600 group-hover:stroke-emerald-600 dark:fill-emerald-400 dark:stroke-emerald-400 group-hover:dark:stroke-emerald-400':
+                'stroke-emerald-600 group-hover:stroke-emerald-600 dark:stroke-emerald-400 group-hover:dark:stroke-emerald-400':
                   hasVoted,
                 'stroke-zinc-500 group-hover:stroke-zinc-600 group-disabled:stroke-zinc-300 dark:stroke-zinc-300 group-hover:dark:stroke-zinc-100 group-disabled:dark:stroke-zinc-500/50':
                   !hasVoted,
