@@ -130,7 +130,7 @@ export function Description({ challenge }: Props) {
               <BookmarkIcon
                 className={clsx(
                   {
-                    'fill-blue-500 stroke-blue-500': hasBookmarked,
+                    'stroke-blue-500': hasBookmarked,
                     'stroke-zinc-500 group-hover:stroke-zinc-600 group-disabled:stroke-zinc-300 dark:stroke-zinc-300 group-hover:dark:stroke-zinc-100 group-disabled:dark:stroke-zinc-500/50':
                       !hasBookmarked,
                   },
