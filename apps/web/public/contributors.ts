@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 151
+        "contributions": 155
     },
     {
         "login": "Hacksore",
@@ -104,7 +104,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/jhechtf/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 22
+        "contributions": 23
     },
     {
         "login": "QuiiBz",
@@ -212,27 +212,6 @@ export const contributors = [
         "contributions": 10
     },
     {
-        "login": "Tylopilus",
-        "id": 45148577,
-        "node_id": "MDQ6VXNlcjQ1MTQ4NTc3",
-        "avatar_url": "https://avatars.githubusercontent.com/u/45148577?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/Tylopilus",
-        "html_url": "https://github.com/Tylopilus",
-        "followers_url": "https://api.github.com/users/Tylopilus/followers",
-        "following_url": "https://api.github.com/users/Tylopilus/following{/other_user}",
-        "gists_url": "https://api.github.com/users/Tylopilus/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/Tylopilus/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/Tylopilus/subscriptions",
-        "organizations_url": "https://api.github.com/users/Tylopilus/orgs",
-        "repos_url": "https://api.github.com/users/Tylopilus/repos",
-        "events_url": "https://api.github.com/users/Tylopilus/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/Tylopilus/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 8
-    },
-    {
         "login": "maxdemaio",
         "id": 44373521,
         "node_id": "MDQ6VXNlcjQ0MzczNTIx",
@@ -249,6 +228,27 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/maxdemaio/repos",
         "events_url": "https://api.github.com/users/maxdemaio/events{/privacy}",
         "received_events_url": "https://api.github.com/users/maxdemaio/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 9
+    },
+    {
+        "login": "Tylopilus",
+        "id": 45148577,
+        "node_id": "MDQ6VXNlcjQ1MTQ4NTc3",
+        "avatar_url": "https://avatars.githubusercontent.com/u/45148577?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/Tylopilus",
+        "html_url": "https://github.com/Tylopilus",
+        "followers_url": "https://api.github.com/users/Tylopilus/followers",
+        "following_url": "https://api.github.com/users/Tylopilus/following{/other_user}",
+        "gists_url": "https://api.github.com/users/Tylopilus/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/Tylopilus/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/Tylopilus/subscriptions",
+        "organizations_url": "https://api.github.com/users/Tylopilus/orgs",
+        "repos_url": "https://api.github.com/users/Tylopilus/repos",
+        "events_url": "https://api.github.com/users/Tylopilus/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/Tylopilus/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 8
@@ -293,7 +293,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/falcon-head/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 6
+        "contributions": 7
     },
     {
         "login": "jproberson",
