@@ -18,7 +18,10 @@ import { uploadChallenge } from './create.action';
 import DEFAULT_CHALLENGE_TEMPLATE from './default-challenge.md';
 import DEFAULT_TEST_CASES from './default-tests.md';
 import DEFAULT_DESCRIPTION from './default-description.md';
-import { createNoProfanitySchema, createNoProfanitySchemaWithValidate } from '@repo/og-image';
+import {
+  createNoProfanitySchema,
+  createNoProfanitySchemaWithValidate,
+} from '~/utils/antiProfanityZod';
 
 export const enum STEPS {
   ChallengeCard,

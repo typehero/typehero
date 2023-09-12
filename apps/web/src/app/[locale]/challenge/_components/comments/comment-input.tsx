@@ -6,9 +6,6 @@ import { useToast } from '@repo/ui/components/use-toast';
 import { ToastAction } from '@repo/ui/components/toast';
 import { Textarea } from '@repo/ui/components/textarea';
 import { Markdown } from '@repo/ui/components/markdown';
-import { containsProfanity } from '~/utils/profanity';
-import { createNoProfanitySchemaWithValidate } from '@repo/og-image';
-import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormField, FormItem, FormMessage } from '@repo/ui/components/form';
@@ -38,42 +35,22 @@ export function CommentInput({ mode, onCancel, onChange, value, placeholder, onS
 
   useAutosizeTextArea(textAreaRef, value, commentMode);
 
-  const handleEnterKey = async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (isSubmitting) {
-      e.preventDefault();
+  const handleEnterKey = async () => {
+    if (!session?.user) {
+      toast({
+        variant: 'destructive',
+        title: 'You need to be logged in to comment.',
+        action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
+      });
+
       return;
     }
-
-    if (e.shiftKey && e.key === 'Enter') {
-      const success = singleFieldSchema.safeParse(form.getValues()).success;
-      if (!success) {
-        form.trigger();
-        return;
-      }
-
-      e.preventDefault();
-      if (!session?.user) {
-        toast({
-          variant: 'destructive',
-          title: 'You need to be logged in to comment.',
-          action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
-        });
-
-        return;
-      }
-      setIsSubmitting(true);
-      await onSubmit();
-      setIsSubmitting(false);
-    }
+    setIsSubmitting(true);
+    await onSubmit();
+    setIsSubmitting(false);
   };
 
   const submitComment = async () => {
-    const success = singleFieldSchema.safeParse(form.getValues()).success;
-    if (!success) {
-      form.trigger();
-      return;
-    }
-
     try {
       if (!session?.user) {
         toast({
@@ -113,7 +90,16 @@ export function CommentInput({ mode, onCancel, onChange, value, placeholder, onS
                     onChange(e.target.value);
                     form.trigger();
                   }}
-                  onKeyDown={handleEnterKey}
+                  onKeyDown={(e) => {
+                    if (isSubmitting) {
+                      e.preventDefault();
+                      return;
+                    }
+                    if (e.key === 'Enter' && e.shiftKey) {
+                      form.handleSubmit(handleEnterKey)();
+                      e.preventDefault();
+                    }
+                  }}
                   placeholder={placeholder ?? 'Enter your comment here.'}
                   ref={textAreaRef}
                   value={value}
@@ -147,7 +133,7 @@ export function CommentInput({ mode, onCancel, onChange, value, placeholder, onS
           <Button
             className="h-8 w-[5.5rem] rounded-lg rounded-br-sm bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
             disabled={value.length === 0 || isSubmitting || !formValid}
-            onClick={submitComment}
+            onClick={form.handleSubmit(submitComment)}
           >
             {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Comment'}
           </Button>

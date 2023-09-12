@@ -11,7 +11,7 @@ import { Button } from '@repo/ui/components/button';
 import { Form, FormField, FormItem, FormMessage } from '@repo/ui/components/form';
 import { MagicIcon } from '@repo/ui/components/magic-icon';
 import { Input } from '@repo/ui/components/input';
-import { createNoProfanitySchemaWithValidate } from '@repo/og-image';
+import { createNoProfanitySchemaWithValidate } from '~/utils/antiProfanityZod';
 
 export interface UserLinkType {
   id: string | null;

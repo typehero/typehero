@@ -1,8 +1,8 @@
-import { ZodString, z } from 'zod';
-import { containsProfanity } from '../../web/src/utils/profanity';
+import { z } from 'zod';
+import { createNoProfanitySchema } from '../../web/src/utils/antiProfanityZod';
 
-type Primitives = string | number | boolean | null;
-type JsonValue = Primitives | JsonValue[] | { [key: string]: JsonValue };
+type Primitives = boolean | number | string | null;
+type JsonValue = JsonValue[] | Primitives | { [key: string]: JsonValue };
 
 const jsonStr = z.string().transform((str, ctx) => {
   try {
@@ -37,19 +37,10 @@ function truncateWordsFn(str: string, maxCharacters: number) {
   // break at closest word
   const truncated = str.slice(0, maxCharacters);
   const lastSpace = truncated.lastIndexOf(' ');
-  return truncated.slice(0, lastSpace) + '…';
+  return `${truncated.slice(0, lastSpace)  }…`;
 }
 
 
-// throws if string contains profanity, uses custom validate function
-export function createNoProfanitySchemaWithValidate(validate: (zodString: ZodString) => ZodString) {
-  return validate(z.string()).refine((str: any) => !containsProfanity(str), "Don't use profanity.");
-}
-
-// throws if string contains profanity, no other checks
-export function createNoProfanitySchema() {
-  return z.string().refine((str: any) => !containsProfanity(str), "Don't use profanity.");
-}
 
 // truncates to maxCharacters, throws if string contains profanity
 export function truncateSchema(opts: { maxCharacters: number }) {

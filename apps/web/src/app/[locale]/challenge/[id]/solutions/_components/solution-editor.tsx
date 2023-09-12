@@ -11,7 +11,7 @@ import { Button } from '@repo/ui/components/button';
 import { useToast } from '@repo/ui/components/use-toast';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@repo/ui/components/form';
 import { Input } from '@repo/ui/components/input';
-import { createNoProfanitySchema } from '@repo/og-image/*';
+import { createNoProfanitySchema } from '~/utils/antiProfanityZod';
 
 const getDefaultMarkdown = (solution: string) => `
 ## Thoughts

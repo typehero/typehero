@@ -1,4 +1,4 @@
-import { createNoProfanitySchemaWithValidate } from '@repo/og-image';
+import { createNoProfanitySchemaWithValidate } from './antiProfanityZod';
 import { z } from 'zod';
 
 export const singleFieldSchema = z.object({
