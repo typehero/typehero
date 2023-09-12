@@ -238,6 +238,9 @@ export default function SplitEditor({
         <div
           className="cursor-row-resize border-y border-zinc-200 bg-zinc-100 p-2 dark:border-zinc-700 dark:bg-zinc-800"
           ref={resizer}
+          onDoubleClick={() => {
+            setIsTestPanelExpanded(false);
+          }}
         >
           <div className="m-auto h-1 w-24 rounded-full  bg-zinc-300 dark:bg-zinc-700" />
         </div>
