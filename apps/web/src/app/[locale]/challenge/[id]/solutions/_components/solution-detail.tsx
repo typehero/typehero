@@ -2,7 +2,6 @@
 
 import { Calendar, Flag, Share, X } from '@repo/ui/icons';
 import Link from 'next/link';
-import { Comments } from '~/app/[locale]/challenge/_components/comments';
 import type { ChallengeSolution } from '~/app/[locale]/challenge/[id]/solutions/[solutionId]/page';
 import { ReportDialog } from '~/components/ReportDialog';
 import { ActionMenu } from '@repo/ui/components/action-menu';
@@ -113,7 +112,6 @@ export function SolutionDetails({ solution }: Props) {
           <Markdown>{solution.description || ''}</Markdown>
         </div>
       </div>
-      <Comments rootId={solution.id!} type="SOLUTION" />
     </div>
   );
 }

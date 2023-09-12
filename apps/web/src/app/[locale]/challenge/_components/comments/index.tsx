@@ -49,6 +49,7 @@ const sortKeys = [
 ] as const;
 
 interface Props {
+  challengeId: number;
   preselectedCommentMetadata?: PreselectedCommentMetadata;
   expanded?: boolean;
   rootId: number;
@@ -56,7 +57,13 @@ interface Props {
 }
 
 // million-ignore
-export function Comments({ preselectedCommentMetadata, rootId, type, expanded = false }: Props) {
+export function Comments({
+  challengeId,
+  preselectedCommentMetadata,
+  rootId,
+  type,
+  expanded = false,
+}: Props) {
   const [showComments, setShowComments] = useState(expanded);
   const [text, setText] = useState('');
   const commentContainerRef = useRef<HTMLDivElement>(null);
@@ -83,6 +90,7 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
   async function createChallengeComment() {
     try {
       const res = await addComment({
+        rootChallengeId: challengeId,
         text,
         rootId,
         rootType: type,

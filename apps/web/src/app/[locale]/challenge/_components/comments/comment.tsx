@@ -99,9 +99,12 @@ export function Comment({
   });
 
   async function createChallengeCommentReply() {
+    const parentComment = comment;
+
     try {
       const res = await replyComment(
         {
+          rootChallengeId: Number(parentComment.rootChallengeId),
           text: replyText,
           rootId,
           rootType: type,
@@ -265,11 +268,29 @@ function SingleComment({
     const commentId = isReply ? comment.parentId : comment.id;
     const paramsObj = { replyId: String(comment.id) };
     const searchParams = new URLSearchParams(paramsObj);
-    await navigator.clipboard.writeText(
-      `${window.location.origin}/challenge/${comment.rootChallengeId}/comments/${commentId}${
-        isReply ? `?${searchParams.toString()}` : ''
-      }`,
-    );
+
+    const { rootType, rootSolutionId } = comment;
+    const baseURL = `${window.location.origin}/challenge/${comment.rootChallengeId}`;
+    const hasGetParams = isReply ? `?${searchParams.toString()}` : '';
+    let shareUrl;
+
+    switch (rootType) {
+      case 'CHALLENGE':
+        shareUrl = `${baseURL}/comments/${commentId}${hasGetParams}`;
+        break;
+      case 'SOLUTION':
+        shareUrl = `${baseURL}/solutions/${rootSolutionId}/comments/${commentId}${hasGetParams}`;
+        break;
+
+      default:
+        break;
+    }
+
+    if (!shareUrl) {
+      return;
+    }
+
+    await navigator.clipboard.writeText(shareUrl);
   }
 
   const loggedinUser = useSession();

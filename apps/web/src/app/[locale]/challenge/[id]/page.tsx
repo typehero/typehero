@@ -19,14 +19,14 @@ export async function generateMetadata({ params: { id } }: Props) {
   });
 }
 
-export default async function Challenges({ params: { id } }: Props) {
+export default async function Challenges({ params: { id: challengeId } }: Props) {
   const session = await getServerAuthSession();
-  const challenge = await getChallengeRouteData(id, session);
+  const challenge = await getChallengeRouteData(challengeId, session);
 
   return (
     <div className="relative h-full">
       <Description challenge={challenge} />
-      <Comments rootId={challenge.id} type="CHALLENGE" />
+      <Comments rootId={challenge.id} challengeId={Number(challengeId)} type="CHALLENGE" />
     </div>
   );
 }

@@ -1,25 +1,42 @@
 import { prisma } from '@repo/db';
-import { SolutionDetails } from '../_components/solution-detail';
 import { getServerAuthSession, type Session } from '@repo/auth/server';
 import { cache } from 'react';
 import { Comments } from '~/app/[locale]/challenge/_components/comments';
+import { SolutionDetails } from '~/app/[locale]/challenge/[id]/solutions/_components/solution-detail';
+import {
+  getPreselectedCommentMetadata,
+  getPreselectedSolutionCommentMetadata,
+} from '~/app/[locale]/challenge/_components/comments/getCommentRouteData';
 
 interface Props {
   params: {
     id: string;
+    commentId: string;
     solutionId: string;
   };
 }
 
 export type ChallengeSolution = NonNullable<Awaited<ReturnType<typeof getSolution>>>;
-export default async function SolutionPage({ params: { id: challengeId, solutionId } }: Props) {
+export default async function SolutionPage({
+  params: { solutionId, commentId, id: challengeId },
+}: Props) {
   const session = await getServerAuthSession();
   const solution = await getSolution(solutionId, session);
+  const preselectedCommentMetadata = await getPreselectedSolutionCommentMetadata(
+    Number(solutionId),
+    Number(commentId),
+  );
 
   return (
     <div className="relative h-full">
       <SolutionDetails solution={solution} />
-      <Comments rootId={solution.id!} challengeId={Number(challengeId)} type="SOLUTION" />
+      <Comments
+        challengeId={Number(challengeId)}
+        rootId={solution.id!}
+        type="SOLUTION"
+        preselectedCommentMetadata={preselectedCommentMetadata}
+        expanded
+      />
     </div>
   );
 }

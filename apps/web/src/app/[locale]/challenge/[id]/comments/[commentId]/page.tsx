@@ -23,6 +23,7 @@ export default async function CommentPage({ params: { id, commentId } }: Props) 
     <div className="relative h-full">
       <Description challenge={challenge} />
       <Comments
+        challengeId={Number(id)}
         rootId={Number(id)}
         preselectedCommentMetadata={preselectedCommentMetadata}
         type="CHALLENGE"
