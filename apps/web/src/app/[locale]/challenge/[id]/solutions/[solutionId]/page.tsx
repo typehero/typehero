@@ -1,6 +1,7 @@
 import { prisma } from '@repo/db';
 import { SolutionDetails } from '../_components/solution-detail';
 import { getServerAuthSession, type Session } from '@repo/auth/server';
+import { cache } from 'react';
 
 interface Props {
   params: {
@@ -36,7 +37,7 @@ export async function generateMetadata({ params: { solutionId } }: Props) {
   };
 }
 
-async function getSolution(solutionId: string, session: Session | null) {
+const getSolution = cache(async (solutionId: string, session: Session | null) => {
   const solution = await prisma.sharedSolution.findFirstOrThrow({
     where: {
       id: Number(solutionId),
@@ -63,4 +64,4 @@ async function getSolution(solutionId: string, session: Session | null) {
   });
 
   return solution;
-}
+});
