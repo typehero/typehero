@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { Solutions } from './_components';
 import { getChallengeRouteData } from '../getChallengeRouteData';
 import { buildMetaForChallenge } from '~/app/metadata';
+import { cache } from 'react';
 
 interface Props {
   params: {
@@ -33,7 +34,7 @@ export default async function SolutionPage({ params: { id } }: Props) {
 }
 
 export type ChallengeSolutionsRouteData = NonNullable<Awaited<ReturnType<typeof getSolutionsData>>>;
-export async function getSolutionsData(challengeId: string, session: Session | null) {
+export const getSolutionsData = cache(async (challengeId: string, session: Session | null) => {
   const data = await prisma.challenge.findFirst({
     where: { id: Number(challengeId) },
     select: {
@@ -71,4 +72,4 @@ export async function getSolutionsData(challengeId: string, session: Session | n
   });
 
   return data;
-}
+});

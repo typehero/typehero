@@ -83,6 +83,7 @@ export function CommentInput({ mode, onCancel, onChange, value, placeholder, onS
             render={({ field }) => (
               <FormItem>
                 <Textarea
+                  disabled={!session?.user}
                   autoFocus
                   className="resize-none border-0 px-3 py-2 focus-visible:ring-0 md:max-h-[calc(100vh_-_232px)]"
                   onChange={(e) => {
@@ -100,7 +101,11 @@ export function CommentInput({ mode, onCancel, onChange, value, placeholder, onS
                       e.preventDefault();
                     }
                   }}
-                  placeholder={placeholder ?? 'Enter your comment here.'}
+                  placeholder={
+                    placeholder ?? !session?.user
+                      ? 'You need to be logged in to comment.'
+                      : 'Enter your comment here.'
+                  }
                   ref={textAreaRef}
                   value={value}
                 />
