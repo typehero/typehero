@@ -189,26 +189,38 @@ export function CodePanel(props: CodePanelProps) {
         )}
       >
         <div className="flex items-center gap-4">
-          <Button
-            className="flex items-center gap-1"
-            variant="ghost"
-            size="sm"
-            onClick={() => {
-              setIsTestPanelExpanded((tp) => !tp);
-            }}
-          >
-            Tests
-            {isTestPanelExpanded ? (
-              <ChevronUp className="rotate-180 transform transition" size={16} />
-            ) : (
-              <ChevronUp className="transform transition" size={16} />
-            )}
-          </Button>
-          {hasFailingTest ? (
-            <XCircle className="stroke-red-600 dark:stroke-red-300" />
-          ) : (
-            <CheckCircle2 className="stroke-green-600 dark:stroke-green-300" />
-          )}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                className="flex items-center gap-1"
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  setIsTestPanelExpanded((tp) => !tp);
+                }}
+              >
+                Tests
+                {isTestPanelExpanded ? (
+                  <ChevronUp className="rotate-180 transform transition" size={16} />
+                ) : (
+                  <ChevronUp className="transform transition" size={16} />
+                )}
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>{isTestPanelExpanded ? 'Hide tests' : 'Show tests'}</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              {hasFailingTest ? (
+                <XCircle className="stroke-red-600 dark:stroke-red-300" />
+              ) : (
+                <CheckCircle2 className="stroke-green-600 dark:stroke-green-300" />
+              )}
+            </TooltipTrigger>
+            <TooltipContent>
+              {hasFailingTest ? 'Tests are failing' : 'All tests have passed 🎉'}
+            </TooltipContent>
+          </Tooltip>
         </div>
         <div className="flex items-center justify-between gap-4">
           <Tooltip>
@@ -216,15 +228,17 @@ export function CodePanel(props: CodePanelProps) {
               <Button
                 disabled={disabled}
                 size="sm"
-                className="cursor-pointer rounded-lg bg-emerald-600 duration-300 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
+                className="cursor-pointer rounded-lg duration-300"
                 onClick={handleSubmit}
               >
                 Submit{tsErrors === undefined && ' (open test cases)'}
               </Button>
             </TooltipTrigger>
-            <TooltipContent>
-              <p>Login to Submit</p>
-            </TooltipContent>
+            {disabled && (
+              <TooltipContent>
+                <p>Login to Submit</p>
+              </TooltipContent>
+            )}
           </Tooltip>
         </div>
       </div>
