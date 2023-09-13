@@ -14,5 +14,11 @@ const COLORS_BY_DIFFICULTY = {
 };
 
 export function DifficultyBadge({ difficulty }: Props) {
-  return <Badge className={`duration-300 ${COLORS_BY_DIFFICULTY[difficulty]}`}>{difficulty}</Badge>;
+  return (
+    <Badge
+      className={`duration-300 ${COLORS_BY_DIFFICULTY[difficulty]} text-white dark:text-black`}
+    >
+      {difficulty}
+    </Badge>
+  );
 }

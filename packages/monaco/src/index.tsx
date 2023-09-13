@@ -228,15 +228,17 @@ export function CodePanel(props: CodePanelProps) {
               <Button
                 disabled={disabled}
                 size="sm"
-                className="cursor-pointer rounded-lg bg-emerald-600 duration-300 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
+                className="cursor-pointer rounded-lg duration-300"
                 onClick={handleSubmit}
               >
                 Submit{tsErrors === undefined && ' (open test cases)'}
               </Button>
             </TooltipTrigger>
-            <TooltipContent>
-              <p>Login to Submit</p>
-            </TooltipContent>
+            {disabled && (
+              <TooltipContent>
+                <p>Login to Submit</p>
+              </TooltipContent>
+            )}
           </Tooltip>
         </div>
       </div>

@@ -86,7 +86,7 @@ export function CommentInput({ mode, onCancel, onChange, value, placeholder, onS
             </Button>
           )}
           <Button
-            className="h-8 w-[5.5rem] rounded-lg rounded-br-sm bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
+            className="h-8 w-[5.5rem] rounded-lg rounded-br-sm"
             disabled={value.length === 0 || isSubmitting}
             onClick={async () => {
               try {
