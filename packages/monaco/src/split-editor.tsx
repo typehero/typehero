@@ -178,6 +178,15 @@ export default function SplitEditor({
     }
   }, [monaco]);
 
+  useEffect(() => {
+    // validates user code when user code is directly manipulated without going through editorState (e.g. reset button)
+    return () => {
+      if (monaco && userEditorState) {
+        onMount?.tests?.(userEditorState, monaco);
+      }
+    }
+  }, [userCode, tests])
+
   return (
     <div className={clsx('flex h-[calc(100%-_90px)] flex-col', className)} ref={wrapper}>
       <section className="h-full overflow-hidden">
