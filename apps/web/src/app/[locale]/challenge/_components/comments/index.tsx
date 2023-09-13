@@ -20,6 +20,7 @@ import { CommentSkeleton } from './comment-skeleton';
 import { addComment } from './comment.action';
 import { getPaginatedComments, type PreselectedCommentMetadata } from './getCommentRouteData';
 import NoComments from './nocomments';
+import { useParams } from 'next/navigation';
 
 const sortKeys = [
   {
@@ -49,7 +50,6 @@ const sortKeys = [
 ] as const;
 
 interface Props {
-  challengeId: number;
   preselectedCommentMetadata?: PreselectedCommentMetadata;
   expanded?: boolean;
   rootId: number;
@@ -57,13 +57,8 @@ interface Props {
 }
 
 // million-ignore
-export function Comments({
-  challengeId,
-  preselectedCommentMetadata,
-  rootId,
-  type,
-  expanded = false,
-}: Props) {
+export function Comments({ preselectedCommentMetadata, rootId, type, expanded = false }: Props) {
+  const { id: challengeId } = useParams();
   const [showComments, setShowComments] = useState(expanded);
   const [text, setText] = useState('');
   const commentContainerRef = useRef<HTMLDivElement>(null);
@@ -71,7 +66,6 @@ export function Comments({
   const [page, setPage] = useState(preselectedCommentMetadata?.page ?? 1);
   const [sortKey, setSortKey] = useState<(typeof sortKeys)[number]>(sortKeys[0]);
   const queryKey = [`${type.toLowerCase()}-${rootId}-comments`, sortKey.value, page];
-
   const { status, data } = useQuery({
     queryKey,
     queryFn: () =>
@@ -90,7 +84,7 @@ export function Comments({
   async function createChallengeComment() {
     try {
       const res = await addComment({
-        rootChallengeId: challengeId,
+        rootChallengeId: Number(challengeId),
         text,
         rootId,
         rootType: type,

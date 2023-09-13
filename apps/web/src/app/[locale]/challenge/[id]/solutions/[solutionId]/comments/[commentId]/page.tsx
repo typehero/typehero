@@ -17,9 +17,7 @@ interface Props {
 }
 
 export type ChallengeSolution = NonNullable<Awaited<ReturnType<typeof getSolution>>>;
-export default async function SolutionPage({
-  params: { solutionId, commentId, id: challengeId },
-}: Props) {
+export default async function SolutionPage({ params: { solutionId, commentId } }: Props) {
   const session = await getServerAuthSession();
   const solution = await getSolution(solutionId, session);
   const preselectedCommentMetadata = await getPreselectedSolutionCommentMetadata(
@@ -31,7 +29,6 @@ export default async function SolutionPage({
     <div className="relative h-full">
       <SolutionDetails solution={solution} />
       <Comments
-        challengeId={Number(challengeId)}
         rootId={solution.id!}
         type="SOLUTION"
         preselectedCommentMetadata={preselectedCommentMetadata}

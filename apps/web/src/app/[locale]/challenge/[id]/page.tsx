@@ -26,7 +26,7 @@ export default async function Challenges({ params: { id: challengeId } }: Props)
   return (
     <div className="relative h-full">
       <Description challenge={challenge} />
-      <Comments rootId={challenge.id} challengeId={Number(challengeId)} type="CHALLENGE" />
+      <Comments rootId={challenge.id} type="CHALLENGE" />
     </div>
   );
 }

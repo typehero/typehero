@@ -12,14 +12,14 @@ interface Props {
 }
 
 export type ChallengeSolution = NonNullable<Awaited<ReturnType<typeof getSolution>>>;
-export default async function SolutionPage({ params: { id: challengeId, solutionId } }: Props) {
+export default async function SolutionPage({ params: { solutionId } }: Props) {
   const session = await getServerAuthSession();
   const solution = await getSolution(solutionId, session);
 
   return (
     <div className="relative h-full">
       <SolutionDetails solution={solution} />
-      <Comments rootId={solution.id!} challengeId={Number(challengeId)} type="SOLUTION" />
+      <Comments rootId={solution.id!} type="SOLUTION" />
     </div>
   );
 }
