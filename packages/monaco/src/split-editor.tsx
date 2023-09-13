@@ -219,9 +219,8 @@ export default function SplitEditor({
         typeCheck();
         onMount?.tests?.(userEditorState, monaco);
       }
-    }
-
-  }, [userCode, tests])
+    };
+  }, [userCode, tests]);
 
   return (
     <div className={clsx('flex h-[calc(100%-_90px)] flex-col', className)} ref={wrapper}>
