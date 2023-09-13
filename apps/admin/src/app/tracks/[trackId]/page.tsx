@@ -1,5 +1,6 @@
 import { prisma } from '@repo/db';
 import { UpdateTrackForm } from './_components/update-track-form';
+import { cache } from 'react';
 
 export interface Props {
   params: {
@@ -15,7 +16,7 @@ export default async function (props: Props) {
 }
 
 export type TrackToManage = NonNullable<Awaited<ReturnType<typeof getTrackById>>>;
-function getTrackById(id: number) {
+const getTrackById = cache((id: number) => {
   return prisma.track.findFirstOrThrow({
     where: {
       id,
@@ -24,7 +25,7 @@ function getTrackById(id: number) {
       trackChallenges: true,
     },
   });
-}
+});
 
 export type ChallengesForTrack = NonNullable<Awaited<ReturnType<typeof getChallenges>>>;
 function getChallenges() {
