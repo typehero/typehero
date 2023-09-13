@@ -234,9 +234,11 @@ export function CodePanel(props: CodePanelProps) {
                 Submit{tsErrors === undefined && ' (open test cases)'}
               </Button>
             </TooltipTrigger>
-            <TooltipContent>
-              <p>Login to Submit</p>
-            </TooltipContent>
+            {disabled && (
+              <TooltipContent>
+                <p>Login to Submit</p>
+              </TooltipContent>
+            )}
           </Tooltip>
         </div>
       </div>
