@@ -9,6 +9,7 @@ import { libSource } from './editor-types';
 import dynamic from 'next/dynamic';
 import { useEditorSettingsStore } from './settings-store';
 import { getEventDeltas } from './utils';
+import { useResetEditor } from './editor-hooks';
 
 function preventSelection(event: Event) {
   event.preventDefault();
@@ -178,49 +179,46 @@ export default function SplitEditor({
     }
   }, [monaco]);
 
-  useEffect(() => {
-    // validates user code when user code is directly manipulated without going through editorState (e.g. reset button)
-    const monacoAndEditorStateReady = monaco && userEditorState;
-    async function typeCheck() {
-      if (monacoAndEditorStateReady) {
-        const models = monaco.editor.getModels();
-        const getWorker = await monaco.languages.typescript.getTypeScriptWorker();
+  const monacoAndEditorStateReady = monaco && userEditorState;
+  async function typeCheck() {
+    if (monacoAndEditorStateReady) {
+      const models = monaco.editor.getModels();
+      const getWorker = await monaco.languages.typescript.getTypeScriptWorker();
 
-        for (const model of models) {
-          const worker = await getWorker(model.uri);
-          const diagnostics = (
-            await Promise.all([
-              worker.getSyntacticDiagnostics(model.uri.toString()),
-              worker.getSemanticDiagnostics(model.uri.toString()),
-            ])
-          ).reduce((a, b) => a.concat(b));
+      for (const model of models) {
+        const worker = await getWorker(model.uri);
+        const diagnostics = (
+          await Promise.all([
+            worker.getSyntacticDiagnostics(model.uri.toString()),
+            worker.getSemanticDiagnostics(model.uri.toString()),
+          ])
+        ).reduce((a, b) => a.concat(b));
 
-          const markers = diagnostics.map((d) => {
-            const start = model.getPositionAt(d.start!);
-            const end = model.getPositionAt(d.start! + d.length!);
+        const markers = diagnostics.map((d) => {
+          const start = model.getPositionAt(d.start!);
+          const end = model.getPositionAt(d.start! + d.length!);
 
-            return {
-              severity: monaco.MarkerSeverity.Error,
-              startLineNumber: start.lineNumber,
-              endLineNumber: end.lineNumber,
-              startColumn: start.column,
-              endColumn: end.column,
-              message: d.messageText as string,
-            } satisfies monaco.editor.IMarkerData;
-          });
+          return {
+            severity: monaco.MarkerSeverity.Error,
+            startLineNumber: start.lineNumber,
+            endLineNumber: end.lineNumber,
+            startColumn: start.column,
+            endColumn: end.column,
+            message: d.messageText as string,
+          } satisfies monaco.editor.IMarkerData;
+        });
 
-          monaco.editor.setModelMarkers(model, model.getLanguageId(), markers);
-        }
+        monaco.editor.setModelMarkers(model, model.getLanguageId(), markers);
       }
     }
+  }
 
-    return () => {
-      if (monacoAndEditorStateReady) {
-        typeCheck();
-        onMount?.tests?.(userEditorState, monaco);
-      }
-    };
-  }, [userCode, tests]);
+  useResetEditor().subscribe('resetCode', () => {
+    if (monacoAndEditorStateReady) {
+      typeCheck();
+      onMount?.tests?.(userEditorState, monaco);
+    }
+  });
 
   return (
     <div className={clsx('flex h-[calc(100%-_90px)] flex-col', className)} ref={wrapper}>
@@ -264,6 +262,7 @@ export default function SplitEditor({
                 monaco.editor.setModelMarkers(model, model.getLanguageId(), markers);
               }
             }
+            console.log('types 1');
 
             onChange?.user?.(e, a);
           }}
