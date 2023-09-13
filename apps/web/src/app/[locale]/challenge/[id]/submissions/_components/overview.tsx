@@ -1,17 +1,18 @@
-import { useQuery } from '@tanstack/react-query';
-import { Copy, X } from '@repo/ui/icons';
-import Link from 'next/link';
-import { getBaseUrl } from '~/utils/getBaseUrl';
-import { getRelativeTime } from '~/utils/relativeTime';
 import { Button } from '@repo/ui/components/button';
-import { toast } from '@repo/ui/components/use-toast';
+import { Markdown } from '@repo/ui/components/markdown';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from '@repo/ui/components/tooltip';
-import { Markdown } from '@repo/ui/components/markdown';
+import { toast } from '@repo/ui/components/use-toast';
+import { Copy, X } from '@repo/ui/icons';
+import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
+import { getBaseUrl } from '~/utils/getBaseUrl';
+import { getRelativeTime } from '~/utils/relativeTime';
+import { getChallengeSubmissionById } from '../getChallengeSubmissions';
 
 interface Props {
   submissionId: string;
@@ -24,7 +25,7 @@ ${code} \`\`\``;
 export function SubmissionOverview({ submissionId }: Props) {
   const { data: submission } = useQuery({
     queryKey: ['submission', submissionId],
-    queryFn: () => getSubmission(submissionId),
+    queryFn: () => getChallengeSubmissionById(submissionId),
   });
 
   const code = codifyForMarkdown(submission?.code.trimStart() ?? '');
@@ -77,8 +78,4 @@ export function SubmissionOverview({ submissionId }: Props) {
       </div>
     </>
   );
-}
-
-async function getSubmission(id: string) {
-  return fetch(`${getBaseUrl()}/api/submissions/${id}`).then((res) => res.json());
 }

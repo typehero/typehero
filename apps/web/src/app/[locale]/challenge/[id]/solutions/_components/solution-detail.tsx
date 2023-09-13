@@ -40,7 +40,7 @@ export function SolutionDetails({ solution }: Props) {
             <X className="stroke-gray-500 hover:stroke-gray-400" size={20} />
           </Link>
         </div>
-        <div className="custom-scrollable-element flex-1 overflow-y-auto px-4 py-3">
+        <div className="custom-scrollable-element flex-1 overflow-y-auto px-4 pb-16 pt-3">
           <div className="mb-5 flex flex-col gap-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">

@@ -189,26 +189,38 @@ export function CodePanel(props: CodePanelProps) {
         )}
       >
         <div className="flex items-center gap-4">
-          <Button
-            className="flex items-center gap-1"
-            variant="ghost"
-            size="sm"
-            onClick={() => {
-              setIsTestPanelExpanded((tp) => !tp);
-            }}
-          >
-            Tests
-            {isTestPanelExpanded ? (
-              <ChevronUp className="rotate-180 transform transition" size={16} />
-            ) : (
-              <ChevronUp className="transform transition" size={16} />
-            )}
-          </Button>
-          {hasFailingTest ? (
-            <XCircle className="stroke-red-600 dark:stroke-red-300" />
-          ) : (
-            <CheckCircle2 className="stroke-green-600 dark:stroke-green-300" />
-          )}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                className="flex items-center gap-1"
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  setIsTestPanelExpanded((tp) => !tp);
+                }}
+              >
+                Tests
+                {isTestPanelExpanded ? (
+                  <ChevronUp className="rotate-180 transform transition" size={16} />
+                ) : (
+                  <ChevronUp className="transform transition" size={16} />
+                )}
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>{isTestPanelExpanded ? 'Hide tests' : 'Show tests'}</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              {hasFailingTest ? (
+                <XCircle className="stroke-red-600 dark:stroke-red-300" />
+              ) : (
+                <CheckCircle2 className="stroke-green-600 dark:stroke-green-300" />
+              )}
+            </TooltipTrigger>
+            <TooltipContent>
+              {hasFailingTest ? 'Tests are failing' : 'All tests have passed 🎉'}
+            </TooltipContent>
+          </Tooltip>
         </div>
         <div className="flex items-center justify-between gap-4">
           <Tooltip>
