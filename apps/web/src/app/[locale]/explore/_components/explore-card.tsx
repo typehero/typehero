@@ -1,6 +1,3 @@
-import { Circle, Diamond, MessageCircle, Plus, Sparkle, ThumbsUp, Triangle } from '@repo/ui/icons';
-import type { ExploreChallengeData } from './explore.action';
-import { getRelativeTime } from '~/utils/relativeTime';
 import {
   Card,
   CardContent,
@@ -10,6 +7,13 @@ import {
 } from '@repo/ui/components/card';
 import { DifficultyBadge } from '@repo/ui/components/difficulty-badge';
 import { Markdown } from '@repo/ui/components/markdown';
+import { Circle, Diamond, MessageCircle, Plus, Sparkle, ThumbsUp, Triangle } from '@repo/ui/icons';
+import dynamic from 'next/dynamic';
+import type { ExploreChallengeData } from './explore.action';
+
+const RelativeTime = dynamic(() => import('./relative-time'), {
+  ssr: false,
+});
 
 interface ExploreCardProps {
   challenge: Pick<
@@ -100,7 +104,7 @@ export function ExploreCard({ challenge }: ExploreCardProps) {
             @{challenge.user.name}
           </div>
           <div className="text-muted-foreground whitespace-nowrap text-sm">
-            {getRelativeTime(challenge.updatedAt)}
+            <RelativeTime date={challenge.updatedAt} />
           </div>
         </div>
         <CardDescription className="relative h-20 pb-4">
