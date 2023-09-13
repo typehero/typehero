@@ -25,16 +25,31 @@ const BGS_BY_TRACK: Record<number, string> = {
   9: 'to-difficulty-extreme/10 dark:to-difficulty-extreme-dark/10',
 } as const;
 
+const EnrolledBadge = ({ text = 'Enrolled' }: { text?: string }) => (
+  <div
+    className={clsx(
+      'absolute -right-[1px] -top-[20px] z-[-1] rounded rounded-tl-lg rounded-tr-xl px-5 pb-10 pt-[3px] text-[10px]',
+      'border border-blue-400 bg-blue-400 text-white',
+    )}
+  >
+    {text}
+  </div>
+);
+
 export function TrackCard({ track, index }: TrackProps) {
+  const isEnrolled = Boolean(track.enrolledUsers?.length);
+
   return (
     <Link href={`/tracks/${track.id}`} className="group">
       <Card
         className={clsx(
-          'group-hover:border-blue-300 group-focus:border-blue-300',
-          'dark:group-hover:border-white dark:group-hover:border-opacity-20 dark:group-focus:border-white dark:group-focus:border-opacity-20',
-          'transition-colors duration-300',
+          'relative transition-colors duration-300',
+          isEnrolled
+            ? 'border-blue-400'
+            : 'group-hover:border-blue-400 group-focus:border-blue-400',
         )}
       >
+        {track.enrolledUsers?.length ? <EnrolledBadge /> : null}
         <CardContent className="flex items-center gap-5 p-2 pr-4">
           <div
             className={clsx(
@@ -44,19 +59,25 @@ export function TrackCard({ track, index }: TrackProps) {
           >
             <Swords
               size={50}
-              className="opacity-50 transition-opacity duration-300 group-hover:opacity-100 group-focus:opacity-100"
+              className={clsx(
+                'transition-opacity duration-300',
+                !isEnrolled && 'opacity-50 group-hover:opacity-100 group-focus:opacity-100',
+              )}
             />
           </div>
 
           <div className="flex-1">
             <div className="flex items-center justify-between gap-2">
-              <span className="font-semibold capitalize tracking-wide">{track.title}</span>
+              <span className="line-clamp-2 font-semibold capitalize tracking-wide">
+                {track.title}
+              </span>
               <Badge className="flex-none">{track._count.trackChallenges} Challenges</Badge>
             </div>
-
-            <span className="text-muted-foreground mt-3 line-clamp-3 block h-8 text-xs tracking-wide">
-              {track.description}
-            </span>
+            <div className="h-8">
+              <span className="text-muted-foreground mt-3 line-clamp-2 text-xs tracking-wide">
+                {track.description}
+              </span>
+            </div>
           </div>
         </CardContent>
       </Card>
