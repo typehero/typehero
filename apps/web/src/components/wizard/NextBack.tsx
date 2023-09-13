@@ -22,7 +22,7 @@ export function NextBack({ current, onChange, onNext, onSubmit }: Props) {
       )}
       {current === STEPS.Summary ? (
         <Button
-          className="w-[79px] rounded-full bg-emerald-500 transition-all duration-300 ease-out hover:bg-emerald-400 hover:px-16 active:scale-95"
+          className="w-[79px] rounded-full transition-all duration-300 ease-out hover:px-16 active:scale-95"
           onClick={onSubmit}
         >
           Submit

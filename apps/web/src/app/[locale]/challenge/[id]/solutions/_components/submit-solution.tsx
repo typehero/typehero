@@ -9,7 +9,7 @@ interface Props {
 export function SubmitSolution({ disabled, setView }: Props) {
   return (
     <Button
-      className="h-8 rounded-lg bg-emerald-600 px-3 py-2 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
+      className="h-8 rounded-lg px-3 py-2"
       disabled={disabled}
       onClick={() => setView('editor')}
     >
