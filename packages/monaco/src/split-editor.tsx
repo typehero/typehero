@@ -2,7 +2,7 @@
 
 import { type OnChange, type OnMount, type OnValidate } from '@monaco-editor/react';
 import clsx from 'clsx';
-import type * as monaco from 'monaco-editor';
+import type * as monacoType from 'monaco-editor';
 import { useEffect, useRef } from 'react';
 import { CodeEditor, LIB_URI } from './code-editor';
 import { libSource } from './editor-types';
@@ -45,7 +45,7 @@ export interface SplitEditorProps {
     user?: OnChange;
   };
   monaco: typeof import('monaco-editor') | undefined;
-  userEditorState?: monaco.editor.IStandaloneCodeEditor;
+  userEditorState?: monacoType.editor.IStandaloneCodeEditor;
 }
 
 // million-ignore
@@ -178,10 +178,8 @@ export default function SplitEditor({
       }
     }
   }, [monaco]);
-
-  const monacoAndEditorStateReady = monaco && userEditorState;
   async function typeCheck() {
-    if (monacoAndEditorStateReady) {
+    if (monaco && userEditorState) {
       const models = monaco.editor.getModels();
       const getWorker = await monaco.languages.typescript.getTypeScriptWorker();
 
@@ -205,14 +203,14 @@ export default function SplitEditor({
             startColumn: start.column,
             endColumn: end.column,
             message: d.messageText as string,
-          } satisfies monaco.editor.IMarkerData;
+          } satisfies monacoType.editor.IMarkerData;
         });
 
         monaco.editor.setModelMarkers(model, model.getLanguageId(), markers);
       }
     }
   }
-
+  const monacoAndEditorStateReady = monaco && userEditorState;
   useResetEditor().subscribe('resetCode', () => {
     if (monacoAndEditorStateReady) {
       typeCheck();
@@ -256,13 +254,12 @@ export default function SplitEditor({
                     startColumn: start.column,
                     endColumn: end.column,
                     message: d.messageText as string,
-                  } satisfies monaco.editor.IMarkerData;
+                  } satisfies monacoType.editor.IMarkerData;
                 });
 
                 monaco.editor.setModelMarkers(model, model.getLanguageId(), markers);
               }
             }
-            console.log('types 1');
 
             onChange?.user?.(e, a);
           }}
