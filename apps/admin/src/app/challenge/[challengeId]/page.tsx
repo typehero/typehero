@@ -1,5 +1,6 @@
 import { prisma } from '@repo/db';
 import { ChallengeReview } from './challenge-review';
+import { cache } from 'react';
 
 interface Props {
   params: {
@@ -13,7 +14,7 @@ export default async function ChallengeReviewPage({ params: { challengeId } }: P
 }
 
 export type ChallengeToReview = NonNullable<Awaited<ReturnType<typeof getChallengeToReview>>>;
-async function getChallengeToReview(id: number) {
+const getChallengeToReview = cache(async (id: number) => {
   return prisma.challenge.findFirstOrThrow({
     where: {
       id,
@@ -29,4 +30,4 @@ async function getChallengeToReview(id: number) {
       createdAt: 'desc',
     },
   });
-}
+});

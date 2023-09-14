@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 142
+        "contributions": 159
     },
     {
         "login": "Hacksore",
@@ -104,7 +104,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/jhechtf/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 22
+        "contributions": 23
     },
     {
         "login": "QuiiBz",
@@ -230,7 +230,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/Tylopilus/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 8
+        "contributions": 9
     },
     {
         "login": "maxdemaio",
@@ -249,6 +249,27 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/maxdemaio/repos",
         "events_url": "https://api.github.com/users/maxdemaio/events{/privacy}",
         "received_events_url": "https://api.github.com/users/maxdemaio/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 9
+    },
+    {
+        "login": "falcon-head",
+        "id": 32938743,
+        "node_id": "MDQ6VXNlcjMyOTM4NzQz",
+        "avatar_url": "https://avatars.githubusercontent.com/u/32938743?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/falcon-head",
+        "html_url": "https://github.com/falcon-head",
+        "followers_url": "https://api.github.com/users/falcon-head/followers",
+        "following_url": "https://api.github.com/users/falcon-head/following{/other_user}",
+        "gists_url": "https://api.github.com/users/falcon-head/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/falcon-head/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/falcon-head/subscriptions",
+        "organizations_url": "https://api.github.com/users/falcon-head/orgs",
+        "repos_url": "https://api.github.com/users/falcon-head/repos",
+        "events_url": "https://api.github.com/users/falcon-head/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/falcon-head/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 8
@@ -273,27 +294,6 @@ export const contributors = [
         "type": "User",
         "site_admin": false,
         "contributions": 7
-    },
-    {
-        "login": "falcon-head",
-        "id": 32938743,
-        "node_id": "MDQ6VXNlcjMyOTM4NzQz",
-        "avatar_url": "https://avatars.githubusercontent.com/u/32938743?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/falcon-head",
-        "html_url": "https://github.com/falcon-head",
-        "followers_url": "https://api.github.com/users/falcon-head/followers",
-        "following_url": "https://api.github.com/users/falcon-head/following{/other_user}",
-        "gists_url": "https://api.github.com/users/falcon-head/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/falcon-head/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/falcon-head/subscriptions",
-        "organizations_url": "https://api.github.com/users/falcon-head/orgs",
-        "repos_url": "https://api.github.com/users/falcon-head/repos",
-        "events_url": "https://api.github.com/users/falcon-head/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/falcon-head/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 6
     },
     {
         "login": "jproberson",
@@ -527,6 +527,27 @@ export const contributors = [
         "contributions": 2
     },
     {
+        "login": "vivekKumarSinghH",
+        "id": 72158561,
+        "node_id": "MDQ6VXNlcjcyMTU4NTYx",
+        "avatar_url": "https://avatars.githubusercontent.com/u/72158561?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/vivekKumarSinghH",
+        "html_url": "https://github.com/vivekKumarSinghH",
+        "followers_url": "https://api.github.com/users/vivekKumarSinghH/followers",
+        "following_url": "https://api.github.com/users/vivekKumarSinghH/following{/other_user}",
+        "gists_url": "https://api.github.com/users/vivekKumarSinghH/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/vivekKumarSinghH/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/vivekKumarSinghH/subscriptions",
+        "organizations_url": "https://api.github.com/users/vivekKumarSinghH/orgs",
+        "repos_url": "https://api.github.com/users/vivekKumarSinghH/repos",
+        "events_url": "https://api.github.com/users/vivekKumarSinghH/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/vivekKumarSinghH/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 2
+    },
+    {
         "login": "NikolaRHristov",
         "id": 90222871,
         "node_id": "MDQ6VXNlcjkwMjIyODcx",
@@ -585,27 +606,6 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/andresmarpz/repos",
         "events_url": "https://api.github.com/users/andresmarpz/events{/privacy}",
         "received_events_url": "https://api.github.com/users/andresmarpz/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 1
-    },
-    {
-        "login": "MVAodhan",
-        "id": 69143973,
-        "node_id": "MDQ6VXNlcjY5MTQzOTcz",
-        "avatar_url": "https://avatars.githubusercontent.com/u/69143973?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/MVAodhan",
-        "html_url": "https://github.com/MVAodhan",
-        "followers_url": "https://api.github.com/users/MVAodhan/followers",
-        "following_url": "https://api.github.com/users/MVAodhan/following{/other_user}",
-        "gists_url": "https://api.github.com/users/MVAodhan/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/MVAodhan/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/MVAodhan/subscriptions",
-        "organizations_url": "https://api.github.com/users/MVAodhan/orgs",
-        "repos_url": "https://api.github.com/users/MVAodhan/repos",
-        "events_url": "https://api.github.com/users/MVAodhan/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/MVAodhan/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 1

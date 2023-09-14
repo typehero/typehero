@@ -52,11 +52,16 @@ export function CommentInput({ mode, onCancel, onChange, value, placeholder, onS
     <div className="flex flex-col rounded-xl rounded-br-lg bg-neutral-100 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-700/90">
       {commentMode === 'editor' && (
         <Textarea
+          disabled={!session?.user}
           autoFocus
           className="resize-none border-0 px-3 py-2 focus-visible:ring-0 md:max-h-[calc(100vh_-_232px)]"
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={handleEnterKey}
-          placeholder={placeholder ?? 'Enter your comment here.'}
+          placeholder={
+            placeholder ?? !session?.user
+              ? 'You need to be logged in to comment.'
+              : 'Enter your comment here.'
+          }
           ref={textAreaRef}
           value={value}
         />
@@ -81,7 +86,7 @@ export function CommentInput({ mode, onCancel, onChange, value, placeholder, onS
             </Button>
           )}
           <Button
-            className="h-8 w-[5.5rem] rounded-lg rounded-br-sm bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-400 dark:hover:bg-emerald-300"
+            className="h-8 w-[5.5rem] rounded-lg rounded-br-sm"
             disabled={value.length === 0 || isSubmitting}
             onClick={async () => {
               try {

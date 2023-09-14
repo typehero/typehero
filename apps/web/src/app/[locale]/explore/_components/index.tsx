@@ -52,7 +52,6 @@ export async function Explore() {
           redirectRoute="/explore/medium"
         />
       </Suspense>
-
       <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection
           title="For the Experts"
