@@ -44,6 +44,8 @@ export function Settings({ profileData, username }: { profileData: FormSchema; u
     register,
   } = form;
 
+  const { setFocus } = useForm();
+
   const userLinks = useWatch({ control: form.control, name: 'userLinks' });
 
   const { fields } = useFieldArray({
@@ -57,7 +59,6 @@ export function Settings({ profileData, username }: { profileData: FormSchema; u
     if (!isValid) return;
     // call the server action
     await updateProfile(values);
-
     toast({
       variant: 'success',
       title: 'Your settings have been updated',
@@ -105,6 +106,7 @@ export function Settings({ profileData, username }: { profileData: FormSchema; u
                       defaultValue={val.url}
                       placeholder="Link to social profile"
                       {...register(`userLinks.${i}.url`)}
+                      onChange={() => setFocus(`userLinks.${i}.url`, { shouldSelect: true })}
                     />
                     {errors.userLinks?.[i]?.url?.message ? (
                       <div className="text-destructive">{errors.userLinks[i]?.url?.message}</div>
