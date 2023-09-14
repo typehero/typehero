@@ -2,13 +2,14 @@
 
 import { type OnChange, type OnMount, type OnValidate } from '@monaco-editor/react';
 import clsx from 'clsx';
-import type * as monaco from 'monaco-editor';
+import type * as monacoType from 'monaco-editor';
 import { useEffect, useRef } from 'react';
 import { CodeEditor, LIB_URI } from './code-editor';
 import { libSource } from './editor-types';
 import dynamic from 'next/dynamic';
 import { useEditorSettingsStore } from './settings-store';
 import { getEventDeltas } from './utils';
+import { useResetEditor } from './editor-hooks';
 
 function preventSelection(event: Event) {
   event.preventDefault();
@@ -44,7 +45,7 @@ export interface SplitEditorProps {
     user?: OnChange;
   };
   monaco: typeof import('monaco-editor') | undefined;
-  userEditorState?: monaco.editor.IStandaloneCodeEditor;
+  userEditorState?: monacoType.editor.IStandaloneCodeEditor;
 }
 
 // million-ignore
@@ -177,6 +178,45 @@ export default function SplitEditor({
       }
     }
   }, [monaco]);
+  async function typeCheck() {
+    if (monaco && userEditorState) {
+      const models = monaco.editor.getModels();
+      const getWorker = await monaco.languages.typescript.getTypeScriptWorker();
+
+      for (const model of models) {
+        const worker = await getWorker(model.uri);
+        const diagnostics = (
+          await Promise.all([
+            worker.getSyntacticDiagnostics(model.uri.toString()),
+            worker.getSemanticDiagnostics(model.uri.toString()),
+          ])
+        ).reduce((a, b) => a.concat(b));
+
+        const markers = diagnostics.map((d) => {
+          const start = model.getPositionAt(d.start!);
+          const end = model.getPositionAt(d.start! + d.length!);
+
+          return {
+            severity: monaco.MarkerSeverity.Error,
+            startLineNumber: start.lineNumber,
+            endLineNumber: end.lineNumber,
+            startColumn: start.column,
+            endColumn: end.column,
+            message: d.messageText as string,
+          } satisfies monacoType.editor.IMarkerData;
+        });
+
+        monaco.editor.setModelMarkers(model, model.getLanguageId(), markers);
+      }
+    }
+  }
+  const monacoAndEditorStateReady = monaco && userEditorState;
+  useResetEditor().subscribe('resetCode', () => {
+    if (monacoAndEditorStateReady) {
+      typeCheck();
+      onMount?.tests?.(userEditorState, monaco);
+    }
+  });
 
   return (
     <div className={clsx('flex h-[calc(100%-_90px)] flex-col', className)} ref={wrapper}>
@@ -214,7 +254,7 @@ export default function SplitEditor({
                     startColumn: start.column,
                     endColumn: end.column,
                     message: d.messageText as string,
-                  } satisfies monaco.editor.IMarkerData;
+                  } satisfies monacoType.editor.IMarkerData;
                 });
 
                 monaco.editor.setModelMarkers(model, model.getLanguageId(), markers);
