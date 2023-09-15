@@ -29,6 +29,7 @@ const formSchema = z.object({
 
 export type FormSchema = z.infer<typeof formSchema>;
 
+// million-ignore
 export function Settings({ profileData, username }: { profileData: FormSchema; username: string }) {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
