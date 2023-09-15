@@ -77,7 +77,6 @@ export async function getPreselectedSolutionCommentMetadata(solutionId: number, 
     select: {
       id: true,
       solutionComment: true,
-      challengeId: true,
     },
   });
 

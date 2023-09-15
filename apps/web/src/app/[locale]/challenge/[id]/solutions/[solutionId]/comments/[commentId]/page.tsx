@@ -3,10 +3,7 @@ import { getServerAuthSession, type Session } from '@repo/auth/server';
 import { cache } from 'react';
 import { Comments } from '~/app/[locale]/challenge/_components/comments';
 import { SolutionDetails } from '~/app/[locale]/challenge/[id]/solutions/_components/solution-detail';
-import {
-  getPreselectedCommentMetadata,
-  getPreselectedSolutionCommentMetadata,
-} from '~/app/[locale]/challenge/_components/comments/getCommentRouteData';
+import { getPreselectedSolutionCommentMetadata } from '~/app/[locale]/challenge/_components/comments/getCommentRouteData';
 
 interface Props {
   params: {
