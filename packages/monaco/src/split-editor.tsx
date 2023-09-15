@@ -210,9 +210,8 @@ export default function SplitEditor({
       }
     }
   }
-  const monacoAndEditorStateReady = monaco && userEditorState;
-  useResetEditor().subscribe('resetCode', () => {
-    if (monacoAndEditorStateReady) {
+  useResetEditor([monaco, userEditorState]).subscribe('resetCode', () => {
+    if (monaco && userEditorState) {
       typeCheck();
       onMount?.tests?.(userEditorState, monaco);
     }
