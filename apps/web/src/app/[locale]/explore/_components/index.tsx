@@ -40,6 +40,14 @@ export async function Explore() {
         <ExploreSection
           title="Great for Beginners"
           fetcher={getChallengesByTagOrDifficulty}
+          tag="BEGINNER"
+          redirectRoute="/explore/beginner"
+        />
+      </Suspense>
+      <Suspense fallback={<ExploreSectionSkeleton />}>
+        <ExploreSection
+          title='"Hey, maybe I like TypeScript"'
+          fetcher={getChallengesByTagOrDifficulty}
           tag="EASY"
           redirectRoute="/explore/easy"
         />
@@ -58,6 +66,14 @@ export async function Explore() {
           fetcher={getChallengesByTagOrDifficulty}
           tag="HARD"
           redirectRoute="/explore/hard"
+        />
+      </Suspense>
+      <Suspense fallback={<ExploreSectionSkeleton />}>
+        <ExploreSection
+          title="The Best of the Best"
+          fetcher={getChallengesByTagOrDifficulty}
+          tag="EXTREME"
+          redirectRoute="/explore/extreme"
         />
       </Suspense>
       <Footsies />
