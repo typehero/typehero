@@ -27,7 +27,7 @@ export default async function SolutionPage({
     <div className="relative h-full">
       <SolutionDetails solution={solution} />
       <Comments
-        rootId={solution.id!}
+        rootId={Number(solutionId)}
         type="SOLUTION"
         preselectedCommentMetadata={preselectedCommentMetadata}
         expanded

@@ -271,23 +271,11 @@ function SingleComment({
     const { rootType, rootSolutionId } = comment;
     const baseURL = `${window.location.origin}/challenge/${challengeId}`;
     const hasGetParams = isReply ? `?${searchParams.toString()}` : '';
-    let shareUrl;
 
-    switch (rootType) {
-      case 'CHALLENGE':
-        shareUrl = `${baseURL}/comments/${commentId}${hasGetParams}`;
-        break;
-      case 'SOLUTION':
-        shareUrl = `${baseURL}/solutions/${rootSolutionId}/comments/${commentId}${hasGetParams}`;
-        break;
-
-      default:
-        break;
-    }
-
-    if (!shareUrl) {
-      return;
-    }
+    const shareUrl =
+      rootType === 'CHALLENGE'
+        ? `${baseURL}/comments/${commentId}${hasGetParams}`
+        : `${baseURL}/solutions/${rootSolutionId}/comments/${commentId}${hasGetParams}`;
 
     await navigator.clipboard.writeText(shareUrl);
   }
