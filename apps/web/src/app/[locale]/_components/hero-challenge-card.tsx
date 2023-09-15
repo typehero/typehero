@@ -54,7 +54,7 @@ export function HeroChallengeCard({
       <p className="translate-x-1 text-lg font-medium">{title}</p>
       <div className="flex gap-3">
         <div
-          className={`text-primary-foreground inline-flex w-fit translate-x-1 items-center rounded-full border border-transparent px-2.5 py-0.5 text-xs font-semibold duration-300 group-hover/card:-translate-x-0 group-hover/card:-translate-y-1 group-hover/card:shadow-[0.5rem_0.5rem_0.25rem_-0.25rem_#0004] ${
+          className={`inline-flex w-fit translate-x-1 items-center rounded-full border border-transparent px-2.5 py-0.5 text-xs font-semibold text-white duration-300 group-hover/card:-translate-x-0 group-hover/card:-translate-y-1 group-hover/card:shadow-[0.5rem_0.5rem_0.25rem_-0.25rem_#0004] dark:text-black ${
             COLORS_BY_DIFFICULTY[difficulty || 'HARD']
           }`}
         >

@@ -2,6 +2,7 @@
 
 import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
+import { cache } from 'react';
 
 /**
  * Enrolls the session user in the track given a track id.
@@ -47,7 +48,7 @@ export async function unenrollUserFromTrack(id: number) {
  * Fetches the track details given a track id.
  * @param id The track id.
  */
-export async function getTrackDetails(id: number) {
+export const getTrackDetails = cache(async (id: number) => {
   const session = await getServerAuthSession();
 
   return prisma.track.findUnique({
@@ -71,4 +72,4 @@ export async function getTrackDetails(id: number) {
       },
     },
   });
-}
+});

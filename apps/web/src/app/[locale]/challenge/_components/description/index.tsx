@@ -25,6 +25,7 @@ import {
 } from '@repo/ui/components/dialog';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { Markdown } from '@repo/ui/components/markdown';
+import { Button } from '@repo/ui/components/button';
 
 interface Props {
   challenge: ChallengeRouteData;
@@ -107,7 +108,7 @@ export function Description({ challenge }: Props) {
         </Dialog>
         <Tooltip>
           <TooltipTrigger asChild>
-            <button
+            <Button
               className="group flex h-6 items-center rounded-full bg-zinc-200 px-3 focus:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:bg-zinc-100 dark:bg-zinc-700 disabled:dark:bg-zinc-700/50"
               disabled={!session.data?.user.id}
               onClick={() => {
@@ -129,14 +130,14 @@ export function Description({ challenge }: Props) {
               <BookmarkIcon
                 className={clsx(
                   {
-                    'fill-blue-500 stroke-blue-500': hasBookmarked,
+                    'stroke-blue-500': hasBookmarked,
                     'stroke-zinc-500 group-hover:stroke-zinc-600 group-disabled:stroke-zinc-300 dark:stroke-zinc-300 group-hover:dark:stroke-zinc-100 group-disabled:dark:stroke-zinc-500/50':
                       !hasBookmarked,
                   },
                   'h-4 w-4',
                 )}
               />
-            </button>
+            </Button>
           </TooltipTrigger>
           <TooltipContent>
             <p>{session.data?.user.id ? 'Bookmark' : 'Login to Bookmark'}</p>

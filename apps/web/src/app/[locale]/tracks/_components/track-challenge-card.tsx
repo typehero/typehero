@@ -4,10 +4,10 @@ import { Check } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { useIsMobile } from '~/utils/useIsMobile';
 
-import type { Tracks } from './track-grid';
+import type { Challenge } from '@repo/db/types';
 
 interface TrackChallengeProps {
-  challenge: Tracks[number]['trackChallenges'][number]['challenge'];
+  challenge: Challenge;
   challengeInProgress?: boolean;
   challengeCompleted?: boolean;
   className?: string;
@@ -38,6 +38,7 @@ export function TrackChallenge({
   challengeCompleted = false,
 }: TrackChallengeProps) {
   const isMobile = useIsMobile();
+
   return (
     <label
       htmlFor={challenge.id.toString()}

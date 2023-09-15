@@ -1,26 +1,7 @@
 'use client';
 
 import type { CommentRoot } from '@repo/db/types';
-import {
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  MessageCircle,
-  ArrowDownNarrowWide,
-  ArrowUpNarrowWide,
-} from '@repo/ui/icons';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import clsx from 'clsx';
-import { useRef, useState } from 'react';
-import { Comment } from './comment';
-import { CommentInput } from './comment-input';
-import { CommentSkeleton } from './comment-skeleton';
-import { addComment } from './comment.action';
-import { getPaginatedComments, type SortOrder } from './getCommentRouteData';
-import NoComments from './nocomments';
 import { Button } from '@repo/ui/components/button';
-import { Toggle } from '@repo/ui/components/toggle';
-import { toast } from '@repo/ui/components/use-toast';
 import {
   Select,
   SelectContent,
@@ -28,44 +9,75 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@repo/ui/components/select';
+import { toast } from '@repo/ui/components/use-toast';
+import { ChevronDown, ChevronLeft, ChevronRight, MessageCircle } from '@repo/ui/icons';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import clsx from 'clsx';
+import { useRef, useState } from 'react';
+import { Comment } from './comment';
+import { CommentInput } from './comment-input';
+import { CommentSkeleton } from './comment-skeleton';
+import { addComment } from './comment.action';
+import { getPaginatedComments, type PreselectedCommentMetadata } from './getCommentRouteData';
+import NoComments from './nocomments';
 
 const sortKeys = [
   {
-    label: 'Created At',
-    value: 'createdAt',
+    label: 'Newest Comments',
+    value: 'newest',
+    key: 'createdAt',
+    order: 'desc',
   },
   {
-    label: '# of Votes',
-    value: 'vote',
+    label: 'Oldest Comments',
+    value: 'oldest',
+    key: 'createdAt',
+    order: 'asc',
   },
   {
-    label: '# of Replies',
+    label: 'Most Votes',
+    value: 'votes',
+    key: 'vote',
+    order: 'desc',
+  },
+  {
+    label: 'Most Replies',
     value: 'replies',
+    key: 'replies',
+    order: 'desc',
   },
 ] as const;
+
 interface Props {
+  preselectedCommentMetadata?: PreselectedCommentMetadata;
+  expanded?: boolean;
   rootId: number;
   type: CommentRoot;
 }
 
 // million-ignore
-export function Comments({ rootId, type }: Props) {
-  const [showComments, setShowComments] = useState(false);
+export function Comments({ preselectedCommentMetadata, rootId, type, expanded = false }: Props) {
+  const [showComments, setShowComments] = useState(expanded);
   const [text, setText] = useState('');
   const commentContainerRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(preselectedCommentMetadata?.page ?? 1);
   const [sortKey, setSortKey] = useState<(typeof sortKeys)[number]>(sortKeys[0]);
-  const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
-
-  const queryKey = [`${type.toLowerCase()}-${rootId}-comments`, sortKey.value, sortOrder, page];
+  const queryKey = [`${type.toLowerCase()}-${rootId}-comments`, sortKey.value, page];
 
   const { status, data } = useQuery({
     queryKey,
     queryFn: () =>
-      getPaginatedComments({ rootId, page, rootType: type, sortKey: sortKey.value, sortOrder }),
+      getPaginatedComments({
+        rootId,
+        page,
+        rootType: type,
+        sortKey: sortKey.key,
+        sortOrder: sortKey.order,
+      }),
     keepPreviousData: true,
-    staleTime: 5000,
+    staleTime: 60000, // one minute
+    refetchOnWindowFocus: false,
   });
 
   async function createChallengeComment() {
@@ -108,7 +120,7 @@ export function Comments({ rootId, type }: Props) {
   return (
     <div
       className={clsx(
-        'bg-background/90 dark:border-b-muted dark:bg-muted/90 absolute bottom-0 w-full overflow-hidden border-t border-zinc-300 shadow-[0_0_3rem_-0.25rem_#0004] backdrop-blur-sm duration-300 dark:border-zinc-700 dark:shadow-[0_0_3rem_-0.25rem_#0008]',
+        'bg-background/90 dark:border-b-muted dark:bg-muted/90 absolute bottom-0 w-full overflow-hidden border-t border-zinc-300 backdrop-blur-sm duration-300 dark:border-zinc-700',
         {
           'lg:border-t-none': showComments,
         },
@@ -117,7 +129,9 @@ export function Comments({ rootId, type }: Props) {
       <div className="relative">
         <button
           className="flex w-full items-center justify-between gap-2 p-3 font-medium text-neutral-500 duration-300 hover:text-neutral-700 focus:outline-none dark:hover:text-zinc-300"
-          onClick={() => setShowComments(!showComments)}
+          onClick={() => {
+            setShowComments(!showComments);
+          }}
         >
           <div className="flex items-center gap-2">
             <MessageCircle className="h-5 w-5" />
@@ -136,7 +150,7 @@ export function Comments({ rootId, type }: Props) {
             {
               'h-64 pb-4 md:h-[calc(100vh_-_164px)]': showComments,
               'h-0 overflow-y-hidden': !showComments,
-              'overflow-y-auto': showComments && data?.comments.length !== 0,
+              'overflow-y-auto': showComments && (data?.comments.length ?? 0) > 0,
             },
           )}
           ref={commentContainerRef}
@@ -149,11 +163,11 @@ export function Comments({ rootId, type }: Props) {
               value={text}
             />
           </div>
-          {data?.comments.length !== 0 && (
+          {(data?.comments.length ?? 0) > 0 && (
             <div className="flex items-center gap-2 px-3 py-2">
               <Select
                 value={sortKey.value}
-                defaultValue="createdAt"
+                defaultValue="newest"
                 onValueChange={(value) => {
                   setSortKey(sortKeys.find((sk) => sk.value === value) ?? sortKeys[0]);
                   setPage(1);
@@ -170,30 +184,6 @@ export function Comments({ rootId, type }: Props) {
                   ))}
                 </SelectContent>
               </Select>
-              <Toggle
-                variant="outline"
-                size="sm"
-                aria-label="Ascending"
-                pressed={sortOrder === 'asc'}
-                onPressedChange={() => {
-                  setSortOrder('asc');
-                  setPage(1);
-                }}
-              >
-                <ArrowUpNarrowWide />
-              </Toggle>
-              <Toggle
-                variant="outline"
-                size="sm"
-                aria-label="Descending"
-                pressed={sortOrder === 'desc'}
-                onPressedChange={() => {
-                  setSortOrder('desc');
-                  setPage(1);
-                }}
-              >
-                <ArrowDownNarrowWide />
-              </Toggle>
             </div>
           )}
           {status === 'loading' && <CommentSkeleton />}
@@ -204,6 +194,7 @@ export function Comments({ rootId, type }: Props) {
               ) : (
                 data.comments.map((comment) => (
                   <Comment
+                    preselectedCommentMetadata={preselectedCommentMetadata}
                     comment={comment}
                     key={comment.id}
                     queryKey={queryKey}

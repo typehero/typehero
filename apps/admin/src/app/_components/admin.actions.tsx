@@ -3,6 +3,7 @@
 import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import { type Prisma, type Report } from '@repo/db/types';
+import { cache } from 'react';
 
 // FML this was obnoxious to do
 export type ChallengeInfo = Omit<Report, 'id' | 'status' | 'type' | 'userId'> & {
@@ -222,7 +223,7 @@ export async function unbanUser(userId: string) {
   ]);
 }
 
-export async function getChallenge(id: number) {
+export const getChallenge = cache(async (id: number) => {
   return prisma.challenge.findFirstOrThrow({
     where: {
       id,
@@ -242,7 +243,7 @@ export async function getChallenge(id: number) {
       },
     },
   });
-}
+});
 
 export type UploadedImages = Awaited<ReturnType<typeof getUploadedImages>>;
 /**

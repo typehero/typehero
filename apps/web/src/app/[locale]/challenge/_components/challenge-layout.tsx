@@ -5,6 +5,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useFullscreenSettingsStore } from './fullscreen';
 import usePanelAdjustments from './usePanelAdjustments';
+import { getEventDeltas } from '@repo/monaco/utils';
 
 export const DEFAULT_SETTINGS = {
   width: '500px',
@@ -78,33 +79,9 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
     let leftWidth = 0;
     let topHeight = 0;
 
-    const getEventDeltas = (e: MouseEvent | TouchEvent) => {
-      if (e instanceof MouseEvent) {
-        return {
-          dx: e.clientX - x,
-          dy: e.clientY - y,
-          currPos: isDesktop ? e.clientX : e.clientY,
-        };
-      }
-
-      const touch = e.changedTouches[0];
-      if (!touch) {
-        return {
-          dx: 0,
-          dy: 0,
-          currPos: 0,
-        };
-      }
-
-      return {
-        dx: touch.clientX - x,
-        dy: touch.clientY - y,
-        currPos: isDesktop ? touch.clientX : touch.clientY,
-      };
-    };
-
     const mouseMoveHandler = (e: MouseEvent | TouchEvent) => {
-      const { dx, dy, currPos } = getEventDeltas(e);
+      const { dx, dy, currPosX, currPosY } = getEventDeltas(e, { x, y });
+      const currPos = isDesktop ? currPosX : currPosY;
       const { width: divideByW, height: divideByH } = parent.current?.getBoundingClientRect() || {
         width: 0,
         height: 0,
@@ -261,7 +238,7 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
         }
         ref={resizer}
       >
-        <div className="absolute left-1/2 top-1/2 h-1 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-400 duration-300 group-hover:bg-neutral-600 group-active:bg-emerald-400 group-active:duration-75 dark:bg-neutral-700 group-hover:dark:bg-neutral-500 lg:h-24 lg:w-1" />
+        <div className="absolute left-1/2 top-1/2 h-1 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-400 duration-300 group-hover:bg-neutral-600 group-active:duration-75 dark:bg-neutral-700 group-hover:dark:bg-neutral-500 lg:h-24 lg:w-1" />
       </div>
       <div
         className="flex min-h-[90px] w-full flex-1 flex-grow flex-col overflow-hidden rounded-l-xl rounded-r-2xl border border-zinc-300 dark:border-zinc-700 lg:min-w-[500px]"

@@ -4,11 +4,7 @@ import Link from 'next/link';
 import { EnrollButton } from './enroll-button';
 import { TrackChallenge } from './track-challenge-card';
 import { TrackProgress } from './track-progress';
-import {
-  enrollUserInTrack,
-  getTrackDetails,
-  unenrollUserFromTrack,
-} from './track.action';
+import { enrollUserInTrack, getTrackDetails, unenrollUserFromTrack } from './track.action';
 
 interface TrackDetailProps {
   // trackid
