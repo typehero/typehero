@@ -8,7 +8,7 @@ class EditorEvents extends EventTarget {
 
 const event = new EditorEvents();
 type EventNames = 'resetCode';
-export function useResetEditor(): {
+export function useResetEditor(deps: unknown[] = []): {
   subscribe: (eventName: EventNames, cb: () => void) => void;
   dispatch: (eventName: EventNames) => void;
 } {
@@ -19,7 +19,7 @@ export function useResetEditor(): {
       };
       event.addEventListener(eventName, fnc);
       return () => event.removeEventListener(eventName, fnc);
-    }, []);
+    }, [...deps]);
   }
 
   function dispatch(eventName: EventNames) {
