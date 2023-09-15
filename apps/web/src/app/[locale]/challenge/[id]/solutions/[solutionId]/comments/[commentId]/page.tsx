@@ -1,9 +1,8 @@
-import { prisma } from '@repo/db';
 import { getServerAuthSession, type Session } from '@repo/auth/server';
-import { cache } from 'react';
 import { Comments } from '~/app/[locale]/challenge/_components/comments';
 import { SolutionDetails } from '~/app/[locale]/challenge/[id]/solutions/_components/solution-detail';
 import { getPreselectedSolutionCommentMetadata } from '~/app/[locale]/challenge/_components/comments/getCommentRouteData';
+import { getSolutionIdRouteData } from '../../getSolutionIdRouteData';
 
 interface Props {
   params: {
@@ -13,12 +12,11 @@ interface Props {
   };
 }
 
-export type ChallengeSolution = NonNullable<Awaited<ReturnType<typeof getSolution>>>;
 export default async function SolutionPage({
   params: { solutionId, commentId, id: challengeId },
 }: Props) {
   const session = await getServerAuthSession();
-  const solution = await getSolution(challengeId, solutionId, session);
+  const solution = await getSolutionIdRouteData(challengeId, solutionId, session);
   const preselectedCommentMetadata = await getPreselectedSolutionCommentMetadata(
     Number(solutionId),
     Number(commentId),
@@ -37,55 +35,3 @@ export default async function SolutionPage({
     </div>
   );
 }
-
-export async function generateMetadata({ params: { solutionId } }: Props) {
-  const solution = await prisma.sharedSolution.findFirstOrThrow({
-    where: {
-      id: Number(solutionId),
-    },
-    include: {
-      challenge: {
-        select: {
-          name: true,
-        },
-      },
-    },
-  });
-
-  return {
-    title: `${solution.title}, solution to ${solution.challenge?.name} | TypeHero`,
-    description: `View this solution to ${solution.challenge?.name} on TypeHero.`,
-  };
-}
-
-const getSolution = cache(
-  async (chalengeId: string, solutionId: string, session: Session | null) => {
-    const solution = await prisma.sharedSolution.findFirstOrThrow({
-      where: {
-        id: Number(solutionId),
-        challengeId: Number(solutionId),
-      },
-      include: {
-        user: {
-          select: {
-            name: true,
-            image: true,
-          },
-        },
-        _count: {
-          select: { vote: true },
-        },
-        vote: {
-          where: {
-            userId: session?.user.id || '',
-          },
-          select: {
-            userId: true,
-          },
-        },
-      },
-    });
-
-    return solution;
-  },
-);

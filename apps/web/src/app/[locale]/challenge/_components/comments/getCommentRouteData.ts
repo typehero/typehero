@@ -66,7 +66,11 @@ export async function getPreselectedCommentMetadata(challengeId: number, comment
   };
 }
 
-export async function getPreselectedSolutionCommentMetadata(solutionId: number, commentId: number, challengeId: number) {
+export async function getPreselectedSolutionCommentMetadata(
+  solutionId: number,
+  commentId: number,
+  challengeId: number,
+) {
   const solution = await prisma.sharedSolution.findFirst({
     where: {
       id: solutionId,
