@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 
 class EditorEvents extends EventTarget {
   dispatch(ev: string) {
@@ -13,13 +13,18 @@ export function useResetEditor(): {
   dispatch: (eventName: EventNames) => void;
 } {
   function subscribe(eventName: EventNames, cb: () => void) {
+    // Memoize the callback to avoid stale closures
+    const memoizedCb = useCallback(() => {
+      cb();
+    }, [cb]);
+
     useEffect(() => {
       const fnc = () => {
-        cb();
+        memoizedCb();
       };
       event.addEventListener(eventName, fnc);
       return () => event.removeEventListener(eventName, fnc);
-    }, []);
+    }, [memoizedCb]);
   }
 
   function dispatch(eventName: EventNames) {
