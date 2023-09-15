@@ -1,8 +1,7 @@
 import { z } from 'zod';
-import { createNoProfanitySchema } from '../../web/src/utils/antiProfanityZod';
 
-type Primitives = boolean | number | string | null;
-type JsonValue = JsonValue[] | Primitives | { [key: string]: JsonValue };
+type Primitives = string | number | boolean | null;
+type JsonValue = Primitives | JsonValue[] | { [key: string]: JsonValue };
 
 const jsonStr = z.string().transform((str, ctx) => {
   try {
@@ -37,14 +36,10 @@ function truncateWordsFn(str: string, maxCharacters: number) {
   // break at closest word
   const truncated = str.slice(0, maxCharacters);
   const lastSpace = truncated.lastIndexOf(' ');
-  return `${truncated.slice(0, lastSpace)  }…`;
+  return truncated.slice(0, lastSpace) + ' …';
 }
-
-
-
-// truncates to maxCharacters, throws if string contains profanity
-export function truncateSchema(opts: { maxCharacters: number }) {
-  return createNoProfanitySchema().transform((str) => truncateWordsFn(str, opts.maxCharacters));
+function truncatedWordSchema(opts: { maxCharacters: number }) {
+  return z.string().transform((str) => truncateWordsFn(str, opts.maxCharacters));
 }
 
 export const fontParams = zodParams(
@@ -57,15 +52,14 @@ export const fontParams = zodParams(
 
 export const challengeParam = zodParams(
   z.object({
-    title: truncateSchema({ maxCharacters: 70 }),
-    description: truncateSchema({ maxCharacters: 145 }),
-    username: truncateSchema({ maxCharacters: 70 }),
+    title: truncatedWordSchema({ maxCharacters: 70 }),
+    description: truncatedWordSchema({ maxCharacters: 145 }),
+    username: z.string(),
   }),
 );
 
 export const userParam = zodParams(
   z.object({
-    username: truncateSchema({ maxCharacters: 70 }),
+    username: truncatedWordSchema({ maxCharacters: 70 }),
   }),
 );
-
