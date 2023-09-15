@@ -61,7 +61,7 @@ export const getTrackDetails = cache(async (id: number) => {
           enrolledUsers: true,
         },
       },
-      trackChallenges: true,
+      trackChallenges: { include: { challenge: { include: { submission: true } } } },
       enrolledUsers: {
         where: {
           id: session?.user.id,
