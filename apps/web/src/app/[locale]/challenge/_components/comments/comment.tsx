@@ -74,7 +74,6 @@ export function Comment({
   type,
   queryKey,
 }: CommentProps) {
-  const { id: challengeId } = useParams();
   const params = useSearchParams();
   const replyId = params.get('replyId');
   const [showReplies, setShowReplies] = useState(
