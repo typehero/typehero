@@ -13,7 +13,6 @@ interface CommentToCreate {
   text: string;
   rootType: CommentRoot;
   rootId: number;
-  rootChallengeId: number;
 }
 export async function addComment(comment: CommentToCreate) {
   const session = await getServerAuthSession();
@@ -25,8 +24,9 @@ export async function addComment(comment: CommentToCreate) {
 
   const { rootId, ...commentToCreate } = {
     ...comment,
-    rootChallengeId: comment.rootChallengeId,
-    rootSolutionId: comment.rootType === 'SOLUTION' ? comment.rootId : undefined,
+    ...(comment.rootType === 'CHALLENGE'
+      ? { rootChallengeId: comment.rootId }
+      : { rootSolutionId: comment.rootId }),
   };
 
   return await prisma.comment.create({
@@ -47,8 +47,9 @@ export async function replyComment(comment: CommentToCreate, parentId: number) {
 
   const { rootId, ...commentToCreate } = {
     ...comment,
-    rootChallengeId: comment.rootChallengeId,
-    rootSolutionId: comment.rootType === 'SOLUTION' ? comment.rootId : undefined,
+    ...(comment.rootType === 'CHALLENGE'
+      ? { rootChallengeId: comment.rootId }
+      : { rootSolutionId: comment.rootId }),
   };
 
   return await prisma.comment.create({
