@@ -3,10 +3,10 @@
 import { Check } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { useIsMobile } from '~/utils/useIsMobile';
-import type { Tracks } from './track-grid';
+import type { Challenge } from '@repo/db/types';
 
 interface TrackChallengeProps {
-  challenge: Tracks[number]['trackChallenges'][number]['challenge'];
+  challenge: Challenge;
   className?: string;
   mock?: boolean;
 }
