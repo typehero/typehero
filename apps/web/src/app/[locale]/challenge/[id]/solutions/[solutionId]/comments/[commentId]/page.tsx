@@ -18,7 +18,7 @@ export default async function SolutionPage({
   params: { solutionId, commentId, id: challengeId },
 }: Props) {
   const session = await getServerAuthSession();
-  const solution = await getSolution(solutionId, session);
+  const solution = await getSolution(challengeId, solutionId, session);
   const preselectedCommentMetadata = await getPreselectedSolutionCommentMetadata(
     Number(solutionId),
     Number(commentId),
@@ -58,31 +58,34 @@ export async function generateMetadata({ params: { solutionId } }: Props) {
   };
 }
 
-const getSolution = cache(async (solutionId: string, session: Session | null) => {
-  const solution = await prisma.sharedSolution.findFirstOrThrow({
-    where: {
-      id: Number(solutionId),
-    },
-    include: {
-      user: {
-        select: {
-          name: true,
-          image: true,
+const getSolution = cache(
+  async (chalengeId: string, solutionId: string, session: Session | null) => {
+    const solution = await prisma.sharedSolution.findFirstOrThrow({
+      where: {
+        id: Number(solutionId),
+        challengeId: Number(solutionId),
+      },
+      include: {
+        user: {
+          select: {
+            name: true,
+            image: true,
+          },
+        },
+        _count: {
+          select: { vote: true },
+        },
+        vote: {
+          where: {
+            userId: session?.user.id || '',
+          },
+          select: {
+            userId: true,
+          },
         },
       },
-      _count: {
-        select: { vote: true },
-      },
-      vote: {
-        where: {
-          userId: session?.user.id || '',
-        },
-        select: {
-          userId: true,
-        },
-      },
-    },
-  });
+    });
 
-  return solution;
-});
+    return solution;
+  },
+);
