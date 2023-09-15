@@ -14,12 +14,15 @@ interface Props {
 }
 
 export type ChallengeSolution = NonNullable<Awaited<ReturnType<typeof getSolution>>>;
-export default async function SolutionPage({ params: { solutionId, commentId } }: Props) {
+export default async function SolutionPage({
+  params: { solutionId, commentId, id: challengeId },
+}: Props) {
   const session = await getServerAuthSession();
   const solution = await getSolution(solutionId, session);
   const preselectedCommentMetadata = await getPreselectedSolutionCommentMetadata(
     Number(solutionId),
     Number(commentId),
+    Number(challengeId),
   );
 
   return (
