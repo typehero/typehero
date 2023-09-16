@@ -159,7 +159,7 @@ export function WaitlistForm() {
         {state === 'duplicate' && (
           <AlertDestructive text="We already have your email. Thanks for signing up!" />
         )}
-        {true && <AlertSuccess />}
+        {state === 'success' && <AlertSuccess />}
         {state === 'error' && <AlertDestructive />}
       </div>
     </div>
