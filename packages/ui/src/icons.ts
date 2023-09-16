@@ -53,4 +53,5 @@ export {
   ArrowUpNarrowWide,
   ChevronRightSquare,
   MessagesSquare,
+  Swords,
 } from 'lucide-react';
