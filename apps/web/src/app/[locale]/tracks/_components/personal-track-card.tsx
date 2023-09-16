@@ -1,8 +1,14 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@repo/ui';
 import { TrendingUpIcon } from '@repo/ui/icons';
 import clsx from 'clsx';
 import type { EnrolledTracks } from './track-enrolled-section';
 import { TrackProgress } from './track-progress';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@repo/ui/components/card';
 
 interface PersonalTrackCardProps {
   track: EnrolledTracks[number];
@@ -10,7 +16,7 @@ interface PersonalTrackCardProps {
 
 export function PersonalTrackCard({ track }: PersonalTrackCardProps) {
   // Calculates the total number of successful challenges.
-  function calulcateCompletedChallenges(): number {
+  function calculateCompletedChallenges(): number {
     let completedChallenges = 0;
     for (const trackChallenge of track.trackChallenges) {
       for (const submission of trackChallenge.challenge.submission) {
@@ -39,7 +45,7 @@ export function PersonalTrackCard({ track }: PersonalTrackCardProps) {
           </div>
         </div>
         <TrackProgress
-          completedChallenges={calulcateCompletedChallenges()}
+          completedChallenges={calculateCompletedChallenges()}
           totalChallenges={track.trackChallenges.length}
         />
       </CardHeader>

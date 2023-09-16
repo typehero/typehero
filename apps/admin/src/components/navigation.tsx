@@ -2,14 +2,19 @@
 
 import { signIn, signOut, useSession } from '@repo/auth/react';
 import { RoleTypes } from '@repo/db/types';
-import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@repo/ui';
+import { Button } from '@repo/ui/components/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@repo/ui/components/dropdown-menu';
 import { Loader2, LogIn, Moon, Sun, User } from '@repo/ui/icons';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 
 export function Navigation() {
   return (
-    <header className="z-10 w-full">
+    <header className="z-0 w-full">
       <nav className="container flex h-14 items-center">
         <div className="flex w-full items-center justify-between">
           <div className="relative flex gap-3">

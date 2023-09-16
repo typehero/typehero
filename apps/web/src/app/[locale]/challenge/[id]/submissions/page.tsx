@@ -1,8 +1,7 @@
-import { notFound } from 'next/navigation';
 import { getServerAuthSession } from '@repo/auth/server';
-import { getChallengeSubmissions } from './getChallengeSubmissions';
+import { notFound } from 'next/navigation';
 import { Submissions } from './_components';
-import type { Metadata } from 'next';
+import { getChallengeSubmissions } from './getChallengeSubmissions';
 
 interface Props {
   params: {
@@ -10,21 +9,10 @@ interface Props {
   };
 }
 
-export async function generateMetadata({ params: { id } }: Props): Promise<Metadata> {
-  const submissions = await getChallengeSubmissions('', id);
-
-  if (!submissions) {
-    return {
-      title: 'Submissions | TypeHero',
-      description: 'View your submissions to this challenge on TypeHero.',
-    };
-  }
-
-  return {
-    title: `${submissions.length} Submission${submissions.length == 1 ? '' : 's'} | TypeHero`,
-    description: 'View all of your submissions to this challenge on TypeHero.',
-  };
-}
+export const metadata = {
+  title: 'Submissions | TypeHero',
+  description: 'View your submissions to this challenge on TypeHero.',
+};
 
 export default async function SubmissionPage({ params: { id } }: Props) {
   const session = await getServerAuthSession();

@@ -2,17 +2,13 @@
 
 import { type User } from '@repo/db/types';
 import {
-  Button,
   Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  Label,
-  Textarea,
-  toast,
-} from '@repo/ui';
+} from '@repo/ui/components/dialog';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import {
@@ -23,6 +19,10 @@ import {
   dismissReport,
 } from '../../_components/admin.actions';
 import { type ReportWithInfo } from './report.action';
+import { toast } from '@repo/ui/components/use-toast';
+import { Button } from '@repo/ui/components/button';
+import { Label } from '@repo/ui/components/label';
+import { Textarea } from '@repo/ui/components/textarea';
 
 export interface ReportActionsProps {
   report: NonNullable<ReportWithInfo>;
@@ -59,7 +59,7 @@ export function ReportActions({ report }: ReportActionsProps) {
         title: 'Success',
         description: <p>Comment deleted successfully</p>,
       });
-      router.push('/admin');
+      router.push('/?tab=reports');
     } catch (e) {
       toast({
         title: 'Error',
@@ -72,7 +72,7 @@ export function ReportActions({ report }: ReportActionsProps) {
   async function handleDisableChallenge(challengeId: number, reportId: number) {
     try {
       await banChallenge(challengeId, reportId);
-      router.push('/admin');
+      router.push('/?tab=reports');
     } catch (e) {
       toast({
         title: 'Error',
@@ -89,7 +89,7 @@ export function ReportActions({ report }: ReportActionsProps) {
         title: 'Success',
         description: <p>User banned successfully.</p>,
       });
-      router.push('/admin');
+      router.push('/?tab=reports');
     } catch (e) {
       toast({
         title: 'Error',
@@ -106,7 +106,7 @@ export function ReportActions({ report }: ReportActionsProps) {
         title: 'Success',
         description: <p>Dismissed successfully.</p>,
       });
-      router.push('/admin');
+      router.push('/?tab=reports');
     } catch (e) {
       console.error(e);
       toast({
@@ -123,7 +123,7 @@ export function ReportActions({ report }: ReportActionsProps) {
       toast({
         title: 'Successfully removed solution',
       });
-      router.push('/admin');
+      router.push('/?tab=reports');
     } else {
       toast({
         title: 'Error',

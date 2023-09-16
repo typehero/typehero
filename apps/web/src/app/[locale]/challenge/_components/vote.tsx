@@ -2,12 +2,13 @@
 
 import { useSession } from '@repo/auth/react';
 import type { VoteType } from '@repo/db/types';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui';
 import { ThumbsUp } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { debounce } from 'lodash';
 import { useRef, useState } from 'react';
 import { incrementOrDecrementUpvote } from '../increment.action';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
+import { Button } from '@repo/ui/components/button';
 
 interface VoteProps {
   voteCount: number;
@@ -39,8 +40,8 @@ export function Vote({
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <button
-          className="group flex h-6 items-center gap-1 rounded-full bg-zinc-200 pl-[0.675rem] pr-2 text-sm focus:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:bg-zinc-100 dark:bg-zinc-700 disabled:dark:bg-zinc-700/50"
+        <Button
+          className="group flex h-6 items-center gap-1 rounded-full bg-zinc-200 py-0 pl-[0.675rem] pr-2 text-sm focus:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:bg-zinc-100 dark:bg-zinc-700 disabled:dark:bg-zinc-700/50"
           disabled={disabled}
           onClick={() => {
             let shouldIncrement = false;
@@ -69,12 +70,12 @@ export function Vote({
           <ThumbsUp
             className={clsx(
               {
-                'fill-emerald-600 stroke-emerald-600 group-hover:stroke-emerald-600 dark:fill-emerald-400 dark:stroke-emerald-400 group-hover:dark:stroke-emerald-400':
+                'stroke-emerald-600 group-hover:stroke-emerald-600 dark:stroke-emerald-400 group-hover:dark:stroke-emerald-400':
                   hasVoted,
                 'stroke-zinc-500 group-hover:stroke-zinc-600 group-disabled:stroke-zinc-300 dark:stroke-zinc-300 group-hover:dark:stroke-zinc-100 group-disabled:dark:stroke-zinc-500/50':
                   !hasVoted,
               },
-              'h-4 w-4 duration-200',
+              'my-auto h-4 w-4 duration-200',
             )}
           />
           <span
@@ -89,7 +90,7 @@ export function Vote({
           >
             {votes}
           </span>
-        </button>
+        </Button>
       </TooltipTrigger>
       <TooltipContent>
         <p>{session.data?.user.id ? 'Upvote' : 'Login to Upvote'}</p>

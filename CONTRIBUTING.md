@@ -6,12 +6,12 @@ Thank you for considering contributing to TypeHero. As an open sourced project
 we only exist by contributions from users like you.
 
 To contribute you will first need to fork the repo. To get the repository up and
-running, please look at [LOCAL.md](/LOCAL.MD) for setup instructions.
+running, please look at [LOCAL.md](/LOCAL.md) for setup instructions.
 
 ## Code of Conduct
 
 This project and everyone participating in it is governed by the
-[CONTRIBUTING.md Code of Conduct](blob/master/CODE_OF_CONDUCT.md). By
+[Code of Conduct](/CODE_OF_CONDUCT.md). By
 participating you are expected to uphold this code. Please report unacceptable
 behavior to <placeholder@typehero.dev>
 
@@ -40,7 +40,7 @@ free to include any information you feel is relevant to the bug.
 We use GitHub issues to track bugs and errors. If you run into an issue with the
 project:
 
-- Open an [Issue](/issues/new).
+- Open an [Issue](https://github.com/typehero/typehero/issues/new/choose).
 - Explain the behavior you would expect and the actual behavior.
 - Please provide as much context as possible and describe the _reproduction
   steps_ that someone else can follow to recreate the issue on their own. This
@@ -69,7 +69,7 @@ the community to understand your suggestion and find related suggestions.
 #### Before Submitting an Enhancement
 
 - Make sure that you are using the latest version.
-- Perform a search in [GitHub](/issues), or the
+- Perform a search in [GitHub](https://github.com/typehero/typehero/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc), or the
   [Suggestions Channel](https://discord.com/channels/796594544980000808/1143947327892103188)
   on Discord to see if the enhancement has already been suggested. If it has,
   add a comment to the existing issue instead of opening a new one.
@@ -80,7 +80,7 @@ the community to understand your suggestion and find related suggestions.
 
 #### How Do I Submit a Good Enhancement Suggestion?
 
-Enhancement suggestions are tracked as [GitHub issues](/issues).
+Enhancement suggestions are tracked as [GitHub issues](https://github.com/typehero/typehero/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc).
 
 - Use a **clear and descriptive title** for the issue to identify the
   suggestion.
@@ -97,7 +97,7 @@ Enhancement suggestions are tracked as [GitHub issues](/issues).
 
 ### Your First Code Contribution
 
-1. Choose an issue from the [GitHub issues](/issues), ask a member of the team
+1. Choose an issue from the [GitHub issues](https://github.com/typehero/typehero/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc), ask a member of the team
    to assign the issue to you.
 2. Fork the repository
 3. Create a branch on your fork. You should either add in the GitHub issue
@@ -107,7 +107,7 @@ Enhancement suggestions are tracked as [GitHub issues](/issues).
    [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/), but
    you are welcome to use one so long as the summary line accurately describes
    the overall purpose of the work and the ticket is referenced either in the PR
-   or the body of the commit message. See [Commits](#commits) for example
+   or the body of the commit message. See [Commits](https://github.com/typehero/typehero/commits/main) for example
    commits.
 5. When ready, put up a PR that links from your fork.
 

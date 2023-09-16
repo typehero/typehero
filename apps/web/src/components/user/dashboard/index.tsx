@@ -1,17 +1,14 @@
 import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import type { User } from '@repo/db/types';
+import { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/card';
+import { MagicIcon } from '@repo/ui/components/magic-icon';
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  MagicIcon,
   Tabs,
   VerticalTabsContent,
   VerticalTabsList,
   VerticalTabsTrigger,
-} from '@repo/ui';
+} from '@repo/ui/components/tabs';
 import { Bookmark, ChevronRightSquare, MessagesSquare, Play, Settings } from '@repo/ui/icons';
 import Link from 'next/link';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
@@ -21,6 +18,7 @@ import { InProgressTab } from './in-progress-tab';
 import { Overview } from './overview';
 import { SolutionsTab } from './solutions-tab';
 import UserHeader from './user-header';
+import { cache } from 'react';
 
 interface Props {
   // TODO: how do do this union type with just letting prisma halp
@@ -30,7 +28,7 @@ interface Props {
 }
 
 export type UserData = NonNullable<Awaited<ReturnType<typeof getUserdata>>>;
-async function getUserdata(id: string) {
+const getUserdata = cache(async (id: string) => {
   const userData = await prisma.user.findFirst({
     where: {
       id,
@@ -54,7 +52,7 @@ async function getUserdata(id: string) {
   });
 
   return userData;
-}
+});
 
 export async function Dashboard({ user }: Props) {
   const userData = await getUserdata(user.id);

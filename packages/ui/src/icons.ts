@@ -15,6 +15,7 @@ export {
   Clipboard,
   Copy,
   Diamond,
+  ExternalLink,
   Flag,
   GitBranch,
   Github,
@@ -52,4 +53,5 @@ export {
   ArrowUpNarrowWide,
   ChevronRightSquare,
   MessagesSquare,
+  Swords,
 } from 'lucide-react';

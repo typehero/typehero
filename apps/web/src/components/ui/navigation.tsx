@@ -1,15 +1,7 @@
 'use client';
 
 import { signIn, signOut, useSession } from '@repo/auth/react';
-import { RoleTypes } from '@repo/db/types';
-import {
-  Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@repo/ui';
+import { type RoleTypes } from '@repo/db/types';
 import { Loader2, LogIn, Moon, Plus, Settings, Settings2, Sun, User } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { useTheme } from 'next-themes';
@@ -18,6 +10,14 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import { FeatureFlagContext } from '~/app/feature-flag-provider';
 import { useFullscreenSettingsStore } from '../../app/[locale]/challenge/_components/fullscreen';
+import { Button } from '@repo/ui/components/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@repo/ui/components/dropdown-menu';
 
 export function getAdminUrl() {
   // reference for vercel.com
@@ -29,13 +29,20 @@ export function getAdminUrl() {
   return `http://localhost:3001`;
 }
 
+const roleTypes: typeof RoleTypes = {
+  USER: 'USER',
+  ADMIN: 'ADMIN',
+  MODERATOR: 'MODERATOR',
+  CREATOR: 'CREATOR',
+};
+
 export function Navigation() {
   const { fssettings } = useFullscreenSettingsStore();
   const pathname = usePathname();
   const featureFlags = useContext(FeatureFlagContext);
 
   return (
-    <header className="z-10 w-full">
+    <header className="z-0 w-full">
       {!fssettings.isFullscreen && (
         <nav
           className={`flex h-14 items-center text-sm font-medium ${
@@ -150,8 +157,8 @@ function LoginButton() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  const isAdmin = session?.user.role.includes(RoleTypes.ADMIN);
-  const isMod = session?.user.role.includes(RoleTypes.MODERATOR);
+  const isAdmin = session?.user.role.includes(roleTypes.ADMIN);
+  const isMod = session?.user.role.includes(roleTypes.MODERATOR);
   const isAdminOrMod = isAdmin || isMod;
 
   // NOTE: 1. loading == true -> 2. signIn() -> 3. session status == 'loading' (loading == false)

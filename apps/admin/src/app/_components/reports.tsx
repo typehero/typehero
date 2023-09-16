@@ -2,15 +2,15 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { Pagination } from '@repo/ui/components/pagination';
 import {
-  Pagination,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from '@repo/ui';
+} from '@repo/ui/components/table';
 import {
   getInfiniteReports,
   type InfiniteReports,

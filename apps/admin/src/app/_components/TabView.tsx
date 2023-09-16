@@ -1,6 +1,6 @@
 'use client';
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui/components/tabs';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React from 'react';
 import type { InfiniteReports } from '../report/[id]/_components/report/report.action';
