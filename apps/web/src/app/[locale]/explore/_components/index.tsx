@@ -46,7 +46,7 @@ export async function Explore() {
       </Suspense>
       <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection
-          title='"Hey, maybe I like TypeScript"'
+          title="Great for Learners"
           fetcher={getChallengesByTagOrDifficulty}
           tag="EASY"
           redirectRoute="/explore/easy"
@@ -62,7 +62,7 @@ export async function Explore() {
       </Suspense>
       <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection
-          title="For the Experts"
+          title="Great for Experts"
           fetcher={getChallengesByTagOrDifficulty}
           tag="HARD"
           redirectRoute="/explore/hard"
@@ -70,7 +70,7 @@ export async function Explore() {
       </Suspense>
       <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection
-          title="The Best of the Best"
+          title="Great for Masters"
           fetcher={getChallengesByTagOrDifficulty}
           tag="EXTREME"
           redirectRoute="/explore/extreme"
