@@ -1,7 +1,13 @@
 'use client';
 
 import type { User } from '@repo/db/types';
-import { Card, Tabs, VerticalTabsContent, VerticalTabsList, VerticalTabsTrigger } from '@repo/ui';
+import {
+  Tabs,
+  VerticalTabsContent,
+  VerticalTabsList,
+  VerticalTabsTrigger,
+} from '@repo/ui/components/tabs';
+import { Card } from '@repo/ui/components/card';
 import { BellRing, Brush, Settings2, Shapes } from 'lucide-react';
 import Link from 'next/link';
 import UserHeader from '~/components/user/dashboard/user-header';
