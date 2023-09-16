@@ -159,7 +159,7 @@ export function WaitlistForm() {
         {state === 'duplicate' && (
           <AlertDestructive text="We already have your email. Thanks for signing up!" />
         )}
-        {state === 'success' && <AlertSuccess />}
+        {true && <AlertSuccess />}
         {state === 'error' && <AlertDestructive />}
       </div>
     </div>
@@ -174,7 +174,9 @@ export function AlertDestructive({
   return (
     <Alert className="dark:bg-[#230808]" variant="destructive">
       <AlertCircle className="h-4 w-4" />
-      <AlertDescription className="text-left text-black dark:text-white">{text}</AlertDescription>
+      <AlertDescription className="pl-7 text-left text-black dark:text-white">
+        {text}
+      </AlertDescription>
     </Alert>
   );
 }
@@ -183,7 +185,7 @@ export function AlertSuccess() {
   return (
     <Alert variant="success">
       <MailCheck className="h-4 w-4" />
-      <AlertDescription className="text-left text-white">
+      <AlertDescription className="pl-7 text-left text-white">
         Thanks for signing up for the waitlist! Consider{' '}
         <a
           className="underline"
