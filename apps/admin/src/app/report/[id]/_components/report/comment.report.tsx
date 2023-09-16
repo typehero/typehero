@@ -1,5 +1,7 @@
 import Link from 'next/link';
+import { ExternalLink } from '@repo/ui/icons';
 import type { ReportWithInfo } from '../../report.action';
+import { Markdown } from '@repo/ui/components/markdown';
 
 export function CommentReport({ report }: { report: NonNullable<ReportWithInfo> }) {
   if (report.type !== 'COMMENT' || report.commentId === null || !report.comment) return null;
@@ -10,7 +12,7 @@ export function CommentReport({ report }: { report: NonNullable<ReportWithInfo> 
       <header>
         Commented on{' '}
         <Link
-          className="rounded-full bg-zinc-800 px-2 py-1 text-blue-600 dark:text-blue-400"
+          className="inline-flex items-baseline gap-2 rounded-full bg-zinc-800 px-2 py-1 text-blue-600 dark:text-blue-400"
           href={`/${report.comment.rootType.toLowerCase()}/${
             report.comment.rootChallengeId || report.comment.rootSolutionId
           }`}
@@ -21,11 +23,21 @@ export function CommentReport({ report }: { report: NonNullable<ReportWithInfo> 
           {report.comment.rootType === 'CHALLENGE'
             ? report.comment.rootChallenge?.name
             : report.comment.rootSolution?.title}
+          <ExternalLink size={16} />
         </Link>
       </header>
-      <section className="mt-4 rounded-lg bg-zinc-800">
-        <pre>{JSON.stringify(report.comment, null, 2)}</pre>
-        {/* <Comment comment={report.comment} readonly rootId={rootId} type={report.comment.rootType} />   */}
+      <section className="mt-4 rounded-lg bg-zinc-800 p-4">
+        <header className="flex gap-4">
+          <div className="font-semibold">@{report.comment.user.name}</div>
+          <div>
+            {report.comment.createdAt.toLocaleString(undefined, {
+              dateStyle: 'medium',
+              timeStyle: 'medium',
+            })}
+          </div>
+        </header>
+        <Markdown>{report.comment.text}</Markdown>
+        <footer className="text-zinc-400">{report.comment._count.replies} Replies</footer>
       </section>
     </div>
   );

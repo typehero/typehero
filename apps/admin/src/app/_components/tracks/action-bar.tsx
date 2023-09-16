@@ -1,6 +1,13 @@
 'use client';
 
-import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@repo/ui';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@repo/ui/components/dialog';
+import { Button } from '@repo/ui/components/button';
 import { useState } from 'react';
 import { AddTrackForm } from './add-track-form';
 

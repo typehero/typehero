@@ -6,7 +6,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useForm, type UseFormReturn } from 'react-hook-form';
 import { z } from 'zod';
 import { useSession } from '@repo/auth/react';
-import { Form } from '@repo/ui';
+import { Form } from '@repo/ui/components/form';
 import type { TsErrors } from '@repo/monaco';
 import { ChallengeCardEditor } from './ChallengeCardEditor';
 import { DescriptionEditor } from './DescriptionEditor';

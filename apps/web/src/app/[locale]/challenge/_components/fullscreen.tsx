@@ -1,4 +1,4 @@
-import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { Maximize2, Minimize2 } from '@repo/ui/icons';
 import { useEffect } from 'react';
 import { create } from 'zustand';

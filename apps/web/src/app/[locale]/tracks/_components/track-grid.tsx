@@ -1,12 +1,13 @@
 import { prisma } from '@repo/db';
 import { TrackCard } from './track-card';
+import { getServerAuthSession } from '@repo/auth/server';
 
 export async function TrackGrid() {
   const tracks = await getTracks();
   return (
     <div className="container flex items-center justify-between gap-3">
-      <section className="grid w-full grid-flow-row grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
-        {tracks?.map((t) => <TrackCard key={`track-${t.id}`} track={t} />)}
+      <section className="grid w-full grid-flow-row grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3">
+        {tracks?.map((t, i) => <TrackCard key={`track-${t.id}`} index={i} track={t} />)}
       </section>
     </div>
   );
@@ -17,24 +18,25 @@ export type Tracks = Awaited<ReturnType<typeof getTracks>>;
 /**
  * Fetches all tracks.
  */
-function getTracks() {
+async function getTracks() {
+  const session = await getServerAuthSession();
+  console.log(session?.user.id);
+
   return prisma.track.findMany({
     include: {
-      trackChallenges: {
-        include: {
-          challenge: true,
+      _count: {
+        select: {
+          trackChallenges: true,
         },
-        orderBy: {
-          orderId: 'asc',
+      },
+      enrolledUsers: {
+        where: {
+          id: session?.user.id ?? '',
         },
-        take: 3,
       },
     },
     where: {
       visible: true,
-    },
-    orderBy: {
-      title: 'asc',
     },
   });
 }

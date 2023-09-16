@@ -1,17 +1,11 @@
-import { type DialogTriggerProps } from '@radix-ui/react-dialog';
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-  TypographyLarge,
-  TypographyP,
-  Markdown,
-  toast,
-} from '@repo/ui';
+import type { DialogTriggerProps } from '@radix-ui/react-dialog';
+import { Button } from '@repo/ui/components/button';
+import { Dialog, DialogContent, DialogTrigger } from '@repo/ui/components/dialog';
+import { Markdown } from '@repo/ui/components/markdown';
+import { TypographyP } from '@repo/ui/components/paragraph';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
+import { TypographyLarge } from '@repo/ui/components/typography/large';
+import { toast } from '@repo/ui/components/use-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { getRelativeTime } from '~/utils/relativeTime';

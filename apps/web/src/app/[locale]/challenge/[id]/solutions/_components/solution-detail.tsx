@@ -2,28 +2,25 @@
 
 import { Calendar, Flag, Share, X } from '@repo/ui/icons';
 import Link from 'next/link';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-  Button,
-  TypographyLarge,
-  toast,
-  UserBadge,
-  ActionMenu,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-  Markdown,
-} from '@repo/ui';
 import { Comments } from '~/app/[locale]/challenge/_components/comments';
 import type { ChallengeSolution } from '~/app/[locale]/challenge/[id]/solutions/[solutionId]/page';
 import { ReportDialog } from '~/components/ReportDialog';
+import { ActionMenu } from '@repo/ui/components/action-menu';
+import { Avatar, AvatarImage, AvatarFallback } from '@repo/ui/components/avatar';
+import { Button } from '@repo/ui/components/button';
+import { toast } from '@repo/ui/components/use-toast';
+import { TypographyLarge } from '@repo/ui/components/typography/large';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
+import { Markdown } from '@repo/ui/components/markdown';
+import { UserBadge } from '@repo/ui/components/user-badge';
+import { Vote } from '../../../_components/vote';
+import { useSession } from '@repo/auth/react';
 
 interface Props {
   solution: ChallengeSolution;
 }
 export function SolutionDetails({ solution }: Props) {
+  const { data: session } = useSession();
   const handleShareClick = async () => {
     if (navigator.clipboard) {
       const url = window.location.href;
@@ -43,13 +40,15 @@ export function SolutionDetails({ solution }: Props) {
             <X className="stroke-gray-500 hover:stroke-gray-400" size={20} />
           </Link>
         </div>
-        <div className="custom-scrollable-element flex-1 overflow-y-auto px-4 py-3">
+        <div className="custom-scrollable-element flex-1 overflow-y-auto px-4 pb-16 pt-3">
           <div className="mb-5 flex flex-col gap-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Avatar>
+                <Avatar className="h-7 w-7">
                   <AvatarImage alt="github profile picture" src={solution.user?.image ?? ''} />
-                  <AvatarFallback>{solution.user?.name}</AvatarFallback>
+                  <AvatarFallback className="border border-zinc-300 dark:border-zinc-600">
+                    {solution.user?.name.substring(0, 1)}
+                  </AvatarFallback>
                 </Avatar>
                 <TypographyLarge>{solution.title}</TypographyLarge>
               </div>
@@ -92,6 +91,23 @@ export function SolutionDetails({ solution }: Props) {
                   {solution.createdAt?.toLocaleString()}
                 </span>
               </div>
+              <Vote
+                voteCount={solution._count.vote}
+                initialHasVoted={solution.vote.length > 0}
+                disabled={!session?.user?.id || solution.userId === session?.user?.id}
+                rootType="SHAREDSOLUTION"
+                rootId={solution.id}
+                onVote={(didUpvote: boolean) => {
+                  solution.vote = didUpvote
+                    ? [
+                        {
+                          userId: session?.user?.id ?? '',
+                        },
+                      ]
+                    : [];
+                  solution._count.vote += didUpvote ? 1 : -1;
+                }}
+              />
             </div>
           </div>
           <Markdown>{solution.description || ''}</Markdown>

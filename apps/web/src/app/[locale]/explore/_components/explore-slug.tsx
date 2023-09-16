@@ -1,7 +1,7 @@
-import { TypographyH3 } from '@repo/ui';
 import Link from 'next/link';
 import { ExploreCard } from './explore-card';
 import { getChallengesByTagOrDifficulty } from './explore.action';
+import { TypographyH3 } from '@repo/ui/components/typography/h3';
 
 interface ExploreSlugProps {
   slug: string;
