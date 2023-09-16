@@ -8,7 +8,7 @@ import { CodeEditor, LIB_URI } from './code-editor';
 import { libSource } from './editor-types';
 import dynamic from 'next/dynamic';
 import { useEditorSettingsStore } from './settings-store';
-import { getEventDeltas } from './utils';
+import { getEventDeltas, typeCheck } from './utils';
 import { useResetEditor } from './editor-hooks';
 
 function preventSelection(event: Event) {
@@ -62,6 +62,7 @@ export default function SplitEditor({
   monaco,
 }: SplitEditorProps) {
   const { settings, updateSettings } = useEditorSettingsStore();
+  const { subscribe } = useResetEditor();
 
   const wrapper = useRef<HTMLDivElement>(null);
   const resizer = useRef<HTMLDivElement>(null);
@@ -178,44 +179,17 @@ export default function SplitEditor({
       }
     }
   }, [monaco]);
-  async function typeCheck() {
-    if (monaco && userEditorState) {
-      const models = monaco.editor.getModels();
-      const getWorker = await monaco.languages.typescript.getTypeScriptWorker();
 
-      for (const model of models) {
-        const worker = await getWorker(model.uri);
-        const diagnostics = (
-          await Promise.all([
-            worker.getSyntacticDiagnostics(model.uri.toString()),
-            worker.getSemanticDiagnostics(model.uri.toString()),
-          ])
-        ).reduce((a, b) => a.concat(b));
-
-        const markers = diagnostics.map((d) => {
-          const start = model.getPositionAt(d.start!);
-          const end = model.getPositionAt(d.start! + d.length!);
-
-          return {
-            severity: monaco.MarkerSeverity.Error,
-            startLineNumber: start.lineNumber,
-            endLineNumber: end.lineNumber,
-            startColumn: start.column,
-            endColumn: end.column,
-            message: d.messageText as string,
-          } satisfies monacoType.editor.IMarkerData;
-        });
-
-        monaco.editor.setModelMarkers(model, model.getLanguageId(), markers);
+  subscribe(
+    'resetCode',
+    () => {
+      if (monaco && userEditorState) {
+        typeCheck(monaco);
+        onMount?.tests?.(userEditorState, monaco);
       }
-    }
-  }
-  useResetEditor([monaco, userEditorState]).subscribe('resetCode', () => {
-    if (monaco && userEditorState) {
-      typeCheck();
-      onMount?.tests?.(userEditorState, monaco);
-    }
-  });
+    },
+    [monaco, userEditorState],
+  );
 
   return (
     <div className={clsx('flex h-[calc(100%-_90px)] flex-col', className)} ref={wrapper}>
@@ -230,34 +204,7 @@ export default function SplitEditor({
           onValidate={onValidate?.user}
           onChange={async (e, a) => {
             if (monaco) {
-              const models = monaco.editor.getModels();
-              const getWorker = await monaco.languages.typescript.getTypeScriptWorker();
-
-              for (const model of models) {
-                const worker = await getWorker(model.uri);
-                const diagnostics = (
-                  await Promise.all([
-                    worker.getSyntacticDiagnostics(model.uri.toString()),
-                    worker.getSemanticDiagnostics(model.uri.toString()),
-                  ])
-                ).reduce((a, b) => a.concat(b));
-
-                const markers = diagnostics.map((d) => {
-                  const start = model.getPositionAt(d.start!);
-                  const end = model.getPositionAt(d.start! + d.length!);
-
-                  return {
-                    severity: monaco.MarkerSeverity.Error,
-                    startLineNumber: start.lineNumber,
-                    endLineNumber: end.lineNumber,
-                    startColumn: start.column,
-                    endColumn: end.column,
-                    message: d.messageText as string,
-                  } satisfies monacoType.editor.IMarkerData;
-                });
-
-                monaco.editor.setModelMarkers(model, model.getLanguageId(), markers);
-              }
+              typeCheck(monaco);
             }
 
             onChange?.user?.(e, a);
