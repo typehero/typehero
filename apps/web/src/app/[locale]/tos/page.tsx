@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <div className="container prose dark:prose-invert py-10 justify-center">
+    <div className="prose dark:prose-invert container justify-center py-10">
       <h1>Terms and Conditions</h1>
 
       <h2>1. Terms</h2>

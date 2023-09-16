@@ -12,14 +12,14 @@ export function Footsies() {
         <div className="text-neutral-500 dark:text-neutral-400">
           <Link
             href="/privacy"
-            className="dark:hover:text-primary-foreground hover:text-neutral-900 transition-colors duration-300 hover:underline"
+            className="dark:hover:text-primary-foreground transition-colors duration-300 hover:text-neutral-900 hover:underline"
           >
             Privacy Policy
           </Link>{' '}
           |{' '}
           <Link
             href="/tos"
-            className="dark:hover:text-primary-foreground hover:text-neutral-900 transition-colors duration-300 hover:underline"
+            className="dark:hover:text-primary-foreground transition-colors duration-300 hover:text-neutral-900 hover:underline"
           >
             Terms of Service
           </Link>
