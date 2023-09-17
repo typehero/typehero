@@ -29,6 +29,30 @@ export function getAdminUrl() {
   return `http://localhost:3001`;
 }
 
+const SkipNavigation = () => {
+  const onSkip = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.currentTarget.blur();
+    const main = document.getElementById('main');
+    if (main) {
+      const res: HTMLElement[] =
+        document.querySelectorAll('#main button, #main a, #main input:not([type="hidden"]), #main select, #main textarea, #main [tabindex]:not([tabindex="-1"])') as unknown as HTMLElement[];
+      if (res.length > 0) {
+        res[0]?.focus();
+      }
+    }
+  }
+  return (
+    <div className="absolute">
+      <Button
+        className="focus:bg-accent w-20 rounded-lg p-2 text-black duration-300 hover:bg-gray-200 focus:outline-none dark:text-white hover:dark:bg-gray-800 focus-visible:not-sr-only sr-only"
+        onClick={onSkip}
+      >
+        Skip Navigation
+      </Button>
+    </div>
+  )
+}
+
 const roleTypes: typeof RoleTypes = {
   USER: 'USER',
   ADMIN: 'ADMIN',
@@ -45,9 +69,8 @@ export function Navigation() {
     <header className="z-0 w-full">
       {!fssettings.isFullscreen && (
         <nav
-          className={`flex h-14 items-center text-sm font-medium ${
-            pathname?.startsWith('/challenge') ? 'px-4' : 'container'
-          }`}
+          className={`flex h-14 items-center text-sm font-medium ${pathname?.startsWith('/challenge') ? 'px-4' : 'container'
+            }`}
         >
           <div className="flex w-full items-center justify-between">
             <div className="relative flex items-center gap-3">
@@ -92,9 +115,7 @@ export function Navigation() {
                   hero
                 </span>
               </a>
-              <a className="focus:visible px-3" href="#main">
-                Skip Navigation
-              </a>
+              <SkipNavigation />
               {featureFlags?.exploreButton ? (
                 <Link href="/explore" className="ml-4">
                   <div
