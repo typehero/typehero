@@ -35,21 +35,22 @@ const SkipNavigation = () => {
     const main = document.getElementById('main');
     if (main) {
       const res: HTMLElement[] =
-        document.querySelectorAll('#main button, #main a, #main input:not([type="hidden"]), #main select, #main textarea, #main [tabindex]:not([tabindex="-1"])') as unknown as HTMLElement[];
+        document
+          .querySelectorAll(
+            '#main button, #main a, #main input:not([type="hidden"]), #main select, #main textarea, #main [tabindex]:not([tabindex="-1"])'
+          ) as unknown as HTMLElement[];
       if (res.length > 0) {
         res[0]?.focus();
       }
     }
   }
   return (
-    <div className="absolute">
-      <Button
-        className="focus:bg-accent w-20 rounded-lg p-2 text-black duration-300 hover:bg-gray-200 focus:outline-none dark:text-white hover:dark:bg-gray-800 focus-visible:not-sr-only sr-only"
+      <button
+        className="focus-visible:not-sr-only sr-only focus:bg-accent w-20 rounded-lg p-4 text-black duration-0 hover:bg-gray-200 focus:outline-none dark:text-white hover:dark:bg-gray-800 focus-visible:ring-2"
         onClick={onSkip}
       >
         Skip Navigation
-      </Button>
-    </div>
+      </button>
   )
 }
 

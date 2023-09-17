@@ -16,14 +16,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 
-const SkipNavigation = () => {
-  return (
-    <button>
-      Skip Navigation
-    </button>
-  )
-}
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html suppressHydrationWarning lang="en">
