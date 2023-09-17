@@ -64,7 +64,6 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
   const [page, setPage] = useState(preselectedCommentMetadata?.page ?? 1);
   const [sortKey, setSortKey] = useState<(typeof sortKeys)[number]>(sortKeys[0]);
   const queryKey = [`${type.toLowerCase()}-${rootId}-comments`, sortKey.value, page];
-
   const { status, data } = useQuery({
     queryKey,
     queryFn: () =>
