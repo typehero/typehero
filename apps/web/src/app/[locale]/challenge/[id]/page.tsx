@@ -19,9 +19,9 @@ export async function generateMetadata({ params: { id } }: Props) {
   });
 }
 
-export default async function Challenges({ params: { id } }: Props) {
+export default async function Challenges({ params: { id: challengeId } }: Props) {
   const session = await getServerAuthSession();
-  const challenge = await getChallengeRouteData(id, session);
+  const challenge = await getChallengeRouteData(challengeId, session);
 
   return (
     <div className="relative h-full">
