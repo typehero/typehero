@@ -15,6 +15,15 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildMetaForDefault();
 }
 
+
+const SkipNavigation = () => {
+  return (
+    <button>
+      Skip Navigation
+    </button>
+  )
+}
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html suppressHydrationWarning lang="en">
@@ -28,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${inter.className} flex flex-col`}>
         <Providers>
           <Navigation />
-          <main className="flex-1">{children}</main>
+          <main id="main" className="flex-1">{children}</main>
           <Toaster />
         </Providers>
         <Analytics />
