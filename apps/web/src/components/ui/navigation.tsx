@@ -77,9 +77,6 @@ export function Navigation() {
               <a
                 className="flex items-center space-x-2 focus:outline-none focus-visible:ring-2"
                 href="/"
-                onBlur={(e) => {
-                  console.log(e);
-                }}
               >
                 <svg
                   className="h-8 w-8 rounded-md bg-[#3178C6] p-[2px]"
