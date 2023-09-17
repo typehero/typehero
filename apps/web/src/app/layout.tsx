@@ -15,7 +15,6 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildMetaForDefault();
 }
 
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html suppressHydrationWarning lang="en">
@@ -29,7 +28,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${inter.className} flex flex-col`}>
         <Providers>
           <Navigation />
-          <main id="main" className="flex-1">{children}</main>
+          <main id="main" className="flex-1">
+            {children}
+          </main>
           <Toaster />
         </Providers>
         <Analytics />

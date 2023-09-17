@@ -34,25 +34,23 @@ const SkipNavigation = () => {
     e.currentTarget.blur();
     const main = document.getElementById('main');
     if (main) {
-      const res: HTMLElement[] =
-        document
-          .querySelectorAll(
-            '#main button, #main a, #main input:not([type="hidden"]), #main select, #main textarea, #main [tabindex]:not([tabindex="-1"])'
-          ) as unknown as HTMLElement[];
+      const res: HTMLElement[] = document.querySelectorAll(
+        '#main button, #main a, #main input:not([type="hidden"]), #main select, #main textarea, #main [tabindex]:not([tabindex="-1"])',
+      ) as unknown as HTMLElement[];
       if (res.length > 0) {
         res[0]?.focus();
       }
     }
-  }
+  };
   return (
-      <button
-        className="focus-visible:not-sr-only sr-only focus:bg-accent w-20 rounded-lg p-4 text-black duration-0 hover:bg-gray-200 focus:outline-none dark:text-white hover:dark:bg-gray-800 focus-visible:ring-2"
-        onClick={onSkip}
-      >
-        Skip Navigation
-      </button>
-  )
-}
+    <button
+      className="focus:bg-accent sr-only w-20 rounded-lg p-4 text-black duration-0 hover:bg-gray-200 focus:outline-none focus-visible:not-sr-only focus-visible:ring-2 dark:text-white hover:dark:bg-gray-800"
+      onClick={onSkip}
+    >
+      Skip Navigation
+    </button>
+  );
+};
 
 const roleTypes: typeof RoleTypes = {
   USER: 'USER',
@@ -70,8 +68,9 @@ export function Navigation() {
     <header className="z-0 w-full">
       {!fssettings.isFullscreen && (
         <nav
-          className={`flex h-14 items-center text-sm font-medium ${pathname?.startsWith('/challenge') ? 'px-4' : 'container'
-            }`}
+          className={`flex h-14 items-center text-sm font-medium ${
+            pathname?.startsWith('/challenge') ? 'px-4' : 'container'
+          }`}
         >
           <div className="flex w-full items-center justify-between">
             <div className="relative flex items-center gap-3">
