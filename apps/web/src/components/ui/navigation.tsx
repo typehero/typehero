@@ -29,16 +29,18 @@ export function getAdminUrl() {
   return `http://localhost:3001`;
 }
 
-const SkipNavigation = () => {
+// for a11y stuff
+function SkipNavigation() {
   const onSkip = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.currentTarget.blur();
     const main = document.getElementById('main');
     if (main) {
-      const res: HTMLElement[] = document.querySelectorAll(
+      const focusableElements: HTMLElement[] = document.querySelectorAll(
         '#main button, #main a, #main input:not([type="hidden"]), #main select, #main textarea, #main [tabindex]:not([tabindex="-1"])',
       ) as unknown as HTMLElement[];
-      if (res.length > 0) {
-        res[0]?.focus();
+      // Try to focus on the first element in the #main section
+      if (focusableElements.length > 0) {
+        focusableElements[0]?.focus();
       }
     }
   };
