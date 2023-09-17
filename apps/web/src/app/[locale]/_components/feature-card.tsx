@@ -481,6 +481,7 @@ export function CuratedTracksCard(props: CardProps) {
               key={`mock-${mockChallenge.id}`}
               challenge={mockChallenge as Challenge}
               mock
+              tabIndex={0}
             />
           ))}
         </div>

@@ -3,8 +3,6 @@
 import { Check } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { useIsMobile } from '~/utils/useIsMobile';
-import type { Tracks } from './track-grid';
-import { useEffect, useRef, useState } from 'react';
 import type { Challenge } from '@repo/db/types';
 
 interface TrackChallengeProps {
@@ -13,6 +11,7 @@ interface TrackChallengeProps {
   challengeCompleted?: boolean;
   className?: string;
   mock?: boolean;
+  tabIndex?: number;
 }
 
 const COLORS_BY_DIFFICULTY = {
@@ -37,6 +36,7 @@ export function TrackChallenge({
   mock,
   challengeInProgress = false,
   challengeCompleted = false,
+  tabIndex = 0,
 }: TrackChallengeProps) {
   const isMobile = useIsMobile();
 
@@ -44,13 +44,15 @@ export function TrackChallenge({
     <label
       htmlFor={challenge.id.toString()}
       className="group/challenge flex cursor-pointer flex-col items-center pt-2 focus:outline-none"
+      tabIndex={tabIndex}
       onKeyDown={(e) => {
         const clickEvent = new MouseEvent('click', {
           view: window,
           bubbles: true,
           cancelable: false,
         });
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
           e.target.dispatchEvent(clickEvent);
         }
       }}
@@ -58,13 +60,12 @@ export function TrackChallenge({
       <div
         className={clsx(
           `flex w-full items-center justify-between gap-3 overflow-hidden rounded-lg`,
-          `bg-gradient-to-r from-neutral-500/10 from-70% ${
-            BGS_BY_DIFFICULTY[challenge.difficulty]
+          `bg-gradient-to-r from-neutral-500/10 from-70% ${BGS_BY_DIFFICULTY[challenge.difficulty]
           } to-100% dark:from-neutral-500/20`,
           ` p-4 py-2 text-black/90 duration-300 group-active/challenge:bg-neutral-500/40 group-active/challenge:duration-75 dark:text-white/90 sm:py-4`,
           className,
           !isMobile &&
-            'group-hover/challenge:scale-105 group-hover/challenge:rounded-xl group-hover/challenge:bg-neutral-500/20',
+          'group-hover/challenge:scale-105 group-hover/challenge:rounded-xl group-hover/challenge:bg-neutral-500/20',
           'group-focus/challenge:outline-none group-focus-visible/challenge:ring-2 group-focus-visible/challenge:ring-blue-600',
         )}
       >
@@ -91,20 +92,18 @@ export function TrackChallenge({
           </div>
         </div>
         <div
-          className={`relative text-xs font-medium tracking-wide ${
-            COLORS_BY_DIFFICULTY[challenge.difficulty]
-          } text-background`}
+          className={`relative text-xs font-medium tracking-wide ${COLORS_BY_DIFFICULTY[challenge.difficulty]
+            } text-background`}
         >
           <div
-            className={`absolute right-0 top-1/2 h-12 w-12 -translate-y-1/2 blur-3xl ${
-              BGS_BY_DIFFICULTY[challenge.difficulty]
-            }`}
+            className={`absolute right-0 top-1/2 h-12 w-12 -translate-y-1/2 blur-3xl ${BGS_BY_DIFFICULTY[challenge.difficulty]
+              }`}
           />
           {challengeInProgress
             ? 'In Progress'
             : `${challenge.difficulty[0]}${challenge.difficulty
-                .substring(1, challenge.difficulty.length)
-                .toLowerCase()}`}
+              .substring(1, challenge.difficulty.length)
+              .toLowerCase()}`}
         </div>
       </div>
     </label>
