@@ -39,5 +39,10 @@ If you find the project interesting and want to support us please consider spons
         <img src="./media/ps-badge.png" alt="Powered by Planetscale" title="Powered by Planetscale" width="200">
       </a>
     </td>
+    <td>
+      <a href="https://www.theopenbootcamp.com/" target="_parent">
+        <img src="./media/open-bootcamp.png" alt="Open Bootcamp Logo" title="Open Bootcamp" width="75">
+      </a>
+    </td>
   </tr>
 </table>
