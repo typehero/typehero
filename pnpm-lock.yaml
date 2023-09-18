@@ -71,7 +71,7 @@ importers:
         specifier: 2.6.0-beta.12
         version: 2.6.0-beta.12
       next:
-        specifier: 13.4.19
+        specifier: ^13.4.19
         version: 13.4.19(@babel/core@7.22.10)(react-dom@18.2.0)(react@18.2.0)
       next-auth:
         specifier: ^4.22.1
@@ -165,7 +165,7 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       next:
-        specifier: ^13.4.8
+        specifier: ^13.4.19
         version: 13.4.19(@babel/core@7.22.10)(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: latest
@@ -174,7 +174,7 @@ importers:
         specifier: latest
         version: 18.2.0(react@18.2.0)
       zod:
-        specifier: ^3.0.0
+        specifier: ^3.21.4
         version: 3.21.4
     devDependencies:
       '@repo/lint':
@@ -184,13 +184,13 @@ importers:
         specifier: workspace:*
         version: link:../../tooling/config-typescript
       '@types/node':
-        specifier: ^18.16.16
-        version: 18.16.16
+        specifier: ^20.4.2
+        version: 20.4.2
       '@types/react':
-        specifier: ^18.2.8
+        specifier: ^18.2.20
         version: 18.2.20
       typescript:
-        specifier: ^5.1.3
+        specifier: ^5.1.6
         version: 5.1.6
 
   apps/web:
@@ -432,10 +432,10 @@ importers:
         specifier: workspace:*
         version: link:../../tooling/config-typescript
       '@types/node':
-        specifier: ^16.18.11
-        version: 16.18.11
+        specifier: ^20.4.2
+        version: 20.4.2
       eslint:
-        specifier: ^8.42.0
+        specifier: ^8.45.0
         version: 8.45.0
       prisma:
         specifier: ^5.0.0
@@ -444,7 +444,7 @@ importers:
         specifier: 5.12.0
         version: 5.12.0(typescript@5.1.6)
       typescript:
-        specifier: ^5.1.3
+        specifier: ^5.1.6
         version: 5.1.6
 
   packages/db:
@@ -463,13 +463,13 @@ importers:
         specifier: workspace:*
         version: link:../../tooling/config-typescript
       '@types/node':
-        specifier: ^16.18.11
-        version: 16.18.11
+        specifier: ^20.4.2
+        version: 20.4.2
       dotenv-cli:
         specifier: ^7.2.1
         version: 7.2.1
       eslint:
-        specifier: ^8.42.0
+        specifier: ^8.45.0
         version: 8.45.0
       prisma:
         specifier: ^5.0.0
@@ -484,7 +484,7 @@ importers:
         specifier: ^3.12.7
         version: 3.12.7
       typescript:
-        specifier: ^5.1.3
+        specifier: ^5.1.6
         version: 5.1.6
       uuid-by-string:
         specifier: ^4.0.0
@@ -526,7 +526,7 @@ importers:
         specifier: ^0.4.0
         version: 0.4.0(patch_hash=j3oqxjoadtct3pc6tokddngzsm)
       next:
-        specifier: ^13.4.10
+        specifier: ^13.4.19
         version: 13.4.19(@babel/core@7.22.10)(react-dom@18.2.0)(react@18.2.0)
       next-themes:
         specifier: ^0.2.1
@@ -551,10 +551,10 @@ importers:
         specifier: workspace:*
         version: link:../../tooling/config-typescript
       eslint:
-        specifier: ^8.42.0
+        specifier: ^8.45.0
         version: 8.45.0
       typescript:
-        specifier: ^5.1.3
+        specifier: ^5.1.6
         version: 5.1.6
 
   packages/ui:
@@ -666,10 +666,10 @@ importers:
         specifier: ^18.2.20
         version: 18.2.20
       eslint:
-        specifier: ^8.42.0
+        specifier: ^8.45.0
         version: 8.45.0
       typescript:
-        specifier: ^5.1.3
+        specifier: ^5.1.6
         version: 5.1.6
 
   tooling/config-eslint:
@@ -690,13 +690,13 @@ importers:
         specifier: ^4.0.2
         version: 4.0.2(@next/eslint-plugin-next@13.4.20-canary.15)(eslint@8.45.0)(prettier@3.0.2)(typescript@5.1.6)
       eslint:
-        specifier: ^8.40.0
+        specifier: ^8.45.0
         version: 8.45.0
       eslint-config-turbo:
         specifier: ^1.10.12
         version: 1.10.12(eslint@8.45.0)
       typescript:
-        specifier: ^5.1.3
+        specifier: ^5.1.6
         version: 5.1.6
 
   tooling/config-tailwind:
@@ -719,8 +719,8 @@ importers:
         specifier: workspace:*
         version: link:../config-typescript
       '@types/node':
-        specifier: ^18.0.0
-        version: 18.0.0
+        specifier: ^20.4.2
+        version: 20.4.2
       '@types/node-fetch':
         specifier: ^2.6.4
         version: 2.6.4
@@ -731,7 +731,7 @@ importers:
         specifier: ^7.2.1
         version: 7.2.1
       eslint:
-        specifier: ^8.42.0
+        specifier: ^8.45.0
         version: 8.45.0
       node-fetch:
         specifier: ^3.3.2
@@ -3999,7 +3999,7 @@ packages:
   /@types/jsonwebtoken@9.0.2:
     resolution: {integrity: sha512-drE6uz7QBKq1fYqqoFKTDRdFCPHd5TCub75BM+D+cMx7NU9hUz7SESLfC2fSCXVFMO5Yj8sOWHuGqPgjc+fz0Q==}
     dependencies:
-      '@types/node': 18.17.6
+      '@types/node': 20.4.2
     dev: true
 
   /@types/lodash@4.14.195:
@@ -4019,28 +4019,13 @@ packages:
   /@types/node-fetch@2.6.4:
     resolution: {integrity: sha512-1ZX9fcN4Rvkvgv4E6PAY5WXUFWFcRWxZa3EW83UjycOB9ljJCedb2CupIP4RZMEwF/M3eTcCihbBRgwtGbg5Rg==}
     dependencies:
-      '@types/node': 18.17.6
+      '@types/node': 20.4.2
       form-data: 3.0.1
     dev: true
 
   /@types/node@12.20.55:
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
     dev: false
-
-  /@types/node@16.18.11:
-    resolution: {integrity: sha512-3oJbGBUWuS6ahSnEq1eN2XrCyf4YsWI8OyCvo7c64zQJNplk3mO84t53o8lfTk+2ji59g5ycfc6qQ3fdHliHuA==}
-    dev: true
-
-  /@types/node@18.0.0:
-    resolution: {integrity: sha512-cHlGmko4gWLVI27cGJntjs/Sj8th9aYwplmZFwmmgYQQvL5NUsgVJG7OddLvNfLqYS31KFN0s3qlaD9qCaxACA==}
-    dev: true
-
-  /@types/node@18.16.16:
-    resolution: {integrity: sha512-NpaM49IGQQAUlBhHMF82QH80J08os4ZmyF9MkpCzWAGuOHqE4gTEbhzd7L3l5LmWuZ6E0OiC1FweQ4tsiW35+g==}
-    dev: true
-
-  /@types/node@18.17.6:
-    resolution: {integrity: sha512-fGmT/P7z7ecA6bv/ia5DlaWCH4YeZvAQMNpUhrJjtAhOhZfoxS1VLUgU2pdk63efSjQaOJWdXMuAJsws+8I6dg==}
 
   /@types/node@20.4.2:
     resolution: {integrity: sha512-Dd0BYtWgnWJKwO1jkmTrzofjK2QXXcai0dmtzvIBhcA+RsG5h8R3xlyta0kGOZRNfL9GuRtb1knmPEhQrePCEw==}
@@ -5164,7 +5149,7 @@ packages:
     dev: false
 
   /concat-map@0.0.1:
-    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
+    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
 
   /condense-newlines@0.2.1:
     resolution: {integrity: sha512-P7X+QL9Hb9B/c8HI5BFFKmjgBu2XpQuF98WZ9XkO+dBGgk5XgwiQz7o1SmpglNWId3581UcS0SFAWfoIhMHPfg==}
@@ -7424,7 +7409,7 @@ packages:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
     engines: {node: '>= 10.13.0'}
     dependencies:
-      '@types/node': 18.17.6
+      '@types/node': 20.4.2
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
