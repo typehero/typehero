@@ -71,7 +71,7 @@ const Report = async function (props: Props) {
         <ReportActions report={report} />
       </div>
 
-      {report.moderator && (
+      {report.moderator ? (
         <Alert className="mt-4" variant="destructive">
           <div className="mb-0.5 flex items-center gap-2">
             <AlertCircle className="h-[1.25rem]" />
@@ -82,7 +82,7 @@ const Report = async function (props: Props) {
             Moderator @{report.moderator.name} took action on this case already.
           </AlertDescription>
         </Alert>
-      )}
+      ) : null}
 
       <div className="wrapper mt-4 flex flex-col gap-4 md:flex-row">
         <section className="order-2 flex-grow md:order-1">{ReportEl(report)}</section>
