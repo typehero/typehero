@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 161
+        "contributions": 163
     },
     {
         "login": "Hacksore",
@@ -41,7 +41,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/Hacksore/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 78
+        "contributions": 79
     },
     {
         "login": "PickleNik",
@@ -548,6 +548,27 @@ export const contributors = [
         "contributions": 2
     },
     {
+        "login": "SubxX",
+        "id": 51792949,
+        "node_id": "MDQ6VXNlcjUxNzkyOTQ5",
+        "avatar_url": "https://avatars.githubusercontent.com/u/51792949?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/SubxX",
+        "html_url": "https://github.com/SubxX",
+        "followers_url": "https://api.github.com/users/SubxX/followers",
+        "following_url": "https://api.github.com/users/SubxX/following{/other_user}",
+        "gists_url": "https://api.github.com/users/SubxX/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/SubxX/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/SubxX/subscriptions",
+        "organizations_url": "https://api.github.com/users/SubxX/orgs",
+        "repos_url": "https://api.github.com/users/SubxX/repos",
+        "events_url": "https://api.github.com/users/SubxX/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/SubxX/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 2
+    },
+    {
         "login": "NikolaRHristov",
         "id": 90222871,
         "node_id": "MDQ6VXNlcjkwMjIyODcx",
@@ -585,27 +606,6 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/aakash19here/repos",
         "events_url": "https://api.github.com/users/aakash19here/events{/privacy}",
         "received_events_url": "https://api.github.com/users/aakash19here/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 1
-    },
-    {
-        "login": "andresmarpz",
-        "id": 78830288,
-        "node_id": "MDQ6VXNlcjc4ODMwMjg4",
-        "avatar_url": "https://avatars.githubusercontent.com/u/78830288?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/andresmarpz",
-        "html_url": "https://github.com/andresmarpz",
-        "followers_url": "https://api.github.com/users/andresmarpz/followers",
-        "following_url": "https://api.github.com/users/andresmarpz/following{/other_user}",
-        "gists_url": "https://api.github.com/users/andresmarpz/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/andresmarpz/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/andresmarpz/subscriptions",
-        "organizations_url": "https://api.github.com/users/andresmarpz/orgs",
-        "repos_url": "https://api.github.com/users/andresmarpz/repos",
-        "events_url": "https://api.github.com/users/andresmarpz/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/andresmarpz/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 1

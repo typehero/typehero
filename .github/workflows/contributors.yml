@@ -21,7 +21,7 @@ jobs:
       contents: write
       pull-requests: write
     env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
