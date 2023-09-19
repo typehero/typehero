@@ -21,7 +21,7 @@
     "lint:fix": "eslint . --fix --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
     "refresh": "turbo db:reset db:seed --concurrency=1",
     "test:e2e": "turbo test:e2e",
-    "test:e2e:install": "pnpm exec playwright install",
+    "test:e2e:install": "playwright install",
     "tunnel": "cloudflared tunnel --url http://localhost:3000",
     "typecheck": "turbo typecheck --continue"
   },
