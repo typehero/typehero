@@ -1,6 +1,9 @@
 'use client';
 
 import type { Challenge, Difficulty } from '@repo/db/types';
+import { Button } from '@repo/ui/components/button';
+import { Markdown } from '@repo/ui/components/markdown';
+import { Reply } from '@repo/ui/icons';
 import clsx from 'clsx';
 import {
   motion,
@@ -9,16 +12,13 @@ import {
   type MotionStyle,
   type MotionValue,
 } from 'framer-motion';
-import { Reply } from '@repo/ui/icons';
 import { useTheme } from 'next-themes';
 import Image, { type StaticImageData } from 'next/image';
 import { useEffect, useState, type MouseEvent } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Steps } from '~/components/wizard/Steps';
 import { useIsMobile } from '~/utils/useIsMobile';
-import { TrackChallenge } from '../tracks/_components/track-challenge-card';
-import { Button } from '@repo/ui/components/button';
-import { Markdown } from '@repo/ui/components/markdown';
+import { MockTrackChallenge } from '../tracks/_components/track-challenge-card';
 
 type WrapperStyle = MotionStyle & {
   '--x': MotionValue<string>;
@@ -462,10 +462,9 @@ export function CuratedTracksCard(props: CardProps) {
         </div>
         <div className="flex w-[69%] flex-col">
           {mockChallenges.map((mockChallenge) => (
-            <TrackChallenge
+            <MockTrackChallenge
               key={`mock-${mockChallenge.id}`}
               challenge={mockChallenge as Challenge}
-              mock
             />
           ))}
         </div>

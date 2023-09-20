@@ -14,7 +14,7 @@ export function TrackProgress({ completedChallenges, totalChallenges }: TrackPro
           {completedChallenges}/{totalChallenges}
         </span>
       </div>
-      <Progress value={(completedChallenges / totalChallenges) * 100} />
+      <Progress className="h-[8px]" value={(completedChallenges / totalChallenges) * 100} />
     </div>
   );
 }
