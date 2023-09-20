@@ -55,7 +55,7 @@
     "clsx": "^2.0.0",
     "lz-string": "^1.5.0",
     "monaco-vim": "^0.4.0",
-    "next": "^13.4.19",
+    "next": "^13.5.1",
     "next-themes": "^0.2.1",
     "prettier": "^3.0.2",
     "react": "^18.2.0",
