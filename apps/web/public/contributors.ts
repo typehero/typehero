@@ -125,7 +125,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/QuiiBz/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 19
+        "contributions": 20
     },
     {
         "login": "creativenull",
