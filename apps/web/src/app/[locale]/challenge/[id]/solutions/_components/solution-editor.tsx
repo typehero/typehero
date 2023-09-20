@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { postSolution } from './post-solution.action';
 import { RichMarkdownEditor } from '~/components/ui/rich-markdown-editor';
-import type { ChallengeSolutionsRouteData } from '~/app/[locale]/challenge/[id]/solutions/page';
+import type { ChallengeSolution } from '../getSolutionRouteData';
 import { Button } from '@repo/ui/components/button';
 import { useToast } from '@repo/ui/components/use-toast';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@repo/ui/components/form';
@@ -34,7 +34,7 @@ const formSchema = z.object({
 export type FormSchema = z.infer<typeof formSchema>;
 
 interface Props {
-  challenge: ChallengeSolutionsRouteData;
+  challenge: ChallengeSolution;
   dismiss: () => void;
 }
 

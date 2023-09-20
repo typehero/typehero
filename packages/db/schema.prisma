@@ -407,7 +407,7 @@ model TrackChallenge {
 model Track {
   id              Int              @id @default(autoincrement())
   title           String
-  description     String
+  description     String           @db.MediumText
   visible         Boolean          @default(true)
   trackChallenges TrackChallenge[]
   enrolledUsers   User[]

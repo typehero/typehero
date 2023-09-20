@@ -73,9 +73,9 @@ const Report = async function (props: Props) {
 
       {report.moderator ? (
         <Alert className="mt-4" variant="destructive">
-          <div className="flex items-center gap-2">
+          <div className="mb-0.5 flex items-center gap-2">
             <AlertCircle className="h-[1.25rem]" />
-            <AlertTitle>Action already taken</AlertTitle>
+            <AlertTitle className="mb-0">Action already taken</AlertTitle>
           </div>
 
           <AlertDescription>
