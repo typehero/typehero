@@ -75,7 +75,7 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
           />
         </div>
         <div className="flex flex-col items-center space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight text-neutral-900 dark:text-white">
+          <h1 className="text-3xl text-center font-bold tracking-tight text-neutral-900 dark:text-white">
             {track?.title}
           </h1>
           <p className="text-md max-w-[69ch] text-center text-neutral-600 dark:text-white/50">
@@ -91,7 +91,7 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
         )}
       </div>
       {isEnrolled !== -1 && (
-        <div className='min-w-[69ch]'>
+        <div className='w-3/4 '>
           <TrackProgress
             completedChallenges={completedTrackChallengeId.length}
             totalChallenges={trackChallenges.length}
@@ -100,8 +100,7 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
       )}
       <div className='gap-8 flex flex-row justify-around w-full'>
         <div className='flex flex-col space-y-2 w-3/4'>
-          <TypographyH3>Challenges</TypographyH3>
-          <div className="grid-col grid grid-cols-1 gap-4 self-stretch">
+          <div className="grid-col grid grid-cols-1 gap-2 self-stretch">
             {trackChallenges
               .sort((a, b) => a.orderId - b.orderId)
               .map((trackChallenge) => (
