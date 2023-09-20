@@ -33,9 +33,9 @@ function orderBy(sortKey: SortKey, sortOrder: SortOrder) {
 }
 
 export type PaginatedComments = NonNullable<Awaited<ReturnType<typeof getPaginatedComments>>>;
-export type PreselectedCommentMetadata = NonNullable<
-  Awaited<ReturnType<typeof getPreselectedCommentMetadata>>
->;
+export type PreselectedCommentMetadata =
+  | NonNullable<Awaited<ReturnType<typeof getPreselectedCommentMetadata>>>
+  | NonNullable<Awaited<ReturnType<typeof getPreselectedSolutionCommentMetadata>>>;
 
 export async function getPreselectedCommentMetadata(challengeId: number, commentId: number) {
   const challengeComments = await prisma.comment.findMany({
@@ -65,6 +65,42 @@ export async function getPreselectedCommentMetadata(challengeId: number, comment
     challengeComments: challengeComments.map((comment) => comment.id),
   };
 }
+
+export async function getPreselectedSolutionCommentMetadata(
+  solutionId: number,
+  commentId: number,
+  challengeId: number,
+) {
+  const solution = await prisma.sharedSolution.findFirst({
+    where: {
+      id: solutionId,
+      challengeId,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+    select: {
+      id: true,
+      solutionComment: true,
+    },
+  });
+
+  if (!solution || !solution.solutionComment) return;
+
+  const comments = solution.solutionComment;
+
+  const index = comments.findIndex((comment) => comment.id === commentId);
+  const selectedComment = comments[index];
+  const page = Math.ceil((index + 1) / PAGESIZE);
+
+  return {
+    page,
+    selectedComment,
+    index,
+    challengeComments: comments.map((comment) => comment.id),
+  };
+}
+
 export async function getPaginatedComments({
   page,
   rootId,
