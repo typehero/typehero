@@ -40,6 +40,14 @@ export async function Explore() {
         <ExploreSection
           title="Great for Beginners"
           fetcher={getChallengesByTagOrDifficulty}
+          tag="BEGINNER"
+          redirectRoute="/explore/beginner"
+        />
+      </Suspense>
+      <Suspense fallback={<ExploreSectionSkeleton />}>
+        <ExploreSection
+          title="Great for Learners"
+          fetcher={getChallengesByTagOrDifficulty}
           tag="EASY"
           redirectRoute="/explore/easy"
         />
@@ -54,10 +62,18 @@ export async function Explore() {
       </Suspense>
       <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection
-          title="For the Experts"
+          title="Great for Experts"
           fetcher={getChallengesByTagOrDifficulty}
           tag="HARD"
           redirectRoute="/explore/hard"
+        />
+      </Suspense>
+      <Suspense fallback={<ExploreSectionSkeleton />}>
+        <ExploreSection
+          title="Great for Masters"
+          fetcher={getChallengesByTagOrDifficulty}
+          tag="EXTREME"
+          redirectRoute="/explore/extreme"
         />
       </Suspense>
       <Footsies />
