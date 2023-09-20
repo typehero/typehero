@@ -53,8 +53,8 @@ export const COLORS_BY_TAGS = {
 export async function ExploreSection({ title, fetcher, tag, redirectRoute }: SectionProps) {
   const challenges = await fetcher(tag.trim().toUpperCase(), 6);
   return (
-    <div className="mx-auto w-full max-w-screen-xl">
-      <div className="container flex items-center justify-between gap-3 px-4 pt-5">
+    <div>
+      <div className="flex items-center justify-between gap-3 px-4 pt-5 md:px-20">
         <h2 className={`relative text-3xl font-bold tracking-tight ${TITLES_BY_TAG[tag]}`}>
           <div
             className={`absolute -left-8 -z-10 h-12 w-32 rounded-full bg-pink-300/50 blur-3xl ${COLORS_BY_TAGS[tag]}`}

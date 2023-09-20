@@ -200,6 +200,11 @@ main {
   inset: -1px;
 }
 
+#container {
+  mask: linear-gradient(90deg, #0000, #000 10% 80%, #0000);
+  -webkit-mask: linear-gradient(90deg, #0000, #000 10% 80%, #0000);
+}
+
 @media (max-width: 768px) {
   .animated-feature-cards::before {
     background: none !important;
