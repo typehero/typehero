@@ -11,7 +11,6 @@ import { TypographyH3 } from '@repo/ui/components/typography/h3';
 import { Markdown } from '@repo/ui/components/markdown';
 
 interface TrackDetailProps {
-  // trackid
   slug: string;
 }
 

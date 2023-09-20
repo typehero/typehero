@@ -24,7 +24,7 @@ export const bgsArray = Object.values(BGS_BY_TRACK);
 const EnrolledBadge = ({ text = 'Enrolled' }: { text?: string }) => (
   <div
     className={clsx(
-      'absolute -right-[1px] -top-[20px] z-[-1] rounded rounded-tl-lg rounded-tr-xl px-5 pb-10 pt-[3px] text-[10px]',
+      'absolute -right-[1px] -top-[27px] z-[-1] rounded rounded-tl-lg rounded-tr-xl px-5 pb-10 pt-[3px] text-sm',
       'border border-blue-400 bg-blue-400 text-white',
     )}
   >
@@ -46,7 +46,7 @@ export function TrackCard({ track }: TrackProps) {
         )}
       >
         {track.enrolledUsers?.length ? <EnrolledBadge /> : null}
-        <CardContent className="flex items-center gap-5 p-2 pr-4">
+        <CardContent className="flex flex-col items-center gap-5 p-8">
           <div
             className={clsx(
               `bg-gradient-to-r from-neutral-500/10 from-10% ${
@@ -63,19 +63,13 @@ export function TrackCard({ track }: TrackProps) {
               )}
             />
           </div>
+          <div className="font-semibold capitalize tracking-wide">{track.title}</div>
+          <div className="text-muted-foreground line-clamp-3 text-sm tracking-wide">
+            {track.description}
+          </div>
 
-          <div className="flex-1">
-            <div className="flex items-center justify-between gap-2">
-              <span className="line-clamp-2 font-semibold capitalize tracking-wide">
-                {track.title}
-              </span>
-              <Badge className="flex-none">{track._count.trackChallenges} Challenges</Badge>
-            </div>
-            <div className="h-8">
-              <span className="text-muted-foreground mt-3 line-clamp-2 text-xs tracking-wide">
-                {track.description}
-              </span>
-            </div>
+          <div className="flex w-full justify-start">
+            <Badge className="flex-none">{track._count.trackChallenges} Challenges</Badge>
           </div>
         </CardContent>
       </Card>
