@@ -15,7 +15,7 @@ export function ActionButton({ action, text, trackId }: EnrollButtonProps) {
   const router = useRouter();
   return (
     <Button
-      variant={'secondary'}
+      variant="secondary"
       onClick={async () => {
         try {
           await action(trackId);

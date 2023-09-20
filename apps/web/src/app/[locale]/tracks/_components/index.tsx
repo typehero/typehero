@@ -2,8 +2,6 @@ import { getServerAuthSession } from '@repo/auth/server';
 import { EnrolledTrackSection } from './track-enrolled-section';
 import { TrackGrid } from './track-grid';
 
-
-
 export async function Tracks() {
   const session = await getServerAuthSession();
 

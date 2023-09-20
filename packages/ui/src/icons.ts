@@ -54,5 +54,5 @@ export {
   ChevronRightSquare,
   MessagesSquare,
   Swords,
-  Sword
+  Sword,
 } from 'lucide-react';

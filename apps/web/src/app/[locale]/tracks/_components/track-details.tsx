@@ -33,12 +33,12 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
   const trackChallenges = track?.trackChallenges ?? [];
   const isEnrolled = track?.enrolledUsers.findIndex((user) => user.id === session?.user.id);
 
-  let completedTrackChallengeId: number[] = [];
-  let inProgressTrackChallengeId: number[] = [];
-  let unattemptedTrackChallengeId: number[] = [];
+  const completedTrackChallengeId: number[] = [];
+  const inProgressTrackChallengeId: number[] = [];
+  const unattemptedTrackChallengeId: number[] = [];
 
   for (const trackChallenge of trackChallenges) {
-    let submissions = trackChallenge.challenge.submission;
+    const submissions = trackChallenge.challenge.submission;
     if (submissions.length > 0) {
       if (submissions.some((submission) => !submission.isSuccessful)) {
         inProgressTrackChallengeId.push(trackChallenge.id);
@@ -46,22 +46,18 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
       if (submissions.some((submission) => submission.isSuccessful)) {
         completedTrackChallengeId.push(trackChallenge.id);
       }
-    }
-    else {
+    } else {
       unattemptedTrackChallengeId.push(trackChallenge.id);
     }
   }
-
-  console.log(`completed tracks: ${JSON.stringify(completedTrackChallengeId)}`);
-  console.log(`isProgress tracks: ${JSON.stringify(inProgressTrackChallengeId)}`);
-  console.log(`unattempted tracks: ${JSON.stringify(unattemptedTrackChallengeId)}`);
 
   return (
     <div className="container flex min-h-screen flex-col items-center gap-4 py-5 md:gap-8 md:pb-20">
       <div className="flex flex-col items-center space-y-4">
         <div
           className={clsx(
-            `bg-gradient-to-r from-neutral-500/10 from-10% ${BGS_BY_TRACK[trackId % bgsArray.length]
+            `bg-gradient-to-r from-neutral-500/10 from-10% ${
+              BGS_BY_TRACK[trackId % bgsArray.length]
             } relative to-100% dark:from-neutral-500/20`,
             'flex h-24 w-24 flex-none items-center justify-center rounded-2xl',
           )}
@@ -75,13 +71,11 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
           />
         </div>
         <div className="flex flex-col items-center space-y-2">
-          <h1 className="text-3xl text-center font-bold tracking-tight text-neutral-900 dark:text-white">
+          <h1 className="text-center text-3xl font-bold tracking-tight text-neutral-900 dark:text-white">
             {track?.title}
           </h1>
           <p className="text-md max-w-[69ch] text-center text-neutral-600 dark:text-white/50">
-            {
-              track?.description
-            }
+            {track?.description}
           </p>
         </div>
         {isEnrolled === -1 ? (
@@ -91,20 +85,23 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
         )}
       </div>
       {isEnrolled !== -1 && (
-        <div className='w-3/4 '>
+        <div className="w-3/4 ">
           <TrackProgress
             completedChallenges={completedTrackChallengeId.length}
             totalChallenges={trackChallenges.length}
           />
         </div>
       )}
-      <div className='gap-8 flex flex-row justify-around w-full'>
-        <div className='flex flex-col space-y-2 w-3/4'>
+      <div className="flex w-full flex-row justify-around gap-8">
+        <div className="flex w-3/4 flex-col space-y-2">
           <div className="grid-col grid grid-cols-1 gap-2 self-stretch">
             {trackChallenges
               .sort((a, b) => a.orderId - b.orderId)
               .map((trackChallenge) => (
-                <Link key={trackChallenge.challenge.id} href={`/challenge/${trackChallenge.challenge.id}`}>
+                <Link
+                  key={trackChallenge.challenge.id}
+                  href={`/challenge/${trackChallenge.challenge.id}`}
+                >
                   <TrackChallenge
                     challenge={trackChallenge.challenge}
                     isCompleted={completedTrackChallengeId.includes(trackChallenge.id)}
@@ -115,6 +112,6 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 }
