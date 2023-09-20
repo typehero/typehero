@@ -111,11 +111,6 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
               ))}
           </div>
         </div>
-        <div className='flex flex-col space-y-4 w-1/4'>
-          <div className='space-y-2'>
-            <TypographyH3>Awards</TypographyH3>
-          </div>
-        </div>
       </div>
     </div >
   );
