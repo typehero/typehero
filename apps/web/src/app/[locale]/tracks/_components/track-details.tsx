@@ -93,7 +93,7 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
         </div>
       )}
       <div className="flex w-full flex-row justify-around gap-8">
-        <div className="flex md:w-3/4 flex-col space-y-2">
+        <div className="flex flex-col space-y-2 md:w-3/4">
           <div className="grid-col grid grid-cols-1 gap-2 self-stretch">
             {trackChallenges
               .sort((a, b) => a.orderId - b.orderId)
