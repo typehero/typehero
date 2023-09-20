@@ -43,7 +43,7 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
       if (submissions.some((submission) => !submission.isSuccessful)) {
         inProgressTrackChallengeId.push(trackChallenge.id);
       }
-      else if (submissions.some((submission) => submission.isSuccessful)) {
+      if (submissions.some((submission) => submission.isSuccessful)) {
         completedTrackChallengeId.push(trackChallenge.id);
       }
     }
@@ -51,6 +51,10 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
       unattemptedTrackChallengeId.push(trackChallenge.id);
     }
   }
+
+  console.log(`completed tracks: ${JSON.stringify(completedTrackChallengeId)}`);
+  console.log(`isProgress tracks: ${JSON.stringify(inProgressTrackChallengeId)}`);
+  console.log(`unattempted tracks: ${JSON.stringify(unattemptedTrackChallengeId)}`);
 
   return (
     <div className="container flex min-h-screen flex-col items-center gap-4 py-5 md:gap-8 md:pb-20">
