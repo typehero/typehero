@@ -10,7 +10,7 @@ export const dynamic = 'force-dynamic';
 export async function Explore() {
   return (
     <div className="flex flex-col gap-8 py-8 md:gap-10 md:py-10">
-      <div className=" px-4 md:px-20">
+      <div className="container">
         <h1 className="mb-8 text-4xl font-bold tracking-tight text-neutral-900 dark:text-white">
           TypeHero Explore
         </h1>

@@ -205,6 +205,14 @@ main {
   -webkit-mask: linear-gradient(90deg, #0000, #000 10% 80%, #0000);
 }
 
+@media (min-width: 1400px) {
+  #container {
+    /* here we calculate the diffrence between screen width and the container width (1400px)
+    then split that on half to make carousel align left with the rest of the content and i added some rems to aligned perfectly */
+    padding-left: calc(calc(calc(100vw - 1400px) + 12rem) / 2);
+  }
+}
+
 @media (max-width: 768px) {
   .animated-feature-cards::before {
     background: none !important;
