@@ -1,9 +1,9 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import type { enrollUserInTrack, unenrollUserFromTrack } from './track.action';
 import { Button } from '@repo/ui/components/button';
 import { toast } from '@repo/ui/components/use-toast';
+import { useRouter } from 'next/navigation';
+import type { enrollUserInTrack, unenrollUserFromTrack } from './track.action';
 
 interface EnrollButtonProps {
   action: typeof enrollUserInTrack | typeof unenrollUserFromTrack;
@@ -11,10 +11,11 @@ interface EnrollButtonProps {
   trackId: number;
 }
 
-export function EnrollButton({ action, text, trackId }: EnrollButtonProps) {
+export function ActionButton({ action, text, trackId }: EnrollButtonProps) {
   const router = useRouter();
   return (
     <Button
+      variant="secondary"
       onClick={async () => {
         try {
           await action(trackId);
