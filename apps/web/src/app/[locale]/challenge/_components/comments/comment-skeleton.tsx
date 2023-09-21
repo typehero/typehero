@@ -1,10 +1,11 @@
 import { Skeleton } from '@repo/ui/components/skeleton';
 
+const SKELETONS = Array.from({ length: 3 }, (_, i) => i + 1);
 export function CommentSkeleton() {
   return (
     <>
-      {Array.from({ length: 3 }, (_, i) => i + 1).map((id) => (
-        <div className="space-y-2 px-4 py-2">
+      {SKELETONS.map((id) => (
+        <div key={id} className="space-y-2 px-4 py-2">
           <div className="flex justify-between ">
             <div className="flex items-center gap-2">
               <Skeleton className="h-10 w-10 rounded-full bg-zinc-300 dark:bg-zinc-700" />
