@@ -22,7 +22,8 @@
         "RESEND_API_KEY",
         "PORT",
         "USERNAME",
-        "PASSWORD"
+        "PASSWORD",
+        "CI"
       ]
     },
     "topo": {
@@ -77,6 +78,9 @@
       "dependsOn": ["@repo/db#db:generate"],
       "persistent": true,
       "cache": false
+    },
+    "test:e2e": {
+      "outputs": ["playwright-report/**"]
     }
   }
 }

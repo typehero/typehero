@@ -12,6 +12,10 @@ services:
       MYSQL_ROOT_USER: dev
       MYSQL_ROOT_PASSWORD: dev
       MYSQL_DATABASE: typehero
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      timeout: 20s
+      retries: 10
     # create a volume for the docker container_name
     volumes:
       - typehero-data:/bitnami/mysql/data
