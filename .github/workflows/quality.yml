@@ -111,3 +111,15 @@ jobs:
         with:
           name: report
           path: apps/web/playwright-report/
+
+      - name: Save PR number
+        env:
+          PR_NUMBER: ${{ github.event.number }}
+        run: |
+          echo $PR_NUMBER > prNumber
+
+      - name: Upload prNumber
+        uses: actions/upload-artifact@v3
+        with:
+          name: prNumber
+          path: prNumber
