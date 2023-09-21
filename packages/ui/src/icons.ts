@@ -27,6 +27,7 @@ export {
   MailCheck,
   Maximize2,
   MessageCircle,
+  Minus,
   Moon,
   Pencil,
   Play,

@@ -1,13 +1,12 @@
 'use client';
 
-import { Check } from '@repo/ui/icons';
+import { Check, Minus } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { useIsMobile } from '~/utils/useIsMobile';
 
 import type { Challenge, Submission } from '@repo/db/types';
-import { DifficultyBadge } from '@repo/ui/components/difficulty-badge';
-import RelativeTime from '../../explore/_components/relative-time';
 import { Badge } from '@repo/ui/components/badge';
+import { DifficultyBadge } from '@repo/ui/components/difficulty-badge';
 
 interface TrackChallengeProps {
   challenge: Challenge & {
@@ -17,14 +16,6 @@ interface TrackChallengeProps {
   isCompleted: boolean;
 }
 
-const COLORS_BY_DIFFICULTY = {
-  BEGINNER: 'text-difficulty-beginner dark:text-difficulty-beginner-dark',
-  EASY: 'text-difficulty-easy dark:text-difficulty-easy-dark',
-  MEDIUM: 'text-difficulty-medium dark:text-difficulty-medium-dark',
-  HARD: 'text-difficulty-hard dark:text-difficulty-hard-dark',
-  EXTREME: 'text-difficulty-extreme dark:text-difficulty-extreme-dark',
-} as const;
-
 const BGS_BY_DIFFICULTY = {
   BEGINNER: 'to-difficulty-beginner/20 dark:to-difficulty-beginner-dark/20',
   EASY: 'to-difficulty-easy/20 dark:to-difficulty-easy-dark/20',
@@ -33,6 +24,7 @@ const BGS_BY_DIFFICULTY = {
   EXTREME: 'to-difficulty-extreme/20 dark:to-difficulty-extreme-dark/20',
 } as const;
 
+// million-ignore
 export function TrackChallenge({ challenge, isInProgress, isCompleted }: TrackChallengeProps) {
   const isMobile = useIsMobile();
 
@@ -60,11 +52,23 @@ export function TrackChallenge({ challenge, isInProgress, isCompleted }: TrackCh
                   className="peer hidden appearance-none"
                   type="checkbox"
                   id={challenge.id.toString()}
-                  checked={isCompleted}
+                  checked={isCompleted || isInProgress}
                   readOnly
                 />
-                <div className="h-5 w-5 rounded-full border border-black/70 bg-black/10 duration-75 peer-checked:border-transparent peer-checked:bg-green-600/80 dark:border-white/50 dark:bg-white/10 peer-checked:dark:bg-green-300/80" />
-                <Check className="absolute left-1 my-auto h-3 w-3 scale-0 stroke-[4] text-white duration-300 peer-checked:scale-100 dark:text-black" />
+                <div
+                  className={clsx(
+                    'h-5 w-5 rounded-full border border-black/70 bg-black/10 duration-75 peer-checked:border-transparent dark:border-white/50 dark:bg-white/10 ',
+                    isCompleted && 'peer-checked:bg-green-600/80 peer-checked:dark:bg-green-300/80',
+                    isInProgress &&
+                      'peer-checked:bg-orange-600/80 peer-checked:dark:bg-orange-300/80',
+                  )}
+                />
+                {isCompleted ? (
+                  <Check className="absolute left-1 my-auto h-3 w-3 scale-0 stroke-[4] text-white duration-300 peer-checked:scale-100 dark:text-black" />
+                ) : null}
+                {isInProgress ? (
+                  <Minus className="absolute left-1 my-auto h-3 w-3 scale-0 stroke-[4] text-white duration-300 peer-checked:scale-100 dark:text-black" />
+                ) : null}
               </div>
               <div className="flex flex-col items-start gap-3 md:flex-row">
                 <div className="flex flex-col gap-2">
@@ -89,6 +93,7 @@ export function TrackChallenge({ challenge, isInProgress, isCompleted }: TrackCh
   );
 }
 
+// million-ignore
 export function MockTrackChallenge({ challenge }: { challenge: Challenge }) {
   const isMobile = useIsMobile();
   return (
@@ -107,7 +112,7 @@ export function MockTrackChallenge({ challenge }: { challenge: Challenge }) {
             'group-hover/challenge:scale-105 group-hover/challenge:rounded-xl group-hover/challenge:bg-neutral-500/20',
         )}
       >
-        <div className="relative flex flex-row gap-3 text-xs sm:text-base">
+        <div className="relative hidden items-center gap-3 md:flex md:flex-row ">
           <input
             className="peer hidden appearance-none"
             type="checkbox"

@@ -7,8 +7,6 @@ import { ActionButton } from './enroll-button';
 import { TrackChallenge } from './track-challenge-card';
 import { TrackProgress } from './track-progress';
 import { enrollUserInTrack, getTrackDetails, unenrollUserFromTrack } from './track.action';
-import { TypographyH3 } from '@repo/ui/components/typography/h3';
-import { Markdown } from '@repo/ui/components/markdown';
 
 interface TrackDetailProps {
   slug: string;
