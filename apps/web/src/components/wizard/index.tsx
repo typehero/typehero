@@ -18,6 +18,10 @@ import { uploadChallenge } from './create.action';
 import DEFAULT_CHALLENGE_TEMPLATE from './default-challenge.md';
 import DEFAULT_TEST_CASES from './default-tests.md';
 import DEFAULT_DESCRIPTION from './default-description.md';
+import {
+  createNoProfanitySchema,
+  createNoProfanitySchemaWithValidate,
+} from '~/utils/antiProfanityZod';
 
 export const enum STEPS {
   ChallengeCard,
@@ -25,28 +29,36 @@ export const enum STEPS {
   TestCases,
   Summary,
 }
+
 const testCaseRegex = new RegExp('(?:\n|^)s*(?:Equal|Extends|NotEqual|Expect)<');
 const createExploreCardSchema = z.object({
   difficulty: z.enum(['BEGINNER', 'EASY', 'MEDIUM', 'HARD', 'EXTREME']),
-  name: z
-    .string()
-    .min(3, 'The name must be longer than 3 characters')
-    .max(30, 'The name must be shorter than 30 characters'),
-  shortDescription: z
-    .string()
-    .min(10, 'The short description must be longer than 10 characters')
-    .max(191, 'The short description must be shorter than 191 characters'),
+  name: createNoProfanitySchemaWithValidate((zodString) =>
+    zodString
+      .min(3, 'The name must be longer than 3 characters')
+      .max(30, 'The name must be shorter than 30 characters'),
+  ),
+  shortDescription: createNoProfanitySchemaWithValidate((zodString) =>
+    zodString
+      .min(10, 'The short description must be longer than 10 characters')
+      .max(191, 'The short description must be shorter than 191 characters'),
+  ),
 });
+
 const createDescriptionSchema = z.object({
-  description: z.string().min(20, 'The description must be longer than 20 characters').max(65536),
+  description: createNoProfanitySchemaWithValidate((zodString) =>
+    zodString.min(20, 'The description must be longer than 20 characters').max(65536),
+  ),
 });
+
 const createTestCasesSchema = z.object({
-  tests: z
-    .string()
-    .min(20, 'The test cases must be longer than 20 characters')
-    .max(65536)
-    .regex(testCaseRegex, 'You need to have test cases in your challenge'),
-  code: z.string(),
+  tests: createNoProfanitySchemaWithValidate((zodString) =>
+    zodString
+      .min(20, 'The test cases must be longer than 20 characters')
+      .max(65536)
+      .regex(testCaseRegex, 'You need to have test cases in your challenge'),
+  ),
+  code: createNoProfanitySchema(),
 });
 export const createChallengeSchema = createExploreCardSchema
   .merge(createDescriptionSchema)
@@ -110,7 +122,6 @@ export function Wizard() {
       setStep((step) => step + 1);
     } else {
       await form.trigger();
-      console.error(success);
     }
   };
 
