@@ -11,10 +11,11 @@ import { Button } from '@repo/ui/components/button';
 import { useToast } from '@repo/ui/components/use-toast';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@repo/ui/components/form';
 import { Input } from '@repo/ui/components/input';
+import { createNoProfanitySchema } from '~/utils/antiProfanityZod';
 
 const getDefaultMarkdown = (solution: string) => `
 ## Thoughts
-<!-- Any thoughts you might like to share about the problem(within TOS of course). -->
+<!-- Any thoughts you might like to share about the problem (within ToS, of course). -->
 
 ## Approach
 <!-- Provide some details on how you approached this challenge. -->
@@ -27,8 +28,8 @@ ${solution}
 `;
 
 const formSchema = z.object({
-  title: z.string(),
-  content: z.string(),
+  title: createNoProfanitySchema(),
+  content: createNoProfanitySchema(),
 });
 
 export type FormSchema = z.infer<typeof formSchema>;
