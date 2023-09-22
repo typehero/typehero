@@ -11,6 +11,7 @@ import { Button } from '@repo/ui/components/button';
 import { Form, FormField, FormItem, FormMessage } from '@repo/ui/components/form';
 import { MagicIcon } from '@repo/ui/components/magic-icon';
 import { Input } from '@repo/ui/components/input';
+import { createNoProfanitySchemaWithValidate } from '~/utils/antiProfanityZod';
 
 export interface UserLinkType {
   id: string | null;
@@ -21,10 +22,13 @@ const formSchema = z.object({
   userLinks: z.array(
     z.object({
       id: z.union([z.string(), z.null()]),
-      url: z.union([z.string().url().max(256), z.literal('')]),
+      url: z.union([
+        createNoProfanitySchemaWithValidate((str) => str.url().max(256)),
+        z.literal(''),
+      ]),
     }),
   ),
-  bio: z.string().max(256).optional(),
+  bio: createNoProfanitySchemaWithValidate((str) => str.max(256)),
 });
 
 export type FormSchema = z.infer<typeof formSchema>;
@@ -88,7 +92,7 @@ export function Settings({ profileData, username }: { profileData: FormSchema; u
               name="bio"
               render={({ field }) => (
                 <FormItem className="h-[300px] w-[600px]">
-                  <RichMarkdownEditor onChange={field.onChange} value={field.value!} />
+                  <RichMarkdownEditor onChange={field.onChange} value={field.value} />
                   <FormMessage />
                 </FormItem>
               )}
