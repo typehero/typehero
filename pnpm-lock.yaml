@@ -373,6 +373,9 @@ importers:
       '@tailwindcss/typography':
         specifier: ^0.5.9
         version: 0.5.9(tailwindcss@3.3.3)
+      '@types/bad-words':
+        specifier: ^3.0.1
+        version: 3.0.1
       '@types/node':
         specifier: ^20.4.2
         version: 20.4.2
@@ -682,7 +685,7 @@ importers:
     dependencies:
       '@next/eslint-plugin-next':
         specifier: canary
-        version: 13.5.3-canary.0
+        version: 13.5.3-canary.1
       '@repo/tsconfig':
         specifier: workspace:*
         version: link:../config-typescript
@@ -694,7 +697,7 @@ importers:
         version: 5.62.0(eslint@8.45.0)(typescript@5.1.6)
       '@vercel/style-guide':
         specifier: ^4.0.2
-        version: 4.0.2(@next/eslint-plugin-next@13.5.3-canary.0)(eslint@8.45.0)(prettier@3.0.2)(typescript@5.1.6)
+        version: 4.0.2(@next/eslint-plugin-next@13.5.3-canary.1)(eslint@8.45.0)(prettier@3.0.2)(typescript@5.1.6)
       eslint:
         specifier: ^8.45.0
         version: 8.45.0
@@ -1779,8 +1782,8 @@ packages:
       glob: 7.1.7
     dev: true
 
-  /@next/eslint-plugin-next@13.5.3-canary.0:
-    resolution: {integrity: sha512-gLole7GgEEm0MfCJVfSsI+mn+hg2YPNKnKVKayYgyqSB0XtMcQqTjlaVzNXoX7kzbJguZMy2AIEB3mFKJbbkRA==}
+  /@next/eslint-plugin-next@13.5.3-canary.1:
+    resolution: {integrity: sha512-dbBl/mCDIkB0byTAoS/DViZQsbQYA3GuUiJuLdtvqXXqQFb1GeEqMHgkxf5Xgk+Tu0T48GDWAOvFcC+ytlcSZw==}
     dependencies:
       glob: 7.1.7
     dev: false
@@ -3973,6 +3976,10 @@ packages:
     resolution: {integrity: sha512-Vqm22aZrCvCd6I5g1SvpW151jfqwTzEZ7XJ3yZ6xaZG31nUEOEyzzVImjRcsN8Wi/QyPxId/x8GTtgIbsy8kEw==}
     dev: true
 
+  /@types/bad-words@3.0.1:
+    resolution: {integrity: sha512-7la3ZDJG1tlRqySO+pnXycZpacaMEw/iLEm8kc4l+I+jN8KjBfoQVwO6jm98xzXVLrxV8vDrB5TaMoop8sKclQ==}
+    dev: true
+
   /@types/btoa-lite@1.0.0:
     resolution: {integrity: sha512-wJsiX1tosQ+J5+bY5LrSahHxr2wT+uME5UDwdN1kg4frt40euqA+wzECkmq4t5QbveHiJepfdThgQrPw6KiSlg==}
     dev: true
@@ -4372,7 +4379,7 @@ packages:
       yoga-wasm-web: 0.3.0
     dev: false
 
-  /@vercel/style-guide@4.0.2(@next/eslint-plugin-next@13.5.3-canary.0)(eslint@8.45.0)(prettier@3.0.2)(typescript@5.1.6):
+  /@vercel/style-guide@4.0.2(@next/eslint-plugin-next@13.5.3-canary.1)(eslint@8.45.0)(prettier@3.0.2)(typescript@5.1.6):
     resolution: {integrity: sha512-FroL+oOePzhw7n/I+f7zr4WNroGHT/+2TlW6WH9+CVSjMNsEyu7Qstj2mI5gWIBjT1Y2ZImKPppCzI2cIYmNZw==}
     engines: {node: '>=16'}
     peerDependencies:
@@ -4392,7 +4399,7 @@ packages:
     dependencies:
       '@babel/core': 7.22.10
       '@babel/eslint-parser': 7.22.10(@babel/core@7.22.10)(eslint@8.45.0)
-      '@next/eslint-plugin-next': 13.5.3-canary.0
+      '@next/eslint-plugin-next': 13.5.3-canary.1
       '@rushstack/eslint-patch': 1.3.2
       '@typescript-eslint/eslint-plugin': 5.59.1(@typescript-eslint/parser@5.62.0)(eslint@8.45.0)(typescript@5.1.6)
       '@typescript-eslint/parser': 5.62.0(eslint@8.45.0)(typescript@5.1.6)
