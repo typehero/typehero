@@ -45,7 +45,7 @@ export function TrackCard({ track }: TrackProps) {
             : 'group-hover:border-blue-400 group-focus:border-blue-400',
         )}
       >
-        {track.enrolledUsers?.length ? <EnrolledBadge /> : null}
+        {isEnrolled ? <EnrolledBadge /> : null}
         <CardContent className="flex flex-col items-center gap-5 p-8">
           <div
             className={clsx(
@@ -63,12 +63,12 @@ export function TrackCard({ track }: TrackProps) {
               )}
             />
           </div>
-          <div className="font-semibold capitalize tracking-wide">{track.title}</div>
-          <div className="text-muted-foreground line-clamp-3 text-sm tracking-wide">
+          <div className="text-center font-semibold capitalize tracking-wide">{track.title}</div>
+          <div className="text-muted-foreground line-clamp-3 text-center text-sm tracking-wide">
             {track.description}
           </div>
 
-          <div className="flex w-full justify-start">
+          <div className="text-center">
             <Badge className="flex-none">{track._count.trackChallenges} Challenges</Badge>
           </div>
         </CardContent>

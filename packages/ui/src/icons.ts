@@ -30,6 +30,7 @@ export {
   Minus,
   Moon,
   Pencil,
+  PieChart,
   Play,
   Plus,
   Reply,

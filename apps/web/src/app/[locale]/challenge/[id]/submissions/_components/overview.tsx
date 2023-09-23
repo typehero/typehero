@@ -1,16 +1,10 @@
 import { Button } from '@repo/ui/components/button';
 import { Markdown } from '@repo/ui/components/markdown';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@repo/ui/components/tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { toast } from '@repo/ui/components/use-toast';
 import { Copy, X } from '@repo/ui/icons';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
-import { getBaseUrl } from '~/utils/getBaseUrl';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { getChallengeSubmissionById } from '../getChallengeSubmissions';
 
@@ -48,18 +42,16 @@ export function SubmissionOverview({ submissionId }: Props) {
         <Link href={`/challenge/${submission.challengeId}/submissions`}>
           <X className="stroke-gray-500 hover:stroke-gray-400" size={20} />
         </Link>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button onClick={copyToClipboard} variant="ghost">
-                <Copy className="stroke-gray-500 hover:stroke-gray-400" size={20} />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Copy</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button onClick={copyToClipboard} variant="ghost">
+              <Copy className="stroke-gray-500 hover:stroke-gray-400" size={20} />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Copy</p>
+          </TooltipContent>
+        </Tooltip>
       </div>
       <div className="p-2">
         <div className="mb-5">

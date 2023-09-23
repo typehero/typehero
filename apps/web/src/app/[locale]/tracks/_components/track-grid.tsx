@@ -7,7 +7,7 @@ export async function TrackGrid() {
   return (
     <div className="container flex items-center justify-between gap-3">
       <section className="grid w-full grid-flow-row grid-cols-1 gap-10 lg:grid-cols-2 xl:grid-cols-3">
-        {tracks?.map((track, i) => <TrackCard key={`track-${track.id}`} track={track} />)}
+        {tracks?.map((track) => <TrackCard key={`track-${track.id}`} track={track} />)}
       </section>
     </div>
   );
@@ -15,9 +15,6 @@ export async function TrackGrid() {
 
 export type Tracks = Awaited<ReturnType<typeof getTracks>>;
 
-/**
- * Fetches all tracks.
- */
 async function getTracks() {
   const session = await getServerAuthSession();
   return prisma.track.findMany({
