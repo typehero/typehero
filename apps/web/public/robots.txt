@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://typehero.dev
+
+# Sitemaps
+Sitemap: https://typehero.dev/sitemap.xml

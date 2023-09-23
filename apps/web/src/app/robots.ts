@@ -7,7 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/api/og/*',
       disallow: '/private/',
     },
-    // TODO: add a sitemap
-    // sitemap: 'https://typehero.dev/sitemap.xml',
+    sitemap: '/sitemap.xml',
   };
 }
