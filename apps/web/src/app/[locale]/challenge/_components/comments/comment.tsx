@@ -135,6 +135,33 @@ export function Comment({
   const toggleReplies = () => setShowReplies(!showReplies);
   const toggleIsReplying = () => setIsReplying(!isReplying);
 
+  // keeps fetching replies from the history until the highlighted comment is found.
+  // there is a slight drawback with it. if a requested comment does not exist.
+  // it'll end up fetching the full reply history. but yep, it works for now.
+  useEffect(
+    () => {
+      if (!replyId || !data?.pages) return;
+
+      if (preselectedCommentMetadata?.selectedComment?.id === comment.id && Boolean(replyId)) {
+        const lastPage = data.pages[data.pages.length - 1];
+        let replyIsFound = false;
+
+        lastPage?.comments.forEach((reply) => {
+          if (reply.id === parseInt(replyId)) {
+            replyIsFound = true;
+          }
+        });
+
+        if (lastPage?.hasMore && !replyIsFound) {
+          fetchNextPage();
+        }
+      }
+    },
+    // go away
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [data?.pages],
+  );
+
   return (
     <div className="flex flex-col px-2 py-1">
       <SingleComment
