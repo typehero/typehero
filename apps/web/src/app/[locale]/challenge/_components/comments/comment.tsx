@@ -6,7 +6,15 @@ import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { toast } from '@repo/ui/components/use-toast';
 import { UserBadge } from '@repo/ui/components/user-badge';
-import { ChevronDown, ChevronUp, Pencil, Reply, Share, Trash2 } from '@repo/ui/icons';
+import {
+  ChevronDown,
+  ChevronUp,
+  Pencil,
+  Reply,
+  Share,
+  Trash2,
+  MoreHorizontal,
+} from '@repo/ui/icons';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -25,6 +33,7 @@ import {
   type PreselectedCommentMetadata,
 } from './getCommentRouteData';
 import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
+import { Button } from '@repo/ui/components/button';
 
 interface SingleCommentProps {
   comment: PaginatedComments['comments'][number];
@@ -135,33 +144,6 @@ export function Comment({
   const toggleReplies = () => setShowReplies(!showReplies);
   const toggleIsReplying = () => setIsReplying(!isReplying);
 
-  // keeps fetching replies from the history until the highlighted comment is found.
-  // there is a slight drawback with it. if a requested comment does not exist.
-  // it'll end up fetching the full reply history. but yep, it works for now.
-  useEffect(
-    () => {
-      if (!replyId || !data?.pages) return;
-
-      if (preselectedCommentMetadata?.selectedComment?.id === comment.id && Boolean(replyId)) {
-        const lastPage = data.pages[data.pages.length - 1];
-        let replyIsFound = false;
-
-        lastPage?.comments.forEach((reply) => {
-          if (reply.id === parseInt(replyId)) {
-            replyIsFound = true;
-          }
-        });
-
-        if (lastPage?.hasMore && !replyIsFound) {
-          fetchNextPage();
-        }
-      }
-    },
-    // go away
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [data?.pages],
-  );
-
   return (
     <div className="flex flex-col px-2 py-1">
       <SingleComment
@@ -191,12 +173,15 @@ export function Comment({
       ) : null}
 
       {!isFetching && showReplies && data?.pages.at(-1)?.hasMore ? (
-        <button
-          className="flex w-full cursor-pointer items-center justify-center gap-1 py-2 text-xs text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
+        <Button
+          variant="ghost"
+          className="gap-1 text-xs text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
           onClick={() => fetchNextPage()}
         >
-          Load more
-        </button>
+          <MoreHorizontal size={24} />
+          Load More
+          <span className="sr-only">Load More</span>
+        </Button>
       ) : null}
 
       {showReplies ? (
