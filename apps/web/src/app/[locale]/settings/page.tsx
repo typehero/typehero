@@ -1,7 +1,7 @@
 import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import type { Metadata } from 'next';
-import { Settings } from '~/components/settings';
+import { Settings } from '~/app/[locale]/settings/_components';
 
 export default async function SettingsPage() {
   // NOTE: what's weird about this API is that it should have the

@@ -16,9 +16,9 @@ import { useTheme } from 'next-themes';
 import Image, { type StaticImageData } from 'next/image';
 import { useEffect, useState, type MouseEvent } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { Steps } from '~/components/wizard/Steps';
 import { useIsMobile } from '~/utils/useIsMobile';
 import { MockTrackChallenge } from '../tracks/_components/track-challenge-card';
+import { Steps } from '../wizard/_components/Steps';
 
 type WrapperStyle = MotionStyle & {
   '--x': MotionValue<string>;

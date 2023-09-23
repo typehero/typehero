@@ -1,4 +1,4 @@
-import { Profile } from '~/components/user/profile';
+import { Profile } from './_components/profile';
 
 interface Props {
   params: {

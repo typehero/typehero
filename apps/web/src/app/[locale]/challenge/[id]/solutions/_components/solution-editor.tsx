@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { postSolution } from './post-solution.action';
-import { RichMarkdownEditor } from '~/components/ui/rich-markdown-editor';
+import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
 import type { ChallengeSolution } from '../getSolutionRouteData';
 import { Button } from '@repo/ui/components/button';
 import { useToast } from '@repo/ui/components/use-toast';

@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { ExploreSection } from './explore-section';
 import { ExploreSectionSkeleton } from './explore-section-skeleton';
 import { getChallengesByTagOrDifficulty } from './explore.action';
-import { Footsies } from '~/components/ui/footsies';
+import { Footsies } from '~/components/footsies';
 
 // CI fails without this
 export const dynamic = 'force-dynamic';
