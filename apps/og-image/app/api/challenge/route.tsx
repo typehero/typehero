@@ -24,7 +24,7 @@ export async function GET(req: Request) {
     (
       <div tw="bg-black h-full w-full text-white bg-cover flex flex-col pt-14 px-24">
         <div tw="flex flex-col items-start h-full px-10 py-4 rounded-t-3xl border border-b-none border-zinc-700 bg-zinc-800">
-          {/* <Logo /> */}
+          <Logo />
           <h1 tw="text-6xl font-bold truncate" style={{ fontWeight: '800 !important' }}>
             {props.title}
           </h1>

@@ -7,7 +7,7 @@ import { fontParams } from 'utils/zodParams';
 
 export const runtime = 'edge';
 
-export default async (req: NextRequest) => {
+export async function GET(req: NextRequest) {
   if (req.nextUrl.pathname !== '/api/font') return;
   const url = new URL(req.url);
 
