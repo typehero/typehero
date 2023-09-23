@@ -54,7 +54,7 @@ export async function EnrolledTrackSection() {
         </>
       ) : (
         <div
-          className="relative my-10 grid min-h-[246px] w-full items-center gap-2 px-5  md:grid-cols-2 md:gap-10"
+          className="relative grid min-h-[246px] w-full items-center gap-2 px-5  md:grid-cols-2 md:gap-10"
           key="helper-track"
         >
           <div className="text-center md:text-right">
