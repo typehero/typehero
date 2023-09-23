@@ -1,7 +1,7 @@
 import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import Link from 'next/link';
-import { Carousel } from '~/components/ui/carousel';
+import { Carousel } from '~/components/carousel';
 import { PersonalTrackCard } from './personal-track-card';
 import { Card } from '@repo/ui/components/card';
 import type { HTMLAttributes } from 'react';

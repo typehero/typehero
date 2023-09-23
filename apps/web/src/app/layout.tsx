@@ -7,7 +7,7 @@ import type { Metadata } from 'next';
 import { Toaster } from '@repo/ui/components/toaster';
 import { Providers } from './providers';
 import { buildMetaForDefault } from './metadata';
-import { Navigation } from '~/components/ui/navigation';
+import { Navigation } from '~/components/navigation';
 
 const inter = Inter({ subsets: ['latin'] });
 

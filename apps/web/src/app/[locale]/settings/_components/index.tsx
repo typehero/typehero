@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
 import * as z from 'zod';
 import Link from 'next/link';
-import { RichMarkdownEditor } from '../ui/rich-markdown-editor';
 import { updateProfile } from './settings.action';
 import { toast } from '@repo/ui/components/use-toast';
 import { Button } from '@repo/ui/components/button';
@@ -12,6 +11,7 @@ import { Form, FormField, FormItem, FormMessage } from '@repo/ui/components/form
 import { MagicIcon } from '@repo/ui/components/magic-icon';
 import { Input } from '@repo/ui/components/input';
 import { createNoProfanitySchemaWithValidate } from '~/utils/antiProfanityZod';
+import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
 
 export interface UserLinkType {
   id: string | null;
