@@ -7,13 +7,6 @@ interface Props {
   children: ReactNode;
 }
 
-const mockFlags = {
-  loginButton: true,
-  exploreButton: true,
-  tracksButton: true,
-};
-
-const isProd = process.env.NODE_ENV === 'production';
 export function FeatureFlagProvider({ children }: Props) {
   const { data: featureFlags } = useQuery(['featureFlags'], () => getFeatureFlags());
 
@@ -21,9 +14,5 @@ export function FeatureFlagProvider({ children }: Props) {
 }
 
 async function getFeatureFlags() {
-  if (isProd) {
-    return fetch('/api/flags').then((res) => res.json());
-  }
-
-  return mockFlags;
+  return fetch('/api/flags').then((res) => res.json());
 }
