@@ -163,8 +163,17 @@ export function Comment({
         </div>
       ) : null}
 
+      {!isFetching && showReplies && data?.pages.at(-1)?.hasMore ? (
+        <button
+          className="flex w-full cursor-pointer items-center justify-center gap-1 py-2 text-xs text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
+          onClick={() => fetchNextPage()}
+        >
+          Load more
+        </button>
+      ) : null}
+
       {showReplies ? (
-        <div className="flex flex-col gap-1 pl-6 pt-1">
+        <div className="flex flex-col-reverse gap-1 pl-6 pt-1">
           {data?.pages.flatMap((page) =>
             page.comments.map((reply) => (
               // this is a reply
@@ -178,15 +187,6 @@ export function Comment({
             )),
           )}
         </div>
-      ) : null}
-
-      {!isFetching && showReplies && data?.pages.at(-1)?.hasMore ? (
-        <button
-          className="flex cursor-pointer items-center gap-1 pl-6 text-xs text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
-          onClick={() => fetchNextPage()}
-        >
-          Load more
-        </button>
       ) : null}
     </div>
   );
