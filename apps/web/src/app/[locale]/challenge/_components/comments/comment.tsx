@@ -6,7 +6,15 @@ import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { toast } from '@repo/ui/components/use-toast';
 import { UserBadge } from '@repo/ui/components/user-badge';
-import { ChevronDown, ChevronUp, Pencil, Reply, Share, Trash2 } from '@repo/ui/icons';
+import {
+  ChevronDown,
+  ChevronUp,
+  Pencil,
+  Reply,
+  Share,
+  Trash2,
+  MoreHorizontal,
+} from '@repo/ui/icons';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -25,6 +33,7 @@ import {
   type PreselectedCommentMetadata,
 } from './getCommentRouteData';
 import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
+import { Button } from '@repo/ui/components/button';
 
 interface SingleCommentProps {
   comment: PaginatedComments['comments'][number];
@@ -163,8 +172,20 @@ export function Comment({
         </div>
       ) : null}
 
+      {!isFetching && showReplies && data?.pages.at(-1)?.hasMore ? (
+        <Button
+          variant="ghost"
+          className="gap-1 text-xs text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
+          onClick={() => fetchNextPage()}
+        >
+          <MoreHorizontal size={24} />
+          Load More
+          <span className="sr-only">Load More</span>
+        </Button>
+      ) : null}
+
       {showReplies ? (
-        <div className="flex flex-col gap-1 pl-6 pt-1">
+        <div className="flex flex-col-reverse gap-1 pl-6 pt-1">
           {data?.pages.flatMap((page) =>
             page.comments.map((reply) => (
               // this is a reply
@@ -178,15 +199,6 @@ export function Comment({
             )),
           )}
         </div>
-      ) : null}
-
-      {!isFetching && showReplies && data?.pages.at(-1)?.hasMore ? (
-        <button
-          className="flex cursor-pointer items-center gap-1 pl-6 text-xs text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
-          onClick={() => fetchNextPage()}
-        >
-          Load more
-        </button>
       ) : null}
     </div>
   );
