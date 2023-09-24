@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
 
+test.use({ storageState: 'playwright/.auth/unauthenticated.json' });
+
 test('challenge page', async ({ page }) => {
   await page.goto('/challenge/4');
 

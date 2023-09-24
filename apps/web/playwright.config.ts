@@ -6,24 +6,32 @@ export default defineConfig({
   expect: {
     timeout: 5 * 1000,
   },
-  fullyParallel: true,
+  fullyParallel: false,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: [['html', { open: 'never' }]],
   use: {
-    baseURL: 'http://127.0.0.1:3000',
-    trace: 'on-first-retry',
+    baseURL: 'http://localhost:3000',
+    trace: process.env.CI ? 'on-first-retry' : 'retain-on-failure',
   },
   projects: [
+    { name: 'setup', testMatch: /.*\.setup\.ts/ },
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: 'playwright/.auth/user.json',
+        contextOptions: {
+          permissions: ['clipboard-read', 'clipboard-write'],
+        },
+      },
+      dependencies: ['setup'],
     },
   ],
   webServer: {
     command: 'pnpm start',
-    url: 'http://127.0.0.1:3000',
+    url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
   },
 });
