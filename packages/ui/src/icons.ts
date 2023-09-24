@@ -35,6 +35,7 @@ export {
   MessagesSquare,
   Minimize2,
   Moon,
+  MoreHorizontal,
   Pencil,
   PieChart,
   Play,
