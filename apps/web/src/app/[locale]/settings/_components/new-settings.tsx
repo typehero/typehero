@@ -10,12 +10,12 @@ import {
 import { Card } from '@repo/ui/components/card';
 import { BellRing, Brush, Settings2, Shapes } from '@repo/ui/icons';
 import Link from 'next/link';
-import UserHeader from '~/components/user/dashboard/user-header';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { ProfileSettings } from './profile';
 import { Notifications } from './notifications';
 import { Appearances } from './appearance';
 import { usePathname } from 'next/navigation';
+import UserHeader from '../../[username]/_components/dashboard/user-header';
 
 interface Props {
   user: User & { userLinks: { id: string | null; url: string }[] };
