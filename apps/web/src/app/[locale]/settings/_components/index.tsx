@@ -11,7 +11,7 @@ import { Form, FormField, FormItem, FormMessage } from '@repo/ui/components/form
 import { MagicIcon } from '@repo/ui/components/magic-icon';
 import { Input } from '@repo/ui/components/input';
 import { createNoProfanitySchemaWithValidate } from '~/utils/antiProfanityZod';
-import { RichMarkdownEditor } from '~/components/ui/rich-markdown-editor';
+import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
 
 export interface UserLinkType {
   id: string | null;

@@ -7,11 +7,8 @@ import { ActionButton } from './enroll-button';
 import { TrackChallenge } from './track-challenge-card';
 import { TrackProgress } from './track-progress';
 import { enrollUserInTrack, getTrackDetails, unenrollUserFromTrack } from './track.action';
-import { TypographyH3 } from '@repo/ui/components/typography/h3';
-import { Markdown } from '@repo/ui/components/markdown';
 
 interface TrackDetailProps {
-  // trackid
   slug: string;
 }
 
@@ -26,30 +23,28 @@ export const BGS_BY_TRACK: Record<number, string> = {
 export const bgsArray = Object.values(BGS_BY_TRACK);
 
 export async function TrackDetail({ slug }: TrackDetailProps) {
-  const session = await getServerAuthSession();
   const trackId = parseInt(slug);
   const track = await getTrackDetails(trackId);
 
   const trackChallenges = track?.trackChallenges ?? [];
-  const isEnrolled = track?.enrolledUsers.findIndex((user) => user.id === session?.user.id);
+  const isEnrolled = Boolean(track?.enrolledUsers?.length);
 
-  const completedTrackChallengeId: number[] = [];
-  const inProgressTrackChallengeId: number[] = [];
-  const unattemptedTrackChallengeId: number[] = [];
-
-  for (const trackChallenge of trackChallenges) {
-    const submissions = trackChallenge.challenge.submission;
-    if (submissions.length > 0) {
-      if (submissions.some((submission) => !submission.isSuccessful)) {
-        inProgressTrackChallengeId.push(trackChallenge.id);
-      }
-      if (submissions.some((submission) => submission.isSuccessful)) {
-        completedTrackChallengeId.push(trackChallenge.id);
-      }
-    } else {
-      unattemptedTrackChallengeId.push(trackChallenge.id);
-    }
-  }
+  const completedTrackChallenges = trackChallenges
+    .filter((trackChallenge) => {
+      return (
+        trackChallenge.challenge.submission.length &&
+        trackChallenge.challenge.submission.some((submission) => submission.isSuccessful)
+      );
+    })
+    .map((trackChallenge) => trackChallenge.id);
+  const inProgressTrackChallenges = trackChallenges
+    .filter((trackChallenge) => {
+      return (
+        trackChallenge.challenge.submission.length &&
+        trackChallenge.challenge.submission.every((submission) => !submission.isSuccessful)
+      );
+    })
+    .map((trackChallenge) => trackChallenge.id);
 
   return (
     <div className="container flex min-h-screen flex-col items-center gap-4 py-5 md:gap-8 md:pb-20">
@@ -78,37 +73,35 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
             {track?.description}
           </p>
         </div>
-        {isEnrolled === -1 ? (
-          <ActionButton action={enrollUserInTrack} trackId={trackId} text="Enroll" />
-        ) : (
+        {isEnrolled ? (
           <ActionButton action={unenrollUserFromTrack} trackId={trackId} text="Unenroll" />
+        ) : (
+          <ActionButton action={enrollUserInTrack} trackId={trackId} text="Enroll" />
         )}
       </div>
-      {isEnrolled !== -1 && (
+      {isEnrolled ? (
         <div className="w-full md:w-3/4 ">
           <TrackProgress
-            completedChallenges={completedTrackChallengeId.length}
+            completedChallenges={completedTrackChallenges.length}
             totalChallenges={trackChallenges.length}
           />
         </div>
-      )}
+      ) : null}
       <div className="flex w-full flex-row justify-around gap-8">
         <div className="flex flex-col space-y-2 md:w-3/4">
           <div className="grid-col grid grid-cols-1 gap-2 self-stretch">
-            {trackChallenges
-              .sort((a, b) => a.orderId - b.orderId)
-              .map((trackChallenge) => (
-                <Link
-                  key={trackChallenge.challenge.id}
-                  href={`/challenge/${trackChallenge.challenge.id}`}
-                >
-                  <TrackChallenge
-                    challenge={trackChallenge.challenge}
-                    isCompleted={completedTrackChallengeId.includes(trackChallenge.id)}
-                    isInProgress={inProgressTrackChallengeId.includes(trackChallenge.id)}
-                  />
-                </Link>
-              ))}
+            {trackChallenges.map((trackChallenge) => (
+              <Link
+                key={trackChallenge.challenge.id}
+                href={`/challenge/${trackChallenge.challenge.id}`}
+              >
+                <TrackChallenge
+                  challenge={trackChallenge.challenge}
+                  isCompleted={completedTrackChallenges.includes(trackChallenge.id)}
+                  isInProgress={inProgressTrackChallenges.includes(trackChallenge.id)}
+                />
+              </Link>
+            ))}
           </div>
         </div>
       </div>

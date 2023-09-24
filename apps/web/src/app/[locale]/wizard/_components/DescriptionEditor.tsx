@@ -4,8 +4,8 @@ import { useWatch } from 'react-hook-form';
 import { FormField, FormItem, FormMessage } from '@repo/ui/components/form';
 import { TypographyH3 } from '@repo/ui/components/typography/h3';
 import { Markdown } from '@repo/ui/components/markdown';
-import { RichMarkdownEditor } from '../ui/rich-markdown-editor';
 import { type WizardForm } from '.';
+import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
 
 interface Props {
   form: WizardForm;

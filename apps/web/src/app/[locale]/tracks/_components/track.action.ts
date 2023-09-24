@@ -55,12 +55,10 @@ export const getTrackDetails = cache(async (id: number) => {
       id,
     },
     include: {
-      _count: {
-        select: {
-          enrolledUsers: true,
-        },
-      },
       trackChallenges: {
+        orderBy: {
+          orderId: 'asc',
+        },
         include: {
           challenge: {
             include: {

@@ -1,7 +1,7 @@
 import { getServerAuthSession } from '@repo/auth/server';
 import { TypographyH2 } from '@repo/ui/components/typography/h2';
 import type { Metadata } from 'next';
-import { Wizard } from '~/components/wizard';
+import { Wizard } from './_components';
 
 export default async function Page() {
   const session = await getServerAuthSession();

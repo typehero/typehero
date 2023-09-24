@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Footsies } from '~/components/ui/footsies';
+import { Footsies } from '~/components/footsies';
 
 export const metadata: Metadata = {
   title: 'Privacy | TypeHero',

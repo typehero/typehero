@@ -36,6 +36,7 @@ export {
   Minimize2,
   Moon,
   Pencil,
+  PieChart,
   Play,
   Plus,
   Reply,
