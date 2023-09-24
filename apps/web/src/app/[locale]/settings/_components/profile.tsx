@@ -2,8 +2,8 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { User } from '@repo/db/types';
+import { Button } from '@repo/ui/components/button';
 import {
-  Button,
   Form,
   FormControl,
   FormDescription,
@@ -11,17 +11,19 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  Input,
+} from '@repo/ui/components/form';
+import { Input } from '@repo/ui/components/input';
+import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-  Separator,
-  Textarea,
-  cn,
-  toast,
-} from '@repo/ui';
+} from '@repo/ui/components/select';
+import { Separator } from '@repo/ui/components/separator';
+import { Textarea } from '@repo/ui/components/textarea';
+import { useToast } from '@repo/ui/components/use-toast';
+import clsx from 'clsx';
 import Link from 'next/link';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -71,6 +73,7 @@ export function ProfileSettings({ user }: Props) {
 }
 
 function ProfileForm() {
+  const { toast } = useToast();
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     mode: 'onChange',
@@ -166,8 +169,8 @@ function ProfileForm() {
               name={`urls.${index}.value`}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className={cn(index !== 0 && 'sr-only')}>URLs</FormLabel>
-                  <FormDescription className={cn(index !== 0 && 'sr-only')}>
+                  <FormLabel className={clsx(index !== 0 && 'sr-only')}>URLs</FormLabel>
+                  <FormDescription className={clsx(index !== 0 && 'sr-only')}>
                     Add links to your website, blog, or social media profiles.
                   </FormDescription>
                   <FormControl>

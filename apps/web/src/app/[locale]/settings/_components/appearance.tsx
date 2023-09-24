@@ -2,8 +2,8 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { User } from '@repo/db/types';
+import { Button } from '@repo/ui/components/button';
 import {
-  Button,
   Form,
   FormControl,
   FormDescription,
@@ -11,14 +11,19 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  RadioGroup,
-  RadioGroupItem,
-  Separator,
-  buttonVariants,
-  cn,
-  toast,
-} from '@repo/ui';
-import { ChevronDownIcon } from 'lucide-react';
+} from '@repo/ui/components/form';
+import { RadioGroup, RadioGroupItem } from '@repo/ui/components/radio-group';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@repo/ui/components/select';
+import { Separator } from '@repo/ui/components/separator';
+import { useToast } from '@repo/ui/components/use-toast';
+import { ChevronDown } from '@repo/ui/icons';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -59,6 +64,7 @@ const defaultValues: Partial<AppearanceFormValues> = {
 };
 
 export function AppearanceForm() {
+  const { toast } = useToast();
   const form = useForm<AppearanceFormValues>({
     resolver: zodResolver(appearanceFormSchema),
     defaultValues,
@@ -83,22 +89,25 @@ export function AppearanceForm() {
           name="font"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Font</FormLabel>
               <div className="relative w-max">
                 <FormControl>
-                  <select
-                    className={cn(
-                      buttonVariants({ variant: 'outline' }),
-                      'w-[200px] appearance-none bg-transparent font-normal',
-                    )}
-                    {...field}
+                  <Select
+                    defaultValue={field.value}
+                    onValueChange={field.onChange as (event: string) => void}
                   >
-                    <option value="inter">Inter</option>
-                    <option value="manrope">Manrope</option>
-                    <option value="system">System</option>
-                  </select>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Select a font" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="inter">Inter</SelectItem>
+                        <SelectItem value="manrope">Manrope</SelectItem>
+                        <SelectItem value="system">System</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                 </FormControl>
-                <ChevronDownIcon className="absolute right-3 top-2.5 h-4 w-4 opacity-50" />
+                <ChevronDown className="absolute right-3 top-2.5 h-4 w-4 opacity-50" />
               </div>
               <FormDescription>Set the font you want to use in the dashboard.</FormDescription>
               <FormMessage />
