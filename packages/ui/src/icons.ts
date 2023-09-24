@@ -57,4 +57,5 @@ export {
   MessagesSquare,
   Swords,
   Sword,
+  MoreHorizontal,
 } from 'lucide-react';
