@@ -2,9 +2,10 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { User } from '@repo/db/types';
+import { Separator } from '@repo/ui/components/separator';
+import { Checkbox } from '@repo/ui/components/checkbox';
+import { Switch } from '@repo/ui/components/switch';
 import {
-  Button,
-  Checkbox,
   Form,
   FormControl,
   FormDescription,
@@ -12,12 +13,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  RadioGroup,
-  RadioGroupItem,
-  Separator,
-  Switch,
-  toast,
-} from '@repo/ui';
+} from '@repo/ui/components/form';
+import { RadioGroup, RadioGroupItem } from '@repo/ui/components/radio-group';
+import { Button } from '@repo/ui/components/button';
+import { useToast } from '@repo/ui/components/use-toast';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -63,6 +62,7 @@ const defaultValues: Partial<NotificationsFormValues> = {
 };
 
 export function NotificationsForm() {
+  const { toast } = useToast();
   const form = useForm<NotificationsFormValues>({
     resolver: zodResolver(notificationsFormSchema),
     defaultValues,

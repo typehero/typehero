@@ -8,7 +8,7 @@ import {
   VerticalTabsTrigger,
 } from '@repo/ui/components/tabs';
 import { Card } from '@repo/ui/components/card';
-import { BellRing, Brush, Settings2, Shapes } from 'lucide-react';
+import { BellRing, Brush, Settings2, Shapes } from '@repo/ui/icons';
 import Link from 'next/link';
 import UserHeader from '~/components/user/dashboard/user-header';
 import { getRelativeTime } from '~/utils/relativeTime';
