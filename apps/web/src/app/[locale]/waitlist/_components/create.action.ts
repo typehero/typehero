@@ -17,6 +17,9 @@ export const sendUserSignupEmail = async (to: string) => {
     to: [to],
     subject: '🔥 Thanks for signing up to TypeHero!',
     react: UserSignupEmail(),
+    headers: {
+      'List-Unsubscribe': '<http://localhost:3000/unsubscribe>',
+    },
   });
 
   return {
