@@ -1,7 +1,3 @@
-import { TrendingUpIcon } from '@repo/ui/icons';
-import clsx from 'clsx';
-import type { EnrolledTracks } from './track-enrolled-section';
-import { TrackProgress } from './track-progress';
 import {
   Card,
   CardContent,
@@ -9,24 +5,23 @@ import {
   CardHeader,
   CardTitle,
 } from '@repo/ui/components/card';
+import clsx from 'clsx';
+import type { EnrolledTracks } from './track-enrolled-section';
+import { TrackProgress } from './track-progress';
+import { useMemo } from 'react';
 
 interface PersonalTrackCardProps {
   track: EnrolledTracks[number];
 }
 
 export function PersonalTrackCard({ track }: PersonalTrackCardProps) {
-  // Calculates the total number of successful challenges.
-  function calculateCompletedChallenges(): number {
-    let completedChallenges = 0;
-    for (const trackChallenge of track.trackChallenges) {
-      for (const submission of trackChallenge.challenge.submission) {
-        if (submission.isSuccessful) {
-          completedChallenges++;
-        }
-      }
-    }
-    return completedChallenges;
-  }
+  const completedChallenges = useMemo(
+    () =>
+      track?.trackChallenges.filter((trackChallenge) =>
+        trackChallenge.challenge.submission.some((submission) => submission.isSuccessful),
+      ).length ?? 0,
+    [track],
+  );
 
   return (
     <Card
@@ -37,22 +32,14 @@ export function PersonalTrackCard({ track }: PersonalTrackCardProps) {
       )}
     >
       <CardHeader className="relative flex flex-col items-start gap-1 pb-0">
-        <CardTitle className="max-w-[75%] truncate text-2xl duration-300">{track.title}</CardTitle>
-        <div className="flex items-center gap-6 text-center duration-300">
-          <div className="flex items-center gap-2 text-sm">
-            <TrendingUpIcon size={18} />
-            {track._count.enrolledUsers}
-          </div>
-        </div>
-        <TrackProgress
-          completedChallenges={calculateCompletedChallenges()}
-          totalChallenges={track.trackChallenges.length}
-        />
+        <CardTitle className="max-w-[90%] truncate text-xl duration-300">{track.title}</CardTitle>
       </CardHeader>
       <CardContent className="relative flex flex-col justify-between gap-2 rounded-xl p-6 pb-0 duration-300">
-        <CardDescription className="relative h-20 w-fit overflow-hidden pb-4">
-          <div className="pointer-events-none absolute inset-0 h-full w-full shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card))] duration-300 group-hover/card:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))] group-focus:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))]" />
-          {track.description}
+        <CardDescription className="relative h-20 overflow-hidden pb-4">
+          <TrackProgress
+            completedChallenges={completedChallenges}
+            totalChallenges={track.trackChallenges.length}
+          />
         </CardDescription>
       </CardContent>
     </Card>

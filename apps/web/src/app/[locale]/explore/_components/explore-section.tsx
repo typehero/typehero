@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ExploreCard } from './explore-card';
 import type { ExploreChallengeData } from './explore.action';
 import { ViewMoreButton } from './view-more-button';
-import { Carousel } from '~/components/ui/carousel';
+import { Carousel } from '~/components/carousel';
 
 interface SectionProps {
   title: string;
