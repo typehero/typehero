@@ -36,22 +36,12 @@ export default function UnsubscribePage(props: { searchParams: { email?: string 
     try {
       await removeFromWaitlist(data.email);
       toast({
-        title: 'Success Unsubscribed',
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-          </pre>
-        ),
+        title: 'Successfully Unsubscribed',
       });
     } catch (e) {
       toast({
         variant: 'destructive',
         title: 'Something went wrong',
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-          </pre>
-        ),
       });
     }
   }
