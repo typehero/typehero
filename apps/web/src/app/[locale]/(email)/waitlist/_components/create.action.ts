@@ -18,7 +18,7 @@ export const sendUserSignupEmail = async (to: string) => {
     from: 'TypeHero <noreply@email.typehero.dev>',
     to: [to],
     subject: '🔥 Thanks for signing up to TypeHero!',
-    react: UserSignupEmail(),
+    react: UserSignupEmail({ to }),
     headers: {
       'List-Unsubscribe': `${baseUrl}/unsubscribe?email=${to}`,
     },
