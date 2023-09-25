@@ -1,5 +1,6 @@
 import { unstable_cache } from 'next/cache';
 
+// eslint-disable-next-line
 export async function withUnstableCache<T extends (...args: any[]) => Promise<any>>(opts: {
   fn: T;
   args: Parameters<T>;
