@@ -17,7 +17,7 @@
 }
 
 .mybg {
-  background: url('../../../../assets/images/waitlist-bg.webp');
+  background: url('../../../../../assets/images/waitlist-bg.webp');
   background-position-y: 33%;
   background-position-x: center;
   background-repeat: no-repeat;
