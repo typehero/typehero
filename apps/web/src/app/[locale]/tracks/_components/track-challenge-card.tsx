@@ -121,9 +121,9 @@ export function MockTrackChallenge({ challenge }: { challenge: Challenge }) {
             'group-hover/challenge:scale-105 group-hover/challenge:rounded-xl group-hover/challenge:bg-neutral-500/20',
         )}
       >
-        <div className="relative items-center gap-3 flex flex-row">
+        <div className="relative flex flex-row items-center gap-3">
           <input
-            className="peer appearance-none absolute"
+            className="peer absolute appearance-none"
             type="checkbox"
             id={challenge.id.toString()}
           />
