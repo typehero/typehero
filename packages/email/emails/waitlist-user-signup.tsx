@@ -16,11 +16,9 @@ import * as React from 'react';
 // so that we can access the assets from the typehero vercel app
 // but when in local most we point to the web app running on localhost
 const baseUrl =
-  process.env.NODE_ENV === 'production'
-    ? `https://typehero.dev`
-    : 'http://127.0.0.1:3000';
+  process.env.NODE_ENV === 'production' ? `https://typehero.dev` : 'http://localhost:3000';
 
-export const UserSignupEmail = () => {
+export const UserSignupEmail = (props: { to: string }) => {
   return (
     <Html>
       <Head />
@@ -42,7 +40,7 @@ export const UserSignupEmail = () => {
               We are cooking extremely hard to bring you the best experience for doing type
               challenges.
             </Text>
-            <Container className="w-fit mx-auto pt-4">
+            <Container className="mx-auto w-fit pt-4">
               <Button
                 pX={20}
                 pY={12}
@@ -52,11 +50,17 @@ export const UserSignupEmail = () => {
                 Follow us on @X
               </Button>
             </Container>
+            <Container className="mt-6">
+              <a
+                className="text-[14px] leading-[24px] text-black"
+                href={`${baseUrl}/unsubscribe?email=${props.to}`}
+              >
+                Unsubscribe from the waitlist
+              </a>
+            </Container>
           </Container>
         </Body>
       </Tailwind>
     </Html>
   );
 };
-
-export default UserSignupEmail;
