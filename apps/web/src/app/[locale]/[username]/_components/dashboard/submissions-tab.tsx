@@ -1,36 +1,22 @@
-import Link from 'next/link';
+import { prisma } from '@repo/db';
+import { Badge } from '@repo/ui/components/badge';
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from '@repo/ui/components/table';
-import { Badge } from '@repo/ui/components/badge';
-import { cache } from 'react';
-import { prisma } from '@repo/db';
-
-const getRecentSubmissions = cache(async (id: string) => {
-  return await prisma.submission.findMany({
-    where: {
-      userId: id,
-    },
-    orderBy: [
-      {
-        createdAt: 'desc',
-      },
-    ],
-    take: 25,
-    include: {
-      challenge: true,
-    },
-  });
-});
+import Link from 'next/link';
+import { withUnstableCache } from '~/utils/withUnstableCache';
 
 export async function SubmissionsTab({ userId }: { userId: string }) {
-  const submissions = await getRecentSubmissions(userId);
+  const submissions = await withUnstableCache({
+    fn: getRecentSubmissions,
+    args: [userId],
+    tags: ['submissions'],
+  });
 
   return (
     <Table>
@@ -65,4 +51,21 @@ export async function SubmissionsTab({ userId }: { userId: string }) {
       </TableBody>
     </Table>
   );
+}
+
+async function getRecentSubmissions(id: string) {
+  return await prisma.submission.findMany({
+    where: {
+      userId: id,
+    },
+    orderBy: [
+      {
+        createdAt: 'desc',
+      },
+    ],
+    take: 25,
+    include: {
+      challenge: true,
+    },
+  });
 }

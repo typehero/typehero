@@ -1,3 +1,4 @@
+import { prisma } from '@repo/db';
 import {
   Table,
   TableBody,
@@ -6,32 +7,16 @@ import {
   TableHeader,
   TableRow,
 } from '@repo/ui/components/table';
-import { prisma } from '@repo/db';
-import { cache } from 'react';
 import Link from 'next/link';
 import { getRelativeTime } from '~/utils/relativeTime';
-
-const getInProgressSubmissions = cache(async (id: string) => {
-  return await prisma.submission.findMany({
-    where: {
-      userId: id,
-      isSuccessful: false,
-    },
-    orderBy: [
-      {
-        createdAt: 'desc',
-      },
-    ],
-    take: 25,
-    include: {
-      challenge: true,
-    },
-    distinct: 'challengeId',
-  });
-});
+import { withUnstableCache } from '~/utils/withUnstableCache';
 
 export async function InProgressTab({ userId }: { userId: string }) {
-  const submissions = await getInProgressSubmissions(userId);
+  const submissions = await withUnstableCache({
+    fn: getInProgressSubmissions,
+    args: [userId],
+    tags: ['in-progress'],
+  });
 
   return (
     <Table>
@@ -55,4 +40,23 @@ export async function InProgressTab({ userId }: { userId: string }) {
       </TableBody>
     </Table>
   );
+}
+
+async function getInProgressSubmissions(id: string) {
+  return await prisma.submission.findMany({
+    where: {
+      userId: id,
+      isSuccessful: false,
+    },
+    orderBy: [
+      {
+        createdAt: 'desc',
+      },
+    ],
+    take: 25,
+    include: {
+      challenge: true,
+    },
+    distinct: 'challengeId',
+  });
 }
