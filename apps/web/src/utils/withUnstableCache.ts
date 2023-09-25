@@ -4,6 +4,7 @@ import { unstable_cache } from 'next/cache';
 export async function withUnstableCache<T extends (...args: any[]) => Promise<any>>(opts: {
   fn: T;
   args: Parameters<T>;
+  keys: string[];
   tags: string[];
 }) {
   const cachedResult = await unstable_cache(
@@ -11,7 +12,7 @@ export async function withUnstableCache<T extends (...args: any[]) => Promise<an
       const result = await opts.fn(...args);
       return result;
     },
-    undefined,
+    [...opts.keys],
     { tags: opts.tags },
   )(...opts.args);
 

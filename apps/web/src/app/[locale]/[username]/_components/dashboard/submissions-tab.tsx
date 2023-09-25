@@ -15,6 +15,7 @@ export async function SubmissionsTab({ userId }: { userId: string }) {
   const submissions = await withUnstableCache({
     fn: getRecentSubmissions,
     args: [userId],
+    keys: ['all-submissions'],
     tags: ['submissions'],
   });
 

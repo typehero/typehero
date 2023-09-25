@@ -12,10 +12,11 @@ import { getRelativeTime } from '~/utils/relativeTime';
 import { withUnstableCache } from '~/utils/withUnstableCache';
 
 export async function InProgressTab({ userId }: { userId: string }) {
-  const submissions = await withUnstableCache({
-    fn: getInProgressSubmissions,
+  const challenges = await withUnstableCache({
+    fn: getInProgressChallenges,
     args: [userId],
-    tags: ['in-progress'],
+    keys: ['in-progress-challenges'],
+    tags: ['challenges'],
   });
 
   return (
@@ -27,14 +28,12 @@ export async function InProgressTab({ userId }: { userId: string }) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {submissions.map((submission) => (
-          <TableRow key={submission.id}>
+        {challenges.map((challenge) => (
+          <TableRow key={challenge.id}>
             <TableCell className="font-medium underline">
-              <Link href={`/challenge/${submission.challenge.id}`}>
-                {submission.challenge.name}
-              </Link>
+              <Link href={`/challenge/${challenge.id}`}>{challenge.name}</Link>
             </TableCell>
-            <TableCell>{getRelativeTime(submission.createdAt)}</TableCell>
+            <TableCell>{getRelativeTime(challenge.submission[0]!.createdAt)}</TableCell>
           </TableRow>
         ))}
       </TableBody>
@@ -42,21 +41,40 @@ export async function InProgressTab({ userId }: { userId: string }) {
   );
 }
 
-async function getInProgressSubmissions(id: string) {
-  return await prisma.submission.findMany({
+async function getInProgressChallenges(id: string) {
+  const challenges = await prisma.challenge.findMany({
     where: {
-      userId: id,
-      isSuccessful: false,
+      AND: [
+        {
+          submission: {
+            none: {
+              userId: id,
+              isSuccessful: true,
+            },
+          },
+        },
+        // Make sure there is at least one submission
+        { submission: { some: { userId: id, isSuccessful: false } } },
+      ],
     },
-    orderBy: [
-      {
-        createdAt: 'desc',
+    select: {
+      id: true,
+      name: true,
+      submission: {
+        orderBy: {
+          createdAt: 'desc',
+        },
+        take: 1,
+        select: {
+          createdAt: true,
+        },
       },
-    ],
-    take: 25,
-    include: {
-      challenge: true,
     },
-    distinct: 'challengeId',
   });
+
+  return challenges.sort(
+    (challengeA, challengeB) =>
+      new Date(challengeB.submission[0]!.createdAt).getTime() -
+      new Date(challengeA.submission[0]!.createdAt).getTime(),
+  );
 }
