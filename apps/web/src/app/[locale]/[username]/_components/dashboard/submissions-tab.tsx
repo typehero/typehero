@@ -1,21 +1,21 @@
+import Link from 'next/link';
 import {
   Table,
   TableBody,
+  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from '@repo/ui/components/table';
-import { prisma } from '@repo/db';
+import { Badge } from '@repo/ui/components/badge';
 import { cache } from 'react';
-import Link from 'next/link';
-import { getRelativeTime } from '~/utils/relativeTime';
+import { prisma } from '@repo/db';
 
-const getInProgressSubmissions = cache(async (id: string) => {
+const getRecentSubmissions = cache(async (id: string) => {
   return await prisma.submission.findMany({
     where: {
       userId: id,
-      isSuccessful: false,
     },
     orderBy: [
       {
@@ -26,21 +26,21 @@ const getInProgressSubmissions = cache(async (id: string) => {
     include: {
       challenge: true,
     },
-    distinct: 'challengeId',
   });
 });
 
-export async function InProgressTab({ userId }: { userId: string }) {
-  const submissions = await getInProgressSubmissions(userId);
+export async function SubmissionsTab({ userId }: { userId: string }) {
+  const submissions = await getRecentSubmissions(userId);
 
   return (
     <Table>
       <TableHeader>
         <TableRow>
           <TableHead>Challenge</TableHead>
-          <TableHead>Last Submission</TableHead>
+          <TableHead>Status</TableHead>
         </TableRow>
       </TableHeader>
+
       <TableBody>
         {submissions.map((submission) => (
           <TableRow key={submission.id}>
@@ -49,7 +49,17 @@ export async function InProgressTab({ userId }: { userId: string }) {
                 {submission.challenge.name}
               </Link>
             </TableCell>
-            <TableCell>{getRelativeTime(submission.createdAt)}</TableCell>
+            <TableCell>
+              {submission.isSuccessful ? (
+                <Badge className="dark:bg-difficulty-easy-dark bg-difficulty-easy text-white duration-300 dark:text-black">
+                  Accepted
+                </Badge>
+              ) : (
+                <Badge className="dark:bg-difficulty-hard-dark bg-difficulty-hard text-white duration-300 dark:text-black">
+                  Rejected
+                </Badge>
+              )}
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
