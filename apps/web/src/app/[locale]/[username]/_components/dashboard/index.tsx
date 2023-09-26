@@ -1,7 +1,12 @@
 import { getServerAuthSession } from '@repo/auth/server';
-import { prisma } from '@repo/db';
 import type { User } from '@repo/db/types';
-import { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/card';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from '@repo/ui/components/card';
 import { MagicIcon } from '@repo/ui/components/magic-icon';
 import {
   Tabs,
@@ -16,9 +21,8 @@ import { getRelativeTime } from '~/utils/relativeTime';
 import { stripProtocolAndWWW } from '~/utils/stringUtils';
 import { InProgressTab } from './in-progress-tab';
 import { Overview } from './overview';
-import { SolutionsTab } from './solutions-tab';
+import { SubmissionsTab } from './submissions-tab';
 import UserHeader from './user-header';
-import { cache } from 'react';
 
 interface Props {
   // TODO: how do do this union type with just letting prisma halp
@@ -27,41 +31,8 @@ interface Props {
   };
 }
 
-export type UserData = NonNullable<Awaited<ReturnType<typeof getUserdata>>>;
-const getUserdata = cache(async (id: string) => {
-  const userData = await prisma.user.findFirst({
-    where: {
-      id,
-    },
-    select: {
-      submission: {
-        where: {
-          userId: id,
-        },
-        orderBy: [
-          {
-            createdAt: 'desc',
-          },
-        ],
-        take: 10,
-        include: {
-          challenge: true,
-        },
-      },
-    },
-  });
-
-  return userData;
-});
-
 export async function Dashboard({ user }: Props) {
-  const userData = await getUserdata(user.id);
   const session = await getServerAuthSession();
-
-  // TODO: this seems sus
-  if (!userData) {
-    return null;
-  }
 
   return (
     <div className="container">
@@ -114,10 +85,10 @@ export async function Dashboard({ user }: Props) {
             </VerticalTabsTrigger>
             <VerticalTabsTrigger
               className="flex items-center justify-center gap-3 px-2 md:justify-normal md:px-3"
-              value="solutions"
+              value="submissions"
             >
               <ChevronRightSquare className="h-4 w-4" />
-              <span className="hidden md:block">Solutions</span>
+              <span className="hidden md:block">Submissions</span>
             </VerticalTabsTrigger>
             <VerticalTabsTrigger
               className="flex items-center justify-center gap-3 px-2 md:justify-normal md:px-3"
@@ -162,19 +133,25 @@ export async function Dashboard({ user }: Props) {
           <Card className="col-span-4 min-h-[calc(100vh_-_56px_-_6rem)]">
             <CardHeader>
               <CardTitle>In-Progress</CardTitle>
+              <CardDescription className="text-muted-foreground mb-4 text-sm">
+                These are all your in-progress challenges.
+              </CardDescription>
             </CardHeader>
             <CardContent className="pl-2">
-              <InProgressTab />
+              <InProgressTab userId={user.id} />
             </CardContent>
           </Card>
         </VerticalTabsContent>
-        <VerticalTabsContent className="shrink grow space-y-4" value="solutions">
+        <VerticalTabsContent className="shrink grow space-y-4" value="submissions">
           <Card className="col-span-4 min-h-[calc(100vh_-_56px_-_6rem)]">
             <CardHeader>
-              <CardTitle>Solutions</CardTitle>
+              <CardTitle>Submissions</CardTitle>
+              <CardDescription className="text-muted-foreground mb-4 text-sm">
+                This is your entire submission history.
+              </CardDescription>
             </CardHeader>
             <CardContent className="pl-2">
-              <SolutionsTab submissions={userData.submission} />
+              <SubmissionsTab userId={user.id} />
             </CardContent>
           </Card>
         </VerticalTabsContent>
