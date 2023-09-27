@@ -29,8 +29,6 @@ import { replyComment, updateComment } from './comment.action';
 import { CommentDeleteDialog } from './delete';
 import {
   getAllComments,
-  getClientSidePaginatedComments,
-  getPaginatedComments,
   type PaginatedComments,
   type PreselectedCommentMetadata,
 } from './getCommentRouteData';
@@ -107,7 +105,7 @@ export function Comment({
 
   const { data, fetchNextPage, isFetching, refetch } = useInfiniteQuery({
     queryKey: replyQueryPaginateKey,
-    queryFn: ({ pageParam = 1 }) => getClientSidePaginatedComments(allReplies.data!, pageParam),
+    queryFn: ({ pageParam = 1 }) => getPaginatedComments(allReplies.data!, pageParam),
     enabled: Boolean(allReplies.data),
     getNextPageParam: (_, pages) => pages.length + 1,
   });
@@ -117,6 +115,26 @@ export function Comment({
       refetch();
     }
   }, [allReplies.data, refetch]);
+
+  const PAGESIZE = 2;
+
+  function getPaginatedComments(
+    comments: Awaited<ReturnType<typeof getAllComments>>,
+    page: number,
+  ) {
+    const totalComments = comments.length;
+    const totalPages = Math.ceil(totalComments / PAGESIZE);
+
+    const start = (page - 1) * PAGESIZE;
+    const end = start + PAGESIZE;
+
+    return {
+      totalComments,
+      totalPages,
+      hasMore: page < totalPages,
+      comments: comments.slice(start, end),
+    };
+  }
 
   async function createChallengeCommentReply() {
     try {

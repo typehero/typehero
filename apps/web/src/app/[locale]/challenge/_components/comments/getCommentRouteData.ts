@@ -253,21 +253,3 @@ export async function getAllComments({
 
   return comments;
 }
-
-export async function getClientSidePaginatedComments(
-  comments: Awaited<ReturnType<typeof getAllComments>>,
-  page: number,
-) {
-  const totalComments = comments.length;
-  const totalPages = Math.ceil(totalComments / PAGESIZE);
-
-  const start = (page - 1) * PAGESIZE;
-  const end = start + PAGESIZE;
-
-  return {
-    totalComments,
-    totalPages,
-    hasMore: page < totalPages,
-    comments: comments.slice(start, end),
-  };
-}
