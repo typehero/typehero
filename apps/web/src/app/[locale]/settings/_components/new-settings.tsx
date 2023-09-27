@@ -49,6 +49,8 @@ export const links = [
 ];
 
 export const NewSettings = ({ user }: Props) => {
+  console.log(['User from new settings '], user);
+
   const path = usePathname();
   let selectedTabValue: string;
   if (path === '/settings') {

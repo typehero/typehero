@@ -30,17 +30,6 @@ export default async function SettingsPage() {
     },
   });
 
-  // NOTE: make the user links have 4 at all times
-  const userLinks = (profileData.userLinks = [
-    ...profileData.userLinks,
-    ...Array(4 - profileData.userLinks.length).fill({
-      id: null,
-      url: '',
-    }),
-  ])
-    // NOTE: sort the user links so empty strings are at the bottom
-    .sort((a, b) => b.url.localeCompare(a.url));
-
   return (
     <>
       <NewSettings user={profileData} />
