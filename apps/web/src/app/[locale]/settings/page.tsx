@@ -2,11 +2,14 @@ import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import type { Metadata } from 'next';
 import { NewSettings } from './_components/new-settings';
+import { buildMetaForDefault } from '~/app/metadata';
 
-export const metadata: Metadata = {
-  title: 'Settings | TypeHero',
-  description: 'Change your settings on TypeHero.',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return buildMetaForDefault({
+    title: 'Settings | TypeHero',
+    description: 'Change your settings on TypeHero.',
+  });
+}
 
 export default async function SettingsPage() {
   const session = await getServerAuthSession();
