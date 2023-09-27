@@ -2,6 +2,7 @@ import { getServerAuthSession } from '@repo/auth/server';
 import { notFound } from 'next/navigation';
 import { Submissions } from './_components';
 import { getChallengeSubmissions } from './getChallengeSubmissions';
+import { withUnstableCache } from '~/utils/withUnstableCache';
 
 interface Props {
   params: {
@@ -16,7 +17,12 @@ export const metadata = {
 
 export default async function SubmissionPage({ params: { id } }: Props) {
   const session = await getServerAuthSession();
-  const submissions = await getChallengeSubmissions(session?.user.id ?? '', id);
+  const submissions = await withUnstableCache({
+    fn: getChallengeSubmissions,
+    args: [session?.user.id ?? '', id],
+    keys: ['all-challenge-submissions'],
+    tags: [`${id}-challenge-submissions`],
+  });
 
   if (!submissions) {
     return notFound();
