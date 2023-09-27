@@ -64,7 +64,6 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
   const [page, setPage] = useState(preselectedCommentMetadata?.page ?? 1);
   const [sortKey, setSortKey] = useState<(typeof sortKeys)[number]>(sortKeys[0]);
   const queryKey = [`${type.toLowerCase()}-${rootId}-comments`, sortKey.value, page];
-
   const { status, data } = useQuery({
     queryKey,
     queryFn: () =>
@@ -120,7 +119,7 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
   return (
     <div
       className={clsx(
-        'bg-background/90 dark:border-b-muted dark:bg-muted/90 absolute bottom-0 w-full overflow-hidden border-t border-zinc-300 backdrop-blur-sm duration-300 dark:border-zinc-700',
+        'bg-background/90 dark:border-b-muted dark:bg-muted/90 absolute bottom-0 max-h-full w-full overflow-hidden border-t border-zinc-300 backdrop-blur-sm duration-300 dark:border-zinc-700',
         {
           'lg:border-t-none': showComments,
         },

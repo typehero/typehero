@@ -6,12 +6,12 @@ import { useState } from 'react';
 import { SolutionEditor } from './solution-editor';
 import { NoSolutions } from './nosolutions';
 import { SubmitSolution } from './submit-solution';
-import type { ChallengeSolutionsRouteData } from '~/app/[locale]/challenge/[id]/solutions/page';
+import type { ChallengeSolution } from '../getSolutionRouteData';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { Button } from '@repo/ui/components/button';
 
 interface Props {
-  challenge: ChallengeSolutionsRouteData;
+  challenge: ChallengeSolution;
 }
 type View = 'details' | 'editor' | 'list';
 export function Solutions({ challenge }: Props) {
@@ -63,7 +63,7 @@ function SolutionRow({
   solution,
 }: {
   handleClick: (id: string) => void;
-  solution: ChallengeSolutionsRouteData['sharedSolution'][0];
+  solution: ChallengeSolution['sharedSolution'][0];
 }) {
   return (
     <Link

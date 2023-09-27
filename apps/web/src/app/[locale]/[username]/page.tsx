@@ -1,4 +1,5 @@
-import { Profile } from '~/components/user/profile';
+import { buildMetaForUser } from '~/app/metadata';
+import { Profile } from './_components/profile';
 
 interface Props {
   params: {
@@ -11,11 +12,11 @@ export default function Page({ params }: Props) {
 }
 
 export async function generateMetadata({ params: { username } }: Props) {
-  // remove the %40 from the username
-  const name = username.substring(3);
+  const name = decodeURIComponent(username).substring(1);
 
-  return {
+  return buildMetaForUser({
+    username: name,
     title: `${name}'s profile | TypeHero`,
     description: `View the profile of ${name} on TypeHero.`,
-  };
+  });
 }

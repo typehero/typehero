@@ -1,0 +1,100 @@
+name: Report
+
+on:
+  workflow_run:
+    workflows: ['Quality']
+    types:
+      - completed
+
+jobs:
+  e2e:
+    name: E2E
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const allArtifacts = await github.rest.actions.listWorkflowRunArtifacts({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               run_id: context.payload.workflow_run.id,
+            });
+
+            const reportArtifact = allArtifacts.data.artifacts.find((artifact) => {
+              return artifact.name == "report"
+            });
+            const report = await github.rest.actions.downloadArtifact({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               artifact_id: reportArtifact.id,
+               archive_format: 'zip',
+            });
+
+            const prNumberArtifact = allArtifacts.data.artifacts.find((artifact) => {
+              return artifact.name == "prNumber"
+            });
+            const prNumber = await github.rest.actions.downloadArtifact({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               artifact_id: prNumberArtifact.id,
+               archive_format: 'zip',
+            });
+
+            const fs = require('fs');
+            fs.writeFileSync(`${process.env.GITHUB_WORKSPACE}/report.zip`, Buffer.from(report.data));
+            fs.writeFileSync(`${process.env.GITHUB_WORKSPACE}/prNumber.zip`, Buffer.from(prNumber.data));
+
+      - name: Unzip artifacts
+        run: |
+          unzip report.zip -d report
+          unzip prNumber.zip
+
+      - name: Publish report
+        if: always()
+        id: report
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: typehero
+          directory: report
+          wranglerVersion: '3'
+
+      - name: Comment on PR
+        if: always() && github.event.workflow_run.event == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const issue_number = Number(fs.readFileSync('./prNumber'));
+
+            const { data: comments } = await github.rest.issues.listComments({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue_number
+            });
+
+            const botComment = comments.find(comment => {
+                return comment.user.type === 'Bot' && comment.body.includes('E2E report:')
+            });
+
+            const output = 'E2E report: ${{ steps.report.outputs.url }}';
+
+            if (botComment) {
+                github.rest.issues.updateComment({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    comment_id: botComment.id,
+                    body: output
+                });
+            } else {
+                github.rest.issues.createComment({
+                    issue_number: issue_number,
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    body: output
+                });
+            }

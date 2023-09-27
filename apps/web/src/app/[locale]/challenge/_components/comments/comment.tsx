@@ -6,11 +6,19 @@ import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { toast } from '@repo/ui/components/use-toast';
 import { UserBadge } from '@repo/ui/components/user-badge';
-import { ChevronDown, ChevronUp, Pencil, Reply, Share, Trash2 } from '@repo/ui/icons';
+import {
+  ChevronDown,
+  ChevronUp,
+  Pencil,
+  Reply,
+  Share,
+  Trash2,
+  MoreHorizontal,
+} from '@repo/ui/icons';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { z } from 'zod';
 import { ReportDialog } from '~/components/ReportDialog';
@@ -25,6 +33,7 @@ import {
   type PreselectedCommentMetadata,
 } from './getCommentRouteData';
 import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
+import { Button } from '@repo/ui/components/button';
 
 interface SingleCommentProps {
   comment: PaginatedComments['comments'][number];
@@ -163,8 +172,20 @@ export function Comment({
         </div>
       ) : null}
 
+      {!isFetching && showReplies && data?.pages.at(-1)?.hasMore ? (
+        <Button
+          variant="ghost"
+          className="gap-1 text-xs text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
+          onClick={() => fetchNextPage()}
+        >
+          <MoreHorizontal size={24} />
+          Load More
+          <span className="sr-only">Load More</span>
+        </Button>
+      ) : null}
+
       {showReplies ? (
-        <div className="flex flex-col gap-1 pl-6 pt-1">
+        <div className="flex flex-col-reverse gap-1 pl-6 pt-1">
           {data?.pages.flatMap((page) =>
             page.comments.map((reply) => (
               // this is a reply
@@ -178,15 +199,6 @@ export function Comment({
             )),
           )}
         </div>
-      ) : null}
-
-      {!isFetching && showReplies && data?.pages.at(-1)?.hasMore ? (
-        <button
-          className="flex cursor-pointer items-center gap-1 pl-6 text-xs text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
-          onClick={() => fetchNextPage()}
-        >
-          Load more
-        </button>
       ) : null}
     </div>
   );
@@ -206,8 +218,10 @@ function SingleComment({
   replyQueryKey,
   preselectedCommentMetadata,
 }: SingleCommentProps) {
-  const params = useSearchParams();
-  const replyId = params.get('replyId');
+  const params = useParams();
+  const challengeId = params.id as string;
+  const searchParams = useSearchParams();
+  const replyId = searchParams.get('replyId');
   const queryClient = useQueryClient();
   const [text, setText] = useState(comment.text);
   const [isEditing, setIsEditing] = useState(false);
@@ -243,9 +257,9 @@ function SingleComment({
     }
   }
 
-  async function copyPathNotifyUser(isReply: boolean) {
+  async function copyPathNotifyUser(isReply: boolean, challengeId: string) {
     try {
-      await copyCommentUrlToClipboard(isReply);
+      await copyCommentUrlToClipboard(isReply, challengeId);
       toast({
         title: 'Success!',
         variant: 'success',
@@ -261,15 +275,21 @@ function SingleComment({
     }
   }
 
-  async function copyCommentUrlToClipboard(isReply: boolean) {
+  async function copyCommentUrlToClipboard(isReply: boolean, challengeId: string) {
     const commentId = isReply ? comment.parentId : comment.id;
     const paramsObj = { replyId: String(comment.id) };
     const searchParams = new URLSearchParams(paramsObj);
-    await navigator.clipboard.writeText(
-      `${window.location.origin}/challenge/${comment.rootChallengeId}/comments/${commentId}${
-        isReply ? `?${searchParams.toString()}` : ''
-      }`,
-    );
+
+    const { rootType, rootSolutionId } = comment;
+    const baseURL = `${window.location.origin}/challenge/${challengeId}`;
+    const hasGetParams = isReply ? `?${searchParams.toString()}` : '';
+
+    const shareUrl =
+      rootType === 'CHALLENGE'
+        ? `${baseURL}/comments/${commentId}${hasGetParams}`
+        : `${baseURL}/solutions/${rootSolutionId}/comments/${commentId}${hasGetParams}`;
+
+    await navigator.clipboard.writeText(shareUrl);
   }
 
   const loggedinUser = useSession();
@@ -316,7 +336,7 @@ function SingleComment({
               </span>
             </TooltipTrigger>
             <TooltipContent align="start" alignOffset={-55} className="rounded-xl">
-              <span className="text-xs text-white">{comment.createdAt.toLocaleString()}</span>
+              <span className="text-foreground text-xs">{comment.createdAt.toLocaleString()}</span>
             </TooltipContent>
           </Tooltip>
         </div>
@@ -365,7 +385,7 @@ function SingleComment({
             <div
               className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
               onClick={() => {
-                copyPathNotifyUser(Boolean(isReply));
+                copyPathNotifyUser(Boolean(isReply), challengeId);
               }}
             >
               <Share className="h-3 w-3" />

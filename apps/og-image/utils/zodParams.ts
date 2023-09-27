@@ -63,4 +63,3 @@ export const userParam = zodParams(
     username: truncatedWordSchema({ maxCharacters: 70 }),
   }),
 );
-

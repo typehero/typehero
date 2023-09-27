@@ -50,18 +50,28 @@ export async function unenrollUserFromTrack(id: number) {
  */
 export const getTrackDetails = cache(async (id: number) => {
   const session = await getServerAuthSession();
-
   return prisma.track.findUnique({
     where: {
       id,
     },
     include: {
-      _count: {
-        select: {
-          enrolledUsers: true,
+      trackChallenges: {
+        orderBy: {
+          orderId: 'asc',
+        },
+        include: {
+          challenge: {
+            include: {
+              submission: true,
+              user: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
         },
       },
-      trackChallenges: true,
       enrolledUsers: {
         where: {
           id: session?.user.id,
