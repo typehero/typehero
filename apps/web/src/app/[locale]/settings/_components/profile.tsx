@@ -13,6 +13,7 @@ import {
   FormMessage,
 } from '@repo/ui/components/form';
 import { Input } from '@repo/ui/components/input';
+import { MagicIcon } from '@repo/ui/components/magic-icon';
 import {
   Select,
   SelectContent,
@@ -21,12 +22,12 @@ import {
   SelectValue,
 } from '@repo/ui/components/select';
 import { Separator } from '@repo/ui/components/separator';
-import { Textarea } from '@repo/ui/components/textarea';
 import { useToast } from '@repo/ui/components/use-toast';
-import clsx from 'clsx';
 import Link from 'next/link';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
+import { createNoProfanitySchemaWithValidate } from '~/utils/antiProfanityZod';
 
 const profileFormSchema = z.object({
   username: z
@@ -42,14 +43,16 @@ const profileFormSchema = z.object({
       required_error: 'Please select an email to display.',
     })
     .email(),
-  bio: z.string().max(160).min(4),
-  urls: z
-    .array(
-      z.object({
-        value: z.string().url({ message: 'Please enter a valid URL.' }),
-      }),
-    )
-    .optional(),
+  bio: createNoProfanitySchemaWithValidate((str) => str.max(256)),
+  userLinks: z.array(
+    z.object({
+      id: z.union([z.string(), z.null()]),
+      url: z.union([
+        createNoProfanitySchemaWithValidate((str) => str.url().max(256)),
+        z.literal(''),
+      ]),
+    }),
+  ),
 });
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
@@ -67,21 +70,45 @@ export function ProfileSettings({ user }: Props) {
         </p>
         <Separator />
       </div>
-      <ProfileForm />
+      <ProfileForm user={user} />
     </div>
   );
 }
 
-function ProfileForm() {
+function ProfileForm({ user }: Props) {
   const { toast } = useToast();
+
+  // NOTE: make the user links have 4 at all times
+  const userLinks = (user.userLinks = [
+    ...user.userLinks,
+    ...Array(4 - user.userLinks.length).fill({
+      id: null,
+      url: '',
+    }),
+  ])
+    // NOTE: sort the user links so empty strings are at the bottom
+    .sort((a, b) => b.url.localeCompare(a.url));
+
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     mode: 'onChange',
+    defaultValues: {
+      bio: user.bio,
+      email: user.email!,
+      userLinks,
+      username: user.name,
+    },
   });
 
-  const { fields, append } = useFieldArray({
-    name: 'urls',
-    control: form.control,
+  const {
+    formState: { errors },
+    control,
+    register,
+  } = form;
+
+  const { fields } = useFieldArray({
+    control,
+    name: 'userLinks',
   });
 
   async function onSubmit(data: ProfileFormValues) {
@@ -128,7 +155,7 @@ function ProfileForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="m@example.com">m@example.com</SelectItem>
+                  <SelectItem value={user.email!}>{user.email}</SelectItem>
                   <SelectItem value="m@google.com">m@google.com</SelectItem>
                   <SelectItem value="m@support.com">m@support.com</SelectItem>
                 </SelectContent>
@@ -141,56 +168,40 @@ function ProfileForm() {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="bio"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="h-[300px] w-[600px]">
               <FormLabel>Bio</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Tell us a little bit about yourself"
-                  className="resize-none"
-                  {...field}
-                />
-              </FormControl>
-              <FormDescription>
-                You can <span>@mention</span> other users and organizations to link to them.
-              </FormDescription>
+              <RichMarkdownEditor onChange={field.onChange} value={field.value} />
               <FormMessage />
             </FormItem>
           )}
         />
-        <div>
-          {fields.map((field, index) => (
-            <FormField
-              control={form.control}
-              key={field.id}
-              name={`urls.${index}.value`}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className={clsx(index !== 0 && 'sr-only')}>URLs</FormLabel>
-                  <FormDescription className={clsx(index !== 0 && 'sr-only')}>
-                    Add links to your website, blog, or social media profiles.
-                  </FormDescription>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          ))}
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            className="mt-2"
-            onClick={() => append({ value: '' })}
-          >
-            Add URL
-          </Button>
+        <div className="flex flex-col items-start space-y-3 pt-8">
+          <h4 className="text-sm font-medium">Social accounts</h4>
+          {fields.map((val, i) => {
+            return (
+              <FormItem className="mb-3" key={`url-link-${i}`}>
+                <div className="flex items-center gap-2">
+                  <MagicIcon url={userLinks[i]?.url ?? ''} />
+                  <Input
+                    className="w-64"
+                    defaultValue={val.url}
+                    placeholder="Link to social profile"
+                    {...register(`userLinks.${i}.url`)}
+                  />
+                  {errors.userLinks?.[i]?.url?.message ? (
+                    <div className="text-destructive">{errors.userLinks[i]?.url?.message}</div>
+                  ) : null}
+                </div>
+              </FormItem>
+            );
+          })}
         </div>
+
         <Button type="submit">Update profile</Button>
       </form>
     </Form>
