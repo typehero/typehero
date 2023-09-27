@@ -14,7 +14,6 @@
     "start": "next start",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "postbuild": "next-sitemap",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -54,7 +53,6 @@
     "monaco-vim": "^0.4.0",
     "next": "^13.5.1",
     "next-international": "1.0.0-rc.6",
-    "next-sitemap": "^4.2.3",
     "next-themes": "^0.2.1",
     "react": "^18.2.0",
     "react-day-picker": "^8.8.0",
