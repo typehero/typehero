@@ -116,7 +116,7 @@ export function Comment({
     }
   }, [allReplies.data, refetch]);
 
-  const PAGESIZE = 2;
+  const PAGESIZE = 10;
 
   function getPaginatedComments(comments: NonNullable<typeof allReplies.data>, page: number) {
     const totalComments = comments.length;
