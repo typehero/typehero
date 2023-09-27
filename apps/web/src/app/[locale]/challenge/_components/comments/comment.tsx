@@ -113,10 +113,10 @@ export function Comment({
   });
 
   useEffect(() => {
-    if (allReplies.data && data) {
+    if (allReplies.data) {
       refetch();
     }
-  }, [allReplies.data, data, refetch]);
+  }, [allReplies.data, refetch]);
 
   async function createChallengeCommentReply() {
     try {
