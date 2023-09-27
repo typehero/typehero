@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { challengeParam } from '@repo/og-image';
+import { challengeParam, userParam } from '@repo/og-image';
 
 const OG_URL =
   process.env.NODE_ENV !== 'production' ? 'http://localhost:4200' : 'https://og.typehero.dev';
@@ -52,6 +52,25 @@ interface MetaParamsForChallenge {
   username: string;
 }
 
+/** Helper to build opengraph metadata for a user, you should call this in generateMetadata() next function */
+export const buildMetaForUser = async ({
+  title,
+  description,
+  username,
+}: MetaParamsForChallenge): Promise<Metadata> => {
+  const params = `${userParam.toSearchString({
+    username,
+  })}`;
+
+  const ogImageUrl = `${OG_URL}/api/user?${params}`;
+
+  return buildMeta({
+    ogImageUrl,
+    title,
+    description,
+  });
+};
+
 /** Helper to build opengraph metadata for a challenge, you should call this in generateMetadata() next function */
 export const buildMetaForChallenge = async ({
   title,
@@ -74,9 +93,17 @@ export const buildMetaForChallenge = async ({
 };
 
 /** Helper to build opengraph metadata with defaults, you should call this in generateMetadata() next function */
-export const buildMetaForDefault = async (): Promise<Metadata> => {
+export const buildMetaForDefault = async ({
+  title,
+  description,
+}: {
+  title?: string;
+  description?: string;
+}): Promise<Metadata> => {
   return buildMeta({
     ogImageUrl: `${OG_URL}/api/default?cache-bust=${new Date().getDate()}`,
+    title,
+    description,
   });
 };
 
