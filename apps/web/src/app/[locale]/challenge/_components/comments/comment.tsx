@@ -118,10 +118,7 @@ export function Comment({
 
   const PAGESIZE = 2;
 
-  function getPaginatedComments(
-    comments: Awaited<ReturnType<typeof getAllComments>>,
-    page: number,
-  ) {
+  function getPaginatedComments(comments: NonNullable<typeof allReplies.data>, page: number) {
     const totalComments = comments.length;
     const totalPages = Math.ceil(totalComments / PAGESIZE);
 
