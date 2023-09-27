@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import NoSubmissions from './nosubmissions';
-import type { ChallengeSubmissions } from '~/app/[locale]/challenge/[id]/submissions/getChallengeSubmissions';
+import type { ChallengeSubmissions } from '~/app/[locale]/challenge/[id]/submissions/[[...catchAll]]/getChallengeSubmissions';
 import { getRelativeTime } from '~/utils/relativeTime';
 
 interface Props {
