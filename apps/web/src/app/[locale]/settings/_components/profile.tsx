@@ -79,7 +79,7 @@ function ProfileForm() {
     mode: 'onChange',
   });
 
-  const { fields, append } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     name: 'urls',
     control: form.control,
   });
@@ -189,6 +189,15 @@ function ProfileForm() {
             onClick={() => append({ value: '' })}
           >
             Add URL
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            className={clsx(`ml-2 mt-2`, !fields.length ? 'hidden' : '')}
+            onClick={() => remove(fields.length - 1)}
+          >
+            Remove
           </Button>
         </div>
         <Button type="submit">Update profile</Button>
