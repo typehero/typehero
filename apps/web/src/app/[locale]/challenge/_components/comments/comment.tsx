@@ -105,13 +105,18 @@ export function Comment({
     enabled: showReplies,
   });
 
-  const { data, fetchNextPage, isFetching } = useInfiniteQuery({
+  const { data, fetchNextPage, isFetching, refetch } = useInfiniteQuery({
     queryKey: replyQueryPaginateKey,
     queryFn: ({ pageParam = 1 }) => getClientSidePaginatedComments(allReplies.data!, pageParam),
     enabled: Boolean(allReplies.data),
     getNextPageParam: (_, pages) => pages.length + 1,
-    refetchInterval: 10, // ensures data is synced to the all replies
   });
+
+  useEffect(() => {
+    if (allReplies.data && data) {
+      refetch();
+    }
+  }, [allReplies.data, data, refetch]);
 
   async function createChallengeCommentReply() {
     try {
