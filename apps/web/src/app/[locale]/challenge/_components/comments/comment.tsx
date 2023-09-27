@@ -97,6 +97,7 @@ export function Comment({
   const queryClient = useQueryClient();
 
   const replyQueryKey = [`${comment.id}-comment-replies`];
+  const replyQueryPaginateKey = replyQueryKey.concat('paginated');
   const allReplies = useQuery({
     queryKey: replyQueryKey,
     queryFn: () => getAllComments({ rootId, rootType: type, parentId: comment.id }),
@@ -105,11 +106,11 @@ export function Comment({
   });
 
   const { data, fetchNextPage, isFetching } = useInfiniteQuery({
-    queryKey: replyQueryKey.concat('paginated'),
+    queryKey: replyQueryPaginateKey,
     queryFn: ({ pageParam = 1 }) => getClientSidePaginatedComments(allReplies.data!, pageParam),
     enabled: Boolean(allReplies.data),
     getNextPageParam: (_, pages) => pages.length + 1,
-    staleTime: 5000,
+    refetchInterval: 10, // ensures data is synced to the all replies
   });
 
   async function createChallengeCommentReply() {
