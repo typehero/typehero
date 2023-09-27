@@ -21,7 +21,7 @@ export default async function SubmissionPage({ params: { id } }: Props) {
     fn: getChallengeSubmissions,
     args: [session?.user.id ?? '', id],
     keys: ['all-challenge-submissions'],
-    tags: ['challenge-submissions'],
+    tags: [`${id}-challenge-submissions`],
   });
 
   if (!submissions) {
