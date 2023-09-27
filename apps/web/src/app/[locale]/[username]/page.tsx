@@ -1,3 +1,4 @@
+import { buildMetaForUser } from '~/app/metadata';
 import { Profile } from './_components/profile';
 
 interface Props {
@@ -13,8 +14,9 @@ export default function Page({ params }: Props) {
 export async function generateMetadata({ params: { username } }: Props) {
   const name = decodeURIComponent(username).substring(1);
 
-  return {
+  return buildMetaForUser({
+    username: name,
     title: `${name}'s profile | TypeHero`,
     description: `View the profile of ${name} on TypeHero.`,
-  };
+  });
 }

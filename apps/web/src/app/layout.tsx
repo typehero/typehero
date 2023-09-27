@@ -12,7 +12,7 @@ import { Navigation } from '~/components/navigation';
 const inter = Inter({ subsets: ['latin'] });
 
 export async function generateMetadata(): Promise<Metadata> {
-  return buildMetaForDefault();
+  return buildMetaForDefault({});
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
