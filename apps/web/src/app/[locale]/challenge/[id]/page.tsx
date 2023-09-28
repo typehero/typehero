@@ -3,6 +3,7 @@ import { Description } from '../_components/description';
 import { Comments } from '../_components/comments';
 import { getChallengeRouteData } from './getChallengeRouteData';
 import { buildMetaForChallenge } from '~/app/metadata';
+import { getRelativeTime } from '~/utils/relativeTime';
 
 interface Props {
   params: {
@@ -16,6 +17,8 @@ export async function generateMetadata({ params: { id } }: Props) {
     title: `${challenge.name} | TypeHero`,
     description: `${challenge.shortDescription} Can you solve it?`,
     username: challenge.user.name,
+    difficulty: challenge.difficulty,
+    date: getRelativeTime(challenge.createdAt),
   });
 }
 
