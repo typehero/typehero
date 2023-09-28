@@ -57,7 +57,6 @@ export const challengeParam = zodParams(
     username: z.string(),
     difficulty: z.enum(['BEGINNER', 'EASY', 'MEDIUM', 'HARD', 'EXTREME']),
     date: z.string().optional(),
-    removeThTitle: z.boolean(),
   }),
 );
 

@@ -53,7 +53,6 @@ interface MetaParamsForChallenge {
   username: string;
   difficulty: 'BEGINNER' | 'EASY' | 'EXTREME' | 'HARD' | 'MEDIUM';
   date: string;
-  removeThTitle: boolean;
 }
 
 interface MetaParamsForUser {
