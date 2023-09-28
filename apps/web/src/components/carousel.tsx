@@ -86,7 +86,7 @@ export function Carousel({ children }: Props) {
           'absolute left-40 top-1/2 hidden -translate-y-1/2 rounded-[5rem] border border-neutral-400 bg-neutral-200/50 px-2 py-4 backdrop-blur-sm duration-300 focus:outline-none focus-visible:ring-2 active:scale-75 dark:border-neutral-600 dark:bg-neutral-700/50',
           showLeftButton && 'sm:block',
         )}
-        id={'slideLeft-' + id}
+        id={`slideLeft-${id}`}
         aria-hidden={!showLeftButton}
         aria-label="Slide carousel of challenges to the left"
       >
@@ -97,7 +97,7 @@ export function Carousel({ children }: Props) {
           'absolute right-40 top-1/2 hidden -translate-y-1/2 rounded-[5rem] border border-neutral-400 bg-neutral-200/50 px-2 py-4 backdrop-blur-sm duration-300 focus:outline-none focus-visible:ring-2 active:scale-75 dark:border-neutral-600 dark:bg-neutral-700/50',
           showRightButton && 'sm:block',
         )}
-        id={'slideRight-' + id}
+        id={`slideRight-${id}`}
         aria-hidden={!showRightButton}
         aria-label="Slide carousel of challenges to the right"
       >
