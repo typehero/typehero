@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import Head from 'next/head';
@@ -34,15 +35,19 @@ export default function Page() {
           <img
             alt="ayo"
             src={`/api/challenge?${challengeParam.toSearchString({
-              description: 'This is a test card that has a has a nice description',
-              title: 'Inferring types is fun',
+              description:
+                'This is a test card that has a has a nice description lorem40 ipsum dolor sit amet, consectetur adipiscing elit. lorem more text here s aothesntohks anatoh esn uthsanotedhusn hwanoejt hsaont hesnathdoneitsdhsas asnoehusnatohesunthaoenst',
+              title: 'Inferring types is fun, but not really',
               username: 'Hacksore',
+              date: '84 years ago',
+              difficulty: 'EASY',
             })}&random=${nonce}`}
           />
         </div>
 
         <div>
           <h2>User</h2>
+
           <img
             alt="ayo"
             src={`/api/user?${userParam.toSearchString({

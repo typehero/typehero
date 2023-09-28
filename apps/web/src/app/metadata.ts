@@ -46,18 +46,26 @@ const baseMetadata: Metadata = {
   },
 };
 
+// TODO: infer from ZOD
 interface MetaParamsForChallenge {
   title: string;
   description: string;
   username: string;
+  difficulty: 'BEGINNER' | 'EASY' | 'EXTREME' | 'HARD' | 'MEDIUM';
+  date: string;
 }
 
+interface MetaParamsForUser {
+  title: string;
+  description: string;
+  username: string;
+}
 /** Helper to build opengraph metadata for a user, you should call this in generateMetadata() next function */
 export const buildMetaForUser = async ({
   title,
   description,
   username,
-}: MetaParamsForChallenge): Promise<Metadata> => {
+}: MetaParamsForUser): Promise<Metadata> => {
   const params = `${userParam.toSearchString({
     username,
   })}`;
@@ -76,11 +84,15 @@ export const buildMetaForChallenge = async ({
   title,
   description,
   username,
+  difficulty,
+  date,
 }: MetaParamsForChallenge): Promise<Metadata> => {
   const params = `${challengeParam.toSearchString({
     description,
     title,
     username,
+    difficulty,
+    date,
   })}`;
 
   const ogImageUrl = `${OG_URL}/api/challenge?${params}`;
