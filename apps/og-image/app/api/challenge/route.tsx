@@ -34,10 +34,10 @@ export async function GET(req: Request) {
 
   return new ImageResponse(
     (
-      <div tw="bg-black h-full w-full text-white bg-cover flex flex-col pt-14 px-14">
+      <div tw="bg-black h-full w-full text-white bg-cover flex flex-col pt-14 px-32">
         <Grid />
         <img
-          tw="absolute right-2 -bottom-10 h-32 opacity-30"
+          tw="absolute right-16 -bottom-10 h-32 opacity-30"
           style={{ transform: 'rotate(30deg)' }}
           src={`${HOST}/amoguwuowoaahhh.png?cache-bust=${new Date().getDate()}`}
           alt="OG"
