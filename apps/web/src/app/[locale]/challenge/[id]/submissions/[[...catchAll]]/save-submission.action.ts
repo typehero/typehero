@@ -1,5 +1,6 @@
 'use server';
 import { prisma } from '@repo/db';
+import { revalidateTag } from 'next/cache';
 
 export async function saveSubmission(
   challengeId: number,
@@ -15,4 +16,5 @@ export async function saveSubmission(
       isSuccessful,
     },
   });
+  revalidateTag(`${challengeId}-challenge-submissions`);
 }
