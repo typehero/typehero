@@ -36,7 +36,12 @@ export async function GET(req: Request) {
     (
       <div tw="bg-black h-full w-full text-white bg-cover flex flex-col pt-14 px-14">
         <Grid />
-        <img src={`${HOST}/amoguwuowoaahhh.png?cache-bust=${new Date().getDate()}`} alt="OG" />
+        <img
+          tw="absolute right-2 -bottom-10 h-32 opacity-30"
+          style={{ transform: 'rotate(30deg)' }}
+          src={`${HOST}/amoguwuowoaahhh.png?cache-bust=${new Date().getDate()}`}
+          alt="OG"
+        />
         <div tw="flex flex-col items-start h-full overflow-hidden rounded-t-[3.5rem] border-zinc-700 border-2 border-b-0 to-black relative">
           <svg
             // @ts-ignore
