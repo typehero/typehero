@@ -10,8 +10,8 @@ interface Props {
 
 export function Carousel({ children }: Props) {
   const id = useId();
-  const buttonRightSelector = 'slideRight-' + id;
-  const buttonLeftSelector = 'slideLeft-' + id;
+  const buttonRightSelector = `slideRight-${id}`;
+  const buttonLeftSelector = `slideLeft-${id}`;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerElement = containerRef.current;
