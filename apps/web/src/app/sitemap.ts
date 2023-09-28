@@ -10,7 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: `${URL}/challenge`,
+      url: `${URL}/explore`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
@@ -19,6 +19,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${URL}/tracks`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
+      priority: 0.5,
+    },
+    {
+      url: `${URL}/tos`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.5,
+    },
+    {
+      url: `${URL}/privacy`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
       priority: 0.5,
     },
   ];
