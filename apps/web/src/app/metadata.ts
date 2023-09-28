@@ -55,12 +55,17 @@ interface MetaParamsForChallenge {
   date: string;
 }
 
+interface MetaParamsForUser {
+  title: string;
+  description: string;
+  username: string;
+}
 /** Helper to build opengraph metadata for a user, you should call this in generateMetadata() next function */
 export const buildMetaForUser = async ({
   title,
   description,
   username,
-}: MetaParamsForChallenge): Promise<Metadata> => {
+}: MetaParamsForUser): Promise<Metadata> => {
   const params = `${userParam.toSearchString({
     username,
   })}`;
