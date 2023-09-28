@@ -94,7 +94,6 @@ export const buildMetaForChallenge = async ({
     username,
     difficulty,
     date,
-    removeThTitle,
   })}`;
 
   const ogImageUrl = `${OG_URL}/api/challenge?${params}`;
