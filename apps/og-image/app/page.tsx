@@ -41,6 +41,7 @@ export default function Page() {
               username: 'Hacksore',
               date: '84 years ago',
               difficulty: 'EASY',
+              hasRemoveThTitle: true,
             })}&random=${nonce}`}
           />
         </div>

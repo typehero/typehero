@@ -53,6 +53,7 @@ interface MetaParamsForChallenge {
   username: string;
   difficulty: 'BEGINNER' | 'EASY' | 'EXTREME' | 'HARD' | 'MEDIUM';
   date: string;
+  hasRemoveThTitle: boolean;
 }
 
 interface MetaParamsForUser {
@@ -86,6 +87,7 @@ export const buildMetaForChallenge = async ({
   username,
   difficulty,
   date,
+  hasRemoveThTitle,
 }: MetaParamsForChallenge): Promise<Metadata> => {
   const params = `${challengeParam.toSearchString({
     description,
@@ -93,6 +95,7 @@ export const buildMetaForChallenge = async ({
     username,
     difficulty,
     date,
+    hasRemoveThTitle,
   })}`;
 
   const ogImageUrl = `${OG_URL}/api/challenge?${params}`;

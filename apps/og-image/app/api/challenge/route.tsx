@@ -81,7 +81,7 @@ export async function GET(req: Request) {
               tw="text-7xl font-bold truncate pr-48 -mt-2 overflow-ellipsis"
               style={{ fontWeight: '800 !important' }}
             >
-              {props.title}
+              {props.title === null ? null : (props.hasRemoveThTitle ? props.title.split(" | ")[0] : props.title)}
             </h1>
             <p tw="flex items-center -mt-3">
               <p

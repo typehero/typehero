@@ -19,6 +19,7 @@ export async function generateMetadata({ params: { id } }: Props) {
     username: challenge.user.name,
     difficulty: challenge.difficulty,
     date: getRelativeTime(challenge.createdAt),
+    hasRemoveThTitle: true,
   });
 }
 
