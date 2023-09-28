@@ -86,7 +86,6 @@ export const buildMetaForChallenge = async ({
   username,
   difficulty,
   date,
-  removeThTitle,
 }: MetaParamsForChallenge): Promise<Metadata> => {
   const params = `${challengeParam.toSearchString({
     description,
