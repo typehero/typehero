@@ -41,7 +41,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/Hacksore/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 82
+        "contributions": 83
     },
     {
         "login": "PickleNik",
@@ -62,7 +62,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/PickleNik/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 78
+        "contributions": 80
     },
     {
         "login": "ggrandi",
@@ -191,6 +191,27 @@ export const contributors = [
         "contributions": 11
     },
     {
+        "login": "maxdemaio",
+        "id": 44373521,
+        "node_id": "MDQ6VXNlcjQ0MzczNTIx",
+        "avatar_url": "https://avatars.githubusercontent.com/u/44373521?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/maxdemaio",
+        "html_url": "https://github.com/maxdemaio",
+        "followers_url": "https://api.github.com/users/maxdemaio/followers",
+        "following_url": "https://api.github.com/users/maxdemaio/following{/other_user}",
+        "gists_url": "https://api.github.com/users/maxdemaio/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/maxdemaio/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/maxdemaio/subscriptions",
+        "organizations_url": "https://api.github.com/users/maxdemaio/orgs",
+        "repos_url": "https://api.github.com/users/maxdemaio/repos",
+        "events_url": "https://api.github.com/users/maxdemaio/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/maxdemaio/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 11
+    },
+    {
         "login": "anthonyshew",
         "id": 35677084,
         "node_id": "MDQ6VXNlcjM1Njc3MDg0",
@@ -228,27 +249,6 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/Tylopilus/repos",
         "events_url": "https://api.github.com/users/Tylopilus/events{/privacy}",
         "received_events_url": "https://api.github.com/users/Tylopilus/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 9
-    },
-    {
-        "login": "maxdemaio",
-        "id": 44373521,
-        "node_id": "MDQ6VXNlcjQ0MzczNTIx",
-        "avatar_url": "https://avatars.githubusercontent.com/u/44373521?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/maxdemaio",
-        "html_url": "https://github.com/maxdemaio",
-        "followers_url": "https://api.github.com/users/maxdemaio/followers",
-        "following_url": "https://api.github.com/users/maxdemaio/following{/other_user}",
-        "gists_url": "https://api.github.com/users/maxdemaio/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/maxdemaio/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/maxdemaio/subscriptions",
-        "organizations_url": "https://api.github.com/users/maxdemaio/orgs",
-        "repos_url": "https://api.github.com/users/maxdemaio/repos",
-        "events_url": "https://api.github.com/users/maxdemaio/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/maxdemaio/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 9
