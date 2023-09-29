@@ -15,7 +15,7 @@ import {
   Trash2,
   MoreHorizontal,
 } from '@repo/ui/icons';
-import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useParams, useSearchParams } from 'next/navigation';
@@ -28,12 +28,13 @@ import { CommentInput } from './comment-input';
 import { replyComment, updateComment } from './comment.action';
 import { CommentDeleteDialog } from './delete';
 import {
-  getPaginatedComments,
+  getAllComments,
   type PaginatedComments,
   type PreselectedCommentMetadata,
 } from './getCommentRouteData';
 import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
 import { Button } from '@repo/ui/components/button';
+import { CommentSkeleton } from './comment-skeleton';
 
 interface SingleCommentProps {
   comment: PaginatedComments['comments'][number];
@@ -94,18 +95,43 @@ export function Comment({
   const queryClient = useQueryClient();
 
   const replyQueryKey = [`${comment.id}-comment-replies`];
-  const { data, fetchNextPage, isFetching } = useInfiniteQuery({
+  const replyQueryPaginateKey = replyQueryKey.concat('paginated');
+  const allReplies = useQuery({
     queryKey: replyQueryKey,
-    queryFn: ({ pageParam = 1 }) =>
-      getPaginatedComments({
-        rootId,
-        rootType: type,
-        page: pageParam,
-        parentId: comment.id,
-      }),
-    getNextPageParam: (_, pages) => pages.length + 1,
+    queryFn: () => getAllComments({ rootId, rootType: type, parentId: comment.id }),
     staleTime: 5000,
+    enabled: showReplies,
   });
+
+  const { data, fetchNextPage, isFetching, refetch } = useInfiniteQuery({
+    queryKey: replyQueryPaginateKey,
+    queryFn: ({ pageParam = 1 }) => getPaginatedComments(allReplies.data!, pageParam),
+    enabled: Boolean(allReplies.data),
+    getNextPageParam: (_, pages) => pages.length + 1,
+  });
+
+  useEffect(() => {
+    if (allReplies.data) {
+      refetch();
+    }
+  }, [allReplies.data, refetch]);
+
+  const PAGESIZE = 10;
+
+  function getPaginatedComments(comments: NonNullable<typeof allReplies.data>, page: number) {
+    const totalComments = comments.length;
+    const totalPages = Math.ceil(totalComments / PAGESIZE);
+
+    const start = (page - 1) * PAGESIZE;
+    const end = start + PAGESIZE;
+
+    return {
+      totalComments,
+      totalPages,
+      hasMore: page < totalPages,
+      comments: comments.slice(start, end),
+    };
+  }
 
   async function createChallengeCommentReply() {
     try {
@@ -184,6 +210,7 @@ export function Comment({
         </Button>
       ) : null}
 
+      {allReplies.isLoading && allReplies.fetchStatus !== 'idle' ? <CommentSkeleton /> : null}
       {showReplies ? (
         <div className="flex flex-col-reverse gap-1 pl-6 pt-1">
           {data?.pages.flatMap((page) =>
