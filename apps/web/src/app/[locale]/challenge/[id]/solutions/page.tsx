@@ -2,7 +2,7 @@ import { getServerAuthSession } from '@repo/auth/server';
 import { notFound } from 'next/navigation';
 import { Solutions } from './_components';
 import { getChallengeRouteData } from '../getChallengeRouteData';
-import { buildMetaForChallenge } from '~/app/metadata';
+import { buildMetaForDefault } from '~/app/metadata';
 import { getSolutionsRouteData } from './getSolutionRouteData';
 
 interface Props {
@@ -13,10 +13,9 @@ interface Props {
 
 export async function generateMetadata({ params: { id } }: Props) {
   const challenge = await getChallengeRouteData(id, null);
-  return buildMetaForChallenge({
+  return buildMetaForDefault({
     title: `Solutions to ${challenge.name} | TypeHero`,
     description: challenge.shortDescription,
-    username: challenge.user.name,
   });
 }
 

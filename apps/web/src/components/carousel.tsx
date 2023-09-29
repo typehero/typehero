@@ -1,7 +1,7 @@
 'use client';
 import { ChevronLeft, ChevronRight } from '@repo/ui/icons';
 import clsx from 'clsx';
-import { useEffect, useRef, useState, type ReactNode, useCallback } from 'react';
+import { useEffect, useRef, useState, type ReactNode, useCallback, useId } from 'react';
 import { useResizeObserver } from '~/utils/useResizeObserver';
 
 interface Props {
@@ -9,6 +9,10 @@ interface Props {
 }
 
 export function Carousel({ children }: Props) {
+  const id = useId();
+  const buttonRightSelector = `slideRight-${id}`;
+  const buttonLeftSelector = `slideLeft-${id}`;
+
   const containerRef = useRef<HTMLDivElement>(null);
   const containerElement = containerRef.current;
 
@@ -42,8 +46,8 @@ export function Carousel({ children }: Props) {
       }
     };
 
-    const buttonRight = containerElement?.querySelector('#slideRight');
-    const buttonLeft = containerElement?.querySelector('#slideLeft');
+    const buttonRight = containerElement?.querySelector(`[id="${buttonRightSelector}"]`);
+    const buttonLeft = containerElement?.querySelector(`[id="${buttonLeftSelector}"]`);
 
     if (containerElement) {
       containerElement.addEventListener('scroll', handleScroll);
@@ -68,7 +72,7 @@ export function Carousel({ children }: Props) {
         buttonLeft.removeEventListener('click', handleSlideLeft);
       }
     };
-  }, [handleScroll, containerElement]);
+  }, [handleScroll, containerElement, buttonRightSelector, buttonLeftSelector]);
 
   return (
     <div
@@ -82,7 +86,7 @@ export function Carousel({ children }: Props) {
           'absolute left-40 top-1/2 hidden -translate-y-1/2 rounded-[5rem] border border-neutral-400 bg-neutral-200/50 px-2 py-4 backdrop-blur-sm duration-300 focus:outline-none focus-visible:ring-2 active:scale-75 dark:border-neutral-600 dark:bg-neutral-700/50',
           showLeftButton && 'sm:block',
         )}
-        id="slideLeft"
+        id={`slideLeft-${id}`}
         aria-hidden={!showLeftButton}
         aria-label="Slide carousel of challenges to the left"
       >
@@ -93,7 +97,7 @@ export function Carousel({ children }: Props) {
           'absolute right-40 top-1/2 hidden -translate-y-1/2 rounded-[5rem] border border-neutral-400 bg-neutral-200/50 px-2 py-4 backdrop-blur-sm duration-300 focus:outline-none focus-visible:ring-2 active:scale-75 dark:border-neutral-600 dark:bg-neutral-700/50',
           showRightButton && 'sm:block',
         )}
-        id="slideRight"
+        id={`slideRight-${id}`}
         aria-hidden={!showRightButton}
         aria-label="Slide carousel of challenges to the right"
       >
