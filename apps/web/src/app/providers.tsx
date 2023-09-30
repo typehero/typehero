@@ -4,6 +4,7 @@ import { VercelToolbar } from '@vercel/toolbar/next';
 import { SessionProvider } from '@repo/auth/react';
 import { TooltipProvider } from '@repo/ui/components/tooltip';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ThemeProvider } from 'next-themes';
 import React from 'react';
 import { FeatureFlagProvider } from './feature-flag-provider';
@@ -21,6 +22,7 @@ export function Providers({ children }: Props) {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
       <SessionProvider>
         <ThemeProvider attribute="class">
           <FeatureFlagProvider>

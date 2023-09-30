@@ -32,11 +32,24 @@ jobs:
                archive_format: 'zip',
             });
 
+            const prNumberArtifact = allArtifacts.data.artifacts.find((artifact) => {
+              return artifact.name == "prNumber"
+            });
+            const prNumber = await github.rest.actions.downloadArtifact({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               artifact_id: prNumberArtifact.id,
+               archive_format: 'zip',
+            });
+
             const fs = require('fs');
             fs.writeFileSync(`${process.env.GITHUB_WORKSPACE}/report.zip`, Buffer.from(report.data));
+            fs.writeFileSync(`${process.env.GITHUB_WORKSPACE}/prNumber.zip`, Buffer.from(prNumber.data));
 
       - name: Unzip artifacts
-        run: unzip report.zip -d report
+        run: |
+          unzip report.zip -d report
+          unzip prNumber.zip
 
       - name: Publish report
         if: always()
@@ -55,10 +68,13 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            const fs = require('fs');
+            const issue_number = Number(fs.readFileSync('./prNumber'));
+
             const { data: comments } = await github.rest.issues.listComments({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                issue_number: context.payload.workflow_run.pull_requests[0].number
+                issue_number: issue_number
             });
 
             const botComment = comments.find(comment => {
@@ -76,7 +92,7 @@ jobs:
                 });
             } else {
                 github.rest.issues.createComment({
-                    issue_number: context.payload.workflow_run.pull_requests[0].number,
+                    issue_number: issue_number,
                     owner: context.repo.owner,
                     repo: context.repo.repo,
                     body: output

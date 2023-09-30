@@ -1,7 +1,7 @@
 import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import Link from 'next/link';
-import { Carousel } from '~/components/ui/carousel';
+import { Carousel } from '~/components/carousel';
 import { PersonalTrackCard } from './personal-track-card';
 import { Card } from '@repo/ui/components/card';
 import type { HTMLAttributes } from 'react';
@@ -54,7 +54,7 @@ export async function EnrolledTrackSection() {
         </>
       ) : (
         <div
-          className="relative my-10 grid min-h-[246px] w-full items-center gap-2 px-5  md:grid-cols-2 md:gap-10"
+          className="relative grid min-h-[246px] w-full items-center gap-2 px-5  md:grid-cols-2 md:gap-10"
           key="helper-track"
         >
           <div className="text-center md:text-right">
