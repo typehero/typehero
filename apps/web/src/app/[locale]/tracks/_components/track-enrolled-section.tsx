@@ -15,11 +15,11 @@ const SkeletonTrack = ({ className, ...rest }: HTMLAttributes<HTMLDivElement>) =
     )}
     {...rest}
   >
-    <div className="h-16 w-16 flex-none rounded-2xl bg-white bg-opacity-5" />
+    <div className="h-16 w-16 flex-none rounded-2xl bg-black bg-opacity-5 dark:bg-white dark:bg-opacity-5" />
     <div className="flex-1 space-y-3 pt-1">
-      <div className="h-3 w-2/3 rounded-lg bg-white bg-opacity-5" />
-      <div className="h-2 w-full rounded-lg bg-white bg-opacity-5" />
-      <div className="h-2 w-full rounded-lg bg-white bg-opacity-5" />
+      <div className="h-3 w-2/3 rounded-lg bg-black bg-opacity-5 dark:bg-white  dark:bg-opacity-5" />
+      <div className="h-2 w-full rounded-lg bg-black bg-opacity-5 dark:bg-white  dark:bg-opacity-5 " />
+      <div className="h-2 w-full rounded-lg bg-black  bg-opacity-5 dark:bg-white  dark:bg-opacity-5" />
     </div>
   </Card>
 );
