@@ -1,13 +1,8 @@
 'use client';
 
-import { useState } from 'react';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { AlertCircle, MailCheck } from '@repo/ui/icons';
-import clsx from 'clsx';
-import { uploadWaitlistEntry } from './create.action';
 import { Alert, AlertDescription } from '@repo/ui/components/alert';
+import { Button } from '@repo/ui/components/button';
 import { Form, FormControl, FormField, FormItem } from '@repo/ui/components/form';
 import { Input } from '@repo/ui/components/input';
 import {
@@ -17,7 +12,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@repo/ui/components/select';
-import { Button } from '@repo/ui/components/button';
+import { AlertCircle, MailCheck } from '@repo/ui/icons';
+import { useMutation } from '@tanstack/react-query';
+import clsx from 'clsx';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 const waitlistFormSchema = z.object({
   name: z.string().min(1, 'Please enter your name'),
@@ -28,11 +27,12 @@ const waitlistFormSchema = z.object({
 export type WaitlistFormSchema = z.infer<typeof waitlistFormSchema>;
 
 export function WaitlistForm() {
-  const [state, setState] = useState<'duplicate' | 'error' | 'idle' | 'submitting' | 'success'>(
-    'idle',
-  );
-
-  const isSubmitting = state === 'submitting';
+  const mutation = useMutation({
+    mutationFn: subscribe,
+    onSuccess: () => {
+      form.reset();
+    },
+  });
 
   const form = useForm<WaitlistFormSchema>({
     resolver: zodResolver(waitlistFormSchema),
@@ -43,18 +43,7 @@ export function WaitlistForm() {
   });
 
   async function onSubmit(data: WaitlistFormSchema) {
-    try {
-      setState('submitting');
-      const status = await uploadWaitlistEntry(data);
-      if (status === 'duplicate') {
-        setState('duplicate');
-      } else {
-        setState('success');
-      }
-      form.reset();
-    } catch (e) {
-      setState('error');
-    }
+    mutation.mutate(data);
   }
 
   return (
@@ -146,21 +135,18 @@ export function WaitlistForm() {
 
           <Button
             className="wl-form-button group relative mt-6 w-full overflow-hidden rounded-xl px-[2px] py-[2px] font-bold transition-shadow duration-300 hover:shadow-[0_0.5rem_2rem_-0.75rem_#3178c6] dark:hover:shadow-[0_0.5rem_2rem_-0.75rem_#5198f6]"
-            disabled={isSubmitting}
+            disabled={mutation.status === 'loading'}
             type="submit"
           >
             <span className="h-full w-full rounded-[10px] bg-white px-4 py-2 text-center font-bold text-black transition-colors duration-300 group-hover:bg-blue-100 dark:bg-black dark:text-white group-hover:dark:bg-cyan-950">
-              {isSubmitting ? 'Submitting...' : 'Join the waitlist'}
+              {mutation.status === 'loading' ? 'Submitting...' : 'Join the waitlist'}
             </span>
           </Button>
         </form>
       </Form>
       <div className="mt-3">
-        {state === 'duplicate' && (
-          <AlertDestructive text="We already have your email. Thanks for signing up!" />
-        )}
-        {state === 'success' && <AlertSuccess />}
-        {state === 'error' && <AlertDestructive />}
+        {mutation.status === 'success' && <AlertSuccess />}
+        {mutation.status === 'error' && <AlertDestructive />}
       </div>
     </div>
   );
@@ -199,4 +185,18 @@ export function AlertSuccess() {
       </AlertDescription>
     </Alert>
   );
+}
+
+async function subscribe(data: WaitlistFormSchema) {
+  const response = await fetch('/api/subscribe', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(text);
+  }
+
+  return response.json();
 }
