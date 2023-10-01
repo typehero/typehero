@@ -343,7 +343,7 @@ function SingleComment({
     const timeout = setTimeout(() => {
       elRef.current?.classList.remove(...SELECTED_CLASSES.split(' '));
     }, 5000);
-    window.requestAnimationFrame(() => elRef.current?.scrollIntoView());
+    window.requestAnimationFrame(() => elRef.current?.scrollIntoView({ block: 'nearest' }));
     return () => {
       clearTimeout(timeout);
     };
