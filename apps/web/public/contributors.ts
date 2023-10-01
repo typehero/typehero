@@ -272,7 +272,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/falcon-head/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 8
+        "contributions": 9
     },
     {
         "login": "basokant",
@@ -401,6 +401,27 @@ export const contributors = [
         "contributions": 4
     },
     {
+        "login": "Rand0mLetters",
+        "id": 108293579,
+        "node_id": "U_kgDOBnRtyw",
+        "avatar_url": "https://avatars.githubusercontent.com/u/108293579?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/Rand0mLetters",
+        "html_url": "https://github.com/Rand0mLetters",
+        "followers_url": "https://api.github.com/users/Rand0mLetters/followers",
+        "following_url": "https://api.github.com/users/Rand0mLetters/following{/other_user}",
+        "gists_url": "https://api.github.com/users/Rand0mLetters/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/Rand0mLetters/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/Rand0mLetters/subscriptions",
+        "organizations_url": "https://api.github.com/users/Rand0mLetters/orgs",
+        "repos_url": "https://api.github.com/users/Rand0mLetters/repos",
+        "events_url": "https://api.github.com/users/Rand0mLetters/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/Rand0mLetters/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 4
+    },
+    {
         "login": "laureanray",
         "id": 22195710,
         "node_id": "MDQ6VXNlcjIyMTk1NzEw",
@@ -522,27 +543,6 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/mirashif/repos",
         "events_url": "https://api.github.com/users/mirashif/events{/privacy}",
         "received_events_url": "https://api.github.com/users/mirashif/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 3
-    },
-    {
-        "login": "Rand0mLetters",
-        "id": 108293579,
-        "node_id": "U_kgDOBnRtyw",
-        "avatar_url": "https://avatars.githubusercontent.com/u/108293579?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/Rand0mLetters",
-        "html_url": "https://github.com/Rand0mLetters",
-        "followers_url": "https://api.github.com/users/Rand0mLetters/followers",
-        "following_url": "https://api.github.com/users/Rand0mLetters/following{/other_user}",
-        "gists_url": "https://api.github.com/users/Rand0mLetters/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/Rand0mLetters/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/Rand0mLetters/subscriptions",
-        "organizations_url": "https://api.github.com/users/Rand0mLetters/orgs",
-        "repos_url": "https://api.github.com/users/Rand0mLetters/repos",
-        "events_url": "https://api.github.com/users/Rand0mLetters/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/Rand0mLetters/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 3
