@@ -23,7 +23,10 @@
         "PORT",
         "USERNAME",
         "PASSWORD",
-        "CI"
+        "CI",
+        "MAILCHIMP_API_KEY",
+        "MAILCHIMP_AUDIENCE_ID",
+        "MAILCHIMP_API_SERVER"
       ]
     },
     "topo": {
