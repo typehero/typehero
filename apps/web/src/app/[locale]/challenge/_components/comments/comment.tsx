@@ -119,8 +119,9 @@ export function Comment({
     refetch,
   } = useInfiniteQuery({
     queryKey: [...replyQueryKey, 'paginated'],
-    queryFn: ({ pageParam: cursor = 0 }) => {
+    queryFn: ({ pageParam = 0 }) => {
       // `cursor` is the start index of the current page
+      const cursor = Number(pageParam);
 
       let take = REPLIES_PAGESIZE;
       if (hasPreselectedReply && cursor === 0) {
