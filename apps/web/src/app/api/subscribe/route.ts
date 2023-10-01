@@ -27,7 +27,8 @@ export async function POST(req: Request) {
         'content-type': 'application/json',
       },
     });
-  } catch (error: any) {
+  } catch (error) {
+    // @ts-ignore
     return new Response(error.response.text, {
       status: 500,
       headers: {
