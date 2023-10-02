@@ -57,8 +57,6 @@ export function Navigation() {
               >
                 <svg
                   className="h-8 w-8 rounded-md bg-[#3178C6] p-[2px]"
-                  width="300"
-                  height="300"
                   viewBox="0 0 38 38"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"

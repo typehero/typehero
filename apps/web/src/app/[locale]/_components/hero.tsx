@@ -8,8 +8,6 @@ import { getScopedI18n } from '~/locales/server';
 function TypeHeroLogo() {
   return (
     <svg
-      width="300"
-      height="300"
       viewBox="0 0 38 38"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
