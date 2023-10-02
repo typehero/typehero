@@ -76,62 +76,62 @@ export function HeroChallengeCard({
           <motion.rect
             {...codeLineProps}
             animate={{ width: getRandomWidth() }}
-            className="fill-neutral-400 dark:fill-neutral-600"
+            className="fill-[#ABABB2] dark:fill-[#2B2B32]"
             y="0"
           />
           <motion.rect
             {...codeLineProps}
             animate={{ width: getRandomWidth() }}
-            className="fill-blue-500 dark:fill-blue-500"
+            className="fill-[#A48088] dark:fill-[#544048]"
             y="19"
           />
           <motion.rect
             {...codeLineProps}
             animate={{ width: getRandomWidth() }}
-            className="fill-fuchsia-500 dark:fill-fuchsia-700"
+            className="fill-[#A48088] dark:fill-[#544048]"
             y="38"
           />
           <motion.rect
             {...codeLineProps}
             animate={{ width: getRandomWidth() }}
-            className="fill-fuchsia-500 dark:fill-fuchsia-700"
+            className="fill-[#809F94] dark:fill-[#404F54]"
             y="57"
           />
           <motion.rect
             {...codeLineProps}
             animate={{ width: getRandomWidth() }}
-            className="fill-neutral-400 dark:fill-neutral-600"
+            className="fill-[#ABABB2] dark:fill-[#2B2B32]"
             y="90"
           />
           <motion.rect
             {...codeLineProps}
             animate={{ width: getRandomWidth() }}
-            className="fill-neutral-400 dark:fill-neutral-600"
+            className="fill-[#ABABB2] dark:fill-[#2B2B32]"
             y="109"
           />
           <motion.rect
             {...codeLineProps}
             animate={{ width: getRandomWidth() }}
-            className="fill-blue-500 dark:fill-blue-500"
+            className="fill-[#A48088] dark:fill-[#544048]"
             transition={{ delay: 0.3, duration: 0.5 }}
             y="128"
           />
           <motion.rect
             {...codeLineProps}
             animate={{ width: getRandomWidth() }}
-            className="fill-blue-500 dark:fill-blue-500"
+            className="fill-[#A48088] dark:fill-[#544048]"
             y="147"
           />
           <motion.rect
             {...codeLineProps}
             animate={{ width: getRandomWidth() }}
-            className="fill-fuchsia-500 dark:fill-fuchsia-700"
+            className="fill-[#809F94] dark:fill-[#404F54]"
             y="166"
           />
           <motion.rect
             {...codeLineProps}
             animate={{ width: getRandomWidth() }}
-            className="fill-fuchsia-500 dark:fill-fuchsia-700"
+            className="fill-[#809F94] dark:fill-[#404F54]"
             y="184"
           />
         </svg>
