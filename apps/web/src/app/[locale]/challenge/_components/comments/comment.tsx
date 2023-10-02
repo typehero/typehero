@@ -75,6 +75,8 @@ const commentReportSchema = z
 
 export type CommentReportSchemaType = z.infer<typeof commentReportSchema>;
 
+const REPLIES_PAGESIZE = 5;
+
 // million-ignore
 export function Comment({
   comment,
@@ -86,52 +88,65 @@ export function Comment({
 }: CommentProps) {
   const params = useSearchParams();
   const replyId = params.get('replyId');
-  const [showReplies, setShowReplies] = useState(
-    preselectedCommentMetadata?.selectedComment?.id === comment.id && Boolean(replyId),
-  );
+
+  const hasPreselectedReply =
+    preselectedCommentMetadata?.selectedComment?.id === comment.id && Boolean(replyId);
+
+  const [showReplies, setShowReplies] = useState(hasPreselectedReply);
 
   const [isReplying, setIsReplying] = useState(false);
   const [replyText, setReplyText] = useState('');
   const queryClient = useQueryClient();
 
-  const replyQueryKey = [`${comment.id}-comment-replies`];
-  const replyQueryPaginateKey = replyQueryKey.concat('paginated');
-  const allReplies = useQuery({
+  const replyQueryKey = [`comment-${comment.id}-replies`];
+
+  const {
+    data: replies,
+    fetchStatus,
+    isLoading: isLoadingReplies,
+  } = useQuery({
     queryKey: replyQueryKey,
     queryFn: () => getAllComments({ rootId, rootType: type, parentId: comment.id }),
     staleTime: 5000,
     enabled: showReplies,
   });
 
-  const { data, fetchNextPage, isFetching, refetch } = useInfiniteQuery({
-    queryKey: replyQueryPaginateKey,
-    queryFn: ({ pageParam = 1 }) => getPaginatedComments(allReplies.data!, pageParam),
-    enabled: Boolean(allReplies.data),
-    getNextPageParam: (_, pages) => pages.length + 1,
+  const {
+    data: paginatedReplies,
+    fetchNextPage,
+    isFetching: isFetchingMoreReplies,
+    hasNextPage: hasMoreReplies,
+    refetch,
+  } = useInfiniteQuery({
+    queryKey: [...replyQueryKey, 'paginated'],
+    queryFn: ({ pageParam = 0 }) => {
+      // `cursor` is the start index of the current page
+      const cursor = Number(pageParam);
+
+      let take = REPLIES_PAGESIZE;
+      if (hasPreselectedReply && cursor === 0) {
+        const preselectedReplyIndex = replies!.findIndex((reply) => Number(replyId) === reply.id);
+        take = Math.ceil((preselectedReplyIndex + 1) / REPLIES_PAGESIZE) * REPLIES_PAGESIZE;
+      }
+
+      // `end` is exclusive, and therefore also the next cursor
+      const end = cursor + take;
+
+      return {
+        // if the current page is the last, don't return the next cursor
+        cursor: end < replies!.length ? end : undefined,
+        replies: replies!.slice(cursor, end),
+      };
+    },
+    enabled: Boolean(replies),
+    getNextPageParam: (_, pages) => pages.at(-1)?.cursor,
   });
 
   useEffect(() => {
-    if (allReplies.data) {
+    if (replies) {
       refetch();
     }
-  }, [allReplies.data, refetch]);
-
-  const PAGESIZE = 10;
-
-  function getPaginatedComments(comments: NonNullable<typeof allReplies.data>, page: number) {
-    const totalComments = comments.length;
-    const totalPages = Math.ceil(totalComments / PAGESIZE);
-
-    const start = (page - 1) * PAGESIZE;
-    const end = start + PAGESIZE;
-
-    return {
-      totalComments,
-      totalPages,
-      hasMore: page < totalPages,
-      comments: comments.slice(start, end),
-    };
-  }
+  }, [replies, refetch]);
 
   async function createChallengeCommentReply() {
     try {
@@ -198,34 +213,35 @@ export function Comment({
         </div>
       ) : null}
 
-      {!isFetching && showReplies && data?.pages.at(-1)?.hasMore ? (
-        <Button
-          variant="ghost"
-          className="gap-1 text-xs text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
-          onClick={() => fetchNextPage()}
-        >
-          <MoreHorizontal size={24} />
-          Load More
-          <span className="sr-only">Load More</span>
-        </Button>
-      ) : null}
-
-      {allReplies.isLoading && allReplies.fetchStatus !== 'idle' ? <CommentSkeleton /> : null}
+      {isLoadingReplies && fetchStatus !== 'idle' ? <CommentSkeleton /> : null}
       {showReplies ? (
-        <div className="flex flex-col-reverse gap-1 pl-6 pt-1">
-          {data?.pages.flatMap((page) =>
-            page.comments.map((reply) => (
-              // this is a reply
-              <SingleComment
-                comment={reply}
-                isReply
-                key={reply.id}
-                replyQueryKey={replyQueryKey}
-                preselectedCommentMetadata={preselectedCommentMetadata}
-              />
-            )),
-          )}
-        </div>
+        <>
+          <div className="flex flex-col gap-1 pl-6 pt-1">
+            {paginatedReplies?.pages.flatMap((page) =>
+              page.replies.map((reply) => (
+                // this is a reply
+                <SingleComment
+                  comment={reply}
+                  isReply
+                  key={reply.id}
+                  replyQueryKey={replyQueryKey}
+                  preselectedCommentMetadata={preselectedCommentMetadata}
+                />
+              )),
+            )}
+          </div>
+          {hasMoreReplies && !isFetchingMoreReplies ? (
+            <Button
+              variant="ghost"
+              className="gap-1 text-xs text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
+              onClick={() => fetchNextPage()}
+            >
+              <MoreHorizontal size={24} />
+              Load More
+              <span className="sr-only">Load More</span>
+            </Button>
+          ) : null}
+        </>
       ) : null}
     </div>
   );
@@ -328,7 +344,7 @@ function SingleComment({
     const timeout = setTimeout(() => {
       elRef.current?.classList.remove(...SELECTED_CLASSES.split(' '));
     }, 5000);
-    window.requestAnimationFrame(() => elRef.current?.scrollIntoView());
+    window.requestAnimationFrame(() => elRef.current?.scrollIntoView({ block: 'nearest' }));
     return () => {
       clearTimeout(timeout);
     };

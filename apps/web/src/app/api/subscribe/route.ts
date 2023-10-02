@@ -7,11 +7,11 @@ mailchimp.setConfig({
 });
 
 export async function POST(req: Request) {
-  const { name, email, intention } = await req.json();
+  const { name: NAME, email, intention: REASON } = await req.json();
 
   const merge_fields = {
-    name,
-    REASON: intention,
+    NAME,
+    REASON,
   };
 
   try {
@@ -22,7 +22,7 @@ export async function POST(req: Request) {
     });
 
     return new Response(JSON.stringify(response), {
-      status: Number(response.status),
+      status: 200,
       headers: {
         'content-type': 'application/json',
       },
