@@ -76,7 +76,7 @@ export function HeroChallengeCard({
           <motion.rect
             {...codeLineProps}
             animate={{ width: getRandomWidth() }}
-            className="fill-[#ABABB2] dark:fill-[#2B2B32]"
+            className="fill-[#ABABB2] dark:fill-neutral-700"
             y="0"
           />
           <motion.rect
@@ -100,13 +100,13 @@ export function HeroChallengeCard({
           <motion.rect
             {...codeLineProps}
             animate={{ width: getRandomWidth() }}
-            className="fill-[#ABABB2] dark:fill-[#2B2B32]"
+            className="fill-[#ABABB2] dark:fill-neutral-700"
             y="90"
           />
           <motion.rect
             {...codeLineProps}
             animate={{ width: getRandomWidth() }}
-            className="fill-[#ABABB2] dark:fill-[#2B2B32]"
+            className="fill-[#ABABB2] dark:fill-neutral-700"
             y="109"
           />
           <motion.rect
