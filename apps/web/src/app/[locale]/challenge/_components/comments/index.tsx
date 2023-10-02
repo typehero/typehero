@@ -256,7 +256,9 @@ function Pagination({
       </Button>
       {pages.map((page) => (
         <Button
-          className={clsx({ 'border border-black dark:border-white/30 ': page === currentPage })}
+          className={clsx('border-border dark:border-ring border', {
+            'bg-border dark:bg-neutral-700': page === currentPage,
+          })}
           key={`pagination-${page}`}
           onClick={() => onClick(page)}
           variant="ghost"
