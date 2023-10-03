@@ -86,6 +86,13 @@ export function Description({ challenge }: Props) {
       {/* Difficulty & Action Buttons */}
       <div className="mt-3 flex items-center gap-3">
         <DifficultyBadge difficulty={challenge.difficulty} />
+        <Vote
+          voteCount={challenge._count.vote}
+          initialHasVoted={challenge.vote.length > 0}
+          disabled={!session?.data?.user?.id}
+          rootType="CHALLENGE"
+          rootId={challenge?.id}
+        />
         <Dialog>
           <DialogTrigger>
             <Tooltip>
@@ -137,13 +144,6 @@ export function Description({ challenge }: Props) {
             <p>{session.data?.user.id ? 'Bookmark' : 'Login to Bookmark'}</p>
           </TooltipContent>
         </Tooltip>
-        <Vote
-          voteCount={challenge._count.vote}
-          initialHasVoted={challenge.vote.length > 0}
-          disabled={!session?.data?.user?.id}
-          rootType="CHALLENGE"
-          rootId={challenge?.id}
-        />
       </div>
       {/* Challenge Description */}
       <div className="prose-invert prose-h3:text-xl mt-6 leading-8">

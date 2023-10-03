@@ -78,15 +78,14 @@ function SolutionRow({
           <Calendar className=" h-4 w-4" />
           <span className="text-xs">{getRelativeTime(solution.createdAt)}</span>
         </div>
-        <Badge variant="secondary" size="xs" className="gap-1">
-          <MessageCircle className="h-4 w-4" />
-          <span>{solution._count.solutionComment}</span>
-        </Badge>
-        {/* TODO: voted state */}
-        {/* bg-emerald-600/10 text-emerald-600 duration-300 hover:bg-emerald-600/20 dark:bg-emerald-400/20 dark:text-emerald-400 dark:hover:bg-emerald-400/40*/}
+        {/* TODO: Use `Vote` component here instead which handles voted state */}
         <Badge variant="secondary" size="xs" className="gap-1">
           <ThumbsUp className="h-4 w-4" />
           <span>{solution._count.vote}</span>
+        </Badge>
+        <Badge variant="secondary" size="xs" className="gap-1">
+          <MessageCircle className="h-4 w-4" />
+          <span>{solution._count.solutionComment}</span>
         </Badge>
       </div>
     </Link>
