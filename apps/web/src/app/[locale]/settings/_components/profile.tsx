@@ -173,7 +173,7 @@ function ProfileForm({ user }: Props) {
           control={form.control}
           name="bio"
           render={({ field }) => (
-            <FormItem className="h-[300px] w-[600px]">
+            <FormItem className="h-[300px] md:w-[600px]">
               <FormLabel>Bio</FormLabel>
               <RichMarkdownEditor onChange={field.onChange} value={field.value} />
               <FormMessage />
