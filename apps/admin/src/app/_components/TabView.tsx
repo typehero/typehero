@@ -23,7 +23,7 @@ export function TabView({ reports, allBannedUsers, uploadedImages }: Props) {
 
   const tab = searchParams.get('tab') ?? 'reports';
   return (
-    <div className="container m-8 flex flex-col space-y-4">
+    <div className="container m-8 flex flex-col space-y-4 mb-4">
       <div className="space-y-2">
         <div className="mx-2 flex flex-col">
           <p className="text-2xl font-semibold text-black dark:text-white">Moderation</p>

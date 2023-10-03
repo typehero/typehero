@@ -77,7 +77,7 @@ export function ChallengeReview({ challenge }: Props) {
           <CodeEditor value={challenge.tests} />
         </div>
       </div>
-      <div className="flex justify-end gap-3 p-4">
+      <div className="flex justify-end gap-3 p-4 pb-6">
         <Link href="/?tab=challengeReviews">
           <Button variant="ghost">Cancel</Button>
         </Link>

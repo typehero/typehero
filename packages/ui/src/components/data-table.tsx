@@ -91,7 +91,9 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
           </TableBody>
         </Table>
       </div>
-      <DataTablePagination table={table} />
+      <div className="pb-4">
+        <DataTablePagination table={table} />
+      </div>
     </div>
   );
 }

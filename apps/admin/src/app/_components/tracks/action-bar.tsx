@@ -17,7 +17,7 @@ export function ActionBar() {
     <div className="flex w-full flex-row-reverse items-center py-4">
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="ghost">Add Track</Button>
+          <Button>Add Track</Button>
         </DialogTrigger>
         <DialogContent className="w-[200px]">
           <DialogHeader>
