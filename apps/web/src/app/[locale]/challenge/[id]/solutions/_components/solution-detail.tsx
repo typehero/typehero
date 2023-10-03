@@ -4,6 +4,7 @@ import { Calendar, Flag, Share, X } from '@repo/ui/icons';
 import Link from 'next/link';
 import type { ChallengeSolution } from '~/app/[locale]/challenge/[id]/solutions/[solutionId]/page';
 import { ReportDialog } from '~/components/ReportDialog';
+import { getRelativeTime } from '~/utils/relativeTime';
 import { ActionMenu } from '@repo/ui/components/action-menu';
 import { Avatar, AvatarImage, AvatarFallback } from '@repo/ui/components/avatar';
 import { Button } from '@repo/ui/components/button';
@@ -52,20 +53,6 @@ export function SolutionDetails({ solution }: Props) {
                 <TypographyLarge>{solution.title}</TypographyLarge>
               </div>
               <div className="flex items-center gap-2">
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      className="group p-0 text-gray-500 group-hover:text-gray-400"
-                      onClick={handleShareClick}
-                      variant="ghost"
-                    >
-                      <Share className="mr-2 h-4 w-4 stroke-gray-500 group-hover:stroke-gray-400" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Share challenge</p>
-                  </TooltipContent>
-                </Tooltip>
                 <ReportDialog reportType="SOLUTION" solutionId={solution.id!}>
                   <ActionMenu
                     items={[
@@ -82,14 +69,16 @@ export function SolutionDetails({ solution }: Props) {
                 </ReportDialog>
               </div>
             </div>
+            {/* Author & Time */}
             <div className="flex items-center gap-4">
               <UserBadge username={solution.user?.name ?? ''} linkComponent={Link} />
-              <div className="flex items-center">
-                <Calendar className="mr-2 h-4 w-4 stroke-gray-400" />
-                <span className="text-xs text-gray-400">
-                  {solution.createdAt?.toLocaleString()}
-                </span>
+              <div className="text-muted-foreground flex items-center gap-2">
+                <Calendar className="h-4 w-4 stroke-current" />
+                <span className="text-xs">{getRelativeTime(solution.createdAt)}</span>
               </div>
+            </div>
+            {/* Difficulty & Action Buttons */}
+            <div className="mt-3 flex items-center gap-3">
               <Vote
                 voteCount={solution._count.vote}
                 initialHasVoted={solution.vote.length > 0}
@@ -107,6 +96,16 @@ export function SolutionDetails({ solution }: Props) {
                   solution._count.vote += didUpvote ? 1 : -1;
                 }}
               />
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button onClick={handleShareClick} variant="secondary" size="xs">
+                    <Share className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Share</p>
+                </TooltipContent>
+              </Tooltip>
             </div>
           </div>
           <Markdown>{solution.description || ''}</Markdown>
