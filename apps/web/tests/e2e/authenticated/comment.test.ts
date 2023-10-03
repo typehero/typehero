@@ -32,7 +32,7 @@ test.describe('create, edit, and delete comments', () => {
     const commentBlock = page.locator('div[id^=comment]', {
       hasText: `${parentComment} ${parentCodeText}`,
     });
-    await commentBlock.getByRole('button', { name: 'Reply' }).click();
+    await commentBlock.getByRole('button', { name: 'Reply', exact: true }).click();
 
     await page.locator('*:focus').fill(`${replyComment}${wrapTypescriptCode(replyCodeText)}`);
     await page.getByRole('button', { name: 'Comment', exact: true, disabled: false }).click();
