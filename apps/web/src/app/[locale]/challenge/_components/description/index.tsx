@@ -91,7 +91,7 @@ export function Description({ challenge }: Props) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button className="text-accent-foreground" size="xs" variant="secondary">
-                  <Share className="h-4 w-4 fill-none stroke-current" />
+                  <Share className="h-4 w-4" />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>

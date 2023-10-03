@@ -73,7 +73,7 @@ export function SolutionDetails({ solution }: Props) {
             <div className="flex items-center gap-4">
               <UserBadge username={solution.user?.name ?? ''} linkComponent={Link} />
               <div className="text-muted-foreground flex items-center gap-2">
-                <Calendar className="h-4 w-4 stroke-current" />
+                <Calendar className="h-4 w-4" />
                 <span className="text-xs">{getRelativeTime(solution.createdAt)}</span>
               </div>
             </div>

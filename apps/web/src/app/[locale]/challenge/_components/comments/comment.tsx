@@ -9,7 +9,7 @@ import { UserBadge } from '@repo/ui/components/user-badge';
 import {
   ChevronDown,
   ChevronUp,
-  Flag,
+  Calendar,
   Pencil,
   Reply,
   Share,
@@ -375,9 +375,10 @@ function SingleComment({
           </div>
           <Tooltip delayDuration={0.05}>
             <TooltipTrigger asChild>
-              <span className="whitespace-nowrap text-[0.8rem] text-neutral-500 dark:text-neutral-400">
-                {getRelativeTime(comment.createdAt)}
-              </span>
+              <div className="text-muted-foreground flex items-center gap-2 whitespace-nowrap text-xs">
+                <Calendar className="h-4 w-4" />
+                <span>{getRelativeTime(comment.createdAt)}</span>
+              </div>
             </TooltipTrigger>
             <TooltipContent align="start" alignOffset={-55} className="rounded-xl">
               <span className="text-foreground text-xs">{comment.createdAt.toLocaleString()}</span>
