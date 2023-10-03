@@ -64,12 +64,12 @@ export function Features() {
             <ImageCard
               imgClass1={clsx(
                 'pointer-events-none transition-transform duration-500 bg-neutral-50/30 dark:bg-neutral-800/30',
-                'scale-[150%] sm:scale-[110%] md:scale-100 max-md:rounded-sm rounded-xl top-[69%] left-[69px] md:top-auto w-[42%] md:-bottom-[11%] sm:left-[40px] lg:w-[69%]',
+                'scale-[150%] sm:scale-[110%] md:scale-100 max-md:rounded-sm rounded-xl top-[50%]  left-[69px] md:top-auto w-[42%] md:-bottom-[11%] sm:left-[40px] lg:w-[69%]',
                 'md:group-hover:translate-x-2 md:group-hover:scale-95',
               )}
               imgClass2={clsx(
                 'pointer-events-none transition-transform duration-500 bg-neutral-50/50 dark:bg-zinc-800/60 backdrop-blur-sm translate-x-0',
-                'scale-[190%] sm:scale-[150%] md:scale-100 rounded-2xl max-md:rounded-md left-[50%] top-[69%] md:top-auto w-[50%] sm:left-[39%] md:-bottom-[12%] lg:w-[77%]',
+                'scale-[190%] sm:scale-[150%] md:scale-100 rounded-2xl max-md:rounded-md left-[50%] top-[55%] md:top-auto w-[50%] sm:left-[39%] md:-bottom-[12%] lg:w-[77%]',
                 'md:group-hover:scale-105 md:group-hover:-translate-x-2',
               )}
               description="Engage in TypeScript challenges to strengthen your grasp of the type system and advanced features"

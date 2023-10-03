@@ -114,7 +114,7 @@ export async function Hero() {
   const t = await getScopedI18n('landing.hero');
 
   return (
-    <section className="-mt-[56px] min-h-[calc(100vh)] overflow-hidden lg:min-h-0 lg:pt-[56px]">
+    <section className="-mt-[56px] min-h-[calc(100vh)] overflow-hidden lg:min-h-0 pt-[56px] mb-12">
       <div className="absolute inset-10 -z-30 overflow-hidden rounded-full opacity-70 lg:hidden">
         <BackgroundGrid />
       </div>
