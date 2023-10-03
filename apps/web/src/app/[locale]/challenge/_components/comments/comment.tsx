@@ -438,7 +438,7 @@ function SingleComment({
                   }}
                 >
                   <Share className="h-3 w-3" />
-                  <span className="sr-only">Share</span>
+                  <span className="sr-only">Share this comment</span>
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
@@ -450,7 +450,7 @@ function SingleComment({
                 <TooltipTrigger>
                   <Button variant="secondary" size="xs" onClick={onClickReply}>
                     <Reply className="h-3 w-3" />
-                    <span className="sr-only">Reply</span>
+                    <span className="sr-only">Create a reply</span>
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -463,7 +463,7 @@ function SingleComment({
                 <TooltipTrigger>
                   <Button variant="secondary" size="xs" onClick={() => setIsEditing(!isEditing)}>
                     <Pencil className="h-3 w-3" />
-                    <span className="sr-only">Edit</span>
+                    <span className="sr-only">Edit this comment</span>
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -477,7 +477,7 @@ function SingleComment({
                   <TooltipTrigger>
                     <Button variant="secondary" size="xs">
                       <Trash2 className="h-3 w-3" />
-                      <span className="sr-only">Delete</span>
+                      <span className="sr-only">Delete this comment</span>
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -491,7 +491,7 @@ function SingleComment({
                   <TooltipTrigger>
                     <Button variant="secondary" size="xs">
                       <span className="hidden text-[0.8rem] sm:block">Flag</span>
-                      <span className="sr-only">Report</span>
+                      <span className="sr-only">Report this comment</span>
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -516,7 +516,7 @@ function SingleComment({
                 <div className="text-xs">
                   {comment._count.replies === 1 ? '1 reply' : `${comment._count.replies} replies`}
                 </div>
-                <span className="sr-only">Toggle Reply</span>
+                <span className="sr-only">Toggle replies view</span>
               </Button>
             )}
           </>
