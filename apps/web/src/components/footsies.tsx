@@ -25,7 +25,7 @@ export function Footsies() {
           </Link>
         </div>
         <div className="text-neutral-500 dark:text-neutral-400">
-          <span className="-scale-x-100">©</span> {new Date().getFullYear()} TypeHero
+          <div className="inline-block rotate-180">©</div> {new Date().getFullYear()} TypeHero
         </div>
       </div>
     </footer>
