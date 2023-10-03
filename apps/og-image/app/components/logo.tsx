@@ -13,8 +13,8 @@ export function Logo() {
           fill="#3178C6"
         />
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M239.78 284.082H304V243H125V284.082H188.906V467H239.78V284.082Z"
           fill="white"
         />

@@ -11,8 +11,8 @@ export function Logo3d() {
         <rect width="637.029" height="637.029" rx="68.1096" fill="#3178C6" />
       </g>
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M275.704 313.881H354.636V262.692H134.631V313.881H213.176V541.802H275.704V313.881Z"
         fill="white"
       />
