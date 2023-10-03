@@ -1,5 +1,5 @@
 <p align=center >
-  <img alt="Github" height=20 src="https://img.shields.io/github/stars/bautistaaa/typehero?style=&logo=github&logoColor=white&label=Stars&labelColor=%23111&color=%23111" />
+  <img alt="Github" height=20 src="https://img.shields.io/github/stars/typehero/typehero?style=&logo=github&logoColor=white&label=Stars&labelColor=%23111&color=%23111" />
   <a href="https://discord.gg/trashdev" target="_parent">
     <img alt="Discord" height=20 src="https://img.shields.io/discord/796594544980000808?style=&logo=discord&logoColor=white&label=%20&labelColor=%237389D8&color=%237389D8" />
   </a>
@@ -37,6 +37,11 @@ If you find the project interesting and want to support us please consider spons
     <td>
       <a href="https://planetscale.com/" target="_parent">
         <img src="./media/ps-badge.png" alt="Powered by Planetscale" title="Powered by Planetscale" width="200">
+      </a>
+    </td>
+    <td>
+      <a href="https://www.theopenbootcamp.com/" target="_parent">
+        <img src="./media/open-bootcamp.png" alt="Open Bootcamp Logo" title="Open Bootcamp" width="75">
       </a>
     </td>
   </tr>

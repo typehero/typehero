@@ -1,6 +1,7 @@
 'use server';
 
 import { prisma } from '@repo/db';
+import { cache } from 'react';
 
 export type ReportsData = Awaited<ReturnType<typeof getReports>>;
 export type InfiniteReports = Awaited<ReturnType<typeof getInfiniteReports>>;
@@ -34,9 +35,13 @@ export async function getReports(lastCursor?: number, take = 3) {
               vote: true,
             },
           },
+          user: {
+            select: {
+              name: true,
+            },
+          },
         },
       },
-      user: true,
       reporter: true,
       issues: true,
       comment: true,
@@ -57,7 +62,7 @@ export async function getReports(lastCursor?: number, take = 3) {
   });
 }
 
-export async function getReportedUserInformation(userId: string) {
+export const getReportedUserInformation = cache(async (userId: string) => {
   return await prisma.user.findFirstOrThrow({
     where: {
       id: userId,
@@ -66,7 +71,11 @@ export async function getReportedUserInformation(userId: string) {
       comment: {
         take: 10,
         include: {
-          user: true,
+          user: {
+            select: {
+              name: true,
+            },
+          },
           _count: {
             select: {
               replies: true,
@@ -93,4 +102,4 @@ export async function getReportedUserInformation(userId: string) {
       },
     },
   });
-}
+});

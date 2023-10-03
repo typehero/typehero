@@ -12,11 +12,11 @@
   "devDependencies": {
     "@repo/lint": "workspace:*",
     "@repo/tsconfig": "workspace:*",
-    "@types/node": "^18.0.0",
+    "@types/node": "^20.4.2",
     "@types/node-fetch": "^2.6.4",
     "dotenv": "^16.3.1",
     "dotenv-cli": "^7.2.1",
-    "eslint": "^8.42.0",
+    "eslint": "^8.45.0",
     "node-fetch": "^3.3.2",
     "octokit": "^3.0.0",
     "tsx": "^3.12.7",

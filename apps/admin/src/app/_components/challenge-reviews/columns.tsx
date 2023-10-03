@@ -1,7 +1,7 @@
 'use client';
 
 import type { Challenge } from '@repo/db/types';
-import { Button } from '@repo/ui';
+import { Button } from '@repo/ui/components/button';
 import { type ColumnDef } from '@tanstack/react-table';
 import Link from 'next/link';
 

@@ -11,7 +11,8 @@
     "db:reset": "turbo db:reset",
     "db:seed": "turbo db:seed",
     "db:studio": "turbo db:studio",
-    "dev": "turbo dev --concurrency=1000",
+    "dev": "turbo dev --filter=!@repo/emails --concurrency=1000",
+    "dev:email": "turbo dev --filter @repo/emails",
     "dl-git": "turbo dl-git",
     "dl-monaco:force": "turbo dl-monaco",
     "format": "prettier . \"!./apps/**\" \"!./packages/**\" \"!./tooling/**\" --check --cache --cache-location=\"node_modules/.cache/prettiercache\"",
@@ -19,6 +20,8 @@
     "lint": "eslint . --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
     "lint:fix": "eslint . --fix --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
     "refresh": "turbo db:reset db:seed --concurrency=1",
+    "test:e2e": "turbo test:e2e",
+    "test:e2e:install": "playwright install",
     "tunnel": "cloudflared tunnel --url http://localhost:3000",
     "typecheck": "turbo typecheck --continue"
   },

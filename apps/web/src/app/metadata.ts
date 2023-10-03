@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { challengeParam } from '@repo/og-image';
+import { challengeParam, userParam } from '@repo/og-image';
 
 const OG_URL =
   process.env.NODE_ENV !== 'production' ? 'http://localhost:4200' : 'https://og.typehero.dev';
@@ -8,8 +8,8 @@ const tagline = 'Level up your typescript skills with interactive exercises';
 const baseMetadata: Metadata = {
   metadataBase: new URL(OG_URL),
   title: {
-    default: 'Typehero',
-    template: '%s | TypeHero',
+    default: 'TypeHero',
+    template: '%s',
   },
   robots: {
     index: true,
@@ -17,9 +17,9 @@ const baseMetadata: Metadata = {
   },
   description: tagline,
   openGraph: {
-    title: 'Typehero',
+    title: 'TypeHero',
     description: tagline,
-    siteName: 'Typehero',
+    siteName: 'TypeHero',
     images: [
       {
         url: `${OG_URL}/api/default`,
@@ -31,7 +31,7 @@ const baseMetadata: Metadata = {
     type: 'website',
   },
   twitter: {
-    title: 'Typehero',
+    title: 'TypeHero',
     card: 'summary_large_image',
     images: [
       {
@@ -46,22 +46,53 @@ const baseMetadata: Metadata = {
   },
 };
 
+// TODO: infer from ZOD
 interface MetaParamsForChallenge {
   title: string;
   description: string;
   username: string;
+  difficulty: 'BEGINNER' | 'EASY' | 'EXTREME' | 'HARD' | 'MEDIUM';
+  date: string;
 }
+
+interface MetaParamsForUser {
+  title: string;
+  description: string;
+  username: string;
+}
+/** Helper to build opengraph metadata for a user, you should call this in generateMetadata() next function */
+export const buildMetaForUser = async ({
+  title,
+  description,
+  username,
+}: MetaParamsForUser): Promise<Metadata> => {
+  const params = `${userParam.toSearchString({
+    username,
+  })}`;
+
+  const ogImageUrl = `${OG_URL}/api/user?${params}`;
+
+  return buildMeta({
+    ogImageUrl,
+    title,
+    description,
+  });
+};
 
 /** Helper to build opengraph metadata for a challenge, you should call this in generateMetadata() next function */
 export const buildMetaForChallenge = async ({
   title,
   description,
   username,
+  difficulty,
+  date,
 }: MetaParamsForChallenge): Promise<Metadata> => {
   const params = `${challengeParam.toSearchString({
     description,
     title,
     username,
+    difficulty,
+    date,
   })}`;
 
   const ogImageUrl = `${OG_URL}/api/challenge?${params}`;
@@ -74,9 +105,17 @@ export const buildMetaForChallenge = async ({
 };
 
 /** Helper to build opengraph metadata with defaults, you should call this in generateMetadata() next function */
-export const buildMetaForDefault = async (): Promise<Metadata> => {
+export const buildMetaForDefault = async ({
+  title,
+  description,
+}: {
+  title?: string;
+  description?: string;
+}): Promise<Metadata> => {
   return buildMeta({
-    ogImageUrl: `${OG_URL}/api/default`,
+    ogImageUrl: `${OG_URL}/api/default?cache-bust=${new Date().getDate()}`,
+    title,
+    description,
   });
 };
 

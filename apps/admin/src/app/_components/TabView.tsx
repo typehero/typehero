@@ -1,13 +1,13 @@
 'use client';
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui/components/tabs';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React from 'react';
 import type { InfiniteReports } from '../report/[id]/_components/report/report.action';
 import type { BannedUsers, UploadedImages } from './admin.actions';
 import { ChallengeReviews } from './challenge-reviews';
 import { ImageUploadReport } from './images';
-import Reports from './reports';
+import { Reports } from './reports';
 import { ManageTracks } from './tracks';
 import { BannedUsers as BannedUserComponent } from './users';
 

@@ -1,13 +1,15 @@
 import { ThumbsUp } from '@repo/ui/icons';
-import { Markdown, Text, UserBadge } from '@repo/ui';
 import Link from 'next/link';
-import type { ReportWithInfo } from '../../report.action';
 import { getChallenge } from '~/app/_components/admin.actions';
+import type { ReportWithInfo } from '../../report.action';
+import { UserBadge } from '@repo/ui/components/user-badge';
+import { Markdown } from '@repo/ui/components/markdown';
+import { Text } from '@repo/ui/components/typography/typography';
 
 export interface ChallengeReportProps {
   report: NonNullable<ReportWithInfo>;
 }
-export default async function ChallengeReport({ report }: ChallengeReportProps) {
+export async function ChallengeReport({ report }: ChallengeReportProps) {
   if (!report.challenge || !report.challengeId) return null;
   const challengeInfo = await getChallenge(report.challengeId);
   return (

@@ -1,12 +1,14 @@
-import { Alert, AlertDescription, AlertTitle, Markdown, Text } from '@repo/ui';
+import { Alert, AlertDescription, AlertTitle } from '@repo/ui/components/alert';
+import { Text } from '@repo/ui/components/typography/typography';
+import { Markdown } from '@repo/ui/components/markdown';
 import { AlertCircle, ChevronLeft } from '@repo/ui/icons';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import ChallengeReport from './_components/report/challenge.report';
-import CommentReport from './_components/report/comment.report';
-import SolutionReport from './_components/report/solution.report';
-import UserReportUi from './_components/report/user.report';
-import ReportActions from './actions';
+import { ChallengeReport } from './_components/report/challenge.report';
+import { CommentReport } from './_components/report/comment.report';
+import { SolutionReport } from './_components/report/solution.report';
+import { UserReport } from './_components/report/user.report';
+import { ReportActions } from './actions';
 import { getReport, type ReportWithInfo } from './report.action';
 
 export interface Props {
@@ -19,12 +21,12 @@ const Report = async function (props: Props) {
   const idNum = Number(props.params.id);
   // Double check that we have a number, redirect out if we don't
   if (isNaN(idNum)) {
-    return redirect('/admin');
+    return redirect('/?tab=reports');
   }
 
   const report = await getReport(idNum);
 
-  if (!report) return redirect('/admin');
+  if (!report) return redirect('/?tab=reports');
 
   let title = '';
 
@@ -52,13 +54,13 @@ const Report = async function (props: Props) {
       case 'SOLUTION':
         return <SolutionReport report={report} />;
       case 'USER':
-        return <UserReportUi report={report} />;
+        return <UserReport report={report} />;
     }
   }
 
   return (
     <div className="container  ">
-      <Link className="inline-flex gap-2" href="/admin">
+      <Link className="inline-flex gap-2" href="/">
         {' '}
         <ChevronLeft /> <span>Back to reports</span>
       </Link>
@@ -71,9 +73,9 @@ const Report = async function (props: Props) {
 
       {report.moderator ? (
         <Alert className="mt-4" variant="destructive">
-          <div className="flex items-center gap-2">
+          <div className="mb-0.5 flex items-center gap-2">
             <AlertCircle className="h-[1.25rem]" />
-            <AlertTitle>Action already taken</AlertTitle>
+            <AlertTitle className="mb-0">Action already taken</AlertTitle>
           </div>
 
           <AlertDescription>

@@ -2,15 +2,15 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { Pagination } from '@repo/ui/components/pagination';
 import {
-  Pagination,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from '@repo/ui';
+} from '@repo/ui/components/table';
 import {
   getInfiniteReports,
   type InfiniteReports,
@@ -20,7 +20,7 @@ export interface ReportsProps {
   initialReports: InfiniteReports;
 }
 
-export default function Reports2({ initialReports }: ReportsProps) {
+export function Reports({ initialReports }: ReportsProps) {
   const router = useRouter();
 
   const [page, setPage] = React.useState(0);

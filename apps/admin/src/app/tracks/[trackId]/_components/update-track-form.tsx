@@ -2,19 +2,13 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
-  Button,
-  Checkbox,
-  DialogFooter,
-  ForceRenderUntilClient,
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  Input,
-  useToast,
-} from '@repo/ui';
+} from '@repo/ui/components/form';
 import Link from 'next/link';
 import { useMemo } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
@@ -23,6 +17,12 @@ import { z } from 'zod';
 import { updateTrack } from '../_actions/update-track.action';
 import type { ChallengesForTrack, TrackToManage } from '../page';
 import { DraggableChallenge } from './draggable-challenge';
+import { useToast } from '@repo/ui/components/use-toast';
+import { Input } from '@repo/ui/components/input';
+import { Checkbox } from '@repo/ui/components/checkbox';
+import { DialogFooter } from '@repo/ui/components/dialog';
+import { Button } from '@repo/ui/components/button';
+import { ForceRenderUntilClient } from '@repo/ui/components/force-render-until-client';
 
 const trackChallengeSchema = z.object({
   challengeId: z.number(),
@@ -118,7 +118,7 @@ export function UpdateTrackForm({ challenges, track }: Props) {
     <ForceRenderUntilClient>
       <div className="container flex flex-col gap-5">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
               name="title"
@@ -175,9 +175,38 @@ export function UpdateTrackForm({ challenges, track }: Props) {
             <Select
               isMulti
               styles={{
-                option: () => {
+                option: (base, { data, isDisabled, isFocused, isSelected }) => {
                   return {
-                    color: 'black',
+                    ...base,
+                    ':active': {
+                      ...base[':active'],
+                      backgroundColor: 'hsl(var(--secondary))',
+                    },
+                    backgroundColor:
+                      isSelected || isFocused ? 'hsl(var(--secondary))' : base.backgroundColor,
+                  };
+                },
+                control: (base) => {
+                  return {
+                    ...base,
+                    borderColor: 'hsl(var(--border))',
+                    borderRadius: '4px',
+                    borderStyle: 'dashed',
+                    overflow: 'hidden',
+                    backgroundColor: 'hsl(var(--background))',
+                  };
+                },
+                menu: (base) => {
+                  return {
+                    ...base,
+                    color: 'var(--text)',
+                    backgroundColor: 'hsl(var(--background))',
+                  };
+                },
+                valueContainer: (base) => {
+                  return {
+                    ...base,
+                    backgroundColor: 'hsl(var(--background))',
                   };
                 },
               }}

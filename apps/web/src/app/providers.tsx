@@ -2,11 +2,14 @@
 
 import { VercelToolbar } from '@vercel/toolbar/next';
 import { SessionProvider } from '@repo/auth/react';
-import { TooltipProvider } from '@repo/ui';
+import { TooltipProvider } from '@repo/ui/components/tooltip';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ThemeProvider } from 'next-themes';
 import React from 'react';
 import { FeatureFlagProvider } from './feature-flag-provider';
+import { I18nProviderClient } from '~/locales/client';
+import en from '~/locales/en';
 
 interface Props {
   children: React.ReactNode;
@@ -19,10 +22,13 @@ export function Providers({ children }: Props) {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
       <SessionProvider>
         <ThemeProvider attribute="class">
           <FeatureFlagProvider>
-            <TooltipProvider>{children}</TooltipProvider>
+            <TooltipProvider>
+              <I18nProviderClient fallbackLocale={en}>{children}</I18nProviderClient>
+            </TooltipProvider>
           </FeatureFlagProvider>
           {shouldInjectToolbar ? <VercelToolbar /> : null}
         </ThemeProvider>

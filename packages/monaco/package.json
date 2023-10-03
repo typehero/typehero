@@ -9,7 +9,8 @@
     "./vim-mode": "./src/vim-mode.tsx",
     "./twoslash": "./src/twoslash.ts",
     "./prettier": "./src/prettier.ts",
-    "./editor-hooks": "./src/editor-hooks.ts"
+    "./editor-hooks": "./src/editor-hooks.ts",
+    "./utils": "./src/utils.ts"
   },
   "typesVersions": {
     "*": {
@@ -33,6 +34,9 @@
       ],
       "editor-hooks": [
         "./src/editor-hooks.ts"
+      ],
+      "utils": [
+        "./src/utils.ts"
       ]
     }
   },
@@ -51,7 +55,7 @@
     "clsx": "^2.0.0",
     "lz-string": "^1.5.0",
     "monaco-vim": "^0.4.0",
-    "next": "^13.4.10",
+    "next": "^13.5.1",
     "next-themes": "^0.2.1",
     "prettier": "^3.0.2",
     "react": "^18.2.0",
@@ -61,7 +65,7 @@
   "devDependencies": {
     "@repo/lint": "workspace:*",
     "@repo/tsconfig": "workspace:*",
-    "eslint": "^8.42.0",
-    "typescript": "^5.1.3"
+    "eslint": "^8.45.0",
+    "typescript": "^5.1.6"
   }
 }

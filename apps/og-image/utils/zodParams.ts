@@ -55,6 +55,8 @@ export const challengeParam = zodParams(
     title: truncatedWordSchema({ maxCharacters: 70 }),
     description: truncatedWordSchema({ maxCharacters: 145 }),
     username: z.string(),
+    difficulty: z.enum(['BEGINNER', 'EASY', 'MEDIUM', 'HARD', 'EXTREME']),
+    date: z.string().optional(),
   }),
 );
 
@@ -63,4 +65,3 @@ export const userParam = zodParams(
     username: truncatedWordSchema({ maxCharacters: 70 }),
   }),
 );
-
