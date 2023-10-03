@@ -2,6 +2,7 @@
 
 import { useSession } from '@repo/auth/react';
 import { Bookmark as BookmarkIcon, Calendar, Flag, Share } from '@repo/ui/icons';
+import clsx from 'clsx';
 import { debounce } from 'lodash';
 import Link from 'next/link';
 import { useRef, useState } from 'react';
@@ -102,7 +103,7 @@ export function Description({ challenge }: Props) {
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Share challenge</p>
+                <p>Share</p>
               </TooltipContent>
             </Tooltip>
           </DialogTrigger>
@@ -120,6 +121,12 @@ export function Description({ challenge }: Props) {
             <Button
               variant="secondary"
               size="xs"
+              className={clsx(
+                'border border-transparent [&:not(:disabled)]:hover:border-blue-500 [&:not(:disabled)]:hover:text-blue-500',
+                {
+                  'border-blue-500 text-blue-500': hasBookmarked,
+                },
+              )}
               disabled={!session.data?.user.id}
               onClick={() => {
                 let shouldBookmark = false;

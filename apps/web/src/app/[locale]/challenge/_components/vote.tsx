@@ -41,9 +41,12 @@ export function Vote({
     <Tooltip>
       <TooltipTrigger asChild>
         <Button
-          className={clsx('gap-2 [&:not(:disabled)]:hover:text-emerald-600', {
-            'text-emerald-600': hasVoted,
-          })}
+          className={clsx(
+            'gap-2 border border-transparent [&:not(:disabled)]:hover:border-emerald-600  [&:not(:disabled)]:hover:text-emerald-600',
+            {
+              'border-emerald-600 text-emerald-600': hasVoted,
+            },
+          )}
           variant="secondary"
           size="xs"
           disabled={disabled}
