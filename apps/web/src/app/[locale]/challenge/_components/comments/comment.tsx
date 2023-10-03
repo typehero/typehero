@@ -428,7 +428,7 @@ function SingleComment({
               }}
             />
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <Button
                   variant="secondary"
                   size="xs"
@@ -447,7 +447,7 @@ function SingleComment({
             </Tooltip>
             {!isReply && (
               <Tooltip>
-                <TooltipTrigger>
+                <TooltipTrigger asChild>
                   <Button variant="secondary" size="xs" onClick={onClickReply}>
                     <Reply className="h-3 w-3" />
                     <span className="sr-only">Create a reply</span>
@@ -460,7 +460,7 @@ function SingleComment({
             )}
             {isAuthor ? (
               <Tooltip>
-                <TooltipTrigger>
+                <TooltipTrigger asChild>
                   <Button variant="secondary" size="xs" onClick={() => setIsEditing(!isEditing)}>
                     <Pencil className="h-3 w-3" />
                     <span className="sr-only">Edit this comment</span>
@@ -472,33 +472,33 @@ function SingleComment({
               </Tooltip>
             ) : null}
             {isAuthor ? (
-              <CommentDeleteDialog asChild comment={comment}>
-                <Tooltip>
-                  <TooltipTrigger>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <CommentDeleteDialog asChild comment={comment}>
                     <Button variant="secondary" size="xs">
                       <Trash2 className="h-3 w-3" />
                       <span className="sr-only">Delete this comment</span>
                     </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Delete</p>
-                  </TooltipContent>
-                </Tooltip>
-              </CommentDeleteDialog>
+                  </CommentDeleteDialog>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Delete</p>
+                </TooltipContent>
+              </Tooltip>
             ) : (
-              <ReportDialog commentId={comment.id} reportType="COMMENT">
-                <Tooltip>
-                  <TooltipTrigger>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <ReportDialog triggerAsChild commentId={comment.id} reportType="COMMENT">
                     <Button variant="secondary" size="xs">
                       <span className="hidden text-[0.8rem] sm:block">Flag</span>
                       <span className="sr-only">Report this comment</span>
                     </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Report</p>
-                  </TooltipContent>
-                </Tooltip>
-              </ReportDialog>
+                  </ReportDialog>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Report</p>
+                </TooltipContent>
+              </Tooltip>
             )}
             {comment._count.replies > 0 && (
               <Button
