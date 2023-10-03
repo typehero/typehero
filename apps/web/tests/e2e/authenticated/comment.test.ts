@@ -32,7 +32,7 @@ test.describe('create, edit, and delete comments', () => {
     const commentBlock = page.locator('div[id^=comment]', {
       hasText: `${parentComment} ${parentCodeText}`,
     });
-    await commentBlock.getByRole('button', { name: 'Create a reply', exact: true }).click();
+    await commentBlock.getByRole('button', { name: 'Create a reply' }).click();
 
     await page.locator('*:focus').fill(`${replyComment}${wrapTypescriptCode(replyCodeText)}`);
     await page.getByRole('button', { name: 'Comment', exact: true, disabled: false }).click();
@@ -63,7 +63,7 @@ test.describe('create, edit, and delete comments', () => {
     const replyBlock = page.locator('div[id^=comment]', {
       hasText: `${replyComment} ${replyCodeText}`,
     });
-    await replyBlock.getByRole('button', { name: 'Edit this comment', exact: true }).click();
+    await replyBlock.getByRole('button', { name: 'Edit this comment' }).click();
 
     await page.locator('*:focus').fill(`${editedReplyComment}${wrapTypescriptCode(replyCodeText)}`);
     await page.getByRole('button', { name: 'Comment', exact: true, disabled: false }).click();
@@ -80,7 +80,7 @@ test.describe('create, edit, and delete comments', () => {
     const replyBlock = page.locator('div[id^=comment]', {
       hasText: `${editedReplyComment} ${replyCodeText}`,
     });
-    await replyBlock.getByRole('button', { name: 'Delete this comment', exact: true }).click();
+    await replyBlock.getByRole('button', { name: 'Delete this comment' }).click();
     await page.getByRole('button', { name: 'Delete' }).click();
 
     await expect(
@@ -92,7 +92,7 @@ test.describe('create, edit, and delete comments', () => {
     const commentBlock = page.locator('div[id^=comment]', {
       hasText: `${editedParentComment} ${parentCodeText}`,
     });
-    await commentBlock.getByRole('button', { name: 'Delete this comment', exact: true }).click();
+    await commentBlock.getByRole('button', { name: 'Delete this comment' }).click();
     await page.getByRole('button', { name: 'Delete' }).click();
 
     await expect(
