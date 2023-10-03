@@ -438,6 +438,7 @@ function SingleComment({
                   }}
                 >
                   <Share className="h-3 w-3" />
+                  <span className="sr-only">Share</span>
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
@@ -449,6 +450,7 @@ function SingleComment({
                 <TooltipTrigger>
                   <Button variant="secondary" size="xs" onClick={onClickReply}>
                     <Reply className="h-3 w-3" />
+                    <span className="sr-only">Reply</span>
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -461,6 +463,7 @@ function SingleComment({
                 <TooltipTrigger>
                   <Button variant="secondary" size="xs" onClick={() => setIsEditing(!isEditing)}>
                     <Pencil className="h-3 w-3" />
+                    <span className="sr-only">Edit</span>
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -474,6 +477,7 @@ function SingleComment({
                   <TooltipTrigger>
                     <Button variant="secondary" size="xs">
                       <Trash2 className="h-3 w-3" />
+                      <span className="sr-only">Delete</span>
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -487,6 +491,7 @@ function SingleComment({
                   <TooltipTrigger>
                     <Button variant="secondary" size="xs">
                       <span className="hidden text-[0.8rem] sm:block">Flag</span>
+                      <span className="sr-only">Report</span>
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -511,6 +516,7 @@ function SingleComment({
                 <div className="text-xs">
                   {comment._count.replies === 1 ? '1 reply' : `${comment._count.replies} replies`}
                 </div>
+                <span className="sr-only">Toggle Reply</span>
               </Button>
             )}
           </>
