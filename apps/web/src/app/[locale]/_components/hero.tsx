@@ -8,23 +8,20 @@ import { getScopedI18n } from '~/locales/server';
 function TypeHeroLogo() {
   return (
     <svg
-      className="h-28 w-28 rounded-3xl sm:h-44 sm:w-44 sm:rounded-[2rem]"
+      viewBox="0 0 38 38"
       fill="none"
-      viewBox="0 0 164 164"
       xmlns="http://www.w3.org/2000/svg"
+      className="h-28 w-28 rounded-3xl sm:h-44 sm:w-44 sm:rounded-[2rem]"
     >
+      <rect width="38" height="38" rx="4.5" fill="#3178C6" />
       <path
-        d="M0 29.8182C0 13.3501 13.3501 0 29.8182 0H134.182C150.65 0 164 13.3501 164 29.8182V134.182C164 150.65 150.65 164 134.182 164H29.8182C13.3501 164 0 150.65 0 134.182V29.8182Z"
-        fill="#3178C6"
-      />
-      <path
-        clipRule="evenodd"
-        d="M71.4351 80.307H91.9394V67.0909H34.7879V80.307H55.1919V139.152H71.4351V80.307Z"
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M15.6947 20.9344H20V18H8V20.9344H12.2842V34H15.6947V20.9344Z"
         fill="white"
-        fillRule="evenodd"
       />
       <path
-        d="M91.9394 139.152V67.0909H106.946V96.9549H129.078V67.0909H144.121V139.152H129.078V109.182H106.946V139.152H91.9394Z"
+        d="M22 34V18H25.4511V24.6309H30.5405V18H34V34H30.5405V27.3458H25.4511V34H22Z"
         fill="white"
       />
     </svg>
