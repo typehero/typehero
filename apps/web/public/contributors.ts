@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 172
+        "contributions": 173
     },
     {
         "login": "Hacksore",
@@ -41,7 +41,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/Hacksore/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 83
+        "contributions": 84
     },
     {
         "login": "PickleNik",
@@ -62,7 +62,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/PickleNik/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 80
+        "contributions": 81
     },
     {
         "login": "ggrandi",
