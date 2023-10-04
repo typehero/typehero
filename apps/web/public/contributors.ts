@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 173
+        "contributions": 174
     },
     {
         "login": "Hacksore",
@@ -62,7 +62,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/PickleNik/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 81
+        "contributions": 82
     },
     {
         "login": "ggrandi",
@@ -317,6 +317,27 @@ export const contributors = [
         "contributions": 6
     },
     {
+        "login": "aakash19here",
+        "id": 86520455,
+        "node_id": "MDQ6VXNlcjg2NTIwNDU1",
+        "avatar_url": "https://avatars.githubusercontent.com/u/86520455?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/aakash19here",
+        "html_url": "https://github.com/aakash19here",
+        "followers_url": "https://api.github.com/users/aakash19here/followers",
+        "following_url": "https://api.github.com/users/aakash19here/following{/other_user}",
+        "gists_url": "https://api.github.com/users/aakash19here/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/aakash19here/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/aakash19here/subscriptions",
+        "organizations_url": "https://api.github.com/users/aakash19here/orgs",
+        "repos_url": "https://api.github.com/users/aakash19here/repos",
+        "events_url": "https://api.github.com/users/aakash19here/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/aakash19here/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 5
+    },
+    {
         "login": "typesafegh",
         "id": 135900154,
         "node_id": "U_kgDOCBmr-g",
@@ -357,27 +378,6 @@ export const contributors = [
         "type": "User",
         "site_admin": false,
         "contributions": 5
-    },
-    {
-        "login": "aakash19here",
-        "id": 86520455,
-        "node_id": "MDQ6VXNlcjg2NTIwNDU1",
-        "avatar_url": "https://avatars.githubusercontent.com/u/86520455?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/aakash19here",
-        "html_url": "https://github.com/aakash19here",
-        "followers_url": "https://api.github.com/users/aakash19here/followers",
-        "following_url": "https://api.github.com/users/aakash19here/following{/other_user}",
-        "gists_url": "https://api.github.com/users/aakash19here/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/aakash19here/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/aakash19here/subscriptions",
-        "organizations_url": "https://api.github.com/users/aakash19here/orgs",
-        "repos_url": "https://api.github.com/users/aakash19here/repos",
-        "events_url": "https://api.github.com/users/aakash19here/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/aakash19here/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 4
     },
     {
         "login": "emalineg",

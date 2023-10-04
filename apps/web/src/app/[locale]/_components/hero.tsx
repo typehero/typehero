@@ -15,8 +15,8 @@ function TypeHeroLogo() {
     >
       <rect width="38" height="38" rx="4.5" fill="#3178C6" />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M15.6947 20.9344H20V18H8V20.9344H12.2842V34H15.6947V20.9344Z"
         fill="white"
       />
