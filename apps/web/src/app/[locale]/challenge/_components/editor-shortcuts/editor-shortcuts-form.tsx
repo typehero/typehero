@@ -27,8 +27,9 @@ function isMacOS() {
   return navigator.platform.toLowerCase().includes('mac');
 }
 export function EditorShortcuts() {
-  const cmdOrCtrl = isMacOS() ? 'Cmd' : 'Ctrl';
-  const optionOrAlt = isMacOS() ? 'Option' : 'Alt';
+  const isMac = isMacOS()
+  const cmdOrCtrl = isMac ? 'Cmd' : 'Ctrl';
+  const optionOrAlt = isMac ? 'Option' : 'Alt';
   return (
     <div className="flex flex-col gap-2">
       <EditorShortcut
