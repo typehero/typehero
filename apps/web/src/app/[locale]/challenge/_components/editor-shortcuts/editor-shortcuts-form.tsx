@@ -27,7 +27,7 @@ function isMacOS() {
   return navigator.platform.toLowerCase().includes('mac');
 }
 export function EditorShortcuts() {
-  const isMac = isMacOS()
+  const isMac = isMacOS();
   const cmdOrCtrl = isMac ? 'Cmd' : 'Ctrl';
   const optionOrAlt = isMac ? 'Option' : 'Alt';
   return (
