@@ -32,14 +32,6 @@ export function EditorShortcuts() {
   return (
     <div className="flex flex-col gap-2">
       <EditorShortcut
-        title="Debug Code"
-        description={
-          <p>
-            <Key>{cmdOrCtrl}</Key> + <Key>{optionOrAlt}</Key> + <Key>'</Key>
-          </p>
-        }
-      />
-      <EditorShortcut
         title="To indent one level"
         description={
           <p>
