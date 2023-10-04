@@ -28,22 +28,6 @@ export function EditorShortcuts() {
   return (
     <div className="flex flex-col gap-2">
       <EditorShortcut
-        title="Run Code"
-        description={
-          <p>
-            <Key>Ctrl</Key> + <Key>'</Key>
-          </p>
-        }
-      />
-      <EditorShortcut
-        title="Submit"
-        description={
-          <p>
-            <Key>Ctrl</Key> + <Key>Enter</Key>
-          </p>
-        }
-      />
-      <EditorShortcut
         title="Debug Code"
         description={
           <p>
