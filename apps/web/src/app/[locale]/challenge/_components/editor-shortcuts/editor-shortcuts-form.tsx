@@ -43,7 +43,7 @@ export function EditorShortcuts() {
         title="To indent one level"
         description={
           <p>
-            <Key>Tab</Key> or <Key>{cmdOrCtrl}</Key> + <Key>{']'}</Key>
+            <Key>Tab</Key> or <Key>{cmdOrCtrl}</Key> + <Key>&#91;</Key>
           </p>
         }
       />
@@ -51,7 +51,7 @@ export function EditorShortcuts() {
         title="To indent one fewer levels"
         description={
           <p>
-            <Key>Shift</Key> + <Key>Tab</Key> or <Key>{cmdOrCtrl}</Key> + <Key>{'['}</Key>
+            <Key>Shift</Key> + <Key>Tab</Key> or <Key>{cmdOrCtrl}</Key> + <Key>&#93;</Key>
           </p>
         }
       />
