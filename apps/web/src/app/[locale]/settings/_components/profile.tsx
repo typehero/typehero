@@ -28,6 +28,7 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
 import { createNoProfanitySchemaWithValidate } from '~/utils/antiProfanityZod';
+import { updateProfile } from './settings.action';
 
 const profileFormSchema = z.object({
   username: z
@@ -112,13 +113,13 @@ function ProfileForm({ user }: Props) {
   });
 
   async function onSubmit(data: ProfileFormValues) {
+    // TODO: handle errors
+
+    await updateProfile(data);
+
     toast({
-      title: 'You submitted the following values:',
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
+      title: 'profile updated',
+      variant: 'success',
     });
   }
 
@@ -132,7 +133,7 @@ function ProfileForm({ user }: Props) {
             <FormItem>
               <FormLabel>Username</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input disabled placeholder="shadcn" {...field} />
               </FormControl>
               <FormDescription>
                 This is your public display name. It can be your real name or a pseudonym. You can
@@ -156,8 +157,6 @@ function ProfileForm({ user }: Props) {
                 </FormControl>
                 <SelectContent>
                   <SelectItem value={user.email!}>{user.email}</SelectItem>
-                  <SelectItem value="m@google.com">m@google.com</SelectItem>
-                  <SelectItem value="m@support.com">m@support.com</SelectItem>
                 </SelectContent>
               </Select>
               <FormDescription>
