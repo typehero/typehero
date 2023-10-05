@@ -1,5 +1,6 @@
 'use server';
 import { prisma } from '@repo/db';
+import { revalidateTag } from 'next/cache';
 
 interface Args {
   challengeId: number;
@@ -17,4 +18,12 @@ export async function postSolution({ challengeId, description, title, userId }: 
       userId,
     },
   });
+}
+
+export async function pinOrUnpinSolution(id: number, isPinned: boolean) {
+  await prisma.sharedSolution.update({
+    where: { id },
+    data: { isPinned },
+  });
+  revalidateTag(`challenge-${id}-submissions`);
 }
