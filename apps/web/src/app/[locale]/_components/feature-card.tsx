@@ -73,7 +73,7 @@ function FeatureCard({
           bgClass,
         )}
       >
-        <div className="mx-10 my-10 min-h-[450px] w-full">
+        <div className="mx-10 my-10 min-h-[250px] w-full sm:min-h-[450px]">
           <div className="flex w-4/6 flex-col gap-3">
             <h2 className="text-xl font-bold tracking-tight md:text-xl">{title}</h2>
             <p className="text-sm leading-5 text-zinc-600 dark:text-zinc-400 sm:text-base sm:leading-7">
@@ -204,7 +204,7 @@ export function ChallengeCreationCard({
       <div
         className={clsx(
           { 'translate-x-0 opacity-0': step < 3 },
-          'absolute left-1/2 top-1/2 flex w-[80%] -translate-x-1/2 -translate-y-[33%] flex-col gap-12 text-center text-2xl font-bold transition-all duration-500 md:w-[50%]',
+          'absolute left-1/2 top-[55%] flex w-[80%] -translate-x-1/2 -translate-y-[33%] flex-col gap-12 text-center text-2xl font-bold transition-all duration-500 md:w-[50%]',
         )}
       >
         <div>🎉</div>
@@ -391,7 +391,7 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
     <FeatureCard {...props}>
       <div
         ref={ref}
-        className="absolute inset-0 left-[23px] top-[30%] flex w-[100%] flex-col gap-3 pt-4 max-md:scale-90 sm:top-[35%] md:left-[37px] md:top-[30%]"
+        className="absolute inset-0 left-[23px] top-[50%] flex w-[100%] flex-col gap-3 pt-4 max-md:scale-90 sm:top-[35%] md:left-[37px] md:top-[30%]"
       >
         <div
           className={clsx(
@@ -451,7 +451,7 @@ export function CuratedTracksCard(props: CardProps) {
     <FeatureCard {...props}>
       <div
         className={clsx(
-          'absolute inset-0 top-[50%] flex flex-col items-center justify-center',
+          'absolute inset-0 top-[90%] flex flex-col items-center justify-center',
           'max-md:scale-110 md:top-[38%]',
         )}
       >
@@ -460,7 +460,7 @@ export function CuratedTracksCard(props: CardProps) {
             Typescript Foundations
           </span>
         </div>
-        <div className="flex w-[69%] flex-col">
+        <div className="flex w-[69%] flex-col sm:top-auto">
           {mockChallenges.map((mockChallenge) => (
             <MockTrackChallenge
               key={`mock-${mockChallenge.id}`}
