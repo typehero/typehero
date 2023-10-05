@@ -1,7 +1,6 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { User } from '@repo/db/types';
 import { Button } from '@repo/ui/components/button';
 import {
   Form,
@@ -13,29 +12,16 @@ import {
   FormMessage,
 } from '@repo/ui/components/form';
 import { RadioGroup, RadioGroupItem } from '@repo/ui/components/radio-group';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@repo/ui/components/select';
 import { Separator } from '@repo/ui/components/separator';
 import { useToast } from '@repo/ui/components/use-toast';
-import { ChevronDown } from '@repo/ui/icons';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-interface Props {
-  user: User & { userLinks: { id: string | null; url: string }[] };
-}
-
-export function Appearances({ user }: Props) {
+export function Appearances() {
   return (
     <div className="max-w-lg space-y-6 p-8">
       <div className="mb-4">
-        <h3 className="text-lg font-medium">Notifications</h3>
+        <h3 className="text-lg font-medium">Appearances</h3>
         <p className="text-muted-foreground mb-4 text-sm">
           Configure how you receive notifications.
         </p>
@@ -84,36 +70,6 @@ export function AppearanceForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="font"
-          render={({ field }) => (
-            <FormItem>
-              <div className="relative w-max">
-                <FormControl>
-                  <Select
-                    defaultValue={field.value}
-                    onValueChange={field.onChange as (event: string) => void}
-                  >
-                    <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder="Select a font" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="inter">Inter</SelectItem>
-                        <SelectItem value="manrope">Manrope</SelectItem>
-                        <SelectItem value="system">System</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </FormControl>
-                <ChevronDown className="absolute right-3 top-2.5 h-4 w-4 opacity-50" />
-              </div>
-              <FormDescription>Set the font you want to use in the dashboard.</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <FormField
           control={form.control}
           name="theme"
