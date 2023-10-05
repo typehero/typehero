@@ -16,6 +16,8 @@ import { Notifications } from './notifications';
 import { Appearances } from './appearance';
 import { usePathname } from 'next/navigation';
 import UserHeader from '../../[username]/_components/dashboard/user-header';
+import { MagicIcon } from '@repo/ui/components/magic-icon';
+import { stripProtocolAndWWW } from '~/utils/stringUtils';
 
 interface Props {
   user: User & { userLinks: { id: string | null; url: string }[] };
@@ -82,6 +84,25 @@ export const NewSettings = ({ user }: Props) => {
             <div className="mb-4 mt-2 w-full text-center text-sm md:w-64 md:text-start">
               {user.bio}
             </div>
+            {user.userLinks.length > 0 && (
+              <div className="flex flex-col gap-2">
+                {user.userLinks
+                  .filter((item) => item.url !== '')
+                  .map((link) => (
+                    <div className="flex items-center gap-2" key={link.id}>
+                      <MagicIcon url={link.url} />
+                      <a
+                        className="text-xs text-neutral-400 hover:text-neutral-600 dark:text-neutral-600 dark:hover:text-neutral-400"
+                        href={link.url}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        {stripProtocolAndWWW(link.url)}
+                      </a>
+                    </div>
+                  ))}
+              </div>
+            )}
           </div>
           <div className="flex gap-4 pr-6 md:flex-col">
             {links.map(({ icon: Icon, name, link, disabled }) => (
