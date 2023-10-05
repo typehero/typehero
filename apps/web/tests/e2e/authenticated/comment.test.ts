@@ -32,7 +32,7 @@ test.describe('create, edit, and delete comments', () => {
     const commentBlock = page.locator('div[id^=comment]', {
       hasText: `${parentComment} ${parentCodeText}`,
     });
-    await commentBlock.getByRole('button', { name: 'Reply' }).click();
+    await commentBlock.getByRole('button', { name: 'Create a reply' }).click();
 
     await page.locator('*:focus').fill(`${replyComment}${wrapTypescriptCode(replyCodeText)}`);
     await page.getByRole('button', { name: 'Comment', exact: true, disabled: false }).click();
@@ -44,7 +44,7 @@ test.describe('create, edit, and delete comments', () => {
     const commentBlock = page.locator('div[id^=comment]', {
       hasText: `${parentComment} ${parentCodeText}`,
     });
-    await commentBlock.getByRole('button', { name: 'Edit' }).click();
+    await commentBlock.getByRole('button', { name: 'Edit this comment' }).click();
 
     await page
       .locator('*:focus')
@@ -63,7 +63,7 @@ test.describe('create, edit, and delete comments', () => {
     const replyBlock = page.locator('div[id^=comment]', {
       hasText: `${replyComment} ${replyCodeText}`,
     });
-    await replyBlock.getByRole('button', { name: 'Edit' }).click();
+    await replyBlock.getByRole('button', { name: 'Edit this comment' }).click();
 
     await page.locator('*:focus').fill(`${editedReplyComment}${wrapTypescriptCode(replyCodeText)}`);
     await page.getByRole('button', { name: 'Comment', exact: true, disabled: false }).click();
@@ -80,7 +80,7 @@ test.describe('create, edit, and delete comments', () => {
     const replyBlock = page.locator('div[id^=comment]', {
       hasText: `${editedReplyComment} ${replyCodeText}`,
     });
-    await replyBlock.getByRole('button', { name: 'Delete' }).click();
+    await replyBlock.getByRole('button', { name: 'Delete this comment' }).click();
     await page.getByRole('button', { name: 'Delete' }).click();
 
     await expect(
@@ -92,7 +92,7 @@ test.describe('create, edit, and delete comments', () => {
     const commentBlock = page.locator('div[id^=comment]', {
       hasText: `${editedParentComment} ${parentCodeText}`,
     });
-    await commentBlock.getByRole('button', { name: 'Delete' }).click();
+    await commentBlock.getByRole('button', { name: 'Delete this comment' }).click();
     await page.getByRole('button', { name: 'Delete' }).click();
 
     await expect(
@@ -118,7 +118,7 @@ test.describe('share comment', () => {
     await page.getByRole('button', { name: 'Comments' }).click();
 
     const commentBlock = page.locator('div[id^=comment]', { hasText: parentComment });
-    await commentBlock.getByText('Share').click();
+    await commentBlock.getByText('Share this comment').click();
 
     await page.getByPlaceholder('Enter your comment here.').focus();
     await ctrlV(page);

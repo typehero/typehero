@@ -1,6 +1,7 @@
 'use client';
 
 import type { Submission } from '@repo/db/types';
+import { Calendar } from '@repo/ui/icons';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
@@ -97,7 +98,10 @@ function SubmissionRow({
         >
           {submission.isSuccessful ? 'Accepted' : 'Rejected'}
         </div>
-        <div className="text-sm text-neutral-500">{getRelativeTime(submission.createdAt)}</div>
+        <div className="text-muted-foreground flex items-center gap-2">
+          <Calendar className=" h-4 w-4" />
+          <span className="text-xs">{getRelativeTime(submission.createdAt)}</span>
+        </div>
       </Link>
     </li>
   );
