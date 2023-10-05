@@ -9,6 +9,7 @@ import { UserBadge } from '@repo/ui/components/user-badge';
 import {
   ChevronDown,
   ChevronUp,
+  Calendar,
   Pencil,
   Reply,
   Share,
@@ -374,9 +375,10 @@ function SingleComment({
           </div>
           <Tooltip delayDuration={0.05}>
             <TooltipTrigger asChild>
-              <span className="whitespace-nowrap text-[0.8rem] text-neutral-500 dark:text-neutral-400">
-                {getRelativeTime(comment.createdAt)}
-              </span>
+              <div className="text-muted-foreground flex items-center gap-2 whitespace-nowrap text-xs">
+                <Calendar className="h-4 w-4" />
+                <span>{getRelativeTime(comment.createdAt)}</span>
+              </div>
             </TooltipTrigger>
             <TooltipContent align="start" alignOffset={-55} className="rounded-xl">
               <span className="text-foreground text-xs">{comment.createdAt.toLocaleString()}</span>
@@ -405,7 +407,7 @@ function SingleComment({
           />
         </div>
       ) : null}
-      <div className="my-auto mt-3 flex items-center gap-4">
+      <div className="my-auto mt-3 flex items-center gap-2">
         {!readonly && (
           <>
             <Vote
@@ -425,50 +427,84 @@ function SingleComment({
                 comment._count.vote += didUpvote ? 1 : -1;
               }}
             />
-            <div
-              className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
-              onClick={() => {
-                copyPathNotifyUser(Boolean(isReply), challengeId);
-              }}
-            >
-              <Share className="h-3 w-3" />
-              <div className="hidden text-[0.8rem] sm:block">Share</div>
-            </div>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="secondary"
+                  size="xs"
+                  className="gap-2"
+                  onClick={() => {
+                    copyPathNotifyUser(Boolean(isReply), challengeId);
+                  }}
+                >
+                  <Share className="h-3 w-3" />
+                  <span className="sr-only">Share this comment</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Share</p>
+              </TooltipContent>
+            </Tooltip>
             {!isReply && (
-              <button
-                className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 disabled:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300"
-                onClick={onClickReply}
-              >
-                <Reply className="h-4 w-4" />
-                <div className="hidden text-[0.8rem] sm:block">Reply</div>
-              </button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="secondary" size="xs" onClick={onClickReply}>
+                    <Reply className="h-3 w-3" />
+                    <span className="sr-only">Create a reply</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Reply</p>
+                </TooltipContent>
+              </Tooltip>
             )}
             {isAuthor ? (
-              <button
-                className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
-                onClick={() => setIsEditing(!isEditing)}
-              >
-                <Pencil className="h-3 w-3" />
-                <div className="hidden text-[0.8rem] sm:block">Edit</div>
-              </button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="secondary" size="xs" onClick={() => setIsEditing(!isEditing)}>
+                    <Pencil className="h-3 w-3" />
+                    <span className="sr-only">Edit this comment</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Edit</p>
+                </TooltipContent>
+              </Tooltip>
             ) : null}
             {isAuthor ? (
-              <CommentDeleteDialog asChild comment={comment}>
-                <button className="flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300">
-                  <Trash2 className="h-3 w-3" />
-                  <div className="hidden text-[0.8rem] sm:block">Delete</div>
-                </button>
-              </CommentDeleteDialog>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <CommentDeleteDialog asChild comment={comment}>
+                    <Button variant="secondary" size="xs">
+                      <Trash2 className="h-3 w-3" />
+                      <span className="sr-only">Delete this comment</span>
+                    </Button>
+                  </CommentDeleteDialog>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Delete</p>
+                </TooltipContent>
+              </Tooltip>
             ) : (
-              <ReportDialog commentId={comment.id} reportType="COMMENT">
-                <div className="flex cursor-pointer items-center text-[0.8rem] text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300">
-                  Report
-                </div>
-              </ReportDialog>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <ReportDialog triggerAsChild commentId={comment.id} reportType="COMMENT">
+                    <Button variant="secondary" size="xs">
+                      <span className="hidden text-[0.8rem] sm:block">Flag</span>
+                      <span className="sr-only">Report this comment</span>
+                    </Button>
+                  </ReportDialog>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Report</p>
+                </TooltipContent>
+              </Tooltip>
             )}
             {comment._count.replies > 0 && (
-              <button
-                className="z-50 flex cursor-pointer items-center gap-1 text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
+              <Button
+                variant="ghost"
+                size="xs"
+                className="z-50 ml-auto gap-1"
                 onClick={onClickToggleReply}
               >
                 {isToggleReply ? (
@@ -480,7 +516,8 @@ function SingleComment({
                 <div className="text-xs">
                   {comment._count.replies === 1 ? '1 reply' : `${comment._count.replies} replies`}
                 </div>
-              </button>
+                <span className="sr-only">Toggle replies view</span>
+              </Button>
             )}
           </>
         )}

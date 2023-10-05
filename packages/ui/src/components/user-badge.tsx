@@ -14,10 +14,7 @@ function UserBadge(props: UserBadgeProps) {
     <Tooltip>
       <TooltipTrigger asChild>
         <Link href={`/@${props.username}`} className="focus:outline-none focus-visible:ring-0">
-          <Button
-            className="-ml-[0.33rem] flex h-auto w-fit items-center rounded-full bg-transparent py-1 pl-[0.33rem] pr-2 text-xs font-bold text-neutral-700 hover:bg-black/10 dark:text-white dark:hover:bg-white/20"
-            size="sm"
-          >
+          <Button className="-ml-2 font-bold" variant="ghost" size="xs">
             @{props.username}
           </Button>
         </Link>

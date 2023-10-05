@@ -41,7 +41,14 @@ export function Vote({
     <Tooltip>
       <TooltipTrigger asChild>
         <Button
-          className="group flex h-6 items-center gap-1 rounded-full bg-zinc-200 py-0 pl-[0.675rem] pr-2 text-sm focus:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:bg-zinc-100 dark:bg-zinc-700 disabled:dark:bg-zinc-700/50"
+          className={clsx(
+            'gap-2 border border-transparent [&:not(:disabled)]:hover:border-emerald-600  [&:not(:disabled)]:hover:text-emerald-600',
+            {
+              'border-emerald-600 text-emerald-600': hasVoted,
+            },
+          )}
+          variant="secondary"
+          size="xs"
           disabled={disabled}
           onClick={() => {
             let shouldIncrement = false;
@@ -67,29 +74,8 @@ export function Vote({
             });
           }}
         >
-          <ThumbsUp
-            className={clsx(
-              {
-                'stroke-emerald-600 group-hover:stroke-emerald-600 dark:stroke-emerald-400 group-hover:dark:stroke-emerald-400':
-                  hasVoted,
-                'stroke-zinc-500 group-hover:stroke-zinc-600 group-disabled:stroke-zinc-300 dark:stroke-zinc-300 group-hover:dark:stroke-zinc-100 group-disabled:dark:stroke-zinc-500/50':
-                  !hasVoted,
-              },
-              'my-auto h-4 w-4 duration-200',
-            )}
-          />
-          <span
-            className={clsx(
-              {
-                'text-emerald-600 dark:text-emerald-400': hasVoted,
-                'text-zinc-500 group-hover:text-zinc-600 group-disabled:text-zinc-300 dark:text-zinc-300 group-hover:dark:text-zinc-100 group-disabled:dark:text-zinc-500/50':
-                  !hasVoted,
-              },
-              'my-auto w-4 self-end duration-300',
-            )}
-          >
-            {votes}
-          </span>
+          <ThumbsUp className="h-4 w-4" />
+          <span className="font-bold">{votes}</span>
         </Button>
       </TooltipTrigger>
       <TooltipContent>

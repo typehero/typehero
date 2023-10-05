@@ -1,8 +1,8 @@
 'use client';
 
 import { useSession } from '@repo/auth/react';
-import { Bookmark as BookmarkIcon, Flag, Share } from '@repo/ui/icons';
-import { clsx } from 'clsx';
+import { Bookmark as BookmarkIcon, Calendar, Flag, Share } from '@repo/ui/icons';
+import clsx from 'clsx';
 import { debounce } from 'lodash';
 import Link from 'next/link';
 import { useRef, useState } from 'react';
@@ -57,7 +57,7 @@ export function Description({ challenge }: Props) {
 
   return (
     <div className="custom-scrollable-element h-full overflow-y-auto px-4 pb-36 pt-3">
-      <div className="flex items-center gap-3">
+      <div className="flex items-center">
         <TypographyH3 className="mr-auto max-w-[75%] items-center truncate text-2xl font-bold">
           {challenge.name}
         </TypographyH3>
@@ -79,27 +79,37 @@ export function Description({ challenge }: Props) {
       {/* Author & Time */}
       <div className="mt-2 flex items-center gap-4">
         <UserBadge username={challenge.user.name} linkComponent={Link} />
-        <span className="text-muted-foreground -ml-1 text-xs">
-          {getRelativeTime(challenge.updatedAt)}
-        </span>
+        <div className="text-muted-foreground flex items-center gap-2">
+          <Calendar className=" h-4 w-4" />
+          <span className="text-xs">{getRelativeTime(challenge.updatedAt)}</span>
+        </div>
       </div>
       {/* Difficulty & Action Buttons */}
       <div className="mt-3 flex items-center gap-3">
         <DifficultyBadge difficulty={challenge.difficulty} />
+        <Vote
+          voteCount={challenge._count.vote}
+          initialHasVoted={challenge.vote.length > 0}
+          disabled={!session?.data?.user?.id}
+          rootType="CHALLENGE"
+          rootId={challenge?.id}
+        />
         <Dialog>
           <DialogTrigger>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Share className="h-4 w-4 stroke-zinc-500 group-hover:stroke-zinc-600 dark:stroke-zinc-300 group-hover:dark:stroke-zinc-100" />
+                <Button className="text-accent-foreground" size="xs" variant="secondary">
+                  <Share className="h-4 w-4" />
+                </Button>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Share challenge</p>
+                <p>Share</p>
               </TooltipContent>
             </Tooltip>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Share this challenge</DialogTitle>
+              <DialogTitle>Share</DialogTitle>
             </DialogHeader>
             <div className="pt-4">
               <ShareForm />
@@ -109,7 +119,14 @@ export function Description({ challenge }: Props) {
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
-              className="group flex h-6 items-center rounded-full bg-zinc-200 px-3 focus:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:bg-zinc-100 dark:bg-zinc-700 disabled:dark:bg-zinc-700/50"
+              variant="secondary"
+              size="xs"
+              className={clsx(
+                'border border-transparent [&:not(:disabled)]:hover:border-blue-500 [&:not(:disabled)]:hover:text-blue-500',
+                {
+                  'border-blue-500 text-blue-500': hasBookmarked,
+                },
+              )}
               disabled={!session.data?.user.id}
               onClick={() => {
                 let shouldBookmark = false;
@@ -127,29 +144,13 @@ export function Description({ challenge }: Props) {
                 );
               }}
             >
-              <BookmarkIcon
-                className={clsx(
-                  {
-                    'stroke-blue-500': hasBookmarked,
-                    'stroke-zinc-500 group-hover:stroke-zinc-600 group-disabled:stroke-zinc-300 dark:stroke-zinc-300 group-hover:dark:stroke-zinc-100 group-disabled:dark:stroke-zinc-500/50':
-                      !hasBookmarked,
-                  },
-                  'h-4 w-4',
-                )}
-              />
+              <BookmarkIcon className="h-4 w-4" />
             </Button>
           </TooltipTrigger>
           <TooltipContent>
             <p>{session.data?.user.id ? 'Bookmark' : 'Login to Bookmark'}</p>
           </TooltipContent>
         </Tooltip>
-        <Vote
-          voteCount={challenge._count.vote}
-          initialHasVoted={challenge.vote.length > 0}
-          disabled={!session?.data?.user?.id}
-          rootType="CHALLENGE"
-          rootId={challenge?.id}
-        />
       </div>
       {/* Challenge Description */}
       <div className="prose-invert prose-h3:text-xl mt-6 leading-8">
