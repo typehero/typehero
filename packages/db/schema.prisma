@@ -359,19 +359,6 @@ model Comment {
   @@index([userId])
 }
 
-enum WaitlistIntention {
-  BUILDER // interested in building challenges for the community
-  USER // interested in solving challenges
-  BOTH
-}
-
-model Waitlist {
-  id        Int               @id @default(autoincrement())
-  name      String
-  email     String
-  intention WaitlistIntention
-}
-
 model ImageUpload {
   /// the id of the db row
   id String @id @default(uuid())
