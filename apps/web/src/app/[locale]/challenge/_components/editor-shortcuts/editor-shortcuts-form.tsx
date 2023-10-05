@@ -23,39 +23,20 @@ const Key = (props: PropsWithChildren) => {
     </kbd>
   );
 };
-
+function isMacOS() {
+  return navigator.platform.toLowerCase().includes('mac');
+}
 export function EditorShortcuts() {
+  const isMac = isMacOS();
+  const cmdOrCtrl = isMac ? 'Cmd' : 'Ctrl';
+  const optionOrAlt = isMac ? 'Option' : 'Alt';
   return (
     <div className="flex flex-col gap-2">
-      <EditorShortcut
-        title="Run Code"
-        description={
-          <p>
-            <Key>Ctrl</Key> + <Key>'</Key>
-          </p>
-        }
-      />
-      <EditorShortcut
-        title="Submit"
-        description={
-          <p>
-            <Key>Ctrl</Key> + <Key>Enter</Key>
-          </p>
-        }
-      />
-      <EditorShortcut
-        title="Debug Code"
-        description={
-          <p>
-            <Key>Ctrl</Key> + <Key>Alt</Key> + <Key>'</Key>
-          </p>
-        }
-      />
       <EditorShortcut
         title="To indent one level"
         description={
           <p>
-            <Key>Tab</Key> + <Key>Ctrl</Key>
+            <Key>Tab</Key> or <Key>{cmdOrCtrl}</Key> + <Key>&#91;</Key>
           </p>
         }
       />
@@ -63,7 +44,7 @@ export function EditorShortcuts() {
         title="To indent one fewer levels"
         description={
           <p>
-            <Key>Shift</Key> + <Key>Tab</Key>
+            <Key>Shift</Key> + <Key>Tab</Key> or <Key>{cmdOrCtrl}</Key> + <Key>&#93;</Key>
           </p>
         }
       />
@@ -71,7 +52,7 @@ export function EditorShortcuts() {
         title="To move lines up/down"
         description={
           <p>
-            <Key>Alt</Key> + <Key>Up/Down</Key>
+            <Key>{optionOrAlt}</Key> + <Key>Up/Down</Key>
           </p>
         }
       />
@@ -79,7 +60,7 @@ export function EditorShortcuts() {
         title="Delete line and copy to buffer"
         description={
           <p>
-            <Key>Ctrl</Key> + <Key>X</Key>
+            <Key>{cmdOrCtrl}</Key> + <Key>X</Key>
           </p>
         }
       />
@@ -87,7 +68,7 @@ export function EditorShortcuts() {
         title="Comment/uncomment current selection"
         description={
           <p>
-            <Key>Ctrl</Key> + <Key>/</Key>
+            <Key>{cmdOrCtrl}</Key> + <Key>/</Key>
           </p>
         }
       />
@@ -95,7 +76,7 @@ export function EditorShortcuts() {
         title="Undo action"
         description={
           <p>
-            <Key>Ctrl</Key> + <Key>Z</Key>
+            <Key>{cmdOrCtrl}</Key> + <Key>Z</Key>
           </p>
         }
       />
@@ -103,7 +84,7 @@ export function EditorShortcuts() {
         title="Redo action"
         description={
           <p>
-            <Key>Ctrl</Key> + <Key>Shift</Key> + <Key>Z</Key>
+            <Key>{cmdOrCtrl}</Key> + <Key>Shift</Key> + <Key>Z</Key>
           </p>
         }
       />
