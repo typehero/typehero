@@ -29,6 +29,12 @@ export const links = [
     disabled: false,
   },
   {
+    icon: Brush,
+    name: 'Appearance',
+    link: '/settings/appearance',
+    disabled: false,
+  },
+  {
     icon: Shapes,
     name: 'Connections',
     link: '/settings/connections',
@@ -38,13 +44,7 @@ export const links = [
     icon: BellRing,
     name: 'Notifications',
     link: '/settings/notifications',
-    disabled: false,
-  },
-  {
-    icon: Brush,
-    name: 'Appearance',
-    link: '/settings/appearance',
-    disabled: false,
+    disabled: true,
   },
 ];
 
@@ -104,7 +104,7 @@ export const NewSettings = ({ user }: Props) => {
             {selectedTabValue === 'profile' && <ProfileSettings user={user} />}
             {selectedTabValue === 'connections' && <div>Connections</div>}
             {selectedTabValue === 'notifications' && <Notifications user={user} />}
-            {selectedTabValue === 'appearance' && <Appearances user={user} />}
+            {selectedTabValue === 'appearance' && <Appearances />}
           </Card>
         </VerticalTabsContent>
       </Tabs>
