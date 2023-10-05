@@ -11,7 +11,7 @@
     }
   },
   "scripts": {
-    "dev": "email dev -p 6969 --skip-install",
+    "dev": "email dev -p 6969 --skip-install true",
     "clean": "rm -rf node_modules .react-email",
     "build": "email export"
   },
