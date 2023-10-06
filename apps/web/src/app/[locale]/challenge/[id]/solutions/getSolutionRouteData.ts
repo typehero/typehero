@@ -8,10 +8,10 @@ export const getSolutionsRouteData = cache(async (challengeId: string, session: 
     where: { id: Number(challengeId) },
     select: {
       id: true,
-      // we just want their most recent solution
       submission: {
         where: {
           userId: session?.user.id || '',
+          isSuccessful: true,
         },
         orderBy: [
           {
@@ -22,6 +22,9 @@ export const getSolutionsRouteData = cache(async (challengeId: string, session: 
       },
       sharedSolution: {
         orderBy: [
+          {
+            isPinned: 'desc',
+          },
           {
             createdAt: 'desc',
           },
