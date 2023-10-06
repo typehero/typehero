@@ -10,6 +10,7 @@ import {
   ChevronDown,
   ChevronUp,
   Calendar,
+  Flag,
   Pencil,
   Reply,
   Share,
@@ -490,7 +491,7 @@ function SingleComment({
                 <TooltipTrigger asChild>
                   <ReportDialog triggerAsChild commentId={comment.id} reportType="COMMENT">
                     <Button variant="secondary" size="xs">
-                      <span className="hidden text-[0.8rem] sm:block">Flag</span>
+                      <Flag className="h-3 w-3" />
                       <span className="sr-only">Report this comment</span>
                     </Button>
                   </ReportDialog>

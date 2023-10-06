@@ -213,6 +213,7 @@ model Vote {
 model SharedSolution {
   id              Int        @id @default(autoincrement())
   createdAt       DateTime   @default(now())
+  isPinned        Boolean    @default(false)
   title           String
   description     String     @db.MediumText
   vote            Vote[]
