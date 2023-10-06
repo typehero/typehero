@@ -1,21 +1,10 @@
 'use client';
 
-import {
-  useEffect,
-  useRef,
-  type ReactNode,
-  useState,
-  useCallback,
-  type MutableRefObject,
-} from 'react';
+import { useEffect, useRef, type ReactNode, useState, type MutableRefObject } from 'react';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useFullscreenSettingsStore } from './fullscreen';
-import usePanelAdjustments from './usePanelAdjustments';
 import { getEventDeltas } from '@repo/monaco/utils';
-import type { ChallengeRouteData } from '../[id]/getChallengeRouteData';
-import { LeftWrapper } from '../[id]/left-wrapper';
-import { Wrapper } from '../[id]/wrapper';
 
 export const DEFAULT_SETTINGS = {
   width: '500px',
@@ -224,6 +213,7 @@ export function ChallengeLayout({
     expandPanel,
     isCollapsed,
     isDesktop,
+    setIsDesktop,
     isLeftPanelCollapsed,
     leftSide,
     settings,

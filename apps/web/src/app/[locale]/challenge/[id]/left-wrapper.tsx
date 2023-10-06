@@ -91,7 +91,7 @@ export function LeftWrapper({ challengeId, children, expandPanel }: Props) {
         }`}
         ref={tabsListRef}
       >
-        {isCollapsed && (
+        {!!isCollapsed && (
           <button
             className="rounded-md rounded-tl-xl duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
             onClick={() => expandPanel()}
@@ -130,11 +130,7 @@ export function LeftWrapper({ challengeId, children, expandPanel }: Props) {
           {isCollapsed ? 'Z' : 'Submissions'}
         </TabsTrigger>
       </TabsList>
-      <TabsContent
-        className={`mt-0 h-[calc(100%_-_41px)]`} //${isCollapsed ? 'hidden' : ''}
-        value={selectedTab}
-        ref={tabsContentRef}
-      >
+      <TabsContent className="mt-0 h-[calc(100%_-_41px)]" value={selectedTab} ref={tabsContentRef}>
         {children}
       </TabsContent>
     </Tabs>
