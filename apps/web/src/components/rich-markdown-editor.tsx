@@ -38,9 +38,22 @@ export function RichMarkdownEditor({
 
   const { theme } = useTheme();
   useEffect(() => {
-    theme === 'dark'
-      ? document.documentElement.setAttribute('data-color-mode', 'dark')
-      : document.documentElement.setAttribute('data-color-mode', 'light');
+    switch (theme) {
+      case 'dark': {
+        document.documentElement.setAttribute('data-color-mode', 'dark');
+        break;
+      }
+
+      case 'light': {
+        document.documentElement.setAttribute('data-color-mode', 'light');
+        break;
+      }
+
+      default: {
+        document.documentElement.setAttribute('data-color-mode', 'system');
+        break;
+      }
+    }
   }, [theme]);
 
   const extraCommands = [...(dismissPreview ? [] : [codePreview, commands.fullscreen])];
