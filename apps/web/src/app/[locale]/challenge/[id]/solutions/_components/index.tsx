@@ -35,13 +35,7 @@ export function Solutions({ challenge }: Props) {
               </div>
               <div className="custom-scrollable-element h-full overflow-y-auto pt-12">
                 {challenge.sharedSolution.map((solution) => (
-                  <SolutionRow
-                    handleClick={() => {
-                      setView('details');
-                    }}
-                    key={solution.id}
-                    solution={solution}
-                  />
+                  <SolutionRow key={solution.id} solution={solution} />
                 ))}
               </div>
             </>
@@ -54,18 +48,11 @@ export function Solutions({ challenge }: Props) {
           )}
         </>
       )}
-
-      {view === 'details' && <div>show some details</div>}
     </div>
   );
 }
 
-function SolutionRow({
-  solution,
-}: {
-  handleClick: (id: string) => void;
-  solution: ChallengeSolution['sharedSolution'][0];
-}) {
+function SolutionRow({ solution }: { solution: ChallengeSolution['sharedSolution'][0] }) {
   return (
     <Link
       className="flex cursor-pointer flex-col gap-2 p-4 duration-300 hover:bg-neutral-100 dark:hover:bg-zinc-700/50"
@@ -78,7 +65,11 @@ function SolutionRow({
           <Calendar className=" h-4 w-4" />
           <span className="text-xs">{getRelativeTime(solution.createdAt)}</span>
         </div>
-        {/* TODO: Use `Vote` component here instead which handles voted state */}
+        {solution.isPinned ? (
+          <Badge className="dark:bg-difficulty-beginner-dark bg-difficulty-beginner text-white duration-300 dark:text-black">
+            Pinned
+          </Badge>
+        ) : null}
         <Badge variant="secondary" size="xs" className="gap-1">
           <ThumbsUp className="h-4 w-4" />
           <span>{solution._count.vote}</span>
