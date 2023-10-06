@@ -1,11 +1,21 @@
 'use client';
 
-import { useEffect, useRef, type ReactNode, useState, useCallback } from 'react';
+import {
+  useEffect,
+  useRef,
+  type ReactNode,
+  useState,
+  useCallback,
+  type MutableRefObject,
+} from 'react';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useFullscreenSettingsStore } from './fullscreen';
 import usePanelAdjustments from './usePanelAdjustments';
 import { getEventDeltas } from '@repo/monaco/utils';
+import type { ChallengeRouteData } from '../[id]/getChallengeRouteData';
+import { LeftWrapper } from '../[id]/left-wrapper';
+import { Wrapper } from '../[id]/wrapper';
 
 export const DEFAULT_SETTINGS = {
   width: '500px',
@@ -33,18 +43,34 @@ export const useLayoutSettingsStore = create<State>()(
 export interface ChallengeLayoutProps {
   left: ReactNode;
   right: ReactNode;
+  setIsDesktop: (bool: boolean) => void;
+  isDesktop: boolean;
+  leftSide: MutableRefObject<HTMLDivElement | null>;
+  collapsePanel: () => void;
+  expandPanel: () => void;
+  adjustPanelSize: (divideByW: number, divideByH: number, newDimensionValue: number) => void;
+  isLeftPanelCollapsed: () => boolean;
 }
 
-const MOBILE_BREAKPOINT = 1025;
+export const MOBILE_BREAKPOINT = 1025;
 
-export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
+export function ChallengeLayout({
+  left,
+  right,
+  setIsDesktop,
+  isDesktop,
+  leftSide,
+  adjustPanelSize,
+  collapsePanel,
+  expandPanel,
+  isLeftPanelCollapsed,
+}: ChallengeLayoutProps) {
   const parent = useRef<HTMLDivElement>(null);
   const resizer = useRef<HTMLDivElement>(null);
   const rightSide = useRef<HTMLDivElement>(null);
 
   const { settings, updateSettings } = useLayoutSettingsStore();
   const { fssettings, updateFSSettings } = useFullscreenSettingsStore();
-  const [isDesktop, setIsDesktop] = useState(window.innerWidth > MOBILE_BREAKPOINT);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const LEFT_PANEL_BREAKPOINT = isDesktop ? 500 : 318;
@@ -54,9 +80,6 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
   const leftStyle = isDesktop
     ? { width: settings.width, minWidth: LEFT_PANEL_BREAKPOINT }
     : { height: settings.height, minHeight: LEFT_PANEL_BREAKPOINT };
-
-  const { leftSide, adjustPanelSize, expandPanel, collapsePanel, isLeftPanelCollapsed } =
-    usePanelAdjustments(DEFAULT_DESKTOP_WIDTH_PX, LEFT_PANEL_BREAKPOINT, isDesktop);
 
   useEffect(() => {
     const ref = resizer.current;
@@ -184,7 +207,7 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
       } else {
         collapsePanel();
         if (isDesktop) {
-          leftSide.current.style.width = '0px';
+          leftSide.current.style.width = '60px';
         } else {
           leftSide.current.style.height = '0px';
         }

@@ -23,13 +23,13 @@ const usePanelAdjustments = (
   const collapsePanel = useCallback(() => {
     if (!leftSide.current) return;
     if (isDesktop) {
-      leftSide.current.style.width = '0px';
+      leftSide.current.style.width = '60px';
       leftSide.current.style.minWidth = '0px';
     } else {
       leftSide.current.style.height = '0px';
       leftSide.current.style.minHeight = '0px';
     }
-    leftSide.current.style.opacity = '0%';
+    // leftSide.current.style.opacity = '0%';
   }, [isDesktop]);
 
   const isLeftPanelCollapsed = useCallback(() => {
