@@ -25,6 +25,8 @@ export interface CodePanelProps {
   saveSubmission: (code: string, isSuccessful: boolean) => Promise<void>;
   submissionDisabled: boolean;
   settingsElement: React.ReactNode;
+  updatePlaygroundTestsLocalStorage?: (code: string) => void;
+  updatePlaygroundCodeLocalStorage?: (code: string) => void;
 }
 
 export type TsErrors = [
@@ -37,7 +39,7 @@ export function CodePanel(props: CodePanelProps) {
   const params = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const isTestsReadonly = !pathname.includes('playground');
+  const isPlayground = pathname.includes('playground');
   const { toast } = useToast();
   const [tsErrors, setTsErrors] = useState<TsErrors>();
   const [isTestPanelExpanded, setIsTestPanelExpanded] = useState(false);
@@ -98,7 +100,7 @@ export function CodePanel(props: CodePanelProps) {
         {props.settingsElement}
       </div>
       <SplitEditor
-        isTestsReadonly={isTestsReadonly}
+        isTestsReadonly={!isPlayground}
         userEditorState={userEditorState}
         monaco={monacoInstance}
         expandTestPanel={isTestPanelExpanded}
@@ -162,8 +164,16 @@ export function CodePanel(props: CodePanelProps) {
           },
         }}
         onChange={{
+          tests: (code) => {
+            if (isPlayground) {
+              props.updatePlaygroundTestsLocalStorage?.(code ?? '');
+            }
+          },
           user: async (code) => {
             if (!monacoInstance) return null;
+            if (isPlayground) {
+              props.updatePlaygroundCodeLocalStorage?.(code ?? '');
+            }
             setCode(code ?? '');
             setLocalStorageCode(code ?? '');
             const getTsWorker = await monacoInstance.languages.typescript.getTypeScriptWorker();

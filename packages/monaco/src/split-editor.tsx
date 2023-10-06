@@ -248,7 +248,10 @@ export default function SplitEditor({
           defaultPath={TESTS_PATH}
           value={tests}
           defaultValue={tests}
-          onChange={onChange?.tests}
+          onChange={async (e, a) => {
+            console.log({ e, a });
+            onChange?.tests?.(e, a);
+          }}
           onValidate={onValidate?.tests}
         />
       </div>

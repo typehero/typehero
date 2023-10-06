@@ -1,22 +1,27 @@
 'use client';
 import { CodePanel } from '@repo/monaco';
-import { ResetEditorButton } from '../../challenge/_components/reset-editor-button';
 import { EditorShortcutsButton } from '../../challenge/_components/editor-shortcuts/editor-shortcuts-button';
-import { SettingsButton } from '../../challenge/_components/settings/settings-button';
 import { FullscreenButton } from '../../challenge/_components/fullscreen';
+import { ResetEditorButton } from '../../challenge/_components/reset-editor-button';
+import { SettingsButton } from '../../challenge/_components/settings/settings-button';
+import { useChallengePlaygroundStore } from './challenge-playground-store';
 
-const MOCK_CHALLENGE = {
-  id: 1,
-  code: 'type Foo = true;',
-  tests: '// some test cases',
-};
 export function Wrapper() {
+  const { values, updateValues } = useChallengePlaygroundStore();
+  const updatePlaygroundTestsLocalStorage = (code: string) => {
+    updateValues({ ...values, challenge: { ...values.challenge, tests: code } });
+  };
+  const updatePlaygroundCodeLocalStorage = (code: string) => {
+    updateValues({ ...values, challenge: { ...values.challenge, code } });
+  };
   return (
     <CodePanel
-      challenge={MOCK_CHALLENGE}
+      challenge={values.challenge}
       saveSubmission={(() => {}) as any}
       submissionDisabled={false}
       settingsElement={<SettingsElements />}
+      updatePlaygroundTestsLocalStorage={updatePlaygroundTestsLocalStorage}
+      updatePlaygroundCodeLocalStorage={updatePlaygroundCodeLocalStorage}
     />
   );
 }
