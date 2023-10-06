@@ -8,20 +8,24 @@ import { getScopedI18n } from '~/locales/server';
 function TypeHeroLogo() {
   return (
     <svg
-      viewBox="0 0 38 38"
+      width="132"
+      height="132"
+      viewBox="0 0 132 132"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="h-28 w-28 rounded-3xl sm:h-44 sm:w-44 sm:rounded-[2rem]"
     >
-      <rect width="38" height="38" rx="4.5" fill="#3178C6" />
       <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M15.6947 20.9344H20V18H8V20.9344H12.2842V34H15.6947V20.9344Z"
+        d="M0 24C0 10.7452 10.7452 0 24 0H108C121.255 0 132 10.7452 132 24V108C132 121.255 121.255 132 108 132H24C10.7452 132 0 121.255 0 108V24Z"
+        fill="#3178C6"
+      />
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M57.4965 64.6373H74V54H28V64.6373H44.4228V112H57.4965V64.6373Z"
         fill="white"
       />
       <path
-        d="M22 34V18H25.4511V24.6309H30.5405V18H34V34H30.5405V27.3458H25.4511V34H22Z"
+        d="M74 112V54H86.0789V78.0369H103.892V54H116V112H103.892V87.8785H86.0789V112H74Z"
         fill="white"
       />
     </svg>
@@ -39,7 +43,7 @@ export async function Hero() {
             <div className="absolute left-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-x-[15%] -translate-y-[50%] rounded-full bg-slate-400/10 blur-3xl dark:block" />
             <div className="absolute right-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-y-[40%] rounded-full bg-[#3178c6]/20 blur-3xl dark:block" />
             <TypeHeroLogo />
-            <h1 className="bg-gradient-to-r from-[#3178c6] to-black bg-clip-text text-6xl font-extrabold text-transparent dark:to-white sm:text-8xl sm:leading-[5.5rem]">
+            <h1 className="bg-gradient-to-r from-[#3178c6] to-black bg-clip-text text-6xl font-extrabold text-transparent dark:to-white sm:text-[5rem] sm:leading-[4.4rem]">
               type
               <br />
               hero

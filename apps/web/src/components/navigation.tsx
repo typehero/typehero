@@ -61,15 +61,15 @@ export function Navigation() {
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <rect width="38" height="38" rx="4.5" fill="#3178C6" />
+                  <rect width="38" height="38" rx="7" fill="#3178C6" />
                   <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M15.6947 20.9344H20V18H8V20.9344H12.2842V34H15.6947V20.9344Z"
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M16.5188 20.0502H21.2852V17.0011H8V20.0502H12.743V33.6261H16.5188V20.0502Z"
                     fill="white"
                   />
                   <path
-                    d="M22 34V18H25.4511V24.6309H30.5405V18H34V34H30.5405V27.3458H25.4511V34H22Z"
+                    d="M21.2207 33.625V17H24.6786V23.8899H29.7779V17H33.2441V33.625H29.7779V26.7109H24.6786V33.625H21.2207Z"
                     fill="white"
                   />
                 </svg>
