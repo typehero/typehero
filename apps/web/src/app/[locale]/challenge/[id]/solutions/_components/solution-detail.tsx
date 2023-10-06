@@ -1,7 +1,6 @@
 'use client';
 
 import { useSession } from '@repo/auth/react';
-import { RoleTypes } from '@repo/db/types';
 import { ActionMenu } from '@repo/ui/components/action-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
 import { Button } from '@repo/ui/components/button';
@@ -11,23 +10,24 @@ import { TypographyLarge } from '@repo/ui/components/typography/large';
 import { toast } from '@repo/ui/components/use-toast';
 import { UserBadge } from '@repo/ui/components/user-badge';
 import { Calendar, Flag, Pin, Share, X } from '@repo/ui/icons';
+import clsx from 'clsx';
 import Link from 'next/link';
 import type { ChallengeSolution } from '~/app/[locale]/challenge/[id]/solutions/[solutionId]/page';
 import { ReportDialog } from '~/components/ReportDialog';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { Vote } from '../../../_components/vote';
 import { pinOrUnpinSolution } from './_actions';
-import clsx from 'clsx';
+import { isAdminOrModerator } from '~/utils/auth-guards';
 
 interface Props {
   solution: ChallengeSolution;
 }
+
 export function SolutionDetails({ solution }: Props) {
   const { data: session } = useSession();
 
-  const showPin = [RoleTypes.ADMIN, RoleTypes.MODERATOR].some(
-    (i) => session?.user.role.includes(i),
-  );
+  const showPin = isAdminOrModerator(session);
+
   const handlePinClick = async () => {
     await pinOrUnpinSolution(solution.id, !solution.isPinned);
   };
