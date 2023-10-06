@@ -34,7 +34,7 @@ export function ChallengeLayoutWrapper({
   return (
     <ChallengeLayout
       left={
-        <LeftWrapper challengeId={challengeId} leftSide={leftSide}>
+        <LeftWrapper challengeId={challengeId} expandPanel={expandPanel}>
           {children}
         </LeftWrapper>
       }

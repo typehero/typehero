@@ -9,34 +9,38 @@ import {
   useState,
   useLayoutEffect,
   type MutableRefObject,
+  useEffect,
 } from 'react';
 
 type Tab = 'description' | 'solutions' | 'submissions';
 interface Props {
   children: ReactNode;
   challengeId: number;
-  leftSide: MutableRefObject<HTMLDivElement | null>;
+  expandPanel: () => void;
 }
 
-export function LeftWrapper({ challengeId, children, leftSide }: Props) {
+export function LeftWrapper({ challengeId, children, expandPanel }: Props) {
   const pathname = usePathname();
   const router = useRouter();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const tabsRef = useRef<HTMLDivElement | null>(null);
+  const tabsListRef = useRef<HTMLDivElement | null>(null);
   const tabsContentRef = useRef<HTMLDivElement | null>(null);
 
   useLayoutEffect(() => {
     const tabsElement = tabsRef.current;
     const tabsContentElement = tabsContentRef.current;
+    const tabsListElement = tabsListRef.current;
 
-    if (!tabsElement || !tabsContentElement) return;
+    if (!tabsElement || !tabsContentElement || !tabsListElement) return;
 
     const handleResize = (entries: ResizeObserverEntry[]) => {
       for (const entry of entries) {
         if (entry.target === tabsElement && entry.contentRect.width < 60) {
           setIsCollapsed(true);
           tabsContentElement.style.display = 'none';
+          tabsListElement.style.display = 'none';
         } else {
           console.log('removing none');
           tabsContentElement.style.display = '';
@@ -53,6 +57,13 @@ export function LeftWrapper({ challengeId, children, leftSide }: Props) {
     };
   }, []);
 
+  useEffect(() => {
+    const tabsListElement = tabsListRef.current;
+    if (isCollapsed && tabsListElement) {
+      tabsListElement.style.display = '';
+    }
+  }, [isCollapsed]);
+
   const selectedTab: Tab = useMemo(() => {
     const splitPath = pathname.split('/');
 
@@ -66,11 +77,6 @@ export function LeftWrapper({ challengeId, children, leftSide }: Props) {
     return 'description';
   }, [pathname]);
 
-  const expandPanel = () => {
-    if (!leftSide.current) return;
-    leftSide.current.style.width = '500px';
-  };
-
   console.log('re-rendering');
 
   return (
@@ -83,6 +89,7 @@ export function LeftWrapper({ challengeId, children, leftSide }: Props) {
         className={`bg-background/90 dark:bg-muted/90 sticky top-0 z-10 grid h-auto w-full rounded-none rounded-tl-2xl rounded-tr-xl border-b border-zinc-300 backdrop-blur-sm dark:border-zinc-700 ${
           isCollapsed ? 'grid-rows-3 gap-6' : 'grid-cols-3'
         }`}
+        ref={tabsListRef}
       >
         {isCollapsed && (
           <button

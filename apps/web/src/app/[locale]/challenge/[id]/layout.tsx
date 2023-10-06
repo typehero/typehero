@@ -15,11 +15,9 @@ export default async function LayoutData({
 
   return (
     <ForceRenderUntilClient>
-      <ChallengeLayoutWrapper
-        challengeId={challenge.id}
-        challenge={challenge}
-        children={children}
-      />
+      <ChallengeLayoutWrapper challengeId={challenge.id} challenge={challenge}>
+        {children}
+      </ChallengeLayoutWrapper>
     </ForceRenderUntilClient>
   );
 }

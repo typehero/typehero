@@ -199,18 +199,8 @@ export function ChallengeLayout({
 
       if (currentSize < LEFT_PANEL_BREAKPOINT) {
         expandPanel();
-        if (isDesktop) {
-          leftSide.current.style.width = DEFAULT_DESKTOP_WIDTH_PX;
-        } else {
-          leftSide.current.style.height = settings.height;
-        }
       } else {
         collapsePanel();
-        if (isDesktop) {
-          leftSide.current.style.width = '60px';
-        } else {
-          leftSide.current.style.height = '0px';
-        }
       }
     };
 
