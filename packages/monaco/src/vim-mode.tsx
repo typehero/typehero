@@ -25,6 +25,8 @@ export function sourceVimCommands(cma: VimMode, vimCommands: string) {
 
   VimMode.Vim.maybeInitVimState_(cma);
 
+  VimMode.Vim.map('jk', '<Esc>', 'insert');
+
   for (const line of vimCommands.split('\n')) {
     // skip comments
     if (line.startsWith('"')) continue;
