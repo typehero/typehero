@@ -2,7 +2,7 @@
 
 import { signIn, signOut, useSession } from '@repo/auth/react';
 import { type RoleTypes } from '@repo/db/types';
-import { Loader2, LogIn, Moon, Plus, Settings, Settings2, Sun, User } from '@repo/ui/icons';
+import { Loader2, LogIn, Moon, Play, Plus, Settings, Settings2, Sun, User } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
@@ -18,6 +18,7 @@ import {
   DropdownMenuTrigger,
 } from '@repo/ui/components/dropdown-menu';
 import { useFullscreenSettingsStore } from '~/app/[locale]/challenge/_components/fullscreen';
+import { isAdminOrModerator } from '~/utils/auth-guards';
 
 export function getAdminUrl() {
   // reference for vercel.com
@@ -39,6 +40,7 @@ const roleTypes: typeof RoleTypes = {
 export function Navigation() {
   const { fssettings } = useFullscreenSettingsStore();
   const pathname = usePathname();
+  const { data } = useSession();
   const featureFlags = useContext(FeatureFlagContext);
 
   return (
@@ -148,9 +150,7 @@ function LoginButton() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  const isAdmin = session?.user.role.includes(roleTypes.ADMIN);
-  const isMod = session?.user.role.includes(roleTypes.MODERATOR);
-  const isAdminOrMod = isAdmin || isMod;
+  const isAdminOrMod = isAdminOrModerator(session);
 
   // NOTE: 1. loading == true -> 2. signIn() -> 3. session status == 'loading' (loading == false)
   const handleSignIn = async () => {
@@ -182,12 +182,12 @@ function LoginButton() {
         align="end"
         className="mt-[0.33rem] w-56 rounded-xl bg-white/50 backdrop-blur-sm dark:bg-neutral-950/50"
       >
-        <Link className="block" href="/wizard">
-          <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
-            <Plus className="mr-2 h-4 w-4" />
-            <span>Create a Challenge</span>
-          </DropdownMenuItem>
-        </Link>
+        {/* <Link className="block" href="/wizard"> */}
+        {/*   <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50"> */}
+        {/*     <Plus className="mr-2 h-4 w-4" /> */}
+        {/*     <span>Create a Challenge</span> */}
+        {/*   </DropdownMenuItem> */}
+        {/* </Link> */}
         <Link className="block" href={`/@${session.user.name}`}>
           <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
             <User className="mr-2 h-4 w-4" />
@@ -205,6 +205,14 @@ function LoginButton() {
             <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
               <Settings className="mr-2 h-4 w-4" />
               <span>Admin</span>
+            </DropdownMenuItem>
+          </a>
+        ) : null}
+        {isAdminOrMod ? (
+          <a className="block" href="/challenge-playground">
+            <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
+              <Play className="mr-2 h-4 w-4" />
+              <span>Challenge Playground</span>
             </DropdownMenuItem>
           </a>
         ) : null}
