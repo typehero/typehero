@@ -38,7 +38,7 @@ export function RichMarkdownEditor({
 
   const { theme } = useTheme();
   useEffect(() => {
-    switch(theme){
+    switch (theme) {
       case 'dark': {
         document.documentElement.setAttribute('data-color-mode', 'dark');
         break;
