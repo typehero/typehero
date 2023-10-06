@@ -1,5 +1,5 @@
 'use client';
-import { CodePanel } from '@repo/monaco';
+import { CodePanel, type CodePanelProps } from '@repo/monaco';
 import { EditorShortcutsButton } from '../../challenge/_components/editor-shortcuts/editor-shortcuts-button';
 import { FullscreenButton } from '../../challenge/_components/fullscreen';
 import { ResetEditorButton } from '../../challenge/_components/reset-editor-button';
@@ -17,7 +17,7 @@ export function Wrapper() {
   return (
     <CodePanel
       challenge={values.challenge}
-      saveSubmission={(() => {}) as any}
+      saveSubmission={(() => {}) as unknown as CodePanelProps['saveSubmission']}
       submissionDisabled={false}
       settingsElement={<SettingsElements />}
       updatePlaygroundTestsLocalStorage={updatePlaygroundTestsLocalStorage}
