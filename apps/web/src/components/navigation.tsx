@@ -2,13 +2,6 @@
 
 import { signIn, signOut, useSession } from '@repo/auth/react';
 import { type RoleTypes } from '@repo/db/types';
-import { Loader2, LogIn, Moon, Play, Plus, Settings, Settings2, Sun, User } from '@repo/ui/icons';
-import clsx from 'clsx';
-import { useTheme } from 'next-themes';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { useContext, useEffect, useState } from 'react';
-import { FeatureFlagContext } from '~/app/feature-flag-provider';
 import { Button } from '@repo/ui/components/button';
 import {
   DropdownMenu,
@@ -17,7 +10,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@repo/ui/components/dropdown-menu';
+import { Loader2, LogIn, Moon, Play, Settings, Settings2, Sun, User } from '@repo/ui/icons';
+import clsx from 'clsx';
+import { useTheme } from 'next-themes';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import { useContext, useEffect, useState } from 'react';
 import { useFullscreenSettingsStore } from '~/app/[locale]/challenge/_components/fullscreen';
+import { FeatureFlagContext } from '~/app/feature-flag-provider';
 import { isAdminOrModerator } from '~/utils/auth-guards';
 
 export function getAdminUrl() {
