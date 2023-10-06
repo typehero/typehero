@@ -1,20 +1,20 @@
 'use client';
 
+import { Button } from '@repo/ui/components/button';
+import { ToastAction } from '@repo/ui/components/toast';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
+import { useToast } from '@repo/ui/components/use-toast';
+import { CheckCircle2, ChevronUp, XCircle } from '@repo/ui/icons';
 import clsx from 'clsx';
-import { ChevronUp, Loader2, XCircle, CheckCircle2 } from '@repo/ui/icons';
-import type * as monaco from 'monaco-editor';
-import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useState } from 'react';
 import lzstring from 'lz-string';
-import { useLocalStorage } from './useLocalStorage';
+import type * as monaco from 'monaco-editor';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import React, { useState } from 'react';
+import { useResetEditor } from './editor-hooks';
+import { PrettierFormatProvider } from './prettier';
 import SplitEditor, { TESTS_PATH, USER_CODE_PATH } from './split-editor';
 import { createTwoslashInlayProvider } from './twoslash';
-import { PrettierFormatProvider } from './prettier';
-import { useResetEditor } from './editor-hooks';
-import { useToast } from '@repo/ui/components/use-toast';
-import { ToastAction } from '@repo/ui/components/toast';
-import { Button } from '@repo/ui/components/button';
-import { Tooltip, TooltipTrigger, TooltipContent } from '@repo/ui/components/tooltip';
+import { useLocalStorage } from './useLocalStorage';
 
 export interface CodePanelProps {
   challenge: {
@@ -36,6 +36,8 @@ export type TsErrors = [
 export function CodePanel(props: CodePanelProps) {
   const params = useSearchParams();
   const router = useRouter();
+  const pathname = usePathname();
+  const isTestsReadonly = !pathname.includes('playground');
   const { toast } = useToast();
   const [tsErrors, setTsErrors] = useState<TsErrors>();
   const [isTestPanelExpanded, setIsTestPanelExpanded] = useState(false);
@@ -96,6 +98,7 @@ export function CodePanel(props: CodePanelProps) {
         {props.settingsElement}
       </div>
       <SplitEditor
+        isTestsReadonly={isTestsReadonly}
         userEditorState={userEditorState}
         monaco={monacoInstance}
         expandTestPanel={isTestPanelExpanded}
