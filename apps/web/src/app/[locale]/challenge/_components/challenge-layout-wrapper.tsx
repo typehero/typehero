@@ -6,7 +6,7 @@ import usePanelAdjustments from './usePanelAdjustments';
 import { LeftWrapper } from '../[id]/left-wrapper';
 import { Wrapper } from '../[id]/wrapper';
 
-export function ChallgengeLayoutWrapper({
+export function ChallengeLayoutWrapper({
   challengeId,
   challenge,
   children,
