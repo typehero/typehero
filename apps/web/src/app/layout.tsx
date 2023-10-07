@@ -8,6 +8,7 @@ import { Toaster } from '@repo/ui/components/toaster';
 import { Providers } from './providers';
 import { buildMetaForDefault } from './metadata';
 import { Navigation } from '~/components/navigation';
+import { CookieBanner } from '~/components/cookie-banner';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Navigation />
           <main className="flex-1">{children}</main>
           <Toaster />
+          <CookieBanner />
         </Providers>
         <Analytics />
       </body>
