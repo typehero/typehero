@@ -24,7 +24,6 @@
     "@monaco-editor/react": "^4.5.1",
     "@next/bundle-analyzer": "^13.4.19",
     "@playwright/test": "^1.38.0",
-    "@prisma/client": "^5.4.1",
     "@radix-ui/react-dialog": "^1.0.4",
     "@repo/auth": "workspace:*",
     "@repo/db": "workspace:*",
