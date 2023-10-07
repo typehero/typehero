@@ -35,7 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Navigation />
           <main className="flex-1">{children}</main>
           <Toaster />
-          <CookieBanner />
+          {/* <CookieBanner /> */}
         </Providers>
         <Analytics />
       </body>
