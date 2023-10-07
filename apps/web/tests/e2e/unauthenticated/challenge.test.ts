@@ -1,9 +1,37 @@
 import { test, expect } from '@playwright/test';
+import { prisma } from '@repo/db';
 
 test.use({ storageState: 'playwright/.auth/unauthenticated.json' });
 
 test('challenge page', async ({ page }) => {
-  await page.goto('/challenge/4');
+  const challengeId = 4;
+
+  // delete replies
+  await prisma.comment.deleteMany({
+    where: {
+      rootChallengeId: challengeId,
+      parentId: {
+        not: null,
+      },
+    },
+  });
+  await prisma.comment.deleteMany({
+    where: {
+      rootChallengeId: challengeId,
+    },
+  });
+  await prisma.sharedSolution.deleteMany({
+    where: {
+      challengeId,
+    },
+  });
+  await prisma.submission.deleteMany({
+    where: {
+      challengeId,
+    },
+  });
+
+  await page.goto(`/challenge/${challengeId}`);
 
   await expect(page.getByRole('heading', { name: 'Pick' })).toBeVisible();
   await expect(

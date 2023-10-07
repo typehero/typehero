@@ -118,6 +118,45 @@ Once the server is running you can seed and sync data
 
 UI Library: [shadcn](https://ui.shadcn.com/)
 
+# Testing
+
+### 1. Install Playwright Dependencies
+
+```
+pnpm test:e2e:install
+```
+
+### 2. Run E2E Tests
+
+You can use the production server or the dev server to run the e2e tests.
+
+> [!WARNING]  
+> The dev server may cause tests to timeout.
+
+### 2.a Production server
+
+Playwright will automatically start the production server
+
+```
+pnpm build && pnpm test:e2e
+```
+
+### 2.b Dev server
+
+Open two separate terminals and run the following commands in each one:
+
+Terminal 1:
+
+```
+pnpm dev
+```
+
+Terminal 2:
+
+```
+pnpm test:e2e
+```
+
 ## FAQ
 
 <details>
