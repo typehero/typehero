@@ -4,7 +4,7 @@ import { useTheme } from 'next-themes';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { postSolution } from './post-solution.action';
+import { postSolution } from './_actions';
 import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
 import type { ChallengeSolution } from '../getSolutionRouteData';
 import { Button } from '@repo/ui/components/button';
