@@ -40,7 +40,7 @@
     "@types/node": "^20.4.2",
     "dotenv-cli": "^7.2.1",
     "eslint": "^8.45.0",
-    "prisma": "^5.0.0",
+    "prisma": "^5.4.1",
     "simple-git": "^3.19.1",
     "tsup": "5.12.0",
     "tsx": "^3.12.7",
