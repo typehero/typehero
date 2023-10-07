@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 175
+        "contributions": 177
     },
     {
         "login": "Hacksore",
@@ -506,6 +506,27 @@ export const contributors = [
         "contributions": 3
     },
     {
+        "login": "ayrock-dev",
+        "id": 7817695,
+        "node_id": "MDQ6VXNlcjc4MTc2OTU=",
+        "avatar_url": "https://avatars.githubusercontent.com/u/7817695?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/ayrock-dev",
+        "html_url": "https://github.com/ayrock-dev",
+        "followers_url": "https://api.github.com/users/ayrock-dev/followers",
+        "following_url": "https://api.github.com/users/ayrock-dev/following{/other_user}",
+        "gists_url": "https://api.github.com/users/ayrock-dev/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/ayrock-dev/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/ayrock-dev/subscriptions",
+        "organizations_url": "https://api.github.com/users/ayrock-dev/orgs",
+        "repos_url": "https://api.github.com/users/ayrock-dev/repos",
+        "events_url": "https://api.github.com/users/ayrock-dev/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/ayrock-dev/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 3
+    },
+    {
         "login": "F-PTS",
         "id": 80021800,
         "node_id": "MDQ6VXNlcjgwMDIxODAw",
@@ -585,27 +606,6 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/odicho/repos",
         "events_url": "https://api.github.com/users/odicho/events{/privacy}",
         "received_events_url": "https://api.github.com/users/odicho/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 2
-    },
-    {
-        "login": "amorriscode",
-        "id": 16005567,
-        "node_id": "MDQ6VXNlcjE2MDA1NTY3",
-        "avatar_url": "https://avatars.githubusercontent.com/u/16005567?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/amorriscode",
-        "html_url": "https://github.com/amorriscode",
-        "followers_url": "https://api.github.com/users/amorriscode/followers",
-        "following_url": "https://api.github.com/users/amorriscode/following{/other_user}",
-        "gists_url": "https://api.github.com/users/amorriscode/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/amorriscode/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/amorriscode/subscriptions",
-        "organizations_url": "https://api.github.com/users/amorriscode/orgs",
-        "repos_url": "https://api.github.com/users/amorriscode/repos",
-        "events_url": "https://api.github.com/users/amorriscode/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/amorriscode/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 2
