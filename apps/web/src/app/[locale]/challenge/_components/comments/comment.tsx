@@ -474,28 +474,28 @@ function SingleComment({
             ) : null}
             {isAuthor ? (
               <Tooltip>
-                <TooltipTrigger asChild>
-                  <CommentDeleteDialog asChild comment={comment}>
+                <CommentDeleteDialog asChild comment={comment}>
+                  <TooltipTrigger asChild>
                     <Button variant="secondary" size="xs">
                       <Trash2 className="h-3 w-3" />
                       <span className="sr-only">Delete this comment</span>
                     </Button>
-                  </CommentDeleteDialog>
-                </TooltipTrigger>
+                  </TooltipTrigger>
+                </CommentDeleteDialog>
                 <TooltipContent>
                   <p>Delete</p>
                 </TooltipContent>
               </Tooltip>
             ) : (
               <Tooltip>
-                <TooltipTrigger asChild>
-                  <ReportDialog triggerAsChild commentId={comment.id} reportType="COMMENT">
+                <ReportDialog triggerAsChild commentId={comment.id} reportType="COMMENT">
+                  <TooltipTrigger asChild>
                     <Button variant="secondary" size="xs">
                       <Flag className="h-3 w-3" />
                       <span className="sr-only">Report this comment</span>
                     </Button>
-                  </ReportDialog>
-                </TooltipTrigger>
+                  </TooltipTrigger>
+                </ReportDialog>
                 <TooltipContent>
                   <p>Report</p>
                 </TooltipContent>
