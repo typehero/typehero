@@ -468,8 +468,8 @@ importers:
   packages/db:
     dependencies:
       '@prisma/client':
-        specifier: ^5.0.0
-        version: 5.0.0(prisma@5.4.1)
+        specifier: ^5.4.1
+        version: 5.4.1(prisma@5.4.1)
     devDependencies:
       '@faker-js/faker':
         specifier: ^8.0.2
@@ -2311,8 +2311,8 @@ packages:
       prisma: 5.0.0
     dev: false
 
-  /@prisma/client@5.0.0(prisma@5.4.1):
-    resolution: {integrity: sha512-XlO5ELNAQ7rV4cXIDJUNBEgdLwX3pjtt9Q/RHqDpGf43szpNJx2hJnggfFs7TKNx0cOFsl6KJCSfqr5duEU/bQ==}
+  /@prisma/client@5.4.1(prisma@5.4.1):
+    resolution: {integrity: sha512-xyD0DJ3gRNfLbPsC+YfMBBuLJtZKQfy1OD2qU/PZg+HKrr7SO+09174LMeTlWP0YF2wca9LxtVd4HnAiB5ketQ==}
     engines: {node: '>=16.13'}
     requiresBuild: true
     peerDependencies:
@@ -2321,12 +2321,16 @@ packages:
       prisma:
         optional: true
     dependencies:
-      '@prisma/engines-version': 4.17.0-26.6b0aef69b7cdfc787f822ecd7cdc76d5f1991584
+      '@prisma/engines-version': 5.4.1-1.2f302df92bd8945e20ad4595a73def5b96afa54f
       prisma: 5.4.1
     dev: false
 
   /@prisma/engines-version@4.17.0-26.6b0aef69b7cdfc787f822ecd7cdc76d5f1991584:
     resolution: {integrity: sha512-HHiUF6NixsldsP3JROq07TYBLEjXFKr6PdH8H4gK/XAoTmIplOJBCgrIUMrsRAnEuGyRoRLXKXWUb943+PFoKQ==}
+    dev: false
+
+  /@prisma/engines-version@5.4.1-1.2f302df92bd8945e20ad4595a73def5b96afa54f:
+    resolution: {integrity: sha512-+nUQM/y8C+1GG5Ioeqcu6itFslCfxvQSAUVSMC9XM2G2Fcq0F4Afnp6m0pXF6X6iUBWen7jZBPmM9Qlq4Nr3/A==}
     dev: false
 
   /@prisma/engines@5.0.0:
