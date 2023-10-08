@@ -10,6 +10,7 @@ import { Toolbar } from '~/components/toolbar';
 import { I18nProviderClient } from '~/locales/client';
 import en from '~/locales/en';
 import { FeatureFlagProvider } from './feature-flag-provider';
+import type { Corner } from '@tanstack/react-query-devtools/build/lib/utils';
 
 interface Props {
   children: React.ReactNode;
@@ -18,9 +19,10 @@ interface Props {
 const queryClient = new QueryClient();
 
 export function Providers({ children }: Props) {
+  const position: Corner = 'top-right';
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
+      <ReactQueryDevtools initialIsOpen={false} position={position} />
       <SessionProvider>
         <ThemeProvider attribute="class">
           <FeatureFlagProvider>
