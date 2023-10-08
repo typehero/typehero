@@ -48,7 +48,10 @@ export function ChallengeTrackOutline({ children, challenge, track, asChild = fa
   return (
     <Sheet>
       <SheetTrigger asChild={asChild}>{children}</SheetTrigger>
-      <SheetContent className="flex w-full flex-col gap-8 sm:w-[540px] md:w-[400px]" side="left">
+      <SheetContent
+        className="flex w-full flex-col gap-8 sm:max-w-[400px] md:max-w-[540px]"
+        side="left"
+      >
         <SheetHeader>
           <SheetTitle>
             <span>{track.title}</span>
@@ -63,7 +66,7 @@ export function ChallengeTrackOutline({ children, challenge, track, asChild = fa
             </span>
           </div>
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col overflow-y-scroll">
           {track.trackChallenges.map((trackChallenge) => {
             /* TODO: challenges in the track should probably be links to those challenges */
             return (
