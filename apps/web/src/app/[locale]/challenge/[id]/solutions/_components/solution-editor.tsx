@@ -11,7 +11,10 @@ import { Button } from '@repo/ui/components/button';
 import { useToast } from '@repo/ui/components/use-toast';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@repo/ui/components/form';
 import { Input } from '@repo/ui/components/input';
-import { createNoProfanitySchema } from '~/utils/antiProfanityZod';
+import {
+  createNoProfanitySchema,
+  createNoProfanitySchemaWithValidate,
+} from '~/utils/antiProfanityZod';
 
 const getDefaultMarkdown = (solution: string) => `
 ## Thoughts
@@ -28,8 +31,12 @@ ${solution}
 `;
 
 const formSchema = z.object({
-  title: createNoProfanitySchema(),
-  content: createNoProfanitySchema(),
+  title: createNoProfanitySchemaWithValidate((zodString) =>
+    zodString.min(5, 'The title must be longer than 5 characters'),
+  ),
+  content: createNoProfanitySchemaWithValidate((zodString) =>
+    zodString.min(30, 'Content must be longer than 30 characters'),
+  ),
 });
 
 export type FormSchema = z.infer<typeof formSchema>;
@@ -45,6 +52,7 @@ export function SolutionEditor({ dismiss, challenge }: Props) {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      title: '',
       content: getDefaultMarkdown(challenge.submission[0]?.code ?? ''),
     },
   });
@@ -114,17 +122,20 @@ export function SolutionEditor({ dismiss, challenge }: Props) {
             Post
           </Button>
         </div>
-        <div className="flex-1">
+        <div className="flex flex-1 flex-col">
           <FormField
             control={form.control}
             name="content"
             render={({ field }) => (
-              <RichMarkdownEditor
-                allowImageUpload
-                value={field.value}
-                // non-split-screen by default
-                onChange={field.onChange}
-              />
+              <FormItem className="flex flex-1 flex-col">
+                <RichMarkdownEditor
+                  allowImageUpload
+                  value={field.value}
+                  // non-split-screen by default
+                  onChange={field.onChange}
+                />
+                <FormMessage />
+              </FormItem>
             )}
           />
         </div>
