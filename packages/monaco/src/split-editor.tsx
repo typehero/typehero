@@ -63,7 +63,6 @@ export default function SplitEditor({
   userCode,
   userEditorState,
 }: SplitEditorProps) {
-  console.log({ isTestsReadonly });
   const { settings, updateSettings } = useEditorSettingsStore();
   const { subscribe } = useResetEditor();
 
@@ -249,7 +248,6 @@ export default function SplitEditor({
           value={tests}
           defaultValue={tests}
           onChange={async (e, a) => {
-            console.log({ e, a });
             onChange?.tests?.(e, a);
           }}
           onValidate={onValidate?.tests}
