@@ -18,7 +18,7 @@ interface Props {
 }
 
 export function ChallengeTrackNavigation({ challenge }: Props) {
-  // TODO: validate the challenge we are looking at is actually on this track id
+  // validate this challenge is actually in the track
   const search = useSearchParams();
   const trackParam = search.get('trackId');
   const trackId = Number(trackParam);
