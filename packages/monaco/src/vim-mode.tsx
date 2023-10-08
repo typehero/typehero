@@ -10,7 +10,7 @@ VimMode.Vim.defineEx('MonacoCommand', 'M', function monacoExCommand(ctx, { args 
     throw new TypeError('Expected an action to run');
   }
 
-  let [ command ] = args;
+  let [command] = args;
 
   // workaround for vim mode not substituting `<Space>` with ` `
   if (command.startsWith('<Space>')) {
