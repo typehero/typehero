@@ -15,6 +15,8 @@ interface TrackChallengeProps {
   };
   isInProgress: boolean;
   isCompleted: boolean;
+  /* Hide short description in a compact view like the in-challenge track overview */
+  isCompact?: boolean;
 }
 
 const BGS_BY_DIFFICULTY = {
@@ -26,7 +28,12 @@ const BGS_BY_DIFFICULTY = {
 } as const;
 
 // million-ignore
-export function TrackChallenge({ challenge, isInProgress, isCompleted }: TrackChallengeProps) {
+export function TrackChallenge({
+  challenge,
+  isInProgress,
+  isCompleted,
+  isCompact = false,
+}: TrackChallengeProps) {
   const isMobile = useIsMobile();
 
   return (
@@ -87,9 +94,11 @@ export function TrackChallenge({ challenge, isInProgress, isCompleted }: TrackCh
                     {isCompleted && isMobile ? <Badge variant="outline">Completed</Badge> : null}
                   </div>
                 </div>
-                <span className="text-muted-foreground">
-                  {challenge.shortDescription.substring(0, 60).concat('...')}
-                </span>
+                {Boolean(!isCompact) && (
+                  <span className="text-muted-foreground">
+                    {challenge.shortDescription.substring(0, 60).concat('...')}
+                  </span>
+                )}
               </div>
             </div>
             <div className="hidden md:block">
