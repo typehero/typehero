@@ -46,20 +46,22 @@ export interface SplitEditorProps {
   };
   monaco: typeof import('monaco-editor') | undefined;
   userEditorState?: monacoType.editor.IStandaloneCodeEditor;
+  isTestsReadonly?: boolean;
 }
 
 // million-ignore
 export default function SplitEditor({
   className,
-  userEditorState,
+  isTestsReadonly = true,
   expandTestPanel,
+  monaco,
+  onChange,
+  onMount,
+  onValidate,
   setIsTestPanelExpanded,
   tests,
   userCode,
-  onMount,
-  onValidate,
-  onChange,
-  monaco,
+  userEditorState,
 }: SplitEditorProps) {
   const { settings, updateSettings } = useEditorSettingsStore();
   const { subscribe } = useResetEditor();
@@ -236,7 +238,7 @@ export default function SplitEditor({
           }}
           onMount={(editor, monaco) => {
             editor.updateOptions({
-              readOnly: true,
+              readOnly: isTestsReadonly,
               renderValidationDecorations: 'on',
             });
 
@@ -245,7 +247,9 @@ export default function SplitEditor({
           defaultPath={TESTS_PATH}
           value={tests}
           defaultValue={tests}
-          onChange={onChange?.tests}
+          onChange={async (e, a) => {
+            onChange?.tests?.(e, a);
+          }}
           onValidate={onValidate?.tests}
         />
       </div>
