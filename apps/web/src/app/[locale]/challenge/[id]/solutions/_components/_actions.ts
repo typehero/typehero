@@ -2,7 +2,7 @@
 import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import { revalidateTag } from 'next/cache';
-import { isAdminOrModerator } from '~/utils/auth-guards';
+import { isAdminOrModerator, isAuthor } from '~/utils/auth-guards';
 
 interface Args {
   challengeId: number;
@@ -24,6 +24,21 @@ export async function postSolution({ challengeId, description, title, userId }: 
     },
   });
   revalidateTag(`challenge-${challengeId}-submissions`);
+}
+
+export async function deleteSolution(id: number) {
+  const session = await getServerAuthSession();
+  const solution = await prisma.sharedSolution.findUnique({
+    where: { id }
+  })
+  if (!isAuthor(session, solution?.userId)) {
+    throw new Error('Only author can delete their solution.')
+  }
+
+  await prisma.sharedSolution.delete({
+    where: { id }
+  })
+  revalidateTag(`challenge-${id}-submissions`);
 }
 
 export async function pinOrUnpinSolution(id: number, isPinned: boolean) {
