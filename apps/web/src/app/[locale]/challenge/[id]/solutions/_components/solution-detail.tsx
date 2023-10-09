@@ -1,25 +1,36 @@
 'use client';
 
-import { Calendar, Flag, Share, X } from '@repo/ui/icons';
+import { useSession } from '@repo/auth/react';
+import { ActionMenu } from '@repo/ui/components/action-menu';
+import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
+import { Button } from '@repo/ui/components/button';
+import { Markdown } from '@repo/ui/components/markdown';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
+import { TypographyLarge } from '@repo/ui/components/typography/large';
+import { toast } from '@repo/ui/components/use-toast';
+import { UserBadge } from '@repo/ui/components/user-badge';
+import { Calendar, Flag, Pin, Share, X } from '@repo/ui/icons';
+import clsx from 'clsx';
 import Link from 'next/link';
 import type { ChallengeSolution } from '~/app/[locale]/challenge/[id]/solutions/[solutionId]/page';
 import { ReportDialog } from '~/components/ReportDialog';
-import { ActionMenu } from '@repo/ui/components/action-menu';
-import { Avatar, AvatarImage, AvatarFallback } from '@repo/ui/components/avatar';
-import { Button } from '@repo/ui/components/button';
-import { toast } from '@repo/ui/components/use-toast';
-import { TypographyLarge } from '@repo/ui/components/typography/large';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
-import { Markdown } from '@repo/ui/components/markdown';
-import { UserBadge } from '@repo/ui/components/user-badge';
+import { getRelativeTime } from '~/utils/relativeTime';
 import { Vote } from '../../../_components/vote';
-import { useSession } from '@repo/auth/react';
+import { pinOrUnpinSolution } from './_actions';
+import { isAdminOrModerator } from '~/utils/auth-guards';
 
 interface Props {
   solution: ChallengeSolution;
 }
+
 export function SolutionDetails({ solution }: Props) {
   const { data: session } = useSession();
+
+  const showPin = isAdminOrModerator(session);
+
+  const handlePinClick = async () => {
+    await pinOrUnpinSolution(solution.id, !solution.isPinned);
+  };
   const handleShareClick = async () => {
     if (navigator.clipboard) {
       const url = window.location.href;
@@ -52,20 +63,6 @@ export function SolutionDetails({ solution }: Props) {
                 <TypographyLarge>{solution.title}</TypographyLarge>
               </div>
               <div className="flex items-center gap-2">
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      className="group p-0 text-gray-500 group-hover:text-gray-400"
-                      onClick={handleShareClick}
-                      variant="ghost"
-                    >
-                      <Share className="mr-2 h-4 w-4 stroke-gray-500 group-hover:stroke-gray-400" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Share challenge</p>
-                  </TooltipContent>
-                </Tooltip>
                 <ReportDialog reportType="SOLUTION" solutionId={solution.id!}>
                   <ActionMenu
                     items={[
@@ -82,13 +79,12 @@ export function SolutionDetails({ solution }: Props) {
                 </ReportDialog>
               </div>
             </div>
+            {/* Author, Time, Action Buttons */}
             <div className="flex items-center gap-4">
               <UserBadge username={solution.user?.name ?? ''} linkComponent={Link} />
-              <div className="flex items-center">
-                <Calendar className="mr-2 h-4 w-4 stroke-gray-400" />
-                <span className="text-xs text-gray-400">
-                  {solution.createdAt?.toLocaleString()}
-                </span>
+              <div className="text-muted-foreground flex items-center gap-2">
+                <Calendar className="h-4 w-4" />
+                <span className="text-xs">{getRelativeTime(solution.createdAt)}</span>
               </div>
               <Vote
                 voteCount={solution._count.vote}
@@ -107,6 +103,31 @@ export function SolutionDetails({ solution }: Props) {
                   solution._count.vote += didUpvote ? 1 : -1;
                 }}
               />
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button onClick={handleShareClick} variant="secondary" size="xs">
+                    <Share className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Share</p>
+                </TooltipContent>
+              </Tooltip>
+              {showPin ? (
+                <Button
+                  onClick={handlePinClick}
+                  variant="secondary"
+                  size="xs"
+                  className={clsx(
+                    'gap-2 border border-transparent [&:not(:disabled)]:hover:border-emerald-600  [&:not(:disabled)]:hover:text-emerald-600',
+                    {
+                      'border-emerald-600 text-emerald-600': solution.isPinned,
+                    },
+                  )}
+                >
+                  <Pin className={clsx('h-4 w-4')} />
+                </Button>
+              ) : null}
             </div>
           </div>
           <Markdown>{solution.description || ''}</Markdown>

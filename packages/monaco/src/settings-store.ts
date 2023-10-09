@@ -14,7 +14,8 @@ nmap gr :M<Space>editor.action.goToReferences
 nmap gi :M<Space>editor.action.goToImplementation
 nmap gx :M<Space>editor.action.openLink
 nmap ]d :M<Space>editor.action.marker.next
-nmap [d :M<Space>editor.action.marker.prev`,
+nmap [d :M<Space>editor.action.marker.prev
+nmap gcc :M<Space>editor.action.commentLine`,
   testPanelHeight: 300,
 };
 

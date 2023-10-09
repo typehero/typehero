@@ -107,6 +107,18 @@ export function Wizard() {
 
   useEffect(() => {
     setRendered(true);
+
+    const handleBeforeUnload: EventListenerOrEventListenerObject = (event) => {
+      event.preventDefault();
+      event.returnValue = false;
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload, { capture: true });
+
+    return () => {
+      // Clean up the event listener when the component unmounts
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
   }, []);
 
   const handleNextClick = async () => {

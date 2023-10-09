@@ -38,6 +38,7 @@ export {
   MoreHorizontal,
   Pencil,
   PieChart,
+  Pin,
   Play,
   Plus,
   Reply,

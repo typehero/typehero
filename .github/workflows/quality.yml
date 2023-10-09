@@ -113,12 +113,14 @@ jobs:
           path: apps/web/playwright-report/
 
       - name: Save PR number
+        if: always()
         env:
           PR_NUMBER: ${{ github.event.number }}
         run: |
           echo $PR_NUMBER > prNumber
 
       - name: Upload prNumber
+        if: always()
         uses: actions/upload-artifact@v3
         with:
           name: prNumber
