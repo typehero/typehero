@@ -18,7 +18,7 @@ import * as React from 'react';
 const baseUrl =
   process.env.NODE_ENV === 'production' ? `https://typehero.dev` : 'http://localhost:3000';
 
-export const EarlyAccessEmail = (props: { to: string }) => {
+export const UserSignupEmail = (props: { to: string }) => {
   return (
     <Html>
       <Head />

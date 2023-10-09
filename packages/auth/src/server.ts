@@ -37,9 +37,9 @@ if (!process.env.GITHUB_SECRET) {
 const useSecureCookies = Boolean(process.env.VERCEL_URL);
 
 export const authOptions: NextAuthOptions = {
-  // pages: {
-  //   signIn: '/auth/signin',
-  // },
+  pages: {
+    signIn: '/login',
+  },
   cookies: {
     sessionToken: {
       name: `${useSecureCookies ? '__Secure-' : ''}next-auth.session-token`,
@@ -53,8 +53,10 @@ export const authOptions: NextAuthOptions = {
     },
   },
   callbacks: {
-    redirect: ({ url, baseUrl }) => {
+    async redirect({ url, baseUrl }) {
+      // Allows relative callback URLs
       if (url.startsWith('/')) return `${baseUrl}${url}`;
+      // Allows callback URLs on the same origin
       else if (new URL(url).origin === baseUrl) return url;
       return baseUrl;
     },

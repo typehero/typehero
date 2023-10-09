@@ -37,5 +37,5 @@ export default async function Challenges({ params: { id: challengeId } }: Props)
 }
 
 export function isAuthor(session: Session | null, userId?: string | null) {
-  return userId && (session?.user?.id && userId === session?.user?.id);
+  return userId && session?.user?.id && userId === session?.user?.id;
 }
