@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@repo/ui/components/dropdown-menu';
-import { LogIn, Moon, Play, Settings, Settings2, Sun, User } from '@repo/ui/icons';
+import { Loader2, LogIn, Moon, Play, Settings, Settings2, Sun, User } from '@repo/ui/icons';
 import type { EdgeConfigItems } from '@vercel/edge-config';
 import clsx from 'clsx';
 import { useTheme } from 'next-themes';
@@ -20,6 +20,7 @@ import { useEffect, useState } from 'react';
 import { useFullscreenSettingsStore } from '~/app/[locale]/challenge/_components/fullscreen';
 import { isAdminOrModerator } from '~/utils/auth-guards';
 
+// TODO: move this to a util as it might be used in other places
 export function getAdminUrl() {
   // reference for vercel.com
   if (process.env.VERCEL_URL) {
@@ -142,18 +143,17 @@ function ThemeButton() {
 }
 
 function LoginButton({ session }: { session: Session | null }) {
-  const [signingIn, setSigningIn] = useState(false);
+  const [isSigningIn, setSigningIn] = useState(false);
   const router = useRouter();
   const isAdminOrMod = isAdminOrModerator(session);
 
+  // We start the flow client side, then a full page redirect will happen
   const handleSignIn = async () => {
     try {
       setSigningIn(true);
       await signIn('github', { redirect: false });
     } catch (error) {
       console.error(error);
-    } finally {
-      setSigningIn(false);
     }
   };
 
@@ -188,7 +188,7 @@ function LoginButton({ session }: { session: Session | null }) {
             <span>Settings</span>
           </DropdownMenuItem>
         </Link>
-        {isAdminOrMod && (
+        {Boolean(isAdminOrMod) && (
           <a className="block" href={getAdminUrl()}>
             <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
               <Settings className="mr-2 h-4 w-4" />
@@ -196,7 +196,7 @@ function LoginButton({ session }: { session: Session | null }) {
             </DropdownMenuItem>
           </a>
         )}
-        {isAdminOrMod && (
+        {Boolean(isAdminOrMod) && (
           <a className="block" href="/challenge-playground">
             <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
               <Play className="mr-2 h-4 w-4" />
@@ -216,14 +216,18 @@ function LoginButton({ session }: { session: Session | null }) {
     </DropdownMenu>
   ) : (
     <Button
-      disabled={signingIn}
+      disabled={isSigningIn}
       className="focus:bg-accent w-20 rounded-lg bg-transparent p-2 text-black duration-300 hover:bg-gray-200 focus:outline-none dark:text-white hover:dark:bg-gray-800"
       onClick={handleSignIn}
     >
-      <div className="flex items-center space-x-2">
-        <LogIn className="h-5 w-5" />
-        <span className="dark:text-white">Login</span>
-      </div>
+      {isSigningIn ? (
+        <Loader2 className="h-5 w-5 animate-spin" />
+      ) : (
+        <div className="flex items-center space-x-2">
+          <LogIn className="h-5 w-5" />
+          <span className="dark:text-white">Login</span>
+        </div>
+      )}
     </Button>
   );
 }
