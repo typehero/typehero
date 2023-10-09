@@ -66,9 +66,29 @@ export function ChallengeLayout({
   const COLLAPSE_BREAKPOINT = isCollapsed ? 50 : 300;
   const DEFAULT_DESKTOP_WIDTH_PX = `${LEFT_PANEL_BREAKPOINT}px`;
 
+  const leftStyleIfDesktopCollapsed = { width: '60px', minWidth: '60px' };
+  const leftStyleIfMobileCollapsed = { height: '41px', minHeight: '41px' };
+
+  const isLeftCollapsed = () => {
+    const leftRef = leftSide.current;
+    if (!leftRef) return false;
+
+    const height = parseFloat(settings.height);
+    const width = parseFloat(settings.width);
+
+    return height <= 41 || width <= 60;
+  };
+
+  const isDesktopCollapsed = isDesktop && isLeftCollapsed();
+  const isMobileCollapsed = !isDesktop && isLeftCollapsed();
+
   const leftStyle = isDesktop
-    ? { width: settings.width, minWidth: LEFT_PANEL_BREAKPOINT }
-    : { height: settings.height, minHeight: LEFT_PANEL_BREAKPOINT };
+    ? isDesktopCollapsed
+      ? leftStyleIfDesktopCollapsed
+      : { width: settings.width, minWidth: `${LEFT_PANEL_BREAKPOINT}px` }
+    : isMobileCollapsed
+    ? leftStyleIfMobileCollapsed
+    : { height: settings.height, minHeight: `${LEFT_PANEL_BREAKPOINT}px` };
 
   useEffect(() => {
     const ref = resizer.current;
@@ -169,17 +189,12 @@ export function ChallengeLayout({
     // handle window resize
     const resizeHandler = () => {
       setIsDesktop(window.innerWidth > MOBILE_BREAKPOINT);
-
-      if (isDesktop) {
-        leftRef.style.width = settings.width;
-        leftRef.style.height = 'auto';
-      } else {
-        leftRef.style.height = settings.height;
-        leftRef.style.width = 'auto';
-      }
     };
 
     const handleResizerDoubleClick = () => {
+      setIsCollapsed(isLeftPanelCollapsed());
+      console.log('handleResizerDoubleClick');
+
       if (!leftSide.current || !rightSide.current) return;
 
       const currentSize = isDesktop
@@ -191,6 +206,12 @@ export function ChallengeLayout({
       } else {
         collapsePanel();
       }
+
+      console.log('setting height to: ', leftRef.offsetHeight);
+
+      isDesktop
+        ? updateSettings({ width: `${leftRef.offsetWidth}px`, height: settings.height })
+        : updateSettings({ width: settings.width, height: `${leftRef.offsetHeight}px` });
     };
 
     window.addEventListener('resize', resizeHandler);
@@ -213,7 +234,6 @@ export function ChallengeLayout({
     expandPanel,
     isCollapsed,
     isDesktop,
-    setIsDesktop,
     isLeftPanelCollapsed,
     leftSide,
     settings,
@@ -227,7 +247,7 @@ export function ChallengeLayout({
       style={{ height: fssettings.isFullscreen ? '100vh' : 'calc(100vh - 3.5rem)' }}
     >
       <div
-        className="min-h-[318px] w-full overflow-hidden rounded-l-2xl rounded-r-xl border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800"
+        className="w-full overflow-hidden rounded-l-2xl rounded-r-xl border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800"
         ref={leftSide}
         style={{ ...leftStyle }}
       >

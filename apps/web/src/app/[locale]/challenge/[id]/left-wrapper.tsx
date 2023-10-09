@@ -1,34 +1,33 @@
 'use client';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui/components/tabs';
+import { FlaskConical, History, Text } from '@repo/ui/icons';
 import { usePathname, useRouter } from 'next/navigation';
-import {
-  useMemo,
-  type ReactNode,
-  useRef,
-  useState,
-  useLayoutEffect,
-  type MutableRefObject,
-  useEffect,
-} from 'react';
+import { useMemo, type ReactNode, useRef, useState, useEffect } from 'react';
 
 type Tab = 'description' | 'solutions' | 'submissions';
 interface Props {
   children: ReactNode;
   challengeId: number;
   expandPanel: () => void;
+  isDesktop: boolean;
 }
 
-export function LeftWrapper({ challengeId, children, expandPanel }: Props) {
+export function LeftWrapper({ challengeId, children, expandPanel, isDesktop }: Props) {
   const pathname = usePathname();
   const router = useRouter();
   const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const isCollapsedRef = useRef(isCollapsed);
+  const isDesktopRef = useRef(isDesktop);
+  isDesktopRef.current = isDesktop;
+  isCollapsedRef.current = isCollapsed;
 
   const tabsRef = useRef<HTMLDivElement | null>(null);
   const tabsListRef = useRef<HTMLDivElement | null>(null);
   const tabsContentRef = useRef<HTMLDivElement | null>(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const tabsElement = tabsRef.current;
     const tabsContentElement = tabsContentRef.current;
     const tabsListElement = tabsListRef.current;
@@ -37,12 +36,17 @@ export function LeftWrapper({ challengeId, children, expandPanel }: Props) {
 
     const handleResize = (entries: ResizeObserverEntry[]) => {
       for (const entry of entries) {
-        if (entry.target === tabsElement && entry.contentRect.width < 60) {
+        if (entry.target !== tabsElement) continue;
+        const isDesktopCollapsed = isDesktopRef.current && entry.contentRect.width <= 60;
+        const isMobileCollapsed = !isDesktopRef.current && entry.contentRect.height <= 41;
+
+        if (isDesktopCollapsed || isMobileCollapsed) {
           setIsCollapsed(true);
           tabsContentElement.style.display = 'none';
-          tabsListElement.style.display = 'none';
+          if (isDesktopRef.current && !isCollapsedRef.current) {
+            tabsListElement.style.display = 'none';
+          }
         } else {
-          console.log('removing none');
           tabsContentElement.style.display = '';
           setIsCollapsed(false);
         }
@@ -59,7 +63,7 @@ export function LeftWrapper({ challengeId, children, expandPanel }: Props) {
 
   useEffect(() => {
     const tabsListElement = tabsListRef.current;
-    if (isCollapsed && tabsListElement) {
+    if (tabsListElement) {
       tabsListElement.style.display = '';
     }
   }, [isCollapsed]);
@@ -77,8 +81,6 @@ export function LeftWrapper({ challengeId, children, expandPanel }: Props) {
     return 'description';
   }, [pathname]);
 
-  console.log('re-rendering');
-
   return (
     <Tabs
       ref={tabsRef}
@@ -87,47 +89,45 @@ export function LeftWrapper({ challengeId, children, expandPanel }: Props) {
     >
       <TabsList
         className={`bg-background/90 dark:bg-muted/90 sticky top-0 z-10 grid h-auto w-full rounded-none rounded-tl-2xl rounded-tr-xl border-b border-zinc-300 backdrop-blur-sm dark:border-zinc-700 ${
-          isCollapsed ? 'grid-rows-3 gap-6' : 'grid-cols-3'
+          isCollapsed ? (isDesktop ? 'grid-rows-3 gap-2' : 'grid-cols-3') : 'grid-cols-3'
         }`}
         ref={tabsListRef}
       >
-        {!!isCollapsed && (
-          <button
-            className="rounded-md rounded-tl-xl duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
-            onClick={() => expandPanel()}
-          >
-            {'>'}
-          </button>
-        )}
         <TabsTrigger
-          className="rounded-md rounded-tl-xl duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
+          className={`rounded-md rounded-tl-xl duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700 ${
+            isCollapsed ? (isDesktop ? 'rounded-r-lg py-4' : 'rounded-bl-xl') : ''
+          }`}
           onClick={() => {
             router.push(`/challenge/${challengeId}`);
             expandPanel();
           }}
           value="description"
         >
-          {isCollapsed ? 'X' : 'Description'}
+          {isCollapsed && isDesktop ? <Text className="h-4 w-4" /> : 'Description'}
         </TabsTrigger>
         <TabsTrigger
-          className="rounded-md duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
+          className={`rounded-md duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700 ${
+            isCollapsed && isDesktop ? 'py-4' : ''
+          }`}
           onClick={() => {
             router.push(`/challenge/${challengeId}/solutions`);
             expandPanel();
           }}
           value="solutions"
         >
-          {isCollapsed ? 'Y' : 'Solutions'}
+          {isCollapsed && isDesktop ? <FlaskConical className="h-4 w-4" /> : 'Solutions'}
         </TabsTrigger>
         <TabsTrigger
-          className="rounded-md rounded-tr-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700"
+          className={`rounded-md rounded-tr-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700 ${
+            isCollapsed ? (isDesktop ? 'rounded-md py-4' : 'rounded-br-xl') : ''
+          }`}
           onClick={() => {
             router.push(`/challenge/${challengeId}/submissions`);
             expandPanel();
           }}
           value="submissions"
         >
-          {isCollapsed ? 'Z' : 'Submissions'}
+          {isCollapsed && isDesktop ? <History className="h-4 w-4" /> : 'Submissions'}
         </TabsTrigger>
       </TabsList>
       <TabsContent className="mt-0 h-[calc(100%_-_41px)]" value={selectedTab} ref={tabsContentRef}>

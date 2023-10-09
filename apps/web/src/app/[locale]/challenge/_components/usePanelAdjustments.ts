@@ -24,10 +24,10 @@ const usePanelAdjustments = (
     if (!leftSide.current) return;
     if (isDesktop) {
       leftSide.current.style.width = '60px';
-      leftSide.current.style.minWidth = '0px';
+      leftSide.current.style.minWidth = '60px';
     } else {
       leftSide.current.style.height = '41px';
-      leftSide.current.style.minHeight = '0px';
+      leftSide.current.style.minHeight = '41px';
     }
     // leftSide.current.style.opacity = '0%';
   }, [isDesktop]);
