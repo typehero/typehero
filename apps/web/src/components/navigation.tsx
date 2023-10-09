@@ -45,8 +45,9 @@ export function Navigation({
     <header className="z-0 w-full">
       {!fssettings.isFullscreen && (
         <nav
-          className={`flex h-14 items-center text-sm font-medium ${pathname?.startsWith('/challenge') ? 'px-4' : 'container'
-            }`}
+          className={`flex h-14 items-center text-sm font-medium ${
+            pathname?.startsWith('/challenge') ? 'px-4' : 'container'
+          }`}
         >
           <div className="flex w-full items-center justify-between">
             <div className="relative flex items-center gap-3">
