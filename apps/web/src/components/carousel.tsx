@@ -78,7 +78,10 @@ export function Carousel({ children, className }: Props) {
 
   return (
     <div
-      className={cn("hide-scrollbar flex w-full snap-x flex-nowrap gap-4 overflow-x-scroll scroll-smooth p-6 px-4 md:px-20", className)}
+      className={cn(
+        'hide-scrollbar flex w-full snap-x flex-nowrap gap-4 overflow-x-scroll scroll-smooth p-6 px-4 md:px-20',
+        className,
+      )}
       id="container"
       ref={containerRef}
     >

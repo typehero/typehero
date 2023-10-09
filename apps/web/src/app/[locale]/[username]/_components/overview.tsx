@@ -1,12 +1,12 @@
-import { Card, CardContent, CardHeader } from "@repo/ui/components/card";
-import { updateUserBio, type UserProfile } from "./profile.actions";
-import { Markdown } from "@repo/ui/components/markdown";
-import { Heart, Pencil } from "@repo/ui/icons";
-import { getRelativeTime } from "~/utils/relativeTime";
-import { EditUserBio } from "./edit_user_bio";
+import { Card, CardContent, CardHeader } from '@repo/ui/components/card';
+import { updateUserBio, type UserProfile } from './profile.actions';
+import { Markdown } from '@repo/ui/components/markdown';
+import { Heart, Pencil } from '@repo/ui/icons';
+import { getRelativeTime } from '~/utils/relativeTime';
+import { EditUserBio } from './edit_user_bio';
 
 interface PublicOverviewProps {
-  publicUser: NonNullable<UserProfile>,
+  publicUser: NonNullable<UserProfile>;
 }
 
 const NULL_BIO = `### Novice Typehero! ✨📜
@@ -27,40 +27,34 @@ is yours to conquer!
 
 export const ProfileOverview = ({ publicUser }: PublicOverviewProps) => {
   return (
-    <div className='flex flex-col gap-4'>
-      {
-        publicUser.bio && publicUser.bio?.length > 1 ? (
-          <Card>
-            <CardContent className='relative p-6 flex flex-col gap-4'>
-              <div className="absolute right-5 z-[50]">
-                <EditUserBio publicUser={publicUser} updateData={updateUserBio} />
-              </div>
-              <Markdown className='relative last-of-type:mb-0'>
-                {publicUser.bio}
-              </Markdown>
-            </CardContent>
-          </Card>
-        ) : (
-          <Card>
-            <CardContent className='p-6 relative'>
-              <div className="absolute right-5 z-[50]">
-                <EditUserBio publicUser={publicUser} updateData={updateUserBio} />
-              </div>
-              <Markdown className='relative last-of-type:mb-0 break-all'>
-                {NULL_BIO}
-              </Markdown>
-            </CardContent>
-          </Card>
-        )
-      }
-      <div className='flex flex-wrap gap-4'>
-        <Card className='w-full md:w-[300px]'>
-          <CardContent className='p-6'>
-            <div className='flex flex-row gap-4 items-center'>
+    <div className="flex flex-col gap-4">
+      {publicUser.bio && publicUser.bio?.length > 1 ? (
+        <Card>
+          <CardContent className="relative flex flex-col gap-4 p-6">
+            <div className="absolute right-5 z-[50]">
+              <EditUserBio publicUser={publicUser} updateData={updateUserBio} />
+            </div>
+            <Markdown className="relative last-of-type:mb-0">{publicUser.bio}</Markdown>
+          </CardContent>
+        </Card>
+      ) : (
+        <Card>
+          <CardContent className="relative p-6">
+            <div className="absolute right-5 z-[50]">
+              <EditUserBio publicUser={publicUser} updateData={updateUserBio} />
+            </div>
+            <Markdown className="relative break-all last-of-type:mb-0">{NULL_BIO}</Markdown>
+          </CardContent>
+        </Card>
+      )}
+      <div className="flex flex-wrap gap-4">
+        <Card className="w-full md:w-[300px]">
+          <CardContent className="p-6">
+            <div className="flex flex-row items-center gap-4">
               <Heart />
-              <div className='flex flex-col gap-2'>
-                <span className='text-lg font-semibold'>Joined</span>
-                <span className='text-sm'>{getRelativeTime(publicUser.createdAt)}</span>
+              <div className="flex flex-col gap-2">
+                <span className="text-lg font-semibold">Joined</span>
+                <span className="text-sm">{getRelativeTime(publicUser.createdAt)}</span>
               </div>
             </div>
           </CardContent>
@@ -68,4 +62,4 @@ export const ProfileOverview = ({ publicUser }: PublicOverviewProps) => {
       </div>
     </div>
   );
-}
+};

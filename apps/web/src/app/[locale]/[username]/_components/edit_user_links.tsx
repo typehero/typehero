@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
-import { z } from "zod";
-import type { UserProfile } from "./profile.actions";
-import { MagicIcon } from "@repo/ui/components/magic-icon";
-import { createNoProfanitySchemaWithValidate } from "~/utils/antiProfanityZod";
-import { useFieldArray, useForm, useWatch } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { toast } from "@repo/ui/components/use-toast";
-import { Dialog, DialogContent, DialogHeader } from "@repo/ui/components/dialog";
-import { Form, FormItem } from "@repo/ui/components/form";
-import { Input } from "@repo/ui/components/input";
-import { Button } from "@repo/ui/components/button";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@repo/ui/components/button';
+import { Dialog, DialogContent, DialogHeader } from '@repo/ui/components/dialog';
+import { Form, FormItem } from '@repo/ui/components/form';
+import { Input } from '@repo/ui/components/input';
+import { MagicIcon } from '@repo/ui/components/magic-icon';
+import { toast } from '@repo/ui/components/use-toast';
+import { useState } from 'react';
+import { useFieldArray, useForm, useWatch } from 'react-hook-form';
+import { z } from 'zod';
+import { createNoProfanitySchemaWithValidate } from '~/utils/antiProfanityZod';
+import type { UserProfile } from './profile.actions';
 
 interface EditUserLinksProps {
   publicUser: NonNullable<UserProfile>;
-  updateData: Function;
+  updateData: (data: UserLinkSchemaType) => Promise<void>;
 }
 
 const UserLinkSchema = z.object({
@@ -35,11 +35,9 @@ export const EditUserLinks = ({ publicUser, updateData }: EditUserLinksProps) =>
   const userLinkForm = useForm<UserLinkSchemaType>({
     resolver: zodResolver(UserLinkSchema),
     defaultValues: {
-      userLinks: [
-        ...publicUser.userLinks,
-      ]
+      userLinks: [...publicUser.userLinks],
     },
-    mode: "onChange",
+    mode: 'onChange',
   });
   const userLinks = useWatch({ control: userLinkForm.control, name: 'userLinks' });
   const userLinkFormFields = useFieldArray<UserLinkSchemaType>({
@@ -51,41 +49,48 @@ export const EditUserLinks = ({ publicUser, updateData }: EditUserLinksProps) =>
     try {
       await updateData(data);
       toast({
-        variant: "success",
-        description: "Your links were successfully updated."
+        variant: 'success',
+        description: 'Your links were successfully updated.',
       });
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
       toast({
-        variant: "destructive",
-        description: "An error occured while trying to update links."
+        variant: 'destructive',
+        description: 'An error occured while trying to update links.',
       });
-    }
-    finally {
+    } finally {
       setEditLinksDialogOpen(false);
     }
   }
 
   return (
     <>
-      <div className='flex flex-row items-center'>
-        <Button variant={'outline'} className="w-full" onClick={() => {
-          setEditLinksDialogOpen(true);
-        }}>
-          <span className='text-sm'>Edit Links</span>
+      <div className="flex flex-row items-center">
+        <Button
+          variant="outline"
+          className="w-full"
+          onClick={() => {
+            setEditLinksDialogOpen(true);
+          }}
+        >
+          <span className="text-sm">Edit Links</span>
         </Button>
       </div>
-      <Dialog open={editLinksDialogOpen} onOpenChange={() => {
-        setEditLinksDialogOpen(!editLinksDialogOpen);
-      }}>
+      <Dialog
+        open={editLinksDialogOpen}
+        onOpenChange={() => {
+          setEditLinksDialogOpen(!editLinksDialogOpen);
+        }}
+      >
         <DialogContent>
-          <DialogHeader>
-            Public Links
-          </DialogHeader>
+          <DialogHeader>Public Links</DialogHeader>
           <Form {...userLinkForm}>
-            <form className="flex flex-col gap-4" autoComplete="off" onSubmit={userLinkForm.handleSubmit(onUserLinkSubmit)}>
-              <div className='flex flex-col space-y-2'>
+            <form
+              className="flex flex-col gap-4"
+              autoComplete="off"
+              onSubmit={userLinkForm.handleSubmit(onUserLinkSubmit)}
+            >
+              <div className="flex flex-col space-y-2">
                 {userLinkFormFields.fields.map((val, i) => {
                   return (
                     <FormItem className="flex-col" key={`url-link-${i}`}>
@@ -98,26 +103,32 @@ export const EditUserLinks = ({ publicUser, updateData }: EditUserLinksProps) =>
                         />
                       </div>
                       {userLinkForm.formState.errors.userLinks?.[i]?.url?.message ? (
-                        <div className="text-sm text-destructive">{userLinkForm.formState.errors.userLinks[i]?.url?.message}</div>
+                        <div className="text-destructive text-sm">
+                          {userLinkForm.formState.errors.userLinks[i]?.url?.message}
+                        </div>
                       ) : null}
                     </FormItem>
                   );
                 })}
               </div>
-              <Button variant={'secondary'} type="button" disabled={userLinks.length === 4}  onClick={() => {
-                if (userLinks.length <= 4) {
-                  userLinkForm.setValue("userLinks", [
-                    ...userLinks,
-                    {
-                      url: ""
-                    }
-                  ])
-                }
-                return;
-              }}>
+              <Button
+                variant="secondary"
+                type="button"
+                disabled={userLinks.length === 4}
+                onClick={() => {
+                  if (userLinks.length <= 4) {
+                    userLinkForm.setValue('userLinks', [
+                      ...userLinks,
+                      {
+                        url: '',
+                      },
+                    ]);
+                  }
+                }}
+              >
                 Add Field
               </Button>
-              <Button className='w-full' type="submit">
+              <Button className="w-full" type="submit">
                 Update
               </Button>
             </form>
@@ -126,4 +137,4 @@ export const EditUserLinks = ({ publicUser, updateData }: EditUserLinksProps) =>
       </Dialog>
     </>
   );
-}
+};

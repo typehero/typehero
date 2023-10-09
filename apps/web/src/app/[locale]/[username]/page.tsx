@@ -1,7 +1,11 @@
 import { buildMetaForDefault, buildMetaForUser } from '~/app/metadata';
 import { notFound } from 'next/navigation';
 import { getServerAuthSession } from '@repo/auth/server';
-import { getPrivateProfile, getPublicProfile, type UserPrivateProfile } from './_components/profile.actions';
+import {
+  getPrivateProfile,
+  getPublicProfile,
+  type UserPrivateProfile,
+} from './_components/profile.actions';
 import { Dashboard } from './_components/dashboard';
 
 interface Props {
@@ -17,7 +21,7 @@ export default async function Page({ params }: Props) {
 
   let privateProfile: UserPrivateProfile = null;
   const auth = await getServerAuthSession();
-  if(auth?.user.name === username) {
+  if (auth?.user.name === username) {
     privateProfile = await getPrivateProfile();
   }
 

@@ -1,20 +1,20 @@
 'use client';
 
-import { z } from "zod";
-import type { UserProfile } from "./profile.actions";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { toast } from "@repo/ui/components/use-toast";
-import { Button } from "@repo/ui/components/button";
-import { Dialog, DialogContent, DialogHeader } from "@repo/ui/components/dialog";
-import { Form, FormField, FormItem, FormMessage } from "@repo/ui/components/form";
-import { RichMarkdownEditor } from "~/components/rich-markdown-editor";
-import { Pencil } from "@repo/ui/icons";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@repo/ui/components/button';
+import { Dialog, DialogContent, DialogHeader } from '@repo/ui/components/dialog';
+import { Form, FormField, FormItem, FormMessage } from '@repo/ui/components/form';
+import { toast } from '@repo/ui/components/use-toast';
+import { Pencil } from '@repo/ui/icons';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
+import type { UserProfile } from './profile.actions';
 
 interface EditUserBioProps {
   publicUser: NonNullable<UserProfile>;
-  updateData: Function;
+  updateData: (data: UserBioSchemaType) => Promise<void>;
 }
 
 const UserBioSchema = z.object({
@@ -27,48 +27,55 @@ export const EditUserBio = ({ publicUser, updateData }: EditUserBioProps) => {
   const userBioForm = useForm<UserBioSchemaType>({
     resolver: zodResolver(UserBioSchema),
     defaultValues: {
-      bio: publicUser.bio ?? "",
+      bio: publicUser.bio ?? '',
     },
-    mode: "onChange",
+    mode: 'onChange',
   });
 
   async function onUserBioSubmit(data: UserBioSchemaType) {
     try {
       await updateData(data);
       toast({
-        variant: "success",
-        description: "Your bio was successfully updated."
+        variant: 'success',
+        description: 'Your bio was successfully updated.',
       });
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
       toast({
-        variant: "destructive",
-        description: "An error occured while trying to update you bio."
+        variant: 'destructive',
+        description: 'An error occured while trying to update you bio.',
       });
-    }
-    finally {
+    } finally {
       setEditBioDialogOpen(false);
     }
   }
 
   return (
     <>
-      <Button size={'sm'} className="w-fit bg-secondary/60 hover:bg-secondary/90 text-muted-foreground" onClick={() => {
-        setEditBioDialogOpen(true);
-      }}>
+      <Button
+        size="sm"
+        className="bg-secondary/60 hover:bg-secondary/90 text-muted-foreground w-fit"
+        onClick={() => {
+          setEditBioDialogOpen(true);
+        }}
+      >
         <Pencil size={18} />
       </Button>
-      <Dialog open={editBioDialogOpen} onOpenChange={() => {
-        setEditBioDialogOpen(!editBioDialogOpen);
-      }}>
+      <Dialog
+        open={editBioDialogOpen}
+        onOpenChange={() => {
+          setEditBioDialogOpen(!editBioDialogOpen);
+        }}
+      >
         <DialogContent>
-          <DialogHeader>
-            Public Bio
-          </DialogHeader>
+          <DialogHeader>Public Bio</DialogHeader>
           <Form {...userBioForm}>
-            <form className="flex flex-col gap-4" autoComplete="off" onSubmit={userBioForm.handleSubmit(onUserBioSubmit)}>
-              <div className='flex flex-col space-y-2'>
+            <form
+              className="flex flex-col gap-4"
+              autoComplete="off"
+              onSubmit={userBioForm.handleSubmit(onUserBioSubmit)}
+            >
+              <div className="flex flex-col space-y-2">
                 <FormField
                   control={userBioForm.control}
                   name="bio"
@@ -80,7 +87,7 @@ export const EditUserBio = ({ publicUser, updateData }: EditUserBioProps) => {
                   )}
                 />
               </div>
-              <Button className='w-full' type="submit">
+              <Button className="w-full" type="submit">
                 Update
               </Button>
             </form>
@@ -89,4 +96,4 @@ export const EditUserBio = ({ publicUser, updateData }: EditUserBioProps) => {
       </Dialog>
     </>
   );
-}
+};
