@@ -467,9 +467,6 @@ importers:
 
   packages/db:
     dependencies:
-      '@mailchimp/mailchimp_marketing':
-        specifier: ^3.0.80
-        version: 3.0.80
       '@prisma/client':
         specifier: ^5.0.0
         version: 5.0.0(prisma@5.0.0)
@@ -486,9 +483,6 @@ importers:
       '@repo/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/config-typescript
-      '@types/mailchimp__mailchimp_marketing':
-        specifier: ^3.0.13
-        version: 3.0.13
       '@types/node':
         specifier: ^20.4.2
         version: 20.4.2
@@ -4152,6 +4146,7 @@ packages:
 
   /@types/mailchimp__mailchimp_marketing@3.0.13:
     resolution: {integrity: sha512-TENsQx6pw3PRkjI2KSPwA4YWfsFp+XVVg7FlX1vqaCATl6r9xZYVat2tBQKSapNQuBDX54G7eaBc2fcUJCzvbA==}
+    dev: false
 
   /@types/mdast@3.0.12:
     resolution: {integrity: sha512-DT+iNIRNX884cx0/Q1ja7NyUPpZuv0KPyL5rGNxm1WC1OtHstl7n4Jb7nk+xacNShQMbczJjt8uFzznpp6kYBg==}

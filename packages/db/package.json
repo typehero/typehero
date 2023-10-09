@@ -31,7 +31,6 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@mailchimp/mailchimp_marketing": "^3.0.80",
     "@prisma/client": "^5.0.0",
     "csv-writer": "^1.6.0"
   },
@@ -39,7 +38,6 @@
     "@faker-js/faker": "^8.0.2",
     "@repo/lint": "workspace:*",
     "@repo/tsconfig": "workspace:*",
-    "@types/mailchimp__mailchimp_marketing": "^3.0.13",
     "@types/node": "^20.4.2",
     "dotenv-cli": "^7.2.1",
     "eslint": "^8.45.0",
