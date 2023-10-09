@@ -15,7 +15,7 @@ export async function generateMetadata({ params: { id } }: Props) {
   const challenge = await getChallengeRouteData(id, null);
   return buildMetaForChallenge({
     title: `${challenge.name} | TypeHero`,
-    description: `${challenge.shortDescription} Can you solve it?`,
+    description: `${challenge.shortDescription}`,
     username: challenge.user.name,
     difficulty: challenge.difficulty,
     date: getRelativeTime(challenge.createdAt),
