@@ -29,7 +29,7 @@ export function SolutionDetails({ solution }: Props) {
   const showPin = isAdminOrModerator(session);
 
   const handlePinClick = async () => {
-    await pinOrUnpinSolution(solution.id, !solution.isPinned);
+    await pinOrUnpinSolution(solution.id, !solution.isPinned, solution.challengeId ?? 0);
   };
   const handleShareClick = async () => {
     if (navigator.clipboard) {
@@ -38,7 +38,7 @@ export function SolutionDetails({ solution }: Props) {
       toast({
         variant: 'success',
         description: 'Link To Solution Copied!',
-      });    
+      });
     }
   };
 
@@ -95,10 +95,10 @@ export function SolutionDetails({ solution }: Props) {
                 onVote={(didUpvote: boolean) => {
                   solution.vote = didUpvote
                     ? [
-                      {
-                        userId: session?.user?.id ?? '',
-                      },
-                    ]
+                        {
+                          userId: session?.user?.id ?? '',
+                        },
+                      ]
                     : [];
                   solution._count.vote += didUpvote ? 1 : -1;
                 }}

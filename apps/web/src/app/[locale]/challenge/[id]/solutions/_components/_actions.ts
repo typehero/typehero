@@ -11,6 +11,9 @@ interface Args {
   userId: string;
 }
 
+export const createCacheKeyForSolutions = (challengeId: number) =>
+  `challenge-${challengeId}-solutions`;
+
 export async function postSolution({ challengeId, description, title, userId }: Args) {
   const session = await getServerAuthSession();
   if (!session) throw new Error('You must be logged in to submit a solution');
@@ -23,25 +26,25 @@ export async function postSolution({ challengeId, description, title, userId }: 
       userId,
     },
   });
-  revalidateTag(`challenge-${challengeId}-submissions`);
+  revalidateTag(createCacheKeyForSolutions(challengeId));
 }
 
-export async function deleteSolution(id: number) {
+export async function deleteSolution(id: number, challengeId: number) {
   const session = await getServerAuthSession();
   const solution = await prisma.sharedSolution.findUnique({
-    where: { id }
-  })
+    where: { id },
+  });
   if (!isAuthor(session, solution?.userId)) {
-    throw new Error('Only author can delete their solution.')
+    throw new Error('Only author can delete their solution.');
   }
 
   await prisma.sharedSolution.delete({
-    where: { id }
-  })
-  revalidateTag(`challenge-${id}-submissions`);
+    where: { id },
+  });
+  revalidateTag(createCacheKeyForSolutions(challengeId));
 }
 
-export async function pinOrUnpinSolution(id: number, isPinned: boolean) {
+export async function pinOrUnpinSolution(id: number, isPinned: boolean, challengeId: number) {
   const session = await getServerAuthSession();
 
   if (!isAdminOrModerator(session))
@@ -51,5 +54,5 @@ export async function pinOrUnpinSolution(id: number, isPinned: boolean) {
     where: { id },
     data: { isPinned },
   });
-  revalidateTag(`challenge-${id}-submissions`);
+  revalidateTag(createCacheKeyForSolutions(challengeId));
 }
