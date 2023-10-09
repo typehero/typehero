@@ -71,19 +71,6 @@ export function Settings({ profileData, username }: { profileData: FormSchema; u
 
   return (
     <div className="container">
-      <div className="mt-10 flex w-full justify-between">
-        <div className="mr-10">
-          <h2 className="text-3xl font-bold">Settings</h2>
-          <h4 className="mb-4 mt-6 text-xl font-bold">Bio</h4>
-        </div>
-
-        <Link className="mb-6" href={`@${username}`}>
-          <Button type="button" variant="outline">
-            View profile
-          </Button>
-        </Link>
-      </div>
-
       <Form {...form}>
         <form action={() => onSubmit(getValues())}>
           <div>

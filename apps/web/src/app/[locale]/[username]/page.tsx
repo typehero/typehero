@@ -1,5 +1,8 @@
 import { buildMetaForUser } from '~/app/metadata';
-import { Profile } from './_components/profile';
+import { notFound } from 'next/navigation';
+import { getServerAuthSession } from '@repo/auth/server';
+import { getPrivateProfile, getPublicProfile, type UserPrivateProfile } from './_components/profile.actions';
+import { Dashboard } from './_components/dashboard';
 
 interface Props {
   params: {
@@ -7,8 +10,18 @@ interface Props {
   };
 }
 
-export default function Page({ params }: Props) {
-  return <Profile username={params.username} />;
+export default async function Page({ params }: Props) {
+  const username = decodeURIComponent(params.username).substring(1);
+  const user = await getPublicProfile(username);
+  if (!user) return notFound();
+
+  let privateProfile: UserPrivateProfile = null;
+  const auth = await getServerAuthSession();
+  if(auth?.user.name === username) {
+    privateProfile = await getPrivateProfile();
+  }
+
+  return <Dashboard publicUser={user} privateUser={privateProfile} />;
 }
 
 export async function generateMetadata({ params: { username } }: Props) {

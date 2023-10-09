@@ -18,3 +18,14 @@ export const prettifyNumbers = (n: number): string => {
   const formatter = new Intl.NumberFormat('en', { notation: 'compact', compactDisplay: 'short' });
   return formatter.format(n);
 };
+
+
+/**
+  * Given a username. It attempts a calculate an
+  * initial. It's not meant to be accurate, the
+  * returned initials should only resemble the
+  * username.
+  */
+export const calculateInitials = (username: string) => {
+  return `${username.charAt(0)}${username.charAt(username.length - 1)}`
+}

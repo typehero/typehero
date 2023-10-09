@@ -1,14 +1,16 @@
 'use client';
 import { ChevronLeft, ChevronRight } from '@repo/ui/icons';
-import clsx from 'clsx';
+import { cn } from '@repo/ui/utilities';
+import clsx, { type ClassValue } from 'clsx';
 import { useEffect, useRef, useState, type ReactNode, useCallback, useId } from 'react';
 import { useResizeObserver } from '~/utils/useResizeObserver';
 
 interface Props {
   children: ReactNode;
+  className?: ClassValue;
 }
 
-export function Carousel({ children }: Props) {
+export function Carousel({ children, className }: Props) {
   const id = useId();
   const buttonRightSelector = `slideRight-${id}`;
   const buttonLeftSelector = `slideLeft-${id}`;
@@ -76,7 +78,7 @@ export function Carousel({ children }: Props) {
 
   return (
     <div
-      className="hide-scrollbar flex w-full snap-x flex-nowrap gap-4 overflow-x-scroll scroll-smooth p-6 px-4 md:px-20"
+      className={cn("hide-scrollbar flex w-full snap-x flex-nowrap gap-4 overflow-x-scroll scroll-smooth p-6 px-4 md:px-20", className)}
       id="container"
       ref={containerRef}
     >

@@ -1,15 +1,37 @@
-import { Github, Link as LinkIcon, Linkedin, Twitter, Youtube } from 'lucide-react';
+import clsx from 'clsx';
+import { Link as LinkIcon, } from 'lucide-react';
+import * as AllLucideIcons from 'lucide-react';
 
-// TODO: this could be more robust
-// it's not accounting for subdomains like the boomer www and stuff
-export function MagicIcon({ url }: { url: string }) {
-  if (url.startsWith('https://github.com/'))
-    return <Github className="h-3 w-3 text-neutral-400 dark:text-neutral-600" />;
-  if (url.startsWith('https://twitter.com/'))
-    return <Twitter className="h-3 w-3 text-neutral-400 dark:text-neutral-600" />;
-  if (url.startsWith('https://www.linkedin.com/'))
-    return <Linkedin className="h-3 w-3 text-neutral-400 dark:text-neutral-600" />;
-  if (url.startsWith('https://youtube.com/'))
-    return <Youtube className="h-3 w-3 text-neutral-400 dark:text-neutral-600" />;
-  return <LinkIcon className="h-3 w-3 text-neutral-400 dark:text-neutral-600" />;
+type IconKey = {
+  key: string,
+  icon: keyof typeof AllLucideIcons;
+}
+
+const UrlMap: IconKey[] = [
+  {
+    key: "github.com",
+    icon: "Github",
+  },
+  {
+    key: "twitter.com",
+    icon: "Twitter"
+  },
+  {
+    key: "linkedin.com",
+    icon: "Linkedin"
+  },
+  {
+    key: "youtube.com",
+    icon: "Youtube"
+  },
+];
+
+export function MagicIcon({ url, size = 18, className }: { url: string, size?: number, className?: string  }) {
+  for (const entry of UrlMap) {
+    if (url.includes(entry.key)) {
+      const Icon = AllLucideIcons[entry.icon] as AllLucideIcons.LucideIcon;
+      return <Icon size={size}  className={clsx('text-neutral-400 dark:text-neutral-600', className)} />;
+    }
+  }
+  return <LinkIcon size={size} className={clsx('text-neutral-400 dark:text-neutral-600', className)} />;
 }

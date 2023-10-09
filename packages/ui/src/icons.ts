@@ -60,4 +60,5 @@ export {
   User,
   X,
   XCircle,
+  Heart,
 } from 'lucide-react';

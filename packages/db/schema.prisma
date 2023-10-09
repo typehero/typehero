@@ -89,7 +89,7 @@ model Role {
 model UserLink {
   id   String @id @default(uuid())
   user User[]
-  url  String @db.VarChar(256)
+  url  String @db.VarChar(256) @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -105,7 +105,7 @@ model User {
   roles         Role[]
 
   /// this is the bio that shows up on the profile page
-  bio       String     @default("") @db.VarChar(256)
+  bio       String?    @db.MediumText
   /// this is the twitter URL that shows up on the profile page
   userLinks UserLink[]
 
