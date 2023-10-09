@@ -78,7 +78,7 @@ export function Navigation({
                   hero
                 </span>
               </Link>
-              {flags?.exploreButton && (
+              {flags?.exploreButton === true && (
                 <Link href="/explore" className="ml-4">
                   <div
                     className={clsx('hover:text-foreground text-foreground/80 transition-colors', {
@@ -89,7 +89,7 @@ export function Navigation({
                   </div>
                 </Link>
               )}
-              {flags?.tracksButton && (
+              {flags?.tracksButton === true && (
                 <Link href="/tracks" className="ml-4">
                   <div
                     className={clsx('hover:text-foreground text-foreground/80 transition-colors', {
