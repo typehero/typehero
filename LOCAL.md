@@ -122,7 +122,7 @@ Once the server is running you can seed and sync data
    ![prisma studio](./media/prisma-studio-models.png)
 
 3. Click on the `User` table from the list of models
-4. Locate your username and open record in new tab to modify
+4. Locate your username and open record in new tab to modify Role
 
    ![modify role](./media/change-role-to-admin.png)
 
