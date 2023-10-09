@@ -400,3 +400,9 @@ model Track {
   trackChallenges TrackChallenge[]
   enrolledUsers   User[]
 }
+
+model BetaTokens {
+  id        Int    @id @default(autoincrement())
+  token     String @unique
+  isClaimed Boolean
+}

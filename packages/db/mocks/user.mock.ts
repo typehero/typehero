@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { type Prisma, UserStatus } from '@prisma/client';
+import { type Prisma } from '@prisma/client';
 
 /**
  *
@@ -15,7 +15,7 @@ export default function UserMock(): Prisma.UserCreateManyInput {
     email,
     emailVerified: faker.date.between({ from: createdAt, to: new Date() }),
     name: faker.person.fullName(),
-    status: faker.helpers.enumValue(UserStatus),
+    status: 'ACTIVE',
     createdAt,
   };
 }

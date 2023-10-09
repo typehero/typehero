@@ -37,6 +37,9 @@ if (!process.env.GITHUB_SECRET) {
 const useSecureCookies = Boolean(process.env.VERCEL_URL);
 
 export const authOptions: NextAuthOptions = {
+  // pages: {
+  //   signIn: '/auth/signin',
+  // },
   cookies: {
     sessionToken: {
       name: `${useSecureCookies ? '__Secure-' : ''}next-auth.session-token`,

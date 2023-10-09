@@ -1,4 +1,4 @@
-import { getServerAuthSession } from '@repo/auth/server';
+import { getServerAuthSession, type Session } from '@repo/auth/server';
 import { Description } from '../_components/description';
 import { Comments } from '../_components/comments';
 import { getChallengeRouteData } from './getChallengeRouteData';
@@ -34,4 +34,8 @@ export default async function Challenges({ params: { id: challengeId } }: Props)
       <Comments rootId={challenge.id} type="CHALLENGE" />
     </div>
   );
+}
+
+export function isAuthor(session: Session | null, userId?: string | null) {
+  return userId && (session?.user?.id && userId === session?.user?.id);
 }
