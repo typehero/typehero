@@ -1,7 +1,7 @@
 'use client';
 
-import { signIn, signOut, useSession } from '@repo/auth/react';
-import { type RoleTypes } from '@repo/db/types';
+import { signIn, signOut } from '@repo/auth/react';
+import type { Session } from '@repo/auth/server';
 import { Button } from '@repo/ui/components/button';
 import {
   DropdownMenu,
@@ -10,14 +10,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@repo/ui/components/dropdown-menu';
-import { Loader2, LogIn, Moon, Play, Settings, Settings2, Sun, User } from '@repo/ui/icons';
+import { LogIn, Moon, Play, Settings, Settings2, Sun, User } from '@repo/ui/icons';
+import type { EdgeConfigItems } from '@vercel/edge-config';
 import clsx from 'clsx';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFullscreenSettingsStore } from '~/app/[locale]/challenge/_components/fullscreen';
-import { FeatureFlagContext } from '~/app/feature-flag-provider';
 import { isAdminOrModerator } from '~/utils/auth-guards';
 
 export function getAdminUrl() {
@@ -30,26 +30,22 @@ export function getAdminUrl() {
   return `http://localhost:3001`;
 }
 
-const roleTypes: typeof RoleTypes = {
-  USER: 'USER',
-  ADMIN: 'ADMIN',
-  MODERATOR: 'MODERATOR',
-  CREATOR: 'CREATOR',
-};
-
-export function Navigation() {
+export function Navigation({
+  session,
+  flags,
+}: {
+  session: Session | null;
+  flags: EdgeConfigItems;
+}) {
   const { fssettings } = useFullscreenSettingsStore();
   const pathname = usePathname();
-  const { data } = useSession();
-  const featureFlags = useContext(FeatureFlagContext);
 
   return (
     <header className="z-0 w-full">
       {!fssettings.isFullscreen && (
         <nav
-          className={`flex h-14 items-center text-sm font-medium ${
-            pathname?.startsWith('/challenge') ? 'px-4' : 'container'
-          }`}
+          className={`flex h-14 items-center text-sm font-medium ${pathname?.startsWith('/challenge') ? 'px-4' : 'container'
+            }`}
         >
           <div className="flex w-full items-center justify-between">
             <div className="relative flex items-center gap-3">
@@ -82,7 +78,7 @@ export function Navigation() {
                   hero
                 </span>
               </Link>
-              {featureFlags?.exploreButton ? (
+              {flags?.exploreButton && (
                 <Link href="/explore" className="ml-4">
                   <div
                     className={clsx('hover:text-foreground text-foreground/80 transition-colors', {
@@ -92,8 +88,8 @@ export function Navigation() {
                     Explore
                   </div>
                 </Link>
-              ) : null}
-              {featureFlags?.tracksButton ? (
+              )}
+              {flags?.tracksButton && (
                 <Link href="/tracks" className="ml-4">
                   <div
                     className={clsx('hover:text-foreground text-foreground/80 transition-colors', {
@@ -103,12 +99,12 @@ export function Navigation() {
                     Tracks
                   </div>
                 </Link>
-              ) : null}
+              )}
             </div>
             <div className="flex">
               <div className="flex items-center justify-end gap-2">
                 <ThemeButton />
-                {featureFlags?.loginButton ? <LoginButton /> : null}
+                <LoginButton session={session} />
               </div>
             </div>
           </div>
@@ -145,24 +141,22 @@ function ThemeButton() {
   );
 }
 
-function LoginButton() {
-  const [loading, setLoading] = useState(false);
-  const { data: session, status } = useSession();
+function LoginButton({ session }: { session: Session | null }) {
+  const [signingIn, setSigningIn] = useState(false);
   const router = useRouter();
-
   const isAdminOrMod = isAdminOrModerator(session);
 
-  // NOTE: 1. loading == true -> 2. signIn() -> 3. session status == 'loading' (loading == false)
   const handleSignIn = async () => {
     try {
-      setLoading(true);
-      // page reloads after sign in, so no need to setLoading(false), othersiwe ugly visual glitch
+      setSigningIn(true);
       await signIn('github', { redirect: false });
     } catch (error) {
-      // only set loading to false if there was an error and page didn't reload after sign in
-      setLoading(false);
+      console.error(error);
+    } finally {
+      setSigningIn(false);
     }
   };
+
   const handleSignOut = async () => {
     await signOut({ redirect: false });
     router.refresh();
@@ -194,22 +188,22 @@ function LoginButton() {
             <span>Settings</span>
           </DropdownMenuItem>
         </Link>
-        {isAdminOrMod ? (
+        {isAdminOrMod && (
           <a className="block" href={getAdminUrl()}>
             <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
               <Settings className="mr-2 h-4 w-4" />
               <span>Admin</span>
             </DropdownMenuItem>
           </a>
-        ) : null}
-        {isAdminOrMod ? (
+        )}
+        {isAdminOrMod && (
           <a className="block" href="/challenge-playground">
             <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
               <Play className="mr-2 h-4 w-4" />
               <span>Challenge Playground</span>
             </DropdownMenuItem>
           </a>
-        ) : null}
+        )}
         <DropdownMenuSeparator />
         <Button
           className="h-8 w-full justify-start rounded-b-lg rounded-t-sm bg-opacity-50 px-2 text-red-500 hover:bg-red-500/20 hover:text-red-500"
@@ -222,18 +216,14 @@ function LoginButton() {
     </DropdownMenu>
   ) : (
     <Button
+      disabled={signingIn}
       className="focus:bg-accent w-20 rounded-lg bg-transparent p-2 text-black duration-300 hover:bg-gray-200 focus:outline-none dark:text-white hover:dark:bg-gray-800"
-      disabled={loading || status === 'loading'}
       onClick={handleSignIn}
     >
-      {loading || status === 'loading' ? (
-        <Loader2 className="h-5 w-5 animate-spin" />
-      ) : (
-        <div className="flex items-center space-x-2">
-          <LogIn className="h-5 w-5" />
-          <span className="dark:text-white">Login</span>
-        </div>
-      )}
+      <div className="flex items-center space-x-2">
+        <LogIn className="h-5 w-5" />
+        <span className="dark:text-white">Login</span>
+      </div>
     </Button>
   );
 }
