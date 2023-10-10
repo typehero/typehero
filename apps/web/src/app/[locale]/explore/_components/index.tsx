@@ -36,14 +36,14 @@ export async function Explore() {
           redirectRoute="/explore/newest"
         />
       </Suspense>
-      <Suspense fallback={<ExploreSectionSkeleton />}>
-        <ExploreSection
-          title="Great for Beginners"
-          fetcher={getChallengesByTagOrDifficulty}
-          tag="BEGINNER"
-          redirectRoute="/explore/beginner"
-        />
-      </Suspense>
+      {/* <Suspense fallback={<ExploreSectionSkeleton />}> */}
+      {/*   <ExploreSection */}
+      {/*     title="Great for Beginners" */}
+      {/*     fetcher={getChallengesByTagOrDifficulty} */}
+      {/*     tag="BEGINNER" */}
+      {/*     redirectRoute="/explore/beginner" */}
+      {/*   /> */}
+      {/* </Suspense> */}
       <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection
           title="Great for Learners"
