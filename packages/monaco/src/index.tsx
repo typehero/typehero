@@ -149,13 +149,23 @@ export function CodePanel(props: CodePanelProps) {
 
             const ts = await (await monaco.languages.typescript.getTypeScriptWorker())(model.uri);
 
-            const errors = await Promise.all([
+            const userErrors = await Promise.all([
               ts.getSemanticDiagnostics(USER_CODE_PATH),
               ts.getSyntacticDiagnostics(USER_CODE_PATH),
               ts.getCompilerOptionsDiagnostics(USER_CODE_PATH),
             ] as const);
 
-            setTsErrors(errors);
+            const testErrors = await Promise.all([
+              ts.getSemanticDiagnostics(TESTS_PATH),
+              ts.getSyntacticDiagnostics(TESTS_PATH),
+              ts.getCompilerOptionsDiagnostics(TESTS_PATH),
+            ] as const);
+
+            setTsErrors(
+              testErrors.map((err, i) => {
+                return [...err, ...(userErrors[i] || [])];
+              }) as TsErrors,
+            );
 
             monaco.languages.registerInlayHintsProvider(
               'typescript',
@@ -183,13 +193,23 @@ export function CodePanel(props: CodePanelProps) {
 
             const tsWorker = await getTsWorker(mm.uri);
 
-            const errors = await Promise.all([
+            const testErrors = await Promise.all([
               tsWorker.getSemanticDiagnostics(TESTS_PATH),
               tsWorker.getSyntacticDiagnostics(TESTS_PATH),
               tsWorker.getCompilerOptionsDiagnostics(TESTS_PATH),
             ] as const);
 
-            setTsErrors(errors);
+            const userErrors = await Promise.all([
+              tsWorker.getSemanticDiagnostics(USER_CODE_PATH),
+              tsWorker.getSyntacticDiagnostics(USER_CODE_PATH),
+              tsWorker.getCompilerOptionsDiagnostics(USER_CODE_PATH),
+            ] as const);
+
+            setTsErrors(
+              testErrors.map((err, i) => {
+                return [...err, ...(userErrors[i] || [])];
+              }) as TsErrors,
+            );
           },
         }}
       />
