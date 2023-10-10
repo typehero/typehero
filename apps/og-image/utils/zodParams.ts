@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-type Primitives = string | number | boolean | null;
-type JsonValue = Primitives | JsonValue[] | { [key: string]: JsonValue };
+type Primitives = boolean | number | string | null;
+type JsonValue = JsonValue[] | Primitives | { [key: string]: JsonValue };
 
 const jsonStr = z.string().transform((str, ctx) => {
   try {
@@ -36,7 +36,7 @@ function truncateWordsFn(str: string, maxCharacters: number) {
   // break at closest word
   const truncated = str.slice(0, maxCharacters);
   const lastSpace = truncated.lastIndexOf(' ');
-  return truncated.slice(0, lastSpace) + ' …';
+  return `${truncated.slice(0, lastSpace)} …`;
 }
 function truncatedWordSchema(opts: { maxCharacters: number }) {
   return z.string().transform((str) => truncateWordsFn(str, opts.maxCharacters));
