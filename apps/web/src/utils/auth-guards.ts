@@ -6,5 +6,5 @@ export function isAdminOrModerator(session: Session | null) {
 }
 
 export function isAuthor(session: Session | null, userId?: string | null) {
-  return Boolean(userId && (session?.user?.id && userId === session?.user?.id));
+  return Boolean(userId && session?.user?.id && userId === session?.user?.id);
 }

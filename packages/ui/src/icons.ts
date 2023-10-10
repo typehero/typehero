@@ -61,5 +61,5 @@ export {
   User,
   X,
   XCircle,
-  Trash
+  Trash,
 } from 'lucide-react';
