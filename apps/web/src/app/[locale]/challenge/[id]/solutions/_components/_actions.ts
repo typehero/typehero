@@ -23,6 +23,7 @@ export async function postSolution({ challengeId, description, title, userId }: 
       userId,
     },
   });
+  revalidateTag(`challenge-${challengeId}-submissions`);
 }
 
 export async function pinOrUnpinSolution(id: number, isPinned: boolean) {

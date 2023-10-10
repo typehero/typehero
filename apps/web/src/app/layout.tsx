@@ -6,9 +6,10 @@ import { Inter } from 'next/font/google';
 import type { Metadata } from 'next';
 import { Toaster } from '@repo/ui/components/toaster';
 import { Providers } from './providers';
+import { getServerAuthSession } from '@repo/auth/server';
 import { buildMetaForDefault } from './metadata';
 import { Navigation } from '~/components/navigation';
-import { CookieBanner } from '~/components/cookie-banner';
+import { getAllFlags } from '~/utils/feature-flags';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -16,7 +17,10 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildMetaForDefault({});
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const flags = await getAllFlags();
+  const session = await getServerAuthSession();
+
   return (
     <html suppressHydrationWarning lang="en">
       <head>
@@ -32,10 +36,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${inter.className} flex flex-col`}>
         <Providers>
-          <Navigation />
+          <Navigation session={session} flags={flags} />
           <main className="flex-1">{children}</main>
           <Toaster />
-          {/* <CookieBanner /> */}
         </Providers>
         <Analytics />
       </body>
