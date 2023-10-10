@@ -44,5 +44,10 @@ If you find the project interesting and want to support us please consider spons
         <img src="./media/open-bootcamp.png" alt="Open Bootcamp Logo" title="Open Bootcamp" width="75">
       </a>
     </td>
+    <td>
+      <a href="https://www.herodevs.com/" target="_parent">
+        <img src="./media/herodevs.svg" alt="HeroDevs Logo" title="HeroDevs" width="200">
+      </a>
+    </td>
   </tr>
 </table>
