@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 180
+        "contributions": 181
     },
     {
         "login": "Hacksore",
@@ -41,7 +41,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/Hacksore/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 86
+        "contributions": 88
     },
     {
         "login": "PickleNik",
@@ -338,6 +338,27 @@ export const contributors = [
         "contributions": 5
     },
     {
+        "login": "vivekKumarSinghH",
+        "id": 72158561,
+        "node_id": "MDQ6VXNlcjcyMTU4NTYx",
+        "avatar_url": "https://avatars.githubusercontent.com/u/72158561?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/vivekKumarSinghH",
+        "html_url": "https://github.com/vivekKumarSinghH",
+        "followers_url": "https://api.github.com/users/vivekKumarSinghH/followers",
+        "following_url": "https://api.github.com/users/vivekKumarSinghH/following{/other_user}",
+        "gists_url": "https://api.github.com/users/vivekKumarSinghH/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/vivekKumarSinghH/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/vivekKumarSinghH/subscriptions",
+        "organizations_url": "https://api.github.com/users/vivekKumarSinghH/orgs",
+        "repos_url": "https://api.github.com/users/vivekKumarSinghH/repos",
+        "events_url": "https://api.github.com/users/vivekKumarSinghH/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/vivekKumarSinghH/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 5
+    },
+    {
         "login": "typesafegh",
         "id": 135900154,
         "node_id": "U_kgDOCBmr-g",
@@ -438,27 +459,6 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/ayrock-dev/repos",
         "events_url": "https://api.github.com/users/ayrock-dev/events{/privacy}",
         "received_events_url": "https://api.github.com/users/ayrock-dev/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 4
-    },
-    {
-        "login": "vivekKumarSinghH",
-        "id": 72158561,
-        "node_id": "MDQ6VXNlcjcyMTU4NTYx",
-        "avatar_url": "https://avatars.githubusercontent.com/u/72158561?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/vivekKumarSinghH",
-        "html_url": "https://github.com/vivekKumarSinghH",
-        "followers_url": "https://api.github.com/users/vivekKumarSinghH/followers",
-        "following_url": "https://api.github.com/users/vivekKumarSinghH/following{/other_user}",
-        "gists_url": "https://api.github.com/users/vivekKumarSinghH/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/vivekKumarSinghH/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/vivekKumarSinghH/subscriptions",
-        "organizations_url": "https://api.github.com/users/vivekKumarSinghH/orgs",
-        "repos_url": "https://api.github.com/users/vivekKumarSinghH/repos",
-        "events_url": "https://api.github.com/users/vivekKumarSinghH/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/vivekKumarSinghH/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 4
