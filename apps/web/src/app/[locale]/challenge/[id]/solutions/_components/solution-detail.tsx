@@ -9,7 +9,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/too
 import { TypographyLarge } from '@repo/ui/components/typography/large';
 import { toast } from '@repo/ui/components/use-toast';
 import { UserBadge } from '@repo/ui/components/user-badge';
-import { Calendar, Flag, Pin, Share, X } from '@repo/ui/icons';
+import { Calendar, Flag, Pin, Share, X, Trash } from '@repo/ui/icons';
 import clsx from 'clsx';
 import Link from 'next/link';
 import type { ChallengeSolution } from '~/app/[locale]/challenge/[id]/solutions/[solutionId]/page';
@@ -17,7 +17,8 @@ import { ReportDialog } from '~/components/ReportDialog';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { Vote } from '../../../_components/vote';
 import { pinOrUnpinSolution } from './_actions';
-import { isAdminOrModerator } from '~/utils/auth-guards';
+import { isAdminOrModerator, isAuthor } from '~/utils/auth-guards';
+import { SolutionDeleteDialog } from './delete';
 
 interface Props {
   solution: ChallengeSolution;
@@ -25,11 +26,10 @@ interface Props {
 
 export function SolutionDetails({ solution }: Props) {
   const { data: session } = useSession();
-
   const showPin = isAdminOrModerator(session);
 
   const handlePinClick = async () => {
-    await pinOrUnpinSolution(solution.id, !solution.isPinned);
+    await pinOrUnpinSolution(solution.id, !solution.isPinned, solution.challengeId ?? 0);
   };
   const handleShareClick = async () => {
     if (navigator.clipboard) {
@@ -127,6 +127,20 @@ export function SolutionDetails({ solution }: Props) {
                 >
                   <Pin className={clsx('h-4 w-4')} />
                 </Button>
+              ) : null}
+              {isAuthor(session, solution.userId) ? (
+                <SolutionDeleteDialog solution={solution}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button variant="secondary" size="xs">
+                        <Trash className="h-4 w-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Delete</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </SolutionDeleteDialog>
               ) : null}
             </div>
           </div>
