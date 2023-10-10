@@ -158,11 +158,14 @@ export function CodePanel(props: CodePanelProps) {
             const testErrors = await Promise.all([
               ts.getSemanticDiagnostics(TESTS_PATH),
               ts.getSyntacticDiagnostics(TESTS_PATH),
-              ts.getCompilerOptionsDiagnostics(TESTS_PATH)] as const);
+              ts.getCompilerOptionsDiagnostics(TESTS_PATH),
+            ] as const);
 
-            setTsErrors(testErrors.map((err, i) => {
-              return [...err, ...(userErrors[i] || [])]
-            }) as TsErrors);
+            setTsErrors(
+              testErrors.map((err, i) => {
+                return [...err, ...(userErrors[i] || [])];
+              }) as TsErrors,
+            );
 
             monaco.languages.registerInlayHintsProvider(
               'typescript',
@@ -199,11 +202,14 @@ export function CodePanel(props: CodePanelProps) {
             const userErrors = await Promise.all([
               tsWorker.getSemanticDiagnostics(USER_CODE_PATH),
               tsWorker.getSyntacticDiagnostics(USER_CODE_PATH),
-              tsWorker.getCompilerOptionsDiagnostics(USER_CODE_PATH)] as const);
+              tsWorker.getCompilerOptionsDiagnostics(USER_CODE_PATH),
+            ] as const);
 
-            setTsErrors(testErrors.map((err, i) => {
-              return [...err, ...(userErrors[i] || [])]
-            }) as TsErrors);
+            setTsErrors(
+              testErrors.map((err, i) => {
+                return [...err, ...(userErrors[i] || [])];
+              }) as TsErrors,
+            );
           },
         }}
       />
