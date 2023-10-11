@@ -7,11 +7,9 @@ import { LeftWrapper } from '../[id]/left-wrapper';
 import { Wrapper } from '../[id]/wrapper';
 
 export function ChallengeLayoutWrapper({
-  challengeId,
   challenge,
   children,
 }: {
-  challengeId: number;
   challenge: ChallengeRouteData;
   children: ReactNode;
 }) {
@@ -34,7 +32,7 @@ export function ChallengeLayoutWrapper({
   return (
     <ChallengeLayout
       left={
-        <LeftWrapper challengeId={challengeId} expandPanel={expandPanel} isDesktop={isDesktop}>
+        <LeftWrapper challengeId={challenge.id} expandPanel={expandPanel} isDesktop={isDesktop}>
           {children}
         </LeftWrapper>
       }
