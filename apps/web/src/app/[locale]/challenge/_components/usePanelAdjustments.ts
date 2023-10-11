@@ -1,4 +1,5 @@
 import { useCallback, useRef } from 'react';
+import { COLLAPSED_DESKTOP_WIDTH, COLLAPSED_MOBILE_HEIGHT } from './challenge-layout';
 
 const usePanelAdjustments = (
   DEFAULT_DESKTOP_WIDTH_PX: string,
@@ -23,13 +24,12 @@ const usePanelAdjustments = (
   const collapsePanel = useCallback(() => {
     if (!leftSide.current) return;
     if (isDesktop) {
-      leftSide.current.style.width = '0px';
-      leftSide.current.style.minWidth = '0px';
+      leftSide.current.style.width = `${COLLAPSED_DESKTOP_WIDTH}px`;
+      leftSide.current.style.minWidth = `${COLLAPSED_DESKTOP_WIDTH}px`;
     } else {
-      leftSide.current.style.height = '0px';
-      leftSide.current.style.minHeight = '0px';
+      leftSide.current.style.height = `${COLLAPSED_MOBILE_HEIGHT}px`;
+      leftSide.current.style.minHeight = `${COLLAPSED_MOBILE_HEIGHT}px`;
     }
-    leftSide.current.style.opacity = '0%';
   }, [isDesktop]);
 
   const isLeftPanelCollapsed = useCallback(() => {
