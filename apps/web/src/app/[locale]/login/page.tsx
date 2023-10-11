@@ -1,20 +1,20 @@
 import { prisma } from '@repo/db';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import { getAllFlags } from '~/utils/feature-flags';
 import { LoginButton } from './_components/LoginButton';
 
-const isProd = process.env.NODE_ENV === 'production';
 // @TODO: add a redirect param to send users back to previous page
 export default async function Index({
   searchParams,
 }: {
   searchParams: Record<string, string | undefined>;
 }) {
+  const flags = await getAllFlags();
   const token = searchParams.token ?? '';
   const validToken = await validateToken(token);
 
-  // if we're local we dont do token validation
-  if (!validToken && isProd) {
+  if (!validToken && flags.enableEarlyAccess) {
     return redirect('/');
   }
 
@@ -31,7 +31,7 @@ export default async function Index({
                 Start your typescript journey by logging in below.
               </p>
             </div>
-            <LoginButton token={validToken} shouldClaimToken={isProd} />
+            <LoginButton token={validToken} shouldClaimToken={flags.enableEarlyAccess} />
             <p className="text-muted-foreground mx-auto px-8 text-sm sm:w-[350px]">
               By clicking continue, you agree to our{' '}
               <Link href="/tos" className="hover:text-primary underline underline-offset-4">

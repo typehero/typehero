@@ -20,7 +20,7 @@ export function LoginButton({ token, shouldClaimToken = true }: Props) {
       setState('pending');
       await signIn('github', { callbackUrl: '/explore' });
 
-      // after a successful sign we should claim the token
+      // after a successful sign we should claim the token so it cant be reused
       if (shouldClaimToken && token) {
         await claimBetaToken(token.id);
       }
