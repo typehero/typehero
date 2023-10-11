@@ -29,7 +29,6 @@ const usePanelAdjustments = (
       leftSide.current.style.height = '41px';
       leftSide.current.style.minHeight = '41px';
     }
-    // leftSide.current.style.opacity = '0%';
   }, [isDesktop]);
 
   const isLeftPanelCollapsed = useCallback(() => {
