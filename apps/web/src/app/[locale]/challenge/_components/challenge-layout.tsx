@@ -42,6 +42,8 @@ export interface ChallengeLayoutProps {
 }
 
 export const MOBILE_BREAKPOINT = 1025;
+export const COLLAPSED_DESKTOP_WIDTH = 60;
+export const COLLAPSED_MOBILE_HEIGHT = 41;
 
 export function ChallengeLayout({
   left,
@@ -65,8 +67,6 @@ export function ChallengeLayout({
   const LEFT_PANEL_BREAKPOINT = isDesktop ? 500 : 318;
   const COLLAPSE_BREAKPOINT = isCollapsed ? 50 : 300;
   const DEFAULT_DESKTOP_WIDTH_PX = `${LEFT_PANEL_BREAKPOINT}px`;
-  const COLLAPSED_DESKTOP_WIDTH = 60;
-  const COLLAPSED_MOBILE_HEIGHT = 41;
   const leftStyleIfDesktopCollapsed = {
     width: `${COLLAPSED_DESKTOP_WIDTH}px`,
     minWidth: `${COLLAPSED_DESKTOP_WIDTH}px`,
