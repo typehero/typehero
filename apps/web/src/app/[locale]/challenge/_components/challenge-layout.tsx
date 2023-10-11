@@ -91,15 +91,22 @@ export function ChallengeLayout({
             width: settings.width,
             minWidth: `${LEFT_PANEL_BREAKPOINT}px`,
           };
-    } else {
-      return isPanelCollapsed
-        ? leftStyleIfMobileCollapsed
-        : {
-            height: settings.height,
-            minHeight: `${LEFT_PANEL_BREAKPOINT}px`,
-          };
     }
-  }, [isDesktop, isPanelCollapsed, settings.height, settings.width]);
+    return isPanelCollapsed
+      ? leftStyleIfMobileCollapsed
+      : {
+          height: settings.height,
+          minHeight: `${LEFT_PANEL_BREAKPOINT}px`,
+        };
+  }, [
+    isDesktop,
+    isPanelCollapsed,
+    settings.height,
+    settings.width,
+    LEFT_PANEL_BREAKPOINT,
+    leftStyleIfDesktopCollapsed,
+    leftStyleIfMobileCollapsed,
+  ]);
 
   useEffect(() => {
     const ref = resizer.current;
