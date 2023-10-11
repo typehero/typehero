@@ -1,4 +1,5 @@
 'use client';
+
 import { ChevronLeft, ChevronRight } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { useEffect, useRef, useState, type ReactNode, useCallback, useId } from 'react';

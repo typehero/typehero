@@ -212,19 +212,14 @@ function LoginButton() {
       </DropdownMenuContent>
     </DropdownMenu>
   ) : (
-    <Button
+    <Link
       className="focus:bg-accent w-20 rounded-lg bg-transparent p-2 text-black duration-300 hover:bg-gray-200 focus:outline-none dark:text-white hover:dark:bg-gray-800"
-      disabled={loading || status === 'loading'}
-      onClick={handleSignIn}
+      href="/login"
     >
-      {loading || status === 'loading' ? (
-        <Loader2 className="h-5 w-5 animate-spin" />
-      ) : (
-        <div className="flex items-center space-x-2">
-          <LogIn className="h-5 w-5" />
-          <span className="dark:text-white">Login</span>
-        </div>
-      )}
-    </Button>
+      <div className="flex items-center space-x-2">
+        <LogIn className="h-5 w-5" />
+        <span className="dark:text-white">Login</span>
+      </div>
+    </Link>
   );
 }
