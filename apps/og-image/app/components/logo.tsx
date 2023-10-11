@@ -1,8 +1,8 @@
 export function Logo() {
   return (
     <svg
-      height="144"
       width="144"
+      height="144"
       viewBox="0 0 512 512"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -14,7 +14,7 @@ export function Logo() {
       <path
         fill-rule="evenodd"
         clip-rule="evenodd"
-        d="M211.466 282.064H269.474V262.295V242.526H107.789V282.064H165.513V458.105H211.466V282.064Z"
+        d="M211.466 282.064H269.474V242.526H107.789V282.064H165.513V458.105H211.466V282.064Z"
         fill="white"
       />
       <path
