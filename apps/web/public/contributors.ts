@@ -506,6 +506,27 @@ export const contributors = [
         "contributions": 3
     },
     {
+        "login": "amorriscode",
+        "id": 16005567,
+        "node_id": "MDQ6VXNlcjE2MDA1NTY3",
+        "avatar_url": "https://avatars.githubusercontent.com/u/16005567?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/amorriscode",
+        "html_url": "https://github.com/amorriscode",
+        "followers_url": "https://api.github.com/users/amorriscode/followers",
+        "following_url": "https://api.github.com/users/amorriscode/following{/other_user}",
+        "gists_url": "https://api.github.com/users/amorriscode/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/amorriscode/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/amorriscode/subscriptions",
+        "organizations_url": "https://api.github.com/users/amorriscode/orgs",
+        "repos_url": "https://api.github.com/users/amorriscode/repos",
+        "events_url": "https://api.github.com/users/amorriscode/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/amorriscode/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 3
+    },
+    {
         "login": "dylf",
         "id": 10430358,
         "node_id": "MDQ6VXNlcjEwNDMwMzU4",
@@ -588,26 +609,5 @@ export const contributors = [
         "type": "User",
         "site_admin": false,
         "contributions": 3
-    },
-    {
-        "login": "odicho",
-        "id": 53154523,
-        "node_id": "MDQ6VXNlcjUzMTU0NTIz",
-        "avatar_url": "https://avatars.githubusercontent.com/u/53154523?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/odicho",
-        "html_url": "https://github.com/odicho",
-        "followers_url": "https://api.github.com/users/odicho/followers",
-        "following_url": "https://api.github.com/users/odicho/following{/other_user}",
-        "gists_url": "https://api.github.com/users/odicho/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/odicho/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/odicho/subscriptions",
-        "organizations_url": "https://api.github.com/users/odicho/orgs",
-        "repos_url": "https://api.github.com/users/odicho/repos",
-        "events_url": "https://api.github.com/users/odicho/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/odicho/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 2
     }
 ]
