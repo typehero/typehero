@@ -65,30 +65,37 @@ export function ChallengeLayout({
   const LEFT_PANEL_BREAKPOINT = isDesktop ? 500 : 318;
   const COLLAPSE_BREAKPOINT = isCollapsed ? 50 : 300;
   const DEFAULT_DESKTOP_WIDTH_PX = `${LEFT_PANEL_BREAKPOINT}px`;
+  const COLLAPSED_DESKTOP_WIDTH = 60;
+  const COLLAPSED_MOBILE_HEIGHT = 41;
+  const leftStyleIfDesktopCollapsed = {
+    width: `${COLLAPSED_DESKTOP_WIDTH}px`,
+    minWidth: `${COLLAPSED_DESKTOP_WIDTH}px`,
+  };
+  const leftStyleIfMobileCollapsed = {
+    height: `${COLLAPSED_MOBILE_HEIGHT}px`,
+    minHeight: `${COLLAPSED_MOBILE_HEIGHT}px`,
+  };
 
-  const leftStyleIfDesktopCollapsed = { width: '60px', minWidth: '60px' };
-  const leftStyleIfMobileCollapsed = { height: '41px', minHeight: '41px' };
-
-  const isLeftCollapsed = () => {
-    const leftRef = leftSide.current;
-    if (!leftRef) return false;
-
+  const isPanelCollapsed = () => {
     const height = parseFloat(settings.height);
     const width = parseFloat(settings.width);
 
-    return height <= 41 || width <= 60;
+    return height <= COLLAPSED_MOBILE_HEIGHT || width <= COLLAPSED_DESKTOP_WIDTH;
   };
 
-  const isDesktopCollapsed = isDesktop && isLeftCollapsed();
-  const isMobileCollapsed = !isDesktop && isLeftCollapsed();
-
   const leftStyle = isDesktop
-    ? isDesktopCollapsed
+    ? isPanelCollapsed()
       ? leftStyleIfDesktopCollapsed
-      : { width: settings.width, minWidth: `${LEFT_PANEL_BREAKPOINT}px` }
-    : isMobileCollapsed
+      : {
+          width: settings.width,
+          minWidth: `${LEFT_PANEL_BREAKPOINT}px`,
+        }
+    : isPanelCollapsed()
     ? leftStyleIfMobileCollapsed
-    : { height: settings.height, minHeight: `${LEFT_PANEL_BREAKPOINT}px` };
+    : {
+        height: settings.height,
+        minHeight: `${LEFT_PANEL_BREAKPOINT}px`,
+      };
 
   useEffect(() => {
     const ref = resizer.current;
@@ -188,12 +195,28 @@ export function ChallengeLayout({
 
     // handle window resize
     const resizeHandler = () => {
-      setIsDesktop(window.innerWidth > MOBILE_BREAKPOINT);
+      const isDesktop = window.innerWidth > MOBILE_BREAKPOINT;
+      setIsDesktop(isDesktop);
+
+      const leftRef = leftSide.current;
+      if (!leftRef) return;
+
+      const height = parseFloat(leftRef.style.height);
+      const width = parseFloat(leftRef.style.width);
+
+      if (height <= 41 || width <= 60) {
+        if (isDesktop) {
+          leftRef.style.width = `${COLLAPSED_DESKTOP_WIDTH}px`;
+          updateSettings({ width: `${COLLAPSED_DESKTOP_WIDTH}px`, height: '300px' });
+        } else {
+          leftRef.style.height = `${COLLAPSED_MOBILE_HEIGHT}px`;
+          updateSettings({ width: '500px', height: `${COLLAPSED_MOBILE_HEIGHT}px` });
+        }
+      }
     };
 
     const handleResizerDoubleClick = () => {
       setIsCollapsed(isLeftPanelCollapsed());
-      console.log('handleResizerDoubleClick');
 
       if (!leftSide.current || !rightSide.current) return;
 
@@ -206,8 +229,6 @@ export function ChallengeLayout({
       } else {
         collapsePanel();
       }
-
-      console.log('setting height to: ', leftRef.offsetHeight);
 
       isDesktop
         ? updateSettings({ width: `${leftRef.offsetWidth}px`, height: settings.height })
