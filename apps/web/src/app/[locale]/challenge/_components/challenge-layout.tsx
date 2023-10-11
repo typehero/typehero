@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, type ReactNode, useState, type MutableRefObject } from 'react';
+import { useEffect, useRef, type ReactNode, useState, type MutableRefObject, useMemo } from 'react';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useFullscreenSettingsStore } from './fullscreen';
@@ -76,26 +76,32 @@ export function ChallengeLayout({
     minHeight: `${COLLAPSED_MOBILE_HEIGHT}px`,
   };
 
-  const isPanelCollapsed = () => {
+  const isPanelCollapsed = useMemo(() => {
     const height = parseFloat(settings.height);
     const width = parseFloat(settings.width);
 
     return height <= COLLAPSED_MOBILE_HEIGHT || width <= COLLAPSED_DESKTOP_WIDTH;
-  };
+  }, [settings.height, settings.width]);
 
-  const leftStyle = isDesktop
-    ? isPanelCollapsed()
-      ? leftStyleIfDesktopCollapsed
-      : {
-          width: settings.width,
-          minWidth: `${LEFT_PANEL_BREAKPOINT}px`,
-        }
-    : isPanelCollapsed()
-    ? leftStyleIfMobileCollapsed
-    : {
-        height: settings.height,
-        minHeight: `${LEFT_PANEL_BREAKPOINT}px`,
-      };
+  const leftStyle = useMemo(() => {
+    if (isDesktop) {
+      return isPanelCollapsed
+        ? leftStyleIfDesktopCollapsed
+        : {
+            width: settings.width,
+            minWidth: `${LEFT_PANEL_BREAKPOINT}px`,
+          };
+    } else {
+      return isPanelCollapsed
+        ? leftStyleIfMobileCollapsed
+        : {
+            height: settings.height,
+            minHeight: `${LEFT_PANEL_BREAKPOINT}px`,
+          };
+    }
+  }, [isDesktop, isPanelCollapsed, settings.height, settings.width]);
+
+  console.log('re-render');
 
   useEffect(() => {
     const ref = resizer.current;
