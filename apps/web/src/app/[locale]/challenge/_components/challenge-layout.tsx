@@ -233,12 +233,12 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
       <div
         className={
           isDesktop
-            ? 'resizer relative cursor-col-resize p-2'
+            ? 'resizer group relative cursor-col-resize p-2'
             : 'resizer relative cursor-row-resize p-2'
         }
         ref={resizer}
       >
-        <div className="absolute left-1/2 top-1/2 h-1 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-400 duration-300 group-hover:bg-neutral-600 group-active:duration-75 dark:bg-neutral-700 group-hover:dark:bg-neutral-500 lg:h-24 lg:w-1" />
+        <div className="group-hover:bg-primary group-active:bg-primary group-hover:dark:bg-primary absolute left-1/2 top-1/2 h-1 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-400 duration-300 group-active:duration-75 dark:bg-neutral-700 lg:h-24 lg:w-1" />
       </div>
       <div
         className="flex min-h-[90px] w-full flex-1 flex-grow flex-col overflow-hidden rounded-l-xl rounded-r-2xl border border-zinc-300 dark:border-zinc-700 lg:min-w-[500px]"
