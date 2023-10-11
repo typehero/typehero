@@ -1,5 +1,7 @@
 'use client';
 
+import { track } from '@vercel/analytics';
+
 import { Button } from '@repo/ui/components/button';
 import { ToastAction } from '@repo/ui/components/toast';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
@@ -91,6 +93,11 @@ export function CodePanel(props: CodePanelProps) {
         action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
       });
     }
+
+    // track if they clicked submit and if they had errors
+    track('challenge-submitted', {
+      success: !hasErrors,
+    });
   };
   const hasFailingTest = tsErrors?.some((e) => e.length) ?? false;
 
