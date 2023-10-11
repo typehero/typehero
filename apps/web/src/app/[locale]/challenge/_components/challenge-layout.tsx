@@ -255,6 +255,7 @@ export function ChallengeLayout({
     expandPanel,
     isCollapsed,
     isDesktop,
+    setIsDesktop,
     isLeftPanelCollapsed,
     leftSide,
     settings,
