@@ -41,7 +41,6 @@ module.exports = {
     'no-control-regex': 'off',
     'no-return-await': 'off',
     '@typescript-eslint/require-await': 'off',
-
     // Best practice/readability
     // Some of these might be opinions.
     // You can ignore if you'd like.

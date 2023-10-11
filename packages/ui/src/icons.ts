@@ -61,6 +61,7 @@ export {
   User,
   X,
   XCircle,
+  Trash,
   Text,
   FlaskConical,
   History,

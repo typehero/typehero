@@ -5,6 +5,7 @@ import { withUnstableCache } from '~/utils/withUnstableCache';
 import { getChallengeRouteData } from '../getChallengeRouteData';
 import { Solutions } from './_components';
 import { getSolutionsRouteData } from './getSolutionRouteData';
+import { createCacheKeyForSolutions } from './_components/_actions';
 
 interface Props {
   params: {
@@ -25,8 +26,8 @@ export default async function SolutionPage({ params: { id } }: Props) {
   const solutions = await withUnstableCache({
     fn: getSolutionsRouteData,
     args: [id, session],
-    keys: ['challenge-submissions'],
-    tags: [`challenge-${id}-submissions`],
+    keys: ['challenge-solutions'],
+    tags: [createCacheKeyForSolutions(Number(id))],
   });
 
   if (!solutions) {

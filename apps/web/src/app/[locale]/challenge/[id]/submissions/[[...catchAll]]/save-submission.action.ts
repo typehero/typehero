@@ -17,4 +17,5 @@ export async function saveSubmission(
     },
   });
   revalidateTag(`${challengeId}-challenge-submissions`);
+  revalidateTag(`challenge-${challengeId}-solutions`);
 }
