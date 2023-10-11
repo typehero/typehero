@@ -204,7 +204,7 @@ export function ChallengeLayout({
       const height = parseFloat(leftRef.style.height);
       const width = parseFloat(leftRef.style.width);
 
-      if (height <= 41 || width <= 60) {
+      if (height <= COLLAPSED_MOBILE_HEIGHT || width <= COLLAPSED_DESKTOP_WIDTH) {
         if (isDesktop) {
           leftRef.style.width = `${COLLAPSED_DESKTOP_WIDTH}px`;
           updateSettings({ width: `${COLLAPSED_DESKTOP_WIDTH}px`, height: '300px' });
