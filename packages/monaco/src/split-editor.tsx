@@ -230,7 +230,7 @@ export default function SplitEditor({
             setIsTestPanelExpanded(false);
           }}
         >
-          <div className="m-auto h-1 w-24 rounded-full bg-zinc-300 group-hover:bg-primary dark:bg-zinc-700 group-hover:dark:bg-primary group-active:bg-primary group-active:bg-primary duration-300" />
+          <div className="m-auto h-1 w-24 rounded-full bg-zinc-300 group-hover:bg-primary dark:bg-zinc-700 group-hover:dark:bg-primary group-active:bg-primary duration-300" />
         </div>
         <CodeEditor
           options={{
