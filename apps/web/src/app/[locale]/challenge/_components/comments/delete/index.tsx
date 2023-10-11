@@ -28,12 +28,19 @@ export function CommentDeleteDialog({
 
   async function handleDeleteComment() {
     try {
-      await deleteComment(comment.id);
-      toast({
-        title: 'Comment Deleted',
-        variant: 'success',
-        description: 'The comment was successfully deleted.',
-      });
+      const res = await deleteComment(comment.id, comment.userId);
+      if (res === 'unauthorized') {
+        toast({
+          title: 'Unauthorized',
+          description: <p>You need to be signed in to post a comment.</p>,
+        });
+      } else {
+        toast({
+          title: 'Comment Deleted',
+          variant: 'success',
+          description: 'The comment was successfully deleted.',
+        });
+      }
     } catch (e) {
       // todo: log on a dump service.
       console.log(e);
