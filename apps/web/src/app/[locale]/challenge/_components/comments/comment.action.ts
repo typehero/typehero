@@ -3,6 +3,7 @@
 import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import type { Comment, CommentRoot, PrismaClient } from '@repo/db/types';
+import { isAdminOrModerator, isAuthor } from '~/utils/auth-guards';
 
 /**
  *
@@ -86,12 +87,9 @@ export async function updateComment(text: string, id: number) {
  */
 export async function deleteComment(comment_id: number, author: string) {
   const session = await getServerAuthSession();
-
   if (!session?.user.id) return 'unauthorized';
   if (!comment_id) return 'invalid_comment';
-  const userRoles = session.user.role;
-  const isAuthorized = userRoles.includes('ADMIN') || userRoles.includes('MODERATOR') || author === session.user.id;
-
+  const isAuthorized = isAdminOrModerator(session) || isAuthor(session, author);
   if (!isAuthorized) {
     return 'unauthorized';
   }
