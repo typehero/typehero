@@ -223,7 +223,6 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
       ref={parent}
       style={{ height: fssettings.isFullscreen ? '100vh' : 'calc(100vh - 3.5rem)' }}
     >
-
       <div
         className="min-h-[318px] w-full overflow-hidden rounded-l-2xl rounded-r-xl border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800"
         ref={leftSide}
@@ -239,7 +238,7 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
         }
         ref={resizer}
       >
-        <div className="absolute left-1/2 top-1/2 h-1 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-400 duration-300 group-hover:bg-primary group-active:bg-primary group-active:duration-75 dark:bg-neutral-700 group-hover:dark:bg-primary lg:h-24 lg:w-1" />
+        <div className="group-hover:bg-primary group-active:bg-primary group-hover:dark:bg-primary absolute left-1/2 top-1/2 h-1 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-400 duration-300 group-active:duration-75 dark:bg-neutral-700 lg:h-24 lg:w-1" />
       </div>
       <div
         className="flex min-h-[90px] w-full flex-1 flex-grow flex-col overflow-hidden rounded-l-xl rounded-r-2xl border border-zinc-300 dark:border-zinc-700 lg:min-w-[500px]"
