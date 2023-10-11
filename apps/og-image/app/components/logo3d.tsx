@@ -11,13 +11,13 @@ export function Logo3d() {
         <rect width="637.029" height="637.029" rx="68.1096" fill="#3178C6" />
       </g>
       <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M275.704 313.881H354.636V262.692H134.631V313.881H213.176V541.802H275.704V313.881Z"
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M243.77 314.169H318.615V288.585V263H110V314.169H184.479V542H243.77V314.169Z"
         fill="white"
       />
       <path
-        d="M354.635 541.802V262.692H413.185V378.363H499.529V262.692H558.221V541.802H499.529V425.724H413.185V541.802H354.635Z"
+        d="M353.385 542V263H413.381V378.626H501.858V263H562V542H501.858V425.967H413.381V542H353.385Z"
         fill="white"
       />
       <defs>
