@@ -79,16 +79,22 @@ export async function updateComment(text: string, id: number) {
   });
 }
 /**
- * Delete's a comment given a comment id. It must
- * be your own comment.
- * @props comment_id The id of the comment.
+ * Deletes a comment given a comment ID. The user must be the author of the comment or have the role of 'ADMIN' or 'MODERATOR'.
+ * @param comment_id The ID of the comment to be deleted.
+ * @param author The ID of the user who authored the comment.
+ * @returns 'unauthorized' if the user is not authorized, 'invalid_comment' if the comment ID is not provided, or undefined if the comment is successfully deleted.
  */
-export async function deleteComment(comment_id: number) {
+export async function deleteComment(comment_id: number, author: string) {
   const session = await getServerAuthSession();
 
   if (!session?.user.id) return 'unauthorized';
   if (!comment_id) return 'invalid_comment';
+  const userRoles = session.user.role;
+  const isAuthorized = userRoles.includes('ADMIN') || userRoles.includes('MODERATOR') || author === session.user.id;
 
+  if (!isAuthorized) {
+    return 'unauthorized';
+  }
   const rootComment = await prisma.comment.findFirstOrThrow({
     where: {
       id: comment_id,
