@@ -1,10 +1,9 @@
 'use client';
 
-import { useEffect, useRef, type ReactNode, useState, useCallback } from 'react';
+import { useEffect, useRef, type ReactNode, useState, type MutableRefObject, useMemo } from 'react';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useFullscreenSettingsStore } from './fullscreen';
-import usePanelAdjustments from './usePanelAdjustments';
 import { getEventDeltas } from '@repo/monaco/utils';
 
 export const DEFAULT_SETTINGS = {
@@ -33,30 +32,74 @@ export const useLayoutSettingsStore = create<State>()(
 export interface ChallengeLayoutProps {
   left: ReactNode;
   right: ReactNode;
+  setIsDesktop: (bool: boolean) => void;
+  isDesktop: boolean;
+  leftSide: MutableRefObject<HTMLDivElement | null>;
+  collapsePanel: () => void;
+  expandPanel: () => void;
+  adjustPanelSize: (divideByW: number, divideByH: number, newDimensionValue: number) => void;
+  isLeftPanelCollapsed: () => boolean;
 }
 
-const MOBILE_BREAKPOINT = 1025;
+export const MOBILE_BREAKPOINT = 1025;
+export const COLLAPSED_DESKTOP_WIDTH = 60;
+export const COLLAPSED_MOBILE_HEIGHT = 41;
 
-export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
+export function ChallengeLayout({
+  left,
+  right,
+  setIsDesktop,
+  isDesktop,
+  leftSide,
+  adjustPanelSize,
+  collapsePanel,
+  expandPanel,
+  isLeftPanelCollapsed,
+}: ChallengeLayoutProps) {
   const parent = useRef<HTMLDivElement>(null);
   const resizer = useRef<HTMLDivElement>(null);
   const rightSide = useRef<HTMLDivElement>(null);
 
   const { settings, updateSettings } = useLayoutSettingsStore();
   const { fssettings, updateFSSettings } = useFullscreenSettingsStore();
-  const [isDesktop, setIsDesktop] = useState(window.innerWidth > MOBILE_BREAKPOINT);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const LEFT_PANEL_BREAKPOINT = isDesktop ? 500 : 318;
   const COLLAPSE_BREAKPOINT = isCollapsed ? 50 : 300;
   const DEFAULT_DESKTOP_WIDTH_PX = `${LEFT_PANEL_BREAKPOINT}px`;
 
-  const leftStyle = isDesktop
-    ? { width: settings.width, minWidth: LEFT_PANEL_BREAKPOINT }
-    : { height: settings.height, minHeight: LEFT_PANEL_BREAKPOINT };
+  const isPanelCollapsed = useMemo(() => {
+    const height = parseFloat(settings.height);
+    const width = parseFloat(settings.width);
 
-  const { leftSide, adjustPanelSize, expandPanel, collapsePanel, isLeftPanelCollapsed } =
-    usePanelAdjustments(DEFAULT_DESKTOP_WIDTH_PX, LEFT_PANEL_BREAKPOINT, isDesktop);
+    return height <= COLLAPSED_MOBILE_HEIGHT || width <= COLLAPSED_DESKTOP_WIDTH;
+  }, [settings.height, settings.width]);
+
+  const leftStyle = useMemo(() => {
+    const leftStyleIfDesktopCollapsed = {
+      width: `${COLLAPSED_DESKTOP_WIDTH}px`,
+      minWidth: `${COLLAPSED_DESKTOP_WIDTH}px`,
+    };
+    const leftStyleIfMobileCollapsed = {
+      height: `${COLLAPSED_MOBILE_HEIGHT}px`,
+      minHeight: `${COLLAPSED_MOBILE_HEIGHT}px`,
+    };
+
+    if (isDesktop) {
+      return isPanelCollapsed
+        ? leftStyleIfDesktopCollapsed
+        : {
+            width: settings.width,
+            minWidth: `${LEFT_PANEL_BREAKPOINT}px`,
+          };
+    }
+    return isPanelCollapsed
+      ? leftStyleIfMobileCollapsed
+      : {
+          height: settings.height,
+          minHeight: `${LEFT_PANEL_BREAKPOINT}px`,
+        };
+  }, [isDesktop, isPanelCollapsed, settings.height, settings.width, LEFT_PANEL_BREAKPOINT]);
 
   useEffect(() => {
     const ref = resizer.current;
@@ -156,18 +199,29 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
 
     // handle window resize
     const resizeHandler = () => {
-      setIsDesktop(window.innerWidth > MOBILE_BREAKPOINT);
+      const isDesktop = window.innerWidth > MOBILE_BREAKPOINT;
+      setIsDesktop(isDesktop);
 
-      if (isDesktop) {
-        leftRef.style.width = settings.width;
-        leftRef.style.height = 'auto';
-      } else {
-        leftRef.style.height = settings.height;
-        leftRef.style.width = 'auto';
+      const leftRef = leftSide.current;
+      if (!leftRef) return;
+
+      const height = parseFloat(leftRef.style.height);
+      const width = parseFloat(leftRef.style.width);
+
+      if (height <= COLLAPSED_MOBILE_HEIGHT || width <= COLLAPSED_DESKTOP_WIDTH) {
+        if (isDesktop) {
+          leftRef.style.width = `${COLLAPSED_DESKTOP_WIDTH}px`;
+          updateSettings({ width: `${COLLAPSED_DESKTOP_WIDTH}px`, height: '300px' });
+        } else {
+          leftRef.style.height = `${COLLAPSED_MOBILE_HEIGHT}px`;
+          updateSettings({ width: '500px', height: `${COLLAPSED_MOBILE_HEIGHT}px` });
+        }
       }
     };
 
     const handleResizerDoubleClick = () => {
+      setIsCollapsed(isLeftPanelCollapsed());
+
       if (!leftSide.current || !rightSide.current) return;
 
       const currentSize = isDesktop
@@ -176,19 +230,13 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
 
       if (currentSize < LEFT_PANEL_BREAKPOINT) {
         expandPanel();
-        if (isDesktop) {
-          leftSide.current.style.width = DEFAULT_DESKTOP_WIDTH_PX;
-        } else {
-          leftSide.current.style.height = settings.height;
-        }
       } else {
         collapsePanel();
-        if (isDesktop) {
-          leftSide.current.style.width = '0px';
-        } else {
-          leftSide.current.style.height = '0px';
-        }
       }
+
+      isDesktop
+        ? updateSettings({ width: `${leftRef.offsetWidth}px`, height: settings.height })
+        : updateSettings({ width: settings.width, height: `${leftRef.offsetHeight}px` });
     };
 
     window.addEventListener('resize', resizeHandler);
@@ -211,6 +259,7 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
     expandPanel,
     isCollapsed,
     isDesktop,
+    setIsDesktop,
     isLeftPanelCollapsed,
     leftSide,
     settings,
@@ -224,7 +273,7 @@ export function ChallengeLayout({ left, right }: ChallengeLayoutProps) {
       style={{ height: fssettings.isFullscreen ? '100vh' : 'calc(100vh - 3.5rem)' }}
     >
       <div
-        className="min-h-[318px] w-full overflow-hidden rounded-l-2xl rounded-r-xl border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800"
+        className="w-full overflow-hidden rounded-l-2xl rounded-r-xl border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800"
         ref={leftSide}
         style={{ ...leftStyle }}
       >

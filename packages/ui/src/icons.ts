@@ -62,4 +62,7 @@ export {
   X,
   XCircle,
   Trash,
+  Text,
+  FlaskConical,
+  History,
 } from 'lucide-react';
