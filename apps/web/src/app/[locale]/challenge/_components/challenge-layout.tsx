@@ -101,8 +101,6 @@ export function ChallengeLayout({
     }
   }, [isDesktop, isPanelCollapsed, settings.height, settings.width]);
 
-  console.log('re-render');
-
   useEffect(() => {
     const ref = resizer.current;
     const leftRef = leftSide.current;
