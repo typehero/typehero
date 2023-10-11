@@ -64,12 +64,12 @@ export function Features() {
             <ImageCard
               imgClass1={clsx(
                 'pointer-events-none transition-transform duration-500 bg-neutral-50/30 dark:bg-neutral-800/30',
-                'scale-[150%] sm:scale-[110%] md:scale-[150%] sm:top-[50%] max-md:rounded-sm rounded-xl top-[75%] left-[69px] md:top-[50%] lg:top-[65%] w-[42%] md:-bottom-[11%] sm:left-[40px] lg:w-[69%]',
-                'md:group-hover:translate-x-2 md:group-hover:scale-[140%]',
+                'scale-[150%] sm:scale-[110%] md:scale-[150%] sm:top-[55%] max-md:rounded-sm rounded-xl top-[75%] left-[69px] md:top-[50%] lg:top-[65%] w-[42%] md:-bottom-[11%] sm:left-[40px] lg:w-[69%]',
+                'md:group-hover:translate-x-2 md:top-[60%] md:group-hover:scale-[140%]',
               )}
               imgClass2={clsx(
                 'pointer-events-none transition-transform duration-500 bg-neutral-50/50 dark:bg-zinc-800/60 backdrop-blur-sm translate-x-0',
-                'scale-[190%] sm:scale-[150%] sm:top-[50%] md:scale-[150%] md:top-[45%] lg:top-[55%] rounded-2xl max-md:rounded-md left-[70%] top-[80%] md:top-auto w-[50%] sm:left-[39%] md:-bottom-[12%] lg:w-[77%]',
+                'scale-[190%] sm:scale-[150%] sm:top-[50%] md:scale-[150%] md:top-[45%] lg:top-[55%] rounded-2xl max-md:rounded-md left-[70%] top-[80%] w-[50%] sm:left-[39%] md:-bottom-[12%] lg:w-[77%]',
                 'md:group-hover:scale-[155%] md:group-hover:-translate-x-2',
               )}
               description="Engage in TypeScript challenges to strengthen your grasp of the type system and advanced features"
@@ -91,7 +91,7 @@ export function Features() {
             <ChallengeCreationCard
               step1img1Class={clsx(
                 'pointer-events-none w-[50%] border border-zinc-300/50 transition-all duration-500 dark:border-zinc-700/50',
-                'max-md:scale-[160%] lg:scale-[160%] max-md:rounded-xl rounded-2xl left-[25%] top-[57%] md:left-[35px] md:top-[41%]',
+                'max-md:scale-[160%] lg:scale-[160%] max-md:rounded-xl rounded-2xl left-1/4 top-[57%] md:left-[35px] md:top-[41%]',
                 'md:group-hover:translate-y-2',
               )}
               step1img2Class={clsx(
@@ -100,13 +100,13 @@ export function Features() {
                 'md:group-hover:-translate-y-6',
               )}
               step2img1Class={clsx(
-                'pointer-events-none w-[50%] rounded-t-xl overflow-hidden border border-zinc-300 transition-all duration-500 dark:border-zinc-700',
-                'max-md:scale-[160%] lg:scale-[150%] lg:top-[70%] left-[25%] top-[100%] md:left-[35px] md:top-[30%]',
+                'pointer-events-none w-[50%] scale-1/2 rounded-t-xl overflow-hidden border border-zinc-300 transition-all duration-500 dark:border-zinc-700',
+                'max-md:scale-[100%] lg:scale-1 lg:top-[40%] left-[0%] top-[40%] lg:top-[30%] md:left-[17px] md:top-[40%]',
                 'md:group-hover:translate-y-2',
               )}
               step2img2Class={clsx(
-                'pointer-events-none w-[110%] rounded-t-xl border border-zinc-300 dark:border-zinc-700 transition-all duration-500 rounded-xl overflow-hidden group-hover:-translate-y-6',
-                'max-md:scale-[140%] lg:scale-[150%] lg:top-[60%] left-[70%] top-[80%] md:top-[30%] md:left-[calc(50%+35px+1rem)]',
+                'pointer-events-none w-[50%] scale-1/2 rounded-t-xl border border-zinc-300 dark:border-zinc-700 transition-all duration-500 rounded-xl overflow-hidden group-hover:-translate-y-6',
+                'max-md:scale-[100%] lg:scale-1 lg:top-[40%] left-[50%] top-[40%] md:top-[40%] lg:top-[30%] md:left-[calc(50%+17px+1rem)]',
                 'md:group-hover:-translate-y-2',
               )}
               step3imgClass={clsx(
