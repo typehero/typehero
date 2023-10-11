@@ -39,12 +39,14 @@ export function Community() {
       <section className={clsx(styles.backdrop, 'relative -mb-[1px] pb-[1px]')}>
         <div className="backdrop-blur-md">
           <div className="container flex flex-col justify-center pt-[128px] lg:flex-row lg:items-center lg:pb-[148px]">
-            <div className="flex flex-1 flex-col items-center gap-6 pb-36 lg:items-start lg:pb-0">
+            <div className="flex flex-1 flex-col items-center gap-6 pb-12 lg:items-start lg:pb-0">
               <div className="rounded-full bg-gradient-to-r from-[#31bdc6] to-[#3178c6] p-[1px] brightness-90 contrast-150 dark:brightness-125 dark:contrast-100">
                 <div className="rounded-full bg-white/80 px-3 py-1 dark:bg-black/80">
                   <span className="flex items-center bg-gradient-to-r from-[#31bdc6] to-[#3178c6] bg-clip-text text-transparent">
-                    <GitBranch className="mr-2 h-4 w-4 stroke-[#31bdc6] stroke-2" /> By developers,
-                    for developers
+                    <GitBranch className="h-4 w-4 stroke-[#31bdc6] stroke-2 sm:mr-2 lg:mr-0 xl:mr-2" />
+                    <span className="hidden sm:block lg:hidden xl:block">
+                      By developers, for developers
+                    </span>
                   </span>
                 </div>
               </div>
@@ -55,12 +57,12 @@ export function Community() {
                 TypeHero is free, open-source, and built by developers just like you. These are some
                 of the contributors who made this possible so far.
               </p>
-              <div className="flex flex-col gap-3 sm:flex-row">
+              <div className="flex flex-col-reverse gap-3 sm:flex-row lg:flex-col-reverse xl:flex-row">
                 <a
                   target="_blank"
                   rel="noreferrer"
                   href="https://discord.gg/trashdev"
-                  className="group mx-auto flex items-center gap-2 rounded-xl bg-neutral-200 px-3 py-2 text-sm font-bold duration-300 hover:bg-[#5865F2] hover:text-white dark:bg-neutral-800 dark:hover:bg-[#5865F2]"
+                  className="group mx-auto flex items-center gap-2 rounded-xl bg-neutral-200 px-3 py-2 text-sm font-bold duration-300 hover:bg-[#5865F2] hover:text-white dark:bg-neutral-800 dark:hover:bg-[#5865F2] lg:ml-0 lg:mr-auto"
                 >
                   <svg
                     className="h-4 w-4 fill-current group-hover:rotate-[360deg]"
@@ -94,11 +96,11 @@ export function Community() {
                 </a>
               </div>
             </div>
-            <div className="relative flex-1 pb-36 pl-4 lg:pb-0">
-              {/* mobile width = w-16(4rem) * 4items  +  gap-x-3(0.75rem) * 3gaps */}
-              {/* medium width = 4rem * 5items + 0.75rem * 4gaps = 23rem  */}
-              {/* large width = 4rem * 6items + 0.75rem * 5gaps =  */}
-              <div className="honeycomboverride mx-auto flex w-[18.25rem] flex-wrap gap-x-3 gap-y-1 sm:w-[23rem] xl:w-[27.75rem] xl:[&>*:nth-child(11n_+_1)]:ml-[2.375rem] [&>*:nth-child(7n_+_1)]:ml-[2.375rem] sm:[&>*:nth-child(7n_+_1)]:ml-0 sm:[&>*:nth-child(9n_+_1)]:ml-[2.375rem] xl:[&>*:nth-child(9n_+_1)]:ml-0">
+            <div className="relative flex-1 pb-36 lg:pb-0 lg:pl-4">
+              {/* width    = w-12(3rem) * 5items  +  gap-x-3(0.75rem) * 4gaps = 18rem */}
+              {/* sm width = w-16(4rem) * 7items  +  gap-x-3(0.75rem) * 6gaps = 23rem  */}
+              {/* // TODO: xl width whatever */}
+              <div className="honeycomboverride mx-auto flex w-[18rem] flex-wrap gap-x-3 gap-y-1 sm:w-[32.5rem] sm:[&>*:nth-child(13n_+_1)]:ml-[2.375rem] lg:[&>*:nth-child(13n_+_1)]:ml-0 [&>*:nth-child(9n_+_1)]:ml-[2.375rem] sm:[&>*:nth-child(9n_+_1)]:ml-0">
                 {contributors.map((contributor) => (
                   <a
                     className="group rounded-full duration-300 hover:scale-125 focus:outline-none focus:duration-0 focus-visible:ring-0 active:scale-105 active:duration-100"
@@ -108,7 +110,7 @@ export function Community() {
                     target="_blank"
                   >
                     <Image
-                      className="honeycombchild h-16 w-16 rounded-3xl bg-cover duration-300 group-hover:rounded-[2rem] group-focus:outline-none group-focus:duration-0 group-focus-visible:ring-2 group-active:rounded-3xl group-active:duration-100"
+                      className="honeycombchild h-12 w-12 rounded-2xl bg-cover duration-300 group-hover:rounded-[2rem] group-focus:outline-none group-focus:duration-0 group-focus-visible:ring-2 group-active:rounded-3xl group-active:duration-100 sm:h-16 sm:w-16 sm:rounded-3xl"
                       src={contributor.avatar_url}
                       width={64}
                       height={64}

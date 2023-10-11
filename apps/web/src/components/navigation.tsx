@@ -56,15 +56,15 @@ export function Navigation({
                 href="/"
               >
                 <svg
-                  className="h-8 w-8 rounded-md bg-[#3178C6] p-[2px]"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-8 w-8 rounded-md"
                   viewBox="0 0 38 38"
                   fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
                 >
                   <rect width="38" height="38" rx="4.5" fill="#3178C6" />
                   <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
                     d="M15.6947 20.9344H20V18H8V20.9344H12.2842V34H15.6947V20.9344Z"
                     fill="white"
                   />

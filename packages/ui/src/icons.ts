@@ -48,6 +48,7 @@ export {
   Shapes,
   Share,
   Sparkle,
+  Sparkles,
   SquareSlash,
   Sun,
   Sword,
