@@ -69,16 +69,8 @@ export async function GET(req: Request) {
             <div tw="flex absolute top-10 right-10">
               <Logo3d />
             </div>
-
-            <p tw="flex items-center -mt-3">
-              <p tw="text-2xl font-bold bg-zinc-600 rounded-full px-3 py-1.5">
-                <span>@</span>
-                <span>{props.username}</span>
-              </p>
-              <p tw="text-2xl ml-4">{props.date}</p>
-            </p>
             <h1
-              tw="text-7xl font-bold truncate pr-48 -mt-2 overflow-ellipsis"
+              tw="text-7xl truncate pr-48 mt-0 overflow-ellipsis"
               style={{ fontWeight: '800 !important' }}
             >
               {props.title === null ? null : props.title.split(' | ')[0]}
@@ -87,10 +79,15 @@ export async function GET(req: Request) {
               <p
                 tw={`${
                   COLORS_BY_DIFFICULTY[props.difficulty]
-                } text-black font-bold text-2xl px-6 py-1.5 rounded-full`}
+                } text-black font-bold text-2xl rounded-full px-6 py-1.5 mb-0`}
               >
                 {props.difficulty}
               </p>
+              <p tw="bg-zinc-600 font-bold text-2xl rounded-full px-3 pt-1.5 pb-2 ml-4 mb-0">
+                <span>@</span>
+                <span>{props.username}</span>
+              </p>
+              <p tw="text-2xl ml-4 mb-0">{props.date}</p>
             </p>
             <p tw="text-3xl text-zinc-300">{props.description}</p>
           </div>
