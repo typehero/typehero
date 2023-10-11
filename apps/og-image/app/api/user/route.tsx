@@ -27,7 +27,7 @@ export async function GET(req: Request) {
         <Grid />
         <div tw="flex flex-col justify-center items-center text-center h-full w-full">
           <Logo />
-          <h1 tw="text-6xl pt-3 font-bold">{props.username}</h1>
+          <h1 tw="text-6xl pt-3 font-bold mt-6">{props.username}</h1>
           <p tw="text-3xl text-zinc-300">
             A user that we can prolly pull data from the db or at least their avatar maybe?
           </p>
