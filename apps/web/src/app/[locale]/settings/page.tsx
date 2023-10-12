@@ -30,8 +30,6 @@ export default async function SettingsPage() {
     },
   });
 
-  console.log(profileData);
-
   return (
     <>
       <NewSettings user={profileData} />
