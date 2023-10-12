@@ -98,7 +98,7 @@ export function LeftWrapper({ challengeId, children, expandPanel, isDesktop }: P
         ref={tabsListRef}
       >
         <TabsTrigger
-          className={`rounded-md rounded-tl-xl duration-300 hover:bg-neutral-200 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700 dark:data-[state=active]:bg-neutral-700 ${
+          className={`rounded-md rounded-tl-xl duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700 ${
             isCollapsed ? (isDesktop ? 'rounded-r-lg py-4' : 'rounded-bl-xl') : ''
           }`}
           onClick={() => {
