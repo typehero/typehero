@@ -35,7 +35,7 @@ const usePanelAdjustments = (
     if (isPlayground) {
       leftSide.current.style.opacity = '0%';
     }
-  }, [isDesktop]);
+  }, [isDesktop, isPlayground]);
 
   const isLeftPanelCollapsed = useCallback(() => {
     if (!leftSide.current) return false;

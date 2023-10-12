@@ -26,7 +26,7 @@ export function ChallengePlaygroundLayoutWrapper({ children }: { children: React
     <ChallengeLayout
       left={<LeftWrapper>{children}</LeftWrapper>}
       right={<Wrapper />}
-      isPlayground={true}
+      isPlayground
       {...props}
     />
   );
