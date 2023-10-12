@@ -14,14 +14,15 @@ export async function updateProfile(profileData: ProfileSchema) {
   const session = await getServerAuthSession();
 
   // 1. Checks that the user is logged in
-  if (!session?.user.id) return 'unauthorized';
+  if (!session?.user.id) return { error: 'unauthorized' };
 
   // 2. test schema validation with zod
   try {
-    console.log("validating", profileData);
     profileSchema.parse(profileData);
-  } catch (error) {
-    return error;
+    console.log('validated', profileData);
+  } catch (error: any) {
+    console.log('Error validating profile data', error);
+    return { error: error.message };
   }
 
   // 3. Update the user bio field in the db
@@ -43,6 +44,8 @@ export async function updateProfile(profileData: ProfileSchema) {
       }),
     ),
   );
+
+  return { success: true }
 
   // do this after we do the shit
   revalidatePath('/settings');
