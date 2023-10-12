@@ -68,8 +68,8 @@ export function ChallengeLayout({
 
   const LEFT_PANEL_BREAKPOINT = isDesktop ? 500 : 318;
   const COLLAPSE_BREAKPOINT = isCollapsed ? 50 : 300;
-  const _COLLAPSED_MOBILE_HEIGHT = isPlayground ? 2 : COLLAPSED_MOBILE_HEIGHT;
-  const _COLLAPSED_DESKTOP_WIDTH = isPlayground ? 2 : COLLAPSED_DESKTOP_WIDTH;
+  const _COLLAPSED_MOBILE_HEIGHT = isPlayground ? 0 : COLLAPSED_MOBILE_HEIGHT;
+  const _COLLAPSED_DESKTOP_WIDTH = isPlayground ? 0 : COLLAPSED_DESKTOP_WIDTH;
 
   const DEFAULT_DESKTOP_WIDTH_PX = `${LEFT_PANEL_BREAKPOINT}px`;
 
@@ -286,7 +286,9 @@ export function ChallengeLayout({
       style={{ height: fssettings.isFullscreen ? '100vh' : 'calc(100vh - 3.5rem)' }}
     >
       <div
-        className="w-full overflow-hidden rounded-l-2xl rounded-r-xl border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800"
+        className={`w-full overflow-hidden rounded-l-2xl rounded-r-xl border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 ${
+          !isPlayground && 'border'
+        }`}
         ref={leftSide}
         style={{ ...leftStyle }}
       >
