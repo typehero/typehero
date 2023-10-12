@@ -66,7 +66,7 @@ const withVercelToolbar = vercelToolbar();
 export default million.next(
   withSentryConfig(
     // NOTE: this whole package is bugged and once they fix this we can remove this workaround
-    // @ts-expect-error
+    // @ts-ignore
     withBundleAnalyzer(withVercelToolbar(nextConfig)),
     {
       // For all available options, see:
