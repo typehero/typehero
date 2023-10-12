@@ -1,5 +1,8 @@
+import { getServerAuthSession } from '@repo/auth/server';
 import { TrackDetail } from '../_components/track-details';
 import { getTrackDetails } from '../_components/track.action';
+import { getAllFlags } from '~/utils/feature-flags';
+import { redirect } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 
@@ -10,7 +13,13 @@ interface Props {
 }
 
 // todo: write a suspense skeleton...
-export default function Page({ params }: Props) {
+export default async function Page({ params }: Props) {
+  const session = await getServerAuthSession();
+  const flags = await getAllFlags();
+
+  if (!session && flags.enableEarlyAccess) {
+    return redirect('/waitlist');
+  }
   return <TrackDetail slug={params.slug} />;
 }
 

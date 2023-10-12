@@ -4,6 +4,8 @@ import { Comments } from '../_components/comments';
 import { getChallengeRouteData } from './getChallengeRouteData';
 import { buildMetaForChallenge } from '~/app/metadata';
 import { getRelativeTime } from '~/utils/relativeTime';
+import { getAllFlags } from '~/utils/feature-flags';
+import { redirect } from 'next/navigation';
 
 interface Props {
   params: {
@@ -25,7 +27,14 @@ export async function generateMetadata({ params: { id } }: Props) {
 }
 
 export default async function Challenges({ params: { id: challengeId } }: Props) {
+  // early acces you must be authorized
   const session = await getServerAuthSession();
+  const flags = await getAllFlags();
+
+  if (!session && flags.enableEarlyAccess) {
+    return redirect('/waitlist');
+  }
+
   const challenge = await getChallengeRouteData(challengeId, session);
 
   return (
