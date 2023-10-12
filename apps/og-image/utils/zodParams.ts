@@ -19,7 +19,6 @@ export function zodParams<TType>(schema: z.ZodType<TType>) {
     decodeRequest: (req: Request) => {
       const url = new URL(req.url);
       const obj = Object.fromEntries(url.searchParams.entries());
-      console.log(url);
 
       return querySchema.safeParse(obj);
     },
