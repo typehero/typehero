@@ -17,7 +17,6 @@ export function Wrapper() {
   };
   return (
     <CodePanel
-      track={track}
       challenge={values.challenge}
       saveSubmission={(() => {}) as unknown as CodePanelProps['saveSubmission']}
       submissionDisabled={false}
