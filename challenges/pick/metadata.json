@@ -1,0 +1,10 @@
+{
+  "id": "pick",
+  "prerequisites": [
+    "literal-types",
+    "keyof",
+    "type-unions",
+    "mapped-object-types",
+    "generic-constraints"
+  ]
+}

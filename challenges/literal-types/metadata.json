@@ -1,0 +1,4 @@
+{
+  "id": "literal-types",
+  "prerequisites": ["primitive-types", "type-unions"]
+}
