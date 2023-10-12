@@ -122,7 +122,7 @@ export function LeftWrapper({ challengeId, children, expandPanel, isDesktop }: P
           {isCollapsed && isDesktop ? <FlaskConical className="h-4 w-4" /> : 'Solutions'}
         </TabsTrigger>
         <TabsTrigger
-          className={`rounded-md rounded-tr-lg duration-300 hover:bg-neutral-200 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700 dark:data-[state=active]:bg-neutral-700 ${
+          className={`rounded-md rounded-tr-lg duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700 ${
             isCollapsed ? (isDesktop ? 'rounded-md py-4' : 'rounded-br-xl') : ''
           }`}
           onClick={() => {
