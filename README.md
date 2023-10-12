@@ -8,7 +8,7 @@
   </a>
 </p>
 
-![typehero header](./media/og.png)
+![typehero header](./media/og-hub-banner.png)
 
 ### 👋 About Us
 
