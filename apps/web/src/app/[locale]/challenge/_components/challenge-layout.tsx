@@ -114,9 +114,6 @@ export function ChallengeLayout({
     _COLLAPSED_DESKTOP_WIDTH,
   ]);
 
-  console.log({ ...leftStyle });
-  console.log({ ...settings });
-
   useEffect(() => {
     const ref = resizer.current;
     const leftRef = leftSide.current;
