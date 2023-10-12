@@ -154,7 +154,13 @@ main {
 .w-md-editor-preview .wmde-markdown {
   @apply bg-muted;
 }
+.wmde-markdown ol {
+  list-style: null !important;
+}
 
+.wmde-markdown ul {
+  list-style: unset !important;
+}
 .custom-scrollable-element::-webkit-scrollbar {
   width: 0.6rem;
 }

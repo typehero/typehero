@@ -37,6 +37,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
 import { Button } from '@repo/ui/components/button';
 import { CommentSkeleton } from './comment-skeleton';
+import { isAdminOrModerator } from '~/utils/auth-guards';
 
 interface SingleCommentProps {
   comment: PaginatedComments['comments'][number];
@@ -340,6 +341,7 @@ function SingleComment({
   const loggedinUser = useSession();
 
   const isAuthor = loggedinUser.data?.user.id === comment.user.id;
+  const isAdminAndModerator = isAdminOrModerator(loggedinUser.data);
 
   useEffect(() => {
     if (!isHighlighted) return;
@@ -472,7 +474,7 @@ function SingleComment({
                 </TooltipContent>
               </Tooltip>
             ) : null}
-            {isAuthor ? (
+            {isAuthor || isAdminAndModerator ? (
               <Tooltip>
                 <CommentDeleteDialog asChild comment={comment}>
                   <TooltipTrigger asChild>
