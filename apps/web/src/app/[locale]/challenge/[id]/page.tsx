@@ -29,7 +29,7 @@ export default async function Challenges({ params: { id: challengeId } }: Props)
   const challenge = await getChallengeRouteData(challengeId, session);
 
   return (
-    <div className="relative h-full">
+    <div className="relative h-full ">
       <Description challenge={challenge} />
       <Comments rootId={challenge.id} type="CHALLENGE" />
     </div>

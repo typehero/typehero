@@ -3,6 +3,7 @@ import { userParam } from 'utils/zodParams';
 import { fetchFont } from 'utils/fetchFont';
 import { Grid } from 'app/components/grid';
 import { Logo } from 'app/components/logo';
+import Image from 'next/image';
 
 export const runtime = 'edge';
 
@@ -23,14 +24,19 @@ export async function GET(req: Request) {
 
   return new ImageResponse(
     (
-      <div tw="bg-black h-full w-full text-white bg-cover flex flex-col px-32 py-14">
+      <div tw="bg-black h-full w-full text-white bg-cover flex flex-col px-14 py-10">
         <Grid />
-        <div tw="flex flex-col justify-center items-center text-center h-full w-full">
-          <Logo />
-          <h1 tw="text-6xl pt-3 font-bold mt-6">{props.username}</h1>
-          <p tw="text-3xl text-zinc-300">
-            A user that we can prolly pull data from the db or at least their avatar maybe?
-          </p>
+        <div tw="flex flex-col text-center h-full w-full gap-4 justify-between">
+          <div tw="flex justify-between">
+            {props.avatar ? (
+              <img src={props.avatar} tw="object-cover h-36 w-36 rounded-full" />
+            ) : null}
+            <Logo />
+          </div>
+          <div tw="flex flex-col text-left">
+            <h1 tw="text-6xl font-bold">{props.username}</h1>
+            {props.bio ? <p tw="text-4xl text-zinc-300">{props.bio}</p> : null}
+          </div>
         </div>
       </div>
     ),

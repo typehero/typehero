@@ -52,6 +52,8 @@ export default function Page() {
             alt="ayo"
             src={`/api/user?${userParam.toSearchString({
               username: 'Hacksore',
+              bio: 'This is a test card that has a has a nice description lorem40 ipsum dolor sit amet, consectetur adipiscing elit. lorem more text here s aothesntohks anatoh esn uthsanotedhusn hwanoejt hsaont hesnathdoneitsdhsas asnoehusnatohesunthaoenst',
+              avatar: 'https://avatars.githubusercontent.com/u/32938743?v=4',
             })}&random=${nonce}`}
           />
         </div>
