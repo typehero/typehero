@@ -1,7 +1,6 @@
 'use client';
 
 import { signIn, signOut, useSession } from '@repo/auth/react';
-import { type RoleTypes } from '@repo/db/types';
 import { Button } from '@repo/ui/components/button';
 import {
   DropdownMenu,
@@ -30,17 +29,9 @@ export function getAdminUrl() {
   return `http://localhost:3001`;
 }
 
-const roleTypes: typeof RoleTypes = {
-  USER: 'USER',
-  ADMIN: 'ADMIN',
-  MODERATOR: 'MODERATOR',
-  CREATOR: 'CREATOR',
-};
-
 export function Navigation() {
   const { fssettings } = useFullscreenSettingsStore();
   const pathname = usePathname();
-  const { data } = useSession();
   const featureFlags = useContext(FeatureFlagContext);
 
   return (
@@ -65,8 +56,8 @@ export function Navigation() {
                 >
                   <rect width="38" height="38" rx="4.5" fill="#3178C6" />
                   <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
+                    fillRule="evenodd"
+                    clipRule="evenodd"
                     d="M15.6947 20.9344H20V18H8V20.9344H12.2842V34H15.6947V20.9344Z"
                     fill="white"
                   />
