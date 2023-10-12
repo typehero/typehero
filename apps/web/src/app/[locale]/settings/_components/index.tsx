@@ -2,7 +2,6 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
-import * as z from 'zod';
 import Link from 'next/link';
 import { updateProfile } from './settings.action';
 import { toast } from '@repo/ui/components/use-toast';
@@ -10,33 +9,18 @@ import { Button } from '@repo/ui/components/button';
 import { Form, FormField, FormItem, FormMessage } from '@repo/ui/components/form';
 import { MagicIcon } from '@repo/ui/components/magic-icon';
 import { Input } from '@repo/ui/components/input';
-import { createNoProfanitySchemaWithValidate } from '~/utils/antiProfanityZod';
 import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
+import { profileSchema, type ProfileSchema } from './schema';
 
 export interface UserLinkType {
   id: string | null;
   url: string;
 }
 
-const formSchema = z.object({
-  userLinks: z.array(
-    z.object({
-      id: z.union([z.string(), z.null()]),
-      url: z.union([
-        createNoProfanitySchemaWithValidate((str) => str.url().max(256)),
-        z.literal(''),
-      ]),
-    }),
-  ),
-  bio: createNoProfanitySchemaWithValidate((str) => str.max(256)),
-});
-
-export type FormSchema = z.infer<typeof formSchema>;
-
 // million-ignore
-export function Settings({ profileData, username }: { profileData: FormSchema; username: string }) {
-  const form = useForm<FormSchema>({
-    resolver: zodResolver(formSchema),
+export function Settings({ profileData, username }: { profileData: ProfileSchema; username: string }) {
+  const form = useForm<ProfileSchema>({
+    resolver: zodResolver(profileSchema),
     defaultValues: {
       ...profileData,
     },
@@ -56,7 +40,7 @@ export function Settings({ profileData, username }: { profileData: FormSchema; u
     name: 'userLinks',
   });
 
-  const onSubmit = async (values: FormSchema) => {
+  const onSubmit = async (values: ProfileSchema) => {
     const isValid = await form.trigger();
 
     if (!isValid) return;
