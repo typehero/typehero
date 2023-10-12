@@ -20,9 +20,10 @@ export async function updateProfile(profileData: ProfileSchema) {
   try {
     profileSchema.parse(profileData);
     console.log('validated', profileData);
+    // eslint-disable-next-line
   } catch (error: any) {
     console.log('Error validating profile data', error);
-    return { error: error.message };
+    return { error: error?.message };
   }
 
   // 3. Update the user bio field in the db
@@ -45,7 +46,7 @@ export async function updateProfile(profileData: ProfileSchema) {
     ),
   );
 
-  return { success: true }
+  return { success: true };
 
   // do this after we do the shit
   revalidatePath('/settings');

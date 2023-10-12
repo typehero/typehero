@@ -62,7 +62,7 @@ function ProfileForm({ user }: Props) {
     // NOTE: sort the user links so empty strings are at the bottom
     .sort((a, b) => b.url.localeCompare(a.url));
 
-  const form = useForm < ProfileSchema > ({
+  const form = useForm<ProfileSchema>({
     resolver: zodResolver(profileSchema),
     mode: 'onChange',
     defaultValues: {

@@ -107,17 +107,19 @@ export const Settings = ({ user }: Props) => {
           <div className="flex gap-4 pr-6 md:flex-col">
             {links.map(({ icon: Icon, name, link, disabled }) => {
               const Comp = disabled ? 'div' : Link;
-              return <Comp href={link} key={name} className="w-full">
-                <VerticalTabsTrigger
-                  className="flex w-full items-center justify-center gap-3 px-2 md:justify-normal md:px-3"
-                  value={name.toLowerCase()}
-                  key={name}
-                  disabled={disabled}
-                >
-                  <Icon className="h-4 w-4" />
-                  <span className="hidden md:block">{name}</span>
-                </VerticalTabsTrigger>
-              </Comp>
+              return (
+                <Comp href={link} key={name} className="w-full">
+                  <VerticalTabsTrigger
+                    className="flex w-full items-center justify-center gap-3 px-2 md:justify-normal md:px-3"
+                    value={name.toLowerCase()}
+                    key={name}
+                    disabled={disabled}
+                  >
+                    <Icon className="h-4 w-4" />
+                    <span className="hidden md:block">{name}</span>
+                  </VerticalTabsTrigger>
+                </Comp>
+              );
             })}
           </div>
         </VerticalTabsList>
