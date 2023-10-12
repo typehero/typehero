@@ -245,9 +245,28 @@ main {
 }
 
 /* overrides a conflicting style on the honeycomb grid */
-@media (min-width: 1280px) {
+.honeycomboverride > *:first-child {
+  margin-left: 2.375rem /* 38px */ !important;
+}
+
+@media (min-width: 1025px) {
   .honeycomboverride > *:first-child {
-    margin-left: 2.375rem /* 38px */ !important;
+    margin-left: -4.75rem !important;
+  }
+  .honeycomboverride > *:nth-child(9) {
+    margin-left: -2.375rem !important;
+  }
+  .honeycomboverride > *:nth-child(14) {
+    margin-left: 0rem !important;
+  }
+  .honeycomboverride > *:nth-child(23) {
+    margin-left: 2.375rem !important;
+  }
+  .honeycomboverride > *:nth-child(23) {
+    margin-left: 2.375rem !important;
+  }
+  .honeycomboverride > *:nth-child(13n + 23) {
+    margin-left: 2.375rem !important;
   }
 }
 
