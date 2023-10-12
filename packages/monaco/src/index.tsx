@@ -1,7 +1,5 @@
 'use client';
 
-import { track } from '@vercel/analytics';
-
 import { Button } from '@repo/ui/components/button';
 import { ToastAction } from '@repo/ui/components/toast';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
@@ -18,6 +16,7 @@ import SplitEditor, { TESTS_PATH, USER_CODE_PATH } from './split-editor';
 import { createTwoslashInlayProvider } from './twoslash';
 import { useLocalStorage } from './useLocalStorage';
 
+type AllowedPropertyValues = boolean | number | string | null;
 export interface CodePanelProps {
   challenge: {
     id: number;
@@ -29,6 +28,7 @@ export interface CodePanelProps {
   settingsElement: React.ReactNode;
   updatePlaygroundTestsLocalStorage?: (code: string) => void;
   updatePlaygroundCodeLocalStorage?: (code: string) => void;
+  track?: (event: string, props?: Record<string, AllowedPropertyValues>) => void;
 }
 
 export type TsErrors = [
@@ -95,7 +95,7 @@ export function CodePanel(props: CodePanelProps) {
     }
 
     // track if they clicked submit and if they had errors
-    track('challenge-submitted', {
+    props.track?.('challenge-submitted', {
       success: !hasErrors,
     });
   };

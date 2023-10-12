@@ -5,6 +5,7 @@ import { FullscreenButton } from '../../challenge/_components/fullscreen';
 import { ResetEditorButton } from '../../challenge/_components/reset-editor-button';
 import { SettingsButton } from '../../challenge/_components/settings/settings-button';
 import { useChallengePlaygroundStore } from './challenge-playground-store';
+import { track } from '@vercel/analytics';
 
 export function Wrapper() {
   const { values, updateValues } = useChallengePlaygroundStore();
@@ -16,6 +17,7 @@ export function Wrapper() {
   };
   return (
     <CodePanel
+      track={track}
       challenge={values.challenge}
       saveSubmission={(() => {}) as unknown as CodePanelProps['saveSubmission']}
       submissionDisabled={false}

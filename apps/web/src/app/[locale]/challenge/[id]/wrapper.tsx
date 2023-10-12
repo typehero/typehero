@@ -9,6 +9,7 @@ import { FullscreenButton } from '../_components/fullscreen';
 import { ResetEditorButton } from '../_components/reset-editor-button';
 import { EditorShortcutsButton } from '../_components/editor-shortcuts/editor-shortcuts-button';
 import { SettingsButton } from '../_components/settings/settings-button';
+import { track } from '@vercel/analytics';
 
 export function Wrapper({ challenge }: { challenge: ChallengeRouteData }) {
   const segments = useSelectedLayoutSegments();
@@ -22,6 +23,7 @@ export function Wrapper({ challenge }: { challenge: ChallengeRouteData }) {
 
   return (
     <CodePanel
+      track={track}
       challenge={challenge}
       saveSubmission={(code, isSuccessful) =>
         saveSubmission(challenge.id, session?.user.id!, code, isSuccessful)
