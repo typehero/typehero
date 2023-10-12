@@ -46,7 +46,7 @@ If you find the project interesting and want to support us please consider spons
     </td>
     <td>
       <a href="https://www.herodevs.com/" target="_parent">
-        <img src="./media/herodevs.svg" alt="HeroDevs Logo" title="HeroDevs" width="200">
+        <img src="./media/herodevs.png" alt="HeroDevs Logo" title="HeroDevs" width="200">
       </a>
     </td>
   </tr>
