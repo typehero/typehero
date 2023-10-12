@@ -39,6 +39,7 @@ export interface ChallengeLayoutProps {
   expandPanel: () => void;
   adjustPanelSize: (divideByW: number, divideByH: number, newDimensionValue: number) => void;
   isLeftPanelCollapsed: () => boolean;
+  isPlayground?: boolean;
 }
 
 export const MOBILE_BREAKPOINT = 1025;
@@ -55,6 +56,7 @@ export function ChallengeLayout({
   collapsePanel,
   expandPanel,
   isLeftPanelCollapsed,
+  isPlayground,
 }: ChallengeLayoutProps) {
   const parent = useRef<HTMLDivElement>(null);
   const resizer = useRef<HTMLDivElement>(null);
@@ -66,23 +68,26 @@ export function ChallengeLayout({
 
   const LEFT_PANEL_BREAKPOINT = isDesktop ? 500 : 318;
   const COLLAPSE_BREAKPOINT = isCollapsed ? 50 : 300;
+  const _COLLAPSED_MOBILE_HEIGHT = isPlayground ? 0 : COLLAPSED_MOBILE_HEIGHT;
+  const _COLLAPSED_DESKTOP_WIDTH = isPlayground ? 0 : COLLAPSED_DESKTOP_WIDTH;
+
   const DEFAULT_DESKTOP_WIDTH_PX = `${LEFT_PANEL_BREAKPOINT}px`;
 
   const isPanelCollapsed = useMemo(() => {
     const height = parseFloat(settings.height);
     const width = parseFloat(settings.width);
 
-    return height <= COLLAPSED_MOBILE_HEIGHT || width <= COLLAPSED_DESKTOP_WIDTH;
-  }, [settings.height, settings.width]);
+    return height <= _COLLAPSED_MOBILE_HEIGHT || width <= _COLLAPSED_DESKTOP_WIDTH;
+  }, [settings.height, settings.width, _COLLAPSED_MOBILE_HEIGHT, _COLLAPSED_DESKTOP_WIDTH]);
 
   const leftStyle = useMemo(() => {
     const leftStyleIfDesktopCollapsed = {
-      width: `${COLLAPSED_DESKTOP_WIDTH}px`,
-      minWidth: `${COLLAPSED_DESKTOP_WIDTH}px`,
+      width: `${_COLLAPSED_DESKTOP_WIDTH}px`,
+      minWidth: `${_COLLAPSED_DESKTOP_WIDTH}px`,
     };
     const leftStyleIfMobileCollapsed = {
-      height: `${COLLAPSED_MOBILE_HEIGHT}px`,
-      minHeight: `${COLLAPSED_MOBILE_HEIGHT}px`,
+      height: `${_COLLAPSED_MOBILE_HEIGHT}px`,
+      minHeight: `${_COLLAPSED_MOBILE_HEIGHT}px`,
     };
 
     if (isDesktop) {
@@ -99,7 +104,15 @@ export function ChallengeLayout({
           height: settings.height,
           minHeight: `${LEFT_PANEL_BREAKPOINT}px`,
         };
-  }, [isDesktop, isPanelCollapsed, settings.height, settings.width, LEFT_PANEL_BREAKPOINT]);
+  }, [
+    isDesktop,
+    isPanelCollapsed,
+    settings.height,
+    settings.width,
+    LEFT_PANEL_BREAKPOINT,
+    _COLLAPSED_MOBILE_HEIGHT,
+    _COLLAPSED_DESKTOP_WIDTH,
+  ]);
 
   useEffect(() => {
     const ref = resizer.current;
@@ -208,13 +221,13 @@ export function ChallengeLayout({
       const height = parseFloat(leftRef.style.height);
       const width = parseFloat(leftRef.style.width);
 
-      if (height <= COLLAPSED_MOBILE_HEIGHT || width <= COLLAPSED_DESKTOP_WIDTH) {
+      if (height <= _COLLAPSED_MOBILE_HEIGHT || width <= _COLLAPSED_DESKTOP_WIDTH) {
         if (isDesktop) {
-          leftRef.style.width = `${COLLAPSED_DESKTOP_WIDTH}px`;
-          updateSettings({ width: `${COLLAPSED_DESKTOP_WIDTH}px`, height: '300px' });
+          leftRef.style.width = `${_COLLAPSED_DESKTOP_WIDTH}px`;
+          updateSettings({ width: `${_COLLAPSED_DESKTOP_WIDTH}px`, height: '300px' });
         } else {
-          leftRef.style.height = `${COLLAPSED_MOBILE_HEIGHT}px`;
-          updateSettings({ width: '500px', height: `${COLLAPSED_MOBILE_HEIGHT}px` });
+          leftRef.style.height = `${_COLLAPSED_MOBILE_HEIGHT}px`;
+          updateSettings({ width: '500px', height: `${_COLLAPSED_MOBILE_HEIGHT}px` });
         }
       }
     };
@@ -264,6 +277,8 @@ export function ChallengeLayout({
     leftSide,
     settings,
     updateSettings,
+    _COLLAPSED_DESKTOP_WIDTH,
+    _COLLAPSED_MOBILE_HEIGHT,
   ]);
 
   return (
@@ -273,7 +288,9 @@ export function ChallengeLayout({
       style={{ height: fssettings.isFullscreen ? '100vh' : 'calc(100vh - 3.5rem)' }}
     >
       <div
-        className="w-full overflow-hidden rounded-l-2xl rounded-r-xl border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800"
+        className={`w-full overflow-hidden rounded-l-2xl rounded-r-xl border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 ${
+          !isPlayground && 'border'
+        }`}
         ref={leftSide}
         style={{ ...leftStyle }}
       >
