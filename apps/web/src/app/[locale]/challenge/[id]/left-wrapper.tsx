@@ -110,7 +110,7 @@ export function LeftWrapper({ challengeId, children, expandPanel, isDesktop }: P
           {isCollapsed && isDesktop ? <Text className="h-4 w-4" /> : 'Description'}
         </TabsTrigger>
         <TabsTrigger
-          className={`rounded-md duration-300 hover:bg-neutral-200 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700 dark:data-[state=active]:bg-neutral-700 ${
+          className={`rounded-md duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700 ${
             isCollapsed && isDesktop ? 'py-4' : ''
           }`}
           onClick={() => {
