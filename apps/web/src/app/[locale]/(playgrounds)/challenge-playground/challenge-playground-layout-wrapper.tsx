@@ -4,7 +4,6 @@ import usePanelAdjustments from '../../challenge/_components/usePanelAdjustments
 import { LeftWrapper } from './left-wrapper';
 import { Wrapper } from './wrapper';
 import { ChallengeLayout, MOBILE_BREAKPOINT } from '../../challenge/_components/challenge-layout';
-// import { ChallengeLayout, MOBILE_BREAKPOINT } from './challenge-playground-layout';
 
 export function ChallengePlaygroundLayoutWrapper({ children }: { children: ReactNode }) {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > MOBILE_BREAKPOINT);
