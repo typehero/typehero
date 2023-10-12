@@ -20,7 +20,13 @@ export function generateStaticParams() {
   return getStaticParams();
 }
 
-export default function RootLayout({ children, params: { locale } }: { children: React.ReactNode, params: { locale: string } }) {
+export default function RootLayout({
+  children,
+  params: { locale },
+}: {
+  children: React.ReactNode;
+  params: { locale: string };
+}) {
   return (
     <html suppressHydrationWarning lang="en">
       <head>

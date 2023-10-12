@@ -1,11 +1,8 @@
 import { Balancer } from 'react-wrap-balancer';
 import styles from './waitlist.module.css';
 import { WaitlistForm } from './waitlist-form';
-import { setStaticParamsLocale } from 'next-international/server';
 
 export function Waitlist({ params: { locale } }: { params: { locale: string } }) {
-  setStaticParamsLocale(locale)
-
   return (
     <main className="relative min-h-[calc(100vh-56px)] sm:px-16 md:px-0">
       <div className={`${styles.waitlistBackground} fixed left-0 top-0 -z-10 h-full w-full`} />

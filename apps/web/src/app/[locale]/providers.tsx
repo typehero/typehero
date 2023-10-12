@@ -12,7 +12,7 @@ import { FeatureFlagProvider } from '../feature-flag-provider';
 import type { Corner } from '@tanstack/react-query-devtools/build/lib/utils';
 
 interface Props {
-  locale: string
+  locale: string;
   children: React.ReactNode;
 }
 
