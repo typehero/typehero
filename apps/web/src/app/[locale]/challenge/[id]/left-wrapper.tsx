@@ -89,12 +89,16 @@ export function LeftWrapper({ challengeId, children, expandPanel, isDesktop }: P
     >
       <TabsList
         className={`bg-background/90 dark:bg-muted/90 sticky top-0 z-10 grid h-auto w-full rounded-none rounded-tl-2xl rounded-tr-xl border-b border-zinc-300 backdrop-blur-sm dark:border-zinc-700 ${
-          isCollapsed ? (isDesktop ? 'grid-rows-3 gap-2' : 'grid-cols-3') : 'grid-cols-3'
+          isCollapsed
+            ? isDesktop
+              ? 'grid-rows-3 gap-2'
+              : 'grid-cols-3 gap-0.5'
+            : 'grid-cols-3 gap-0.5'
         }`}
         ref={tabsListRef}
       >
         <TabsTrigger
-          className={`rounded-md rounded-tl-xl duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700 ${
+          className={`rounded-md rounded-tl-xl duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700 ${
             isCollapsed ? (isDesktop ? 'rounded-r-lg py-4' : 'rounded-bl-xl') : ''
           }`}
           onClick={() => {
@@ -106,7 +110,7 @@ export function LeftWrapper({ challengeId, children, expandPanel, isDesktop }: P
           {isCollapsed && isDesktop ? <Text className="h-4 w-4" /> : 'Description'}
         </TabsTrigger>
         <TabsTrigger
-          className={`rounded-md duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700 ${
+          className={`rounded-md duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700 ${
             isCollapsed && isDesktop ? 'py-4' : ''
           }`}
           onClick={() => {
@@ -118,7 +122,7 @@ export function LeftWrapper({ challengeId, children, expandPanel, isDesktop }: P
           {isCollapsed && isDesktop ? <FlaskConical className="h-4 w-4" /> : 'Solutions'}
         </TabsTrigger>
         <TabsTrigger
-          className={`rounded-md rounded-tr-lg duration-300 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700 ${
+          className={`rounded-md rounded-tr-lg duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700 ${
             isCollapsed ? (isDesktop ? 'rounded-md py-4' : 'rounded-br-xl') : ''
           }`}
           onClick={() => {
