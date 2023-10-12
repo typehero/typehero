@@ -78,7 +78,7 @@ export function ChallengeLayout({
     const width = parseFloat(settings.width);
 
     return height <= _COLLAPSED_MOBILE_HEIGHT || width <= _COLLAPSED_DESKTOP_WIDTH;
-  }, [settings.height, settings.width, _COLLAPSED_DESKTOP_WIDTH, _COLLAPSED_DESKTOP_WIDTH]);
+  }, [settings.height, settings.width, _COLLAPSED_MOBILE_HEIGHT, _COLLAPSED_DESKTOP_WIDTH]);
 
   const leftStyle = useMemo(() => {
     const leftStyleIfDesktopCollapsed = {
