@@ -13,8 +13,8 @@ export function Logo3d() {
           fill="#3178C6"
         />
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M261.441 348.723H333.158V299.842H133.263V348.723H204.629V566.368H261.441V348.723Z"
           fill="white"
         />
@@ -31,9 +31,9 @@ export function Logo3d() {
           width="732"
           height="732"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feColorMatrix
             in="SourceAlpha"
