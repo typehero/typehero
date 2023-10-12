@@ -93,11 +93,6 @@ export function CodePanel(props: CodePanelProps) {
         action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
       });
     }
-
-    // track if they clicked submit and if they had errors
-    props.track?.('challenge-submitted', {
-      success: !hasErrors,
-    });
   };
   const hasFailingTest = tsErrors?.some((e) => e.length) ?? false;
 
