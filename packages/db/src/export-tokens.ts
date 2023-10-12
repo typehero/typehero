@@ -1,7 +1,9 @@
+// @ts-nocheck
+// this file is temporary
 import { createObjectCsvWriter } from 'csv-writer';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { prisma } from '../src';
+import { prisma } from '.';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

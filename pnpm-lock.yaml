@@ -470,9 +470,6 @@ importers:
       '@prisma/client':
         specifier: ^5.0.0
         version: 5.0.0(prisma@5.0.0)
-      csv-writer:
-        specifier: ^1.6.0
-        version: 1.6.0
     devDependencies:
       '@faker-js/faker':
         specifier: ^8.0.2
@@ -5400,10 +5397,6 @@ packages:
   /csstype@3.1.2:
     resolution: {integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==}
 
-  /csv-writer@1.6.0:
-    resolution: {integrity: sha512-NOx7YDFWEsM/fTRAJjRpPp8t+MKRVvniAg9wQlUKx20MFrPs73WLJhFf5iteqrxNYnsy924K3Iroh3yNHeYd2g==}
-    dev: false
-
   /damerau-levenshtein@1.0.8:
     resolution: {integrity: sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==}
 
@@ -8933,6 +8926,22 @@ packages:
       camelcase-css: 2.0.1
       postcss: 8.4.28
 
+  /postcss-load-config@3.1.4:
+    resolution: {integrity: sha512-6DiM4E7v4coTE4uzA8U//WhtPwyhiim3eyjEMFCnUpzbrkK9wJHgKDT2mR+HbtSrd/NubVaYTOpSpjUl8NQeRg==}
+    engines: {node: '>= 10'}
+    peerDependencies:
+      postcss: '>=8.0.9'
+      ts-node: '>=9.0.0'
+    peerDependenciesMeta:
+      postcss:
+        optional: true
+      ts-node:
+        optional: true
+    dependencies:
+      lilconfig: 2.1.0
+      yaml: 1.10.2
+    dev: true
+
   /postcss-load-config@3.1.4(postcss@8.4.21):
     resolution: {integrity: sha512-6DiM4E7v4coTE4uzA8U//WhtPwyhiim3eyjEMFCnUpzbrkK9wJHgKDT2mR+HbtSrd/NubVaYTOpSpjUl8NQeRg==}
     engines: {node: '>= 10'}
@@ -8948,6 +8957,7 @@ packages:
       lilconfig: 2.1.0
       postcss: 8.4.21
       yaml: 1.10.2
+    dev: false
 
   /postcss-load-config@4.0.1(postcss@8.4.28):
     resolution: {integrity: sha512-vEJIc8RdiBRu3oRAI0ymerOn+7rPuMvRXslTvZUKZonDHFIczxztIyJ1urxM1x9JXEikvpWWTUUqal5j/8QgvA==}
@@ -9009,6 +9019,7 @@ packages:
       nanoid: 3.3.6
       picocolors: 1.0.0
       source-map-js: 1.0.2
+    dev: false
 
   /postcss@8.4.26:
     resolution: {integrity: sha512-jrXHFF8iTloAenySjM/ob3gSj7pCu0Ji49hnjqzsgSRa50hkWCKD0HQ+gMNJkW38jBI68MpAAg7ZWwHwX8NMMw==}
@@ -10504,7 +10515,7 @@ packages:
       execa: 5.1.1
       globby: 11.1.0
       joycon: 3.1.1
-      postcss-load-config: 3.1.4(postcss@8.4.21)
+      postcss-load-config: 3.1.4
       resolve-from: 5.0.0
       rollup: 2.79.1
       source-map: 0.7.4
