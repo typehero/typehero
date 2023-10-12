@@ -19,6 +19,7 @@ export function zodParams<TType>(schema: z.ZodType<TType>) {
     decodeRequest: (req: Request) => {
       const url = new URL(req.url);
       const obj = Object.fromEntries(url.searchParams.entries());
+      console.log(url);
 
       return querySchema.safeParse(obj);
     },
@@ -63,5 +64,7 @@ export const challengeParam = zodParams(
 export const userParam = zodParams(
   z.object({
     username: truncatedWordSchema({ maxCharacters: 70 }),
+    bio: truncatedWordSchema({ maxCharacters: 145 }).optional(),
+    avatar: z.string().optional(),
   }),
 );
