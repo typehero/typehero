@@ -29,20 +29,45 @@ export async function GET(req: Request) {
     EXTREME: 'bg-[#d8b4fe]',
   };
 
+  const GRADIENT_BY_DIFFICULTY = {
+    BEGINNER: '#366175',
+    EASY: '#2a4734',
+    MEDIUM: '#66421b',
+    HARD: '#5c2020',
+    EXTREME: '#48345c',
+  };
+
+  const mogus_coords = Array.from(
+    new Set([
+      ['right-16 -bottom-10', 'rotate(50deg)'],
+      ['left-8 -bottom-16', 'scaleX(-1)'],
+      ['top-0 left-100', 'scaleX(1)'],
+    ]),
+  );
+
+  const mogus_roll = Math.floor(1 + Math.random() * 9);
+  const random_mogus_coord = mogus_coords[Math.floor(Math.random() * mogus_coords.length)] ?? '';
+  let title = props.title === null ? null : props.title.split(' | ')[0]?.trim();
+  if (title && title?.length > 45) {
+    title = title.slice(0, 40) + '…';
+  }
+
   const HOST =
     process.env.NODE_ENV === 'production' ? 'https://og.typehero.dev' : 'http://localhost:4200';
 
   return new ImageResponse(
     (
-      <div tw="bg-black h-full w-full text-white bg-cover flex flex-col pt-14 px-32">
+      <div tw="bg-black h-96 w-full text-white bg-cover flex flex-col pt-10 pb-10 px-16">
         <Grid />
-        <img
-          tw="absolute right-16 -bottom-10 h-32 opacity-30"
-          style={{ transform: 'rotate(30deg)' }}
-          src={`${HOST}/amoguwuowoaahhh.png?cache-bust=${new Date().getDate()}`}
-          alt="OG"
-        />
-        <div tw="flex flex-col items-start h-full overflow-hidden rounded-t-[3.5rem] border-zinc-700 border-2 border-b-0 to-black relative">
+        {mogus_roll === 8 && (
+          <img
+            tw={`absolute h-32 opacity-30 ${random_mogus_coord[0]}`}
+            style={{ transform: random_mogus_coord[1] }}
+            src={`${HOST}/amoguwuowoaahhh.png?cache-bust=${new Date().getDate()}`}
+            alt="OG"
+          />
+        )}
+        <div tw="flex flex-col items-start h-full overflow-hidden rounded-[3.5rem] border-zinc-700 border-2 to-black relative">
           <svg
             // @ts-ignore
             tw="absolute h-full w-full"
@@ -61,42 +86,41 @@ export async function GET(req: Request) {
                 gradientUnits="userSpaceOnUse"
               >
                 <stop stop-color="#27272A" />
-                <stop offset="1" stop-color="#0E0E0F" />
+                <stop offset="1" stop-color={GRADIENT_BY_DIFFICULTY[props.difficulty]} />
               </linearGradient>
             </defs>
           </svg>
-          <div tw="flex flex-col p-10 w-full">
+          <div tw="flex h-full flex-col p-10 w-full">
             <div tw="flex absolute top-10 right-10">
               <Logo3d />
             </div>
             <h1
-              tw="text-7xl truncate pr-48 mt-0 overflow-ellipsis"
+              tw="-mt-2 text-7xl pr-48 truncate overflow-ellipsis"
               style={{ fontWeight: '800 !important' }}
             >
-              {props.title === null ? null : props.title.split(' | ')[0]}
+              {title}
             </h1>
-            <p tw="flex items-center -mt-3">
+            <div tw="flex absolute bottom-10 left-10 flex-row items-center">
               <p
                 tw={`${
                   COLORS_BY_DIFFICULTY[props.difficulty]
-                } text-black font-bold text-2xl rounded-full px-6 py-1.5 mb-0`}
+                } text-black font-bold text-2xl rounded-full px-6 py-1.5 mb-0 mt-0`}
               >
                 {props.difficulty}
               </p>
-              <p tw="bg-zinc-600 font-bold text-2xl rounded-full px-3 pt-1.5 pb-2 ml-4 mb-0">
+              <p tw="bg-zinc-600 font-bold text-2xl rounded-full px-3 pt-1.5 pb-2 mt-0 ml-4 mb-0">
                 <span>@</span>
                 <span>{props.username}</span>
               </p>
-              <p tw="text-2xl ml-4 mb-0">{props.date}</p>
-            </p>
-            <p tw="text-3xl text-zinc-300">{props.description}</p>
+              <p tw="text-2xl ml-4 mb-0 mt-0">{props.date}</p>
+            </div>
           </div>
         </div>
       </div>
     ),
     {
       width: 1200,
-      height: 600,
+      height: 400,
       fonts: [
         { name: 'Inter', data: inter900, weight: 900 },
         { name: 'Inter', data: inter700, weight: 700 },
