@@ -63,5 +63,7 @@ export const challengeParam = zodParams(
 export const userParam = zodParams(
   z.object({
     username: truncatedWordSchema({ maxCharacters: 70 }),
+    bio: truncatedWordSchema({ maxCharacters: 145 }).optional(),
+    avatar: z.string().optional(),
   }),
 );
