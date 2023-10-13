@@ -7,6 +7,7 @@ import { getRelativeTime } from '~/utils/relativeTime';
 import { getAllFlags } from '~/utils/feature-flags';
 import { redirect } from 'next/navigation';
 import { prisma } from '@repo/db';
+import { isBetaUser } from '~/utils/server/is-beta-user';
 
 interface Props {
   params: {
@@ -30,15 +31,9 @@ export async function generateMetadata({ params: { id } }: Props) {
 export default async function Challenges({ params: { id: challengeId } }: Props) {
   // early acces you must be authorized
   const session = await getServerAuthSession();
-  const flags = await getAllFlags();
+  const isBeta = await isBetaUser(session);
 
-  const isBetaUser = await prisma.betaTokens.findFirst({
-    where: {
-      userId: session?.user.id,
-    },
-  });
-
-  if ((!session || !isBetaUser) && flags.enableEarlyAccess) {
+  if (!isBeta) {
     return redirect('/claim');
   }
 

@@ -6,18 +6,14 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@repo/ui/co
 import { Input } from '@repo/ui/components/input';
 import { toast } from '@repo/ui/components/use-toast';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { type z } from 'zod';
 import { validateToken } from './_actions';
+import { claimFormSchema } from './_schema';
 
-const formSchema = z.object({
-  code: z.string().min(10),
-});
-
-export type FormSchema = z.infer<typeof formSchema>;
-
+export type FormSchema = z.infer<typeof claimFormSchema>;
 export function ClaimForm() {
   const form = useForm<FormSchema>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(claimFormSchema),
     defaultValues: {
       code: '',
     },
@@ -25,24 +21,14 @@ export function ClaimForm() {
 
   async function onSubmit(data: FormSchema) {
     try {
-      await validateToken(data.code);
+      await validateToken(data);
       toast({
         title: 'Token accepted!',
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-          </pre>
-        ),
       });
     } catch (e) {
       toast({
         variant: 'destructive',
-        title: 'Something went wrong',
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-          </pre>
-        ),
+        title: 'Invalid token',
       });
     }
   }
@@ -56,6 +42,7 @@ export function ClaimForm() {
             <FormItem className="w-64">
               <FormControl>
                 <Input
+                  maxLength={10}
                   className="rounded-xl bg-neutral-200 dark:bg-neutral-800"
                   placeholder="Enter Early Access token"
                   {...field}

@@ -1,27 +1,20 @@
+import { getServerAuthSession } from '@repo/auth/server';
 import { Suspense } from 'react';
+import { Footsies } from '~/components/footsies';
 import { ExploreSection } from './explore-section';
 import { ExploreSectionSkeleton } from './explore-section-skeleton';
 import { getChallengesByTagOrDifficulty } from './explore.action';
-import { Footsies } from '~/components/footsies';
+import { isBetaUser } from '~/utils/server/is-beta-user';
 import { redirect } from 'next/navigation';
-import { getAllFlags } from '~/utils/feature-flags';
-import { getServerAuthSession } from '@repo/auth/server';
-import { prisma } from '@repo/db';
 
 // CI fails without this
 export const dynamic = 'force-dynamic';
 
 export async function Explore() {
   const session = await getServerAuthSession();
-  const flags = await getAllFlags();
+  const isBeta = await isBetaUser(session);
 
-  const isBetaUser = await prisma.betaTokens.findFirst({
-    where: {
-      userId: session?.user.id,
-    },
-  });
-
-  if ((!session || !isBetaUser) && flags.enableEarlyAccess) {
+  if (!isBeta) {
     return redirect('/claim');
   }
 

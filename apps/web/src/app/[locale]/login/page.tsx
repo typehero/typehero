@@ -16,7 +16,7 @@ export default async function Index() {
                 Start your typescript journey by logging in below.
               </p>
             </div>
-            <LoginButton />
+            <LoginButton redirectTo="/explore" />
             <p className="text-muted-foreground mx-auto px-8 text-sm sm:w-[350px]">
               By clicking continue, you agree to our{' '}
               <Link href="/tos" className="hover:text-primary underline underline-offset-4">
@@ -34,8 +34,3 @@ export default async function Index() {
     </>
   );
 }
-
-// export type Token = NonNullable<Awaited<ReturnType<typeof validateToken>>>;
-// async function validateToken(token: string) {
-//   return prisma.betaTokens.findUnique({ where: { token, isClaimed: false } });
-// }

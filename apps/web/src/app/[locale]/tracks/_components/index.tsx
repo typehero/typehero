@@ -1,16 +1,16 @@
 import { getServerAuthSession } from '@repo/auth/server';
+import { redirect } from 'next/navigation';
+import { isBetaUser } from '~/utils/server/is-beta-user';
 import { EnrolledTrackSection } from './track-enrolled-section';
 import { TrackGrid } from './track-grid';
-import { getAllFlags } from '~/utils/feature-flags';
-import { redirect } from 'next/navigation';
 
 export async function Tracks() {
   // early acces you must be authorized
   const session = await getServerAuthSession();
-  const flags = await getAllFlags();
+  const isBeta = await isBetaUser(session);
 
-  if (!session && flags.enableEarlyAccess) {
-    return redirect('/waitlist');
+  if (!isBeta) {
+    return redirect('/claim');
   }
 
   return (
