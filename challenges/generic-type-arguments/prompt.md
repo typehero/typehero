@@ -6,7 +6,7 @@ And just like functions often need arguments, we need some way to provide inputs
 
 ## How To Use Generic Arguments
 
-Instead of using parenthesis to pass arguments, with generics we use angled brackets: `<` and `>`.
+Instead of using parenthesis to pass arguments, with generics we use angled brackets: `<` and `>`.  
 
 Other than that, there are a lot of similarities between the two concepts.
 
@@ -86,7 +86,7 @@ type AvocadoToast = {
 }
 ```
 
-> Note: you might notice that we're missing types for our type arguments!  Right now there's nothing stopping us from sending in wrong values like `GroceryItem<number[], boolean, { over: 9000 }>`.  We'll cover that in a future challenge on [`generic-constraints`](todo-link)
+> Note: you might notice that we're missing types for our type arguments!  Right now there's nothing stopping us from sending in wrong values like `GroceryItem<number[], boolean, { over: 9000 }>`.  We'll cover that in a future challenge on [`generic-constraints`](todo-link).
 
 ## Solving This Challenge
 
