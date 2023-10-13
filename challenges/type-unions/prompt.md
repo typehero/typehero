@@ -63,6 +63,17 @@ const landSpacecraft = (distance: Distance) => {
 }
 ```
 
+## Properties of Unions
+
+Unions are a very deep topic, actually.  The three things you need to know right now are:
+
+1. unions are unordered
+  - and if you implement hacks to try to depend on the order your tests will break across different TypeScript versions
+1. the items in a union are unique
+  - so doing `1 | 1 | 2 | 3` is the same as `1 | 2 | 3`
+1. the `never` type is an empty union
+  - we'll learn more about `never` [later on](todo-never)
+
 ## Solving This Challenge
 
 We just started integrating with a new API from a vendor that only publishes data in `feet`.  Now we need to update a function `getDistanceInMeters` accordingly.

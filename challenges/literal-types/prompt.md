@@ -1,99 +1,70 @@
 ## The Problem Literal Types Solve
 
-> Some forewarning on this challenge..
->
-> In isolation TypeScript type literals are not really that useful.  The power of literals is unlocked by other TypeScript features (like [`typeof`](todo-typeof), [type unions](todo-type-unions), and [compound strings](todo-compound-string-literals)) that deeply depend on type literals in order to work.  Type literals are important building blocks, so don't be discouraged if this particular challenge feels a bit academic.  Keep going and you'll find that type literals unlock many extremely practical superpowers.
-
-JavaScript, like most programming languages has a concept of "primitive" data types.  Primitive data types are things like `string`, `boolean`, `number`, and `object`.
+JavaScript, like most programming languages has a concept of [primitive data types](todo-primitive-data-types).  Primitive data types are things like `string`, `boolean`, `number`, and `object`.
 
 > sidenote: in JavaScript, arrays and functions are actually objects, but that's a topic for another time :)
 
-Let's say we've been baking chocolate chip cookies as a side-hustle and we wanna take things to the next level.  To get to industrial scales, we're gonna need to start writing down our recipes.
+But TypeScript isn't _like_ most programming languages.  It's better.  It takes takes things to the next level by introducing _literal_ data types.
 
-We might make some variables like this:
+You can think of literal data types as being an infinite set of subsets of their primitive counterparts.  For example
 
-```js
-const name = 'chocolate chips';
-const inStock = true;
-const kilograms = 5;
-```
+### A Practical Use-Case
 
-Or, better yet, we might wrap them all in an object:
-
-```js
-const chocolateChips = {
-  name: 'chocolate chips',
-  inStock: true,
-  kilograms: 5,
-}
-```
-
-TypeScript has built-in _types_ that represent all of these primitive data types.
+Literal types can be used to create a rainbow of possibilities.  In this case, we've defined a type `RainbowColor` that can only have one of the types specified in a union of literal strings.
 
 ```ts
-const name: string = 'chocolate chips';
-const inStock: boolean = true;
-const kilograms: number = 5;
-
-type Ingredient = {
-  name: string;
-  inStock: boolean;
-  kilograms: number;
-}
-
-const chocolateChips: Ingredient = {
-  name: 'chocolate chips',
-  inStock: true,
-  kilograms: 5,
-}
+type RainbowColor = 'red' | 'orange' | 'yellow' | 'green' | 'blue' | 'indigo' | 'violet';
 ```
 
-You can also create [type aliases](todo-needs-link) for primitive types:
+Then, we can use this type in a function to ensure bad values are not passed in:
 
 ```ts
-type Name = string;
-type InStock = boolean;
-type Kilograms = number;
-
-type Ingredient = {
-  name: Name;
-  inStock: InStock;
-  kilograms: Kilograms;
+function pickColor(color: RainbowColor): void {
+  console.log(`I choose the color ${color}!`);
 }
+
+// no error: TypeScript is happy!
+pickColor('yellow');
+
+// Error: Argument of type 'purple' is not assignable to parameter of type 'RainbowColor'.
+pickColor('purple');
+// ^?
 ```
 
-But there's a problem.  Actually there are lots of problems that literal types solve but let's just look at one of them.
+> By the way.  Did you know that purple's not in the rainbow because [there's no "purple" wavelength of light](https://www.youtube.com/results?search_query=purple+is+not+a+color).  It's true.  Our brains fabricate it for us to make sense of paradoxical visual inputs.
 
-Let's say you have a function like this:
+### Literal Types For Returns
+
+But wait! There's A LOT more!  Literal types are useful for returns, too.  Check out this code:
 
 ```ts
-const needToOrderMore = (ingredient: Ingredient) => {
-  if (ingredient.kilograms < 100) {
-    return true;
-  }
-  return false;
+type Day = 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
+
+const isItPartyTime = (day: Day) => {
+  switch (day) {
+    case 'Friday':
+    case 'Saturday':
+    case 'Sunday':
+      return 'definitely party time';
+
+    default:
+      return 'prolly lay low for now'
+  }
 }
+
+isItPartyTime('Monday');
+// ^?
 ```
 
-## Using Literal Types
+> /* the above example assumes a 4 day workweek since 4 day workweeks are observed to increase employee productivity.
 
-```ts
-type Name = 'chocolate chips';
-type InStock = true;
-type Kilograms = 5;
+The _return type_ for this function is _also_ a literal type union.  Notice that you didn't have to specify the return type anywhere.  It just _works_ this way in TypeScript.  Nice.
 
-type Ingredient = {
-  name: 'chocolate chips';
-  inStock: true;
-  kilograms: 5;
-}
-```
+### Why Are Type Literals Even Necessary?
 
-### Why Is This Even Necessary?
+If you're thinking to yourself:
 
-You might be thinking to yourself:
-
-> Why is this even necessary?  Lots of languages don't have anything like this and they seem to get along just fine.
+> Why are type literals even necessary?  Lots of languages don't have anything like this and they seem to get along just fine with primitive types like `string` and `number` and `boolean`.
 
 It's a great question, but to answer it we need one more concept: _type unions_.
 
@@ -103,4 +74,12 @@ Take a look at the [type unions](todo-needs-link) challenge.
 
 ## Solving this Challenge
 
-In this challenge you'll create some TypeScript literal types.
+In this prompt we talked mostly about string literals, but there are more kinds:
+
+- number literals
+  - (including fractional numbers)
+- boolean literals
+- function literals
+- object literals
+
+Take a look at the tests and see if you can create some type literals that will satisfy the tests.
