@@ -1,8 +1,8 @@
 ## The Problem Primitive Data Types Solve
 
-Because the ability to create primitive types are the foundational idea behind TypeScript, asking asking what problem primitive types solve is more like asking "what problem does _TypeScript_ solve".
+Because the ability to create primitive types are the foundational idea behind TypeScript, asking what problem primitive types solve is more like asking "what problem does _TypeScript_ solve".
 
-TypeScript is like a really really smart spellchecker.  It helps you work faster when you're at your best, but it also saves you from misspelling words you're under stress at 3am the night before a big term paper is due.
+TypeScript is like a really really smart spellchecker.  It helps you work faster when you're at your best, but it also saves you from misspelling words when you're under stress at 3am the night before a big term paper is due.
 
 Think about it for a second: spellcheckers work because there are encoded with rules about the vocabulary and syntax of English.  Similarly, TypeScript has advanced knowledge about the vocabulary and syntax of JavaScript.  But TypeScript can do even better because you can specify the type of your data.  That allows TypeScript to make even better judgement calls about whether something you're trying to do is likely to be a bug (or not).
 
@@ -12,7 +12,7 @@ And speaking of words and language, the usage of "primitive" in this sense is a 
 
 > 1. relating to, denoting, or preserving the character of an early stage in the evolutionary or historical development of something.
 
-So basically, it means "ancient" or "undeveloped"??
+So basically, it means "ancient" or "undeveloped"?  huh???
 
 Nope.  That's actually not the way the word is used in this context.  If you keep reading down the list, you'll find a less common definition:
 
