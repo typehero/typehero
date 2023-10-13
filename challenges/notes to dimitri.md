@@ -1,4 +1,4 @@
-## ideas for future challenges
+## ideas for future challenges (in no particular order)
 
 - unique-symbol
 - functions-with-literal-returns
@@ -23,6 +23,7 @@
 - tuples
 - tuple-labels
 - typeof
+- indexing-types
 
 ## TODO
 
@@ -78,3 +79,49 @@ const createRow = <T>(row: {
 This syntax might look a little funky at first, but if you stand back and squint a bit, you'll see that it's just a mashup of the regular argument syntax and the type generic syntax we saw above.
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const characters = {
+  ironMan: {
+    name: 'Tony Stark',
+    age: 53,
+    attributes: ['genius', 'billionaire', 'playboy', 'philanthropist']
+  },
+  thor: {
+    name: 'Thor Odinson',
+    age: 1500,
+    attributes: ['Asgardian', 'God', 'thunder'],
+  },
+  hulk: {
+    name: 'Bruce Banner',
+    age: 44,
+    attributes: ['gamma-irradiated', 'scientist']
+  },
+  captainAmerica: {
+    name: 'Steve Rogers',
+    age: 105,
+    attributes: ['super-soldier', 'strong'],
+  },
+  blackWidow: {
+    name: 'Natasha Romanoff',
+    age: 34,
+    attributes: ['master spy', 'martial artist'],
+  },
+  spiderMan: {
+    name: 'Peter Parker',
+    age: 19,
+    attributes: ['agile', 'web-slinging'],
+  },
+}
