@@ -1,12 +1,15 @@
 ## The Problem Literal Types Solve
 
-JavaScript, like most programming languages has a concept of "primitive" data types.
+> Some forewarning on this challenge..
+>
+> In isolation TypeScript type literals are not really that useful.  The power of literals is unlocked by other TypeScript features (like [`typeof`](todo-typeof), [type unions](todo-type-unions), and [compound strings](todo-compound-string-literals)) that deeply depend on type literals in order to work.  Type literals are important building blocks, so don't be discouraged if this particular challenge feels a bit academic.  Keep going and you'll find that type literals unlock many extremely practical superpowers.
 
-Primitive data types are things like `string`, `boolean`, `number`, and `object`.
+JavaScript, like most programming languages has a concept of "primitive" data types.  Primitive data types are things like `string`, `boolean`, `number`, and `object`.
 
-> in JavaScript, arrays and functions are actually objects, but that's a topic for another time :)
 
-Let's say we've been baking chocolate chip cookies as a side-hussle and we wanna take things to the next level.  To get to industiral scales, we're gonna need to start writing down our recipes.
+> sidenote: in JavaScript, arrays and functions are actually objects, but that's a topic for another time :)
+
+Let's say we've been baking chocolate chip cookies as a side-hustle and we wanna take things to the next level.  To get to industrial scales, we're gonna need to start writing down our recipes.
 
 We might make some variables like this:
 
