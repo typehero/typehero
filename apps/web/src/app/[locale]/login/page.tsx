@@ -5,19 +5,7 @@ import { getAllFlags } from '~/utils/feature-flags';
 import { LoginButton } from './_components/LoginButton';
 
 // @TODO: add a redirect param to send users back to previous page
-export default async function Index({
-  searchParams,
-}: {
-  searchParams: Record<string, string | undefined>;
-}) {
-  const flags = await getAllFlags();
-  const token = searchParams.token ?? '';
-  const validToken = await validateToken(token);
-
-  if (!validToken && flags.enableEarlyAccess) {
-    return redirect('/');
-  }
-
+export default async function Index() {
   return (
     <>
       <div className="container flex h-full flex-col items-center justify-center">
@@ -31,7 +19,7 @@ export default async function Index({
                 Start your typescript journey by logging in below.
               </p>
             </div>
-            <LoginButton token={validToken} shouldClaimToken={flags.enableEarlyAccess} />
+            <LoginButton />
             <p className="text-muted-foreground mx-auto px-8 text-sm sm:w-[350px]">
               By clicking continue, you agree to our{' '}
               <Link href="/tos" className="hover:text-primary underline underline-offset-4">
@@ -50,7 +38,7 @@ export default async function Index({
   );
 }
 
-export type Token = NonNullable<Awaited<ReturnType<typeof validateToken>>>;
-async function validateToken(token: string) {
-  return prisma.betaTokens.findUnique({ where: { token, isClaimed: false } });
-}
+// export type Token = NonNullable<Awaited<ReturnType<typeof validateToken>>>;
+// async function validateToken(token: string) {
+//   return prisma.betaTokens.findUnique({ where: { token, isClaimed: false } });
+// }
