@@ -23,7 +23,7 @@ That's a lot of properties!  But what if you have a function that only needs two
 const pickYourPokemon = (pokemon: Pokemon) => {
   const { type, name } = pokemon;
 
-  return `You picked the ${type}-type Pokemon ${name}!
+  return `You picked the ${type}-type Pokemon ${name}!`
 }
 ```
 
