@@ -6,6 +6,7 @@ import { buildMetaForChallenge } from '~/app/metadata';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { getAllFlags } from '~/utils/feature-flags';
 import { redirect } from 'next/navigation';
+import { prisma } from '@repo/db';
 
 interface Props {
   params: {
@@ -31,8 +32,14 @@ export default async function Challenges({ params: { id: challengeId } }: Props)
   const session = await getServerAuthSession();
   const flags = await getAllFlags();
 
-  if (!session && flags.enableEarlyAccess) {
-    return redirect('/waitlist');
+  const isBetaUser = await prisma.betaTokens.findFirst({
+    where: {
+      userId: session?.user.id,
+    },
+  });
+
+  if ((!session || !isBetaUser) && flags.enableEarlyAccess) {
+    return redirect('/claim');
   }
 
   const challenge = await getChallengeRouteData(challengeId, session);

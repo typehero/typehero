@@ -1,7 +1,4 @@
-import { prisma } from '@repo/db';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
-import { getAllFlags } from '~/utils/feature-flags';
 import { LoginButton } from './_components/LoginButton';
 
 // @TODO: add a redirect param to send users back to previous page

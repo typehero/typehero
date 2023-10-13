@@ -1,5 +1,7 @@
 import { prisma } from '.';
 
+const TOKEN_LIMIT = 3069;
+
 function generateRandomStr() {
   const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
   let result = '';
@@ -8,8 +10,6 @@ function generateRandomStr() {
   }
   return result;
 }
-
-const TOKEN_LIMIT = 2500;
 
 async function populateTokens() {
   await prisma.betaTokens.deleteMany();

@@ -6,17 +6,23 @@ import { Footsies } from '~/components/footsies';
 import { redirect } from 'next/navigation';
 import { getAllFlags } from '~/utils/feature-flags';
 import { getServerAuthSession } from '@repo/auth/server';
+import { prisma } from '@repo/db';
 
 // CI fails without this
 export const dynamic = 'force-dynamic';
 
 export async function Explore() {
-  // early acces you must be authorized
   const session = await getServerAuthSession();
   const flags = await getAllFlags();
 
-  if (!session && flags.enableEarlyAccess) {
-    return redirect('/waitlist');
+  const isBetaUser = await prisma.betaTokens.findFirst({
+    where: {
+      userId: session?.user.id,
+    },
+  });
+
+  if ((!session || !isBetaUser) && flags.enableEarlyAccess) {
+    return redirect('/claim');
   }
 
   return (
