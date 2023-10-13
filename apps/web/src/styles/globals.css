@@ -303,6 +303,86 @@ main {
   animation: gradient-rotate 5s linear infinite reverse;
 }
 
+.animate-beam {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.5);
+  animation: beam 2s 0.75s ease 1 forwards;
+}
+
+@keyframes beam {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .animate-beam {
+    opacity: 0;
+    transform: translate(-50%, -20%) scale(0.5);
+    animation: beam 2s 0.75s ease 1 forwards;
+  }
+
+  @keyframes beam {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -20%) scale(0.5);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(0, 0) scale(1);
+    }
+  }
+}
+.animate-bg-gradient-to-center {
+  animation: bg-to-center 1s 0.75s ease 1 forwards;
+}
+.animate-bg-gradient-to-center-title {
+  animation: bg-to-center 1s 0.95s ease 1 forwards;
+}
+
+@keyframes bg-to-center {
+  0% {
+    background-position: right bottom;
+  }
+  100% {
+    background-position: center;
+  }
+}
+
+.animate-star {
+  color: white;
+  stroke: currentColor;
+  animate: star 1s 0.5s ease 1 forwards;
+}
+
+@keyframes star {
+  0% {
+    color: #3178c6;
+  }
+  100% {
+    color: #ffffff;
+  }
+}
+
+.animate-logo-light {
+  filter: brightness(90%);
+  animation: logo-light 1s 0.85s ease 1 forwards;
+}
+
+@keyframes logo-light {
+  0% {
+    filter: brightness(90%);
+  }
+  100% {
+    filter: brightness(110%);
+  }
+}
+
 @keyframes gradient-rotate {
   0% {
     --gradient-angle: 360deg;
