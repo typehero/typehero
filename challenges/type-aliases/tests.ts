@@ -1,15 +1,5 @@
 import { Expect, Equal } from 'type-testing';
 
-interface Spacecraft {
-  name: Name;
-  yearBuilt: Year;
-  crewCapacity: Count;
-  launchDate: Date;
-  isOperational: IsOperational;
-  propulsionSystem: string[];
-  payload: Payload[];
-}
-
 type test_Name = Expect<Equal<Name, string>>;
 type test_Year = Expect<Equal<Year, number>>;
 type test_Count = Expect<Equal<Count, number>>;
@@ -20,12 +10,25 @@ type test_PayloadName = Expect<Equal<
   string
 >>;
 
-type test_Kilograms = Expect<Equal<Kilograms, number>>;
+type test_Kilograms = Expect<Equal<
+  Kilograms,
+  number
+>>;
 
 type test_PayloadMass = Expect<Equal<
   Payload['mass'],
   Kilograms
 >>;
+
+interface Spacecraft {
+  name: Name;
+  yearBuilt: Year;
+  crewCapacity: Count;
+  launchDate: Date;
+  isOperational: IsOperational;
+  propulsionSystem: string[];
+  payload: Payload[];
+}
 
 const voyager1 = {
   name: "Voyager 1",
