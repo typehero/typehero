@@ -1,6 +1,6 @@
 ## What Problem Type Unions Solve
 
-Type In a previous example for `type-aliases` we saw a problem.  We were writing code for a space shuttle and we wanted to make sure that we can't accidentally use the wrong units type.
+In a previous example for `type-aliases` we saw a problem.  We were writing code for a space shuttle and we wanted to make sure that we can't accidentally use the wrong units type.
 
 ```ts
 type Meters = number;
