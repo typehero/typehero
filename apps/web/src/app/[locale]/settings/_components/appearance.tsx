@@ -15,7 +15,8 @@ import { RadioGroup, RadioGroupItem } from '@repo/ui/components/radio-group';
 import { Separator } from '@repo/ui/components/separator';
 import { useToast } from '@repo/ui/components/use-toast';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { appearanceFormSchema } from './schema';
+import type { z } from 'zod';
 
 export function Appearances() {
   return (
@@ -31,16 +32,6 @@ export function Appearances() {
     </div>
   );
 }
-
-const appearanceFormSchema = z.object({
-  theme: z.enum(['light', 'dark'], {
-    required_error: 'Please select a theme.',
-  }),
-  font: z.enum(['inter', 'manrope', 'system'], {
-    invalid_type_error: 'Select a font',
-    required_error: 'Please select a font.',
-  }),
-});
 
 type AppearanceFormValues = z.infer<typeof appearanceFormSchema>;
 
