@@ -85,18 +85,18 @@ function ProfileForm({ user }: Props) {
   });
 
   async function onSubmit(data: ProfileSchema) {
-    const res = await updateProfile(data);
-    if (res.error) {
+    try {
+      await updateProfile(data);
+      toast({
+        title: 'profile updated',
+        variant: 'success',
+      });
+    } catch (error) {
       toast({
         title: 'Could not update profile',
         variant: 'destructive',
       });
     }
-
-    toast({
-      title: 'profile updated',
-      variant: 'success',
-    });
   }
 
   return (

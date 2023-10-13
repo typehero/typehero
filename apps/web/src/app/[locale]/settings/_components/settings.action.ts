@@ -17,14 +17,7 @@ export async function updateProfile(profileData: ProfileSchema) {
   if (!session?.user.id) return { error: 'unauthorized' };
 
   // 2. test schema validation with zod
-  try {
-    profileSchema.parse(profileData);
-    console.log('validated', profileData);
-    // eslint-disable-next-line
-  } catch (error: any) {
-    console.log('Error validating profile data', error);
-    return { error: error?.message };
-  }
+  profileSchema.parse(profileData);
 
   // 3. Update the user bio field in the db
   await prisma.user.update({
