@@ -22,9 +22,59 @@
 - generic-defaults
 - tuples
 - tuple-labels
+- typeof
 
 ## TODO
 
 - figure out patching `Pick` out (`noLib`?)
 - JSON Schema for metadata.json
 - add some kind of tags system to metadata
+
+
+## random disorganized snippets for later
+
+
+
+
+
+
+
+
+a good one for strong generics
+
+```ts
+const config = {
+  apiUrl: 'https://api.example.com',
+  apiKey: 'your-api-key',
+} as const;
+
+function getConfigValue<K extends keyof typeof config>(key: K) {
+  return config[key];
+}
+
+const apiUrl = getConfigValue('apiUrl');
+```
+
+
+
+
+
+
+
+### Universe 2: with functions
+
+Functions can also take generic _type arguments_ along with their regular JavaScript-land arguments.
+
+```ts
+const createRow = <T>(row: {
+  label: string;
+  value: T;
+  disabled: boolean;
+}) => {
+  // ... do things
+}
+```
+
+This syntax might look a little funky at first, but if you stand back and squint a bit, you'll see that it's just a mashup of the regular argument syntax and the type generic syntax we saw above.
+
+
