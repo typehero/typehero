@@ -65,21 +65,23 @@ Don't worry if this TypeScript feature seems underwhelming.  It's not that usefu
 
 ### p.s. Don't Overuse Aliases
 
-One little tip: be careful not to _over use_ type aliases.  A very common example is that you may be tempted to write something like this:
+One little tip: be careful not to _over use_ type aliases.  A very common mistake beginners make is to create aliases for arrays of things:
 
 ```ts
 export interface Row {
-  id: string;
-  displayed: boolean;
-  selectable: boolean;
-  label: string;
-  expanded: boolean;
+  // imagine some properties here
 }
 
 export type Rows = Row[];
 ```
 
-That might seem nice because you can just import `Rows` and use it somewhere in your app where you have an array of Rows.  But avoid doing this.  You can just import `Row` and specify `Row[]` when you use it.  This is beneficial because it's simpler to read and immediately understand but also because it gives you access to the `Row` type, which you're probably going to want to work with _anyway_.
+That might seem nice because you can just import `Rows` and use it somewhere in your app where you have an array of Rows.
+
+But, ask yourself:
+
+> can I just import `Row` and specify `Row[]` when needed?
+
+If the answer is yes, then you should probably not make an alias for `Rows`.  This is beneficial because you're probably going to want to work with the `Row` type _anyway_ in the same file.  It's also a bit easier to read and understand.
 
 ## Solving This Challenge
 
