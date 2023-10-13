@@ -28,21 +28,33 @@ const casettesByArtist = {
 };
 ```
 
-But what if you wanted to extract all these keys as a type?  You _certainly_ would not want to retype all those artist names.
+But what if you wanted to extract all these keys as a type?
 
-You can use `keyof`!
+We could always re-type all of them in a literal union:
+
+```ts
+type Artists = 'Alanis Morissette' | 'Mariah Carey' | 'Nirvana'
+  | 'Oasis' | 'Radiohead' | 'No Doubt'| 'Backstreet Boys'
+  | 'Spice Girls' | 'Green Day' | 'Pearl Jam'| 'Metallica'
+  | 'Guns N\' Roses' | 'U2' | 'Aerosmith' | 'R.E.M.' | 'Blur'
+  | 'The Smashing Pumpkins' | 'Britney Spears' | 'Whitney Houston'
+```
+
+But that's pretty Rough.  You _certainly_ would not want to retype all those artist names.  What if you forget one?  What if you misspell one?
+
+Great news: you can use `keyof` to solve this problem!
 
 ## How To Use `keyof`
 
 `keyof` is special TypeScript syntax that you use before any type.
 
-In our case we _don't have_ a type, so we create one with the `typeof` operator:
+In our case we _don't have_ a type to start working with (because we), so we create one with the `typeof` operator:
 
 ```ts
 type CasettesByArtist = typeof casettesByArtist;
 ```
 
-Then we can combine `keyof` with our new type to get an alias that represents the union of all keys in our `casettestByArtist` object.
+Then we can use `keyof` on our new type to get an alias that represents the union of all keys in our `casettestByArtist` object.
 
 ```ts
 type Artists = keyof CasettesByArtist;
