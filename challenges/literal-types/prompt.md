@@ -6,7 +6,6 @@
 
 JavaScript, like most programming languages has a concept of "primitive" data types.  Primitive data types are things like `string`, `boolean`, `number`, and `object`.
 
-
 > sidenote: in JavaScript, arrays and functions are actually objects, but that's a topic for another time :)
 
 Let's say we've been baking chocolate chip cookies as a side-hustle and we wanna take things to the next level.  To get to industrial scales, we're gonna need to start writing down our recipes.
@@ -36,7 +35,7 @@ const name: string = 'chocolate chips';
 const inStock: boolean = true;
 const kilograms: number = 5;
 
-interface Ingredient {
+type Ingredient = {
   name: string;
   inStock: boolean;
   kilograms: number;
@@ -56,7 +55,7 @@ type Name = string;
 type InStock = boolean;
 type Kilograms = number;
 
-interface Ingredient {
+type Ingredient = {
   name: Name;
   inStock: InStock;
   kilograms: Kilograms;
@@ -83,7 +82,7 @@ type Name = 'chocolate chips';
 type InStock = true;
 type Kilograms = 5;
 
-interface Ingredient {
+type Ingredient = {
   name: 'chocolate chips';
   inStock: true;
   kilograms: 5;
