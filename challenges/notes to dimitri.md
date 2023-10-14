@@ -19,7 +19,8 @@
 - array-item-type
 - as-const
 - generic-function-arguments
-- generic-defaults
+- generic-function-constraints
+- generic-type-defaults
 - tuples
 - tuple-labels
 - typeof
@@ -93,7 +94,7 @@ This syntax might look a little funky at first, but if you stand back and squint
 
 
 
-const characters = {
+const characters = {generic-constraints
   ironMan: {
     name: 'Tony Stark',
     age: 53,
@@ -125,3 +126,17 @@ const characters = {
     attributes: ['agile', 'web-slinging'],
   },
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+type CarType = "Bugatti" | "Ferarri" | "Lambo" | "Porsche" | "Toyota Corolla";
