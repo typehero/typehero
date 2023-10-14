@@ -1,9 +1,13 @@
-import { getServerAuthSession } from '@repo/auth/server';
+import { getServerAuthSession, type Session } from '@repo/auth/server';
 import { Description } from '../_components/description';
 import { Comments } from '../_components/comments';
 import { getChallengeRouteData } from './getChallengeRouteData';
 import { buildMetaForChallenge } from '~/app/metadata';
 import { getRelativeTime } from '~/utils/relativeTime';
+import { getAllFlags } from '~/utils/feature-flags';
+import { redirect } from 'next/navigation';
+import { prisma } from '@repo/db';
+import { isBetaUser } from '~/utils/server/is-beta-user';
 
 interface Props {
   params: {
@@ -25,7 +29,14 @@ export async function generateMetadata({ params: { id } }: Props) {
 }
 
 export default async function Challenges({ params: { id: challengeId } }: Props) {
+  // early acces you must be authorized
   const session = await getServerAuthSession();
+  const isBeta = await isBetaUser(session);
+
+  if (!isBeta) {
+    return redirect('/claim');
+  }
+
   const challenge = await getChallengeRouteData(challengeId, session);
 
   return (
@@ -34,4 +45,8 @@ export default async function Challenges({ params: { id: challengeId } }: Props)
       <Comments rootId={challenge.id} type="CHALLENGE" />
     </div>
   );
+}
+
+export function isAuthor(session: Session | null, userId?: string | null) {
+  return userId && session?.user?.id && userId === session?.user?.id;
 }

@@ -130,6 +130,7 @@ model User {
 
   imageUpload ImageUpload[]
   tracks      Track[]
+  BetaTokens  BetaTokens[]
 }
 
 model VerificationToken {
@@ -399,4 +400,13 @@ model Track {
   visible         Boolean          @default(true)
   trackChallenges TrackChallenge[]
   enrolledUsers   User[]
+}
+
+model BetaTokens {
+  id     Int     @id @default(autoincrement())
+  token  String  @unique
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String?
+
+  @@index([userId])
 }

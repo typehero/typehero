@@ -1,4 +1,3 @@
-'use server';
 import { type Session } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import { cache } from 'react';

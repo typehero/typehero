@@ -1,8 +1,9 @@
 import { getServerAuthSession } from '@repo/auth/server';
-import { TypographyH2 } from '@repo/ui/components/typography/h2';
 import type { Metadata } from 'next';
-import { Wizard } from './_components';
+import { redirect } from 'next/navigation';
 import { buildMetaForDefault } from '~/app/metadata';
+import { isBetaUser } from '~/utils/server/is-beta-user';
+import { Wizard } from './_components';
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildMetaForDefault({
@@ -13,13 +14,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Page() {
   const session = await getServerAuthSession();
+  const isBeta = await isBetaUser(session);
 
-  if (!session?.user) {
-    return (
-      <div className="container flex h-full flex-col items-center justify-center">
-        <TypographyH2>You must be logged in to create a challenge.</TypographyH2>
-      </div>
-    );
+  if (!isBeta) {
+    return redirect('/claim');
   }
 
   return <Wizard />;
