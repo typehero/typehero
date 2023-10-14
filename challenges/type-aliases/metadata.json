@@ -1,4 +1,4 @@
 {
   "id": "type-aliases",
-  "prerequisites": ["primitive-types"]
+  "prerequisites": ["primitive-data-types"]
 }

@@ -15,7 +15,7 @@
   - intersections-with-any
 - type-guards (continuing on from type unions)
 - compound-string-literals
-- mapped-arrays
+- mapping-arrays
 - array-item-type
 - as-const
 - generic-function-arguments
@@ -25,6 +25,8 @@
 - tuple-labels
 - typeof
 - indexing-types
+- mapping-modifiers https://www.typescriptlang.org/docs/handbook/2/mapped-types.html#mapping-modifiers
+- key-remapping-with-as https://www.typescriptlang.org/docs/handbook/2/mapped-types.html#key-remapping-via-as
 
 ## TODO
 
