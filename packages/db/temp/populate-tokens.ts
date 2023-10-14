@@ -1,4 +1,4 @@
-import { prisma } from '.';
+import { prisma } from '../src';
 
 const TOKEN_LIMIT = 3069;
 
