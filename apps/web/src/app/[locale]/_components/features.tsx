@@ -64,7 +64,7 @@ export function Features() {
             <ImageCard
               imgClass1={clsx(
                 'pointer-events-none transition-transform duration-500 bg-neutral-50/30 dark:bg-neutral-800/30',
-                'cale-[150%] sm:scale-[110%] md:scale-[150%] sm:top-[55%] max-md:rounded-sm rounded-xl top-[75%] left-[69px] md:top-[50%] lg:top-[65%] w-[42%] md:-bottom-[11%] sm:left-[40px] lg:w-[69%]',
+                'scale-[150%] sm:scale-[110%] md:scale-[150%] sm:top-[55%] max-md:rounded-sm rounded-xl top-[75%] left-[69px] md:top-[50%] lg:top-[65%] w-[42%] md:-bottom-[11%] sm:left-[40px] lg:w-[69%]',
                 'md:group-hover:translate-x-2 md:top-[60%] md:group-hover:scale-[140%]',
               )}
               imgClass2={clsx(
