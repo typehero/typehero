@@ -3,7 +3,6 @@ import { Analytics } from '@vercel/analytics/react';
 import '../../styles/globals.css';
 
 import { Inter } from 'next/font/google';
-import type { Metadata } from 'next';
 import { Toaster } from '@repo/ui/components/toaster';
 import { Providers } from './providers';
 import { buildMetaForDefault } from '../metadata';
@@ -11,10 +10,6 @@ import { Navigation } from '~/components/navigation';
 import { getStaticParams } from '~/locales/server';
 
 const inter = Inter({ subsets: ['latin'] });
-
-export async function generateMetadata(): Promise<Metadata> {
-  return buildMetaForDefault({});
-}
 
 export function generateStaticParams() {
   return getStaticParams();
