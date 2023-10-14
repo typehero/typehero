@@ -55,8 +55,8 @@ If you find the project interesting and want to support us please consider spons
     <td>
       <a href="https://www.uploadthing.com/" target="_parent">
         <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="./media/uploadthing-logo.svg">
-          <img alt="Uploadthing Logo" src="./media/uploadthing-logo-dark.svg" width="200">
+          <source media="(prefers-color-scheme: dark)" srcset="./media/uploadthing-logo-dark.svg">
+          <img alt="Uploadthing Logo" src="./media/uploadthing-logo.svg" width="200">
         </picture>
       </a>
     </td>
