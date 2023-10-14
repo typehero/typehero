@@ -50,7 +50,7 @@ export const links = [
   },
 ];
 
-export const NewSettings = ({ user }: Props) => {
+export const Settings = ({ user }: Props) => {
   const path = usePathname();
   let selectedTabValue: string;
   if (path === '/settings') {
@@ -105,19 +105,22 @@ export const NewSettings = ({ user }: Props) => {
             )}
           </div>
           <div className="flex gap-4 pr-6 md:flex-col">
-            {links.map(({ icon: Icon, name, link, disabled }) => (
-              <Link href={link} key={name} className="w-full">
-                <VerticalTabsTrigger
-                  className="flex w-full items-center justify-center gap-3 px-2 md:justify-normal md:px-3"
-                  value={name.toLowerCase()}
-                  key={name}
-                  disabled={disabled}
-                >
-                  <Icon className="h-4 w-4" />
-                  <span className="hidden md:block">{name}</span>
-                </VerticalTabsTrigger>
-              </Link>
-            ))}
+            {links.map(({ icon: Icon, name, link, disabled }) => {
+              const Comp = disabled ? 'div' : Link;
+              return (
+                <Comp href={link} key={name} className="w-full">
+                  <VerticalTabsTrigger
+                    className="flex w-full items-center justify-center gap-3 px-2 md:justify-normal md:px-3"
+                    value={name.toLowerCase()}
+                    key={name}
+                    disabled={disabled}
+                  >
+                    <Icon className="h-4 w-4" />
+                    <span className="hidden md:block">{name}</span>
+                  </VerticalTabsTrigger>
+                </Comp>
+              );
+            })}
           </div>
         </VerticalTabsList>
         <VerticalTabsContent className="shrink grow space-y-4" value={selectedTabValue}>
