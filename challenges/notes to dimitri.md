@@ -141,4 +141,21 @@ const characters = {generic-constraints
 
 
 
-type CarType = "Bugatti" | "Ferarri" | "Lambo" | "Porsche" | "Toyota Corolla";
+type StarWarsCharacter = {
+  [id: string]: {
+    fullName: string;
+    species: string;
+    // ...imagine many more properties
+  }
+};
+
+const starWarsCharacters: StarWarsCharacter = {
+  luke: { fullName: "Luke Skywalker", species: "Human" },
+  yoda: { fullName: "Yoda", species: "Unknown" },
+  chewy: { fullName: "Chewbacca", species: "Wookiee" },
+  // ...imagine many more characters
+};
+
+type SpeciesByCharacterId<T extends StarWarsCharacter> = {
+  [Id in keyof T]: T[Id]["species"]
+};
