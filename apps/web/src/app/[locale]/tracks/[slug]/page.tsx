@@ -1,3 +1,6 @@
+import { getServerAuthSession } from '@repo/auth/server';
+import { redirect } from 'next/navigation';
+import { isBetaUser } from '~/utils/server/is-beta-user';
 import { TrackDetail } from '../_components/track-details';
 import { getTrackDetails } from '../_components/track.action';
 
@@ -10,7 +13,14 @@ interface Props {
 }
 
 // todo: write a suspense skeleton...
-export default function Page({ params }: Props) {
+export default async function Page({ params }: Props) {
+  const session = await getServerAuthSession();
+  const isBeta = await isBetaUser(session);
+
+  if (!isBeta) {
+    return redirect('/claim');
+  }
+
   return <TrackDetail slug={params.slug} />;
 }
 

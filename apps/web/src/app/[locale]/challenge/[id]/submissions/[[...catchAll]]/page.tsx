@@ -1,9 +1,10 @@
 import { cache } from 'react';
 import { prisma } from '@repo/db';
 import { getServerAuthSession } from '@repo/auth/server';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { Submissions } from './_components';
 import { withUnstableCache } from '~/utils/withUnstableCache';
+import { isBetaUser } from '~/utils/server/is-beta-user';
 
 interface Props {
   params: {
@@ -18,6 +19,12 @@ export const metadata = {
 
 export default async function SubmissionPage({ params: { id } }: Props) {
   const session = await getServerAuthSession();
+  const isBeta = await isBetaUser(session);
+
+  if (!isBeta) {
+    return redirect('/claim');
+  }
+
   const submissions = await withUnstableCache({
     fn: getChallengeSubmissions,
     args: [session?.user.id ?? '', id],
@@ -33,7 +40,7 @@ export default async function SubmissionPage({ params: { id } }: Props) {
 }
 
 export type ChallengeSubmissions = NonNullable<Awaited<ReturnType<typeof getChallengeSubmissions>>>;
-export const getChallengeSubmissions = cache((userId: string, challengeId: string) => {
+const getChallengeSubmissions = cache((userId: string, challengeId: string) => {
   return prisma.submission.findMany({
     where: { challengeId: Number(challengeId), userId },
     orderBy: [
