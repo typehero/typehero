@@ -1,20 +1,17 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from '@repo/auth/react';
-import { useTheme } from 'next-themes';
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { postSolution } from './_actions';
-import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
-import type { ChallengeSolution } from '../getSolutionRouteData';
 import { Button } from '@repo/ui/components/button';
-import { useToast } from '@repo/ui/components/use-toast';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@repo/ui/components/form';
 import { Input } from '@repo/ui/components/input';
-import {
-  createNoProfanitySchema,
-  createNoProfanitySchemaWithValidate,
-} from '~/utils/antiProfanityZod';
+import { useToast } from '@repo/ui/components/use-toast';
+import { useTheme } from 'next-themes';
+import { revalidateTag } from 'next/cache';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
+import { createNoProfanitySchemaWithValidate } from '~/utils/antiProfanityZod';
+import type { ChallengeSolution } from '../getSolutionRouteData';
+import { createCacheKeyForSolutions, postSolution } from './_actions';
 
 const getDefaultMarkdown = (solution: string) => `
 ## Thoughts
@@ -48,7 +45,6 @@ interface Props {
 
 export function SolutionEditor({ dismiss, challenge }: Props) {
   const session = useSession();
-  const router = useRouter();
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -71,9 +67,6 @@ export function SolutionEditor({ dismiss, challenge }: Props) {
         variant: 'success',
         title: 'Your solution has been posted!',
       });
-
-      // refresh the router so we see latest data
-      router.refresh();
     } catch (error) {
       toast({
         variant: 'destructive',

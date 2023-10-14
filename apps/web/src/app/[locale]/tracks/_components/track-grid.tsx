@@ -1,9 +1,15 @@
 import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
+import { withUnstableCache } from '~/utils/withUnstableCache';
 import { TrackCard } from './track-card';
 
 export async function TrackGrid() {
-  const tracks = await getTracks();
+  const tracks = await withUnstableCache({
+    fn: getTracks,
+    args: [],
+    keys: ['tracks'],
+    tags: ['tracks'],
+  });
   return (
     <div className="container flex items-center justify-between gap-3">
       <section className="grid w-full grid-flow-row grid-cols-1 gap-10 lg:grid-cols-2 xl:grid-cols-3">

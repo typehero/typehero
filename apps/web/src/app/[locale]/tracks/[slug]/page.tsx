@@ -1,6 +1,7 @@
 import { getServerAuthSession } from '@repo/auth/server';
 import { redirect } from 'next/navigation';
 import { isBetaUser } from '~/utils/server/is-beta-user';
+import { withUnstableCache } from '~/utils/withUnstableCache';
 import { TrackDetail } from '../_components/track-details';
 import { getTrackDetails } from '../_components/track.action';
 
@@ -25,7 +26,12 @@ export default async function Page({ params }: Props) {
 }
 
 export async function generateMetadata({ params: { slug } }: Props) {
-  const track = await getTrackDetails(parseInt(slug));
+  const track = await withUnstableCache({
+    fn: getTrackDetails,
+    args: [parseInt(slug)],
+    keys: [`track-${slug}-detail`],
+    tags: [`track-${slug}-detail`],
+  });
 
   if (!track) {
     return {

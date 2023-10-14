@@ -24,7 +24,7 @@ export async function Tracks() {
           tracks, offering a dynamic learning path for developers to enhance their skills.
         </p>
       </div>
-      {session ? <EnrolledTrackSection /> : null}
+      <EnrolledTrackSection />
       <TrackGrid />
     </div>
   );

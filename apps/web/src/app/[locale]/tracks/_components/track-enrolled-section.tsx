@@ -1,4 +1,4 @@
-import { getServerAuthSession } from '@repo/auth/server';
+import { getServerAuthSession, type Session } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import Link from 'next/link';
 import { Carousel } from '~/components/carousel';
@@ -6,7 +6,9 @@ import { PersonalTrackCard } from './personal-track-card';
 import { Card } from '@repo/ui/components/card';
 import type { HTMLAttributes } from 'react';
 import clsx from 'clsx';
+import { withUnstableCache } from '~/utils/withUnstableCache';
 
+export const createEnrolledTrackCacheKey = (userId: string) => `user-${userId}-enrolled-tracks`;
 const SkeletonTrack = ({ className, ...rest }: HTMLAttributes<HTMLDivElement>) => (
   <Card
     className={clsx(
@@ -25,11 +27,22 @@ const SkeletonTrack = ({ className, ...rest }: HTMLAttributes<HTMLDivElement>) =
 );
 
 export async function EnrolledTrackSection() {
-  const tracks = await getUserEnrolledTracks();
+  const session = await getServerAuthSession();
+
+  if (!session) {
+    return null;
+  }
+
+  const tracks = await withUnstableCache({
+    fn: getUserEnrolledTracks,
+    args: [session],
+    keys: [createEnrolledTrackCacheKey(session.user.id)],
+    tags: [createEnrolledTrackCacheKey(session.user.id)],
+  });
 
   return (
     <div>
-      {tracks.length ? (
+      {tracks.length > 0 ? (
         <>
           <div className="container flex items-center justify-between gap-3 px-4 pt-5">
             <h2 className="relative text-3xl font-bold tracking-tight">
@@ -82,13 +95,12 @@ export type EnrolledTracks = Awaited<ReturnType<typeof getUserEnrolledTracks>>;
 /**
  * Fetches user enrolled tracks based on current session.
  */
-async function getUserEnrolledTracks() {
-  const session = await getServerAuthSession();
+async function getUserEnrolledTracks(session: Session) {
   return prisma.track.findMany({
     where: {
       enrolledUsers: {
         some: {
-          id: session?.user.id,
+          id: session.user.id,
         },
       },
     },
@@ -99,7 +111,7 @@ async function getUserEnrolledTracks() {
             include: {
               submission: {
                 where: {
-                  userId: session?.user.id,
+                  userId: session.user.id,
                 },
               },
             },
