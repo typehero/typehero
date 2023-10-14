@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@repo/ui/components/dropdown-menu';
-import { LogIn, Moon, Play, Settings, Settings2, Sun, User } from '@repo/ui/icons';
+import { Loader2, LogIn, Moon, Play, Settings, Settings2, Sun, User } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
@@ -137,7 +137,7 @@ function ThemeButton() {
 }
 
 function LoginButton() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
 
   const isAdminOrMod = isAdminOrModerator(session);
@@ -204,10 +204,14 @@ function LoginButton() {
       className="focus:bg-accent w-20 rounded-lg bg-transparent p-2 text-black duration-300 hover:bg-gray-200 focus:outline-none dark:text-white hover:dark:bg-gray-800"
       href="/login"
     >
-      <div className="flex items-center space-x-2">
-        <LogIn className="h-5 w-5" />
-        <span className="dark:text-white">Login</span>
-      </div>
+      {status === 'loading' ? (
+        <Loader2 className="h-5 w-5 animate-spin" />
+      ) : (
+        <div className="flex items-center space-x-2">
+          <LogIn className="h-5 w-5" />
+          <span className="dark:text-white">Login</span>
+        </div>
+      )}
     </Link>
   );
 }
