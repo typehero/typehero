@@ -3,10 +3,11 @@
 import { Tabs, TabsList, TabsTrigger } from "@repo/ui/components/tabs";
 import { useParams, useRouter } from "next/navigation";
 
-export default function Headers({ id }: { id: string }) {
+export default function Headers() {
 
   const params = useParams<{id: string}>();
-  const router = useRouter()
+  const router = useRouter();
+
   return (
     <Tabs className="flex h-full w-full flex-col overflow-hidden" defaultValue={'description'}>
       <TabsList className="bg-background/90 dark:bg-muted/90 sticky top-0 z-10 grid h-auto w-full grid-cols-3 rounded-none rounded-tl-2xl rounded-tr-xl border-b border-zinc-300 backdrop-blur-sm dark:border-zinc-700">
