@@ -5,13 +5,13 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@repo/ui/co
 import { Input } from '@repo/ui/components/input';
 import { useToast } from '@repo/ui/components/use-toast';
 import { useTheme } from 'next-themes';
-import { revalidateTag } from 'next/cache';
+import { useParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
 import { createNoProfanitySchemaWithValidate } from '~/utils/antiProfanityZod';
 import type { ChallengeSolution } from '../getSolutionRouteData';
-import { createCacheKeyForSolutions, postSolution } from './_actions';
+import { postSolution } from './_actions';
 
 const getDefaultMarkdown = (solution: string) => `
 ## Thoughts
@@ -44,6 +44,7 @@ interface Props {
 }
 
 export function SolutionEditor({ dismiss, challenge }: Props) {
+  const { slug } = useParams();
   const session = useSession();
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
@@ -59,6 +60,7 @@ export function SolutionEditor({ dismiss, challenge }: Props) {
       await postSolution({
         challengeId: challenge.id,
         description: data.content ?? '',
+        slug: slug as string,
         title: data.title ?? '',
         userId: session.data?.user.id!,
       });

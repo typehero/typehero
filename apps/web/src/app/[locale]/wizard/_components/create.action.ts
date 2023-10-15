@@ -14,6 +14,7 @@ export async function uploadChallenge(data: CreateChallengeSchema, isUserACreato
   return prisma.challenge.create({
     data: {
       ...data,
+      slug: data.name.toLowerCase().replace(/ /g, '-'),
       userId: session.user.id,
       // if a user has the creator role already then their challenges dont need to be approved anymore
       ...(isUserACreator ? { status: 'ACTIVE' } : {}),
