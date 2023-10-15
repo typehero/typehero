@@ -4,7 +4,7 @@ export const mockFlags = {
   enableLogin: true,
   enableExplore: true,
   enableTracks: true,
-  enableEarlyAccess: true,
+  enableEarlyAccess: false,
 };
 
 export async function getAllFlags() {
