@@ -25,7 +25,8 @@ export default function Page() {
 
         <p>
           If you have additional questions or require more information about our Privacy Policy, do
-          not hesitate to contact us at <a href="mailto:support@typehero.dev">support@typehero.dev</a>.
+          not hesitate to contact us at{' '}
+          <a href="mailto:support@typehero.dev">support@typehero.dev</a>.
         </p>
 
         <p>
@@ -164,7 +165,8 @@ export default function Page() {
         </p>
         <p>
           If you make a request, we have one month to respond to you. If you would like to exercise
-          any of these rights, please contact us at <a href="mailto:support@typehero.dev">support@typehero.dev</a>.
+          any of these rights, please contact us at{' '}
+          <a href="mailto:support@typehero.dev">support@typehero.dev</a>.
         </p>
 
         <h2>Information Sharing</h2>
