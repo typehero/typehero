@@ -43,8 +43,7 @@ export function AddTrackForm({ toggle }: Props) {
 
   async function onSubmit(data: FormSchema) {
     try {
-      const slug = data.name.toLowerCase().replace(/\s/g, '-');
-      await createTrack({ ...data, slug });
+      await createTrack(data);
       queryClient.invalidateQueries(['tracks']);
       toggle(false);
       toast({
