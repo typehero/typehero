@@ -31,7 +31,7 @@ test('challenge page', async ({ page }) => {
     },
   });
 
-  await page.goto(`/challenge/${challengeId}`);
+  await page.goto(`/challenge/pick`);
 
   await expect(page.getByRole('heading', { name: 'Pick' })).toBeVisible();
   await expect(
