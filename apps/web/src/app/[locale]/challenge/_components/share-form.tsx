@@ -8,14 +8,14 @@ import { useCallback, useState } from 'react';
 import { useLocalStorage } from '~/utils/useLocalStorage';
 
 export function ShareForm() {
-  const { id: challengeId } = useParams();
+  const { slug } = useParams();
   const [copied, setCopied] = useState(false);
   const [copiedWithCode, setCopiedWithCode] = useState(false);
-  const [codeToCompress] = useLocalStorage(`challenge-${challengeId}`, '');
-  const url = `${window.location.origin}/challenge/${challengeId}`;
+  const [codeToCompress] = useLocalStorage(`challenge-${slug}`, '');
+  const url = `${window.location.origin}/challenge/${slug}`;
 
   const copyToClipboard = useCallback(async () => {
-    const url = `${window.location.origin}/challenge/${challengeId}`;
+    const url = `${window.location.origin}/challenge/${slug}`;
 
     try {
       if (navigator.clipboard && !copied) {
@@ -27,11 +27,11 @@ export function ShareForm() {
       console.error('copyToClipboard', e);
       setCopied(false);
     }
-  }, [challengeId, copied]);
+  }, [slug, copied]);
 
   const copyToClipboardWithCode = useCallback(async () => {
     const compressedCode = lzstring.compressToEncodedURIComponent(codeToCompress);
-    const url = `${window.location.origin}/challenge/${challengeId}/?code=${compressedCode}`;
+    const url = `${window.location.origin}/challenge/${slug}/?code=${compressedCode}`;
 
     try {
       if (navigator.clipboard && !copiedWithCode) {
@@ -43,7 +43,7 @@ export function ShareForm() {
       console.error('copyToClipboard', e);
       setCopiedWithCode(false);
     }
-  }, [challengeId, copiedWithCode, codeToCompress]);
+  }, [slug, copiedWithCode, codeToCompress]);
 
   return (
     <div className="flex flex-col space-y-4">

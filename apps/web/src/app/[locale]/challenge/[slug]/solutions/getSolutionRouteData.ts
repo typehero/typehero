@@ -3,9 +3,9 @@ import { prisma } from '@repo/db';
 import type { Session } from '@repo/auth/server';
 
 export type ChallengeSolution = NonNullable<Awaited<ReturnType<typeof getSolutionsRouteData>>>;
-export const getSolutionsRouteData = cache(async (challengeId: string, session: Session | null) => {
+export const getSolutionsRouteData = cache(async (slug: string, session: Session | null) => {
   const data = await prisma.challenge.findFirst({
-    where: { id: Number(challengeId) },
+    where: { slug },
     select: {
       id: true,
       submission: {

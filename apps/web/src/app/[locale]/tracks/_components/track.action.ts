@@ -66,11 +66,11 @@ export async function unenrollUserFromTrack(id: number) {
  * Fetches the track details given a track id.
  * @param id The track id.
  */
-export const getTrackDetails = cache(async (id: number) => {
+export const getTrackDetails = cache(async (slug: string) => {
   const session = await getServerAuthSession();
-  return prisma.track.findUnique({
+  return prisma.track.findFirstOrThrow({
     where: {
-      id,
+      slug,
     },
     include: {
       trackChallenges: {

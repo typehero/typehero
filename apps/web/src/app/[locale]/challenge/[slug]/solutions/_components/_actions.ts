@@ -3,18 +3,19 @@ import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import { revalidateTag } from 'next/cache';
 import { isAdminOrModerator, isAuthor } from '~/utils/auth-guards';
+import type { ChallengeSolution } from '../[solutionId]/page';
 
 interface Args {
   challengeId: number;
   description: string;
+  slug: string;
   title: string;
   userId: string;
 }
 
-export const createCacheKeyForSolutions = (challengeId: number) =>
-  `challenge-${challengeId}-solutions`;
+export const createCacheKeyForSolutions = (slug: string) => `challenge-${slug}-solutions`;
 
-export async function postSolution({ challengeId, description, title, userId }: Args) {
+export async function postSolution({ challengeId, description, slug, title, userId }: Args) {
   const session = await getServerAuthSession();
   if (!session) throw new Error('You must be logged in to submit a solution');
 
@@ -26,25 +27,23 @@ export async function postSolution({ challengeId, description, title, userId }: 
       userId,
     },
   });
-  revalidateTag(createCacheKeyForSolutions(challengeId));
+  revalidateTag(createCacheKeyForSolutions(slug));
 }
 
-export async function deleteSolution(id: number, challengeId: number) {
+export async function deleteSolution(solutionToDelete: ChallengeSolution) {
   const session = await getServerAuthSession();
-  const solution = await prisma.sharedSolution.findUnique({
-    where: { id },
-  });
-  if (!isAuthor(session, solution?.userId)) {
+  if (!isAuthor(session, solutionToDelete?.userId)) {
     throw new Error('Only author can delete their solution.');
   }
 
   await prisma.sharedSolution.delete({
-    where: { id },
+    where: { id: solutionToDelete.id },
   });
-  revalidateTag(createCacheKeyForSolutions(challengeId));
+
+  revalidateTag(createCacheKeyForSolutions(solutionToDelete.challenge?.slug ?? ''));
 }
 
-export async function pinOrUnpinSolution(id: number, isPinned: boolean, challengeId: number) {
+export async function pinOrUnpinSolution(id: number, isPinned: boolean, slug: string) {
   const session = await getServerAuthSession();
 
   if (!isAdminOrModerator(session))
@@ -54,5 +53,5 @@ export async function pinOrUnpinSolution(id: number, isPinned: boolean, challeng
     where: { id },
     data: { isPinned },
   });
-  revalidateTag(createCacheKeyForSolutions(challengeId));
+  revalidateTag(createCacheKeyForSolutions(slug));
 }

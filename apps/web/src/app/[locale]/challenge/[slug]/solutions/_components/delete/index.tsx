@@ -2,7 +2,7 @@ import type { DialogTriggerProps } from '@radix-ui/react-dialog';
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogTrigger } from '@repo/ui/components/dialog';
 import { TypographyLarge } from '@repo/ui/components/typography/large';
-import type { ChallengeSolution } from '~/app/[locale]/challenge/[id]/solutions/[solutionId]/page';
+import type { ChallengeSolution } from '~/app/[locale]/challenge/[slug]/solutions/[solutionId]/page';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { Button } from '@repo/ui/components/button';
@@ -23,7 +23,7 @@ export function SolutionDeleteDialog({ children, solution, ...props }: SolutionD
 
   async function handleDeleteSolution() {
     try {
-      await deleteSolution(solution.id, solution.challengeId ?? 0);
+      await deleteSolution(solution);
       toast({
         title: 'Solution Deleted',
         variant: 'success',

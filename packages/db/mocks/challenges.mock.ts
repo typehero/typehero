@@ -6,7 +6,7 @@ import { parse } from 'yaml';
 import { faker } from '@faker-js/faker';
 import { simpleGit } from 'simple-git';
 import { ChallengeStatus, type Difficulty, type Prisma } from '@prisma/client';
-import { gId, trashId } from '../seed';
+import { gId, slugify, trashId } from '../seed';
 
 export interface InfoFile {
   title: string;
@@ -65,6 +65,7 @@ export async function loadChallengesFromTypeChallenge() {
     arr.push({
       id: idNum,
       name: title,
+      slug: slugify(title),
       description: README,
       status: ChallengeStatus.ACTIVE,
       code: prompt,

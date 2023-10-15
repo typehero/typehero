@@ -8,13 +8,13 @@ import { redirect } from 'next/navigation';
 
 interface Props {
   params: {
-    id: string;
+    slug: string;
     solutionId: string;
   };
 }
 
 export type ChallengeSolution = NonNullable<Awaited<ReturnType<typeof getSolutionIdRouteData>>>;
-export default async function SolutionPage({ params: { solutionId, id: challengeId } }: Props) {
+export default async function SolutionPage({ params: { solutionId, slug } }: Props) {
   const session = await getServerAuthSession();
   const isBeta = await isBetaUser(session);
 
@@ -22,7 +22,7 @@ export default async function SolutionPage({ params: { solutionId, id: challenge
     return redirect('/claim');
   }
 
-  const solution = await getSolutionIdRouteData(challengeId, solutionId, session);
+  const solution = await getSolutionIdRouteData(slug, solutionId, session);
 
   return (
     <div className="relative h-full">

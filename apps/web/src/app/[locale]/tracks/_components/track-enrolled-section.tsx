@@ -56,7 +56,7 @@ export async function EnrolledTrackSection() {
               {tracks.map((t) => (
                 <Link
                   className="group w-[250px] flex-none snap-center focus:outline-none sm:w-[330px] xl:w-[333px]"
-                  href={`/tracks/${t.id}`}
+                  href={`/tracks/${t.slug}`}
                   key={t.id}
                 >
                   <PersonalTrackCard track={t} />
@@ -125,7 +125,7 @@ async function getUserEnrolledTracks(session: Session) {
       },
     },
     orderBy: {
-      title: 'asc',
+      name: 'asc',
     },
   });
 }

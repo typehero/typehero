@@ -8,12 +8,12 @@ import { useMemo, type ReactNode, useRef, useState, useEffect } from 'react';
 type Tab = 'description' | 'solutions' | 'submissions';
 interface Props {
   children: ReactNode;
-  challengeId: number;
+  slug: string;
   expandPanel: () => void;
   isDesktop: boolean;
 }
 
-export function LeftWrapper({ challengeId, children, expandPanel, isDesktop }: Props) {
+export function LeftWrapper({ slug, children, expandPanel, isDesktop }: Props) {
   const pathname = usePathname();
   const router = useRouter();
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -102,7 +102,7 @@ export function LeftWrapper({ challengeId, children, expandPanel, isDesktop }: P
             isCollapsed ? (isDesktop ? 'rounded-r-lg py-4' : 'rounded-bl-xl') : ''
           }`}
           onClick={() => {
-            router.push(`/challenge/${challengeId}`);
+            router.push(`/challenge/${slug}`);
             expandPanel();
           }}
           value="description"
@@ -114,7 +114,7 @@ export function LeftWrapper({ challengeId, children, expandPanel, isDesktop }: P
             isCollapsed && isDesktop ? 'py-4' : ''
           }`}
           onClick={() => {
-            router.push(`/challenge/${challengeId}/solutions`);
+            router.push(`/challenge/${slug}/solutions`);
             expandPanel();
           }}
           value="solutions"
@@ -126,7 +126,7 @@ export function LeftWrapper({ challengeId, children, expandPanel, isDesktop }: P
             isCollapsed ? (isDesktop ? 'rounded-md py-4' : 'rounded-br-xl') : ''
           }`}
           onClick={() => {
-            router.push(`/challenge/${challengeId}/submissions`);
+            router.push(`/challenge/${slug}/submissions`);
             expandPanel();
           }}
           value="submissions"

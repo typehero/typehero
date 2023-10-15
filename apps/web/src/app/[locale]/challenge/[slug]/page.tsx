@@ -1,22 +1,20 @@
 import { getServerAuthSession, type Session } from '@repo/auth/server';
-import { Description } from '../_components/description';
-import { Comments } from '../_components/comments';
-import { getChallengeRouteData } from './getChallengeRouteData';
+import { redirect } from 'next/navigation';
 import { buildMetaForChallenge } from '~/app/metadata';
 import { getRelativeTime } from '~/utils/relativeTime';
-import { getAllFlags } from '~/utils/feature-flags';
-import { redirect } from 'next/navigation';
-import { prisma } from '@repo/db';
 import { isBetaUser } from '~/utils/server/is-beta-user';
+import { Comments } from '../_components/comments';
+import { Description } from '../_components/description';
+import { getChallengeRouteData } from './getChallengeRouteData';
 
 interface Props {
   params: {
-    id: string;
+    slug: string;
   };
 }
 
-export async function generateMetadata({ params: { id } }: Props) {
-  const challenge = await getChallengeRouteData(id, null);
+export async function generateMetadata({ params: { slug } }: Props) {
+  const challenge = await getChallengeRouteData(slug, null);
   const description = `Unlock your TypeScript potential by solving the ${challenge.name} challenge on TypeHero.`;
 
   return buildMetaForChallenge({
@@ -28,7 +26,7 @@ export async function generateMetadata({ params: { id } }: Props) {
   });
 }
 
-export default async function Challenges({ params: { id: challengeId } }: Props) {
+export default async function Challenges({ params: { slug } }: Props) {
   // early acces you must be authorized
   const session = await getServerAuthSession();
   const isBeta = await isBetaUser(session);
@@ -37,7 +35,7 @@ export default async function Challenges({ params: { id: challengeId } }: Props)
     return redirect('/claim');
   }
 
-  const challenge = await getChallengeRouteData(challengeId, session);
+  const challenge = await getChallengeRouteData(slug, session);
 
   return (
     <div className="relative h-full ">

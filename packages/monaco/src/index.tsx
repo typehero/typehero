@@ -20,6 +20,7 @@ export interface CodePanelProps {
   challenge: {
     id: number;
     code: string;
+    slug: string;
     tests: string;
   };
   saveSubmission: (code: string, isSuccessful: boolean) => Promise<void>;
@@ -36,6 +37,7 @@ export type TsErrors = [
 ];
 
 export function CodePanel(props: CodePanelProps) {
+  console.log({ slug: props.challenge.slug });
   const params = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -44,7 +46,7 @@ export function CodePanel(props: CodePanelProps) {
   const [tsErrors, setTsErrors] = useState<TsErrors>();
   const [isTestPanelExpanded, setIsTestPanelExpanded] = useState(false);
   const [localStorageCode, setLocalStorageCode] = useLocalStorage(
-    `challenge-${props.challenge.id}`,
+    `challenge-${props.challenge.slug}`,
     '',
   );
 
