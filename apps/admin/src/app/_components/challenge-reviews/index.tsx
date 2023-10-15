@@ -8,11 +8,9 @@ import { columns } from './columns';
 export function ChallengeReviews() {
   const { data, isLoading } = useQuery(['challenge-reviews'], () => getPendingChallenges());
 
-  if (isLoading || !data) return null;
-
   return (
     <div className="w-full rounded-md border">
-      <DataTable data={data} columns={columns} />
+      {data ? <DataTable data={data} columns={columns} /> : ''}
     </div>
   );
 }
