@@ -2,7 +2,9 @@
 
 import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
+import { revalidateTag } from 'next/cache';
 import { cache } from 'react';
+import { createEnrolledTrackCacheKey } from './track-enrolled-section';
 
 /**
  * Enrolls the session user in the track given a track id.
@@ -10,7 +12,11 @@ import { cache } from 'react';
  */
 export async function enrollUserInTrack(id: number) {
   const session = await getServerAuthSession();
-  return prisma.track.update({
+  if (!session) {
+    throw new Error('User is not logged in');
+  }
+
+  await prisma.track.update({
     where: {
       id,
     },
@@ -22,6 +28,10 @@ export async function enrollUserInTrack(id: number) {
       },
     },
   });
+
+  revalidateTag(`track-${id}-detail`);
+  revalidateTag('tracks');
+  revalidateTag(createEnrolledTrackCacheKey(session.user.id));
 }
 
 /**
@@ -30,7 +40,11 @@ export async function enrollUserInTrack(id: number) {
  */
 export async function unenrollUserFromTrack(id: number) {
   const session = await getServerAuthSession();
-  return prisma.track.update({
+  if (!session) {
+    throw new Error('User is not logged in');
+  }
+
+  await prisma.track.update({
     where: {
       id,
     },
@@ -42,6 +56,10 @@ export async function unenrollUserFromTrack(id: number) {
       },
     },
   });
+
+  revalidateTag(`track-${id}-detail`);
+  revalidateTag('tracks');
+  revalidateTag(createEnrolledTrackCacheKey(session.user.id));
 }
 
 /**
@@ -74,7 +92,7 @@ export const getTrackDetails = cache(async (id: number) => {
       },
       enrolledUsers: {
         where: {
-          id: session?.user.id,
+          id: session?.user.id ?? '',
         },
         select: {
           id: true,
