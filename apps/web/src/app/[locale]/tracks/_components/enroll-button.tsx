@@ -2,7 +2,6 @@
 
 import { Button } from '@repo/ui/components/button';
 import { toast } from '@repo/ui/components/use-toast';
-import { useRouter } from 'next/navigation';
 import type { enrollUserInTrack, unenrollUserFromTrack } from './track.action';
 
 interface EnrollButtonProps {
@@ -12,14 +11,12 @@ interface EnrollButtonProps {
 }
 
 export function ActionButton({ action, text, trackId }: EnrollButtonProps) {
-  const router = useRouter();
   return (
     <Button
       variant="secondary"
       onClick={async () => {
         try {
           await action(trackId);
-          router.refresh();
           toast({
             title: 'Success',
             variant: 'success',

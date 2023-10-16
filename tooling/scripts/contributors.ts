@@ -14,13 +14,17 @@ async function getOcto() {
   }
 
   const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
-  const response = await octokit.request('GET /repos/{owner}/{repo}/contributors', {
-    owner: 'typehero',
-    repo: 'typehero',
+  
+  // get paginated contributors
+  const res = await octokit.paginate(octokit.rest.repos.listContributors, {
+    owner: "typehero",
+    repo: "typehero",
+    per_page: 100,
   });
 
-  // put all avatar urls in a list and exclude bots
-  return response.data.map((contributor) => contributor).filter(contributor => contributor.type !== 'Bot');
+  const contributors = res.map((contributor) => contributor).filter(contributor => contributor.type !== 'Bot');
+  return contributors
+  
 }
 
 async function start() {

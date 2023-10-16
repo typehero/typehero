@@ -1,13 +1,12 @@
 import type { Difficulty, Tags } from '@repo/db/types';
 import Link from 'next/link';
-import { ExploreCard } from './explore-card';
-import type { ExploreChallengeData } from './explore.action';
-import { ViewMoreButton } from './view-more-button';
 import { Carousel } from '~/components/carousel';
+import { ExploreCard } from './explore-card';
+import { getChallengesByTagOrDifficulty } from './explore.action';
+import { ViewMoreButton } from './view-more-button';
 
 interface SectionProps {
   title: string;
-  fetcher: (tagOrDifficulty: string, take: number) => ExploreChallengeData;
   /**
    * This is used by UI to apply the right colors. You still need to manually specify the
    * `redirectRoute` for view-more button to work.
@@ -50,8 +49,8 @@ export const COLORS_BY_TAGS = {
   EXTREME: 'dark:bg-purple-300 bg-purple-600/50',
 } as const;
 
-export async function ExploreSection({ title, fetcher, tag, redirectRoute }: SectionProps) {
-  const challenges = await fetcher(tag.trim().toUpperCase(), 6);
+export async function ExploreSection({ title, tag, redirectRoute }: SectionProps) {
+  const challenges = await getChallengesByTagOrDifficulty(tag.trim().toUpperCase(), 6);
   return (
     <div>
       <div className="container flex items-center justify-between gap-3 px-4 pt-5">

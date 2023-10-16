@@ -25,38 +25,10 @@ import { Separator } from '@repo/ui/components/separator';
 import { useToast } from '@repo/ui/components/use-toast';
 import Link from 'next/link';
 import { useFieldArray, useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
-import { createNoProfanitySchemaWithValidate } from '~/utils/antiProfanityZod';
 import { updateProfile } from './settings.action';
+import { profileSchema, type ProfileSchema } from './schema';
 
-const profileFormSchema = z.object({
-  username: z
-    .string()
-    .min(2, {
-      message: 'Username must be at least 2 characters.',
-    })
-    .max(30, {
-      message: 'Username must not be longer than 30 characters.',
-    }),
-  email: z
-    .string({
-      required_error: 'Please select an email to display.',
-    })
-    .email(),
-  bio: createNoProfanitySchemaWithValidate((str) => str.max(256)),
-  userLinks: z.array(
-    z.object({
-      id: z.union([z.string(), z.null()]),
-      url: z.union([
-        createNoProfanitySchemaWithValidate((str) => str.url().max(256)),
-        z.literal(''),
-      ]),
-    }),
-  ),
-});
-
-type ProfileFormValues = z.infer<typeof profileFormSchema>;
 interface Props {
   user: User & { userLinks: { id: string | null; url: string }[] };
 }
@@ -90,8 +62,8 @@ function ProfileForm({ user }: Props) {
     // NOTE: sort the user links so empty strings are at the bottom
     .sort((a, b) => b.url.localeCompare(a.url));
 
-  const form = useForm<ProfileFormValues>({
-    resolver: zodResolver(profileFormSchema),
+  const form = useForm<ProfileSchema>({
+    resolver: zodResolver(profileSchema),
     mode: 'onChange',
     defaultValues: {
       bio: user.bio,
@@ -112,15 +84,19 @@ function ProfileForm({ user }: Props) {
     name: 'userLinks',
   });
 
-  async function onSubmit(data: ProfileFormValues) {
-    // TODO: handle errors
-
-    await updateProfile(data);
-
-    toast({
-      title: 'profile updated',
-      variant: 'success',
-    });
+  async function onSubmit(data: ProfileSchema) {
+    try {
+      await updateProfile(data);
+      toast({
+        title: 'profile updated',
+        variant: 'success',
+      });
+    } catch (error) {
+      toast({
+        title: 'Could not update profile',
+        variant: 'destructive',
+      });
+    }
   }
 
   return (

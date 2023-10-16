@@ -1,7 +1,6 @@
 'use client';
 
-import { signIn, signOut } from '@repo/auth/react';
-import type { Session } from '@repo/auth/server';
+import { signOut, useSession } from '@repo/auth/react';
 import { Button } from '@repo/ui/components/button';
 import {
   DropdownMenu,
@@ -11,16 +10,15 @@ import {
   DropdownMenuTrigger,
 } from '@repo/ui/components/dropdown-menu';
 import { Loader2, LogIn, Moon, Play, Settings, Settings2, Sun, User } from '@repo/ui/icons';
-import type { EdgeConfigItems } from '@vercel/edge-config';
 import clsx from 'clsx';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useFullscreenSettingsStore } from '~/app/[locale]/challenge/_components/fullscreen';
+import { FeatureFlagContext } from '~/app/feature-flag-provider';
 import { isAdminOrModerator } from '~/utils/auth-guards';
 
-// TODO: move this to a util as it might be used in other places
 export function getAdminUrl() {
   // reference for vercel.com
   if (process.env.VERCEL_URL) {
@@ -31,15 +29,10 @@ export function getAdminUrl() {
   return `http://localhost:3001`;
 }
 
-export function Navigation({
-  session,
-  flags,
-}: {
-  session: Session | null;
-  flags: EdgeConfigItems;
-}) {
+export function Navigation() {
   const { fssettings } = useFullscreenSettingsStore();
   const pathname = usePathname();
+  const featureFlags = useContext(FeatureFlagContext);
 
   return (
     <header className="z-0 w-full">
@@ -56,10 +49,10 @@ export function Navigation({
                 href="/"
               >
                 <svg
-                  className="h-8 w-8 rounded-md bg-[#3178C6] p-[2px]"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-8 w-8 rounded-md"
                   viewBox="0 0 38 38"
                   fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
                 >
                   <rect width="38" height="38" rx="4.5" fill="#3178C6" />
                   <path
@@ -80,7 +73,7 @@ export function Navigation({
                   hero
                 </span>
               </Link>
-              {flags?.exploreButton === true && (
+              {featureFlags?.enableExplore ? (
                 <Link href="/explore" className="ml-4">
                   <div
                     className={clsx('hover:text-foreground text-foreground/80 transition-colors', {
@@ -90,8 +83,8 @@ export function Navigation({
                     Explore
                   </div>
                 </Link>
-              )}
-              {flags?.tracksButton === true && (
+              ) : null}
+              {featureFlags?.enableTracks ? (
                 <Link href="/tracks" className="ml-4">
                   <div
                     className={clsx('hover:text-foreground text-foreground/80 transition-colors', {
@@ -101,12 +94,12 @@ export function Navigation({
                     Tracks
                   </div>
                 </Link>
-              )}
+              ) : null}
             </div>
             <div className="flex">
               <div className="flex items-center justify-end gap-2">
                 <ThemeButton />
-                {flags?.loginButton === true && <LoginButton session={session} />}
+                {featureFlags?.enableLogin ? <LoginButton /> : null}
               </div>
             </div>
           </div>
@@ -143,20 +136,11 @@ function ThemeButton() {
   );
 }
 
-function LoginButton({ session }: { session: Session | null }) {
-  const [isSigningIn, setSigningIn] = useState(false);
+function LoginButton() {
+  const { data: session, status } = useSession();
   const router = useRouter();
-  const isAdminOrMod = isAdminOrModerator(session);
 
-  // We start the flow client side, then a full page redirect will happen
-  const handleSignIn = async () => {
-    try {
-      setSigningIn(true);
-      await signIn('github', { redirect: false });
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const isAdminOrMod = isAdminOrModerator(session);
 
   const handleSignOut = async () => {
     await signOut({ redirect: false });
@@ -189,22 +173,22 @@ function LoginButton({ session }: { session: Session | null }) {
             <span>Settings</span>
           </DropdownMenuItem>
         </Link>
-        {Boolean(isAdminOrMod) && (
+        {isAdminOrMod ? (
           <a className="block" href={getAdminUrl()}>
             <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
               <Settings className="mr-2 h-4 w-4" />
               <span>Admin</span>
             </DropdownMenuItem>
           </a>
-        )}
-        {Boolean(isAdminOrMod) && (
+        ) : null}
+        {isAdminOrMod ? (
           <a className="block" href="/challenge-playground">
             <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
               <Play className="mr-2 h-4 w-4" />
               <span>Challenge Playground</span>
             </DropdownMenuItem>
           </a>
-        )}
+        ) : null}
         <DropdownMenuSeparator />
         <Button
           className="h-8 w-full justify-start rounded-b-lg rounded-t-sm bg-opacity-50 px-2 text-red-500 hover:bg-red-500/20 hover:text-red-500"
@@ -216,12 +200,11 @@ function LoginButton({ session }: { session: Session | null }) {
       </DropdownMenuContent>
     </DropdownMenu>
   ) : (
-    <Button
-      disabled={isSigningIn}
+    <Link
       className="focus:bg-accent w-20 rounded-lg bg-transparent p-2 text-black duration-300 hover:bg-gray-200 focus:outline-none dark:text-white hover:dark:bg-gray-800"
-      onClick={handleSignIn}
+      href="/login"
     >
-      {isSigningIn ? (
+      {status === 'loading' ? (
         <Loader2 className="h-5 w-5 animate-spin" />
       ) : (
         <div className="flex items-center space-x-2">
@@ -229,6 +212,6 @@ function LoginButton({ session }: { session: Session | null }) {
           <span className="dark:text-white">Login</span>
         </div>
       )}
-    </Button>
+    </Link>
   );
 }

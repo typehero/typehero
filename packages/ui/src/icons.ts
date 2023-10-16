@@ -48,6 +48,7 @@ export {
   Shapes,
   Share,
   Sparkle,
+  Sparkles,
   SquareSlash,
   Sun,
   Sword,
@@ -62,4 +63,7 @@ export {
   X,
   XCircle,
   Trash,
+  Text,
+  FlaskConical,
+  History,
 } from 'lucide-react';

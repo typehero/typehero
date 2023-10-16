@@ -74,8 +74,15 @@ export function CodePanel(props: CodePanelProps) {
   const handleSubmit = async () => {
     const hasErrors = tsErrors?.some((e) => e.length) ?? false;
 
-    await props.saveSubmission(code ?? '', !hasErrors);
-    router.refresh();
+    try {
+      await props.saveSubmission(code ?? '', !hasErrors);
+    } catch {
+      return toast({
+        variant: 'destructive',
+        title: 'Something went wrong while submitting your code.',
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
+    }
 
     if (hasErrors) {
       toast({

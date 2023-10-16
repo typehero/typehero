@@ -3,34 +3,37 @@ export function Logo3d() {
     <svg
       width="144"
       height="144"
-      viewBox="0 0 638 638"
+      viewBox="0 0 633 633"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g filter="url(#filter0_ii_284_103)">
-        <rect width="637.029" height="637.029" rx="68.1096" fill="#3178C6" />
+      <g filter="url(#filter0_ii_1050_32)">
+        <path
+          d="M0 74.9605C0 33.561 33.561 0 74.9605 0H558.039C599.439 0 633 33.561 633 74.9605V558.039C633 599.439 599.439 633 558.039 633H74.9605C33.561 633 0 599.439 0 558.039V74.9605Z"
+          fill="#3178C6"
+        />
+        <path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M261.441 348.723H333.158V299.842H133.263V348.723H204.629V566.368H261.441V348.723Z"
+          fill="white"
+        />
+        <path
+          d="M366.474 566.368V299.842H423.962V410.298H508.741V299.842H566.368V566.368H508.741V455.523H423.962V566.368H366.474Z"
+          fill="white"
+        />
       </g>
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M275.704 313.881H354.636V262.692H134.631V313.881H213.176V541.802H275.704V313.881Z"
-        fill="white"
-      />
-      <path
-        d="M354.635 541.802V262.692H413.185V378.363H499.529V262.692H558.221V541.802H499.529V425.724H413.185V541.802H354.635Z"
-        fill="white"
-      />
       <defs>
         <filter
-          id="filter0_ii_284_103"
+          id="filter0_ii_1050_32"
           x="-49"
           y="-49"
-          width="736.029"
-          height="736.029"
+          width="732"
+          height="732"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feColorMatrix
             in="SourceAlpha"
@@ -42,7 +45,7 @@ export function Logo3d() {
           <feGaussianBlur stdDeviation="74.5" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
           <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0" />
-          <feBlend mode="normal" in2="shape" result="effect1_innerShadow_284_103" />
+          <feBlend mode="normal" in2="shape" result="effect1_innerShadow_1050_32" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -55,8 +58,8 @@ export function Logo3d() {
           <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.12 0" />
           <feBlend
             mode="normal"
-            in2="effect1_innerShadow_284_103"
-            result="effect2_innerShadow_284_103"
+            in2="effect1_innerShadow_1050_32"
+            result="effect2_innerShadow_1050_32"
           />
         </filter>
       </defs>
