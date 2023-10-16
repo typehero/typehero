@@ -59,7 +59,7 @@ test('challenge page', async ({ page }) => {
 });
 
 test('reset challenge', async ({ page }) => {
-  await page.goto('/challenge/4');
+  await page.goto('/challenge/pick');
 
   await expect(page.getByText('type MyPick<T, K> = any')).toBeVisible();
 
