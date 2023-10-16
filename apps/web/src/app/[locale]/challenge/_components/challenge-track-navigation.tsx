@@ -1,3 +1,5 @@
+'use client';
+
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
@@ -23,12 +25,12 @@ export function ChallengeTrackNavigation({ challenge, track, isCollapsed, classN
   const router = useRouter();
 
   const { data: trackDetails, isLoading } = useQuery({
-    queryKey: ['track-details', track!.id],
+    queryKey: ['track-details', track?.id],
     queryFn: () => {
       console.log('fetching track');
       return getTrackDetails(track!.id);
     },
-    enabled: Boolean(track !== null && track.id),
+    enabled: Boolean(track?.id),
   });
 
   const currentIndex = useMemo(() => {
