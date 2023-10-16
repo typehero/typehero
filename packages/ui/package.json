@@ -5,6 +5,7 @@
   "exports": {
     "./types": "./src/types.ts",
     "./icons": "./src/icons.ts",
+    "./cn": "./src/cn.ts",
     "./components/*": "./src/components/*"
   },
   "typesVersions": {
@@ -14,6 +15,9 @@
       ],
       "icons": [
         "./src/icons.ts"
+      ],
+      "cn": [
+        "./src/cn.ts"
       ],
       "components/*": [
         "./src/components/*"

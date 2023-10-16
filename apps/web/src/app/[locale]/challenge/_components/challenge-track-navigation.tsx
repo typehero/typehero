@@ -1,83 +1,118 @@
-'use client';
-
-import { useSearchParams } from 'next/navigation';
-
-import { getTrackDetails } from '../../tracks/_components/track.action';
+import { useQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { useMemo } from 'react';
 
 import { type ChallengeRouteData } from '~/app/[locale]/challenge/[id]/getChallengeRouteData';
+import { getTrackDetails } from '~/app/[locale]/tracks/_components/track.action';
 
+import { Button } from '@repo/ui/components/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
+import { cn } from '@repo/ui/cn';
+import { Swords, ChevronLeft, ChevronRight } from '@repo/ui/icons';
 
 import { ChallengeTrackOutline } from './challenge-track-outline';
-import { Button } from '@repo/ui/components/button';
-import { ChevronLeft, ChevronRight } from '@repo/ui/icons';
-import { useQuery } from '@tanstack/react-query';
 
 interface Props {
-  challenge: ChallengeRouteData;
+  challenge: ChallengeRouteData['challenge'];
+  track: ChallengeRouteData['track'];
+  isCollapsed: boolean;
+  className?: string;
 }
 
-export function ChallengeTrackNavigation({ challenge }: Props) {
-  // TODO: validate the challenge we are looking at is actually on this track id
-  const search = useSearchParams();
-  const trackParam = search.get('trackId');
-  const trackId = Number(trackParam);
+export function ChallengeTrackNavigation({ challenge, track, isCollapsed, className }: Props) {
+  const router = useRouter();
 
-  const { data: track, isLoading } = useQuery({
-    queryKey: ['track', trackId],
+  const { data: trackDetails, isLoading } = useQuery({
+    queryKey: ['track-details', track!.id],
     queryFn: () => {
       console.log('fetching track');
-      return getTrackDetails(trackId);
+      return getTrackDetails(track!.id);
     },
-    enabled: Boolean(trackId),
+    enabled: Boolean(track !== null && track.id),
   });
 
-  // TODO: combine
-  if (isLoading) return null;
-  if (track === undefined) return null; // there was no `?trackId` in the URL so the query didnt go off
-  if (track === null) return null; // we had a `?trackId` but it was invalid
+  const currentIndex = useMemo(() => {
+    if (trackDetails === null || trackDetails === undefined) return null;
+
+    const index = trackDetails.trackChallenges.findIndex((x) => x.challengeId === challenge.id);
+    return index === -1 ? null : index;
+  }, [trackDetails, challenge]);
+
+  const next = useMemo(() => {
+    if (currentIndex === null) return null;
+
+    const index = currentIndex + 1;
+    return index < trackDetails!.trackChallenges.length
+      ? trackDetails!.trackChallenges[index]
+      : null;
+  }, [currentIndex, trackDetails]);
+
+  const previous = useMemo(() => {
+    if (currentIndex === null) return null;
+
+    const index = currentIndex - 1;
+    return index > 0 ? trackDetails!.trackChallenges[index] : null;
+  }, [currentIndex, trackDetails]);
+
+  if (isLoading || track === null || trackDetails === null || trackDetails === undefined)
+    return null;
 
   return (
-    <div className="bg-primary text-primary-foreground flex gap-4 px-4 py-1">
-      <ChallengeTrackOutline challenge={challenge} track={track} asChild>
+    <div
+      className={cn(
+        {
+          'flex h-[44px] items-center gap-1': !isCollapsed,
+          'text-muted-foreground inline-flex h-auto': isCollapsed,
+        },
+        className,
+      )}
+    >
+      <ChallengeTrackOutline challenge={challenge} track={trackDetails} asChild>
         <Button
-          className="text-primary-foreground hover:text-secondary-foreground"
           variant="ghost"
-          size="xs"
+          size="sm"
+          className={cn('inline-flex flex-1 gap-2 overflow-hidden rounded-tl-xl', {
+            'justify-start': !isCollapsed,
+            'h-full items-center justify-center p-4 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50':
+              isCollapsed,
+          })}
         >
-          {track.title}
+          <Swords className="h-4 w-4 shrink-0" />
+          {Boolean(!isCollapsed) && (
+            <span className="overflow-hidden text-ellipsis whitespace-nowrap">{track.title}</span>
+          )}
         </Button>
       </ChallengeTrackOutline>
-      {/* TODO: actually make this button work */}
-      {/* TODO: disable if there is no previous */}
-      <div className="flex items-center gap-1">
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              className="text-primary-foreground hover:text-secondary-foreground"
-              variant="ghost"
-              size="xs"
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>Previous</TooltipContent>
-        </Tooltip>
-        {/* TODO: actually make this button work */}
-        {/* TODO: disable if there is no next */}
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              className="text-primary-foreground hover:text-secondary-foreground"
-              variant="ghost"
-              size="xs"
-            >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>Next</TooltipContent>
-        </Tooltip>
-      </div>
+      {Boolean(!isCollapsed) && (
+        <>
+          <Tooltip delayDuration={0}>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                size="sm"
+                disabled={Boolean(!previous)}
+                onClick={() => router.push(`/challenge/${previous!.challengeId}`)}
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Previous</TooltipContent>
+          </Tooltip>
+          <Tooltip delayDuration={0}>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                size="sm"
+                disabled={Boolean(!next)}
+                onClick={() => router.push(`/challenge/${next!.challengeId}`)}
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Next</TooltipContent>
+          </Tooltip>
+        </>
+      )}
     </div>
   );
 }

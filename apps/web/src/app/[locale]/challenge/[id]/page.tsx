@@ -1,10 +1,11 @@
 import { getServerAuthSession } from '@repo/auth/server';
 import { Description } from '../_components/description';
-import { ChallengeTrackNavigation } from '../_components/challenge-track-navigation';
 import { Comments } from '../_components/comments';
 import { getChallengeRouteData } from './getChallengeRouteData';
 import { buildMetaForChallenge } from '~/app/metadata';
 import { getRelativeTime } from '~/utils/relativeTime';
+import { redirect } from 'next/navigation';
+import { isBetaUser } from '~/utils/server/is-beta-user';
 
 interface Props {
   params: {
@@ -13,7 +14,9 @@ interface Props {
 }
 
 export async function generateMetadata({ params: { id } }: Props) {
-  const challenge = await getChallengeRouteData(id, null);
+  const { challenge } = await getChallengeRouteData(id, null);
+  const description = `Unlock your TypeScript potential by solving the ${challenge.name} challenge on TypeHero.`;
+
   return buildMetaForChallenge({
     title: `${challenge.name} | TypeHero`,
     description: `${challenge.shortDescription} Can you solve it?`,
@@ -25,11 +28,15 @@ export async function generateMetadata({ params: { id } }: Props) {
 
 export default async function Challenges({ params: { id: challengeId } }: Props) {
   const session = await getServerAuthSession();
-  const challenge = await getChallengeRouteData(challengeId, session);
+  const isBeta = await isBetaUser(session);
 
+  if (!isBeta) {
+    return redirect('/claim');
+  }
+
+  const { challenge } = await getChallengeRouteData(challengeId, session);
   return (
     <div className="relative h-full">
-      <ChallengeTrackNavigation challenge={challenge} />
       <Description challenge={challenge} />
       <Comments rootId={challenge.id} type="CHALLENGE" />
     </div>

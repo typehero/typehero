@@ -5,6 +5,7 @@ export const mockFlags = {
   enableExplore: true,
   enableTracks: true,
   enableEarlyAccess: false,
+  enableInChallengeTrack: false,
 };
 
 export async function getAllFlags() {

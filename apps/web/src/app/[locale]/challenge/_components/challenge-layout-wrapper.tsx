@@ -6,13 +6,13 @@ import usePanelAdjustments from './usePanelAdjustments';
 import { LeftWrapper } from '../[slug]/left-wrapper';
 import { Wrapper } from '../[slug]/wrapper';
 
-export function ChallengeLayoutWrapper({
-  challenge,
-  children,
-}: {
-  challenge: ChallengeRouteData;
+interface Props {
+  challenge: ChallengeRouteData['challenge'];
+  track: ChallengeRouteData['track'];
   children: ReactNode;
-}) {
+}
+
+export function ChallengeLayoutWrapper({ challenge, track, children }: Props) {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > MOBILE_BREAKPOINT);
   const LEFT_PANEL_BREAKPOINT = isDesktop ? 500 : 318;
   const DEFAULT_DESKTOP_WIDTH_PX = `${LEFT_PANEL_BREAKPOINT}px`;
@@ -32,7 +32,12 @@ export function ChallengeLayoutWrapper({
   return (
     <ChallengeLayout
       left={
-        <LeftWrapper slug={challenge.slug} expandPanel={expandPanel} isDesktop={isDesktop}>
+        <LeftWrapper
+          challenge={challenge}
+          track={track}
+          expandPanel={expandPanel}
+          isDesktop={isDesktop}
+        >
           {children}
         </LeftWrapper>
       }

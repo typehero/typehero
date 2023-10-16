@@ -386,7 +386,7 @@ model TrackChallenge {
   orderId     Int
   challengeId Int
   challenge   Challenge @relation(fields: [challengeId], references: [id])
-  Track       Track?    @relation(fields: [trackId], references: [id])
+  track       Track?    @relation(fields: [trackId], references: [id])
   trackId     Int?
 
   @@unique([challengeId, orderId])

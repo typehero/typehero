@@ -1,8 +1,14 @@
 'use client';
 
-import type { Challenge } from '@repo/db/types';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { type ReactNode } from 'react';
 
-import { Progress } from '@repo/ui/components/progress';
+import type { getTrackDetails } from '~/app/[locale]/tracks/_components/track.action';
+import { TrackChallenge } from '~/app/[locale]/tracks/_components/track-challenge-card';
+import { TrackProgress } from '~/app/[locale]/tracks/_components/track-progress';
+
+import { Button } from '@repo/ui/components/button';
 import {
   Sheet,
   SheetContent,
@@ -10,19 +16,20 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@repo/ui/components/sheet';
-
-import { TrackChallenge } from '~/app/[locale]/tracks/_components/track-challenge-card';
-
-import type { getTrackDetails } from '../../tracks/_components/track.action';
+import type { Challenge } from '@repo/db/types';
+import { ChevronRight } from '@repo/ui/icons';
 
 interface Props {
-  children: React.ReactNode;
+  children: ReactNode;
   challenge: Challenge;
-  track: NonNullable<Awaited<ReturnType<typeof getTrackDetails>>>; // TODO: cleanup maybe?
+  track: NonNullable<Awaited<ReturnType<typeof getTrackDetails>>>;
   asChild?: boolean;
 }
 
 export function ChallengeTrackOutline({ children, challenge, track, asChild = false }: Props) {
+  const router = useRouter();
+
+  const trackChallenges = track?.trackChallenges ?? [];
   const completedTrackChallenges = track.trackChallenges
     .filter((trackChallenge) => {
       return (
@@ -40,43 +47,44 @@ export function ChallengeTrackOutline({ children, challenge, track, asChild = fa
     })
     .map((trackChallenge) => trackChallenge.id);
 
-  const numberCompleted = completedTrackChallenges.length;
-  const totalChallenges = track.trackChallenges.length;
-
-  const progress = (numberCompleted / totalChallenges) * 100;
-
   return (
     <Sheet>
       <SheetTrigger asChild={asChild}>{children}</SheetTrigger>
       <SheetContent
-        className="flex w-full flex-col gap-8 sm:max-w-[400px] md:max-w-[540px]"
+        className="flex w-full flex-col gap-8 overflow-y-scroll sm:max-w-[400px] md:max-w-[540px]"
         side="left"
       >
         <SheetHeader>
           <SheetTitle>
-            <span>{track.title}</span>
+            <Button
+              variant="ghost"
+              className="text-foreground flex max-w-full justify-start gap-4 text-lg font-semibold"
+              onClick={() => router.push(`/tracks/${track.id}`)}
+            >
+              <span className="overflow-hidden text-ellipsis whitespace-nowrap">{track.title}</span>
+              <ChevronRight className="h-4 w-4 shrink-0" />
+            </Button>
           </SheetTitle>
         </SheetHeader>
+        <TrackProgress
+          completedChallenges={completedTrackChallenges.length}
+          totalChallenges={trackChallenges.length}
+        />
         <div className="flex flex-col">
-          <span className="font-medium">Progress</span>
-          <div className="flex items-center gap-4">
-            <Progress value={progress} className="w-1/2" />
-            <span>
-              {numberCompleted} <span className="text-muted-foreground">/ {totalChallenges}</span>
-            </span>
-          </div>
-        </div>
-        <div className="flex flex-col overflow-y-scroll">
           {track.trackChallenges.map((trackChallenge) => {
-            /* TODO: challenges in the track should probably be links to those challenges */
             return (
-              <TrackChallenge
-                key={trackChallenge.id}
-                challenge={trackChallenge.challenge}
-                isCompleted={completedTrackChallenges.includes(trackChallenge.id)}
-                isInProgress={inProgressTrackChallenges.includes(trackChallenge.id)}
-                isCompact
-              />
+              <Link
+                key={trackChallenge.challenge.id}
+                href={`/challenge/${trackChallenge.challenge.id}`}
+              >
+                <TrackChallenge
+                  challenge={trackChallenge.challenge}
+                  isCompleted={completedTrackChallenges.includes(trackChallenge.id)}
+                  isInProgress={inProgressTrackChallenges.includes(trackChallenge.id)}
+                  isSelected={trackChallenge.challengeId === challenge.id}
+                  isCompact
+                />
+              </Link>
             );
           })}
         </div>
