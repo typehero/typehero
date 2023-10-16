@@ -17,6 +17,7 @@ import { useToast } from '@repo/ui/components/use-toast';
 import { useForm } from 'react-hook-form';
 import { appearanceFormSchema } from './schema';
 import type { z } from 'zod';
+import { useTheme } from 'next-themes';
 
 export function Appearances() {
   return (
@@ -35,19 +36,23 @@ export function Appearances() {
 
 type AppearanceFormValues = z.infer<typeof appearanceFormSchema>;
 
-// This can come from your database or API.
-const defaultValues: Partial<AppearanceFormValues> = {
-  theme: 'light',
-};
-
 export function AppearanceForm() {
   const { toast } = useToast();
+  const { setTheme, resolvedTheme } = useTheme();
+
+  // This can come from your database or API.
+  const defaultValues: Partial<AppearanceFormValues> = {
+    theme: resolvedTheme === 'dark' ? 'dark' : 'light',
+  };
+
   const form = useForm<AppearanceFormValues>({
     resolver: zodResolver(appearanceFormSchema),
     defaultValues,
   });
 
   function onSubmit(data: AppearanceFormValues) {
+    console.log(data, '********************************');
+    setTheme(data.theme);
     toast({
       title: 'You submitted the following values:',
       description: (
