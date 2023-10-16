@@ -36,7 +36,7 @@ export function TrackCard({ track }: TrackProps) {
   const isEnrolled = Boolean(track.enrolledUsers?.length);
 
   return (
-    <Link href={`/tracks/${track.id}`} className="group">
+    <Link href={`/tracks/${track.slug}`} className="group">
       <Card
         className={clsx(
           'relative transition-colors duration-300',
@@ -63,7 +63,7 @@ export function TrackCard({ track }: TrackProps) {
               )}
             />
           </div>
-          <div className="text-center font-semibold capitalize tracking-wide">{track.title}</div>
+          <div className="text-center font-semibold capitalize tracking-wide">{track.name}</div>
           <div className="text-muted-foreground line-clamp-3 text-center text-sm tracking-wide">
             {track.description}
           </div>

@@ -1,10 +1,10 @@
 'use client';
 import { useState, type ReactNode } from 'react';
-import type { ChallengeRouteData } from '../[id]/getChallengeRouteData';
+import type { ChallengeRouteData } from '../[slug]/getChallengeRouteData';
 import { ChallengeLayout, MOBILE_BREAKPOINT } from './challenge-layout';
 import usePanelAdjustments from './usePanelAdjustments';
-import { LeftWrapper } from '../[id]/left-wrapper';
-import { Wrapper } from '../[id]/wrapper';
+import { LeftWrapper } from '../[slug]/left-wrapper';
+import { Wrapper } from '../[slug]/wrapper';
 
 export function ChallengeLayoutWrapper({
   challenge,
@@ -32,7 +32,7 @@ export function ChallengeLayoutWrapper({
   return (
     <ChallengeLayout
       left={
-        <LeftWrapper challengeId={challenge.id} expandPanel={expandPanel} isDesktop={isDesktop}>
+        <LeftWrapper slug={challenge.slug} expandPanel={expandPanel} isDesktop={isDesktop}>
           {children}
         </LeftWrapper>
       }

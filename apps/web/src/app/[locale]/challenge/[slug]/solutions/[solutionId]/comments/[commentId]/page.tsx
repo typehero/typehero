@@ -1,26 +1,26 @@
-import { getServerAuthSession, type Session } from '@repo/auth/server';
+import { getServerAuthSession } from '@repo/auth/server';
+import { SolutionDetails } from '~/app/[locale]/challenge/[slug]/solutions/_components/solution-detail';
 import { Comments } from '~/app/[locale]/challenge/_components/comments';
-import { SolutionDetails } from '~/app/[locale]/challenge/[id]/solutions/_components/solution-detail';
 import { getPreselectedSolutionCommentMetadata } from '~/app/[locale]/challenge/_components/comments/getCommentRouteData';
 import { getSolutionIdRouteData } from '../../getSolutionIdRouteData';
 
 interface Props {
   params: {
-    id: string;
+    slug: string;
     commentId: string;
     solutionId: string;
   };
 }
 
-export default async function SolutionPage({
-  params: { solutionId, commentId, id: challengeId },
+export default async function SolutionPageComments({
+  params: { solutionId, commentId, slug },
 }: Props) {
   const session = await getServerAuthSession();
-  const solution = await getSolutionIdRouteData(challengeId, solutionId, session);
+  const solution = await getSolutionIdRouteData(slug, solutionId, session);
   const preselectedCommentMetadata = await getPreselectedSolutionCommentMetadata(
     Number(solutionId),
     Number(commentId),
-    Number(challengeId),
+    Number(solution.challengeId),
   );
 
   return (

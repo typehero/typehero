@@ -12,24 +12,26 @@ import { UserBadge } from '@repo/ui/components/user-badge';
 import { Calendar, Flag, Pin, Share, X, Trash } from '@repo/ui/icons';
 import clsx from 'clsx';
 import Link from 'next/link';
-import type { ChallengeSolution } from '~/app/[locale]/challenge/[id]/solutions/[solutionId]/page';
+import type { ChallengeSolution } from '~/app/[locale]/challenge/[slug]/solutions/[solutionId]/page';
 import { ReportDialog } from '~/components/ReportDialog';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { Vote } from '../../../_components/vote';
 import { pinOrUnpinSolution } from './_actions';
 import { isAdminOrModerator, isAuthor } from '~/utils/auth-guards';
 import { SolutionDeleteDialog } from './delete';
+import { useParams } from 'next/navigation';
 
 interface Props {
   solution: ChallengeSolution;
 }
 
 export function SolutionDetails({ solution }: Props) {
+  const { slug } = useParams();
   const { data: session } = useSession();
   const showPin = isAdminOrModerator(session);
 
   const handlePinClick = async () => {
-    await pinOrUnpinSolution(solution.id, !solution.isPinned, solution.challengeId ?? 0);
+    await pinOrUnpinSolution(solution.id, !solution.isPinned, slug as string);
   };
   const handleShareClick = async () => {
     if (navigator.clipboard) {
@@ -46,7 +48,7 @@ export function SolutionDetails({ solution }: Props) {
     <div className="relative h-full">
       <div className="relative flex h-full flex-col">
         <div className="bg-background/90 dark:bg-muted/90 sticky right-0 top-0 flex w-full border-b border-zinc-300 p-2 backdrop-blur-sm dark:border-zinc-700">
-          <Link href={`/challenge/${solution.challengeId}/solutions`}>
+          <Link href={`/challenge/${slug}/solutions`}>
             <X className="stroke-gray-500 hover:stroke-gray-400" size={20} />
           </Link>
         </div>

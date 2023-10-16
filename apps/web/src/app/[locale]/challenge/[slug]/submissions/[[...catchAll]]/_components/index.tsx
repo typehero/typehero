@@ -8,6 +8,7 @@ import { useMemo, useState } from 'react';
 import NoSubmissions from './nosubmissions';
 import { getRelativeTime } from '~/utils/relativeTime';
 import type { ChallengeSubmissions } from '../page';
+import { useParams } from 'next/navigation';
 
 interface Props {
   submissions: ChallengeSubmissions;
@@ -67,29 +68,18 @@ export function Submissions({ submissions }: Props) {
 
       <ul className="custom-scrollable-element flex h-full flex-col overflow-y-auto pt-12">
         {filteredSubmissions.map((submission) => {
-          return (
-            <SubmissionRow
-              challengeId={submission.challengeId}
-              key={submission.id}
-              submission={submission}
-            />
-          );
+          return <SubmissionRow key={submission.id} submission={submission} />;
         })}
       </ul>
     </div>
   );
 }
 
-function SubmissionRow({
-  challengeId,
-  submission,
-}: {
-  challengeId: number;
-  submission: Submission;
-}) {
+function SubmissionRow({ submission }: { submission: Submission }) {
+  const { slug } = useParams();
   return (
     <li className="flex cursor-pointer items-center justify-between px-4 py-2 duration-300 hover:bg-neutral-100 dark:rounded-none dark:hover:bg-zinc-700/50">
-      <Link className="w-full" href={`/challenge/${challengeId}/submissions/${submission.id}`}>
+      <Link className="w-full" href={`/challenge/${slug}/submissions/${submission.id}`}>
         <div
           className={clsx({
             'text-emerald-600  dark:text-emerald-400': submission.isSuccessful,

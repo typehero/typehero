@@ -5,10 +5,11 @@ import { notFound, redirect } from 'next/navigation';
 import { Submissions } from './_components';
 import { withUnstableCache } from '~/utils/withUnstableCache';
 import { isBetaUser } from '~/utils/server/is-beta-user';
+import { createChallengeSubmissionCacheKey } from './save-submission.action';
 
 interface Props {
   params: {
-    id: string;
+    slug: string;
   };
 }
 
@@ -17,7 +18,7 @@ export const metadata = {
   description: 'View your submissions to this challenge on TypeHero.',
 };
 
-export default async function SubmissionPage({ params: { id } }: Props) {
+export default async function SubmissionPage({ params: { slug } }: Props) {
   const session = await getServerAuthSession();
   const isBeta = await isBetaUser(session);
 
@@ -27,9 +28,9 @@ export default async function SubmissionPage({ params: { id } }: Props) {
 
   const submissions = await withUnstableCache({
     fn: getChallengeSubmissions,
-    args: [session?.user.id ?? '', id],
+    args: [session?.user.id ?? '', slug],
     keys: ['all-challenge-submissions'],
-    tags: [`${id}-challenge-submissions`],
+    tags: [createChallengeSubmissionCacheKey(slug)],
   });
 
   if (!submissions) {
@@ -40,9 +41,13 @@ export default async function SubmissionPage({ params: { id } }: Props) {
 }
 
 export type ChallengeSubmissions = NonNullable<Awaited<ReturnType<typeof getChallengeSubmissions>>>;
-const getChallengeSubmissions = cache((userId: string, challengeId: string) => {
+const getChallengeSubmissions = cache(async (userId: string, slug: string) => {
+  const challenge = await prisma.challenge.findFirstOrThrow({
+    where: { slug },
+    select: { id: true },
+  });
   return prisma.submission.findMany({
-    where: { challengeId: Number(challengeId), userId },
+    where: { challengeId: challenge.id, userId },
     orderBy: [
       {
         createdAt: 'desc',

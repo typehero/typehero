@@ -13,7 +13,6 @@ interface EnrollButtonProps {
 export function ActionButton({ action, text, trackId }: EnrollButtonProps) {
   return (
     <Button
-      variant="secondary"
       onClick={async () => {
         try {
           await action(trackId);
@@ -22,10 +21,7 @@ export function ActionButton({ action, text, trackId }: EnrollButtonProps) {
             variant: 'success',
             description: <p>You're now successfully {text.toLowerCase()}ed the track.</p>,
           });
-        } catch (e) {
-          if (process.env.NODE_ENV === 'development') {
-            console.log(e);
-          }
+        } catch {
           toast({
             title: 'Error',
             variant: 'destructive',

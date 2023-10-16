@@ -152,7 +152,8 @@ model Challenge {
   createdAt        DateTime        @default(now())
   updatedAt        DateTime        @updatedAt
   difficulty       Difficulty
-  name             String
+  name             String          @unique
+  slug             String          @unique
   /// this is the description to describe the challenge on description panel
   description      String          @db.MediumText
   /// this is a short blue thats shown on the explore card
@@ -395,7 +396,8 @@ model TrackChallenge {
 
 model Track {
   id              Int              @id @default(autoincrement())
-  title           String
+  name            String           @unique
+  slug            String           @unique
   description     String           @db.MediumText
   visible         Boolean          @default(true)
   trackChallenges TrackChallenge[]

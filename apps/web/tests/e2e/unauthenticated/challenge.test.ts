@@ -31,7 +31,7 @@ test('challenge page', async ({ page }) => {
     },
   });
 
-  await page.goto(`/challenge/${challengeId}`);
+  await page.goto(`/challenge/pick`);
 
   await expect(page.getByRole('heading', { name: 'Pick' })).toBeVisible();
   await expect(
@@ -59,7 +59,7 @@ test('challenge page', async ({ page }) => {
 });
 
 test('reset challenge', async ({ page }) => {
-  await page.goto('/challenge/4');
+  await page.goto('/challenge/pick');
 
   await expect(page.getByText('type MyPick<T, K> = any')).toBeVisible();
 

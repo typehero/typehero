@@ -28,7 +28,7 @@ export default async function Page({ params }: Props) {
 export async function generateMetadata({ params: { slug } }: Props) {
   const track = await withUnstableCache({
     fn: getTrackDetails,
-    args: [parseInt(slug)],
+    args: [slug],
     keys: [`track-${slug}-detail`],
     tags: [`track-${slug}-detail`],
   });
@@ -41,7 +41,7 @@ export async function generateMetadata({ params: { slug } }: Props) {
   }
 
   return {
-    title: `${track.title} Track | TypeHero`,
-    description: `View the details of the ${track.title} track on TypeHero. ${track.description}`,
+    title: `${track.name} Track | TypeHero`,
+    description: `View the details of the ${track.name} track on TypeHero. ${track.description}`,
   };
 }

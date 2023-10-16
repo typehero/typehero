@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import { debounce } from 'lodash';
 import Link from 'next/link';
 import { useRef, useState } from 'react';
-import { type ChallengeRouteData } from '~/app/[locale]/challenge/[id]/getChallengeRouteData';
+import { type ChallengeRouteData } from '~/app/[locale]/challenge/[slug]/getChallengeRouteData';
 import { ReportDialog } from '~/components/ReportDialog';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { addOrRemoveBookmark } from '../bookmark.action';

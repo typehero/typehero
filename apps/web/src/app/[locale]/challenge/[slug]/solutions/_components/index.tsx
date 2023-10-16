@@ -10,6 +10,7 @@ import type { ChallengeSolution } from '../getSolutionRouteData';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { Badge } from '@repo/ui/components/badge';
 import { UserBadge } from '@repo/ui/components/user-badge';
+import { useParams } from 'next/navigation';
 
 interface Props {
   challenge: ChallengeSolution;
@@ -53,10 +54,11 @@ export function Solutions({ challenge }: Props) {
 }
 
 function SolutionRow({ solution }: { solution: ChallengeSolution['sharedSolution'][0] }) {
+  const { slug } = useParams();
   return (
     <Link
       className="flex cursor-pointer flex-col gap-2 p-4 duration-300 hover:bg-neutral-100 dark:hover:bg-zinc-700/50"
-      href={`/challenge/${solution.challengeId}/solutions/${solution.id}`}
+      href={`/challenge/${slug}/solutions/${solution.id}`}
     >
       <h3 className="truncate font-bold">{solution.title}</h3>
       <div className="flex items-center gap-2">

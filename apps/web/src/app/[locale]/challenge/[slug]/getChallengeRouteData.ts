@@ -5,10 +5,10 @@ import { cache } from 'react';
 export type ChallengeRouteData = NonNullable<Awaited<ReturnType<typeof getChallengeRouteData>>>;
 
 // this is to data to populate the description tab (default tab on challenge page)
-export const getChallengeRouteData = cache((id: string, session: Session | null) => {
+export const getChallengeRouteData = cache((slug: string, session: Session | null) => {
   return prisma.challenge.findFirstOrThrow({
     where: {
-      id: Number(id),
+      slug,
       status: 'ACTIVE',
     },
     include: {

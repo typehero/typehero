@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { getChallengeSubmissionById } from '../getChallengeSubmissions';
+import { useParams } from 'next/navigation';
 
 interface Props {
   submissionId: string;
@@ -17,6 +18,7 @@ ${code} \`\`\``;
 };
 
 export function SubmissionOverview({ submissionId }: Props) {
+  const { slug } = useParams();
   const { data: submission } = useQuery({
     queryKey: ['submission', submissionId],
     queryFn: () => getChallengeSubmissionById(submissionId),
@@ -39,7 +41,7 @@ export function SubmissionOverview({ submissionId }: Props) {
   return (
     <>
       <div className="sticky top-0 flex h-[40px] items-center justify-between border-b border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
-        <Link href={`/challenge/${submission.challengeId}/submissions`}>
+        <Link href={`/challenge/${slug}/submissions`}>
           <X className="stroke-gray-500 hover:stroke-gray-400" size={20} />
         </Link>
         <Tooltip>

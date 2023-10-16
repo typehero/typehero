@@ -6,24 +6,24 @@ import { getChallengeRouteData } from '../../getChallengeRouteData';
 
 interface Props {
   params: {
-    id: string;
+    slug: string;
     commentId: string;
   };
 }
 
-export default async function CommentPage({ params: { id, commentId } }: Props) {
+export default async function CommentPage({ params: { slug, commentId } }: Props) {
   const session = await getServerAuthSession();
+  const challenge = await getChallengeRouteData(slug, session);
   const preselectedCommentMetadata = await getPreselectedCommentMetadata(
-    Number(id),
+    challenge.id,
     Number(commentId),
   );
-  const challenge = await getChallengeRouteData(id, session);
 
   return (
     <div className="relative h-full">
       <Description challenge={challenge} />
       <Comments
-        rootId={Number(id)}
+        rootId={challenge.id}
         preselectedCommentMetadata={preselectedCommentMetadata}
         type="CHALLENGE"
         expanded

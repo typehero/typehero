@@ -31,7 +31,7 @@ const trackChallengeSchema = z.object({
 });
 
 const formSchema = z.object({
-  title: z.string().min(3),
+  name: z.string().min(3),
   description: z.string().min(10),
   visible: z.boolean(),
   trackChallenges: z.array(trackChallengeSchema),
@@ -56,7 +56,7 @@ export function UpdateTrackForm({ challenges, track }: Props) {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: track.title,
+      name: track.name,
       description: track.description,
       visible: track.visible,
       trackChallenges: track.trackChallenges,
@@ -121,10 +121,10 @@ export function UpdateTrackForm({ challenges, track }: Props) {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
-              name="title"
+              name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Track Title:</FormLabel>
+                  <FormLabel>Track Name:</FormLabel>
                   <FormControl>
                     <Input
                       className="rounded-xl bg-neutral-200 dark:bg-neutral-800"

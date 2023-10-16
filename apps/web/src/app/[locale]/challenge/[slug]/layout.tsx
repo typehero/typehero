@@ -5,13 +5,13 @@ import { ForceRenderUntilClient } from '@repo/ui/components/force-render-until-c
 
 export default async function LayoutData({
   children,
-  params: { id },
+  params: { slug },
 }: {
   children: React.ReactNode;
-  params: { id: string };
+  params: { slug: string };
 }) {
   const session = await getServerAuthSession();
-  const challenge = await getChallengeRouteData(id, session);
+  const challenge = await getChallengeRouteData(slug, session);
 
   return (
     <ForceRenderUntilClient>

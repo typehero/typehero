@@ -5,7 +5,7 @@ import { ctrlV, wrapTypescriptCode } from '../helpers';
 
 test.describe('create, edit, and delete comments', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/challenge/5');
+    await page.goto('/challenge/pick');
     await page.getByRole('button', { name: 'Comments' }).click();
   });
 
@@ -108,13 +108,13 @@ test.describe('sharing comments', () => {
   test('share comment and navigate to comment link', async ({ page, context }) => {
     const comment = await prisma.comment.create({
       data: {
-        rootChallengeId: 6,
+        rootChallengeId: 3,
         text: parentComment,
         userId: USER.id,
       },
     });
 
-    await page.goto('/challenge/6');
+    await page.goto('/challenge/omit');
     await page.getByRole('button', { name: 'Comments' }).click();
 
     const commentBlock = page.locator('div[id^=comment]', { hasText: parentComment });
@@ -150,7 +150,7 @@ test.describe('sharing comments', () => {
     // delete comment A
     await prisma.comment.delete({ where: { id: commentA.id } });
     // but visit a deep link to it anyway
-    await page.goto(`/challenge/6/comments/${commentA.id}`);
+    await page.goto(`/challenge/simple-vue/comments/${commentA.id}`);
     // assert other comments, such as comment B, are still visible on page load
     await expect(
       page.locator('div[id^=comment]', { hasText: 'this comment is timeless' }),

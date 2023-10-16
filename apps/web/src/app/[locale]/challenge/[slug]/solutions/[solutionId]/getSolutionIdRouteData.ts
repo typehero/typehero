@@ -4,11 +4,15 @@ import { type Session } from '@repo/auth/server';
 import { redirect } from 'next/navigation';
 
 export const getSolutionIdRouteData = cache(
-  async (challengeId: string, solutionId: string, session: Session | null) => {
+  async (slug: string, solutionId: string, session: Session | null) => {
+    const challenge = await prisma.challenge.findFirstOrThrow({
+      where: { slug },
+      select: { id: true },
+    });
     const solution = await prisma.sharedSolution.findFirst({
       where: {
         id: Number(solutionId),
-        challengeId: Number(challengeId),
+        challengeId: challenge.id,
       },
       include: {
         user: {
@@ -28,11 +32,16 @@ export const getSolutionIdRouteData = cache(
             userId: true,
           },
         },
+        challenge: {
+          select: {
+            slug: true,
+          },
+        },
       },
     });
 
     if (!solution) {
-      redirect(`/challenge/${challengeId}/solutions`);
+      redirect(`/challenge/${challenge.id}/solutions`);
     }
 
     return solution;
