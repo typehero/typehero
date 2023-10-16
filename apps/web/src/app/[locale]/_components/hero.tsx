@@ -22,7 +22,7 @@ function TypeHeroLogo3D() {
       <path
         fillRule="evenodd"
         clipRule="evenodd"
-        d="M15.6947 20.9344H20V18H8V20.9344H12.2842V34H15.6947V20.9344Z"
+        d="M243.77 314.169H318.615V288.585V263H110V314.169H184.479V542H243.77V314.169Z"
         fill="white"
       />
       <path
@@ -37,9 +37,9 @@ function TypeHeroLogo3D() {
           width="736.029"
           height="736.029"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feColorMatrix
             in="SourceAlpha"
@@ -88,7 +88,7 @@ function BeamOfLight() {
           ry="273.501"
           transform="matrix(-0.822377 -0.568943 -0.568943 0.822377 2222.88 1131.09)"
           fill="white"
-          fill-opacity="0.21"
+          fillOpacity="0.21"
         />
       </g>
       <defs>
@@ -99,9 +99,9 @@ function BeamOfLight() {
           width="3785.16"
           height="2840.26"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feGaussianBlur stdDeviation="151" result="effect1_foregroundBlur_791_106" />
         </filter>
@@ -114,7 +114,7 @@ export async function Hero() {
   const t = await getScopedI18n('landing.hero');
 
   return (
-    <section className="-mt-[56px] mb-12 min-h-[calc(100vh)] overflow-hidden pt-[56px] lg:min-h-0">
+    <section className="-mt-[56px] min-h-[calc(100vh)] overflow-hidden lg:min-h-0 lg:pt-[56px]">
       <div className="absolute inset-10 -z-30 overflow-hidden rounded-full opacity-70 lg:hidden">
         <BackgroundGrid />
       </div>
