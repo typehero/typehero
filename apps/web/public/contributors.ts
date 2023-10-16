@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 183
+        "contributions": 184
     },
     {
         "login": "Hacksore",
@@ -41,7 +41,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/Hacksore/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 95
+        "contributions": 96
     },
     {
         "login": "PickleNik",
@@ -611,6 +611,27 @@ export const contributors = [
         "contributions": 3
     },
     {
+        "login": "kualta",
+        "id": 72769566,
+        "node_id": "MDQ6VXNlcjcyNzY5NTY2",
+        "avatar_url": "https://avatars.githubusercontent.com/u/72769566?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kualta",
+        "html_url": "https://github.com/kualta",
+        "followers_url": "https://api.github.com/users/kualta/followers",
+        "following_url": "https://api.github.com/users/kualta/following{/other_user}",
+        "gists_url": "https://api.github.com/users/kualta/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/kualta/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/kualta/subscriptions",
+        "organizations_url": "https://api.github.com/users/kualta/orgs",
+        "repos_url": "https://api.github.com/users/kualta/repos",
+        "events_url": "https://api.github.com/users/kualta/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/kualta/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 3
+    },
+    {
         "login": "metal-face",
         "id": 101987676,
         "node_id": "U_kgDOBhQ1XA",
@@ -795,27 +816,6 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/SubxX/repos",
         "events_url": "https://api.github.com/users/SubxX/events{/privacy}",
         "received_events_url": "https://api.github.com/users/SubxX/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 2
-    },
-    {
-        "login": "kualta",
-        "id": 72769566,
-        "node_id": "MDQ6VXNlcjcyNzY5NTY2",
-        "avatar_url": "https://avatars.githubusercontent.com/u/72769566?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/kualta",
-        "html_url": "https://github.com/kualta",
-        "followers_url": "https://api.github.com/users/kualta/followers",
-        "following_url": "https://api.github.com/users/kualta/following{/other_user}",
-        "gists_url": "https://api.github.com/users/kualta/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/kualta/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/kualta/subscriptions",
-        "organizations_url": "https://api.github.com/users/kualta/orgs",
-        "repos_url": "https://api.github.com/users/kualta/repos",
-        "events_url": "https://api.github.com/users/kualta/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/kualta/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 2
