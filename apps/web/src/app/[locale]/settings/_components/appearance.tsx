@@ -40,7 +40,6 @@ export function AppearanceForm() {
   const { toast } = useToast();
   const { setTheme, resolvedTheme } = useTheme();
 
-  // This can come from your database or API.
   const defaultValues: Partial<AppearanceFormValues> = {
     theme: resolvedTheme === 'dark' ? 'dark' : 'light',
   };
@@ -51,7 +50,6 @@ export function AppearanceForm() {
   });
 
   function onSubmit(data: AppearanceFormValues) {
-    console.log(data, '********************************');
     setTheme(data.theme);
     toast({
       title: `The system theme changed to ${data.theme} mode`,
