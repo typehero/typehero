@@ -1,4 +1,5 @@
 {
   "id": "literal-types",
+  "difficulty": "beginner",
   "prerequisites": ["primitive-data-types", "type-unions"]
 }

@@ -3,10 +3,7 @@ import { Expect, Equal } from 'type-testing';
 const height = 500;
 const width = 700;
 
-type test_Width = Expect<Equal<
-  Width,
-  number
->>;
+type test_Width = Expect<Equal<Width, number>>;
 
 const margin = {
   top: 20,
@@ -15,10 +12,7 @@ const margin = {
   left: 50,
 };
 
-type test_Margin = Expect<Equal<
-  Margin,
-  { top: 20, right: 30, bottom: 40, left: 50 }
->>;
+type test_Margin = Expect<Equal<Margin, { top: 20; right: 30; bottom: 40; left: 50 }>>;
 
 const d3ChartConfig = {
   width,
@@ -33,7 +27,7 @@ const d3ChartConfig = {
   ],
   xScale: {
     type: 'band',
-    domain: data => data.map(d => d.category),
+    domain: (data) => data.map((d) => d.category),
     range: [0, width - margin.right - margin.left],
   },
   yScale: {
@@ -54,48 +48,49 @@ const d3ChartConfig = {
   },
 };
 
-type test_Data = Expect<Equal<
-  Data,
-  { category: string, value: number }[]
->>;
+type test_Data = Expect<Equal<Data, { category: string; value: number }[]>>;
 
-type test_YScale = Expect<Equal<
-  YScale,
-  {
-    type: string;
-    domain: (number | ((data: number[]) => number))[],
-    range: number[],
-  }
->>;
+type test_YScale = Expect<
+  Equal<
+    YScale,
+    {
+      type: string;
+      domain: (number | ((data: number[]) => number))[];
+      range: number[];
+    }
+  >
+>;
 
-type test_d3ChartConfig = Expect<Equal<
-  D3ChartConfig,
-  {
-    width: number;
-    height: Width;
-    margin: Margin;
-    data: Data;
-    xScale: {
-      type: string;
-      domain: string[];
-      range: [number, number];
-    };
-    yScale: {
-      type: string;
-      domain: [number, number];
-      range: [number, number];
-    };
-    xAxis: {
-      label: string;
-      tickSize: number;
-    };
-    yAxis: {
-      label: string;
-      tickSize: number;
-    };
-    bar: {
-      fill: string;
+type test_d3ChartConfig = Expect<
+  Equal<
+    D3ChartConfig,
+    {
       width: number;
-    };
-  }
->>;
+      height: Width;
+      margin: Margin;
+      data: Data;
+      xScale: {
+        type: string;
+        domain: string[];
+        range: [number, number];
+      };
+      yScale: {
+        type: string;
+        domain: [number, number];
+        range: [number, number];
+      };
+      xAxis: {
+        label: string;
+        tickSize: number;
+      };
+      yAxis: {
+        label: string;
+        tickSize: number;
+      };
+      bar: {
+        fill: string;
+        width: number;
+      };
+    }
+  >
+>;

@@ -1,6 +1,6 @@
 ## What Problem Type Unions Solve
 
-In a previous example for `type-aliases` we saw a problem.  We were writing code for a space shuttle and we wanted to make sure that we can't accidentally use the wrong units type.
+In a previous example for `type-aliases` we saw a problem. We were writing code for a space shuttle and we wanted to make sure that we can't accidentally use the wrong units type.
 
 ```ts
 type Meters = number;
@@ -18,7 +18,7 @@ const distanceInMiles: Miles = 1242;
 landSpacecraft(distanceInMiles);
 ```
 
-What do we do?  We have some places in our code that take a unit of `miles` and some places in our code that take a unit of `meters` and we want to be sure we _NEVER_ mix the two up since it could mean literally destroying the entire spacecraft if we do (even once).
+What do we do? We have some places in our code that take a unit of `miles` and some places in our code that take a unit of `meters` and we want to be sure we _NEVER_ mix the two up since it could mean literally destroying the entire spacecraft if we do (even once).
 
 We can use unions!
 
@@ -60,22 +60,27 @@ const landSpacecraft = (distance: Distance) => {
     value: distance.unit === 'miles' ? distance.value / 1609.34 : distance.value,
   };
   // ... rest of our code
-}
+};
 ```
 
 ## Properties of Unions
 
-Unions are a very deep topic, actually.  The three things you need to know right now are:
+Unions are a very deep topic, actually. The three things you need to know right now are:
 
 1. unions are unordered
-  - and if you implement hacks to try to depend on the order your tests will break across different TypeScript versions
+
+- and if you implement hacks to try to depend on the order your tests will break across different TypeScript versions
+
 1. the items in a union are unique
-  - so doing `1 | 1 | 2 | 3` is the same as `1 | 2 | 3`
+
+- so doing `1 | 1 | 2 | 3` is the same as `1 | 2 | 3`
+
 1. the `never` type is an empty union
-  - we'll learn more about `never` [later on](todo-never)
+
+- we'll learn more about `never` [later on](todo-never)
 
 ## Solving This Challenge
 
-We just started integrating with a new API from a vendor that only publishes data in `feet`.  Now we need to update a function `getDistanceInMeters` accordingly.
+We just started integrating with a new API from a vendor that only publishes data in `feet`. Now we need to update a function `getDistanceInMeters` accordingly.
 
 Then, context switch to a completely different task (realistic, isn't it??) and update the `Position` type's union members until there are no more errors in the test.

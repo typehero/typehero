@@ -1,9 +1,6 @@
 import { Expect, Equal } from 'type-testing';
 
-type test_AllowStringString = Expect<Equal<
-  AllowString<string>,
-  string
->>;
+type test_AllowStringString = Expect<Equal<AllowString<string>, string>>;
 
 // @ts-expect-error invalid input
 type error_AllowStringNumber = AllowString<number>;
@@ -14,21 +11,20 @@ type error_AllowStringBoolean = AllowString<boolean>;
 // @ts-expect-error invalid input
 type error_AllowNumberString = AllowNumber<string>;
 
-type test_AllowNumberNumber = Expect<Equal<
-  AllowNumber<number>,
-  number
->>;
+type test_AllowNumberNumber = Expect<Equal<AllowNumber<number>, number>>;
 
 // @ts-expect-error invalid input
 type error_AllowNumberBoolean = AllowNumber<boolean>;
 
-type test_CreateLogger = Expect<Equal<
-  CreateLogger<(a: number) => void>,
-  {
-    log: (a: number) => void;
-    exit: () => void;
-  }
->>;
+type test_CreateLogger = Expect<
+  Equal<
+    CreateLogger<(a: number) => void>,
+    {
+      log: (a: number) => void;
+      exit: () => void;
+    }
+  >
+>;
 
 // @ts-expect-error invalid input
 type error_CreateLoggerString = CreateLogger<string>;

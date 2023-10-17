@@ -1,4 +1,5 @@
 {
   "id": "pick",
+  "difficulty": "easy",
   "prerequisites": ["literal-types", "keyof", "mapped-object-types", "generic-type-constraints"]
 }

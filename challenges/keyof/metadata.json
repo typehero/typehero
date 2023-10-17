@@ -1,4 +1,5 @@
 {
   "id": "keyof",
+  "difficulty": "beginner",
   "prerequisites": ["type-aliases", "literal-types", "type-unions"]
 }

@@ -2,4 +2,4 @@ type GroceryList = unknown;
 
 type InnapropriateActionBySituation = unknown;
 
-type CharactersById = unknown
+type CharactersById = unknown;

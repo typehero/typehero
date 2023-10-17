@@ -12,7 +12,7 @@ Let's envision that code in TypeScript and see how type aliases can help.
  */
 const landSpacecraft = (distance: number) => {
   // ... do fancy math here
-}
+};
 ```
 
 In this case, wouldn't it be nice if we could use a type that's more specific than `number`?
@@ -27,14 +27,14 @@ type Meters = number;
 
 const landSpacecraft = (distance: Meters) => {
   // ... do fancy math here
-}
+};
 ```
 
-Cool, huh?  Now we can do fun stuff like adding JSDoc (as you see above) that way people will see more information about how this type is intended to be _used_ in programs.
+Cool, huh? Now we can do fun stuff like adding JSDoc (as you see above) that way people will see more information about how this type is intended to be _used_ in programs.
 
 ## The Biggest Source Of Bugs With Aliases
 
-But unfortunately, this particular TypeScript types design might not be a great choice for such a job because the actual behavior may be surprising to you.  You might expect the following code to have a type error, but it doesn't:
+But unfortunately, this particular TypeScript types design might not be a great choice for such a job because the actual behavior may be surprising to you. You might expect the following code to have a type error, but it doesn't:
 
 ```ts
 /** In */
@@ -45,9 +45,9 @@ const targetDistance: Miles = 100;
 landSpacecraft(targetDistance);
 ```
 
-Wait!  What's going on?  `landSpacecraft` specifically asked for `Meters` but clearly we passed in `Miles` here.  Our spacecraft is going to crash!
+Wait! What's going on? `landSpacecraft` specifically asked for `Meters` but clearly we passed in `Miles` here. Our spacecraft is going to crash!
 
-Be careful that you understand that TypeScript is a _structural type system_.  One result of this is that primitive types are _not_ something known as ["opaque types"](https://en.wikipedia.org/wiki/Opaque_data_type).  To TypeScript, everything that's an alias for a number is still a number.
+Be careful that you understand that TypeScript is a _structural type system_. One result of this is that primitive types are _not_ something known as ["opaque types"](https://en.wikipedia.org/wiki/Opaque_data_type). To TypeScript, everything that's an alias for a number is still a number.
 
 There actually is a idiomatic TypeScript way to design this, but it requires another concept covered in another challenge [`type-unions`](TODO-link).
 
@@ -61,11 +61,11 @@ type MyAlias = number;
 
 It's most common (but not mandatory) to use a semicolon to end a type declaration.
 
-Don't worry if this TypeScript feature seems underwhelming.  It's not that useful _on its own_, but rather it becomes very powerful when you pair it with other concepts (like type unions, literal types, intersections, and more).
+Don't worry if this TypeScript feature seems underwhelming. It's not that useful _on its own_, but rather it becomes very powerful when you pair it with other concepts (like type unions, literal types, intersections, and more).
 
 ### p.s. Don't Overuse Aliases
 
-One little tip: be careful not to _over use_ type aliases.  A very common mistake beginners make is to create aliases for arrays of things:
+One little tip: be careful not to _over use_ type aliases. A very common mistake beginners make is to create aliases for arrays of things:
 
 ```ts
 export interface Row {
@@ -81,7 +81,7 @@ But, ask yourself:
 
 > can I just import `Row` and specify `Row[]` when needed?
 
-If the answer is yes, then you should probably not make an alias for `Rows`.  This is beneficial because you're probably going to want to work with the `Row` type _anyway_ in the same file.  It's also a bit easier to read and understand.
+If the answer is yes, then you should probably not make an alias for `Rows`. This is beneficial because you're probably going to want to work with the `Row` type _anyway_ in the same file. It's also a bit easier to read and understand.
 
 ## Solving This Challenge
 
