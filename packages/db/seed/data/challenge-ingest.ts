@@ -1,18 +1,11 @@
 import { type Prisma } from '@prisma/client';
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const challengePath = path.join(__dirname, '../../../challenges');
 
 export async function ingestChallenges(challengePath: string) {
   const challengesToCreate: Prisma.ChallengeCreateManyInput[] = [];
   try {
     const items = await fs.promises.readdir(challengePath);
-    console.log('Items:', items);
 
     for (const item of items) {
       const itemPath = path.join(challengePath, item);
@@ -51,10 +44,7 @@ async function buildChallenge(pathToDirectory: string) {
 
     const stats = await fs.promises.stat(itemPath);
 
-    if (stats.isDirectory()) {
-      // await ingestChallenges(itemPath, userId);
-    } else if (stats.isFile()) {
-      const fileExtension = path.extname(itemPath);
+    if (stats.isFile()) {
       const fileName = path.parse(itemPath).name;
 
       if (fileName === 'prompt') {
@@ -62,7 +52,6 @@ async function buildChallenge(pathToDirectory: string) {
           const fileContents = await fs.promises.readFile(itemPath, 'utf8');
           challengeToCreate.description = fileContents;
           challengeToCreate.shortDescription = fileContents.slice(0, 100);
-          // console.log('Parsed ts:', fileContents);
         } catch (jsonError) {
           console.error('Error parsing JSON:', jsonError);
         }
@@ -71,7 +60,6 @@ async function buildChallenge(pathToDirectory: string) {
         try {
           const fileContents = await fs.promises.readFile(itemPath, 'utf8');
           challengeToCreate.code = fileContents;
-          // console.log('Parsed ts:', fileContents);
         } catch (jsonError) {
           console.error('Error parsing JSON:', jsonError);
         }
@@ -80,7 +68,6 @@ async function buildChallenge(pathToDirectory: string) {
         try {
           const fileContents = await fs.promises.readFile(itemPath, 'utf8');
           challengeToCreate.tests = fileContents;
-          // console.log('Parsed ts:', fileContents);
         } catch (jsonError) {
           console.error('Error parsing JSON:', jsonError);
         }
@@ -97,20 +84,21 @@ async function buildChallenge(pathToDirectory: string) {
           console.error('Error parsing JSON:', jsonError);
         }
       }
-      const isWithinSolutionsDirectory = challengePath.split('/').at(-1) === 'solutions';
-
-      if (isWithinSolutionsDirectory) {
-        if (fileExtension === '.ts') {
-          try {
-            const fileContents = await fs.promises.readFile(itemPath, 'utf8');
-            // console.log('Parsed ts:', fileContents);
-          } catch (jsonError) {
-            console.error('Error parsing JSON:', jsonError);
-          }
-        }
-      } else {
-        // console.log(`File: ${itemPath} (Extension: ${fileExtension})`);
-      }
+      // @TODO: we'll ingest solutions later
+      // const isWithinSolutionsDirectory = challengePath.split('/').at(-1) === 'solutions';
+      //
+      // if (isWithinSolutionsDirectory) {
+      //   if (fileExtension === '.ts') {
+      //     try {
+      //       const fileContents = await fs.promises.readFile(itemPath, 'utf8');
+      //       // console.log('Parsed ts:', fileContents);
+      //     } catch (jsonError) {
+      //       console.error('Error parsing JSON:', jsonError);
+      //     }
+      //   }
+      // } else {
+      //   // console.log(`File: ${itemPath} (Extension: ${fileExtension})`);
+      // }
     }
   }
 
