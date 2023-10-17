@@ -1,15 +1,17 @@
 'use client';
 
 import { type OnChange, type OnMount, type OnValidate } from '@monaco-editor/react';
+import { setupTypeAcquisition } from '@typescript/ata';
 import clsx from 'clsx';
 import type * as monacoType from 'monaco-editor';
-import { useEffect, useRef } from 'react';
-import { CodeEditor, LIB_URI } from './code-editor';
-import { libSource } from './editor-types';
 import dynamic from 'next/dynamic';
+import { useEffect, useRef, useState } from 'react';
+import ts from 'typescript';
+import { CodeEditor, LIB_URI } from './code-editor';
+import { useResetEditor } from './editor-hooks';
+import { libSource } from './editor-types';
 import { useEditorSettingsStore } from './settings-store';
 import { getEventDeltas, typeCheck } from './utils';
-import { useResetEditor } from './editor-hooks';
 
 function preventSelection(event: Event) {
   event.preventDefault();
@@ -69,6 +71,38 @@ export default function SplitEditor({
   const wrapper = useRef<HTMLDivElement>(null);
   const resizer = useRef<HTMLDivElement>(null);
   const testPanel = useRef<HTMLDivElement>(null);
+
+  const addLibraryToRuntime = (code: string, _path: string) => {
+    if (!monaco) return;
+    console.log({ code, _path });
+    const path = `file://${_path}`;
+    monaco.languages.typescript.javascriptDefaults.addExtraLib(code, path);
+    const uri = monaco.Uri.file(path);
+    if (monaco.editor.getModel(uri) === null) {
+      monaco.editor.createModel(code, 'javascript', uri);
+    }
+  };
+
+  const [ata] = useState(() =>
+    setupTypeAcquisition({
+      projectName: 'TypeScript Playground',
+      // typescript: typeof import('typescript'),
+      typescript: ts,
+      logger: console,
+      delegate: {
+        receivedFile: addLibraryToRuntime,
+        progress: (downloaded: number, total: number) => {
+          // console.log({ dl, ttl })
+        },
+        started: () => {
+          console.log('ATA start');
+        },
+        finished: (f) => {
+          console.log('ATA done');
+        },
+      },
+    }),
+  );
 
   useEffect(() => {
     const resizerRef = resizer.current;
@@ -207,6 +241,12 @@ export default function SplitEditor({
           onChange={async (e, a) => {
             if (monaco) {
               typeCheck(monaco);
+
+              const model = monaco.editor.getModel(monaco.Uri.parse(USER_CODE_PATH));
+              const code = model?.getValue();
+              if (code) {
+                ata(code);
+              }
             }
 
             onChange?.user?.(e, a);
