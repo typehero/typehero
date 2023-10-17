@@ -1,5 +1,7 @@
 {
   "id": "generic-type-arguments",
+  "label": "Generic Type Arguments",
+  "description": "Generic types are like functions, and functions need inputs.  That's what generic type arguments are.",
   "difficulty": "beginner",
   "prerequisites": ["primitive-data-types", "type-aliases"]
 }

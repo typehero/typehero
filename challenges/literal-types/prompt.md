@@ -2,7 +2,7 @@
 
 JavaScript, like most programming languages has a concept of [primitive data types](todo-primitive-data-types).  Primitive data types are things like `string`, `boolean`, `number`, and `object`.
 
-> sidenote: in JavaScript, arrays and functions are actually objects, but that's a topic for another time :)
+> side note: in JavaScript, arrays and functions are actually objects, but that's a topic for another time :)
 
 But TypeScript isn't _like_ most programming languages.  It's better.  It takes takes things to the next level by introducing _literal_ data types.
 
@@ -66,7 +66,7 @@ If you're thinking to yourself:
 
 > Why are type literals even necessary?  Lots of languages don't have anything like this and they seem to get along just fine with primitive types like `string` and `number` and `boolean`.
 
-The TLDR; is: once you pair type unions with literals, you can start _descriminating_ inputs based on one particular literal instance of a type versus another, TypeScript suddenly becomes capable of doing some pretty amazing static analysis on your code that you could never do if all you had were primitive types.  If that's unpalatable to you, there's always COBOL.  Try that out instead maybe?
+The TLDR; is: once you pair type unions with literals, you can start _discriminating_ inputs based on one particular literal instance of a type versus another, TypeScript suddenly becomes capable of doing some pretty amazing static analysis on your code that you could never do if all you had were primitive types.  If that's unpalatable to you, there's always COBOL.  Try that out instead maybe?
 
 ## Solving this Challenge
 

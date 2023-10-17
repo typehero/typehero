@@ -1,5 +1,7 @@
 {
   "id": "type-aliases",
+  "label": "Type Aliases",
+  "description": "You can create multiple names for the same type.",
   "difficulty": "beginner",
   "prerequisites": ["primitive-data-types"]
 }
