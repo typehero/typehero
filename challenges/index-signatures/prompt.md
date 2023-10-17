@@ -4,7 +4,7 @@ It's common in any language to make general purpose mappings of one type to anot
 
 Look at this theoretical API response from your company.  This is a `/followerCountByUser` endpoint and we pass in some user we're looking
 
-```
+```text
 https://yourcompany.com/api/v1/followerCountByUser
 ```
 
@@ -105,4 +105,4 @@ type FollowerCountByUser = {
 
 ## Solving This Challenge
 
-Take a look at the tests.  You'll see some
+Take a look at the tests.  You'll see some objects.  Try to make types (using index signatures) that match those objects.

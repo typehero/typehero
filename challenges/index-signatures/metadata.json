@@ -1,5 +1,7 @@
 {
   "id": "index-signatures",
+  "label": "Index Signatures",
+  "description": "Index signatures allow us to handle types where the properties are a non-specific literal value.",
   "difficulty": "beginner",
   "prerequisites": ["type-aliases", "primitive-data-types"]
 }

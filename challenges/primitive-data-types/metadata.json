@@ -1,5 +1,7 @@
 {
   "id": "primitive-data-types",
+  "label": "Primitive Data Types",
+  "description": "Your TypeScript journey starts with these building blocks.",
   "difficulty": "beginner",
   "prerequisites": []
 }

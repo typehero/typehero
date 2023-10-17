@@ -1,5 +1,7 @@
 {
   "id": "indexed-types",
+  "label": "Indexed Types",
+  "description": "Some types can be indexed (sorta like you would index an array or an object) to lookup a particular value.",
   "difficulty": "beginner",
   "prerequisites": ["primitive-types", "type-unions", "keyof", "literal-types"]
 }
