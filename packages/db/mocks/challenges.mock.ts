@@ -60,7 +60,7 @@ export async function loadChallengesFromTypeChallenge() {
     }
 
     arr.push({
-      // id: idNum,
+      id: idNum,
       name: title,
       slug: slugify(title),
       description: README,
