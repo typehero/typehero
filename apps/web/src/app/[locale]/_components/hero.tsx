@@ -13,7 +13,7 @@ function TypeHeroLogo3D() {
       viewBox="0 0 633 633"
       fill="none"
     >
-      <g className="block dark:hidden">
+      <g className="dark:hidden">
         <path
           d="M0 74.9605C0 33.561 33.561 0 74.9605 0H558.039C599.439 0 633 33.561 633 74.9605V558.039C633 599.439 599.439 633 558.039 633H74.9605C33.561 633 0 599.439 0 558.039V74.9605Z"
           fill="#3178C6"
@@ -45,7 +45,7 @@ function TypeHeroLogo3D() {
           fill="white"
         />
       </g>
-      <g className="animate-3d-logo hidden  dark:block" filter="url(#filter0_ii_1050_32)">
+      <g className="animate-3d-logo hidden dark:block" filter="url(#filter0_ii_1050_32)">
         <path
           d="M0 74.9605C0 33.561 33.561 0 74.9605 0H558.039C599.439 0 633 33.561 633 74.9605V558.039C633 599.439 599.439 633 558.039 633H74.9605C33.561 633 0 599.439 0 558.039V74.9605Z"
           fill="#3178C6"
@@ -107,7 +107,7 @@ function TypeHeroLogo3D() {
 function BeamOfLight() {
   return (
     <svg
-      className="animate-beam pointer-events-none absolute left-0 top-0 z-[-1] h-[138%] w-[138%] lg:w-[84%]"
+      className="animate-beam pointer-events-none absolute left-0 top-0 z-[-1] h-[169%] w-[138%] lg:w-[84%]"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 3787 2842"
       fill="none"
@@ -157,12 +157,26 @@ export async function Hero() {
             target="_blank"
             rel="noreferrer"
             href="https://github.com/typehero/typehero"
-            className="animate-bg-gradient-to-center group rounded-full bg-gradient-to-r from-yellow-600 via-black to-[#3178c6] to-70% bg-[length:420%_420%] bg-right-bottom p-[1px] brightness-90 contrast-150 duration-500 hover:bg-left-top hover:shadow-[0_0_2rem_-0.75rem_#eab308] dark:from-yellow-500 dark:via-white dark:to-[#3178c6] dark:brightness-125 dark:contrast-100"
+            className="animate-bg-gradient-to-center group hidden rounded-full bg-gradient-to-r from-yellow-600 via-black to-[#3178c6] to-70% bg-[length:420%_420%] bg-right-bottom p-[1px] brightness-90 contrast-150 duration-500 hover:bg-left-top hover:shadow-[0_0_2rem_-0.75rem_#eab308] dark:block dark:from-yellow-500 dark:via-white dark:to-[#3178c6] dark:brightness-125 dark:contrast-100"
           >
-            <div className="rounded-full bg-white/80 px-3 py-1 dark:bg-black/80">
-              <span className="animate-bg-gradient-to-center relative flex items-center bg-gradient-to-r from-yellow-600 via-black to-[#3178c6] to-70% bg-[length:420%_420%] bg-clip-text bg-right-bottom text-transparent duration-500 group-hover:bg-left-top dark:from-yellow-500 dark:via-white dark:to-[#3178c6]">
+            <div className="rounded-full px-3 py-1 dark:bg-black/80">
+              <span className="animate-bg-gradient-to-center relative flex items-center bg-gradient-to-r to-70% bg-[length:420%_420%] bg-clip-text bg-right-bottom text-transparent duration-500 group-hover:bg-left-top dark:from-yellow-500 dark:via-white dark:to-[#3178c6]">
                 <Sparkles className="absolute -left-1 top-0.5 h-5 w-5 translate-x-0.5 scale-50 stroke-yellow-500 opacity-0 duration-500 dark:group-hover:rotate-[125deg] dark:group-hover:scale-100 dark:group-hover:opacity-100" />
-                <Sparkle className=" mr-2 h-4 w-4 stroke-white stroke-2 duration-500 group-hover:rotate-180 group-hover:scale-110 group-hover:stroke-yellow-600 dark:duration-500 dark:group-hover:scale-[2] dark:group-hover:opacity-0" />{' '}
+                <Sparkle className="mr-2 h-4 w-4 stroke-white stroke-2 duration-500 group-hover:rotate-180 group-hover:scale-110 group-hover:stroke-yellow-600 dark:duration-500 dark:group-hover:scale-[2] dark:group-hover:opacity-0" />{' '}
+                Star us on Github
+              </span>
+            </div>
+          </a>
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href="https://github.com/typehero/typehero"
+            className="group rounded-full bg-gradient-to-r from-yellow-600 to-[#3178c6] bg-[length:420%_420%] bg-right-bottom p-[1px] brightness-90 contrast-150 duration-500 hover:bg-left-top hover:shadow-[0_0_2rem_-0.75rem_#eab308] dark:hidden"
+          >
+            <div className="rounded-full bg-white/80 px-3 py-1">
+              <span className="relative flex items-center bg-gradient-to-r from-yellow-600 to-[#3178c6] bg-[length:420%_420%] bg-clip-text bg-right-bottom text-transparent duration-500 group-hover:bg-left-top">
+                <Sparkles className="absolute -left-1 top-0.5 h-5 w-5 translate-x-0.5 scale-50 stroke-yellow-500 opacity-0 duration-500" />
+                <Sparkle className="mr-2 h-4 w-4 stroke-[#3178c6] stroke-2 duration-500 group-hover:rotate-180 group-hover:scale-110 group-hover:stroke-yellow-600 " />{' '}
                 Star us on Github
               </span>
             </div>

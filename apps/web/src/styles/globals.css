@@ -316,17 +316,21 @@ main {
   }
 }
 
-@media (max-width: 768px) {
+/* portrait */
+@media (orientation: portrait) {
   .animate-beam {
     opacity: 0;
-    transform: translate(-150%, -120%) scale(0.5);
+    transform: translate(-62%, -40%) scale(0.5);
     animation: beam 2s 0.75s ease 1 forwards;
   }
+}
 
+/* tablet */
+@media (max-width: 1025px) {
   @keyframes beam {
     to {
       opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
+      transform: translate(-40%, -40%) scale(1);
     }
   }
 }
