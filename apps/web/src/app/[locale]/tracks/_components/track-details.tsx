@@ -1,4 +1,3 @@
-import { getServerAuthSession } from '@repo/auth/server';
 import Link from 'next/link';
 
 import { Swords } from '@repo/ui/icons';
@@ -23,11 +22,10 @@ export const BGS_BY_TRACK: Record<number, string> = {
 export const bgsArray = Object.values(BGS_BY_TRACK);
 
 export async function TrackDetail({ slug }: TrackDetailProps) {
-  const trackId = parseInt(slug);
-  const track = await getTrackDetails(trackId);
+  const track = await getTrackDetails(slug);
 
-  const trackChallenges = track?.trackChallenges ?? [];
-  const isEnrolled = Boolean(track?.enrolledUsers?.length);
+  const trackChallenges = track.trackChallenges ?? [];
+  const isEnrolled = Boolean(track.enrolledUsers?.length);
 
   const completedTrackChallenges = trackChallenges
     .filter((trackChallenge) => {
@@ -52,7 +50,7 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
         <div
           className={clsx(
             `bg-gradient-to-r from-neutral-500/10 from-10% ${
-              BGS_BY_TRACK[trackId % bgsArray.length]
+              BGS_BY_TRACK[track.id % bgsArray.length]
             } relative to-100% dark:from-neutral-500/20`,
             'flex h-24 w-24 flex-none items-center justify-center rounded-2xl',
           )}
@@ -67,16 +65,16 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
         </div>
         <div className="flex flex-col items-center space-y-2">
           <h1 className="text-center text-3xl font-bold tracking-tight text-neutral-900 dark:text-white">
-            {track?.title}
+            {track.name}
           </h1>
           <p className="text-md max-w-[69ch] text-center text-neutral-600 dark:text-white/50">
-            {track?.description}
+            {track.description}
           </p>
         </div>
         {isEnrolled ? (
-          <ActionButton action={unenrollUserFromTrack} trackId={trackId} text="Unenroll" />
+          <ActionButton action={unenrollUserFromTrack} trackId={track.id} text="Unenroll" />
         ) : (
-          <ActionButton action={enrollUserInTrack} trackId={trackId} text="Enroll" />
+          <ActionButton action={enrollUserInTrack} trackId={track.id} text="Enroll" />
         )}
       </div>
       {isEnrolled ? (
@@ -93,7 +91,7 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
             {trackChallenges.map((trackChallenge) => (
               <Link
                 key={trackChallenge.challenge.id}
-                href={`/challenge/${trackChallenge.challenge.id}`}
+                href={`/challenge/${trackChallenge.challenge.slug}`}
               >
                 <TrackChallenge
                   challenge={trackChallenge.challenge}

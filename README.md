@@ -8,7 +8,7 @@
   </a>
 </p>
 
-![typehero header](./media/og.png)
+![typehero header](./media/og-hub-banner.png)
 
 ### 👋 About Us
 
@@ -46,7 +46,18 @@ If you find the project interesting and want to support us please consider spons
     </td>
     <td>
       <a href="https://www.herodevs.com/" target="_parent">
-        <img src="./media/herodevs.svg" alt="HeroDevs Logo" title="HeroDevs" width="200">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="./media/herodevs-dark.png">
+          <img alt="HeroDevs Logo" src="./media/herodevs.png" width="200">
+        </picture>
+      </a>
+    </td>
+    <td>
+      <a href="https://www.uploadthing.com/" target="_parent">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="./media/uploadthing-logo-dark.svg">
+          <img alt="Uploadthing Logo" src="./media/uploadthing-logo.svg" width="200">
+        </picture>
       </a>
     </td>
   </tr>

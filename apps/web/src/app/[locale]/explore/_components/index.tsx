@@ -1,13 +1,23 @@
+import { getServerAuthSession } from '@repo/auth/server';
 import { Suspense } from 'react';
+import { Footsies } from '~/components/footsies';
 import { ExploreSection } from './explore-section';
 import { ExploreSectionSkeleton } from './explore-section-skeleton';
 import { getChallengesByTagOrDifficulty } from './explore.action';
-import { Footsies } from '~/components/footsies';
+import { isBetaUser } from '~/utils/server/is-beta-user';
+import { redirect } from 'next/navigation';
 
 // CI fails without this
 export const dynamic = 'force-dynamic';
 
 export async function Explore() {
+  const session = await getServerAuthSession();
+  const isBeta = await isBetaUser(session);
+
+  if (!isBeta) {
+    return redirect('/claim');
+  }
+
   return (
     <div className="flex flex-col gap-8 py-8 md:gap-10 md:py-10">
       <div className="container">
@@ -21,60 +31,33 @@ export async function Explore() {
         </p>
       </div>
       <Suspense fallback={<ExploreSectionSkeleton />}>
-        <ExploreSection
-          title="💕 Most Popular"
-          fetcher={getChallengesByTagOrDifficulty}
-          tag="POPULAR"
-          redirectRoute="/explore/popular"
-        />
+        <ExploreSection title="💕 Most Popular" tag="POPULAR" redirectRoute="/explore/popular" />
       </Suspense>
       <Suspense fallback={<ExploreSectionSkeleton />}>
-        <ExploreSection
-          title="🔥 Newest"
-          fetcher={getChallengesByTagOrDifficulty}
-          tag="NEWEST"
-          redirectRoute="/explore/newest"
-        />
+        <ExploreSection title="🔥 Newest" tag="NEWEST" redirectRoute="/explore/newest" />
       </Suspense>
       <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection
           title="Great for Beginners"
-          fetcher={getChallengesByTagOrDifficulty}
           tag="BEGINNER"
           redirectRoute="/explore/beginner"
         />
       </Suspense>
       <Suspense fallback={<ExploreSectionSkeleton />}>
-        <ExploreSection
-          title="Great for Learners"
-          fetcher={getChallengesByTagOrDifficulty}
-          tag="EASY"
-          redirectRoute="/explore/easy"
-        />
+        <ExploreSection title="Great for Learners" tag="EASY" redirectRoute="/explore/easy" />
       </Suspense>
       <Suspense fallback={<ExploreSectionSkeleton />}>
         <ExploreSection
           title="Great for Enthusiasts"
-          fetcher={getChallengesByTagOrDifficulty}
           tag="MEDIUM"
           redirectRoute="/explore/medium"
         />
       </Suspense>
       <Suspense fallback={<ExploreSectionSkeleton />}>
-        <ExploreSection
-          title="Great for Experts"
-          fetcher={getChallengesByTagOrDifficulty}
-          tag="HARD"
-          redirectRoute="/explore/hard"
-        />
+        <ExploreSection title="Great for Experts" tag="HARD" redirectRoute="/explore/hard" />
       </Suspense>
       <Suspense fallback={<ExploreSectionSkeleton />}>
-        <ExploreSection
-          title="Great for Masters"
-          fetcher={getChallengesByTagOrDifficulty}
-          tag="EXTREME"
-          redirectRoute="/explore/extreme"
-        />
+        <ExploreSection title="Great for Masters" tag="EXTREME" redirectRoute="/explore/extreme" />
       </Suspense>
       <Footsies />
     </div>

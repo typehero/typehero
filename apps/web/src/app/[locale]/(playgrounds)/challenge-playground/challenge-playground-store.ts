@@ -6,6 +6,7 @@ export const DEFAULT_VALUES = {
   challenge: {
     id: 1,
     code: 'type Foo = string;',
+    slug: 'some-slug',
     tests: '// test cases go here',
   },
 };

@@ -5,6 +5,7 @@ const usePanelAdjustments = (
   DEFAULT_DESKTOP_WIDTH_PX: string,
   LEFT_PANEL_BREAKPOINT: number,
   isDesktop: boolean,
+  isPlayground?: boolean,
 ) => {
   const leftSide = useRef<HTMLDivElement | null>(null);
 
@@ -24,13 +25,17 @@ const usePanelAdjustments = (
   const collapsePanel = useCallback(() => {
     if (!leftSide.current) return;
     if (isDesktop) {
-      leftSide.current.style.width = `${COLLAPSED_DESKTOP_WIDTH}px`;
-      leftSide.current.style.minWidth = `${COLLAPSED_DESKTOP_WIDTH}px`;
+      leftSide.current.style.width = `${isPlayground ? '0' : COLLAPSED_DESKTOP_WIDTH}px`;
+      leftSide.current.style.minWidth = `${isPlayground ? '0' : COLLAPSED_DESKTOP_WIDTH}px`;
     } else {
-      leftSide.current.style.height = `${COLLAPSED_MOBILE_HEIGHT}px`;
-      leftSide.current.style.minHeight = `${COLLAPSED_MOBILE_HEIGHT}px`;
+      leftSide.current.style.height = `${isPlayground ? '0' : COLLAPSED_MOBILE_HEIGHT}px`;
+      leftSide.current.style.minHeight = `${isPlayground ? '0' : COLLAPSED_MOBILE_HEIGHT}px`;
     }
-  }, [isDesktop]);
+
+    if (isPlayground) {
+      leftSide.current.style.opacity = '0%';
+    }
+  }, [isDesktop, isPlayground]);
 
   const isLeftPanelCollapsed = useCallback(() => {
     if (!leftSide.current) return false;

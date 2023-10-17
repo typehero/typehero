@@ -7,7 +7,7 @@ export function Grid() {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g opacity="0.08">
+      <g opacity="0.3">
         <path d="M-757.85 83.708H4648.3" stroke="white" stroke-width="3" stroke-dasharray="1 1" />
         <path d="M-757.85 237.22H4648.3" stroke="white" stroke-width="3" stroke-dasharray="1 1" />
         <path d="M-757.85 390.732H4648.3" stroke="white" stroke-width="3" stroke-dasharray="1 1" />
