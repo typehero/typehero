@@ -54,6 +54,7 @@
     "@repo/ui": "workspace:^",
     "@typescript/ata": "^0.9.4",
     "clsx": "^2.0.0",
+    "lodash": "^4.17.21",
     "lz-string": "^1.5.0",
     "monaco-vim": "^0.4.0",
     "next": "^13.5.4",

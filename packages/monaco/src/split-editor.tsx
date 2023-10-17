@@ -3,6 +3,7 @@
 import { type OnChange, type OnMount, type OnValidate } from '@monaco-editor/react';
 import { setupTypeAcquisition } from '@typescript/ata';
 import clsx from 'clsx';
+import debounce from 'lodash/debounce';
 import type * as monacoType from 'monaco-editor';
 import dynamic from 'next/dynamic';
 import { useEffect, useRef, useState } from 'react';
@@ -86,7 +87,6 @@ export default function SplitEditor({
   const [ata] = useState(() =>
     setupTypeAcquisition({
       projectName: 'TypeScript Playground',
-      // typescript: typeof import('typescript'),
       typescript: ts,
       logger: console,
       delegate: {
@@ -103,6 +103,8 @@ export default function SplitEditor({
       },
     }),
   );
+
+  const debouncedAta = useRef(debounce((code: string) => ata(code), 1000)).current;
 
   useEffect(() => {
     const resizerRef = resizer.current;
@@ -245,7 +247,7 @@ export default function SplitEditor({
               const model = monaco.editor.getModel(monaco.Uri.parse(USER_CODE_PATH));
               const code = model?.getValue();
               if (code) {
-                ata(code);
+                debouncedAta(code);
               }
             }
 
