@@ -1,0 +1,4 @@
+{
+  "id": "type-unions",
+  "prerequisites": ["type-aliases", "literal-types"]
+}

@@ -1,0 +1,4 @@
+{
+  "id": "pick",
+  "prerequisites": ["literal-types", "keyof", "mapped-object-types", "generic-type-constraints"]
+}
