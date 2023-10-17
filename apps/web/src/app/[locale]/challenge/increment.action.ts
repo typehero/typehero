@@ -9,6 +9,11 @@ export async function incrementOrDecrementUpvote(
   shouldIncrement: boolean,
 ) {
   const session = await getServerAuthSession();
+
+  if (!session) {
+    throw new Error('User not authenticated');
+  }
+
   const voteExists = await prisma.vote.findFirst({
     where: {
       rootType,
@@ -16,7 +21,7 @@ export async function incrementOrDecrementUpvote(
       commentId: rootType === 'COMMENT' ? id : undefined,
       sharedSolutionId: rootType === 'SHAREDSOLUTION' ? id : undefined,
       submissionId: rootType === 'SUBMISSION' ? id : undefined,
-      userId: session?.user.id,
+      userId: session?.user.id ?? '',
     },
   });
 
@@ -28,7 +33,7 @@ export async function incrementOrDecrementUpvote(
         commentId: rootType === 'COMMENT' ? id : undefined,
         sharedSolutionId: rootType === 'SHAREDSOLUTION' ? id : undefined,
         submissionId: rootType === 'SUBMISSION' ? id : undefined,
-        userId: session?.user.id,
+        userId: session.user.id,
       },
     });
   }

@@ -1,0 +1,4 @@
+{
+  "id": "indexed-types",
+  "prerequisites": ["primitive-types", "type-unions", "keyof", "literal-types"]
+}

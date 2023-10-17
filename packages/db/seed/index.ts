@@ -7,6 +7,7 @@ import UserMock from '../mocks/user.mock';
 
 const prisma = new PrismaClient();
 
+export const slugify = (str: string) => str.toLowerCase().replace(/\s/g, '-');
 const usersToBeMade = Array.from({ length: 15 }, () => UserMock());
 const alotOfSharedSolutions = (challengeId: number) =>
   Array.from({ length: 50 }, () => ({
@@ -72,7 +73,8 @@ for (const [index, track] of tracks.entries()) {
 
   const createdTrack = await prisma.track.create({
     data: {
-      title: track.name,
+      name: track.name,
+      slug: slugify(track.name),
       description: track.description,
       visible: true,
     },

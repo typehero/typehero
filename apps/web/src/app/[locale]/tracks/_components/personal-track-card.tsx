@@ -32,7 +32,7 @@ export function PersonalTrackCard({ track }: PersonalTrackCardProps) {
       )}
     >
       <CardHeader className="relative flex flex-col items-start gap-1 pb-0">
-        <CardTitle className="max-w-[90%] truncate text-xl duration-300">{track.title}</CardTitle>
+        <CardTitle className="max-w-[90%] truncate text-xl duration-300">{track.name}</CardTitle>
       </CardHeader>
       <CardContent className="relative flex flex-col justify-between gap-2 rounded-xl p-6 pb-0 duration-300">
         <CardDescription className="relative h-20 overflow-hidden pb-4">

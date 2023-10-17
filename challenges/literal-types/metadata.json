@@ -1,0 +1,4 @@
+{
+  "id": "literal-types",
+  "prerequisites": ["primitive-data-types", "type-unions"]
+}
