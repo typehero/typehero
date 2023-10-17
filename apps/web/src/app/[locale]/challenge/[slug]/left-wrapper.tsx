@@ -1,22 +1,32 @@
 'use client';
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui/components/tabs';
-import { FlaskConical, History, Text } from '@repo/ui/icons';
 import { usePathname, useRouter } from 'next/navigation';
-import { useMemo, type ReactNode, useRef, useState, useEffect } from 'react';
+import { useMemo, type ReactNode, useRef, useState, useEffect, useContext } from 'react';
+
+import { FeatureFlagContext } from '~/app/feature-flag-provider';
+import { ChallengeTrackNavigation } from '~/app/[locale]/challenge/_components/challenge-track-navigation';
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui/components/tabs';
+import { cn } from '@repo/ui/cn';
+import { FlaskConical, History, Text } from '@repo/ui/icons';
+
+import type { ChallengeRouteData } from './getChallengeRouteData';
 
 type Tab = 'description' | 'solutions' | 'submissions';
 interface Props {
   children: ReactNode;
-  slug: string;
+  challenge: ChallengeRouteData['challenge'];
+  track: ChallengeRouteData['track'];
   expandPanel: () => void;
   isDesktop: boolean;
 }
 
-export function LeftWrapper({ slug, children, expandPanel, isDesktop }: Props) {
+export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop }: Props) {
   const pathname = usePathname();
   const router = useRouter();
   const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const featureFlags = useContext(FeatureFlagContext);
 
   const isCollapsedRef = useRef(isCollapsed);
   const isDesktopRef = useRef(isDesktop);
@@ -81,62 +91,92 @@ export function LeftWrapper({ slug, children, expandPanel, isDesktop }: Props) {
     return 'description';
   }, [pathname]);
 
+  // Hide the enrolled track when in collapsed mobile view.
+  const isTrackFeatureEnabled = featureFlags?.enableInChallengeTrack;
+  const hasEnrolledTrackForChallenge = track !== null;
+  const isTrackVisible =
+    isTrackFeatureEnabled && hasEnrolledTrackForChallenge && (!isCollapsed || isDesktop);
+
+  const isIconOnly = isCollapsed && isDesktop;
+
   return (
-    <Tabs
-      ref={tabsRef}
-      className="flex h-full w-full flex-col overflow-hidden"
-      defaultValue={selectedTab}
-    >
-      <TabsList
-        className={`bg-background/90 dark:bg-muted/90 sticky top-0 z-10 grid h-auto w-full rounded-none rounded-tl-2xl rounded-tr-xl border-b border-zinc-300 backdrop-blur-sm dark:border-zinc-700 ${
-          isCollapsed
-            ? isDesktop
-              ? 'grid-rows-3 gap-2'
-              : 'grid-cols-3 gap-0.5'
-            : 'grid-cols-3 gap-0.5'
-        }`}
-        ref={tabsListRef}
+    <div className="flex h-full w-full flex-col">
+      {Boolean(isTrackVisible) && (
+        <ChallengeTrackNavigation
+          challenge={challenge}
+          track={track}
+          isCollapsed={isCollapsed}
+          className={cn('border-b border-zinc-300 p-1 dark:border-zinc-700')}
+        />
+      )}
+      <Tabs
+        ref={tabsRef}
+        className="flex h-full w-full flex-col overflow-hidden"
+        defaultValue={selectedTab}
       >
-        <TabsTrigger
-          className={`rounded-md rounded-tl-xl duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700 ${
-            isCollapsed ? (isDesktop ? 'rounded-r-lg py-4' : 'rounded-bl-xl') : ''
-          }`}
-          onClick={() => {
-            router.push(`/challenge/${slug}`);
-            expandPanel();
-          }}
-          value="description"
+        <TabsList
+          className={cn(
+            'bg-background/90 dark:bg-muted/90 sticky top-0 z-10 grid h-auto w-full rounded-none rounded-tl-2xl rounded-tr-xl border-b border-zinc-300 backdrop-blur-sm dark:border-zinc-700',
+            {
+              'grid-rows-3 gap-2': isIconOnly,
+              'grid-cols-3 gap-0.5': !isIconOnly,
+              'rounded-tl-xl': !isTrackVisible,
+            },
+          )}
+          ref={tabsListRef}
         >
-          {isCollapsed && isDesktop ? <Text className="h-4 w-4" /> : 'Description'}
-        </TabsTrigger>
-        <TabsTrigger
-          className={`rounded-md duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700 ${
-            isCollapsed && isDesktop ? 'py-4' : ''
-          }`}
-          onClick={() => {
-            router.push(`/challenge/${slug}/solutions`);
-            expandPanel();
-          }}
-          value="solutions"
+          <TabsTrigger
+            className={cn(
+              'rounded-md duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700',
+              {
+                'p-4': isIconOnly,
+                'rounded-tl-xl': !isTrackVisible,
+                'rounded-bl-xl': isCollapsed && !isDesktop,
+              },
+            )}
+            onClick={() => {
+              router.push(`/challenge/${challenge.slug}`);
+              expandPanel();
+            }}
+            value="description"
+          >
+            {isIconOnly ? <Text className="h-4 w-4" /> : 'Description'}
+          </TabsTrigger>
+          <TabsTrigger
+            className={cn(
+              'rounded-md duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700',
+              { 'p-4': isIconOnly },
+            )}
+            onClick={() => {
+              router.push(`/challenge/${challenge.slug}/solutions`);
+              expandPanel();
+            }}
+            value="solutions"
+          >
+            {isIconOnly ? <FlaskConical className="h-4 w-4" /> : 'Solutions'}
+          </TabsTrigger>
+          <TabsTrigger
+            className={cn(
+              'rounded-md rounded-tr-lg duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700',
+              { 'p-4': isIconOnly },
+            )}
+            onClick={() => {
+              router.push(`/challenge/${challenge.slug}/submissions`);
+              expandPanel();
+            }}
+            value="submissions"
+          >
+            {isIconOnly ? <History className="h-4 w-4" /> : 'Submissions'}
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent
+          className="mt-0 h-[calc(100%_-_44px)]"
+          value={selectedTab}
+          ref={tabsContentRef}
         >
-          {isCollapsed && isDesktop ? <FlaskConical className="h-4 w-4" /> : 'Solutions'}
-        </TabsTrigger>
-        <TabsTrigger
-          className={`rounded-md rounded-tr-lg duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700 ${
-            isCollapsed ? (isDesktop ? 'rounded-md py-4' : 'rounded-br-xl') : ''
-          }`}
-          onClick={() => {
-            router.push(`/challenge/${slug}/submissions`);
-            expandPanel();
-          }}
-          value="submissions"
-        >
-          {isCollapsed && isDesktop ? <History className="h-4 w-4" /> : 'Submissions'}
-        </TabsTrigger>
-      </TabsList>
-      <TabsContent className="mt-0 h-[calc(100%_-_41px)]" value={selectedTab} ref={tabsContentRef}>
-        {children}
-      </TabsContent>
-    </Tabs>
+          {children}
+        </TabsContent>
+      </Tabs>
+    </div>
   );
 }

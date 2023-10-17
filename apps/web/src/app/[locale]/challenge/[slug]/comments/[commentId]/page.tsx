@@ -13,7 +13,7 @@ interface Props {
 
 export default async function CommentPage({ params: { slug, commentId } }: Props) {
   const session = await getServerAuthSession();
-  const challenge = await getChallengeRouteData(slug, session);
+  const { challenge } = await getChallengeRouteData(slug, session);
   const preselectedCommentMetadata = await getPreselectedCommentMetadata(
     challenge.id,
     Number(commentId),

@@ -8,7 +8,7 @@ export const createChallengeSubmissionCacheKey = (slug: string) => {
   return `${slug}-challenge-submissions`;
 };
 interface Args {
-  challenge: ChallengeRouteData;
+  challenge: ChallengeRouteData['challenge'];
   userId: string;
   code: string;
   isSuccessful: boolean;

@@ -28,7 +28,7 @@ import { Markdown } from '@repo/ui/components/markdown';
 import { Button } from '@repo/ui/components/button';
 
 interface Props {
-  challenge: ChallengeRouteData;
+  challenge: ChallengeRouteData['challenge'];
 }
 
 export interface FormValues {

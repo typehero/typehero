@@ -11,7 +11,11 @@ import type { ChallengeRouteData } from './getChallengeRouteData';
 import { SubmissionOverview } from './submissions/[[...catchAll]]/_components/overview';
 import { saveSubmission } from './submissions/[[...catchAll]]/save-submission.action';
 
-export function Wrapper({ challenge }: { challenge: ChallengeRouteData }) {
+interface Props {
+  challenge: ChallengeRouteData['challenge'];
+}
+
+export function Wrapper({ challenge }: Props) {
   const segments = useSelectedLayoutSegments();
   const { data: session } = useSession();
 

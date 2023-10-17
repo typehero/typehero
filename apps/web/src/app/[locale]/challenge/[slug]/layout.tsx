@@ -1,7 +1,9 @@
+import { ChallengeLayoutWrapper } from '~/app/[locale]/challenge/_components/challenge-layout-wrapper';
+
 import { getServerAuthSession } from '@repo/auth/server';
-import { ChallengeLayoutWrapper } from '../_components/challenge-layout-wrapper';
-import { getChallengeRouteData } from './getChallengeRouteData';
 import { ForceRenderUntilClient } from '@repo/ui/components/force-render-until-client';
+
+import { getChallengeRouteData } from './getChallengeRouteData';
 
 export default async function LayoutData({
   children,
@@ -11,11 +13,13 @@ export default async function LayoutData({
   params: { slug: string };
 }) {
   const session = await getServerAuthSession();
-  const challenge = await getChallengeRouteData(slug, session);
+  const { challenge, track } = await getChallengeRouteData(slug, session);
 
   return (
     <ForceRenderUntilClient>
-      <ChallengeLayoutWrapper challenge={challenge}>{children}</ChallengeLayoutWrapper>
+      <ChallengeLayoutWrapper challenge={challenge} track={track}>
+        {children}
+      </ChallengeLayoutWrapper>
     </ForceRenderUntilClient>
   );
 }

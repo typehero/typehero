@@ -14,7 +14,7 @@ interface Props {
 }
 
 export async function generateMetadata({ params: { slug } }: Props) {
-  const challenge = await getChallengeRouteData(slug, null);
+  const { challenge } = await getChallengeRouteData(slug, null);
   const description = `Unlock your TypeScript potential by solving the ${challenge.name} challenge on TypeHero.`;
 
   return buildMetaForChallenge({
@@ -27,7 +27,7 @@ export async function generateMetadata({ params: { slug } }: Props) {
 }
 
 export default async function Challenges({ params: { slug } }: Props) {
-  // early acces you must be authorized
+  // early access you must be authorized
   const session = await getServerAuthSession();
   const isBeta = await isBetaUser(session);
 
@@ -35,7 +35,7 @@ export default async function Challenges({ params: { slug } }: Props) {
     return redirect('/claim');
   }
 
-  const challenge = await getChallengeRouteData(slug, session);
+  const { challenge } = await getChallengeRouteData(slug, session);
 
   return (
     <div className="relative h-full ">
