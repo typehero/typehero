@@ -20,7 +20,7 @@ export function LoginButton({ redirectTo }: { redirectTo: string }) {
 
   return (
     <Button disabled={state === 'pending'} variant="outline" onClick={handleSignIn}>
-      Github
+      GitHub
     </Button>
   );
 }

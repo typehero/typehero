@@ -27,8 +27,8 @@ body:
         - Build Built In Utility Types
         - For The Experts
         - JS Built In Methods
-        - Understanding Typescript Syntax
-        - Typescript Foundations(unions|extends|infer|etc)
+        - Understanding TypeScript Syntax
+        - TypeScript Foundations(unions|extends|infer|etc)
   - type: textarea
     id: description
     attributes:
