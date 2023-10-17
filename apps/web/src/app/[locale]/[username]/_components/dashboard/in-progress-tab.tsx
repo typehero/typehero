@@ -31,7 +31,7 @@ export async function InProgressTab({ userId }: { userId: string }) {
         {challenges.map((challenge) => (
           <TableRow key={challenge.id}>
             <TableCell className="font-medium underline">
-              <Link href={`/challenge/${challenge.id}`}>{challenge.name}</Link>
+              <Link href={`/challenge/${challenge.slug}`}>{challenge.name}</Link>
             </TableCell>
             <TableCell>{getRelativeTime(challenge.submission[0]!.createdAt)}</TableCell>
           </TableRow>
@@ -59,6 +59,7 @@ async function getInProgressChallenges(userId: string) {
     },
     select: {
       id: true,
+      slug: true,
       name: true,
       submission: {
         orderBy: {
