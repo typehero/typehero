@@ -244,32 +244,6 @@ main {
   @apply mx-auto max-w-[1400px] px-4 md:px-24;
 }
 
-/* overrides a conflicting style on the honeycomb grid */
-.honeycomboverride > *:first-child {
-  margin-left: 2.375rem /* 38px */ !important;
-}
-
-@media (min-width: 1025px) {
-  .honeycomboverride > *:first-child {
-    margin-left: -4.75rem !important;
-  }
-  .honeycomboverride > *:nth-child(9) {
-    margin-left: -2.375rem !important;
-  }
-  .honeycomboverride > *:nth-child(14) {
-    margin-left: 0rem !important;
-  }
-  .honeycomboverride > *:nth-child(23) {
-    margin-left: 2.375rem !important;
-  }
-  .honeycomboverride > *:nth-child(23) {
-    margin-left: 2.375rem !important;
-  }
-  .honeycomboverride > *:nth-child(13n + 23) {
-    margin-left: 2.375rem !important;
-  }
-}
-
 @property --gradient-angle {
   syntax: '<angle>'; /* <- defined as type angle for the transition to work */
   initial-value: 360deg;
@@ -525,4 +499,46 @@ main {
 
 a {
   @apply focus:outline-none focus-visible:ring-2;
+}
+
+.infinite-scroll-x-container {
+  overflow: hidden;
+  mask: linear-gradient(to right, transparent, white 20%, white 80%, transparent);
+  -webkit-mask: linear-gradient(to right, transparent, white 20%, white 80%, transparent);
+}
+.infinite-scroll-x {
+  animation: infinite-scroll-x 120s linear infinite;
+}
+
+.infinite-scroll-x-reverse {
+  animation: infinite-scroll-x 120s linear infinite reverse;
+}
+
+.infinite-scroll-x:hover,
+.infinite-scroll-x-reverse:hover {
+  animation-play-state: paused;
+}
+
+@keyframes infinite-scroll-x {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (min-width: 1280px) {
+  .honeycomboverride > *:first-child {
+    margin-left: -4.75rem !important;
+  }
+  .honeycomboverride > *:nth-child(8) {
+    margin-left: 0rem !important;
+  }
+  .honeycomboverride > *:nth-child(10) {
+    margin-left: -2.375rem !important;
+  }
+  .honeycomboverride > *:nth-child(26) {
+    margin-left: 2.375rem !important;
+  }
+  .honeycomboverride > *:nth-child(15n + 26) {
+    margin-left: 2.375rem !important;
+  }
 }
