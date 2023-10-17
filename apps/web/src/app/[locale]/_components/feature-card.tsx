@@ -436,7 +436,7 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
           <Image
             className={clsx({ amoguwusus: inView }, 'opacity-0')}
             alt="amoguwuawa"
-            src="/Red.webp"
+            src="/skeleton.png"
             height="198"
             width="150"
           />
