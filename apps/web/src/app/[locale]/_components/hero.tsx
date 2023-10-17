@@ -157,12 +157,12 @@ export async function Hero() {
             target="_blank"
             rel="noreferrer"
             href="https://github.com/typehero/typehero"
-            className="animate-bg-gradient-to-center group rounded-full bg-gradient-to-r from-yellow-600 via-[#FFB800] to-[#FFB800] to-70% bg-[length:420%_420%] bg-right-bottom p-[1px] contrast-150 duration-500 hover:bg-left-top hover:shadow-[0_0_2rem_-0.5rem_#FFB800] dark:from-yellow-500 dark:via-white dark:to-[#FFB800]  dark:contrast-100 dark:hover:shadow-[0_0_2rem_-0.5rem_#fff8]"
+            className="animate-bg-gradient-to-center group rounded-full bg-gradient-to-r from-yellow-600 via-[#DD8800] to-[#DD8800] to-70% bg-[length:420%_420%] bg-right-bottom p-[1px] contrast-150 duration-500 hover:bg-left-top hover:shadow-[0_0_2rem_-0.5rem_#DD8800] dark:from-yellow-500 dark:via-white dark:to-[#FFB800]  dark:contrast-100 dark:hover:shadow-[0_0_2rem_-0.5rem_#fff8]"
           >
             <div className="rounded-full bg-white/80 px-3 py-1 dark:bg-black/80">
               <span className="animate-bg-gradient-to-center relative flex items-center bg-gradient-to-r to-70% bg-[length:420%_420%] bg-clip-text bg-right-bottom text-transparent duration-500 group-hover:bg-left-top dark:from-yellow-500 dark:via-white dark:to-[#FFB800]">
                 <Sparkle className="animate-oldstar absolute  -left-1 top-0.5 mr-2 h-5 w-5 translate-x-0.5 stroke-[#FFB800] stroke-2 duration-500 group-hover:rotate-180 group-hover:scale-110 group-hover:stroke-yellow-600 dark:duration-500  " />
-                <Sparkle className="animate-newstar mr-2 h-4 w-4 stroke-[#FFB800] stroke-2 duration-500 group-hover:rotate-180 group-hover:scale-110 group-hover:fill-[#FFB800] dark:stroke-white dark:duration-500 dark:group-hover:fill-white" />{' '}
+                <Sparkle className="animate-newstar mr-2 h-4 w-4 stroke-[#DD8800] stroke-2 duration-500 group-hover:rotate-180 group-hover:scale-110 group-hover:fill-[#FFB800] dark:stroke-white dark:duration-500 dark:group-hover:fill-white" />{' '}
                 Star us on Github
               </span>
             </div>
