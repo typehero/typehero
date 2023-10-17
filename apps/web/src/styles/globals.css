@@ -521,8 +521,3 @@ main {
 a {
   @apply focus:outline-none focus-visible:ring-2;
 }
-
-.gridmask {
-  mask: radial-gradient(#fff 50%, transparent 80%);
-  -webkit-mask: radial-gradient(#fff 50%, transparent 80%);
-}
