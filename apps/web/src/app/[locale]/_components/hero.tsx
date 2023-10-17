@@ -10,32 +10,32 @@ function TypeHeroLogo3D() {
     <svg
       className="animate-logo-light h-28 w-28 sm:h-44 sm:w-44"
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 638 638"
+      viewBox="0 0 633 633"
       fill="none"
     >
-      <g className="hidden dark:block" filter="url(#filter0_ii_284_103)">
-        <rect width="637.029" height="637.029" rx="68.1096" fill="#3178C6" />
+      <g filter="url(#filter0_ii_1050_32)">
+        <path
+          d="M0 74.9605C0 33.561 33.561 0 74.9605 0H558.039C599.439 0 633 33.561 633 74.9605V558.039C633 599.439 599.439 633 558.039 633H74.9605C33.561 633 0 599.439 0 558.039V74.9605Z"
+          fill="#3178C6"
+        />
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M261.441 348.724H333.158V299.842H133.263V348.724H204.629V566.368H261.441V348.724Z"
+          fill="white"
+        />
+        <path
+          d="M366.474 566.368V299.842H423.962V410.298H508.741V299.842H566.368V566.368H508.741V455.523H423.962V566.368H366.474Z"
+          fill="white"
+        />
       </g>
-      <g className="block dark:hidden">
-        <rect width="637.029" height="637.029" rx="68.1096" fill="#3178C6" />
-      </g>
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M243.77 314.169H318.615V288.585V263H110V314.169H184.479V542H243.77V314.169Z"
-        fill="white"
-      />
-      <path
-        d="M353.385 542V263H413.381V378.626H501.858V263H562V542H501.858V425.967H413.381V542H353.385Z"
-        fill="white"
-      />
       <defs>
         <filter
-          id="filter0_ii_284_103"
+          id="filter0_ii_1050_32"
           x="-49"
           y="-49"
-          width="736.029"
-          height="736.029"
+          width="732"
+          height="732"
           filterUnits="userSpaceOnUse"
           colorInterpolationFilters="sRGB"
         >
@@ -51,7 +51,7 @@ function TypeHeroLogo3D() {
           <feGaussianBlur stdDeviation="74.5" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
           <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0" />
-          <feBlend mode="normal" in2="shape" result="effect1_innerShadow_284_103" />
+          <feBlend mode="normal" in2="shape" result="effect1_innerShadow_1050_32" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -64,8 +64,8 @@ function TypeHeroLogo3D() {
           <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.12 0" />
           <feBlend
             mode="normal"
-            in2="effect1_innerShadow_284_103"
-            result="effect2_innerShadow_284_103"
+            in2="effect1_innerShadow_1050_32"
+            result="effect2_innerShadow_1050_32"
           />
         </filter>
       </defs>
