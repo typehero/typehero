@@ -14,6 +14,7 @@ export function Community() {
   const innerScrollerRef = useRef<HTMLDivElement | null>(null);
   const innerScrollerRef2 = useRef<HTMLDivElement | null>(null);
   const innerScrollerRef3 = useRef<HTMLDivElement | null>(null);
+  const innerScrollerRef4 = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (innerScrollerRef.current) {
@@ -38,6 +39,14 @@ export function Community() {
         const duplicatedNode = child.cloneNode(true) as HTMLElement;
         duplicatedNode.setAttribute('aria-hidden', 'true');
         innerScrollerRef3.current!.appendChild(duplicatedNode);
+      });
+    }
+    if (innerScrollerRef4.current) {
+      const scrollerContent = Array.from(innerScrollerRef4.current.children) as HTMLElement[];
+      scrollerContent.forEach((child) => {
+        const duplicatedNode = child.cloneNode(true) as HTMLElement;
+        duplicatedNode.setAttribute('aria-hidden', 'true');
+        innerScrollerRef4.current!.appendChild(duplicatedNode);
       });
     }
   }, []);
@@ -135,13 +144,13 @@ export function Community() {
               </div>
             </div>
             {/* autoscrolled */}
-            <div className="pb-36 lg:pb-0 lg:pl-8 xl:hidden">
+            <div className="pb-16 lg:pb-0 lg:pl-8 xl:hidden">
               <div className="infinite-scroll-x-container mx-auto hover:shadow-[0_0_10rem_10rem_#fff8] dark:hover:shadow-[0_0_10rem_10rem_#0008] lg:w-[25rem] xl:w-[35rem]">
                 <div
                   ref={innerScrollerRef}
                   className="infinite-scroll-x relative flex w-max flex-nowrap py-1.5"
                 >
-                  {contributors.slice(0, contributors.length / 3).map((contributor) => (
+                  {contributors.slice(0, contributors.length / 4).map((contributor) => (
                     <Contributor contributor={contributor} key={contributor.id} />
                   ))}
                 </div>
@@ -152,7 +161,7 @@ export function Community() {
                   className="infinite-scroll-x-reverse relative flex w-max flex-nowrap py-1.5"
                 >
                   {contributors
-                    .slice(contributors.length / 3, (contributors.length / 3) * 2)
+                    .slice(contributors.length / 4, (contributors.length / 4) * 2)
                     .map((contributor) => (
                       <Contributor contributor={contributor} key={contributor.id} />
                     ))}
@@ -164,7 +173,19 @@ export function Community() {
                   className="infinite-scroll-x relative flex w-max flex-nowrap py-1.5"
                 >
                   {contributors
-                    .slice((contributors.length / 3) * 2, contributors.length)
+                    .slice((contributors.length / 4) * 2, (contributors.length / 4) * 3)
+                    .map((contributor) => (
+                      <Contributor contributor={contributor} key={contributor.id} />
+                    ))}
+                </div>
+              </div>
+              <div className="infinite-scroll-x-container mx-auto hover:shadow-[0_0_10rem_10rem_#fff8] dark:hover:shadow-[0_0_10rem_10rem_#0008] lg:w-[25rem] xl:w-[35rem]">
+                <div
+                  ref={innerScrollerRef4}
+                  className="infinite-scroll-x-reverse relative flex w-max flex-nowrap py-1.5"
+                >
+                  {contributors
+                    .slice((contributors.length / 4) * 3, contributors.length)
                     .map((contributor) => (
                       <Contributor contributor={contributor} key={contributor.id} />
                     ))}
