@@ -16,7 +16,7 @@ import {
   VerticalTabsList,
   VerticalTabsTrigger,
 } from '@repo/ui/components/tabs';
-import { Bookmark, ChevronRightSquare, Play, Settings } from '@repo/ui/icons';
+import { Bookmark, ChevronRightSquare, Play, Settings, Text } from '@repo/ui/icons';
 
 import { getRelativeTime } from '~/utils/relativeTime';
 import { stripProtocolAndWWW } from '~/utils/stringUtils';
@@ -62,7 +62,7 @@ export async function Dashboard({ user }: Props) {
               </span>
             </div>
             {Boolean(filteredProfileLinks.length > 0) && (
-              <div className="flex w-full flex-col gap-2">
+              <div className="flex w-full flex-col items-center gap-2 md:items-start">
                 {filteredProfileLinks.map((link) => (
                   <div className="flex items-center gap-2" key={link.id}>
                     <MagicIcon url={link.url} />
@@ -83,7 +83,7 @@ export async function Dashboard({ user }: Props) {
                 className="flex items-center justify-center gap-3 px-2 md:justify-normal md:px-3"
                 value="overview"
               >
-                <Play className="h-4 w-4" />
+                <Text className="h-4 w-4" />
                 <span className="hidden md:block">Overview</span>
               </VerticalTabsTrigger>
               {Boolean(isOwnProfile) && (
