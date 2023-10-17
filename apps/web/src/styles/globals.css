@@ -303,6 +303,91 @@ main {
   animation: gradient-rotate 5s linear infinite reverse;
 }
 
+.animate-beam {
+  opacity: 0;
+  transform: translate(-72%, -62%) scale(0.5);
+  animation: beam 2s 0.75s ease 1 forwards;
+}
+
+@keyframes beam {
+  to {
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
+  }
+}
+
+/* portrait */
+@media (orientation: portrait) {
+  .animate-beam {
+    opacity: 0;
+    transform: translate(-62%, -40%) scale(0.5);
+    animation: beam 2s 0.75s ease 1 forwards;
+  }
+}
+
+/* tablet */
+@media (max-width: 1025px) {
+  @keyframes beam {
+    to {
+      opacity: 1;
+      transform: translate(-40%, -40%) scale(1);
+    }
+  }
+}
+
+.animate-newstar {
+  opacity: 0;
+  animation: newstar 1.5s 0.95s ease 1 forwards;
+}
+.animate-oldstar {
+  opacity: 1;
+  animation: oldstar 1.5s 0.95s ease 1 forwards;
+}
+
+@keyframes newstar {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes oldstar {
+  to {
+    opacity: 0;
+  }
+}
+
+.animate-bg-gradient-to-center {
+  animation: bg-to-center 1s 0.75s ease 1 forwards;
+}
+.animate-bg-gradient-to-center-title {
+  animation: bg-to-center 1s 0.95s ease 1 forwards;
+}
+
+@keyframes bg-to-center {
+  to {
+    background-position: center;
+  }
+}
+
+.animate-logo-light {
+  filter: brightness(90%);
+  animation: logo-light 1.25s 0.85s ease 1 forwards;
+}
+@keyframes logo-light {
+  to {
+    filter: brightness(110%);
+  }
+}
+
+.animate-3d-logo {
+  opacity: 0.1;
+  animation: logo-3d 1.25s 0.85s ease 1 forwards;
+}
+@keyframes logo-3d {
+  to {
+    opacity: 1;
+  }
+}
+
 @keyframes gradient-rotate {
   0% {
     --gradient-angle: 360deg;
