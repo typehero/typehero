@@ -8,12 +8,44 @@ import { getScopedI18n } from '~/locales/server';
 function TypeHeroLogo3D() {
   return (
     <svg
-      className="animate-logo-light h-28 w-28 sm:h-44 sm:w-44"
+      className="h-28 w-28 sm:h-44 sm:w-44"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 633 633"
       fill="none"
     >
-      <g filter="url(#filter0_ii_1050_32)">
+      <g className="block dark:hidden">
+        <path
+          d="M0 74.9605C0 33.561 33.561 0 74.9605 0H558.039C599.439 0 633 33.561 633 74.9605V558.039C633 599.439 599.439 633 558.039 633H74.9605C33.561 633 0 599.439 0 558.039V74.9605Z"
+          fill="#3178C6"
+        />
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M261.441 348.724H333.158V299.842H133.263V348.724H204.629V566.368H261.441V348.724Z"
+          fill="white"
+        />
+        <path
+          d="M366.474 566.368V299.842H423.962V410.298H508.741V299.842H566.368V566.368H508.741V455.523H423.962V566.368H366.474Z"
+          fill="white"
+        />
+      </g>
+      <g className="animate-logo-light hidden dark:block">
+        <path
+          d="M0 74.9605C0 33.561 33.561 0 74.9605 0H558.039C599.439 0 633 33.561 633 74.9605V558.039C633 599.439 599.439 633 558.039 633H74.9605C33.561 633 0 599.439 0 558.039V74.9605Z"
+          fill="#3178C6"
+        />
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M261.441 348.724H333.158V299.842H133.263V348.724H204.629V566.368H261.441V348.724Z"
+          fill="white"
+        />
+        <path
+          d="M366.474 566.368V299.842H423.962V410.298H508.741V299.842H566.368V566.368H508.741V455.523H423.962V566.368H366.474Z"
+          fill="white"
+        />
+      </g>
+      <g className="animate-3d-logo hidden  dark:block" filter="url(#filter0_ii_1050_32)">
         <path
           d="M0 74.9605C0 33.561 33.561 0 74.9605 0H558.039C599.439 0 633 33.561 633 74.9605V558.039C633 599.439 599.439 633 558.039 633H74.9605C33.561 633 0 599.439 0 558.039V74.9605Z"
           fill="#3178C6"
@@ -75,27 +107,27 @@ function TypeHeroLogo3D() {
 function BeamOfLight() {
   return (
     <svg
-      className="animate-beam pointer-events-none absolute left-0 top-0 z-[-1] h-[69%] w-full sm:w-[69%] lg:w-[42%]"
-      viewBox="0 0 2378 1682"
-      fill="none"
+      className="animate-beam pointer-events-none absolute left-0 top-0 z-[-1] h-[138%] w-[138%] lg:w-[84%]"
       xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 3787 2842"
+      fill="none"
     >
-      <g filter="url(#filter0_f_791_106)">
+      <g filter="url(#filter0_f_1065_8)">
         <ellipse
           cx="1924.71"
           cy="273.501"
           rx="1924.71"
           ry="273.501"
-          transform="matrix(-0.822377 -0.568943 -0.568943 0.822377 2222.88 1131.09)"
+          transform="matrix(-0.822377 -0.568943 -0.568943 0.822377 3631.88 2291.09)"
           fill="white"
           fillOpacity="0.21"
         />
       </g>
       <defs>
         <filter
-          id="filter0_f_791_106"
-          x="-1408.14"
-          y="-1159.16"
+          id="filter0_f_1065_8"
+          x="0.860352"
+          y="0.838989"
           width="3785.16"
           height="2840.26"
           filterUnits="userSpaceOnUse"
@@ -103,7 +135,7 @@ function BeamOfLight() {
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-          <feGaussianBlur stdDeviation="151" result="effect1_foregroundBlur_791_106" />
+          <feGaussianBlur stdDeviation="151" result="effect1_foregroundBlur_1065_8" />
         </filter>
       </defs>
     </svg>
@@ -118,8 +150,8 @@ export async function Hero() {
       <div className="absolute inset-10 -z-30 overflow-hidden rounded-full opacity-70 lg:hidden">
         <BackgroundGrid />
       </div>
-      <BeamOfLight />
-      <div className="container grid min-h-screen items-center justify-center lg:min-h-0 lg:grid-cols-2">
+      <div className="container relative grid min-h-screen items-center justify-center lg:min-h-0 lg:grid-cols-2">
+        <BeamOfLight />
         <div className="flex w-full flex-col items-center justify-center gap-10 lg:items-start">
           <a
             target="_blank"
@@ -130,7 +162,7 @@ export async function Hero() {
             <div className="rounded-full bg-white/80 px-3 py-1 dark:bg-black/80">
               <span className="animate-bg-gradient-to-center relative flex items-center bg-gradient-to-r from-yellow-600 via-black to-[#3178c6] to-70% bg-[length:420%_420%] bg-clip-text bg-right-bottom text-transparent duration-500 group-hover:bg-left-top dark:from-yellow-500 dark:via-white dark:to-[#3178c6]">
                 <Sparkles className="absolute -left-1 top-0.5 h-5 w-5 translate-x-0.5 scale-50 stroke-yellow-500 opacity-0 duration-500 dark:group-hover:rotate-[125deg] dark:group-hover:scale-100 dark:group-hover:opacity-100" />
-                <Sparkle className="animate-star mr-2 h-4 w-4 stroke-2 duration-500 group-hover:rotate-180 group-hover:scale-110 group-hover:stroke-yellow-600 dark:duration-500 dark:group-hover:scale-[2] dark:group-hover:opacity-0" />{' '}
+                <Sparkle className=" mr-2 h-4 w-4 stroke-white stroke-2 duration-500 group-hover:rotate-180 group-hover:scale-110 group-hover:stroke-yellow-600 dark:duration-500 dark:group-hover:scale-[2] dark:group-hover:opacity-0" />{' '}
                 Star us on Github
               </span>
             </div>
@@ -139,7 +171,7 @@ export async function Hero() {
             <div className="absolute left-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-x-[15%] -translate-y-[50%] rounded-full bg-slate-400/10 blur-3xl dark:block" />
             <div className="absolute right-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-y-[40%] rounded-full bg-[#3178c6]/20 blur-3xl dark:block" />
             <TypeHeroLogo3D />
-            <h1 className="animate-bg-gradient-to-center-title dark:to-69% bg-gradient-to-br from-[#3178c6] from-[69%] to-black/0 bg-[length:200%_200%] bg-clip-text bg-right-bottom text-6xl font-extrabold text-transparent dark:from-white dark:from-0% dark:to-[#3178c6] sm:text-8xl sm:leading-[5.5rem]">
+            <h1 className="animate-bg-gradient-to-center-title dark:to-69% bg-gradient-to-br from-[#3178c6] from-[69%] to-black/0 bg-clip-text bg-right-bottom text-6xl font-extrabold text-transparent dark:from-white dark:from-30% dark:via-[#3178c6] dark:to-[#3178c6] dark:bg-[length:300%_300%] sm:text-8xl sm:leading-[5.5rem]">
               type
               <br />
               hero

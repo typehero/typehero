@@ -45,12 +45,12 @@ export function Navigation() {
           <div className="flex w-full items-center justify-between">
             <div className="relative flex items-center gap-3">
               <Link
-                className="flex items-center space-x-2 focus:outline-none focus-visible:ring-2"
+                className="flex items-center space-x-1.5 focus:outline-none focus-visible:ring-2"
                 href="/"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 rounded-md"
+                  className="h-6 w-6"
                   viewBox="0 0 38 38"
                   fill="none"
                 >
