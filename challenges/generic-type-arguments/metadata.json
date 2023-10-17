@@ -1,0 +1,4 @@
+{
+  "id": "generic-type-arguments",
+  "prerequisites": ["primitive-data-types", "type-aliases"]
+}

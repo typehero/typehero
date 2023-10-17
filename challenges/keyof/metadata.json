@@ -1,0 +1,4 @@
+{
+  "id": "keyof",
+  "prerequisites": ["type-aliases", "literal-types", "type-unions"]
+}

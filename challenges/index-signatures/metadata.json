@@ -1,0 +1,4 @@
+{
+  "id": "index-signatures",
+  "prerequisites": ["type-aliases", "primitive-data-types"]
+}
