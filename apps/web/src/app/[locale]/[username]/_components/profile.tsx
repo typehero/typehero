@@ -34,5 +34,6 @@ export async function Profile({ username: usernameFromQuery }: Props) {
   });
 
   if (!user) return notFound();
+
   return <Dashboard user={user} />;
 }
