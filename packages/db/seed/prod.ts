@@ -1,8 +1,13 @@
-import { PrismaClient } from '@prisma/client';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import uuidByString from 'uuid-by-string';
-import { loadChallengesFromTypeChallenge } from '../mocks/challenges.mock';
+import { prisma } from '../src';
+import { ingestChallenges } from './data/challenge-ingest';
 
-const prisma = new PrismaClient();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const challengePath = path.join(__dirname, '../../../challenges');
 
 export const slugify = (str: string) => str.toLowerCase().replace(/\s/g, '-');
 const TYPE_CHALLENGE_ID = uuidByString('type-challenges');
@@ -23,13 +28,9 @@ try {
     },
   });
 
-  const data = await loadChallengesFromTypeChallenge();
-
+  const challengesToCreate = await ingestChallenges(challengePath);
   await prisma.challenge.createMany({
-    data: data.map((challenge) => ({
-      ...challenge,
-      userId: typeChallengeUser.id,
-    })),
+    data: challengesToCreate.map((challenge) => ({ ...challenge, userId: typeChallengeUser.id })),
   });
 
   await prisma.$disconnect();

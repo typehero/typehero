@@ -10,7 +10,7 @@ interface Pokemon {
 }
 
 const pickYourPokemon = (
-  pokemon: Pick<Pokemon, 'name' | 'type'>
+  pokemon: MyPick<Pokemon, 'name' | 'type'>
 ) => {
   const { type, name } = pokemon;
   return `You picked the ${type}-type Pokemon ${name}!`
@@ -27,12 +27,12 @@ console.log(pickYourPokemon(pikachu))
 /** Selecting an invalid property should be an error. */
 const pokemonAttacks = (
   // @ts-expect-error
-  pokemon: Pick<Pokemon, 'attacks' | 'age'>
+  pokemon: MyPick<Pokemon, 'attacks' | 'age'>
 ) => {
   return 'Oops! WE ';
 }
 
 /** It's also totally fine to select a single property */
-const recallPokemon = (pokemon: Pick<Pokemon, 'name'>) => {
+const recallPokemon = (pokemon: MyPick<Pokemon, 'name'>) => {
   return `You recalled ${pokemon.name}!`
 }

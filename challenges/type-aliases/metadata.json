@@ -1,4 +1,5 @@
 {
   "id": "type-aliases",
+  "difficulty": "beginner",
   "prerequisites": ["primitive-data-types"]
 }

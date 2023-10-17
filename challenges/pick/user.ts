@@ -1,1 +1,1 @@
-type Pick<T, K> = unknown;
+type MyPick<T, K> = unknown;
