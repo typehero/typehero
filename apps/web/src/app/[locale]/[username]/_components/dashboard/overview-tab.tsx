@@ -1,5 +1,7 @@
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 
+import type { User } from '@repo/db/types';
+
 interface Props {
   // TODO: how do do this union type with just letting prisma halp
   user: Pick<User, 'bio' | 'createdAt' | 'id' | 'image' | 'name'> & {
