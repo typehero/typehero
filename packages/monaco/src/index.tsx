@@ -8,7 +8,7 @@ import { CheckCircle2, ChevronUp, XCircle } from '@repo/ui/icons';
 import clsx from 'clsx';
 import lzstring from 'lz-string';
 import type * as monaco from 'monaco-editor';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 import { useResetEditor } from './editor-hooks';
 import { PrettierFormatProvider } from './prettier';
@@ -37,9 +37,7 @@ export type TsErrors = [
 ];
 
 export function CodePanel(props: CodePanelProps) {
-  console.log({ slug: props.challenge.slug });
   const params = useSearchParams();
-  const router = useRouter();
   const pathname = usePathname();
   const isPlayground = pathname.includes('playground');
   const { toast } = useToast();
