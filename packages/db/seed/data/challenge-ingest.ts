@@ -51,7 +51,6 @@ async function buildChallenge(pathToDirectory: string) {
         try {
           const fileContents = await fs.promises.readFile(itemPath, 'utf8');
           challengeToCreate.description = fileContents;
-          challengeToCreate.shortDescription = fileContents.slice(0, 100);
         } catch (jsonError) {
           console.error('Error parsing JSON:', jsonError);
         }
@@ -77,9 +76,9 @@ async function buildChallenge(pathToDirectory: string) {
           const fileContents = await fs.promises.readFile(itemPath, 'utf8');
           const jsonData = JSON.parse(fileContents);
           challengeToCreate.difficulty = jsonData.difficulty.toUpperCase();
-          challengeToCreate.name = hyphenatedToPascalCase(jsonData.id);
+          challengeToCreate.name = jsonData.label;
           challengeToCreate.slug = jsonData.id;
-          // console.log('Parsed JSON:', jsonData);
+          challengeToCreate.shortDescription = jsonData.description;
         } catch (jsonError) {
           console.error('Error parsing JSON:', jsonError);
         }
