@@ -11,7 +11,7 @@ interface Contributor {
 export function Contributor({ contributor }: { contributor: Contributor }) {
   return (
     <a
-      className="group relative rounded-full px-1.5 duration-300 hover:z-50 hover:scale-[1.2] focus:outline-none focus:duration-0 focus-visible:ring-0 active:scale-105 active:duration-100"
+      className="group relative rounded-full px-1.5 duration-300 hover:z-50 hover:scale-[1.2] focus:outline-none focus:duration-0 focus-visible:ring-0 active:scale-105 active:duration-100 lg:py-0.5"
       href={contributor.html_url}
       rel="noopener"
       target="_blank"

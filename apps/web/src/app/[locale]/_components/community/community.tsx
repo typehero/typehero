@@ -125,7 +125,17 @@ export function Community() {
                 </a>
               </div>
             </div>
-            <div className="relative pb-36 lg:pb-0 lg:pl-6">
+            {/* honeycomb grid */}
+            <div className="hidden flex-1 pb-0 pl-6 xl:block">
+              {/* xl width = w-16(4rem) * 8items  +  px-1.5(0.75rem) * 8paddings = 38rem */}
+              <div className="honeycomboverride ml-auto flex flex-wrap xl:w-[38rem] ">
+                {contributors.map((contributor) => (
+                  <Contributor contributor={contributor} key={contributor.id} />
+                ))}
+              </div>
+            </div>
+            {/* autoscrolled */}
+            <div className="pb-36 lg:pb-0 lg:pl-8 xl:hidden">
               <div className="infinite-scroll-x-container mx-auto hover:shadow-[0_0_10rem_10rem_#fff8] dark:hover:shadow-[0_0_10rem_10rem_#0008] lg:w-[25rem] xl:w-[35rem]">
                 <div
                   ref={innerScrollerRef}

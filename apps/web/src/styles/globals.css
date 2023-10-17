@@ -439,3 +439,21 @@ a {
     transform: translateX(-50%);
   }
 }
+
+@media (min-width: 1280px) {
+  .honeycomboverride > *:first-child {
+    margin-left: -4.75rem !important;
+  }
+  .honeycomboverride > *:nth-child(8) {
+    margin-left: 0rem !important;
+  }
+  .honeycomboverride > *:nth-child(10) {
+    margin-left: -2.375rem !important;
+  }
+  .honeycomboverride > *:nth-child(26) {
+    margin-left: 2.375rem !important;
+  }
+  .honeycomboverride > *:nth-child(15n + 26) {
+    margin-left: 2.375rem !important;
+  }
+}
