@@ -236,7 +236,14 @@ export default function SplitEditor({
           className="overflow-hidden"
           height={userEditorState && settings.bindings === 'vim' ? 'calc(100% - 36px)' : '100%'}
           defaultPath={USER_CODE_PATH}
-          onMount={onMount?.user}
+          onMount={(editor, monaco) => {
+            onMount?.user?.(editor, monaco);
+            const model = monaco.editor.getModel(monaco.Uri.parse(USER_CODE_PATH));
+            const code = model?.getValue();
+            if (code) {
+              debouncedAta(code);
+            }
+          }}
           defaultValue={userCode}
           value={userCode}
           onValidate={onValidate?.user}
@@ -285,6 +292,12 @@ export default function SplitEditor({
             });
 
             onMount?.tests?.(editor, monaco);
+
+            const model = monaco.editor.getModel(monaco.Uri.parse(TESTS_PATH));
+            const code = model?.getValue();
+            if (code) {
+              debouncedAta(code);
+            }
           }}
           defaultPath={TESTS_PATH}
           value={tests}
