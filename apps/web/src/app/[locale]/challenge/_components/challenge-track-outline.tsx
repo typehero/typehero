@@ -59,9 +59,9 @@ export function ChallengeTrackOutline({ children, challenge, track, asChild = fa
             <Button
               variant="ghost"
               className="text-foreground flex max-w-full justify-start gap-4 text-lg font-semibold"
-              onClick={() => router.push(`/tracks/${track.id}`)}
+              onClick={() => router.push(`/tracks/${track.slug}`)}
             >
-              <span className="overflow-hidden text-ellipsis whitespace-nowrap">{track.title}</span>
+              <span className="overflow-hidden text-ellipsis whitespace-nowrap">{track.name}</span>
               <ChevronRight className="h-4 w-4 shrink-0" />
             </Button>
           </SheetTitle>
@@ -75,7 +75,7 @@ export function ChallengeTrackOutline({ children, challenge, track, asChild = fa
             return (
               <Link
                 key={trackChallenge.challenge.id}
-                href={`/challenge/${trackChallenge.challenge.id}`}
+                href={`/challenge/${trackChallenge.challenge.slug}`}
               >
                 <TrackChallenge
                   challenge={trackChallenge.challenge}

@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 
-import { type ChallengeRouteData } from '~/app/[locale]/challenge/[id]/getChallengeRouteData';
+import { type ChallengeRouteData } from '~/app/[locale]/challenge/[slug]/getChallengeRouteData';
 import { getTrackDetails } from '~/app/[locale]/tracks/_components/track.action';
 
 import { Button } from '@repo/ui/components/button';
@@ -25,12 +25,11 @@ export function ChallengeTrackNavigation({ challenge, track, isCollapsed, classN
   const router = useRouter();
 
   const { data: trackDetails, isLoading } = useQuery({
-    queryKey: ['track-details', track?.id],
+    queryKey: ['track-details', track?.slug],
     queryFn: () => {
-      console.log('fetching track');
-      return getTrackDetails(track!.id);
+      return getTrackDetails(track!.slug);
     },
-    enabled: Boolean(track?.id),
+    enabled: Boolean(track?.slug),
   });
 
   const currentIndex = useMemo(() => {
@@ -81,7 +80,7 @@ export function ChallengeTrackNavigation({ challenge, track, isCollapsed, classN
         >
           <Swords className="h-4 w-4 shrink-0" />
           {Boolean(!isCollapsed) && (
-            <span className="overflow-hidden text-ellipsis whitespace-nowrap">{track.title}</span>
+            <span className="overflow-hidden text-ellipsis whitespace-nowrap">{track.name}</span>
           )}
         </Button>
       </ChallengeTrackOutline>
@@ -93,7 +92,7 @@ export function ChallengeTrackNavigation({ challenge, track, isCollapsed, classN
                 variant="ghost"
                 size="sm"
                 disabled={Boolean(!previous)}
-                onClick={() => router.push(`/challenge/${previous!.challengeId}`)}
+                onClick={() => router.push(`/challenge/${previous!.challenge.slug}`)}
               >
                 <ChevronLeft className="h-4 w-4" />
               </Button>
@@ -106,7 +105,7 @@ export function ChallengeTrackNavigation({ challenge, track, isCollapsed, classN
                 variant="ghost"
                 size="sm"
                 disabled={Boolean(!next)}
-                onClick={() => router.push(`/challenge/${next!.challengeId}`)}
+                onClick={() => router.push(`/challenge/${next!.challenge.slug}`)}
               >
                 <ChevronRight className="h-4 w-4" />
               </Button>

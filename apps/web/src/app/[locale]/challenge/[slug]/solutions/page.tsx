@@ -14,7 +14,7 @@ interface Props {
 }
 
 export async function generateMetadata({ params: { slug } }: Props) {
-  const challenge = await getChallengeRouteData(slug, null);
+  const { challenge } = await getChallengeRouteData(slug, null);
   return buildMetaForDefault({
     title: `Solutions to ${challenge.name} | TypeHero`,
     description: challenge.shortDescription,
