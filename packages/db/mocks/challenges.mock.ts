@@ -3,8 +3,8 @@ import { readdir, readFile, rm } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { simpleGit } from 'simple-git';
 import { parse } from 'yaml';
-import { slugify } from '../seed';
 
+const slugify = (str: string) => str.toLowerCase().replace(/\s/g, '-');
 export interface InfoFile {
   title: string;
   author: {
@@ -67,7 +67,6 @@ export async function loadChallengesFromTypeChallenge() {
       status: ChallengeStatus.ACTIVE,
       code: prompt,
       tests: testData,
-      // prompt: `// TEST CASE START\n${testData}\n\n// CODE START\n${prompt}`,
       difficulty: difficulty === 'warm' ? 'BEGINNER' : (difficulty.toUpperCase() as Difficulty),
       shortDescription: README.slice(0, 100),
     });

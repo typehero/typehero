@@ -1,4 +1,5 @@
 {
   "id": "index-signatures",
+  "difficulty": "beginner",
   "prerequisites": ["type-aliases", "primitive-data-types"]
 }

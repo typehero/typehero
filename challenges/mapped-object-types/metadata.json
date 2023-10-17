@@ -1,4 +1,5 @@
 {
   "id": "mapped-object-types",
+  "difficulty": "beginner",
   "prerequisites": ["index-signatures", "keyof", "generic-type-arguments", "indexed-types"]
 }

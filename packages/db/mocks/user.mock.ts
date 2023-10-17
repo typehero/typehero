@@ -1,11 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { type Prisma } from '@prisma/client';
 
-/**
- *
- * @returns Creates a mock user.
- */
-export default function UserMock(): Prisma.UserCreateManyInput {
+export function createUser(): Prisma.UserCreateManyInput {
   // Create email
   const email = faker.internet.email();
   // Created At
@@ -19,3 +15,6 @@ export default function UserMock(): Prisma.UserCreateManyInput {
     createdAt,
   };
 }
+
+export const createUsers = (numberOfUsersToCreate: number) =>
+  Array.from({ length: numberOfUsersToCreate }, () => createUser());

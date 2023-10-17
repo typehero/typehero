@@ -1,4 +1,5 @@
 {
   "id": "generic-type-arguments",
+  "difficulty": "beginner",
   "prerequisites": ["primitive-data-types", "type-aliases"]
 }
