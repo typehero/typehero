@@ -5,7 +5,7 @@ import { LoginButton } from './_components/LoginButton';
 export default async function Index() {
   return (
     <>
-      <div className="container flex h-full flex-col items-center justify-center">
+      <div className="container -mt-[56px] flex h-screen flex-col items-center justify-center">
         <div className="lg:p-8">
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 text-center sm:w-[450px]">
             <div className="flex flex-col space-y-2 text-center">
@@ -18,7 +18,7 @@ export default async function Index() {
             </div>
             <LoginButton redirectTo="/explore" />
             <p className="text-muted-foreground mx-auto px-8 text-sm sm:w-[350px]">
-              By clicking continue, you agree to our{' '}
+              By clicking Login, you agree to our <br />
               <Link href="/tos" className="hover:text-primary underline underline-offset-4">
                 Terms of Service
               </Link>{' '}
