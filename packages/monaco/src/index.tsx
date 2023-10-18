@@ -139,6 +139,7 @@ export function CodePanel(props: CodePanelProps) {
               strict: true,
               target: monaco.languages.typescript.ScriptTarget.ESNext,
               strictNullChecks: true,
+              moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
             });
 
             monaco.languages.registerDocumentFormattingEditProvider(
