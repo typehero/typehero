@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 import type { User } from '@repo/db/types';
 import {
   Tabs,
@@ -7,7 +9,7 @@ import {
   VerticalTabsList,
   VerticalTabsTrigger,
 } from '@repo/ui/components/tabs';
-import { Brush, Settings2 } from '@repo/ui/icons';
+import { Settings2, User as UserIcon } from '@repo/ui/icons';
 import { MagicIcon } from '@repo/ui/components/magic-icon';
 import { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/card';
 
@@ -16,26 +18,10 @@ import UserHeader from '~/app/[locale]/[username]/_components/dashboard/user-hea
 import { stripProtocolAndWWW } from '~/utils/stringUtils';
 
 import { ProfileSettings } from './edit-profile-tab';
-import { Appearances } from './edit-appearance-tab';
 
 interface Props {
   user: User & { userLinks: { id: string | null; url: string }[] };
 }
-
-export const links = [
-  {
-    icon: Settings2,
-    name: 'Profile',
-    link: '/settings',
-    disabled: false,
-  },
-  {
-    icon: Brush,
-    name: 'Appearance',
-    link: '/settings/appearance',
-    disabled: false,
-  },
-];
 
 export const Settings = async ({ user }: Props) => {
   const filteredProfileLinks =
@@ -44,7 +30,7 @@ export const Settings = async ({ user }: Props) => {
   return (
     <div className="container">
       {/* // TODO: GFI: make each page a subroute, put settings & profile into the same layout */}
-      <Tabs className="flex flex-col gap-8 py-8 md:flex-row" defaultValue="profile">
+      <Tabs className="flex flex-col gap-8 py-8 md:flex-row" defaultValue="settings">
         <VerticalTabsList>
           <div className="flex flex-col items-center gap-10 md:items-start">
             <div
@@ -80,38 +66,28 @@ export const Settings = async ({ user }: Props) => {
             <div className="flex gap-4 md:w-full md:flex-col">
               <VerticalTabsTrigger
                 className="flex items-center justify-center gap-3 px-2 md:justify-normal md:px-3"
-                value="profile"
+                value="settings"
+              >
+                <UserIcon className="h-4 w-4" />
+                <span className="hidden md:block">Settings</span>
+              </VerticalTabsTrigger>
+              <Link
+                href="/settings"
+                className="border-border dark:border-ring data-[state=active]:bg-border ring-offset-background focus-visible:ring-ring data-[state=active]:text-foreground flex items-center justify-center gap-3 whitespace-nowrap rounded-xl border px-1.5 py-1.5 text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm md:justify-normal md:px-3"
               >
                 <Settings2 className="h-4 w-4" />
-                <span className="hidden md:block">Profile</span>
-              </VerticalTabsTrigger>
-              <VerticalTabsTrigger
-                className="flex items-center justify-center gap-3 px-2 md:justify-normal md:px-3"
-                value="appearance"
-              >
-                <Brush className="h-4 w-4" />
-                <span className="hidden md:block">Appearance</span>
-              </VerticalTabsTrigger>
+                <span className="hidden md:block">Back to Profile</span>
+              </Link>
             </div>
           </div>
         </VerticalTabsList>
-        <VerticalTabsContent className="shrink grow space-y-4" value="profile">
+        <VerticalTabsContent className="shrink grow space-y-4" value="settings">
           <Card className="col-span-4 md:min-h-[calc(100vh_-_56px_-_6rem)]">
             <CardHeader>
               <CardTitle>Profile</CardTitle>
             </CardHeader>
             <CardContent>
               <ProfileSettings user={user} />
-            </CardContent>
-          </Card>
-        </VerticalTabsContent>
-        <VerticalTabsContent className="shrink grow space-y-4" value="appearance">
-          <Card className="col-span-4 md:min-h-[calc(100vh_-_56px_-_6rem)]">
-            <CardHeader>
-              <CardTitle>Appearance</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Appearances />
             </CardContent>
           </Card>
         </VerticalTabsContent>
