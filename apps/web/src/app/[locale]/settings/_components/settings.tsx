@@ -68,14 +68,14 @@ export const Settings = async ({ user }: Props) => {
                 className="flex items-center justify-center gap-3 px-2 md:justify-normal md:px-3"
                 value="settings"
               >
-                <UserIcon className="h-4 w-4" />
+                <Settings2 className="h-4 w-4" />
                 <span className="hidden md:block">Settings</span>
               </VerticalTabsTrigger>
               <Link
                 href="/settings"
                 className="border-border dark:border-ring data-[state=active]:bg-border ring-offset-background focus-visible:ring-ring data-[state=active]:text-foreground flex items-center justify-center gap-3 whitespace-nowrap rounded-xl border px-1.5 py-1.5 text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm md:justify-normal md:px-3"
               >
-                <Settings2 className="h-4 w-4" />
+                <UserIcon className="h-4 w-4" />
                 <span className="hidden md:block">Back to Profile</span>
               </Link>
             </div>
@@ -84,7 +84,7 @@ export const Settings = async ({ user }: Props) => {
         <VerticalTabsContent className="shrink grow space-y-4" value="settings">
           <Card className="col-span-4 md:min-h-[calc(100vh_-_56px_-_6rem)]">
             <CardHeader>
-              <CardTitle>Profile</CardTitle>
+              <CardTitle>Settings</CardTitle>
             </CardHeader>
             <CardContent>
               <ProfileSettings user={user} />
