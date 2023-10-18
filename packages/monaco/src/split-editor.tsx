@@ -72,11 +72,11 @@ export default function SplitEditor({
   const wrapper = useRef<HTMLDivElement>(null);
   const resizer = useRef<HTMLDivElement>(null);
   const testPanel = useRef<HTMLDivElement>(null);
-  const monacoRef = useRef<typeof import('monaco-editor')>()
+  const monacoRef = useRef<typeof import('monaco-editor')>();
 
   useEffect(() => {
     monacoRef.current = monaco;
-  }, [monaco])
+  }, [monaco]);
 
   const addLibraryToRuntime = (code: string, _path: string) => {
     if (!monacoRef.current) return;
@@ -163,7 +163,7 @@ export default function SplitEditor({
       document.addEventListener('selectstart', preventSelection);
     };
 
-    const mouseUpHandler = function() {
+    const mouseUpHandler = function () {
       // Restore transition
       testPanelRef.classList.add('transition-all');
 
