@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 185
+        "contributions": 190
     },
     {
         "login": "Hacksore",
@@ -62,7 +62,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/PickleNik/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 84
+        "contributions": 86
     },
     {
         "login": "ggrandi",
@@ -296,6 +296,27 @@ export const contributors = [
         "contributions": 7
     },
     {
+        "login": "ayrock-dev",
+        "id": 7817695,
+        "node_id": "MDQ6VXNlcjc4MTc2OTU=",
+        "avatar_url": "https://avatars.githubusercontent.com/u/7817695?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/ayrock-dev",
+        "html_url": "https://github.com/ayrock-dev",
+        "followers_url": "https://api.github.com/users/ayrock-dev/followers",
+        "following_url": "https://api.github.com/users/ayrock-dev/following{/other_user}",
+        "gists_url": "https://api.github.com/users/ayrock-dev/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/ayrock-dev/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/ayrock-dev/subscriptions",
+        "organizations_url": "https://api.github.com/users/ayrock-dev/orgs",
+        "repos_url": "https://api.github.com/users/ayrock-dev/repos",
+        "events_url": "https://api.github.com/users/ayrock-dev/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/ayrock-dev/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 7
+    },
+    {
         "login": "vivekKumarSinghH",
         "id": 72158561,
         "node_id": "MDQ6VXNlcjcyMTU4NTYx",
@@ -375,27 +396,6 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/odicho/repos",
         "events_url": "https://api.github.com/users/odicho/events{/privacy}",
         "received_events_url": "https://api.github.com/users/odicho/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 5
-    },
-    {
-        "login": "ayrock-dev",
-        "id": 7817695,
-        "node_id": "MDQ6VXNlcjc4MTc2OTU=",
-        "avatar_url": "https://avatars.githubusercontent.com/u/7817695?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/ayrock-dev",
-        "html_url": "https://github.com/ayrock-dev",
-        "followers_url": "https://api.github.com/users/ayrock-dev/followers",
-        "following_url": "https://api.github.com/users/ayrock-dev/following{/other_user}",
-        "gists_url": "https://api.github.com/users/ayrock-dev/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/ayrock-dev/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/ayrock-dev/subscriptions",
-        "organizations_url": "https://api.github.com/users/ayrock-dev/orgs",
-        "repos_url": "https://api.github.com/users/ayrock-dev/repos",
-        "events_url": "https://api.github.com/users/ayrock-dev/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/ayrock-dev/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 5
@@ -543,6 +543,27 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/amorriscode/repos",
         "events_url": "https://api.github.com/users/amorriscode/events{/privacy}",
         "received_events_url": "https://api.github.com/users/amorriscode/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 3
+    },
+    {
+        "login": "dimitropoulos",
+        "id": 15232461,
+        "node_id": "MDQ6VXNlcjE1MjMyNDYx",
+        "avatar_url": "https://avatars.githubusercontent.com/u/15232461?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/dimitropoulos",
+        "html_url": "https://github.com/dimitropoulos",
+        "followers_url": "https://api.github.com/users/dimitropoulos/followers",
+        "following_url": "https://api.github.com/users/dimitropoulos/following{/other_user}",
+        "gists_url": "https://api.github.com/users/dimitropoulos/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/dimitropoulos/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/dimitropoulos/subscriptions",
+        "organizations_url": "https://api.github.com/users/dimitropoulos/orgs",
+        "repos_url": "https://api.github.com/users/dimitropoulos/repos",
+        "events_url": "https://api.github.com/users/dimitropoulos/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/dimitropoulos/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 3
