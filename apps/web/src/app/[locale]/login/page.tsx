@@ -18,7 +18,7 @@ export default async function Index() {
             </div>
             <LoginButton redirectTo="/explore" />
             <p className="text-muted-foreground mx-auto px-8 text-sm sm:w-[350px]">
-              By clicking continue, you agree to our{' '}
+              By clicking Login, you agree to our{' '}
               <Link href="/tos" className="hover:text-primary underline underline-offset-4">
                 Terms of Service
               </Link>{' '}
