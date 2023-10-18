@@ -150,7 +150,7 @@ export async function Hero() {
       <div className="absolute inset-10 -z-30 overflow-hidden rounded-full opacity-70 lg:hidden">
         <BackgroundGrid />
       </div>
-      <div className="container relative grid min-h-screen items-center justify-center lg:min-h-0 lg:grid-cols-2">
+      <div className="container relative grid min-h-screen items-center justify-center py-24 lg:min-h-0 lg:grid-cols-2 lg:py-0">
         <BeamOfLight />
         <div className="flex w-full flex-col items-center justify-center gap-10 lg:items-start">
           <a
