@@ -19,7 +19,7 @@ export function LoginButton({ redirectTo }: { redirectTo: string }) {
   };
 
   return (
-    <div className="mx-auto duration-300 hover:shadow-[0_0_2rem_-0.5rem_#3178c6]">
+    <div className="mx-auto rounded-md duration-300 hover:shadow-[0_0_2rem_-0.5rem_#3178c6]">
       <Button
         variant="outline"
         onClick={handleSignIn}
