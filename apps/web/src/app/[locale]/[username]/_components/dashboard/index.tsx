@@ -44,7 +44,7 @@ export async function Dashboard({ user }: Props) {
 
   return (
     <div className="container">
-      {/* // TODO: GFI: make each page a subroute, put settings into this same layout */}
+      {/* // TODO: GFI: make each page a subroute, put settings & profile into same layout */}
       <Tabs className="flex flex-col gap-8 py-8 md:flex-row" defaultValue="overview">
         <VerticalTabsList>
           <div className="flex flex-col items-center gap-10 md:items-start">
