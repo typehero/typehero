@@ -1,4 +1,5 @@
 'use client';
+import { createTwoslashInlayProvider } from './twoslash';
 
 import { type OnChange, type OnMount, type OnValidate } from '@monaco-editor/react';
 import { setupTypeAcquisition } from '@typescript/ata';
@@ -13,6 +14,7 @@ import { useResetEditor } from './editor-hooks';
 import { libSource } from './editor-types';
 import { useEditorSettingsStore } from './settings-store';
 import { getEventDeltas, typeCheck } from './utils';
+import { PrettierFormatProvider } from './prettier';
 
 function preventSelection(event: Event) {
   event.preventDefault();
@@ -78,31 +80,21 @@ export default function SplitEditor({
     monacoRef.current = monaco;
   }, [monaco]);
 
-  const addLibraryToRuntime = (code: string, _path: string) => {
-    if (!monacoRef.current) return;
-    const path = `file://${_path}`;
-    const uri = monacoRef.current.Uri.parse(path);
-    if (monacoRef.current.editor.getModel(uri) === null) {
-      monacoRef.current.languages.typescript.typescriptDefaults.addExtraLib(code, path);
-      monacoRef.current.editor.createModel(code, 'javascript', uri);
-    }
-  };
-
+  // i moved this into onMount to avpid the monacoRef stuff but then you can really debounce it
   const [ata] = useState(() =>
     setupTypeAcquisition({
       projectName: 'TypeScript Playground',
       typescript: ts,
       logger: console,
       delegate: {
-        receivedFile: addLibraryToRuntime,
-        progress: (downloaded: number, total: number) => {
-          // console.log({ dl, ttl })
-        },
-        started: () => {
-          console.log('ATA start');
-        },
-        finished: (f) => {
-          console.log('ATA done');
+        receivedFile: (code: string, _path: string) => {
+          if (!monacoRef.current) return;
+          const path = `file://${_path}`;
+          const uri = monacoRef.current.Uri.parse(path);
+          if (monacoRef.current.editor.getModel(uri) === null) {
+            monacoRef.current.languages.typescript.typescriptDefaults.addExtraLib(code, path);
+            monacoRef.current.editor.createModel(code, 'javascript', uri);
+          }
         },
       },
     }),
@@ -207,26 +199,10 @@ export default function SplitEditor({
     };
   }, [settings, updateSettings, setIsTestPanelExpanded]);
 
-  useEffect(() => {
-    if (monaco) {
-      const libUri = monaco.Uri.parse(LIB_URI);
-
-      monaco.languages.typescript.typescriptDefaults.setEagerModelSync(true);
-
-      if (!monaco.editor.getModel(libUri)) {
-        monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, LIB_URI);
-        monaco.editor
-          .createModel(libSource, 'typescript', libUri)
-          .setEOL(monaco.editor.EndOfLineSequence.LF);
-      }
-    }
-  }, [monaco]);
-
   subscribe(
     'resetCode',
     () => {
       if (monaco && userEditorState) {
-        typeCheck(monaco);
         onMount?.tests?.(userEditorState, monaco);
       }
     },
@@ -240,28 +216,53 @@ export default function SplitEditor({
           className="overflow-hidden"
           height={userEditorState && settings.bindings === 'vim' ? 'calc(100% - 36px)' : '100%'}
           defaultPath={USER_CODE_PATH}
-          onMount={(editor, monaco) => {
-            onMount?.user?.(editor, monaco);
-            const model = monaco.editor.getModel(monaco.Uri.parse(USER_CODE_PATH));
-            const code = model?.getValue();
-            if (code) {
-              debouncedAta(code);
+          onMount={async (editor, monaco) => {
+            const libUri = monaco.Uri.parse(LIB_URI);
+
+            monaco.languages.typescript.typescriptDefaults.setEagerModelSync(true);
+
+            if (!monaco.editor.getModel(libUri)) {
+              monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, LIB_URI);
+              monaco.editor
+                .createModel(libSource, 'typescript', libUri)
+                .setEOL(monaco.editor.EndOfLineSequence.LF);
             }
+
+            const model = monaco.editor.getModel(monaco.Uri.parse(USER_CODE_PATH))!;
+            debouncedAta(model.getValue());
+
+            editor.getModel()?.onDidChangeContent(() => {
+              debouncedAta(editor.getValue());
+            });
+
+            const tsWorker = await (
+              await monaco.languages.typescript.getTypeScriptWorker()
+            )(model.uri);
+            monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+              ...monaco.languages.typescript.typescriptDefaults.getCompilerOptions(),
+              strict: true,
+              target: monaco.languages.typescript.ScriptTarget.ESNext,
+              strictNullChecks: true,
+              moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
+              allowSyntheticDefaultImports: true,
+            });
+
+            monaco.languages.registerDocumentFormattingEditProvider(
+              'typescript',
+              PrettierFormatProvider,
+            );
+
+            monaco.languages.registerInlayHintsProvider(
+              'typescript',
+              createTwoslashInlayProvider(monaco, tsWorker),
+            );
+
+            onMount?.user?.(editor, monaco);
           }}
           defaultValue={userCode}
           value={userCode}
           onValidate={onValidate?.user}
           onChange={async (e, a) => {
-            if (monaco) {
-              typeCheck(monaco);
-
-              const model = monaco.editor.getModel(monaco.Uri.parse(USER_CODE_PATH));
-              const code = model?.getValue();
-              if (code) {
-                debouncedAta(code);
-              }
-            }
-
             onChange?.user?.(e, a);
           }}
         />

@@ -134,20 +134,6 @@ export function CodePanel(props: CodePanelProps) {
           user: async (editor, monaco) => {
             setMonacoInstance(monaco);
 
-            monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
-              ...monaco.languages.typescript.typescriptDefaults.getCompilerOptions(),
-              strict: true,
-              target: monaco.languages.typescript.ScriptTarget.ESNext,
-              strictNullChecks: true,
-              moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
-              allowSyntheticDefaultImports: true,
-            });
-
-            monaco.languages.registerDocumentFormattingEditProvider(
-              'typescript',
-              PrettierFormatProvider,
-            );
-
             setUserEditorState(editor);
 
             const model = editor.getModel();
@@ -174,11 +160,6 @@ export function CodePanel(props: CodePanelProps) {
               testErrors.map((err, i) => {
                 return [...err, ...(userErrors[i] || [])];
               }) as TsErrors,
-            );
-
-            monaco.languages.registerInlayHintsProvider(
-              'typescript',
-              createTwoslashInlayProvider(monaco, ts),
             );
           },
         }}
