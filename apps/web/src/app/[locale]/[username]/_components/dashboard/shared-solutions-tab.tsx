@@ -18,8 +18,8 @@ export async function SharedSolutionsTab({ userId }: { userId: string }) {
   const solutions = await withUnstableCache({
     fn: getSharedSolutions,
     args: [userId],
-    keys: ['shared-solutions'],
-    tags: ['submissions'],
+    keys: [`shared-solutions-${userId}`],
+    tags: [`shared-solutions-${userId}`],
   });
 
   return (

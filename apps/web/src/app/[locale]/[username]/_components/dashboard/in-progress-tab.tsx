@@ -15,8 +15,8 @@ export async function InProgressTab({ userId }: { userId: string }) {
   const challenges = await withUnstableCache({
     fn: getInProgressChallenges,
     args: [userId],
-    keys: ['in-progress-challenges'],
-    tags: ['challenges'],
+    keys: [`in-progress-challenges-${userId}`],
+    tags: [`in-progress-challenges-${userId}`],
   });
 
   return (

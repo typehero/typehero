@@ -2,9 +2,11 @@ import { prisma } from '@repo/db';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Dashboard } from './dashboard';
+import { getServerAuthSession } from '@repo/auth/server';
 
 interface Props {
   username: string;
+  children: React.ReactNode;
 }
 
 export const metadata: Metadata = {
@@ -12,9 +14,8 @@ export const metadata: Metadata = {
   description: 'View this profile on TypeHero.',
 };
 
-export async function Profile({ username: usernameFromQuery }: Props) {
+export async function Profile({ username: usernameFromQuery, children }: Props) {
   const [, username] = decodeURIComponent(usernameFromQuery).split('@');
-
   if (!username) return notFound();
 
   const user = await prisma.user.findFirst({
@@ -35,5 +36,8 @@ export async function Profile({ username: usernameFromQuery }: Props) {
 
   if (!user) return notFound();
 
-  return <Dashboard user={user} />;
+  const session = await getServerAuthSession();
+  const isOwnProfile = session?.user.id === user.id;
+
+  return <Dashboard user={user} children={children} isOwnProfile={isOwnProfile} />;
 }

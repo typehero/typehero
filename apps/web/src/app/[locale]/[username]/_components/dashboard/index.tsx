@@ -1,14 +1,7 @@
+'use client';
 import Link from 'next/link';
 
-import { getServerAuthSession } from '@repo/auth/server';
 import type { User } from '@repo/db/types';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from '@repo/ui/components/card';
 import { MagicIcon } from '@repo/ui/components/magic-icon';
 import {
   Tabs,
@@ -21,31 +14,49 @@ import { Bookmark, ChevronRightSquare, Play, Settings, Text } from '@repo/ui/ico
 import { getRelativeTime } from '~/utils/relativeTime';
 import { stripProtocolAndWWW } from '~/utils/stringUtils';
 
-import { BookmarksTab } from './bookmarks-tab';
-import { InProgressTab } from './in-progress-tab';
-import { OverviewTab } from './overview-tab';
-import { SharedSolutionsTab } from './shared-solutions-tab';
 import UserHeader from './user-header';
+import { useMemo } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 
 interface Props {
   // TODO: how do do this union type with just letting prisma halp
   user: Pick<User, 'bio' | 'createdAt' | 'id' | 'image' | 'name'> & {
     userLinks: { id: string | null; url: string }[];
   };
+  isOwnProfile: boolean;
+  children: React.ReactNode;
 }
+type Tab = 'overview' | 'in-progress' | 'shared-solutions' | 'bookmarks';
 
-export async function Dashboard({ user }: Props) {
-  const session = await getServerAuthSession();
-
-  const isOwnProfile = session?.user.id === user.id;
+export function Dashboard({ user, isOwnProfile, children }: Props) {
+  const router = useRouter();
 
   const filteredProfileLinks =
     user.userLinks.length > 0 ? user.userLinks.filter((item) => item.url !== '') : [];
 
+  const pathname = usePathname();
+  const selectedTab: Tab = useMemo(() => {
+    const splitPath = pathname.split('/');
+
+    if (splitPath.includes('in-progress')) {
+      return 'in-progress';
+    }
+
+    if (splitPath.includes('shared-solutions')) {
+      return 'shared-solutions';
+    }
+
+    if (splitPath.includes('bookmarks')) {
+      return 'bookmarks';
+    }
+
+    return 'overview';
+  }, [pathname]);
+
   return (
     <div className="container">
       {/* // TODO: GFI: make each page a subroute, put settings & profile into same layout */}
-      <Tabs className="flex flex-col gap-8 py-8 md:flex-row" defaultValue="overview">
+      <Tabs className="flex flex-col gap-8 py-8 md:flex-row" defaultValue={selectedTab}>
         <VerticalTabsList>
           <div className="flex flex-col items-center gap-10 md:items-start">
             <div
@@ -80,24 +91,33 @@ export async function Dashboard({ user }: Props) {
             )}
             <div className="flex gap-4 md:w-full md:flex-col">
               <VerticalTabsTrigger
-                className="flex items-center justify-center gap-3 px-2 md:justify-normal md:px-3"
+                className="flex items-center justify-center gap-3 px-2 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50 md:justify-normal md:px-3"
                 value="overview"
+                onClick={() => {
+                  router.push(`/@${user.name}`);
+                }}
               >
                 <Text className="h-4 w-4" />
                 <span className="hidden md:block">Overview</span>
               </VerticalTabsTrigger>
               {Boolean(isOwnProfile) && (
                 <VerticalTabsTrigger
-                  className="flex items-center justify-center gap-3 px-2 md:justify-normal md:px-3"
+                  className="flex items-center justify-center gap-3 px-2 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50 md:justify-normal md:px-3"
                   value="in-progress"
+                  onClick={() => {
+                    router.push(`/@${user.name}/in-progress`);
+                  }}
                 >
                   <Play className="h-4 w-4" />
                   <span className="hidden md:block">In-Progress</span>
                 </VerticalTabsTrigger>
               )}
               <VerticalTabsTrigger
-                className="flex items-center justify-center gap-3 px-2 md:justify-normal md:px-3"
+                className="flex items-center justify-center gap-3 px-2 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50 md:justify-normal md:px-3"
                 value="shared-solutions"
+                onClick={() => {
+                  router.push(`/@${user.name}/shared-solutions`);
+                }}
               >
                 <ChevronRightSquare className="h-4 w-4" />
                 <span className="hidden md:block">Shared Solutions</span>
@@ -105,15 +125,18 @@ export async function Dashboard({ user }: Props) {
               {Boolean(isOwnProfile) && (
                 <>
                   <VerticalTabsTrigger
-                    className="flex items-center justify-center gap-3 px-2 md:justify-normal md:px-3"
+                    className="flex items-center justify-center gap-3 px-2 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50 md:justify-normal md:px-3"
                     value="bookmarks"
+                    onClick={() => {
+                      router.push(`/@${user.name}/bookmarks`);
+                    }}
                   >
                     <Bookmark className="h-4 w-4" />
                     <span className="hidden md:block">Bookmarks</span>
                   </VerticalTabsTrigger>
                   <Link
                     href="/settings"
-                    className="border-border dark:border-ring data-[state=active]:bg-border ring-offset-background focus-visible:ring-ring data-[state=active]:text-foreground flex items-center justify-center gap-3 whitespace-nowrap rounded-xl border px-1.5 py-1.5 text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm md:justify-normal md:px-3"
+                    className="border-border dark:border-ring  data-[state=active]:bg-border ring-offset-background focus-visible:ring-ring data-[state=active]:text-foreground flex items-center justify-center gap-3 whitespace-nowrap rounded-xl border px-1.5 py-1.5 text-sm font-medium transition-all duration-300 hover:bg-neutral-200/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm dark:hover:bg-neutral-700/50 md:justify-normal md:px-3"
                   >
                     <Settings className="h-4 w-4" />
                     <span className="hidden md:block">Settings</span>
@@ -123,54 +146,8 @@ export async function Dashboard({ user }: Props) {
             </div>
           </div>
         </VerticalTabsList>
-        <VerticalTabsContent className="shrink grow space-y-4" value="overview">
-          <Card className="col-span-4 md:min-h-[calc(100vh_-_56px_-_6rem)]">
-            <CardHeader>
-              <CardTitle>Overview</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <OverviewTab user={user} />
-            </CardContent>
-          </Card>
-        </VerticalTabsContent>
-        <VerticalTabsContent className="shrink grow space-y-4" value="in-progress">
-          <Card className="col-span-4 md:min-h-[calc(100vh_-_56px_-_6rem)]">
-            <CardHeader>
-              <CardTitle>In-Progress</CardTitle>
-              <CardDescription className="text-muted-foreground mb-4 text-sm">
-                Your in-progress challenges.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <InProgressTab userId={user.id} />
-            </CardContent>
-          </Card>
-        </VerticalTabsContent>
-        <VerticalTabsContent className="shrink grow space-y-4" value="shared-solutions">
-          <Card className="col-span-4 md:min-h-[calc(100vh_-_56px_-_6rem)]">
-            <CardHeader>
-              <CardTitle>Shared Solutions</CardTitle>
-              <CardDescription className="text-muted-foreground mb-4 text-sm">
-                {isOwnProfile ? 'Your' : `${user.name}'s`} shared challenge solutions.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <SharedSolutionsTab userId={user.id} />
-            </CardContent>
-          </Card>
-        </VerticalTabsContent>
-        <VerticalTabsContent className="shrink grow space-y-4" value="bookmarks">
-          <Card className="col-span-4 md:min-h-[calc(100vh_-_56px_-_6rem)]">
-            <CardHeader>
-              <CardTitle>Bookmarks</CardTitle>
-              <CardDescription className="text-muted-foreground mb-4 text-sm">
-                Your bookmarked challenges.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <BookmarksTab userId={user.id} />
-            </CardContent>
-          </Card>
+        <VerticalTabsContent className="shrink grow space-y-4" value={selectedTab}>
+          {children}
         </VerticalTabsContent>
       </Tabs>
     </div>

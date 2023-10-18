@@ -17,8 +17,8 @@ export async function BookmarksTab({ userId }: { userId: string }) {
   const bookmarks = await withUnstableCache({
     fn: getBookmarkedChallenges,
     args: [userId],
-    keys: ['bookmarked-challenges'],
-    tags: ['challenges'],
+    keys: [`bookmarked-challenges-${userId}`],
+    tags: [`bookmarked-challenges-${userId}`],
   });
 
   return (
