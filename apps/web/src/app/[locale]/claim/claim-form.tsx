@@ -34,7 +34,7 @@ export function ClaimForm() {
   }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="mx-auto flex gap-5">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="mx-auto flex gap-3">
         <FormField
           control={form.control}
           name="code"
@@ -43,7 +43,7 @@ export function ClaimForm() {
               <FormControl>
                 <Input
                   maxLength={10}
-                  className="rounded-xl bg-neutral-200 dark:bg-neutral-800"
+                  className="h-10 rounded-xl border border-neutral-400 bg-neutral-200 dark:border-neutral-700 dark:bg-neutral-800"
                   placeholder="Enter Early Access token"
                   {...field}
                 />
@@ -53,7 +53,9 @@ export function ClaimForm() {
           )}
         />
 
-        <Button type="submit">Submit</Button>
+        <Button className="h-10 rounded-xl" type="submit">
+          Submit
+        </Button>
       </form>
     </Form>
   );

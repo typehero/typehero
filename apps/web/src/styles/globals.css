@@ -101,6 +101,11 @@ main {
   scroll-behavior: smooth;
   height: 100%;
 }
+
+.from-background {
+  --tw-gradient-from: hsl(var(--background)) var(--tw-gradient-from-position);
+}
+
 .w-md-editor-content {
   @apply bg-background dark:bg-muted;
 }
@@ -579,4 +584,17 @@ a {
   syntax: '<angle>';
   initial-value: 0deg;
   inherits: false;
+}
+
+.animate-amogup {
+  opacity: 0;
+  transform: translateY(50%);
+  animation: amogup 1s 0.25s ease 1 forwards;
+}
+
+@keyframes amogup {
+  to {
+    opacity: 0.5;
+    transform: translateY(0%);
+  }
 }
