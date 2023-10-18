@@ -142,8 +142,8 @@ console.log(pickYourPokemon(pikachu))
 
 In this challenge you'll implement the `Pick` type described above.
 
-Remember that the TypeScript `keyof` operator is the way of getting the keys of a type.  So `keyof Pokemon` will result in a union of strings that looks like `'name' | 'type'  ...... | 'weakness' | 'resilience'`.  If `Pick` didn't take 
- 
+Remember that the TypeScript `keyof` operator is the way of getting the keys of a type.  So `keyof Pokemon` will result in a union of strings that looks like `'name' | 'type'  ...... | 'weakness' | 'resilience'`.
+
 By convention, the first argument of the `Pick` type is the base type (so, `Pokemon` in our example) and the second generic argument is a union of strings of that are valid keys of the base type.
 
 Another convention is the use of `T` and `K` as parameter types.  For extremely generic types like `Pick` this is normal.  As your types become more specific you should try to make more descriptive names.
