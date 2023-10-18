@@ -74,7 +74,7 @@ function FeatureCard({
         )}
       >
         <div className="mx-10 my-10 min-h-[250px] w-full md:min-h-[450px]">
-          <div className="flex w-4/6 flex-col gap-3">
+          <div className="flex w-4/6 flex-col gap-3 md:w-[80%] xl:w-4/6">
             <h2 className="text-xl font-bold tracking-tight md:text-xl">{title}</h2>
             <p className="text-sm leading-5 text-zinc-600 dark:text-zinc-400 sm:text-base sm:leading-7">
               {description}
@@ -455,12 +455,12 @@ export function CuratedTracksCard(props: CardProps) {
           'max-md:scale-110 md:top-[38%]',
         )}
       >
-        <div className="flex w-[69%] items-center justify-between gap-3 rounded-b-lg rounded-t-xl bg-neutral-500/10 p-2 pl-3">
+        <div className="flex w-[69%] items-center justify-between gap-3 rounded-b-lg rounded-t-xl bg-neutral-500/10 p-2 pl-3 md:w-[82%] xl:w-[69%]">
           <span className="flex items-center gap-1 text-xs font-semibold tracking-wide">
             TypeScript Foundations
           </span>
         </div>
-        <div className="flex w-[69%] flex-col sm:top-auto">
+        <div className="flex w-[69%] flex-col sm:top-auto md:w-[82%] xl:w-[69%]">
           {mockChallenges.map((mockChallenge) => (
             <MockTrackChallenge
               key={`mock-${mockChallenge.id}`}
