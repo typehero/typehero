@@ -11,9 +11,7 @@ import type * as monaco from 'monaco-editor';
 import { usePathname, useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 import { useResetEditor } from './editor-hooks';
-import { PrettierFormatProvider } from './prettier';
 import SplitEditor, { TESTS_PATH, USER_CODE_PATH } from './split-editor';
-import { createTwoslashInlayProvider } from './twoslash';
 import { useLocalStorage } from './useLocalStorage';
 
 export interface CodePanelProps {
@@ -116,12 +114,20 @@ export function CodePanel(props: CodePanelProps) {
         userCode={code}
         onMount={{
           tests: async (editor, monaco) => {
+            const models = monaco.editor.getModels();
+            console.log({ models });
+            for (const m of models) {
+              console.log({
+                model: m.uri.toString(),
+                value: m.getValue(),
+              });
+            }
             const getTsWorker = await monaco.languages.typescript.getTypeScriptWorker();
 
-            const mm = monaco.editor.getModel(monaco.Uri.parse(TESTS_PATH));
-            if (!mm) return null;
+            const model = monaco.editor.getModel(monaco.Uri.parse(TESTS_PATH));
+            if (!model) return null;
 
-            const tsWorker = await getTsWorker(mm.uri);
+            const tsWorker = await getTsWorker(model.uri);
             const errors = await Promise.all([
               tsWorker.getSemanticDiagnostics(TESTS_PATH),
               tsWorker.getSyntacticDiagnostics(TESTS_PATH),
@@ -133,27 +139,27 @@ export function CodePanel(props: CodePanelProps) {
           },
           user: async (editor, monaco) => {
             setMonacoInstance(monaco);
-
             setUserEditorState(editor);
 
-            const model = editor.getModel();
+            const getTsWorker = await monaco.languages.typescript.getTypeScriptWorker();
+            const model = monaco.editor.getModel(monaco.Uri.parse(USER_CODE_PATH));
 
             if (!model) {
               throw new Error();
             }
 
-            const ts = await (await monaco.languages.typescript.getTypeScriptWorker())(model.uri);
+            const tsWorker = await getTsWorker(model.uri);
 
             const userErrors = await Promise.all([
-              ts.getSemanticDiagnostics(USER_CODE_PATH),
-              ts.getSyntacticDiagnostics(USER_CODE_PATH),
-              ts.getCompilerOptionsDiagnostics(USER_CODE_PATH),
+              tsWorker.getSemanticDiagnostics(USER_CODE_PATH),
+              tsWorker.getSyntacticDiagnostics(USER_CODE_PATH),
+              tsWorker.getCompilerOptionsDiagnostics(USER_CODE_PATH),
             ] as const);
 
             const testErrors = await Promise.all([
-              ts.getSemanticDiagnostics(TESTS_PATH),
-              ts.getSyntacticDiagnostics(TESTS_PATH),
-              ts.getCompilerOptionsDiagnostics(TESTS_PATH),
+              tsWorker.getSemanticDiagnostics(TESTS_PATH),
+              tsWorker.getSyntacticDiagnostics(TESTS_PATH),
+              tsWorker.getCompilerOptionsDiagnostics(TESTS_PATH),
             ] as const);
 
             setTsErrors(

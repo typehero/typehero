@@ -12,9 +12,9 @@ import ts from 'typescript';
 import { CodeEditor, LIB_URI } from './code-editor';
 import { useResetEditor } from './editor-hooks';
 import { libSource } from './editor-types';
-import { useEditorSettingsStore } from './settings-store';
-import { getEventDeltas, typeCheck } from './utils';
 import { PrettierFormatProvider } from './prettier';
+import { useEditorSettingsStore } from './settings-store';
+import { getEventDeltas } from './utils';
 
 function preventSelection(event: Event) {
   event.preventDefault();
@@ -83,7 +83,7 @@ export default function SplitEditor({
   // i moved this into onMount to avpid the monacoRef stuff but then you can really debounce it
   const [ata] = useState(() =>
     setupTypeAcquisition({
-      projectName: 'TypeScript Playground',
+      projectName: 'TypeHero Playground',
       typescript: ts,
       logger: console,
       delegate: {
@@ -91,9 +91,18 @@ export default function SplitEditor({
           if (!monacoRef.current) return;
           const path = `file://${_path}`;
           const uri = monacoRef.current.Uri.parse(path);
-          if (monacoRef.current.editor.getModel(uri) === null) {
+          const model = monacoRef.current.editor.getModel(uri);
+          if (!model) {
             monacoRef.current.languages.typescript.typescriptDefaults.addExtraLib(code, path);
-            monacoRef.current.editor.createModel(code, 'javascript', uri);
+            monacoRef.current.editor.createModel(code, 'typescript', uri);
+          }
+
+          const models = monacoRef.current.editor.getModels();
+          for (const m of models) {
+            console.log({
+              model: m.uri.toString(),
+              value: m.getValue(),
+            });
           }
         },
       },
@@ -245,6 +254,7 @@ export default function SplitEditor({
               strictNullChecks: true,
               moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
               allowSyntheticDefaultImports: true,
+              outDir: 'lib', // kills the override input file error
             });
 
             monaco.languages.registerDocumentFormattingEditProvider(
