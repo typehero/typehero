@@ -81,9 +81,9 @@ export default function SplitEditor({
   const addLibraryToRuntime = (code: string, _path: string) => {
     if (!monacoRef.current) return;
     const path = `file://${_path}`;
-    monacoRef.current.languages.typescript.typescriptDefaults.addExtraLib(code, path);
-    const uri = monacoRef.current.Uri.file(path);
+    const uri = monacoRef.current.Uri.parse(path);
     if (monacoRef.current.editor.getModel(uri) === null) {
+      monacoRef.current.languages.typescript.typescriptDefaults.addExtraLib(code, path);
       monacoRef.current.editor.createModel(code, 'javascript', uri);
     }
   };
@@ -296,12 +296,6 @@ export default function SplitEditor({
             });
 
             onMount?.tests?.(editor, monaco);
-
-            const model = monaco.editor.getModel(monaco.Uri.parse(TESTS_PATH));
-            const code = model?.getValue();
-            if (code) {
-              debouncedAta(code);
-            }
           }}
           defaultPath={TESTS_PATH}
           value={tests}
