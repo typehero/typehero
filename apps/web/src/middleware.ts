@@ -11,7 +11,7 @@ export function middleware(req: NextRequest) {
   // Ignore requests to the Vercel user metadata endpoint to prevent
   // i18n locale error extracting the locale as ".well-known"
   if (req.nextUrl.pathname === '/.well-known/vercel-user-meta') {
-    return new Response(null, { status: 404 })
+    return new Response(null, { status: 404 });
   }
 
   const { VERCEL_ENV: vercelEnv, STAGING: staging = false } = process.env;
