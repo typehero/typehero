@@ -136,7 +136,7 @@ export function Dashboard({ user, isOwnProfile, children }: Props) {
                   </VerticalTabsTrigger>
                   <Link
                     href="/settings"
-                    className="border-border dark:border-ring  data-[state=active]:bg-border ring-offset-background focus-visible:ring-ring data-[state=active]:text-foreground flex items-center justify-center gap-3 whitespace-nowrap rounded-xl border px-1.5 py-1.5 text-sm font-medium transition-all duration-300 hover:bg-neutral-200/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm dark:hover:bg-neutral-700/50 md:justify-normal md:px-3"
+                    className="border-border dark:border-ring data-[state=active]:bg-border ring-offset-background focus-visible:ring-ring data-[state=active]:text-foreground flex items-center justify-center gap-3 whitespace-nowrap rounded-xl border px-1.5 py-1.5 text-sm font-medium transition-all duration-300 hover:bg-neutral-200/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm dark:hover:bg-neutral-700/50 md:justify-normal md:px-3"
                   >
                     <Settings className="h-4 w-4" />
                     <span className="hidden md:block">Settings</span>
