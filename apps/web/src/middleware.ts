@@ -8,12 +8,6 @@ const I18nMiddleware = createI18nMiddleware({
 });
 
 export function middleware(req: NextRequest) {
-  // Ignore requests to the Vercel user metadata endpoint to prevent
-  // i18n locale error extracting the locale as ".well-known"
-  if (req.nextUrl.pathname === '/.well-known/vercel-user-meta') {
-    return new Response(null, { status: 404 });
-  }
-
   const { VERCEL_ENV: vercelEnv, STAGING: staging = false } = process.env;
 
   // skip blocking the request if local or preview or staging
@@ -25,5 +19,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!api|static|site.webmanifest|_next|favicon.ico|robots.txt).*)'],
+  matcher: ['/((?!api|static|.*\\..*|_next|favicon.ico|robots.txt).*)'],
 };
