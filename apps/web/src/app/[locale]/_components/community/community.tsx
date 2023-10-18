@@ -144,7 +144,7 @@ export function Community() {
               </div>
             </div>
             {/* autoscrolled */}
-            <div className="pb-16 lg:pb-0 lg:pl-8 xl:hidden">
+            <div className="pb-16 sm:pb-24 lg:pb-0 lg:pl-8 xl:hidden">
               <div className="infinite-scroll-x-container mx-auto hover:shadow-[0_0_10rem_10rem_#fff8] dark:hover:shadow-[0_0_10rem_10rem_#0008] lg:w-[25rem] xl:w-[35rem]">
                 <div
                   ref={innerScrollerRef}
