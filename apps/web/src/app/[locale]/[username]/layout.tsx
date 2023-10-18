@@ -7,5 +7,5 @@ export default async function LayoutProfile({
   children: React.ReactNode;
   params: { username: string };
 }) {
-  return <Profile username={username} children={children} />;
+  return <Profile username={username}>{children}</Profile>;
 }

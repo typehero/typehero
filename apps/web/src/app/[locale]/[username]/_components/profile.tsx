@@ -39,5 +39,9 @@ export async function Profile({ username: usernameFromQuery, children }: Props) 
   const session = await getServerAuthSession();
   const isOwnProfile = session?.user.id === user.id;
 
-  return <Dashboard user={user} children={children} isOwnProfile={isOwnProfile} />;
+  return (
+    <Dashboard user={user} isOwnProfile={isOwnProfile}>
+      {children}
+    </Dashboard>
+  );
 }

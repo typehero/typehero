@@ -26,7 +26,7 @@ interface Props {
   isOwnProfile: boolean;
   children: React.ReactNode;
 }
-type Tab = 'overview' | 'in-progress' | 'shared-solutions' | 'bookmarks';
+type Tab = 'bookmarks' | 'in-progress' | 'overview' | 'shared-solutions';
 
 export function Dashboard({ user, isOwnProfile, children }: Props) {
   const router = useRouter();
