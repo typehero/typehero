@@ -105,7 +105,7 @@ model User {
   roles         Role[]
 
   /// this is the bio that shows up on the profile page
-  bio       String     @default("") @db.VarChar(256)
+  bio       String     @default("") @db.VarChar(1000)
   /// this is the twitter URL that shows up on the profile page
   userLinks UserLink[]
 
@@ -252,6 +252,8 @@ model Bookmark {
   userId      String
   challenge   Challenge? @relation(fields: [challengeId], references: [id])
   challengeId Int?
+
+  createdAt DateTime? @default(now())
 
   @@index([userId])
   @@index([challengeId])

@@ -457,7 +457,7 @@ export function CuratedTracksCard(props: CardProps) {
       >
         <div className="flex w-[69%] items-center justify-between gap-3 rounded-b-lg rounded-t-xl bg-neutral-500/10 p-2 pl-3">
           <span className="flex items-center gap-1 text-xs font-semibold tracking-wide">
-            Typescript Foundations
+            TypeScript Foundations
           </span>
         </div>
         <div className="flex w-[69%] flex-col">

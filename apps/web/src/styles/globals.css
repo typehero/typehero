@@ -244,32 +244,6 @@ main {
   @apply mx-auto max-w-[1400px] px-4 md:px-24;
 }
 
-/* overrides a conflicting style on the honeycomb grid */
-.honeycomboverride > *:first-child {
-  margin-left: 2.375rem /* 38px */ !important;
-}
-
-@media (min-width: 1025px) {
-  .honeycomboverride > *:first-child {
-    margin-left: -4.75rem !important;
-  }
-  .honeycomboverride > *:nth-child(9) {
-    margin-left: -2.375rem !important;
-  }
-  .honeycomboverride > *:nth-child(14) {
-    margin-left: 0rem !important;
-  }
-  .honeycomboverride > *:nth-child(23) {
-    margin-left: 2.375rem !important;
-  }
-  .honeycomboverride > *:nth-child(23) {
-    margin-left: 2.375rem !important;
-  }
-  .honeycomboverride > *:nth-child(13n + 23) {
-    margin-left: 2.375rem !important;
-  }
-}
-
 @property --gradient-angle {
   syntax: '<angle>'; /* <- defined as type angle for the transition to work */
   initial-value: 360deg;
@@ -301,6 +275,91 @@ main {
 .wl-form-button {
   background: linear-gradient(var(--gradient-angle), #34d399, #60a5fa, #ff88ff, #ff8844);
   animation: gradient-rotate 5s linear infinite reverse;
+}
+
+.animate-beam {
+  opacity: 0;
+  transform: translate(-72%, -62%) scale(0.5);
+  animation: beam 2s 0.75s ease 1 forwards;
+}
+
+@keyframes beam {
+  to {
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
+  }
+}
+
+/* portrait */
+@media (orientation: portrait) {
+  .animate-beam {
+    opacity: 0;
+    transform: translate(-62%, -40%) scale(0.5);
+    animation: beam 2s 0.75s ease 1 forwards;
+  }
+}
+
+/* tablet */
+@media (max-width: 1025px) {
+  @keyframes beam {
+    to {
+      opacity: 1;
+      transform: translate(-40%, -40%) scale(1);
+    }
+  }
+}
+
+.animate-newstar {
+  opacity: 0;
+  animation: newstar 1.5s 0.95s ease 1 forwards;
+}
+.animate-oldstar {
+  opacity: 1;
+  animation: oldstar 1.5s 0.95s ease 1 forwards;
+}
+
+@keyframes newstar {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes oldstar {
+  to {
+    opacity: 0;
+  }
+}
+
+.animate-bg-gradient-to-center {
+  animation: bg-to-center 1s 0.75s ease 1 forwards;
+}
+.animate-bg-gradient-to-center-title {
+  animation: bg-to-center 1s 0.95s ease 1 forwards;
+}
+
+@keyframes bg-to-center {
+  to {
+    background-position: center;
+  }
+}
+
+.animate-logo-light {
+  filter: brightness(90%);
+  animation: logo-light 1.25s 0.85s ease 1 forwards;
+}
+@keyframes logo-light {
+  to {
+    filter: brightness(110%);
+  }
+}
+
+.animate-3d-logo {
+  opacity: 0.1;
+  animation: logo-3d 1.25s 0.85s ease 1 forwards;
+}
+@keyframes logo-3d {
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes gradient-rotate {
@@ -440,4 +499,46 @@ main {
 
 a {
   @apply focus:outline-none focus-visible:ring-2;
+}
+
+.infinite-scroll-x-container {
+  overflow: hidden;
+  mask: linear-gradient(to right, transparent, white 20%, white 80%, transparent);
+  -webkit-mask: linear-gradient(to right, transparent, white 20%, white 80%, transparent);
+}
+.infinite-scroll-x {
+  animation: infinite-scroll-x 120s linear infinite;
+}
+
+.infinite-scroll-x-reverse {
+  animation: infinite-scroll-x 120s linear infinite reverse;
+}
+
+.infinite-scroll-x:hover,
+.infinite-scroll-x-reverse:hover {
+  animation-play-state: paused;
+}
+
+@keyframes infinite-scroll-x {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (min-width: 1280px) {
+  .honeycomboverride > *:first-child {
+    margin-left: -4.75rem !important;
+  }
+  .honeycomboverride > *:nth-child(8) {
+    margin-left: 0rem !important;
+  }
+  .honeycomboverride > *:nth-child(10) {
+    margin-left: -2.375rem !important;
+  }
+  .honeycomboverride > *:nth-child(26) {
+    margin-left: 2.375rem !important;
+  }
+  .honeycomboverride > *:nth-child(15n + 26) {
+    margin-left: 2.375rem !important;
+  }
 }

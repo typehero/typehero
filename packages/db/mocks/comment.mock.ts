@@ -1,12 +1,8 @@
 import { faker } from '@faker-js/faker';
 import { type Prisma } from '@prisma/client';
-import { trashId } from '../seed';
+import { trashId } from '../seed/dev';
 
-/**
- *
- * @returns Creates a mock user.
- */
-export default function CommentMock(
+export function createComment(
   commentNumber: number,
   parentId?: number,
 ): Prisma.CommentCreateManyInput {
