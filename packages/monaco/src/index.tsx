@@ -114,14 +114,14 @@ export function CodePanel(props: CodePanelProps) {
         userCode={code}
         onMount={{
           tests: async (editor, monaco) => {
-            const models = monaco.editor.getModels();
-            console.log({ models });
-            for (const m of models) {
-              console.log({
-                model: m.uri.toString(),
-                value: m.getValue(),
-              });
-            }
+            // const models = monaco.editor.getModels();
+            // console.log({ models });
+            // for (const m of models) {
+            //   console.log({
+            //     model: m.uri.toString(),
+            //     value: m.getValue(),
+            //   });
+            // }
             const getTsWorker = await monaco.languages.typescript.getTypeScriptWorker();
 
             const model = monaco.editor.getModel(monaco.Uri.parse(TESTS_PATH));
@@ -146,6 +146,20 @@ export function CodePanel(props: CodePanelProps) {
 
             if (!model) {
               throw new Error();
+            }
+
+            const actualCode = model
+              .getValue()
+              .split('\n')
+              .filter((c) => !c.startsWith('import'))
+              .join('\n');
+            if (actualCode) {
+              monaco.languages.typescript.typescriptDefaults.setExtraLibs([
+                {
+                  content: actualCode,
+                  filePath: 'file:///node_modules/@types/user.d.ts',
+                },
+              ]);
             }
 
             const tsWorker = await getTsWorker(model.uri);
@@ -175,13 +189,25 @@ export function CodePanel(props: CodePanelProps) {
               props.updatePlaygroundTestsLocalStorage?.(code ?? '');
             }
           },
-          user: async (code) => {
+          user: async (code = '') => {
             if (!monacoInstance) return null;
             if (isPlayground) {
               props.updatePlaygroundCodeLocalStorage?.(code ?? '');
             }
-            setCode(code ?? '');
-            setLocalStorageCode(code ?? '');
+            setCode(code);
+            setLocalStorageCode(code);
+
+            const actualCode = code
+              .split('\n')
+              .filter((c) => !c.startsWith('import'))
+              .join('\n');
+            if (actualCode) {
+              monacoInstance.languages.typescript.typescriptDefaults.addExtraLib(
+                actualCode,
+                'file:///node_modules/@types/user.d.ts',
+              );
+            }
+
             const getTsWorker = await monacoInstance.languages.typescript.getTypeScriptWorker();
 
             const mm = monacoInstance.editor.getModel(monacoInstance.Uri.parse(TESTS_PATH));

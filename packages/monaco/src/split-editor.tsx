@@ -54,6 +54,12 @@ export interface SplitEditorProps {
   isTestsReadonly?: boolean;
 }
 
+const getActualCode = (code: string) =>
+  code
+    .split('\n')
+    .filter((c) => !c.startsWith('import'))
+    .join('\n');
+
 // million-ignore
 export default function SplitEditor({
   className,
@@ -96,6 +102,34 @@ export default function SplitEditor({
             monacoRef.current.languages.typescript.typescriptDefaults.addExtraLib(code, path);
             monacoRef.current.editor.createModel(code, 'typescript', uri);
           }
+
+          const userCode = monacoRef.current.editor
+            .getModel(monacoRef.current.Uri.parse(USER_CODE_PATH))!
+            .getValue();
+
+          const testCode = monacoRef.current.editor
+            .getModel(monacoRef.current.Uri.parse(TESTS_PATH))!
+            .getValue();
+
+          monacoRef.current.languages.typescript.typescriptDefaults.addExtraLib(
+            getActualCode(userCode),
+            'file:///node_modules/@types/user.d.ts',
+          );
+          monacoRef.current.languages.typescript.typescriptDefaults.addExtraLib(
+            getActualCode(testCode),
+            'file:///node_modules/@types/tests.d.ts',
+          );
+
+          monacoRef.current.languages.typescript.typescriptDefaults.setExtraLibs([
+            {
+              content: getActualCode(userCode),
+              filePath: 'file:///node_modules/@types/user.d.ts',
+            },
+            {
+              content: getActualCode(testCode),
+              filePath: 'file:///node_modules/@types/tests.d.ts',
+            },
+          ]);
 
           const models = monacoRef.current.editor.getModels();
           for (const m of models) {
@@ -305,6 +339,9 @@ export default function SplitEditor({
               readOnly: isTestsReadonly,
               renderValidationDecorations: 'on',
             });
+
+            const model = monaco.editor.getModel(monaco.Uri.parse(TESTS_PATH))!;
+            debouncedAta(model.getValue());
 
             onMount?.tests?.(editor, monaco);
           }}
