@@ -1,5 +1,3 @@
-import { Expect } from 'type-testing';
-
 type test_age = Expect<NotLiteral<number, typeof age>>;
 type test_name = Expect<NotLiteral<string, typeof name>>;
 

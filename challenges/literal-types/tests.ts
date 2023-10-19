@@ -1,5 +1,3 @@
-import { Expect, Equal } from 'type-testing';
-
 type test_LiteralString = Expect<Equal<
   LiteralString,
   'chocolate chips'

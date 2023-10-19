@@ -4,92 +4,61 @@
  * based on: https://github.com/type-challenges/type-challenges/blob/main/utils/index.d.ts
  */
 export const libSource = `
-type Expect<T extends true> = T;
-type ExpectTrue<T extends true> = T;
-type ExpectFalse<T extends false> = T;
-type IsTrue<T extends true> = T;
-type IsFalse<T extends false> = T;
-
-type NotEqual<X, Y> = true extends Equal<X, Y> ? false : true;
-type Equal<X, Y> = (<T>() => T extends X ? 1 : 2) extends <T>() => T extends Y
-  ? 1
-  : 2
-  ? true
+type Equal<X, Y> =
+  (<T>() => T extends X ? 1 : 2) extends
+  (<T>() => T extends Y ? 1 : 2) ? true : false;
+type Expect<T extends true> = Equal<T, true>;
+type ExpectFalse<T extends false> = Equal<T, false>;
+type FalseCases<T extends readonly false[]> =
+  Equal<T[number], false> extends true
+  ? IsTuple<T> extends true
+    ? true
+    : false
   : false;
-
-type IsAny<T> = 0 extends 1 & T ? true : false;
-type NotAny<T> = true extends IsAny<T> ? false : true;
-
-type Debug<T> = { [K in keyof T]: T[K] };
-type MergeInsertions<T> = T extends object
-  ? { [K in keyof T]: MergeInsertions<T[K]> }
-  : T;
-
-type Alike<X, Y> = Equal<MergeInsertions<X>, MergeInsertions<Y>>;
-
-type ExpectExtends<VALUE, EXPECTED> = EXPECTED extends VALUE ? true : false;
-type ExpectValidArgs<
-  FUNC extends (...args: any[]) => any,
-  ARGS extends any[]
-> = ARGS extends Parameters<FUNC> ? true : false;
-
-type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
-  k: infer I
-) => void
-  ? I
-  : never;
-
-type NoInfer<T> = [T][T extends any ? 0 : never];
-
-type IsUnion<T, U = T> = [T] extends [never]
+type IsAny<T> = 0 extends (1 & T) ? true : false;
+type IsNever<T> = [T] extends [never] ? true : false;
+type IsTuple<T> =
+  IsNever<T> extends true
   ? false
-  : T extends unknown
-  ? [U] extends [T]
+  : T extends readonly unknown[]
+    ? number extends T["length"]
+      ? false
+      : true
+    : false
+;
+type IsTuple<T> =
+  IsNever<T> extends true
+  ? false
+  : T extends readonly unknown[]
+    ? number extends T["length"]
+      ? false
+      : true
+    : false
+;
+type IsUnionInternal<T, Copy = T> =
+  [T] extends [never] // IsNever check
+    ? false
+    : T extends never // force distributivity
+      ? false
+      : [Copy] extends [T] // distributed union equality check
+        ? false
+        : true
+;
+type IsUnknown<T> =
+  [unknown] extends [T]
+  ? IsAny<T> extends true
+    ? false
+    : IsNever<T> extends true
+      ? false
+      : true
+  : false;
+type NotEqual<X, Y> =
+  (<T>() => T extends X ? 1 : 2) extends
+  (<T>() => T extends Y ? 1 : 2) ? false : true;
+type TrueCases<T extends readonly true[]> =
+  false extends Equal<T[number], true>
+  ? false extends IsTuple<T>
     ? false
     : true
-  : false;
-
-declare function id<T>(): T;
-
-/**
- * Helper function to test your code.
- *
- * Checks if two types have all the same properties and modifiers
- *
- * To check what it is failing, you can hover over \`Equal\` and see what the types failing are
- */
-declare function Equal<A, B>(
-  ...args: [
-    ...([a: A, b: B] | []),
-    ...(Alike<A, B> extends true ? [] : [msg: "not equal"])
-  ]
-): void;
-
-/**
- * Helper function to test your code.
- *
- * Checks that two types aren't the same
- *
- * To check what it is failing, you can hover over \`NotEqual\` and see what the types failing are
- */
-declare function NotEqual<A, B>(
-  ...args: [
-    ...([a: A, b: B] | []),
-    ...(Alike<A, B> extends true ? [msg: "equal"] : [])
-  ]
-): void;
-
-/**
- * Helper function to test your code.
- *
- * Checks if type \`A\` extends \`B\`
- *
- * To check what it is failing, you can hover over \`Extends\` and see what the types failing are
- */
-declare function Extends<A, B>(
-  ...args: [
-    ...([a: A, b: B] | []),
-    ...([A] extends [B] ? [] : [msg: [A, "doesn't extend", B]])
-  ]
-): void;
+  : true;
 `;
