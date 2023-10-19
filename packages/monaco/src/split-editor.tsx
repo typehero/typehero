@@ -99,7 +99,9 @@ export default function SplitEditor({
       logger: console,
       delegate: {
         receivedFile: (code: string, _path: string) => {
-          if (!monacoRef.current) return;
+          if (!monacoRef.current) {
+            return;
+          }
           const path = `file://${_path}`;
           const uri = monacoRef.current.Uri.parse(path);
           const model = monacoRef.current.editor.getModel(uri);
@@ -150,7 +152,8 @@ export default function SplitEditor({
     }),
   );
 
-  const debouncedAta = useRef(debounce((code: string) => ata(code), 1000)).current;
+  const debouncedUserCodeAta = useRef(debounce((code: string) => ata(code), 1000)).current;
+  const debouncedTestCodeAta = useRef(debounce((code: string) => ata(code), 1000)).current;
 
   useEffect(() => {
     const resizerRef = resizer.current;
@@ -281,7 +284,7 @@ export default function SplitEditor({
             const model = monaco.editor.getModel(monaco.Uri.parse(USER_CODE_PATH))!;
             const code = model.getValue();
             console.log('on mount user code', code);
-            debouncedAta(code);
+            debouncedUserCodeAta(code);
             monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
               ...monaco.languages.typescript.typescriptDefaults.getCompilerOptions(),
               strict: true,
@@ -333,7 +336,7 @@ export default function SplitEditor({
           onValidate={onValidate?.user}
           onChange={async (e, a) => {
             const code = e ?? '';
-            debouncedAta(code);
+            debouncedUserCodeAta(code);
             if (hasImports(code)) {
               console.log('on change user has import');
               const actualCode = code
@@ -385,7 +388,7 @@ export default function SplitEditor({
           onMount={(editor, monaco) => {
             const testModel = monaco.editor.getModel(monaco.Uri.parse(TESTS_PATH))!;
             const testCode = testModel.getValue();
-            debouncedAta(testCode);
+            debouncedTestCodeAta(testCode);
 
             if (hasImports(testCode)) {
               console.log('on mount tests has import');
@@ -415,7 +418,7 @@ export default function SplitEditor({
           defaultValue={tests}
           onChange={async (e, a) => {
             const code = e ?? '';
-            debouncedAta(code);
+            debouncedTestCodeAta(code);
             if (hasImports(code)) {
               console.log('on change tests has import');
               const actualCode = code
