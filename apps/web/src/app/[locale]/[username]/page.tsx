@@ -1,6 +1,7 @@
 import { buildMetaForDefault, buildMetaForUser } from '~/app/metadata';
-import { Profile } from './_components/profile';
 import { prisma } from '@repo/db';
+import { OverviewTab } from './_components/dashboard/overview-tab';
+import { notFound } from 'next/navigation';
 
 interface Props {
   params: {
@@ -8,8 +9,29 @@ interface Props {
   };
 }
 
-export default function Page({ params }: Props) {
-  return <Profile username={params.username} />;
+export default async function Page({ params: { username: usernameFromQuery } }: Props) {
+  const [, username] = decodeURIComponent(usernameFromQuery).split('@');
+
+  if (!username) return notFound();
+
+  const user = await prisma.user.findFirst({
+    where: {
+      name: {
+        equals: username,
+      },
+    },
+    select: {
+      id: true,
+      createdAt: true,
+      bio: true,
+      image: true,
+      name: true,
+      userLinks: true,
+    },
+  });
+
+  if (!user) return notFound();
+  return <OverviewTab user={user} />;
 }
 
 export async function generateMetadata({ params: { username: usernameFromQuery } }: Props) {

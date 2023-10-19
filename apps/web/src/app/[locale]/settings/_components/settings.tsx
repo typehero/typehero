@@ -65,15 +65,15 @@ export const Settings = async ({ user }: Props) => {
             )}
             <div className="flex gap-4 md:w-full md:flex-col">
               <VerticalTabsTrigger
-                className="flex items-center justify-center gap-3 px-2 md:justify-normal md:px-3"
+                className="flex items-center justify-center gap-3 px-2 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50 md:justify-normal md:px-3 "
                 value="settings"
               >
                 <Settings2 className="h-4 w-4" />
                 <span className="hidden md:block">Settings</span>
               </VerticalTabsTrigger>
               <Link
-                href="/settings"
-                className="border-border dark:border-ring data-[state=active]:bg-border ring-offset-background focus-visible:ring-ring data-[state=active]:text-foreground flex items-center justify-center gap-3 whitespace-nowrap rounded-xl border px-1.5 py-1.5 text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm md:justify-normal md:px-3"
+                href={`/@${user.name}`}
+                className="border-border dark:border-ring  data-[state=active]:bg-border ring-offset-background focus-visible:ring-ring data-[state=active]:text-foreground flex items-center justify-center gap-3 whitespace-nowrap rounded-xl border px-1.5 py-1.5 text-sm font-medium transition-all duration-300 hover:bg-neutral-200/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm dark:hover:bg-neutral-700/50 md:justify-normal md:px-3"
               >
                 <UserIcon className="h-4 w-4" />
                 <span className="hidden md:block">Back to Profile</span>
