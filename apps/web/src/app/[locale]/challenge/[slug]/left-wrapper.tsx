@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-import { type ReactNode, useRef, useState, useEffect, useContext, useMemo } from 'react';
+import { useMemo, type ReactNode, useRef, useState, useEffect, useContext } from 'react';
 
 import { FeatureFlagContext } from '~/app/feature-flag-provider';
 import { ChallengeTrackNavigation } from '~/app/[locale]/challenge/_components/challenge-track-navigation';
