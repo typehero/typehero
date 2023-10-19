@@ -126,36 +126,20 @@ export default function SplitEditor({
             .getValue();
 
           if (hasImports(userCode)) {
-            // console.log('received file: user create d ts');
             monacoRef.current.languages.typescript.typescriptDefaults.addExtraLib(
               getActualCode(userCode),
               'file:///node_modules/@types/user.d.ts',
             );
-          } else {
-            // console.log('received file: remove extra libs');
-            // monacoRef.current.languages.typescript.typescriptDefaults.setExtraLibs([]);
           }
 
           if (hasImports(testCode)) {
-            console.log('received file: test create d ts');
             monacoRef.current.languages.typescript.typescriptDefaults.addExtraLib(
               getActualCode(testCode),
               'file:///node_modules/@types/test.d.ts',
             );
-          } else {
-            // console.log('remove');
-            // monacoRef.current.languages.typescript.typescriptDefaults.setExtraLibs([]);
           }
 
           onMount?.tests?.(editorRef.current, monacoRef.current);
-
-          // const models = monacoRef.current.editor.getModels();
-          // for (const m of models) {
-          //   console.log({
-          //     model: m.uri.toString(),
-          //     value: m.getValue(),
-          //   });
-          // }
         },
       },
     }),
@@ -317,7 +301,6 @@ export default function SplitEditor({
             );
 
             if (hasImports(code)) {
-              console.log('on mount user has import');
               const actualCode = code
                 .split('\n')
                 .filter((c) => !c.startsWith('import') && !c.startsWith('export'))
@@ -330,9 +313,6 @@ export default function SplitEditor({
                   },
                 ]);
               }
-            } else {
-              console.log('on mount tests has no import');
-              // monaco.languages.typescript.typescriptDefaults.setExtraLibs([]);
             }
 
             typeCheck(monaco);
@@ -346,7 +326,6 @@ export default function SplitEditor({
             const code = value ?? '';
             debouncedUserCodeAta(code);
             if (hasImports(code)) {
-              console.log('on change user has import');
               const actualCode = code
                 .split('\n')
                 .filter((c) => !c.startsWith('import') && !c.startsWith('export'))
@@ -366,7 +345,6 @@ export default function SplitEditor({
                 onMount?.tests?.(editorRef.current!, monacoRef.current!);
               });
             } else {
-              console.log('on mount tests has no import');
               // we want to blow away the user.d.ts because
               // 1. its no longer needed
               // 2. so you dont get duplicate type errors if you add imports back in
@@ -411,7 +389,6 @@ export default function SplitEditor({
             debouncedTestCodeAta(testCode);
 
             if (hasImports(testCode)) {
-              console.log('on mount tests has import');
               const actualCode = testCode
                 .split('\n')
                 .filter((c) => !c.startsWith('import'))
@@ -424,9 +401,6 @@ export default function SplitEditor({
                   },
                 ]);
               }
-            } else {
-              console.log('on mount tests has no import');
-              // monaco.languages.typescript.typescriptDefaults.setExtraLibs([]);
             }
 
             typeCheck(monaco);
@@ -440,7 +414,6 @@ export default function SplitEditor({
             const code = editor ?? '';
             debouncedTestCodeAta(code);
             if (hasImports(code)) {
-              console.log('on change tests has import');
               const actualCode = code
                 .split('\n')
                 .filter((c) => !c.startsWith('import'))
@@ -453,8 +426,6 @@ export default function SplitEditor({
                   },
                 ]);
               }
-            } else {
-              console.log('on change tests has no import');
             }
 
             onChange?.tests?.(editor, changeEvent);
@@ -492,8 +463,6 @@ async function typeCheck(monaco: typeof monacoType) {
         message: d.messageText as string,
       } satisfies monacoType.editor.IMarkerData;
     });
-
-    // console.log({ model: model.uri.path, diagnostics });
 
     monaco.editor.setModelMarkers(model, model.getLanguageId(), markers);
   }
