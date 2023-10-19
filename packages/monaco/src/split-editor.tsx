@@ -283,7 +283,6 @@ export default function SplitEditor({
 
             const model = monaco.editor.getModel(monaco.Uri.parse(USER_CODE_PATH))!;
             const code = model.getValue();
-            console.log('on mount user code', code);
             debouncedUserCodeAta(code);
             monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
               ...monaco.languages.typescript.typescriptDefaults.getCompilerOptions(),
@@ -312,9 +311,10 @@ export default function SplitEditor({
               console.log('on mount user has import');
               const actualCode = code
                 .split('\n')
-                .filter((c) => !c.startsWith('import') || !c.startsWith('export'))
+                .filter((c) => !c.startsWith('import') && !c.startsWith('export'))
                 .join('\n');
               if (actualCode) {
+                console.log({ actualCode });
                 monaco.languages.typescript.typescriptDefaults.setExtraLibs([
                   {
                     content: actualCode,
@@ -341,9 +341,10 @@ export default function SplitEditor({
               console.log('on change user has import');
               const actualCode = code
                 .split('\n')
-                .filter((c) => !c.startsWith('import') || !c.startsWith('export'))
+                .filter((c) => !c.startsWith('import') && !c.startsWith('export'))
                 .join('\n');
               if (actualCode) {
+                console.log({ actualCode });
                 monaco?.languages.typescript.typescriptDefaults.setExtraLibs([
                   {
                     content: actualCode,
@@ -353,7 +354,13 @@ export default function SplitEditor({
               }
             } else {
               console.log('on mount tests has no import');
-              // monaco.languages.typescript.typescriptDefaults.setExtraLibs([]);
+              // we want to blow away the user.d.ts because
+              // 1. its no longer needed
+              // 2. so you dont get duplicate type errors if you add imports back in
+              monaco?.languages.typescript.typescriptDefaults.addExtraLib(
+                '',
+                'file:///node_modules/@types/user.d.ts',
+              );
             }
             typeCheck(monaco!);
             onChange?.user?.(e, a);
@@ -435,7 +442,6 @@ export default function SplitEditor({
               }
             } else {
               console.log('on change tests has no import');
-              // monaco.languages.typescript.typescriptDefaults.setExtraLibs([]);
             }
 
             onChange?.tests?.(e, a);

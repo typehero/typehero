@@ -11,7 +11,7 @@ import type * as monaco from 'monaco-editor';
 import { usePathname, useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 import { useResetEditor } from './editor-hooks';
-import SplitEditor, { TESTS_PATH, USER_CODE_PATH, hasImports } from './split-editor';
+import SplitEditor, { TESTS_PATH, USER_CODE_PATH } from './split-editor';
 import { useLocalStorage } from './useLocalStorage';
 
 export interface CodePanelProps {
@@ -158,9 +158,6 @@ export function CodePanel(props: CodePanelProps) {
               props.updatePlaygroundTestsLocalStorage?.(code ?? '');
 
               if (!monacoInstance) return null;
-              if (isPlayground) {
-                props.updatePlaygroundCodeLocalStorage?.(code ?? '');
-              }
               setCode(code);
               setLocalStorageCode(code);
 
