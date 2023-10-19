@@ -598,3 +598,7 @@ a {
     transform: translateY(0%);
   }
 }
+
+.ReactQueryDevtools > button {
+  margin-bottom: 5rem !important;
+}
