@@ -56,7 +56,7 @@ export function Dashboard({ user, isOwnProfile, children }: Props) {
   return (
     <div className="container">
       {/* // TODO: GFI: make each page a subroute, put settings & profile into same layout */}
-      <Tabs className="flex flex-col gap-8 py-8 md:flex-row" defaultValue={selectedTab}>
+      <Tabs className="flex flex-col gap-8 py-8 md:flex-row" value={selectedTab}>
         <VerticalTabsList>
           <div className="flex flex-col items-center gap-10 md:items-start">
             <div
