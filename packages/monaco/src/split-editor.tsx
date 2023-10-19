@@ -55,7 +55,7 @@ export interface SplitEditorProps {
 }
 
 export const hasImports = (code: string) => {
-  const x = code.split('\n').filter((c) => c.startsWith('import'));
+  const x = code.split('\n').filter((c) => c.startsWith('import') || c.startsWith('export'));
   return x.length > 0;
 };
 
@@ -280,6 +280,7 @@ export default function SplitEditor({
 
             const model = monaco.editor.getModel(monaco.Uri.parse(USER_CODE_PATH))!;
             const code = model.getValue();
+            console.log('on mount user code', code);
             debouncedAta(code);
             monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
               ...monaco.languages.typescript.typescriptDefaults.getCompilerOptions(),
@@ -308,7 +309,7 @@ export default function SplitEditor({
               console.log('on mount user has import');
               const actualCode = code
                 .split('\n')
-                .filter((c) => !c.startsWith('import'))
+                .filter((c) => !c.startsWith('import') || !c.startsWith('export'))
                 .join('\n');
               if (actualCode) {
                 monaco.languages.typescript.typescriptDefaults.setExtraLibs([
@@ -323,6 +324,7 @@ export default function SplitEditor({
               // monaco.languages.typescript.typescriptDefaults.setExtraLibs([]);
             }
 
+            typeCheck(monaco);
             // this just does the typechecking so the UI can update
             onMount?.user?.(editor, monaco);
           }}
@@ -333,10 +335,10 @@ export default function SplitEditor({
             const code = e ?? '';
             debouncedAta(code);
             if (hasImports(code)) {
-              console.log('on mount user has import');
+              console.log('on change user has import');
               const actualCode = code
                 .split('\n')
-                .filter((c) => !c.startsWith('import'))
+                .filter((c) => !c.startsWith('import') || !c.startsWith('export'))
                 .join('\n');
               if (actualCode) {
                 monaco?.languages.typescript.typescriptDefaults.setExtraLibs([
@@ -350,6 +352,7 @@ export default function SplitEditor({
               console.log('on mount tests has no import');
               // monaco.languages.typescript.typescriptDefaults.setExtraLibs([]);
             }
+            typeCheck(monaco!);
             onChange?.user?.(e, a);
           }}
         />
@@ -403,6 +406,7 @@ export default function SplitEditor({
               // monaco.languages.typescript.typescriptDefaults.setExtraLibs([]);
             }
 
+            typeCheck(monaco);
             // this just does the typechecking so the UI can update
             onMount?.tests?.(editor, monaco);
           }}
@@ -411,6 +415,7 @@ export default function SplitEditor({
           defaultValue={tests}
           onChange={async (e, a) => {
             const code = e ?? '';
+            debouncedAta(code);
             if (hasImports(code)) {
               console.log('on change tests has import');
               const actualCode = code
@@ -430,7 +435,6 @@ export default function SplitEditor({
               // monaco.languages.typescript.typescriptDefaults.setExtraLibs([]);
             }
 
-            debouncedAta(e ?? '');
             onChange?.tests?.(e, a);
           }}
           onValidate={onValidate?.tests}
@@ -438,4 +442,37 @@ export default function SplitEditor({
       </div>
     </div>
   );
+}
+
+export async function typeCheck(monaco: typeof monacoType) {
+  const models = monaco.editor.getModels();
+  const getWorker = await monaco.languages.typescript.getTypeScriptWorker();
+
+  for (const model of models) {
+    const worker = await getWorker(model.uri);
+    const diagnostics = (
+      await Promise.all([
+        worker.getSyntacticDiagnostics(model.uri.toString()),
+        worker.getSemanticDiagnostics(model.uri.toString()),
+      ])
+    ).reduce((a, b) => a.concat(b));
+
+    const markers = diagnostics.map((d) => {
+      const start = model.getPositionAt(d.start!);
+      const end = model.getPositionAt(d.start! + d.length!);
+
+      return {
+        severity: monaco.MarkerSeverity.Error,
+        startLineNumber: start.lineNumber,
+        endLineNumber: end.lineNumber,
+        startColumn: start.column,
+        endColumn: end.column,
+        message: d.messageText as string,
+      } satisfies monacoType.editor.IMarkerData;
+    });
+
+    console.log({ model: model.uri.path, diagnostics });
+
+    monaco.editor.setModelMarkers(model, model.getLanguageId(), markers);
+  }
 }
