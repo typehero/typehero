@@ -13,7 +13,7 @@ export async function withUnstableCache<T extends (...args: any[]) => Promise<an
       return result;
     },
     [...opts.keys],
-    { tags: opts.tags, revalidate: 60 },
+    { tags: opts.tags },
   )(...opts.args);
 
   return cachedResult as Awaited<ReturnType<T>>;

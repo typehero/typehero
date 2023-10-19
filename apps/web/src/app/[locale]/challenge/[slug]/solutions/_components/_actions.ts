@@ -14,6 +14,7 @@ interface Args {
 }
 
 export const createCacheKeyForSolutions = (slug: string) => `challenge-${slug}-solutions`;
+export const createCacheKeyForSharedSolutionsTab = (userId: string) => `${userId}-shared-solutions`;
 
 export async function postSolution({ challengeId, description, slug, title, userId }: Args) {
   const session = await getServerAuthSession();
@@ -28,6 +29,7 @@ export async function postSolution({ challengeId, description, slug, title, user
     },
   });
   revalidateTag(createCacheKeyForSolutions(slug));
+  revalidateTag(createCacheKeyForSharedSolutionsTab(userId));
 }
 
 export async function deleteSolution(solutionToDelete: ChallengeSolution) {
