@@ -11,7 +11,7 @@ import type * as monaco from 'monaco-editor';
 import { usePathname, useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 import { useResetEditor } from './editor-hooks';
-import SplitEditor, { TESTS_PATH, USER_CODE_PATH } from './split-editor';
+import SplitEditor, { TESTS_PATH, USER_CODE_PATH, hasImports } from './split-editor';
 import { useLocalStorage } from './useLocalStorage';
 
 export interface CodePanelProps {
@@ -40,6 +40,7 @@ export function CodePanel(props: CodePanelProps) {
   const isPlayground = pathname.includes('playground');
   const { toast } = useToast();
   const [tsErrors, setTsErrors] = useState<TsErrors>();
+  console.log({ tsErrors });
   const [isTestPanelExpanded, setIsTestPanelExpanded] = useState(false);
   const [localStorageCode, setLocalStorageCode] = useLocalStorage(
     `challenge-${props.challenge.slug}`,
@@ -114,14 +115,6 @@ export function CodePanel(props: CodePanelProps) {
         userCode={code}
         onMount={{
           tests: async (editor, monaco) => {
-            // const models = monaco.editor.getModels();
-            // console.log({ models });
-            // for (const m of models) {
-            //   console.log({
-            //     model: m.uri.toString(),
-            //     value: m.getValue(),
-            //   });
-            // }
             const getTsWorker = await monaco.languages.typescript.getTypeScriptWorker();
 
             const model = monaco.editor.getModel(monaco.Uri.parse(TESTS_PATH));
@@ -148,27 +141,7 @@ export function CodePanel(props: CodePanelProps) {
               throw new Error();
             }
 
-            const actualCode = model
-              .getValue()
-              .split('\n')
-              .filter((c) => !c.startsWith('import'))
-              .join('\n');
-            if (actualCode) {
-              monaco.languages.typescript.typescriptDefaults.setExtraLibs([
-                {
-                  content: actualCode,
-                  filePath: 'file:///node_modules/@types/user.d.ts',
-                },
-              ]);
-            }
-
             const tsWorker = await getTsWorker(model.uri);
-
-            const userErrors = await Promise.all([
-              tsWorker.getSemanticDiagnostics(USER_CODE_PATH),
-              tsWorker.getSyntacticDiagnostics(USER_CODE_PATH),
-              tsWorker.getCompilerOptionsDiagnostics(USER_CODE_PATH),
-            ] as const);
 
             const testErrors = await Promise.all([
               tsWorker.getSemanticDiagnostics(TESTS_PATH),
@@ -176,11 +149,7 @@ export function CodePanel(props: CodePanelProps) {
               tsWorker.getCompilerOptionsDiagnostics(TESTS_PATH),
             ] as const);
 
-            setTsErrors(
-              testErrors.map((err, i) => {
-                return [...err, ...(userErrors[i] || [])];
-              }) as TsErrors,
-            );
+            setTsErrors(testErrors);
           },
         }}
         onChange={{
@@ -197,17 +166,6 @@ export function CodePanel(props: CodePanelProps) {
             setCode(code);
             setLocalStorageCode(code);
 
-            const actualCode = code
-              .split('\n')
-              .filter((c) => !c.startsWith('import'))
-              .join('\n');
-            if (actualCode) {
-              monacoInstance.languages.typescript.typescriptDefaults.addExtraLib(
-                actualCode,
-                'file:///node_modules/@types/user.d.ts',
-              );
-            }
-
             const getTsWorker = await monacoInstance.languages.typescript.getTypeScriptWorker();
 
             const mm = monacoInstance.editor.getModel(monacoInstance.Uri.parse(TESTS_PATH));
@@ -221,17 +179,7 @@ export function CodePanel(props: CodePanelProps) {
               tsWorker.getCompilerOptionsDiagnostics(TESTS_PATH),
             ] as const);
 
-            const userErrors = await Promise.all([
-              tsWorker.getSemanticDiagnostics(USER_CODE_PATH),
-              tsWorker.getSyntacticDiagnostics(USER_CODE_PATH),
-              tsWorker.getCompilerOptionsDiagnostics(USER_CODE_PATH),
-            ] as const);
-
-            setTsErrors(
-              testErrors.map((err, i) => {
-                return [...err, ...(userErrors[i] || [])];
-              }) as TsErrors,
-            );
+            setTsErrors(testErrors);
           },
         }}
       />

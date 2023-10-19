@@ -54,6 +54,11 @@ export interface SplitEditorProps {
   isTestsReadonly?: boolean;
 }
 
+export const hasImports = (code: string) => {
+  const x = code.split('\n').filter((c) => c.startsWith('import'));
+  return x.length > 0;
+};
+
 const getActualCode = (code: string) =>
   code
     .split('\n')
@@ -111,33 +116,35 @@ export default function SplitEditor({
             .getModel(monacoRef.current.Uri.parse(TESTS_PATH))!
             .getValue();
 
-          monacoRef.current.languages.typescript.typescriptDefaults.addExtraLib(
-            getActualCode(userCode),
-            'file:///node_modules/@types/user.d.ts',
-          );
-          monacoRef.current.languages.typescript.typescriptDefaults.addExtraLib(
-            getActualCode(testCode),
-            'file:///node_modules/@types/tests.d.ts',
-          );
-
-          monacoRef.current.languages.typescript.typescriptDefaults.setExtraLibs([
-            {
-              content: getActualCode(userCode),
-              filePath: 'file:///node_modules/@types/user.d.ts',
-            },
-            {
-              content: getActualCode(testCode),
-              filePath: 'file:///node_modules/@types/tests.d.ts',
-            },
-          ]);
-
-          const models = monacoRef.current.editor.getModels();
-          for (const m of models) {
-            console.log({
-              model: m.uri.toString(),
-              value: m.getValue(),
-            });
+          if (hasImports(userCode)) {
+            console.log('received file: user create d ts');
+            monacoRef.current.languages.typescript.typescriptDefaults.addExtraLib(
+              getActualCode(userCode),
+              'file:///node_modules/@types/user.d.ts',
+            );
+          } else {
+            // console.log('received file: remove extra libs');
+            // monacoRef.current.languages.typescript.typescriptDefaults.setExtraLibs([]);
           }
+
+          if (hasImports(testCode)) {
+            console.log('received file: test create d ts');
+            monacoRef.current.languages.typescript.typescriptDefaults.addExtraLib(
+              getActualCode(testCode),
+              'file:///node_modules/@types/test.d.ts',
+            );
+          } else {
+            // console.log('remove');
+            // monacoRef.current.languages.typescript.typescriptDefaults.setExtraLibs([]);
+          }
+
+          // const models = monacoRef.current.editor.getModels();
+          // for (const m of models) {
+          //   console.log({
+          //     model: m.uri.toString(),
+          //     value: m.getValue(),
+          //   });
+          // }
         },
       },
     }),
@@ -272,15 +279,8 @@ export default function SplitEditor({
             }
 
             const model = monaco.editor.getModel(monaco.Uri.parse(USER_CODE_PATH))!;
-            debouncedAta(model.getValue());
-
-            editor.getModel()?.onDidChangeContent(() => {
-              debouncedAta(editor.getValue());
-            });
-
-            const tsWorker = await (
-              await monaco.languages.typescript.getTypeScriptWorker()
-            )(model.uri);
+            const code = model.getValue();
+            debouncedAta(code);
             monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
               ...monaco.languages.typescript.typescriptDefaults.getCompilerOptions(),
               strict: true,
@@ -296,17 +296,41 @@ export default function SplitEditor({
               PrettierFormatProvider,
             );
 
+            const getTsWorker = await monaco.languages.typescript.getTypeScriptWorker();
+            const tsWorker = await getTsWorker(model.uri);
+
             monaco.languages.registerInlayHintsProvider(
               'typescript',
               createTwoslashInlayProvider(monaco, tsWorker),
             );
 
+            if (hasImports(code)) {
+              console.log('on mount user has import');
+              const actualCode = code
+                .split('\n')
+                .filter((c) => !c.startsWith('import'))
+                .join('\n');
+              if (actualCode) {
+                monaco.languages.typescript.typescriptDefaults.setExtraLibs([
+                  {
+                    content: actualCode,
+                    filePath: 'file:///node_modules/@types/user.d.ts',
+                  },
+                ]);
+              }
+            } else {
+              console.log('on mount tests has no import');
+              // monaco.languages.typescript.typescriptDefaults.setExtraLibs([]);
+            }
+
+            // this just does the typechecking so the UI can update
             onMount?.user?.(editor, monaco);
           }}
           defaultValue={userCode}
           value={userCode}
           onValidate={onValidate?.user}
           onChange={async (e, a) => {
+            debouncedAta(e ?? '');
             onChange?.user?.(e, a);
           }}
         />
@@ -333,22 +357,61 @@ export default function SplitEditor({
         <CodeEditor
           options={{
             lineNumbers: 'off',
+            renderValidationDecorations: 'on',
+            readOnly: isTestsReadonly,
           }}
           onMount={(editor, monaco) => {
-            editor.updateOptions({
-              readOnly: isTestsReadonly,
-              renderValidationDecorations: 'on',
-            });
+            const testModel = monaco.editor.getModel(monaco.Uri.parse(TESTS_PATH))!;
+            const testCode = testModel.getValue();
+            debouncedAta(testCode);
 
-            const model = monaco.editor.getModel(monaco.Uri.parse(TESTS_PATH))!;
-            debouncedAta(model.getValue());
+            if (hasImports(testCode)) {
+              console.log('on mount tests has import');
+              const actualCode = testCode
+                .split('\n')
+                .filter((c) => !c.startsWith('import'))
+                .join('\n');
+              if (actualCode) {
+                monaco.languages.typescript.typescriptDefaults.setExtraLibs([
+                  {
+                    content: actualCode,
+                    filePath: 'file:///node_modules/@types/test.d.ts',
+                  },
+                ]);
+              }
+            } else {
+              console.log('on mount tests has no import');
+              // monaco.languages.typescript.typescriptDefaults.setExtraLibs([]);
+            }
 
+            // this just does the typechecking so the UI can update
             onMount?.tests?.(editor, monaco);
           }}
           defaultPath={TESTS_PATH}
           value={tests}
           defaultValue={tests}
           onChange={async (e, a) => {
+            const code = e ?? '';
+            if (hasImports(code)) {
+              console.log('on change tests has import');
+              const actualCode = code
+                .split('\n')
+                .filter((c) => !c.startsWith('import'))
+                .join('\n');
+              if (actualCode) {
+                monaco?.languages.typescript.typescriptDefaults.setExtraLibs([
+                  {
+                    content: actualCode,
+                    filePath: 'file:///node_modules/@types/test.d.ts',
+                  },
+                ]);
+              }
+            } else {
+              console.log('on change tests has no import');
+              // monaco.languages.typescript.typescriptDefaults.setExtraLibs([]);
+            }
+
+            debouncedAta(e ?? '');
             onChange?.tests?.(e, a);
           }}
           onValidate={onValidate?.tests}
