@@ -103,6 +103,8 @@ export default function SplitEditor({
       typescript: ts,
       logger: console,
       delegate: {
+        // NOTE: this gets cached so it wont execute if you comment out an import and uncomment it.
+        // it will only be called the first time
         receivedFile: (code: string, _path: string) => {
           if (!monacoRef.current || !editorRef.current) {
             return;
@@ -124,7 +126,7 @@ export default function SplitEditor({
             .getValue();
 
           if (hasImports(userCode)) {
-            console.log('received file: user create d ts');
+            // console.log('received file: user create d ts');
             monacoRef.current.languages.typescript.typescriptDefaults.addExtraLib(
               getActualCode(userCode),
               'file:///node_modules/@types/user.d.ts',
@@ -321,7 +323,6 @@ export default function SplitEditor({
                 .filter((c) => !c.startsWith('import') && !c.startsWith('export'))
                 .join('\n');
               if (actualCode) {
-                console.log({ actualCode });
                 monaco.languages.typescript.typescriptDefaults.setExtraLibs([
                   {
                     content: actualCode,
@@ -341,8 +342,8 @@ export default function SplitEditor({
           defaultValue={userCode}
           value={userCode}
           onValidate={onValidate?.user}
-          onChange={async (e, a) => {
-            const code = e ?? '';
+          onChange={async (value, changeEvent) => {
+            const code = value ?? '';
             debouncedUserCodeAta(code);
             if (hasImports(code)) {
               console.log('on change user has import');
@@ -351,7 +352,6 @@ export default function SplitEditor({
                 .filter((c) => !c.startsWith('import') && !c.startsWith('export'))
                 .join('\n');
               if (actualCode) {
-                console.log({ actualCode });
                 monaco?.languages.typescript.typescriptDefaults.setExtraLibs([
                   {
                     content: actualCode,
@@ -359,6 +359,12 @@ export default function SplitEditor({
                   },
                 ]);
               }
+              // we'll need to typecheck tests here in the event that you uncomment the same import
+              // because `receivedFile` wont be called again
+              setTimeout(() => {
+                // send to next tick
+                onMount?.tests?.(editorRef.current!, monacoRef.current!);
+              });
             } else {
               console.log('on mount tests has no import');
               // we want to blow away the user.d.ts because
@@ -370,7 +376,7 @@ export default function SplitEditor({
               );
             }
             typeCheck(monaco!);
-            onChange?.user?.(e, a);
+            onChange?.user?.(value, changeEvent);
           }}
         />
         {userEditorState && settings.bindings === 'vim' && (
@@ -430,8 +436,8 @@ export default function SplitEditor({
           defaultPath={TESTS_PATH}
           value={tests}
           defaultValue={tests}
-          onChange={async (e, a) => {
-            const code = e ?? '';
+          onChange={async (editor, changeEvent) => {
+            const code = editor ?? '';
             debouncedTestCodeAta(code);
             if (hasImports(code)) {
               console.log('on change tests has import');
@@ -451,7 +457,7 @@ export default function SplitEditor({
               console.log('on change tests has no import');
             }
 
-            onChange?.tests?.(e, a);
+            onChange?.tests?.(editor, changeEvent);
           }}
           onValidate={onValidate?.tests}
         />
@@ -487,7 +493,7 @@ async function typeCheck(monaco: typeof monacoType) {
       } satisfies monacoType.editor.IMarkerData;
     });
 
-    console.log({ model: model.uri.path, diagnostics });
+    // console.log({ model: model.uri.path, diagnostics });
 
     monaco.editor.setModelMarkers(model, model.getLanguageId(), markers);
   }
