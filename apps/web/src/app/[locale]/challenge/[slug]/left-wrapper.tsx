@@ -112,7 +112,7 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
       <Tabs
         ref={tabsRef}
         className="flex h-full w-full flex-col overflow-hidden"
-        defaultValue={selectedTab}
+        value={selectedTab}
       >
         <TabsList
           className={cn(
