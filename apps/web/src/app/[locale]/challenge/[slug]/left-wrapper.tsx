@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-import { useMemo, type ReactNode, useRef, useState, useEffect, useContext } from 'react';
+import { type ReactNode, useRef, useState, useEffect, useContext, useMemo } from 'react';
 
 import { FeatureFlagContext } from '~/app/feature-flag-provider';
 import { ChallengeTrackNavigation } from '~/app/[locale]/challenge/_components/challenge-track-navigation';
@@ -78,7 +78,7 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
     }
   }, [isCollapsed]);
 
-  const selectedTab: Tab = useMemo(() => {
+  const selectedTab = useMemo(() => {
     const splitPath = pathname.split('/');
 
     if (splitPath.includes('submissions')) {
@@ -112,7 +112,7 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
       <Tabs
         ref={tabsRef}
         className="flex h-full w-full flex-col overflow-hidden"
-        defaultValue={selectedTab}
+        value={selectedTab}
       >
         <TabsList
           className={cn(
