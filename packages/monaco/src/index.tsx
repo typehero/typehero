@@ -153,10 +153,31 @@ export function CodePanel(props: CodePanelProps) {
           },
         }}
         onChange={{
-          tests: (code) => {
+          tests: async (code = '') => {
             if (isPlayground) {
               props.updatePlaygroundTestsLocalStorage?.(code ?? '');
             }
+            if (!monacoInstance) return null;
+            if (isPlayground) {
+              props.updatePlaygroundCodeLocalStorage?.(code ?? '');
+            }
+            setCode(code);
+            setLocalStorageCode(code);
+
+            const getTsWorker = await monacoInstance.languages.typescript.getTypeScriptWorker();
+
+            const mm = monacoInstance.editor.getModel(monacoInstance.Uri.parse(TESTS_PATH));
+            if (!mm) return null;
+
+            const tsWorker = await getTsWorker(mm.uri);
+
+            const testErrors = await Promise.all([
+              tsWorker.getSemanticDiagnostics(TESTS_PATH),
+              tsWorker.getSyntacticDiagnostics(TESTS_PATH),
+              tsWorker.getCompilerOptionsDiagnostics(TESTS_PATH),
+            ] as const);
+
+            setTsErrors(testErrors);
           },
           user: async (code = '') => {
             if (!monacoInstance) return null;

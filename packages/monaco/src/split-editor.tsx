@@ -330,7 +330,26 @@ export default function SplitEditor({
           value={userCode}
           onValidate={onValidate?.user}
           onChange={async (e, a) => {
-            debouncedAta(e ?? '');
+            const code = e ?? '';
+            debouncedAta(code);
+            if (hasImports(code)) {
+              console.log('on mount user has import');
+              const actualCode = code
+                .split('\n')
+                .filter((c) => !c.startsWith('import'))
+                .join('\n');
+              if (actualCode) {
+                monaco?.languages.typescript.typescriptDefaults.setExtraLibs([
+                  {
+                    content: actualCode,
+                    filePath: 'file:///node_modules/@types/user.d.ts',
+                  },
+                ]);
+              }
+            } else {
+              console.log('on mount tests has no import');
+              // monaco.languages.typescript.typescriptDefaults.setExtraLibs([]);
+            }
             onChange?.user?.(e, a);
           }}
         />
