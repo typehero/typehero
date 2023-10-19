@@ -73,8 +73,8 @@ function FeatureCard({
           bgClass,
         )}
       >
-        <div className="mx-10 my-10 min-h-[250px] w-full md:min-h-[450px]">
-          <div className="flex w-4/6 flex-col gap-3 md:w-[80%] xl:w-4/6">
+        <div className="m-6 min-h-[330px] w-full sm:m-10 md:min-h-[450px]">
+          <div className="flex w-5/6 flex-col gap-3 sm:w-4/6 md:w-4/5 xl:w-4/6">
             <h2 className="text-xl font-bold tracking-tight md:text-xl">{title}</h2>
             <p className="text-sm leading-5 text-zinc-600 dark:text-zinc-400 sm:text-base sm:leading-7">
               {description}
@@ -204,7 +204,7 @@ export function ChallengeCreationCard({
       <div
         className={clsx(
           { 'translate-x-0 opacity-0': step < 3 },
-          'absolute left-1/2 top-[55%] flex w-[80%] -translate-x-1/2 -translate-y-[33%] flex-col gap-12 text-center text-2xl font-bold transition-all duration-500 md:w-[50%]',
+          'absolute left-1/2 top-1/2 flex w-[80%] -translate-x-1/2 -translate-y-[33%] flex-col gap-12 text-center text-2xl font-bold transition-all duration-500 md:w-[50%]',
         )}
       >
         <div>🎉</div>
@@ -391,7 +391,7 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
     <FeatureCard {...props}>
       <div
         ref={ref}
-        className="absolute inset-0 left-[23px] top-[50%] flex w-[100%] flex-col gap-3 pt-4 max-md:scale-90 sm:top-[35%] md:left-[37px] md:top-[30%]"
+        className="absolute inset-0 left-[23px] top-[25%] flex w-[100%] flex-col gap-3 pt-4 max-md:scale-90 sm:left-[33px] sm:top-[35%] md:left-[37px] md:top-[30%]"
       >
         <div
           className={clsx(
@@ -402,7 +402,7 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
         >
           <div className="flex items-center gap-2">
             <Badge name="dax" />
-            <div className="text-xs text-neutral-500">48 minutes ago</div>
+            <div className="text-xs text-neutral-500">5 years ago</div>
           </div>
           Implementing Pick in TypeScript is hard, can anyone help?
         </div>
@@ -416,7 +416,7 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
           <Reply className="absolute -left-8 h-4 w-4 opacity-50" />
           <div className="flex items-center gap-2">
             <Badge name="trash" />
-            <div className="text-xs text-neutral-500">12 minutes ago</div>
+            <div className="text-xs text-neutral-500">just now</div>
           </div>
           ez, the answer is
           <Markdown>{solutionComment}</Markdown>
@@ -434,11 +434,18 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
             <div className="text-xs text-neutral-500">just now</div>
           </div>
           <Image
-            className={clsx({ amoguwusus: inView }, 'opacity-0')}
+            className={clsx({ amoguwusus: inView }, 'hidden opacity-0 xl:block')}
             alt="amoguwuawa"
             src="/Red.webp"
             height="198"
             width="150"
+          />
+          <Image
+            className={clsx({ amoguwusus: inView }, 'opacity-0 xl:hidden')}
+            alt="amoguwuawa"
+            src="/Red.webp"
+            height="66"
+            width="50"
           />
         </div>
       </div>
@@ -451,8 +458,8 @@ export function CuratedTracksCard(props: CardProps) {
     <FeatureCard {...props}>
       <div
         className={clsx(
-          'absolute inset-0 top-[90%] flex flex-col items-center justify-center',
-          'max-md:scale-110 md:top-[38%]',
+          'absolute inset-0 top-[60%] flex flex-col items-center justify-center sm:top-[69%]',
+          'max-md:scale-110 md:top-[42%] lg:top-[38%]',
         )}
       >
         <div className="flex w-[69%] items-center justify-between gap-3 rounded-b-lg rounded-t-xl bg-neutral-500/10 p-2 pl-3 md:w-[82%] xl:w-[69%]">
@@ -460,7 +467,7 @@ export function CuratedTracksCard(props: CardProps) {
             TypeScript Foundations
           </span>
         </div>
-        <div className="flex w-[69%] flex-col sm:top-auto md:w-[82%] xl:w-[69%]">
+        <div className="flex w-[69%] flex-col md:w-[82%] xl:w-[69%]">
           {mockChallenges.map((mockChallenge) => (
             <MockTrackChallenge
               key={`mock-${mockChallenge.id}`}
