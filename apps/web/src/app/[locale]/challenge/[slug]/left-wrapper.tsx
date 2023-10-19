@@ -78,7 +78,7 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
     }
   }, [isCollapsed]);
 
-  const selectedTab = useMemo(() => {
+  const selectedTab: Tab = useMemo(() => {
     const splitPath = pathname.split('/');
 
     if (splitPath.includes('submissions')) {
