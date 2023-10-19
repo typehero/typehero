@@ -1,4 +1,5 @@
 'use client';
+
 import { createTwoslashInlayProvider } from './twoslash';
 
 import { type OnChange, type OnMount, type OnValidate } from '@monaco-editor/react';
@@ -86,10 +87,14 @@ export default function SplitEditor({
   const resizer = useRef<HTMLDivElement>(null);
   const testPanel = useRef<HTMLDivElement>(null);
   const monacoRef = useRef<typeof import('monaco-editor')>();
+  const editorRef = useRef<monacoType.editor.IStandaloneCodeEditor>();
 
   useEffect(() => {
     monacoRef.current = monaco;
   }, [monaco]);
+  useEffect(() => {
+    editorRef.current = userEditorState;
+  }, [userEditorState]);
 
   // i moved this into onMount to avpid the monacoRef stuff but then you can really debounce it
   const [ata] = useState(() =>
@@ -99,7 +104,7 @@ export default function SplitEditor({
       logger: console,
       delegate: {
         receivedFile: (code: string, _path: string) => {
-          if (!monacoRef.current) {
+          if (!monacoRef.current || !editorRef.current) {
             return;
           }
           const path = `file://${_path}`;
@@ -139,6 +144,8 @@ export default function SplitEditor({
             // console.log('remove');
             // monacoRef.current.languages.typescript.typescriptDefaults.setExtraLibs([]);
           }
+
+          onMount?.tests?.(editorRef.current, monacoRef.current);
 
           // const models = monacoRef.current.editor.getModels();
           // for (const m of models) {
@@ -453,7 +460,7 @@ export default function SplitEditor({
   );
 }
 
-export async function typeCheck(monaco: typeof monacoType) {
+async function typeCheck(monaco: typeof monacoType) {
   const models = monaco.editor.getModels();
   const getWorker = await monaco.languages.typescript.getTypeScriptWorker();
 
