@@ -10,7 +10,7 @@ export async function TrackGrid() {
   const tracks = await withUnstableCache({
     fn: getTracks,
     args: [session],
-    keys: [],
+    keys: [createTrackGridCacheKey(session?.user.id ?? '')],
     tags: [createTrackGridCacheKey(session?.user.id ?? '')],
   });
   return (
