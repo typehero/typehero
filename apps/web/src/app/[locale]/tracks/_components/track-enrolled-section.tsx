@@ -36,7 +36,7 @@ export async function EnrolledTrackSection() {
   const tracks = await withUnstableCache({
     fn: getUserEnrolledTracks,
     args: [session],
-    keys: [],
+    keys: [createEnrolledTrackCacheKey(session.user.id)],
     tags: [createEnrolledTrackCacheKey(session.user.id)],
   });
 
