@@ -96,7 +96,7 @@ export function Description({ challenge }: Props) {
           rootId={challenge?.id}
         />
         <Dialog>
-          <DialogTrigger className="rounded-full">
+          <DialogTrigger>
             <Tooltip>
               <TooltipTrigger asChild>
                 <div
