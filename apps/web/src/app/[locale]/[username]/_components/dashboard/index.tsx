@@ -37,7 +37,6 @@ export function Dashboard({ user, isOwnProfile, children }: Props) {
       { name: 'in-progress', route: `/@${user.name}/in-progress` },
       { name: 'shared-solutions', route: `/@${user.name}/shared-solutions` },
       { name: 'bookmarks', route: `/@${user.name}/bookmarks` },
-      { name: 'settings', route: '/settings' },
     ],
     [user.name],
   );
