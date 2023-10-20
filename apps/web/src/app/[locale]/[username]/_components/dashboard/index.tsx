@@ -15,7 +15,7 @@ import { getRelativeTime } from '~/utils/relativeTime';
 import { stripProtocolAndWWW } from '~/utils/stringUtils';
 
 import UserHeader from './user-header';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
 interface Props {
@@ -30,6 +30,16 @@ type Tab = 'bookmarks' | 'in-progress' | 'overview' | 'shared-solutions';
 
 export function Dashboard({ user, isOwnProfile, children }: Props) {
   const router = useRouter();
+
+  const tabs = useMemo(
+    () => [
+      { name: 'overview', route: `/@${user.name}` },
+      { name: 'in-progress', route: `/@${user.name}/in-progress` },
+      { name: 'shared-solutions', route: `/@${user.name}/shared-solutions` },
+      { name: 'bookmarks', route: `/@${user.name}/bookmarks` },
+    ],
+    [user.name],
+  );
 
   const filteredProfileLinks =
     user.userLinks.length > 0 ? user.userLinks.filter((item) => item.url !== '') : [];
@@ -52,6 +62,15 @@ export function Dashboard({ user, isOwnProfile, children }: Props) {
 
     return 'overview';
   }, [pathname]);
+
+  useEffect(() => {
+    // prefetch every route except for the one we're currently in
+    tabs.forEach((tab) => {
+      if (selectedTab !== tab.name) {
+        router.prefetch(tab.route);
+      }
+    });
+  }, [router, selectedTab, tabs]);
 
   return (
     <div className="container">
