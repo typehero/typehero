@@ -13,13 +13,14 @@ import {
 
 import { getRelativeTime } from '~/utils/relativeTime';
 import { withUnstableCache } from '~/utils/withUnstableCache';
+import { createCacheKeyForSharedSolutionsTab } from '~/app/[locale]/challenge/[slug]/solutions/_components/_actions';
 
 export async function SharedSolutionsTab({ userId }: { userId: string }) {
   const solutions = await withUnstableCache({
     fn: getSharedSolutions,
     args: [userId],
-    keys: ['shared-solutions'],
-    tags: ['submissions'],
+    keys: [`shared-solutions`],
+    tags: [createCacheKeyForSharedSolutionsTab(userId)],
   });
 
   return (

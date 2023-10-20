@@ -401,7 +401,10 @@ model Track {
   name            String           @unique
   slug            String           @unique
   description     String           @db.MediumText
+  /// determines if a track can be seen on tracks page
   visible         Boolean          @default(true)
+  /// use this to display coming soon UI
+  isComingSoon    Boolean          @default(false)
   trackChallenges TrackChallenge[]
   enrolledUsers   User[]
 }

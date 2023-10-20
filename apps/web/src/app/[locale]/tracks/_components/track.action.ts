@@ -5,6 +5,7 @@ import { prisma } from '@repo/db';
 import { revalidateTag } from 'next/cache';
 import { cache } from 'react';
 import { createEnrolledTrackCacheKey } from './track-enrolled-section';
+import { createTrackGridCacheKey } from './track-grid';
 
 /**
  * Enrolls the session user in the track given a track id.
@@ -30,7 +31,7 @@ export async function enrollUserInTrack(id: number) {
   });
 
   revalidateTag(`track-${id}-detail`);
-  revalidateTag('tracks');
+  revalidateTag(createTrackGridCacheKey(session.user.id));
   revalidateTag(createEnrolledTrackCacheKey(session.user.id));
 }
 
@@ -58,7 +59,7 @@ export async function unenrollUserFromTrack(id: number) {
   });
 
   revalidateTag(`track-${id}-detail`);
-  revalidateTag('tracks');
+  revalidateTag(createTrackGridCacheKey(session.user.id));
   revalidateTag(createEnrolledTrackCacheKey(session.user.id));
 }
 

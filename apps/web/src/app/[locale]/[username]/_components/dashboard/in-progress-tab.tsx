@@ -8,6 +8,7 @@ import {
   TableRow,
 } from '@repo/ui/components/table';
 import Link from 'next/link';
+import { createInProgressSubmissionCacheKey } from '~/app/[locale]/challenge/[slug]/submissions/[[...catchAll]]/save-submission.action';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { withUnstableCache } from '~/utils/withUnstableCache';
 
@@ -15,8 +16,8 @@ export async function InProgressTab({ userId }: { userId: string }) {
   const challenges = await withUnstableCache({
     fn: getInProgressChallenges,
     args: [userId],
-    keys: ['in-progress-challenges'],
-    tags: ['challenges'],
+    keys: [`in-progress-challenges`],
+    tags: [createInProgressSubmissionCacheKey(userId)],
   });
 
   return (

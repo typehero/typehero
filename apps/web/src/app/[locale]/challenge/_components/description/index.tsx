@@ -25,7 +25,8 @@ import {
 } from '@repo/ui/components/dialog';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { Markdown } from '@repo/ui/components/markdown';
-import { Button } from '@repo/ui/components/button';
+import { Button, buttonVariants } from '@repo/ui/components/button';
+import { cn } from '@repo/ui/cn';
 
 interface Props {
   challenge: ChallengeRouteData['challenge'];
@@ -98,9 +99,14 @@ export function Description({ challenge }: Props) {
           <DialogTrigger>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button className="text-accent-foreground" size="xs" variant="secondary">
+                <div
+                  className={cn(
+                    buttonVariants({ variant: 'secondary', size: 'xs' }),
+                    'rounded-full',
+                  )}
+                >
                   <Share className="h-4 w-4" />
-                </Button>
+                </div>
               </TooltipTrigger>
               <TooltipContent>
                 <p>Share</p>
