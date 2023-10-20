@@ -201,7 +201,7 @@ export default function SplitEditor({
       document.addEventListener('selectstart', preventSelection);
     };
 
-    const mouseUpHandler = function() {
+    const mouseUpHandler = function () {
       // Restore transition
       testPanelRef.classList.add('transition-all');
 
