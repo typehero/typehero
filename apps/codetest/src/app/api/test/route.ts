@@ -31,8 +31,6 @@ const standardLibs = [
 ];
 
 function typecheck({ code, testCase }: { code: string; testCase: string }) {
-  console.log(`Type checking the following code:\n${code}\n`);
-
   // all we haev to do is just concat the files?
   const file = ts.createSourceFile(
     'index.ts',
@@ -74,7 +72,9 @@ function typecheck({ code, testCase }: { code: string; testCase: string }) {
     compilerHost,
   );
 
-  const emitResult = program.emit();
+  // we might want to check the status here?
+  // const emitResult = program.emit();
+
   const allDiagnostics = ts.getPreEmitDiagnostics(program);
 
   const errors: string[] = [];
@@ -94,11 +94,7 @@ function typecheck({ code, testCase }: { code: string; testCase: string }) {
     }
   });
 
-  const exitCode = emitResult.emitSkipped ? 1 : 0;
-  console.log(`Process exiting with code '${exitCode}'.`);
-
   return {
-    status: exitCode,
     errors,
   };
 }
@@ -106,6 +102,6 @@ function typecheck({ code, testCase }: { code: string; testCase: string }) {
 export async function POST(req: Request) {
   const { code, testCase } = await req.json();
 
-  const result = typecheck({ code, testCase });
-  return NextResponse.json({ result });
+  const { errors } = typecheck({ code, testCase });
+  return NextResponse.json({ errors });
 }
