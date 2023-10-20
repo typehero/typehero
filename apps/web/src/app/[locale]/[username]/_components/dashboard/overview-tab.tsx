@@ -19,7 +19,7 @@ export async function OverviewTab({ user }: Props) {
         <CardTitle>Overview</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="w-full text-sm md:w-64 md:text-start">
+        <div className="w-full text-sm">
           {Boolean(hasBio) && <ReactMarkdown>{user.bio}</ReactMarkdown>}
           {Boolean(!hasBio) && (
             <p className="text-muted-foreground">{user.name} does not have a bio.</p>
