@@ -127,19 +127,23 @@ export default function SplitEditor({
             .getModel(monacoRef.current.Uri.parse(TESTS_PATH))!
             .getValue();
 
+          const extraLibs = [];
+
           if (hasImports(userCode)) {
-            monacoRef.current.languages.typescript.typescriptDefaults.addExtraLib(
-              getActualCode(userCode),
-              'file:///node_modules/@types/user.d.ts',
-            );
+            extraLibs.push({
+              content: getActualCode(userCode),
+              filePath: 'file:///node_modules/@types/user.d.ts',
+            });
           }
 
           if (hasImports(testCode)) {
-            monacoRef.current.languages.typescript.typescriptDefaults.addExtraLib(
-              getActualCode(testCode),
-              'file:///node_modules/@types/test.d.ts',
-            );
+            extraLibs.push({
+              content: getActualCode(testCode),
+              filePath: 'file:///node_modules/@types/test.d.ts',
+            });
           }
+
+          monacoRef.current.languages.typescript.typescriptDefaults.setExtraLibs(extraLibs);
 
           onMount?.tests?.(editorRef.current, monacoRef.current);
         },
@@ -332,10 +336,12 @@ export default function SplitEditor({
               // we want to blow away the user.d.ts because
               // 1. its no longer needed
               // 2. so you dont get duplicate type errors if you add imports back in
-              monaco?.languages.typescript.typescriptDefaults.addExtraLib(
-                '',
-                'file:///node_modules/@types/user.d.ts',
-              );
+              monaco?.languages.typescript.typescriptDefaults.setExtraLibs([
+                {
+                  content: '',
+                  filePath: 'file:///node_modules/@types/user.d.ts',
+                },
+              ]);
             }
             typeCheck(monaco!);
             onChange?.user?.(value, changeEvent);
