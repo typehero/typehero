@@ -263,7 +263,6 @@ export default function SplitEditor({
           height={userEditorState && settings.bindings === 'vim' ? 'calc(100% - 36px)' : '100%'}
           defaultPath={USER_CODE_PATH}
           onMount={async (editor, monaco) => {
-            typeCheck(monaco);
             // this just does the typechecking so the UI can update
             onMount?.user?.(editor, monaco);
             const libUri = monaco.Uri.parse(LIB_URI);
@@ -352,7 +351,6 @@ export default function SplitEditor({
                 'file:///node_modules/@types/user.d.ts',
               );
             }
-            typeCheck(monaco!);
             onChange?.user?.(value, changeEvent);
           }}
         />
@@ -383,7 +381,6 @@ export default function SplitEditor({
             readOnly: isTestsReadonly,
           }}
           onMount={(editor, monaco) => {
-            typeCheck(monaco);
             // this just does the typechecking so the UI can update
             onMount?.tests?.(editor, monaco);
             const testModel = monaco.editor.getModel(monaco.Uri.parse(TESTS_PATH))!;
@@ -433,35 +430,4 @@ export default function SplitEditor({
       </div>
     </div>
   );
-}
-
-async function typeCheck(monaco: typeof monacoType) {
-  const models = monaco.editor.getModels();
-  const getWorker = await monaco.languages.typescript.getTypeScriptWorker();
-
-  for (const model of models) {
-    const worker = await getWorker(model.uri);
-    const diagnostics = (
-      await Promise.all([
-        worker.getSyntacticDiagnostics(model.uri.toString()),
-        worker.getSemanticDiagnostics(model.uri.toString()),
-      ])
-    ).reduce((a, b) => a.concat(b));
-
-    const markers = diagnostics.map((d) => {
-      const start = model.getPositionAt(d.start!);
-      const end = model.getPositionAt(d.start! + d.length!);
-
-      return {
-        severity: monaco.MarkerSeverity.Error,
-        startLineNumber: start.lineNumber,
-        endLineNumber: end.lineNumber,
-        startColumn: start.column,
-        endColumn: end.column,
-        message: d.messageText as string,
-      } satisfies monacoType.editor.IMarkerData;
-    });
-
-    monaco.editor.setModelMarkers(model, model.getLanguageId(), markers);
-  }
 }
