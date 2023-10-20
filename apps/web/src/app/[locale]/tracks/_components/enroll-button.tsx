@@ -29,7 +29,7 @@ export function ActionButton({ action, text, trackId }: EnrollButtonProps) {
               error instanceof Error ? (
                 <p>
                   {error.message}{' '}
-                  <a href={'/login'} className="font-bold underline">
+                  <a href="/login" className="font-bold underline">
                     Login
                   </a>
                 </p>
