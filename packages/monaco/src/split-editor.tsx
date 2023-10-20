@@ -56,14 +56,14 @@ export interface SplitEditorProps {
 }
 
 export const hasImports = (code: string) => {
-  const x = code.split('\n').filter((c) => c.startsWith('import') || c.startsWith('export'));
+  const x = code.split('\n').filter((line) => line.trim().startsWith('import'));
   return x.length > 0;
 };
 
 const getActualCode = (code: string) =>
   code
     .split('\n')
-    .filter((c) => !c.startsWith('import'))
+    .filter((c) => !c.trim().startsWith('import'))
     .join('\n');
 
 // million-ignore
@@ -303,7 +303,7 @@ export default function SplitEditor({
             if (hasImports(code)) {
               const actualCode = code
                 .split('\n')
-                .filter((c) => !c.startsWith('import') && !c.startsWith('export'))
+                .filter((c) => !c.trim().startsWith('import'))
                 .join('\n');
               if (actualCode) {
                 monaco.languages.typescript.typescriptDefaults.setExtraLibs([
@@ -328,7 +328,7 @@ export default function SplitEditor({
             if (hasImports(code)) {
               const actualCode = code
                 .split('\n')
-                .filter((c) => !c.startsWith('import') && !c.startsWith('export'))
+                .filter((c) => !c.trim().startsWith('import'))
                 .join('\n');
               if (actualCode) {
                 monaco?.languages.typescript.typescriptDefaults.setExtraLibs([
