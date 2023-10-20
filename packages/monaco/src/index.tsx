@@ -143,9 +143,9 @@ export function CodePanel(props: CodePanelProps) {
             const tsWorker = await getTsWorker(model.uri);
 
             const testErrors = await Promise.all([
-              tsWorker.getSemanticDiagnostics(TESTS_PATH),
-              tsWorker.getSyntacticDiagnostics(TESTS_PATH),
-              tsWorker.getCompilerOptionsDiagnostics(TESTS_PATH),
+              tsWorker.getSemanticDiagnostics(USER_CODE_PATH),
+              tsWorker.getSyntacticDiagnostics(USER_CODE_PATH),
+              tsWorker.getCompilerOptionsDiagnostics(USER_CODE_PATH),
             ] as const);
 
             setTsErrors(testErrors);
@@ -162,10 +162,10 @@ export function CodePanel(props: CodePanelProps) {
 
               const getTsWorker = await monacoInstance.languages.typescript.getTypeScriptWorker();
 
-              const mm = monacoInstance.editor.getModel(monacoInstance.Uri.parse(TESTS_PATH));
-              if (!mm) return null;
+              const model = monacoInstance.editor.getModel(monacoInstance.Uri.parse(TESTS_PATH));
+              if (!model) return null;
 
-              const tsWorker = await getTsWorker(mm.uri);
+              const tsWorker = await getTsWorker(model.uri);
 
               const testErrors = await Promise.all([
                 tsWorker.getSemanticDiagnostics(TESTS_PATH),
@@ -186,15 +186,15 @@ export function CodePanel(props: CodePanelProps) {
 
             const getTsWorker = await monacoInstance.languages.typescript.getTypeScriptWorker();
 
-            const mm = monacoInstance.editor.getModel(monacoInstance.Uri.parse(TESTS_PATH));
-            if (!mm) return null;
+            const model = monacoInstance.editor.getModel(monacoInstance.Uri.parse(USER_CODE_PATH));
+            if (!model) return null;
 
-            const tsWorker = await getTsWorker(mm.uri);
+            const tsWorker = await getTsWorker(model.uri);
 
             const testErrors = await Promise.all([
-              tsWorker.getSemanticDiagnostics(TESTS_PATH),
-              tsWorker.getSyntacticDiagnostics(TESTS_PATH),
-              tsWorker.getCompilerOptionsDiagnostics(TESTS_PATH),
+              tsWorker.getSemanticDiagnostics(USER_CODE_PATH),
+              tsWorker.getSyntacticDiagnostics(USER_CODE_PATH),
+              tsWorker.getCompilerOptionsDiagnostics(USER_CODE_PATH),
             ] as const);
 
             setTsErrors(testErrors);
