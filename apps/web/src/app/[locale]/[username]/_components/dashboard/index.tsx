@@ -71,7 +71,7 @@ export function Dashboard({ user, isOwnProfile, children }: Props) {
         router.prefetch(tab.route);
       }
     });
-  }, [router]);
+  }, [router, selectedTab, tabs]);
 
   return (
     <div className="container">
