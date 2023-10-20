@@ -16,19 +16,22 @@ export async function enrollUserInTrack(id: number) {
   if (!session) {
     throw new Error('User is not logged in');
   }
-
-  await prisma.track.update({
-    where: {
-      id,
-    },
-    data: {
-      enrolledUsers: {
-        connect: {
-          id: session?.user.id,
+  try {
+    await prisma.track.update({
+      where: {
+        id,
+      },
+      data: {
+        enrolledUsers: {
+          connect: {
+            id: session?.user.id,
+          },
         },
       },
-    },
-  });
+    });
+  } catch {
+    throw new Error('Internal server error');
+  }
 
   revalidateTag(`track-${id}-detail`);
   revalidateTag(createTrackGridCacheKey(session.user.id));
