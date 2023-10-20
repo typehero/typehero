@@ -1,4 +1,0 @@
-name = "testie"
-main = "src/index.ts"
-compatibility_date = "2023-10-16"
-node_compat = true
