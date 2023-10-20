@@ -2,7 +2,6 @@
 import type * as monaco from 'monaco-editor';
 
 export const TWOSLASH_INLAY_HINTS_PROVIDER = 'twoslash inlay hints provider';
-const queryRegex = /^\s*\/\/\s*\^\?$/gm;
 
 export const createTwoslashInlayProvider = (
   m: typeof monaco,
@@ -22,6 +21,7 @@ export const createTwoslashInlayProvider = (
         };
       }
 
+      const queryRegex = /^\s*\/\/\s*\^\?$/gm;
       while ((match = queryRegex.exec(text)) !== null) {
         const end = match.index + match[0].length - 1;
         const endPos = model.getPositionAt(end);
