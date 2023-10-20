@@ -263,6 +263,9 @@ export default function SplitEditor({
           height={userEditorState && settings.bindings === 'vim' ? 'calc(100% - 36px)' : '100%'}
           defaultPath={USER_CODE_PATH}
           onMount={async (editor, monaco) => {
+            typeCheck(monaco);
+            // this just does the typechecking so the UI can update
+            onMount?.user?.(editor, monaco);
             const libUri = monaco.Uri.parse(LIB_URI);
 
             monaco.languages.typescript.typescriptDefaults.setEagerModelSync(true);
@@ -314,10 +317,6 @@ export default function SplitEditor({
                 ]);
               }
             }
-
-            typeCheck(monaco);
-            // this just does the typechecking so the UI can update
-            onMount?.user?.(editor, monaco);
           }}
           defaultValue={userCode}
           value={userCode}
@@ -384,6 +383,9 @@ export default function SplitEditor({
             readOnly: isTestsReadonly,
           }}
           onMount={(editor, monaco) => {
+            typeCheck(monaco);
+            // this just does the typechecking so the UI can update
+            onMount?.tests?.(editor, monaco);
             const testModel = monaco.editor.getModel(monaco.Uri.parse(TESTS_PATH))!;
             const testCode = testModel.getValue();
             debouncedTestCodeAta(testCode);
@@ -402,10 +404,6 @@ export default function SplitEditor({
                 ]);
               }
             }
-
-            typeCheck(monaco);
-            // this just does the typechecking so the UI can update
-            onMount?.tests?.(editor, monaco);
           }}
           defaultPath={TESTS_PATH}
           value={tests}
