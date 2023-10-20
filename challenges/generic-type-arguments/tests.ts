@@ -1,5 +1,3 @@
-import { Expect, Equal } from 'type-testing';
-
 type test_CapreseSaladName = Expect<Equal<
   CapreseSalad['name'],
   'Caprese Salad'

@@ -21,14 +21,27 @@ export function ActionButton({ action, text, trackId }: EnrollButtonProps) {
             variant: 'success',
             description: <p>You're now successfully {text.toLowerCase()}ed the track.</p>,
           });
-        } catch {
-          toast({
-            title: 'Error',
-            variant: 'destructive',
-            description: (
-              <p>There was an error trying to {text.toLowerCase()} you from the track.</p>
-            ),
-          });
+        } catch (error) {
+          error instanceof Error && error.message === 'User is not logged in'
+            ? toast({
+                title: `Please Login to continue`,
+                variant: 'destructive',
+                description: (
+                  <p>
+                    You must be logged in to enroll in a track.{' '}
+                    <a href="/login" className="font-bold underline">
+                      Login
+                    </a>
+                  </p>
+                ),
+              })
+            : toast({
+                title: `Error`,
+                variant: 'destructive',
+                description: (
+                  <p>There was an error trying to {text.toLowerCase()} you from the track.</p>
+                ),
+              });
         }
       }}
     >
