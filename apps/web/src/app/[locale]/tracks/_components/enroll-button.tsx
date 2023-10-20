@@ -21,13 +21,21 @@ export function ActionButton({ action, text, trackId }: EnrollButtonProps) {
             variant: 'success',
             description: <p>You're now successfully {text.toLowerCase()}ed the track.</p>,
           });
-        } catch {
+        } catch (error) {
           toast({
-            title: 'Error',
+            title: `Please Login to continue`,
             variant: 'destructive',
-            description: (
-              <p>There was an error trying to {text.toLowerCase()} you from the track.</p>
-            ),
+            description:
+              error instanceof Error ? (
+                <p>
+                  {error.message}{' '}
+                  <a href={'/login'} className="font-bold underline">
+                    Login
+                  </a>
+                </p>
+              ) : (
+                <p>There was an error trying to {text.toLowerCase()} you from the track.</p>
+              ),
           });
         }
       }}
