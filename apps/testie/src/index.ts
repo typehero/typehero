@@ -1,46 +1,103 @@
-/**
- * Welcome to Cloudflare Workers! This is your first worker.
- *
- * - Run `npm run dev` in your terminal to start a development server
- * - Open a browser tab at http://localhost:8787/ to see your worker in action
- * - Run `npm run deploy` to publish your worker
- *
- * Learn more at https://developers.cloudflare.com/workers/
- */
+import { Hono } from 'hono/quick';
+import ts from 'typescript';
+// import fs from 'node:fs';
 
-import handleProxy from './proxy';
-import handleRedirect from './redirect';
-import apiRouter from './router';
+const app = new Hono();
 
-// Export a default object containing event handlers
-export default {
-	// The fetch handler is invoked when this worker receives a HTTP(S) request
-	// and should return a Response (optionally wrapped in a Promise)
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-		// You'll find it helpful to parse the request.url string into a URL object. Learn more at https://developer.mozilla.org/en-US/docs/Web/API/URL
-		const url = new URL(request.url);
+async function loadStandardLib(libName: string) {
+	// const standardTypeDefs = // fs.readFileSync(`node_modules/typescript/lib/${libName}`, 'utf8');
+	const standardLib = await import(`typescript/lib/${libName}`);
+	console.log('standardLib', standardLib);
+	return ts.createSourceFile(libName, standardLib.toString(), ts.ScriptTarget.ESNext, true, ts.ScriptKind.TS);
+}
 
-		// You can get pretty far with simple logic like if/switch-statements
-		switch (url.pathname) {
-			case '/redirect':
-				return handleRedirect.fetch(request, env, ctx);
+const standardLibs = [
+	'lib.decorators.d.ts',
+	// 'lib.decorators.legacy.d.ts',
+	// 'lib.d.ts',
+	// 'lib.es5.d.ts',
+	// 'lib.webworker.importscripts.d.ts',
+	// 'lib.scripthost.d.ts',
+	// 'lib.dom.d.ts',
+	// 'lib.esnext.d.ts',
+];
 
-			case '/proxy':
-				return handleProxy.fetch(request, env, ctx);
+async function typecheck(code: string) {
+	console.log(`Type checking the following code:\n${code}\n`);
+
+	for (const libName of standardLibs) {
+		console.log('libName', libName);
+		try {
+			const standardLib = await import(`typescript/lib/${libName}`);
+			console.log('code', standardLib);
+		} catch (e) {
+			console.log(e);
 		}
+	}
 
-		if (url.pathname.startsWith('/api/')) {
-			// You can also use more robust routing
-			return apiRouter.handle(request);
+	const file = ts.createSourceFile('index.ts', code, ts.ScriptTarget.ESNext, true, ts.ScriptKind.TS);
+
+	// This is needed
+	const compilerHost: ts.CompilerHost = {
+		fileExists: (fileName) => fileName === file.fileName,
+		getSourceFile: (fileName) => {
+			// read the dts file from node modules
+			if (fileName === file.fileName) return file;
+		},
+		getDefaultLibFileName: () => 'lib.d.ts',
+		writeFile: () => { },
+		getCurrentDirectory: () => '/',
+		getCanonicalFileName: (f) => f.toLowerCase(),
+		getNewLine: () => '\n',
+		useCaseSensitiveFileNames: () => false,
+		readFile: (fileName) => (fileName === file.fileName ? file.text : undefined),
+	};
+
+	const program = ts.createProgram(
+		[file.fileName],
+		{
+			allowJs: true,
+			noEmit: true,
+			noEmitOnError: true,
+			noImplicitAny: true,
+			target: ts.ScriptTarget.ESNext,
+			module: ts.ModuleKind.ESNext,
+		},
+		compilerHost,
+	);
+
+	const emitResult = program.emit();
+	const allDiagnostics = ts.getPreEmitDiagnostics(program);
+
+	allDiagnostics.forEach((diagnostic) => {
+		if (diagnostic.file) {
+			const { line, character } = ts.getLineAndCharacterOfPosition(diagnostic.file, diagnostic.start!);
+			const message = ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n');
+			console.log(`${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`);
+		} else {
+			console.log(ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n'));
 		}
+	});
 
-		return new Response(
-			`Try making requests to:
-      <ul>
-      <li><code><a href="/redirect?redirectUrl=https://example.com/">/redirect?redirectUrl=https://example.com/</a></code>,</li>
-      <li><code><a href="/proxy?modify&proxyUrl=https://example.com/">/proxy?modify&proxyUrl=https://example.com/</a></code>, or</li>
-      <li><code><a href="/api/todos">/api/todos</a></code></li>`,
-			{ headers: { 'Content-Type': 'text/html' } }
-		);
-	},
-};
+	const exitCode = emitResult.emitSkipped ? 1 : 0;
+	console.log(`Process exiting with code '${exitCode}'.`);
+
+	return {
+		status: exitCode,
+	};
+}
+
+app.post('/api/test', async (c) => {
+	const body = await c.req.parseBody();
+
+	const result = typecheck(body.toString());
+	try {
+		return c.json({
+			result,
+		});
+	} catch (e) {
+		console.log(e);
+	}
+});
+
+export default app;
