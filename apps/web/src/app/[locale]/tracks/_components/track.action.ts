@@ -14,7 +14,7 @@ import { createTrackGridCacheKey } from './track-grid';
 export async function enrollUserInTrack(id: number) {
   const session = await getServerAuthSession();
   if (!session) {
-    throw new Error('You must be logged in to enroll in a track.');
+    throw new Error('User is not logged in');
   }
 
   await prisma.track.update({
