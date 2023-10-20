@@ -1,14 +1,17 @@
-import { getServerAuthSession } from '@repo/auth/server';
+import { getServerAuthSession, type Session } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import { withUnstableCache } from '~/utils/withUnstableCache';
 import { TrackCard } from './track-card';
 
+export const createTrackGridCacheKey = (userId: string) => `user-${userId}-tracks`;
 export async function TrackGrid() {
+  const session = await getServerAuthSession();
+
   const tracks = await withUnstableCache({
     fn: getTracks,
-    args: [],
-    keys: ['tracks'],
-    tags: ['tracks'],
+    args: [session],
+    keys: [],
+    tags: [createTrackGridCacheKey(session?.user.id ?? '')],
   });
   return (
     <div className="container flex items-center justify-between gap-3">
@@ -21,8 +24,7 @@ export async function TrackGrid() {
 
 export type Tracks = Awaited<ReturnType<typeof getTracks>>;
 
-async function getTracks() {
-  const session = await getServerAuthSession();
+async function getTracks(session: Session | null) {
   return prisma.track.findMany({
     include: {
       _count: {
