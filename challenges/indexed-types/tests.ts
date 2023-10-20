@@ -1,3 +1,5 @@
+import { Expect, Equal } from 'type-testing';
+
 type Cars = ["Bugatti", "Ferarri", "Lambo", "Porsche", "Toyota Corolla"]
 
 type Donations = {
