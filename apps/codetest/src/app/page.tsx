@@ -1,5 +1,3 @@
 export default function Home() {
-  return (
-    <main>do no use this</main>
-  )
+  return <main>do no use this</main>;
 }

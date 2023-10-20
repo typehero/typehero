@@ -51,7 +51,7 @@ function typecheck({ code, testCase }: { code: string; testCase: string }) {
       if (fileName === file.fileName) return file;
     },
     getDefaultLibFileName: () => 'lib.d.ts',
-    writeFile: () => { },
+    writeFile: () => {},
     getCurrentDirectory: () => '/',
     getCanonicalFileName: (f) => f.toLowerCase(),
     getNewLine: () => '\n',
