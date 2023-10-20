@@ -1,3 +1,5 @@
+import { Expect, Equal } from 'type-testing';
+
 type test_AllowStringString = Expect<Equal<
   AllowString<string>,
   string
