@@ -56,14 +56,16 @@ export interface SplitEditorProps {
 }
 
 export const hasImports = (code: string) => {
-  const x = code.split('\n').filter((c) => c.startsWith('import') || c.startsWith('export'));
+  const x = code
+    .split('\n')
+    .filter((line) => line.trim().startsWith('import') || line.trim().startsWith('export'));
   return x.length > 0;
 };
 
 const getActualCode = (code: string) =>
   code
     .split('\n')
-    .filter((c) => !c.startsWith('import'))
+    .filter((line) => !line.trim().startsWith('import') && !line.trim().startsWith('export'))
     .join('\n');
 
 // million-ignore
@@ -303,21 +305,6 @@ export default function SplitEditor({
               createTwoslashInlayProvider(monaco, tsWorker),
             );
 
-            if (hasImports(code)) {
-              const actualCode = code
-                .split('\n')
-                .filter((c) => !c.startsWith('import') && !c.startsWith('export'))
-                .join('\n');
-              if (actualCode) {
-                monaco.languages.typescript.typescriptDefaults.setExtraLibs([
-                  {
-                    content: actualCode,
-                    filePath: 'file:///node_modules/@types/user.d.ts',
-                  },
-                ]);
-              }
-            }
-
             typeCheck(monaco);
           }}
           defaultValue={userCode}
@@ -326,19 +313,15 @@ export default function SplitEditor({
           onChange={async (value, changeEvent) => {
             const code = value ?? '';
             debouncedUserCodeAta(code);
+
             if (hasImports(code)) {
-              const actualCode = code
-                .split('\n')
-                .filter((c) => !c.startsWith('import') && !c.startsWith('export'))
-                .join('\n');
-              if (actualCode) {
-                monaco?.languages.typescript.typescriptDefaults.setExtraLibs([
-                  {
-                    content: actualCode,
-                    filePath: 'file:///node_modules/@types/user.d.ts',
-                  },
-                ]);
-              }
+              monaco?.languages.typescript.typescriptDefaults.setExtraLibs([
+                {
+                  content: getActualCode(code),
+                  filePath: 'file:///node_modules/@types/user.d.ts',
+                },
+              ]);
+
               // we'll need to typecheck tests here in the event that you uncomment the same import
               // because `receivedFile` wont be called again
               setTimeout(() => {
