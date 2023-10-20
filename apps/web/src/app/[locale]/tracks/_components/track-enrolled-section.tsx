@@ -40,6 +40,8 @@ export async function EnrolledTrackSection() {
     tags: [createEnrolledTrackCacheKey(session.user.id)],
   });
 
+  console.log('ammuh: ', tracks[0]?._count);
+
   return (
     <div>
       {tracks.length > 0 ? (
