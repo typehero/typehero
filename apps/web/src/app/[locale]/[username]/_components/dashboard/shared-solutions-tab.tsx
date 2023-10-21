@@ -1,7 +1,6 @@
 import Link from 'next/link';
 
 import { prisma } from '@repo/db';
-import { Badge } from '@repo/ui/components/badge';
 import {
   Table,
   TableBody,
