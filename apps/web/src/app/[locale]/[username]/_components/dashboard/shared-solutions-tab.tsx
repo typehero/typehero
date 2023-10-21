@@ -26,7 +26,8 @@ export async function SharedSolutionsTab({ userId }: { userId: string }) {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Shared Solution</TableHead>
+          <TableHead>Title</TableHead>
+          <TableHead>Challenge</TableHead>
           <TableHead>Votes</TableHead>
           <TableHead>Date</TableHead>
         </TableRow>
@@ -36,6 +37,11 @@ export async function SharedSolutionsTab({ userId }: { userId: string }) {
           <TableRow key={solution.id}>
             <TableCell className="font-medium underline">
               <Link href={`/challenge/${solution.challenge?.slug}/solutions/${solution.id}`}>
+                {solution.title}
+              </Link>
+            </TableCell>
+            <TableCell className="font-medium underline">
+              <Link href={`/challenge/${solution.challenge?.slug}`}>
                 {solution.challenge?.name}
               </Link>
             </TableCell>
