@@ -19,7 +19,7 @@ interface Props {
 const queryClient = new QueryClient();
 
 export function Providers({ locale, children }: Props) {
-  const position: Corner = 'top-right';
+  const position: Corner = 'bottom-right';
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} position={position} />

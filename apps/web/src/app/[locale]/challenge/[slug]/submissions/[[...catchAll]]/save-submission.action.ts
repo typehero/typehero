@@ -7,6 +7,11 @@ import { createCacheKeyForSolutions } from '../../solutions/_components/_actions
 export const createChallengeSubmissionCacheKey = (slug: string) => {
   return `${slug}-challenge-submissions`;
 };
+
+export const createInProgressSubmissionCacheKey = (userId: string) => {
+  return `${userId}-in-progress-challenges`;
+};
+
 interface Args {
   challenge: ChallengeRouteData['challenge'];
   userId: string;
@@ -24,4 +29,5 @@ export async function saveSubmission({ challenge, userId, code, isSuccessful }: 
   });
   revalidateTag(createChallengeSubmissionCacheKey(challenge.slug));
   revalidateTag(createCacheKeyForSolutions(challenge.slug));
+  revalidateTag(createInProgressSubmissionCacheKey(userId));
 }

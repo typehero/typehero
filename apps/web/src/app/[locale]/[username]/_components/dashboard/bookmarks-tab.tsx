@@ -12,13 +12,14 @@ import {
 
 import { getRelativeTime } from '~/utils/relativeTime';
 import { withUnstableCache } from '~/utils/withUnstableCache';
+import { createCacheKeyForBookmarksTab } from '~/app/[locale]/challenge/_components/bookmark.action';
 
 export async function BookmarksTab({ userId }: { userId: string }) {
   const bookmarks = await withUnstableCache({
     fn: getBookmarkedChallenges,
     args: [userId],
-    keys: ['bookmarked-challenges'],
-    tags: ['challenges'],
+    keys: [`bookmarked-challenges`],
+    tags: [createCacheKeyForBookmarksTab(userId)],
   });
 
   return (
