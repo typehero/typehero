@@ -13,8 +13,33 @@ interface Args {
   userId: string;
 }
 
+interface SolutionUpdateArgs {
+  id: number;
+  description: string;
+  slug: string;
+  title: string;
+  userId: string;
+}
+
 export const createCacheKeyForSolutions = (slug: string) => `challenge-${slug}-solutions`;
 export const createCacheKeyForSharedSolutionsTab = (userId: string) => `${userId}-shared-solutions`;
+
+export async function updateSolution({ id, description, slug, title, userId }: SolutionUpdateArgs) {
+  const session = await getServerAuthSession();
+  if (!isAuthor(session, userId)) {
+    throw new Error('Only author can delete their solution.');
+  }
+
+  await prisma.sharedSolution.update({
+    where: { id },
+    data: {
+      title,
+      description,
+    },
+  });
+
+  revalidateTag(createCacheKeyForSolutions(slug));
+}
 
 export async function postSolution({ challengeId, description, slug, title, userId }: Args) {
   const session = await getServerAuthSession();
