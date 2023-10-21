@@ -36,12 +36,12 @@ export async function SharedSolutionsTab({ userId }: { userId: string }) {
         {solutions.map((solution) => (
           <TableRow key={solution.id}>
             <TableCell className="font-medium underline">
-              <Link href={`/challenge/${solution.challenge?.slug}`}>
+              <Link href={`/challenge/${solution.challenge?.slug}/solutions/${solution.id}`}>
                 {solution.challenge?.name}
               </Link>
             </TableCell>
             <TableCell>{solution._count.vote}</TableCell>
-            <TableCell className="font-medium underline">
+            <TableCell className="font-medium">
               {Boolean(solution.createdAt) && getRelativeTime(solution.createdAt)}
             </TableCell>
           </TableRow>
