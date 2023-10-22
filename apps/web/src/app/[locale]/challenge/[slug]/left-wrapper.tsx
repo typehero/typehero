@@ -136,7 +136,7 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
             )}
             onClick={() => {
               router.push(`/challenge/${challenge.slug}`);
-              expandPanel();
+              isCollapsed && expandPanel();
             }}
             value="description"
           >
@@ -149,7 +149,7 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
             )}
             onClick={() => {
               router.push(`/challenge/${challenge.slug}/solutions`);
-              expandPanel();
+              isCollapsed && expandPanel();
             }}
             value="solutions"
           >
@@ -162,7 +162,7 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
             )}
             onClick={() => {
               router.push(`/challenge/${challenge.slug}/submissions`);
-              expandPanel();
+              isCollapsed && expandPanel();
             }}
             value="submissions"
           >
