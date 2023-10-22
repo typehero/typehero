@@ -53,7 +53,7 @@ export function TrackChallenge({
             'from-blue-600/30 from-10% dark:from-neutral-500/30': isSelected,
           },
           {
-            'group-hover/challenge:scale-105 group-hover/challenge:rounded-xl group-hover/challenge:bg-neutral-500/20 lg:group-hover/challenge:scale-[1.025]':
+            'group-hover/challenge:scale-[1.025] group-hover/challenge:bg-neutral-500/20 lg:group-hover/challenge:rounded-xl':
               !isMobile,
           },
         )}
