@@ -39,12 +39,17 @@ export function TrackCard({ track }: TrackProps) {
     <Link href={`/tracks/${track.slug}`} className="group">
       <Card
         className={clsx(
-          'relative transition-colors duration-300',
+          'relative overflow-hidden transition-colors duration-300',
           isEnrolled
             ? 'border-blue-400'
             : 'group-hover:border-blue-400 group-focus:border-blue-400',
         )}
       >
+        <div className="absolute -bottom-4 -left-4 w-1/3">
+          <div className="-ml-8 h-12 w-full border-t border-neutral-700/50 bg-gradient-to-r from-neutral-900 to-transparent" />
+          <div className="-ml-4 h-12 w-full border-t border-neutral-700/50 bg-gradient-to-r from-neutral-900 to-transparent" />
+          <div className="h-12 w-full border-t border-neutral-700/50 bg-gradient-to-r from-neutral-900 to-transparent" />
+        </div>
         {isEnrolled ? <EnrolledBadge /> : null}
         <CardContent className="flex flex-col items-center gap-5 p-8">
           <div
