@@ -397,7 +397,7 @@ function SingleComment({
           <div className="text-muted-foreground flex items-center gap-2 whitespace-nowrap text-xs">
             <span>
               {hasBeenEdited
-                ? `Last edited at ${new Intl.DateTimeFormat('en-US', {
+                ? `Last edited at ${new Intl.DateTimeFormat(undefined, {
                     timeStyle: 'short',
                     dateStyle: 'short',
                   }).format(comment.updatedAt)}`
