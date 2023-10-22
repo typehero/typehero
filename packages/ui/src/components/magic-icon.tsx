@@ -6,13 +6,15 @@ export function MagicIcon({ url }: { url: string }) {
   const linkedinRegex = /^https?:\/\/(?:www\.)?linkedin\.com\//;
   const youtubeRegex = /^https?:\/\/(?:www\.)?youtube\.com\//;
 
-  if (githubRegex.test(url))
+  const lowercaseUrl = url.toLowerCase();
+
+  if (githubRegex.test(lowercaseUrl))
     return <Github className="h-3 w-3 text-neutral-400 dark:text-neutral-600" />;
-  if (twitterRegex.test(url))
+  if (twitterRegex.test(lowercaseUrl))
     return <Twitter className="h-3 w-3 text-neutral-400 dark:text-neutral-600" />;
-  if (linkedinRegex.test(url))
+  if (linkedinRegex.test(lowercaseUrl))
     return <Linkedin className="h-3 w-3 text-neutral-400 dark:text-neutral-600" />;
-  if (youtubeRegex.test(url))
+  if (youtubeRegex.test(lowercaseUrl))
     return <Youtube className="h-3 w-3 text-neutral-400 dark:text-neutral-600" />;
   return <LinkIcon className="h-3 w-3 text-neutral-400 dark:text-neutral-600" />;
 }
