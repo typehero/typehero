@@ -9,7 +9,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/too
 import { TypographyLarge } from '@repo/ui/components/typography/large';
 import { toast } from '@repo/ui/components/use-toast';
 import { UserBadge } from '@repo/ui/components/user-badge';
-import { Calendar, Flag, Pin, Share, X, Trash } from '@repo/ui/icons';
+import { Calendar, Flag, Pin, Share, Trash } from '@repo/ui/icons';
 import clsx from 'clsx';
 import Link from 'next/link';
 import type { ChallengeSolution } from '~/app/[locale]/challenge/[slug]/solutions/[solutionId]/page';
@@ -20,6 +20,7 @@ import { pinOrUnpinSolution } from './_actions';
 import { isAdminOrModerator, isAuthor } from '~/utils/auth-guards';
 import { SolutionDeleteDialog } from './delete';
 import { useParams } from 'next/navigation';
+import { ArrowLeft } from 'lucide-react';
 
 interface Props {
   solution: ChallengeSolution;
@@ -47,14 +48,14 @@ export function SolutionDetails({ solution }: Props) {
   return (
     <div className="relative h-full">
       <div className="relative flex h-full flex-col">
-        <div className="bg-background/90 dark:bg-muted/90 sticky right-0 top-0 flex w-full border-b border-zinc-300 p-2 backdrop-blur-sm dark:border-zinc-700">
-          <Link href={`/challenge/${slug}/solutions`}>
-            <X className="stroke-gray-500 hover:stroke-gray-400" size={20} />
-          </Link>
-        </div>
         <div className="custom-scrollable-element flex-1 overflow-y-auto px-4 pb-16 pt-3">
           <div className="mb-5 flex flex-col gap-3">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+            <div>
+                <Link href={`/challenge/${slug}/solutions`} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '28px', height: '28px', backgroundColor: 'rgba(128, 128, 128, 0.2)', borderRadius: '50%' }}>
+                  <ArrowLeft className="stroke-gray-500 hover:stroke-gray-400"  size={20} />
+                </Link>
+              </div>
               <div className="flex items-center gap-2">
                 <Avatar className="h-7 w-7">
                   <AvatarImage alt="github profile picture" src={solution.user?.image ?? ''} />
@@ -88,6 +89,10 @@ export function SolutionDetails({ solution }: Props) {
                 <Calendar className="h-4 w-4" />
                 <span className="text-xs">{getRelativeTime(solution.createdAt)}</span>
               </div>
+              </div>
+
+          </div>
+          <div className="flex items-center gap-3">
               <Vote
                 voteCount={solution._count.vote}
                 initialHasVoted={solution.vote.length > 0}
@@ -97,10 +102,10 @@ export function SolutionDetails({ solution }: Props) {
                 onVote={(didUpvote: boolean) => {
                   solution.vote = didUpvote
                     ? [
-                        {
-                          userId: session?.user?.id ?? '',
-                        },
-                      ]
+                      {
+                        userId: session?.user?.id ?? '',
+                      },
+                    ]
                     : [];
                   solution._count.vote += didUpvote ? 1 : -1;
                 }}
@@ -145,8 +150,9 @@ export function SolutionDetails({ solution }: Props) {
                 </SolutionDeleteDialog>
               ) : null}
             </div>
-          </div>
+            <div className="mt-4">
           <Markdown>{solution.description || ''}</Markdown>
+          </div>
         </div>
       </div>
     </div>
