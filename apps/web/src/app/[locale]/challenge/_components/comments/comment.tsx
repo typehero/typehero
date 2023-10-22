@@ -394,14 +394,16 @@ function SingleComment({
       {!isEditing && (
         <div className="-mb-1">
           <ExpandableContent content={comment.text} />
-          <div className="text-muted-foreground flex items-center gap-2 whitespace-nowrap text-xs">
-            {hasBeenEdited
-              ? `Last edited at ${new Intl.DateTimeFormat(undefined, {
-                  timeStyle: 'short',
-                  dateStyle: 'short',
-                }).format(comment.updatedAt)}`
-              : null}
-          </div>
+          {hasBeenEdited ? (
+            <div className="text-muted-foreground flex items-center gap-2 whitespace-nowrap text-xs">
+              `Last edited at $
+              {new Intl.DateTimeFormat(undefined, {
+                timeStyle: 'short',
+                dateStyle: 'short',
+              }).format(comment.updatedAt)}
+              `
+            </div>
+          ) : null}
         </div>
       )}
       {isEditing ? (
