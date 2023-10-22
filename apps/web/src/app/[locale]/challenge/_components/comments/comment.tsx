@@ -395,14 +395,12 @@ function SingleComment({
         <div className="-mb-1">
           <ExpandableContent content={comment.text} />
           <div className="text-muted-foreground flex items-center gap-2 whitespace-nowrap text-xs">
-            <span>
-              {hasBeenEdited
-                ? `Last edited at ${new Intl.DateTimeFormat(undefined, {
-                    timeStyle: 'short',
-                    dateStyle: 'short',
-                  }).format(comment.updatedAt)}`
-                : null}
-            </span>
+            {hasBeenEdited
+              ? `Last edited at ${new Intl.DateTimeFormat(undefined, {
+                  timeStyle: 'short',
+                  dateStyle: 'short',
+                }).format(comment.updatedAt)}`
+              : null}
           </div>
         </div>
       )}
