@@ -17,7 +17,6 @@ function TypeHeroLogo3D() {
       <g className="dark:hidden">
         <path
           d="M0 74.9605C0 33.561 33.561 0 74.9605 0H558.039C599.439 0 633 33.561 633 74.9605V558.039C633 599.439 599.439 633 558.039 633H74.9605C33.561 633 0 599.439 0 558.039V74.9605Z"
-
           fill="#FFB800"
         />
         <path
@@ -34,7 +33,6 @@ function TypeHeroLogo3D() {
       <g className="animate-logo-light hidden dark:block">
         <path
           d="M0 74.9605C0 33.561 33.561 0 74.9605 0H558.039C599.439 0 633 33.561 633 74.9605V558.039C633 599.439 599.439 633 558.039 633H74.9605C33.561 633 0 599.439 0 558.039V74.9605Z"
-
           fill="#FFB800"
         />
         <path
