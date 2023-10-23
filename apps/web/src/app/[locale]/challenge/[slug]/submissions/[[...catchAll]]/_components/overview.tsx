@@ -14,7 +14,7 @@ interface Props {
 }
 const codifyForMarkdown = (code: string) => {
   return `\`\`\`ts
-${code} \`\`\``;
+${code}`;
 };
 
 export function SubmissionOverview({ submissionId }: Props) {
