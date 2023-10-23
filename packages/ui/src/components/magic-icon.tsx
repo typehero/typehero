@@ -1,10 +1,10 @@
 import { Github, Link as LinkIcon, Linkedin, Twitter, Youtube } from 'lucide-react';
 
 export function MagicIcon({ url }: { url: string }) {
-  const githubRegex = /^https?:\/\/(?:www\.)?github\.com\//;
-  const twitterRegex = /^https?:\/\/(?:www\.)?twitter\.com\//;
-  const linkedinRegex = /^https?:\/\/(?:www\.)?linkedin\.com\//;
-  const youtubeRegex = /^https?:\/\/(?:www\.)?youtube\.com\//;
+  const githubRegex = /^(?:https?:\/\/)?(?:www\.)?github\.com\/(?:\w+)(\/)?$/;
+  const twitterRegex = /^(?:https?:\/\/)?(?:www\.)?twitter\.com\/(?:\w+)(\/)?$/;
+  const linkedinRegex = /^(?:https?:\/\/)?(?:www\.)?linkedin\.com\/(?:\w+)(\/)?$/;
+  const youtubeRegex = /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/(?:\w+)(\/)?$/;
 
   const lowercaseUrl = url.toLowerCase();
 
