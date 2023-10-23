@@ -66,4 +66,5 @@ export {
   Text,
   FlaskConical,
   History,
+  ArrowLeft,
 } from 'lucide-react';
