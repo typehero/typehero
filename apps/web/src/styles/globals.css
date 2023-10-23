@@ -602,3 +602,12 @@ a {
 .ReactQueryDevtools > button {
   margin-bottom: 5rem !important;
 }
+
+/* overrides silly annoying shadcn default */
+/* it doesn't transition shadows by default */
+.shadcnoverridetransition {
+  transition: all 0.3s ease !important;
+}
+.shadcnoverridetransition:active {
+  transition: all 0.075s ease !important;
+}
