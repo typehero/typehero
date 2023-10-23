@@ -1,9 +1,10 @@
-import { Sparkles, Github, Mail, Sparkle, Twitter } from '@repo/ui/icons';
+import { Github, Mail, Sparkle, Twitter } from '@repo/ui/icons';
 import Link from 'next/link';
 import { Balancer } from 'react-wrap-balancer';
 import { Button } from '@repo/ui/components/button';
 import { HeroIllustration, BackgroundGrid } from './hero-illustration';
 import { getScopedI18n } from '~/locales/server';
+import { Ghost } from './hero-ghost';
 
 function TypeHeroLogo3D() {
   return (
@@ -147,6 +148,7 @@ export async function Hero() {
 
   return (
     <section className="-mt-[56px] min-h-[calc(100vh)] overflow-hidden lg:min-h-0 lg:pt-[56px]">
+      <Ghost />
       <div className="absolute inset-10 -z-30 overflow-hidden rounded-full opacity-70 lg:hidden">
         <BackgroundGrid />
       </div>
