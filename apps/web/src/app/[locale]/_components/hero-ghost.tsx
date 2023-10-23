@@ -20,10 +20,7 @@ export function Ghost() {
       const distX = mouseX - ghostX - ghost.clientWidth / 2;
       const distY = mouseY - ghostY - ghost.clientHeight / 2;
 
-      ghost.style.transform = `skew(${Math.min(
-        Math.max(-distX * 2 * Math.abs(distX / 1000) * Math.abs(distX / 1000), -50),
-        50,
-      )}deg)`;
+      ghost.style.transform = `skew(${Math.min(Math.max(-distX * 0.1, -50), 50)}deg)`;
 
       ghost.style.scale = `1 ${Math.min(Math.max(1 - distY / 250, 0.5), 1.5)}`;
 
