@@ -10,8 +10,8 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
 import { createNoProfanitySchemaWithValidate } from '~/utils/antiProfanityZod';
-import type { ChallengeSolution } from '../getSolutionRouteData';
-import { postSolution } from './_actions';
+import type { ChallengeSolution } from '~/app/[locale]/challenge/[slug]/solutions/[solutionId]/page';
+import { updateSolution } from './_actions';
 
 const getDefaultMarkdown = (solution: string) => `
 ## Thoughts
@@ -39,26 +39,26 @@ const formSchema = z.object({
 export type FormSchema = z.infer<typeof formSchema>;
 
 interface Props {
-  challenge: ChallengeSolution;
-  dismiss: () => void;
+  solution: ChallengeSolution;
+  setIsEditing: (isEditing: boolean) => void;
 }
 
-export function SolutionEditor({ dismiss, challenge }: Props) {
+export function EditSolution({ solution, setIsEditing }: Props) {
   const { slug } = useParams();
   const session = useSession();
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: '',
-      content: getDefaultMarkdown(challenge.submission[0]?.code ?? ''),
+      title: solution.title,
+      content: getDefaultMarkdown(solution.description),
     },
   });
   const { toast } = useToast();
 
   const onSubmit = async (data: FormSchema) => {
     try {
-      await postSolution({
-        challengeId: challenge.id,
+      await updateSolution({
+        id: solution.id,
         description: data.content ?? '',
         slug: slug as string,
         title: data.title ?? '',
@@ -67,7 +67,7 @@ export function SolutionEditor({ dismiss, challenge }: Props) {
 
       toast({
         variant: 'success',
-        title: 'Your solution has been posted!',
+        title: 'Your solution has been updated!',
       });
     } catch (error) {
       toast({
@@ -75,14 +75,14 @@ export function SolutionEditor({ dismiss, challenge }: Props) {
         title: 'Uh oh! Something went wrong. Please try again.',
       });
     } finally {
-      dismiss();
+      setIsEditing(false);
     }
   };
 
   const { theme } = useTheme();
-  theme != null
-    ? document.documentElement.setAttribute('data-color-mode', theme)
-    : document.documentElement.setAttribute('data-color-mode', 'system');
+  theme === 'dark'
+    ? document.documentElement.setAttribute('data-color-mode', 'dark')
+    : document.documentElement.setAttribute('data-color-mode', 'light');
 
   return (
     <Form {...form}>
@@ -108,13 +108,13 @@ export function SolutionEditor({ dismiss, challenge }: Props) {
           </div>
           <Button
             className="h-8 rounded-lg bg-white px-3 py-2 text-black hover:bg-zinc-200 focus-visible:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:focus-visible:bg-zinc-700"
-            onClick={dismiss}
+            onClick={() => setIsEditing(false)}
             type="button"
           >
             Cancel
           </Button>
           <Button className="h-8 rounded-lg px-3 py-2" type="submit">
-            Post
+            Update
           </Button>
         </div>
         <div className="flex flex-1 flex-col">
