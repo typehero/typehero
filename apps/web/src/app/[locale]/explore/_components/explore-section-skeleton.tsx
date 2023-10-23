@@ -8,7 +8,7 @@ export function ExploreSectionSkeleton() {
         <Skeleton className="my-4 h-10 w-1/3 rounded-lg bg-zinc-300 dark:bg-zinc-700" />
         <Skeleton className="my-4 mr-4 h-4 w-16 rounded-lg bg-zinc-300 dark:bg-zinc-700" />
       </div>
-      <div className="flex w-full flex-nowrap gap-4 overflow-x-hidden px-4 md:px-20">
+      <div className="flex w-full flex-nowrap gap-4 overflow-x-hidden px-4 md:px-20" id="container">
         <ExploreCardSkeleton />
         <ExploreCardSkeleton />
         <ExploreCardSkeleton />
