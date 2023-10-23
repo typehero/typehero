@@ -41,7 +41,7 @@ export async function EnrolledTrackSection() {
   });
 
   return (
-    <div>
+    <div className="sm:px-8 md:px-0">
       {tracks.length > 0 ? (
         <>
           <div className="container p-4">
