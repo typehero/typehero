@@ -9,7 +9,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/too
 import { TypographyLarge } from '@repo/ui/components/typography/large';
 import { toast } from '@repo/ui/components/use-toast';
 import { UserBadge } from '@repo/ui/components/user-badge';
-import { Calendar, Flag, Pin, Share, X, Trash } from '@repo/ui/icons';
+import { Calendar, Flag, Pin, Share, X, Trash, Pencil } from '@repo/ui/icons';
 import clsx from 'clsx';
 import Link from 'next/link';
 import type { ChallengeSolution } from '~/app/[locale]/challenge/[slug]/solutions/[solutionId]/page';
@@ -20,6 +20,8 @@ import { pinOrUnpinSolution } from './_actions';
 import { isAdminOrModerator, isAuthor } from '~/utils/auth-guards';
 import { SolutionDeleteDialog } from './delete';
 import { useParams } from 'next/navigation';
+import { useState } from 'react';
+import { EditSolution } from './edit-solution';
 
 interface Props {
   solution: ChallengeSolution;
@@ -29,6 +31,7 @@ export function SolutionDetails({ solution }: Props) {
   const { slug } = useParams();
   const { data: session } = useSession();
   const showPin = isAdminOrModerator(session);
+  const [isEditing, setIsEditing] = useState(false);
 
   const handlePinClick = async () => {
     await pinOrUnpinSolution(solution.id, !solution.isPinned, slug as string);
@@ -130,23 +133,42 @@ export function SolutionDetails({ solution }: Props) {
                   <Pin className={clsx('h-4 w-4')} />
                 </Button>
               ) : null}
+
+              {/* Only author can see edit / delete button */}
               {isAuthor(session, solution.userId) ? (
-                <SolutionDeleteDialog solution={solution}>
+                <>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Button variant="secondary" size="xs">
-                        <Trash className="h-4 w-4" />
+                      <Button
+                        onClick={() => setIsEditing(!isEditing)}
+                        variant="secondary"
+                        size="xs"
+                      >
+                        <Pencil className="h-4 w-4" />
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent>
-                      <p>Delete</p>
+                      <p>Edit</p>
                     </TooltipContent>
                   </Tooltip>
-                </SolutionDeleteDialog>
+                  <SolutionDeleteDialog solution={solution}>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button variant="secondary" size="xs">
+                          <Trash className="h-4 w-4" />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Delete</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </SolutionDeleteDialog>
+                </>
               ) : null}
             </div>
           </div>
-          <Markdown>{solution.description || ''}</Markdown>
+          {!isEditing && <Markdown>{solution.description || ''}</Markdown>}
+          {isEditing ? <EditSolution solution={solution} setIsEditing={setIsEditing} /> : null}
         </div>
       </div>
     </div>

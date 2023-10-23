@@ -26,7 +26,7 @@ import {
 export function Features() {
   return (
     <section className="relative overflow-hidden" id="features">
-      <div className="container mb-[64px] grid items-center justify-center">
+      <div className="mx-auto mb-[64px] grid max-w-[1400px] items-center justify-center px-4 sm:px-24 md:px-4 lg:px-24">
         <div className="flex flex-col items-center justify-center gap-16">
           <div className="mt-1 flex flex-col gap-3 px-4 text-center sm:px-0">
             <a
@@ -60,20 +60,20 @@ export function Features() {
               <Balancer>All you need to become a TypeScript menace</Balancer>
             </p>
           </div>
-          <div className="relative z-10 grid w-full gap-8 lg:grid-cols-2">
+          <div className="relative z-10 grid w-full gap-4 md:grid-cols-2 lg:gap-8 [&>*:nth-child(3)]:hidden md:[&>*:nth-child(3)]:block">
             <ImageCard
               imgClass1={clsx(
                 'pointer-events-none transition-transform duration-500 bg-neutral-50/30 dark:bg-neutral-800/30',
-                'scale-[150%] sm:scale-[110%] md:scale-100 max-md:rounded-sm rounded-xl top-[69%] left-[69px] md:top-auto w-[42%] md:-bottom-[11%] sm:left-[40px] lg:w-[69%]',
+                'scale-[150%] sm:scale-100 md:scale-100 max-md:rounded-sm rounded-xl top-[69%] left-[69px] md:top-auto w-[42%] sm:top-[50%] md:-bottom-[1%] xl:-bottom-[11%] sm:left-[40px] md:w-[69%]',
                 'md:group-hover:translate-x-2 md:group-hover:scale-95',
               )}
               imgClass2={clsx(
                 'pointer-events-none transition-transform duration-500 bg-neutral-50/50 dark:bg-zinc-800/60 backdrop-blur-sm translate-x-0',
-                'scale-[190%] sm:scale-[150%] md:scale-100 rounded-2xl max-md:rounded-md left-[50%] top-[69%] md:top-auto w-[50%] sm:left-[39%] md:-bottom-[12%] lg:w-[77%]',
+                'scale-[190%] sm:scale-[120%] md:scale-100 rounded-2xl max-md:rounded-md left-[50%] sm:top-[49%] top-[69%] md:top-auto w-[50%] sm:left-[39%] md:-bottom-[2%] xl:-bottom-[12%] md:w-[77%]',
                 'md:group-hover:scale-105 md:group-hover:-translate-x-2',
               )}
               description="Engage in TypeScript challenges to strengthen your grasp of the type system and advanced features"
-              bgClass="lg:bg-gradient-to-br"
+              bgClass="md:bg-gradient-to-br"
               image={{
                 dark1: FeatureCardChallengeDark2,
                 dark2: FeatureCardChallengeDark1,
@@ -85,7 +85,7 @@ export function Features() {
             />
             <CollaborativeEnvironmentCard
               description="Developers can share solutions and engage in discussions through commenting"
-              bgClass="lg:bg-gradient-to-bl"
+              bgClass="md:bg-gradient-to-bl"
               title="Collaborative Environment"
             />
             <ChallengeCreationCard
@@ -114,7 +114,7 @@ export function Features() {
                 'left-[5%] top-[50%] md:top-[30%] md:left-1/2 md:left-[35px]',
               )}
               description="Craft your own coding challenges to share with the TypeHero community"
-              bgClass="lg:bg-gradient-to-tr"
+              bgClass="md:bg-gradient-to-tr"
               image={{
                 step1dark1: Step1Dark1,
                 step1dark2: Step1Dark2,
@@ -132,7 +132,7 @@ export function Features() {
             />
             <CuratedTracksCard
               description="Tracks are curated challenges, spanning various topics and difficulty levels, to advance your TypeScript skills."
-              bgClass="lg:bg-gradient-to-tl"
+              bgClass="md:bg-gradient-to-tl"
               title="Learning Tracks"
             />
           </div>

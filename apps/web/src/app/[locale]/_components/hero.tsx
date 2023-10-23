@@ -17,11 +17,12 @@ function TypeHeroLogo3D() {
       <g className="dark:hidden">
         <path
           d="M0 74.9605C0 33.561 33.561 0 74.9605 0H558.039C599.439 0 633 33.561 633 74.9605V558.039C633 599.439 599.439 633 558.039 633H74.9605C33.561 633 0 599.439 0 558.039V74.9605Z"
+
           fill="#FFB800"
         />
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M261.441 348.724H333.158V299.842H133.263V348.724H204.629V566.368H261.441V348.724Z"
           fill="black"
         />
@@ -33,11 +34,12 @@ function TypeHeroLogo3D() {
       <g className="animate-logo-light hidden dark:block">
         <path
           d="M0 74.9605C0 33.561 33.561 0 74.9605 0H558.039C599.439 0 633 33.561 633 74.9605V558.039C633 599.439 599.439 633 558.039 633H74.9605C33.561 633 0 599.439 0 558.039V74.9605Z"
+
           fill="#FFB800"
         />
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M261.441 348.724H333.158V299.842H133.263V348.724H204.629V566.368H261.441V348.724Z"
           fill="black"
         />
@@ -52,8 +54,8 @@ function TypeHeroLogo3D() {
           fill="#FFB800"
         />
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M261.441 348.724H333.158V299.842H133.263V348.724H204.629V566.368H261.441V348.724Z"
           fill="black"
         />
@@ -152,7 +154,7 @@ export async function Hero() {
       <div className="absolute inset-10 -z-30 overflow-hidden rounded-full opacity-70 lg:hidden">
         <BackgroundGrid />
       </div>
-      <div className="container relative grid min-h-screen items-center justify-center lg:min-h-0 lg:grid-cols-2">
+      <div className="container relative grid min-h-screen items-center justify-center py-24 lg:min-h-0 lg:grid-cols-2 lg:py-0">
         <BeamOfLight />
         <div className="flex w-full flex-col items-center justify-center gap-10 lg:items-start">
           <a

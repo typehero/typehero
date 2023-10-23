@@ -13,5 +13,6 @@ monaco-editor.d.ts
 pnpm-lock.yaml
 
 !apps/**
+challenges/**
 !packages/**
 !tooling/**

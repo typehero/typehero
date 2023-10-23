@@ -10,6 +10,10 @@
     {
       "fileMatch": ["vercel.json"],
       "url": "https://openapi.vercel.sh/vercel.json"
+    },
+    {
+      "fileMatch": ["challenges/**/metadata.json"],
+      "url": "./challenges/metadata.schema.json"
     }
   ],
   "search.exclude": {

@@ -35,7 +35,7 @@ export function Navigation() {
   const featureFlags = useContext(FeatureFlagContext);
 
   return (
-    <header className="z-0 w-full">
+    <header className="z-50 w-full">
       {!fssettings.isFullscreen && (
         <nav
           className={`flex h-14 items-center text-sm font-medium ${

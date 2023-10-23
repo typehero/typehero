@@ -342,6 +342,8 @@ function SingleComment({
   const isAuthor = loggedinUser.data?.user.id === comment.user.id;
   const isAdminAndModerator = isAdminOrModerator(loggedinUser.data);
 
+  const hasBeenEdited = comment.updatedAt.getTime() > comment.createdAt.getTime();
+
   useEffect(() => {
     if (!isHighlighted) return;
     const timeout = setTimeout(() => {
@@ -375,6 +377,7 @@ function SingleComment({
             </Avatar>
             <UserBadge username={comment.user.name ?? ''} linkComponent={Link} />
           </div>
+
           <Tooltip delayDuration={0.05}>
             <TooltipTrigger asChild>
               <div className="text-muted-foreground flex items-center gap-2 whitespace-nowrap text-xs">
@@ -391,6 +394,15 @@ function SingleComment({
       {!isEditing && (
         <div className="-mb-1">
           <ExpandableContent content={comment.text} />
+          {hasBeenEdited ? (
+            <div className="text-muted-foreground flex items-center gap-2 whitespace-nowrap text-xs">
+              Last edited at
+              {new Intl.DateTimeFormat(undefined, {
+                timeStyle: 'short',
+                dateStyle: 'short',
+              }).format(comment.updatedAt)}
+            </div>
+          ) : null}
         </div>
       )}
       {isEditing ? (

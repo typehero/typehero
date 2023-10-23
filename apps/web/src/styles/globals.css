@@ -101,6 +101,11 @@ main {
   scroll-behavior: smooth;
   height: 100%;
 }
+
+.from-background {
+  --tw-gradient-from: hsl(var(--background)) var(--tw-gradient-from-position);
+}
+
 .w-md-editor-content {
   @apply bg-background dark:bg-muted;
 }
@@ -242,32 +247,6 @@ main {
 
 .container {
   @apply mx-auto max-w-[1400px] px-4 md:px-24;
-}
-
-/* overrides a conflicting style on the honeycomb grid */
-.honeycomboverride > *:first-child {
-  margin-left: 2.375rem /* 38px */ !important;
-}
-
-@media (min-width: 1025px) {
-  .honeycomboverride > *:first-child {
-    margin-left: -4.75rem !important;
-  }
-  .honeycomboverride > *:nth-child(9) {
-    margin-left: -2.375rem !important;
-  }
-  .honeycomboverride > *:nth-child(14) {
-    margin-left: 0rem !important;
-  }
-  .honeycomboverride > *:nth-child(23) {
-    margin-left: 2.375rem !important;
-  }
-  .honeycomboverride > *:nth-child(23) {
-    margin-left: 2.375rem !important;
-  }
-  .honeycomboverride > *:nth-child(13n + 23) {
-    margin-left: 2.375rem !important;
-  }
 }
 
 @property --gradient-angle {
@@ -519,4 +498,101 @@ main {
 
 a {
   @apply focus:outline-none focus-visible:ring-2;
+}
+
+.infinite-scroll-x-container {
+  overflow: hidden;
+  mask: linear-gradient(to right, transparent, white 20%, white 80%, transparent);
+  -webkit-mask: linear-gradient(to right, transparent, white 20%, white 80%, transparent);
+}
+.infinite-scroll-x {
+  animation: infinite-scroll-x 120s linear infinite;
+}
+
+.infinite-scroll-x-reverse {
+  animation: infinite-scroll-x 120s linear infinite reverse;
+}
+
+.infinite-scroll-x:hover,
+.infinite-scroll-x-reverse:hover {
+  animation-play-state: paused;
+}
+
+@keyframes infinite-scroll-x {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (min-width: 1280px) {
+  .honeycomboverride > *:first-child {
+    margin-left: -4.75rem !important;
+  }
+  .honeycomboverride > *:nth-child(8) {
+    margin-left: 0rem !important;
+  }
+  .honeycomboverride > *:nth-child(10) {
+    margin-left: -2.375rem !important;
+  }
+  .honeycomboverride > *:nth-child(26) {
+    margin-left: 2.375rem !important;
+  }
+  .honeycomboverride > *:nth-child(15n + 26) {
+    margin-left: 2.375rem !important;
+  }
+}
+
+.fancy-border-gradient::before {
+  inset: 0;
+  content: '';
+  --angle: 0deg;
+  position: absolute;
+  border-radius: inherit;
+  padding: 1.5px; /* control the border thickness */
+  background: conic-gradient(
+    from var(--angle),
+    #3178c622,
+    #3178c644 35%,
+    #3178c688 39%,
+    #3178c6,
+    #3178c688 61%,
+    #3178c644 65%,
+    #3178c622
+  );
+  -webkit-mask-composite: xor;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  animation: 3s rotate linear infinite;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+@keyframes rotate {
+  to {
+    --angle: 360deg;
+  }
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.animate-amogup {
+  opacity: 0;
+  transform: translateY(50%);
+  animation: amogup 1s 0.25s ease 1 forwards;
+}
+
+@keyframes amogup {
+  to {
+    opacity: 0.5;
+    transform: translateY(0%);
+  }
+}
+
+.ReactQueryDevtools > button {
+  margin-bottom: 5rem !important;
 }

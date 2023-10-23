@@ -18,6 +18,10 @@
       "dependsOn": ["db:push"],
       "cache": false
     },
+    "db:prod:seed": {
+      "dependsOn": ["db:push"],
+      "cache": false
+    },
     "db:studio": {
       "cache": false
     }
