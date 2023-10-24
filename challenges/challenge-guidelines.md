@@ -148,14 +148,14 @@ Unless your challenge is related to `any`, avoid using it.  That means you shoul
 <td>
 
 ```ts
-type Split = any;
+type Split = unknown;
 ```
 
 </td>
 <td>
 
 ```ts
-type Split = unknown;
+type Split = any;
 ```
 
 </td>
