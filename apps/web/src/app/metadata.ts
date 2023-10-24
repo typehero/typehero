@@ -5,7 +5,7 @@ const OG_URL =
   process.env.NODE_ENV !== 'production' ? 'http://localhost:4200' : 'https://og.typehero.dev';
 
 const tagline = 'Level up your typescript skills with interactive exercises';
-const baseMetadata: Metadata = {
+export const baseMetadata: Metadata = {
   metadataBase: new URL(OG_URL),
   title: {
     default: 'TypeHero',
