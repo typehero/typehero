@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 export const DEFAULT_SETTINGS = {
-  fontSize: '12',
+  fontSize: '16',
   bindings: 'standard',
   tabSize: '2',
   vimConfig: `" - this is a comment

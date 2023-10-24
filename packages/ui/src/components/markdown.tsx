@@ -73,6 +73,14 @@ export function Markdown({ children, className }: { children: string; className?
               style={syntaxHighlighterTheme} // theme
               wrapLines
               wrapLongLines
+              customStyle={{ fontSize: 'inherit' }}
+              codeTagProps={{
+                style: {
+                  // overrides
+                  fontSize: 'inherit',
+                  lineHeight: 'inherit',
+                },
+              }}
               {...props}
             >
               {String(children).replace(/\n$/, '')}
