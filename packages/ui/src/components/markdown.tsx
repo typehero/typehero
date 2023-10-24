@@ -76,19 +76,6 @@ export function Markdown({ children, className }: { children: string; className?
               customStyle={{ fontSize: 'inherit' }}
               codeTagProps={{
                 style: {
-                  // Default styles
-                  fontFamily:
-                    'Menlo, Monaco, Consolas, "Andale Mono", "Ubuntu Mono", "Courier New", monospace',
-                  color: 'rgb(212, 212, 212)',
-                  textShadow: 'none',
-                  direction: 'ltr',
-                  textAlign: 'left',
-                  whiteSpace: 'pre',
-                  wordSpacing: 'normal',
-                  wordBreak: 'normal',
-                  tabSize: 4,
-                  hyphens: 'none',
-
                   // overrides
                   fontSize: 'inherit',
                   lineHeight: 'inherit',
