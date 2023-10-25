@@ -7,6 +7,7 @@ import { TrackChallenge } from './track-challenge-card';
 import { TrackProgress } from './track-progress';
 import { enrollUserInTrack, getTrackDetails, unenrollUserFromTrack } from './track.action';
 import { Footsies } from '~/components/footsies';
+import { notFound } from 'next/navigation';
 
 interface TrackDetailProps {
   slug: string;
@@ -24,6 +25,10 @@ export const bgsArray = Object.values(BGS_BY_TRACK);
 
 export async function TrackDetail({ slug }: TrackDetailProps) {
   const track = await getTrackDetails(slug);
+
+  if (track.isComingSoon || !track.visible) {
+    return notFound();
+  }
 
   const trackChallenges = track.trackChallenges ?? [];
   const isEnrolled = Boolean(track.enrolledUsers?.length);

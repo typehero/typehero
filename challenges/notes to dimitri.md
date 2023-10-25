@@ -31,9 +31,16 @@
 ## TODO
 
 - figure out patching `Pick` out (`noLib`?)
-- JSON Schema for metadata.json
 - add some kind of tags system to metadata
 
+- CI
+  - lint tests
+  - lint markdown
+    - spelling
+    - lint code in markdown codeblocks
+    - check for dead links somehow (might require local links to work)
+  - schema validation
+    - also check that the linked ids are correct (`prerequisites`)
 
 ## random disorganized snippets for later
 
