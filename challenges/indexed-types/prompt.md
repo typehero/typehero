@@ -86,7 +86,7 @@ type IndexEmpty = Empty[9001];
 
 Not a big deal or anything, but just something to be aware of in case you were expecting a different behavior.
 
-> _spoiler alert_: there actually _ARE_ ways to index a string and return a particular character, but ends up involving some quite advanced type machinery.  Check out the [First Character](todo-first-character) challenge if you're curious.
+> _spoiler alert_: there actually _ARE_ ways to index a string and return a particular character, but ends up involving some quite advanced type machinery.<!--   Check out the [First Character](todo-first-character) challenge if you're curious. -->
 
 ## Solving This Challenge
 

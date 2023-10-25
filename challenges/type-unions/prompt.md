@@ -11,7 +11,7 @@ const landSpacecraft = (distance: Meters) {
 }
 ```
 
-But we noticed when we call `landSpacecraft` with the wrong literal type (see [the challenge on literal types](todo-link)), there's no error like we might expect:
+But we noticed when we call `landSpacecraft` with the wrong literal type (see [the challenge on literal types](https://typehero.dev/challenge/literal-types)), there's no error like we might expect:
 
 ```ts
 const distanceInMiles: Miles = 1242;

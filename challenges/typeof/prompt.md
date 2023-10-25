@@ -6,7 +6,7 @@ You're doing yourself a great service by improve your knowledge of TypeScript.  
 
 | | JavaScript world | types world |
 | - | - | - |
-| variables | `const`, `let`, function arguments | [type aliases](todo-type-aliases), [default generic arguments](todo-default-generic-arguments) |
+| variables | `const`, `let`, function arguments | [type aliases](https://typehero.dev/challenge/type-aliases), [default generic arguments](https://typehero.dev/challenge/default-generic-arguments) |
 | operations | `for` loops, `while` loops, recursion, higher-order functions | recursion, higher-order types |
 | runtime artifacts  | ✅ | ❌ |
 | time of error | runtime | compile time |
@@ -84,7 +84,7 @@ type CreatePoint = typeof createPoint
 //|TypeScript stuff
 ```
 
-Later, you're going to learn about ways to then do more operations on types.  We're going to be extracting [keys of objects](todo-pick), and creating new types for [return types](todo-return-types) and [parameters](todo-parameters) of functions.
+Later, you're going to learn about ways to then do more operations on types.  We're going to be extracting keys of objects <!-- todo [keys of objects](https://typehero.dev/challenge/object-keys)-->, and creating new types for return types <!-- todo [return types](https://typehero.dev/challenge/return-types) --> and parameters <!-- todo [parameters](https://typehero.dev/challenge/parameters) --> of functions.
 
 ## Solving This Challenge
 

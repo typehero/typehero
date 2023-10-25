@@ -4,12 +4,12 @@
   "properties": {
     "id": {
       "description": "a snake-case-style slug that will also be used in URLs (and, therefore, needs SEO considerations)",
-      "maxLength": 25,
+      "maxLength": 35,
       "type": "string"
     },
     "label": {
       "description": "A few capitalized words (often just a capitalized version of the slug) that the user will see for the challenge.",
-      "maxLength": 25,
+      "maxLength": 35,
       "type": "string"
     },
     "description": {
