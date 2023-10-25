@@ -159,7 +159,7 @@ export function Description({ challenge }: Props) {
         </Tooltip>
       </div>
       {/* Challenge Description */}
-      <div className="prose-invert prose-h3:text-xl mt-6 leading-6">
+      <div className="prose-invert prose-h3:text-xl mt-6 leading-7">
         <Markdown>{challenge.description}</Markdown>
       </div>
     </div>
