@@ -17,6 +17,6 @@ type test_TheCoolestCarEverMade = Expect<Equal<
 
 type test_TruckDriverBonusGiver = Expect<Equal<
   TruckDriverBonusGiver,
-  "Taylor Swift"
+  45_000_000
 >>;
 
