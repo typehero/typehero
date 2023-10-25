@@ -17,11 +17,13 @@ export async function TrackGrid() {
   return (
     <div className="container">
       <section className="w-[calc(100% + 8rem)] grid grid-cols-1 gap-4 sm:px-8 md:-mx-16 md:grid-cols-2 md:px-0 lg:mx-0 lg:w-full xl:grid-cols-3 2xl:gap-8">
-        {tracks?.map((track) => <TrackCard key={`track-${track.id}`} track={track} />)}
-        {/* Coming Soon:tm: cards */}
-        {tracks
-          ?.splice(0, 1)
-          .map((track) => <TrackCardSoon key={`track-${track.id}`} track={track} />)}
+        {tracks?.map((track) => {
+          if (track.isComingSoon) {
+            return <TrackCardSoon key={`track-${track.id}`} track={track} />;
+          }
+
+          return <TrackCard key={`track-${track.id}`} track={track} />;
+        })}
       </section>
     </div>
   );
@@ -45,6 +47,9 @@ async function getTracks(session: Session | null) {
     },
     where: {
       visible: true,
+    },
+    orderBy: {
+      isComingSoon: 'asc',
     },
   });
 }

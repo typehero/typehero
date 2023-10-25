@@ -1,6 +1,6 @@
 ## The Problem Literal Types Solve
 
-JavaScript, like most programming languages has a concept of [primitive data types](todo-primitive-data-types).  Primitive data types are things like `string`, `boolean`, `number`, and `object`.
+JavaScript, like most programming languages has a concept of [primitive data types](https://typehero.dev/challenge/primitive-data-types).  Primitive data types are things like `string`, `boolean`, `number`, and `object`.
 
 > side note: in JavaScript, arrays and functions are actually objects, but that's a topic for another time :)
 

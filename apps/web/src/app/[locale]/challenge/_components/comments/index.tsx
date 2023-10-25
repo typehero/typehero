@@ -98,7 +98,7 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
         });
       }
       setText('');
-      queryClient.invalidateQueries(queryKey);
+      queryClient.invalidateQueries([`${type.toLowerCase()}-${rootId}-comments`]);
     } catch (e) {
       toast({
         title: 'Unauthorized',

@@ -73,9 +73,9 @@ So wrapping it all up, our type for this API might look like this:
 
 ```ts
 type Info = {
-    count: number;
-    currentPage: number;
-    pages: number;
+  count: number;
+  currentPage: number;
+  pages: number;
 }
 
 type FollowerCountByUserResults = {
@@ -83,8 +83,8 @@ type FollowerCountByUserResults = {
 }
 
 type FollowerCountByUser = {
-    info: Info;
-    results: FollowerCountByUserResults;
+  info: Info;
+  results: FollowerCountByUserResults;
 }
 ```
 
