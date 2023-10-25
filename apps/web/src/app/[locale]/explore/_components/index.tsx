@@ -35,9 +35,6 @@ export async function Explore() {
           <ExploreSection title="💕 Most Popular" tag="POPULAR" redirectRoute="/explore/popular" />
         </Suspense>
         <Suspense fallback={<ExploreSectionSkeleton />}>
-          <ExploreSection title="🔥 Newest" tag="NEWEST" redirectRoute="/explore/newest" />
-        </Suspense>
-        <Suspense fallback={<ExploreSectionSkeleton />}>
           <ExploreSection
             title="Great for Beginners"
             tag="BEGINNER"
