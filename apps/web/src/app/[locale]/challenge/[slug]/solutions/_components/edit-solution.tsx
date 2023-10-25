@@ -13,20 +13,6 @@ import { createNoProfanitySchemaWithValidate } from '~/utils/antiProfanityZod';
 import type { ChallengeSolution } from '~/app/[locale]/challenge/[slug]/solutions/[solutionId]/page';
 import { updateSolution } from './_actions';
 
-const getDefaultMarkdown = (solution: string) => `
-## Thoughts
-<!-- Any thoughts you might like to share about the problem (within ToS, of course). -->
-
-## Approach
-<!-- Provide some details on how you approached this challenge. -->
-
-
-## Code
-\`\`\`ts
-${solution}
-\`\`\`
-`;
-
 const formSchema = z.object({
   title: createNoProfanitySchemaWithValidate((zodString) =>
     zodString.min(5, 'The title must be longer than 5 characters'),
@@ -50,7 +36,7 @@ export function EditSolution({ solution, setIsEditing }: Props) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: solution.title,
-      content: getDefaultMarkdown(solution.description),
+      content: solution.description,
     },
   });
   const { toast } = useToast();

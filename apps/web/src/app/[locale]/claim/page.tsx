@@ -1,10 +1,32 @@
-import { getServerAuthSession } from '@repo/auth/server';
+import { getServerAuthSession, type Session } from '@repo/auth/server';
 import { LoginButton } from '../login/_components/LoginButton';
-import { ClaimForm } from './claim-form';
+import { ClaimForm, type FormSchema } from './claim-form';
 import Image from 'next/image';
+import { isBetaUser } from '~/utils/server/is-beta-user';
+import { redirect } from 'next/navigation';
+import { isValidToken } from './_actions';
 
-export default async function Claim() {
+interface Props {
+  searchParams?: { token: string };
+}
+
+export default async function Claim({ searchParams }: Props) {
+  const token = searchParams?.token;
   const session = await getServerAuthSession();
+
+  if (session && token) {
+    if (await isValidToken(session, { code: token })) {
+      return redirect('/explore');
+    }
+  }
+
+  const isBeta = await isBetaUser(session);
+  if (isBeta) {
+    return redirect('/explore');
+  }
+
+  const redirectUrl = token ? `/claim?token=${token}` : '/claim';
+
   const header = session ? 'In early access?' : 'Login to claim your token';
   const subheader = session ? 'Enter the token that was emailed to you' : '';
   return (
@@ -22,7 +44,7 @@ export default async function Claim() {
             {header}
           </h1>
           <p>{subheader}</p>
-          {session ? <ClaimForm /> : <LoginButton redirectTo="/claim" />}
+          {session ? <ClaimForm /> : <LoginButton redirectTo={redirectUrl} />}
         </div>
       </div>
     </div>
