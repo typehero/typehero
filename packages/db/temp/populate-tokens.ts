@@ -16,7 +16,6 @@ async function populateTokens() {
   await prisma.betaTokens.createMany({
     data: Array.from(new Array(TOKEN_LIMIT).keys()).map(() => {
       return {
-        isClaimed: false,
         token: generateRandomStr(),
       };
     }),

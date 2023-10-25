@@ -31,7 +31,7 @@ export function TrackCardSoon({ track }: TrackProps) {
   const isEnrolled = Boolean(track.enrolledUsers?.length);
 
   return (
-    <Link href={`/tracks/${track.slug}`} className="group">
+    <div className="group">
       <Card
         className={clsx(
           'relative overflow-hidden border-dashed duration-300',
@@ -73,6 +73,6 @@ export function TrackCardSoon({ track }: TrackProps) {
           </div>
         </CardContent>
       </Card>
-    </Link>
+    </div>
   );
 }
