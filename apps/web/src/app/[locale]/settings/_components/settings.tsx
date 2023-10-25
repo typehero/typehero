@@ -32,7 +32,7 @@ export const Settings = async ({ user }: Props) => {
       {/* // TODO: GFI: make each page a subroute, put settings & profile into the same layout */}
       <Tabs className="flex flex-col gap-8 py-8 md:flex-row" defaultValue="settings">
         <VerticalTabsList>
-          <div className="flex flex-col items-center gap-10 md:items-start">
+          <div className="flex flex-col items-center gap-4 md:items-start">
             <div
               className="h-32 w-32 rounded-3xl bg-cover bg-center bg-no-repeat md:h-64 md:w-64"
               style={{ backgroundImage: `url(${user.image ?? '/avatar.jpeg'})` }}
