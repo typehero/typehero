@@ -10,7 +10,7 @@ Instead of using parenthesis to pass arguments, with generics we use angled brac
 
 Other than that, there are a lot of similarities between the two concepts.
 
-> You can even provide defaults for generic arguments!  See the relevant challenge for [generic defaults](todo-link).
+> You can even provide defaults for generic arguments!  See the relevant challenge for [generic defaults](https://typehero.dev/challenge/default-generic-arguments).
 
 There are two separate situations when you'd use this syntax.  One is when you're working strictly with types, and another is when you're doing more normal JavaScript-y stuff like with functions and constants.
 
@@ -86,7 +86,7 @@ type AvocadoToast = {
 }
 ```
 
-> Note: you might notice that we're missing types for our type arguments!  Right now there's nothing stopping us from sending in wrong values like `GroceryItem<number[], boolean, { over: 9000 }>`.  We'll cover that in a future challenge on [`generic-constraints`](todo-link).
+> Note: you might notice that we're missing types for our type arguments!  Right now there's nothing stopping us from sending in wrong values like `GroceryItem<number[], boolean, { over: 9000 }>`.  We'll cover that in a future challenge on [generic type constraints](https://typehero.dev/challenge/generic-type-constraints).
 
 ## Solving This Challenge
 
