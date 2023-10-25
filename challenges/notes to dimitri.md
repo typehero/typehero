@@ -38,6 +38,7 @@
   - lint markdown
     - spelling
     - lint code in markdown codeblocks
+    - check for dead links somehow (might require local links to work)
   - schema validation
     - also check that the linked ids are correct (`prerequisites`)
 

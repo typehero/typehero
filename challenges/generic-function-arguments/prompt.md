@@ -6,7 +6,7 @@ In many situations, we don't need functions to be generic.  The function might b
 
 ## Understanding Generic Syntax
 
-In a previous challenge on [generic type arguments](todo-generic-type-arguments) we saw a `Row` type that looked like this:
+In a previous challenge on [generic type arguments](https://typehero.dev/challenge/generic-type-arguments) we saw a `Row` type that looked like this:
 
 ```ts
 interface Row<T> {

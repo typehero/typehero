@@ -25,7 +25,7 @@ You should prefer more work for yourself at a 10,000:1 ratio.
 
 ### Keep It Fun
 
-Try to keep them fun and find widely relatable pop-culture references (without getting political or anything like that).  Things like movies, video games, music, art, and anything a large number of people are likely to be familiar with.
+Try to keep them fun and find widely relatable pop-culture references (without getting political or anything like that).  Things like movies, video games, music, art, and anything a large number of people are likely to be familiar with.  If you can work in some kind of interesting and lesser-known science fact or something that can also help the reader feel more engaged.
 
 ### Encourage Healthy Practices
 
