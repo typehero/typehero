@@ -11,9 +11,6 @@ tesing for modern web apps. Here is a [link to their docs](https://playwright.de
 If you would like to write a test, please follow the steps below:
 
 1. Navigate to the folder `apps/web/tests/e2e`
-
-![Folder location](..%2F..%2F..%2F..%2F..%2FDesktop%2FScreenshot%202023-10-17%20at%207.55.27%E2%80%AFPM.png)
-
 2. Create a new file with the name of your test. For example, `my-test.test.ts`.
 3. To run the test, run the following command `npx playwright test`.
 
