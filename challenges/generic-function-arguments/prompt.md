@@ -61,7 +61,7 @@ const createRow = <T>(someArg: T) => {
 }
 ```
 
-Because of this ambiguity, we need to do something to _disambiguate_ these two situations to the TypeScript compiler.  In the early days it used to be common to do use `<T extends unknown>` (or `<T extends any>` in the days before `unknown` existed in TypeScript).  But over time people realized there's a shorter way: `<T,>`.  Because `,` is invalid in JSX, but valid in TypeScript to separate multiple arguments, it's sufficient to use this to disambiguate the two situations to the TypeScript compiler.
+Because of this ambiguity, we need to do something to _disambiguate_ these two situations to the TypeScript compiler.  In the early days it used to be common to use `<T extends unknown>` (or `<T extends any>` in the days before `unknown` existed in TypeScript).  But over time people realized there's a shorter way: `<T,>`.  Because `,` is invalid in JSX, but valid in TypeScript to separate multiple arguments, it's sufficient to use this to disambiguate the two situations to the TypeScript compiler.
 
 All that to say, if you see this strange syntax know that it's not you, it's TypeScript being a bit funky.  If this is confusing to you, just skip it and come back here and read it again when the day comes that you first see this syntax out in the wild.
 
