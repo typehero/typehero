@@ -6,6 +6,7 @@ import { ActionButton } from './enroll-button';
 import { TrackChallenge } from './track-challenge-card';
 import { TrackProgress } from './track-progress';
 import { enrollUserInTrack, getTrackDetails, unenrollUserFromTrack } from './track.action';
+import { Footsies } from '~/components/footsies';
 
 interface TrackDetailProps {
   slug: string;
@@ -45,64 +46,65 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
     .map((trackChallenge) => trackChallenge.id);
 
   return (
-    <div className="container flex min-h-screen flex-col items-center gap-4 py-5 md:gap-8 md:pb-20">
-      <div className="flex flex-col items-center space-y-4">
-        <div
-          className={clsx(
-            `bg-gradient-to-r from-neutral-500/10 from-10% ${
-              BGS_BY_TRACK[track.id % bgsArray.length]
-            } relative to-100% dark:from-neutral-500/20`,
-            'flex h-24 w-24 flex-none items-center justify-center rounded-2xl',
-          )}
-        >
-          <Swords
-            size={50}
-            className={clsx(
-              'transition-opacity duration-300',
-              !isEnrolled && 'opacity-50 group-hover:opacity-100 group-focus:opacity-100',
-            )}
-          />
-        </div>
-        <div className="flex flex-col items-center space-y-2">
-          <h1 className="text-center text-3xl font-bold tracking-tight text-neutral-900 dark:text-white">
-            {track.name}
-          </h1>
-          <p className="text-md max-w-[69ch] text-center text-neutral-600 dark:text-white/50">
-            {track.description}
-          </p>
-        </div>
-        {isEnrolled ? (
-          <ActionButton action={unenrollUserFromTrack} trackId={track.id} text="Unenroll" />
-        ) : (
-          <ActionButton action={enrollUserInTrack} trackId={track.id} text="Enroll" />
-        )}
-      </div>
-      {isEnrolled ? (
-        <div className="w-full md:w-3/4 ">
-          <TrackProgress
-            completedChallenges={completedTrackChallenges.length}
-            totalChallenges={trackChallenges.length}
-          />
-        </div>
-      ) : null}
-      <div className="flex w-full flex-row justify-around gap-8">
-        <div className="flex flex-col space-y-2 md:w-3/4">
-          <div className="grid-col grid grid-cols-1 gap-2 self-stretch">
-            {trackChallenges.map((trackChallenge) => (
-              <Link
-                key={trackChallenge.challenge.id}
-                href={`/challenge/${trackChallenge.challenge.slug}`}
-              >
-                <TrackChallenge
-                  challenge={trackChallenge.challenge}
-                  isCompleted={completedTrackChallenges.includes(trackChallenge.id)}
-                  isInProgress={inProgressTrackChallenges.includes(trackChallenge.id)}
-                />
-              </Link>
-            ))}
+    <>
+      <div className="container flex flex-col items-center gap-8 pb-8 pt-5 sm:pb-12 md:pb-0">
+        <div className="flex w-full flex-col justify-between gap-8 sm:flex-row sm:items-center sm:gap-8">
+          <div className="flex gap-6">
+            <div
+              className={clsx(
+                `bg-gradient-to-r from-neutral-500/10 from-10% ${
+                  BGS_BY_TRACK[track.id % bgsArray.length]
+                } relative to-100% dark:from-neutral-500/20`,
+                'hidden h-24 w-24 flex-none items-center justify-center rounded-2xl sm:flex',
+              )}
+            >
+              <Swords
+                size={50}
+                className={clsx(
+                  'transition-opacity duration-300',
+                  !isEnrolled && 'opacity-50 group-hover:opacity-100 group-focus:opacity-100',
+                )}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <h1 className="text-3xl font-bold tracking-tight text-neutral-900 dark:text-white">
+                {track.name}
+              </h1>
+              <p className="text-md max-w-[69ch] text-neutral-600 dark:text-white/50">
+                {track.description}
+              </p>
+            </div>
           </div>
+          {isEnrolled ? (
+            <ActionButton action={unenrollUserFromTrack} trackId={track.id} text="Unenroll" />
+          ) : (
+            <ActionButton action={enrollUserInTrack} trackId={track.id} text="Enroll" />
+          )}
+        </div>
+        <div className="flex w-full flex-col">
+          {isEnrolled ? (
+            <div className="mb-2 w-full px-1 sm:px-8 lg:px-0">
+              <TrackProgress
+                completedChallenges={completedTrackChallenges.length}
+                totalChallenges={trackChallenges.length}
+              />
+            </div>
+          ) : null}
+          {trackChallenges.map((trackChallenge) => (
+            <Link
+              key={trackChallenge.challenge.id}
+              href={`/challenge/${trackChallenge.challenge.slug}`}
+            >
+              <TrackChallenge
+                challenge={trackChallenge.challenge}
+                isCompleted={completedTrackChallenges.includes(trackChallenge.id)}
+                isInProgress={inProgressTrackChallenges.includes(trackChallenge.id)}
+              />
+            </Link>
+          ))}
         </div>
       </div>
-    </div>
+      <Footsies />
+    </>
   );
 }
