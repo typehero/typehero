@@ -1,11 +1,10 @@
 import { getServerAuthSession } from '@repo/auth/server';
+import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
 import { Footsies } from '~/components/footsies';
+import { isBetaUser } from '~/utils/server/is-beta-user';
 import { ExploreSection } from './explore-section';
 import { ExploreSectionSkeleton } from './explore-section-skeleton';
-import { getChallengesByTagOrDifficulty } from './explore.action';
-import { isBetaUser } from '~/utils/server/is-beta-user';
-import { redirect } from 'next/navigation';
 
 // CI fails without this
 export const dynamic = 'force-dynamic';
@@ -31,9 +30,6 @@ export async function Explore() {
             <span className="font-semibold dark:text-neutral-200">perfect</span> challenge!
           </p>
         </div>
-        <Suspense fallback={<ExploreSectionSkeleton />}>
-          <ExploreSection title="💕 Most Popular" tag="POPULAR" redirectRoute="/explore/popular" />
-        </Suspense>
         <Suspense fallback={<ExploreSectionSkeleton />}>
           <ExploreSection
             title="Great for Beginners"
