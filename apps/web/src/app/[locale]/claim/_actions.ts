@@ -30,9 +30,9 @@ export async function validateToken(claimFormData: FormSchema) {
 }
 
 export async function isValidToken(session: Session, claimFormData: FormSchema) {
-  claimFormSchema.parse(claimFormData);
-
   try {
+    claimFormSchema.parse(claimFormData);
+
     await prisma.betaTokens.update({
       where: {
         token: claimFormData.code,
