@@ -77,7 +77,7 @@ export function Dashboard({ user, isOwnProfile, children }: Props) {
       {/* // TODO: GFI: make each page a subroute, put settings & profile into same layout */}
       <Tabs className="flex flex-col gap-8 py-8 md:flex-row" value={selectedTab}>
         <VerticalTabsList>
-          <div className="flex flex-col items-center gap-10 md:items-start">
+          <div className="flex flex-col items-center gap-4 md:items-start">
             <div
               className="h-32 w-32 rounded-3xl bg-cover bg-center bg-no-repeat md:h-64 md:w-64"
               style={{ backgroundImage: `url(${user.image ?? '/avatar.jpeg'})` }}
@@ -85,7 +85,7 @@ export function Dashboard({ user, isOwnProfile, children }: Props) {
             <div className="flex flex-col items-center gap-2 md:w-full md:items-start">
               <UserHeader user={user} isOwnProfile={isOwnProfile} />
               <span
-                className="text-muted-foreground text-sm italic tracking-tight"
+                className="text-muted-foreground tracking-tight"
                 title={`Joined ${user.createdAt.toString()}`}
               >
                 Joined {getRelativeTime(user.createdAt)}
@@ -97,7 +97,7 @@ export function Dashboard({ user, isOwnProfile, children }: Props) {
                   <div className="flex items-center gap-2" key={link.id}>
                     <MagicIcon url={link.url} />
                     <a
-                      className="text-xs text-neutral-400 hover:text-neutral-600 dark:text-neutral-600 dark:hover:text-neutral-400"
+                      className="text-neutral-400 hover:text-neutral-600 dark:text-neutral-600 dark:hover:text-neutral-400"
                       href={link.url}
                       rel="noopener noreferrer"
                       target="_blank"
