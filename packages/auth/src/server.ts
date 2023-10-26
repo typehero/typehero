@@ -51,6 +51,26 @@ export const authOptions: NextAuthOptions = {
         secure: useSecureCookies,
       },
     },
+    callbackUrl: {
+      name: `${useSecureCookies ? '__Secure-' : ''}next-auth.callback-url`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        domain: useSecureCookies ? 'typehero.dev' : process.env.VERCEL_URL,
+        secure: useSecureCookies,
+      },
+    },
+    csrfToken: {
+      name: '__Host-next-auth.csrf-token',
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        domain: useSecureCookies ? 'typehero.dev' : process.env.VERCEL_URL,
+        secure: useSecureCookies,
+      },
+    },
   },
   callbacks: {
     session: async ({ session, user }) => {
