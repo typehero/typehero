@@ -63,6 +63,6 @@ export async function updateProfile(profileData: ProfileSchema) {
 
   // do this after we do the shit
   revalidatePath('/settings');
-  
+
   return { success: true };
 }
