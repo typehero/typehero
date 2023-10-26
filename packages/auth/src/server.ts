@@ -47,17 +47,7 @@ export const authOptions: NextAuthOptions = {
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
-        domain: useSecureCookies ? 'typehero.dev' : process.env.VERCEL_URL,
-        secure: useSecureCookies,
-      },
-    },
-    csrfToken: {
-      name: '__Host-next-auth.csrf-token',
-      options: {
-        httpOnly: true,
-        sameSite: 'lax',
-        path: '/',
-        domain: useSecureCookies ? 'typehero.dev' : process.env.VERCEL_URL,
+        domain: useSecureCookies ? '.typehero.dev' : process.env.VERCEL_URL,
         secure: useSecureCookies,
       },
     },
