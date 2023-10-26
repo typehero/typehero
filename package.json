@@ -19,6 +19,7 @@
     "format": "prettier . \"!./apps/**\" \"!./packages/**\" \"!./tooling/**\" --check --cache --cache-location=\"node_modules/.cache/prettiercache\"",
     "format:fix": "prettier . \"!./apps/**\" \"!./packages/**\" \"!./tooling/**\" --write --cache --cache-location=\"node_modules/.cache/prettiercache\" --log-level=warn",
     "lint": "eslint . --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
+    "lint:markdown": "npx markdownlint-cli2 \"challenges/**/*.md\" \"#**/node_modules\"",
     "lint:fix": "eslint . --fix --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
     "refresh": "turbo db:reset db:seed --concurrency=1",
     "test:e2e": "turbo test:e2e",
@@ -27,6 +28,7 @@
     "typecheck": "turbo typecheck --continue"
   },
   "devDependencies": {
+    "markdownlint-cli2": "^0.10.0",
     "prettier": "^3.0.2",
     "prettier-plugin-tailwindcss": "^0.4.1",
     "turbo": "^1.10.13",
