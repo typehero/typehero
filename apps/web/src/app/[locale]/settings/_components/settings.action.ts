@@ -25,18 +25,30 @@ export async function updateProfile(profileData: ProfileSchema) {
     data: { bio: profileData.bio },
   });
 
-  // 4. Update the users links in the db if the url is not empty
-  await prisma.$transaction(
-    profileData.userLinks.map((link) =>
-      prisma.userLink.upsert({
-        where: { id: link.id ?? '' },
-        update: { url: link.url },
-        create: {
-          url: link.url,
-          user: { connect: { id: session.user.id } },
+  // 4. Delete all existing user links for the user
+  await prisma.userLink.deleteMany({
+    where: {
+      user: {
+        some: {
+          id: session.user.id,
         },
-      }),
-    ),
+      },
+    },
+  });
+
+  // 5. Update the users links in the db if the url is not empty
+
+  // Create an array of user links to create
+  const userLinksToCreate = profileData.userLinks.map((link) => ({
+    url: link.url,
+    user: {
+      connect: { id: session.user.id },
+    },
+  }));
+
+  // Insert the new user links in a batch
+  await prisma.$transaction(
+    userLinksToCreate.map((userLink) => prisma.userLink.create({ data: userLink })),
   );
 
   return { success: true };
