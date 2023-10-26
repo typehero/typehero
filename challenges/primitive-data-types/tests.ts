@@ -1,5 +1,5 @@
 type test_age = Expect<NotLiteral<number, typeof age>>;
-type test_name = Expect<NotLiteral<string, typeof name>>;
+type test_artistName = Expect<NotLiteral<string, typeof artistName>>;
 
 /** this is just a helper type to sus out literals */
 type NotLiteral<T, U> =
