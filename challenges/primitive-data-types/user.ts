@@ -5,7 +5,7 @@ const playSong = (
   return `${name} was released in the year ${year}`;
 };
 
-const name = 'Frank Zappa';
+const artistName = 'Frank Zappa';
 
 const age = 52;
 
@@ -24,6 +24,6 @@ const musicianInfo = ({
 };
 
 musicianInfo({
-  name,
+  name: artistName,
   age,
 });

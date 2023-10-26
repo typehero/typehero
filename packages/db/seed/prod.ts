@@ -73,6 +73,7 @@ try {
         where: {
           slug: {
             in: [
+              'generic-function-arguments',
               'generic-type-arguments',
               'generic-type-constraints',
               'index-signatures',

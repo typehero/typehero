@@ -57,7 +57,7 @@ export async function GET(req: Request) {
 
   return new ImageResponse(
     (
-      <div tw="bg-black h-96 w-full text-white bg-cover flex flex-col pt-10 pb-10 px-16">
+      <div tw="bg-black h-full w-full text-white bg-cover flex flex-col pt-10 pb-10 px-16">
         <Grid />
         {mogus_roll === 8 && (
           <img

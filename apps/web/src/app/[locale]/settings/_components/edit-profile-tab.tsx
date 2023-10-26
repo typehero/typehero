@@ -31,9 +31,10 @@ function ProfileForm({ user }: Props) {
   const { toast } = useToast();
 
   // NOTE: make the user links have 4 at all times
+  const userLinksLength: number = user.userLinks?.length ?? 0;
   const userLinks = (user.userLinks = [
     ...user.userLinks,
-    ...Array(4 - user.userLinks.length).fill({
+    ...Array(4 - userLinksLength).fill({
       id: null,
       url: '',
     }),

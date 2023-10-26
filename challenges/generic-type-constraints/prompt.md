@@ -1,6 +1,6 @@
 ## The Problem Generic Type Constraints Solve
 
-Generics are an incredibly powerful tool in TypeScript.  In a [previous challenge](todo-generic-type-arguments) where generic type arguments were introduced, we compared them to function arguments _but for types_.
+Generics are an incredibly powerful tool in TypeScript.  In a [previous challenge](https://typehero.dev/challenge/generic-type-arguments) where generic type arguments were introduced, we compared them to function arguments _but for types_.
 
 Consider the parallel of these two:
 

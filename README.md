@@ -25,7 +25,7 @@ Please see the [`LOCAL.md`](/LOCAL.md) on how to get setup. Consider joining the
 
 ### 💖 Sponsors
 
-If you find the project interesting and want to support us please consider sponsoring. Your sponsorship would not only contribute to the advancement of this project but also ensure its ongoing maintenance and improvement for the benefit of the open-source community.
+If you find our project interesting and want to support us please consider sponsoring. Your sponsorship would contribute to the advancement of this project and further ensure its ongoing maintenance and improvement for the benefit of the open-source community.
 
 <table>
   <tr>

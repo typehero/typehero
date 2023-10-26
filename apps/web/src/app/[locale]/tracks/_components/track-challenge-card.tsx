@@ -1,6 +1,6 @@
 'use client';
 
-import { Check, PieChart } from '@repo/ui/icons';
+import { Check, PieChart, Loader2 } from '@repo/ui/icons';
 import { useIsMobile } from '~/utils/useIsMobile';
 
 import type { Challenge, Submission } from '@repo/db/types';
@@ -46,26 +46,29 @@ export function TrackChallenge({
       <div
         className={cn(
           BGS_BY_DIFFICULTY[challenge.difficulty],
-          'flex w-full items-center justify-between gap-3 rounded-lg',
-          'bg-gradient-to-r from-neutral-500/10 from-70% to-100% dark:from-neutral-500/20',
-          'p-4 py-2 text-black/90 duration-300 group-active/challenge:bg-neutral-500/40 group-active/challenge:duration-75 dark:text-white/90 sm:py-4',
+          'flex w-full items-center justify-between gap-3 rounded-3xl lg:rounded-lg',
+          'bg-gradient-to-r from-neutral-500/10 from-70% to-100% dark:from-neutral-900/70',
+          'p-4 text-black/90 duration-300 group-active/challenge:bg-neutral-500/40 group-active/challenge:duration-75 dark:text-white/90',
           {
-            'group-hover/challenge:scale-105 group-hover/challenge:rounded-xl group-hover/challenge:bg-neutral-500/20':
+            'from-blue-600/30 from-10% dark:from-neutral-500/30': isSelected,
+          },
+          {
+            'group-hover/challenge:scale-[1.025] group-hover/challenge:bg-neutral-500/20 lg:group-hover/challenge:rounded-xl':
               !isMobile,
           },
         )}
       >
-        <div className="w-full flex-col space-y-2">
-          <div className="flex flex-row justify-between">
-            <div className="flex flex-row gap-3">
+        <div className="w-full space-y-2">
+          <div className="flex w-full flex-row justify-between">
+            <div className="flex w-full flex-row gap-3">
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <div className="relative hidden items-center gap-3 md:flex md:flex-row ">
+                  <div className="relative hidden gap-3 pr-1.5 pt-2 md:flex md:flex-row lg:items-center lg:pr-0 lg:pt-0">
                     <input
                       className="peer hidden appearance-none"
                       type="checkbox"
                       id={challenge.id.toString()}
-                      checked={isCompleted || isInProgress}
+                      checked={isCompleted || isInProgress || isSelected}
                       readOnly
                     />
                     <div
@@ -76,11 +79,16 @@ export function TrackChallenge({
                             isCompleted,
                           'peer-checked:bg-orange-600/80 peer-checked:dark:bg-orange-300/80':
                             isInProgress,
+                          'peer-checked:bg-blue-600/80 peer-checked:dark:bg-blue-300/80':
+                            isSelected,
                         },
                       )}
                     />
+                    {isSelected ? (
+                      <Loader2 className="absolute left-1 my-auto h-3 w-3 scale-0 stroke-[4] text-white duration-300 peer-checked:scale-100 dark:text-black" />
+                    ) : null}
                     {isCompleted ? (
-                      <Check className="absolute left-1 my-auto h-3 w-3 scale-0 stroke-[4] text-white duration-300 peer-checked:scale-100 dark:text-black" />
+                      <Check className="absolute left-1.5 my-auto h-4 w-4 scale-0 stroke-[4] text-white duration-300 peer-checked:scale-100 dark:text-black" />
                     ) : null}
                     {isInProgress ? (
                       <PieChart className="absolute left-1 my-auto h-3 w-3 scale-0 stroke-[4] text-white duration-300 peer-checked:scale-100 dark:text-black" />
@@ -91,10 +99,10 @@ export function TrackChallenge({
                   <p>{isCompleted ? 'Completed' : isInProgress ? 'Attempted' : 'Todo'}</p>
                 </TooltipContent>
               </Tooltip>
-              <div className="flex flex-col items-start gap-3 md:flex-row">
-                <div className="flex flex-col gap-2">
-                  <span className={cn({ 'text-primary': isSelected })}>{challenge.name}</span>
-                  <div className="flex flex-row gap-3 md:hidden">
+              <div className="flex w-full flex-col items-start gap-3 lg:flex-row">
+                <div className="flex w-full justify-between gap-2 text-lg font-bold lg:w-auto lg:text-base lg:font-normal">
+                  <span className={cn({ 'font-bold': isSelected })}>{challenge.name}</span>
+                  <div className="flex flex-row items-start gap-3 lg:hidden">
                     <DifficultyBadge difficulty={challenge.difficulty} />
                     {isCompleted && isMobile ? <Badge variant="outline">Completed</Badge> : null}
                   </div>
@@ -106,7 +114,7 @@ export function TrackChallenge({
                 )}
               </div>
             </div>
-            <div className="hidden md:block">
+            <div className="hidden items-center lg:flex">
               <DifficultyBadge difficulty={challenge.difficulty} />
             </div>
           </div>

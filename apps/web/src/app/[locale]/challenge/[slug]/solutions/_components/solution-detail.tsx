@@ -20,6 +20,8 @@ import { pinOrUnpinSolution } from './_actions';
 import { isAdminOrModerator, isAuthor } from '~/utils/auth-guards';
 import { SolutionDeleteDialog } from './delete';
 import { useParams } from 'next/navigation';
+import { useState } from 'react';
+import { EditSolution } from './edit-solution';
 
 interface Props {
   solution: ChallengeSolution;
@@ -29,6 +31,7 @@ export function SolutionDetails({ solution }: Props) {
   const { slug } = useParams();
   const { data: session } = useSession();
   const showPin = isAdminOrModerator(session);
+  const [isEditing, setIsEditing] = useState(false);
 
   const handlePinClick = async () => {
     await pinOrUnpinSolution(solution.id, !solution.isPinned, slug as string);
@@ -88,70 +91,84 @@ export function SolutionDetails({ solution }: Props) {
                 <Calendar className="h-4 w-4" />
                 <span className="text-xs">{getRelativeTime(solution.createdAt)}</span>
               </div>
-            </div>
-
-          </div>
-          <div className="flex items-center gap-3">
-            <Vote
-              voteCount={solution._count.vote}
-              initialHasVoted={solution.vote.length > 0}
-              disabled={!session?.user?.id || solution.userId === session?.user?.id}
-              rootType="SHAREDSOLUTION"
-              rootId={solution.id}
-              onVote={(didUpvote: boolean) => {
-                solution.vote = didUpvote
-                  ? [
+              <Vote
+                voteCount={solution._count.vote}
+                initialHasVoted={solution.vote.length > 0}
+                disabled={!session?.user?.id || solution.userId === session?.user?.id}
+                rootType="SHAREDSOLUTION"
+                rootId={solution.id}
+                onVote={(didUpvote: boolean) => {
+                  solution.vote = didUpvote
+                    ? [
+                        {
+                          userId: session?.user?.id ?? '',
+                        },
+                      ]
+                    : [];
+                  solution._count.vote += didUpvote ? 1 : -1;
+                }}
+              />
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button onClick={handleShareClick} variant="secondary" size="xs">
+                    <Share className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Share</p>
+                </TooltipContent>
+              </Tooltip>
+              {showPin ? (
+                <Button
+                  onClick={handlePinClick}
+                  variant="secondary"
+                  size="xs"
+                  className={clsx(
+                    'gap-2 border border-transparent [&:not(:disabled)]:hover:border-emerald-600  [&:not(:disabled)]:hover:text-emerald-600',
                     {
-                      userId: session?.user?.id ?? '',
+                      'border-emerald-600 text-emerald-600': solution.isPinned,
                     },
-                  ]
-                  : [];
-                solution._count.vote += didUpvote ? 1 : -1;
-              }}
-            />
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button onClick={handleShareClick} variant="secondary" size="xs">
-                  <Share className="h-4 w-4" />
+                  )}
+                >
+                  <Pin className={clsx('h-4 w-4')} />
                 </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Share</p>
-              </TooltipContent>
-            </Tooltip>
-            {showPin ? (
-              <Button
-                onClick={handlePinClick}
-                variant="secondary"
-                size="xs"
-                className={clsx(
-                  'gap-2 border border-transparent [&:not(:disabled)]:hover:border-emerald-600  [&:not(:disabled)]:hover:text-emerald-600',
-                  {
-                    'border-emerald-600 text-emerald-600': solution.isPinned,
-                  },
-                )}
-              >
-                <Pin className={clsx('h-4 w-4')} />
-              </Button>
-            ) : null}
-            {isAuthor(session, solution.userId) ? (
-              <SolutionDeleteDialog solution={solution}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button variant="secondary" size="xs">
-                      <Trash className="h-4 w-4" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Delete</p>
-                  </TooltipContent>
-                </Tooltip>
-              </SolutionDeleteDialog>
-            ) : null}
+              ) : null}
+
+              {/* Only author can see edit / delete button */}
+              {isAuthor(session, solution.userId) ? (
+                <>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        onClick={() => setIsEditing(!isEditing)}
+                        variant="secondary"
+                        size="xs"
+                      >
+                        <Pencil className="h-4 w-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Edit</p>
+                    </TooltipContent>
+                  </Tooltip>
+                  <SolutionDeleteDialog solution={solution}>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button variant="secondary" size="xs">
+                          <Trash className="h-4 w-4" />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Delete</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </SolutionDeleteDialog>
+                </>
+              ) : null}
+            </div>
           </div>
-          <div className="mt-4">
-            <Markdown>{solution.description || ''}</Markdown>
-          </div>
+          {!isEditing && <Markdown>{solution.description || ''}</Markdown>}
+          {isEditing ? <EditSolution solution={solution} setIsEditing={setIsEditing} /> : null}
         </div>
       </div>
     </div>

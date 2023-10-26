@@ -1,6 +1,5 @@
 'use server';
-
-import { getServerAuthSession } from '@repo/auth/server';
+import { getServerAuthSession, type Session } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import { redirect } from 'next/navigation';
 import { claimFormSchema } from './_schema';
@@ -28,4 +27,25 @@ export async function validateToken(claimFormData: FormSchema) {
   });
 
   redirect('/explore');
+}
+
+export async function isValidToken(session: Session, claimFormData: FormSchema) {
+  try {
+    claimFormSchema.parse(claimFormData);
+
+    await prisma.betaTokens.update({
+      where: {
+        token: claimFormData.code,
+        AND: {
+          userId: null,
+        },
+      },
+      data: {
+        user: { connect: { id: session?.user.id } },
+      },
+    });
+    return true;
+  } catch (e) {
+    return false;
+  }
 }
