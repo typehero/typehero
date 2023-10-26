@@ -9,7 +9,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/too
 import { TypographyLarge } from '@repo/ui/components/typography/large';
 import { toast } from '@repo/ui/components/use-toast';
 import { UserBadge } from '@repo/ui/components/user-badge';
-import { Calendar, Flag, Pin, Share, Trash, ArrowLeft } from '@repo/ui/icons';
+import { Calendar, Flag, Pin, Share, Trash, ArrowLeft, Pencil } from '@repo/ui/icons';
 import clsx from 'clsx';
 import Link from 'next/link';
 import type { ChallengeSolution } from '~/app/[locale]/challenge/[slug]/solutions/[solutionId]/page';
@@ -91,6 +91,8 @@ export function SolutionDetails({ solution }: Props) {
                 <Calendar className="h-4 w-4" />
                 <span className="text-xs">{getRelativeTime(solution.createdAt)}</span>
               </div>
+            </div>
+            <div className="flex items-center gap-3">
               <Vote
                 voteCount={solution._count.vote}
                 initialHasVoted={solution.vote.length > 0}
@@ -100,10 +102,10 @@ export function SolutionDetails({ solution }: Props) {
                 onVote={(didUpvote: boolean) => {
                   solution.vote = didUpvote
                     ? [
-                        {
-                          userId: session?.user?.id ?? '',
-                        },
-                      ]
+                      {
+                        userId: session?.user?.id ?? '',
+                      },
+                    ]
                     : [];
                   solution._count.vote += didUpvote ? 1 : -1;
                 }}
