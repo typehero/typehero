@@ -611,3 +611,46 @@ a {
 .shadcnoverridetransition:active {
   transition: all 0.075s ease !important;
 }
+
+.sky {
+  background: black;
+  width: 100vw;
+}
+
+.star {
+  border-radius: 50%;
+  background: white;
+  position: absolute;
+  box-shadow: 0 0 5px white;
+  opacity: 0.8;
+  animation: star linear infinite;
+}
+
+@keyframes star {
+  from {
+    transform: translate3d(-100%, 0, 1px);
+  }
+  to {
+    transform: translate3d(100vw, 0, 1px);
+  }
+}
+
+.boi {
+  left: 0%;
+  animation: eject 5s linear;
+  z-index: 10;
+  opacity: 0;
+  animation-delay: 2s;
+}
+
+@keyframes eject {
+  0% {
+    transform: translate(0vw) rotate(0turn);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(100vw) rotate(-2turn);
+    opacity: 1;
+  }
+}
