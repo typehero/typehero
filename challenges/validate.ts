@@ -15,10 +15,10 @@ this script does a few checks:
 
 const getChallengeIds = (dir: string) => {
   return readdirSync(dir)
-    .filter(entry => entry !== 'blank')
-    .filter(entry => statSync(join(dir, entry)).isDirectory())
-    .filter(entry => statSync(join(dir, entry, "metadata.json")).isFile());
-}
+    .filter((entry) => entry !== 'blank')
+    .filter((entry) => statSync(join(dir, entry)).isDirectory())
+    .filter((entry) => statSync(join(dir, entry, 'metadata.json')).isFile());
+};
 
 const getMetadata = (dir: string, id: string) => {
   const metadataFilePath = join(dir, id, 'metadata.json');
@@ -30,8 +30,8 @@ const getMetadata = (dir: string, id: string) => {
   return {
     metadataFilePath,
     metadata,
-  }
-}
+  };
+};
 
 const validateMetadataSchema = (dir: string, ids: string[]) => {
   const ajv = new Ajv();
@@ -40,36 +40,46 @@ const validateMetadataSchema = (dir: string, ids: string[]) => {
 
   const validate = ajv.compile(schema);
 
-  ids.forEach(id => {
+  ids.forEach((id) => {
     const { metadata, metadataFilePath } = getMetadata(dir, id);
-  
+
     if (!validate(metadata)) {
-      console.error(`[ERROR]: the challenge metadata file ${metadataFilePath} is invalid: ${JSON.stringify(validate.errors)}`)
+      console.error(
+        `[ERROR]: the challenge metadata file ${metadataFilePath} is invalid: ${JSON.stringify(
+          validate.errors,
+        )}`,
+      );
     }
-  })
-}
+  });
+};
 
 const ensureChallengeIdMatchesDirectory = (dir: string) => (id: string) => {
   const { metadataFilePath, metadata } = getMetadata(dir, id);
 
   if (id !== metadata.id) {
-    console.error(`[ERROR]: the challenge metadata file ${metadataFilePath} contains the id "${metadata.id}", but this does not match the directory ("${id}").`);
+    console.error(
+      `[ERROR]: the challenge metadata file ${metadataFilePath} contains the id "${metadata.id}", but this does not match the directory ("${id}").`,
+    );
   }
-}
+};
 
 const validatePrerequisiteIds = (dir: string) => (id: string, _: number, ids: string[]) => {
   const { metadataFilePath, metadata } = getMetadata(dir, id);
-  
-  metadata.prerequisites.forEach(prerequisite => {
+
+  metadata.prerequisites.forEach((prerequisite) => {
     if (!ids.includes(prerequisite)) {
-      console.error(`[ERROR] the challenge metadata file ${metadataFilePath} contains a prerequisite "${prerequisite}" which does not match any known challenge id.`)
+      console.error(
+        `[ERROR] the challenge metadata file ${metadataFilePath} contains a prerequisite "${prerequisite}" which does not match any known challenge id.`,
+      );
     }
 
     if (prerequisite === id) {
-      console.error(`[ERROR] the challenge metadata file ${metadataFilePath} contains a prerequisite "${prerequisite}" which matches the challenge id "${id}"`)
+      console.error(
+        `[ERROR] the challenge metadata file ${metadataFilePath} contains a prerequisite "${prerequisite}" which matches the challenge id "${id}"`,
+      );
     }
-  })
-}
+  });
+};
 
 const validateMetadataFiles = () => {
   const challengeIds = getChallengeIds(__dirname);
@@ -77,6 +87,6 @@ const validateMetadataFiles = () => {
   validateMetadataSchema(__dirname, challengeIds);
   challengeIds.forEach(ensureChallengeIdMatchesDirectory(__dirname));
   challengeIds.forEach(validatePrerequisiteIds(__dirname));
-}
+};
 
 validateMetadataFiles();
