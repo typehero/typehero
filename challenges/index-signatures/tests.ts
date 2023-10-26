@@ -17,7 +17,7 @@ const groceryList: GroceryList = {
   shouldAlsoError: true
 };
 
-const innapropriateActionBySituation: InnapropriateActionBySituation = {
+const inappropriateActionBySituation: InappropriateActionBySituation = {
   funeral: ['excessive laughter', 'bringing up personal achievements'],
   medicalDiagnosis: ['jokes about American healthcare', 'WebMD', 'doomscrolling twitter instead of listening'],
   leetcodeInterview: ['praise of CSS', 'citing XKCD comics by number from memory', 'use of emojis in whiteboard exercises followed by pontificating about your deep knowledge of UTF-16'],

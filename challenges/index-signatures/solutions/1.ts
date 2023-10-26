@@ -2,7 +2,7 @@ type GroceryList = {
   [groceryItem: string]: number;
 };
 
-type InnapropriateActionBySituation = {
+type InappropriateActionBySituation = {
   [situation: string]: string[];
 };
 

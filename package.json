@@ -19,7 +19,7 @@
     "format": "prettier . \"!./apps/**\" \"!./packages/**\" \"!./tooling/**\" \"!challenges/**/tests.ts\" --check --cache --cache-location=\"node_modules/.cache/prettiercache\"",
     "format:fix": "prettier . \"!./apps/**\" \"!./packages/**\" \"!./tooling/**\" \"!challenges/**/tests.ts\" --write --cache --cache-location=\"node_modules/.cache/prettiercache\" --log-level=warn",
     "lint": "eslint . --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
-    "lint:markdown": "npx markdownlint-cli2 \"challenges/**/*.md\" \"#**/node_modules\"",
+    "lint:markdown": "markdownlint-cli2 \"challenges/**/*.md\" \"#**/node_modules\" && cspell challenges/** --no-progress",
     "lint:fix": "eslint . --fix --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
     "refresh": "turbo db:reset db:seed --concurrency=1",
     "test:e2e": "turbo test:e2e",
@@ -28,6 +28,7 @@
     "typecheck": "turbo typecheck --continue"
   },
   "devDependencies": {
+    "cspell": "^7.3.8",
     "markdownlint-cli2": "^0.10.0",
     "prettier": "^3.0.2",
     "prettier-plugin-tailwindcss": "^0.4.1",

@@ -58,7 +58,7 @@ In our case we _don't have_ a type to start working with (because we), so we cre
 type CasettesByArtist = typeof casettesByArtist;
 ```
 
-Then we can use `keyof` on our new type to get an alias that represents the union of all keys in our `casettestByArtist` object.
+Then we can use `keyof` on our new type to get an alias that represents the union of all keys in our `casettesByArtist` object.
 
 ```ts
 type Artists = keyof CasettesByArtist;

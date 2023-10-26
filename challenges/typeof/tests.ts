@@ -50,7 +50,7 @@ const d3ChartConfig = {
     tickSize: 5,
   },
   bar: {
-    fill: 'steelblue',
+    fill: 'rebeccapurple',
   },
 };
 
