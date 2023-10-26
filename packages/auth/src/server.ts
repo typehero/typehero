@@ -35,6 +35,7 @@ if (!process.env.GITHUB_SECRET) {
 }
 
 const useSecureCookies = Boolean(process.env.VERCEL_URL);
+const cookieDomain = useSecureCookies ? '.typehero.dev' : process.env.VERCEL_URL;
 
 export const authOptions: NextAuthOptions = {
   pages: {
@@ -47,7 +48,17 @@ export const authOptions: NextAuthOptions = {
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
-        domain: useSecureCookies ? '.typehero.dev' : process.env.VERCEL_URL,
+        domain: cookieDomain,
+        secure: useSecureCookies,
+      },
+    },
+    csrfToken: {
+      name: '__Host-next-auth.csrf-token',
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        domain: cookieDomain,
         secure: useSecureCookies,
       },
     },
