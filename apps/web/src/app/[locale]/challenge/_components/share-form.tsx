@@ -47,7 +47,7 @@ export function ShareForm() {
 
       <DialogFooter>
         <div className="flex items-center justify-end gap-2">
-          {!!codeToCompress && (
+          {Boolean(codeToCompress) && (
             <div className="flex h-fit items-center justify-center gap-2 text-xs">
               <Checkbox
                 id="copy-with-code"
