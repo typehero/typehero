@@ -34,8 +34,9 @@ if (!process.env.GITHUB_SECRET) {
   throw new Error('No GITHUB_SECRET has been provided.');
 }
 
-const useSecureCookies = Boolean(process.env.VERCEL_URL);
-const cookieDomain = useSecureCookies ? '.typehero.dev' : process.env.VERCEL_URL;
+const useSecureCookies = process.env.VERCEL_ENV === 'production';
+const cookiePrefix = useSecureCookies ? "__Secure-" : "";
+const cookieDomain = useSecureCookies ? 'typehero.dev' : undefined;
 
 export const authOptions: NextAuthOptions = {
   pages: {
@@ -43,17 +44,7 @@ export const authOptions: NextAuthOptions = {
   },
   cookies: {
     sessionToken: {
-      name: `${useSecureCookies ? '__Secure-' : ''}next-auth.session-token`,
-      options: {
-        httpOnly: true,
-        sameSite: 'lax',
-        path: '/',
-        domain: cookieDomain,
-        secure: useSecureCookies,
-      },
-    },
-    csrfToken: {
-      name: '__Host-next-auth.csrf-token',
+      name: `${cookiePrefix}next-auth.session-token`,
       options: {
         httpOnly: true,
         sameSite: 'lax',
