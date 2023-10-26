@@ -36,7 +36,7 @@ if (!process.env.GITHUB_SECRET) {
 
 const useSecureCookies = process.env.VERCEL_ENV === 'production';
 const cookiePrefix = useSecureCookies ? '__Secure-' : '';
-const cookieDomain = useSecureCookies ? 'typehero.dev' : undefined;
+const cookieDomain = useSecureCookies ? '.typehero.dev' : undefined;
 
 export const authOptions: NextAuthOptions = {
   pages: {
