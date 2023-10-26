@@ -1,10 +1,10 @@
 type GroceryList = {
-  [groceryItem: string]: number
+  [groceryItem: string]: number;
 };
 
 type InnapropriateActionBySituation = {
   [situation: string]: string[];
-}
+};
 
 type CharactersById = {
   [character: number]: {
@@ -12,5 +12,5 @@ type CharactersById = {
     name: string;
     status: string;
     species: string;
-  }
-}
+  };
+};
