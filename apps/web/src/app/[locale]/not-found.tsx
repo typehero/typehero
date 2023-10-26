@@ -6,7 +6,7 @@ export default async function NotFound() {
   const randomChallengeSlug = await getRandomChallenge();
 
   return (
-    <div className="relative -mt-[56px] flex h-full flex-col items-center justify-center gap-8">
+    <div className="relative -mt-[56px] flex h-full flex-col items-center justify-center gap-8 overflow-hidden">
       <Image
         className="animate-amogfly absolute left-0 -z-10 mx-auto opacity-80"
         alt="Early Access"

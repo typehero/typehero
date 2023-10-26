@@ -664,18 +664,18 @@ a {
 }
 
 .animate-amogfly {
-  transform: translateX(-10vw);
+  transform: translateX(-33vw);
   animation: amogfly 15s 2s linear infinite forwards;
 }
 
 .th-amogfly {
-  transform: translateX(-10vw);
+  transform: translateX(-33vw);
   animation: thfly 25s 15.25s linear infinite forwards;
 }
 
 @keyframes thfly {
   0% {
-    transform: translateX(-10vw);
+    transform: translateX(-33vw);
   }
   100% {
     transform: translateX(1337vw) rotate(6969deg);
@@ -684,7 +684,7 @@ a {
 
 @keyframes amogfly {
   0% {
-    transform: translateX(-10vw);
+    transform: translateX(-33vw);
     filter: hue-rotate(0deg) brightness(200%);
   }
   100% {
