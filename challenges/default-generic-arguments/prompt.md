@@ -8,7 +8,7 @@ Sometimes you have a value in mind for an argument and you don't want to force u
 
 ### First: A Refresher On Function Defaults
 
-Just like how you can create defaults arguments for functions.  Let's take the case of a run-of-the-mill logging function.  The logger always needs a message to log, but [log level](https://en.wikipedia.org/wiki/Syslog#Severity_level) might be something you want to be optional:
+Let's take the case of a run-of-the-mill logging function.  The logger always needs a message to log, but [log level](https://en.wikipedia.org/wiki/Syslog#Severity_level) might be something you want to be optional:
 
 ```ts
 type LogLevel = 'debug' | 'info' | 'notice' | 'warning' | 'error' | 'critical';
