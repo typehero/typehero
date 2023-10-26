@@ -611,3 +611,84 @@ a {
 .shadcnoverridetransition:active {
   transition: all 0.075s ease !important;
 }
+
+.stars {
+  background-size: 200px 200px;
+  background-image: radial-gradient(2px 2px at 40px 60px, #ccc, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 20px 50px, white, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 30px 100px, white, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 40px 60px, white, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 110px 90px, white, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 190px 150px, white, rgba(0, 0, 0, 0));
+  background-repeat: repeat;
+}
+
+.stars:first-of-type {
+  animation: stars-move-right-1 200s linear infinite;
+}
+
+.stars:nth-of-type(2) {
+  background-image: radial-gradient(2px 2px at 25px 35px, #ccc, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 55px 20px, white, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 69px 42px, white, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 42px 69px, white, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 32px 90px, white, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 150px 190px, white, rgba(0, 0, 0, 0));
+  animation: stars-move-right-2 111s linear infinite;
+}
+
+.stars:nth-of-type(3) {
+  background-image: radial-gradient(2px 2px at 60px 40px, #ccc, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 50px 20px, white, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 100px 30px, white, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 60px 40px, white, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 90px 110px, white, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 150px 190px, white, rgba(0, 0, 0, 0));
+  animation: stars-move-right-3 69s linear infinite;
+}
+
+@keyframes stars-move-right-1 {
+  to {
+    transform: translateX(100%);
+  }
+}
+@keyframes stars-move-right-2 {
+  to {
+    transform: translateX(100%) scale(2);
+  }
+}
+@keyframes stars-move-right-3 {
+  to {
+    transform: translateX(100%) scale(3);
+  }
+}
+
+.animate-amogfly {
+  transform: translateX(-10vw);
+  animation: amogfly 15s 2s linear infinite forwards;
+}
+
+.th-amogfly {
+  transform: translateX(-10vw);
+  animation: thfly 25s 15.25s linear infinite forwards;
+}
+
+@keyframes thfly {
+  0% {
+    transform: translateX(-10vw);
+  }
+  100% {
+    transform: translateX(1337vw) rotate(6969deg);
+  }
+}
+
+@keyframes amogfly {
+  0% {
+    transform: translateX(-10vw);
+    filter: hue-rotate(0deg) brightness(200%);
+  }
+  100% {
+    transform: translateX(200vw) rotate(1337deg);
+    filter: hue-rotate(720deg) brightness(200%);
+  }
+}
