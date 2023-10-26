@@ -25,19 +25,6 @@ export async function updateProfile(profileData: ProfileSchema) {
     data: { bio: profileData.bio },
   });
 
-  // 4. Delete all existing user links for the user
-  await prisma.userLink.deleteMany({
-    where: {
-      user: {
-        some: {
-          id: session.user.id,
-        },
-      },
-    },
-  });
-
-  // 5. Update the users links in the db if the url is not empty
-
   // Create an array of user links to create
   const userLinksToCreate = profileData.userLinks.map((link) => ({
     url: link.url,
@@ -46,13 +33,36 @@ export async function updateProfile(profileData: ProfileSchema) {
     },
   }));
 
-  // Insert the new user links in a batch
-  await prisma.$transaction(
-    userLinksToCreate.map((userLink) => prisma.userLink.create({ data: userLink })),
-  );
+  try {
+    await prisma.$transaction([
+      // 4. Delete all existing user links for the user
+      prisma.userLink.deleteMany({
+        where: {
+          user: {
+            some: {
+              id: session.user.id,
+            },
+          },
+        },
+      }),
 
-  return { success: true };
+      // 5. Insert the new user links
+      ...userLinksToCreate.map((userLink) =>
+        prisma.userLink.create({
+          data: userLink,
+        }),
+      ),
+    ]);
+  } catch (error) {
+    // Handle the error, and possibly log it
+    console.error('Transaction error:', error);
+    throw error; // Re-throw the error if needed
+  } finally {
+    await prisma.$disconnect();
+  }
 
   // do this after we do the shit
   revalidatePath('/settings');
+  
+  return { success: true };
 }
