@@ -102,10 +102,10 @@ export function SolutionDetails({ solution }: Props) {
                 onVote={(didUpvote: boolean) => {
                   solution.vote = didUpvote
                     ? [
-                      {
-                        userId: session?.user?.id ?? '',
-                      },
-                    ]
+                        {
+                          userId: session?.user?.id ?? '',
+                        },
+                      ]
                     : [];
                   solution._count.vote += didUpvote ? 1 : -1;
                 }}
