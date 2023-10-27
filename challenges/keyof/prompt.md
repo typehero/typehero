@@ -2,8 +2,10 @@
 
 The `keyof` operator is used for extracting a union representing the keys (also known as "properties") of a type.
 
-Let's say your audiophile cousin is asking you to digitize her casette tape collection (she's convinced they "sound better" on casette... yawn..).  So you make an object where you count up how many albums you have for each artist:
+Let's say your audiophile cousin is asking you to digitize her casette tape collection (she's convinced they "sound better" on casette... yawn..). So you make an object where you count up how many albums you have for each artist:
 
+<!-- no need to complicate the reading of this by some having quotes and some not (which is made especially distracting by the fact that they show up syntax highlighted different colors) -->
+<!-- prettier-ignore -->
 ```ts
 const casettesByArtist = {
   'Alanis Morissette': 2,
@@ -17,7 +19,7 @@ const casettesByArtist = {
   'Green Day': 2,
   'Pearl Jam': 5,
   'Metallica': 5,
-  'Guns N\' Roses': 2,
+  "Guns N' Roses": 2,
   'U2': 3,
   'Aerosmith': 4,
   'R.E.M.': 4,
@@ -32,6 +34,8 @@ But what if you wanted to extract all these keys as a type?
 
 We could always re-type all of them in a literal union:
 
+<!-- want to not raise distracting syntax questions about starting with `|` and also keep it on fewer lines in the prompt window -->
+<!-- prettier-ignore -->
 ```ts
 type Artists = 'Alanis Morissette' | 'Mariah Carey' | 'Nirvana'
   | 'Oasis' | 'Radiohead' | 'No Doubt'| 'Backstreet Boys'
@@ -40,7 +44,7 @@ type Artists = 'Alanis Morissette' | 'Mariah Carey' | 'Nirvana'
   | 'The Smashing Pumpkins' | 'Britney Spears' | 'Whitney Houston'
 ```
 
-But that's pretty Rough.  You _certainly_ would not want to retype all those artist names.  What if you forget one?  What if you misspell one?
+But that's pretty Rough. You _certainly_ would not want to retype all those artist names. What if you forget one? What if you misspell one?
 
 Great news: you can use `keyof` to solve this problem!
 
@@ -54,7 +58,7 @@ In our case we _don't have_ a type to start working with (because we), so we cre
 type CasettesByArtist = typeof casettesByArtist;
 ```
 
-Then we can use `keyof` on our new type to get an alias that represents the union of all keys in our `casettestByArtist` object.
+Then we can use `keyof` on our new type to get an alias that represents the union of all keys in our `casettesByArtist` object.
 
 ```ts
 type Artists = keyof CasettesByArtist;
@@ -64,7 +68,7 @@ type Artists = keyof CasettesByArtist;
 
 The result of `keyof` is always a union.
 
-> Even if there are 0 or 1 objects, it doesn't hurt to think of the result as a union.  If there are no elements in the result will be `never` (which is the empty set in "Set theory" terminology).  When there's only one key than the resulting type will be a single primitive or literal type.
+> Even if there are 0 or 1 objects, it doesn't hurt to think of the result as a union. If there are no elements in the result will be `never` (which is the empty set in "Set theory" terminology). When there's only one key than the resulting type will be a single primitive or literal type.
 
 ## Solving This Challenge
 

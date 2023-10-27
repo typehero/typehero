@@ -1,8 +1,8 @@
 ## Why Functions Need Generics
 
-One of the most common needs a TypeScript developer faces is the need to pass generic type arguments to functions.  Then, those functions can use and manipulate those parameters.
+One of the most common needs a TypeScript developer faces is the need to pass generic type arguments to functions. Then, those functions can use and manipulate those parameters.
 
-In many situations, we don't need functions to be generic.  The function might be written in such a way as to only work for one type of data (e.g. `string` or `number`).  But, other times, we write functions where we want to pass the data type along from input to output.
+In many situations, we don't need functions to be generic. The function might be written in such a way as to only work for one type of data (e.g. `string` or `number`). But, other times, we write functions where we want to pass the data type along from input to output.
 
 ## Understanding Generic Syntax
 
@@ -24,7 +24,7 @@ const createRow = (
 
   // how do we provide a type for `value`?
   value: unknown,
-  
+
   disabled = false,
 ) => ({
   label,
@@ -36,20 +36,16 @@ const createRow = (
 Similarly to how we used the `<` and `>` for our `Row` interface, we place the `<` and `>` right before the parenthesis that start our function's arguments.
 
 ```ts
-const createRow = <T>(
-  label: string,
-  value: T,
-  disabled = false,
-) => ({
+const createRow = <T,>(label: string, value: T, disabled = false) => ({
   //...
-})
+});
 ```
 
-This is great!  Now our `value` parameter has the right type!
+This is great! Now our `value` parameter has the right type!
 
 ### A Word On A Syntax Quirk
 
-You may see the `<T,>` syntax out in the wild.  There's an unfortunate niggle with TypeScript's syntax that this is used to work around.  Imagine being a parser and seeing `const createRow = <T>`.  If you don't know what's coming next it could be ambiguous between these two things
+You may see the `<T,>` syntax out in the wild. There's an unfortunate niggle with TypeScript's syntax that this is used to work around. Imagine being a parser and seeing `const createRow = <T>`. If you don't know what's coming next it could be ambiguous between these two things
 
 ```ts
 // Thing 1: Start of JSX
@@ -61,20 +57,20 @@ const createRow = <T>(someArg: T) => {
 }
 ```
 
-Because of this ambiguity, we need to do something to _disambiguate_ these two situations to the TypeScript compiler.  In the early days it used to be common to use `<T extends unknown>` (or `<T extends any>` in the days before `unknown` existed in TypeScript).  But over time people realized there's a shorter way: `<T,>`.  Because `,` is invalid in JSX, but valid in TypeScript to separate multiple arguments, it's sufficient to use this to disambiguate the two situations to the TypeScript compiler.
+Because of this ambiguity, we need to do something to _disambiguate_ these two situations to the TypeScript compiler. In the early days it used to be common to use `<T extends unknown>` (or `<T extends any>` in the days before `unknown` existed in TypeScript). But over time people realized there's a shorter way: `<T,>`. Because `,` is invalid in JSX, but valid in TypeScript to separate multiple arguments, it's sufficient to use this to disambiguate the two situations to the TypeScript compiler.
 
-All that to say, if you see this strange syntax know that it's not you, it's TypeScript being a bit funky.  If this is confusing to you, just skip it and come back here and read it again when the day comes that you first see this syntax out in the wild.
+All that to say, if you see this strange syntax know that it's not you, it's TypeScript being a bit funky. If this is confusing to you, just skip it and come back here and read it again when the day comes that you first see this syntax out in the wild.
 
 ## Solving This Challenge
 
-This challenge asks you to make an `identity` function.  This function does nothing and returns what it was passed with no modifications.
+This challenge asks you to make an `identity` function. This function does nothing and returns what it was passed with no modifications.
 
 > Note: mathematicians love `identity` operations, so computer scientists use them too so we can seem cool to the mathematicians.
 
-The next function (`mapArray`) is admittedly pretty hard, but take it slow and think about it one step at a time.  Ask yourself:
+The next function (`mapArray`) is admittedly pretty hard, but take it slow and think about it one step at a time. Ask yourself:
 
 > what is the type of `arr`
 
-Then provide a generic argument as a type for `arr`.  After you do that, think about what types you need to provide for `fn`.
+Then provide a generic argument as a type for `arr`. After you do that, think about what types you need to provide for `fn`.
 
-In this particular case, if you spend a few minutes with it don't be afraid to check out some solutions.  This second example is here more to widen your perspective than anything else.  It's good to wrestle with tough problems, even ones that are above your ability level.
+In this particular case, if you spend a few minutes with it don't be afraid to check out some solutions. This second example is here more to widen your perspective than anything else. It's good to wrestle with tough problems, even ones that are above your ability level.

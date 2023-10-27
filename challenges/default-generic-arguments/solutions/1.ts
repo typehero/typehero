@@ -5,4 +5,4 @@ type ApiRequest<Data, Method = 'GET'> = {
 
 type TSConfig<Config extends { strict: boolean } = { strict: true }> = {
   strict: Config['strict'];
-}
+};
