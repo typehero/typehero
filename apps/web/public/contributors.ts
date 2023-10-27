@@ -41,7 +41,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/Hacksore/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 102
+        "contributions": 103
     },
     {
         "login": "PickleNik",
@@ -62,7 +62,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/PickleNik/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 91
+        "contributions": 93
     },
     {
         "login": "QuiiBz",
@@ -209,7 +209,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/maxdemaio/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 12
+        "contributions": 13
     },
     {
         "login": "falcon-head",
@@ -422,6 +422,27 @@ export const contributors = [
         "contributions": 6
     },
     {
+        "login": "dimitropoulos",
+        "id": 15232461,
+        "node_id": "MDQ6VXNlcjE1MjMyNDYx",
+        "avatar_url": "https://avatars.githubusercontent.com/u/15232461?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/dimitropoulos",
+        "html_url": "https://github.com/dimitropoulos",
+        "followers_url": "https://api.github.com/users/dimitropoulos/followers",
+        "following_url": "https://api.github.com/users/dimitropoulos/following{/other_user}",
+        "gists_url": "https://api.github.com/users/dimitropoulos/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/dimitropoulos/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/dimitropoulos/subscriptions",
+        "organizations_url": "https://api.github.com/users/dimitropoulos/orgs",
+        "repos_url": "https://api.github.com/users/dimitropoulos/repos",
+        "events_url": "https://api.github.com/users/dimitropoulos/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/dimitropoulos/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 5
+    },
+    {
         "login": "FullStackCorm",
         "id": 101738478,
         "node_id": "U_kgDOBhBn7g",
@@ -459,27 +480,6 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/billc-dev/repos",
         "events_url": "https://api.github.com/users/billc-dev/events{/privacy}",
         "received_events_url": "https://api.github.com/users/billc-dev/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 4
-    },
-    {
-        "login": "dimitropoulos",
-        "id": 15232461,
-        "node_id": "MDQ6VXNlcjE1MjMyNDYx",
-        "avatar_url": "https://avatars.githubusercontent.com/u/15232461?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/dimitropoulos",
-        "html_url": "https://github.com/dimitropoulos",
-        "followers_url": "https://api.github.com/users/dimitropoulos/followers",
-        "following_url": "https://api.github.com/users/dimitropoulos/following{/other_user}",
-        "gists_url": "https://api.github.com/users/dimitropoulos/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/dimitropoulos/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/dimitropoulos/subscriptions",
-        "organizations_url": "https://api.github.com/users/dimitropoulos/orgs",
-        "repos_url": "https://api.github.com/users/dimitropoulos/repos",
-        "events_url": "https://api.github.com/users/dimitropoulos/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/dimitropoulos/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 4
