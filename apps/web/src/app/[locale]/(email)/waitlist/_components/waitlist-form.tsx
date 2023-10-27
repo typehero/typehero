@@ -5,6 +5,7 @@ import { Alert, AlertDescription } from '@repo/ui/components/alert';
 import { Button } from '@repo/ui/components/button';
 import { Form, FormControl, FormField, FormItem } from '@repo/ui/components/form';
 import { Input } from '@repo/ui/components/input';
+import type { ErrorResponse } from '@mailchimp/mailchimp_marketing';
 import {
   Select,
   SelectContent,
@@ -146,17 +147,22 @@ export function WaitlistForm() {
       </Form>
       <div className="mt-3">
         {mutation.status === 'success' && <AlertSuccess />}
-        {mutation.status === 'error' && <AlertDestructive />}
+        {mutation.status === 'error' && (
+          <AlertDestructive
+            text={
+              // @ts-ignore
+              mutation.error?.message === 'Member Exists'
+                ? 'You are already added to the waitlist with this email. We will reach out to you soon.'
+                : 'Something went wrong, please try again.'
+            }
+          />
+        )}
       </div>
     </div>
   );
 }
 
-export function AlertDestructive({
-  text = 'Something went wrong. Please try again.',
-}: {
-  text?: string;
-}) {
+export function AlertDestructive({ text }: { text?: string }) {
   return (
     <Alert className="dark:bg-[#230808]" variant="destructive">
       <AlertCircle className="h-4 w-4" />
@@ -194,8 +200,8 @@ async function subscribe(data: WaitlistFormSchema) {
   });
 
   if (!response.ok) {
-    const text = await response.text();
-    throw new Error(text);
+    const error: ErrorResponse = await response.json();
+    throw new Error(error.title);
   }
 
   return response.json();
