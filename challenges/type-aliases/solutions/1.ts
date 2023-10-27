@@ -6,6 +6,6 @@ type IsOperational = boolean;
 type Kilograms = number;
 
 interface Payload {
-  name: Name,
-  mass: Kilograms
+  name: Name;
+  mass: Kilograms;
 }

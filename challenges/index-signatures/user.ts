@@ -1,5 +1,5 @@
 type GroceryList = unknown;
 
-type InnapropriateActionBySituation = unknown;
+type InappropriateActionBySituation = unknown;
 
-type CharactersById = unknown
+type CharactersById = unknown;

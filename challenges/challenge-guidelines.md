@@ -1,4 +1,5 @@
 <!-- omit in toc -->
+
 # TypeHero Challenge Guidelines
 
 - [Writing `prompt.md`](#writing-promptmd)
@@ -12,7 +13,7 @@
   - [Don't Use `any`, Prefer `unknown`](#dont-use-any-prefer-unknown)
   - [Avoid "Leading The Witness"](#avoid-leading-the-witness)
 
-This is a guide to help you write a challenge for TypeHero.  Our goal is to keep the writing process straightforward while at the same time having some consistency.  We've learned from experience that there are a few useful things to do to make it a more consistent (and less chaotic) feeling experience for our users.  Some of these things are arbitrary design choices.  That's ok.  It's not about a "right way of doing things" but more "a cohesive experience for users".
+This is a guide to help you write a challenge for TypeHero. Our goal is to keep the writing process straightforward while at the same time having some consistency. We've learned from experience that there are a few useful things to do to make it a more consistent (and less chaotic) feeling experience for our users. Some of these things are arbitrary design choices. That's ok. It's not about a "right way of doing things" but more "a cohesive experience for users".
 
 In general, if you find yourself having to pick between:
 
@@ -25,11 +26,11 @@ You should prefer more work for yourself at a 10,000:1 ratio.
 
 ### Keep It Fun
 
-Try to keep them fun and find widely relatable pop-culture references (without getting political or anything like that).  Things like movies, video games, music, art, and anything a large number of people are likely to be familiar with.  If you can work in some kind of interesting and lesser-known science fact or something that can also help the reader feel more engaged.
+Try to keep them fun and find widely relatable pop-culture references (without getting political or anything like that). Things like movies, video games, music, art, and anything a large number of people are likely to be familiar with. If you can work in some kind of interesting and lesser-known science fact or something that can also help the reader feel more engaged.
 
 ### Encourage Healthy Practices
 
-Avoid using `T` and `U` and `S` as generic parameters names.  That doesn't mean there's never a place for them.  Just avoid it if you can.  For SUPER generic types (like `Pick`), it's fine to use `T`.
+Avoid using `T` and `U` and `S` as generic parameters names. That doesn't mean there's never a place for them. Just avoid it if you can. For SUPER generic types (like `Pick`), it's fine to use `T`.
 
 ## Writing `test.ts`
 
@@ -49,20 +50,14 @@ Make sure that the thing that's in the `Expect<Equal<` block _first_ is the thin
 <td>
 
 ```ts
-type test_TheCoolestCarEverMade = Expect<Equal<
-  TheCoolestCarEverMade,
-  "Toyota Corolla"
->>;
+type test_TheCoolestCarEverMade = Expect<Equal<TheCoolestCarEverMade, 'Toyota Corolla'>>;
 ```
 
 </td>
 <td>
 
 ```ts
-type test_TheCoolestCarEverMade = Expect<Equal<
-  "Toyota Corolla",
-  TheCoolestCarEverMade
->>;
+type test_TheCoolestCarEverMade = Expect<Equal<'Toyota Corolla', TheCoolestCarEverMade>>;
 ```
 
 </td>
@@ -109,7 +104,7 @@ type tests = [
 </tbody>
 </table>
 
-Why? Well what if you have a problem where only `MyThing3` is failing, if the test is written with a tuple type it's really difficult to debug the computed result of `MyThing3` that without taking `MyThing3` out and assigning it to an alias.  That's a pretty bad experience for users.  We can do that work for them upfront.
+Why? Well what if you have a problem where only `MyThing3` is failing, if the test is written with a tuple type it's really difficult to debug the computed result of `MyThing3` that without taking `MyThing3` out and assigning it to an alias. That's a pretty bad experience for users. We can do that work for them upfront.
 
 Time to get comfortable with multicursor editing!
 
@@ -134,7 +129,7 @@ type test_MyThing_string = MyThing<string>;
 
 ### Don't Use `any`, Prefer `unknown`
 
-Unless your challenge is related to `any`, avoid using it.  That means you should every helper type equal to `unknown` (not `any`).
+Unless your challenge is related to `any`, avoid using it. That means you should every helper type equal to `unknown` (not `any`).
 
 <table>
 <thead>
@@ -165,7 +160,7 @@ type Split = any;
 
 ### Avoid "Leading The Witness"
 
-One goal of TypeHero is to keep things as real-world as possible (except in the case of challenges that are literally just "for science" like JSON parsers, etc.).  That means that you want to give people as much on-the-ground experience as possible.  You want users to leave a challenge feeling like they actually learned or accomplished something (or both!).
+One goal of TypeHero is to keep things as real-world as possible (except in the case of challenges that are literally just "for science" like JSON parsers, etc.). That means that you want to give people as much on-the-ground experience as possible. You want users to leave a challenge feeling like they actually learned or accomplished something (or both!).
 
 We want to encourage good behaviors that will carry users into their daily work.
 
