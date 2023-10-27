@@ -4,7 +4,7 @@ import { resolve } from 'node:path';
 import { simpleGit } from 'simple-git';
 import { parse } from 'yaml';
 
-const slugify = (str: string) => str.toLowerCase().replace(/\s/g, '-');
+const slugify = (str: string) => str.toLowerCase().replace(/\s/g, '-').replace(/\./g, '-');
 export interface InfoFile {
   title: string;
   author: {
