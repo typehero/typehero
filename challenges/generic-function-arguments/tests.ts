@@ -1,4 +1,4 @@
-// import { Expect, Equal } from 'type-testing';
+import { Expect, Equal } from 'type-testing';
 
 /** temporary */
 const expect = <T>(a: T) => ({
