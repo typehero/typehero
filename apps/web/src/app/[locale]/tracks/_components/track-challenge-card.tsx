@@ -37,6 +37,11 @@ export function TrackChallenge({
   isCompact = false,
 }: TrackChallengeProps) {
   const isMobile = useIsMobile();
+  const backgroundColor = isCompleted
+    ? 'peer-checked:bg-green-600/80 peer-checked:dark:bg-green-300/80'
+    : isInProgress
+    ? 'peer-checked:bg-orange-600/80 peer-checked:dark:bg-orange-300/80'
+    : '';
 
   return (
     <label
@@ -68,27 +73,17 @@ export function TrackChallenge({
                       className="peer hidden appearance-none"
                       type="checkbox"
                       id={challenge.id.toString()}
-                      checked={isCompleted || isInProgress || isSelected}
+                      checked={isCompleted || isInProgress}
                       readOnly
                     />
                     <div
                       className={cn(
                         'h-5 w-5 rounded-full border border-black/70 bg-black/10 duration-75 peer-checked:border-transparent dark:border-white/50 dark:bg-white/10',
-                        {
-                          'peer-checked:bg-green-600/80 peer-checked:dark:bg-green-300/80':
-                            isCompleted,
-                          'peer-checked:bg-orange-600/80 peer-checked:dark:bg-orange-300/80':
-                            isInProgress,
-                          'peer-checked:bg-blue-600/80 peer-checked:dark:bg-blue-300/80':
-                            isSelected,
-                        },
+                        backgroundColor,
                       )}
                     />
-                    {isSelected ? (
-                      <Loader2 className="absolute left-1 my-auto h-3 w-3 scale-0 stroke-[4] text-white duration-300 peer-checked:scale-100 dark:text-black" />
-                    ) : null}
                     {isCompleted ? (
-                      <Check className="absolute left-1.5 my-auto h-4 w-4 scale-0 stroke-[4] text-white duration-300 peer-checked:scale-100 dark:text-black" />
+                      <Check className="absolute left-1 my-auto h-3.5 w-3.5 scale-0 stroke-[4] text-white duration-300 peer-checked:scale-100 dark:text-black" />
                     ) : null}
                     {isInProgress ? (
                       <PieChart className="absolute left-1 my-auto h-3 w-3 scale-0 stroke-[4] text-white duration-300 peer-checked:scale-100 dark:text-black" />
