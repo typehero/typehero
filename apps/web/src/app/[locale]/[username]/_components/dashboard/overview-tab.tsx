@@ -1,7 +1,6 @@
-import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
-
 import type { User } from '@repo/db/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/card';
+import { Markdown } from '@repo/ui/components/markdown';
 
 interface Props {
   // TODO: how do do this union type with just letting prisma halp
@@ -20,7 +19,7 @@ export async function OverviewTab({ user }: Props) {
       </CardHeader>
       <CardContent>
         <div className="w-full text-sm">
-          {Boolean(hasBio) && <ReactMarkdown>{user.bio}</ReactMarkdown>}
+          {Boolean(hasBio) && <Markdown>{user.bio}</Markdown>}
           {Boolean(!hasBio) && (
             <p className="text-muted-foreground">{user.name} does not have a bio.</p>
           )}
