@@ -1,4 +1,4 @@
-import { Expect, Equal } from 'type-testing';
+// import { Expect, Equal } from 'type-testing';
 
 /** temporary */
 const expect = <T>(a: T) => ({
@@ -6,24 +6,24 @@ const expect = <T>(a: T) => ({
 });
 
 const identity_string = identity("this is a string");
-expect(identity_string).toEqual("this is a ...");
+expect(identity_string).toEqual("this is a string");
 type test_identity_string = Expect<Equal<
   typeof identity_string,
-  string
+  "this is a string"
 >>;
 
 const identity_number = identity(123.45);
 expect(identity_number).toEqual(123.45);
 type test_identity_number = Expect<Equal<
   typeof identity_number,
-  number
+  123.45
 >>;
 
 const identity_boolean = identity(false);
 expect(identity_boolean).toEqual(false);
 type test_identity_boolean = Expect<Equal<
   typeof identity_boolean,
-  boolean
+  false
 >>;
 
 const strings = ['1', '1', '2', '3', '5'];
