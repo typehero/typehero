@@ -3,5 +3,10 @@
   "label": "Default Generic Arguments",
   "description": "Default generic arguments allow you to optionally pass a generic argument.",
   "difficulty": "beginner",
-  "prerequisites": ["generic-type-arguments", "type-unions", "generic-constraints", "indexed-types"]
+  "prerequisites": [
+    "generic-type-arguments",
+    "type-unions",
+    "generic-type-constraints",
+    "indexed-types"
+  ]
 }
