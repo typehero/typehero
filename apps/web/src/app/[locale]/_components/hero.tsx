@@ -1,9 +1,10 @@
-import { Sparkles, Github, Mail, Sparkle, Twitter } from '@repo/ui/icons';
+import { Github, Mail, Sparkle, Twitter } from '@repo/ui/icons';
 import Link from 'next/link';
 import { Balancer } from 'react-wrap-balancer';
 import { Button } from '@repo/ui/components/button';
 import { HeroIllustration, BackgroundGrid } from './hero-illustration';
 import { getScopedI18n } from '~/locales/server';
+import { Ghost } from './hero-ghost';
 
 function TypeHeroLogo3D() {
   return (
@@ -16,49 +17,49 @@ function TypeHeroLogo3D() {
       <g className="dark:hidden">
         <path
           d="M0 74.9605C0 33.561 33.561 0 74.9605 0H558.039C599.439 0 633 33.561 633 74.9605V558.039C633 599.439 599.439 633 558.039 633H74.9605C33.561 633 0 599.439 0 558.039V74.9605Z"
-          fill="#3178C6"
+          fill="#FFB800"
         />
         <path
           fillRule="evenodd"
           clipRule="evenodd"
           d="M261.441 348.724H333.158V299.842H133.263V348.724H204.629V566.368H261.441V348.724Z"
-          fill="white"
+          fill="black"
         />
         <path
           d="M366.474 566.368V299.842H423.962V410.298H508.741V299.842H566.368V566.368H508.741V455.523H423.962V566.368H366.474Z"
-          fill="white"
+          fill="black"
         />
       </g>
       <g className="animate-logo-light hidden dark:block">
         <path
           d="M0 74.9605C0 33.561 33.561 0 74.9605 0H558.039C599.439 0 633 33.561 633 74.9605V558.039C633 599.439 599.439 633 558.039 633H74.9605C33.561 633 0 599.439 0 558.039V74.9605Z"
-          fill="#3178C6"
+          fill="#FFB800"
         />
         <path
           fillRule="evenodd"
           clipRule="evenodd"
           d="M261.441 348.724H333.158V299.842H133.263V348.724H204.629V566.368H261.441V348.724Z"
-          fill="white"
+          fill="black"
         />
         <path
           d="M366.474 566.368V299.842H423.962V410.298H508.741V299.842H566.368V566.368H508.741V455.523H423.962V566.368H366.474Z"
-          fill="white"
+          fill="black"
         />
       </g>
       <g className="animate-3d-logo hidden dark:block" filter="url(#filter0_ii_1050_32)">
         <path
           d="M0 74.9605C0 33.561 33.561 0 74.9605 0H558.039C599.439 0 633 33.561 633 74.9605V558.039C633 599.439 599.439 633 558.039 633H74.9605C33.561 633 0 599.439 0 558.039V74.9605Z"
-          fill="#3178C6"
+          fill="#FFB800"
         />
         <path
           fillRule="evenodd"
           clipRule="evenodd"
           d="M261.441 348.724H333.158V299.842H133.263V348.724H204.629V566.368H261.441V348.724Z"
-          fill="white"
+          fill="black"
         />
         <path
           d="M366.474 566.368V299.842H423.962V410.298H508.741V299.842H566.368V566.368H508.741V455.523H423.962V566.368H366.474Z"
-          fill="white"
+          fill="black"
         />
       </g>
       <defs>
@@ -147,6 +148,7 @@ export async function Hero() {
 
   return (
     <section className="-mt-[56px] min-h-[calc(100vh)] overflow-hidden lg:min-h-0 lg:pt-[56px]">
+      <Ghost />
       <div className="absolute inset-10 -z-30 overflow-hidden rounded-full opacity-70 lg:hidden">
         <BackgroundGrid />
       </div>
@@ -157,21 +159,21 @@ export async function Hero() {
             target="_blank"
             rel="noreferrer"
             href="https://github.com/typehero/typehero"
-            className="animate-bg-gradient-to-center group rounded-full bg-gradient-to-r from-yellow-600 via-[#3178c6] to-[#3178c6] to-70% bg-[length:420%_420%] bg-right-bottom p-[1px] brightness-90 contrast-150 duration-500 hover:bg-left-top hover:shadow-[0_0_2rem_-0.5rem_#3178c6] dark:from-yellow-500 dark:via-white dark:to-[#3178c6] dark:brightness-125 dark:contrast-100 dark:hover:shadow-[0_0_2rem_-0.5rem_#fff8]"
+            className="animate-bg-gradient-to-center group rounded-full bg-gradient-to-r from-yellow-600 via-[#DD8800] to-[#DD8800] to-70% bg-[length:420%_420%] bg-right-bottom p-[1px] contrast-150 duration-500 hover:bg-left-top hover:shadow-[0_0_2rem_-0.5rem_#DD8800] dark:from-yellow-500 dark:via-white dark:to-[#FFB800]  dark:contrast-100 dark:hover:shadow-[0_0_2rem_-0.5rem_#fff8]"
           >
             <div className="rounded-full bg-white/80 px-3 py-1 dark:bg-black/80">
-              <span className="animate-bg-gradient-to-center relative flex items-center bg-gradient-to-r to-70% bg-[length:420%_420%] bg-clip-text bg-right-bottom text-transparent duration-500 group-hover:bg-left-top dark:from-yellow-500 dark:via-white dark:to-[#3178c6]">
-                <Sparkle className="animate-oldstar absolute  -left-1 top-0.5 mr-2 h-5 w-5 translate-x-0.5 stroke-[#3178c6] stroke-2 duration-500 group-hover:rotate-180 group-hover:scale-110 group-hover:stroke-yellow-600 dark:duration-500  " />
-                <Sparkle className="animate-newstar mr-2 h-4 w-4 stroke-[#3178c6] stroke-2 duration-500 group-hover:rotate-180 group-hover:scale-110 group-hover:fill-[#3178c6] dark:stroke-white dark:duration-500 dark:group-hover:fill-white" />{' '}
-                Star us on GitHub
+              <span className="animate-bg-gradient-to-center relative flex items-center bg-gradient-to-r to-70% bg-[length:420%_420%] bg-clip-text bg-right-bottom text-transparent duration-500 group-hover:bg-left-top dark:from-yellow-500 dark:via-white dark:to-[#FFB800]">
+                <Sparkle className="animate-oldstar absolute  -left-1 top-0.5 mr-2 h-5 w-5 translate-x-0.5 stroke-[#FFB800] stroke-2 duration-500 group-hover:rotate-180 group-hover:scale-110 group-hover:stroke-yellow-600 dark:duration-500  " />
+                <Sparkle className="animate-newstar mr-2 h-4 w-4 stroke-[#DD8800] stroke-2 duration-500 group-hover:rotate-180 group-hover:scale-110 group-hover:fill-[#FFB800] dark:stroke-white dark:duration-500 dark:group-hover:fill-white" />{' '}
+                Star us on Github
               </span>
             </div>
           </a>
           <div className="relative flex w-full items-center justify-center gap-4 lg:justify-start">
             <div className="absolute left-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-x-[15%] -translate-y-[50%] rounded-full bg-slate-400/10 blur-3xl dark:block" />
-            <div className="absolute right-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-y-[40%] rounded-full bg-[#3178c6]/20 blur-3xl dark:block" />
+            <div className="absolute right-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-y-[40%] rounded-full bg-[#FFB800]/20 blur-3xl dark:block" />
             <TypeHeroLogo3D />
-            <h1 className="animate-bg-gradient-to-center-title dark:to-69% bg-gradient-to-br from-[#3178c6] from-[69%] to-black/0 bg-clip-text bg-right-bottom text-6xl font-extrabold text-transparent dark:from-white dark:from-30% dark:via-[#3178c6] dark:to-[#3178c6] dark:bg-[length:300%_300%] sm:text-8xl sm:leading-[5.5rem]">
+            <h1 className="animate-bg-gradient-to-center-title dark:to-69% bg-gradient-to-br from-[#FFB800] from-[69%] to-black/0 bg-clip-text bg-right-bottom text-6xl font-extrabold text-transparent dark:from-white dark:from-30% dark:via-[#FFB800] dark:to-[#FFB800] dark:bg-[length:300%_300%] sm:text-8xl sm:leading-[5.5rem]">
               type
               <br />
               hero
@@ -184,10 +186,10 @@ export async function Hero() {
           <div className="flex flex-col-reverse gap-3 md:flex-row">
             <Button
               asChild
-              className="hero-join-button group relative mx-auto w-fit overflow-hidden rounded-xl p-[2px] font-bold transition-all duration-300 hover:bg-transparent hover:shadow-[0_0_2rem_-0.5rem_#3178c6] dark:hidden md:mr-0 lg:mr-auto"
+              className="hero-join-button group relative mx-auto w-fit overflow-hidden rounded-xl p-[2px] font-bold transition-all duration-300 hover:bg-transparent hover:shadow-[0_0_2rem_-0.5rem_#FFB800] dark:hidden md:mr-0 lg:mr-auto"
             >
               <Link href="/waitlist">
-                <span className="inline-flex h-full w-fit items-center gap-1 rounded-[10px] bg-white px-4 py-2 text-[#3178c6] transition-all duration-300">
+                <span className="inline-flex h-full w-fit items-center gap-1 rounded-[10px] bg-white px-4 py-2 text-[#FFB800] transition-all duration-300">
                   <Mail className="mr-1 h-4 w-4 stroke-[3]" />
                   {t('buttons.waitlist')}
                 </span>
