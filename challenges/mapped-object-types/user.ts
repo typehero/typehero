@@ -1,1 +1,1 @@
-type MovieInfoByGenre = unknown
+type MovieInfoByGenre = unknown;

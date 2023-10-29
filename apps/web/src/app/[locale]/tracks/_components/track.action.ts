@@ -81,7 +81,11 @@ export const getTrackDetails = cache(async (slug: string) => {
         include: {
           challenge: {
             include: {
-              submission: true,
+              submission: {
+                where: {
+                  userId: session?.user.id ?? '',
+                },
+              },
               user: {
                 select: {
                   name: true,
