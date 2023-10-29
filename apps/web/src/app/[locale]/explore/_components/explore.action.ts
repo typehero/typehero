@@ -1,5 +1,6 @@
 'use server';
 
+import { getServerAuthSession, type Session } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import { Tags, type Difficulty } from '@repo/db/types';
 
@@ -10,6 +11,7 @@ const allTags: Tags[] = Object.values(Tags);
  * Fetches challenges either by tag or difficulty.
  */
 export async function getChallengesByTagOrDifficulty(str: string, take?: number) {
+  const session = await getServerAuthSession();
   const formattedStr = str.trim().toUpperCase();
 
   return prisma.challenge.findMany({
@@ -30,6 +32,22 @@ export async function getChallengesByTagOrDifficulty(str: string, take?: number)
           }),
     },
     include: {
+      ...( session && session?.user?.id ? {
+        submission: {
+          where: {
+            isSuccessful: true,
+            user: {
+              id: {
+                equals: session.user.id,
+              }
+            }
+          },
+          take: 1,
+          select: {
+            id: true,
+          }
+        },
+      }: {}),
       _count: {
         select: { vote: true, comment: true },
       },
