@@ -14,7 +14,6 @@ async function Admin() {
   const isModOrAdmin = isAdmin || isMod;
 
   const allBannedUsers = await getBannedUsers();
-  // This needs done because server functions are dumb and this throws A LOT of errors otherwise.
   const reports = await getInfiniteReports();
   const uploadedImages = await getUploadedImages();
 
