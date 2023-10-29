@@ -6,12 +6,13 @@ import { revalidateTag } from 'next/cache';
 import { cache } from 'react';
 import { createEnrolledTrackCacheKey } from './track-enrolled-section';
 import { createTrackGridCacheKey } from './track-grid';
+import { track } from '@vercel/analytics';
 
 /**
  * Enrolls the session user in the track given a track id.
  * @param id The track id.
  */
-export async function enrollUserInTrack(id: number) {
+export async function enrollUserInTrack(id: number, slug: string) {
   const session = await getServerAuthSession();
   if (!session) {
     throw new Error('User is not logged in');
@@ -30,6 +31,7 @@ export async function enrollUserInTrack(id: number) {
     },
   });
 
+  track?.('track-action', { action: 'enrolled', slug });
   revalidateTag(`track-${id}-detail`);
   revalidateTag(createTrackGridCacheKey(session.user.id));
   revalidateTag(createEnrolledTrackCacheKey(session.user.id));
@@ -39,7 +41,7 @@ export async function enrollUserInTrack(id: number) {
  * Un-enrolls the session user in the track given a track id.
  * @param id The track id.
  */
-export async function unenrollUserFromTrack(id: number) {
+export async function unenrollUserFromTrack(id: number, slug: string) {
   const session = await getServerAuthSession();
   if (!session) {
     throw new Error('User is not logged in');
@@ -58,6 +60,7 @@ export async function unenrollUserFromTrack(id: number) {
     },
   });
 
+  track?.('track-action', { action: 'unenrolled', slug });
   revalidateTag(`track-${id}-detail`);
   revalidateTag(createTrackGridCacheKey(session.user.id));
   revalidateTag(createEnrolledTrackCacheKey(session.user.id));
