@@ -5,6 +5,7 @@ import { getBannedUsers, getUploadedImages } from './_components/admin.actions';
 import { getInfiniteReports } from './report/[id]/_components/report/report.action';
 import { TabView } from './_components/TabView';
 
+// what
 async function Admin() {
   const session = await getServerAuthSession();
   const roles = session?.user.role ?? [];
