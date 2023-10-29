@@ -51,18 +51,6 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
     })
     .map((trackChallenge) => trackChallenge.id);
 
-  async function enroll(id: number) {
-    'use server';
-    await enrollUserInTrack(id);
-    vercelTrack?.('track-action', { action: 'enrolled', slug });
-  }
-
-  async function unenroll(id: number) {
-    'use server';
-    await unenrollUserFromTrack(id);
-    vercelTrack?.('track-action', { action: 'unenrolled', slug });
-  }
-
   return (
     <>
       <div className="container flex flex-col items-center gap-8 pb-8 pt-5 sm:pb-12 md:pb-0">
@@ -94,9 +82,14 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
             </div>
           </div>
           {isEnrolled ? (
-            <ActionButton action={unenroll} trackId={track.id} text="Unenroll" />
+            <ActionButton
+              slug={slug}
+              action={unenrollUserFromTrack}
+              trackId={track.id}
+              text="Unenroll"
+            />
           ) : (
-            <ActionButton action={enroll} trackId={track.id} text="Enroll" />
+            <ActionButton slug={slug} action={enrollUserInTrack} trackId={track.id} text="Enroll" />
           )}
         </div>
         <div className="flex w-full flex-col">
