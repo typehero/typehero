@@ -4,6 +4,7 @@ import { Swords } from '@repo/ui/icons';
 import { clsx } from 'clsx';
 import { ActionButton } from './enroll-button';
 import { TrackChallenge } from './track-challenge-card';
+import { track as vercelTrack } from '@vercel/analytics';
 import { TrackProgress } from './track-progress';
 import { enrollUserInTrack, getTrackDetails, unenrollUserFromTrack } from './track.action';
 import { Footsies } from '~/components/footsies';
@@ -50,6 +51,18 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
     })
     .map((trackChallenge) => trackChallenge.id);
 
+  async function enroll(id: number) {
+    'use server';
+    await enrollUserInTrack(id);
+    vercelTrack?.('track-action', { action: 'enrolled', slug });
+  }
+
+  async function unenroll(id: number) {
+    'use server';
+    await unenrollUserFromTrack(id);
+    vercelTrack?.('track-action', { action: 'unenrolled', slug });
+  }
+
   return (
     <>
       <div className="container flex flex-col items-center gap-8 pb-8 pt-5 sm:pb-12 md:pb-0">
@@ -81,9 +94,9 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
             </div>
           </div>
           {isEnrolled ? (
-            <ActionButton action={unenrollUserFromTrack} trackId={track.id} text="Unenroll" />
+            <ActionButton action={unenroll} trackId={track.id} text="Unenroll" />
           ) : (
-            <ActionButton action={enrollUserInTrack} trackId={track.id} text="Enroll" />
+            <ActionButton action={enroll} trackId={track.id} text="Enroll" />
           )}
         </div>
         <div className="flex w-full flex-col">
