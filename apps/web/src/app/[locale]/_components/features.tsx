@@ -30,13 +30,13 @@ export function Features() {
         <div className="flex flex-col items-center justify-center gap-16">
           <div className="mt-1 flex flex-col gap-3 px-4 text-center sm:px-0">
             <a
-              className="mx-auto hidden rounded-full bg-gradient-to-r from-[#31bdc6] to-[#3178c6] p-[1px] brightness-90 contrast-150 focus:outline-none focus:ring-blue-600 focus-visible:ring-2 dark:brightness-125 dark:contrast-100 sm:block"
+              className="mx-auto hidden rounded-full bg-gradient-to-r from-[#5157E6] to-[#FFB800] p-[1px] brightness-90 contrast-150 focus:outline-none focus:ring-blue-600 focus-visible:ring-2 dark:brightness-125 dark:contrast-100 sm:block"
               href="#features"
             >
               <div className="group relative overflow-hidden rounded-full bg-white/80 px-3 py-1 duration-300 hover:pr-9 dark:bg-black/80">
-                <span className="bg-gradient-to-r from-[#31bdc6] to-[#3178c6] bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[#5157E6] to-[#FFB800] bg-clip-text text-transparent">
                   <svg
-                    className="mr-1 inline-block h-4 w-4 fill-[#31bdc6]"
+                    className="mr-1 inline-block h-4 w-4 fill-[#5157E6]"
                     viewBox="4 4 48 48"
                     xmlns="http://www.w3.org/2000/svg"
                   >

@@ -70,7 +70,7 @@ export function Community() {
           ref={ref}
           style={
             {
-              '--bottom': '#4188e6',
+              '--bottom': '#ffb800',
             } as WrapperStyle
           }
         />
@@ -80,11 +80,11 @@ export function Community() {
         <div className="backdrop-blur-md">
           <div className="container flex flex-col justify-center pt-[128px] lg:flex-row lg:items-center lg:pb-[148px]">
             <div className="flex flex-1 flex-col items-center gap-6 pb-12 lg:items-start lg:pb-0">
-              <div className="rounded-full bg-gradient-to-r from-[#31bdc6] to-[#3178c6] p-[1px] brightness-90 contrast-150 dark:brightness-125 dark:contrast-100">
+              <div className="rounded-full bg-gradient-to-r from-[#5157E6] to-[#FFB800] p-[1px] brightness-90 contrast-150 dark:brightness-125 dark:contrast-100">
                 <div className="rounded-full bg-white/80 px-3 py-1 dark:bg-black/80">
-                  <span className="flex items-center bg-gradient-to-r from-[#31bdc6] to-[#3178c6] bg-clip-text text-transparent">
-                    <GitBranch className="h-4 w-4 stroke-[#31bdc6] stroke-2 sm:mr-2" />
-                    <span className="hidden sm:block">By developers, for developers</span>
+                  <span className="flex items-center bg-gradient-to-r from-[#5157E6] to-[#FFB800] bg-clip-text text-transparent">
+                    <GitBranch className="h-4 w-4 stroke-[#5157E6] stroke-2 sm:mr-2" />
+                    <span className="hidden sm:block">By developers, for developers</span>]
                   </span>
                 </div>
               </div>
