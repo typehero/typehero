@@ -84,7 +84,7 @@ export function Community() {
                 <div className="rounded-full bg-white/80 px-3 py-1 dark:bg-black/80">
                   <span className="flex items-center bg-gradient-to-r from-[#5157E6] to-[#FFB800] bg-clip-text text-transparent">
                     <GitBranch className="h-4 w-4 stroke-[#5157E6] stroke-2 sm:mr-2" />
-                    <span className="hidden sm:block">By developers, for developers</span>]
+                    <span className="hidden sm:block">By developers, for developers</span>
                   </span>
                 </div>
               </div>
