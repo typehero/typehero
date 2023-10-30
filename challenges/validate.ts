@@ -13,14 +13,16 @@ this script does a few checks:
 1. make sure the prerequisites don't contain the current
 */
 
-const getChallengeIds = (dir: string) => {
+const dir = __dirname;
+
+const getChallengeIds = () => {
   return readdirSync(dir)
     .filter((entry) => entry !== 'blank')
     .filter((entry) => statSync(join(dir, entry)).isDirectory())
     .filter((entry) => statSync(join(dir, entry, 'metadata.json')).isFile());
 };
 
-const getMetadata = (dir: string, id: string) => {
+const getMetadata = (id: string) => {
   const metadataFilePath = join(dir, id, 'metadata.json');
   const metadataFile = readFileSync(metadataFilePath).toString();
   const metadata = JSON.parse(metadataFile) as {
@@ -33,7 +35,7 @@ const getMetadata = (dir: string, id: string) => {
   };
 };
 
-const validateMetadataSchema = (dir: string, ids: string[]) => {
+const validateMetadataSchema = (ids: string[]) => {
   const ajv = new Ajv();
 
   const schema = JSON.parse(readFileSync(join(dir, 'metadata.schema.json')).toString());
@@ -41,7 +43,7 @@ const validateMetadataSchema = (dir: string, ids: string[]) => {
   const validate = ajv.compile(schema);
 
   ids.forEach((id) => {
-    const { metadata, metadataFilePath } = getMetadata(dir, id);
+    const { metadata, metadataFilePath } = getMetadata(id);
 
     if (!validate(metadata)) {
       console.error(
@@ -53,8 +55,8 @@ const validateMetadataSchema = (dir: string, ids: string[]) => {
   });
 };
 
-const ensureChallengeIdMatchesDirectory = (dir: string) => (id: string) => {
-  const { metadataFilePath, metadata } = getMetadata(dir, id);
+const ensureChallengeIdMatchesDirectory = (id: string) => {
+  const { metadataFilePath, metadata } = getMetadata(id);
 
   if (id !== metadata.id) {
     console.error(
@@ -63,8 +65,8 @@ const ensureChallengeIdMatchesDirectory = (dir: string) => (id: string) => {
   }
 };
 
-const validatePrerequisiteIds = (dir: string) => (id: string, _: number, ids: string[]) => {
-  const { metadataFilePath, metadata } = getMetadata(dir, id);
+const validatePrerequisiteIds = (id: string, _: number, ids: string[]) => {
+  const { metadataFilePath, metadata } = getMetadata(id);
 
   metadata.prerequisites.forEach((prerequisite) => {
     if (!ids.includes(prerequisite)) {
@@ -82,11 +84,11 @@ const validatePrerequisiteIds = (dir: string) => (id: string, _: number, ids: st
 };
 
 const validateMetadataFiles = () => {
-  const challengeIds = getChallengeIds(__dirname);
+  const challengeIds = getChallengeIds();
 
-  validateMetadataSchema(__dirname, challengeIds);
-  challengeIds.forEach(ensureChallengeIdMatchesDirectory(__dirname));
-  challengeIds.forEach(validatePrerequisiteIds(__dirname));
+  validateMetadataSchema(challengeIds);
+  challengeIds.forEach(ensureChallengeIdMatchesDirectory);
+  challengeIds.forEach(validatePrerequisiteIds);
 };
 
 validateMetadataFiles();

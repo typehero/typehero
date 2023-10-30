@@ -3,5 +3,6 @@
   "label": "Type Unions",
   "description": "Type unions are a powerful tool that allow you to create a type that's many values all at once.",
   "difficulty": "beginner",
-  "prerequisites": ["type-aliases", "literal-types"]
+  "prerequisites": ["type-aliases", "literal-types"],
+  "author": "dimitropoulos"
 }

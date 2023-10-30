@@ -8,5 +8,6 @@
     "type-unions",
     "generic-type-constraints",
     "indexed-types"
-  ]
+  ],
+  "author": "dimitropoulos"
 }
