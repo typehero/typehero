@@ -7,7 +7,7 @@
     "checks": "turbo format lint typecheck --continue",
     "checks:fix": "turbo format:fix lint:fix typecheck --continue --force",
     "clean": "turbo clean && rm -rf node_modules && rm -rf .turbo",
-    "check:solutions": "tsx ./challenges/check-solutions.ts",
+    "check:solutions": "tsx ./challenges/validate.ts",
     "db:push": "turbo db:push",
     "db:reset": "turbo db:reset",
     "db:seed": "turbo db:seed",

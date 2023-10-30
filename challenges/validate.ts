@@ -2,12 +2,13 @@ import { readdirSync, readFileSync, statSync } from 'fs';
 import { join } from 'path';
 import Ajv from 'ajv';
 import {
-  createCompilerHost,
+  CompilerHost,
   createProgram,
   createSourceFile,
   flattenDiagnosticMessageText,
   getPreEmitDiagnostics,
   readConfigFile,
+  ScriptKind,
   ScriptTarget,
   sys,
 } from 'typescript';
@@ -34,6 +35,17 @@ export const getChallengeIds = () => {
     .filter((id) => statSync(join(dir, id, 'metadata.json')).isFile())
     .filter((id) => statSync(join(dir, id, 'tsconfig.json')).isFile());
 };
+
+function loadStandardLib(libName: string) {
+  const standardTypeDefs = readFileSync(`node_modules/typescript/lib/${libName}`, 'utf8');
+  return createSourceFile(
+    libName,
+    standardTypeDefs.toString(),
+    ScriptTarget.ESNext,
+    true,
+    ScriptKind.TS,
+  );
+}
 
 const getMetadata = (id: string) => {
   const metadataFilePath = join(dir, id, 'metadata.json');
@@ -104,6 +116,17 @@ const validateMetadataFiles = () => {
   challengeIds.forEach(validatePrerequisiteIds);
 };
 
+const standardLibs = [
+  'lib.decorators.d.ts',
+  'lib.decorators.legacy.d.ts',
+  'lib.d.ts',
+  'lib.es5.d.ts',
+  'lib.webworker.importscripts.d.ts',
+  'lib.scripthost.d.ts',
+  'lib.dom.d.ts',
+  'lib.esnext.d.ts',
+];
+
 const validateTests = () => {
   getChallengeIds()
     .filter((id) => {
@@ -125,28 +148,56 @@ const validateTests = () => {
 
       readdirSync(join(dir, id, 'solutions')).forEach((file) => {
         const solutionPath = join(dir, id, 'solutions', file);
-        const solutionSource = readFileSync(solutionPath).toString();
+        const solutionSource = readFileSync(solutionPath, 'utf8');
 
-        const sourceFileName = `in-memory/${id}/${file}`;
-
-        const compilerHost = createCompilerHost(tsconfig, true);
-        const program = createProgram([sourceFileName], tsconfig, compilerHost);
-
-        console.log(`checking ${solutionPath}`);
         const sourceFile = createSourceFile(
-          sourceFileName,
+          `in-memory/${id}/${file}`,
           `${testsSource}\n${solutionSource}`,
           ScriptTarget.Latest,
         );
-        console.log('sourceFile', sourceFile);
 
+        // This is needed
+        const compilerHost: CompilerHost = {
+          fileExists: (fileName) => fileName === sourceFile.fileName,
+          getSourceFile: (fileName) => {
+            for (const lib of standardLibs) {
+              if (fileName === lib) return loadStandardLib(lib);
+            }
+            // read the dts file from node modules
+            if (fileName === sourceFile.fileName) return sourceFile;
+          },
+          getDefaultLibFileName: () => 'lib.d.ts',
+          writeFile: () => { },
+          getCurrentDirectory: () => '/',
+          getCanonicalFileName: (f) => f.toLowerCase(),
+          getNewLine: () => '\n',
+          useCaseSensitiveFileNames: () => false,
+          readFile: (fileName) => (fileName === sourceFile.fileName ? sourceFile.text : undefined),
+        };
+
+        const program = createProgram([sourceFile.fileName], tsconfig, compilerHost);
+
+        const errors: string[] = [];
         getPreEmitDiagnostics(program, sourceFile).forEach((diagnostic) => {
           const message = flattenDiagnosticMessageText(diagnostic.messageText, '\n');
 
-          console.error(
-            `[ERROR] challenge solution \`${id}/solutions/${file}\` contains the following error when run against the tests: ${message}`,
-          );
+          errors.push(message);
         });
+
+        // if passed give a nice message for the source file
+        if (errors.length === 0) {
+          console.log(
+            `[✅PASS] challenge solution \`${id}/solutions/${file}\``,
+          );
+        } else {
+          console.log(
+            `[🛑FAIL] challenge solution \`${id}/solutions/${file}\``,
+          );
+          console.log(errors.join('\n'));
+        }
+
+        console.log("");
+
       });
     });
 };
