@@ -7,6 +7,7 @@
     "checks": "turbo format lint typecheck --continue",
     "checks:fix": "turbo format:fix lint:fix typecheck --continue --force",
     "clean": "turbo clean && rm -rf node_modules && rm -rf .turbo",
+    "check:solutions": "tsx ./challenges/check-solutions.ts",
     "db:push": "turbo db:push",
     "db:reset": "turbo db:reset",
     "db:seed": "turbo db:seed",
@@ -35,7 +36,9 @@
     "prettier": "^3.0.2",
     "prettier-plugin-tailwindcss": "^0.4.1",
     "turbo": "^1.10.16",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "tsx": "^3.14.0",
+    "type-testing": "0.2.0"
   },
   "packageManager": "pnpm@8.6.9",
   "pnpm": {
