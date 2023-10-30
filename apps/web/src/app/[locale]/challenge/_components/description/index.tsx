@@ -89,7 +89,14 @@ export function Description({ challenge }: Props) {
       <div className="mt-3 flex items-center gap-3">
         <DifficultyBadge difficulty={challenge.difficulty} />
         {challenge.hasSuccessfulSubmission ? (
-          <CheckCircle className="stroke-green-600 dark:stroke-green-300" />
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <CheckCircle className="stroke-green-600 dark:stroke-green-300" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Solved</p>
+            </TooltipContent>
+          </Tooltip>
         ) : null}
         <Vote
           voteCount={challenge._count.vote}
