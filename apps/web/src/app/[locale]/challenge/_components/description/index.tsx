@@ -5,7 +5,7 @@ import { Bookmark as BookmarkIcon, Calendar, CheckCircle, Flag, Share } from '@r
 import clsx from 'clsx';
 import { debounce } from 'lodash';
 import Link from 'next/link';
-import { useRef, useState } from 'react';
+import { useRef, useState, useMemo } from 'react';
 import { type ChallengeRouteData } from '~/app/[locale]/challenge/[slug]/getChallengeRouteData';
 import { ReportDialog } from '~/components/ReportDialog';
 import { getRelativeTime } from '~/utils/relativeTime';
@@ -88,7 +88,7 @@ export function Description({ challenge }: Props) {
       {/* Difficulty & Action Buttons */}
       <div className="mt-3 flex items-center gap-3">
         <DifficultyBadge difficulty={challenge.difficulty} />
-        {challenge.hasSuccessfulSubmission ? (
+        {challenge.submission.length > 0 ? (
           <Tooltip>
             <TooltipTrigger asChild>
               <CheckCircle className="stroke-green-600 dark:stroke-green-300" />
