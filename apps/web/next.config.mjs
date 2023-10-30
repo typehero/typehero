@@ -34,9 +34,6 @@ const nextConfig = {
     return config;
   },
   reactStrictMode: true,
-  experimental: {
-    serverActions: true,
-  },
   typescript: {
     ignoreBuildErrors: false,
   },

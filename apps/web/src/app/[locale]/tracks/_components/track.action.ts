@@ -1,6 +1,6 @@
 'use server';
 
-import { getServerAuthSession } from '@repo/auth/server';
+import { getServerAuthSession, type Session } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import { revalidateTag } from 'next/cache';
 import { cache } from 'react';
@@ -109,3 +109,43 @@ export const getTrackDetails = cache(async (slug: string) => {
     },
   });
 });
+
+export type EnrolledTracks = Awaited<ReturnType<typeof getUserEnrolledTracks>>;
+
+/**
+ * Fetches user enrolled tracks based on current session.
+ */
+export async function getUserEnrolledTracks(session: Session) {
+  return prisma.track.findMany({
+    where: {
+      enrolledUsers: {
+        some: {
+          id: session.user.id,
+        },
+      },
+    },
+    include: {
+      trackChallenges: {
+        include: {
+          challenge: {
+            include: {
+              submission: {
+                where: {
+                  userId: session.user.id,
+                },
+              },
+            },
+          },
+        },
+      },
+      _count: {
+        select: {
+          enrolledUsers: true,
+        },
+      },
+    },
+    orderBy: {
+      name: 'asc',
+    },
+  });
+}
