@@ -69,7 +69,7 @@ export const getChallengeRouteData = cache(async (slug: string, session: Session
   return {
     challenge: {
       ...challenge,
-      hasSuccessfulSubmission: challenge?.submission.some((submission) => submission.isSuccessful),
+      hasSuccessfulSubmission: challenge.submission.some((submission) => submission.isSuccessful),
     },
     track,
   };
