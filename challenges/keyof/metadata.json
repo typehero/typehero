@@ -3,5 +3,6 @@
   "label": "The `keyof` operator",
   "description": "`keyof` allows us to extract a union of another type's keys.",
   "difficulty": "beginner",
-  "prerequisites": ["type-aliases", "literal-types", "type-unions"]
+  "prerequisites": ["type-aliases", "literal-types", "type-unions"],
+  "author": "dimitropoulos"
 }
