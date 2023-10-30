@@ -1,11 +1,3 @@
-import { NotEqual, Expect } from 'type-testing';
-
-type testCaseGroceryList = Expect<NotEqual<GroceryList, unknown>>;
-type testCaseInappropriateActionBySituation = Expect<
-  NotEqual<InappropriateActionBySituation, unknown>
->;
-type testCaseCharactersById = Expect<NotEqual<CharactersById, unknown>>;
-
 const groceryList: GroceryList = {
   carrots: 5,
   potatoes: 12,
@@ -75,3 +67,16 @@ const charactersById: CharactersById = {
     species: 'Human',
   },
 };
+
+import { NotEqual, Expect } from 'type-testing';
+
+type testCaseGroceryListUnknown = Expect<NotEqual<GroceryList, unknown>>;
+type testCaseInappropriateActionBySituationUnknown = Expect<
+  NotEqual<InappropriateActionBySituation, unknown>
+>;
+type testCaseCharactersByIdUnknown = Expect<NotEqual<CharactersById, unknown>>;
+type testCaseGroceryListAny = Expect<NotEqual<GroceryList, any>>;
+type testCaseInappropriateActionBySituationAny = Expect<
+  NotEqual<InappropriateActionBySituation, any>
+>;
+type testCaseCharactersByIdAny = Expect<NotEqual<CharactersById, any>>;
