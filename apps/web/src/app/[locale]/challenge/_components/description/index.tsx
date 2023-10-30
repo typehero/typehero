@@ -1,11 +1,11 @@
 'use client';
 
 import { useSession } from '@repo/auth/react';
-import { Bookmark as BookmarkIcon, Calendar, Flag, Share } from '@repo/ui/icons';
+import { Bookmark as BookmarkIcon, Calendar, CheckCircle, Flag, Share } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { debounce } from 'lodash';
 import Link from 'next/link';
-import { useRef, useState } from 'react';
+import { useRef, useState, useMemo } from 'react';
 import { type ChallengeRouteData } from '~/app/[locale]/challenge/[slug]/getChallengeRouteData';
 import { ReportDialog } from '~/components/ReportDialog';
 import { getRelativeTime } from '~/utils/relativeTime';
@@ -88,6 +88,9 @@ export function Description({ challenge }: Props) {
       {/* Difficulty & Action Buttons */}
       <div className="mt-3 flex items-center gap-3">
         <DifficultyBadge difficulty={challenge.difficulty} />
+        {challenge.hasSuccessfulSubmission ? (
+          <CheckCircle className="stroke-green-600 dark:stroke-green-300" />
+        ) : null}
         <Vote
           voteCount={challenge._count.vote}
           initialHasVoted={challenge.vote.length > 0}

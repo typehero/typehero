@@ -35,6 +35,11 @@ export const getChallengeRouteData = cache(async (slug: string, session: Session
           userId: session?.user.id || '',
         },
       },
+      submission: {
+        where: {
+          userId: session?.user.id || '',
+        },
+      },
     },
   });
 
@@ -61,5 +66,11 @@ export const getChallengeRouteData = cache(async (slug: string, session: Session
         })
       : null;
 
-  return { challenge, track };
+  return {
+    challenge: {
+      ...challenge,
+      hasSuccessfulSubmission: challenge?.submission.some((submission) => submission.isSuccessful),
+    },
+    track,
+  };
 });
