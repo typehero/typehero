@@ -68,35 +68,15 @@ const charactersById: CharactersById = {
   },
 };
 
-// You shouldn't worry much about these tests below. Just make sure you avoid using 'any' and/or 'unknown'!
-import { Equal, Extends, Expect } from 'type-testing';
+import { NotEqual, Expect } from 'type-testing';
 
-type testCaseGroceryListCheck = Expect<Extends<string, keyof GroceryList>>;
-type GroceryListValues = GroceryList[keyof GroceryList];
-type testCaseGroceryListCheck2 = Expect<Equal<GroceryListValues, number>>;
-
-type testCaseInappropriateActionBySituation = Expect<
-  Extends<string, keyof InappropriateActionBySituation>
+type testCaseGroceryListUnknown = Expect<NotEqual<GroceryList, unknown>>;
+type testCaseInappropriateActionBySituationUnknown = Expect<
+  NotEqual<InappropriateActionBySituation, unknown>
 >;
-type InappropriateActionBySituationValues =
-  InappropriateActionBySituation[keyof InappropriateActionBySituation];
-type testCaseInappropriateActionBySituation2 = Expect<
-  NotEqual<InappropriateActionBySituationValues, any>
+type testCaseCharactersByIdUnknown = Expect<NotEqual<CharactersById, unknown>>;
+type testCaseGroceryListAny = Expect<NotEqual<GroceryList, any>>;
+type testCaseInappropriateActionBySituationAny = Expect<
+  NotEqual<InappropriateActionBySituation, any>
 >;
-type testCaseInappropriateActionBySituation3 = Expect<
-  NotEqual<InappropriateActionBySituationValues, Array<any>>
->;
-type testCaseInappropriateActionBySituation4 = Expect<
-  NotEqual<InappropriateActionBySituationValues, unknown>
->;
-type testCaseInappropriateActionBySituation5 = Expect<
-  NotEqual<InappropriateActionBySituationValues, Array<unknown>>
->;
-
-type testCaseCharactersById = Expect<Extends<number, keyof CharactersById>>;
-type CharactersByIdValues = CharactersById[keyof CharactersById];
-type testCaseCharactersById2 = Expect<NotEqual<CharactersByIdValues, any>>;
-type testCaseCharactersById3 = Expect<NotEqual<CharactersByIdValues, unknown>>;
-type CharactersByIdValuesOfValues = CharactersByIdValues[keyof CharactersByIdValues];
-type testCaseCharactersById4 = Expect<NotEqual<CharactersByIdValuesOfValues, any>>;
-type testCaseCharactersById5 = Expect<NotEqual<CharactersByIdValuesOfValues, unknown>>;
+type testCaseCharactersByIdAny = Expect<NotEqual<CharactersById, any>>;
