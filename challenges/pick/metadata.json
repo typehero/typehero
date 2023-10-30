@@ -3,5 +3,6 @@
   "label": "The `Pick` builtin",
   "description": "TypeScript ships with a `Pick` type.  Learn how to make it yourself!",
   "difficulty": "easy",
-  "prerequisites": ["literal-types", "keyof", "mapped-object-types", "generic-type-constraints"]
+  "prerequisites": ["literal-types", "keyof", "mapped-object-types", "generic-type-constraints"],
+  "author": "dimitropoulos"
 }
