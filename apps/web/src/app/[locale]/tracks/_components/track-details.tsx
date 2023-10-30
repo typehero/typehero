@@ -4,6 +4,7 @@ import { Swords } from '@repo/ui/icons';
 import { clsx } from 'clsx';
 import { ActionButton } from './enroll-button';
 import { TrackChallenge } from './track-challenge-card';
+import { track as vercelTrack } from '@vercel/analytics';
 import { TrackProgress } from './track-progress';
 import { enrollUserInTrack, getTrackDetails, unenrollUserFromTrack } from './track.action';
 import { Footsies } from '~/components/footsies';
@@ -81,9 +82,14 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
             </div>
           </div>
           {isEnrolled ? (
-            <ActionButton action={unenrollUserFromTrack} trackId={track.id} text="Unenroll" />
+            <ActionButton
+              slug={slug}
+              action={unenrollUserFromTrack}
+              trackId={track.id}
+              text="Unenroll"
+            />
           ) : (
-            <ActionButton action={enrollUserInTrack} trackId={track.id} text="Enroll" />
+            <ActionButton slug={slug} action={enrollUserInTrack} trackId={track.id} text="Enroll" />
           )}
         </div>
         <div className="flex w-full flex-col">

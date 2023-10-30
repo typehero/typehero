@@ -9,9 +9,10 @@ interface EnrollButtonProps {
   action: typeof enrollUserInTrack | typeof unenrollUserFromTrack;
   text: string;
   trackId: number;
+  slug: string;
 }
 
-export function ActionButton({ action, text, trackId }: EnrollButtonProps) {
+export function ActionButton({ action, text, trackId, slug }: EnrollButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
   return (
     <Button
@@ -20,7 +21,7 @@ export function ActionButton({ action, text, trackId }: EnrollButtonProps) {
       onClick={async () => {
         setIsLoading(true);
         try {
-          await action(trackId);
+          await action(trackId, slug);
           toast({
             title: 'Success',
             variant: 'success',
