@@ -271,8 +271,8 @@ importers:
         specifier: ^5.5.0
         version: 5.5.0(react-dropzone@14.2.3)(react@18.2.0)(uploadthing@5.5.2)(zod@3.21.4)
       '@vercel/analytics':
-        specifier: ^1.0.2
-        version: 1.0.2
+        specifier: ^1.1.1
+        version: 1.1.1
       '@vercel/edge-config':
         specifier: ^0.2.1
         version: 0.2.1
@@ -354,6 +354,9 @@ importers:
       resend:
         specifier: ^0.17.2
         version: 0.17.2
+      server:
+        specifier: link:@vercel/analytics/server
+        version: link:@vercel/analytics/server
       superjson:
         specifier: 1.12.4
         version: 1.12.4
@@ -4781,8 +4784,10 @@ packages:
       zod: 3.21.4
     dev: false
 
-  /@vercel/analytics@1.0.2:
-    resolution: {integrity: sha512-BZFxVrv24VbNNl5xMxqUojQIegEeXMI6rX3rg1uVLYUEXsuKNBSAEQf4BWEcjQDp/8aYJOj6m8V4PUA3x/cxgg==}
+  /@vercel/analytics@1.1.1:
+    resolution: {integrity: sha512-+NqgNmSabg3IFfxYhrWCfB/H+RCUOCR5ExRudNG2+pcRehq628DJB5e1u1xqwpLtn4pAYii4D98w7kofORAGQA==}
+    dependencies:
+      server-only: 0.0.1
     dev: false
 
   /@vercel/edge-config-fs@0.1.0:
