@@ -3,5 +3,6 @@
   "label": "Generic Type Constraints",
   "description": "Generic type constraints allow us to restrict the possible types a generic type will accept.",
   "difficulty": "beginner",
-  "prerequisites": []
+  "prerequisites": [],
+  "author": "dimitropoulos"
 }

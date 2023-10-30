@@ -3,5 +3,6 @@
   "label": "The `typeof` Operator",
   "description": "When you need to create a type from existing JavaScript values, `typeof` is the tool for the job.",
   "difficulty": "beginner",
-  "prerequisites": ["literal-types", "type-unions", "type-aliases"]
+  "prerequisites": ["literal-types", "type-unions", "type-aliases"],
+  "author": "dimitropoulos"
 }

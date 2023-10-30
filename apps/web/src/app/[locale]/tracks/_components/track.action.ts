@@ -6,7 +6,7 @@ import { revalidateTag } from 'next/cache';
 import { cache } from 'react';
 import { createEnrolledTrackCacheKey } from './track-enrolled-section';
 import { createTrackGridCacheKey } from './track-grid';
-import { track } from '@vercel/analytics';
+import { track } from '@vercel/analytics/server';
 
 /**
  * Enrolls the session user in the track given a track id.

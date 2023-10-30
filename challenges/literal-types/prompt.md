@@ -4,7 +4,7 @@ JavaScript, like most programming languages has a concept of [primitive data typ
 
 > side note: in JavaScript, arrays and functions are actually objects, but that's a topic for another time :)
 
-But TypeScript isn't _like_ most programming languages. It's better. It takes takes things to the next level by introducing _literal_ data types.
+But TypeScript isn't _like_ most programming languages. It's better. It takes things to the next level by introducing _literal_ data types.
 
 You can think of literal data types as being an infinite set of subsets of their primitive counterparts. For example
 

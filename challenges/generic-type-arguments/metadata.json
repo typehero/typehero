@@ -3,5 +3,6 @@
   "label": "Generic Type Arguments",
   "description": "Generic types are like function arguments.",
   "difficulty": "beginner",
-  "prerequisites": ["primitive-data-types", "type-aliases"]
+  "prerequisites": ["primitive-data-types", "type-aliases"],
+  "author": "dimitropoulos"
 }
