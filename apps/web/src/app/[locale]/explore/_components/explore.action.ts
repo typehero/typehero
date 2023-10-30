@@ -32,7 +32,7 @@ export async function getChallengesByTagOrDifficulty(str: string, take?: number)
           }),
     },
     include: {
-      ...( session && session?.user?.id ? {
+      ...(session ? {
         submission: {
           where: {
             isSuccessful: true,
