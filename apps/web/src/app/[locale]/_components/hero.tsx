@@ -211,8 +211,7 @@ export async function Hero() {
                 </Link>
               </Button>
             )}
-            {session && (
-              <Button
+            {session ? <Button
                 asChild
                 className="hero-join-button-dark group relative mx-auto hidden w-fit overflow-hidden rounded-xl p-[1px] font-bold transition-all duration-300 dark:block dark:hover:shadow-[0_0_2rem_-0.5rem_#fff8] md:mr-0 lg:mr-auto"
                 variant="outline"
@@ -223,8 +222,7 @@ export async function Hero() {
                     Explore
                   </span>
                 </Link>
-              </Button>
-            )}
+              </Button> : null}
             <div className="flex gap-3">
               <Button
                 asChild
