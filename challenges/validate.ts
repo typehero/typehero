@@ -13,6 +13,8 @@ import {
   sys,
 } from 'typescript';
 
+import picocolors from 'picocolors';
+
 /*
 this script does a few checks:
 
@@ -184,20 +186,12 @@ const validateTests = () => {
           errors.push(message);
         });
 
-        // if passed give a nice message for the source file
-        if (errors.length === 0) {
-          console.log(
-            `[✅PASS] challenge solution \`${id}/solutions/${file}\``,
-          );
-        } else {
-          console.log(
-            `[🛑FAIL] challenge solution \`${id}/solutions/${file}\``,
-          );
-          console.log(errors.join('\n'));
-        }
+        const errorOrSuccessColor = errors.length === 0 ? picocolors.green : picocolors.red;
+        const statusSymbol = errors.length === 0 ? '✓' : '✗';
+        console.log(errorOrSuccessColor(`${statusSymbol} ${id}`));
+        console.log(errors.join('\n'));
 
-        console.log("");
-
+        console.log('');
       });
     });
 };
