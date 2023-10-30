@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 209
+        "contributions": 213
     },
     {
         "login": "Hacksore",
@@ -62,7 +62,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/PickleNik/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 94
+        "contributions": 95
     },
     {
         "login": "QuiiBz",
@@ -464,6 +464,27 @@ export const contributors = [
         "contributions": 5
     },
     {
+        "login": "zaCKoZAck0",
+        "id": 69889382,
+        "node_id": "MDQ6VXNlcjY5ODg5Mzgy",
+        "avatar_url": "https://avatars.githubusercontent.com/u/69889382?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/zaCKoZAck0",
+        "html_url": "https://github.com/zaCKoZAck0",
+        "followers_url": "https://api.github.com/users/zaCKoZAck0/followers",
+        "following_url": "https://api.github.com/users/zaCKoZAck0/following{/other_user}",
+        "gists_url": "https://api.github.com/users/zaCKoZAck0/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/zaCKoZAck0/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/zaCKoZAck0/subscriptions",
+        "organizations_url": "https://api.github.com/users/zaCKoZAck0/orgs",
+        "repos_url": "https://api.github.com/users/zaCKoZAck0/repos",
+        "events_url": "https://api.github.com/users/zaCKoZAck0/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/zaCKoZAck0/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 4
+    },
+    {
         "login": "billc-dev",
         "id": 71155598,
         "node_id": "MDQ6VXNlcjcxMTU1NTk4",
@@ -585,27 +606,6 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/amorriscode/repos",
         "events_url": "https://api.github.com/users/amorriscode/events{/privacy}",
         "received_events_url": "https://api.github.com/users/amorriscode/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 3
-    },
-    {
-        "login": "zaCKoZAck0",
-        "id": 69889382,
-        "node_id": "MDQ6VXNlcjY5ODg5Mzgy",
-        "avatar_url": "https://avatars.githubusercontent.com/u/69889382?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/zaCKoZAck0",
-        "html_url": "https://github.com/zaCKoZAck0",
-        "followers_url": "https://api.github.com/users/zaCKoZAck0/followers",
-        "following_url": "https://api.github.com/users/zaCKoZAck0/following{/other_user}",
-        "gists_url": "https://api.github.com/users/zaCKoZAck0/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/zaCKoZAck0/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/zaCKoZAck0/subscriptions",
-        "organizations_url": "https://api.github.com/users/zaCKoZAck0/orgs",
-        "repos_url": "https://api.github.com/users/zaCKoZAck0/repos",
-        "events_url": "https://api.github.com/users/zaCKoZAck0/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/zaCKoZAck0/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 3
