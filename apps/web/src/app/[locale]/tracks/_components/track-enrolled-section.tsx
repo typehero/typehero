@@ -1,30 +1,9 @@
 import { getServerAuthSession, type Session } from '@repo/auth/server';
 import { prisma } from '@repo/db';
-import Link from 'next/link';
-import { Carousel } from '~/components/carousel';
-import { PersonalTrackCard } from './personal-track-card';
-import { Card } from '@repo/ui/components/card';
-import type { HTMLAttributes } from 'react';
-import clsx from 'clsx';
 import { withUnstableCache } from '~/utils/withUnstableCache';
-
-export const createEnrolledTrackCacheKey = (userId: string) => `user-${userId}-enrolled-tracks`;
-const SkeletonTrack = ({ className, ...rest }: HTMLAttributes<HTMLDivElement>) => (
-  <Card
-    className={clsx(
-      'm-auto flex w-[300px] gap-4 bg-white bg-opacity-[.03] p-2 backdrop-blur-xl backdrop-filter md:m-0',
-      className,
-    )}
-    {...rest}
-  >
-    <div className="h-16 w-16 flex-none rounded-2xl bg-black bg-opacity-5 dark:bg-white dark:bg-opacity-5" />
-    <div className="flex-1 space-y-3 pt-1">
-      <div className="h-3 w-2/3 rounded-lg bg-black bg-opacity-5 dark:bg-white  dark:bg-opacity-5" />
-      <div className="h-2 w-full rounded-lg bg-black bg-opacity-5 dark:bg-white  dark:bg-opacity-5 " />
-      <div className="h-2 w-full rounded-lg bg-black  bg-opacity-5 dark:bg-white  dark:bg-opacity-5" />
-    </div>
-  </Card>
-);
+import { EnrolledTrackSectionCarousel } from './track-enrolled-section-carousel';
+import { SkeletonTrack } from './SkeletonTrack';
+import { createEnrolledTrackCacheKey } from './track.action';
 
 export async function EnrolledTrackSection() {
   const session = await getServerAuthSession();
@@ -52,17 +31,7 @@ export async function EnrolledTrackSection() {
           </div>
 
           <section className="relative flex w-full flex-row gap-4 overflow-hidden rounded-[2.5rem]">
-            <Carousel>
-              {tracks.map((t) => (
-                <Link
-                  className="group w-[250px] flex-none snap-center focus:outline-none sm:w-[330px] xl:w-[333px]"
-                  href={`/tracks/${t.slug}`}
-                  key={t.id}
-                >
-                  <PersonalTrackCard track={t} />
-                </Link>
-              ))}
-            </Carousel>
+            <EnrolledTrackSectionCarousel tracks={tracks} />
           </section>
         </>
       ) : (
