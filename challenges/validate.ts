@@ -38,20 +38,15 @@ export const getChallengeIds = () => {
     .filter((id) => statSync(join(dir, id, 'tsconfig.json')).isFile());
 };
 
-function loadStandardLib(libName: string) {
-  const standardTypeDefs = readFileSync(`node_modules/typescript/lib/${libName}`, 'utf8');
-  return createSourceFile(
-    libName,
-    standardTypeDefs.toString(),
-    ScriptTarget.ESNext,
-    true,
-    ScriptKind.TS,
-  );
+// node_modules/typescript/lib/
+function loadLib(libPath: string) {
+  const standardTypeDefs = readFileSync(libPath, 'utf8');
+  return createSourceFile(libPath, standardTypeDefs, ScriptTarget.ESNext, true, ScriptKind.TS);
 }
 
 const getMetadata = (id: string) => {
   const metadataFilePath = join(dir, id, 'metadata.json');
-  const metadataFile = readFileSync(metadataFilePath).toString();
+  const metadataFile = readFileSync(metadataFilePath, 'utf8');
   const metadata = JSON.parse(metadataFile) as {
     id: string;
     prerequisites: string[];
@@ -65,7 +60,7 @@ const getMetadata = (id: string) => {
 const validateMetadataSchema = (ids: string[]) => {
   const ajv = new Ajv();
 
-  const schema = JSON.parse(readFileSync(join(dir, 'metadata.schema.json')).toString());
+  const schema = JSON.parse(readFileSync(join(dir, 'metadata.schema.json'), 'utf8'));
 
   const validate = ajv.compile(schema);
 
@@ -119,14 +114,20 @@ const validateMetadataFiles = () => {
 };
 
 const standardLibs = [
-  'lib.decorators.d.ts',
-  'lib.decorators.legacy.d.ts',
-  'lib.d.ts',
-  'lib.es5.d.ts',
-  'lib.webworker.importscripts.d.ts',
-  'lib.scripthost.d.ts',
-  'lib.dom.d.ts',
-  'lib.esnext.d.ts',
+  'node_modules/typescript/lib/lib.decorators.d.ts',
+  'node_modules/typescript/lib/lib.decorators.legacy.d.ts',
+  'node_modules/typescript/lib/lib.d.ts',
+  'node_modules/typescript/lib/lib.es5.d.ts',
+  'node_modules/typescript/lib/lib.webworker.importscripts.d.ts',
+  'node_modules/typescript/lib/lib.scripthost.d.ts',
+  'node_modules/typescript/lib/lib.dom.d.ts',
+  'node_modules/typescript/lib/lib.esnext.d.ts',
+];
+
+// TODO: make these work
+const thirdPartyLibs = [
+  // 'node_modules/type-testing/dist/Equal.d.ts',
+  // 'node_modules/type-testing/dist/Expect.d.ts',
 ];
 
 const validateTests = () => {
@@ -146,12 +147,13 @@ const validateTests = () => {
     .forEach((id) => {
       const tsconfig = readConfigFile(join(dir, id, 'tsconfig.json'), sys.readFile).config
         .compilerOptions;
-      const testsSource = readFileSync(join(dir, id, 'tests.ts')).toString();
+      const testsSource = readFileSync(join(dir, id, 'tests.ts'), 'utf8');
 
       readdirSync(join(dir, id, 'solutions')).forEach((file) => {
         const solutionPath = join(dir, id, 'solutions', file);
         const solutionSource = readFileSync(solutionPath, 'utf8');
 
+        // our challenge test file
         const sourceFile = createSourceFile(
           `in-memory/${id}/${file}`,
           `${testsSource}\n${solutionSource}`,
@@ -162,9 +164,10 @@ const validateTests = () => {
         const compilerHost: CompilerHost = {
           fileExists: (fileName) => fileName === sourceFile.fileName,
           getSourceFile: (fileName) => {
-            for (const lib of standardLibs) {
-              if (fileName === lib) return loadStandardLib(lib);
+            for (const libPath of standardLibs) {
+              if (libPath.endsWith(fileName)) return loadLib(libPath);
             }
+
             // read the dts file from node modules
             if (fileName === sourceFile.fileName) return sourceFile;
           },
