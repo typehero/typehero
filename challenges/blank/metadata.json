@@ -3,5 +3,6 @@
   "label": "Lower Snake Case",
   "description": "Try to keep it to one shortish sentence.",
   "difficulty": "beginner",
-  "prerequisites": []
+  "prerequisites": [],
+  "author": "your-github-user-id"
 }

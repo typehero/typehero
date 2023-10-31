@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 export async function ingestChallenges(challengePath: string) {
-  const challengesToCreate: Prisma.ChallengeCreateManyInput[] = [];
+  const challengesToCreate: (Prisma.ChallengeCreateManyInput & { author: string })[] = [];
   try {
     const items = await fs.promises.readdir(challengePath);
 
@@ -33,9 +33,9 @@ export async function ingestChallenges(challengePath: string) {
 }
 
 async function buildChallenge(pathToDirectory: string) {
-  const challengeToCreate: Prisma.ChallengeCreateManyInput = {
+  const challengeToCreate: Prisma.ChallengeCreateManyInput & { author: string } = {
     status: 'ACTIVE',
-  } as Prisma.ChallengeCreateManyInput;
+  } as Prisma.ChallengeCreateManyInput & { author: string };
 
   const files = await fs.promises.readdir(pathToDirectory);
 
@@ -83,6 +83,7 @@ async function buildChallenge(pathToDirectory: string) {
           challengeToCreate.name = jsonData.label;
           challengeToCreate.slug = jsonData.id;
           challengeToCreate.shortDescription = jsonData.description;
+          challengeToCreate.author = jsonData.author;
         } catch (jsonError) {
           console.error('Error parsing JSON:', jsonError);
         }

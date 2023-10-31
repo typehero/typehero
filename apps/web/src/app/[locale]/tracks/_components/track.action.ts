@@ -4,7 +4,7 @@ import { getServerAuthSession, type Session } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import { revalidateTag } from 'next/cache';
 import { cache } from 'react';
-import { track } from '@vercel/analytics';
+import { track } from '@vercel/analytics/server';
 
 export const createTrackGridCacheKey = (userId: string) => `user-${userId}-tracks`;
 export const createEnrolledTrackCacheKey = (userId: string) => `user-${userId}-enrolled-tracks`;

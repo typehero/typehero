@@ -3,5 +3,6 @@
   "label": "Mapped Object Types",
   "description": "Mapping objects is a foundational skill that allows you to write type translation logic.",
   "difficulty": "beginner",
-  "prerequisites": ["index-signatures", "keyof", "generic-type-arguments", "indexed-types"]
+  "prerequisites": ["index-signatures", "keyof", "generic-type-arguments", "indexed-types"],
+  "author": "dimitropoulos"
 }
