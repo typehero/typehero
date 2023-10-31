@@ -12,6 +12,10 @@ export const createInProgressSubmissionCacheKey = (userId: string) => {
   return `${userId}-in-progress-challenges`;
 };
 
+export const createCompletedSubmissionCacheKey = (userId: string) => {
+  return `${userId}-completed-challenges`;
+};
+
 interface Args {
   challenge: ChallengeRouteData['challenge'];
   userId: string;
@@ -30,4 +34,5 @@ export async function saveSubmission({ challenge, userId, code, isSuccessful }: 
   revalidateTag(createChallengeSubmissionCacheKey(challenge.slug));
   revalidateTag(createCacheKeyForSolutions(challenge.slug));
   revalidateTag(createInProgressSubmissionCacheKey(userId));
+  revalidateTag(createCompletedSubmissionCacheKey(userId));
 }
