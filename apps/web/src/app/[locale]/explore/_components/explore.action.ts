@@ -1,6 +1,6 @@
 'use server';
 
-import { getServerAuthSession, type Session } from '@repo/auth/server';
+import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import { Tags, type Difficulty } from '@repo/db/types';
 
