@@ -218,7 +218,7 @@ export async function Hero() {
                 variant="outline"
               >
                 <Link href="/explore">
-                  <span className="inline-flex h-full w-fit items-center gap-1 rounded-[10px] bg-white px-4 py-2 text-[#FFB800] transition-all duration-300">
+                  <span className="inline-flex h-full w-fit items-center gap-2 rounded-[10px] bg-white px-4 py-2 text-[#FFB800] transition-all duration-300">
                     <Compass className="h-4 w-4" />
                     Explore
                   </span>
