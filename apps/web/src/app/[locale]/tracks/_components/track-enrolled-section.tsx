@@ -3,8 +3,7 @@ import { prisma } from '@repo/db';
 import { withUnstableCache } from '~/utils/withUnstableCache';
 import { EnrolledTrackSectionCarousel } from './track-enrolled-section-carousel';
 import { SkeletonTrack } from './SkeletonTrack';
-
-export const createEnrolledTrackCacheKey = (userId: string) => `user-${userId}-enrolled-tracks`;
+import { createEnrolledTrackCacheKey } from './track.action';
 
 export async function EnrolledTrackSection() {
   const session = await getServerAuthSession();
