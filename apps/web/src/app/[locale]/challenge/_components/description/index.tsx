@@ -91,7 +91,7 @@ export function Description({ challenge }: Props) {
         {challenge.hasSolved ? (
           <Tooltip>
             <TooltipTrigger asChild>
-              <CheckCircle className="stroke-green-600 dark:stroke-green-300" />
+              <CheckCircle className="stroke-green-600 dark:stroke-green-300" size={20} />
             </TooltipTrigger>
             <TooltipContent>
               <p>Solved</p>
