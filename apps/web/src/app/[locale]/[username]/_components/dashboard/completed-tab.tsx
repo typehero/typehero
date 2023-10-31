@@ -1,16 +1,7 @@
 import { prisma } from '@repo/db';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@repo/ui/components/table';
-import Link from 'next/link';
 import { createCompletedSubmissionCacheKey } from '~/app/[locale]/challenge/[slug]/submissions/[[...catchAll]]/save-submission.action';
-import { getRelativeTime } from '~/utils/relativeTime';
 import { withUnstableCache } from '~/utils/withUnstableCache';
+import ChallengeHistory from './challenge-history';
 
 export async function CompletedTab({ userId }: { userId: string }) {
   const challenges = await withUnstableCache({
@@ -20,26 +11,7 @@ export async function CompletedTab({ userId }: { userId: string }) {
     tags: [createCompletedSubmissionCacheKey(userId)],
   });
 
-  return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Challenge</TableHead>
-          <TableHead>Last Submission</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {challenges.map((challenge) => (
-          <TableRow key={challenge.id}>
-            <TableCell className="font-medium underline">
-              <Link href={`/challenge/${challenge.slug}`}>{challenge.name}</Link>
-            </TableCell>
-            <TableCell>{getRelativeTime(challenge.submission[0]!.createdAt)}</TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
-  );
+  return <ChallengeHistory challenges={challenges} />;
 }
 
 async function getCompletedChallenges(userId: string) {
