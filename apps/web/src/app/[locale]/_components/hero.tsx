@@ -211,7 +211,22 @@ export async function Hero() {
                 </Link>
               </Button>
             )}
-            {session ? <Button
+            {session ? (
+              <Button
+                asChild
+                className="hero-join-button group relative mx-auto w-fit overflow-hidden rounded-xl p-[2px] font-bold transition-all duration-300 hover:bg-transparent hover:shadow-[0_0_2rem_-0.5rem_#FFB800] dark:hidden md:mr-0 lg:mr-auto"
+                variant="outline"
+              >
+                <Link href="/explore">
+                  <span className="inline-flex h-full w-fit items-center gap-1 rounded-[10px] bg-white px-4 py-2 text-[#FFB800] transition-all duration-300">
+                    <Compass className="h-4 w-4" />
+                    Explore
+                  </span>
+                </Link>
+              </Button>
+            ) : null}
+            {session ? (
+              <Button
                 asChild
                 className="hero-join-button-dark group relative mx-auto hidden w-fit overflow-hidden rounded-xl p-[1px] font-bold transition-all duration-300 dark:block dark:hover:shadow-[0_0_2rem_-0.5rem_#fff8] md:mr-0 lg:mr-auto"
                 variant="outline"
@@ -222,7 +237,8 @@ export async function Hero() {
                     Explore
                   </span>
                 </Link>
-              </Button> : null}
+              </Button>
+            ) : null}
             <div className="flex gap-3">
               <Button
                 asChild
