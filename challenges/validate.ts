@@ -178,8 +178,8 @@ const validateTests = () => {
         // our challenge test file
         const sourceFile = createSourceFile(
           file,
-          // `in-memory/${id}/${file}`,
-          `${testsSource}\n${solutionSource}`,
+          // note: putting the `solutionSource` first avoids "Block-scoped variable used before its declaration" errors at the expense of the imports (which are in `testsSource`) not being at the top of the file. There's no technical reason this is a problem at this moment, but just something to be aware of because it's a little weird.
+          `${solutionSource}\n${testsSource}\n`,
           ScriptTarget.Latest,
         );
 
