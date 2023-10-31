@@ -3,5 +3,6 @@
   "label": "Indexed Types",
   "description": "Some types can be indexed to lookup a particular value.",
   "difficulty": "beginner",
-  "prerequisites": ["primitive-data-types", "type-unions", "keyof", "literal-types"]
+  "prerequisites": ["primitive-data-types", "type-unions", "keyof", "literal-types"],
+  "author": "dimitropoulos"
 }

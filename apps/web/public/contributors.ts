@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 209
+        "contributions": 214
     },
     {
         "login": "Hacksore",
@@ -62,7 +62,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/PickleNik/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 94
+        "contributions": 95
     },
     {
         "login": "QuiiBz",
@@ -296,6 +296,27 @@ export const contributors = [
         "contributions": 10
     },
     {
+        "login": "dimitropoulos",
+        "id": 15232461,
+        "node_id": "MDQ6VXNlcjE1MjMyNDYx",
+        "avatar_url": "https://avatars.githubusercontent.com/u/15232461?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/dimitropoulos",
+        "html_url": "https://github.com/dimitropoulos",
+        "followers_url": "https://api.github.com/users/dimitropoulos/followers",
+        "following_url": "https://api.github.com/users/dimitropoulos/following{/other_user}",
+        "gists_url": "https://api.github.com/users/dimitropoulos/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/dimitropoulos/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/dimitropoulos/subscriptions",
+        "organizations_url": "https://api.github.com/users/dimitropoulos/orgs",
+        "repos_url": "https://api.github.com/users/dimitropoulos/repos",
+        "events_url": "https://api.github.com/users/dimitropoulos/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/dimitropoulos/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 9
+    },
+    {
         "login": "ayrock-dev",
         "id": 7817695,
         "node_id": "MDQ6VXNlcjc4MTc2OTU=",
@@ -336,27 +357,6 @@ export const contributors = [
         "type": "User",
         "site_admin": false,
         "contributions": 9
-    },
-    {
-        "login": "dimitropoulos",
-        "id": 15232461,
-        "node_id": "MDQ6VXNlcjE1MjMyNDYx",
-        "avatar_url": "https://avatars.githubusercontent.com/u/15232461?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/dimitropoulos",
-        "html_url": "https://github.com/dimitropoulos",
-        "followers_url": "https://api.github.com/users/dimitropoulos/followers",
-        "following_url": "https://api.github.com/users/dimitropoulos/following{/other_user}",
-        "gists_url": "https://api.github.com/users/dimitropoulos/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/dimitropoulos/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/dimitropoulos/subscriptions",
-        "organizations_url": "https://api.github.com/users/dimitropoulos/orgs",
-        "repos_url": "https://api.github.com/users/dimitropoulos/repos",
-        "events_url": "https://api.github.com/users/dimitropoulos/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/dimitropoulos/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 8
     },
     {
         "login": "basokant",
@@ -441,6 +441,27 @@ export const contributors = [
         "type": "User",
         "site_admin": false,
         "contributions": 6
+    },
+    {
+        "login": "zaCKoZAck0",
+        "id": 69889382,
+        "node_id": "MDQ6VXNlcjY5ODg5Mzgy",
+        "avatar_url": "https://avatars.githubusercontent.com/u/69889382?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/zaCKoZAck0",
+        "html_url": "https://github.com/zaCKoZAck0",
+        "followers_url": "https://api.github.com/users/zaCKoZAck0/followers",
+        "following_url": "https://api.github.com/users/zaCKoZAck0/following{/other_user}",
+        "gists_url": "https://api.github.com/users/zaCKoZAck0/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/zaCKoZAck0/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/zaCKoZAck0/subscriptions",
+        "organizations_url": "https://api.github.com/users/zaCKoZAck0/orgs",
+        "repos_url": "https://api.github.com/users/zaCKoZAck0/repos",
+        "events_url": "https://api.github.com/users/zaCKoZAck0/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/zaCKoZAck0/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 5
     },
     {
         "login": "FullStackCorm",
@@ -585,27 +606,6 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/amorriscode/repos",
         "events_url": "https://api.github.com/users/amorriscode/events{/privacy}",
         "received_events_url": "https://api.github.com/users/amorriscode/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 3
-    },
-    {
-        "login": "zaCKoZAck0",
-        "id": 69889382,
-        "node_id": "MDQ6VXNlcjY5ODg5Mzgy",
-        "avatar_url": "https://avatars.githubusercontent.com/u/69889382?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/zaCKoZAck0",
-        "html_url": "https://github.com/zaCKoZAck0",
-        "followers_url": "https://api.github.com/users/zaCKoZAck0/followers",
-        "following_url": "https://api.github.com/users/zaCKoZAck0/following{/other_user}",
-        "gists_url": "https://api.github.com/users/zaCKoZAck0/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/zaCKoZAck0/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/zaCKoZAck0/subscriptions",
-        "organizations_url": "https://api.github.com/users/zaCKoZAck0/orgs",
-        "repos_url": "https://api.github.com/users/zaCKoZAck0/repos",
-        "events_url": "https://api.github.com/users/zaCKoZAck0/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/zaCKoZAck0/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 3
@@ -1299,6 +1299,27 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/SooditK/repos",
         "events_url": "https://api.github.com/users/SooditK/events{/privacy}",
         "received_events_url": "https://api.github.com/users/SooditK/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 1
+    },
+    {
+        "login": "thomasKn",
+        "id": 10447155,
+        "node_id": "MDQ6VXNlcjEwNDQ3MTU1",
+        "avatar_url": "https://avatars.githubusercontent.com/u/10447155?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/thomasKn",
+        "html_url": "https://github.com/thomasKn",
+        "followers_url": "https://api.github.com/users/thomasKn/followers",
+        "following_url": "https://api.github.com/users/thomasKn/following{/other_user}",
+        "gists_url": "https://api.github.com/users/thomasKn/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/thomasKn/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/thomasKn/subscriptions",
+        "organizations_url": "https://api.github.com/users/thomasKn/orgs",
+        "repos_url": "https://api.github.com/users/thomasKn/repos",
+        "events_url": "https://api.github.com/users/thomasKn/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/thomasKn/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 1
