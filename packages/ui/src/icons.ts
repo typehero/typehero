@@ -19,6 +19,7 @@ export {
   Circle,
   Clipboard,
   Command,
+  Compass,
   Copy,
   Diamond,
   ExternalLink,
