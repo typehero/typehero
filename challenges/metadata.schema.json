@@ -28,7 +28,11 @@
       "items": {
         "type": "string"
       }
+    },
+    "author": {
+      "description": "The author of this challenge",
+      "type": "string"
     }
   },
-  "required": ["id", "label", "description", "difficulty", "prerequisites"]
+  "required": ["id", "label", "description", "difficulty", "prerequisites", "author"]
 }
