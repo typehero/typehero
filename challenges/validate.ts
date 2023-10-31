@@ -172,7 +172,7 @@ const validateTests = () => {
             if (fileName === sourceFile.fileName) return sourceFile;
           },
           getDefaultLibFileName: () => 'lib.d.ts',
-          writeFile: () => { },
+          writeFile: () => {},
           getCurrentDirectory: () => '/',
           getCanonicalFileName: (f) => f.toLowerCase(),
           getNewLine: () => '\n',
