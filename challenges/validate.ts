@@ -191,7 +191,7 @@ const validateTests = () => {
 
         const errorOrSuccessColor = errors.length === 0 ? picocolors.green : picocolors.red;
         const statusSymbol = errors.length === 0 ? '✓' : '✗';
-        console.log(errorOrSuccessColor(`${statusSymbol} ${id}`));
+        console.log(errorOrSuccessColor(`${statusSymbol} ${id}/solutions/${file}`));
         console.log(errors.join('\n'));
 
         console.log('');
