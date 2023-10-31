@@ -182,11 +182,8 @@ const validateTests = () => {
 
         const program = createProgram([sourceFile.fileName], tsconfig, compilerHost);
 
-        const errors: string[] = [];
-        getPreEmitDiagnostics(program, sourceFile).forEach((diagnostic) => {
-          const message = flattenDiagnosticMessageText(diagnostic.messageText, '\n');
-
-          errors.push(message);
+        const errors = getPreEmitDiagnostics(program, sourceFile).map((diagnostic) => {
+          return flattenDiagnosticMessageText(diagnostic.messageText, '\n');
         });
 
         const errorOrSuccessColor = errors.length === 0 ? picocolors.green : picocolors.red;
