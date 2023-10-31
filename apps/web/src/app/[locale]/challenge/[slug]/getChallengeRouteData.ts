@@ -69,7 +69,10 @@ export const getChallengeRouteData = cache(async (slug: string, session: Session
       : null;
 
   return {
-    challenge,
+    challenge: {
+      ...challenge,
+      hasSolved: challenge.submission.length > 0,
+    },
     track,
   };
 });
