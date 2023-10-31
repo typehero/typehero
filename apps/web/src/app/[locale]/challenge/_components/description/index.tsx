@@ -56,6 +56,8 @@ export function Description({ challenge }: Props) {
     }, 500),
   ).current;
 
+  const hasSuccessfulSolution = challenge.submission.length > 0;
+
   return (
     <div className="custom-scrollable-element h-full overflow-y-auto px-4 pb-36 pt-3">
       <div className="flex items-center">
@@ -88,7 +90,7 @@ export function Description({ challenge }: Props) {
       {/* Difficulty & Action Buttons */}
       <div className="mt-3 flex items-center gap-3">
         <DifficultyBadge difficulty={challenge.difficulty} />
-        {challenge.submission.length > 0 ? (
+        {hasSuccessfulSolution ? (
           <Tooltip>
             <TooltipTrigger asChild>
               <CheckCircle className="stroke-green-600 dark:stroke-green-300" />
