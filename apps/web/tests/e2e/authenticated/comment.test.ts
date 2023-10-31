@@ -153,7 +153,7 @@ test.describe('sharing comments', () => {
     await page.goto(`/challenge/simple-vue/comments/${commentA.id}`);
     // assert other comments, such as comment B, are still visible on page load
     await expect(
-      page.locator('div[id^=comment]', { hasText: 'this comment is timeless' }),
+      page.locator('div[id^=comment]', { hasText: 'this comment is timeless' }).first(),
     ).toBeVisible();
   });
 });
