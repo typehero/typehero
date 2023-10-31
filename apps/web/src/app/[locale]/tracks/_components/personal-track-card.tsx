@@ -6,9 +6,9 @@ import {
   CardTitle,
 } from '@repo/ui/components/card';
 import clsx from 'clsx';
+import { useMemo } from 'react';
 import type { EnrolledTracks } from './track-enrolled-section';
 import { TrackProgress } from './track-progress';
-import { useMemo } from 'react';
 
 interface PersonalTrackCardProps {
   track: EnrolledTracks[number];

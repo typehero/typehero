@@ -48,7 +48,8 @@ export function ChallengeCardEditor({ form }: Props) {
       <TypographyH3 className="mx-auto mb-4 max-w-fit lg:mb-6">Create Challenge Card</TypographyH3>
       <div className="flex flex-wrap items-start justify-center gap-4 xl:px-24">
         <div className="w-full sm:w-2/3 lg:w-[333px] xl:w-[392px]">
-          <ExploreCard challenge={data} />
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+          <ExploreCard challenge={data as any} />
         </div>
         <div className="flex w-full flex-col gap-1 rounded-3xl border border-neutral-200 bg-neutral-100 p-4 pt-[0.8rem] dark:border-neutral-800 dark:bg-neutral-900 sm:w-2/3 lg:w-[calc(333px+79px+16px)] xl:w-[calc(392px+79px+16px)]">
           <FormField
