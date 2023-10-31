@@ -3,17 +3,40 @@ import { join } from 'path';
 import Ajv from 'ajv';
 import {
   CompilerHost,
+  createCompilerHost,
   createProgram,
   createSourceFile,
   flattenDiagnosticMessageText,
   getPreEmitDiagnostics,
   readConfigFile,
+  ResolvedModule,
+  resolveModuleName,
   ScriptKind,
   ScriptTarget,
   sys,
 } from 'typescript';
 
 import picocolors from 'picocolors';
+
+type LogLevel = 'silent' | 'error' | 'info' | 'trace' | 'debug';
+const LOG_LEVEL = 'error';
+const shouldLog = (level: LogLevel) => {
+  const levels: Record<LogLevel, number> = {
+    silent: 0,
+    error: 4,
+    info: 7,
+    trace: 8,
+    debug: 9,
+  };
+  const currentLevel = levels[LOG_LEVEL];
+  const requestedLevel = levels[level];
+  return currentLevel >= requestedLevel;
+};
+const log = (level: LogLevel) => (shouldLog(level) ? console.log : () => {});
+const error = log('error');
+const info = log('info');
+const debug = log('debug');
+const trace = log('trace');
 
 /*
 this script does a few checks:
@@ -38,11 +61,13 @@ export const getChallengeIds = () => {
     .filter((id) => statSync(join(dir, id, 'tsconfig.json')).isFile());
 };
 
-// node_modules/typescript/lib/
-function loadLib(libPath: string) {
+/**
+ * example: `node_modules/typescript/lib/`
+ */
+const loadLib = (libPath: string) => {
   const standardTypeDefs = readFileSync(libPath, 'utf8');
   return createSourceFile(libPath, standardTypeDefs, ScriptTarget.ESNext, true, ScriptKind.TS);
-}
+};
 
 const getMetadata = (id: string) => {
   const metadataFilePath = join(dir, id, 'metadata.json');
@@ -113,6 +138,8 @@ const validateMetadataFiles = () => {
   challengeIds.forEach(validatePrerequisiteIds);
 };
 
+const moduleSearchLocations = ['type-testing/dist/index.d.ts'];
+
 const standardLibs = [
   'node_modules/typescript/lib/lib.decorators.d.ts',
   'node_modules/typescript/lib/lib.decorators.legacy.d.ts',
@@ -122,12 +149,6 @@ const standardLibs = [
   'node_modules/typescript/lib/lib.scripthost.d.ts',
   'node_modules/typescript/lib/lib.dom.d.ts',
   'node_modules/typescript/lib/lib.esnext.d.ts',
-];
-
-// TODO: make these work
-const thirdPartyLibs = [
-  // 'node_modules/type-testing/dist/Equal.d.ts',
-  // 'node_modules/type-testing/dist/Expect.d.ts',
 ];
 
 const validateTests = () => {
@@ -147,6 +168,7 @@ const validateTests = () => {
     .forEach((id) => {
       const tsconfig = readConfigFile(join(dir, id, 'tsconfig.json'), sys.readFile).config
         .compilerOptions;
+
       const testsSource = readFileSync(join(dir, id, 'tests.ts'), 'utf8');
 
       readdirSync(join(dir, id, 'solutions')).forEach((file) => {
@@ -155,30 +177,91 @@ const validateTests = () => {
 
         // our challenge test file
         const sourceFile = createSourceFile(
-          `in-memory/${id}/${file}`,
+          file,
+          // `in-memory/${id}/${file}`,
           `${testsSource}\n${solutionSource}`,
           ScriptTarget.Latest,
         );
 
-        // This is needed
-        const compilerHost: CompilerHost = {
-          fileExists: (fileName) => fileName === sourceFile.fileName,
+        function fileExists(fileName: string): boolean {
+          debug('exs', fileName, sourceFile.fileName);
+          return sys.fileExists(fileName);
+        }
+
+        function readFile(fileName: string): string | undefined {
+          return sys.readFile(fileName);
+        }
+
+        const compilerHost = {
+          fileExists,
+          readFile,
+          resolveModuleNames: (moduleNames, containingFile) => {
+            trace('rMN', moduleNames, containingFile);
+
+            return moduleNames.map((moduleName) => {
+              // try to use standard resolution
+              const result = resolveModuleName(moduleName, containingFile, tsconfig, {
+                fileExists,
+                readFile,
+              });
+              if (result.resolvedModule) {
+                trace('rMN resolving normally', result.resolvedModule);
+                return result.resolvedModule;
+              } else {
+                trace('rMN failed to resolve normally', result);
+              }
+
+              // fallback to custom resolution
+              for (const location of moduleSearchLocations) {
+                trace('rMN exploring location', { location, moduleName });
+
+                if (location.startsWith(moduleName)) {
+                  const t = resolveModuleName(location, containingFile, tsconfig, {
+                    fileExists,
+                    readFile,
+                  });
+                  trace('rMN', { t });
+
+                  trace('rMN resolving manually', location);
+                  return {
+                    resolvedFileName: location,
+                    isExternalLibraryImport: true,
+                  };
+                }
+              }
+
+              trace('rMN failed to resolve', { moduleName });
+              return undefined;
+            });
+          },
           getSourceFile: (fileName) => {
+            debug('get', fileName);
+
             for (const libPath of standardLibs) {
-              if (libPath.endsWith(fileName)) return loadLib(libPath);
+              if (libPath.endsWith(fileName)) {
+                return loadLib(libPath);
+              }
+            }
+
+            for (const customPath of moduleSearchLocations) {
+              if (fileName === customPath) {
+                return loadLib(`node_modules/${customPath}`);
+              }
             }
 
             // read the dts file from node modules
-            if (fileName === sourceFile.fileName) return sourceFile;
+            if (fileName === sourceFile.fileName) {
+              return sourceFile;
+            }
           },
+
           getDefaultLibFileName: () => 'lib.d.ts',
           writeFile: () => {},
           getCurrentDirectory: () => '/',
-          getCanonicalFileName: (f) => f.toLowerCase(),
+          getCanonicalFileName: (fileName) => fileName.toLowerCase(),
           getNewLine: () => '\n',
           useCaseSensitiveFileNames: () => false,
-          readFile: (fileName) => (fileName === sourceFile.fileName ? sourceFile.text : undefined),
-        };
+        } satisfies CompilerHost;
 
         const program = createProgram([sourceFile.fileName], tsconfig, compilerHost);
 
@@ -186,12 +269,15 @@ const validateTests = () => {
           return flattenDiagnosticMessageText(diagnostic.messageText, '\n');
         });
 
-        const errorOrSuccessColor = errors.length === 0 ? picocolors.green : picocolors.red;
-        const statusSymbol = errors.length === 0 ? '✓' : '✗';
-        console.log(errorOrSuccessColor(`${statusSymbol} ${id}/solutions/${file}`));
-        console.log(errors.join('\n'));
-
-        console.log('');
+        const hasErrors = errors.length > 0;
+        const errorOrSuccessColor = hasErrors ? picocolors.red : picocolors.green;
+        const statusSymbol = hasErrors ? '✗' : '✓';
+        // keeping the full file path means that you can click to go to a buggy file in the IDE's integrated terminal
+        console.log(errorOrSuccessColor(`${statusSymbol} challenges/${id}/solutions/${file}`));
+        if (hasErrors) {
+          console.log(errors.join('\n'));
+          console.log('');
+        }
       });
     });
 };

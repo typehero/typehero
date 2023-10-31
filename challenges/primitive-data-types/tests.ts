@@ -1,3 +1,5 @@
+import { Expect, Equal } from 'type-testing';
+
 type test_age = Expect<NotLiteral<number, typeof age>>;
 type test_artistName = Expect<NotLiteral<string, typeof artistName>>;
 

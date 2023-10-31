@@ -1,4 +1,4 @@
-// import { Expect } from 'type-testing';
+import { Expect, Extends } from 'type-testing';
 // import { expect } from 'jest';
 //
 // const getDistanceInMeters = (distance: Distance) => {
