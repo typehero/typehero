@@ -3,6 +3,7 @@ import { join } from 'path';
 import Ajv from 'ajv';
 import {
   CompilerHost,
+  CompilerOptions,
   createCompilerHost,
   createProgram,
   createSourceFile,
@@ -19,7 +20,7 @@ import {
 import picocolors from 'picocolors';
 
 type LogLevel = 'silent' | 'error' | 'info' | 'trace' | 'debug';
-const LOG_LEVEL = 'error';
+const LOG_LEVEL = 'info';
 const shouldLog = (level: LogLevel) => {
   const levels: Record<LogLevel, number> = {
     silent: 0,
@@ -49,6 +50,8 @@ this script does a few checks:
   - (bonus: this ensures that the id is unique since you can't have two sibling directories with the same name)
 1. make sure the prerequisites are valid ids
 1. make sure the prerequisites don't contain the current
+
+Finally, as an almost entirely different task: this script runs each solution and tests pair (for each challenge) through an in-memory TypeScript compiler.
 */
 
 const dir = __dirname;
@@ -62,10 +65,10 @@ export const getChallengeIds = () => {
 };
 
 /**
- * example: `node_modules/typescript/lib/`
+ * This helper will look up a file in the local `node_modules`
  */
 const loadLib = (libPath: string) => {
-  const standardTypeDefs = readFileSync(libPath, 'utf8');
+  const standardTypeDefs = readFileSync(`node_modules/${libPath}`, 'utf8');
   return createSourceFile(libPath, standardTypeDefs, ScriptTarget.ESNext, true, ScriptKind.TS);
 };
 
@@ -141,14 +144,14 @@ const validateMetadataFiles = () => {
 const moduleSearchLocations = ['type-testing/dist/index.d.ts'];
 
 const standardLibs = [
-  'node_modules/typescript/lib/lib.decorators.d.ts',
-  'node_modules/typescript/lib/lib.decorators.legacy.d.ts',
-  'node_modules/typescript/lib/lib.d.ts',
-  'node_modules/typescript/lib/lib.es5.d.ts',
-  'node_modules/typescript/lib/lib.webworker.importscripts.d.ts',
-  'node_modules/typescript/lib/lib.scripthost.d.ts',
-  'node_modules/typescript/lib/lib.dom.d.ts',
-  'node_modules/typescript/lib/lib.esnext.d.ts',
+  'typescript/lib/lib.decorators.d.ts',
+  'typescript/lib/lib.decorators.legacy.d.ts',
+  'typescript/lib/lib.d.ts',
+  'typescript/lib/lib.es5.d.ts',
+  'typescript/lib/lib.webworker.importscripts.d.ts',
+  'typescript/lib/lib.scripthost.d.ts',
+  'typescript/lib/lib.dom.d.ts',
+  'typescript/lib/lib.esnext.d.ts',
 ];
 
 const validateTests = () => {
@@ -166,8 +169,8 @@ const validateTests = () => {
       return true;
     })
     .forEach((id) => {
-      const tsconfig = readConfigFile(join(dir, id, 'tsconfig.json'), sys.readFile).config
-        .compilerOptions;
+      const compilerOptions = readConfigFile(join(dir, id, 'tsconfig.json'), sys.readFile).config
+        .compilerOptions as CompilerOptions;
 
       const testsSource = readFileSync(join(dir, id, 'tests.ts'), 'utf8');
 
@@ -183,12 +186,13 @@ const validateTests = () => {
           ScriptTarget.Latest,
         );
 
-        function fileExists(fileName: string): boolean {
-          debug('exs', fileName, sourceFile.fileName);
+        const fileExists = (fileName: string) => {
+          debug('fileExists', fileName, sourceFile.fileName);
           return sys.fileExists(fileName);
         }
 
-        function readFile(fileName: string): string | undefined {
+        const readFile = (fileName: string) => {
+          debug('readFile', fileName);
           return sys.readFile(fileName);
         }
 
@@ -200,7 +204,7 @@ const validateTests = () => {
 
             return moduleNames.map((moduleName) => {
               // try to use standard resolution
-              const result = resolveModuleName(moduleName, containingFile, tsconfig, {
+              const result = resolveModuleName(moduleName, containingFile, compilerOptions, {
                 fileExists,
                 readFile,
               });
@@ -216,13 +220,11 @@ const validateTests = () => {
                 trace('rMN exploring location', { location, moduleName });
 
                 if (location.startsWith(moduleName)) {
-                  const t = resolveModuleName(location, containingFile, tsconfig, {
+                  const result = resolveModuleName(location, containingFile, compilerOptions, {
                     fileExists,
                     readFile,
                   });
-                  trace('rMN', { t });
-
-                  trace('rMN resolving manually', location);
+                  trace('rMN resolving manually', location, result);
                   return {
                     resolvedFileName: location,
                     isExternalLibraryImport: true,
@@ -235,22 +237,25 @@ const validateTests = () => {
             });
           },
           getSourceFile: (fileName) => {
-            debug('get', fileName);
+            debug('getSourceFile', fileName);
 
             for (const libPath of standardLibs) {
               if (libPath.endsWith(fileName)) {
+                debug('getSourceFile found in standardLib', libPath);
                 return loadLib(libPath);
               }
             }
 
-            for (const customPath of moduleSearchLocations) {
-              if (fileName === customPath) {
-                return loadLib(`node_modules/${customPath}`);
+            for (const modulePath of moduleSearchLocations) {
+              if (fileName === modulePath) {
+                debug('getSourceFile found in moduleSearchLocations', modulePath);
+                return loadLib(modulePath);
               }
             }
 
             // read the dts file from node modules
             if (fileName === sourceFile.fileName) {
+              debug('getSourceFile matched against the source file');
               return sourceFile;
             }
           },
@@ -263,21 +268,21 @@ const validateTests = () => {
           useCaseSensitiveFileNames: () => false,
         } satisfies CompilerHost;
 
-        const program = createProgram([sourceFile.fileName], tsconfig, compilerHost);
+        const program = createProgram([sourceFile.fileName], compilerOptions, compilerHost);
 
         const errors = getPreEmitDiagnostics(program, sourceFile).map((diagnostic) => {
           return flattenDiagnosticMessageText(diagnostic.messageText, '\n');
         });
 
-        const hasErrors = errors.length > 0;
-        const errorOrSuccessColor = hasErrors ? picocolors.red : picocolors.green;
-        const statusSymbol = hasErrors ? '✗' : '✓';
-        // keeping the full file path means that you can click to go to a buggy file in the IDE's integrated terminal
-        console.log(errorOrSuccessColor(`${statusSymbol} challenges/${id}/solutions/${file}`));
-        if (hasErrors) {
-          console.log(errors.join('\n'));
-          console.log('');
+        /** keeping the full file path means that you can click to go to a buggy file in the IDE's integrated terminal */
+        const logLine = `challenges/${id}/solutions/${file}`;
+        if (errors.length > 0) {
+          info(picocolors.red(`✗ ${logLine}`))
+          info(errors.map(line => `  ${line}`).join('\n'), '\n');
+        } else {
+          info(picocolors.green(`✓ ${logLine}`))
         }
+
       });
     });
 };
