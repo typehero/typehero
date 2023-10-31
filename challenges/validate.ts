@@ -169,8 +169,12 @@ const validateTests = () => {
       return true;
     })
     .forEach((id) => {
-      const compilerOptions = readConfigFile(join(dir, id, 'tsconfig.json'), sys.readFile).config
-        .compilerOptions as CompilerOptions;
+      const compilerOptions = {
+        ...(readConfigFile(join(dir, id, 'tsconfig.json'), sys.readFile).config
+          .compilerOptions as CompilerOptions),
+        // NOTE: we need to make sure we match the same tsconfig in the editor so we don't have issues
+        strict: true,
+      };
 
       const testsSource = readFileSync(join(dir, id, 'tests.ts'), 'utf8');
 
@@ -189,12 +193,12 @@ const validateTests = () => {
         const fileExists = (fileName: string) => {
           debug('fileExists', fileName, sourceFile.fileName);
           return sys.fileExists(fileName);
-        }
+        };
 
         const readFile = (fileName: string) => {
           debug('readFile', fileName);
           return sys.readFile(fileName);
-        }
+        };
 
         const compilerHost = {
           fileExists,
@@ -277,12 +281,11 @@ const validateTests = () => {
         /** keeping the full file path means that you can click to go to a buggy file in the IDE's integrated terminal */
         const logLine = `challenges/${id}/solutions/${file}`;
         if (errors.length > 0) {
-          info(picocolors.red(`✗ ${logLine}`))
-          info(errors.map(line => `  ${line}`).join('\n'), '\n');
+          info(picocolors.red(`✗ ${logLine}`));
+          info(errors.map((line) => `  ${line}`).join('\n'), '\n');
         } else {
-          info(picocolors.green(`✓ ${logLine}`))
+          info(picocolors.green(`✓ ${logLine}`));
         }
-
       });
     });
 };

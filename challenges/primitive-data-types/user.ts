@@ -8,7 +8,7 @@ const age = 52;
 
 interface Musician {
   artistName: string;
-  
+
   // add the rest
 }
 
