@@ -17,12 +17,12 @@
   },
   "scripts": {
     "build": "next build",
-    "dev": "next dev -p 4200",
+    "dev": "next dev --turbo -p 4200",
     "start": "next start"
   },
   "dependencies": {
     "@vercel/og": "^1.0.0",
-    "next": "^13.5.4",
+    "next": "14.0.1",
     "react": "latest",
     "react-dom": "latest",
     "zod": "^3.21.4"

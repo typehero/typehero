@@ -1,12 +1,13 @@
 'use server';
 
-import { getServerAuthSession } from '@repo/auth/server';
+import { getServerAuthSession, type Session } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import { revalidateTag } from 'next/cache';
 import { cache } from 'react';
-import { createEnrolledTrackCacheKey } from './track-enrolled-section';
-import { createTrackGridCacheKey } from './track-grid';
 import { track } from '@vercel/analytics/server';
+
+export const createTrackGridCacheKey = (userId: string) => `user-${userId}-tracks`;
+export const createEnrolledTrackCacheKey = (userId: string) => `user-${userId}-enrolled-tracks`;
 
 /**
  * Enrolls the session user in the track given a track id.
@@ -109,3 +110,43 @@ export const getTrackDetails = cache(async (slug: string) => {
     },
   });
 });
+
+export type EnrolledTracks = Awaited<ReturnType<typeof getUserEnrolledTracks>>;
+
+/**
+ * Fetches user enrolled tracks based on current session.
+ */
+export async function getUserEnrolledTracks(session: Session) {
+  return prisma.track.findMany({
+    where: {
+      enrolledUsers: {
+        some: {
+          id: session.user.id,
+        },
+      },
+    },
+    include: {
+      trackChallenges: {
+        include: {
+          challenge: {
+            include: {
+              submission: {
+                where: {
+                  userId: session.user.id,
+                },
+              },
+            },
+          },
+        },
+      },
+      _count: {
+        select: {
+          enrolledUsers: true,
+        },
+      },
+    },
+    orderBy: {
+      name: 'asc',
+    },
+  });
+}

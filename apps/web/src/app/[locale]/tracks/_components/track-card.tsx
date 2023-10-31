@@ -1,5 +1,3 @@
-'use client';
-
 import { Badge } from '@repo/ui/components/badge';
 import { Card, CardContent } from '@repo/ui/components/card';
 import { Swords } from '@repo/ui/icons';
