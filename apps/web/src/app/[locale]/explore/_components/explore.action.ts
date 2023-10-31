@@ -32,22 +32,6 @@ export async function getChallengesByTagOrDifficulty(str: string, take?: number)
           }),
     },
     include: {
-      ...(session ? {
-        submission: {
-          where: {
-            isSuccessful: true,
-            user: {
-              id: {
-                equals: session.user.id,
-              }
-            }
-          },
-          take: 1,
-          select: {
-            id: true,
-          }
-        },
-      }: {}),
       _count: {
         select: { vote: true, comment: true },
       },
