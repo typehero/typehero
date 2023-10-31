@@ -1,7 +1,7 @@
 'use client';
 
 import { useSession } from '@repo/auth/react';
-import { Bookmark as BookmarkIcon, Calendar, Flag, Share } from '@repo/ui/icons';
+import { Bookmark as BookmarkIcon, Calendar, CheckCircle, Flag, Share } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { debounce } from 'lodash';
 import Link from 'next/link';
@@ -88,6 +88,16 @@ export function Description({ challenge }: Props) {
       {/* Difficulty & Action Buttons */}
       <div className="mt-3 flex items-center gap-3">
         <DifficultyBadge difficulty={challenge.difficulty} />
+        {challenge.hasSolved ? (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <CheckCircle className="stroke-green-600 dark:stroke-green-300" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Solved</p>
+            </TooltipContent>
+          </Tooltip>
+        ) : null}
         <Vote
           voteCount={challenge._count.vote}
           initialHasVoted={challenge.vote.length > 0}
