@@ -44,6 +44,8 @@ If you find our project interesting and want to support us please consider spons
         <img src="./media/open-bootcamp.png" alt="Open Bootcamp Logo" title="Open Bootcamp" width="75">
       </a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://www.herodevs.com/" target="_parent">
         <picture>
@@ -58,6 +60,11 @@ If you find our project interesting and want to support us please consider spons
           <source media="(prefers-color-scheme: dark)" srcset="./media/uploadthing-logo-dark.svg">
           <img alt="Uploadthing Logo" src="./media/uploadthing-logo.svg" width="200">
         </picture>
+      </a>
+    </td>
+    <td>
+      <a href="https://kinde.com/" target="_parent">
+        <img src="./media/kinde.jpg" alt="Kinde Logo" title="Kinde" width="70">
       </a>
     </td>
   </tr>
