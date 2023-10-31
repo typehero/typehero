@@ -7,7 +7,16 @@ import {
 } from '@repo/ui/components/card';
 import { DifficultyBadge } from '@repo/ui/components/difficulty-badge';
 import { Markdown } from '@repo/ui/components/markdown';
-import { Circle, Diamond, MessageCircle, Plus, Sparkle, ThumbsUp, Triangle } from '@repo/ui/icons';
+import {
+  CheckCircle,
+  Circle,
+  Diamond,
+  MessageCircle,
+  Plus,
+  Sparkle,
+  ThumbsUp,
+  Triangle,
+} from '@repo/ui/icons';
 import dynamic from 'next/dynamic';
 import type { ExploreChallengeData } from './explore.action';
 
@@ -16,10 +25,7 @@ const RelativeTime = dynamic(() => import('./relative-time'), {
 });
 
 interface ExploreCardProps {
-  challenge: Pick<
-    Awaited<ExploreChallengeData>[0],
-    '_count' | 'difficulty' | 'name' | 'shortDescription' | 'updatedAt' | 'user'
-  >;
+  challenge: Awaited<ExploreChallengeData>[0];
 }
 
 const BORDERS_BY_DIFFICULTY = {
@@ -45,6 +51,8 @@ const SHADOWS_BY_DIFFICULTY = {
 };
 
 export function ExploreCard({ challenge }: ExploreCardProps) {
+  const hasBeenSolved = challenge.submission.length > 0;
+
   return (
     <Card
       className={`group/card bg-background hover:bg-card-hovered relative overflow-hidden duration-300 sm:min-w-[300px] xl:min-w-[333px]
@@ -86,8 +94,11 @@ export function ExploreCard({ challenge }: ExploreCardProps) {
         <CardTitle className="max-w-[75%] truncate text-2xl duration-300">
           {challenge.name}
         </CardTitle>
-        <div className="flex items-center gap-6 text-center duration-300">
+        <div className="flex items-center gap-5 text-center duration-300">
           <DifficultyBadge difficulty={challenge.difficulty} />
+          {Boolean(hasBeenSolved) && (
+            <CheckCircle className="stroke-green-600 dark:stroke-green-300" size={18} />
+          )}
           <div className="flex items-center gap-2 text-sm">
             <MessageCircle size={18} />
             {challenge._count.comment}
