@@ -3,7 +3,7 @@ import { prisma } from '@repo/db';
 import { withUnstableCache } from '~/utils/withUnstableCache';
 import { TrackCard } from './track-card';
 import { TrackCardSoon } from './track-card-soon';
-import { createTrackGridCacheKey } from "./track.action";
+import { createTrackGridCacheKey } from './track.action';
 
 export async function TrackGrid() {
   const session = await getServerAuthSession();
