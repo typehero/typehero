@@ -59,7 +59,7 @@ export async function postSolution({ challengeId, description, slug, title, user
 
 export async function deleteSolution(solutionToDelete: ChallengeSolution) {
   const session = await getServerAuthSession();
-  if (!isAuthor(session, solutionToDelete?.userId) || isAdminOrModerator(session)) {
+  if (!isAuthor(session, solutionToDelete?.userId) && !isAdminOrModerator(session)) {
     throw new Error('Not authorized to delete this solution.');
   }
 
