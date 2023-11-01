@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 214
+        "contributions": 220
     },
     {
         "login": "Hacksore",
@@ -1031,6 +1031,27 @@ export const contributors = [
         "contributions": 1
     },
     {
+        "login": "DHRMKJ",
+        "id": 69114484,
+        "node_id": "MDQ6VXNlcjY5MTE0NDg0",
+        "avatar_url": "https://avatars.githubusercontent.com/u/69114484?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/DHRMKJ",
+        "html_url": "https://github.com/DHRMKJ",
+        "followers_url": "https://api.github.com/users/DHRMKJ/followers",
+        "following_url": "https://api.github.com/users/DHRMKJ/following{/other_user}",
+        "gists_url": "https://api.github.com/users/DHRMKJ/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/DHRMKJ/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/DHRMKJ/subscriptions",
+        "organizations_url": "https://api.github.com/users/DHRMKJ/orgs",
+        "repos_url": "https://api.github.com/users/DHRMKJ/repos",
+        "events_url": "https://api.github.com/users/DHRMKJ/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/DHRMKJ/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 1
+    },
+    {
         "login": "eduardoRoth",
         "id": 5419161,
         "node_id": "MDQ6VXNlcjU0MTkxNjE=",
@@ -1068,6 +1089,27 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/remixie/repos",
         "events_url": "https://api.github.com/users/remixie/events{/privacy}",
         "received_events_url": "https://api.github.com/users/remixie/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 1
+    },
+    {
+        "login": "ja153903",
+        "id": 20523874,
+        "node_id": "MDQ6VXNlcjIwNTIzODc0",
+        "avatar_url": "https://avatars.githubusercontent.com/u/20523874?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/ja153903",
+        "html_url": "https://github.com/ja153903",
+        "followers_url": "https://api.github.com/users/ja153903/followers",
+        "following_url": "https://api.github.com/users/ja153903/following{/other_user}",
+        "gists_url": "https://api.github.com/users/ja153903/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/ja153903/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/ja153903/subscriptions",
+        "organizations_url": "https://api.github.com/users/ja153903/orgs",
+        "repos_url": "https://api.github.com/users/ja153903/repos",
+        "events_url": "https://api.github.com/users/ja153903/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/ja153903/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 1
