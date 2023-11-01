@@ -7,8 +7,10 @@ import {
   createProgram,
   createSourceFile,
   flattenDiagnosticMessageText,
+  formatDiagnosticsWithColorAndContext,
   getPreEmitDiagnostics,
   readConfigFile,
+  ResolvedModuleWithFailedLookupLocations,
   resolveModuleName,
   ScriptKind,
   ScriptTarget,
@@ -18,7 +20,7 @@ import {
 import picocolors from 'picocolors';
 
 type LogLevel = 'silent' | 'error' | 'info' | 'trace' | 'debug';
-const LOG_LEVEL = 'trace';
+const LOG_LEVEL = 'info';
 const shouldLog = (level: LogLevel) => {
   const levels: Record<LogLevel, number> = {
     silent: 0,
@@ -37,6 +39,20 @@ const info = log('info');
 const debug = log('debug');
 const trace = log('trace');
 
+/** you can add challenge ids here to focus them in the test output */
+const focusTests: string[] = [
+  // "default-generic-arguments",
+  // "typeof",
+];
+
+const isFocused = (id: string) => {
+  if (focusTests.length === 0) {
+    // no tests are included in the `focusTests`, so return true because then, in a sense, all tests are focused
+    return true;
+  }
+  return focusTests.includes(id);
+};
+
 /*
 this script does a few checks:
 
@@ -52,26 +68,19 @@ this script does a few checks:
 Finally, as an almost entirely different task: this script runs each solution and tests pair (for each challenge) through an in-memory TypeScript compiler.
 */
 
-const dir = __dirname;
+const repoRoot = join(__dirname, '..');
+const challengesDir = `${repoRoot}/challenges/`;
 
 export const getChallengeIds = () => {
-  return readdirSync(dir)
+  return readdirSync(challengesDir)
     .filter((id) => id !== 'blank')
-    .filter((id) => statSync(join(dir, id)).isDirectory())
-    .filter((id) => statSync(join(dir, id, 'metadata.json')).isFile())
-    .filter((id) => statSync(join(dir, id, 'tsconfig.json')).isFile());
-};
-
-/**
- * This helper will look up a file in the local `node_modules`
- */
-const loadLib = (libPath: string) => {
-  const standardTypeDefs = readFileSync(`node_modules/${libPath}`, 'utf8');
-  return createSourceFile(libPath, standardTypeDefs, ScriptTarget.ESNext, true, ScriptKind.TS);
+    .filter((id) => statSync(join(challengesDir, id)).isDirectory())
+    .filter((id) => statSync(join(challengesDir, id, 'metadata.json')).isFile())
+    .filter((id) => statSync(join(challengesDir, id, 'tsconfig.json')).isFile());
 };
 
 const getMetadata = (id: string) => {
-  const metadataFilePath = join(dir, id, 'metadata.json');
+  const metadataFilePath = join(challengesDir, id, 'metadata.json');
   const metadataFile = readFileSync(metadataFilePath, 'utf8');
   const metadata = JSON.parse(metadataFile) as {
     id: string;
@@ -86,7 +95,7 @@ const getMetadata = (id: string) => {
 const validateMetadataSchema = (ids: string[]) => {
   const ajv = new Ajv();
 
-  const schema = JSON.parse(readFileSync(join(dir, 'metadata.schema.json'), 'utf8'));
+  const schema = JSON.parse(readFileSync(join(challengesDir, 'metadata.schema.json'), 'utf8'));
 
   const validate = ajv.compile(schema);
 
@@ -139,23 +148,10 @@ const validateMetadataFiles = () => {
   challengeIds.forEach(validatePrerequisiteIds);
 };
 
-const moduleSearchLocations = ['type-testing/dist/index.d.ts'];
-
-const standardLibs = [
-  'typescript/lib/lib.decorators.d.ts',
-  'typescript/lib/lib.decorators.legacy.d.ts',
-  'typescript/lib/lib.d.ts',
-  'typescript/lib/lib.es5.d.ts',
-  'typescript/lib/lib.webworker.importscripts.d.ts',
-  'typescript/lib/lib.scripthost.d.ts',
-  'typescript/lib/lib.dom.d.ts',
-  'typescript/lib/lib.esnext.d.ts',
-];
-
 const validateTests = () => {
   getChallengeIds()
     .filter((id) => {
-      const path = join(dir, id, 'solutions');
+      const path = join(challengesDir, id, 'solutions');
       statSync(path).isDirectory();
       readdirSync(path).forEach((file) => {
         if (!/^\d+\.ts$/.test(file)) {
@@ -167,122 +163,117 @@ const validateTests = () => {
       return true;
     })
     .forEach((id) => {
-      if (id !== "default-generic-arguments") {
+      if (!isFocused(id)) {
         return;
       }
 
-      const compilerOptions = readConfigFile(join(dir, id, 'tsconfig.json'), sys.readFile).config
-          .compilerOptions as CompilerOptions;
+      const compilerOptions = readConfigFile(join(challengesDir, id, 'tsconfig.json'), sys.readFile)
+        .config.compilerOptions as CompilerOptions;
 
-      const testsSource = readFileSync(join(dir, id, 'tests.ts'), 'utf8');
+      const testsSource = readFileSync(join(challengesDir, id, 'tests.ts'), 'utf8');
 
-      readdirSync(join(dir, id, 'solutions')).forEach((file) => {
-        const solutionPath = join(dir, id, 'solutions', file);
+      readdirSync(join(challengesDir, id, 'solutions')).forEach((file) => {
+        const solutionPath = join(challengesDir, id, 'solutions', file);
         const solutionSource = readFileSync(solutionPath, 'utf8');
 
         // our challenge test file
         const sourceFile = createSourceFile(
-          file,
+          `${repoRoot}/in-memory/${file}`,
           // note: putting the `solutionSource` first avoids "Block-scoped variable used before its declaration" errors at the expense of the imports (which are in `testsSource`) not being at the top of the file. There's no technical reason this is a problem at this moment, but just something to be aware of because it's a little weird.
           `${solutionSource}\n${testsSource}\n`,
           ScriptTarget.Latest,
         );
 
         const fileExists = (fileName: string) => {
-          debug('fileExists', fileName, sourceFile.fileName);
-          return sys.fileExists(fileName);
+          const answer = sys.fileExists(fileName);
+          debug(`fileExists: ${answer}`, fileName);
+          return answer;
         };
 
         const readFile = (fileName: string) => {
-          debug('readFile', fileName);
-          return sys.readFile(fileName);
+          const answer = sys.readFile(fileName);
+          debug(`readFile`, fileName, answer);
+          return answer;
         };
+
+        const getNewLine = () => '\n';
+        const getCurrentDirectory = () => '/';
 
         const compilerHost = {
           fileExists,
           readFile,
-          resolveModuleNames: (moduleNames, containingFile) => {
-            trace('rMN', moduleNames, containingFile);
+          resolveModuleNameLiterals: (
+            moduleNames,
+            containingFile,
+            redirectedReference,
+            options,
+            containingSourceFile,
+            reusedNames,
+          ) => {
+            trace(
+              'rMNL',
+              moduleNames.map((moduleName) => moduleName.text),
+              containingFile,
+            );
 
-            return moduleNames.map((moduleName) => {
+            return moduleNames.map((moduleName): ResolvedModuleWithFailedLookupLocations => {
               // try to use standard resolution
-              const result = resolveModuleName(moduleName, containingFile, compilerOptions, {
+              const result = resolveModuleName(moduleName.text, containingFile, compilerOptions, {
                 fileExists,
                 readFile,
               });
               if (result.resolvedModule) {
-                trace('rMN resolving normally', result.resolvedModule);
-                return result.resolvedModule;
+                trace('rMNL resolving normally', result.resolvedModule);
+                return result;
               } else {
-                trace('rMN failed to resolve normally', result);
+                trace('rMNL failed to resolve normally', result);
               }
 
-              // fallback to custom resolution
-              for (const location of moduleSearchLocations) {
-                trace('rMN exploring location', location);
-
-                if (location.startsWith(moduleName)) {
-                  trace('rMN trying to resolve manually')
-                  const result = resolveModuleName(location, containingFile, compilerOptions, {
-                    fileExists,
-                    readFile,
-                  });
-                  if (result.resolvedModule !== undefined) {
-                    trace('rMN resolving manually', result);
-                    return result;
-                  } else {
-                    trace('rMN failed resolving location manually', result)
-                  }
-                }
-              }
-
-              trace('rMN failed to resolve', { moduleName });
-              return undefined;
+              trace('rMNL failed to resolve', { moduleName });
+              throw new Error('failed');
             });
           },
           getSourceFile: (fileName) => {
             debug('getSourceFile', fileName);
 
-            for (const libPath of standardLibs) {
-              if (libPath.endsWith(fileName)) {
-                debug('getSourceFile found in standardLib', libPath);
-                return loadLib(libPath);
-              }
-            }
-
-            for (const modulePath of moduleSearchLocations) {
-              if (fileName === modulePath) {
-                debug('getSourceFile found in moduleSearchLocations', modulePath);
-                return loadLib(modulePath);
-              }
-            }
-
-            // read the dts file from node modules
-            if (fileName === sourceFile.fileName) {
-              debug('getSourceFile matched against the source file');
+            if (fileName.endsWith(sourceFile.fileName)) {
+              // we are reading from our in-memory file that doesn't actually exist so in this case we need to fake it
               return sourceFile;
             }
+
+            const standardTypeDefs = readFileSync(`${fileName}`, 'utf8');
+            return createSourceFile(
+              fileName,
+              standardTypeDefs,
+              ScriptTarget.ESNext,
+              true,
+              ScriptKind.TS,
+            );
           },
 
-          getDefaultLibFileName: () => 'lib.d.ts',
-          writeFile: () => {},
-          getCurrentDirectory: () => '/',
+          getDefaultLibFileName: () => `${repoRoot}/node_modules/typescript/lib/lib.d.ts`,
+          writeFile: () => {
+            throw new Error('Not implemented');
+          },
+          getCurrentDirectory,
           getCanonicalFileName: (fileName) => fileName.toLowerCase(),
-          getNewLine: () => '\n',
+          getNewLine,
           useCaseSensitiveFileNames: () => false,
         } satisfies CompilerHost;
 
         const program = createProgram([sourceFile.fileName], compilerOptions, compilerHost);
 
-        const errors = getPreEmitDiagnostics(program, sourceFile).map((diagnostic) => {
-          return flattenDiagnosticMessageText(diagnostic.messageText, '\n');
+        const errors = getPreEmitDiagnostics(program, sourceFile);
+        const formattedErrors = formatDiagnosticsWithColorAndContext(errors, {
+          getCanonicalFileName: () => sourceFile.fileName,
+          getNewLine,
+          getCurrentDirectory,
         });
 
-        /** keeping the full file path means that you can click to go to a buggy file in the IDE's integrated terminal */
         const logLine = `challenges/${id}/solutions/${file}`;
         if (errors.length > 0) {
           info(picocolors.red(`✗ ${logLine}`));
-          info(errors.map((line) => `  ${line}`).join('\n'), '\n');
+          info(formattedErrors);
         } else {
           info(picocolors.green(`✓ ${logLine}`));
         }
