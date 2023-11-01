@@ -30,4 +30,6 @@ type test_TSConfig_boolean = Expect<Equal<
   { strict: boolean }
 >>;
 
+// THIS SHOULD CAUSE A TYPESCRIPT ERROR
+type ShouldBeWrong = Expect<false>;
 

@@ -169,6 +169,10 @@ const validateTests = () => {
       return true;
     })
     .forEach((id) => {
+      if (id !== "default-generic-arguments") {
+        return;
+      }
+
       const compilerOptions = readConfigFile(join(dir, id, 'tsconfig.json'), sys.readFile).config
           .compilerOptions as CompilerOptions;
 
