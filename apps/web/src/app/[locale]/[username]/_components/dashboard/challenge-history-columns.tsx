@@ -4,7 +4,7 @@ import { type ColumnDef } from '@tanstack/react-table';
 import Link from 'next/link';
 import { getRelativeTime } from '~/utils/relativeTime';
 
-interface Challenge {
+export interface Challenge {
   id: number;
   name: string;
   slug: string;
