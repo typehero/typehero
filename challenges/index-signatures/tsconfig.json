@@ -1,3 +1,7 @@
 {
-  "compilerOptions": {}
+  "compilerOptions": {
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true
+  }
 }

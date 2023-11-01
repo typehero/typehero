@@ -5,7 +5,7 @@ const width = 700;
 
 type test_Width = Expect<Equal<
   Width,
-  number
+  700
 >>;
 
 const margin = {
@@ -17,7 +17,7 @@ const margin = {
 
 type test_Margin = Expect<Equal<
   Margin,
-  { top: 20, right: 30, bottom: 40, left: 50 }
+  { top: number, right: number, bottom: number, left: number }
 >>;
 
 const d3ChartConfig = {
@@ -33,12 +33,12 @@ const d3ChartConfig = {
   ],
   xScale: {
     type: 'band',
-    domain: data => data.map(d => d.category),
+    domain: [0, 100],
     range: [0, width - margin.right - margin.left],
   },
   yScale: {
     type: 'linear',
-    domain: [0, (data: number[]) => Math.max(data.length, data[0])],
+    domain: [0, 100],
     range: [height - margin.bottom, margin.top],
   },
   xAxis: {
@@ -63,8 +63,8 @@ type test_YScale = Expect<Equal<
   YScale,
   {
     type: string;
-    domain: (number | ((data: number[]) => number))[],
-    range: number[],
+    domain: number[];
+    range: number[];
   }
 >>;
 
@@ -72,18 +72,18 @@ type test_d3ChartConfig = Expect<Equal<
   D3ChartConfig,
   {
     width: number;
-    height: Width;
+    height: number;
     margin: Margin;
     data: Data;
     xScale: {
       type: string;
-      domain: string[];
-      range: [number, number];
+      domain: number[];
+      range: number[];
     };
     yScale: {
       type: string;
-      domain: [number, number];
-      range: [number, number];
+      domain: number[];
+      range: number[];
     };
     xAxis: {
       label: string;
@@ -95,7 +95,6 @@ type test_d3ChartConfig = Expect<Equal<
     };
     bar: {
       fill: string;
-      width: number;
     };
   }
 >>;

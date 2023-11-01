@@ -169,12 +169,8 @@ const validateTests = () => {
       return true;
     })
     .forEach((id) => {
-      const compilerOptions = {
-        ...(readConfigFile(join(dir, id, 'tsconfig.json'), sys.readFile).config
-          .compilerOptions as CompilerOptions),
-        // NOTE: we need to make sure we match the same tsconfig in the editor so we don't have issues
-        strict: true,
-      };
+      const compilerOptions = readConfigFile(join(dir, id, 'tsconfig.json'), sys.readFile).config
+          .compilerOptions as CompilerOptions;
 
       const testsSource = readFileSync(join(dir, id, 'tests.ts'), 'utf8');
 
