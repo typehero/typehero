@@ -116,6 +116,11 @@ main {
   border-bottom: 1px solid rgb(212 212 216) !important;
   /* bg-background (in light mode) */
   background: #fff !important;
+
+  position: sticky;
+  top: 0;
+  z-index: 11;
+  align-self: flex-start;
 }
 
 /* dark:border-b-zinc-300 dark:bg-muted */
