@@ -4,13 +4,11 @@ import Ajv from 'ajv';
 import {
   CompilerHost,
   CompilerOptions,
-  createCompilerHost,
   createProgram,
   createSourceFile,
   flattenDiagnosticMessageText,
   getPreEmitDiagnostics,
   readConfigFile,
-  ResolvedModule,
   resolveModuleName,
   ScriptKind,
   ScriptTarget,
@@ -20,7 +18,7 @@ import {
 import picocolors from 'picocolors';
 
 type LogLevel = 'silent' | 'error' | 'info' | 'trace' | 'debug';
-const LOG_LEVEL = 'info';
+const LOG_LEVEL = 'trace';
 const shouldLog = (level: LogLevel) => {
   const levels: Record<LogLevel, number> = {
     silent: 0,
@@ -221,18 +219,20 @@ const validateTests = () => {
 
               // fallback to custom resolution
               for (const location of moduleSearchLocations) {
-                trace('rMN exploring location', { location, moduleName });
+                trace('rMN exploring location', location);
 
                 if (location.startsWith(moduleName)) {
+                  trace('rMN trying to resolve manually')
                   const result = resolveModuleName(location, containingFile, compilerOptions, {
                     fileExists,
                     readFile,
                   });
-                  trace('rMN resolving manually', location, result);
-                  return {
-                    resolvedFileName: location,
-                    isExternalLibraryImport: true,
-                  };
+                  if (result.resolvedModule !== undefined) {
+                    trace('rMN resolving manually', result);
+                    return result;
+                  } else {
+                    trace('rMN failed resolving location manually', result)
+                  }
                 }
               }
 
