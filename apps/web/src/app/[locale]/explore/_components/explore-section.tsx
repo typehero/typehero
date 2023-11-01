@@ -65,11 +65,22 @@ export async function ExploreSection({ title, tag, redirectRoute }: SectionProps
       <section className="relative flex w-full flex-col overflow-hidden rounded-[2.5rem]">
         <Carousel>
           {challenges
-            .sort((a, b) =>
-              difficultyToNumber[a.difficulty] !== difficultyToNumber[b.difficulty]
+            .sort((a, b) => {
+              const aHasSubmission = a?.submission?.length && a.submission.length > 0;
+              const bHasSubmission = b?.submission?.length && b.submission.length > 0;
+
+              if (aHasSubmission && !bHasSubmission) {
+                return -1;
+              }
+
+              if (!aHasSubmission && bHasSubmission) {
+                return 1;
+              }
+
+              return difficultyToNumber[a.difficulty] !== difficultyToNumber[b.difficulty]
                 ? difficultyToNumber[a.difficulty] - difficultyToNumber[b.difficulty]
-                : a.name.localeCompare(b.name),
-            )
+                : a.name.localeCompare(b.name);
+            })
             .map((challenge) => (
               <Link
                 className="group snap-center focus:outline-none sm:w-[330px] xl:w-[333px]"
