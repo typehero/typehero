@@ -82,7 +82,7 @@ export function Description({ challenge }: Props) {
         <UserBadge username={challenge.user.name} linkComponent={Link} />
         <div className="text-muted-foreground flex items-center gap-2">
           <Calendar className=" h-4 w-4" />
-          <span className="text-xs">{getRelativeTime(challenge.updatedAt)}</span>
+          <span className="text-xs">Last updated {getRelativeTime(challenge.updatedAt)}</span>
         </div>
       </div>
       {/* Difficulty & Action Buttons */}
