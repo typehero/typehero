@@ -54,16 +54,16 @@ export function Navigation() {
                   viewBox="0 0 38 38"
                   fill="none"
                 >
-                  <rect width="38" height="38" rx="4.5" fill="#FFB800" />
+                  <rect width="38" height="38" rx="4.5" fill="#3178C6" />
                   <path
                     fillRule="evenodd"
                     clipRule="evenodd"
                     d="M15.6947 20.9344H20V18H8V20.9344H12.2842V34H15.6947V20.9344Z"
-                    fill="black"
+                    fill="white"
                   />
                   <path
                     d="M22 34V18H25.4511V24.6309H30.5405V18H34V34H30.5405V27.3458H25.4511V34H22Z"
-                    fill="black"
+                    fill="white"
                   />
                 </svg>
 
