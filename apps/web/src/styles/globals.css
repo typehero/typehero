@@ -201,8 +201,8 @@ main {
   @apply pointer-events-none absolute select-none rounded-3xl opacity-0 transition-opacity duration-300 hover:opacity-100;
   background: radial-gradient(
     1000px circle at var(--x) var(--y),
-    #5157e6 0,
-    #ffb800 25%,
+    #3aecf8 0,
+    #5295dc 25%,
     rgba(255, 255, 255, 0) 50%,
     transparent 80%
   );
@@ -256,7 +256,13 @@ main {
 }
 
 .hero-join-button {
-  background: linear-gradient(var(--gradient-angle), #dd880077, #dd880033, #dd8800, #dd880077);
+  background: linear-gradient(
+    var(--gradient-angle),
+    hsla(211, 60%, 48%, 0.7),
+    hsla(211, 60%, 48%, 0.3),
+    #3178c6,
+    hsla(211, 60%, 48%, 0.5)
+  );
   animation: gradient-rotate 5s linear infinite reverse;
 }
 
