@@ -9,7 +9,7 @@ import {
   VerticalTabsList,
   VerticalTabsTrigger,
 } from '@repo/ui/components/tabs';
-import { Bookmark, ChevronRightSquare, Play, Settings, Text } from '@repo/ui/icons';
+import { Bookmark, CheckCircle, ChevronRightSquare, Play, Settings, Text } from '@repo/ui/icons';
 
 import { getRelativeTime } from '~/utils/relativeTime';
 import { stripProtocolAndWWW } from '~/utils/stringUtils';
@@ -26,7 +26,7 @@ interface Props {
   isOwnProfile: boolean;
   children: React.ReactNode;
 }
-type Tab = 'bookmarks' | 'in-progress' | 'overview' | 'shared-solutions';
+type Tab = 'bookmarks' | 'completed' | 'in-progress' | 'overview' | 'shared-solutions';
 
 export function Dashboard({ user, isOwnProfile, children }: Props) {
   const router = useRouter();
@@ -37,6 +37,7 @@ export function Dashboard({ user, isOwnProfile, children }: Props) {
       { name: 'in-progress', route: `/@${user.name}/in-progress` },
       { name: 'shared-solutions', route: `/@${user.name}/shared-solutions` },
       { name: 'bookmarks', route: `/@${user.name}/bookmarks` },
+      { name: 'completed', route: `@${user.name}/completed` },
     ],
     [user.name],
   );
@@ -58,6 +59,10 @@ export function Dashboard({ user, isOwnProfile, children }: Props) {
 
     if (splitPath.includes('bookmarks')) {
       return 'bookmarks';
+    }
+
+    if (splitPath.includes('completed')) {
+      return 'completed';
     }
 
     return 'overview';
@@ -119,6 +124,18 @@ export function Dashboard({ user, isOwnProfile, children }: Props) {
                 <Text className="h-4 w-4" />
                 <span className="hidden md:block">Overview</span>
               </VerticalTabsTrigger>
+              {Boolean(isOwnProfile) && (
+                <VerticalTabsTrigger
+                  className="flex items-center justify-center gap-3 px-2 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50 md:justify-normal md:px-3"
+                  value="completed"
+                  onClick={() => {
+                    router.push(`/@${user.name}/completed`);
+                  }}
+                >
+                  <CheckCircle className="h-4 w-4" />
+                  <span className="hidden md:block">Completed</span>
+                </VerticalTabsTrigger>
+              )}
               {Boolean(isOwnProfile) && (
                 <VerticalTabsTrigger
                   className="flex items-center justify-center gap-3 px-2 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50 md:justify-normal md:px-3"
