@@ -117,7 +117,7 @@ export function SolutionEditor({ dismiss, challenge }: Props) {
             Post
           </Button>
         </div>
-        <div className="flex flex-1 flex-col">
+        <div className="flex flex-1 flex-col overflow-auto">
           <FormField
             control={form.control}
             name="content"
