@@ -13,7 +13,7 @@ const groceryList: GroceryList = {
   // @ts-expect-error intentionally invalid because the value is a string, not a number
   shouldError: "because it's a string",
 
-  // @ts-expect-error intentionally invalid because the valie is a boolean, not a number
+  // @ts-expect-error intentionally invalid because the value is a boolean, not a number
   shouldAlsoError: true,
 };
 
