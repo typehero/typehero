@@ -1,3 +1,5 @@
+// if you want a similar db to what prod looks like.
+// this should never be run on prod directly
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import uuidByString from 'uuid-by-string';
