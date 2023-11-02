@@ -16,7 +16,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${inter.className} flex flex-col`}>
         <Providers>
           <Navigation />
-          <main className="flex-1">
+          <main className="py-5">
+            <div className="container space-y-0.5">
+              <h2 className="text-2xl font-bold tracking-tight">Admin</h2>
+              <p className="text-muted-foreground">
+                The dashboard for all things moderation, administration, and more.
+              </p>
+            </div>
+            <div className="bg-border my-6 h-[1px] w-full shrink-0"></div>
             <div className="h-full">{children}</div>
           </main>
           <Toaster />

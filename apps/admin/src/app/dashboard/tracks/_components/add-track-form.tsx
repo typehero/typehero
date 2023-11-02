@@ -1,21 +1,21 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useQueryClient } from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { createTrack } from './tracks.actions';
-import { useToast } from '@repo/ui/components/use-toast';
+import { Button } from '@repo/ui/components/button';
+import { Checkbox } from '@repo/ui/components/checkbox';
+import { DialogFooter } from '@repo/ui/components/dialog';
 import {
   Form,
-  FormItem,
-  FormField,
-  FormLabel,
   FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
   FormMessage,
 } from '@repo/ui/components/form';
 import { Input } from '@repo/ui/components/input';
-import { Checkbox } from '@repo/ui/components/checkbox';
-import { DialogFooter } from '@repo/ui/components/dialog';
-import { Button } from '@repo/ui/components/button';
+import { useToast } from '@repo/ui/components/use-toast';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { createTrack } from '../tracks.actions';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
   name: z.string().min(3),
@@ -30,7 +30,7 @@ interface Props {
 }
 export function AddTrackForm({ toggle }: Props) {
   const { toast } = useToast();
-  const queryClient = useQueryClient();
+  const router = useRouter();
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
@@ -44,7 +44,7 @@ export function AddTrackForm({ toggle }: Props) {
   async function onSubmit(data: FormSchema) {
     try {
       await createTrack(data);
-      queryClient.invalidateQueries(['tracks']);
+      router.refresh();
       toggle(false);
       toast({
         title: 'Track Added',
