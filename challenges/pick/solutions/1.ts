@@ -3,6 +3,6 @@
  *
  * This solution is verbatim from the ES5 builtins.
  */
-type Pick<T, K extends keyof T> = {
+type MyPick<T, K extends keyof T> = {
   [P in K]: T[P];
 };

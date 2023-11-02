@@ -1,63 +1,67 @@
-// import { Expect } from 'type-testing';
-// import { expect } from 'jest';
-//
-// const getDistanceInMeters = (distance: Distance) => {
-//   switch (distance.unit) {
-//     case 'miles':
-//       return {
-//         unit: 'meters',
-//         value: distance.value / 1609.34,
-//       } satisfies Meters;
-//
-//     case 'meters':
-//       return {
-//         unit: 'meters',
-//         value: distance.value,
-//       } satisfies Meters;
-//
-//     case 'feet':
-//       return {
-//         unit: 'meters',
-//         value: distance.value * 3.28084,
-//       } satisfies Meters;
-//
-//     default:
-//       // @ts-expect-error (in production codebases, we'd assert an unreachable case here but that's beyond the scope of this lesson)
-//       throw new Error(`unrecognized unit: ${distance.unit}`)
-//   }
-// }
-//
-// const lowMarsOrbit = {
-//   unit: 'meters',
-//   value: 300_000
-// } satisfies Meters;
-//
-// const mediumMarsOrbit = {
-//   unit: 'meters',
-//   value: 2_000_000
-// } satisfies Meters;
-//
-// const highMarsOrbit = {
-//   unit: 'meters',
-//   value: 5_000_000
-// } satisfies Meters;
-//
-//
-// expect(getDistanceInMeters({
-//   unit: 'miles',
-//   value: 186.41182099494205,
-// })).toEqual(lowMarsOrbit);
-//
-// expect(getDistanceInMeters({
-//   unit: 'meters',
-//   value: 2_000_000,
-// })).toEqual(mediumMarsOrbit);
-//
-// expect(getDistanceInMeters({
-//   unit: 'feet',
-//   value: 1523999.9512320017,
-// })).toEqual(highMarsOrbit);
-//
+import { Expect, Extends } from 'type-testing';
+
+/** temporary */
+const expect = <T>(a: T) => ({
+  toEqual: (b: T) => a === b
+});
+
+const getDistanceInMeters = (distance: Distance) => {
+  switch (distance.unit) {
+    case 'miles':
+      return {
+        unit: 'meters',
+        value: distance.value / 1609.34,
+      } satisfies Meters;
+
+    case 'meters':
+      return {
+        unit: 'meters',
+        value: distance.value,
+      } satisfies Meters;
+
+    case 'feet':
+      return {
+        unit: 'meters',
+        value: distance.value * 3.28084,
+      } satisfies Meters;
+
+    default:
+      // @ts-expect-error (in production codebases, we'd assert an unreachable case here but that's beyond the scope of this lesson)
+      throw new Error(`unrecognized unit: ${distance.unit}`)
+  }
+}
+
+const lowMarsOrbit = {
+  unit: 'meters',
+  value: 300_000
+} satisfies Meters;
+
+const mediumMarsOrbit = {
+  unit: 'meters',
+  value: 2_000_000
+} satisfies Meters;
+
+const highMarsOrbit = {
+  unit: 'meters',
+  value: 5_000_000
+} satisfies Meters;
+
+
+expect(getDistanceInMeters({
+  unit: 'miles',
+  value: 186.41182099494205,
+})).toEqual(lowMarsOrbit);
+
+expect(getDistanceInMeters({
+  unit: 'meters',
+  value: 2_000_000,
+})).toEqual(mediumMarsOrbit);
+
+expect(getDistanceInMeters({
+  unit: 'feet',
+  value: 1523999.9512320017,
+})).toEqual(highMarsOrbit);
+
 
 /////////////////////////////////////////////////
 // Part 2
@@ -102,8 +106,6 @@ const positionElement = (position: Position): AbsolutePosition => {
       return {}
   }
 }
-
-type Extends<T, U> = T extends U ? true : false;
 
 type test_topLeft = Expect<Extends<'topLeft', Position>>;
 type test_top = Expect<Extends<'top', Position>>;

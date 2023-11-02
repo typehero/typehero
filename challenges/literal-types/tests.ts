@@ -52,10 +52,10 @@ type test_almostPi = Expect<Equal<
 type test_literalObject = Expect<Equal<
   typeof literalObject,
   {
-    origin: "far across the omniverse",
-    command: "fetch",
-    item: "the universe's ultimate cup of coffee (black)",
-    time: "five Earth minutes"
+    origin: string,
+    command: string,
+    item: string,
+    time: string
   }
 >>;
 

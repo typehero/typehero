@@ -16,7 +16,7 @@ interface Row<T> {
 }
 ```
 
-Imagine, though, that you had a function `createRow` that returns an object that looked like our `Row` type:
+Imagine if you had a function `createRow` that returns an object that looked like our `Row` type:
 
 ```ts
 const createRow = (
@@ -45,7 +45,7 @@ This is great! Now our `value` parameter has the right type!
 
 ### A Word On A Syntax Quirk
 
-You may see the `<T,>` syntax out in the wild. There's an unfortunate niggle with TypeScript's syntax that this is used to work around. Imagine being a parser and seeing `const createRow = <T>`. If you don't know what's coming next it could be ambiguous between these two things
+You may see the `<T,>` syntax out in the wild. There's an unfortunate inconveinence with TypeScript's syntax that this is used to work around. Imagine being a parser and seeing `const createRow = <T>`. If you don't know what's coming next it could be ambiguous between these two things
 
 ```ts
 // Thing 1: Start of JSX
@@ -57,9 +57,9 @@ const createRow = <T>(someArg: T) => {
 }
 ```
 
-Because of this ambiguity, we need to do something to _disambiguate_ these two situations to the TypeScript compiler. In the early days it used to be common to use `<T extends unknown>` (or `<T extends any>` in the days before `unknown` existed in TypeScript). But over time people realized there's a shorter way: `<T,>`. Because `,` is invalid in JSX, but valid in TypeScript to separate multiple arguments, it's sufficient to use this to disambiguate the two situations to the TypeScript compiler.
+Because of this ambiguity, we need to do something to _disambiguate_ these two situations to the TypeScript compiler. In the early days it was common to use `<T extends unknown>` (or `<T extends any>` before `unknown` existed in TypeScript); however, over time people realized there was an easier way: `<T,>`. Since `,` is invalid in JSX, but valid in TypeScript when separating multiple arguments, it's appropriate to use this to disambiguate the two situations to the TypeScript compiler.
 
-All that to say, if you see this strange syntax know that it's not you, it's TypeScript being a bit funky. If this is confusing to you, just skip it and come back here and read it again when the day comes that you first see this syntax out in the wild.
+With that being said, if you see this strange syntax, please note that it is not you, it's just TypeScript being a bit funky. If this is confusing to you, just skip it and come back here and read it again when the day comes that you first see this syntax out in the wild.
 
 ## Solving This Challenge
 
@@ -71,6 +71,6 @@ The next function (`mapArray`) is admittedly pretty hard, but take it slow and t
 
 > what is the type of `arr`
 
-Then provide a generic argument as a type for `arr`. After you do that, think about what types you need to provide for `fn`.
+Then, provide a generic argument as a type for `arr`. After you do that, think about what types you need to provide for `fn`.
 
-In this particular case, if you spend a few minutes with it don't be afraid to check out some solutions. This second example is here more to widen your perspective than anything else. It's good to wrestle with tough problems, even ones that are above your ability level.
+In this particular case, if you spend a few minutes with it don't be afraid to check out some solutions. The second example is here to widen your perspective more than anything else. It's good to wrestle with tough problems, even ones that are above your ability level.
