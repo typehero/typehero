@@ -85,6 +85,8 @@ If the answer is yes, then you should probably not make an alias for `Rows`. Thi
 
 ## Solving This Challenge
 
-To solve this challenge, make type aliases for `Name`, `Year`, `Payload`, etc. until there are no errors in the tests.
+To solve this challenge, make type aliases for `Name`, `Year`, `Payload`, (and maybe others!) until there are no errors in the tests. You may need to read the tests and create some new type aliases from scratch.
+
+> As you continue your journey with TypeScript (and TypeHero!) you should get into the habit of closely consulting tests as you go. The tests can help you ensure that your implementation is correct, and quite often that means filling in missing pieces in your implementation.
 
 `Name` is started here for you as an example.
