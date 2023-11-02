@@ -1,3 +1,5 @@
+import { Expect, Equal } from 'type-testing';
+
 type test_Name = Expect<Equal<Name, string>>;
 type test_Year = Expect<Equal<Year, number>>;
 type test_Count = Expect<Equal<Count, number>>;

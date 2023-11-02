@@ -12,53 +12,101 @@ type MoviesByGenre = {
   thriller: 'The Silence of the Lambs';
 };
 
-type test_MoviesInfoByGenre = Expect<Equal<
+const test_MoviesInfoByGenre: MovieInfoByGenre<MoviesByGenre> = {
+  action: {
+    name: 'Die Hard',
+    year: 1988,
+    director: 'John McTiernan',
+  },
+  comedy: {
+    name: 'Groundhog Day',
+    year: 1993,
+    director: 'Harold Ramis',
+  },
+  sciFi: {
+    name: 'Blade Runner',
+    year: 1982,
+    director: 'Ridley Scott',
+  },
+  fantasy: {
+    name: 'The Lord of the Rings: The Fellowship of the Ring',
+    year: 2001,
+    director: 'Peter Jackson',
+  },
+  drama: {
+    name: 'The Shawshank Redemption',
+    year: 1994,
+    director: 'Frank Darabont',
+  },
+  horror: {
+    name: 'The Shining',
+    year: 1980,
+    director: 'Stanley Kubrick',
+  },
+  romance: {
+    name: 'Titanic',
+    year: 1997,
+    director: 'James Cameron',
+  },
+  animation: {
+    name: 'Toy Story',
+    year: 1995,
+    director: 'John Lasseter',
+  },
+  thriller: {
+    name: 'The Silence of the Lambs',
+    year: 1991,
+    director: 'Jonathan Demme',
+  },
+};
+
+type test_MovieInfoByGenre = Expect<Equal<
+  MovieInfoByGenre<MoviesByGenre>,
   {
     action: {
-      name: 'Die Hard',
-      year: 1988,
-      director: 'John McTiernan',
-    },
+        name: string;
+        year: number;
+        director: string;
+    };
     comedy: {
-      name: 'Groundhog Day',
-      year: 1993,
-      director: 'Harold Ramis',
-    },
+        name: string;
+        year: number;
+        director: string;
+    };
     sciFi: {
-      name: 'Blade Runner',
-      year: 1982,
-      director: 'Ridley Scott',
-    },
+        name: string;
+        year: number;
+        director: string;
+    };
     fantasy: {
-      name: 'The Lord of the Rings: The Fellowship of the Ring',
-      year: 2001,
-      director: 'Peter Jackson',
-    },
+        name: string;
+        year: number;
+        director: string;
+    };
     drama: {
-      name: 'The Shawshank Redemption',
-      year: 1994,
-      director: 'Frank Darabont',
-    },
+        name: string;
+        year: number;
+        director: string;
+    };
     horror: {
-      name: 'The Shining',
-      year: 1980,
-      director: 'Stanley Kubrick',
-    },
+        name: string;
+        year: number;
+        director: string;
+    };
     romance: {
-      name: 'Titanic',
-      year: 1997,
-      director: 'James Cameron',
-    },
+        name: string;
+        year: number;
+        director: string;
+    };
     animation: {
-      name: 'Toy Story',
-      year: 1995,
-      director: 'John Lasseter',
-    },
+        name: string;
+        year: number;
+        director: string;
+    };
     thriller: {
-      name: 'The Silence of the Lambs',
-      year: 1991,
-      director: 'Jonathan Demme',
-    },
-  },
-  MovieInfoByGenre<MoviesByGenre>
->>
+        name: string;
+        year: number;
+        director: string;
+    };
+  }
+>>;
