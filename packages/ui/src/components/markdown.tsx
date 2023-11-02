@@ -95,7 +95,8 @@ export function Markdown({ children, className }: { children: string; className?
         details: ({ ...props }) => <details {...props} />,
         summary: ({ ...props }) => <summary {...props} />,
       }}
-      rehypePlugins={[rehypeRaw]}
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      rehypePlugins={[rehypeRaw as any]}
       remarkPlugins={[removeHtmlComments, remarkGfm]}
     >
       {children}
