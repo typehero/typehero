@@ -10,11 +10,7 @@ export async function ingestChallenges(challengePath: string) {
     for (const item of items) {
       const itemPath = path.join(challengePath, item);
 
-      if (
-        itemPath.includes('blank') ||
-        itemPath.includes('solutions') ||
-        itemPath.includes('type-unions')
-      ) {
+      if (itemPath.includes('blank') || itemPath.includes('solutions')) {
         continue;
       }
 
