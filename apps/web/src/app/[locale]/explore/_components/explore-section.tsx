@@ -70,11 +70,11 @@ export async function ExploreSection({ title, tag, redirectRoute }: SectionProps
               const bHasSubmission = b?.submission?.length && b.submission.length > 0;
 
               if (aHasSubmission && !bHasSubmission) {
-                return -1;
+                return 1;
               }
 
               if (!aHasSubmission && bHasSubmission) {
-                return 1;
+                return -1;
               }
 
               return difficultyToNumber[a.difficulty] !== difficultyToNumber[b.difficulty]
