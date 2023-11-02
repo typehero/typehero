@@ -29,5 +29,3 @@ type test_TSConfig_boolean = Expect<Equal<
   TSConfig<{ strict: boolean }>,
   { strict: boolean }
 >>;
-
-
