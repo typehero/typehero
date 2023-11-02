@@ -1,2 +1,2 @@
-type TheCoolestCarEverMade = Cars[5];
+type TheCoolestCarEverMade = Cars[4];
 type TruckDriverBonusGiver = Donations['Taylor Swift'];

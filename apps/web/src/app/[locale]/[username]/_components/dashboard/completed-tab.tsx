@@ -1,34 +1,28 @@
 import { prisma } from '@repo/db';
-import { createInProgressSubmissionCacheKey } from '~/app/[locale]/challenge/[slug]/submissions/[[...catchAll]]/save-submission.action';
+import { createCompletedSubmissionCacheKey } from '~/app/[locale]/challenge/[slug]/submissions/[[...catchAll]]/save-submission.action';
 import { withUnstableCache } from '~/utils/withUnstableCache';
 import ChallengeHistory from './challenge-history';
 
-export async function InProgressTab({ userId }: { userId: string }) {
+export async function CompletedTab({ userId }: { userId: string }) {
   const challenges = await withUnstableCache({
-    fn: getInProgressChallenges,
+    fn: getCompletedChallenges,
     args: [userId],
-    keys: [`in-progress-challenges`],
-    tags: [createInProgressSubmissionCacheKey(userId)],
+    keys: [`completed-challenges`],
+    tags: [createCompletedSubmissionCacheKey(userId)],
   });
 
   return <ChallengeHistory challenges={challenges} />;
 }
 
-async function getInProgressChallenges(userId: string) {
+async function getCompletedChallenges(userId: string) {
   const challenges = await prisma.challenge.findMany({
     where: {
-      AND: [
-        {
-          submission: {
-            none: {
-              userId,
-              isSuccessful: true,
-            },
-          },
+      submission: {
+        some: {
+          userId,
+          isSuccessful: true,
         },
-        // Make sure there is at least one submission
-        { submission: { some: { userId, isSuccessful: false } } },
-      ],
+      },
     },
     select: {
       id: true,
