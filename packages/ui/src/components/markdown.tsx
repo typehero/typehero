@@ -72,8 +72,6 @@ export function Markdown({ children, className }: { children: string; className?
               className={clsx(className, 'rounded-xl dark:rounded-md')}
               language={match[1]}
               style={syntaxHighlighterTheme} // theme
-              wrapLines
-              wrapLongLines
               customStyle={{ fontSize: 'inherit' }}
               codeTagProps={{
                 style: {
