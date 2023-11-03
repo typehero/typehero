@@ -136,7 +136,6 @@ export function SolutionDetails({ solution }: Props) {
                 </Button>
               ) : null}
 
-              {/* Author / Admin can see edit / delete button */}
               {isAuthor(session, solution.userId) || isAdminOrModerator(session) ? (
                 <>
                   <Tooltip>
