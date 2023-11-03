@@ -9,6 +9,7 @@ import { visit, SKIP, type BuildVisitor } from 'unist-util-visit';
 import type { Transformer } from 'unified';
 import { useTheme } from 'next-themes';
 import typescript from 'react-syntax-highlighter/dist/esm/languages/prism/typescript';
+import rehypeRaw from 'rehype-raw';
 
 SyntaxHighlighter.registerLanguage('typescript', typescript);
 
@@ -91,7 +92,11 @@ export function Markdown({ children, className }: { children: string; className?
             </code>
           );
         },
+        details: ({ ...props }) => <details {...props} />,
+        summary: ({ ...props }) => <summary {...props} />,
       }}
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      rehypePlugins={[rehypeRaw as any]}
       remarkPlugins={[removeHtmlComments, remarkGfm]}
     >
       {children}
