@@ -96,9 +96,10 @@ export async function deleteComment(comment_id: number, author: string) {
     },
   });
 
-  const isAuthorized = isAdminOrModerator(session) || isAuthor(session, rootComment.userId);
+  const isAuthorized =
+    isAdminOrModerator(session) || isAuthor(session, rootComment.userId);
   if (!isAuthorized) {
-    return 'unauthorized';
+    return "unauthorized";
   }
 
   await deleteCommentWithChildren(prisma, rootComment);
