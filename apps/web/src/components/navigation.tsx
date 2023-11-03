@@ -136,9 +136,12 @@ function ThemeButton() {
   );
 }
 
+const BLACKLISTED_LOGIN_REDIRECT_PATHS = ['/', '/login'];
+
 function LoginButton() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const pathname = usePathname();
 
   const isAdminOrMod = isAdminOrModerator(session);
 
@@ -146,6 +149,15 @@ function LoginButton() {
     await signOut({ redirect: false });
     router.refresh();
   };
+
+  const isBlacklistedPath = BLACKLISTED_LOGIN_REDIRECT_PATHS.some((blacklistedPath) => {
+    if (blacklistedPath.endsWith('/*')) {
+      const prefix = blacklistedPath.slice(0, -2);
+      return pathname.startsWith(prefix);
+    }
+
+    return blacklistedPath === pathname;
+  });
 
   return session ? (
     <DropdownMenu>
@@ -202,7 +214,12 @@ function LoginButton() {
   ) : (
     <Link
       className="focus:bg-accent w-20 rounded-lg bg-transparent p-2 text-black duration-300 hover:bg-gray-200 focus:outline-none dark:text-white hover:dark:bg-gray-800"
-      href="/login"
+      href={{
+        pathname: '/login',
+        query: {
+          ...(!isBlacklistedPath && { redirectTo: pathname }),
+        },
+      }}
     >
       {status === 'loading' ? (
         <Loader2 className="h-5 w-5 animate-spin" />
