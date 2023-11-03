@@ -59,7 +59,13 @@ export async function postSolution({ challengeId, description, slug, title, user
 
 export async function deleteSolution(solutionToDelete: ChallengeSolution) {
   const session = await getServerAuthSession();
-  if (!isAuthor(session, solutionToDelete?.userId) && !isAdminOrModerator(session)) {
+  const solution = await prisma.sharedSolution.findFirstOrThrow({
+    where: {
+      id: solutionToDelete.id,
+    },
+  });
+
+  if (!isAuthor(session, solution.userId) && !isAdminOrModerator(session)) {
     throw new Error('Not authorized to delete this solution.');
   }
 
