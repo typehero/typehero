@@ -2,6 +2,7 @@
 
 import ReactMarkdown from 'react-markdown';
 import { PrismAsyncLight as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import remarkGfm from 'remark-gfm';
 import { vs, vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import clsx from 'clsx';
@@ -66,14 +67,11 @@ export function Markdown({ children, className }: { children: string; className?
         p: ({ className, ...props }) => <p className={clsx(className, 'mb-4')} {...props} />,
         code({ inline, className, children, style: _, ...props }) {
           const match = /language-(\w+)/.exec(className || '');
+          const codeString = String.raw`hi`;
           return !inline && match ? (
             <SyntaxHighlighter
-              PreTag="section" // parent tag
-              className={clsx(className, 'rounded-xl dark:rounded-md')}
-              language={match[1]}
-              style={syntaxHighlighterTheme} // theme
-              wrapLines
-              wrapLongLines
+              style={syntaxHighlighterTheme}
+              language="javascript"
               customStyle={{ fontSize: 'inherit' }}
               codeTagProps={{
                 style: {
@@ -82,9 +80,8 @@ export function Markdown({ children, className }: { children: string; className?
                   lineHeight: 'inherit',
                 },
               }}
-              {...props}
             >
-              {String(children).replace(/\n$/, '')}
+              {String(children).trim()}
             </SyntaxHighlighter>
           ) : (
             <code className="rounded-md border border-zinc-300 bg-neutral-200 px-1 py-[0.10rem] font-mono text-zinc-600 dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-300">
