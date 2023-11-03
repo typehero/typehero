@@ -51,7 +51,7 @@ module.exports = {
           hovered: 'hsl(var(--card-hovered))',
           foreground: 'hsl(var(--card-foreground))',
         },
-        "error-label": {
+        'error-label': {
           DEFAULT: 'hsl(var(--error-label))',
         },
 
