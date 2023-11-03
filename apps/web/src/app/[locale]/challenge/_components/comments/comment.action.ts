@@ -89,15 +89,17 @@ export async function deleteComment(comment_id: number, author: string) {
   const session = await getServerAuthSession();
   if (!session?.user.id) return 'unauthorized';
   if (!comment_id) return 'invalid_comment';
-  const isAuthorized = isAdminOrModerator(session) || isAuthor(session, author);
-  if (!isAuthorized) {
-    return 'unauthorized';
-  }
+  
   const rootComment = await prisma.comment.findFirstOrThrow({
     where: {
       id: comment_id,
     },
   });
+
+  const isAuthorized = isAdminOrModerator(session) || isAuthor(session, rootComment.userId);
+  if (!isAuthorized) {
+    return 'unauthorized';
+  }
 
   await deleteCommentWithChildren(prisma, rootComment);
 }
