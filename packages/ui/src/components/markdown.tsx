@@ -82,7 +82,7 @@ export function Markdown({ children, className }: { children: string; className?
               }}
               {...props}
             >
-              {String(children).trimEnd()}
+              {String(children).replace(/\n$/, '')}
             </SyntaxHighlighter>
           ) : (
             <code className="rounded-md border border-zinc-300 bg-neutral-200 px-1 py-[0.10rem] font-mono text-zinc-600 dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-300">
