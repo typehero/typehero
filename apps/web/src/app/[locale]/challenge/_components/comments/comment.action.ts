@@ -72,10 +72,10 @@ export async function updateComment(text: string, id: number) {
   return await prisma.comment.update({
     where: {
       id,
+      userId: session.user.id,
     },
     data: {
       text,
-      userId: session.user.id,
     },
   });
 }
