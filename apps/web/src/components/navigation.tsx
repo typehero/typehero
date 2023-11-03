@@ -151,11 +151,6 @@ function LoginButton() {
   };
 
   const isBlacklistedPath = BLACKLISTED_LOGIN_REDIRECT_PATHS.some((blacklistedPath) => {
-    if (blacklistedPath.endsWith('/*')) {
-      const prefix = blacklistedPath.slice(0, -2);
-      return pathname.startsWith(prefix);
-    }
-
     return blacklistedPath === pathname;
   });
 
