@@ -66,7 +66,6 @@ export function Markdown({ children, className }: { children: string; className?
         p: ({ className, ...props }) => <p className={clsx(className, 'mb-4')} {...props} />,
         code({ inline, className, children, style: _, ...props }) {
           const match = /language-(\w+)/.exec(className || '');
-          const codeString = String.raw`hi`;
           return !inline && match ? (
             <SyntaxHighlighter
               PreTag="section" // parent tag
