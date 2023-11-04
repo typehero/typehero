@@ -28,11 +28,16 @@ export function CommentDeleteDialog({
 
   async function handleDeleteComment() {
     try {
-      const res = await deleteComment(comment.id, comment.userId);
+      const res = await deleteComment(comment.id);
       if (res === 'unauthorized') {
         toast({
           title: 'Unauthorized',
           description: <p>You need to be signed in to post a comment.</p>,
+        });
+      } else if (res === 'invalid_comment') {
+        toast({
+          title: 'Invalid Comment',
+          description: 'The comment id is invalid.',
         });
       } else {
         toast({

@@ -24,10 +24,17 @@ interface SolutionUpdateArgs {
 export const createCacheKeyForSolutions = (slug: string) => `challenge-${slug}-solutions`;
 export const createCacheKeyForSharedSolutionsTab = (userId: string) => `${userId}-shared-solutions`;
 
-export async function updateSolution({ id, description, slug, title, userId }: SolutionUpdateArgs) {
+export async function updateSolution({ id, description, slug, title }: SolutionUpdateArgs) {
   const session = await getServerAuthSession();
-  if (!isAuthor(session, userId)) {
-    throw new Error('Only author can delete their solution.');
+
+  const solution = await prisma.sharedSolution.findFirstOrThrow({
+    where: {
+      id,
+    },
+  });
+
+  if (!isAuthor(session, solution.userId) && !isAdminOrModerator(session)) {
+    throw new Error('Not authorized to edit this solution.');
   }
 
   await prisma.sharedSolution.update({
@@ -59,7 +66,13 @@ export async function postSolution({ challengeId, description, slug, title, user
 
 export async function deleteSolution(solutionToDelete: ChallengeSolution) {
   const session = await getServerAuthSession();
-  if (!isAuthor(session, solutionToDelete?.userId) && !isAdminOrModerator(session)) {
+  const solution = await prisma.sharedSolution.findFirstOrThrow({
+    where: {
+      id: solutionToDelete.id,
+    },
+  });
+
+  if (!isAuthor(session, solution.userId) && !isAdminOrModerator(session)) {
     throw new Error('Not authorized to delete this solution.');
   }
 
