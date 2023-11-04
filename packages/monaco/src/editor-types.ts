@@ -41,14 +41,6 @@ type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
 
 type NoInfer<T> = [T][T extends any ? 0 : never];
 
-type IsUnion<T, U = T> = [T] extends [never]
-  ? false
-  : T extends unknown
-  ? [U] extends [T]
-    ? false
-    : true
-  : false;
-
 declare function id<T>(): T;
 
 /**
