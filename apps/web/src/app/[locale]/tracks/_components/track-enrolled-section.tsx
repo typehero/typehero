@@ -1,9 +1,7 @@
 import { getServerAuthSession, type Session } from '@repo/auth/server';
 import { prisma } from '@repo/db';
-import { withUnstableCache } from '~/utils/withUnstableCache';
 import { EnrolledTrackSectionCarousel } from './track-enrolled-section-carousel';
 import { SkeletonTrack } from './SkeletonTrack';
-import { createEnrolledTrackCacheKey } from './track.action';
 
 export async function EnrolledTrackSection() {
   const session = await getServerAuthSession();
@@ -12,12 +10,7 @@ export async function EnrolledTrackSection() {
     return null;
   }
 
-  const tracks = await withUnstableCache({
-    fn: getUserEnrolledTracks,
-    args: [session],
-    keys: [createEnrolledTrackCacheKey(session.user.id)],
-    tags: [createEnrolledTrackCacheKey(session.user.id)],
-  });
+  const tracks = await getUserEnrolledTracks(session);
 
   return (
     <div className="sm:px-8 md:px-0">

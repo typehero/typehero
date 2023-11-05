@@ -65,17 +65,27 @@ export async function replyComment(comment: CommentToCreate, parentId: number) {
 export async function updateComment(text: string, id: number) {
   const session = await getServerAuthSession();
 
-  if (!session?.user.id) return 'unauthorized';
+  if (!session) return 'unauthorized';
   if (text.length === 0) return 'text_is_empty';
-  if (!session.user.id) return 'unauthorized';
+
+  const comment = await prisma.comment.findFirstOrThrow({
+    where: {
+      id,
+    },
+  });
+
+  const isAuthorized = isAdminOrModerator(session) || isAuthor(session, comment.userId);
+  if (!isAuthorized) {
+    return 'unauthorized';
+  }
 
   return await prisma.comment.update({
     where: {
       id,
+      userId: session.user.id,
     },
     data: {
       text,
-      userId: session.user.id,
     },
   });
 }
@@ -85,19 +95,22 @@ export async function updateComment(text: string, id: number) {
  * @param author The ID of the user who authored the comment.
  * @returns 'unauthorized' if the user is not authorized, 'invalid_comment' if the comment ID is not provided, or undefined if the comment is successfully deleted.
  */
-export async function deleteComment(comment_id: number, author: string) {
+export async function deleteComment(comment_id: number) {
   const session = await getServerAuthSession();
-  if (!session?.user.id) return 'unauthorized';
+
+  if (!session) return 'unauthorized';
   if (!comment_id) return 'invalid_comment';
-  const isAuthorized = isAdminOrModerator(session) || isAuthor(session, author);
-  if (!isAuthorized) {
-    return 'unauthorized';
-  }
+
   const rootComment = await prisma.comment.findFirstOrThrow({
     where: {
       id: comment_id,
     },
   });
+
+  const isAuthorized = isAdminOrModerator(session) || isAuthor(session, rootComment.userId);
+  if (!isAuthorized) {
+    return 'unauthorized';
+  }
 
   await deleteCommentWithChildren(prisma, rootComment);
 }
