@@ -91,48 +91,24 @@ export default function SplitEditor({
   const monacoRef = useRef<typeof import('monaco-editor')>();
   const editorRef = useRef<monacoType.editor.IStandaloneCodeEditor>();
 
-  const [isWrapperInnerFocused, setIsWrapperInnerFocused] = useState(false);
-
   useEffect(() => {
-    const focusHandler = () => {
-      setIsWrapperInnerFocused(true);
-    };
-
-    const blurHandler = () => {
-      setIsWrapperInnerFocused(false);
-    };
-
-    wrapper.current?.addEventListener('focus', focusHandler, true);
-    wrapper.current?.addEventListener('blur', blurHandler, true);
-
-    return () => {
-      wrapper.current?.removeEventListener('focus', focusHandler, true);
-      wrapper.current?.removeEventListener('blur', blurHandler, true);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!isWrapperInnerFocused) {
-      return;
-    }
-
     const saveHandler = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.code === 'KeyS') {
+      if ((e.ctrlKey && e.code === 'KeyS') && (wrapper.current && wrapper.current.contains(document.activeElement))) {
         e.preventDefault();
         toast({
           title: 'Saved',
           description: 'Your code has been saved',
           duration: 1000,
         });
-        return false;
       }
     };
 
     document.addEventListener('keydown', saveHandler);
+
     return () => {
       document.removeEventListener('keydown', saveHandler);
     };
-  }, [isWrapperInnerFocused]);
+  }, []);
 
   useEffect(() => {
     monacoRef.current = monaco;
