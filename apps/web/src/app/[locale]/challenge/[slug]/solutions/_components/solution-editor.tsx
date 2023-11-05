@@ -87,7 +87,7 @@ export function SolutionEditor({ dismiss, challenge }: Props) {
   return (
     <Form {...form}>
       <form className="relative flex h-full flex-col" onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="bg-background/90 dark:bg-muted/90 sticky right-0 top-0 z-10 flex w-full items-center justify-between gap-2 border-b border-zinc-300 bg-opacity-20 p-1 pr-2 backdrop-blur-sm dark:border-zinc-700">
+        <div className="bg-background/90 dark:bg-muted/90 sticky right-0 top-0 z-10 flex w-full items-start justify-between gap-2 border-b border-zinc-300 bg-opacity-20 p-1 pr-2 backdrop-blur-sm dark:border-zinc-700">
           <div className="flex-1">
             <FormField
               control={form.control}
@@ -107,13 +107,13 @@ export function SolutionEditor({ dismiss, challenge }: Props) {
             />
           </div>
           <Button
-            className="h-8 rounded-lg bg-white px-3 py-2 text-black hover:bg-zinc-200 focus-visible:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:focus-visible:bg-zinc-700"
+            className="my-1 h-8 rounded-lg bg-white px-3 py-2 text-black hover:bg-zinc-200 focus-visible:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:focus-visible:bg-zinc-700"
             onClick={dismiss}
             type="button"
           >
             Cancel
           </Button>
-          <Button className="h-8 rounded-lg px-3 py-2" type="submit">
+          <Button className="my-1 h-8 rounded-lg px-3 py-2" type="submit">
             Post
           </Button>
         </div>
