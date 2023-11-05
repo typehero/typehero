@@ -91,16 +91,15 @@ export default function SplitEditor({
   const monacoRef = useRef<typeof import('monaco-editor')>();
   const editorRef = useRef<monacoType.editor.IStandaloneCodeEditor>();
 
-  const [wrapperFocused, setWrapperFocused] = useState(false);
+  const [isWrapperInnerFocused, setIsWrapperInnerFocused] = useState(false);
 
   useEffect(() => {
-    console.log('setting up focus handlers');
     const focusHandler = () => {
-      setWrapperFocused(true);
+      setIsWrapperInnerFocused(true);
     };
 
     const blurHandler = () => {
-      setWrapperFocused(false);
+      setIsWrapperInnerFocused(false);
     };
 
     wrapper.current?.addEventListener('focus', focusHandler, true);
@@ -113,7 +112,7 @@ export default function SplitEditor({
   }, []);
 
   useEffect(() => {
-    if (!wrapperFocused) {
+    if (!isWrapperInnerFocused) {
       return;
     }
 
@@ -133,7 +132,7 @@ export default function SplitEditor({
     return () => {
       document.removeEventListener('keydown', saveHandler);
     };
-  }, [wrapperFocused]);
+  }, [isWrapperInnerFocused]);
 
   useEffect(() => {
     monacoRef.current = monaco;
