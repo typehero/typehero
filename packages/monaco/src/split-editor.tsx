@@ -93,7 +93,7 @@ export default function SplitEditor({
 
   useEffect(() => {
     const saveHandler = (e: KeyboardEvent) => {
-      if ((e.ctrlKey && e.code === 'KeyS') && (wrapper.current && wrapper.current.contains(document.activeElement))) {
+      if (((e.ctrlKey || e.metaKey) && e.code === 'KeyS') && (wrapper.current && wrapper.current.contains(document.activeElement))) {
         e.preventDefault();
         toast({
           title: 'Saved',
