@@ -2,12 +2,13 @@ import { Button } from '@repo/ui/components/button';
 import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { toast } from '@repo/ui/components/use-toast';
-import { Copy, X } from '@repo/ui/icons';
+import { CheckCircle2, Copy, X, XCircle } from '@repo/ui/icons';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { getChallengeSubmissionById } from '../getChallengeSubmissions';
-import { useParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
+import { Suggestions } from './suggestions';
 
 interface Props {
   submissionId: string;
@@ -19,12 +20,17 @@ ${code}`;
 
 export function SubmissionOverview({ submissionId }: Props) {
   const { slug } = useParams();
+  const searchParams = useSearchParams();
+
+  const showSuggestions = searchParams.get('success') === 'true';
   const { data: submission } = useQuery({
-    queryKey: ['submission', submissionId],
+    queryKey: [`submission`, submissionId],
     queryFn: () => getChallengeSubmissionById(submissionId),
   });
 
   const code = codifyForMarkdown(submission?.code.trimStart() ?? '');
+
+  const track = searchParams.get('slug');
 
   const copyToClipboard = async () => {
     if (navigator.clipboard) {
@@ -58,18 +64,30 @@ export function SubmissionOverview({ submissionId }: Props) {
       <div className="p-2">
         <div className="mb-5">
           <div
-            className={`inline-block rounded-xl px-4 py-1 ${
+            className={`flex items-center gap-1 py-1 ${
               submission.isSuccessful
-                ? 'bg-emerald-600/10 text-emerald-600  dark:bg-emerald-400/10 dark:text-emerald-400 '
-                : 'bg-rose-600/10 text-rose-600 dark:bg-rose-400/10 dark:text-rose-400 '
+                ? ' text-emerald-600  dark:text-emerald-400 '
+                : ' text-rose-600  dark:text-rose-400 '
             }`}
           >
+            {submission.isSuccessful ? (
+              <CheckCircle2 size={17} className="mb-0.5" />
+            ) : (
+              <XCircle size={17} className="mb-0.5" />
+            )}
             {submission.isSuccessful ? 'Accepted' : 'Rejected'}
           </div>
-          <div className="text-sm text-neutral-500">{getRelativeTime(submission.createdAt)}</div>
+          <div className="text-sm text-neutral-500">
+            Submitted {getRelativeTime(submission.createdAt)}
+          </div>
         </div>
         <Markdown>{code}</Markdown>
       </div>
+      {showSuggestions ? (
+        <div className="flex h-full w-full items-start justify-center">
+          <Suggestions track={track} challengeId={submission.challengeId} />
+        </div>
+      ) : null}
     </>
   );
 }
