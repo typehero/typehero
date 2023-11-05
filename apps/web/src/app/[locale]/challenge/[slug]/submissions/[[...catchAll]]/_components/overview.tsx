@@ -81,12 +81,12 @@ export function SubmissionOverview({ submissionId }: Props) {
             Submitted {getRelativeTime(submission.createdAt)}
           </div>
         </div>
-        <Markdown>{code}</Markdown>
         {showSuggestions ? (
           <div className="flex w-full items-start justify-center">
             <Suggestions track={track} challengeId={submission.challengeId} />
           </div>
         ) : null}
+        <Markdown>{code}</Markdown>
       </div>
     </>
   );
