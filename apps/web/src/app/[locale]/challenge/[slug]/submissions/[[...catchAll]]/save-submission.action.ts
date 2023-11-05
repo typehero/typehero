@@ -23,7 +23,7 @@ interface Args {
   isSuccessful: boolean;
 }
 export async function saveSubmission({ challenge, userId, code, isSuccessful }: Args) {
-  await prisma.submission.create({
+  const submission = await prisma.submission.create({
     data: {
       challengeId: challenge.id,
       userId,
@@ -35,4 +35,5 @@ export async function saveSubmission({ challenge, userId, code, isSuccessful }: 
   revalidateTag(createCacheKeyForSolutions(challenge.slug));
   revalidateTag(createInProgressSubmissionCacheKey(userId));
   revalidateTag(createCompletedSubmissionCacheKey(userId));
+  return submission;
 }
