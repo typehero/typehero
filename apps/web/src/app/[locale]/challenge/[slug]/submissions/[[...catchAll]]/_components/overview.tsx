@@ -24,7 +24,7 @@ export function SubmissionOverview({ submissionId }: Props) {
 
   const showSuggestions = searchParams.get('success') === 'true';
   const { data: submission } = useQuery({
-    queryKey: [`submission-${submissionId}`, submissionId],
+    queryKey: [`submission`, submissionId],
     queryFn: () => getChallengeSubmissionById(submissionId),
   });
 
