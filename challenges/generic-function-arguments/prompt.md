@@ -45,7 +45,7 @@ This is great! Now our `value` parameter has the right type!
 
 ### A Word On A Syntax Quirk
 
-You may see the `<T,>` syntax out in the wild. There's an unfortunate inconveinence with TypeScript's syntax that this is used to work around. Imagine being a parser and seeing `const createRow = <T>`. If you don't know what's coming next it could be ambiguous between these two things
+You may see the `<T,>` syntax out in the wild. There's an unfortunate inconvenience with TypeScript's syntax that this is used to work around. Imagine being a parser and seeing `const createRow = <T>`. If you don't know what's coming next it could be ambiguous between these two things
 
 ```ts
 // Thing 1: Start of JSX
