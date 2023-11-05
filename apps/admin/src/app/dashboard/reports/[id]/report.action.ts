@@ -1,11 +1,13 @@
+'use server';
+
 import { prisma } from '@repo/db';
 
 export type ReportWithInfo = Awaited<ReturnType<typeof getReport>>;
 
-export async function getReport(idNum: number) {
-  return prisma.report.findFirst({
+export async function getReport(id: number) {
+  return prisma.report.findFirstOrThrow({
     where: {
-      id: Number(idNum),
+      id: Number(id),
     },
     orderBy: {
       type: 'asc',

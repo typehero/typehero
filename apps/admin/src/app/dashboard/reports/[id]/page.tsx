@@ -1,9 +1,8 @@
 import { Alert, AlertDescription, AlertTitle } from '@repo/ui/components/alert';
-import { Text } from '@repo/ui/components/typography/typography';
 import { Markdown } from '@repo/ui/components/markdown';
+import { Text } from '@repo/ui/components/typography/typography';
 import { AlertCircle, ChevronLeft } from '@repo/ui/icons';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
 import { ChallengeReport } from './_components/report/challenge.report';
 import { CommentReport } from './_components/report/comment.report';
 import { SolutionReport } from './_components/report/solution.report';
@@ -17,46 +16,31 @@ export interface Props {
   };
 }
 
-const Report = async function (props: Props) {
-  const idNum = Number(props.params.id);
-  // Double check that we have a number, redirect out if we don't
-  if (isNaN(idNum)) {
-    return redirect('/?tab=reports');
-  }
-
-  const report = await getReport(idNum);
-
-  if (!report) return redirect('/?tab=reports');
-
-  let title = '';
-
-  switch (report.type) {
+const getTitle = (type: string) => {
+  switch (type) {
     case 'USER':
-      title = 'User Report';
-      break;
+      return 'User Report';
     case 'CHALLENGE':
-      title = 'Challenge Report';
-      break;
+      return 'Challenge Report';
     case 'COMMENT':
-      title = 'Comment Report';
-      break;
+      return 'Comment Report';
     case 'SOLUTION':
-      title = 'Solution Report';
-      break;
+      return 'Solution Report';
   }
+};
 
-  function ReportEl(report: NonNullable<ReportWithInfo>) {
-    switch (report.type) {
-      case 'CHALLENGE':
-        return <ChallengeReport report={report} />;
-      case 'COMMENT':
-        return <CommentReport report={report} />;
-      case 'SOLUTION':
-        return <SolutionReport report={report} />;
-      case 'USER':
-        return <UserReport report={report} />;
-    }
-  }
+const getComponentByType = (type: ReportWithInfo['type']) => {
+  return {
+    CHALLENGE: ChallengeReport,
+    COMMENT: CommentReport,
+    SOLUTION: SolutionReport,
+    USER: UserReport,
+  }[type];
+};
+export default async function ({ params: { id } }: Props) {
+  const report = await getReport(+id);
+
+  const ReportComponent = getComponentByType(report.type);
 
   return (
     <div className="container  ">
@@ -66,7 +50,7 @@ const Report = async function (props: Props) {
       </Link>
       <div className="bg-background/80 sticky top-0 z-50 flex items-center justify-between">
         <Text color="primary" intent="h1">
-          {title}
+          {getTitle(report.type)}
         </Text>
         <ReportActions report={report} />
       </div>
@@ -85,7 +69,9 @@ const Report = async function (props: Props) {
       ) : null}
 
       <div className="wrapper mt-4 flex flex-col gap-4 md:flex-row">
-        <section className="order-2 flex-grow md:order-1">{ReportEl(report)}</section>
+        <section className="order-2 flex-grow md:order-1">
+          <ReportComponent report={report} />
+        </section>
         <aside className="order-1 flex-shrink-0 md:order-2 md:w-1/3 lg:w-[30%]">
           <Text className="mt-6" intent="h2">
             Information
@@ -115,6 +101,4 @@ const Report = async function (props: Props) {
       </div>
     </div>
   );
-};
-
-export default Report;
+}

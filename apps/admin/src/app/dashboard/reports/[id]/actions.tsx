@@ -17,12 +17,12 @@ import {
   deleteComment,
   deleteSolution,
   dismissReport,
-} from '../../_components/admin.actions';
-import { type ReportWithInfo } from './report.action';
+} from './admin.actions';
 import { toast } from '@repo/ui/components/use-toast';
 import { Button } from '@repo/ui/components/button';
 import { Label } from '@repo/ui/components/label';
 import { Textarea } from '@repo/ui/components/textarea';
+import type { ReportWithInfo } from './report.action';
 
 export interface ReportActionsProps {
   report: NonNullable<ReportWithInfo>;

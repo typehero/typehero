@@ -10,7 +10,7 @@ async function Admin() {
   const isMod = roles.includes(RoleTypes.MODERATOR);
   const isAdmin = roles.includes(RoleTypes.ADMIN);
   const isModOrAdmin = isAdmin || isMod;
-  if (isModOrAdmin) redirect('/dashboard');
+  if (isModOrAdmin) redirect('/dashboard/reports');
   return (
     <div>
       <div className="flex flex-col gap-4">
