@@ -18,6 +18,8 @@ interface TrackChallengeProps {
   isSelected?: boolean;
   /* Hide short description in a compact view like the in-challenge track overview */
   isCompact?: boolean;
+  /* Hide submission status */
+  hideSubmissionStatus?: boolean;
 }
 
 const BGS_BY_DIFFICULTY = {
@@ -35,6 +37,7 @@ export function TrackChallenge({
   isCompleted,
   isSelected = false,
   isCompact = false,
+  hideSubmissionStatus = false,
 }: TrackChallengeProps) {
   const isMobile = useIsMobile();
   const backgroundColor = isCompleted
@@ -66,34 +69,36 @@ export function TrackChallenge({
         <div className="w-full space-y-2">
           <div className="flex w-full flex-row justify-between">
             <div className="flex w-full flex-row gap-3">
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="relative hidden gap-3 pr-1.5 pt-2 md:flex md:flex-row lg:items-center lg:pr-0 lg:pt-0">
-                    <input
-                      className="peer hidden appearance-none"
-                      type="checkbox"
-                      id={challenge.id.toString()}
-                      checked={isCompleted || isInProgress}
-                      readOnly
-                    />
-                    <div
-                      className={cn(
-                        'h-5 w-5 rounded-full border border-black/70 bg-black/10 duration-75 peer-checked:border-transparent dark:border-white/50 dark:bg-white/10',
-                        backgroundColor,
-                      )}
-                    />
-                    {isCompleted ? (
-                      <Check className="absolute left-1 my-auto h-3.5 w-3.5 scale-0 stroke-[4] text-white duration-300 peer-checked:scale-100 dark:text-black" />
-                    ) : null}
-                    {isInProgress ? (
-                      <PieChart className="absolute left-1 my-auto h-3 w-3 scale-0 stroke-[4] text-white duration-300 peer-checked:scale-100 dark:text-black" />
-                    ) : null}
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{isCompleted ? 'Completed' : isInProgress ? 'Attempted' : 'Todo'}</p>
-                </TooltipContent>
-              </Tooltip>
+              {!hideSubmissionStatus && (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="relative hidden gap-3 pr-1.5 pt-2 md:flex md:flex-row lg:items-center lg:pr-0 lg:pt-0">
+                      <input
+                        className="peer hidden appearance-none"
+                        type="checkbox"
+                        id={challenge.id.toString()}
+                        checked={isCompleted || isInProgress}
+                        readOnly
+                      />
+                      <div
+                        className={cn(
+                          'h-5 w-5 rounded-full border border-black/70 bg-black/10 duration-75 peer-checked:border-transparent dark:border-white/50 dark:bg-white/10',
+                          backgroundColor,
+                        )}
+                      />
+                      {isCompleted ? (
+                        <Check className="absolute left-1 my-auto h-3.5 w-3.5 scale-0 stroke-[4] text-white duration-300 peer-checked:scale-100 dark:text-black" />
+                      ) : null}
+                      {isInProgress ? (
+                        <PieChart className="absolute left-1 my-auto h-3 w-3 scale-0 stroke-[4] text-white duration-300 peer-checked:scale-100 dark:text-black" />
+                      ) : null}
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{isCompleted ? 'Completed' : isInProgress ? 'Attempted' : 'Todo'}</p>
+                  </TooltipContent>
+                </Tooltip>
+              )}
               <div className="flex w-full flex-col items-start gap-3 lg:flex-row">
                 <div className="flex w-full justify-between gap-2 text-lg font-bold lg:w-auto lg:text-base lg:font-normal">
                   <span className={cn({ 'font-bold': isSelected })}>{challenge.name}</span>
