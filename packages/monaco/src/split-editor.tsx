@@ -16,6 +16,7 @@ import { libSource } from './editor-types';
 import { PrettierFormatProvider } from './prettier';
 import { useEditorSettingsStore } from './settings-store';
 import { getEventDeltas } from './utils';
+import { useToast } from '@repo/ui/components/use-toast';
 
 function preventSelection(event: Event) {
   event.preventDefault();
@@ -80,6 +81,7 @@ export default function SplitEditor({
   userCode,
   userEditorState,
 }: SplitEditorProps) {
+  const { toast } = useToast();
   const { settings, updateSettings } = useEditorSettingsStore();
   const { subscribe } = useResetEditor();
 
@@ -88,6 +90,50 @@ export default function SplitEditor({
   const testPanel = useRef<HTMLDivElement>(null);
   const monacoRef = useRef<typeof import('monaco-editor')>();
   const editorRef = useRef<monacoType.editor.IStandaloneCodeEditor>();
+
+  const [wrapperFocused, setWrapperFocused] = useState(false);
+
+  useEffect(() => {
+    console.log('setting up focus handlers');
+    const focusHandler = () => {
+      setWrapperFocused(true);
+    };
+
+    const blurHandler = () => {
+      setWrapperFocused(false);
+    };
+
+    wrapper.current?.addEventListener('focus', focusHandler, true);
+    wrapper.current?.addEventListener('blur', blurHandler, true);
+
+    return () => {
+      wrapper.current?.removeEventListener('focus', focusHandler, true);
+      wrapper.current?.removeEventListener('blur', blurHandler, true);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!wrapperFocused) {
+      return;
+    }
+
+    const saveHandler = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.code === 'KeyS') {
+        e.preventDefault();
+        toast({
+          title: 'Saved',
+          description: 'Your code has been saved',
+          duration: 1000,
+        });
+        return false;
+      }
+    };
+
+    document.addEventListener('keydown', saveHandler);
+    return () => {
+      document.removeEventListener('keydown', saveHandler);
+    };
+  }, [wrapperFocused]);
 
   useEffect(() => {
     monacoRef.current = monaco;
