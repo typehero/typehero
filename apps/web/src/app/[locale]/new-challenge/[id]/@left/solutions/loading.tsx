@@ -1,0 +1,1 @@
+export { SolutionsSkeleton as default } from '~/app/[locale]/challenge/[id]/solutions/_components/solution-skeleton';
