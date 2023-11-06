@@ -120,7 +120,7 @@ export async function GET(req: Request) {
     ),
     {
       width: 1200,
-      height: 400,
+      height: 600,
       fonts: [
         { name: 'Inter', data: inter900, weight: 900 },
         { name: 'Inter', data: inter700, weight: 700 },
