@@ -3,7 +3,9 @@ import { userParam } from 'utils/zodParams';
 import { fetchFont } from 'utils/fetchFont';
 import { Grid } from 'app/components/grid';
 import { Logo } from 'app/components/logo';
-import Image from 'next/image';
+
+import getChallenges from '../getChallenges';
+
 
 export const runtime = 'edge';
 
@@ -14,6 +16,9 @@ export async function GET(req: Request) {
     fetchFont('Inter', 400),
   ]);
 
+
+
+
   const parsed = userParam.decodeRequest(req);
 
   if (!parsed.success) {
@@ -21,6 +26,7 @@ export async function GET(req: Request) {
   }
 
   const props = parsed.data.input;
+  console.log({props})
 
   return new ImageResponse(
     (
@@ -34,7 +40,7 @@ export async function GET(req: Request) {
             <div tw='flex flex-col ml-10'>
               <h1 tw="text-6xl font-bold">{props.username}</h1>
               <p tw='text-4xl -mt-6 font-semibold'>Member since</p>
-              <p tw="text-4xl mt-1 font-semibold">Challenges solved!</p>
+              <p tw="text-4xl mt-1 font-semibold">{getChallenges()} Challenges solved!</p>
             </div>
           </div>
           <div tw="flex relative right-0">
