@@ -12,12 +12,15 @@ export function middleware(req: NextRequest) {
   // because it ignores the i18n static params and provides
   // and invalid locale dynamic param
   if (req.nextUrl.pathname === '/.well-known/vercel-user-meta') {
-    return new Response()
+    return new Response();
   }
 
   return I18nMiddleware(req);
 }
 
 export const config = {
-  matcher: ['/.well-known/vercel-user-meta', '/((?!api|static|.*\\..*|_next|favicon.ico|robots.txt).*)'],
+  matcher: [
+    '/.well-known/vercel-user-meta',
+    '/((?!api|static|.*\\..*|_next|favicon.ico|robots.txt).*)',
+  ],
 };
