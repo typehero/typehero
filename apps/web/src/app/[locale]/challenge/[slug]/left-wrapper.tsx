@@ -116,7 +116,7 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
       >
         <TabsList
           className={cn(
-            'bg-background/90 dark:bg-muted/90 sticky top-0 z-10 grid h-auto w-full rounded-none rounded-tl-2xl rounded-tr-xl border-b border-zinc-300 backdrop-blur-sm dark:border-zinc-700',
+            'bg-background/90 dark:bg-muted/90 sticky top-0 z-10 grid h-auto w-full border-b border-zinc-300 backdrop-blur-sm dark:border-zinc-700',
             {
               'grid-rows-3 gap-2': isIconOnly,
               'grid-cols-3 gap-0.5': !isIconOnly,
@@ -158,7 +158,11 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
           <TabsTrigger
             className={cn(
               'rounded-md rounded-tr-lg duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700',
-              { 'p-4': isIconOnly },
+              {
+                'p-4': isIconOnly,
+                'rounded-tr-xl': !isTrackVisible,
+                'rounded-br-xl': isCollapsed && !isDesktop,
+              },
             )}
             onClick={() => {
               router.push(`/challenge/${challenge.slug}/submissions`);

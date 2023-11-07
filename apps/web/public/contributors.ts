@@ -1556,6 +1556,27 @@ export const contributors = [
         "contributions": 1
     },
     {
+        "login": "aadamw",
+        "id": 131662061,
+        "node_id": "U_kgDOB9kA7Q",
+        "avatar_url": "https://avatars.githubusercontent.com/u/131662061?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/aadamw",
+        "html_url": "https://github.com/aadamw",
+        "followers_url": "https://api.github.com/users/aadamw/followers",
+        "following_url": "https://api.github.com/users/aadamw/following{/other_user}",
+        "gists_url": "https://api.github.com/users/aadamw/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/aadamw/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/aadamw/subscriptions",
+        "organizations_url": "https://api.github.com/users/aadamw/orgs",
+        "repos_url": "https://api.github.com/users/aadamw/repos",
+        "events_url": "https://api.github.com/users/aadamw/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/aadamw/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 1
+    },
+    {
         "login": "haze",
         "id": 15584994,
         "node_id": "MDQ6VXNlcjE1NTg0OTk0",
