@@ -46,7 +46,7 @@ export function SubmissionOverview({ submissionId }: Props) {
 
   return (
     <>
-      <div className="sticky top-0 flex h-[40px] items-center justify-between border-b border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
+      <div className="sticky top-0 flex h-[40px] items-center justify-between  border-b border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
         <Link href={`/challenge/${slug}/submissions`}>
           <X className="stroke-gray-500 hover:stroke-gray-400" size={20} />
         </Link>
@@ -61,7 +61,7 @@ export function SubmissionOverview({ submissionId }: Props) {
           </TooltipContent>
         </Tooltip>
       </div>
-      <div className="p-2">
+      <div className="custom-scrollable-element h-fit overflow-y-scroll p-2">
         <div className="mb-5">
           <div
             className={`flex items-center gap-1 py-1 ${
@@ -81,13 +81,13 @@ export function SubmissionOverview({ submissionId }: Props) {
             Submitted {getRelativeTime(submission.createdAt)}
           </div>
         </div>
+        {showSuggestions ? (
+          <div className="flex w-full items-start justify-center">
+            <Suggestions track={track} challengeId={submission.challengeId} />
+          </div>
+        ) : null}
         <Markdown>{code}</Markdown>
       </div>
-      {showSuggestions ? (
-        <div className="flex h-full w-full items-start justify-center">
-          <Suggestions track={track} challengeId={submission.challengeId} />
-        </div>
-      ) : null}
     </>
   );
 }
