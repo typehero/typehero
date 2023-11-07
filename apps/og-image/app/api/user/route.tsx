@@ -20,7 +20,6 @@ export async function GET(req: Request) {
   }
 
   const props = parsed.data.input;
-  console.log({props})
 
   return new ImageResponse(
     (
