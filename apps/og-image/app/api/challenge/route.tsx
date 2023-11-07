@@ -57,7 +57,7 @@ export async function GET(req: Request) {
 
   return new ImageResponse(
     (
-      <div tw="bg-black h-full w-full text-white bg-cover flex flex-col pt-10 pb-10 px-16">
+      <div tw="bg-black h-full w-full text-white bg-cover justify-center flex flex-col  pt-10 pb-10 px-16">
         <Grid />
         {mogus_roll === 8 && (
           <img
@@ -67,7 +67,7 @@ export async function GET(req: Request) {
             alt="OG"
           />
         )}
-        <div tw="flex flex-col items-start h-full overflow-hidden rounded-[3.5rem] border-zinc-700 border-2 to-black relative">
+        <div tw="flex items-start min-h-[350px] overflow-hidden rounded-[3.5rem] border-zinc-700 border-2 to-black relative">
           <svg
             // @ts-ignore
             tw="absolute h-full w-full"
@@ -120,7 +120,7 @@ export async function GET(req: Request) {
     ),
     {
       width: 1200,
-      height: 400,
+      height: 600,
       fonts: [
         { name: 'Inter', data: inter900, weight: 900 },
         { name: 'Inter', data: inter700, weight: 700 },
