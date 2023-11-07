@@ -74,46 +74,48 @@ export function CommentInput({ mode, onCancel, onChange, value, placeholder, onS
   };
 
   return (
-    <div className="relative flex flex-col rounded-xl rounded-br-lg bg-neutral-100 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-700/90">
+    <div className="relative flex flex-col">
       {commentMode === 'editor' && (
-        <Form {...form}>
-          <FormField
-            control={form.control}
-            name="text"
-            render={({ field }) => (
-              <FormItem>
-                <Textarea
-                  disabled={!session?.user}
-                  autoFocus
-                  className="resize-none border-0 px-3 py-2 focus-visible:ring-0 md:max-h-[calc(100vh_-_232px)]"
-                  onChange={(e) => {
-                    field.onChange(e);
-                    onChange(e.target.value);
-                    form.trigger();
-                  }}
-                  onKeyDown={(e) => {
-                    if (isSubmitting) {
-                      e.preventDefault();
-                      return;
+        <div className="rounded-xl rounded-br-lg bg-neutral-100 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-700/90">
+          <Form {...form}>
+            <FormField
+              control={form.control}
+              name="text"
+              render={({ field }) => (
+                <FormItem>
+                  <Textarea
+                    disabled={!session?.user}
+                    autoFocus
+                    className="resize-none border-0 px-3 py-2 focus-visible:ring-0 md:max-h-[calc(100vh_-_232px)]"
+                    onChange={(e) => {
+                      field.onChange(e);
+                      onChange(e.target.value);
+                      form.trigger();
+                    }}
+                    onKeyDown={(e) => {
+                      if (isSubmitting) {
+                        e.preventDefault();
+                        return;
+                      }
+                      if (e.key === 'Enter' && e.shiftKey) {
+                        form.handleSubmit(handleEnterKey)();
+                        e.preventDefault();
+                      }
+                    }}
+                    placeholder={
+                      placeholder ?? !session?.user
+                        ? 'You need to be logged in to comment.'
+                        : 'Enter your comment here.'
                     }
-                    if (e.key === 'Enter' && e.shiftKey) {
-                      form.handleSubmit(handleEnterKey)();
-                      e.preventDefault();
-                    }
-                  }}
-                  placeholder={
-                    placeholder ?? !session?.user
-                      ? 'You need to be logged in to comment.'
-                      : 'Enter your comment here.'
-                  }
-                  ref={textAreaRef}
-                  value={value}
-                />
-                <FormMessage className="absolute h-8 pl-3 leading-8" />
-              </FormItem>
-            )}
-          />
-        </Form>
+                    ref={textAreaRef}
+                    value={value}
+                  />
+                  <FormMessage className="absolute h-8 pl-3 leading-8" />
+                </FormItem>
+              )}
+            />
+          </Form>
+        </div>
       )}
       {commentMode === 'preview' && (
         <div className="min-h-[5rem] overflow-y-auto break-words px-3 pt-2 text-sm md:max-h-[calc(100vh_-_232px)]">

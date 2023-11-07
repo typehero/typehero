@@ -16,6 +16,7 @@ import { libSource } from './editor-types';
 import { PrettierFormatProvider } from './prettier';
 import { useEditorSettingsStore } from './settings-store';
 import { getEventDeltas } from './utils';
+import { useToast } from '@repo/ui/components/use-toast';
 
 function preventSelection(event: Event) {
   event.preventDefault();
@@ -80,6 +81,7 @@ export default function SplitEditor({
   userCode,
   userEditorState,
 }: SplitEditorProps) {
+  const { toast } = useToast();
   const { settings, updateSettings } = useEditorSettingsStore();
   const { subscribe } = useResetEditor();
 
@@ -88,6 +90,30 @@ export default function SplitEditor({
   const testPanel = useRef<HTMLDivElement>(null);
   const monacoRef = useRef<typeof import('monaco-editor')>();
   const editorRef = useRef<monacoType.editor.IStandaloneCodeEditor>();
+
+  useEffect(() => {
+    const saveHandler = (e: KeyboardEvent) => {
+      if (
+        (e.ctrlKey || e.metaKey) &&
+        e.code === 'KeyS' &&
+        wrapper.current &&
+        wrapper.current.contains(document.activeElement)
+      ) {
+        e.preventDefault();
+        toast({
+          title: 'Saved',
+          description: 'Your code has been saved',
+          duration: 1000,
+        });
+      }
+    };
+
+    document.addEventListener('keydown', saveHandler);
+
+    return () => {
+      document.removeEventListener('keydown', saveHandler);
+    };
+  }, []);
 
   useEffect(() => {
     monacoRef.current = monaco;

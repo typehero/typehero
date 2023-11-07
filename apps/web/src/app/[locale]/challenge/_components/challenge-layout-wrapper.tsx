@@ -41,7 +41,7 @@ export function ChallengeLayoutWrapper({ challenge, track, children }: Props) {
           {children}
         </LeftWrapper>
       }
-      right={<Wrapper challenge={challenge} />}
+      right={<Wrapper track={track} challenge={challenge} />}
       {...props}
     />
   );
