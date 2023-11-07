@@ -2,6 +2,7 @@ import { buildMetaForDefault, buildMetaForUser } from '~/app/metadata';
 import { prisma } from '@repo/db';
 import { OverviewTab } from './_components/dashboard/overview-tab';
 import { notFound } from 'next/navigation';
+import { getRelativeTime } from '~/utils/relativeTime';
 
 interface Props {
   params: {
@@ -54,16 +55,32 @@ export async function generateMetadata({ params: { username: usernameFromQuery }
     },
   });
 
-  const bio = user ? user.bio : '';
+  const challenges = await prisma.challenge.findMany({
+    where: {
+      submission: {
+        some: {
+          userId: user?.id,
+          isSuccessful: true,
+        },
+      },
+    },
+    select: {
+      name: true,
+    },
+  });
+  
   const avatar = user && user.image ? user.image : '';
+  const date = user?.createdAt as Date
+  const dateSince = getRelativeTime(date)
 
   if (username)
     return buildMetaForUser({
       username,
       title: `${username}'s profile | TypeHero`,
       description: `View the profile of ${username} on TypeHero.`,
-      bio,
+      challenges: challenges.length,
       avatar,
+      dateSince
     });
   return buildMetaForDefault({
     title: 'Profile | TypeHero',

@@ -4,9 +4,6 @@ import { fetchFont } from 'utils/fetchFont';
 import { Grid } from 'app/components/grid';
 import { Logo } from 'app/components/logo';
 
-import getChallenges from '../getChallenges';
-
-
 export const runtime = 'edge';
 
 export async function GET(req: Request) {
@@ -15,9 +12,6 @@ export async function GET(req: Request) {
     fetchFont('Inter', 700),
     fetchFont('Inter', 400),
   ]);
-
-
-
 
   const parsed = userParam.decodeRequest(req);
 
@@ -38,9 +32,8 @@ export async function GET(req: Request) {
               <img src={props.avatar} tw="object-cover h-68 w-68 rounded-full" />
             ) : null}
             <div tw='flex flex-col ml-10'>
-              <h1 tw="text-6xl font-bold">{props.username}</h1>
-              <p tw='text-4xl -mt-6 font-semibold'>Member since</p>
-              <p tw="text-4xl mt-1 font-semibold">{getChallenges()} Challenges solved!</p>
+              <h1 tw="text-8xl font-bold">{props.username}</h1>
+              <p tw='text-4xl -mt-6 font-medium'>Member Since: {props.dateSince}</p>
             </div>
           </div>
           <div tw="flex relative right-0">

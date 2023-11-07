@@ -59,21 +59,24 @@ interface MetaParamsForUser {
   title: string;
   description: string;
   username: string;
-  bio: string;
   avatar: string;
+  dateSince: string;
+  challenges: number;
 }
 /** Helper to build opengraph metadata for a user, you should call this in generateMetadata() next function */
 export const buildMetaForUser = async ({
   title,
   description,
   username,
-  bio,
+  challenges,
+  dateSince,
   avatar,
 }: MetaParamsForUser): Promise<Metadata> => {
   const params = `${userParam.toSearchString({
     username,
-    bio,
     avatar,
+    challenges,
+    dateSince,
   })}`;
 
   const ogImageUrl = `${OG_URL}/api/user?${params}`;
