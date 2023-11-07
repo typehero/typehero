@@ -8,16 +8,16 @@ const I18nMiddleware = createI18nMiddleware({
 });
 
 export function middleware(req: NextRequest) {
-  const { VERCEL_ENV: vercelEnv, STAGING: staging = false } = process.env;
-
-  // skip blocking the request if local or preview or staging
-  if (!vercelEnv || staging) {
-    return I18nMiddleware(req);
+  // Ignore the request to this endpoint made by the toolbar
+  // because it ignores the i18n static params and provides
+  // and invalid locale dynamic param
+  if (req.nextUrl.pathname === '/.well-known/vercel-user-meta') {
+    return new Response()
   }
 
   return I18nMiddleware(req);
 }
 
 export const config = {
-  matcher: ['/((?!api|static|.*\\..*|_next|favicon.ico|robots.txt).*)'],
+  matcher: ['/.well-known/vercel-user-meta', '/((?!api|static|.*\\..*|_next|favicon.ico|robots.txt).*)'],
 };
