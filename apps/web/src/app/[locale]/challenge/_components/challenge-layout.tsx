@@ -94,16 +94,16 @@ export function ChallengeLayout({
       return isPanelCollapsed
         ? leftStyleIfDesktopCollapsed
         : {
-          width: settings.width,
-          minWidth: `${LEFT_PANEL_BREAKPOINT}px`,
-        };
+            width: settings.width,
+            minWidth: `${LEFT_PANEL_BREAKPOINT}px`,
+          };
     }
     return isPanelCollapsed
       ? leftStyleIfMobileCollapsed
       : {
-        height: settings.height,
-        minHeight: `${LEFT_PANEL_BREAKPOINT}px`,
-      };
+          height: settings.height,
+          minHeight: `${LEFT_PANEL_BREAKPOINT}px`,
+        };
   }, [
     isDesktop,
     isPanelCollapsed,
@@ -288,8 +288,9 @@ export function ChallengeLayout({
       style={{ height: fssettings.isFullscreen ? '100vh' : 'calc(100vh - 3.5rem)' }}
     >
       <div
-        className={`w-full overflow-hidden rounded-2xl border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 ${!isPlayground && 'border'
-          }`}
+        className={`w-full overflow-hidden rounded-2xl border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 ${
+          !isPlayground && 'border'
+        }`}
         ref={leftSide}
         style={{ ...leftStyle }}
       >
