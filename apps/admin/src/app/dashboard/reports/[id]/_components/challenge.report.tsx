@@ -1,10 +1,10 @@
-import { ThumbsUp } from '@repo/ui/icons';
-import Link from 'next/link';
-import type { ReportWithInfo } from '../../report.action';
-import { UserBadge } from '@repo/ui/components/user-badge';
 import { Markdown } from '@repo/ui/components/markdown';
 import { Text } from '@repo/ui/components/typography/typography';
-import { getChallenge } from '../../admin.actions';
+import { UserBadge } from '@repo/ui/components/user-badge';
+import { ThumbsUp } from '@repo/ui/icons';
+import Link from 'next/link';
+import type { ReportWithInfo } from '../_actions';
+import { getChallenge } from '../_actions';
 
 export interface ChallengeReportProps {
   report: NonNullable<ReportWithInfo>;

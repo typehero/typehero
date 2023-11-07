@@ -3,12 +3,12 @@ import { Markdown } from '@repo/ui/components/markdown';
 import { Text } from '@repo/ui/components/typography/typography';
 import { AlertCircle, ChevronLeft } from '@repo/ui/icons';
 import Link from 'next/link';
-import { ChallengeReport } from './_components/report/challenge.report';
-import { CommentReport } from './_components/report/comment.report';
-import { SolutionReport } from './_components/report/solution.report';
-import { UserReport } from './_components/report/user.report';
+import { getReport, type ReportWithInfo } from './_actions';
+import { ChallengeReport } from './_components/challenge.report';
+import { CommentReport } from './_components/comment.report';
+import { SolutionReport } from './_components/solution.report';
+import { UserReport } from './_components/user.report';
 import { ReportActions } from './actions';
-import { getReport, type ReportWithInfo } from './report.action';
 
 export interface Props {
   params: {

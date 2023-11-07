@@ -3,6 +3,7 @@
 import { prisma } from '@repo/db';
 
 export type AdminReport = NonNullable<Awaited<ReturnType<typeof getReports>>>[0];
+export type Reports = Awaited<ReturnType<typeof getReports>>;
 export async function getReports() {
   const reports = await prisma.report.findMany({
     select: {

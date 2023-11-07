@@ -4,6 +4,7 @@ import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import { type Prisma, type Report } from '@repo/db/types';
 import { cache } from 'react';
+import { assertAdmin } from '~/utils/auth-guards';
 
 // FML this was obnoxious to do
 export type ChallengeInfo = Omit<Report, 'id' | 'status' | 'type' | 'userId'> & {
@@ -153,6 +154,8 @@ export async function deleteSolution(solutionId: number, reportId: number) {
 export async function banUser(userId: string, reportId: number, banReason?: string) {
   const session = await getServerAuthSession();
 
+  assertAdmin(session);
+
   await prisma.$transaction([
     prisma.user.update({
       where: {
@@ -245,15 +248,109 @@ export const getChallenge = cache(async (id: number) => {
   });
 });
 
-export type UploadedImages = Awaited<ReturnType<typeof getUploadedImages>>;
-/**
- * The function fetches the last 100 uploaded images.
- */
-export async function getUploadedImages() {
-  return prisma.imageUpload.findMany({
-    take: 100,
+export const getReportedUserInformation = async (userId: string) => {
+  return await prisma.user.findFirstOrThrow({
+    where: {
+      id: userId,
+    },
+    include: {
+      comment: {
+        take: 10,
+        include: {
+          user: {
+            select: {
+              name: true,
+            },
+          },
+          _count: {
+            select: {
+              replies: true,
+            },
+          },
+          rootChallenge: true,
+          rootSolution: true,
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
+      },
+      sharedSolution: {
+        take: 5,
+        orderBy: {
+          createdAt: 'desc',
+        },
+      },
+      challenge: {
+        take: 5,
+        orderBy: {
+          createdAt: 'asc',
+        },
+      },
+    },
+  });
+};
+
+export type ReportWithInfo = Awaited<ReturnType<typeof getReport>>;
+
+export async function getReport(id: number) {
+  return prisma.report.findFirstOrThrow({
+    where: {
+      id: Number(id),
+    },
     orderBy: {
-      createdAt: 'asc',
+      type: 'asc',
+    },
+    include: {
+      user: {
+        select: {
+          name: true,
+        },
+      },
+      challenge: {
+        include: {
+          user: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+      comment: {
+        include: {
+          _count: {
+            select: {
+              replies: true,
+            },
+          },
+          rootChallenge: true,
+          rootSolution: true,
+          user: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+      issues: true,
+      reporter: {
+        select: {
+          name: true,
+        },
+      },
+      solution: {
+        include: {
+          user: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+      moderator: {
+        select: {
+          name: true,
+        },
+      },
     },
   });
 }

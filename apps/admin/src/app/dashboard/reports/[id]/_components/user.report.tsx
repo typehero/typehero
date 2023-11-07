@@ -1,10 +1,9 @@
 'use server';
 
-// import { Comment } from '~/app/challenge/_components/comments/comment';
-import { Text } from '@repo/ui/components/typography/typography';
-import { Markdown } from '@repo/ui/components/markdown';
 import { Expandable } from '@repo/ui/components/expandable';
-import { getReportedUserInformation, type ReportWithInfo } from '../../report.action';
+import { Markdown } from '@repo/ui/components/markdown';
+import { Text } from '@repo/ui/components/typography/typography';
+import { getReportedUserInformation, type ReportWithInfo } from '../_actions';
 
 interface UserReportProps {
   report: NonNullable<ReportWithInfo>;
@@ -13,7 +12,6 @@ interface UserReportProps {
 export async function UserReport({ report }: UserReportProps) {
   if (!report.userId) return null;
   const userInfo = await getReportedUserInformation(report.userId);
-  const commentRootId = report.comment?.rootChallengeId ?? report.comment?.rootSolutionId ?? -1;
 
   return (
     <div>

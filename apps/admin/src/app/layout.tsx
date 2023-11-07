@@ -17,7 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Providers>
           <Navigation />
           <main className="py-5">
-            <div className="container space-y-0.5">
+            <div className="space-y-0.5 px-4">
               <h2 className="text-2xl font-bold tracking-tight">Admin</h2>
               <p className="text-muted-foreground">
                 The dashboard for all things moderation, administration, and more.

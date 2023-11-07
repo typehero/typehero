@@ -1,7 +1,7 @@
-import Link from 'next/link';
-import { ExternalLink } from '@repo/ui/icons';
-import type { ReportWithInfo } from '../../report.action';
 import { Markdown } from '@repo/ui/components/markdown';
+import { ExternalLink } from '@repo/ui/icons';
+import Link from 'next/link';
+import type { ReportWithInfo } from '../_actions';
 
 export function CommentReport({ report }: { report: NonNullable<ReportWithInfo> }) {
   if (report.type !== 'COMMENT' || report.commentId === null || !report.comment) return null;

@@ -1,11 +1,11 @@
 'use server';
 
-import Link from 'next/link';
 import { prisma } from '@repo/db';
-import { Text } from '@repo/ui/components/typography/typography';
 import { Markdown } from '@repo/ui/components/markdown';
-import type { ReportWithInfo } from '../../report.action';
+import { Text } from '@repo/ui/components/typography/typography';
+import Link from 'next/link';
 import { cache } from 'react';
+import type { ReportWithInfo } from '../_actions';
 
 const getSolutionChallenge = cache(async (challengeId: number) => {
   return prisma.challenge.findFirstOrThrow({

@@ -20,7 +20,7 @@ const sidebarNavItems = [
 ];
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <main className="container flex gap-7">
+    <main className="flex gap-7 px-4">
       <aside className="-mx-4 lg:w-1/5">
         <SidebarNav items={sidebarNavItems} />
       </aside>

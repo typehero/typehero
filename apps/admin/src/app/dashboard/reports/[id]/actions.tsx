@@ -1,6 +1,7 @@
 'use client';
 
 import { type User } from '@repo/db/types';
+import { Button } from '@repo/ui/components/button';
 import {
   Dialog,
   DialogContent,
@@ -9,25 +10,17 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@repo/ui/components/dialog';
-import { useRouter } from 'next/navigation';
-import { useMemo, useState } from 'react';
-import {
-  banChallenge,
-  banUser,
-  deleteComment,
-  deleteSolution,
-  dismissReport,
-} from './admin.actions';
-import { toast } from '@repo/ui/components/use-toast';
-import { Button } from '@repo/ui/components/button';
 import { Label } from '@repo/ui/components/label';
 import { Textarea } from '@repo/ui/components/textarea';
-import type { ReportWithInfo } from './report.action';
+import { toast } from '@repo/ui/components/use-toast';
+import { useRouter } from 'next/navigation';
+import { useMemo, useState } from 'react';
+import type { ReportWithInfo } from './_actions';
+import { banChallenge, banUser, deleteComment, deleteSolution, dismissReport } from './_actions';
 
 export interface ReportActionsProps {
   report: NonNullable<ReportWithInfo>;
 }
-// export type ReportActionsProps = UserReportActionProps | ChallengeReportActionProps | SolutionReportActionProps | CommentReportActionProps;
 
 export interface ReportActionsBase {
   moderator?: User;
@@ -38,6 +31,7 @@ export function ReportActions({ report }: ReportActionsProps) {
   const [banReason, setBanReason] = useState('');
   const [ban, setBan] = useState(false);
   const router = useRouter();
+  console.log({ report });
 
   const user = useMemo(() => {
     switch (report.type) {
@@ -83,6 +77,7 @@ export function ReportActions({ report }: ReportActionsProps) {
   }
 
   async function handleBanUser(userId: string, reportId: number, banReason?: string) {
+    debugger;
     try {
       await banUser(report.userId!, reportId, banReason);
       toast({
