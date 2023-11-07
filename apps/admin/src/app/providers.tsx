@@ -3,7 +3,6 @@
 import { SessionProvider } from '@repo/auth/react';
 import { TooltipProvider } from '@repo/ui/components/tooltip';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ThemeProvider } from 'next-themes';
 
 interface Props {
@@ -21,7 +20,6 @@ const queryClient = new QueryClient({
 export function Providers({ children }: Props) {
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
       <SessionProvider>
         <ThemeProvider attribute="class">
           <TooltipProvider>{children}</TooltipProvider>

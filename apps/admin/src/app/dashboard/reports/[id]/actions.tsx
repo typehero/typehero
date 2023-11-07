@@ -77,7 +77,6 @@ export function ReportActions({ report }: ReportActionsProps) {
   }
 
   async function handleBanUser(userId: string, reportId: number, banReason?: string) {
-    debugger;
     try {
       await banUser(report.userId!, reportId, banReason);
       toast({

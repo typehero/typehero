@@ -23,7 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 The dashboard for all things moderation, administration, and more.
               </p>
             </div>
-            <div className="bg-border my-6 h-[1px] w-full shrink-0"></div>
+            <div className="bg-border my-6 h-[1px] w-full shrink-0" />
             <div className="h-full">{children}</div>
           </main>
           <Toaster />

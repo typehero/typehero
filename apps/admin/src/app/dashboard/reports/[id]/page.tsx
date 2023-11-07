@@ -38,7 +38,7 @@ const getComponentByType = (type: ReportWithInfo['type']) => {
   }[type];
 };
 export default async function ({ params: { id } }: Props) {
-  const report = await getReport(+id);
+  const report = await getReport(Number(id));
 
   const ReportComponent = getComponentByType(report.type);
 
