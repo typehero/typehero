@@ -55,19 +55,6 @@ export async function generateMetadata({ params: { username: usernameFromQuery }
     },
   });
 
-  const challenges = await prisma.challenge.findMany({
-    where: {
-      submission: {
-        some: {
-          userId: user?.id,
-          isSuccessful: true,
-        },
-      },
-    },
-    select: {
-      name: true,
-    },
-  });
   
   const avatar = user && user.image ? user.image : '';
   const date = user?.createdAt as Date
