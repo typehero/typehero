@@ -1,11 +1,10 @@
 import { Analytics } from '@vercel/analytics/react';
 
-import '../../styles/globals.css';
+import '../styles/globals.css';
 
 import { Toaster } from '@repo/ui/components/toaster';
 import { Inter } from 'next/font/google';
 import { Navigation } from '~/components/navigation';
-import { getStaticParams } from '~/locales/server';
 import { Providers } from './providers';
 
 import { OG_URL, tagline } from './metadata';
@@ -49,10 +48,6 @@ export const metadata = {
 };
 
 const inter = Inter({ subsets: ['latin'] });
-
-export function generateStaticParams() {
-  return getStaticParams();
-}
 
 export default function RootLayout({
   children,

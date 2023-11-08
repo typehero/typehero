@@ -13,7 +13,7 @@
       rgba(59, 131, 199, 0.17) 75.5%,
       rgba(49, 120, 198, 0.3) 100%
     ),
-    url('../../../assets/images/background_pattern.webp');
+    url('../../assets/images/background_pattern.webp');
   background-size: cover;
   background-position-x: center;
   background-repeat: no-repeat;
