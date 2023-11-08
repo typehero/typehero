@@ -3,6 +3,7 @@
 import Link from 'next/link';
 
 import type { User } from '@repo/db/types';
+import { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/card';
 import {
   Tabs,
   VerticalTabsContent,
@@ -10,12 +11,6 @@ import {
   VerticalTabsTrigger,
 } from '@repo/ui/components/tabs';
 import { Settings2, User as UserIcon } from '@repo/ui/icons';
-import { MagicIcon } from '@repo/ui/components/magic-icon';
-import { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/card';
-
-import { getRelativeTime } from '~/utils/relativeTime';
-import UserHeader from '~/app/[username]/_components/dashboard/user-header';
-import { stripProtocolAndWWW } from '~/utils/stringUtils';
 
 import { ProfileSettings } from './edit-profile-tab';
 
@@ -37,9 +32,7 @@ export const Settings = async ({ user }: Props) => {
               className="h-32 w-32 rounded-3xl bg-cover bg-center bg-no-repeat md:h-64 md:w-64"
               style={{ backgroundImage: `url(${user.image ?? '/avatar.jpeg'})` }}
             />
-            <div className="flex flex-col items-center gap-2 md:w-full md:items-start">
-              <UserHeader user={user} isOwnProfile />
-            </div>
+            <div className="flex flex-col items-center gap-2 md:w-full md:items-start"></div>
             <div className="flex gap-4 md:w-full md:flex-col">
               <VerticalTabsTrigger
                 className="flex items-center justify-center gap-3 px-2 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50 md:justify-normal md:px-3 "
