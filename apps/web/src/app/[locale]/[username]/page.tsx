@@ -78,7 +78,6 @@ export async function generateMetadata({ params: { username: usernameFromQuery }
       username,
       title: `${username}'s profile | TypeHero`,
       description: `View the profile of ${username} on TypeHero.`,
-      challenges: challenges.length,
       avatar,
       dateSince
     });
