@@ -391,7 +391,6 @@ model TrackChallenge {
   track       Track?    @relation(fields: [trackId], references: [id])
   trackId     Int?
 
-  @@unique([challengeId, orderId])
   @@index([challengeId])
   @@index([trackId])
 }

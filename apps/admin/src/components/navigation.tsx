@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react';
 export function Navigation() {
   return (
     <header className="z-0 w-full">
-      <nav className="container flex h-14 items-center">
+      <nav className="flex h-14 items-center px-4">
         <div className="flex w-full items-center justify-between">
           <div className="relative flex gap-3">
             <a className="flex items-center space-x-2 duration-300" href="/">
