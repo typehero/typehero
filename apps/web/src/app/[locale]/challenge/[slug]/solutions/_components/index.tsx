@@ -1,25 +1,55 @@
 'use client';
+
 import { Calendar, MessageCircle, ThumbsUp } from '@repo/ui/icons';
 import { useSession } from '@repo/auth/react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { SolutionEditor } from './solution-editor';
 import { NoSolutions } from './nosolutions';
 import { SubmitSolution } from './submit-solution';
-import type { ChallengeSolution } from '../getSolutionRouteData';
+import { type ChallengeSolution, getPaginatedSolutions } from '../getSolutionRouteData';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { Badge } from '@repo/ui/components/badge';
 import { UserBadge } from '@repo/ui/components/user-badge';
 import { useParams } from 'next/navigation';
+import { Pagination } from '../../../_components/pagination';
+import { sortKeys } from '~/utils/sorting';
+import { SortSelect } from '../../../_components/sort-select';
+import { useQuery } from '@tanstack/react-query';
+import { SolutionsSkeleton } from './solution-skeleton';
 
 interface Props {
   challenge: ChallengeSolution;
+  slug: string;
 }
+
 type View = 'details' | 'editor' | 'list';
-export function Solutions({ challenge }: Props) {
+
+export function Solutions({ challenge, slug }: Props) {
   const [view, setView] = useState<View>('list');
-  const loggedInUserHasSolution = challenge.submission.length;
+  const commentContainerRef = useRef<HTMLDivElement>(null);
+  const [sortKey, setSortKey] = useState<(typeof sortKeys)[number]>(sortKeys[0]);
+  const [page, setPage] = useState(1);
   const session = useSession();
+
+  const handleChangePage = (page: number) => {
+    setPage(page);
+    commentContainerRef.current?.scroll({
+      top: 128,
+      behavior: 'smooth',
+    });
+  };
+
+  const { status, data } = useQuery({
+    queryKey: ['paginated-solutions', sortKey.value, page],
+    queryFn: () =>
+      getPaginatedSolutions({ slug, page, sortKey: sortKey.key, sortOrder: sortKey.order }),
+    keepPreviousData: true,
+    staleTime: 60000, // one minute
+    refetchOnWindowFocus: false,
+  });
+
+  const loggedInUserHasSolution = challenge.submission.length;
 
   return (
     <div className="relative h-full">
@@ -29,15 +59,38 @@ export function Solutions({ challenge }: Props) {
 
       {view === 'list' && (
         <>
-          {challenge.sharedSolution.length !== 0 ? (
+          {data?.solutions.length !== 0 ? (
             <>
-              <div className="bg-background/70 dark:bg-muted/70 absolute right-0 top-0 flex w-full justify-end border-b border-zinc-300 p-2 backdrop-blur-sm dark:border-zinc-700">
-                <SubmitSolution disabled={Boolean(!loggedInUserHasSolution)} setView={setView} />
-              </div>
-              <div className="custom-scrollable-element h-full overflow-y-auto pt-12">
-                {challenge.sharedSolution.map((solution) => (
-                  <SolutionRow key={solution.id} solution={solution} />
-                ))}
+              {status === 'loading' && <SolutionsSkeleton />}
+              {status === 'success' && (
+                <div className="bg-background/70 dark:bg-muted/70 absolute right-0 top-0 flex w-full justify-end border-b border-zinc-300 p-2 backdrop-blur-sm dark:border-zinc-700">
+                  <SubmitSolution disabled={Boolean(!loggedInUserHasSolution)} setView={setView} />
+                </div>
+              )}
+              <div
+                className="custom-scrollable-element relative flex h-full flex-col overflow-y-auto pt-12"
+                ref={commentContainerRef}
+              >
+                <div>
+                  {(data?.solutions.length ?? 0) > 0 && (
+                    <SortSelect sortKey={sortKey} setSortKey={setSortKey} setPage={setPage} />
+                  )}
+                </div>
+                <div className="flex-1">
+                  {status === 'success' &&
+                    data?.solutions.map((solution) => (
+                      <SolutionRow key={solution.id} solution={solution} />
+                    ))}
+                </div>
+                {(data?.totalPages ?? 0) > 1 && (
+                  <div className="mb-2 flex justify-center">
+                    <Pagination
+                      currentPage={page}
+                      onClick={handleChangePage}
+                      totalPages={data?.totalPages ?? 0}
+                    />
+                  </div>
+                )}
               </div>
             </>
           ) : (
