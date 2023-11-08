@@ -136,11 +136,11 @@ export function WaitlistForm() {
 
           <Button
             className="wl-form-button group relative mt-6 w-full overflow-hidden rounded-xl px-[2px] py-[2px] font-bold transition-shadow duration-300 hover:shadow-[0_0.5rem_2rem_-0.75rem_#3178c6] dark:hover:shadow-[0_0.5rem_2rem_-0.75rem_#5198f6]"
-            disabled={mutation.status === 'loading'}
+            disabled={mutation.status === 'pending'}
             type="submit"
           >
             <span className="h-full w-full rounded-[10px] bg-white px-4 py-2 text-center font-bold text-black transition-colors duration-300 group-hover:bg-blue-100 dark:bg-black dark:text-white group-hover:dark:bg-cyan-950">
-              {mutation.status === 'loading' ? 'Submitting...' : 'Join the waitlist'}
+              {mutation.status === 'pending' ? 'Submitting...' : 'Join the waitlist'}
             </span>
           </Button>
         </form>
