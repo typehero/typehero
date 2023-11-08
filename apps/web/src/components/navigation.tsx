@@ -15,7 +15,7 @@ import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
-import { useFullscreenSettingsStore } from '~/app/[locale]/challenge/_components/fullscreen';
+import { useFullscreenSettingsStore } from '~/app/challenge/_components/fullscreen';
 import { FeatureFlagContext } from '~/app/feature-flag-provider';
 import { isAdminOrModerator } from '~/utils/auth-guards';
 
