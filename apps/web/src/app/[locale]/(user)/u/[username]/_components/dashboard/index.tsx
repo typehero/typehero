@@ -33,11 +33,11 @@ export function Dashboard({ user, isOwnProfile, children }: Props) {
 
   const tabs = useMemo(
     () => [
-      { name: 'overview', route: `/@${user.name}` },
-      { name: 'in-progress', route: `/@${user.name}/in-progress` },
-      { name: 'shared-solutions', route: `/@${user.name}/shared-solutions` },
-      { name: 'bookmarks', route: `/@${user.name}/bookmarks` },
-      { name: 'completed', route: `@${user.name}/completed` },
+      { name: 'overview', route: `/u/${user.name}` },
+      { name: 'in-progress', route: `/u/${user.name}/in-progress` },
+      { name: 'shared-solutions', route: `/u/${user.name}/shared-solutions` },
+      { name: 'bookmarks', route: `/u/${user.name}/bookmarks` },
+      { name: 'completed', route: `/u/${user.name}/completed` },
     ],
     [user.name],
   );
@@ -118,7 +118,7 @@ export function Dashboard({ user, isOwnProfile, children }: Props) {
                 className="flex items-center justify-center gap-3 px-2 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50 md:justify-normal md:px-3"
                 value="overview"
                 onClick={() => {
-                  router.push(`/@${user.name}`);
+                  router.push(`/u/${user.name}`);
                 }}
               >
                 <Text className="h-4 w-4" />
@@ -129,7 +129,7 @@ export function Dashboard({ user, isOwnProfile, children }: Props) {
                   className="flex items-center justify-center gap-3 px-2 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50 md:justify-normal md:px-3"
                   value="completed"
                   onClick={() => {
-                    router.push(`/@${user.name}/completed`);
+                    router.push(`/u/${user.name}/completed`);
                   }}
                 >
                   <CheckCircle className="h-4 w-4" />
@@ -141,7 +141,7 @@ export function Dashboard({ user, isOwnProfile, children }: Props) {
                   className="flex items-center justify-center gap-3 px-2 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50 md:justify-normal md:px-3"
                   value="in-progress"
                   onClick={() => {
-                    router.push(`/@${user.name}/in-progress`);
+                    router.push(`/u/${user.name}/in-progress`);
                   }}
                 >
                   <Play className="h-4 w-4" />
@@ -152,7 +152,7 @@ export function Dashboard({ user, isOwnProfile, children }: Props) {
                 className="flex items-center justify-center gap-3 px-2 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50 md:justify-normal md:px-3"
                 value="shared-solutions"
                 onClick={() => {
-                  router.push(`/@${user.name}/shared-solutions`);
+                  router.push(`/u/${user.name}/shared-solutions`);
                 }}
               >
                 <ChevronRightSquare className="h-4 w-4" />
@@ -164,7 +164,7 @@ export function Dashboard({ user, isOwnProfile, children }: Props) {
                     className="flex items-center justify-center gap-3 px-2 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50 md:justify-normal md:px-3"
                     value="bookmarks"
                     onClick={() => {
-                      router.push(`/@${user.name}/bookmarks`);
+                      router.push(`/u/${user.name}/bookmarks`);
                     }}
                   >
                     <Bookmark className="h-4 w-4" />

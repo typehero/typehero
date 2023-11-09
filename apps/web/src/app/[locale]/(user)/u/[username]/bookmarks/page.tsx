@@ -5,9 +5,9 @@ import {
   CardHeader,
   CardTitle,
 } from '@repo/ui/components/card';
-import { CompletedTab } from '../_components/dashboard/completed-tab';
-import { notFound } from 'next/navigation';
 import { prisma } from '@repo/db';
+import { BookmarksTab } from '../_components/dashboard/bookmarks-tab';
+import { notFound } from 'next/navigation';
 
 interface Props {
   params: {
@@ -15,9 +15,7 @@ interface Props {
   };
 }
 
-export default async function CompletedPage({ params: { username: usernameFromQuery } }: Props) {
-  const [, username] = decodeURIComponent(usernameFromQuery).split('@');
-
+export default async function BookmarksPage({ params: { username } }: Props) {
   if (!username) return notFound();
 
   const user = await prisma.user.findFirst({
@@ -41,13 +39,13 @@ export default async function CompletedPage({ params: { username: usernameFromQu
   return (
     <Card className="col-span-4 md:min-h-[calc(100vh_-_56px_-_6rem)]">
       <CardHeader>
-        <CardTitle>Completed</CardTitle>
+        <CardTitle>Bookmarks</CardTitle>
         <CardDescription className="text-muted-foreground mb-4 text-sm">
-          Your completed challenges.
+          Your bookmarked challenges.
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <CompletedTab userId={user.id} />
+        <BookmarksTab userId={user.id} />
       </CardContent>
     </Card>
   );

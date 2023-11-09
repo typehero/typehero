@@ -14,8 +14,7 @@ export const metadata: Metadata = {
   description: 'View this profile on TypeHero.',
 };
 
-export async function Profile({ username: usernameFromQuery, children }: Props) {
-  const [, username] = decodeURIComponent(usernameFromQuery).split('@');
+export async function Profile({ username, children }: Props) {
   if (!username) return notFound();
 
   const user = await prisma.user.findFirst({

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 
 import type { User } from '@repo/db/types';
+import { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/card';
 import {
   Tabs,
   VerticalTabsContent,
@@ -10,12 +11,8 @@ import {
   VerticalTabsTrigger,
 } from '@repo/ui/components/tabs';
 import { Settings2, User as UserIcon } from '@repo/ui/icons';
-import { MagicIcon } from '@repo/ui/components/magic-icon';
-import { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/card';
 
-import { getRelativeTime } from '~/utils/relativeTime';
 import UserHeader from '~/app/[locale]/[username]/_components/dashboard/user-header';
-import { stripProtocolAndWWW } from '~/utils/stringUtils';
 
 import { ProfileSettings } from './edit-profile-tab';
 
@@ -49,7 +46,7 @@ export const Settings = async ({ user }: Props) => {
                 <span className="hidden md:block">Settings</span>
               </VerticalTabsTrigger>
               <Link
-                href={`/@${user.name}`}
+                href={`/u/${user.name}`}
                 className="border-border dark:border-ring  data-[state=active]:bg-border ring-offset-background focus-visible:ring-ring data-[state=active]:text-foreground flex items-center justify-center gap-3 whitespace-nowrap rounded-xl border px-1.5 py-1.5 text-sm font-medium transition-all duration-300 hover:bg-neutral-200/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm dark:hover:bg-neutral-700/50 md:justify-normal md:px-3"
               >
                 <UserIcon className="h-4 w-4" />

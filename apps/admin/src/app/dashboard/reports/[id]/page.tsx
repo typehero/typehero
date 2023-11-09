@@ -78,10 +78,7 @@ export default async function ({ params: { id } }: Props) {
           </Text>
 
           <Text className="mt-4" intent="leading">
-            Reporter{' '}
-            <Link className="text-gray-400 hover:underline" href={`/@${report.reporter.name}`}>
-              @{report.reporter.name}
-            </Link>{' '}
+            Reporter <div className="text-gray-400 hover:underline">@{report.reporter.name}</div>{' '}
             says that this challenge includes:{' '}
           </Text>
 

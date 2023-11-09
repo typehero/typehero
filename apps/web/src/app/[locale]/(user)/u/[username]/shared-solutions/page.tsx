@@ -5,9 +5,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@repo/ui/components/card';
-import { prisma } from '@repo/db';
-import { BookmarksTab } from '../_components/dashboard/bookmarks-tab';
+import { SharedSolutionsTab } from '../_components/dashboard/shared-solutions-tab';
 import { notFound } from 'next/navigation';
+import { prisma } from '@repo/db';
+import { getServerAuthSession } from '@repo/auth/server';
 
 interface Props {
   params: {
@@ -15,9 +16,7 @@ interface Props {
   };
 }
 
-export default async function BookmarksPage({ params: { username: usernameFromQuery } }: Props) {
-  const [, username] = decodeURIComponent(usernameFromQuery).split('@');
-
+export default async function SharedSolutionsPage({ params: { username } }: Props) {
   if (!username) return notFound();
 
   const user = await prisma.user.findFirst({
@@ -38,16 +37,19 @@ export default async function BookmarksPage({ params: { username: usernameFromQu
 
   if (!user) return notFound();
 
+  const session = await getServerAuthSession();
+  const isOwnProfile = session?.user.id === user.id;
+
   return (
     <Card className="col-span-4 md:min-h-[calc(100vh_-_56px_-_6rem)]">
       <CardHeader>
-        <CardTitle>Bookmarks</CardTitle>
+        <CardTitle>Shared Solutions</CardTitle>
         <CardDescription className="text-muted-foreground mb-4 text-sm">
-          Your bookmarked challenges.
+          {isOwnProfile ? 'Your' : `${user.name}'s`} shared challenge solutions.
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <BookmarksTab userId={user.id} />
+        <SharedSolutionsTab userId={user.id} />
       </CardContent>
     </Card>
   );

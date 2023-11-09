@@ -168,7 +168,7 @@ function LoginButton() {
         align="end"
         className="mt-[0.33rem] w-56 rounded-xl bg-white/50 backdrop-blur-sm dark:bg-neutral-950/50"
       >
-        <Link className="block" href={`/@${session.user.name}`}>
+        <Link className="block" href={`/u/${session.user.name}`}>
           <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
