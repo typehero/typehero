@@ -1,6 +1,6 @@
-import { Button } from "@repo/ui/components/button";
-import { ChevronLeft, ChevronRight } from "@repo/ui/icons";
-import clsx from "clsx";
+import { Button } from '@repo/ui/components/button';
+import { ChevronLeft, ChevronRight } from '@repo/ui/icons';
+import clsx from 'clsx';
 
 export function Pagination({
   currentPage,
