@@ -33,12 +33,6 @@ type ExpectValidArgs<
   ARGS extends any[]
 > = ARGS extends Parameters<FUNC> ? true : false;
 
-type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
-  k: infer I
-) => void
-  ? I
-  : never;
-
 type NoInfer<T> = [T][T extends any ? 0 : never];
 
 declare function id<T>(): T;
