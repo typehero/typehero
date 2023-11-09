@@ -2,8 +2,19 @@ import Image from 'next/image';
 import { Button } from '@repo/ui/components/button';
 import { getRandomChallenge } from '~/utils/server/get-random-challenge';
 import { Navigation } from '~/components/navigation';
+import { cookies } from 'next/headers';
+import { getScopedI18n, getStaticParams } from '~/locales/server';
+
+export function generateStaticParams() {
+  return getStaticParams();
+}
 
 export default async function NotFound() {
+  const cookieStore = cookies();
+  const locale = cookieStore.get('Next-Locale')?.value;
+  console.log({ locale });
+  const t = await getScopedI18n('404');
+  console.log(t('message'));
   const randomChallengeSlug = await getRandomChallenge();
 
   return (
@@ -34,7 +45,7 @@ export default async function NotFound() {
           <p className="px-6 text-center font-mono text-base md:px-0 md:text-xl">
             {/* Looks Like You Took a Wrong Turn at the Interface. <br className="hidden md:inline" />
           Let's Get You Back on Track */}
-            Page not found, sus
+            {t('message')}
           </p>
         </div>
         {randomChallengeSlug !== null ? (
