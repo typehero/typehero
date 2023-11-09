@@ -68,10 +68,10 @@ export async function generateMetadata({ params: { username: usernameFromQuery }
       name: true,
     },
   });
-  
+
   const avatar = user && user.image ? user.image : '';
-  const date = user?.createdAt as Date
-  const dateSince = getRelativeTime(date)
+  const date = user?.createdAt as Date;
+  const dateSince = getRelativeTime(date);
 
   if (username)
     return buildMetaForUser({
@@ -80,7 +80,7 @@ export async function generateMetadata({ params: { username: usernameFromQuery }
       description: `View the profile of ${username} on TypeHero.`,
       challenges: challenges.length,
       avatar,
-      dateSince
+      dateSince,
     });
   return buildMetaForDefault({
     title: 'Profile | TypeHero',
