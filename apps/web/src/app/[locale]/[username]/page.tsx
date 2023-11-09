@@ -55,32 +55,18 @@ export async function generateMetadata({ params: { username: usernameFromQuery }
     },
   });
 
-  const challenges = await prisma.challenge.findMany({
-    where: {
-      submission: {
-        some: {
-          userId: user?.id,
-          isSuccessful: true,
-        },
-      },
-    },
-    select: {
-      name: true,
-    },
-  });
-
+  
   const avatar = user && user.image ? user.image : '';
-  const date = user?.createdAt as Date;
-  const dateSince = getRelativeTime(date);
+  const date = user?.createdAt as Date
+  const dateSince = getRelativeTime(date)
 
   if (username)
     return buildMetaForUser({
       username,
       title: `${username}'s profile | TypeHero`,
       description: `View the profile of ${username} on TypeHero.`,
-      challenges: challenges.length,
       avatar,
-      dateSince,
+      dateSince
     });
   return buildMetaForDefault({
     title: 'Profile | TypeHero',
