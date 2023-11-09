@@ -1,16 +1,5 @@
-import { Inter } from 'next/font/google';
-import { getStaticParams } from '~/locales/server';
-import Html from '../html';
-import { Providers } from './providers';
-import { Navigation } from '~/components/navigation';
-import { Toaster } from '@repo/ui/components/toaster';
-import { Analytics } from '@vercel/analytics/react';
-
-const inter = Inter({ subsets: ['latin'] });
-
-export function generateStaticParams() {
-  return getStaticParams();
-}
+'use client';
+import { I18nProviderClient } from '~/locales/client';
 
 export default function RootLayout({
   children,
@@ -19,14 +8,5 @@ export default function RootLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
-  return (
-    <>
-      <Providers locale={locale}>
-        <Navigation />
-        <main className="flex-1">{children}</main>
-        <Toaster />
-      </Providers>
-      <Analytics />
-    </>
-  );
+  return <I18nProviderClient locale={locale}>{children}</I18nProviderClient>;
 }
