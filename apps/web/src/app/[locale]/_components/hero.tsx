@@ -212,11 +212,11 @@ export async function Hero() {
             {session ? (
               <Button
                 asChild
-                className="hero-join-button group relative mx-auto w-fit overflow-hidden rounded-xl p-[2px] font-bold transition-all duration-300 hover:bg-transparent hover:shadow-[0_0_2rem_-0.5rem_#FFB800] dark:hidden md:mr-0 lg:mr-auto"
+                className="hero-join-button group relative mx-auto w-fit overflow-hidden rounded-xl p-[2px] font-bold transition-all duration-300 hover:bg-transparent hover:shadow-[0_0_2rem_-0.5rem_#3B82F6] dark:hidden md:mr-0 lg:mr-auto"
                 variant="outline"
               >
                 <Link href="/explore">
-                  <span className="inline-flex h-full w-fit items-center gap-2 rounded-[10px] bg-white px-4 py-2 text-[#FFB800] transition-all duration-300">
+                  <span className="text-primary inline-flex h-full w-fit items-center gap-2 rounded-[10px] bg-white px-4 py-2 transition-all duration-300">
                     <Compass className="h-4 w-4" />
                     Explore
                   </span>

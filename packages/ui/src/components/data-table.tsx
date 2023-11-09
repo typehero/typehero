@@ -17,6 +17,7 @@ import {
 import { useState } from 'react';
 import { DataTablePagination } from './data-table-pagination';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './table';
+import { ChevronDown, ChevronUp } from '../icons';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -60,10 +61,16 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(header.column.columnDef.header, header.getContext())}
+                    <TableHead key={header.id} onClick={header.column.getToggleSortingHandler()}>
+                      <div className="flex items-center justify-between">
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(header.column.columnDef.header, header.getContext())}
+                        {{
+                          asc: <ChevronUp size={16} />,
+                          desc: <ChevronDown size={16} />,
+                        }[header.column.getIsSorted() as string] ?? null}
+                      </div>
                     </TableHead>
                   );
                 })}
