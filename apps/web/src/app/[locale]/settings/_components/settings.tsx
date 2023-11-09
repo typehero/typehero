@@ -12,18 +12,14 @@ import {
 } from '@repo/ui/components/tabs';
 import { Settings2, User as UserIcon } from '@repo/ui/icons';
 
-import UserHeader from '~/app/[locale]/[username]/_components/dashboard/user-header';
-
 import { ProfileSettings } from './edit-profile-tab';
+import UserHeader from '../../(user)/u/[username]/_components/dashboard/user-header';
 
 interface Props {
   user: User & { userLinks: { id: string | null; url: string }[] };
 }
 
 export const Settings = async ({ user }: Props) => {
-  const filteredProfileLinks =
-    user.userLinks.length > 0 ? user.userLinks.filter((item) => item.url !== '') : [];
-
   return (
     <div className="container">
       {/* // TODO: GFI: make each page a subroute, put settings & profile into the same layout */}
