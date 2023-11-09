@@ -3,18 +3,13 @@ import { Button } from '@repo/ui/components/button';
 import { getRandomChallenge } from '~/utils/server/get-random-challenge';
 import { Navigation } from '~/components/navigation';
 import { cookies } from 'next/headers';
-import { getScopedI18n, getStaticParams } from '~/locales/server';
-
-export function generateStaticParams() {
-  return getStaticParams();
-}
+import { getScopedI18n } from '~/locales/server';
 
 export default async function NotFound() {
   const cookieStore = cookies();
   const locale = cookieStore.get('Next-Locale')?.value;
-  console.log({ locale });
   const t = await getScopedI18n('404');
-  console.log(t('message'));
+
   const randomChallengeSlug = await getRandomChallenge();
 
   return (
