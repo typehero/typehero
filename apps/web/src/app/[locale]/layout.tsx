@@ -11,10 +11,10 @@ export default function RootLayout({
 }) {
   return (
     <>
-      <Navigation />
-      <main className="flex-1">
-        <I18nProviderClient locale={locale}>{children}</I18nProviderClient>
-      </main>
+      <I18nProviderClient locale={locale}>
+        <Navigation />
+        <main className="flex-1">{children}</main>
+      </I18nProviderClient>
     </>
   );
 }
