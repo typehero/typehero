@@ -1,9 +1,8 @@
 'use client';
 
 import type { CommentRoot } from '@repo/db/types';
-import { Button } from '@repo/ui/components/button';
 import { toast } from '@repo/ui/components/use-toast';
-import { ChevronDown, ChevronLeft, ChevronRight, MessageCircle } from '@repo/ui/icons';
+import { ChevronDown, MessageCircle } from '@repo/ui/icons';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { useRef, useState } from 'react';
@@ -13,9 +12,8 @@ import { CommentSkeleton } from './comment-skeleton';
 import { addComment } from './comment.action';
 import { getPaginatedComments, type PreselectedCommentMetadata } from './getCommentRouteData';
 import NoComments from './nocomments';
-import { sortKeys } from '~/utils/sorting';
-import { SortSelect } from '../sort-select';
 import { Pagination } from '../pagination';
+import { SortSelect } from '../sort-select';
 
 interface Props {
   preselectedCommentMetadata?: PreselectedCommentMetadata;
@@ -23,6 +21,33 @@ interface Props {
   rootId: number;
   type: CommentRoot;
 }
+
+const sortKeys = [
+  {
+    label: 'Newest Comments',
+    value: 'newest',
+    key: 'createdAt',
+    order: 'desc',
+  },
+  {
+    label: 'Oldest Comments',
+    value: 'oldest',
+    key: 'createdAt',
+    order: 'asc',
+  },
+  {
+    label: 'Most Votes',
+    value: 'votes',
+    key: 'vote',
+    order: 'desc',
+  },
+  {
+    label: 'Most Replies',
+    value: 'replies',
+    key: 'replies',
+    order: 'desc',
+  },
+] as const;
 
 // million-ignore
 export function Comments({ preselectedCommentMetadata, rootId, type, expanded = false }: Props) {
@@ -85,6 +110,11 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
     });
   };
 
+  const handleValueChange = (value: string) => {
+    setSortKey(sortKeys.find((sk) => sk.value === value) ?? sortKeys[0]);
+    setPage(1);
+  };
+
   return (
     <div
       className={clsx(
@@ -132,7 +162,11 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
             />
           </div>
           {(data?.comments.length ?? 0) > 0 && (
-            <SortSelect sortKey={sortKey} setSortKey={setSortKey} setPage={setPage} />
+            <SortSelect
+              currentSortKey={sortKey}
+              totalSortKeys={sortKeys}
+              onValueChange={handleValueChange}
+            />
           )}
           {status === 'loading' && <CommentSkeleton />}
           <div className="flex-1">
