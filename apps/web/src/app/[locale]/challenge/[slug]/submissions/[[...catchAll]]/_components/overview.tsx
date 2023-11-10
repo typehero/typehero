@@ -2,12 +2,12 @@ import { Button } from '@repo/ui/components/button';
 import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { toast } from '@repo/ui/components/use-toast';
-import { CheckCircle2, Copy, X, XCircle } from '@repo/ui/icons';
+import { CheckCircle2, Copy, Plus, X, XCircle } from '@repo/ui/icons';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
+import { useParams, useSearchParams } from 'next/navigation';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { getChallengeSubmissionById } from '../getChallengeSubmissions';
-import { useParams, useSearchParams } from 'next/navigation';
 import { Suggestions } from './suggestions';
 
 interface Props {
@@ -62,31 +62,43 @@ export function SubmissionOverview({ submissionId }: Props) {
         </Tooltip>
       </div>
       <div className="custom-scrollable-element h-fit overflow-y-scroll p-2">
-        <div className="mb-5">
-          <div
-            className={`flex items-center gap-1 py-1 ${
-              submission.isSuccessful
-                ? ' text-emerald-600  dark:text-emerald-400 '
-                : ' text-rose-600  dark:text-rose-400 '
-            }`}
-          >
-            {submission.isSuccessful ? (
-              <CheckCircle2 size={17} className="mb-0.5" />
-            ) : (
-              <XCircle size={17} className="mb-0.5" />
-            )}
-            {submission.isSuccessful ? 'Accepted' : 'Rejected'}
+        <div className="mb-2 flex items-center justify-between">
+          <div>
+            <div
+              className={`flex items-center gap-1 px-3 py-1 text-xl ${
+                submission.isSuccessful
+                  ? ' text-emerald-600  dark:text-emerald-400 '
+                  : ' text-rose-600  dark:text-rose-400 '
+              }`}
+            >
+              {submission.isSuccessful ? (
+                <CheckCircle2 size={22} className="mb-0.5" />
+              ) : (
+                <XCircle size={22} className="mb-0.5" />
+              )}
+              {submission.isSuccessful ? 'Accepted' : 'Rejected'}
+            </div>
+            <div className="px-3 text-sm text-neutral-500">
+              Submitted {getRelativeTime(submission.createdAt)}
+            </div>
           </div>
-          <div className="text-sm text-neutral-500">
-            Submitted {getRelativeTime(submission.createdAt)}
+          <div>
+            <Link
+              className="bg-primary flex h-8 items-center gap-1 rounded-lg px-3 py-2 text-sm"
+              href={`/challenge/${slug}/solutions`}
+            >
+              <Plus size={16} /> Solution
+            </Link>
           </div>
         </div>
         {showSuggestions ? (
-          <div className="flex w-full items-start justify-center">
+          <div className="flex w-full items-start">
             <Suggestions track={track} challengeId={submission.challengeId} />
           </div>
         ) : null}
-        <Markdown>{code}</Markdown>
+        <div className="mb-3 px-3">
+          <Markdown>{code}</Markdown>
+        </div>
       </div>
     </>
   );
