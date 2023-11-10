@@ -49,7 +49,7 @@ export function SolutionEditor({ dismiss, challenge }: Props) {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: '',
+      title: `${session.user.name}'s Solution`,
       content: getDefaultMarkdown(challenge.submission[0]?.code ?? ''),
     },
   });
@@ -61,7 +61,7 @@ export function SolutionEditor({ dismiss, challenge }: Props) {
         challengeId: challenge.id,
         description: data.content ?? '',
         slug: slug as string,
-        title: data.title ?? '',
+        title: data.title ?? `${session.user.name}'s Solution`,
         userId: session.data?.user.id!,
       });
 
