@@ -1,7 +1,3 @@
-'use client';
-
-import { signOut, useSession } from '@repo/auth/react';
-import { Button } from '@repo/ui/components/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,15 +5,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@repo/ui/components/dropdown-menu';
-import { Loader2, LogIn, Moon, Play, Settings, Settings2, Sun, User } from '@repo/ui/icons';
-import clsx from 'clsx';
-import { useTheme } from 'next-themes';
+import { Play, Settings, Settings2, User } from '@repo/ui/icons';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { useContext, useEffect, useState } from 'react';
-import { useFullscreenSettingsStore } from '~/app/[locale]/challenge/_components/fullscreen';
-import { FeatureFlagContext } from '~/app/feature-flag-provider';
 import { isAdminOrModerator } from '~/utils/auth-guards';
+import { getAllFlags } from '~/utils/feature-flags';
+import { getServerAuthSession } from '@repo/auth/server';
+import { ThemeButton } from './theme-button';
+import { NavLink } from './nav-link';
+import { NavWrapper } from './nav-wrapper';
+import { LoginLink } from './login-link';
+import { SignOutLink } from './signout-link';
+import { getScopedI18n } from '~/locales/server';
 
 export function getAdminUrl() {
   // reference for vercel.com
@@ -29,130 +27,63 @@ export function getAdminUrl() {
   return `http://localhost:3001`;
 }
 
-export function Navigation() {
-  const { fssettings } = useFullscreenSettingsStore();
-  const pathname = usePathname();
-  const featureFlags = useContext(FeatureFlagContext);
+export async function Navigation() {
+  const t = await getScopedI18n('navigation');
+  const featureFlags = await getAllFlags();
 
   return (
     <header className="z-50 w-full">
-      {!fssettings.isFullscreen && (
-        <nav
-          className={`flex h-14 items-center text-sm font-medium ${
-            pathname?.startsWith('/challenge') ? 'px-4' : 'container'
-          }`}
-        >
-          <div className="flex w-full items-center justify-between">
-            <div className="relative flex items-center gap-3">
-              <Link
-                className="flex items-center space-x-1.5 focus:outline-none focus-visible:ring-2"
-                href="/"
+      <NavWrapper>
+        <div className="flex w-full items-center justify-between">
+          <div className="relative flex items-center gap-3">
+            <Link
+              className="flex items-center space-x-1.5 focus:outline-none focus-visible:ring-2"
+              href="/"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                viewBox="0 0 38 38"
+                fill="none"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  viewBox="0 0 38 38"
-                  fill="none"
-                >
-                  <rect width="38" height="38" rx="4.5" fill="#3178C6" />
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M15.6947 20.9344H20V18H8V20.9344H12.2842V34H15.6947V20.9344Z"
-                    fill="white"
-                  />
-                  <path
-                    d="M22 34V18H25.4511V24.6309H30.5405V18H34V34H30.5405V27.3458H25.4511V34H22Z"
-                    fill="white"
-                  />
-                </svg>
+                <rect width="38" height="38" rx="4.5" fill="#3178C6" />
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M15.6947 20.9344H20V18H8V20.9344H12.2842V34H15.6947V20.9344Z"
+                  fill="white"
+                />
+                <path
+                  d="M22 34V18H25.4511V24.6309H30.5405V18H34V34H30.5405V27.3458H25.4511V34H22Z"
+                  fill="white"
+                />
+              </svg>
 
-                <span className="font-bold leading-3">
-                  type
-                  <br />
-                  hero
-                </span>
-              </Link>
-              {featureFlags?.enableExplore ? (
-                <Link href="/explore" className="ml-4">
-                  <div
-                    className={clsx('hover:text-foreground text-foreground/80 transition-colors', {
-                      '!text-foreground': pathname === '/explore',
-                    })}
-                  >
-                    Explore
-                  </div>
-                </Link>
-              ) : null}
-              {featureFlags?.enableTracks ? (
-                <Link href="/tracks" className="ml-4">
-                  <div
-                    className={clsx('hover:text-foreground text-foreground/80 transition-colors', {
-                      '!text-foreground': pathname === '/tracks',
-                    })}
-                  >
-                    Tracks
-                  </div>
-                </Link>
-              ) : null}
-            </div>
-            <div className="flex">
-              <div className="flex items-center justify-end gap-2">
-                <ThemeButton />
-                {featureFlags?.enableLogin ? <LoginButton /> : null}
-              </div>
+              <span className="font-bold leading-3">
+                type
+                <br />
+                hero
+              </span>
+            </Link>
+            {featureFlags?.enableExplore ? <NavLink title={t('explore')} href="/explore" /> : null}
+            {featureFlags?.enableTracks ? <NavLink title={t('tracks')} href="/tracks" /> : null}
+          </div>
+          <div className="flex">
+            <div className="flex items-center justify-end gap-2">
+              <ThemeButton />
+              {featureFlags?.enableLogin ? <LoginButton /> : null}
             </div>
           </div>
-        </nav>
-      )}
+        </div>
+      </NavWrapper>
     </header>
   );
 }
 
-function ThemeButton() {
-  const [mounted, setMounted] = useState(false);
-  const { setTheme, resolvedTheme } = useTheme();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  return (
-    <>
-      {mounted ? (
-        <button
-          aria-label="theme button"
-          className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none focus-visible:ring-2"
-          onClick={() => {
-            setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
-          }}
-          type="button"
-        >
-          {resolvedTheme === 'dark' && <Moon aria-hidden="true" className="h-5 w-5" />}
-          {resolvedTheme === 'light' && <Sun aria-hidden="true" className="h-5 w-5" />}
-        </button>
-      ) : null}
-    </>
-  );
-}
-
-const BLACKLISTED_LOGIN_REDIRECT_PATHS = ['/', '/login'];
-
-function LoginButton() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
-  const pathname = usePathname();
+async function LoginButton() {
+  const session = await getServerAuthSession();
 
   const isAdminOrMod = isAdminOrModerator(session);
-
-  const handleSignOut = async () => {
-    await signOut({ redirect: false });
-    router.refresh();
-  };
-
-  const isBlacklistedPath = BLACKLISTED_LOGIN_REDIRECT_PATHS.some((blacklistedPath) => {
-    return blacklistedPath === pathname;
-  });
 
   return session ? (
     <DropdownMenu>
@@ -197,33 +128,11 @@ function LoginButton() {
           </a>
         ) : null}
         <DropdownMenuSeparator />
-        <Button
-          className="h-8 w-full justify-start rounded-b-lg rounded-t-sm bg-opacity-50 px-2 text-red-500 hover:bg-red-500/20 hover:text-red-500"
-          onClick={handleSignOut}
-          variant="ghost"
-        >
-          <span className="text-red-500">Log out</span>
-        </Button>
+
+        <SignOutLink />
       </DropdownMenuContent>
     </DropdownMenu>
   ) : (
-    <Link
-      className="focus:bg-accent w-20 rounded-lg bg-transparent p-2 text-black duration-300 hover:bg-gray-200 focus:outline-none dark:text-white hover:dark:bg-gray-800"
-      href={{
-        pathname: '/login',
-        query: {
-          ...(!isBlacklistedPath && { redirectTo: pathname }),
-        },
-      }}
-    >
-      {status === 'loading' ? (
-        <Loader2 className="h-5 w-5 animate-spin" />
-      ) : (
-        <div className="flex items-center space-x-2">
-          <LogIn className="h-5 w-5" />
-          <span className="dark:text-white">Login</span>
-        </div>
-      )}
-    </Link>
+    <LoginLink />
   );
 }
