@@ -2,35 +2,9 @@
 import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import type { CommentRoot } from '@repo/db/types';
+import { orderBy, type SortKey, type SortOrder } from '~/utils/sorting';
 
 const PAGESIZE = 10;
-
-const sortKeys = ['createdAt', 'vote', 'replies'] as const;
-const sortOrders = ['asc', 'desc'] as const;
-
-export type SortKey = (typeof sortKeys)[number];
-export type SortOrder = (typeof sortOrders)[number];
-
-function orderBy(sortKey: SortKey, sortOrder: SortOrder) {
-  switch (sortKey) {
-    case 'vote':
-      return {
-        vote: {
-          _count: sortOrder,
-        },
-      };
-    case 'replies':
-      return {
-        replies: {
-          _count: sortOrder,
-        },
-      };
-    case 'createdAt':
-      return {
-        [sortKey]: sortOrder,
-      };
-  }
-}
 
 export type PaginatedComments = NonNullable<Awaited<ReturnType<typeof getPaginatedComments>>>;
 export type PreselectedCommentMetadata =

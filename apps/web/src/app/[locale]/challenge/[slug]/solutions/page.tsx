@@ -34,5 +34,5 @@ export default async function SolutionPage({ params: { slug } }: Props) {
     return notFound();
   }
 
-  return <Solutions challenge={solutions} />;
+  return <Solutions challenge={solutions} slug={slug} />;
 }
