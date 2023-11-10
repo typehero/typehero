@@ -13,10 +13,9 @@ import { Badge } from '@repo/ui/components/badge';
 import { UserBadge } from '@repo/ui/components/user-badge';
 import { useParams } from 'next/navigation';
 import { Pagination } from '../../../_components/pagination';
-import { sortKeys } from '~/utils/sorting';
-import { SortSelect } from '../../../_components/sort-select';
 import { useQuery } from '@tanstack/react-query';
 import { SolutionsSkeleton } from './solution-skeleton';
+import { SortSelect } from '../../../_components/sort-select';
 
 interface Props {
   challenge: ChallengeSolution;
@@ -25,11 +24,33 @@ interface Props {
 
 type View = 'details' | 'editor' | 'list';
 
+const sortKeys = [
+  {
+    label: 'Newest Solutions',
+    value: 'newest',
+    key: 'createdAt',
+    order: 'desc',
+  },
+  {
+    label: 'Most Votes',
+    value: 'votes',
+    key: 'vote',
+    order: 'desc',
+  },
+  {
+    label: 'Most Replies',
+    value: 'solutionComment',
+    key: 'solutionComment',
+    order: 'desc',
+  },
+] as const;
+
 export function Solutions({ challenge, slug }: Props) {
   const [view, setView] = useState<View>('list');
   const commentContainerRef = useRef<HTMLDivElement>(null);
   const [sortKey, setSortKey] = useState<(typeof sortKeys)[number]>(sortKeys[0]);
   const [page, setPage] = useState(1);
+  const queryKey = [`paginated-${challenge.id}-solutions`, sortKey.value, page];
   const session = useSession();
 
   const handleChangePage = (page: number) => {
@@ -40,8 +61,13 @@ export function Solutions({ challenge, slug }: Props) {
     });
   };
 
+  const handleValueChange = (value: string) => {
+    setSortKey(sortKeys.find((sk) => sk.value === value) ?? sortKeys[0]);
+    setPage(1);
+  };
+
   const { status, data } = useQuery({
-    queryKey: ['paginated-solutions', sortKey.value, page],
+    queryKey,
     queryFn: () =>
       getPaginatedSolutions({ slug, page, sortKey: sortKey.key, sortOrder: sortKey.order }),
     keepPreviousData: true,
@@ -73,7 +99,11 @@ export function Solutions({ challenge, slug }: Props) {
               >
                 <div>
                   {(data?.solutions.length ?? 0) > 0 && (
-                    <SortSelect sortKey={sortKey} setSortKey={setSortKey} setPage={setPage} />
+                    <SortSelect
+                      currentSortKey={sortKey}
+                      totalSortKeys={sortKeys}
+                      onValueChange={handleValueChange}
+                    />
                   )}
                 </div>
                 <div className="flex-1">

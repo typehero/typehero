@@ -5,30 +5,29 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@repo/ui/components/select';
-import { sortKeys } from '~/utils/sorting';
 
-interface Props {
-  sortKey: (typeof sortKeys)[number];
-  setSortKey: (value: (typeof sortKeys)[number]) => void;
-  setPage: (value: number) => void;
+interface SortKey {
+  label: string;
+  value: string;
+  key: string;
+  order: string;
 }
 
-export function SortSelect({ sortKey, setSortKey, setPage }: Props) {
+interface Props {
+  currentSortKey: SortKey;
+  totalSortKeys: readonly SortKey[];
+  onValueChange: (value: string) => void;
+}
+
+export function SortSelect({ currentSortKey, totalSortKeys, onValueChange }: Props) {
   return (
     <div className="flex items-center gap-2 px-3 py-2">
-      <Select
-        value={sortKey.value}
-        defaultValue="newest"
-        onValueChange={(value) => {
-          setSortKey(sortKeys.find((sk) => sk.value === value) ?? sortKeys[0]);
-          setPage(1);
-        }}
-      >
+      <Select value={currentSortKey.value} defaultValue="newest" onValueChange={onValueChange}>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Sort Key" />
         </SelectTrigger>
         <SelectContent>
-          {sortKeys.map((sortKey, index) => (
+          {totalSortKeys.map((sortKey, index) => (
             <SelectItem key={index} value={sortKey.value}>
               {sortKey.label}
             </SelectItem>
