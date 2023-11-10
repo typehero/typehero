@@ -59,7 +59,7 @@ const ToastAction = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Action
     className={cn(
-      'ring-offset-background hover:bg-secondary focus:ring-ring group-[.destructive]:border-destructive-foreground group-[.destructive]:dark:hover:text-destructive-foreground group-[.destructive]:hover:bg-destructive-foreground group-[.destructive]:hover:text-destructive-foreground group-[.destructive]:focus:ring-destructive inline-flex h-8 shrink-0 items-center justify-center rounded-md border border-white bg-transparent px-3 text-sm font-medium text-black transition-colors hover:text-[#27272a] focus:outline-none focus:ring-2 focus:ring-offset-0 disabled:pointer-events-none disabled:opacity-50 group-[.destructive]:hover:text-[#27272a] dark:hover:border-[#27272a] dark:hover:text-white group-[.destructive]:dark:hover:border-[#27272a] group-[.destructive]:dark:hover:bg-[#27272a]',
+      'ring-offset-background hover:bg-transparent/10 focus:ring-ring group-[.destructive]:border-destructive-foreground group-[.destructive]:dark:hover:text-destructive-foreground group-[.destructive]:hover:bg-destructive-foreground group-[.destructive]:hover:text-destructive-foreground group-[.destructive]:focus:ring-destructive inline-flex h-8 shrink-0 items-center justify-center rounded-md border border-white bg-transparent px-3 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-0 disabled:pointer-events-none disabled:opacity-50 group-[.destructive]:hover:bg-transparent/10',
       className,
     )}
     ref={ref}
@@ -74,7 +74,7 @@ const ToastClose = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Close
     className={cn(
-      'text-foreground/50 hover:text-foreground absolute right-2 top-2 rounded-md p-1 opacity-0 transition-opacity focus:opacity-100 focus:outline-none focus:ring-2 group-hover:opacity-100 group-[.destructive]:text-red-300 group-[.destructive]:hover:text-red-50 group-[.destructive]:focus:ring-red-400 group-[.destructive]:focus:ring-offset-red-600',
+      'hover:text-foreground absolute right-2 top-2 rounded-md p-1 opacity-0 transition-opacity focus:opacity-100 focus:outline-none focus:ring-2 group-hover:opacity-100 group-[.destructive]:text-red-300 group-[.destructive]:hover:text-red-50 group-[.destructive]:focus:ring-red-400 group-[.destructive]:focus:ring-offset-red-600',
       className,
     )}
     ref={ref}
