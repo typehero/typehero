@@ -2,8 +2,13 @@ import Image from 'next/image';
 import { Button } from '@repo/ui/components/button';
 import { getRandomChallenge } from '~/utils/server/get-random-challenge';
 import { getScopedI18n } from '~/locales/server';
+import { setStaticParamsLocale } from 'next-international/server';
 
 export default async function NotFound() {
+  // fix broken e2e tests... not sure why this is needed
+  // but i18n still works with other locales even with this set
+  setStaticParamsLocale('en');
+
   const t = await getScopedI18n('404');
 
   const randomChallengeSlug = await getRandomChallenge();
