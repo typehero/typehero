@@ -3,7 +3,6 @@ import { userParam } from 'utils/zodParams';
 import { fetchFont } from 'utils/fetchFont';
 import { Grid } from 'app/components/grid';
 import { Logo } from 'app/components/logo';
-import Image from 'next/image';
 
 export const runtime = 'edge';
 
@@ -21,21 +20,24 @@ export async function GET(req: Request) {
   }
 
   const props = parsed.data.input;
+  console.log({props})
 
   return new ImageResponse(
     (
       <div tw="bg-black h-full w-full text-white bg-cover flex flex-col px-14 py-10">
         <Grid />
-        <div tw="flex flex-col text-center h-full w-full gap-4 justify-between">
-          <div tw="flex justify-between">
+        <div tw="flex flex text-center h-full w-full gap-4 justify-between">
+          <div tw="flex items-center">
             {props.avatar ? (
-              <img src={props.avatar} tw="object-cover h-36 w-36 rounded-full" />
+              <img src={props.avatar} tw="object-cover h-68 w-68 rounded-full" />
             ) : null}
-            <Logo />
+            <div tw='flex flex-col ml-10'>
+              <h1 tw="text-8xl font-bold">{props.username}</h1>
+              <p tw='text-4xl -mt-6 font-medium'>Member Since: {props.dateSince}</p>
+            </div>
           </div>
-          <div tw="flex flex-col text-left">
-            <h1 tw="text-6xl font-bold">{props.username}</h1>
-            {props.bio ? <p tw="text-4xl text-zinc-300">{props.bio}</p> : null}
+          <div tw="flex relative right-0">
+            <Logo />
           </div>
         </div>
       </div>
