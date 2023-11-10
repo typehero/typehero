@@ -1,8 +1,7 @@
-import Image from 'next/image';
 import { Button } from '@repo/ui/components/button';
-import { getRandomChallenge } from '~/utils/server/get-random-challenge';
+import Image from 'next/image';
 import { getScopedI18n } from '~/locales/server';
-import { setStaticParamsLocale } from 'next-international/server';
+import { getRandomChallenge } from '~/utils/server/get-random-challenge';
 
 export const dynamic = 'force-dynamic';
 
