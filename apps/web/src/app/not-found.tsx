@@ -1,8 +1,6 @@
 import Image from 'next/image';
 import { Button } from '@repo/ui/components/button';
 import { getRandomChallenge } from '~/utils/server/get-random-challenge';
-import { Navigation } from '~/components/navigation';
-
 import { getScopedI18n } from '~/locales/server';
 
 export default async function NotFound() {
