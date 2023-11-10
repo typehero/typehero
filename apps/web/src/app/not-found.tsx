@@ -2,19 +2,16 @@ import Image from 'next/image';
 import { Button } from '@repo/ui/components/button';
 import { getRandomChallenge } from '~/utils/server/get-random-challenge';
 import { Navigation } from '~/components/navigation';
-import { cookies } from 'next/headers';
+
 import { getScopedI18n } from '~/locales/server';
 
 export default async function NotFound() {
-  const cookieStore = cookies();
-  const locale = cookieStore.get('Next-Locale')?.value;
   const t = await getScopedI18n('404');
 
   const randomChallengeSlug = await getRandomChallenge();
 
   return (
     <>
-      <Navigation />
       <div className="relative -mt-[56px] flex h-screen flex-col items-center justify-center gap-8 overflow-hidden">
         <Image
           className="animate-amogfly absolute left-0 -z-10 mx-auto opacity-80"
