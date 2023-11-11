@@ -12,6 +12,7 @@ import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
 import { createNoProfanitySchemaWithValidate } from '~/utils/antiProfanityZod';
 import type { ChallengeSolution } from '../getSolutionRouteData';
 import { postSolution } from './_actions';
+import { useQueryClient } from '@tanstack/react-query';
 
 const getDefaultMarkdown = (solution: string) => `
 ## Thoughts
@@ -45,11 +46,12 @@ interface Props {
 
 export function SolutionEditor({ dismiss, challenge }: Props) {
   const { slug } = useParams();
+  const queryClient = useQueryClient();
   const session = useSession();
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: `${session.user.name}'s Solution`,
+      title: `${session.data?.user.name}'s Solution`,
       content: getDefaultMarkdown(challenge.submission[0]?.code ?? ''),
     },
   });
@@ -61,7 +63,7 @@ export function SolutionEditor({ dismiss, challenge }: Props) {
         challengeId: challenge.id,
         description: data.content ?? '',
         slug: slug as string,
-        title: data.title ?? `${session.user.name}'s Solution`,
+        title: data.title ?? `${session.data?.user.name}'s Solution`,
         userId: session.data?.user.id!,
       });
 
@@ -75,6 +77,8 @@ export function SolutionEditor({ dismiss, challenge }: Props) {
         title: 'Uh oh! Something went wrong. Please try again.',
       });
     } finally {
+      // Todo: It just works
+      queryClient.refetchQueries([`paginated-solutions`, slug]);
       dismiss();
     }
   };

@@ -50,7 +50,7 @@ export function Solutions({ challenge, slug }: Props) {
   const commentContainerRef = useRef<HTMLDivElement>(null);
   const [sortKey, setSortKey] = useState<(typeof sortKeys)[number]>(sortKeys[0]);
   const [page, setPage] = useState(1);
-  const queryKey = [`paginated-${challenge.id}-solutions`, sortKey.value, page];
+  const queryKey = ['paginated-solutions', slug, page, sortKey.key, sortKey.order];
   const session = useSession();
 
   const handleChangePage = (page: number) => {
@@ -78,7 +78,7 @@ export function Solutions({ challenge, slug }: Props) {
   const loggedInUserHasSolution = challenge.submission.length;
 
   return (
-    <div className="relative h-full">
+    <div className="flex h-full flex-col">
       {view === 'editor' && (
         <SolutionEditor challenge={challenge} dismiss={() => setView('list')} />
       )}
@@ -89,12 +89,12 @@ export function Solutions({ challenge, slug }: Props) {
             <>
               {status === 'loading' && <SolutionsSkeleton />}
               {status === 'success' && (
-                <div className="bg-background/70 dark:bg-muted/70 absolute right-0 top-0 flex w-full justify-end border-b border-zinc-300 p-2 backdrop-blur-sm dark:border-zinc-700">
+                <div className="bg-background/70 dark:bg-muted/70 flex w-full justify-end border-b border-zinc-300 p-2 backdrop-blur-sm dark:border-zinc-700">
                   <SubmitSolution disabled={Boolean(!loggedInUserHasSolution)} setView={setView} />
                 </div>
               )}
               <div
-                className="custom-scrollable-element relative flex h-full flex-col overflow-y-auto pt-12"
+                className="custom-scrollable-element relative flex h-full flex-col overflow-y-auto"
                 ref={commentContainerRef}
               >
                 <div>
