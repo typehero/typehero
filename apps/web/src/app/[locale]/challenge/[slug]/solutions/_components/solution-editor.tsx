@@ -71,12 +71,7 @@ export function SolutionEditor({ dismiss, challengeId, code }: Props) {
         variant: 'success',
         title: 'Your solution has been posted!',
       });
-    } catch (error) {
-      toast({
-        variant: 'destructive',
-        title: 'Uh oh! Something went wrong. Please try again.',
-      });
-    } finally {
+
       // invalidate cache on adding a solution successfully
       queryClient.invalidateQueries({
         queryKey: [`challenge-solutions`, slug],
@@ -84,6 +79,12 @@ export function SolutionEditor({ dismiss, challengeId, code }: Props) {
       queryClient.refetchQueries({
         queryKey: ['challenge-solutions', slug],
       });
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Uh oh! Something went wrong. Please try again.',
+      });
+    } finally {
       dismiss();
     }
   };

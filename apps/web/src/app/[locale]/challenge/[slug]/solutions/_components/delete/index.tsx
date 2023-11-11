@@ -33,20 +33,19 @@ export function SolutionDeleteDialog({
         variant: 'success',
         description: 'The solution was successfully deleted.',
       });
-      router.back();
-    } catch (e) {
-      toast({
-        title: 'Uh Oh!',
-        variant: 'destructive',
-        description: 'An error occurred while trying to delete the comment.',
-      });
-    } finally {
       // invalidate cache on deleting a solution successfully
       queryClient.invalidateQueries({
         queryKey: ['challenge-solutions', slug],
       });
       queryClient.refetchQueries({
         queryKey: ['challenge-solutions', slug],
+      });
+      router.back();
+    } catch (e) {
+      toast({
+        title: 'Uh Oh!',
+        variant: 'destructive',
+        description: 'An error occurred while trying to delete the comment.',
       });
     }
   }
