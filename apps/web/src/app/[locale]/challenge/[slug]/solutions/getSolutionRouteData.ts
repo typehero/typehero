@@ -1,17 +1,32 @@
 'use server';
-import { cache } from 'react';
 import { prisma } from '@repo/db';
-import { type Session } from '@repo/auth/server';
+import { getServerAuthSession, type Session } from '@repo/auth/server';
 import type { SortKey, SortOrder } from '~/utils/sorting';
 import { orderBy } from '~/utils/sorting';
 
 const PAGESIZE = 10;
 
-export type ChallengeSolution = NonNullable<Awaited<ReturnType<typeof getSolutionsRouteData>>>;
-export const getSolutionsRouteData = cache(async (slug: string, session: Session | null) => {
+export type PaginatedSolution = NonNullable<Awaited<ReturnType<typeof getPaginatedSolutions>>>;
+export async function getPaginatedSolutions({
+  slug,
+  page,
+  sortKey = 'createdAt',
+  sortOrder = 'desc',
+}: {
+  slug: string;
+  page: number;
+  sortKey?: SortKey;
+  sortOrder?: SortOrder;
+}) {
+  const session = await getServerAuthSession();
   const data = await prisma.challenge.findFirst({
     where: { slug },
     select: {
+      _count: {
+        select: {
+          sharedSolution: true,
+        },
+      },
       id: true,
       submission: {
         where: {
@@ -26,13 +41,13 @@ export const getSolutionsRouteData = cache(async (slug: string, session: Session
         take: 1,
       },
       sharedSolution: {
+        skip: (page - 1) * PAGESIZE,
+        take: PAGESIZE,
         orderBy: [
           {
-            isPinned: 'desc',
+            isPinned: 'desc' as SortOrder,
           },
-          {
-            createdAt: 'desc',
-          },
+          orderBy(sortKey, sortOrder),
         ],
         include: {
           user: {
@@ -48,55 +63,13 @@ export const getSolutionsRouteData = cache(async (slug: string, session: Session
     },
   });
 
-  return data;
-});
-
-export async function getPaginatedSolutions({
-  slug,
-  page,
-  sortKey = 'createdAt',
-  sortOrder = 'desc',
-}: {
-  slug: string;
-  page: number;
-  sortKey?: SortKey;
-  sortOrder?: SortOrder;
-}) {
-  const challenge = await prisma.challenge.findFirst({
-    where: { slug },
-  });
-
-  const solutions = await prisma.sharedSolution.findMany({
-    where: { challengeId: challenge?.id },
-    skip: (page - 1) * PAGESIZE,
-    take: PAGESIZE,
-    orderBy: [
-      {
-        isPinned: 'desc' as SortOrder,
-      },
-      orderBy(sortKey, sortOrder),
-    ],
-    include: {
-      user: {
-        select: {
-          name: true,
-        },
-      },
-      _count: {
-        select: { vote: true, solutionComment: true },
-      },
-    },
-  });
-
-  const totalSolutions = await prisma.sharedSolution.count({
-    where: { challengeId: challenge?.id },
-  });
+  const totalSolutions = data?._count?.sharedSolution || 0;
 
   const totalPages = Math.ceil(totalSolutions / PAGESIZE);
 
   return {
+    ...data,
     totalPages,
     hasMore: page < totalPages,
-    solutions,
   };
 }

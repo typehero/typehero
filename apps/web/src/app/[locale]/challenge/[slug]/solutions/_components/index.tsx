@@ -7,7 +7,7 @@ import { useRef, useState } from 'react';
 import { SolutionEditor } from './solution-editor';
 import { NoSolutions } from './nosolutions';
 import { SubmitSolution } from './submit-solution';
-import { type ChallengeSolution, getPaginatedSolutions } from '../getSolutionRouteData';
+import { type PaginatedSolution, getPaginatedSolutions } from '../getSolutionRouteData';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { Badge } from '@repo/ui/components/badge';
 import { UserBadge } from '@repo/ui/components/user-badge';
@@ -18,13 +18,10 @@ import { SolutionsSkeleton } from './solution-skeleton';
 import { SortSelect } from '../../../_components/sort-select';
 
 interface Props {
-  challenge: ChallengeSolution;
   slug: string;
 }
 
-type View = 'details' | 'editor' | 'list';
-
-const sortKeys = [
+export const SORT_KEYS = [
   {
     label: 'Newest Solutions',
     value: 'newest',
@@ -45,28 +42,30 @@ const sortKeys = [
   },
 ] as const;
 
-export function Solutions({ challenge, slug }: Props) {
+type View = 'details' | 'editor' | 'list';
+
+export function Solutions({ slug }: Props) {
   const [view, setView] = useState<View>('list');
   const commentContainerRef = useRef<HTMLDivElement>(null);
-  const [sortKey, setSortKey] = useState<(typeof sortKeys)[number]>(sortKeys[0]);
+  const [sortKey, setSortKey] = useState<(typeof SORT_KEYS)[number]>(SORT_KEYS[0]);
   const [page, setPage] = useState(1);
-  const queryKey = ['paginated-solutions', slug, page, sortKey.key, sortKey.order];
+  const queryKey = ['challenge-solutions', slug, page, sortKey.key, sortKey.order];
   const session = useSession();
 
   const handleChangePage = (page: number) => {
     setPage(page);
     commentContainerRef.current?.scroll({
-      top: 128,
+      top: 0,
       behavior: 'smooth',
     });
   };
 
   const handleValueChange = (value: string) => {
-    setSortKey(sortKeys.find((sk) => sk.value === value) ?? sortKeys[0]);
+    setSortKey(SORT_KEYS.find((sk) => sk.value === value) ?? SORT_KEYS[0]);
     setPage(1);
   };
 
-  const { status, data } = useQuery({
+  const { status, data: pageData } = useQuery({
     queryKey,
     queryFn: () =>
       getPaginatedSolutions({ slug, page, sortKey: sortKey.key, sortOrder: sortKey.order }),
@@ -75,17 +74,21 @@ export function Solutions({ challenge, slug }: Props) {
     refetchOnWindowFocus: false,
   });
 
-  const loggedInUserHasSolution = challenge.submission.length;
+  const loggedInUserHasSolution = pageData?.submission?.length ?? 0;
 
   return (
     <div className="flex h-full flex-col">
-      {view === 'editor' && (
-        <SolutionEditor challenge={challenge} dismiss={() => setView('list')} />
-      )}
+      {view === 'editor' && pageData?.id ? (
+        <SolutionEditor
+          challengeId={pageData.id}
+          code={pageData?.submission?.[0]?.code}
+          dismiss={() => setView('list')}
+        />
+      ) : null}
 
       {view === 'list' && (
         <>
-          {data?.solutions.length !== 0 ? (
+          {pageData?.sharedSolution?.length !== 0 ? (
             <>
               {status === 'loading' && <SolutionsSkeleton />}
               {status === 'success' && (
@@ -98,26 +101,26 @@ export function Solutions({ challenge, slug }: Props) {
                 ref={commentContainerRef}
               >
                 <div>
-                  {(data?.solutions.length ?? 0) > 0 && (
+                  {(pageData?.sharedSolution?.length ?? 0) > 0 && (
                     <SortSelect
                       currentSortKey={sortKey}
-                      totalSortKeys={sortKeys}
+                      totalSortKeys={SORT_KEYS}
                       onValueChange={handleValueChange}
                     />
                   )}
                 </div>
                 <div className="flex-1">
                   {status === 'success' &&
-                    data?.solutions.map((solution) => (
+                    pageData?.sharedSolution?.map((solution) => (
                       <SolutionRow key={solution.id} solution={solution} />
                     ))}
                 </div>
-                {(data?.totalPages ?? 0) > 1 && (
+                {(pageData?.totalPages ?? 0) > 1 && (
                   <div className="mb-2 flex justify-center">
                     <Pagination
                       currentPage={page}
                       onClick={handleChangePage}
-                      totalPages={data?.totalPages ?? 0}
+                      totalPages={pageData?.totalPages ?? 0}
                     />
                   </div>
                 )}
@@ -136,7 +139,11 @@ export function Solutions({ challenge, slug }: Props) {
   );
 }
 
-function SolutionRow({ solution }: { solution: ChallengeSolution['sharedSolution'][0] }) {
+function SolutionRow({
+  solution,
+}: {
+  solution: NonNullable<PaginatedSolution['sharedSolution']>[number];
+}) {
   const { slug } = useParams();
   return (
     <Link

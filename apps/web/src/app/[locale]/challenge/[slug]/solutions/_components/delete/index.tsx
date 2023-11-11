@@ -12,12 +12,20 @@ import { Label } from '@repo/ui/components/label';
 import { deleteSolution } from '../_actions';
 import { toast } from '@repo/ui/components/use-toast';
 import { useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface SolutionDeleteDialogProps extends DialogTriggerProps {
   solution: ChallengeSolution;
+  slug: string[] | string | undefined;
 }
 
-export function SolutionDeleteDialog({ children, solution, ...props }: SolutionDeleteDialogProps) {
+export function SolutionDeleteDialog({
+  children,
+  slug,
+  solution,
+  ...props
+}: SolutionDeleteDialogProps) {
+  const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
@@ -36,6 +44,12 @@ export function SolutionDeleteDialog({ children, solution, ...props }: SolutionD
         variant: 'destructive',
         description: 'An error occurred while trying to delete the comment.',
       });
+    } finally {
+      // invalidate cache on deleting a solution successfully
+      queryClient.invalidateQueries({
+        queryKey: ['challenge-solutions', slug],
+      });
+      setIsOpen(false);
     }
   }
 
