@@ -3,12 +3,8 @@ import { useState } from 'react';
 import { Dialog, DialogContent, DialogTrigger } from '@repo/ui/components/dialog';
 import { TypographyLarge } from '@repo/ui/components/typography/large';
 import type { ChallengeSolution } from '~/app/[locale]/challenge/[slug]/solutions/[solutionId]/page';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
-import { getRelativeTime } from '~/utils/relativeTime';
 import { Button } from '@repo/ui/components/button';
 import { TypographyP } from '@repo/ui/components/paragraph';
-import { Markdown } from '@repo/ui/components/markdown';
-import { Label } from '@repo/ui/components/label';
 import { deleteSolution } from '../_actions';
 import { toast } from '@repo/ui/components/use-toast';
 import { useRouter } from 'next/navigation';
@@ -49,7 +45,10 @@ export function SolutionDeleteDialog({
       queryClient.invalidateQueries({
         queryKey: ['challenge-solutions', slug],
       });
-      setIsOpen(false);
+      // Todo: currently requires refetching because react-query doesn't think it's necessary
+      queryClient.refetchQueries({
+        queryKey: ['challenge-solutions', slug],
+      });
     }
   }
 
