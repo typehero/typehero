@@ -8,6 +8,7 @@ import {
 import { InProgressTab } from '../_components/dashboard/in-progress-tab';
 import { notFound } from 'next/navigation';
 import { prisma } from '@repo/db';
+import { getServerAuthSession } from '@repo/auth/server';
 
 interface Props {
   params: {
@@ -16,9 +17,10 @@ interface Props {
 }
 
 export default async function InProgressPage({ params: { username: usernameFromQuery } }: Props) {
+  const session = await getServerAuthSession();
   const [, username] = decodeURIComponent(usernameFromQuery).split('@');
 
-  if (!username) return notFound();
+  if (!username || session?.user.name !== username) return notFound();
 
   const user = await prisma.user.findFirst({
     where: {

@@ -8,6 +8,7 @@ import {
 import { prisma } from '@repo/db';
 import { BookmarksTab } from '../_components/dashboard/bookmarks-tab';
 import { notFound } from 'next/navigation';
+import { getServerAuthSession } from '@repo/auth/server';
 
 interface Props {
   params: {
@@ -16,9 +17,10 @@ interface Props {
 }
 
 export default async function BookmarksPage({ params: { username: usernameFromQuery } }: Props) {
+  const session = await getServerAuthSession();
   const [, username] = decodeURIComponent(usernameFromQuery).split('@');
 
-  if (!username) return notFound();
+  if (!username || session?.user.name !== username) return notFound();
 
   const user = await prisma.user.findFirst({
     where: {
