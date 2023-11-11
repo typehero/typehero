@@ -40,7 +40,7 @@ export function CodePanel(props: CodePanelProps) {
   const isPlayground = pathname.includes('playground');
   const { toast } = useToast();
   const [tsErrors, setTsErrors] = useState<TsErrors>();
-  const [isTestPanelExpanded, setIsTestPanelExpanded] = useState(false);
+  const [isTestPanelExpanded, setIsTestPanelExpanded] = useState(true);
   const [localStorageCode, setLocalStorageCode] = useLocalStorage(
     `challenge-${props.challenge.slug}`,
     '',

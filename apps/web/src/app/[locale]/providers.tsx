@@ -12,13 +12,12 @@ import { FeatureFlagProvider } from '../feature-flag-provider';
 import type { Corner } from '@tanstack/react-query-devtools/build/lib/utils';
 
 interface Props {
-  locale: string;
   children: React.ReactNode;
 }
 
 const queryClient = new QueryClient();
 
-export function Providers({ locale, children }: Props) {
+export function Providers({ children }: Props) {
   const position: Corner = 'bottom-right';
   return (
     <QueryClientProvider client={queryClient}>
@@ -26,9 +25,7 @@ export function Providers({ locale, children }: Props) {
       <SessionProvider>
         <ThemeProvider attribute="class">
           <FeatureFlagProvider>
-            <TooltipProvider>
-              <I18nProviderClient locale={locale}>{children}</I18nProviderClient>
-            </TooltipProvider>
+            <TooltipProvider>{children}</TooltipProvider>
           </FeatureFlagProvider>
           <Suspense>
             <Toolbar />
