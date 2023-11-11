@@ -45,7 +45,6 @@ export function SolutionDeleteDialog({
       queryClient.invalidateQueries({
         queryKey: ['challenge-solutions', slug],
       });
-      // Todo: currently requires refetching because react-query doesn't think it's necessary
       queryClient.refetchQueries({
         queryKey: ['challenge-solutions', slug],
       });

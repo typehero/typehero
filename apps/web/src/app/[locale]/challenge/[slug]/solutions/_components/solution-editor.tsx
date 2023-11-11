@@ -79,7 +79,10 @@ export function SolutionEditor({ dismiss, challengeId, code }: Props) {
     } finally {
       // invalidate cache on adding a solution successfully
       queryClient.invalidateQueries({
-        queryKey: [`paginated-solutions`, slug],
+        queryKey: [`challenge-solutions`, slug],
+      });
+      queryClient.refetchQueries({
+        queryKey: ['challenge-solutions', slug],
       });
       dismiss();
     }
