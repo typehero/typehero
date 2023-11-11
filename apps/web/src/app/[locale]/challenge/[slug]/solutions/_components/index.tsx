@@ -69,7 +69,6 @@ export function Solutions({ slug }: Props) {
     queryKey,
     queryFn: () =>
       getPaginatedSolutions({ slug, page, sortKey: sortKey.key, sortOrder: sortKey.order }),
-    keepPreviousData: true,
     staleTime: 60000, // one minute
     refetchOnWindowFocus: false,
   });
@@ -90,7 +89,7 @@ export function Solutions({ slug }: Props) {
         <>
           {pageData?.sharedSolution?.length !== 0 ? (
             <>
-              {status === 'loading' && <SolutionsSkeleton />}
+              {status === 'pending' && <SolutionsSkeleton />}
               {status === 'success' && (
                 <div className="bg-background/70 dark:bg-muted/70 flex w-full justify-end border-b border-zinc-300 p-2 backdrop-blur-sm dark:border-zinc-700">
                   <SubmitSolution disabled={Boolean(!loggedInUserHasSolution)} setView={setView} />

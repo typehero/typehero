@@ -10,7 +10,10 @@ interface Props {
 
 const isProd = process.env.NODE_ENV === 'production';
 export function FeatureFlagProvider({ children }: Props) {
-  const { data: featureFlags } = useQuery(['featureFlags'], () => getFeatureFlags());
+  const { data: featureFlags } = useQuery({
+    queryKey: ['featureFlags'],
+    queryFn: () => getFeatureFlags(),
+  });
 
   return <FeatureFlagContext.Provider value={featureFlags}>{children}</FeatureFlagContext.Provider>;
 }

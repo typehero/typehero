@@ -24,7 +24,7 @@ interface Props {
 export function ChallengeTrackNavigation({ challenge, track, isCollapsed, className }: Props) {
   const router = useRouter();
 
-  const { data: trackDetails, isLoading } = useQuery({
+  const { data: trackDetails, isPending } = useQuery({
     queryKey: ['track-details', track?.slug],
     queryFn: () => {
       return getTrackDetails(track!.slug);
@@ -55,7 +55,7 @@ export function ChallengeTrackNavigation({ challenge, track, isCollapsed, classN
     return index > 0 ? trackDetails!.trackChallenges[index] : null;
   }, [currentIndex, trackDetails]);
 
-  if (isLoading || track === null || trackDetails === null || trackDetails === undefined)
+  if (isPending || track === null || trackDetails === null || trackDetails === undefined)
     return null;
 
   return (

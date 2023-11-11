@@ -106,7 +106,7 @@ export function Comment({
   const {
     data: replies,
     fetchStatus,
-    isLoading: isLoadingReplies,
+    isPending: isLoadingReplies,
   } = useQuery({
     queryKey: replyQueryKey,
     queryFn: () => getAllComments({ rootId, rootType: type, parentId: comment.id }),
@@ -121,8 +121,9 @@ export function Comment({
     hasNextPage: hasMoreReplies,
     refetch,
   } = useInfiniteQuery({
+    initialPageParam: 0,
     queryKey: [...replyQueryKey, 'paginated'],
-    queryFn: ({ pageParam = 0 }) => {
+    queryFn: ({ pageParam }) => {
       // `cursor` is the start index of the current page
       const cursor = Number(pageParam);
 
@@ -173,8 +174,8 @@ export function Comment({
         });
       }
       setReplyText('');
-      queryClient.invalidateQueries(replyQueryKey);
-      queryClient.invalidateQueries(queryKey);
+      queryClient.invalidateQueries({ queryKey: replyQueryKey });
+      queryClient.invalidateQueries({ queryKey });
       setShowReplies(true);
     } catch (e) {
       toast({
@@ -291,8 +292,8 @@ function SingleComment({
           description: <p>You need to be signed in to post a comment.</p>,
         });
       }
-      queryClient.invalidateQueries(queryKey);
-      queryClient.invalidateQueries(replyQueryKey);
+      queryClient.invalidateQueries({ queryKey });
+      queryClient.invalidateQueries({ queryKey: replyQueryKey });
     } catch (e) {
       toast({
         title: 'Unauthorized',
