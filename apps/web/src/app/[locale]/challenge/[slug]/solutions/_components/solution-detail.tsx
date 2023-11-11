@@ -152,7 +152,7 @@ export function SolutionDetails({ solution }: Props) {
                       <p>Edit</p>
                     </TooltipContent>
                   </Tooltip>
-                  <SolutionDeleteDialog solution={solution}>
+                  <SolutionDeleteDialog solution={solution} slug={slug}>
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Button variant="secondary" size="xs">
