@@ -2,8 +2,6 @@ import { Loader2 } from '@repo/ui/icons';
 import { useSession } from '@repo/auth/react';
 import { useEffect, useRef, useState, type RefObject } from 'react';
 import { Button } from '@repo/ui/components/button';
-import { useToast } from '@repo/ui/components/use-toast';
-import { ToastAction } from '@repo/ui/components/toast';
 import { Textarea } from '@repo/ui/components/textarea';
 import { Markdown } from '@repo/ui/components/markdown';
 import { useForm } from 'react-hook-form';
@@ -21,7 +19,6 @@ interface Props {
 
 export function CommentInput({ mode, onCancel, placeholder, onSubmit, defaultValue }: Props) {
   const { data: session } = useSession();
-  const { toast } = useToast();
   const [commentMode, setCommentMode] = useState<'editor' | 'preview'>('editor');
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
