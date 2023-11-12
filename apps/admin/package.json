@@ -22,7 +22,7 @@
     "@repo/lint": "workspace:*",
     "@repo/monaco": "workspace:*",
     "@repo/ui": "workspace:*",
-    "@tanstack/react-query": "^4.29.25",
+    "@tanstack/react-query": "^5.8.1",
     "@tanstack/react-table": "^8.9.3",
     "clsx": "^2.0.0",
     "million": "2.6.0-beta.12",

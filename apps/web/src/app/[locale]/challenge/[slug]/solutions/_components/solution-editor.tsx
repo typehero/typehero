@@ -10,8 +10,8 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
 import { createNoProfanitySchemaWithValidate } from '~/utils/antiProfanityZod';
-import type { ChallengeSolution } from '../getSolutionRouteData';
 import { postSolution } from './_actions';
+import { useQueryClient } from '@tanstack/react-query';
 
 const getDefaultMarkdown = (solution: string) => `
 ## Thoughts
@@ -39,18 +39,20 @@ const formSchema = z.object({
 export type FormSchema = z.infer<typeof formSchema>;
 
 interface Props {
-  challenge: ChallengeSolution;
+  challengeId: number;
+  code?: string;
   dismiss: () => void;
 }
 
-export function SolutionEditor({ dismiss, challenge }: Props) {
+export function SolutionEditor({ dismiss, challengeId, code }: Props) {
   const { slug } = useParams();
+  const queryClient = useQueryClient();
   const session = useSession();
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: `${session.user.name}'s Solution`,
-      content: getDefaultMarkdown(challenge.submission[0]?.code ?? ''),
+      title: `${session.data?.user.name}'s Solution`,
+      content: getDefaultMarkdown(code ?? ''),
     },
   });
   const { toast } = useToast();
@@ -58,16 +60,24 @@ export function SolutionEditor({ dismiss, challenge }: Props) {
   const onSubmit = async (data: FormSchema) => {
     try {
       await postSolution({
-        challengeId: challenge.id,
+        challengeId,
         description: data.content ?? '',
         slug: slug as string,
-        title: data.title ?? `${session.user.name}'s Solution`,
+        title: data.title ?? `${session.data?.user.name}'s Solution`,
         userId: session.data?.user.id!,
       });
 
       toast({
         variant: 'success',
         title: 'Your solution has been posted!',
+      });
+
+      // invalidate cache on adding a solution successfully
+      queryClient.invalidateQueries({
+        queryKey: [`challenge-solutions`, slug],
+      });
+      queryClient.refetchQueries({
+        queryKey: ['challenge-solutions', slug],
       });
     } catch (error) {
       toast({

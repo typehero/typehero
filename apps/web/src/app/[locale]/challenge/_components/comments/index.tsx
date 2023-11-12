@@ -1,16 +1,8 @@
 'use client';
 
 import type { CommentRoot } from '@repo/db/types';
-import { Button } from '@repo/ui/components/button';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@repo/ui/components/select';
 import { toast } from '@repo/ui/components/use-toast';
-import { ChevronDown, ChevronLeft, ChevronRight, MessageCircle } from '@repo/ui/icons';
+import { ChevronDown, MessageCircle } from '@repo/ui/icons';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { useRef, useState } from 'react';
@@ -20,6 +12,15 @@ import { CommentSkeleton } from './comment-skeleton';
 import { addComment } from './comment.action';
 import { getPaginatedComments, type PreselectedCommentMetadata } from './getCommentRouteData';
 import NoComments from './nocomments';
+import { Pagination } from '../pagination';
+import { SortSelect } from '../sort-select';
+
+interface Props {
+  preselectedCommentMetadata?: PreselectedCommentMetadata;
+  expanded?: boolean;
+  rootId: number;
+  type: CommentRoot;
+}
 
 const sortKeys = [
   {
@@ -48,13 +49,6 @@ const sortKeys = [
   },
 ] as const;
 
-interface Props {
-  preselectedCommentMetadata?: PreselectedCommentMetadata;
-  expanded?: boolean;
-  rootId: number;
-  type: CommentRoot;
-}
-
 // million-ignore
 export function Comments({ preselectedCommentMetadata, rootId, type, expanded = false }: Props) {
   const [showComments, setShowComments] = useState(expanded);
@@ -74,7 +68,6 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
         sortKey: sortKey.key,
         sortOrder: sortKey.order,
       }),
-    keepPreviousData: true,
     staleTime: 60000, // one minute
     refetchOnWindowFocus: false,
   });
@@ -98,7 +91,7 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
         });
       }
       setText('');
-      queryClient.invalidateQueries([`${type.toLowerCase()}-${rootId}-comments`]);
+      queryClient.invalidateQueries({ queryKey: [`${type.toLowerCase()}-${rootId}-comments`] });
     } catch (e) {
       toast({
         title: 'Unauthorized',
@@ -114,6 +107,11 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
       top: 128,
       behavior: 'smooth',
     });
+  };
+
+  const handleValueChange = (value: string) => {
+    setSortKey(sortKeys.find((sk) => sk.value === value) ?? sortKeys[0]);
+    setPage(1);
   };
 
   return (
@@ -163,29 +161,13 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
             />
           </div>
           {(data?.comments.length ?? 0) > 0 && (
-            <div className="flex items-center gap-2 px-3 py-2">
-              <Select
-                value={sortKey.value}
-                defaultValue="newest"
-                onValueChange={(value) => {
-                  setSortKey(sortKeys.find((sk) => sk.value === value) ?? sortKeys[0]);
-                  setPage(1);
-                }}
-              >
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Sort Key" />
-                </SelectTrigger>
-                <SelectContent>
-                  {sortKeys.map((sortKey, index) => (
-                    <SelectItem key={index} value={sortKey.value}>
-                      {sortKey.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+            <SortSelect
+              currentSortKey={sortKey}
+              totalSortKeys={sortKeys}
+              onValueChange={handleValueChange}
+            />
           )}
-          {status === 'loading' && <CommentSkeleton />}
+          {status === 'pending' && <CommentSkeleton />}
           <div className="flex-1">
             {status === 'success' &&
               (data.comments.length === 0 ? (
@@ -215,64 +197,5 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
         </div>
       </div>
     </div>
-  );
-}
-
-function Pagination({
-  currentPage,
-  totalPages,
-  onClick,
-}: {
-  totalPages: number;
-  currentPage: number;
-  onClick: (page: number) => void;
-}) {
-  const maxVisiblePages = 5;
-  const halfVisiblePages = Math.floor(maxVisiblePages / 2);
-
-  let startPage = currentPage - halfVisiblePages;
-  let endPage = currentPage + halfVisiblePages;
-
-  if (startPage <= 0) {
-    startPage = 1;
-    endPage = Math.min(totalPages, maxVisiblePages);
-  }
-
-  if (endPage > totalPages) {
-    endPage = totalPages;
-    startPage = Math.max(1, totalPages - maxVisiblePages + 1);
-  }
-
-  const pages = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
-
-  return (
-    <nav className="justify-space-between flex items-center gap-2">
-      <Button
-        disabled={currentPage === 1}
-        onClick={() => onClick(Math.max(0, currentPage - 1))}
-        variant="ghost"
-      >
-        <ChevronLeft />
-      </Button>
-      {pages.map((page) => (
-        <Button
-          className={clsx('border-border dark:border-ring border', {
-            'bg-border dark:bg-neutral-700': page === currentPage,
-          })}
-          key={`pagination-${page}`}
-          onClick={() => onClick(page)}
-          variant="ghost"
-        >
-          {page}
-        </Button>
-      ))}
-      <Button
-        disabled={currentPage === totalPages}
-        onClick={() => onClick(Math.min(totalPages, currentPage + 1))}
-        variant="ghost"
-      >
-        <ChevronRight />
-      </Button>
-    </nav>
   );
 }

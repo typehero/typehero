@@ -55,7 +55,7 @@ export function CommentDeleteDialog({
         description: 'An error occurred while trying to delete the comment.',
       });
     } finally {
-      queryClient.invalidateQueries(queryKey);
+      queryClient.invalidateQueries({ queryKey });
       setIsOpen(!isOpen);
     }
   }

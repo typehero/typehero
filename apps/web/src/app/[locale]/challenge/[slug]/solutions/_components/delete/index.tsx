@@ -3,21 +3,25 @@ import { useState } from 'react';
 import { Dialog, DialogContent, DialogTrigger } from '@repo/ui/components/dialog';
 import { TypographyLarge } from '@repo/ui/components/typography/large';
 import type { ChallengeSolution } from '~/app/[locale]/challenge/[slug]/solutions/[solutionId]/page';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
-import { getRelativeTime } from '~/utils/relativeTime';
 import { Button } from '@repo/ui/components/button';
 import { TypographyP } from '@repo/ui/components/paragraph';
-import { Markdown } from '@repo/ui/components/markdown';
-import { Label } from '@repo/ui/components/label';
 import { deleteSolution } from '../_actions';
 import { toast } from '@repo/ui/components/use-toast';
 import { useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface SolutionDeleteDialogProps extends DialogTriggerProps {
   solution: ChallengeSolution;
+  slug: string[] | string | undefined;
 }
 
-export function SolutionDeleteDialog({ children, solution, ...props }: SolutionDeleteDialogProps) {
+export function SolutionDeleteDialog({
+  children,
+  slug,
+  solution,
+  ...props
+}: SolutionDeleteDialogProps) {
+  const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
@@ -28,6 +32,13 @@ export function SolutionDeleteDialog({ children, solution, ...props }: SolutionD
         title: 'Solution Deleted',
         variant: 'success',
         description: 'The solution was successfully deleted.',
+      });
+      // invalidate cache on deleting a solution successfully
+      queryClient.invalidateQueries({
+        queryKey: ['challenge-solutions', slug],
+      });
+      queryClient.refetchQueries({
+        queryKey: ['challenge-solutions', slug],
       });
       router.back();
     } catch (e) {

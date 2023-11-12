@@ -9,26 +9,21 @@ import React, { Suspense } from 'react';
 import { Toolbar } from '~/components/toolbar';
 import { I18nProviderClient } from '~/locales/client';
 import { FeatureFlagProvider } from '../feature-flag-provider';
-import type { Corner } from '@tanstack/react-query-devtools/build/lib/utils';
 
 interface Props {
-  locale: string;
   children: React.ReactNode;
 }
 
 const queryClient = new QueryClient();
 
-export function Providers({ locale, children }: Props) {
-  const position: Corner = 'bottom-right';
+export function Providers({ children }: Props) {
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} position={position} />
+      <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-right" />
       <SessionProvider>
         <ThemeProvider attribute="class">
           <FeatureFlagProvider>
-            <TooltipProvider>
-              <I18nProviderClient locale={locale}>{children}</I18nProviderClient>
-            </TooltipProvider>
+            <TooltipProvider>{children}</TooltipProvider>
           </FeatureFlagProvider>
           <Suspense>
             <Toolbar />

@@ -1,43 +1,128 @@
 'use client';
+
 import { Calendar, MessageCircle, ThumbsUp } from '@repo/ui/icons';
 import { useSession } from '@repo/auth/react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { SolutionEditor } from './solution-editor';
 import { NoSolutions } from './nosolutions';
 import { SubmitSolution } from './submit-solution';
-import type { ChallengeSolution } from '../getSolutionRouteData';
+import { type PaginatedSolution, getPaginatedSolutions } from '../getSolutionRouteData';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { Badge } from '@repo/ui/components/badge';
 import { UserBadge } from '@repo/ui/components/user-badge';
 import { useParams } from 'next/navigation';
+import { Pagination } from '../../../_components/pagination';
+import { useQuery } from '@tanstack/react-query';
+import { SolutionsSkeleton } from './solution-skeleton';
+import { SortSelect } from '../../../_components/sort-select';
 
 interface Props {
-  challenge: ChallengeSolution;
+  slug: string;
 }
+
+export const SORT_KEYS = [
+  {
+    label: 'Newest Solutions',
+    value: 'newest',
+    key: 'createdAt',
+    order: 'desc',
+  },
+  {
+    label: 'Most Votes',
+    value: 'votes',
+    key: 'vote',
+    order: 'desc',
+  },
+  {
+    label: 'Most Replies',
+    value: 'solutionComment',
+    key: 'solutionComment',
+    order: 'desc',
+  },
+] as const;
+
 type View = 'details' | 'editor' | 'list';
-export function Solutions({ challenge }: Props) {
+
+export function Solutions({ slug }: Props) {
   const [view, setView] = useState<View>('list');
-  const loggedInUserHasSolution = challenge.submission.length;
+  const commentContainerRef = useRef<HTMLDivElement>(null);
+  const [sortKey, setSortKey] = useState<(typeof SORT_KEYS)[number]>(SORT_KEYS[0]);
+  const [page, setPage] = useState(1);
+  const queryKey = ['challenge-solutions', slug, page, sortKey.key, sortKey.order];
   const session = useSession();
 
+  const handleChangePage = (page: number) => {
+    setPage(page);
+    commentContainerRef.current?.scroll({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
+  const handleValueChange = (value: string) => {
+    setSortKey(SORT_KEYS.find((sk) => sk.value === value) ?? SORT_KEYS[0]);
+    setPage(1);
+  };
+
+  const { status, data: pageData } = useQuery({
+    queryKey,
+    queryFn: () =>
+      getPaginatedSolutions({ slug, page, sortKey: sortKey.key, sortOrder: sortKey.order }),
+    staleTime: 60000, // one minute
+    refetchOnWindowFocus: false,
+  });
+
+  const loggedInUserHasSolution = pageData?.submission?.length ?? 0;
+
   return (
-    <div className="relative h-full">
-      {view === 'editor' && (
-        <SolutionEditor challenge={challenge} dismiss={() => setView('list')} />
-      )}
+    <div className="flex h-full flex-col">
+      {view === 'editor' && pageData?.id ? (
+        <SolutionEditor
+          challengeId={pageData.id}
+          code={pageData?.submission?.[0]?.code}
+          dismiss={() => setView('list')}
+        />
+      ) : null}
 
       {view === 'list' && (
         <>
-          {challenge.sharedSolution.length !== 0 ? (
+          {pageData?.sharedSolution?.length !== 0 ? (
             <>
-              <div className="bg-background/70 dark:bg-muted/70 absolute right-0 top-0 flex w-full justify-end border-b border-zinc-300 p-2 backdrop-blur-sm dark:border-zinc-700">
-                <SubmitSolution disabled={Boolean(!loggedInUserHasSolution)} setView={setView} />
-              </div>
-              <div className="custom-scrollable-element h-full overflow-y-auto pt-12">
-                {challenge.sharedSolution.map((solution) => (
-                  <SolutionRow key={solution.id} solution={solution} />
-                ))}
+              {status === 'pending' && <SolutionsSkeleton />}
+              {status === 'success' && (
+                <div className="bg-background/70 dark:bg-muted/70 flex w-full justify-end border-b border-zinc-300 p-2 backdrop-blur-sm dark:border-zinc-700">
+                  <SubmitSolution disabled={Boolean(!loggedInUserHasSolution)} setView={setView} />
+                </div>
+              )}
+              <div
+                className="custom-scrollable-element relative flex h-full flex-col overflow-y-auto"
+                ref={commentContainerRef}
+              >
+                <div>
+                  {(pageData?.sharedSolution?.length ?? 0) > 0 && (
+                    <SortSelect
+                      currentSortKey={sortKey}
+                      totalSortKeys={SORT_KEYS}
+                      onValueChange={handleValueChange}
+                    />
+                  )}
+                </div>
+                <div className="flex-1">
+                  {status === 'success' &&
+                    pageData?.sharedSolution?.map((solution) => (
+                      <SolutionRow key={solution.id} solution={solution} />
+                    ))}
+                </div>
+                {(pageData?.totalPages ?? 0) > 1 && (
+                  <div className="mb-2 flex justify-center">
+                    <Pagination
+                      currentPage={page}
+                      onClick={handleChangePage}
+                      totalPages={pageData?.totalPages ?? 0}
+                    />
+                  </div>
+                )}
               </div>
             </>
           ) : (
@@ -53,7 +138,11 @@ export function Solutions({ challenge }: Props) {
   );
 }
 
-function SolutionRow({ solution }: { solution: ChallengeSolution['sharedSolution'][0] }) {
+function SolutionRow({
+  solution,
+}: {
+  solution: NonNullable<PaginatedSolution['sharedSolution']>[number];
+}) {
   const { slug } = useParams();
   return (
     <Link
