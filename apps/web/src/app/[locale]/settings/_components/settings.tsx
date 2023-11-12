@@ -3,6 +3,7 @@
 import Link from 'next/link';
 
 import type { User } from '@repo/db/types';
+import { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/card';
 import {
   Tabs,
   VerticalTabsContent,
@@ -10,13 +11,8 @@ import {
   VerticalTabsTrigger,
 } from '@repo/ui/components/tabs';
 import { Settings2, User as UserIcon } from '@repo/ui/icons';
-import { MagicIcon } from '@repo/ui/components/magic-icon';
-import { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/card';
 
-import { getRelativeTime } from '~/utils/relativeTime';
-import UserHeader from '~/app/[locale]/[username]/_components/dashboard/user-header';
-import { stripProtocolAndWWW } from '~/utils/stringUtils';
-
+import UserHeader from '../../(profile)/[username]/_components/dashboard/user-header';
 import { ProfileSettings } from './edit-profile-tab';
 
 interface Props {
@@ -24,9 +20,6 @@ interface Props {
 }
 
 export const Settings = async ({ user }: Props) => {
-  const filteredProfileLinks =
-    user.userLinks.length > 0 ? user.userLinks.filter((item) => item.url !== '') : [];
-
   return (
     <div className="container">
       {/* // TODO: GFI: make each page a subroute, put settings & profile into the same layout */}

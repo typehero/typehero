@@ -1,8 +1,9 @@
 import { DataTable } from '@repo/ui/components/data-table';
-import { columns, type Challenge } from './challenge-history-columns';
+import { columns } from './challenge-history-columns';
+import type { HistoricalChallenge } from './_actions';
 
 interface Props {
-  challenges: Challenge[];
+  challenges: HistoricalChallenge[];
 }
 
 export default function ChallengeHistory({ challenges }: Props) {

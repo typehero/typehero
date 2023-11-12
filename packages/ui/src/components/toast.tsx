@@ -59,7 +59,7 @@ const ToastAction = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Action
     className={cn(
-      'ring-offset-background hover:bg-secondary focus:ring-ring group-[.destructive]:border-destructive-foreground group-[.destructive]:dark:hover:text-destructive-foreground group-[.destructive]:hover:bg-destructive-foreground group-[.destructive]:hover:text-destructive-foreground group-[.destructive]:focus:ring-destructive inline-flex h-8 shrink-0 items-center justify-center rounded-md border border-white bg-transparent px-3 text-sm font-medium text-black transition-colors hover:text-[#27272a] focus:outline-none focus:ring-2 focus:ring-offset-0 disabled:pointer-events-none disabled:opacity-50 group-[.destructive]:hover:text-[#27272a] dark:hover:border-[#27272a] dark:hover:text-white group-[.destructive]:dark:hover:border-[#27272a] group-[.destructive]:dark:hover:bg-[#27272a]',
+      'ring-offset-background focus:ring-ring group-[.destructive]:border-destructive-foreground group-[.destructive]:dark:hover:text-destructive-foreground group-[.destructive]:hover:bg-destructive-foreground group-[.destructive]:hover:text-destructive-foreground group-[.destructive]:focus:ring-destructive inline-flex h-8 shrink-0 items-center justify-center rounded-md border border-white bg-transparent px-3 text-sm font-medium transition-colors hover:bg-transparent/10 focus:outline-none focus:ring-2 focus:ring-offset-0 disabled:pointer-events-none disabled:opacity-50 group-[.destructive]:hover:bg-transparent/10',
       className,
     )}
     ref={ref}

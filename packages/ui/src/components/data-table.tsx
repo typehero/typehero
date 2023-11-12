@@ -62,14 +62,16 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead key={header.id} onClick={header.column.getToggleSortingHandler()}>
-                      <div className="flex items-center justify-between">
+                      <div className="relative">
                         {header.isPlaceholder
                           ? null
                           : flexRender(header.column.columnDef.header, header.getContext())}
-                        {{
-                          asc: <ChevronUp size={16} />,
-                          desc: <ChevronDown size={16} />,
-                        }[header.column.getIsSorted() as string] ?? null}
+                        <span className="absolute inset-y-0 right-0 flex items-center pr-2">
+                          {{
+                            asc: <ChevronUp size={16} />,
+                            desc: <ChevronDown size={16} />,
+                          }[header.column.getIsSorted() as string] ?? null}
+                        </span>
                       </div>
                     </TableHead>
                   );
