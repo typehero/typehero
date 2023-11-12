@@ -12,7 +12,7 @@ interface Props {
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      cacheTime: 0,
+      gcTime: 0,
     },
   },
 });

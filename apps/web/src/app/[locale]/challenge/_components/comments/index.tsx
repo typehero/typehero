@@ -68,7 +68,6 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
         sortKey: sortKey.key,
         sortOrder: sortKey.order,
       }),
-    keepPreviousData: true,
     staleTime: 60000, // one minute
     refetchOnWindowFocus: false,
   });
@@ -92,7 +91,7 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
         });
       }
       setText('');
-      queryClient.invalidateQueries([`${type.toLowerCase()}-${rootId}-comments`]);
+      queryClient.invalidateQueries({ queryKey: [`${type.toLowerCase()}-${rootId}-comments`] });
     } catch (e) {
       toast({
         title: 'Unauthorized',
@@ -168,7 +167,7 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
               onValueChange={handleValueChange}
             />
           )}
-          {status === 'loading' && <CommentSkeleton />}
+          {status === 'pending' && <CommentSkeleton />}
           <div className="flex-1">
             {status === 'success' &&
               (data.comments.length === 0 ? (
