@@ -17,7 +17,6 @@ import {
   Trash2,
   MoreHorizontal,
 } from '@repo/ui/icons';
-import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useParams, useSearchParams } from 'next/navigation';
@@ -27,17 +26,13 @@ import { ReportDialog } from '~/components/ReportDialog';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { Vote } from '../vote';
 import { CommentInput } from './comment-input';
-import { replyComment, updateComment } from './comment.action';
 import { CommentDeleteDialog } from './delete';
-import {
-  getAllComments,
-  type PaginatedComments,
-  type PreselectedCommentMetadata,
-} from './getCommentRouteData';
+import { type PaginatedComments, type PreselectedCommentMetadata } from './getCommentRouteData';
 import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
 import { Button } from '@repo/ui/components/button';
 import { CommentSkeleton } from './comment-skeleton';
 import { isAdminOrModerator } from '~/utils/auth-guards';
+import { useCommentsReplies } from './comments.hooks';
 
 interface SingleCommentProps {
   comment: PaginatedComments['comments'][number];
@@ -46,15 +41,17 @@ interface SingleCommentProps {
   isToggleReply?: boolean;
   onClickReply?: () => void;
   onClickToggleReply?: () => void;
-  queryKey?: (number | string)[];
-  replyQueryKey?: (number | string)[];
   preselectedCommentMetadata?: PreselectedCommentMetadata;
+  deleteComment: (commentId: number) => Promise<void>;
+  updateComment: (text: string, commentId: number) => Promise<void>;
 }
 
 type CommentProps = SingleCommentProps & {
   preselectedCommentMetadata?: PreselectedCommentMetadata;
   rootId: number;
   type: CommentRoot;
+  deleteComment: (commentId: number) => Promise<void>;
+  updateComment: (text: string, commentId: number) => Promise<void>;
 };
 
 const commentReportSchema = z
@@ -78,8 +75,6 @@ const commentReportSchema = z
 
 export type CommentReportSchemaType = z.infer<typeof commentReportSchema>;
 
-const REPLIES_PAGESIZE = 5;
-
 // million-ignore
 export function Comment({
   comment,
@@ -87,7 +82,8 @@ export function Comment({
   readonly = false,
   rootId,
   type,
-  queryKey,
+  deleteComment,
+  updateComment,
 }: CommentProps) {
   const params = useSearchParams();
   const replyId = params.get('replyId');
@@ -96,95 +92,22 @@ export function Comment({
     preselectedCommentMetadata?.selectedComment?.id === comment.id && Boolean(replyId);
 
   const [showReplies, setShowReplies] = useState(hasPreselectedReply);
-
   const [isReplying, setIsReplying] = useState(false);
-  const [replyText, setReplyText] = useState('');
-  const queryClient = useQueryClient();
-
-  const replyQueryKey = [`comment-${comment.id}-replies`];
 
   const {
-    data: replies,
-    fetchStatus,
-    isPending: isLoadingReplies,
-  } = useQuery({
-    queryKey: replyQueryKey,
-    queryFn: () => getAllComments({ rootId, rootType: type, parentId: comment.id }),
-    staleTime: 5000,
-    enabled: showReplies,
-  });
-
-  const {
-    data: paginatedReplies,
+    status,
+    data,
     fetchNextPage,
-    isFetching: isFetchingMoreReplies,
-    hasNextPage: hasMoreReplies,
-    refetch,
-  } = useInfiniteQuery({
-    initialPageParam: 0,
-    queryKey: [...replyQueryKey, 'paginated'],
-    queryFn: ({ pageParam }) => {
-      // `cursor` is the start index of the current page
-      const cursor = Number(pageParam);
-
-      let take = REPLIES_PAGESIZE;
-      if (hasPreselectedReply && cursor === 0) {
-        const preselectedReplyIndex = replies!.findIndex((reply) => Number(replyId) === reply.id);
-        take = Math.ceil((preselectedReplyIndex + 1) / REPLIES_PAGESIZE) * REPLIES_PAGESIZE;
-      }
-
-      // `end` is exclusive, and therefore also the next cursor
-      const end = cursor + take;
-
-      return {
-        // if the current page is the last, don't return the next cursor
-        cursor: end < replies!.length ? end : undefined,
-        replies: replies!.slice(cursor, end),
-      };
-    },
-    enabled: Boolean(replies),
-    getNextPageParam: (_, pages) => pages.at(-1)?.cursor,
+    addReplyComment,
+    updateReplyComment,
+    deleteReplyComment,
+    showLoadMoreRepliesBtn,
+  } = useCommentsReplies({
+    enabled: showReplies,
+    rootId,
+    type,
+    parentCommentId: comment.id,
   });
-
-  useEffect(() => {
-    if (replies) {
-      refetch();
-    }
-  }, [replies, refetch]);
-
-  async function createChallengeCommentReply() {
-    try {
-      const res = await replyComment(
-        {
-          text: replyText,
-          rootId,
-          rootType: type,
-        },
-        comment.id,
-      );
-      if (res === 'text_is_empty') {
-        toast({
-          title: 'Empty Comment',
-          description: <p>You cannot post an empty comment.</p>,
-        });
-      } else if (res === 'unauthorized') {
-        toast({
-          title: 'Unauthorized',
-          description: <p>You need to be signed in to post a comment.</p>,
-        });
-      }
-      setReplyText('');
-      queryClient.invalidateQueries({ queryKey: replyQueryKey });
-      queryClient.invalidateQueries({ queryKey });
-      setShowReplies(true);
-    } catch (e) {
-      toast({
-        title: 'Unauthorized',
-        variant: 'destructive',
-        description: <p>You need to be signed in to post a comment.</p>,
-      });
-    }
-  }
 
   const toggleReplies = () => setShowReplies(!showReplies);
   const toggleIsReplying = () => setIsReplying(!isReplying);
@@ -198,6 +121,8 @@ export function Comment({
         onClickReply={toggleIsReplying}
         onClickToggleReply={toggleReplies}
         readonly={readonly}
+        deleteComment={deleteComment}
+        updateComment={updateComment}
       />
       {isReplying ? (
         <div className="relative mt-2 pb-2 pl-8">
@@ -207,34 +132,34 @@ export function Comment({
             onCancel={() => {
               setIsReplying(false);
             }}
-            onChange={setReplyText}
-            onSubmit={async () => {
-              await createChallengeCommentReply();
+            onSubmit={async (text) => {
+              await addReplyComment(text);
+              setShowReplies(true);
               setIsReplying(false);
             }}
-            value={replyText}
           />
         </div>
       ) : null}
 
-      {isLoadingReplies && fetchStatus !== 'idle' ? <CommentSkeleton /> : null}
+      {showReplies && status === 'pending' ? <CommentSkeleton /> : null}
       {showReplies ? (
         <>
           <div className="flex flex-col gap-1 pl-6 pt-1">
-            {paginatedReplies?.pages.flatMap((page) =>
+            {data?.pages.flatMap((page) =>
               page.replies.map((reply) => (
                 // this is a reply
                 <SingleComment
                   comment={reply}
                   isReply
                   key={reply.id}
-                  replyQueryKey={replyQueryKey}
                   preselectedCommentMetadata={preselectedCommentMetadata}
+                  deleteComment={deleteReplyComment}
+                  updateComment={updateReplyComment}
                 />
               )),
             )}
           </div>
-          {hasMoreReplies && !isFetchingMoreReplies ? (
+          {showLoadMoreRepliesBtn ? (
             <Button
               variant="ghost"
               className="gap-1 text-xs text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
@@ -260,16 +185,14 @@ function SingleComment({
   isToggleReply,
   onClickReply,
   onClickToggleReply,
-  queryKey,
   readonly = false,
-  replyQueryKey,
   preselectedCommentMetadata,
+  deleteComment,
+  updateComment,
 }: SingleCommentProps) {
   const { slug } = useParams();
   const searchParams = useSearchParams();
   const replyId = searchParams.get('replyId');
-  const queryClient = useQueryClient();
-  const [text, setText] = useState(comment.text);
   const [isEditing, setIsEditing] = useState(false);
   const elRef = useRef<HTMLDivElement | null>(null);
   const session = useSession();
@@ -277,31 +200,6 @@ function SingleComment({
   const isHighlighted = replyId
     ? Number(replyId) === comment.id
     : preselectedCommentMetadata?.selectedComment?.id === comment.id;
-
-  async function updateChallengeComment() {
-    try {
-      const res = await updateComment(text, comment.id);
-      if (res === 'text_is_empty') {
-        toast({
-          title: 'Empty Comment',
-          description: <p>You cannot post an empty comment.</p>,
-        });
-      } else if (res === 'unauthorized') {
-        toast({
-          title: 'Unauthorized',
-          description: <p>You need to be signed in to post a comment.</p>,
-        });
-      }
-      queryClient.invalidateQueries({ queryKey });
-      queryClient.invalidateQueries({ queryKey: replyQueryKey });
-    } catch (e) {
-      toast({
-        title: 'Unauthorized',
-        variant: 'destructive',
-        description: <p>You need to be signed in to post a comment.</p>,
-      });
-    }
-  }
 
   async function copyPathNotifyUser(isReply: boolean, slug: string) {
     try {
@@ -410,15 +308,14 @@ function SingleComment({
         <div className="mb-2">
           <CommentInput
             mode="edit"
+            defaultValue={comment.text}
             onCancel={() => {
               setIsEditing(false);
             }}
-            onChange={setText}
-            onSubmit={async () => {
-              await updateChallengeComment();
+            onSubmit={async (text) => {
+              await updateComment(text, comment.id);
               setIsEditing(false);
             }}
-            value={text}
           />
         </div>
       ) : null}
@@ -488,7 +385,7 @@ function SingleComment({
             ) : null}
             {isAuthor || isAdminAndModerator ? (
               <Tooltip>
-                <CommentDeleteDialog asChild comment={comment}>
+                <CommentDeleteDialog asChild comment={comment} deleteComment={deleteComment}>
                   <TooltipTrigger asChild>
                     <Button variant="secondary" size="xs">
                       <Trash2 className="h-3 w-3" />
