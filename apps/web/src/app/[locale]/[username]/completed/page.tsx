@@ -30,11 +30,6 @@ export default async function CompletedPage({ params: { username: usernameFromQu
     },
     select: {
       id: true,
-      createdAt: true,
-      bio: true,
-      image: true,
-      name: true,
-      userLinks: true,
     },
   });
 

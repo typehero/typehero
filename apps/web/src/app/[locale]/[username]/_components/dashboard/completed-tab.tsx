@@ -1,48 +1,17 @@
-import { prisma } from '@repo/db';
-import { createCompletedSubmissionCacheKey } from '~/app/[locale]/challenge/[slug]/submissions/[[...catchAll]]/save-submission.action';
+import { createCompletedSubmissionCacheKey } from '~/app/[locale]/challenge/[slug]/submissions/[[...catchAll]]/cache-keys';
 import { withUnstableCache } from '~/utils/withUnstableCache';
+import { getChallengeHistoryByCategory } from './_actions';
 import ChallengeHistory from './challenge-history';
 
 export async function CompletedTab({ userId }: { userId: string }) {
   const challenges = await withUnstableCache({
-    fn: getCompletedChallenges,
-    args: [userId],
-    keys: [`completed-challenges`],
+    fn: getChallengeHistoryByCategory,
+    args: ['completed', userId],
+    keys: [`completed-challenges-${userId}`],
     tags: [createCompletedSubmissionCacheKey(userId)],
   });
 
+  console.log({ challenges });
+
   return <ChallengeHistory challenges={challenges} />;
-}
-
-async function getCompletedChallenges(userId: string) {
-  const challenges = await prisma.challenge.findMany({
-    where: {
-      submission: {
-        some: {
-          userId,
-          isSuccessful: true,
-        },
-      },
-    },
-    select: {
-      id: true,
-      slug: true,
-      name: true,
-      submission: {
-        orderBy: {
-          createdAt: 'desc',
-        },
-        take: 1,
-        select: {
-          createdAt: true,
-        },
-      },
-    },
-  });
-
-  return challenges.sort(
-    (challengeA, challengeB) =>
-      new Date(challengeB.submission[0]!.createdAt).getTime() -
-      new Date(challengeA.submission[0]!.createdAt).getTime(),
-  );
 }

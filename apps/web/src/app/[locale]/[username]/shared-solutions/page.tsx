@@ -1,3 +1,5 @@
+import { getServerAuthSession } from '@repo/auth/server';
+import { prisma } from '@repo/db';
 import {
   Card,
   CardContent,
@@ -5,10 +7,11 @@ import {
   CardHeader,
   CardTitle,
 } from '@repo/ui/components/card';
-import { SharedSolutionsTab } from '../_components/dashboard/shared-solutions-tab';
+import { DataTable } from '@repo/ui/components/data-table';
 import { notFound } from 'next/navigation';
-import { prisma } from '@repo/db';
-import { getServerAuthSession } from '@repo/auth/server';
+import { withUnstableCache } from '~/utils/withUnstableCache';
+import { createCacheKeyForSharedSolutionsTab } from '../../challenge/[slug]/solutions/_components/_actions';
+import { sharedSolutionsColumns } from './_components/shared-solutions-columns';
 
 interface Props {
   params: {
@@ -31,15 +34,18 @@ export default async function SharedSolutionsPage({
     },
     select: {
       id: true,
-      createdAt: true,
-      bio: true,
-      image: true,
       name: true,
-      userLinks: true,
     },
   });
 
   if (!user) return notFound();
+
+  const solutions = await withUnstableCache({
+    fn: getSharedSolutions,
+    args: [user.id],
+    keys: [`shared-solutions`],
+    tags: [createCacheKeyForSharedSolutionsTab(user.id)],
+  });
 
   const session = await getServerAuthSession();
   const isOwnProfile = session?.user.id === user.id;
@@ -53,8 +59,35 @@ export default async function SharedSolutionsPage({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <SharedSolutionsTab userId={user.id} />
+        <DataTable data={solutions} columns={sharedSolutionsColumns} />
       </CardContent>
     </Card>
   );
+}
+
+export type SharedSolutions = Awaited<ReturnType<typeof getSharedSolutions>>;
+export type SharedSolution = SharedSolutions[0];
+async function getSharedSolutions(userId: string) {
+  return await prisma.sharedSolution.findMany({
+    where: {
+      userId,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+    include: {
+      _count: {
+        select: {
+          vote: true,
+        },
+      },
+      challenge: {
+        select: {
+          id: true,
+          slug: true,
+          name: true,
+        },
+      },
+    },
+  });
 }

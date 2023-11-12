@@ -3,25 +3,21 @@
 import { type ColumnDef } from '@tanstack/react-table';
 import Link from 'next/link';
 import { getRelativeTime } from '~/utils/relativeTime';
+import type { HistoricalChallenge } from './_actions';
 
-export interface Challenge {
-  id: number;
-  name: string;
-  slug: string;
-  submission: {
-    createdAt: Date;
-  }[];
-}
-
-export const columns: ColumnDef<Challenge>[] = [
+export const columns: ColumnDef<HistoricalChallenge>[] = [
   {
-    accessorKey: 'challenge',
+    accessorKey: 'slug',
     header: 'Challenge',
-    cell: ({ row }) => <Link href={`/challenge/${row.original.slug}`}>{row.original.name}</Link>,
+    cell: ({ row }) => (
+      <Link href={`/challenge/${row.original.slug}`} className="underline">
+        {row.original.name}
+      </Link>
+    ),
   },
   {
-    accessorKey: 'lastSubmission',
+    accessorKey: 'submissionDate',
     header: 'Last Submission',
-    cell: ({ row }) => getRelativeTime(row.original.submission[0]!.createdAt),
+    cell: ({ row }) => getRelativeTime(row.original.submissionDate!),
   },
 ];

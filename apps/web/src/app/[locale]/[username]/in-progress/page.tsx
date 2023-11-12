@@ -30,11 +30,6 @@ export default async function InProgressPage({ params: { username: usernameFromQ
     },
     select: {
       id: true,
-      createdAt: true,
-      bio: true,
-      image: true,
-      name: true,
-      userLinks: true,
     },
   });
 

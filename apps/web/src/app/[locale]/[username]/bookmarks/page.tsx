@@ -1,3 +1,5 @@
+import { getServerAuthSession } from '@repo/auth/server';
+import { prisma } from '@repo/db';
 import {
   Card,
   CardContent,
@@ -5,10 +7,11 @@ import {
   CardHeader,
   CardTitle,
 } from '@repo/ui/components/card';
-import { prisma } from '@repo/db';
-import { BookmarksTab } from '../_components/dashboard/bookmarks-tab';
 import { notFound } from 'next/navigation';
-import { getServerAuthSession } from '@repo/auth/server';
+import { withUnstableCache } from '~/utils/withUnstableCache';
+import { createCacheKeyForBookmarksTab } from '../../challenge/_components/bookmark.action';
+import { DataTable } from '@repo/ui/components/data-table';
+import { bookmarkedChallengedColumns } from './_components/bookmarked-challenges-columns';
 
 interface Props {
   params: {
@@ -30,15 +33,17 @@ export default async function BookmarksPage({ params: { username: usernameFromQu
     },
     select: {
       id: true,
-      createdAt: true,
-      bio: true,
-      image: true,
-      name: true,
-      userLinks: true,
     },
   });
 
   if (!user) return notFound();
+
+  const bookmarks = await withUnstableCache({
+    fn: getBookmarkedChallenges,
+    args: [user.id],
+    keys: [`bookmarked-challenges`],
+    tags: [createCacheKeyForBookmarksTab(user.id)],
+  });
 
   return (
     <Card className="col-span-4 md:min-h-[calc(100vh_-_56px_-_6rem)]">
@@ -49,8 +54,27 @@ export default async function BookmarksPage({ params: { username: usernameFromQu
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <BookmarksTab userId={user.id} />
+        <DataTable data={bookmarks} columns={bookmarkedChallengedColumns} />
       </CardContent>
     </Card>
   );
+}
+
+export type BookmarkedChallenge = Awaited<ReturnType<typeof getBookmarkedChallenges>>[0];
+async function getBookmarkedChallenges(userId: string) {
+  return await prisma.bookmark.findMany({
+    where: { userId },
+    include: {
+      challenge: {
+        select: {
+          id: true,
+          slug: true,
+          name: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
 }
