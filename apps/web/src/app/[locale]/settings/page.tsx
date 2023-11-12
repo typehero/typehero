@@ -1,4 +1,4 @@
-import { getServerAuthSession } from '@repo/auth/server';
+import { auth } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import type { Metadata } from 'next';
 import { Settings } from './_components/settings';
@@ -12,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function SettingsPage() {
-  const session = await getServerAuthSession();
+  const session = await auth();
 
   if (!session?.user || !session.user.name) {
     return null;

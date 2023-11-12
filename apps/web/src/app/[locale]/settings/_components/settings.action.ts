@@ -1,6 +1,6 @@
 'use server';
 
-import { getServerAuthSession } from '@repo/auth/server';
+import { auth } from '@repo/auth/server';
 import { revalidatePath } from 'next/cache';
 import { prisma } from '@repo/db';
 import type { ProfileSchema } from './schema';
@@ -11,7 +11,7 @@ import { profileSchema } from './schema';
  * @param profileData
  */
 export async function updateProfile(profileData: ProfileSchema) {
-  const session = await getServerAuthSession();
+  const session = await auth();
 
   // 1. Checks that the user is logged in
   if (!session?.user.id) return { error: 'unauthorized' };

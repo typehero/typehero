@@ -1,3 +1,3 @@
-import NextAuth from 'next-auth/next';
+import NextAuth from 'next-auth';
 
 export default NextAuth;

@@ -9,7 +9,7 @@ import { Play, Settings, Settings2, User } from '@repo/ui/icons';
 import Link from 'next/link';
 import { isAdminOrModerator } from '~/utils/auth-guards';
 import { getAllFlags } from '~/utils/feature-flags';
-import { getServerAuthSession } from '@repo/auth/server';
+import { auth } from '@repo/auth/server';
 import { ThemeButton } from './theme-button';
 import { NavLink } from './nav-link';
 import { NavWrapper } from './nav-wrapper';
@@ -81,7 +81,7 @@ export async function Navigation() {
 }
 
 async function LoginButton() {
-  const session = await getServerAuthSession();
+  const session = await auth();
 
   const isAdminOrMod = isAdminOrModerator(session);
 

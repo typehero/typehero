@@ -2,7 +2,7 @@ import { prisma } from '@repo/db';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Dashboard } from './dashboard';
-import { getServerAuthSession } from '@repo/auth/server';
+import { auth } from '@repo/auth/server';
 
 interface Props {
   username: string;
@@ -36,7 +36,7 @@ export async function Profile({ username: usernameFromQuery, children }: Props) 
 
   if (!user) return notFound();
 
-  const session = await getServerAuthSession();
+  const session = await auth();
   const isOwnProfile = session?.user.id === user.id;
 
   return (

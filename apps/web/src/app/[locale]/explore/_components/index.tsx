@@ -1,4 +1,4 @@
-import { getServerAuthSession } from '@repo/auth/server';
+import { auth } from '@repo/auth/server';
 import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
 import { Footsies } from '~/components/footsies';
@@ -10,7 +10,7 @@ import { ExploreSectionSkeleton } from './explore-section-skeleton';
 export const dynamic = 'force-dynamic';
 
 export async function Explore() {
-  const session = await getServerAuthSession();
+  const session = await auth();
   const isBeta = await isBetaUser(session);
 
   if (!isBeta) {

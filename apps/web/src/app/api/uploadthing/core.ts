@@ -1,6 +1,6 @@
 import { createUploadthing, type FileRouter } from 'uploadthing/next';
-import { getServerAuthSession, authOptions } from '@repo/auth/server';
 import { prisma } from '@repo/db';
+import { auth } from '@repo/auth/server';
 
 const f = createUploadthing();
 
@@ -32,7 +32,7 @@ export const ourFileRouter = {
   })
     // Set permissions and file types for this FileRoute
     .middleware(async () => {
-      const session = await getServerAuthSession();
+      const session = await auth();
 
       // If you throw, the user will not be able to upload
       if (!session?.user.id) throw new Error('Unauthorized');

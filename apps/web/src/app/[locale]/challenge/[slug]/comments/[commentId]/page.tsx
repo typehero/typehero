@@ -1,4 +1,4 @@
-import { getServerAuthSession } from '@repo/auth/server';
+import { auth } from '@repo/auth/server';
 import { Comments } from '../../../_components/comments';
 import { getPreselectedCommentMetadata } from '../../../_components/comments/getCommentRouteData';
 import { Description } from '../../../_components/description';
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default async function CommentPage({ params: { slug, commentId } }: Props) {
-  const session = await getServerAuthSession();
+  const session = await auth();
   const { challenge } = await getChallengeRouteData(slug, session);
   const preselectedCommentMetadata = await getPreselectedCommentMetadata(
     challenge.id,

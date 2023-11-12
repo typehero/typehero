@@ -1,4 +1,3 @@
-import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import {
   Card,
@@ -12,6 +11,7 @@ import { createCompletedSubmissionCacheKey } from '~/app/[locale]/challenge/[slu
 import { withUnstableCache } from '~/utils/withUnstableCache';
 import { getChallengeHistoryByCategory } from '../_components/dashboard/_actions';
 import ChallengeHistory from '../_components/dashboard/challenge-history';
+import { auth } from '@repo/auth/server';
 
 interface Props {
   params: {
@@ -20,7 +20,7 @@ interface Props {
 }
 
 export default async function CompletedPage({ params: { username: usernameFromQuery } }: Props) {
-  const session = await getServerAuthSession();
+  const session = await auth();
   const [, username] = decodeURIComponent(usernameFromQuery).split('@');
 
   if (!username || session?.user.name !== username) return notFound();

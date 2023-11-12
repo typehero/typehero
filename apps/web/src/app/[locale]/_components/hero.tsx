@@ -4,7 +4,7 @@ import { Balancer } from 'react-wrap-balancer';
 import { Button } from '@repo/ui/components/button';
 import { HeroIllustration, BackgroundGrid } from './hero-illustration';
 import { getScopedI18n } from '~/locales/server';
-import { getServerAuthSession } from '@repo/auth/server';
+import { auth } from '@repo/auth/server';
 
 function TypeHeroLogo3D() {
   return (
@@ -145,7 +145,7 @@ function BeamOfLight() {
 
 export async function Hero() {
   const t = await getScopedI18n('landing.hero');
-  const session = await getServerAuthSession();
+  const session = await auth();
   return (
     <section className="-mt-[56px] min-h-[calc(100vh)] overflow-hidden lg:min-h-0 lg:pt-[56px]">
       <div className="absolute inset-10 -z-30 overflow-hidden rounded-full opacity-70 lg:hidden">

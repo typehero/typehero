@@ -1,5 +1,5 @@
 'use server';
-import { getServerAuthSession } from '@repo/auth/server';
+import { auth } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import type { VoteType } from '@repo/db/types';
 
@@ -8,7 +8,7 @@ export async function incrementOrDecrementUpvote(
   rootType: VoteType,
   shouldIncrement: boolean,
 ) {
-  const session = await getServerAuthSession();
+  const session = await auth();
 
   if (!session) {
     throw new Error('User not authenticated');

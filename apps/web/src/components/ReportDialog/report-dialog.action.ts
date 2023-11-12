@@ -1,6 +1,6 @@
 'use server';
 
-import { getServerAuthSession } from '@repo/auth/server';
+import { auth } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import { type Prisma, type Report } from '@repo/db/types';
 
@@ -70,7 +70,7 @@ export type SolutionReport = Omit<
 export async function addReport(
   report: ChallengeReport | CommentReport | SolutionReport | UserReport,
 ) {
-  const reporter = await getServerAuthSession();
+  const reporter = await auth();
   if (!reporter?.user.id) return 'not_logged_in';
 
   let filterData;

@@ -1,5 +1,5 @@
 'use server';
-import { getServerAuthSession } from '@repo/auth/server';
+import { auth } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import type { CommentRoot } from '@repo/db/types';
 import { orderBy, type SortKey, type SortOrder } from '~/utils/sorting';
@@ -97,7 +97,7 @@ export async function getPaginatedComments({
   sortKey?: SortKey;
   sortOrder?: SortOrder;
 }) {
-  const session = await getServerAuthSession();
+  const session = await auth();
 
   const totalComments = await prisma.comment.count({
     where: {
@@ -187,7 +187,7 @@ export async function getAllComments({
   sortKey?: SortKey;
   sortOrder?: SortOrder;
 }) {
-  const session = await getServerAuthSession();
+  const session = await auth();
 
   const comments = await prisma.comment.findMany({
     where: {

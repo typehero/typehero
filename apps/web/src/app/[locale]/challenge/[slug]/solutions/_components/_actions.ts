@@ -1,5 +1,5 @@
 'use server';
-import { getServerAuthSession } from '@repo/auth/server';
+import { auth } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import { revalidateTag } from 'next/cache';
 import { isAdminOrModerator, isAuthor } from '~/utils/auth-guards';
@@ -25,7 +25,7 @@ export const createCacheKeyForSolutions = (slug: string) => `challenge-${slug}-s
 export const createCacheKeyForSharedSolutionsTab = (userId: string) => `${userId}-shared-solutions`;
 
 export async function updateSolution({ id, description, slug, title }: SolutionUpdateArgs) {
-  const session = await getServerAuthSession();
+  const session = await auth();
 
   const solution = await prisma.sharedSolution.findFirstOrThrow({
     where: {
@@ -49,7 +49,7 @@ export async function updateSolution({ id, description, slug, title }: SolutionU
 }
 
 export async function postSolution({ challengeId, description, slug, title, userId }: Args) {
-  const session = await getServerAuthSession();
+  const session = await auth();
   if (!session) throw new Error('You must be logged in to submit a solution');
 
   await prisma.sharedSolution.create({
@@ -65,7 +65,7 @@ export async function postSolution({ challengeId, description, slug, title, user
 }
 
 export async function deleteSolution(solutionToDelete: ChallengeSolution) {
-  const session = await getServerAuthSession();
+  const session = await auth();
   const solution = await prisma.sharedSolution.findFirstOrThrow({
     where: {
       id: solutionToDelete.id,
@@ -84,7 +84,7 @@ export async function deleteSolution(solutionToDelete: ChallengeSolution) {
 }
 
 export async function pinOrUnpinSolution(id: number, isPinned: boolean, slug: string) {
-  const session = await getServerAuthSession();
+  const session = await auth();
 
   if (!isAdminOrModerator(session))
     throw new Error('You are not authorized to pin/unpin solutions');
