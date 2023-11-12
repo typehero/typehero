@@ -1,3 +1,5 @@
+import { getServerAuthSession } from '@repo/auth/server';
+import { prisma } from '@repo/db';
 import {
   Card,
   CardContent,
@@ -5,10 +7,11 @@ import {
   CardHeader,
   CardTitle,
 } from '@repo/ui/components/card';
-import { InProgressTab } from '../_components/dashboard/in-progress-tab';
 import { notFound } from 'next/navigation';
-import { prisma } from '@repo/db';
-import { getServerAuthSession } from '@repo/auth/server';
+import { createInProgressSubmissionCacheKey } from '~/app/[locale]/challenge/[slug]/submissions/[[...catchAll]]/cache-keys';
+import { withUnstableCache } from '~/utils/withUnstableCache';
+import { getChallengeHistoryByCategory } from '../_components/dashboard/_actions';
+import ChallengeHistory from '../_components/dashboard/challenge-history';
 
 interface Props {
   params: {
@@ -35,6 +38,13 @@ export default async function InProgressPage({ params: { username: usernameFromQ
 
   if (!user) return notFound();
 
+  const challenges = await withUnstableCache({
+    fn: getChallengeHistoryByCategory,
+    args: ['in-progress', user.id],
+    keys: [`in-progress-challenges-${user.id}`],
+    tags: [createInProgressSubmissionCacheKey(user.id)],
+  });
+
   return (
     <Card className="col-span-4 md:min-h-[calc(100vh_-_56px_-_6rem)]">
       <CardHeader>
@@ -44,7 +54,7 @@ export default async function InProgressPage({ params: { username: usernameFromQ
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <InProgressTab userId={user.id} />
+        <ChallengeHistory challenges={challenges} />
       </CardContent>
     </Card>
   );

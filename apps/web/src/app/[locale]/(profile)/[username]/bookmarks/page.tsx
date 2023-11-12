@@ -9,7 +9,7 @@ import {
 } from '@repo/ui/components/card';
 import { notFound } from 'next/navigation';
 import { withUnstableCache } from '~/utils/withUnstableCache';
-import { createCacheKeyForBookmarksTab } from '../../challenge/_components/bookmark.action';
+import { createCacheKeyForBookmarksTab } from '../../../challenge/_components/bookmark.action';
 import { DataTable } from '@repo/ui/components/data-table';
 import { bookmarkedChallengedColumns } from './_components/bookmarked-challenges-columns';
 

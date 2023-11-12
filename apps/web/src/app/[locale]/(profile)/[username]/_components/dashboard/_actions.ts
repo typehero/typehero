@@ -4,7 +4,7 @@ import { prisma } from '@repo/db';
 
 export type HistoricalChallenge = Awaited<ReturnType<typeof getChallengeHistoryByCategory>>[0];
 
-type HistoryType = 'in-progress' | 'completed';
+type HistoryType = 'completed' | 'in-progress';
 const getPredicateByType = (type: HistoryType, userId: string) => {
   switch (type) {
     case 'in-progress':
