@@ -9,7 +9,6 @@ import React, { Suspense } from 'react';
 import { Toolbar } from '~/components/toolbar';
 import { I18nProviderClient } from '~/locales/client';
 import { FeatureFlagProvider } from '../feature-flag-provider';
-import type { Corner } from '@tanstack/react-query-devtools/build/lib/utils';
 
 interface Props {
   children: React.ReactNode;
@@ -18,10 +17,9 @@ interface Props {
 const queryClient = new QueryClient();
 
 export function Providers({ children }: Props) {
-  const position: Corner = 'bottom-right';
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} position={position} />
+      <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-right" />
       <SessionProvider>
         <ThemeProvider attribute="class">
           <FeatureFlagProvider>

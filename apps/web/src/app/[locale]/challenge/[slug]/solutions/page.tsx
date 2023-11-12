@@ -1,11 +1,6 @@
-import { getServerAuthSession } from '@repo/auth/server';
-import { notFound } from 'next/navigation';
 import { buildMetaForDefault } from '~/app/metadata';
-import { withUnstableCache } from '~/utils/withUnstableCache';
 import { getChallengeRouteData } from '../getChallengeRouteData';
 import { Solutions } from './_components';
-import { getSolutionsRouteData } from './getSolutionRouteData';
-import { createCacheKeyForSolutions } from './_components/_actions';
 
 interface Props {
   params: {
@@ -22,17 +17,5 @@ export async function generateMetadata({ params: { slug } }: Props) {
 }
 
 export default async function SolutionPage({ params: { slug } }: Props) {
-  const session = await getServerAuthSession();
-  const solutions = await withUnstableCache({
-    fn: getSolutionsRouteData,
-    args: [slug, session],
-    keys: ['challenge-solutions'],
-    tags: [createCacheKeyForSolutions(slug)],
-  });
-
-  if (!solutions) {
-    return notFound();
-  }
-
-  return <Solutions challenge={solutions} slug={slug} />;
+  return <Solutions slug={slug} />;
 }
