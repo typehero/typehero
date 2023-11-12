@@ -46,7 +46,7 @@ export function Markdown({ children, className }: { children: string; className?
 
   return (
     <ReactMarkdown
-      className={clsx(className, 'leading-relaxed')}
+      className={className}
       components={{
         a: ({ className, ...props }) => (
           <a className={clsx(className, 'text-blue-500')} {...props} />
