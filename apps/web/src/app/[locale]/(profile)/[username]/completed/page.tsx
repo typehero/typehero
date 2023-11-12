@@ -1,3 +1,5 @@
+import { getServerAuthSession } from '@repo/auth/server';
+import { prisma } from '@repo/db';
 import {
   Card,
   CardContent,
@@ -5,10 +7,11 @@ import {
   CardHeader,
   CardTitle,
 } from '@repo/ui/components/card';
-import { CompletedTab } from '../_components/dashboard/completed-tab';
 import { notFound } from 'next/navigation';
-import { prisma } from '@repo/db';
-import { getServerAuthSession } from '@repo/auth/server';
+import { createCompletedSubmissionCacheKey } from '~/app/[locale]/challenge/[slug]/submissions/[[...catchAll]]/cache-keys';
+import { withUnstableCache } from '~/utils/withUnstableCache';
+import { getChallengeHistoryByCategory } from '../_components/dashboard/_actions';
+import ChallengeHistory from '../_components/dashboard/challenge-history';
 
 interface Props {
   params: {
@@ -30,15 +33,17 @@ export default async function CompletedPage({ params: { username: usernameFromQu
     },
     select: {
       id: true,
-      createdAt: true,
-      bio: true,
-      image: true,
-      name: true,
-      userLinks: true,
     },
   });
 
   if (!user) return notFound();
+
+  const challenges = await withUnstableCache({
+    fn: getChallengeHistoryByCategory,
+    args: ['completed', user.id],
+    keys: [`completed-challenges-${user.id}`],
+    tags: [createCompletedSubmissionCacheKey(user.id)],
+  });
 
   return (
     <Card className="col-span-4 md:min-h-[calc(100vh_-_56px_-_6rem)]">
@@ -49,7 +54,7 @@ export default async function CompletedPage({ params: { username: usernameFromQu
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <CompletedTab userId={user.id} />
+        <ChallengeHistory challenges={challenges} />
       </CardContent>
     </Card>
   );

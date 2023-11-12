@@ -3,18 +3,11 @@ import { prisma } from '@repo/db';
 import { revalidateTag } from 'next/cache';
 import type { ChallengeRouteData } from '../../getChallengeRouteData';
 import { createCacheKeyForSolutions } from '../../solutions/_components/_actions';
-
-export const createChallengeSubmissionCacheKey = (slug: string) => {
-  return `${slug}-challenge-submissions`;
-};
-
-export const createInProgressSubmissionCacheKey = (userId: string) => {
-  return `${userId}-in-progress-challenges`;
-};
-
-export const createCompletedSubmissionCacheKey = (userId: string) => {
-  return `${userId}-completed-challenges`;
-};
+import {
+  createChallengeSubmissionCacheKey,
+  createCompletedSubmissionCacheKey,
+  createInProgressSubmissionCacheKey,
+} from './cache-keys';
 
 interface Args {
   challenge: ChallengeRouteData['challenge'];
