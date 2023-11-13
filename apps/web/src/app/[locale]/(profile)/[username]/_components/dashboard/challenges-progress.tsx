@@ -25,7 +25,7 @@ export async function ChallengesProgress() {
                 className="h-1"
                 value={(challenges[difficulty].solved / challenges[difficulty].total) * 100}
               />
-              <div className="w-16 md:w-20">
+              <div className="w-16 text-center md:w-20">
                 {challenges[difficulty].solved}
                 <span className="text-muted-foreground text-sm">
                   /{challenges[difficulty].total}
@@ -36,7 +36,7 @@ export async function ChallengesProgress() {
         </div>
       </CardContent>
       <CardFooter>
-        <div className="text-muted-foreground text-xs">
+        <div className="text-muted-foreground text-sm">
           Solved: <span className="text-foreground text-xl">{totalSolved}</span>/{totalChallenges} (
           {percentage}%)
         </div>

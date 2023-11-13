@@ -70,7 +70,7 @@ export async function getChallengeHistoryByCategory(type: HistoryType, userId: s
 export async function getSolvedChallenges() {
   const session = await getServerAuthSession();
 
-  const solvedChallenges = await prisma.submission.findMany({
+  const successfulSubmissions = await prisma.submission.findMany({
     where: {
       userId: session?.user.id,
       isSuccessful: true,
@@ -89,7 +89,7 @@ export async function getSolvedChallenges() {
     by: ['difficulty'],
     where: {
       id: {
-        in: solvedChallenges.map((challenge) => challenge.challenge.id),
+        in: successfulSubmissions.map((challenge) => challenge.challenge.id),
       },
     },
     _count: {
@@ -107,8 +107,6 @@ export async function getSolvedChallenges() {
   const totalSolved = challengesSolved.reduce((acc, challenge) => acc + challenge._count._all, 0);
   const totalChallenges = allChallenges.reduce((acc, challenge) => acc + challenge._count._all, 0);
   const percentage = ((totalSolved / totalChallenges) * 100).toFixed(1);
-
-  // format the data
 
   const challenges: Record<
     (typeof DIFFICULTIES)[number],
@@ -140,12 +138,11 @@ export async function getSolvedChallenges() {
   };
 
   // assign values
-  challengesSolved.forEach((challenge) => {
+  allChallenges.forEach((challenge) => {
     const difficulty = challenge.difficulty as (typeof DIFFICULTIES)[number];
-    challenges[difficulty].solved = challenge._count._all;
-    challenges[difficulty].total = allChallenges.find(
-      (challenge) => challenge.difficulty === difficulty,
-    )!._count._all;
+    challenges[difficulty].total = challenge._count._all;
+    challenges[difficulty].solved =
+      challengesSolved.find((challenge) => challenge.difficulty === difficulty)?._count._all ?? 0;
   });
 
   return {
