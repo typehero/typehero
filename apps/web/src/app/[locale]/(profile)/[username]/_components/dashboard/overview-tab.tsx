@@ -1,5 +1,5 @@
 import type { User } from '@repo/db/types';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@repo/ui/components/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/card';
 import { Markdown } from '@repo/ui/components/markdown';
 import { ChallengesProgress } from './challenges-progress';
 

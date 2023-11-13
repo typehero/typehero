@@ -21,7 +21,7 @@ export async function ChallengesProgress() {
                 difficulty={difficulty}
               />
               <Progress
-                indicatorClass={`bg-opacity-75 ${getGradientClass(difficulty)}`}
+                indicatorClassName={`bg-opacity-75 ${getProgressBarColor(difficulty)}`}
                 className="h-1"
                 value={(challenges[difficulty].solved / challenges[difficulty].total) * 100}
               />
@@ -45,7 +45,7 @@ export async function ChallengesProgress() {
   );
 }
 
-const getGradientClass = (difficulty: string) => {
+const getProgressBarColor = (difficulty: string) => {
   switch (difficulty) {
     case 'BEGINNER':
       return 'dark:bg-blue-300 bg-blue-700';

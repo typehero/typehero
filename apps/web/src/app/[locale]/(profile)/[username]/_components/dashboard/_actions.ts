@@ -2,7 +2,7 @@
 
 import { prisma } from '@repo/db';
 import { getServerAuthSession } from '@repo/auth/server';
-import { DIFFICULTIES } from './challenges-progress';
+import type { DIFFICULTIES } from './challenges-progress';
 
 export type HistoricalChallenge = Awaited<ReturnType<typeof getChallengeHistoryByCategory>>[0];
 
