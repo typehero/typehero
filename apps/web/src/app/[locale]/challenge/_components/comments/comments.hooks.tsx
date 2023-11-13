@@ -4,7 +4,7 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
-import { useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 
 import { commentErrors, sortKeys } from './comments.constants';
 import { getPaginatedComments } from './getCommentRouteData';
@@ -168,6 +168,7 @@ export function useComments({ type, rootId, initialPage }: UseCommentsProps) {
 interface UseCommentRepliesProps extends DefaultCommentsProps {
   parentCommentId: number;
   enabled: boolean;
+  preselectedReplyId?: number;
 }
 
 const REPLIES_PAGESIZE = 5;
@@ -177,6 +178,7 @@ export function useCommentsReplies({
   type,
   parentCommentId,
   enabled,
+  preselectedReplyId,
 }: UseCommentRepliesProps) {
   const queryClient = useQueryClient();
   const rootQueryKey = [getRootQueryKey(rootId, type)];
@@ -213,6 +215,25 @@ export function useCommentsReplies({
     },
     getNextPageParam: (_, pages) => pages.at(-1)?.page,
   });
+
+  useEffect(() => {
+    if (!preselectedReplyId) {
+      return;
+    }
+
+    console.log({ preselectedReplyId });
+    const allReplies = data?.pages.flatMap((page) => page.replies) ?? [];
+    const hasPreselectedReply = allReplies.some((reply) => reply.id === preselectedReplyId);
+
+    console.log({ allReplies, hasPreselectedReply });
+    if (hasPreselectedReply || !allReplies.length) {
+      return;
+    }
+
+    console.log({ hasPreselectedReply });
+
+    fetchNextPage();
+  }, [data?.pages, fetchNextPage, preselectedReplyId]);
 
   const addReplyComment = async (text: string) => {
     try {
