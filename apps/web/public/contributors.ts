@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 229
+        "contributions": 230
     },
     {
         "login": "Hacksore",
@@ -146,7 +146,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/odicho/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 16
+        "contributions": 17
     },
     {
         "login": "creativenull",
@@ -1236,6 +1236,27 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/eduardoRoth/repos",
         "events_url": "https://api.github.com/users/eduardoRoth/events{/privacy}",
         "received_events_url": "https://api.github.com/users/eduardoRoth/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 1
+    },
+    {
+        "login": "me-imfhd",
+        "id": 114667178,
+        "node_id": "U_kgDOBtWuqg",
+        "avatar_url": "https://avatars.githubusercontent.com/u/114667178?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/me-imfhd",
+        "html_url": "https://github.com/me-imfhd",
+        "followers_url": "https://api.github.com/users/me-imfhd/followers",
+        "following_url": "https://api.github.com/users/me-imfhd/following{/other_user}",
+        "gists_url": "https://api.github.com/users/me-imfhd/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/me-imfhd/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/me-imfhd/subscriptions",
+        "organizations_url": "https://api.github.com/users/me-imfhd/orgs",
+        "repos_url": "https://api.github.com/users/me-imfhd/repos",
+        "events_url": "https://api.github.com/users/me-imfhd/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/me-imfhd/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 1
