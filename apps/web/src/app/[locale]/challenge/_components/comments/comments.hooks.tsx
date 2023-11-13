@@ -221,16 +221,12 @@ export function useCommentsReplies({
       return;
     }
 
-    console.log({ preselectedReplyId });
     const allReplies = data?.pages.flatMap((page) => page.replies) ?? [];
     const hasPreselectedReply = allReplies.some((reply) => reply.id === preselectedReplyId);
 
-    console.log({ allReplies, hasPreselectedReply });
     if (hasPreselectedReply || !allReplies.length) {
       return;
     }
-
-    console.log({ hasPreselectedReply });
 
     fetchNextPage();
   }, [data?.pages, fetchNextPage, preselectedReplyId]);
