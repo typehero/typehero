@@ -7,7 +7,7 @@ import {
 import { useEffect, useReducer } from 'react';
 
 import { commentErrors, sortKeys } from './comments.constants';
-import { getPaginatedComments } from './getCommentRouteData';
+import { getAllComments, getPaginatedComments } from './getCommentRouteData';
 import type { CommentRoot } from '@repo/db/types';
 import {
   addComment as addCommentAction,
@@ -184,52 +184,53 @@ export function useCommentsReplies({
   const rootQueryKey = [getRootQueryKey(rootId, type)];
   const queryKey = [...rootQueryKey, `comment-${parentCommentId}-replies`];
 
+  const { data: replies } = useQuery({
+    queryKey: rootQueryKey,
+    queryFn: () => getAllComments({ rootId, rootType: type, parentId: parentCommentId }),
+    staleTime: 5000,
+    enabled,
+  });
+
   const {
     data,
     fetchNextPage,
     isFetching: isFetchingMoreReplies,
     hasNextPage: hasMoreReplies,
+    refetch,
     status,
   } = useInfiniteQuery({
-    enabled,
-    placeholderData: keepPreviousData,
     initialPageParam: 1,
-    queryKey,
-    queryFn: async ({ pageParam }) => {
-      // `page` is the start index of the current page
-      const page = Number(pageParam);
+    queryKey: [...rootQueryKey, 'paginated'],
+    queryFn: ({ pageParam }) => {
+      // `cursor` is the start index of the current page
+      const cursor = Number(pageParam);
 
-      const comments = await getPaginatedComments({
-        rootId,
-        page,
-        take: REPLIES_PAGESIZE,
-        rootType: type,
-        parentId: parentCommentId,
-      });
+      let take = REPLIES_PAGESIZE;
+      if (preselectedReplyId && cursor === 1) {
+        const preselectedReplyIndex = replies!.findIndex(
+          (reply) => preselectedReplyId === reply.id,
+        );
+        take = Math.ceil((preselectedReplyIndex + 1) / REPLIES_PAGESIZE) * REPLIES_PAGESIZE;
+      }
+
+      // `end` is exclusive, and therefore also the next cursor
+      const end = cursor + take;
 
       return {
         // if the current page is the last, don't return the next cursor
-        page: comments.hasMore ? page + 1 : undefined,
-        replies: comments.comments,
+        cursor: end < replies!.length ? end : undefined,
+        replies: replies!.slice(cursor, end),
       };
     },
-    getNextPageParam: (_, pages) => pages.at(-1)?.page,
+    enabled: Boolean(replies),
+    getNextPageParam: (_, pages) => pages.at(-1)?.cursor,
   });
 
   useEffect(() => {
-    if (!preselectedReplyId) {
-      return;
+    if (replies) {
+      refetch();
     }
-
-    const allReplies = data?.pages.flatMap((page) => page.replies) ?? [];
-    const hasPreselectedReply = allReplies.some((reply) => reply.id === preselectedReplyId);
-
-    if (hasPreselectedReply || !allReplies.length) {
-      return;
-    }
-
-    fetchNextPage();
-  }, [data?.pages, fetchNextPage, preselectedReplyId]);
+  }, [replies, refetch]);
 
   const addReplyComment = async (text: string) => {
     try {
