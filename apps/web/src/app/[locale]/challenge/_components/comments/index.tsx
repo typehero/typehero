@@ -28,7 +28,7 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
   const {
     data,
     addComment,
-    meta,
+    commentsMeta,
     status,
     changePage,
     changeSorting,
@@ -90,7 +90,7 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
           </div>
           {(data?.comments.length ?? 0) > 0 && (
             <SortSelect
-              currentSortKey={meta.sort}
+              currentSortKey={commentsMeta.sort}
               totalSortKeys={sortKeys}
               onValueChange={changeSorting}
             />
@@ -117,7 +117,7 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
           {(data?.totalPages ?? 0) > 1 && (
             <div className="mt-2 flex justify-center">
               <Pagination
-                currentPage={meta.page}
+                currentPage={commentsMeta.page}
                 onClick={handleChangePage}
                 totalPages={data?.totalPages ?? 0}
               />

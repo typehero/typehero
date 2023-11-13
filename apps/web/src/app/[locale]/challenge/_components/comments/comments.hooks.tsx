@@ -38,7 +38,7 @@ interface UseCommentsProps extends DefaultCommentsProps {
 
 export function useComments({ type, rootId, initialPage }: UseCommentsProps) {
   const queryClient = useQueryClient();
-  const [meta, updateMeta] = useReducer(
+  const [commentsMeta, updateCommentsMeta] = useReducer(
     (state: CommentsMeta, action: Partial<CommentsMeta>) => ({ ...state, ...action }),
     {
       page: initialPage ?? 1,
@@ -53,14 +53,14 @@ export function useComments({ type, rootId, initialPage }: UseCommentsProps) {
   ];
 
   const { status, data } = useQuery({
-    queryKey: getQueryKey({ sort: meta.sort.value, page: meta.page }),
+    queryKey: getQueryKey({ sort: commentsMeta.sort.value, page: commentsMeta.page }),
     queryFn: () => {
       return getPaginatedComments({
         rootId,
-        page: meta.page,
+        page: commentsMeta.page,
         rootType: type,
-        sortKey: meta.sort.key,
-        sortOrder: meta.sort.order,
+        sortKey: commentsMeta.sort.key,
+        sortOrder: commentsMeta.sort.order,
       });
     },
     placeholderData: keepPreviousData,
@@ -69,11 +69,14 @@ export function useComments({ type, rootId, initialPage }: UseCommentsProps) {
   });
 
   const changePage = (page: number) => {
-    updateMeta({ page });
+    updateCommentsMeta({ page });
   };
 
   const changeSorting = (sort: string) => {
-    updateMeta({ sort: sortKeys.find((key) => key.value === sort) ?? sortKeys[0], page: 1 });
+    updateCommentsMeta({
+      sort: sortKeys.find((key) => key.value === sort) ?? sortKeys[0],
+      page: 1,
+    });
   };
 
   const deleteComment = async (commentId: number) => {
@@ -90,17 +93,15 @@ export function useComments({ type, rootId, initialPage }: UseCommentsProps) {
           description: 'The comment was successfully deleted.',
         });
       }
+      const newPage = data?.comments.length === 1 ? commentsMeta.page - 1 : commentsMeta.page;
+      changePage(newPage);
+      queryClient.invalidateQueries({
+        queryKey: getQueryKey({ sort: commentsMeta.sort.value, page: newPage }),
+      });
     } catch (e) {
       toast({
         ...commentErrors.unexpected,
         variant: 'destructive',
-      });
-    } finally {
-      // If the last comment on the page was deleted, we need to go back a page
-      const newPage = data?.comments.length === 1 ? meta.page - 1 : meta.page;
-      changePage(newPage);
-      queryClient.invalidateQueries({
-        queryKey: getQueryKey({ sort: meta.sort.value, page: newPage }),
       });
     }
   };
@@ -123,7 +124,7 @@ export function useComments({ type, rootId, initialPage }: UseCommentsProps) {
       const newPage = 1;
       changePage(newPage);
       queryClient.invalidateQueries({
-        queryKey: getQueryKey({ sort: meta.sort.value, page: newPage }),
+        queryKey: getQueryKey({ sort: commentsMeta.sort.value, page: newPage }),
       });
     } catch (e) {
       toast({
@@ -141,14 +142,13 @@ export function useComments({ type, rootId, initialPage }: UseCommentsProps) {
       } else if (res === 'unauthorized') {
         toast(commentErrors.unauthorized);
       }
+      queryClient.invalidateQueries({
+        queryKey: getQueryKey({ sort: commentsMeta.sort.value, page: commentsMeta.page }),
+      });
     } catch (e) {
       toast({
         ...commentErrors.unauthorized,
         variant: 'destructive',
-      });
-    } finally {
-      queryClient.invalidateQueries({
-        queryKey: getQueryKey({ sort: meta.sort.value, page: meta.page }),
       });
     }
   };
@@ -156,7 +156,7 @@ export function useComments({ type, rootId, initialPage }: UseCommentsProps) {
   return {
     data,
     status,
-    meta,
+    commentsMeta,
     changePage,
     changeSorting,
     deleteComment,
@@ -229,14 +229,13 @@ export function useCommentsReplies({
       } else if (res === 'unauthorized') {
         toast(commentErrors.unauthorized);
       }
+      //Invalidate the root query to refetch the comments
+      queryClient.invalidateQueries({ queryKey: rootQueryKey });
     } catch (e) {
       toast({
         ...commentErrors.unauthorized,
         variant: 'destructive',
       });
-    } finally {
-      //Invalidate the root query to refetch the comments
-      queryClient.invalidateQueries({ queryKey: rootQueryKey });
     }
   };
 
@@ -271,14 +270,13 @@ export function useCommentsReplies({
           description: 'The comment was successfully deleted.',
         });
       }
+      //Invalidate the root query to refetch the comments
+      queryClient.invalidateQueries({ queryKey: rootQueryKey });
     } catch (e) {
       toast({
         ...commentErrors.unexpected,
         variant: 'destructive',
       });
-    } finally {
-      //Invalidate the root query to refetch the comments
-      queryClient.invalidateQueries({ queryKey: rootQueryKey });
     }
   };
 
