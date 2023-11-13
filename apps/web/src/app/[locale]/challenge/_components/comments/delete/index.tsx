@@ -5,59 +5,28 @@ import { Markdown } from '@repo/ui/components/markdown';
 import { TypographyP } from '@repo/ui/components/paragraph';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { TypographyLarge } from '@repo/ui/components/typography/large';
-import { toast } from '@repo/ui/components/use-toast';
-import { useQueryClient } from '@tanstack/react-query';
+
 import { useState } from 'react';
 import { getRelativeTime } from '~/utils/relativeTime';
-import { deleteComment } from '../comment.action';
+
 import { type PaginatedComments } from '../getCommentRouteData';
 
 interface CommentDeleteDialogProps extends DialogTriggerProps {
   comment: PaginatedComments['comments'][number];
-  queryKey?: (number | string)[];
+  deleteComment: (commentId: number) => Promise<void>;
 }
 
 export function CommentDeleteDialog({
   children,
   comment,
-  queryKey,
+  deleteComment,
   ...props
 }: CommentDeleteDialogProps) {
-  const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
 
   async function handleDeleteComment() {
-    try {
-      const res = await deleteComment(comment.id);
-      if (res === 'unauthorized') {
-        toast({
-          title: 'Unauthorized',
-          description: <p>You need to be signed in to post a comment.</p>,
-        });
-      } else if (res === 'invalid_comment') {
-        toast({
-          title: 'Invalid Comment',
-          description: 'The comment id is invalid.',
-        });
-      } else {
-        toast({
-          title: 'Comment Deleted',
-          variant: 'success',
-          description: 'The comment was successfully deleted.',
-        });
-      }
-    } catch (e) {
-      // todo: log on a dump service.
-      console.log(e);
-      toast({
-        title: 'Uh Oh!',
-        variant: 'destructive',
-        description: 'An error occurred while trying to delete the comment.',
-      });
-    } finally {
-      queryClient.invalidateQueries({ queryKey });
-      setIsOpen(!isOpen);
-    }
+    await deleteComment(comment.id);
+    setIsOpen(!isOpen);
   }
 
   return (
