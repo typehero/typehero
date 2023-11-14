@@ -4,7 +4,7 @@ import { createContext, useState, useContext, type PropsWithChildren } from 'rea
 interface TrackVisibilityContextType {
   isTrackTitleVisible: boolean | null;
   setIsTrackTitleVisible: React.Dispatch<React.SetStateAction<boolean | null>>;
-};
+}
 
 export const TrackVisibilityContext = createContext<TrackVisibilityContextType | undefined>(
   undefined,
