@@ -2,8 +2,6 @@ import { Loader2 } from '@repo/ui/icons';
 import { useSession } from '@repo/auth/react';
 import { useEffect, useRef, useState, type RefObject } from 'react';
 import { Button } from '@repo/ui/components/button';
-import { useToast } from '@repo/ui/components/use-toast';
-import { ToastAction } from '@repo/ui/components/toast';
 import { Textarea } from '@repo/ui/components/textarea';
 import { Markdown } from '@repo/ui/components/markdown';
 import { useForm } from 'react-hook-form';
@@ -14,64 +12,37 @@ import { singleFieldSchema, type SingleFieldSchema } from '~/utils/zodSingleStri
 interface Props {
   mode: 'create' | 'edit' | 'reply';
   onCancel?: () => void;
-  onChange: (text: string) => void;
-  value: string;
   placeholder?: string;
-  onSubmit: () => Promise<void>;
+  onSubmit: (text: string) => Promise<void>;
+  defaultValue?: string;
 }
 
-export function CommentInput({ mode, onCancel, onChange, value, placeholder, onSubmit }: Props) {
+export function CommentInput({ mode, onCancel, placeholder, onSubmit, defaultValue }: Props) {
   const { data: session } = useSession();
-  const { toast } = useToast();
   const [commentMode, setCommentMode] = useState<'editor' | 'preview'>('editor');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const form = useForm<SingleFieldSchema>({
     resolver: zodResolver(singleFieldSchema),
-    defaultValues: { text: '' },
+    defaultValues: { text: defaultValue ?? '' },
   });
   const formValid = form.formState.isValid;
-
+  const value = form.watch('text');
   useAutosizeTextArea(textAreaRef, value, commentMode);
 
-  const handleEnterKey = async () => {
-    if (!session?.user) {
-      toast({
-        variant: 'destructive',
-        title: 'You need to be logged in to comment.',
-        action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
-      });
-
-      return;
-    }
-    setIsSubmitting(true);
-    await onSubmit();
-    setIsSubmitting(false);
-  };
-
-  const submitComment = async () => {
+  const submitComment = async ({ text }: { text: string }) => {
     try {
-      if (!session?.user) {
-        toast({
-          variant: 'destructive',
-          title: 'You need to be logged in to comment.',
-          action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
-        });
-
-        return;
-      }
-
-      setIsSubmitting(true);
-
-      await onSubmit();
+      await onSubmit(text);
     } catch (e) {
       console.error(e);
     } finally {
-      setIsSubmitting(false);
+      form.reset();
       setCommentMode('editor');
     }
   };
+
+  const isSubmitting = form.formState.isSubmitting;
 
   return (
     <div className="relative flex flex-col">
@@ -89,7 +60,6 @@ export function CommentInput({ mode, onCancel, onChange, value, placeholder, onS
                     className="resize-none border-0 px-3 py-2 focus-visible:ring-0 md:max-h-[calc(100vh_-_232px)]"
                     onChange={(e) => {
                       field.onChange(e);
-                      onChange(e.target.value);
                       form.trigger();
                     }}
                     onKeyDown={(e) => {
@@ -98,7 +68,7 @@ export function CommentInput({ mode, onCancel, onChange, value, placeholder, onS
                         return;
                       }
                       if (e.key === 'Enter' && e.shiftKey) {
-                        form.handleSubmit(handleEnterKey)();
+                        form.handleSubmit(submitComment);
                         e.preventDefault();
                       }
                     }}
