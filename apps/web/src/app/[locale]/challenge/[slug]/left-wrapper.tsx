@@ -11,6 +11,7 @@ import { cn } from '@repo/ui/cn';
 import { FlaskConical, History, Text } from '@repo/ui/icons';
 
 import type { ChallengeRouteData } from './getChallengeRouteData';
+import { useTrackVisiblity } from './_context';
 
 type Tab = 'description' | 'solutions' | 'submissions';
 interface Props {
@@ -98,6 +99,11 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
     isTrackFeatureEnabled && hasEnrolledTrackForChallenge && (!isCollapsed || isDesktop);
 
   const isIconOnly = isCollapsed && isDesktop;
+  const { setIsTrackTitleVisible } = useTrackVisiblity();
+
+  useEffect(() => {
+    setIsTrackTitleVisible(Boolean(isTrackVisible));
+  }, [isTrackVisible]);
 
   return (
     <div className="flex h-full w-full flex-col">

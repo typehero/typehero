@@ -13,6 +13,7 @@ import { Pagination } from '../pagination';
 import { SortSelect } from '../sort-select';
 import { useComments } from './comments.hooks';
 import { sortKeys } from './comments.constants';
+import { useTrackVisiblity } from '../../[slug]/_context';
 
 interface Props {
   preselectedCommentMetadata?: PreselectedCommentMetadata;
@@ -23,8 +24,10 @@ interface Props {
 
 // million-ignore
 export function Comments({ preselectedCommentMetadata, rootId, type, expanded = false }: Props) {
+  const { isTrackTitleVisible } = useTrackVisiblity();
   const [showComments, setShowComments] = useState(expanded);
   const commentContainerRef = useRef<HTMLDivElement>(null);
+  // const tabsRef = useRef<>(null);
   const {
     data,
     addComment,
@@ -62,6 +65,7 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
           className="flex w-full items-center justify-between gap-2 p-3 font-medium text-neutral-500 duration-300 hover:text-neutral-700 focus:outline-none dark:hover:text-zinc-300"
           onClick={() => {
             setShowComments(!showComments);
+            alert(`Visibilty is ${isTrackTitleVisible}`);
             commentContainerRef.current?.scroll({ top: 0 });
           }}
         >
@@ -80,9 +84,11 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
           className={clsx(
             'custom-scrollable-element flex flex-col overscroll-contain duration-300',
             {
-              'h-64 pb-4 lg:h-[calc(100vh_-_164px)]': showComments,
               'h-0 overflow-y-hidden': !showComments,
-              'overflow-y-auto pb-36': showComments && (data?.comments.length ?? 0) > 0,
+              'h-64 pb-4 lg:h-[calc(100vh_-_164px)]': showComments && !isTrackTitleVisible, // no title
+              'h-[calc(256px_-_46px)] pb-4 lg:h-[calc(100vh_-_210px)]':
+                showComments && isTrackTitleVisible, // with title
+              'overflow-y-auto ': showComments && (data?.comments.length ?? 0) > 0,
             },
           )}
           ref={commentContainerRef}
