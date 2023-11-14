@@ -201,7 +201,7 @@ export async function getAllComments({
   sortKey?: SortKey;
   sortOrder?: SortOrder;
 }) {
-  const session = await getServerAuthSession();
+  const session = await auth();
 
   const comments = await prisma.comment.findMany({
     where: {

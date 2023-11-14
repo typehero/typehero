@@ -185,7 +185,7 @@ export function useCommentsReplies({
   const queryKey = [...rootQueryKey, `comment-${parentCommentId}-replies`];
 
   const { data: replies } = useQuery({
-    queryKey: rootQueryKey,
+    queryKey,
     queryFn: () => getAllComments({ rootId, rootType: type, parentId: parentCommentId }),
     staleTime: 5000,
     enabled,
@@ -199,22 +199,22 @@ export function useCommentsReplies({
     refetch,
     status,
   } = useInfiniteQuery({
-    initialPageParam: 1,
-    queryKey: [...rootQueryKey, 'paginated'],
+    initialPageParam: 0,
+    queryKey: [...queryKey, 'paginated'],
     queryFn: ({ pageParam }) => {
       // `cursor` is the start index of the current page
       const cursor = Number(pageParam);
 
       let take = REPLIES_PAGESIZE;
-      if (preselectedReplyId && cursor === 1) {
+      if (preselectedReplyId && cursor === 0) {
         const preselectedReplyIndex = replies!.findIndex(
           (reply) => preselectedReplyId === reply.id,
         );
         take = Math.ceil((preselectedReplyIndex + 1) / REPLIES_PAGESIZE) * REPLIES_PAGESIZE;
       }
-
       // `end` is exclusive, and therefore also the next cursor
       const end = cursor + take;
+      console.log({ cursor, end, replies });
 
       return {
         // if the current page is the last, don't return the next cursor
@@ -222,9 +222,11 @@ export function useCommentsReplies({
         replies: replies!.slice(cursor, end),
       };
     },
-    enabled: Boolean(replies),
+    enabled: Boolean(replies?.length),
     getNextPageParam: (_, pages) => pages.at(-1)?.cursor,
   });
+
+  console.log({ replies, data });
 
   useEffect(() => {
     if (replies) {
