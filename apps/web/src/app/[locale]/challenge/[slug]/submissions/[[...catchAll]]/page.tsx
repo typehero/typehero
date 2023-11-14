@@ -1,4 +1,4 @@
-import { getServerAuthSession } from '@repo/auth/server';
+import { auth } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import { notFound, redirect } from 'next/navigation';
 import { cache } from 'react';
@@ -19,7 +19,7 @@ export const metadata = {
 };
 
 export default async function SubmissionPage({ params: { slug } }: Props) {
-  const session = await getServerAuthSession();
+  const session = await auth();
   const isBeta = await isBetaUser(session);
 
   if (!isBeta) {

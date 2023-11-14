@@ -1,8 +1,9 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import type { Role, RoleTypes } from '@repo/db/types';
-import { getServerSession, type DefaultSession, type NextAuthOptions } from 'next-auth';
+import { type DefaultSession } from 'next-auth';
 import GitHubProvider from 'next-auth/providers/github';
 import { prisma } from '@repo/db';
+import NextAuth from './next-auth';
 
 export type { Session, DefaultSession as DefaultAuthSession } from 'next-auth';
 
@@ -38,7 +39,10 @@ const useSecureCookies = process.env.VERCEL_ENV === 'production';
 const cookiePrefix = useSecureCookies ? '__Secure-' : '';
 const cookieDomain = useSecureCookies ? 'typehero.dev' : undefined;
 
-export const authOptions: NextAuthOptions = {
+export const {
+  handlers: { GET, POST },
+  auth,
+} = NextAuth({
   pages: {
     signIn: '/login',
   },
@@ -56,18 +60,13 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     session: async ({ session, user }) => {
-      // 1. State
       let userRoles: RoleTypes[] = [];
-
-      // 2. If user already has roles, reduce them to a RoleTypes array.
       if (user.roles) {
         userRoles = user.roles.reduce((acc: RoleTypes[], role) => {
           acc.push(role.role);
           return acc;
         }, []);
       }
-
-      // 3. If the current user doesn't have a USER role. Assign one.
       if (!userRoles.includes('USER')) {
         const updatedUser = await prisma.user.update({
           where: {
@@ -89,13 +88,11 @@ export const authOptions: NextAuthOptions = {
             roles: true,
           },
         });
-
         userRoles = updatedUser.roles.reduce((acc: RoleTypes[], role) => {
           acc.push(role.role);
           return acc;
         }, []);
       }
-
       return {
         ...session,
         user: {
@@ -114,13 +111,4 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GITHUB_SECRET!,
     }),
   ],
-};
-
-/**
- * Wrapper for `getServerSession` so that you don't need to import the `authOptions` in every file.
- *
- * @see https://next-auth.js.org/configuration/nextjs
- */
-export const getServerAuthSession = () => {
-  return getServerSession(authOptions);
-};
+});

@@ -1,6 +1,6 @@
 import { prisma } from '@repo/db';
 import { SolutionDetails } from '../_components/solution-detail';
-import { getServerAuthSession } from '@repo/auth/server';
+import { auth } from '@repo/auth/server';
 import { Comments } from '~/app/[locale]/challenge/_components/comments';
 import { getSolutionIdRouteData } from './getSolutionIdRouteData';
 import { isBetaUser } from '~/utils/server/is-beta-user';
@@ -15,7 +15,7 @@ interface Props {
 
 export type ChallengeSolution = NonNullable<Awaited<ReturnType<typeof getSolutionIdRouteData>>>;
 export default async function SolutionPage({ params: { solutionId, slug } }: Props) {
-  const session = await getServerAuthSession();
+  const session = await auth();
   const isBeta = await isBetaUser(session);
 
   if (!isBeta) {

@@ -1,6 +1,6 @@
 'use server';
 
-import { getServerAuthSession } from '@repo/auth/server';
+import { auth } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import type { Comment, CommentRoot, PrismaClient } from '@repo/db/types';
 import { isAdminOrModerator, isAuthor } from '~/utils/auth-guards';
@@ -16,7 +16,7 @@ interface CommentToCreate {
   rootId: number;
 }
 export async function addComment(comment: CommentToCreate) {
-  const session = await getServerAuthSession();
+  const session = await auth();
 
   if (!session?.user.id) return 'unauthorized';
   if (comment.text.length === 0) return 'text_is_empty';
@@ -39,7 +39,7 @@ export async function addComment(comment: CommentToCreate) {
 }
 
 export async function replyComment(comment: CommentToCreate, parentId: number) {
-  const session = await getServerAuthSession();
+  const session = await auth();
 
   if (!session?.user.id) return 'unauthorized';
   if (comment.text.length === 0) return 'text_is_empty';
@@ -63,7 +63,7 @@ export async function replyComment(comment: CommentToCreate, parentId: number) {
 }
 
 export async function updateComment(text: string, id: number) {
-  const session = await getServerAuthSession();
+  const session = await auth();
 
   if (!session) return 'unauthorized';
   if (text.length === 0) return 'text_is_empty';
@@ -96,7 +96,7 @@ export async function updateComment(text: string, id: number) {
  * @returns 'unauthorized' if the user is not authorized, 'invalid_comment' if the comment ID is not provided, or undefined if the comment is successfully deleted.
  */
 export async function deleteComment(comment_id: number) {
-  const session = await getServerAuthSession();
+  const session = await auth();
 
   if (!session) return 'unauthorized';
   if (!comment_id) return 'invalid_comment';

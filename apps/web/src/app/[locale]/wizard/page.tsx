@@ -1,4 +1,4 @@
-import { getServerAuthSession } from '@repo/auth/server';
+import { auth } from '@repo/auth/server';
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { buildMetaForDefault } from '~/app/metadata';
@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Page() {
-  const session = await getServerAuthSession();
+  const session = await auth();
   const isBeta = await isBetaUser(session);
 
   if (!isBeta) {

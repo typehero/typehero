@@ -1,4 +1,4 @@
-import { getServerAuthSession, type Session } from '@repo/auth/server';
+import { auth, type Session } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import { withUnstableCache } from '~/utils/withUnstableCache';
 import { TrackCard } from './track-card';
@@ -6,7 +6,7 @@ import { TrackCardSoon } from './track-card-soon';
 import { createTrackGridCacheKey } from './track.action';
 
 export async function TrackGrid() {
-  const session = await getServerAuthSession();
+  const session = await auth();
 
   const tracks = await withUnstableCache({
     fn: getTracks,

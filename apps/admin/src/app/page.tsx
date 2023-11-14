@@ -1,10 +1,10 @@
-import { getServerAuthSession } from '@repo/auth/server';
+import { auth } from '@repo/auth/server';
 import { RoleTypes } from '@repo/db/types';
 import { Lock } from '@repo/ui/icons';
 import { redirect } from 'next/navigation';
 
 async function Admin() {
-  const session = await getServerAuthSession();
+  const session = await auth();
   const roles = session?.user.role ?? [];
 
   const isMod = roles.includes(RoleTypes.MODERATOR);

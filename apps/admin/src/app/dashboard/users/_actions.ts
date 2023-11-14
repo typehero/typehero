@@ -1,6 +1,6 @@
 'use server';
 
-import { getServerAuthSession } from '@repo/auth/server';
+import { auth } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import { revalidatePath } from 'next/cache';
 
@@ -20,7 +20,7 @@ export async function getBannedUsers() {
  * @returns
  */
 export async function banUser(userId: string, reportId: number, banReason?: string) {
-  const session = await getServerAuthSession();
+  const session = await auth();
 
   await prisma.$transaction([
     prisma.user.update({

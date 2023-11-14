@@ -1,5 +1,5 @@
 'use server';
-import { getServerAuthSession } from '@repo/auth/server';
+import { auth } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import type { CommentRoot } from '@repo/db/types';
 import { orderBy, type SortKey, type SortOrder } from '~/utils/sorting';
@@ -118,7 +118,7 @@ export async function getPaginatedComments({
   sortOrder?: SortOrder;
   take?: number;
 }) {
-  const session = await getServerAuthSession();
+  const session = await auth();
 
   const totalComments = await getCommentsCount({ rootType, rootId, parentId });
 

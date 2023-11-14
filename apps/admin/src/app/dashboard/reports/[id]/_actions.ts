@@ -1,6 +1,5 @@
 'use server';
-
-import { getServerAuthSession } from '@repo/auth/server';
+import { auth } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import { type Prisma, type Report } from '@repo/db/types';
 import { cache } from 'react';
@@ -77,7 +76,7 @@ export async function getBannedUsers() {
  * @returns
  */
 export async function banChallenge(challengeId: number, reportId: number) {
-  const session = await getServerAuthSession();
+  const session = await auth();
   await prisma.$transaction([
     prisma.challenge.update({
       where: {
@@ -107,7 +106,7 @@ export async function banChallenge(challengeId: number, reportId: number) {
  * @returns
  */
 export async function dismissReport(reportId: number) {
-  const session = await getServerAuthSession();
+  const session = await auth();
   return prisma.report.update({
     where: {
       id: reportId,
@@ -152,7 +151,7 @@ export async function deleteSolution(solutionId: number, reportId: number) {
  * @returns
  */
 export async function banUser(userId: string, reportId: number, banReason?: string) {
-  const session = await getServerAuthSession();
+  const session = await auth();
 
   assertAdmin(session);
 
