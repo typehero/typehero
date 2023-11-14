@@ -187,3 +187,64 @@ export async function getPaginatedComments({
     comments,
   };
 }
+
+export async function getAllComments({
+  rootId,
+  rootType,
+  parentId = null,
+  sortKey = 'createdAt',
+  sortOrder = 'desc',
+}: {
+  rootId: number;
+  rootType: CommentRoot;
+  parentId?: number | null;
+  sortKey?: SortKey;
+  sortOrder?: SortOrder;
+}) {
+  const session = await auth();
+
+  const comments = await prisma.comment.findMany({
+    where: {
+      rootType,
+      parentId,
+      ...(rootType === 'CHALLENGE' ? { rootChallengeId: rootId } : { rootSolutionId: rootId }),
+      visible: true,
+    },
+    orderBy: orderBy(sortKey, sortOrder),
+    include: {
+      user: {
+        select: {
+          id: true,
+          name: true,
+          image: true,
+        },
+      },
+      _count: {
+        select: {
+          replies: true,
+          vote: true,
+        },
+      },
+      vote: {
+        select: {
+          userId: true,
+        },
+        where: {
+          userId: session?.user.id || '',
+        },
+      },
+      rootChallenge: {
+        select: {
+          name: true,
+        },
+      },
+      rootSolution: {
+        select: {
+          title: true,
+        },
+      },
+    },
+  });
+
+  return comments;
+}
