@@ -1,7 +1,7 @@
 'use client';
 import { createContext, useState, useContext, type PropsWithChildren } from 'react';
 
-type TrackVisibilityContextType = {
+interface TrackVisibilityContextType {
   isTrackTitleVisible: boolean | null;
   setIsTrackTitleVisible: React.Dispatch<React.SetStateAction<boolean | null>>;
 };

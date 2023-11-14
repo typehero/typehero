@@ -103,7 +103,7 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
 
   useEffect(() => {
     setIsTrackTitleVisible(Boolean(isTrackVisible));
-  }, [isTrackVisible]);
+  }, [isTrackVisible, setIsTrackTitleVisible]);
 
   return (
     <div className="flex h-full w-full flex-col">
