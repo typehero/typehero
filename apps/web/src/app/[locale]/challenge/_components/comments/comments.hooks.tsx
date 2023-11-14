@@ -214,7 +214,6 @@ export function useCommentsReplies({
       }
       // `end` is exclusive, and therefore also the next cursor
       const end = cursor + take;
-      console.log({ cursor, end, replies });
 
       return {
         // if the current page is the last, don't return the next cursor
@@ -225,8 +224,6 @@ export function useCommentsReplies({
     enabled: Boolean(replies?.length),
     getNextPageParam: (_, pages) => pages.at(-1)?.cursor,
   });
-
-  console.log({ replies, data });
 
   useEffect(() => {
     if (replies) {
