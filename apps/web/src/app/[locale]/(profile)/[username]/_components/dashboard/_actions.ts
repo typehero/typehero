@@ -1,7 +1,7 @@
 'use server';
 
 import { prisma } from '@repo/db';
-import { getServerAuthSession } from '@repo/auth/server';
+import { auth } from '@repo/auth/server';
 import type { DIFFICULTIES } from './challenges-progress';
 
 export type HistoricalChallenge = Awaited<ReturnType<typeof getChallengeHistoryByCategory>>[0];
@@ -68,7 +68,7 @@ export async function getChallengeHistoryByCategory(type: HistoryType, userId: s
 }
 
 export async function getSolvedChallenges() {
-  const session = await getServerAuthSession();
+  const session = await auth();
 
   const successfulSubmissions = await prisma.submission.findMany({
     where: {
