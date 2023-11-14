@@ -1,5 +1,5 @@
 'use server';
-import { getServerAuthSession } from '@repo/auth/server';
+import { auth } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import type { Challenge } from '@repo/db/types';
 
@@ -16,7 +16,7 @@ export async function getSimilarChallenges(
   maxChallenges = 2,
 ): Promise<Challenge[]> {
   try {
-    const session = await getServerAuthSession();
+    const session = await auth();
     const { difficulty } = await prisma.challenge.findFirstOrThrow({
       where: {
         id: challengeId,

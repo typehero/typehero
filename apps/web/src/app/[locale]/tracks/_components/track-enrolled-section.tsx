@@ -1,10 +1,10 @@
-import { getServerAuthSession, type Session } from '@repo/auth/server';
+import { auth, type Session } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import { EnrolledTrackSectionCarousel } from './track-enrolled-section-carousel';
 import { SkeletonTrack } from './SkeletonTrack';
 
 export async function EnrolledTrackSection() {
-  const session = await getServerAuthSession();
+  const session = await auth();
 
   if (!session) {
     return null;

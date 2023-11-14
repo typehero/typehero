@@ -1,4 +1,4 @@
-import { getServerAuthSession, type Session } from '@repo/auth/server';
+import { auth } from '@repo/auth/server';
 import { LoginButton } from '../login/_components/LoginButton';
 import { ClaimForm, type FormSchema } from './claim-form';
 import Image from 'next/image';
@@ -12,7 +12,7 @@ interface Props {
 
 export default async function Claim({ searchParams }: Props) {
   const token = searchParams?.token;
-  const session = await getServerAuthSession();
+  const session = await auth();
 
   if (session && token) {
     if (await isValidToken(session, { code: token })) {

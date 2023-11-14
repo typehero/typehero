@@ -1,4 +1,4 @@
-import { getServerAuthSession, type Session } from '@repo/auth/server';
+import { auth, type Session } from '@repo/auth/server';
 import { redirect } from 'next/navigation';
 import { buildMetaForChallenge } from '~/app/metadata';
 import { getRelativeTime } from '~/utils/relativeTime';
@@ -28,7 +28,7 @@ export async function generateMetadata({ params: { slug } }: Props) {
 
 export default async function Challenges({ params: { slug } }: Props) {
   // early access you must be authorized
-  const session = await getServerAuthSession();
+  const session = await auth();
   const isBeta = await isBetaUser(session);
 
   if (!isBeta) {

@@ -1,11 +1,11 @@
 'use server';
 
 import { prisma } from '@repo/db';
-import { getServerAuthSession } from '@repo/auth/server';
+import { auth } from '@repo/auth/server';
 import { type CreateChallengeSchema } from '.';
 
 export async function uploadChallenge(data: CreateChallengeSchema, isUserACreator: boolean) {
-  const session = await getServerAuthSession();
+  const session = await auth();
 
   if (!session) {
     throw new Error('Unauthorized');
