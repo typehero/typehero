@@ -1,6 +1,8 @@
 'use server';
 
 import { prisma } from '@repo/db';
+import { getServerAuthSession } from '@repo/auth/server';
+import type { DIFFICULTIES } from './challenges-progress';
 
 export type HistoricalChallenge = Awaited<ReturnType<typeof getChallengeHistoryByCategory>>[0];
 
@@ -63,4 +65,90 @@ export async function getChallengeHistoryByCategory(type: HistoryType, userId: s
         new Date(challengeB.submissionDate!).getTime() -
         new Date(challengeA.submissionDate!).getTime(),
     );
+}
+
+export async function getSolvedChallenges() {
+  const session = await getServerAuthSession();
+
+  const successfulSubmissions = await prisma.submission.findMany({
+    where: {
+      userId: session?.user.id,
+      isSuccessful: true,
+    },
+    select: {
+      challenge: {
+        select: {
+          id: true,
+        },
+      },
+    },
+    distinct: ['challengeId'],
+  });
+
+  const challengesSolved = await prisma.challenge.groupBy({
+    by: ['difficulty'],
+    where: {
+      id: {
+        in: successfulSubmissions.map((challenge) => challenge.challenge.id),
+      },
+    },
+    _count: {
+      _all: true,
+    },
+  });
+
+  const allChallenges = await prisma.challenge.groupBy({
+    by: ['difficulty'],
+    _count: {
+      _all: true,
+    },
+  });
+
+  const totalSolved = challengesSolved.reduce((acc, challenge) => acc + challenge._count._all, 0);
+  const totalChallenges = allChallenges.reduce((acc, challenge) => acc + challenge._count._all, 0);
+  const percentage = ((totalSolved / totalChallenges) * 100).toFixed(1);
+
+  const challenges: Record<
+    (typeof DIFFICULTIES)[number],
+    {
+      solved: number;
+      total: number;
+    }
+  > = {
+    BEGINNER: {
+      solved: 0,
+      total: 0,
+    },
+    EASY: {
+      solved: 0,
+      total: 0,
+    },
+    MEDIUM: {
+      solved: 0,
+      total: 0,
+    },
+    HARD: {
+      solved: 0,
+      total: 0,
+    },
+    EXTREME: {
+      solved: 0,
+      total: 0,
+    },
+  };
+
+  // assign values
+  allChallenges.forEach((challenge) => {
+    const difficulty = challenge.difficulty as (typeof DIFFICULTIES)[number];
+    challenges[difficulty].total = challenge._count._all;
+    challenges[difficulty].solved =
+      challengesSolved.find((challenge) => challenge.difficulty === difficulty)?._count._all ?? 0;
+  });
+
+  return {
+    challenges,
+    totalSolved,
+    totalChallenges,
+    percentage,
+  };
 }
