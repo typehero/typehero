@@ -65,7 +65,6 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
           className="flex w-full items-center justify-between gap-2 p-3 font-medium text-neutral-500 duration-300 hover:text-neutral-700 focus:outline-none dark:hover:text-zinc-300"
           onClick={() => {
             setShowComments(!showComments);
-            alert(`Visibilty is ${isTrackTitleVisible}`);
             commentContainerRef.current?.scroll({ top: 0 });
           }}
         >
