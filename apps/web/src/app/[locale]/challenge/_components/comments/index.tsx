@@ -79,9 +79,9 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
           className={clsx(
             'custom-scrollable-element flex flex-col overscroll-contain duration-300',
             {
-              'h-64 pb-4 md:h-[calc(100vh_-_164px)]': showComments,
+              'h-64 pb-4 lg:h-[calc(100vh_-_164px)]': showComments,
               'h-0 overflow-y-hidden': !showComments,
-              'overflow-y-auto': showComments && (data?.comments.length ?? 0) > 0,
+              'overflow-y-auto pb-36': showComments && (data?.comments.length ?? 0) > 0,
             },
           )}
           ref={commentContainerRef}
