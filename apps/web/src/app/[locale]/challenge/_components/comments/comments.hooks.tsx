@@ -4,10 +4,10 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
-import { useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 
 import { commentErrors, sortKeys } from './comments.constants';
-import { getPaginatedComments } from './getCommentRouteData';
+import { getAllComments, getPaginatedComments } from './getCommentRouteData';
 import type { CommentRoot } from '@repo/db/types';
 import {
   addComment as addCommentAction,
@@ -168,6 +168,7 @@ export function useComments({ type, rootId, initialPage }: UseCommentsProps) {
 interface UseCommentRepliesProps extends DefaultCommentsProps {
   parentCommentId: number;
   enabled: boolean;
+  preselectedReplyId?: number;
 }
 
 const REPLIES_PAGESIZE = 5;
@@ -177,42 +178,58 @@ export function useCommentsReplies({
   type,
   parentCommentId,
   enabled,
+  preselectedReplyId,
 }: UseCommentRepliesProps) {
   const queryClient = useQueryClient();
   const rootQueryKey = [getRootQueryKey(rootId, type)];
   const queryKey = [...rootQueryKey, `comment-${parentCommentId}-replies`];
+
+  const { data: replies } = useQuery({
+    queryKey,
+    queryFn: () => getAllComments({ rootId, rootType: type, parentId: parentCommentId }),
+    staleTime: 5000,
+    enabled,
+  });
 
   const {
     data,
     fetchNextPage,
     isFetching: isFetchingMoreReplies,
     hasNextPage: hasMoreReplies,
+    refetch,
     status,
   } = useInfiniteQuery({
-    enabled,
-    placeholderData: keepPreviousData,
-    initialPageParam: 1,
-    queryKey,
-    queryFn: async ({ pageParam }) => {
-      // `page` is the start index of the current page
-      const page = Number(pageParam);
+    initialPageParam: 0,
+    queryKey: [...queryKey, 'paginated'],
+    queryFn: ({ pageParam }) => {
+      // `cursor` is the start index of the current page
+      const cursor = Number(pageParam);
 
-      const comments = await getPaginatedComments({
-        rootId,
-        page,
-        take: REPLIES_PAGESIZE,
-        rootType: type,
-        parentId: parentCommentId,
-      });
+      let take = REPLIES_PAGESIZE;
+      if (preselectedReplyId && cursor === 0) {
+        const preselectedReplyIndex = replies!.findIndex(
+          (reply) => preselectedReplyId === reply.id,
+        );
+        take = Math.ceil((preselectedReplyIndex + 1) / REPLIES_PAGESIZE) * REPLIES_PAGESIZE;
+      }
+      // `end` is exclusive, and therefore also the next cursor
+      const end = cursor + take;
 
       return {
         // if the current page is the last, don't return the next cursor
-        page: comments.hasMore ? page + 1 : undefined,
-        replies: comments.comments,
+        cursor: end < replies!.length ? end : undefined,
+        replies: replies!.slice(cursor, end),
       };
     },
-    getNextPageParam: (_, pages) => pages.at(-1)?.page,
+    enabled: Boolean(replies?.length),
+    getNextPageParam: (_, pages) => pages.at(-1)?.cursor,
   });
+
+  useEffect(() => {
+    if (replies) {
+      refetch();
+    }
+  }, [replies, refetch]);
 
   const addReplyComment = async (text: string) => {
     try {

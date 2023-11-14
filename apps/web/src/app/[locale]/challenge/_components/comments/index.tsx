@@ -37,6 +37,7 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
   } = useComments({
     type,
     rootId,
+    initialPage: preselectedCommentMetadata?.page,
   });
 
   const handleChangePage = (page: number) => {

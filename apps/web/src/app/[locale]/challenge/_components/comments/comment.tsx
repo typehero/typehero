@@ -107,6 +107,7 @@ export function Comment({
     rootId,
     type,
     parentCommentId: comment.id,
+    preselectedReplyId: hasPreselectedReply ? Number(replyId) : undefined,
   });
 
   const toggleReplies = () => setShowReplies(!showReplies);
