@@ -94,7 +94,7 @@ type BasicPokemonInfo = Pick<Pokemon, BasicPokemonKeys>;
 
 We're almost there!
 
-A few things about your options fo the syntax here. We made the `BasicPokemonKeys` helper type, but we didn't have to. We can declare the type _inline_ like this:
+A few things about your options for the syntax here. We made the `BasicPokemonKeys` helper type, but we didn't have to. We can declare the type _inline_ like this:
 
 ```ts
 type BasicPokemonInfo = Pick<Pokemon, 'name' | 'type'>;
