@@ -1,6 +1,6 @@
 'use server';
 
-import { getServerAuthSession, type Session } from '@repo/auth/server';
+import { auth, type Session } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import { revalidateTag } from 'next/cache';
 import { cache } from 'react';
@@ -13,7 +13,7 @@ export const createTrackGridCacheKey = (userId: string) => `user-${userId}-track
  * @param id The track id.
  */
 export async function enrollUserInTrack(id: number, slug: string) {
-  const session = await getServerAuthSession();
+  const session = await auth();
   if (!session) {
     throw new Error('User is not logged in');
   }
@@ -41,7 +41,7 @@ export async function enrollUserInTrack(id: number, slug: string) {
  * @param id The track id.
  */
 export async function unenrollUserFromTrack(id: number, slug: string) {
-  const session = await getServerAuthSession();
+  const session = await auth();
   if (!session) {
     throw new Error('User is not logged in');
   }
@@ -69,7 +69,7 @@ export async function unenrollUserFromTrack(id: number, slug: string) {
  * @param id The track id.
  */
 export const getTrackDetails = cache(async (slug: string) => {
-  const session = await getServerAuthSession();
+  const session = await auth();
   return prisma.track.findFirstOrThrow({
     where: {
       slug,

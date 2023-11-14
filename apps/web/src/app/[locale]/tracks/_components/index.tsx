@@ -1,4 +1,4 @@
-import { getServerAuthSession } from '@repo/auth/server';
+import { auth } from '@repo/auth/server';
 import { redirect } from 'next/navigation';
 import { isBetaUser } from '~/utils/server/is-beta-user';
 import { EnrolledTrackSection } from './track-enrolled-section';
@@ -7,7 +7,7 @@ import { Footsies } from '~/components/footsies';
 
 export async function Tracks() {
   // early acces you must be authorized
-  const session = await getServerAuthSession();
+  const session = await auth();
   const isBeta = await isBetaUser(session);
 
   if (!isBeta) {

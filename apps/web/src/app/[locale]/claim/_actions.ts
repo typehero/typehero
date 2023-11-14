@@ -1,5 +1,5 @@
 'use server';
-import { getServerAuthSession, type Session } from '@repo/auth/server';
+import { auth, type Session } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import { redirect } from 'next/navigation';
 import { claimFormSchema } from './_schema';
@@ -8,7 +8,7 @@ import { type FormSchema } from './claim-form';
 export async function validateToken(claimFormData: FormSchema) {
   claimFormSchema.parse(claimFormData);
 
-  const session = await getServerAuthSession();
+  const session = await auth();
 
   if (!session) {
     throw new Error('Not authenticated');

@@ -1,4 +1,3 @@
-import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import {
   Card,
@@ -12,6 +11,7 @@ import { notFound } from 'next/navigation';
 import { withUnstableCache } from '~/utils/withUnstableCache';
 import { createCacheKeyForSharedSolutionsTab } from '../../../challenge/[slug]/solutions/_components/_actions';
 import { sharedSolutionsColumns } from './_components/shared-solutions-columns';
+import { auth } from '@repo/auth/server';
 
 interface Props {
   params: {
@@ -47,7 +47,7 @@ export default async function SharedSolutionsPage({
     tags: [createCacheKeyForSharedSolutionsTab(user.id)],
   });
 
-  const session = await getServerAuthSession();
+  const session = await auth();
   const isOwnProfile = session?.user.id === user.id;
 
   return (

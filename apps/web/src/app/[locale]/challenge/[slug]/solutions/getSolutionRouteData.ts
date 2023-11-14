@@ -1,6 +1,6 @@
 'use server';
 import { prisma } from '@repo/db';
-import { getServerAuthSession, type Session } from '@repo/auth/server';
+import { auth } from '@repo/auth/server';
 import type { SortKey, SortOrder } from '~/utils/sorting';
 import { orderBy } from '~/utils/sorting';
 
@@ -18,7 +18,7 @@ export async function getPaginatedSolutions({
   sortKey?: SortKey;
   sortOrder?: SortOrder;
 }) {
-  const session = await getServerAuthSession();
+  const session = await auth();
   const data = await prisma.challenge.findFirst({
     where: { slug },
     select: {
