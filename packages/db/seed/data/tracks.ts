@@ -25,8 +25,8 @@ export const tracks = [
       'TypeScript Foundations is a curated set of challenges designed to build a strong foundation. From basic syntax to advanced concepts, this collection offers hands-on exercises to help you become a TypeScript Hero.',
   },
   {
-    name: 'Twelve Days of TypeScript 2023',
+    name: 'Advent of TypeScript 2023',
     description:
-      'Explore the Twelve Days of TypeScript and follow along with the community across Advent of TypeScript 2023.',
+      'Explore and follow along with the community across Advent of TypeScript 2023.',
   },
 ];
