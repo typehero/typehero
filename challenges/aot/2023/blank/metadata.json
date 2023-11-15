@@ -1,0 +1,8 @@
+{
+  "id": "lower-snake-case",
+  "label": "Lower Snake Case",
+  "description": "Try to keep it to one shortish sentence.",
+  "difficulty": "beginner",
+  "prerequisites": [],
+  "author": "your-github-user-id"
+}
