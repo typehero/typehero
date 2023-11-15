@@ -42,17 +42,17 @@ export function ChallengeTrackNavigation({ challenge, track, isCollapsed, classN
   const next = useMemo(() => {
     if (currentIndex === null) return null;
 
-    const index = currentIndex + 1;
-    return index < trackDetails!.trackChallenges.length
-      ? trackDetails!.trackChallenges[index]
+    const nextIndex = currentIndex + 1;
+    return nextIndex < trackDetails!.trackChallenges.length
+      ? trackDetails!.trackChallenges[nextIndex]
       : null;
   }, [currentIndex, trackDetails]);
 
   const previous = useMemo(() => {
     if (currentIndex === null) return null;
 
-    const index = currentIndex - 1;
-    return index > 0 ? trackDetails!.trackChallenges[index] : null;
+    const prevIndex = currentIndex - 1;
+    return prevIndex >= 0 ? trackDetails!.trackChallenges[prevIndex] : null;
   }, [currentIndex, trackDetails]);
 
   if (isPending || track === null || trackDetails === null || trackDetails === undefined)
