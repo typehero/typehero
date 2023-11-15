@@ -5,4 +5,5 @@ export default {
   '404.message': 'Page not found, sus',
   'navigation.explore': 'Explore',
   'navigation.tracks': 'Tracks',
+  'navigation.advent': 'Advent of TypeScript',
 } as const;
