@@ -1,6 +1,11 @@
+import { notFound } from 'next/navigation';
+import { getAllFlags } from '~/utils/feature-flags';
 import { CardGrid } from './card-grid';
 
 export async function AotLandingPage() {
+  const featureFlags = await getAllFlags();
+  if (!featureFlags.enableHolidayEvent) return notFound();
+
   return (
     <div className="flex flex-col gap-5 pb-8 md:gap-10 md:py-5">
       <div className="container">
