@@ -1,40 +1,41 @@
-"use client"
+'use client';
 import React, { useEffect, useRef } from 'react';
 import './advent-of-ts-banner.css';
-
-interface Particle {
-  x: number;
-  y: number;
-  dx: number;
-  dy: number;
-  reset: () => void;
-}
 
 const AdventofTSBanner: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   let width = 0;
   let height = 0;
+
+  // Intially 0 particles
   let particles: Particle[] = [];
 
-  const Particle: Particle = {
-    x: 0,
-    y: 0,
-    dx: 0,
-    dy: 0,
+  class Particle {
+    x: number;
+    y: number;
+    dx: number;
+    dy: number;
+
+    constructor() {
+      this.x = this.y = this.dx = this.dy = 0;
+      this.reset();
+    }
+
     reset() {
       this.y = Math.random() * height;
       this.x = Math.random() * width;
       this.dx = Math.random() * 1 - 0.5;
       this.dy = Math.random() * 0.5 + 0.5;
-    },
-  };
-
-  function createParticles(count: number) {
-    if (count !== particles.length) {
-      particles = Array.from({ length: count }, () => ({ ...Particle }));
     }
   }
 
+  function createParticles(count: number) {
+    if (count !== particles.length) {
+      particles = Array.from({ length: count }, () => new Particle());
+    }
+  }
+
+  // good
   function onResize() {
     width = window.innerWidth;
     height = window.innerHeight;
@@ -45,11 +46,23 @@ const AdventofTSBanner: React.FC = () => {
     createParticles((width * height) / 10000);
   }
 
-  function updateParticles(ctx: CanvasRenderingContext2D) {
+  function updateParticles() {
+    const canvas = canvasRef.current;
+
+    if (!canvas) {
+      return;
+    }
+
+    const ctx = canvas.getContext('2d');
+    
+    if (!ctx) {
+      return;
+    }
+
     ctx.clearRect(0, 0, width, height);
     ctx.fillStyle = '#f6f9fa';
 
-    particles.forEach((particle) => {
+    particles.forEach(function (particle) {
       particle.y += particle.dy;
       particle.x += particle.dx;
 
@@ -67,7 +80,7 @@ const AdventofTSBanner: React.FC = () => {
       ctx.fill();
     });
 
-    window.requestAnimationFrame(() => updateParticles(ctx));
+    window.requestAnimationFrame(updateParticles);
   }
 
   useEffect(() => {
@@ -76,16 +89,24 @@ const AdventofTSBanner: React.FC = () => {
     if (canvas) {
       const ctx = canvas.getContext('2d');
       if (ctx) {
+        console.log('canvy is ready, uwu');
+        // Make snow after the canvas is ready
+        console.log('ayo particles before resize?', particles);
+
         onResize();
+        console.log('ayo particles after resize?', particles);
+
         updateParticles(ctx);
         window.addEventListener('resize', onResize);
 
+        // cleanup function, remove event listener
         return () => {
           window.removeEventListener('resize', onResize);
         };
       }
     }
   }, []);
+
   return (
     <div className="content relative rounded-3xl">
       <canvas id="snow" className="snow" ref={canvasRef}></canvas>
