@@ -32,7 +32,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@prisma/client": "^5.0.0"
+    "@prisma/client": "^5.0.0",
+    "algoliasearch": "^4.20.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",

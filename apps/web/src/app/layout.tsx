@@ -6,6 +6,7 @@ import { getStaticParams } from '~/locales/server';
 import '../styles/globals.css';
 import { Providers } from './[locale]/providers';
 import { OG_URL, tagline } from './metadata';
+import { Search } from '~/components/Search';
 
 export function generateStaticParams() {
   return getStaticParams();

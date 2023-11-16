@@ -45,6 +45,8 @@ export default async function CompletedPage({ params: { username: usernameFromQu
     tags: [createCompletedSubmissionCacheKey(user.id)],
   });
 
+  console.log(challenges);
+
   return (
     <Card className="col-span-4 md:min-h-[calc(100vh_-_56px_-_6rem)]">
       <CardHeader>
