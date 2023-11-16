@@ -23,7 +23,6 @@ const AdventofTSBanner: React.FC = () => {
     }
 
     reset() {
-    
       this.y = Math.random() * height;
       this.x = Math.random() * width;
       this.dx = Math.random() * 1 - 0.5;
@@ -39,10 +38,6 @@ const AdventofTSBanner: React.FC = () => {
 
   // good
   function onResize() {
-    console.log("on resize called");
-    console.log("width in resize", width);
-    console.log("height in size", height);
-
     width = window.innerWidth;
     height = window.innerHeight;
     if (canvasRef.current) {
@@ -90,16 +85,10 @@ const AdventofTSBanner: React.FC = () => {
   }
 
   useEffect(() => {
-    console.log('canvy is ready, uwu');
-    console.log('ayo particles before resize?', particles);
     onResize();
-    console.log('ayo particles after resize?', particles);
 
     updateParticles();
     window.addEventListener('resize', onResize);
-
-    console.log('width uwu', width);
-    console.log('height uwu', height);
 
     // cleanup function, remove event listener
     return () => {
@@ -115,7 +104,7 @@ const AdventofTSBanner: React.FC = () => {
           <h1 className="text-8xl font-bold text-[#37455d]">Advent of TypeScript</h1>
           <h2 className="mb-8 text-4xl text-[#37455d] underline">Twelve Days of Typescript</h2>
           <div>
-            <button className="z-10 candy-cane relative flex items-center gap-1 bg-[#4476C0] px-8 py-4 text-2xl text-white transition duration-700 ease-in-out hover:scale-110 hover:shadow-[0_0_2rem_-0.5rem_#4476C0]">
+            <button className="candy-cane relative z-10 flex items-center gap-1 bg-[#4476C0] px-8 py-4 text-2xl text-white transition duration-700 ease-in-out hover:scale-110 hover:shadow-[0_0_2rem_-0.5rem_#4476C0]">
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
                 <g fill="none" fill-rule="evenodd">
                   <path d="M24 0v24H0V0h24ZM12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036c-.01-.003-.019 0-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.016-.018Zm.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022Zm-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01l-.184-.092Z" />
