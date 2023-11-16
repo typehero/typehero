@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import './advent-of-ts-banner.css';
 
+// million-ignore
 const AdventofTSBanner: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   let width = 0;
@@ -22,6 +23,7 @@ const AdventofTSBanner: React.FC = () => {
     }
 
     reset() {
+    
       this.y = Math.random() * height;
       this.x = Math.random() * width;
       this.dx = Math.random() * 1 - 0.5;
@@ -37,6 +39,10 @@ const AdventofTSBanner: React.FC = () => {
 
   // good
   function onResize() {
+    console.log("on resize called");
+    console.log("width in resize", width);
+    console.log("height in size", height);
+
     width = window.innerWidth;
     height = window.innerHeight;
     if (canvasRef.current) {
@@ -85,14 +91,11 @@ const AdventofTSBanner: React.FC = () => {
 
   useEffect(() => {
     console.log('canvy is ready, uwu');
-    // Make snow after the canvas is ready
     console.log('ayo particles before resize?', particles);
-
     onResize();
     console.log('ayo particles after resize?', particles);
 
     updateParticles();
-    onResize();
     window.addEventListener('resize', onResize);
 
     console.log('width uwu', width);
