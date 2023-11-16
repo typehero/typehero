@@ -67,6 +67,9 @@ export async function Navigation() {
             </Link>
             {featureFlags?.enableExplore ? <NavLink title={t('explore')} href="/explore" /> : null}
             {featureFlags?.enableTracks ? <NavLink title={t('tracks')} href="/tracks" /> : null}
+            {featureFlags?.enableHolidayEvent ? (
+              <NavLink title={t('advent')} href="/aot-2023" />
+            ) : null}
           </div>
           <div className="flex">
             <div className="flex items-center justify-end gap-2">
