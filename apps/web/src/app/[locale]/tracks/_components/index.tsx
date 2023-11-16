@@ -4,6 +4,8 @@ import { isBetaUser } from '~/utils/server/is-beta-user';
 import { EnrolledTrackSection } from './track-enrolled-section';
 import { TrackGrid } from './track-grid';
 import { Footsies } from '~/components/footsies';
+import { Suspense } from 'react';
+import { AllTracksCardSkeleton } from './enrolled-track-card-skeleton';
 
 export async function Tracks() {
   // early acces you must be authorized
@@ -18,6 +20,7 @@ export async function Tracks() {
     <>
       <div className="flex flex-col gap-5 pb-8 md:gap-10 md:py-5">
         <EnrolledTrackSection />
+
         <div className="container">
           <h1 className="mb-8 text-4xl font-bold tracking-tight text-neutral-900 dark:text-white sm:px-8 md:px-0">
             Tracks
@@ -28,7 +31,9 @@ export async function Tracks() {
             skills.
           </p>
         </div>
-        <TrackGrid />
+        <Suspense fallback={<AllTracksCardSkeleton />}>
+          <TrackGrid />
+        </Suspense>
       </div>
       <Footsies />
     </>

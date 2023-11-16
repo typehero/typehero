@@ -1,0 +1,51 @@
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@repo/ui/components/card';
+import { Skeleton } from '@repo/ui/components/skeleton';
+import En from '~/locales/en';
+import { AllTracksCardSkeleton, EnrolledTrackCardSkeleton } from './enrolled-track-card-skeleton';
+
+export function EnrolledTracksSkeleton() {
+  return (
+    <div className="sm:px-8 md:px-0">
+      <div className="container p-4">
+        {/* TITLE  */}
+        <div className="mb-2 mt-8">
+          <Skeleton className="h-8 w-20 rounded-lg bg-zinc-300 dark:bg-zinc-700" />
+        </div>
+
+        {/* CARDS */}
+        <div className="flex flex-row gap-5 pb-8 md:gap-10 md:py-5">
+          <EnrolledTrackCardSkeleton />
+          <EnrolledTrackCardSkeleton />
+          <EnrolledTrackCardSkeleton />
+        </div>
+      </div>
+
+      {/* All Tracks List */}
+      <div className="container p-4">
+        {/* TITLE  */}
+        <div className="mb-8 mt-8">
+          <Skeleton className="h-8 w-20 rounded-lg bg-zinc-300 dark:bg-zinc-700" />
+        </div>
+
+        {/* Description */}
+        <div className="mb-8 flex flex-col gap-9">
+          <Skeleton className="h-3 w-[500px] rounded-lg bg-zinc-300 dark:bg-zinc-700" />
+          <Skeleton className="h-3 w-[450px] rounded-lg bg-zinc-300 dark:bg-zinc-700" />
+        </div>
+
+        {/* CARDS */}
+        <div className=" grid grid-cols-1 gap-4 sm:px-8 md:-mx-16 md:grid-cols-2 md:px-0 lg:mx-0 lg:w-full xl:grid-cols-3 2xl:gap-8">
+          <AllTracksCardSkeleton />
+          <AllTracksCardSkeleton />
+          <AllTracksCardSkeleton />
+        </div>
+      </div>
+    </div>
+  );
+}

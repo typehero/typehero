@@ -2,6 +2,8 @@ import { auth, type Session } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import { EnrolledTrackSectionCarousel } from './track-enrolled-section-carousel';
 import { SkeletonTrack } from './SkeletonTrack';
+import { Suspense } from 'react';
+import { EnrolledTracksSkeleton } from './enrolled-tracks-skeleton';
 
 export async function EnrolledTrackSection() {
   const session = await auth();
