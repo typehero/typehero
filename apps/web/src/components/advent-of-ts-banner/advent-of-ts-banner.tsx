@@ -54,7 +54,7 @@ const AdventofTSBanner: React.FC = () => {
     }
 
     const ctx = canvas.getContext('2d');
-    
+
     if (!ctx) {
       return;
     }
@@ -84,31 +84,28 @@ const AdventofTSBanner: React.FC = () => {
   }
 
   useEffect(() => {
-    const canvas = canvasRef.current;
+    console.log('canvy is ready, uwu');
+    // Make snow after the canvas is ready
+    console.log('ayo particles before resize?', particles);
 
-    if (canvas) {
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        console.log('canvy is ready, uwu');
-        // Make snow after the canvas is ready
-        console.log('ayo particles before resize?', particles);
+    onResize();
+    console.log('ayo particles after resize?', particles);
 
-        onResize();
-        console.log('ayo particles after resize?', particles);
+    updateParticles();
+    window.addEventListener('resize', onResize);
 
-        updateParticles(ctx);
-        window.addEventListener('resize', onResize);
+    console.log('width uwu', width);
+    console.log('height uwu', height);
 
-        // cleanup function, remove event listener
-        return () => {
-          window.removeEventListener('resize', onResize);
-        };
-      }
-    }
+    // cleanup function, remove event listener
+    return () => {
+      window.removeEventListener('resize', onResize);
+    };
   }, []);
 
   return (
-    <div className="content relative rounded-3xl">
+    <div>
+          <div className="content relative rounded-3xl">
       <canvas id="snow" className="snow" ref={canvasRef}></canvas>
       <div className="flex flex-col p-10">
         <h1 className="text-8xl font-bold text-[#37455d]">Advent of TypeScript</h1>
@@ -155,6 +152,8 @@ const AdventofTSBanner: React.FC = () => {
         </div>
       </div>
     </div>
+    </div>
+
   );
 };
 
