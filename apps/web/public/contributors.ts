@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 230
+        "contributions": 231
     },
     {
         "login": "Hacksore",
@@ -356,7 +356,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/ayrock-dev/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 9
+        "contributions": 10
     },
     {
         "login": "Tylopilus",
@@ -674,6 +674,27 @@ export const contributors = [
         "contributions": 3
     },
     {
+        "login": "me-imfhd",
+        "id": 114667178,
+        "node_id": "U_kgDOBtWuqg",
+        "avatar_url": "https://avatars.githubusercontent.com/u/114667178?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/me-imfhd",
+        "html_url": "https://github.com/me-imfhd",
+        "followers_url": "https://api.github.com/users/me-imfhd/followers",
+        "following_url": "https://api.github.com/users/me-imfhd/following{/other_user}",
+        "gists_url": "https://api.github.com/users/me-imfhd/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/me-imfhd/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/me-imfhd/subscriptions",
+        "organizations_url": "https://api.github.com/users/me-imfhd/orgs",
+        "repos_url": "https://api.github.com/users/me-imfhd/repos",
+        "events_url": "https://api.github.com/users/me-imfhd/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/me-imfhd/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 3
+    },
+    {
         "login": "F-PTS",
         "id": 80021800,
         "node_id": "MDQ6VXNlcjgwMDIxODAw",
@@ -837,27 +858,6 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/Dun-sin/repos",
         "events_url": "https://api.github.com/users/Dun-sin/events{/privacy}",
         "received_events_url": "https://api.github.com/users/Dun-sin/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 2
-    },
-    {
-        "login": "me-imfhd",
-        "id": 114667178,
-        "node_id": "U_kgDOBtWuqg",
-        "avatar_url": "https://avatars.githubusercontent.com/u/114667178?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/me-imfhd",
-        "html_url": "https://github.com/me-imfhd",
-        "followers_url": "https://api.github.com/users/me-imfhd/followers",
-        "following_url": "https://api.github.com/users/me-imfhd/following{/other_user}",
-        "gists_url": "https://api.github.com/users/me-imfhd/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/me-imfhd/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/me-imfhd/subscriptions",
-        "organizations_url": "https://api.github.com/users/me-imfhd/orgs",
-        "repos_url": "https://api.github.com/users/me-imfhd/repos",
-        "events_url": "https://api.github.com/users/me-imfhd/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/me-imfhd/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 2
