@@ -39,7 +39,6 @@ export function SnowCanvas() {
       particle.x += particle.dx;
 
       if (particle.y > CANVAS_HEIGHT) {
-        console.log(`^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`);
         particle.y = 0;
       }
 
