@@ -13,7 +13,7 @@ import { Pagination } from '../pagination';
 import { SortSelect } from '../sort-select';
 import { useComments } from './comments.hooks';
 import { sortKeys } from './comments.constants';
-import { useTrackVisiblity } from '../../[slug]/_context';
+import { useTrackNavigationVisiblity } from '../../[slug]/use-track-visibility.hook';
 
 interface Props {
   preselectedCommentMetadata?: PreselectedCommentMetadata;
@@ -24,10 +24,9 @@ interface Props {
 
 // million-ignore
 export function Comments({ preselectedCommentMetadata, rootId, type, expanded = false }: Props) {
-  const { isTrackTitleVisible } = useTrackVisiblity();
+  const { isTrackTitleVisible } = useTrackNavigationVisiblity();
   const [showComments, setShowComments] = useState(expanded);
   const commentContainerRef = useRef<HTMLDivElement>(null);
-  // const tabsRef = useRef<>(null);
   const {
     data,
     addComment,

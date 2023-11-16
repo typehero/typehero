@@ -4,7 +4,7 @@ import { auth } from '@repo/auth/server';
 import { ForceRenderUntilClient } from '@repo/ui/components/force-render-until-client';
 
 import { getChallengeRouteData } from './getChallengeRouteData';
-import { TrackVisibiltyProvider } from './_context';
+import { TrackVisibiltyProvider } from './use-track-visibility.hook';
 
 export default async function LayoutData({
   children,
