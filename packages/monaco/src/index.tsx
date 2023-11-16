@@ -60,6 +60,7 @@ export function CodePanel(props: CodePanelProps) {
   };
 
   const [code, setCode] = useState(() => getDefaultCode());
+  const [tests, setTests] = useState(() => props.challenge.tests);
   useResetEditor().subscribe('resetCode', () => {
     setCode(props.challenge.code);
     setLocalStorageCode(props.challenge.code);
@@ -110,7 +111,7 @@ export function CodePanel(props: CodePanelProps) {
         monaco={monacoInstance}
         expandTestPanel={isTestPanelExpanded}
         setIsTestPanelExpanded={setIsTestPanelExpanded}
-        tests={props.challenge.tests}
+        tests={tests}
         userCode={code}
         onMount={{
           tests: async (editor, monaco) => {
@@ -157,7 +158,7 @@ export function CodePanel(props: CodePanelProps) {
               props.updatePlaygroundTestsLocalStorage?.(code ?? '');
 
               if (!monacoInstance) return null;
-              setCode(code);
+              setTests(code);
               setLocalStorageCode(code);
 
               const getTsWorker = await monacoInstance.languages.typescript.getTypeScriptWorker();
