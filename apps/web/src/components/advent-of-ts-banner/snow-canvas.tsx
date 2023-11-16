@@ -39,6 +39,7 @@ export function SnowCanvas() {
       particle.x += particle.dx;
 
       if (particle.y > CANVAS_HEIGHT) {
+        console.log(`^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`);
         particle.y = 0;
       }
 
@@ -62,7 +63,6 @@ export function SnowCanvas() {
 
   useEffect(() => {
     function onResize() {
-      console.log(CANVAS_WIDTH, CANVAS_HEIGHT);
       if (canvasRef.current) {
         canvasRef.current.width = CANVAS_WIDTH;
         canvasRef.current.height = CANVAS_HEIGHT;

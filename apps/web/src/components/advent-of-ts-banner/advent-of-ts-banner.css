@@ -3,7 +3,7 @@
   position: relative;
   z-index: 1;
   background-color: #d2e1ec;
-  background-image: linear-gradient(to bottom, #bbcfe1 0%, #e8f2f6 80%);
+  background-image: linear-gradient(to bottom, #5b8db9 0%, #e8f2f6 80%);
 }
 
 .ground:before,
@@ -59,21 +59,6 @@
     4215px -4185px 15px #b7c1d3,
     4490px -4510px 15px #7e90b0,
     4850px -4750px 15px #a1aec6;
-}
-
-.mound:before {
-  content: '';
-  display: block;
-  width: 600px;
-  height: 200px;
-  position: absolute;
-  left: 50%;
-  margin-left: -300px;
-  top: 50px;
-  z-index: 1;
-  border-radius: 100%;
-  background-color: #e8f2f6;
-  background-image: linear-gradient(to bottom, #dee8f1, #f6f9fa 60px);
 }
 
 .ground {
