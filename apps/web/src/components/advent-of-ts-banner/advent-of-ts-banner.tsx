@@ -1,4 +1,6 @@
+"use client"
 import React, { useEffect, useRef } from 'react';
+import './advent-of-ts-banner.css';
 
 interface Particle {
   x: number;
