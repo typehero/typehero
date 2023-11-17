@@ -73,7 +73,7 @@ export function EditSolution({ solution, setIsEditing }: Props) {
   return (
     <Form {...form}>
       <form className="relative flex h-full flex-col" onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="bg-background/90 dark:bg-muted/90 sticky right-0 top-0 z-10 flex w-full items-center justify-between gap-2 border-b border-zinc-300 bg-opacity-20 p-1 pr-2 backdrop-blur-sm dark:border-zinc-700">
+        <div className="bg-background/90 dark:bg-muted/90 sticky right-0 top-0 flex w-full items-center justify-between gap-2 border-b border-zinc-300 bg-opacity-20 p-1 pr-2 backdrop-blur-sm dark:border-zinc-700">
           <div className="flex-1">
             <FormField
               control={form.control}
