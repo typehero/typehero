@@ -4,6 +4,7 @@ import { Carousel } from '~/components/carousel';
 import { ExploreCard } from './explore-card';
 import { getChallengesByTagOrDifficulty } from './explore.action';
 import { ViewMoreButton } from './view-more-button';
+import { getAllFlags } from '~/utils/feature-flags';
 
 interface SectionProps {
   title: string;
@@ -50,6 +51,7 @@ export const COLORS_BY_TAGS = {
 } as const;
 
 export async function ExploreSection({ title, tag, redirectRoute }: SectionProps) {
+  const { enableHolidayEvent } = await getAllFlags();
   const challenges = await getChallengesByTagOrDifficulty(tag.trim().toUpperCase(), 6);
   return (
     <div>
@@ -87,7 +89,11 @@ export async function ExploreSection({ title, tag, redirectRoute }: SectionProps
                 href={`/challenge/${challenge.slug}`}
                 key={challenge.id}
               >
-                <ExploreCard challenge={challenge} key={`challenge-${challenge.id}`} />
+                <ExploreCard
+                  challenge={challenge}
+                  key={`challenge-${challenge.id}`}
+                  isHolidayEvent={Boolean(enableHolidayEvent)}
+                />
               </Link>
             ))}
         </Carousel>
