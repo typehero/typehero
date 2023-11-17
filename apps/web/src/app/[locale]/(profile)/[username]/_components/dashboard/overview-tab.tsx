@@ -16,7 +16,7 @@ export async function OverviewTab({ user }: Props) {
   return (
     <div className="col-span-4 flex flex-col gap-6 md:min-h-[calc(100vh_-_56px_-_6rem)]">
       <div className="flex flex-col md:flex-row md:gap-6">
-        <ChallengesProgress />
+        <ChallengesProgress userId={user.id} />
         {/* //Todo: Filling with void for now, may put contributions / something else */}
         <div className="max-w-sm flex-grow" />
       </div>
