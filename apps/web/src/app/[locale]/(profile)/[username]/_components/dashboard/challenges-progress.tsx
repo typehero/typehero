@@ -5,8 +5,13 @@ import { getSolvedChallenges } from './_actions';
 
 export const DIFFICULTIES = ['BEGINNER', 'EASY', 'MEDIUM', 'HARD', 'EXTREME'] as const;
 
-export async function ChallengesProgress() {
-  const { challenges, percentage, totalChallenges, totalSolved } = await getSolvedChallenges();
+interface ChallengesProgressProps {
+  userId: string;
+}
+
+export async function ChallengesProgress({ userId }: ChallengesProgressProps) {
+  const { challenges, percentage, totalChallenges, totalSolved } =
+    await getSolvedChallenges(userId);
   return (
     <Card className="flex-grow">
       <CardHeader>
