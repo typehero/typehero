@@ -57,6 +57,7 @@ export {
   Swords,
   ThumbsUp,
   Trash2,
+  TreePine,
   TrendingUpIcon,
   Triangle,
   Twitter,

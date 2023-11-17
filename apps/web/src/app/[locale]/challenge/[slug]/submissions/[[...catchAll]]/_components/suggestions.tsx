@@ -1,6 +1,6 @@
 'use client';
 import { Button } from '@repo/ui/components/button';
-import { ChevronRight, Swords } from '@repo/ui/icons';
+import { ChevronRight, Swords, TreePine } from '@repo/ui/icons';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useMemo } from 'react';
@@ -48,13 +48,16 @@ export function Suggestions({ track, challengeId }: SuggestionsProps) {
       : null;
   }, [currentIndex, trackDetails]);
 
+  const isHolidayTrack = trackDetails?.slug === 'advent-of-typescript-2023';
+  const Icon = isHolidayTrack ? TreePine : Swords;
+
   return (
     <div className="w-full max-w-[1000px] md:py-4 md:pb-8">
       {trackDetails && next ? (
         <>
           <div className="flex items-center justify-between p-3">
             <h3 className="text-foreground/70 flex items-center gap-2 text-lg font-semibold md:text-xl">
-              <Swords size={26} />
+              <Icon size={26} />
               {`Next Up in ${trackDetails?.name}`}
             </h3>
             <Link href={`/tracks/${track}`}>

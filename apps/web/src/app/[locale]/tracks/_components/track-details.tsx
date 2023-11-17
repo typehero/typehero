@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { Swords } from '@repo/ui/icons';
+import { Swords, TreePine } from '@repo/ui/icons';
 import { clsx } from 'clsx';
 import { ActionButton } from './enroll-button';
 import { TrackChallenge } from './track-challenge-card';
@@ -30,6 +30,9 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
   if (track.isComingSoon || !track.visible) {
     return notFound();
   }
+
+  const isHolidayTrack = track.slug === 'advent-of-typescript-2023';
+  const Icon = isHolidayTrack ? TreePine : Swords;
 
   const trackChallenges = track.trackChallenges ?? [];
   const isEnrolled = Boolean(track.enrolledUsers?.length);
@@ -64,7 +67,7 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
                 'hidden h-24 w-24 flex-none items-center justify-center rounded-2xl sm:flex',
               )}
             >
-              <Swords
+              <Icon
                 size={50}
                 className={clsx(
                   'transition-opacity duration-300',

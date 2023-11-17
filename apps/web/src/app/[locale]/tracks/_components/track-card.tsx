@@ -1,6 +1,6 @@
 import { Badge } from '@repo/ui/components/badge';
 import { Card, CardContent } from '@repo/ui/components/card';
-import { Swords } from '@repo/ui/icons';
+import { Swords, TreePine } from '@repo/ui/icons';
 import { clsx } from 'clsx';
 import Link from 'next/link';
 import type { Tracks } from './track-grid';
@@ -27,6 +27,9 @@ const EnrolledBadge = ({ text = 'Enrolled' }: { text?: string }) => (
 
 export function TrackCard({ track }: TrackProps) {
   const isEnrolled = Boolean(track.enrolledUsers?.length);
+
+  const isHolidayTrack = track.slug === 'advent-of-typescript-2023';
+  const Icon = isHolidayTrack ? TreePine : Swords;
 
   return (
     <Link href={`/tracks/${track.slug}`} className="group">
@@ -82,7 +85,7 @@ export function TrackCard({ track }: TrackProps) {
               'flex h-24 w-24 flex-none items-center justify-center rounded-2xl',
             )}
           >
-            <Swords
+            <Icon
               size={50}
               className={clsx(
                 'transition-opacity duration-300',

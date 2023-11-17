@@ -10,7 +10,7 @@ import { getTrackDetails } from '~/app/[locale]/tracks/_components/track.action'
 import { Button } from '@repo/ui/components/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { cn } from '@repo/ui/cn';
-import { Swords, ChevronLeft, ChevronRight } from '@repo/ui/icons';
+import { ChevronLeft, ChevronRight, Swords, TreePine } from '@repo/ui/icons';
 
 import { ChallengeTrackOutline } from './challenge-track-outline';
 
@@ -58,6 +58,9 @@ export function ChallengeTrackNavigation({ challenge, track, isCollapsed, classN
   if (isPending || track === null || trackDetails === null || trackDetails === undefined)
     return null;
 
+  const isHolidayTrack = track.slug === 'advent-of-typescript-2023';
+  const Icon = isHolidayTrack ? TreePine : Swords;
+
   return (
     <div
       className={cn(
@@ -78,7 +81,7 @@ export function ChallengeTrackNavigation({ challenge, track, isCollapsed, classN
               isCollapsed,
           })}
         >
-          <Swords className="h-4 w-4 shrink-0" />
+          <Icon className="h-4 w-4 shrink-0" />
           {Boolean(!isCollapsed) && (
             <span className="overflow-hidden text-ellipsis whitespace-nowrap">{track.name}</span>
           )}
