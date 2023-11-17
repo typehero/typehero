@@ -152,3 +152,78 @@ export async function getSolvedChallenges() {
     percentage,
   };
 }
+
+export interface BadgeInfo {
+  id: string;
+  name: string;
+}
+
+export async function getBadges(userId: string): Promise<BadgeInfo[]> {
+  const badges: BadgeInfo[] = [];
+
+  const holidayTrack = await prisma.track.findFirstOrThrow({
+    where: {
+      slug: 'advent-of-typescript-2023',
+    },
+    include: {
+      trackChallenges: {
+        orderBy: {
+          orderId: 'asc',
+        },
+        include: {
+          challenge: {
+            include: {
+              submission: {
+                where: {
+                  userId,
+                },
+              },
+            },
+          },
+        },
+      },
+      enrolledUsers: {
+        where: {
+          id: userId,
+        },
+        select: {
+          id: true,
+        },
+      },
+    },
+  });
+
+  const totalHolidayChallenges = holidayTrack.trackChallenges.length;
+
+  const numberOfInProgressHolidayChallenges = holidayTrack.trackChallenges.filter(
+    (trackChallenge) => {
+      return (
+        trackChallenge.challenge.submission.length &&
+        trackChallenge.challenge.submission.every((submission) => !submission.isSuccessful)
+      );
+    },
+  ).length;
+
+  if (numberOfInProgressHolidayChallenges > 0) {
+    badges.push({ id: 'aot-2023-attempt', name: 'Advent of TypeScript 2023 Level 1' });
+  }
+
+  const numberOfCompletedHolidayChallenges = holidayTrack.trackChallenges.filter(
+    (trackChallenge) => {
+      return (
+        trackChallenge.challenge.submission.length &&
+        trackChallenge.challenge.submission.some((submission) => submission.isSuccessful)
+      );
+    },
+  ).length;
+
+  if (numberOfCompletedHolidayChallenges > 0) {
+    badges.push({ id: 'aot-2023-participant', name: 'Advent of TypeScript 2023 Level 2' });
+  }
+
+  if (numberOfCompletedHolidayChallenges === totalHolidayChallenges) {
+    badges.push({ id: 'aot-2023-completionist', name: 'Advent of TypeScript 2023 Level 3' });
+  }
+
+  return badges;
+}
