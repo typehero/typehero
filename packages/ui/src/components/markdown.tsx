@@ -1,17 +1,15 @@
 'use client';
 
 import ReactMarkdown from 'react-markdown';
-import { PrismAsyncLight as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import remarkGfm from 'remark-gfm';
-import { vs, vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { vscDarkPlus } from '../themes/vs-dark-plus';
+import { vs } from '../themes/vs';
 import clsx from 'clsx';
 import { visit, SKIP, type BuildVisitor } from 'unist-util-visit';
 import type { Transformer } from 'unified';
 import { useTheme } from 'next-themes';
-import typescript from 'react-syntax-highlighter/dist/esm/languages/prism/typescript';
 import rehypeRaw from 'rehype-raw';
-
-SyntaxHighlighter.registerLanguage('typescript', typescript);
 
 const HTML_COMMENT_REGEX = new RegExp('<!--([\\s\\S]*?)-->', 'g');
 
