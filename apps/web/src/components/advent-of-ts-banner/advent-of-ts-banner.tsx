@@ -36,8 +36,8 @@ export function AdventofTSBanner() {
                     fill="#3178C6"
                   />
                   <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
+                    fillRule="evenodd"
+                    clipRule="evenodd"
                     d="M70.6264 94.2049H90V81H36V94.2049H55.2789V153H70.6264V94.2049Z"
                     fill="white"
                   />
@@ -64,13 +64,13 @@ export function AdventofTSBanner() {
                     rx="67.3645"
                     ry="17.6403"
                     fill="#A5A49E"
-                    fill-opacity="0.24"
+                    fillOpacity="0.24"
                   />
                   <path
                     d="M170.9 130.635L143.251 119.027C142.012 118.506 140.6 119.208 140.267 120.51V120.51C139.965 121.688 140.675 122.886 141.852 123.188L170.9 130.635ZM170.9 130.635L199.547 118.039M199.547 118.039L209 101.91M199.547 118.039L195.001 100.003"
                     stroke="#876B49"
-                    stroke-width="6"
-                    stroke-linecap="round"
+                    strokeWidth="6"
+                    strokeLinecap="round"
                   />
                   <ellipse
                     cx="39.4732"
@@ -91,7 +91,7 @@ export function AdventofTSBanner() {
                   <path
                     d="M154.058 182.857C154.058 199.874 147.492 212.603 137.667 221.084C127.831 229.574 114.701 233.831 101.552 233.831C88.4029 233.831 75.2723 229.574 65.4367 221.084C55.6115 212.603 49.0456 199.874 49.0456 182.857C49.0456 165.027 55.6177 151.692 65.4453 142.81C75.2814 133.921 88.409 129.466 101.552 129.466C114.695 129.466 127.822 133.921 137.658 142.81C147.486 151.692 154.058 165.027 154.058 182.857Z"
                     stroke="black"
-                    stroke-opacity="0.1"
+                    strokeOpacity="0.1"
                   />
                   <path
                     d="M146.9 123.238C146.9 176.963 58.8357 176.963 58.8357 123.238C58.8357 66.9895 146.9 66.9895 146.9 123.238Z"
@@ -100,7 +100,7 @@ export function AdventofTSBanner() {
                   <path
                     d="M146.4 123.238C146.4 136.517 140.965 146.449 132.825 153.07C124.672 159.702 113.781 163.032 102.868 163.032C91.9551 163.032 81.064 159.702 72.9113 153.07C64.7708 146.449 59.3357 136.517 59.3357 123.238C59.3357 109.319 64.7779 98.9127 72.92 91.9788C81.0728 85.0356 91.9608 81.5516 102.868 81.5516C113.775 81.5516 124.663 85.0356 132.816 91.9788C140.958 98.9127 146.4 109.319 146.4 123.238Z"
                     stroke="black"
-                    stroke-opacity="0.1"
+                    strokeOpacity="0.1"
                   />
                   <g filter="url(#filter0_d_2_51)">
                     <path
@@ -110,7 +110,7 @@ export function AdventofTSBanner() {
                     <path
                       d="M139.221 68.3731C139.221 79.4395 134.684 87.7115 127.889 93.227C121.083 98.7524 111.986 101.529 102.868 101.529C93.7497 101.529 84.6532 98.7524 77.8466 93.227C71.0523 87.7115 66.5149 79.4395 66.5149 68.3731C66.5149 59.5974 71.0267 51.8152 77.8583 45.914C84.6911 40.0117 93.812 36.0231 102.932 34.8433C112.054 33.6632 121.121 35.2977 127.898 40.5668C134.659 45.8246 139.221 54.7652 139.221 68.3731Z"
                       stroke="black"
-                      stroke-opacity="0.1"
+                      strokeOpacity="0.1"
                     />
                   </g>
                   <path
@@ -152,8 +152,8 @@ export function AdventofTSBanner() {
                   <path
                     d="M39.2126 133.972L67.683 116.787C69.5338 115.67 71.9381 116.656 72.4727 118.75V118.75C72.8822 120.355 72.0095 122.009 70.4538 122.576L39.2126 133.972ZM39.2126 133.972L19.4699 101.791M19.4699 101.791L16 82.2435M19.4699 101.791L29.9994 84.5082"
                     stroke="#876B49"
-                    stroke-width="7"
-                    stroke-linecap="round"
+                    strokeWidth="7"
+                    strokeLinecap="round"
                   />
                   <defs>
                     <filter
@@ -163,9 +163,9 @@ export function AdventofTSBanner() {
                       width="81.7062"
                       height="76.0496"
                       filterUnits="userSpaceOnUse"
-                      color-interpolation-filters="sRGB"
+                      colorInterpolationFilters="sRGB"
                     >
-                      <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                      <feFlood floodOpacity="0" result="BackgroundImageFix" />
                       <feColorMatrix
                         in="SourceAlpha"
                         type="matrix"
