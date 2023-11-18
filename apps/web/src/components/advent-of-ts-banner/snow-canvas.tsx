@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 const CANVAS_HEIGHT = 500;
 const CANVAS_WIDTH = 900;
@@ -9,16 +9,9 @@ export function SnowCanvas() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const requestAnimationRef = useRef<number | null>(null);
 
-  let particles: Particle[] = [];
+  const [particles, setParticles] = useState<Particle[]>([]);
 
-  function createParticles(count: number) {
-    if (count !== particles.length) {
-      particles = Array.from({ length: count }, () => new Particle(CANVAS_HEIGHT, CANVAS_WIDTH));
-    }
-  }
-
-  // good
-  function updateParticles() {
+  const updateParticles = useCallback(() => {
     const canvas = canvasRef.current;
 
     if (!canvas) {
@@ -34,7 +27,7 @@ export function SnowCanvas() {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     ctx.fillStyle = '#f6f9fa';
 
-    particles.forEach(function (particle) {
+    particles.forEach(function (particle: Particle) {
       particle.y += particle.dy;
       particle.x += particle.dx;
 
@@ -53,14 +46,21 @@ export function SnowCanvas() {
     });
 
     requestAnimationRef.current = requestAnimationFrame(updateParticles);
-  }
+  }, [particles]);
 
   useEffect(() => {
     requestAnimationRef.current = requestAnimationFrame(updateParticles);
     return () => cancelAnimationFrame(requestAnimationRef.current!);
-  }, []); // Make sure the effect runs only once
+  }, [updateParticles]); // Make sure the effect runs only once
 
   useEffect(() => {
+    function createParticles(count: number) {
+      if (count !== particles.length) {
+        setParticles(
+          Array.from({ length: count }, () => new Particle(CANVAS_HEIGHT, CANVAS_WIDTH)),
+        );
+      }
+    }
     function onResize() {
       if (canvasRef.current) {
         canvasRef.current.width = CANVAS_WIDTH;
@@ -77,7 +77,7 @@ export function SnowCanvas() {
     return () => {
       window.removeEventListener('resize', onResize);
     };
-  }, []);
+  }, [updateParticles, particles.length]);
 
   return (
     <canvas
@@ -99,7 +99,10 @@ class Particle {
   dy: number;
 
   constructor(height: number, width: number) {
-    this.x = this.y = this.dx = this.dy = 0;
+    this.x = 0;
+    this.y = 0;
+    this.dx = 0;
+    this.dy = 0;
     this.height = height;
     this.width = width;
     this.reset();
@@ -108,7 +111,7 @@ class Particle {
   reset() {
     this.y = Math.random() * this.height;
     this.x = Math.random() * this.width;
-    this.dx = Math.random() * 1 - 0.5;
+    this.dx = Number(Math.random()) - 0.5;
     this.dy = Math.random() * 0.5 + 0.5;
   }
 }
