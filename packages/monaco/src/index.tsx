@@ -42,7 +42,7 @@ export function CodePanel(props: CodePanelProps) {
   const [tsErrors, setTsErrors] = useState<TsErrors>();
   const [isTestPanelExpanded, setIsTestPanelExpanded] = useState(true);
   const [localStorageCode, setLocalStorageCode] = useLocalStorage(
-    `challenge-${props.challenge.slug}`,
+    props.challenge.slug !== 'test-slug' ? `challenge-${props.challenge.slug}` : '',
     '',
   );
 
