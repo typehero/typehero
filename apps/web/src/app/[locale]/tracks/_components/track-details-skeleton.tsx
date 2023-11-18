@@ -44,7 +44,7 @@ export function TrackChallengesSkeleton() {
           <Skeleton className="h-6 w-24 rounded-lg border bg-zinc-300 dark:bg-zinc-700" />
           <Skeleton className="h-6 w-40 rounded-lg border bg-zinc-300 dark:bg-zinc-700" />
         </div>
-        <Skeleton className="h-8 w-20 rounded-3xl bg-zinc-300 dark:bg-zinc-700" />
+        <Skeleton className="h-6 w-20 rounded-3xl bg-zinc-300 dark:bg-zinc-700" />
       </div>
     </div>
   );

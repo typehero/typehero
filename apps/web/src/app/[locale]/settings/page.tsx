@@ -3,6 +3,8 @@ import { prisma } from '@repo/db';
 import type { Metadata } from 'next';
 import { Settings } from './_components/settings';
 import { buildMetaForDefault } from '~/app/metadata';
+import { Suspense } from 'react';
+import SettingsSkeleton from './loading';
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildMetaForDefault({
@@ -32,7 +34,9 @@ export default async function SettingsPage() {
 
   return (
     <>
-      <Settings user={profileData} />
+      <Suspense fallback={<SettingsSkeleton />}>
+        <Settings user={profileData} />
+      </Suspense>
     </>
   );
 }
