@@ -30,13 +30,13 @@ const TITLES_BY_TAG = {
   POPULAR: '',
   NEWEST: '',
   BEGINNER:
-    'bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-sky-500 dark:from-sky-500 dark:to-sky-200',
-  EASY: 'bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-green-500 dark:from-green-300 dark:to-green-100',
+    'bg-clip-text text-transparent select-none bg-gradient-to-r from-sky-500 to-sky-500 dark:from-sky-500 dark:to-sky-200',
+  EASY: 'bg-clip-text text-transparent select-none bg-gradient-to-r from-green-600 to-green-500 dark:from-green-300 dark:to-green-100',
   MEDIUM:
-    'bg-clip-text text-transparent bg-gradient-to-r from-yellow-600 to-yellow-500 dark:from-yellow-300 dark:to-yellow-100',
-  HARD: 'bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-red-500 dark:from-red-300 dark:to-red-100',
+    'bg-clip-text text-transparent select-none bg-gradient-to-r from-yellow-600 to-yellow-500 dark:from-yellow-300 dark:to-yellow-100',
+  HARD: 'bg-clip-text text-transparent select-none bg-gradient-to-r from-red-600 to-red-500 dark:from-red-300 dark:to-red-100',
   EXTREME:
-    'bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-purple-500 dark:from-purple-400 dark:to-purple-100',
+    'bg-clip-text text-transparent select-none bg-gradient-to-r from-purple-600 to-purple-500 dark:from-purple-400 dark:to-purple-100',
 };
 
 export const COLORS_BY_TAGS = {

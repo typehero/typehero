@@ -1,7 +1,6 @@
 'use client';
 
 import { signIn, signOut, useSession } from '@repo/auth/react';
-import { RoleTypes } from '@repo/db/types';
 import { Button } from '@repo/ui/components/button';
 import {
   DropdownMenu,
@@ -87,10 +86,6 @@ function ThemeButton() {
 function LoginButton() {
   const [loading, setLoading] = useState(false);
   const { data: session, status } = useSession();
-
-  const isAdmin = session?.user.role.includes(RoleTypes.ADMIN);
-  const isMod = session?.user.role.includes(RoleTypes.MODERATOR);
-  const isAdminOrMod = isAdmin || isMod;
 
   // NOTE: 1. loading == true -> 2. signIn() -> 3. session status == 'loading' (loading == false)
   const handleSignIn = async () => {

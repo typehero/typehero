@@ -13,6 +13,7 @@ import { Pagination } from '../pagination';
 import { SortSelect } from '../sort-select';
 import { useComments } from './comments.hooks';
 import { sortKeys } from './comments.constants';
+import { useTrackNavigationVisiblity } from '../../[slug]/use-track-visibility.hook';
 
 interface Props {
   preselectedCommentMetadata?: PreselectedCommentMetadata;
@@ -23,6 +24,7 @@ interface Props {
 
 // million-ignore
 export function Comments({ preselectedCommentMetadata, rootId, type, expanded = false }: Props) {
+  const { isTrackTitleVisible } = useTrackNavigationVisiblity();
   const [showComments, setShowComments] = useState(expanded);
   const commentContainerRef = useRef<HTMLDivElement>(null);
   const {
@@ -62,6 +64,7 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
           className="flex w-full items-center justify-between gap-2 p-3 font-medium text-neutral-500 duration-300 hover:text-neutral-700 focus:outline-none dark:hover:text-zinc-300"
           onClick={() => {
             setShowComments(!showComments);
+            commentContainerRef.current?.scroll({ top: 0 });
           }}
         >
           <div className="flex items-center gap-2">
@@ -79,9 +82,11 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
           className={clsx(
             'custom-scrollable-element flex flex-col overscroll-contain duration-300',
             {
-              'h-64 pb-4 md:h-[calc(100vh_-_164px)]': showComments,
               'h-0 overflow-y-hidden': !showComments,
-              'overflow-y-auto': showComments && (data?.comments.length ?? 0) > 0,
+              'h-64 pb-4 lg:h-[calc(100vh_-_164px)]': showComments && !isTrackTitleVisible, // no title
+              'h-[calc(256px_-_46px)] pb-4 lg:h-[calc(100vh_-_210px)]':
+                showComments && isTrackTitleVisible, // with title
+              'overflow-y-auto ': showComments && (data?.comments.length ?? 0) > 0,
             },
           )}
           ref={commentContainerRef}

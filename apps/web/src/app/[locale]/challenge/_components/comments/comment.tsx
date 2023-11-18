@@ -296,7 +296,7 @@ function SingleComment({
           <ExpandableContent content={comment.text} />
           {hasBeenEdited ? (
             <div className="text-muted-foreground flex items-center gap-2 whitespace-nowrap text-xs">
-              Last edited at
+              Last edited at{' '}
               {new Intl.DateTimeFormat(undefined, {
                 timeStyle: 'short',
                 dateStyle: 'short',

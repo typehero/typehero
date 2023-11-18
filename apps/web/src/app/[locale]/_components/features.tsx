@@ -34,7 +34,7 @@ export function Features() {
               href="#features"
             >
               <div className="group relative overflow-hidden rounded-full bg-white/80 px-3 py-1 duration-300 hover:pr-9 dark:bg-black/80">
-                <span className="bg-gradient-to-r from-[#31bdc6] to-[#3178c6] bg-clip-text text-transparent">
+                <span className="select-none bg-gradient-to-r from-[#31bdc6] to-[#3178c6] bg-clip-text text-transparent">
                   <svg
                     className="mr-1 inline-block h-4 w-4 fill-[#31bdc6]"
                     viewBox="4 4 48 48"
