@@ -38,7 +38,7 @@ export function EnrolledTracksSkeleton() {
         </div>
 
         {/* CARDS */}
-        <div className="mb-6 grid grid-cols-1 gap-3 sm:px-8 md:-mx-16 md:grid-cols-2 md:px-0 lg:mx-0 lg:w-full xl:grid-cols-3 2xl:gap-8">
+        <div className="container mb-6 grid grid-cols-1 gap-3 sm:px-8 md:-mx-16 md:grid-cols-2 md:px-0 lg:mx-0 lg:w-full xl:grid-cols-3 2xl:gap-8">
           <AllTracksCardSkeleton />
           <AllTracksCardSkeleton />
           <AllTracksCardSkeleton />
