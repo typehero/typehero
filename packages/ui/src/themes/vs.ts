@@ -1,4 +1,4 @@
-export const vs: { [key: string]: React.CSSProperties } = {
+export const vs: Record<string, React.CSSProperties> = {
   'code[class*="language-"]': {
     color: '#393A34',
     fontFamily: '"Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace',

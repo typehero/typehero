@@ -1,4 +1,4 @@
-export const vscDarkPlus: { [key: string]: React.CSSProperties } = {
+export const vscDarkPlus: Record<string, React.CSSProperties> = {
   'pre[class*="language-"]': {
     color: '#d4d4d4',
     fontSize: '13px',
