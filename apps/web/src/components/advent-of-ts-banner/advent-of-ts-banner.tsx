@@ -4,7 +4,7 @@ import { SnowCanvas } from './snow-canvas';
 
 export function AdventofTSBanner() {
   return (
-    <div className="container mt-[128px] flex min-h-[500px] justify-center lg:mb-[148px]">
+    <div className="container mt-11 flex min-h-[500px] justify-center md:mt-[128px] lg:mb-[148px]">
       <div className="content max-w-[900px] overflow-hidden rounded-3xl">
         <SnowCanvas />
         <div className="absolute left-0 top-0 h-full w-full">
@@ -194,7 +194,7 @@ export function AdventofTSBanner() {
                   </defs>
                 </svg>
               </div>
-              <div className="absolute bottom-[100px] right-[50px] z-30 mt-44 text-4xl font-semibold tracking-tighter text-red-600">
+              <div className="absolute bottom-[100px] right-[50px] z-30 mt-44 text-2xl font-semibold tracking-tighter text-red-600 md:text-4xl">
                 Coming December 1st
               </div>
             </div>
