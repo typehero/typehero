@@ -1,6 +1,6 @@
 import { ImageResponse } from '@vercel/og';
-import { fetchFont } from 'utils/fetchFont';
-// export const runtime = 'edge';
+// import { fetchFont } from 'utils/fetchFont';
+export const runtime = 'edge';
 
 export async function GET() {
   // const [inter700] = await Promise.all([fetchFont('Inter', 700)]);
