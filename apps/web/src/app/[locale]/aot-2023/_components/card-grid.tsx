@@ -1,8 +1,10 @@
 import { prisma } from '@repo/db';
 import { TiltableCard } from './tiltable-card';
+import { auth, type Session } from '@repo/auth/server';
 
 export async function CardGrid() {
-  const challenges = await getChallenges();
+  const session = await auth();
+  const challenges = await getChallenges(session);
   const challengesToReveal = revealItems(challenges);
 
   return (
@@ -17,10 +19,27 @@ export async function CardGrid() {
 }
 
 export type Challenges = NonNullable<Awaited<ReturnType<typeof getChallenges>>>;
-async function getChallenges() {
-  return prisma.challenge.findMany({
+async function getChallenges(session: Session | null) {
+  const challenges = await prisma.challenge.findMany({
     take: 25,
+    include: {
+      submission: {
+        where: {
+          userId: session?.user.id ?? '',
+          isSuccessful: true,
+        },
+        select: {
+          isSuccessful: true,
+        },
+        take: 1,
+      },
+    },
   });
+
+  return challenges.map((challenge) => ({
+    ...challenge,
+    hasSolved: challenge.submission.length > 0,
+  }));
 }
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;

@@ -46,7 +46,8 @@ const IMAGES = [
 ];
 export function TiltableCard({ index, challenge }: Props) {
   const router = useRouter();
-  const [isFlipped, setIsFlipped] = useState(false);
+  // if a day has been solved it should just be flipped
+  const [isFlipped, setIsFlipped] = useState(challenge.hasSolved);
 
   const [rotations, setRotations] = useState({ x: 0, y: 0, z: 0 });
   const [isAnimating, setAnimating] = useState(false);
@@ -54,12 +55,12 @@ export function TiltableCard({ index, challenge }: Props) {
   const [glare, setGlare] = useState({ x: 0, y: 0, opacity: 0 });
 
   const handleClick = () => {
-    if (!challenge.isRevealed) return;
+    if (!challenge.isRevealed || challenge.hasSolved) return;
     setIsFlipped((prevState) => !prevState);
   };
 
   const animate = (event: MouseEvent) => {
-    if (!challenge.isRevealed) return;
+    if (!challenge.isRevealed || challenge.hasSolved) return;
     setAnimating(true);
 
     const rect = event.currentTarget.getBoundingClientRect();
@@ -112,6 +113,7 @@ export function TiltableCard({ index, challenge }: Props) {
         height: '320px',
         perspective: '1200px',
         transformStyle: 'preserve-3d',
+        position: 'relative',
       }}
     >
       <motion.div
@@ -135,7 +137,8 @@ export function TiltableCard({ index, challenge }: Props) {
           }}
           style={{
             height: '320px',
-            backgroundColor: challenge.isRevealed ? '#175f2c' : '#0f3c1c',
+            backgroundColor: challenge.hasSolved ? '#175f2c' : '#761111',
+            ...(!challenge.isRevealed ? { filter: 'grayscale(100%)' } : {}),
             borderRadius: '0.5rem',
             boxShadow:
               '0 0 0 1px rgba(0, 0, 0, 0.105), 0 9px 20px 0 rgba(0, 0, 0, 0.02), 0 1px 2px 0 rgba(0, 0, 0, 0.106)',
@@ -214,7 +217,7 @@ export function TiltableCard({ index, challenge }: Props) {
           }}
           style={{
             height: '320px',
-            backgroundColor: '#175f2c',
+            backgroundColor: challenge.hasSolved ? '#175f2c' : '#761111',
             borderRadius: '0.5rem',
             boxShadow:
               '0 0 0 1px rgba(0, 0, 0, 0.105), 0 9px 20px 0 rgba(0, 0, 0, 0.02), 0 1px 2px 0 rgba(0, 0, 0, 0.106)',
@@ -226,6 +229,7 @@ export function TiltableCard({ index, challenge }: Props) {
             transformStyle: 'preserve-3d',
             transformOrigin: 'center',
             perspective: '320px',
+            overflow: 'hidden',
           }}
         >
           <motion.div
@@ -249,6 +253,11 @@ export function TiltableCard({ index, challenge }: Props) {
               opacity: glare.opacity,
             }}
           />
+          {Boolean(challenge.hasSolved) && (
+            <div className="absolute left-[-46px] top-[12px] w-[170px] -rotate-45 transform bg-gradient-to-r from-yellow-400 to-yellow-100 py-1 font-semibold text-black drop-shadow-md">
+              <span className="ml-12">Solved</span>
+            </div>
+          )}
           <p className="text-xl font-bold">{challenge.name}</p>
         </motion.div>
       </motion.div>
