@@ -1,20 +1,5 @@
 import { prisma } from '@repo/db';
-import { ChallengeCard } from './challenge-card';
-
-const slugs = [
-  'hello-world',
-  'pick',
-  'awaited',
-  'readonly',
-  'exclude',
-  'parameters',
-  'omit',
-  'pop',
-  'trim-left',
-  'get-return-type',
-  'permutation',
-  'currying-1',
-];
+import { TiltableCard } from './tiltable-card';
 
 export async function CardGrid() {
   const challenges = await getChallenges();
@@ -22,9 +7,12 @@ export async function CardGrid() {
 
   return (
     <div className="container">
-      <section className="w-[calc(100% + 8rem)] grid grid-cols-1 gap-4 sm:px-8 md:-mx-16 md:grid-cols-2 md:px-0 lg:mx-0 lg:w-full xl:grid-cols-3 2xl:gap-8">
+      <section className="w-[calc(100% + 8rem)] grid grid-cols-[repeat(1,240px)] gap-4 sm:px-8 md:-mx-16 md:grid-cols-[repeat(3,240px)] md:px-0 lg:mx-0 lg:w-full xl:grid-cols-[repeat(4,240px)] 2xl:gap-8">
+        {/* {challengesToReveal?.map((challenge, i) => { */}
+        {/*   return <ChallengeCard key={i} challenge={challenge} />; */}
+        {/* })} */}
         {challengesToReveal?.map((challenge, i) => {
-          return <ChallengeCard key={i} challenge={challenge} />;
+          return <TiltableCard key={challenge.id} index={i} challenge={challenge} />;
         })}
       </section>
     </div>
@@ -34,11 +22,7 @@ export async function CardGrid() {
 export type Challenges = NonNullable<Awaited<ReturnType<typeof getChallenges>>>;
 async function getChallenges() {
   return prisma.challenge.findMany({
-    where: {
-      slug: {
-        in: slugs,
-      },
-    },
+    take: 25,
   });
 }
 
