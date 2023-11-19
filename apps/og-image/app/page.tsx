@@ -64,7 +64,7 @@ export default function Page() {
         </div>
         <div>
           <h2>Aot 2023</h2>
-          <img alt="default metadata" src="/api/aot-2023" />
+          <img alt="aot-2023 metadata" src="/api/aot-2023" />
         </div>
       </main>
     </div>
