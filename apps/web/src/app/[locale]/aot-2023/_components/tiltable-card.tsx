@@ -8,6 +8,11 @@ interface Props {
   challenge: Challenges[0] & { isRevealed: boolean };
   index: number;
 }
+const spring = {
+  type: 'spring',
+  stiffness: 300,
+  damping: 40,
+};
 
 const IMAGES = [
   'gingerbreadman2',
@@ -37,10 +42,16 @@ const IMAGES = [
   '25',
 ];
 export function TiltableCard({ index, challenge }: Props) {
+  const [isFlipped, setIsFlipped] = useState(false);
+
   const [rotations, setRotations] = useState({ x: 0, y: 0, z: 0 });
   const [isAnimating, setAnimating] = useState(false);
   const isAnimatingReference = useRef(isAnimating);
   const [glare, setGlare] = useState({ x: 0, y: 0, opacity: 0 });
+
+  const handleClick = () => {
+    setIsFlipped((prevState) => !prevState);
+  };
 
   const animate = (event: MouseEvent) => {
     setAnimating(true);
@@ -88,51 +99,132 @@ export function TiltableCard({ index, challenge }: Props) {
 
   return (
     <motion.div
-      onMouseMove={animate}
-      onMouseLeave={stopAnimating}
-      animate={{
-        rotateY: rotations.x,
-        rotateX: rotations.y,
-        transformPerspective: rotations.z * 100,
-      }}
+      onClick={handleClick}
+      transition={spring}
       style={{
         height: '320px',
-        backgroundColor: '#175f2c',
-        borderRadius: '0.5rem',
-        boxShadow:
-          '0 0 0 1px rgba(0, 0, 0, 0.105), 0 9px 20px 0 rgba(0, 0, 0, 0.02), 0 1px 2px 0 rgba(0, 0, 0, 0.106)',
-        display: 'flex',
-        alignItems: 'center',
-        position: 'relative',
-        justifyContent: 'center',
+        perspective: '1200px',
         transformStyle: 'preserve-3d',
-        transformOrigin: 'center',
-        perspective: '320px',
       }}
     >
       <motion.div
+        animate={{ rotateY: isFlipped ? -180 : 0 }}
+        transition={spring}
         style={{
-          zIndex: 2,
-          mixBlendMode: 'overlay',
-          position: 'absolute',
-          transform: 'translateZ(1px)',
           width: '100%',
           height: '100%',
-          borderRadius: '0.5rem',
-          transformStyle: 'preserve-3d',
+          zIndex: isFlipped ? 0 : 1,
+          backfaceVisibility: 'hidden',
+          position: 'absolute',
         }}
-        animate={{
-          background: `radial-gradient(
+      >
+        <motion.div
+          onMouseMove={animate}
+          onMouseLeave={stopAnimating}
+          animate={{
+            rotateY: rotations.x,
+            rotateX: rotations.y,
+            transformPerspective: rotations.z * 100,
+          }}
+          style={{
+            height: '320px',
+            backgroundColor: '#175f2c',
+            borderRadius: '0.5rem',
+            boxShadow:
+              '0 0 0 1px rgba(0, 0, 0, 0.105), 0 9px 20px 0 rgba(0, 0, 0, 0.02), 0 1px 2px 0 rgba(0, 0, 0, 0.106)',
+            display: 'flex',
+            alignItems: 'center',
+            position: 'relative',
+            justifyContent: 'center',
+            transformStyle: 'preserve-3d',
+            transformOrigin: 'center',
+            perspective: '320px',
+          }}
+        >
+          <motion.div
+            style={{
+              zIndex: 2,
+              mixBlendMode: 'overlay',
+              position: 'absolute',
+              transform: 'translateZ(1px)',
+              width: '100%',
+              height: '100%',
+              borderRadius: '0.5rem',
+              transformStyle: 'preserve-3d',
+            }}
+            animate={{
+              background: `radial-gradient(
             farthest-corner circle at ${glare.x}% ${glare.y}%,
             rgba(255, 255, 255, 0.7) 10%,
             rgba(255, 255, 255, 0.5) 24%,
             rgba(0, 0, 0, 0.8) 82%
           )`,
-          opacity: glare.opacity,
+              opacity: glare.opacity,
+            }}
+          />
+          <Image src={`/aot/${IMAGES[index]}.png`} width={100} height={100} alt="" />
+          <p className="absolute bottom-4 right-4 text-xl font-bold text-white">{index + 1}</p>
+        </motion.div>
+      </motion.div>
+      <motion.div
+        initial={{ rotateY: 180 }}
+        animate={{ rotateY: isFlipped ? 0 : 180 }}
+        transition={spring}
+        style={{
+          width: '100%',
+          height: '100%',
+          zIndex: isFlipped ? 1 : 0,
+          backfaceVisibility: 'hidden',
+          position: 'absolute',
         }}
-      />
-      <Image src={`/aot/${IMAGES[index]}.png`} width={100} height={100} alt="" />
-      <p className="absolute bottom-4 right-4 text-xl font-bold text-white">{index + 1}</p>
+      >
+        <motion.div
+          onMouseMove={animate}
+          onMouseLeave={stopAnimating}
+          animate={{
+            rotateY: rotations.x,
+            rotateX: rotations.y,
+            transformPerspective: rotations.z * 100,
+          }}
+          style={{
+            height: '320px',
+            backgroundColor: '#175f2c',
+            borderRadius: '0.5rem',
+            boxShadow:
+              '0 0 0 1px rgba(0, 0, 0, 0.105), 0 9px 20px 0 rgba(0, 0, 0, 0.02), 0 1px 2px 0 rgba(0, 0, 0, 0.106)',
+            display: 'flex',
+            alignItems: 'center',
+            position: 'relative',
+            justifyContent: 'center',
+            transformStyle: 'preserve-3d',
+            transformOrigin: 'center',
+            perspective: '320px',
+          }}
+        >
+          <motion.div
+            style={{
+              zIndex: 2,
+              mixBlendMode: 'overlay',
+              position: 'absolute',
+              transform: 'translateZ(1px)',
+              width: '100%',
+              height: '100%',
+              borderRadius: '0.5rem',
+              transformStyle: 'preserve-3d',
+            }}
+            animate={{
+              background: `radial-gradient(
+            farthest-corner circle at ${glare.x}% ${glare.y}%,
+            rgba(255, 255, 255, 0.7) 10%,
+            rgba(255, 255, 255, 0.5) 24%,
+            rgba(0, 0, 0, 0.8) 82%
+          )`,
+              opacity: glare.opacity,
+            }}
+          />
+          Card stuff
+        </motion.div>
+      </motion.div>
     </motion.div>
   );
 }
