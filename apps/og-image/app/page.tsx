@@ -53,13 +53,18 @@ export default function Page() {
             src={`/api/user?${userParam.toSearchString({
               username: 'Hacksore',
               avatar: 'https://avatars.githubusercontent.com/u/32938743?v=4',
-              dateSince: '2 days ago'
+              dateSince: '2 days ago',
             })}&random=${nonce}`}
           />
         </div>
+
         <div>
           <h2>Default</h2>
           <img alt="default metadata" src="/api/default" />
+        </div>
+        <div>
+          <h2>Aot 2023</h2>
+          <img alt="default metadata" src="/api/aot-2023" />
         </div>
       </main>
     </div>
