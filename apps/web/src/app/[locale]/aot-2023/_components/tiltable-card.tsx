@@ -1,11 +1,10 @@
 'use client';
+
 import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useRef, useState, type MouseEvent } from 'react';
 import type { Challenges } from './card-grid';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Button } from '@repo/ui/components/button';
-import { useRouter } from 'next/navigation';
 
 interface Props {
   challenge: Challenges[0] & { isRevealed: boolean };
