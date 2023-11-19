@@ -8,9 +8,6 @@ export async function CardGrid() {
   return (
     <div className="container">
       <section className="w-[calc(100% + 8rem)] grid grid-cols-[repeat(1,240px)] gap-4 sm:px-8 md:-mx-16 md:grid-cols-[repeat(3,240px)] md:px-0 lg:mx-0 lg:w-full xl:grid-cols-[repeat(4,240px)] 2xl:gap-8">
-        {/* {challengesToReveal?.map((challenge, i) => { */}
-        {/*   return <ChallengeCard key={i} challenge={challenge} />; */}
-        {/* })} */}
         {challengesToReveal?.map((challenge, i) => {
           return <TiltableCard key={challenge.id} index={i} challenge={challenge} />;
         })}
