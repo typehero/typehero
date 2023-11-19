@@ -18,7 +18,8 @@ import { Markdown } from '@repo/ui/components/markdown';
 import { BookmarkTooltip } from './bookmark';
 import { Report } from './report';
 import { ShareTooltip } from './share';
-import { ChallengeVote } from './vote';
+import { auth } from '@repo/auth/server';
+import { Vote } from '../vote';
 
 export interface ChallengeProps {
   challenge: ChallengeRouteData['challenge'];
@@ -31,7 +32,9 @@ export interface FormValues {
   other: boolean;
 }
 
-export function Description({ challenge }: ChallengeProps) {
+export async function Description({ challenge }: ChallengeProps) {
+  const session = await auth();
+
   return (
     <div className="custom-scrollable-element h-full overflow-y-auto px-4 pb-36 pt-3">
       <div className="flex items-center">
@@ -61,7 +64,13 @@ export function Description({ challenge }: ChallengeProps) {
             </TooltipContent>
           </Tooltip>
         ) : null}
-        <ChallengeVote challenge={challenge} />
+        <Vote
+          voteCount={challenge._count.vote}
+          initialHasVoted={challenge.vote.length > 0}
+          disabled={!session?.user?.id}
+          rootType="CHALLENGE"
+          rootId={challenge?.id}
+        />
         <Dialog>
           <DialogTrigger>
             <ShareTooltip />
