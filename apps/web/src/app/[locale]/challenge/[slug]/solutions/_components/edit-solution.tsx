@@ -66,7 +66,7 @@ export function EditSolution({ solution, setIsEditing }: Props) {
   };
 
   const { theme } = useTheme();
-  theme != null
+  theme !== undefined
     ? document.documentElement.setAttribute('data-color-mode', theme)
     : document.documentElement.setAttribute('data-color-mode', 'system');
 
