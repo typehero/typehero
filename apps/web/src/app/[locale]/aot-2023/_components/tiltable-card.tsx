@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useRef, useState, type MouseEvent } from 'react';
 import type { Challenges } from './card-grid';
+import clsx from 'clsx';
 
 interface Props {
   challenge: Challenges[0] & { isRevealed: boolean };
@@ -53,10 +54,12 @@ export function TiltableCard({ index, challenge }: Props) {
   const [glare, setGlare] = useState({ x: 0, y: 0, opacity: 0 });
 
   const handleClick = () => {
+    if (!challenge.isRevealed) return;
     setIsFlipped((prevState) => !prevState);
   };
 
   const animate = (event: MouseEvent) => {
+    if (!challenge.isRevealed) return;
     setAnimating(true);
 
     const rect = event.currentTarget.getBoundingClientRect();
@@ -90,6 +93,7 @@ export function TiltableCard({ index, challenge }: Props) {
   };
 
   const stopAnimating = () => {
+    if (!challenge.isRevealed) return;
     setAnimating(false);
 
     setTimeout(() => {
@@ -131,7 +135,7 @@ export function TiltableCard({ index, challenge }: Props) {
           }}
           style={{
             height: '320px',
-            backgroundColor: '#175f2c',
+            backgroundColor: challenge.isRevealed ? '#175f2c' : '#0f3c1c',
             borderRadius: '0.5rem',
             boxShadow:
               '0 0 0 1px rgba(0, 0, 0, 0.105), 0 9px 20px 0 rgba(0, 0, 0, 0.02), 0 1px 2px 0 rgba(0, 0, 0, 0.106)',
@@ -165,8 +169,21 @@ export function TiltableCard({ index, challenge }: Props) {
               opacity: glare.opacity,
             }}
           />
-          <Image src={`/aot/${IMAGES[index]}.png`} width={100} height={100} alt="" />
-          <p className="absolute bottom-4 right-4 text-xl font-bold text-white">{index + 1}</p>
+          <Image
+            src={`/aot/${IMAGES[index]}.png`}
+            width={100}
+            height={100}
+            alt=""
+            className={clsx(!challenge.isRevealed && 'opacity-50')}
+          />
+          <p
+            className={clsx(
+              'absolute bottom-4 right-4 text-xl font-bold text-white',
+              !challenge.isRevealed && 'opacity-50',
+            )}
+          >
+            {index + 1}
+          </p>
         </motion.div>
       </motion.div>
       <motion.div

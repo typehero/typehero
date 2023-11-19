@@ -25,10 +25,10 @@ async function getChallenges() {
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 function revealItems(items: Challenges) {
-  const startDate: Date = new Date('2023-12-14');
+  const startDate: Date = new Date('2023-11-17');
   const today: Date = new Date();
 
-  const daysPassed = Math.floor((today.getTime() - startDate.getTime()) / MS_PER_DAY) - 1;
+  const daysPassed = Math.floor((today.getTime() - startDate.getTime()) / MS_PER_DAY);
 
   return items.map((item, index) => {
     const isPastOrCurrentDay = index <= daysPassed;
