@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import { useRef, useState, type MouseEvent } from 'react';
 import type { Challenges } from './card-grid';
 import Image from 'next/image';
+import Link from 'next/link';
+import { Button } from '@repo/ui/components/button';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   challenge: Challenges[0] & { isRevealed: boolean };
@@ -42,6 +45,7 @@ const IMAGES = [
   '25',
 ];
 export function TiltableCard({ index, challenge }: Props) {
+  const router = useRouter();
   const [isFlipped, setIsFlipped] = useState(false);
 
   const [rotations, setRotations] = useState({ x: 0, y: 0, z: 0 });
@@ -167,6 +171,10 @@ export function TiltableCard({ index, challenge }: Props) {
         </motion.div>
       </motion.div>
       <motion.div
+        onClick={(e) => {
+          e.stopPropagation();
+          router.push(`/challenge/${challenge.slug}`);
+        }}
         initial={{ rotateY: 180 }}
         animate={{ rotateY: isFlipped ? 0 : 180 }}
         transition={spring}
@@ -176,9 +184,11 @@ export function TiltableCard({ index, challenge }: Props) {
           zIndex: isFlipped ? 1 : 0,
           backfaceVisibility: 'hidden',
           position: 'absolute',
+          cursor: 'pointer',
         }}
       >
         <motion.div
+          className="aot-card"
           onMouseMove={animate}
           onMouseLeave={stopAnimating}
           animate={{
@@ -193,6 +203,7 @@ export function TiltableCard({ index, challenge }: Props) {
             boxShadow:
               '0 0 0 1px rgba(0, 0, 0, 0.105), 0 9px 20px 0 rgba(0, 0, 0, 0.02), 0 1px 2px 0 rgba(0, 0, 0, 0.106)',
             display: 'flex',
+            flexDirection: 'column',
             alignItems: 'center',
             position: 'relative',
             justifyContent: 'center',
@@ -222,7 +233,7 @@ export function TiltableCard({ index, challenge }: Props) {
               opacity: glare.opacity,
             }}
           />
-          Card stuff
+          <p className="text-xl font-bold">{challenge.name}</p>
         </motion.div>
       </motion.div>
     </motion.div>
