@@ -105,6 +105,7 @@ export default function SplitEditor({
           title: 'Saved',
           description: 'Your code has been saved',
           duration: 1000,
+          variant: 'success',
         });
       }
     };
