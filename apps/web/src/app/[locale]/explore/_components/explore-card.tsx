@@ -21,7 +21,7 @@ import {
 import dynamic from 'next/dynamic';
 import type { ExploreChallengeData } from './explore.action';
 import { cn } from '@repo/ui/cn';
-import { HolidayChristmasTree } from './aot-2023-explote-card';
+import { HolidayChristmasTree } from './aot-2023-explore-card';
 
 const RelativeTime = dynamic(() => import('./relative-time'), {
   ssr: false,
