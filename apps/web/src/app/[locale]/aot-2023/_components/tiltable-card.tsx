@@ -258,7 +258,7 @@ export function TiltableCard({ index, challenge }: Props) {
               <span className="ml-12">Solved</span>
             </div>
           )}
-          <p className="text-xl font-bold">{challenge.name}</p>
+          <p className="text-xl font-bold text-white">{challenge.name}</p>
         </motion.div>
       </motion.div>
     </motion.div>

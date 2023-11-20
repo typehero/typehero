@@ -10,7 +10,7 @@ export async function AotLandingPage() {
   return (
     <div className="flex flex-col gap-5 pb-8 md:gap-10 md:py-5">
       <div className="container">
-        <h1 className="mb-10 text-center text-4xl font-bold tracking-tighter text-white sm:text-8xl">
+        <h1 className="mb-10 text-center text-4xl font-bold tracking-tighter text-black dark:text-white sm:text-8xl">
           <span>Advent</span> of <span className="text-red-600">TypeScript</span>
         </h1>
         {/* <div className="flex items-center justify-center gap-10"> */}
