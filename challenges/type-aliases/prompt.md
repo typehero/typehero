@@ -49,7 +49,7 @@ Wait! What's going on? `landSpacecraft` specifically asked for `Meters` but clea
 
 Be careful that you understand that TypeScript is a _structural type system_. One result of this is that primitive types are _not_ something known as ["opaque types"](https://en.wikipedia.org/wiki/Opaque_data_type). To TypeScript, everything that's an alias for a number is still a number.
 
-There actually is a idiomatic TypeScript way to design this, but it requires another concept covered in another challenge on [type unions](https://typehero.dev/challenge/type-unions).
+There actually is an idiomatic TypeScript way to design this, but it requires another concept covered in another challenge on [type unions](https://typehero.dev/challenge/type-unions).
 
 ## How To Create Type Aliases
 
