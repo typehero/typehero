@@ -168,7 +168,11 @@ export function SolutionDetails({ solution }: Props) {
               ) : null}
             </div>
           </div>
-          {!isEditing && <Markdown>{solution.description || ''}</Markdown>}
+          {!isEditing && (
+            <div className="prose-invert prose-h3:text-xl mt-6 leading-7">
+              <Markdown>{solution.description || ''}</Markdown>{' '}
+            </div>
+          )}
           {isEditing ? <EditSolution solution={solution} setIsEditing={setIsEditing} /> : null}
         </div>
       </div>

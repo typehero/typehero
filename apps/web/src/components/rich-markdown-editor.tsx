@@ -163,7 +163,7 @@ export function RichMarkdownEditor({
   };
 
   return (
-    <div className="h-full flex-1">
+    <div className="h-full flex-1 selection:bg-blue-400/50 selection:text-white">
       <MDEditor
         components={{
           toolbar: (command) => {

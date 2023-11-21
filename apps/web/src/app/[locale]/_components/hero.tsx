@@ -152,7 +152,7 @@ export async function Hero() {
         <BackgroundGrid />
       </div>
       <div className="container relative grid min-h-screen items-center justify-center py-24 lg:min-h-0 lg:grid-cols-2 lg:py-0">
-        <BeamOfLight />
+        {/* <BeamOfLight /> */}
         <div className="flex w-full flex-col items-center justify-center gap-10 lg:items-start">
           <a
             target="_blank"
@@ -161,7 +161,7 @@ export async function Hero() {
             className="animate-bg-gradient-to-center group rounded-full bg-gradient-to-r from-yellow-600 via-[#3178c6] to-[#3178c6] to-70% bg-[length:420%_420%] bg-right-bottom p-[1px] brightness-90 contrast-150 duration-500 hover:bg-left-top hover:shadow-[0_0_2rem_-0.5rem_#3178c6] dark:from-yellow-500 dark:via-white dark:to-[#3178c6] dark:brightness-125 dark:contrast-100 dark:hover:shadow-[0_0_2rem_-0.5rem_#fff8]"
           >
             <div className="rounded-full bg-white/80 px-3 py-1 dark:bg-black/80">
-              <span className="animate-bg-gradient-to-center relative flex items-center bg-gradient-to-r to-70% bg-[length:420%_420%] bg-clip-text bg-right-bottom text-transparent duration-500 group-hover:bg-left-top dark:from-yellow-500 dark:via-white dark:to-[#3178c6]">
+              <span className="animate-bg-gradient-to-center relative flex select-none items-center bg-gradient-to-r to-70% bg-[length:420%_420%] bg-clip-text bg-right-bottom text-transparent duration-500 group-hover:bg-left-top dark:from-yellow-500 dark:via-white dark:to-[#3178c6]">
                 <Sparkle className="animate-oldstar absolute  -left-1 top-0.5 mr-2 h-5 w-5 translate-x-0.5 stroke-[#3178c6] stroke-2 duration-500 group-hover:rotate-180 group-hover:scale-110 group-hover:stroke-yellow-600 dark:duration-500  " />
                 <Sparkle className="animate-newstar mr-2 h-4 w-4 stroke-[#3178c6] stroke-2 duration-500 group-hover:rotate-180 group-hover:scale-110 group-hover:fill-[#3178c6] dark:stroke-white dark:duration-500 dark:group-hover:fill-white" />{' '}
                 Star us on GitHub
@@ -172,7 +172,7 @@ export async function Hero() {
             <div className="absolute left-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-x-[15%] -translate-y-[50%] rounded-full bg-slate-400/10 blur-3xl dark:block" />
             <div className="absolute right-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-y-[40%] rounded-full bg-[#3178c6]/20 blur-3xl dark:block" />
             <TypeHeroLogo3D />
-            <h1 className="animate-bg-gradient-to-center-title dark:to-69% bg-gradient-to-br from-[#3178c6] from-[69%] to-black/0 bg-clip-text bg-right-bottom text-6xl font-extrabold text-transparent dark:from-white dark:from-30% dark:via-[#3178c6] dark:to-[#3178c6] dark:bg-[length:300%_300%] sm:text-8xl sm:leading-[5.5rem]">
+            <h1 className="animate-bg-gradient-to-center-title dark:to-69% select-none bg-gradient-to-br from-[#3178c6] from-[69%] to-black/0 bg-clip-text bg-right-bottom text-6xl font-extrabold text-transparent dark:from-white dark:from-30% dark:via-[#3178c6] dark:to-[#3178c6] dark:bg-[length:300%_300%] sm:text-8xl sm:leading-[5.5rem]">
               type
               <br />
               hero
