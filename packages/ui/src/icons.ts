@@ -49,6 +49,7 @@ export {
   Settings2,
   Shapes,
   Share,
+  Shield,
   Sparkle,
   Sparkles,
   SquareSlash,

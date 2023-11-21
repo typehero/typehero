@@ -37,7 +37,7 @@ How would you write a type for your company's endpoint that returned data like t
 
 In the real world you're going to have other things going on in types that might distract you. But don't get distracted by the pagination info. Let's zoom in on the `"results"` object.
 
-`results` seems to be some kind of mapping of user ids to a follower count. It's an object where they keys are (more or less) random strings and the values are all numbers.
+`results` seems to be some kind of mapping of user ids to a follower count. It's an object where the keys are (more or less) random strings and the values are all numbers.
 
 This turns out to be exactly the scenario for TypeScript index signatures!
 
