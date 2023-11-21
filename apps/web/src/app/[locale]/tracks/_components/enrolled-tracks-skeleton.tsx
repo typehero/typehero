@@ -1,12 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@repo/ui/components/card';
 import { Skeleton } from '@repo/ui/components/skeleton';
-import En from '~/locales/en';
 import { AllTracksCardSkeleton, EnrolledTrackCardSkeleton } from './enrolled-track-card-skeleton';
 
 export function EnrolledTracksSkeleton() {
