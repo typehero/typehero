@@ -1,7 +1,6 @@
 import { Skeleton } from '@repo/ui/components/skeleton';
 
 export function ProfileSkeleton() {
-  console.log('ProfileSkeleton');
   return (
     <div className="container  flex flex-col gap-8 py-8 md:flex-row ">
       <div className="flex flex-col gap-4 md:flex-row">
