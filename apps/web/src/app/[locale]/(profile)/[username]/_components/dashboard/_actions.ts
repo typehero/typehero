@@ -154,7 +154,8 @@ export async function getSolvedChallenges() {
 }
 
 export interface BadgeInfo {
-  id: string;
+  // eslint-disable-next-line @typescript-eslint/sort-type-constituents
+  slug: 'aot-2023-bronze' | 'aot-2023-silver' | 'aot-2023-gold' | 'aot-2023-platinum';
   name: string;
 }
 
@@ -193,8 +194,6 @@ export async function getBadges(userId: string): Promise<BadgeInfo[]> {
     },
   });
 
-  const totalHolidayChallenges = holidayTrack.trackChallenges.length;
-
   const numberOfInProgressHolidayChallenges = holidayTrack.trackChallenges.filter(
     (trackChallenge) => {
       return (
@@ -205,7 +204,7 @@ export async function getBadges(userId: string): Promise<BadgeInfo[]> {
   ).length;
 
   if (numberOfInProgressHolidayChallenges > 0) {
-    badges.push({ id: 'aot-2023-attempt', name: 'Advent of TypeScript 2023 Level 1' });
+    badges.push({ slug: 'aot-2023-bronze', name: 'Advent of TypeScript 2023 Bronze' });
   }
 
   const numberOfCompletedHolidayChallenges = holidayTrack.trackChallenges.filter(
@@ -217,12 +216,16 @@ export async function getBadges(userId: string): Promise<BadgeInfo[]> {
     },
   ).length;
 
-  if (numberOfCompletedHolidayChallenges > 0) {
-    badges.push({ id: 'aot-2023-participant', name: 'Advent of TypeScript 2023 Level 2' });
+  if (numberOfCompletedHolidayChallenges >= 5) {
+    badges.push({ slug: 'aot-2023-silver', name: 'Advent of TypeScript 2023 Silver' });
   }
 
-  if (numberOfCompletedHolidayChallenges === totalHolidayChallenges) {
-    badges.push({ id: 'aot-2023-completionist', name: 'Advent of TypeScript 2023 Level 3' });
+  if (numberOfCompletedHolidayChallenges >= 15) {
+    badges.push({ slug: 'aot-2023-gold', name: 'Advent of TypeScript 2023 Gold' });
+  }
+
+  if (numberOfCompletedHolidayChallenges >= 25) {
+    badges.push({ slug: 'aot-2023-platinum', name: 'Advent of TypeScript 2023 Platinum' });
   }
 
   return badges;
