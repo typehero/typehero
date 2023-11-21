@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Dashboard } from './dashboard';
 import { auth } from '@repo/auth/server';
+import { getBadges } from './dashboard/_actions';
 
 interface Props {
   username: string;
@@ -39,8 +40,10 @@ export async function Profile({ username: usernameFromQuery, children }: Props) 
   const session = await auth();
   const isOwnProfile = session?.user.id === user.id;
 
+  const badges = await getBadges(user.id);
+
   return (
-    <Dashboard user={user} isOwnProfile={isOwnProfile}>
+    <Dashboard user={user} isOwnProfile={isOwnProfile} badges={badges}>
       {children}
     </Dashboard>
   );
