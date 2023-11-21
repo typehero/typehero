@@ -196,10 +196,7 @@ export async function getBadges(userId: string): Promise<BadgeInfo[]> {
 
   const numberOfInProgressHolidayChallenges = holidayTrack.trackChallenges.filter(
     (trackChallenge) => {
-      return (
-        trackChallenge.challenge.submission.length &&
-        trackChallenge.challenge.submission.every((submission) => !submission.isSuccessful)
-      );
+      return trackChallenge.challenge.submission?.every((submission) => !submission.isSuccessful);
     },
   ).length;
 
@@ -209,10 +206,7 @@ export async function getBadges(userId: string): Promise<BadgeInfo[]> {
 
   const numberOfCompletedHolidayChallenges = holidayTrack.trackChallenges.filter(
     (trackChallenge) => {
-      return (
-        trackChallenge.challenge.submission.length &&
-        trackChallenge.challenge.submission.some((submission) => submission.isSuccessful)
-      );
+      return trackChallenge.challenge.submission?.some((submission) => submission.isSuccessful);
     },
   ).length;
 
