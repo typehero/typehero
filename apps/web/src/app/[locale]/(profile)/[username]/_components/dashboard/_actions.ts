@@ -164,7 +164,7 @@ export interface BadgeInfo {
 export async function getBadges(userId: string): Promise<BadgeInfo[]> {
   const badges: BadgeInfo[] = [];
 
-  const holidayTrack = await prisma.track.findFirstOrThrow({
+  const holidayTrack = await prisma.track.findFirst({
     where: {
       slug: 'advent-of-typescript-2023',
     },
@@ -196,21 +196,19 @@ export async function getBadges(userId: string): Promise<BadgeInfo[]> {
     },
   });
 
-  const numberOfInProgressHolidayChallenges = holidayTrack.trackChallenges.filter(
-    (trackChallenge) => {
+  const numberOfInProgressHolidayChallenges =
+    holidayTrack?.trackChallenges.filter((trackChallenge) => {
       return trackChallenge.challenge.submission?.every((submission) => !submission.isSuccessful);
-    },
-  ).length;
+    }).length ?? 0;
 
   if (numberOfInProgressHolidayChallenges > 0) {
     badges.push({ slug: 'aot-2023-bronze', name: 'Advent of TypeScript 2023 Bronze' });
   }
 
-  const numberOfCompletedHolidayChallenges = holidayTrack.trackChallenges.filter(
-    (trackChallenge) => {
+  const numberOfCompletedHolidayChallenges =
+    holidayTrack?.trackChallenges.filter((trackChallenge) => {
       return trackChallenge.challenge.submission?.some((submission) => submission.isSuccessful);
-    },
-  ).length;
+    }).length ?? 0;
 
   if (numberOfCompletedHolidayChallenges >= 5) {
     badges.push({ slug: 'aot-2023-silver', name: 'Advent of TypeScript 2023 Silver' });
