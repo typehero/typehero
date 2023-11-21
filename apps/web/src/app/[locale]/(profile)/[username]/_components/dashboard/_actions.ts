@@ -44,6 +44,9 @@ export async function getChallengeHistoryByCategory(type: HistoryType, userId: s
       slug: true,
       name: true,
       submission: {
+        where: {
+          userId,
+        },
         orderBy: {
           createdAt: 'desc',
         },
