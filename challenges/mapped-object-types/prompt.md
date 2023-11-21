@@ -43,7 +43,7 @@ Let's talk about what this syntax does, piece by piece:
 - `;` it might at first seem strange, but if you take a step back, this is just a `property: value` line in an object type, so we end it with a semicolon like we normally would with types in TypeScript.
 - `};` ends the type declaration.
 
-But, all this _stuff_ but we end up with a type that's literally identical to what we started with. In the above code, `Example` and `MoviesByGenre` are literally the same type to TypeScript because TypeScript is a structural type system. THey have all the same properties and values, so to TypeScript they are basically aliases at this point (aliases with extra steps, granted!).
+But, all this _stuff_ but we end up with a type that's literally identical to what we started with. In the above code, `Example` and `MoviesByGenre` are literally the same type to TypeScript because TypeScript is a structural type system. They have all the same properties and values, so to TypeScript they are basically aliases at this point (aliases with extra steps, granted!).
 
 ### Resetting all values
 

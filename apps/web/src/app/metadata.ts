@@ -125,6 +125,20 @@ export const buildMetaForDefault = async ({
   });
 };
 
+export const buildMetaForEventPage = async ({
+  title,
+  description,
+}: {
+  title?: string;
+  description?: string;
+}): Promise<Metadata> => {
+  return buildMeta({
+    ogImageUrl: `${OG_URL}/api/aot-2023`,
+    title,
+    description,
+  });
+};
+
 /** update the metadata for og */
 const buildMeta = async ({
   ogImageUrl,
