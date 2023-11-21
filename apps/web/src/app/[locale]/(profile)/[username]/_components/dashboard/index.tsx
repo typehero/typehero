@@ -1,5 +1,7 @@
 'use client';
+import { useEffect, useMemo } from 'react';
 import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 
 import type { User } from '@repo/db/types';
 import { MagicIcon } from '@repo/ui/components/magic-icon';
@@ -14,9 +16,9 @@ import { Bookmark, CheckCircle, ChevronRightSquare, Play, Settings, Text } from 
 import { getRelativeTime } from '~/utils/relativeTime';
 import { stripProtocolAndWWW } from '~/utils/stringUtils';
 
+import { type BadgeInfo } from './_actions';
+import { Badges } from './badges';
 import UserHeader from './user-header';
-import { useEffect, useMemo } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
 
 interface Props {
   // TODO: how do do this union type with just letting prisma halp
@@ -24,11 +26,12 @@ interface Props {
     userLinks: { id: string | null; url: string }[];
   };
   isOwnProfile: boolean;
+  badges: BadgeInfo[];
   children: React.ReactNode;
 }
 type Tab = 'bookmarks' | 'completed' | 'in-progress' | 'overview' | 'shared-solutions';
 
-export function Dashboard({ user, isOwnProfile, children }: Props) {
+export function Dashboard({ user, isOwnProfile, badges, children }: Props) {
   const router = useRouter();
 
   const tabs = useMemo(
@@ -180,6 +183,7 @@ export function Dashboard({ user, isOwnProfile, children }: Props) {
                 </>
               )}
             </div>
+            <Badges className="flex w-full flex-1" badges={badges} />
           </div>
         </VerticalTabsList>
         <VerticalTabsContent className="shrink grow space-y-4" value={selectedTab}>
