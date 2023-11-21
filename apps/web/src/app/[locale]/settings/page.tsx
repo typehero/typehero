@@ -32,10 +32,6 @@ export default async function SettingsPage() {
       updatedAt: 'asc',
     },
   });
-
-  const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
-  await delay(5000);
-
   return (
     <>
       <Settings user={profileData} />
