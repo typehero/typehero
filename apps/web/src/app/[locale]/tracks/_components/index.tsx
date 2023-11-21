@@ -20,7 +20,6 @@ export async function Tracks() {
     <>
       <div className="flex flex-col gap-5 pb-8 md:gap-10 md:py-5">
         <EnrolledTrackSection />
-
         <div className="container">
           <h1 className="mb-8 text-4xl font-bold tracking-tight text-neutral-900 dark:text-white sm:px-8 md:px-0">
             Tracks

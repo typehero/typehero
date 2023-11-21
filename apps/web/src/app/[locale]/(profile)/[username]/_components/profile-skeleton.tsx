@@ -1,6 +1,6 @@
 import { Skeleton } from '@repo/ui/components/skeleton';
 
-export const ProfileSkeleton = () => {
+export function ProfileSkeleton() {
   return (
     <div className="container  flex flex-col gap-8 py-8 md:flex-row ">
       <div className="flex flex-col gap-4 md:flex-row">
@@ -8,9 +8,9 @@ export const ProfileSkeleton = () => {
           <Skeleton className="h-32 w-32 rounded-3xl bg-cover md:h-64 md:w-64" />
           <Skeleton className="mt-4 h-10 w-60 rounded-lg bg-zinc-300 dark:bg-zinc-700 dark:text-white" />
           <div className="mt-4 flex gap-4 md:w-full md:flex-col">
-            <TabsTriggerSkeleton />
-            <TabsTriggerSkeleton />
-            <TabsTriggerSkeleton />
+            {Array.from({ length: 3 }, (_, idx) => (
+              <TabsTriggerSkeleton key={idx} />
+            ))}
           </div>
         </div>
       </div>
@@ -28,7 +28,7 @@ export const ProfileSkeleton = () => {
       </div>
     </div>
   );
-};
+}
 
 export function TabsTriggerSkeleton() {
   return (

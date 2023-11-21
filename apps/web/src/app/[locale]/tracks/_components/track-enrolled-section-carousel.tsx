@@ -14,9 +14,7 @@ export function EnrolledTrackSectionCarousel({ tracks }: { tracks: EnrolledTrack
           href={`/tracks/${t.slug}`}
           key={t.id}
         >
-          <Suspense fallback={<EnrolledTrackCardSkeleton />}>
-            <PersonalTrackCard track={t} />
-          </Suspense>
+          <PersonalTrackCard track={t} />
         </Link>
       ))}
     </Carousel>

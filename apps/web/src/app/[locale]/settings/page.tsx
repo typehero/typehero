@@ -5,6 +5,7 @@ import { Settings } from './_components/settings';
 import { buildMetaForDefault } from '~/app/metadata';
 import { Suspense } from 'react';
 import SettingsSkeleton from './loading';
+import { de } from 'date-fns/locale';
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildMetaForDefault({
@@ -32,11 +33,12 @@ export default async function SettingsPage() {
     },
   });
 
+  const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+  await delay(5000);
+
   return (
     <>
-      <Suspense fallback={<SettingsSkeleton />}>
-        <Settings user={profileData} />
-      </Suspense>
+      <Settings user={profileData} />
     </>
   );
 }

@@ -19,17 +19,9 @@ export function TrackDetailsSkeleton() {
 
       {/* Track Challenges */}
       <div className="mt-8 flex flex-col gap-2">
-        <TrackChallengesSkeleton />
-        <TrackChallengesSkeleton />
-        <TrackChallengesSkeleton />
-        <TrackChallengesSkeleton />
-        <TrackChallengesSkeleton />
-        <TrackChallengesSkeleton />
-        <TrackChallengesSkeleton />
-        <TrackChallengesSkeleton />
-        <TrackChallengesSkeleton />
-        <TrackChallengesSkeleton />
-        <TrackChallengesSkeleton />
+        {Array.from({ length: 10 }, (_, idx) => (
+          <TrackChallengesSkeleton key={idx} />
+        ))}
       </div>
     </>
   );
