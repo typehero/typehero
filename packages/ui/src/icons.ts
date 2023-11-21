@@ -70,4 +70,5 @@ export {
   FlaskConical,
   History,
   ArrowLeft,
+  RectangleVertical,
 } from 'lucide-react';
