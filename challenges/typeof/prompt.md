@@ -2,7 +2,7 @@
 
 Have we said thank you, yet, for taking these TypeHero challenges? Well... THANK YOU!
 
-You're doing yourself a great service by improve your knowledge of TypeScript. As you dig deeper, on your quest to become a TypeScript wizard, you're going to start noticing that there are almost two worlds. The "JavaScript" world and the "types" world.
+You're doing yourself a great service by improving your knowledge of TypeScript. As you dig deeper, on your quest to become a TypeScript wizard, you're going to start noticing that there are almost two worlds. The "JavaScript" world and the "types" world.
 
 |                   | JavaScript world                                              | types world                                                                                                                                        |
 | ----------------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -66,7 +66,7 @@ type Count = typeof count;
 
 ### `typeof` Is Most Useful For Complex Types
 
-TypeScript keyword that you put before a JavaScript _identifier_ like a variable name. Let's say you have this function in your codebase:
+`typeof` is a TypeScript keyword that you put before a JavaScript _identifier_ like a variable name. Let's say you have this function in your codebase:
 
 ```ts
 const createPoint = (x: number, y: number) => ({ x, y });
