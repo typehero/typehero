@@ -2,7 +2,7 @@ import { Skeleton } from '@repo/ui/components/skeleton';
 
 export function ProfileSkeleton() {
   return (
-    <div className="container  flex flex-col gap-8 py-8 md:flex-row ">
+    <div className="container flex h-full flex-col gap-8 py-8 md:flex-row">
       <div className="flex flex-col gap-4 md:flex-row">
         <div className="flex flex-col items-center gap-4 md:items-start">
           <Skeleton className="h-32 w-32 rounded-3xl bg-cover md:h-64 md:w-64" />
