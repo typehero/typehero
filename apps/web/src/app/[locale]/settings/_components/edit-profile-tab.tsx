@@ -14,8 +14,6 @@ import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
 
 import { updateProfile } from './settings.action';
 import { profileSchema, type ProfileSchema } from './schema';
-import { SettingsSkeleton } from './settings-skeleton';
-import { Suspense } from 'react';
 
 interface Props {
   user: User & { userLinks: { id: string | null; url: string }[] };

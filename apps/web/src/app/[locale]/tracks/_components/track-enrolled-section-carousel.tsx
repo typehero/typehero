@@ -2,8 +2,6 @@ import Link from 'next/link';
 import { Carousel } from '~/components/carousel';
 import { PersonalTrackCard } from './personal-track-card';
 import type { EnrolledTracks } from './track.action';
-import { EnrolledTrackCardSkeleton } from './enrolled-track-card-skeleton';
-import { Suspense } from 'react';
 
 export function EnrolledTrackSectionCarousel({ tracks }: { tracks: EnrolledTracks }) {
   return (
