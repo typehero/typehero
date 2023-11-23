@@ -20,7 +20,6 @@ export async function GET(req: Request) {
   }
 
   const props = parsed.data.input;
-  console.log({props})
 
   return new ImageResponse(
     (
@@ -31,9 +30,9 @@ export async function GET(req: Request) {
             {props.avatar ? (
               <img src={props.avatar} tw="object-cover h-68 w-68 rounded-full" />
             ) : null}
-            <div tw='flex flex-col ml-10'>
+            <div tw="flex flex-col ml-10">
               <h1 tw="text-8xl font-bold">{props.username}</h1>
-              <p tw='text-4xl -mt-6 font-medium'>Member Since: {props.dateSince}</p>
+              <p tw="text-4xl -mt-6 font-medium">Member Since: {props.dateSince}</p>
             </div>
           </div>
           <div tw="flex relative right-0">
