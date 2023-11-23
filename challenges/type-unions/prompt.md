@@ -67,12 +67,9 @@ const landSpacecraft = (distance: Distance) => {
 
 Unions are a very deep topic, actually. The three things you need to know right now are:
 
-1. unions are unordered
-   a. and if you implement hacks to try to depend on the order your tests will break across different TypeScript versions
-1. the items in a union are unique
-   a. so doing `1 | 1 | 2 | 3` is the same as `1 | 2 | 3`
-1. the `never` type is an empty union
-   a. we'll learn more about `never` [later on](todo-never)
+1. unions are unordered: if you implement hacks to try to depend on the order your tests will break across different TypeScript versions
+1. the items in a union are unique: so doing `1 | 1 | 2 | 3` is the same as `1 | 2 | 3`
+1. the `never` type is an empty union: we'll learn more about `never` [later on](todo-never)
 
 ## Solving This Challenge
 

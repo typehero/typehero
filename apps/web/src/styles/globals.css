@@ -760,9 +760,3 @@ a {
 .prose-invert :where(ul > li):not(:where([class~="not-prose"] *))::marker {
   color: var(--tw-prose-bullets);
 }
-.prose-invert :where(hr):not(:where([class~="not-prose"] *)) {
-  border-color: var(--tw-prose-hr);
-  border-top-width: 1px;
-  margin-top: 3em;
-  margin-bottom: 3em;
-}
