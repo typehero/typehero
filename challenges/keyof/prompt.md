@@ -52,7 +52,7 @@ Great news: you can use `keyof` to solve this problem!
 
 `keyof` is special TypeScript syntax that you use before any type.
 
-In our case we _don't have_ a type to start working with (because we), so we create one with the `typeof` operator:
+In our case we _don't have_ a type to start working with so we create one with the `typeof` operator:
 
 ```ts
 type CasettesByArtist = typeof casettesByArtist;
@@ -68,7 +68,7 @@ type Artists = keyof CasettesByArtist;
 
 The result of `keyof` is always a union.
 
-> Even if there are 0 or 1 objects, it doesn't hurt to think of the result as a union. If there are no elements in the result will be `never` (which is the empty set in "Set theory" terminology). When there's only one key than the resulting type will be a single primitive or literal type.
+> Even if there are 0 or 1 objects, it doesn't hurt to think of the result as a union. If there are no elements in the result, the type will be `never` (which is the empty set in "Set theory" terminology). When there's only one key then the resulting type will be a single primitive or literal type.
 
 ## Solving This Challenge
 
