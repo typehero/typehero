@@ -52,10 +52,7 @@ export async function loadChallengesFromTypeChallenge(isProd = false) {
     );
 
     const testData = await readFile(resolve(QUESTIONS_PATH, dir.name, 'test-cases.ts')).then((f) =>
-      f
-        .toString()
-        .replace(/import .* from '@type-challenges\/utils';?/g, '')
-        .trim(),
+      f.toString().trim(),
     );
 
     const [selfId] = dir.name.split('-');

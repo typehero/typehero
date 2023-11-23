@@ -1,15 +1,15 @@
 import type { OnChange } from '@monaco-editor/react';
 import type { TsErrors } from '@repo/monaco';
-import { CodeEditor, loadCheckingLib, type CodeEditorProps } from '@repo/monaco/code-editor';
+import { CodeEditor, type CodeEditorProps } from '@repo/monaco/code-editor';
+import { PrettierFormatProvider } from '@repo/monaco/prettier';
+import { createTwoslashInlayProvider } from '@repo/monaco/twoslash';
 import { FormField, FormItem, FormMessage } from '@repo/ui/components/form';
 import { TypographyH3 } from '@repo/ui/components/typography/h3';
-import { useCallback, useState } from 'react';
 import type * as monaco from 'monaco-editor';
 import dynamic from 'next/dynamic';
-import { createTwoslashInlayProvider } from '@repo/monaco/twoslash';
-import { PrettierFormatProvider } from '@repo/monaco/prettier';
-import type { WizardForm } from '.';
+import { useCallback, useState } from 'react';
 import { SettingsButton } from '~/app/[locale]/challenge/_components/settings/settings-button';
+import type { WizardForm } from '.';
 
 const VimStatusBar = dynamic(() => import('@repo/monaco/vim-mode'), {
   ssr: false,
@@ -34,8 +34,6 @@ export function TestCasesEditor({ form, hasTsErrors, setTsErrors }: Props) {
       });
 
       monaco.languages.registerDocumentFormattingEditProvider('typescript', PrettierFormatProvider);
-
-      loadCheckingLib(monaco);
 
       const model = editor.getModel();
 
