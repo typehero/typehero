@@ -21,7 +21,7 @@ const inappropriateActionBySituation: InappropriateActionBySituation = {
   funeral: [
     'excessive laughter',
     'bringing up personal achievements',
-    'insisting everyone sings joins you in loudly singing the 1991 Queen track "The Show Must Go On"',
+    'insisting everyone joins you in loudly singing the 1991 Queen track "The Show Must Go On"',
   ],
   medicalDiagnosis: [
     'jokes about American healthcare',
@@ -39,7 +39,7 @@ const inappropriateActionBySituation: InappropriateActionBySituation = {
   ],
 
   // @ts-expect-error intentionally invalid because the value is a string, not a string array
-  romanticDate: 'checking your phone incessantly for a new Primagen video to drop',
+  romanticDate: 'checking your phone incessantly for a new Primeagen video to drop', // cspell:disable-line
 };
 
 const charactersById: CharactersById = {
