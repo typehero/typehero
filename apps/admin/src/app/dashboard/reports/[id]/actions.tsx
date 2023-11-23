@@ -31,7 +31,6 @@ export function ReportActions({ report }: ReportActionsProps) {
   const [banReason, setBanReason] = useState('');
   const [ban, setBan] = useState(false);
   const router = useRouter();
-  console.log({ report });
 
   const user = useMemo(() => {
     switch (report.type) {

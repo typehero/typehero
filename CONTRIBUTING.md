@@ -59,7 +59,7 @@ Once it is filed:
   as well as possibly other tags (such as `critical`), and the issue will be
   left to be [implemented by someone](#your-first-code-contribution)
 
-### Suggestiong Enhancements
+### Suggesting Enhancements
 
 This section guides you through submitting an enhancement suggestion for
 CONTRIBUTING.md **including completely new features and minor improvements to
