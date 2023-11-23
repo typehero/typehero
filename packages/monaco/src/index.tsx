@@ -98,7 +98,6 @@ export function CodePanel(props: CodePanelProps) {
     }
   };
   const hasFailingTest = tsErrors?.some((e) => e.length) ?? false;
-  console.count('CodePanel');
 
   return (
     <>
