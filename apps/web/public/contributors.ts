@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 238
+        "contributions": 240
     },
     {
         "login": "Hacksore",
@@ -401,6 +401,27 @@ export const contributors = [
         "contributions": 7
     },
     {
+        "login": "heathhenley",
+        "id": 5819478,
+        "node_id": "MDQ6VXNlcjU4MTk0Nzg=",
+        "avatar_url": "https://avatars.githubusercontent.com/u/5819478?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/heathhenley",
+        "html_url": "https://github.com/heathhenley",
+        "followers_url": "https://api.github.com/users/heathhenley/followers",
+        "following_url": "https://api.github.com/users/heathhenley/following{/other_user}",
+        "gists_url": "https://api.github.com/users/heathhenley/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/heathhenley/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/heathhenley/subscriptions",
+        "organizations_url": "https://api.github.com/users/heathhenley/orgs",
+        "repos_url": "https://api.github.com/users/heathhenley/repos",
+        "events_url": "https://api.github.com/users/heathhenley/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/heathhenley/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 7
+    },
+    {
         "login": "vivekKumarSinghH",
         "id": 72158561,
         "node_id": "MDQ6VXNlcjcyMTU4NTYx",
@@ -585,27 +606,6 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/emalineg/repos",
         "events_url": "https://api.github.com/users/emalineg/events{/privacy}",
         "received_events_url": "https://api.github.com/users/emalineg/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 4
-    },
-    {
-        "login": "heathhenley",
-        "id": 5819478,
-        "node_id": "MDQ6VXNlcjU4MTk0Nzg=",
-        "avatar_url": "https://avatars.githubusercontent.com/u/5819478?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/heathhenley",
-        "html_url": "https://github.com/heathhenley",
-        "followers_url": "https://api.github.com/users/heathhenley/followers",
-        "following_url": "https://api.github.com/users/heathhenley/following{/other_user}",
-        "gists_url": "https://api.github.com/users/heathhenley/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/heathhenley/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/heathhenley/subscriptions",
-        "organizations_url": "https://api.github.com/users/heathhenley/orgs",
-        "repos_url": "https://api.github.com/users/heathhenley/repos",
-        "events_url": "https://api.github.com/users/heathhenley/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/heathhenley/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 4
