@@ -44,6 +44,19 @@ async function getTracks(session: Session | null) {
           id: session?.user.id ?? '',
         },
       },
+      trackChallenges: {
+        include: {
+          challenge: {
+            include: {
+              submission: {
+                where: {
+                  userId: session?.user.id,
+                },
+              },
+            },
+          },
+        },
+      },
     },
     where: {
       visible: true,
