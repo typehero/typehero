@@ -24,7 +24,7 @@ const EnrolledAndCompletedBadge = ({ text = 'Enrolled' }: { text?: string }) => 
   <div
     className={clsx(
       'text-background absolute left-0 top-0 z-10 rounded-br-3xl bg-[#3078c5] px-5 py-1.5 text-sm font-bold dark:bg-blue-400',
-      text === 'Completed' && 'bg-green-500 text-white dark:bg-green-700',
+      text === 'Completed' && 'bg-green-700 text-white dark:bg-green-500',
     )}
   >
     {text}
@@ -51,7 +51,7 @@ export function TrackCard({ track }: TrackProps) {
         className={clsx(
           'relative overflow-hidden duration-300',
           isCompleted
-            ? 'border-green-500 dark:border-green-700'
+            ? 'border-green-700 dark:border-green-500'
             : isEnrolled
             ? 'border-[#3078c5] dark:border-blue-400'
             : 'dark:group-hover:border-border group-hover:border-neutral-400 group-hover:shadow-xl group-focus:border-neutral-500 dark:group-hover:shadow dark:group-hover:shadow-neutral-400/70',
