@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getAllFlags } from '~/utils/feature-flags';
 import { CardGrid } from './card-grid';
-import Image from 'next/image';
 
 export async function AotLandingPage() {
   const featureFlags = await getAllFlags();
