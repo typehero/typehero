@@ -1,1 +1,0 @@
-type XYZ = unknown;
