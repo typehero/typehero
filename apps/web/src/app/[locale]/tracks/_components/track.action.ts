@@ -6,8 +6,6 @@ import { revalidateTag } from 'next/cache';
 import { cache } from 'react';
 import { track } from '@vercel/analytics/server';
 
-export const createTrackGridCacheKey = (userId: string) => `user-${userId}-tracks`;
-
 /**
  * Enrolls the session user in the track given a track id.
  * @param id The track id.
@@ -33,7 +31,6 @@ export async function enrollUserInTrack(id: number, slug: string) {
 
   track?.('track-action', { action: 'enrolled', slug });
   revalidateTag(`track-${id}-detail`);
-  revalidateTag(createTrackGridCacheKey(session.user.id));
 }
 
 /**
@@ -61,7 +58,6 @@ export async function unenrollUserFromTrack(id: number, slug: string) {
 
   track?.('track-action', { action: 'unenrolled', slug });
   revalidateTag(`track-${id}-detail`);
-  revalidateTag(createTrackGridCacheKey(session.user.id));
 }
 
 /**
