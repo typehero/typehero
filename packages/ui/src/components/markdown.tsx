@@ -44,6 +44,7 @@ export function Markdown({ children, className }: { children: string; className?
 
   return (
     <ReactMarkdown
+      skipHtml
       className={className}
       components={{
         a: ({ className, ...props }) => (
