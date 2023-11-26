@@ -9,7 +9,7 @@ import clsx from 'clsx';
 import { visit, SKIP, type BuildVisitor } from 'unist-util-visit';
 import type { Transformer } from 'unified';
 import { useTheme } from 'next-themes';
-import rehypeRaw from 'rehype-raw';
+// import rehypeRaw from 'rehype-raw';
 
 const HTML_COMMENT_REGEX = new RegExp('<!--([\\s\\S]*?)-->', 'g');
 
@@ -92,8 +92,9 @@ export function Markdown({ children, className }: { children: string; className?
         details: ({ ...props }) => <details {...props} />,
         summary: ({ ...props }) => <summary {...props} />,
       }}
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      rehypePlugins={[rehypeRaw as any]}
+      // FIXME: this is vuln to XSS and I don't know why we use it, let's remove it
+      // or add in a sanitizer lib like: https://github.com/rehypejs/rehype-sanitize
+      // rehypePlugins={[rehypeRaw as any]}
       remarkPlugins={[removeHtmlComments, remarkGfm]}
     >
       {children}
