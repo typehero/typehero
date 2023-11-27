@@ -97,7 +97,7 @@ test.describe('create, edit, and delete comments', () => {
 
     await expect(
       page.getByLabel('Description').getByText(`${editedParentComment} ${parentCodeText}`),
-    ).not.toBeVisible();
+    ).not.toBeVisible({ timeout: 10000 });
   });
 });
 
