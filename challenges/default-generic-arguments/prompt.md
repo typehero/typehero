@@ -57,12 +57,8 @@ Your goal is to create some types that have have the correct default argument.
 
 The second type, `TSConfig`, should feel a bit difficult, but if you get stuck, feel free to check out the little hint below:
 
-<details>
-
-<summary>small hint</summary>
+### small hint
 
 1. Start with a literal object as the parameter default.
 1. Use [indexed types](https://typehero.dev/challenge/indexed-types).
 1. The error you'll see is because of a missing [generic constraint](https://typehero.dev/challenge/generic-type-constraints).
-
-</details>

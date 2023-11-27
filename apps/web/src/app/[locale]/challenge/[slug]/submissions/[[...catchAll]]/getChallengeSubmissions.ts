@@ -8,5 +8,12 @@ export const getChallengeSubmissionById = cache((id: string) => {
     where: {
       id: Number(id),
     },
+    include: {
+      challenge: {
+        select: {
+          name: true,
+        },
+      },
+    },
   });
 });

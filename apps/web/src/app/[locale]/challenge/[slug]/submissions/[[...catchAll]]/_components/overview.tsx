@@ -2,13 +2,14 @@ import { Button } from '@repo/ui/components/button';
 import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { toast } from '@repo/ui/components/use-toast';
-import { CheckCircle2, Copy, Plus, X, XCircle } from '@repo/ui/icons';
+import { CheckCircle2, Copy, Plus, Twitter, X, XCircle } from '@repo/ui/icons';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useParams, useSearchParams } from 'next/navigation';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { getChallengeSubmissionById } from '../getChallengeSubmissions';
 import { Suggestions } from './suggestions';
+import { AOT_CHALLENGES } from '../../../aot-slugs';
 
 interface Props {
   submissionId: string;
@@ -21,6 +22,8 @@ ${code}`;
 export function SubmissionOverview({ submissionId }: Props) {
   const { slug } = useParams();
   const searchParams = useSearchParams();
+
+  const isAotChallenge = AOT_CHALLENGES.includes(slug as string);
 
   const showSuggestions = searchParams.get('success') === 'true';
   const { data: submission } = useQuery({
@@ -82,16 +85,18 @@ export function SubmissionOverview({ submissionId }: Props) {
               Submitted {getRelativeTime(submission.createdAt)}
             </div>
           </div>
-          <div>
-            <Link
-              className="bg-primary flex h-8 items-center gap-1 rounded-lg px-3 py-2 text-sm"
-              href={`/challenge/${slug}/solutions`}
-            >
-              <Plus size={16} /> Solution
-            </Link>
-          </div>
+          {!isAotChallenge && (
+            <div>
+              <Link
+                className="bg-primary flex h-8 items-center gap-1 rounded-lg px-3 py-2 text-sm"
+                href={`/challenge/${slug}/solutions`}
+              >
+                <Plus size={16} /> Solution
+              </Link>
+            </div>
+          )}
         </div>
-        {showSuggestions ? (
+        {showSuggestions && !isAotChallenge ? (
           <div className="flex w-full items-start">
             <Suggestions track={track} challengeId={submission.challengeId} />
           </div>
@@ -99,6 +104,34 @@ export function SubmissionOverview({ submissionId }: Props) {
         <div className="mb-3 px-3">
           <Markdown>{code}</Markdown>
         </div>
+        {isAotChallenge ? (
+          <div className="mb-3 flex gap-2 px-3">
+            <Button
+              asChild
+              className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
+              variant="outline"
+            >
+              <a
+                target="_blank"
+                rel="noreferrer"
+                className="gap-1 md:inline-flex"
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                  `I've completed ${submission.challenge.name} - Advent of TypeScript 2023`,
+                )}&url=https://typehero.dev/challenge/${slug}&hashtags=AdventOfTypescript`}
+              >
+                <Twitter className="h-4 w-4" />
+                Share on Twitter
+              </a>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              className="fancy-border-gradient relative border-none"
+            >
+              <Link href="/aot-2023">Back to Advent of TypeScript</Link>
+            </Button>
+          </div>
+        ) : null}
       </div>
     </>
   );

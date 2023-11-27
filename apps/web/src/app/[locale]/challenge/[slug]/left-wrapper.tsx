@@ -12,6 +12,7 @@ import { FlaskConical, History, Text } from '@repo/ui/icons';
 
 import type { ChallengeRouteData } from './getChallengeRouteData';
 import { useTrackNavigationVisiblity } from './use-track-visibility.hook';
+import { AOT_CHALLENGES } from './aot-slugs';
 
 type Tab = 'description' | 'solutions' | 'submissions';
 interface Props {
@@ -29,6 +30,7 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
 
   const featureFlags = useContext(FeatureFlagContext);
 
+  const isAotChallenge = useMemo(() => AOT_CHALLENGES.includes(challenge.slug), [challenge.slug]);
   const isCollapsedRef = useRef(isCollapsed);
   const isDesktopRef = useRef(isDesktop);
   isDesktopRef.current = isDesktop;
@@ -96,7 +98,10 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
   const isTrackFeatureEnabled = featureFlags?.enableInChallengeTrack;
   const hasEnrolledTrackForChallenge = track !== null;
   const isTrackVisible =
-    isTrackFeatureEnabled && hasEnrolledTrackForChallenge && (!isCollapsed || isDesktop);
+    isTrackFeatureEnabled &&
+    hasEnrolledTrackForChallenge &&
+    (!isCollapsed || isDesktop) &&
+    !isAotChallenge;
 
   const isIconOnly = isCollapsed && isDesktop;
   const { setIsTrackTitleVisible } = useTrackNavigationVisiblity();
@@ -127,6 +132,8 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
               'grid-rows-3 gap-2': isIconOnly,
               'grid-cols-3 gap-0.5': !isIconOnly,
               'rounded-tl-xl': !isTrackVisible,
+              'grid-cols-2 gap-0.5': isAotChallenge && !isIconOnly,
+              'grid-rows-2 gap-2': isAotChallenge && isIconOnly,
             },
           )}
           ref={tabsListRef}
@@ -148,19 +155,21 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
           >
             {isIconOnly ? <Text className="h-4 w-4" /> : 'Description'}
           </TabsTrigger>
-          <TabsTrigger
-            className={cn(
-              'rounded-md duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700',
-              { 'p-4': isIconOnly },
-            )}
-            onClick={() => {
-              router.push(`/challenge/${challenge.slug}/solutions`);
-              isCollapsed && expandPanel();
-            }}
-            value="solutions"
-          >
-            {isIconOnly ? <FlaskConical className="h-4 w-4" /> : 'Solutions'}
-          </TabsTrigger>
+          {!isAotChallenge ? (
+            <TabsTrigger
+              className={cn(
+                'rounded-md duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700',
+                { 'p-4': isIconOnly },
+              )}
+              onClick={() => {
+                router.push(`/challenge/${challenge.slug}/solutions`);
+                isCollapsed && expandPanel();
+              }}
+              value="solutions"
+            >
+              {isIconOnly ? <FlaskConical className="h-4 w-4" /> : 'Solutions'}
+            </TabsTrigger>
+          ) : null}
           <TabsTrigger
             className={cn(
               'rounded-md rounded-tr-lg duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700',

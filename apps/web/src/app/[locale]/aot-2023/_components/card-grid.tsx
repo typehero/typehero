@@ -4,7 +4,7 @@ import { auth, type Session } from '@repo/auth/server';
 
 export async function CardGrid() {
   const session = await auth();
-  const challenges = await getChallenges(session);
+  const challenges = await getTrackChallenges(session);
   const challengesToReveal = revealItems(challenges);
 
   return (
@@ -18,33 +18,49 @@ export async function CardGrid() {
   );
 }
 
-export type Challenges = NonNullable<Awaited<ReturnType<typeof getChallenges>>>;
-async function getChallenges(session: Session | null) {
-  const challenges = await prisma.challenge.findMany({
-    take: 25,
+export type Challenges = NonNullable<Awaited<ReturnType<typeof getTrackChallenges>>>;
+async function getTrackChallenges(session: Session | null) {
+  const track = await prisma.track.findFirstOrThrow({
+    where: {
+      slug: 'advent-of-typescript-2023',
+    },
     include: {
-      submission: {
-        where: {
-          userId: session?.user.id ?? '',
-          isSuccessful: true,
+      trackChallenges: {
+        include: {
+          challenge: {
+            include: {
+              submission: {
+                where: {
+                  userId: session?.user.id || '',
+                  isSuccessful: true,
+                },
+                select: {
+                  isSuccessful: true,
+                },
+                take: 1,
+              },
+            },
+          },
         },
-        select: {
-          isSuccessful: true,
+        orderBy: {
+          orderId: 'asc',
         },
-        take: 1,
       },
     },
   });
 
-  return challenges.map((challenge) => ({
-    ...challenge,
-    hasSolved: challenge.submission.length > 0,
-  }));
+  return track?.trackChallenges.map((trackChallenge) => {
+    const { submission, ...challenge } = trackChallenge.challenge;
+    return {
+      ...challenge,
+      hasSolved: trackChallenge.challenge.submission.length > 0,
+    };
+  });
 }
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 function revealItems(items: Challenges) {
-  const startDate: Date = new Date('2023-11-17');
+  const startDate: Date = new Date('2023-12-01');
   const today: Date = new Date();
 
   const daysPassed = Math.floor((today.getTime() - startDate.getTime()) / MS_PER_DAY);
