@@ -11,11 +11,12 @@ import { isAdminOrModerator } from '~/utils/auth-guards';
 import { getAllFlags } from '~/utils/feature-flags';
 import { auth } from '@repo/auth/server';
 import { ThemeButton } from './theme-button';
-import { NavLink } from './nav-link';
 import { NavWrapper } from './nav-wrapper';
 import { LoginLink } from './login-link';
 import { SignOutLink } from './signout-link';
 import { getScopedI18n } from '~/locales/server';
+import { MobileNav } from './mobile-nav';
+import { NavLink } from './nav-link';
 
 export function getAdminUrl() {
   // reference for vercel.com
@@ -65,11 +66,15 @@ export async function Navigation() {
                 hero
               </span>
             </Link>
-            {featureFlags?.enableExplore ? <NavLink title={t('explore')} href="/explore" /> : null}
-            {featureFlags?.enableTracks ? <NavLink title={t('tracks')} href="/tracks" /> : null}
-            {featureFlags?.enableHolidayEvent ? (
-              <NavLink title={t('advent')} href="/aot-2023" />
-            ) : null}
+            <MobileNav>
+              {featureFlags?.enableExplore ? (
+                <NavLink title={t('explore')} href="/explore" />
+              ) : null}
+              {featureFlags?.enableTracks ? <NavLink title={t('tracks')} href="/tracks" /> : null}
+              {featureFlags?.enableHolidayEvent ? (
+                <NavLink title={t('advent')} href="/aot-2023" />
+              ) : null}
+            </MobileNav>
           </div>
           <div className="flex">
             <div className="flex items-center justify-end gap-2">
