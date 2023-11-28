@@ -14,6 +14,7 @@ export function Wrapper() {
   const updatePlaygroundCodeLocalStorage = (code: string) => {
     updateValues({ ...values, challenge: { ...values.challenge, code } });
   };
+
   return (
     <CodePanel
       challenge={values.challenge}

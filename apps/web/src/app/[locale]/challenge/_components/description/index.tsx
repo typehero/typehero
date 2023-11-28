@@ -1,21 +1,9 @@
 'use client';
 
 import { useSession } from '@repo/auth/react';
-import { Bookmark as BookmarkIcon, Calendar, CheckCircle, Flag, Share } from '@repo/ui/icons';
-import clsx from 'clsx';
-import { debounce } from 'lodash';
-import Link from 'next/link';
-import { useRef, useState } from 'react';
-import { type ChallengeRouteData } from '~/app/[locale]/challenge/[slug]/getChallengeRouteData';
-import { ReportDialog } from '~/components/ReportDialog';
-import { getRelativeTime } from '~/utils/relativeTime';
-import { addOrRemoveBookmark } from '../bookmark.action';
-import { ShareForm } from '../share-form';
-import { Vote } from '../vote';
+import { cn } from '@repo/ui/cn';
 import { ActionMenu } from '@repo/ui/components/action-menu';
-import { TypographyH3 } from '@repo/ui/components/typography/h3';
-import { UserBadge } from '@repo/ui/components/user-badge';
-import { DifficultyBadge } from '@repo/ui/components/difficulty-badge';
+import { Button, buttonVariants } from '@repo/ui/components/button';
 import {
   Dialog,
   DialogContent,
@@ -23,10 +11,23 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@repo/ui/components/dialog';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
+import { DifficultyBadge } from '@repo/ui/components/difficulty-badge';
 import { Markdown } from '@repo/ui/components/markdown';
-import { Button, buttonVariants } from '@repo/ui/components/button';
-import { cn } from '@repo/ui/cn';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
+import { TypographyH3 } from '@repo/ui/components/typography/h3';
+import { UserBadge } from '@repo/ui/components/user-badge';
+import { Bookmark as BookmarkIcon, Calendar, CheckCircle, Flag, Share } from '@repo/ui/icons';
+import clsx from 'clsx';
+import { debounce } from 'lodash';
+import Link from 'next/link';
+import { useMemo, useRef, useState } from 'react';
+import { type ChallengeRouteData } from '~/app/[locale]/challenge/[slug]/getChallengeRouteData';
+import { ReportDialog } from '~/components/ReportDialog';
+import { getRelativeTime } from '~/utils/relativeTime';
+import { addOrRemoveBookmark } from '../bookmark.action';
+import { ShareForm } from '../share-form';
+import { Vote } from '../vote';
+import { AOT_CHALLENGES } from '../../[slug]/aot-slugs';
 
 interface Props {
   challenge: ChallengeRouteData['challenge'];
@@ -42,6 +43,8 @@ export interface FormValues {
 export function Description({ challenge }: Props) {
   const [hasBookmarked, setHasBookmarked] = useState(challenge.bookmark.length > 0);
   const session = useSession();
+
+  const isAotChallenge = useMemo(() => AOT_CHALLENGES.includes(challenge.slug), [challenge.slug]);
 
   const debouncedBookmark = useRef(
     debounce(async (challengeId: number, userId: string, shouldBookmark: boolean) => {
@@ -87,7 +90,7 @@ export function Description({ challenge }: Props) {
       </div>
       {/* Difficulty & Action Buttons */}
       <div className="mt-3 flex items-center gap-3">
-        <DifficultyBadge difficulty={challenge.difficulty} />
+        {!isAotChallenge ? <DifficultyBadge difficulty={challenge.difficulty} /> : null}
         {challenge.hasSolved ? (
           <Tooltip>
             <TooltipTrigger asChild>

@@ -4,6 +4,7 @@ import { Swords } from '@repo/ui/icons';
 import { clsx } from 'clsx';
 import Link from 'next/link';
 import type { Tracks } from './track-grid';
+import { useMemo } from 'react';
 
 interface TrackProps {
   track: Tracks[number];
@@ -19,21 +20,39 @@ export const BGS_BY_TRACK: Record<number, string> = {
 } as const;
 export const bgsArray = Object.values(BGS_BY_TRACK);
 
-const EnrolledBadge = ({ text = 'Enrolled' }: { text?: string }) => (
-  <div className="text-background absolute left-0 top-0 z-10 rounded-br-3xl bg-[#3078c5] px-5 py-1.5 text-sm font-bold dark:bg-blue-400">
+const EnrolledAndCompletedBadge = ({ text = 'Enrolled' }: { text?: string }) => (
+  <div
+    className={clsx(
+      'text-background absolute left-0 top-0 z-10 rounded-br-3xl bg-[#3078c5] px-5 py-1.5 text-sm font-bold dark:bg-blue-400',
+      text === 'Completed' && 'bg-green-700 text-white dark:bg-green-500',
+    )}
+  >
     {text}
   </div>
 );
 
 export function TrackCard({ track }: TrackProps) {
-  const isEnrolled = Boolean(track.enrolledUsers?.length);
+  const { trackChallenges, enrolledUsers } = track;
+  const isEnrolled = Boolean(enrolledUsers?.length);
+
+  const completedChallenges = useMemo(
+    () =>
+      trackChallenges?.filter((trackChallenge) =>
+        trackChallenge.challenge.submission.some((submission) => submission.isSuccessful),
+      ).length ?? 0,
+    [trackChallenges],
+  );
+
+  const isCompleted = completedChallenges === track._count.trackChallenges;
 
   return (
     <Link href={`/tracks/${track.slug}`} className="group">
       <Card
         className={clsx(
           'relative overflow-hidden duration-300',
-          isEnrolled
+          isCompleted
+            ? 'border-green-700 dark:border-green-500'
+            : isEnrolled
             ? 'border-[#3078c5] dark:border-blue-400'
             : 'dark:group-hover:border-border group-hover:border-neutral-400 group-hover:shadow-xl group-focus:border-neutral-500 dark:group-hover:shadow dark:group-hover:shadow-neutral-400/70',
         )}
@@ -72,7 +91,9 @@ export function TrackCard({ track }: TrackProps) {
             )}
           />
         </div>
-        {isEnrolled ? <EnrolledBadge /> : null}
+        {isEnrolled || isCompleted ? (
+          <EnrolledAndCompletedBadge text={isCompleted ? 'Completed' : undefined} />
+        ) : null}
         <CardContent className="relative z-10 flex flex-col items-center gap-5 p-8">
           <div
             className={clsx(
@@ -96,7 +117,9 @@ export function TrackCard({ track }: TrackProps) {
           </div>
 
           <div className="text-center">
-            <Badge className="flex-none">{track._count.trackChallenges} Challenges</Badge>
+            <Badge className="flex-none" variant={isCompleted ? 'completed' : 'default'}>
+              {track._count.trackChallenges} Challenges
+            </Badge>
           </div>
         </CardContent>
       </Card>

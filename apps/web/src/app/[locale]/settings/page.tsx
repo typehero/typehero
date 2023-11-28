@@ -29,7 +29,6 @@ export default async function SettingsPage() {
       updatedAt: 'asc',
     },
   });
-
   return (
     <>
       <Settings user={profileData} />
