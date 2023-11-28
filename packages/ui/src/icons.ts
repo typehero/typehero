@@ -3,6 +3,7 @@ export {
   ArrowDownNarrowWide,
   ArrowUp,
   ArrowUpNarrowWide,
+  BadgeInfo,
   BellRing,
   Binary,
   Bookmark,
