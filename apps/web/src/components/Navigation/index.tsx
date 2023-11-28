@@ -17,6 +17,7 @@ import { SignOutLink } from './signout-link';
 import { getScopedI18n } from '~/locales/server';
 import { MobileNav } from './mobile-nav';
 import { NavLink } from './nav-link';
+import { Badge } from '@repo/ui/components/badge';
 
 export function getAdminUrl() {
   // reference for vercel.com
@@ -66,20 +67,40 @@ export async function Navigation() {
                 hero
               </span>
             </Link>
-            <MobileNav>
+            <div className="hidden items-center md:flex">
               {featureFlags?.enableExplore ? (
                 <NavLink title={t('explore')} href="/explore" />
               ) : null}
               {featureFlags?.enableTracks ? <NavLink title={t('tracks')} href="/tracks" /> : null}
               {featureFlags?.enableHolidayEvent ? (
-                <NavLink title={t('advent')} href="/aot-2023" />
+                <div className="flex items-center gap-1">
+                  <NavLink title={t('advent')} href="/aot-2023" />
+                  <Badge className="h-4 bg-red-600 px-1.5" variant="default">
+                    New
+                  </Badge>
+                </div>
               ) : null}
-            </MobileNav>
+            </div>
           </div>
+
           <div className="flex">
             <div className="flex items-center justify-end gap-2">
               <ThemeButton />
               {featureFlags?.enableLogin ? <LoginButton /> : null}
+              <MobileNav>
+                {featureFlags?.enableExplore ? (
+                  <NavLink title={t('explore')} href="/explore" />
+                ) : null}
+                {featureFlags?.enableTracks ? <NavLink title={t('tracks')} href="/tracks" /> : null}
+                {featureFlags?.enableHolidayEvent ? (
+                  <div className="flex items-center gap-2">
+                    <NavLink title={t('advent')} href="/aot-2023" />
+                    <Badge className="h-4 bg-red-600 px-1.5" variant="default">
+                      New
+                    </Badge>
+                  </div>
+                ) : null}
+              </MobileNav>
             </div>
           </div>
         </div>

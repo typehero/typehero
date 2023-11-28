@@ -732,6 +732,10 @@ a {
   cursor: pointer;
 }
 
+.hamburger .line:nth-child(1) {
+  height: 1px;
+}
+
 .hamburger.is-active .line:nth-child(1) {
   height: 2px;
   -webkit-transform: translateY(5px) rotate(45deg);
@@ -745,4 +749,8 @@ a {
   -ms-transform: translateY(-5px) rotate(-45deg);
   -o-transform: translateY(-5px) rotate(-45deg);
   transform: translateY(-5px) rotate(-45deg);
+}
+
+body.mobile-nav-active {
+  overflow: hidden;
 }
