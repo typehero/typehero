@@ -33,6 +33,21 @@ export async function Navigation() {
   const t = await getScopedI18n('navigation');
   const featureFlags = await getAllFlags();
 
+  const NavLinks = () => (
+    <>
+      {featureFlags?.enableExplore ? <NavLink title={t('explore')} href="/explore" /> : null}
+      {featureFlags?.enableTracks ? <NavLink title={t('tracks')} href="/tracks" /> : null}
+      {featureFlags?.enableHolidayEvent ? (
+        <div className="flex items-center gap-1">
+          <NavLink title={t('advent')} href="/aot-2023" />
+          <Badge className="h-4 bg-red-600 px-1.5" variant="default">
+            New
+          </Badge>
+        </div>
+      ) : null}
+    </>
+  );
+
   return (
     <header className="z-50 w-full">
       <NavWrapper>
@@ -68,18 +83,7 @@ export async function Navigation() {
               </span>
             </Link>
             <div className="hidden items-center md:flex">
-              {featureFlags?.enableExplore ? (
-                <NavLink title={t('explore')} href="/explore" />
-              ) : null}
-              {featureFlags?.enableTracks ? <NavLink title={t('tracks')} href="/tracks" /> : null}
-              {featureFlags?.enableHolidayEvent ? (
-                <div className="flex items-center gap-1">
-                  <NavLink title={t('advent')} href="/aot-2023" />
-                  <Badge className="h-4 bg-red-600 px-1.5" variant="default">
-                    New
-                  </Badge>
-                </div>
-              ) : null}
+              <NavLinks />
             </div>
           </div>
 
@@ -88,18 +92,7 @@ export async function Navigation() {
               <ThemeButton />
               {featureFlags?.enableLogin ? <LoginButton /> : null}
               <MobileNav>
-                {featureFlags?.enableExplore ? (
-                  <NavLink title={t('explore')} href="/explore" />
-                ) : null}
-                {featureFlags?.enableTracks ? <NavLink title={t('tracks')} href="/tracks" /> : null}
-                {featureFlags?.enableHolidayEvent ? (
-                  <div className="flex items-center gap-2">
-                    <NavLink title={t('advent')} href="/aot-2023" />
-                    <Badge className="h-4 bg-red-600 px-1.5" variant="default">
-                      New
-                    </Badge>
-                  </div>
-                ) : null}
+                <NavLinks />
               </MobileNav>
             </div>
           </div>
