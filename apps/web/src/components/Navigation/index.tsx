@@ -62,7 +62,7 @@ export async function Navigation() {
               <span className="font-bold leading-3">
                 type
                 <br />
-                hero
+                hero <span className="text-muted-foreground bg-muted px-1 text-xs">BETA</span>
               </span>
             </Link>
             {featureFlags?.enableExplore ? <NavLink title={t('explore')} href="/explore" /> : null}
