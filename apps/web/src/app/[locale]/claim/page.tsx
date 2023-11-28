@@ -1,10 +1,10 @@
 import { auth } from '@repo/auth/server';
-import { LoginButton } from '../login/_components/LoginButton';
-import { ClaimForm, type FormSchema } from './claim-form';
 import Image from 'next/image';
-import { isBetaUser } from '~/utils/server/is-beta-user';
 import { redirect } from 'next/navigation';
+import { isBetaUser } from '~/utils/server/is-beta-user';
+import { LoginButton } from '../login/_components/LoginButton';
 import { isValidToken } from './_actions';
+import { ClaimForm } from './claim-form';
 
 interface Props {
   searchParams?: { token: string };

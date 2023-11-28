@@ -1,6 +1,8 @@
 import { buildMetaForDefault } from '~/app/metadata';
 import { getChallengeRouteData } from '../getChallengeRouteData';
 import { Solutions } from './_components';
+import { AOT_CHALLENGES } from '../aot-slugs';
+import { notFound } from 'next/navigation';
 
 interface Props {
   params: {
@@ -17,5 +19,6 @@ export async function generateMetadata({ params: { slug } }: Props) {
 }
 
 export default async function SolutionPage({ params: { slug } }: Props) {
+  if (AOT_CHALLENGES.includes(slug)) return notFound();
   return <Solutions slug={slug} />;
 }
