@@ -11,11 +11,13 @@ import { isAdminOrModerator } from '~/utils/auth-guards';
 import { getAllFlags } from '~/utils/feature-flags';
 import { auth } from '@repo/auth/server';
 import { ThemeButton } from './theme-button';
-import { NavLink } from './nav-link';
 import { NavWrapper } from './nav-wrapper';
 import { LoginLink } from './login-link';
 import { SignOutLink } from './signout-link';
 import { getScopedI18n } from '~/locales/server';
+import { MobileNav } from './mobile-nav';
+import { NavLink } from './nav-link';
+import { Badge } from '@repo/ui/components/badge';
 
 export function getAdminUrl() {
   // reference for vercel.com
@@ -30,6 +32,21 @@ export function getAdminUrl() {
 export async function Navigation() {
   const t = await getScopedI18n('navigation');
   const featureFlags = await getAllFlags();
+
+  const NavLinks = () => (
+    <>
+      {featureFlags?.enableExplore ? <NavLink title={t('explore')} href="/explore" /> : null}
+      {featureFlags?.enableTracks ? <NavLink title={t('tracks')} href="/tracks" /> : null}
+      {featureFlags?.enableHolidayEvent ? (
+        <div className="flex items-center gap-1">
+          <NavLink title={t('advent')} href="/aot-2023" />
+          <Badge className="h-4 bg-red-600 px-1.5" variant="default">
+            New
+          </Badge>
+        </div>
+      ) : null}
+    </>
+  );
 
   return (
     <header className="z-50 w-full">
@@ -65,16 +82,18 @@ export async function Navigation() {
                 hero <span className="text-muted-foreground bg-muted px-1 text-xs">BETA</span>
               </span>
             </Link>
-            {featureFlags?.enableExplore ? <NavLink title={t('explore')} href="/explore" /> : null}
-            {featureFlags?.enableTracks ? <NavLink title={t('tracks')} href="/tracks" /> : null}
-            {featureFlags?.enableHolidayEvent ? (
-              <NavLink title={t('advent')} href="/aot-2023" />
-            ) : null}
+            <div className="hidden items-center md:flex">
+              <NavLinks />
+            </div>
           </div>
+
           <div className="flex">
             <div className="flex items-center justify-end gap-2">
               <ThemeButton />
               {featureFlags?.enableLogin ? <LoginButton /> : null}
+              <MobileNav>
+                <NavLinks />
+              </MobileNav>
             </div>
           </div>
         </div>
