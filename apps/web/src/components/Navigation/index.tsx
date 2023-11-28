@@ -53,10 +53,7 @@ export async function Navigation() {
       <NavWrapper>
         <div className="flex w-full items-center justify-between">
           <div className="relative flex items-center gap-3">
-            <Link
-              className="flex items-center space-x-1.5 focus:outline-none focus-visible:ring-2"
-              href="/"
-            >
+            <Link className="flex space-x-1.5 focus:outline-none focus-visible:ring-2" href="/">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
@@ -76,11 +73,11 @@ export async function Navigation() {
                 />
               </svg>
 
-              <span className="font-bold leading-3">
+              <div className="font-bold leading-3">
                 type
                 <br />
                 hero <span className="text-muted-foreground bg-muted px-1 text-xs">BETA</span>
-              </span>
+              </div>
             </Link>
             <div className="hidden items-center md:flex">
               <NavLinks />
