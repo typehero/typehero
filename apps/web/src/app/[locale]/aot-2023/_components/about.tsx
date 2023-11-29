@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@repo/ui/cn';
 import { Button } from '@repo/ui/components/button';
 import {
   Sheet,
@@ -10,13 +11,16 @@ import {
 } from '@repo/ui/components/sheet';
 import { BadgeInfo } from '@repo/ui/icons';
 
-export function About() {
+export function About({ className }: { className?: string }) {
   return (
     <Sheet>
       <SheetTrigger asChild>
         <Button
           asChild
-          className="flex cursor-pointer items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
+          className={cn(
+            className,
+            'flex cursor-pointer items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white',
+          )}
           variant="outline"
         >
           <span>
