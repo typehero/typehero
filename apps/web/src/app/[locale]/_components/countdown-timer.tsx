@@ -3,13 +3,15 @@ import { useEffect, useState } from 'react';
 
 export const CountdownTimer = () => {
   const releaseDate = new Date('2023-12-01T05:00:00.000Z');
-  const [timeDifference, setTime] = useState(releaseDate.getTime() - Date.now());
+  const [remainingTime, setRemainingTime] = useState(
+    Math.max(0, releaseDate.getTime() - Date.now()),
+  );
 
   useEffect(() => {
     const countdown = () => {
-      setTime((prevTime) => {
-        return Math.max(0, prevTime - 100);
-      });
+      const now = Date.now();
+      const newRemainingTime = Math.max(0, releaseDate.getTime() - now);
+      setRemainingTime(newRemainingTime);
     };
 
     const timerId = setInterval(countdown, 100);
@@ -17,14 +19,14 @@ export const CountdownTimer = () => {
     return () => {
       clearInterval(timerId);
     };
-  }, [timeDifference]);
+  }, [remainingTime]);
 
-  const { days, hours, minutes, seconds } = calculateTimeComponents(timeDifference);
+  const { days, hours, minutes, seconds } = calculateTimeComponents(remainingTime);
 
   return <>{`${days}, ${hours}, ${minutes}, ${seconds}`}</>;
 };
 
-const calculateTimeComponents = (milliseconds: number, isFormatted: boolean = false) => {
+const calculateTimeComponents = (milliseconds: number, isFormatted = false) => {
   const millisecondsInSecond = 1000;
   const millisecondsInMinute = 60 * millisecondsInSecond;
   const millisecondsInHour = 60 * millisecondsInMinute;
