@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 const DateCard = ({ date, label }: { date: React.ReactNode; label: string }) => {
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex select-none flex-col items-center gap-4">
       <div className="flex aspect-square w-[60px] items-center justify-center rounded-xl border bg-white/90 p-2 text-3xl text-red-600 lg:w-[80px] lg:text-4xl">
         {date}
       </div>
