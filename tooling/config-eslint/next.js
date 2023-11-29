@@ -40,6 +40,7 @@ module.exports = {
   root: true,
   plugins: ['unused-imports'],
   rules: {
+    ...rules,
     'unused-imports/no-unused-imports': 'error',
   },
 };
