@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 241
+        "contributions": 244
     },
     {
         "login": "Hacksore",
@@ -167,7 +167,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/zaCKoZAck0/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 15
+        "contributions": 17
     },
     {
         "login": "creativenull",
@@ -380,27 +380,6 @@ export const contributors = [
         "contributions": 9
     },
     {
-        "login": "basokant",
-        "id": 70033855,
-        "node_id": "MDQ6VXNlcjcwMDMzODU1",
-        "avatar_url": "https://avatars.githubusercontent.com/u/70033855?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/basokant",
-        "html_url": "https://github.com/basokant",
-        "followers_url": "https://api.github.com/users/basokant/followers",
-        "following_url": "https://api.github.com/users/basokant/following{/other_user}",
-        "gists_url": "https://api.github.com/users/basokant/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/basokant/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/basokant/subscriptions",
-        "organizations_url": "https://api.github.com/users/basokant/orgs",
-        "repos_url": "https://api.github.com/users/basokant/repos",
-        "events_url": "https://api.github.com/users/basokant/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/basokant/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 7
-    },
-    {
         "login": "heathhenley",
         "id": 5819478,
         "node_id": "MDQ6VXNlcjU4MTk0Nzg=",
@@ -417,6 +396,27 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/heathhenley/repos",
         "events_url": "https://api.github.com/users/heathhenley/events{/privacy}",
         "received_events_url": "https://api.github.com/users/heathhenley/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 8
+    },
+    {
+        "login": "basokant",
+        "id": 70033855,
+        "node_id": "MDQ6VXNlcjcwMDMzODU1",
+        "avatar_url": "https://avatars.githubusercontent.com/u/70033855?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/basokant",
+        "html_url": "https://github.com/basokant",
+        "followers_url": "https://api.github.com/users/basokant/followers",
+        "following_url": "https://api.github.com/users/basokant/following{/other_user}",
+        "gists_url": "https://api.github.com/users/basokant/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/basokant/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/basokant/subscriptions",
+        "organizations_url": "https://api.github.com/users/basokant/orgs",
+        "repos_url": "https://api.github.com/users/basokant/repos",
+        "events_url": "https://api.github.com/users/basokant/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/basokant/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 7
