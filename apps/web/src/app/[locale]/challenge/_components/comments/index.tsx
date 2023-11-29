@@ -7,7 +7,7 @@ import { useRef, useState } from 'react';
 import { Comment } from './comment';
 import { CommentInput } from './comment-input';
 import { CommentSkeleton } from './comment-skeleton';
-import { getPaginatedComments, type PreselectedCommentMetadata } from './getCommentRouteData';
+import { type PreselectedCommentMetadata } from './getCommentRouteData';
 import NoComments from './nocomments';
 import { Pagination } from '../pagination';
 import { SortSelect } from '../sort-select';

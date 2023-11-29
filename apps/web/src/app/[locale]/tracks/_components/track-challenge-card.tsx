@@ -1,6 +1,6 @@
 'use client';
 
-import { Check, PieChart, Loader2 } from '@repo/ui/icons';
+import { Check, PieChart } from '@repo/ui/icons';
 import { useIsMobile } from '~/utils/useIsMobile';
 
 import type { Challenge, Submission } from '@repo/db/types';
