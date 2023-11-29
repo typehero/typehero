@@ -100,8 +100,8 @@ export function About({ className }: { className?: string }) {
           </p>
           <h3 className="text-2xl font-semibold tracking-tighter">Rewards</h3>
           <p>
-            Earn and collect each Advent of TypeScript badge along the way. Once earned, collected
-            badges will show as achievements on your public profile.
+            Earn and collect Advent of TypeScript badges on your journey! Once earned, these badges
+            will be proudly displayed as achievements on your public profile. Happy coding! ☃️
           </p>
           <div className="grid grid-cols-[6rem_1fr] grid-rows-4 gap-4">
             <div className="flex w-full items-center justify-center">
