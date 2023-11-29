@@ -88,7 +88,7 @@ export function SubmissionOverview({ submissionId }: Props) {
           {!isAotChallenge && (
             <div>
               <Link
-                className="bg-primary flex h-8 items-center gap-1 rounded-lg px-3 py-2 text-sm"
+                className="bg-primary flex h-8 items-center gap-1 rounded-lg px-3 py-2 text-sm text-white"
                 href={`/challenge/${slug}/solutions`}
               >
                 <Plus size={16} /> Solution
