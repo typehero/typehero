@@ -101,7 +101,7 @@ export function About({ className }: { className?: string }) {
           <h3 className="text-2xl font-semibold tracking-tighter">Rewards</h3>
           <p>
             Earn and collect each Advent of TypeScript badge along the way. Once earned, collected
-            badge will show as achievements on your public profile.
+            badges will show as achievements on your public profile.
           </p>
           <div className="grid grid-cols-[6rem_1fr] grid-rows-4 gap-4">
             <div className="flex w-full items-center justify-center">
@@ -118,7 +118,7 @@ export function About({ className }: { className?: string }) {
               <HolidaySilverBadge className="h-24 w-24" />
             </div>
             <div className="my-2">
-              <h4 className="font-bold">Advent of TypeScript 2023 Bronze</h4>
+              <h4 className="font-bold">Advent of TypeScript 2023 Silver</h4>
               <p>
                 Successfully <span className="font-bold text-red-600">complete 5</span> Advent of
                 TypeScript 2023 challenges.
@@ -128,7 +128,7 @@ export function About({ className }: { className?: string }) {
               <HolidayGoldBadge className="h-24 w-24" />
             </div>
             <div className="my-2">
-              <h4 className="font-bold">Advent of TypeScript 2023 Bronze</h4>
+              <h4 className="font-bold">Advent of TypeScript 2023 Gold</h4>
               <p>
                 Successfully <span className="font-bold text-red-600">complete 15</span> Advent of
                 TypeScript 2023 challenges.
@@ -138,7 +138,7 @@ export function About({ className }: { className?: string }) {
               <HolidayPlatinumBadge className="h-24 w-24" />
             </div>
             <div className="my-2">
-              <h4 className="font-bold">Advent of TypeScript 2023 Bronze</h4>
+              <h4 className="font-bold">Advent of TypeScript 2023 Platinum</h4>
               <p>
                 Successfully <span className="font-bold text-red-600">complete all 25</span> Advent
                 of TypeScript 2023 challenges.
