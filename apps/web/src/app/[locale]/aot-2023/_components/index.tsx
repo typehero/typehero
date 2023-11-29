@@ -4,6 +4,7 @@ import { About } from './about';
 import { CardGrid } from './card-grid';
 import { Github } from '@repo/ui/icons';
 import { Button } from '@repo/ui/components/button';
+import { CountdownTimer } from '../../_components/countdown-timer';
 
 export async function AotLandingPage() {
   const featureFlags = await getAllFlags();
@@ -20,6 +21,7 @@ export async function AotLandingPage() {
             The first type challenge will unlock at{' '}
             <span className="text-primary">midnight(est)</span> on December 1st
           </p>
+          <CountdownTimer />
           <div className="flex w-full flex-col items-center justify-center gap-2 md:w-auto md:flex-row md:gap-5">
             <a
               target="_blank"

@@ -1,6 +1,17 @@
 'use client';
 import { useEffect, useState } from 'react';
 
+const DateCard = ({ date, label }: { date: React.ReactNode; label: string }) => {
+  return (
+    <div className="flex flex-col items-center gap-4">
+      <div className="flex aspect-square w-[60px] items-center justify-center rounded-xl border bg-white/90 p-2 text-3xl text-red-600 lg:w-[80px] lg:text-4xl">
+        {date}
+      </div>
+      <span className="text-foreground text-sm">{label}</span>
+    </div>
+  );
+};
+
 export const CountdownTimer = () => {
   const releaseDateTimeInMilliSeconds = new Date('2023-12-01T05:00:00.000Z').getTime();
   const [remainingTime, setRemainingTime] = useState(
@@ -22,7 +33,16 @@ export const CountdownTimer = () => {
 
   const { days, hours, minutes, seconds } = calculateTimeComponents(remainingTime);
 
-  return <>{`${days}, ${hours}, ${minutes}, ${seconds}`}</>;
+  if (remainingTime === 0) return null;
+
+  return (
+    <div className="flex gap-4 font-bold tabular-nums">
+      <DateCard date={days} label="Days" />
+      <DateCard date={hours} label="Hours" />
+      <DateCard date={minutes} label="Minutes" />
+      <DateCard date={seconds} label="Seconds" />
+    </div>
+  );
 };
 
 const calculateTimeComponents = (milliseconds: number, isFormatted = false) => {
