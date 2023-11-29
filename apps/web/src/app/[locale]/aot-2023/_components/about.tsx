@@ -110,8 +110,8 @@ export function About({ className }: { className?: string }) {
             <div className="my-2">
               <h4 className="font-bold">Advent of TypeScript 2023 Bronze</h4>
               <p>
-                Submit at least <span className="font-bold text-red-600">1 attempt</span> for an
-                Advent of TypeScript 2023 challenge.
+                Submit at least <span className="font-bold">1</span> attempt for an Advent of
+                TypeScript 2023 challenge.
               </p>
             </div>
             <div className="flex w-full items-center justify-center">
@@ -120,8 +120,8 @@ export function About({ className }: { className?: string }) {
             <div className="my-2">
               <h4 className="font-bold">Advent of TypeScript 2023 Silver</h4>
               <p>
-                Successfully <span className="font-bold text-red-600">complete 5</span> Advent of
-                TypeScript 2023 challenges.
+                Successfully complete <span className="font-bold">5</span> Advent of TypeScript 2023
+                challenges.
               </p>
             </div>
             <div className="flex w-full items-center justify-center">
@@ -130,8 +130,8 @@ export function About({ className }: { className?: string }) {
             <div className="my-2">
               <h4 className="font-bold">Advent of TypeScript 2023 Gold</h4>
               <p>
-                Successfully <span className="font-bold text-red-600">complete 15</span> Advent of
-                TypeScript 2023 challenges.
+                Successfully complete <span className="font-bold">15</span> Advent of TypeScript
+                2023 challenges.
               </p>
             </div>
             <div className="flex w-full items-center justify-center">
@@ -140,8 +140,8 @@ export function About({ className }: { className?: string }) {
             <div className="my-2">
               <h4 className="font-bold">Advent of TypeScript 2023 Platinum</h4>
               <p>
-                Successfully <span className="font-bold text-red-600">complete all 25</span> Advent
-                of TypeScript 2023 challenges.
+                Successfully complete all <span className="font-bold">25</span> Advent of TypeScript
+                2023 challenges.
               </p>
             </div>
           </div>
