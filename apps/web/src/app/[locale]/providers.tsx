@@ -7,7 +7,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ThemeProvider } from 'next-themes';
 import React, { Suspense } from 'react';
 import { Toolbar } from '~/components/toolbar';
-import { I18nProviderClient } from '~/locales/client';
 import { FeatureFlagProvider } from '../feature-flag-provider';
 
 interface Props {

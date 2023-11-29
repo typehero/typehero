@@ -16,11 +16,9 @@ import {
   Sparkle,
   ThumbsUp,
   Triangle,
-  RectangleVertical,
 } from '@repo/ui/icons';
 import dynamic from 'next/dynamic';
 import type { ExploreChallengeData } from './explore.action';
-import { cn } from '@repo/ui/cn';
 import { HolidayChristmasTree } from './aot-2023-explore-card';
 
 const RelativeTime = dynamic(() => import('./relative-time'), {

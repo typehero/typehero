@@ -38,5 +38,9 @@ module.exports = {
     tsconfigRootDir: `${__dirname}/tsconfig.json`,
   },
   root: true,
-  rules,
+  plugins: ['unused-imports'],
+  rules: {
+    ...rules,
+    'unused-imports/no-unused-imports': 'error',
+  },
 };

@@ -35,12 +35,9 @@ module.exports = {
     project: `${__dirname}/tsconfig.json`,
   },
   root: true,
-  rules,
-  // settings: {
-  //   'import/resolver': {
-  //     typescript: {
-  //       project,
-  //     },
-  //   },
-  // },
+  plugins: ['unused-imports'],
+  rules: {
+    ...rules,
+    'unused-imports/no-unused-imports': 'error',
+  },
 };

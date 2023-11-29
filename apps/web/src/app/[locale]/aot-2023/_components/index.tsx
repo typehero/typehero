@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { getAllFlags } from '~/utils/feature-flags';
 import { About } from './about';
 import { CardGrid } from './card-grid';
-import { Github, Sparkle } from '@repo/ui/icons';
+import { Github } from '@repo/ui/icons';
 import { Button } from '@repo/ui/components/button';
 
 export async function AotLandingPage() {
