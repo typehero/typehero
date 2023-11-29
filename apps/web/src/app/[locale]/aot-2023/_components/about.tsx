@@ -10,6 +10,12 @@ import {
   SheetTrigger,
 } from '@repo/ui/components/sheet';
 import { BadgeInfo } from '@repo/ui/icons';
+import {
+  HolidayBronzeBadge,
+  HolidaySilverBadge,
+  HolidayGoldBadge,
+  HolidayPlatinumBadge,
+} from '../../(profile)/[username]/_components/badges/aot-2023-badge';
 
 export function About({ className }: { className?: string }) {
   return (
@@ -92,6 +98,53 @@ export function About({ className }: { className?: string }) {
             </a>{' '}
             after the event, so be sure to give it a star!
           </p>
+          <h3 className="text-2xl font-semibold tracking-tighter">Rewards</h3>
+          <p>
+            Earn and collect each Advent of TypeScript badge along the way. Once earned, collected
+            badge will show as achievements on your public profile.
+          </p>
+          <div className="grid grid-cols-[6rem_1fr] grid-rows-4 gap-4">
+            <div className="flex w-full items-center justify-center">
+              <HolidayBronzeBadge className="h-24 w-24" />
+            </div>
+            <div className="my-2">
+              <h4 className="font-bold">Advent of TypeScript 2023 Bronze</h4>
+              <p>
+                Submit at least <span className="font-bold text-red-600">1 attempt</span> for an
+                Advent of TypeScript 2023 challenge.
+              </p>
+            </div>
+            <div className="flex w-full items-center justify-center">
+              <HolidaySilverBadge className="h-24 w-24" />
+            </div>
+            <div className="my-2">
+              <h4 className="font-bold">Advent of TypeScript 2023 Bronze</h4>
+              <p>
+                Successfully <span className="font-bold text-red-600">complete 5</span> Advent of
+                TypeScript 2023 challenges.
+              </p>
+            </div>
+            <div className="flex w-full items-center justify-center">
+              <HolidayGoldBadge className="h-24 w-24" />
+            </div>
+            <div className="my-2">
+              <h4 className="font-bold">Advent of TypeScript 2023 Bronze</h4>
+              <p>
+                Successfully <span className="font-bold text-red-600">complete 15</span> Advent of
+                TypeScript 2023 challenges.
+              </p>
+            </div>
+            <div className="flex w-full items-center justify-center">
+              <HolidayPlatinumBadge className="h-24 w-24" />
+            </div>
+            <div className="my-2">
+              <h4 className="font-bold">Advent of TypeScript 2023 Bronze</h4>
+              <p>
+                Successfully <span className="font-bold text-red-600">complete all 25</span> Advent
+                of TypeScript 2023 challenges.
+              </p>
+            </div>
+          </div>
         </div>
       </SheetContent>
     </Sheet>
