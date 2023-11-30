@@ -14,7 +14,7 @@ export async function AotLandingPage() {
     <div className="flex flex-col gap-5 pb-8 md:gap-10 md:py-5">
       <div className="container">
         <div className="relative mx-auto w-fit text-center">
-          <div className="absolute left-0 top-0 -z-10 h-full w-full transform-gpu bg-gradient-to-r from-red-500 via-red-600 to-green-500 opacity-70 blur-3xl sm:opacity-40" />
+          <div className="absolute left-0 top-0 -z-10 hidden h-full w-full transform-gpu bg-gradient-to-r from-red-500 via-red-600 to-green-500 opacity-70 blur-3xl dark:block sm:opacity-40" />
           <h1 className="mb-10 mt-16 text-4xl font-bold tracking-tighter text-black dark:text-white sm:text-8xl">
             <span>Advent</span> of <span className="text-red-600">TypeScript</span>
           </h1>
