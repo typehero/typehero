@@ -2,8 +2,9 @@ import { notFound } from 'next/navigation';
 import { getAllFlags } from '~/utils/feature-flags';
 import { About } from './about';
 import { CardGrid } from './card-grid';
-import { Github, Sparkle } from '@repo/ui/icons';
+import { Github } from '@repo/ui/icons';
 import { Button } from '@repo/ui/components/button';
+import { CountdownTimer } from '../../_components/countdown-timer';
 
 export async function AotLandingPage() {
   const featureFlags = await getAllFlags();
@@ -12,7 +13,7 @@ export async function AotLandingPage() {
   return (
     <div className="flex flex-col gap-5 pb-8 md:gap-10 md:py-5">
       <div className="container">
-        <h1 className="mb-10 text-center text-4xl font-bold tracking-tighter text-black dark:text-white sm:text-8xl">
+        <h1 className="mb-10 mt-16 text-center text-4xl font-bold tracking-tighter text-black dark:text-white sm:text-8xl">
           <span>Advent</span> of <span className="text-red-600">TypeScript</span>
         </h1>
         <div className="flex flex-col items-center justify-center gap-5">
@@ -20,12 +21,13 @@ export async function AotLandingPage() {
             The first type challenge will unlock at{' '}
             <span className="text-primary">midnight(est)</span> on December 1st
           </p>
-          <div className="flex items-center justify-center gap-5">
+          <CountdownTimer />
+          <div className="flex w-full flex-col items-center justify-center gap-2 md:w-auto md:flex-row md:gap-5">
             <a
               target="_blank"
               rel="noreferrer"
               href="https://discord.com/invite/KPNUNQRB"
-              className="group mx-auto flex items-center gap-2 rounded-xl bg-[#5865F2] px-3 py-2 text-sm font-bold text-white duration-300 dark:bg-[#5865F2]"
+              className="group flex w-full items-center justify-center gap-2 rounded-xl bg-[#5865F2] px-3 py-2 text-sm font-bold text-white duration-300 dark:bg-[#5865F2] md:mx-auto md:w-auto"
             >
               <svg
                 className="h-4 w-4 fill-current group-hover:rotate-[360deg]"
@@ -39,10 +41,10 @@ export async function AotLandingPage() {
               </svg>
               Join the Discord
             </a>
-            <About />
+            <About className="w-full md:w-auto" />
             <Button
               asChild
-              className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
+              className="flex w-full items-center justify-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white md:w-auto"
               variant="outline"
             >
               <a

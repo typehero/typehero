@@ -1,4 +1,4 @@
-import { Sparkles, Github, Mail, Sparkle, Twitter, Compass } from '@repo/ui/icons';
+import { Github, Mail, Sparkle, Twitter, Compass } from '@repo/ui/icons';
 import Link from 'next/link';
 import { Balancer } from 'react-wrap-balancer';
 import { Button } from '@repo/ui/components/button';
