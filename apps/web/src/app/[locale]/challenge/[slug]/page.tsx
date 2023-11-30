@@ -44,7 +44,7 @@ export default async function Challenges({ params: { slug } }: Props) {
     const [, day = '1'] = slug.split('-');
     const daysPassed = daysAfterDecemberFirst();
 
-    if (parseInt(day) > daysPassed) {
+    if (parseInt(day) > daysPassed + 1) {
       return notFound();
     }
   }
@@ -63,12 +63,12 @@ export function isAuthor(session: Session | null, userId?: string | null) {
   return userId && session?.user?.id && userId === session?.user?.id;
 }
 
-const MS_PER_DAY = 24 * 60 * 60 * 1000;
-function daysAfterDecemberFirst() {
-  const startDate: Date = new Date('2023-12-01');
-  const today: Date = new Date();
+export function daysAfterDecemberFirst() {
+  const MS_PER_DAY = 24 * 60 * 60 * 1000;
+  const startDate = new Date('2023-12-01T05:00:00.000Z').getTime();
+  const today = Date.now();
 
-  const daysPassed = Math.floor((today.getTime() - startDate.getTime()) / MS_PER_DAY) + 1;
+  const daysPassed = Math.floor((today - startDate) / MS_PER_DAY);
 
   return daysPassed;
 }
