@@ -1,8 +1,8 @@
 import { cn } from '@repo/ui/cn';
 
-export type SledProps = {
+export interface SledProps {
   className?: string;
-};
+}
 export function Sled({ className }: SledProps) {
   return (
     <svg
