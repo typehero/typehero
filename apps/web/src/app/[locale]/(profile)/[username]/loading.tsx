@@ -1,1 +1,1 @@
-export { ProfileSkeleton as default } from './_components/profile-skeleton';
+export { PageContentSkeleton as default } from './_components/profile-skeleton';
