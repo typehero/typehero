@@ -1,6 +1,7 @@
 import { prisma } from '@repo/db';
 import { TiltableCard } from './tiltable-card';
 import { auth, type Session } from '@repo/auth/server';
+import { daysAfterDecemberFirst } from '../../challenge/[slug]/page';
 
 export async function CardGrid() {
   const session = await auth();
@@ -58,12 +59,8 @@ async function getTrackChallenges(session: Session | null) {
   });
 }
 
-const MS_PER_DAY = 24 * 60 * 60 * 1000;
 function revealItems(items: Challenges) {
-  const startDate: Date = new Date('2023-12-01');
-  const today: Date = new Date();
-
-  const daysPassed = Math.floor((today.getTime() - startDate.getTime()) / MS_PER_DAY);
+  const daysPassed = daysAfterDecemberFirst();
 
   return items.map((item, index) => {
     const isPastOrCurrentDay = index <= daysPassed;
