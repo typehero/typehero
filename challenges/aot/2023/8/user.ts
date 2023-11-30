@@ -1,0 +1,1 @@
+type RemoveMisbehavingPeople<T> = unknown;

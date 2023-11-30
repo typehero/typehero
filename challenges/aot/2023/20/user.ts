@@ -1,0 +1,1 @@
+type ToAsciiArt<T> = unknown;

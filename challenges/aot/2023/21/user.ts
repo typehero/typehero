@@ -1,0 +1,1 @@
+type CheckTicTacToe<T> = unknown;

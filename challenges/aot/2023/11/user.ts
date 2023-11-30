@@ -1,0 +1,1 @@
+type SantaListProtector<T> = any;
