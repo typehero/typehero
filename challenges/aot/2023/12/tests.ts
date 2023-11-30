@@ -10,10 +10,27 @@ type Forest4 = ['🎄', '🎄', '🎄', '🎅🏼', '🎄'];
 
 type Forest5 = ['🎄', '🎄', '🎄', '🎄'];
 
-type cases = [
-  Expect<Equal<FindSanta<Forest1>, 0>>,
-  Expect<Equal<FindSanta<Forest2>, 1>>,
-  Expect<Equal<FindSanta<Forest3>, 2>>,
-  Expect<Equal<FindSanta<Forest4>, 3>>,
-  Expect<Equal<FindSanta<Forest5>, never>>,
-];
+type test_0_actual = FindSanta<Forest1>;
+//   ^?
+type test_0_expected = 0;
+type test_0 = Expect<Equal<test_0_expected, test_0_actual>>;
+
+type test_1_actual = FindSanta<Forest2>;
+//   ^?
+type test_1_expected = 1;
+type test_1 = Expect<Equal<test_1_expected, test_1_actual>>;
+
+type test_2_actual = FindSanta<Forest3>;
+//   ^?
+type test_2_expected = 2;
+type test_2 = Expect<Equal<test_2_expected, test_2_actual>>;
+
+type test_3_actual = FindSanta<Forest4>;
+//   ^?
+type test_3_expected = 3;
+type test_3 = Expect<Equal<test_3_expected, test_3_actual>>;
+
+type test_4_actual = FindSanta<Forest5>;
+//   ^?
+type test_4_expected = never;
+type test_4 = Expect<Equal<test_4_expected, test_4_actual>>;
