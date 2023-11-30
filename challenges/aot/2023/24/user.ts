@@ -1,2 +1,6 @@
-// Use the provided type Directions (located in the test panel)
-type Move<T> = unknown;
+type Alley = "  ";
+type MazeItem = "🎄" | "🎅" | Alley;
+type DELICIOUS_COOKIES = "🍪";
+type MazeMatrix = MazeItem[][];
+type Directions = "up" | "down" | "left" | "right";
+type Move = unknown;

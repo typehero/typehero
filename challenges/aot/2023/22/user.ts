@@ -1,2 +1,17 @@
-// Use the provided type Connect4Chips (located in the test panel)
-type Connect4<T, U> = unknown;
+type Connect4Cell = "🔴" | "🟡" | "  ";
+
+type EmptyBoard = [
+  ["  ", "  ", "  ", "  ", "  ", "  ", "  "],
+  ["  ", "  ", "  ", "  ", "  ", "  ", "  "],
+  ["  ", "  ", "  ", "  ", "  ", "  ", "  "],
+  ["  ", "  ", "  ", "  ", "  ", "  ", "  "],
+  ["  ", "  ", "  ", "  ", "  ", "  ", "  "],
+  ["  ", "  ", "  ", "  ", "  ", "  ", "  "],
+];
+
+type NewGame = {
+  board: EmptyBoard;
+  state: "🟡";
+};
+
+type Connect4 = unknown;
