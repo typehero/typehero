@@ -1,17 +1,11 @@
-### Christmas Cookie Inventory
+## Christmas Cookie Inventory
 
-Santa's workshop has a cookie inventory! The elves have been keeping track of various cookie types and their quantities. Now, Santa needs your help to create a TypeScript type that extracts the names of all the different types of cookies from the inventory.
+Phew! Yesterday's tactic worked. Santa got down-and-dirty with the elves on the factory floor and they seem to have stopped planning their strike.
 
-```typescript
-const cookieInventory = {
-  chocolate: 1,
-  sugar: 20,
-  gingerBread: 10,
-  peanutButter: 30,
-  snickeDoodle: 73,
-};
-```
+With on small exception.. Unfortunately, two pesky elves (Jingle and Jangle) have realized that the 300 year stock options vesting cliff that Santa put into the elves' contract isn't quite typical. Jingle and Jangle already joined forces with Hermey (who has nothing to lose because he'd rather be a dentist than make toys) and they're beginning to cause a fuss.
 
-Your task is to define a TypeScript type named `CookieSurveyInput` that extracts the names of the cookie types from the `cookieInventory` object.
+Santa noticed that a lot of this discussion is happening during cookie inventory. Help Santa speed up the process so these conversations are cut short.
 
-Good luck!
+Take a look at the `cookieInventory` variable in the tests. Your goal is to update `CookieSurveyInput` so that it will return a union of all of the names of the various different cookies.
+
+Good luck! As Santa always says: "your hard work will pay off eventually, just be patient".

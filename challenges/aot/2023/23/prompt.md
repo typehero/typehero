@@ -1,26 +1,15 @@
-## Reindeer Sudoku
+## Connect 4, but in TypeScript types
 
-Santa's reindeer sure do like to cause trouble! This time they've decided to make a game out of arranging themselves into a Sudoku board.
+Your goal for this challenge is to implement Connect 4 in TypeScript types.
 
-Before arranging themselves in this configuration, the reindeer left Santa a foreboding message:
+Each cell in the game can contain `🔴` or `🟡` or be empty (` `). You're provided with a rough layout of how to organize the board in the `EmptyBoard` type. The game state is represtend by an object with a `board` property and a `state` property (which keeps track of which player is next up to play).
 
-> SaNtA.... yOu MuSt ImPleMeNt ThE `Validate` TyPe To DeTerMinE WhEThEr OuR SuDokU ConFiGuRaTiOn Is vALid
+## What is Connect 4
 
-Oh.. and what's that... also Vixen seems to have left a separate note
+In case you haven't played it before: Connect 4 is a game in which the players choose a color and then take turns dropping colored tokens into a six-row, seven-column vertically suspended grid. The pieces fall straight down, occupying the lowest available space within the column. The objective of the game is to be the first to form a horizontal, vertical, or diagonal line of four of one's own tokens.
 
-> _make sure `Validate` is a predicate_
-> - _Vixen_
+> fun fact:
+> Connect 4 is also known as Connect Four, Four Up, Plot Four, Find Four, Captain's Mistress, Four in a Row, Drop Four, and Gravitrips in the Soviet Union
 
-Well that's sorta condescending. Vixen seems to be assuming we already know that a "predicate" is just a fancy computer science term for a function that returns `true` or `false`. Oh well. That's Vixen for you.
-
-## What is Sudoku
-
-If you're not already familiar: Sudoku is a logic-based number placement puzzle. Here are the basic rules:
-
-- Grid Structure: The game is played on a 9x9 grid, divided into nine 3x3 subgrids or "regions."
-- Number Placement: The objective is to fill the grid with numbers from 1 to 9.
-- Row Constraint: Every row must contain each number from 1 to 9 without repeating.
-- Column Constraint: Every column must also contain each number from 1 to 9 without repeating.
-- Region Constraint: Each of the nine 3x3 regions must contain each number from 1 to 9, again without repetition.
-
-Normally you solve the puzzle by logically deducing the numbers for the empty cells, ensuring that all rows, columns, and 3x3 regions have numbers from 1 to 9 according to the rules. However, in this case the cells are all already filled in and your mission is to instead determine whether the configuration follows the rules of Sudoku.
+> another fun fact:
+> Connect 4 was "solved" by James Allen and Victor Allis (independently from on another.. like two weeks apart!) in 1988. They couldn't do a full brute-force proof at the time, but 7 years later John Tromp in the Netherlands did it with a database on a Sun Microsystems and Silicon Graphics International worksations (for a combined total of 40,000 computation hours!).

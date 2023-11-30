@@ -1,4 +1,4 @@
-### Protect the List
+## Protect the List
 
 Santa's elves are working on a special type to protect Santa's list. They've started with a basic type structure:
 

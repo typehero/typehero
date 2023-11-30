@@ -1,4 +1,4 @@
-### Christmas Street Suffix Tester 
+## Christmas Street Suffix Tester
 
 Santa's elves are working on a special utility to test street names for specific suffixes! They've set up a type called `StreetSuffixTester`, but it needs refining to correctly identify whether a given street name contains a particular suffix.
 

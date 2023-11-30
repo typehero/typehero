@@ -1,21 +1,19 @@
-### Is Santa Dyslexic?
+## Is Santa Dyslexic?
 
-Santa's workshop needs a TypeScript type to reverse the names of his reindeer! There's a starter type defined as follows:
+_\[it's early Saturday morning and the team has been working overtime. Santa storms into the factory floor shouting..\]_
 
-```typescript
-type Reverse<S> = unknown;
-```
+> _\[Santa\]_ Don't you elves take any pride in your work?!?! Others would love to have your job for much less pay! I asked for a simple type that will reverse strings!! How hard is that?!? What do we even pay you for??
 
-Your task is to create a TypeScript type named `Reverse<S>` that reverses the given string `S`. The type should be able to reverse the names of Santa's reindeer, following these rules:
+_\[unfortunately, Santa is conveniently forgetting that the `Reverse` type was cut from the sprint (which... of course... he agreed to)\]_
 
-- `'rehsaD'` should be transformed into `'Dasher'`
-- `'recnaD'` should be transformed into `'Dancer'`
-- `'recnarP'` should be transformed into `'Prancer'`
-- `'nexiV'` should be transformed into `'Vixen'`
-- `'temoC'` should be transformed into `'Comet'`
-- `'dipuC'` should be transformed into `'Cupid'`
-- `'rennoD'` should be transformed into `'Donner'`
-- `'neztilB'` should be transformed into `'Blitzen'`
-- `'hploduR'` should be transformed into `'Rudolph'`
-
-Good luck!
+> _\[floor manager\]_ Ok. We never got acceptance criteria for that ticket.
+>
+> _\[Santa\]_ How difficult is it to understand what Reverse does!? `'rehsaD'` should be transformed into `'Dasher'`, `'recnaD'` should be transformed into `'Dancer'`, `'recnarP'` should be transformed into `'Prancer'`.. DO I NEED TO KEEP GOING?
+>
+> _\[floor manager\]_ Well you might be surprised. For example, should happen to multi-codepoint unicode characters?
+>
+> _\[Santa\]_ What are you on about with all that accessibility stuff again!
+>
+> _\[floor manager\]_ Accessibility is important, sir.
+>
+> _\[Santa\]_ Look, this is just an MVP. We can add accessibility later. Just get me my `Reverse` type! I'm having a hard time reading this stuff otherwise!

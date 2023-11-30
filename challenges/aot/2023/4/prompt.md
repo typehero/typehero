@@ -1,39 +1,21 @@
-### Christmas Present Delivery
+## Christmas Present Delivery Addresses
 
-Santa needs your help creating a TypeScript type for the Present Delivery List! Initially, there's a type defined for an `Address` and an empty `PresentDeliveryList`:
+_\[a conversation in the North Pole kitchenette on the morning of December 4th between Santa and the head elf, Bernard\]_
 
-```typescript
-type Address = { address: string; city: string };
-type PresentDeliveryList = unknown;
-```
+> _\[Bernard\]_ This is bullshit, Kris. I've been leading the Elves for 200+ years. Don't you trust that I know what I'm talking about?? WE NEED TO GROW THE TEAM. We're running a skeleton-crew here.
+>
+> _\[Santa\]_ Remember, we're like a family here; we all make sacrifices! _We're still a startup!_
+>
+> _\[Bernard\]_ I swear to you. I think if I hear another hussle-culture quip from you.... I think my little elf head will explode.
+>
+> _\[Santa\]_ If you can stick to it now and get us through one more year, there will definitely be rewards down the line.
+>
+> _\[Bernard\]_ I don't know why I even bothered asking...
 
-Your task is to define a TypeScript generic type named `PresentDeliveryList` that takes in another generic `BehaviorList`. The `BehaviorList` represents a list of children along with their behaviors (either 'good' or 'bad'). The `PresentDeliveryList` should map each child's behavior to their corresponding `Address`.
+Clearly, Bernard is a bit disgruntled. Can you blame him? Alas, there's still more work to do. Bernard walks away and mutters to himself:
 
-Here's a test case that your `PresentDeliveryList` type needs to pass:
+> _\[Bernard\]_ Guess it's time drag myself through another pointless TypeScript type challenge with no practical application.
 
-```typescript
-type MixedBehaviorList = {
-  john: { behavior: 'good' };
-  jimmy: { behavior: 'bad' };
-  sara: { behavior: 'good' };
-  suzy: { behavior: 'good' };
-  chris: { behavior: 'good' };
-  penny: { behavior: 'bad' };
-};
+Poor Bernard. Let's help him out.
 
-type test_MixedBehaviorTest = Expect<
-  Equal<
-    PresentDeliveryList<MixedBehaviorList>,
-    {
-      john: Address;
-      jimmy: Address;
-      sara: Address;
-      suzy: Address;
-      chris: Address;
-      penny: Address;
-    }
-  >
->;
-```
-
-Good luck!
+Today's task is craft a type (`PresentDeliveryList`) that takes an object type as an input and then replaces the values at each property with an `Address`. We don't know in advance what properties will be provided, which is why it needs to be a generic type. Otherwise Bernard would probably just copy/pasta it to get throug the day.

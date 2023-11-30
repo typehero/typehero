@@ -1,30 +1,19 @@
-/** because "dashing" implies speed */
-type Dasher = '💨';
+type Connect4Chips = '🔴' | '🟡';
+type Connect4Cell = Connect4Chips | '  ';
+type Connect4State = '🔴' | '🟡' | '🔴 Won' | '🟡 Won' | 'Draw';
 
-/** representing dancing or grace */
-type Dancer = '💃';
+type EmptyBoard = [
+  ["  ", "  ", "  ", "  ", "  ", "  ", "  "],
+  ["  ", "  ", "  ", "  ", "  ", "  ", "  "],
+  ["  ", "  ", "  ", "  ", "  ", "  ", "  "],
+  ["  ", "  ", "  ", "  ", "  ", "  ", "  "],
+  ["  ", "  ", "  ", "  ", "  ", "  ", "  "],
+  ["  ", "  ", "  ", "  ", "  ", "  ", "  "],
+];
 
-/** a deer, prancing */
-type Prancer = '🦌';
+type NewGame = {
+  board: EmptyBoard;
+  state: "🟡";
+};
 
-/** a star for the dazzling, slightly mischievous Vixen */
-type Vixen = '🌟';
-
-/** for the celestial body that shares its name */
-type Comet = '☄️';
-
-/** symbolizing love, as Cupid is the god of love */
-type Cupid = '❤️';
-
-/** representing thunder, as "Donner" means thunder in German */
-type Donner = '🌩️';
-
-/** meaning lightning in German, hence the lightning bolt */
-type Blitzen = '⚡';
-
-/** for his famous red nose */
-type Rudolph = '🔴';
-
-type Reindeer = Dasher | Dancer | Prancer | Vixen | Comet | Cupid | Donner | Blitzen | Rudolph;
-
-type Validate = unknown;
+type Connect4 = unknown;

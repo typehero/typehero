@@ -1,5 +1,12 @@
 ## Christmas Cookies
 
-Santa needs your help defining a TypeScript type that represents his favorite cookies. This year, Santa's craving two specific types: gingerbread and chocolate chip cookies. Can you create a type that captures Santa's favorite cookies?
+It's December 1st! That means it's almost time for the big day! Santa has a preparation regimen that involves, of course, eating lots of deliciouis cookies.
 
-Your task is to define a TypeScript type named SantasFavoriteCookies that only allows the values `ginger-bread` or `chocolate-chip`.
+Santa's elves have provided Santa an API whereby Santa can submit his favorite cookie flavors. This year his favorites are:
+
+- `ginger-bread`
+- `chocolate-chip`
+
+But the elves have some kind of fancy code-gen build step (built in Rust, of course), so all Santa needs to do is update the `SantasFavoriteCookies` type.
+
+Can you help?
