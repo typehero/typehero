@@ -5,6 +5,9 @@ import { CardGrid } from './card-grid';
 import { Github } from '@repo/ui/icons';
 import { Button } from '@repo/ui/components/button';
 import { CountdownTimer } from '../../_components/countdown-timer';
+import { Sled } from './sled';
+import { cn } from '@repo/ui/cn';
+import hohohoStyles from './hohoho.module.css';
 
 export async function AotLandingPage() {
   const featureFlags = await getAllFlags();
@@ -13,9 +16,13 @@ export async function AotLandingPage() {
   return (
     <div className="flex flex-col gap-5 pb-8 md:gap-10 md:py-5">
       <div className="container">
-        <h1 className="mb-10 mt-16 text-center text-4xl font-bold tracking-tighter text-black dark:text-white sm:text-8xl">
+        <div className='w-fit mx-auto relative'>
+        <Sled className={cn('animate-bounce',hohohoStyles.sled)} />
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-red-500 via-red-600 to-green-500 -z-10 blur-3xl transform-gpu opacity-50" />
+        <h1 className="mb-10 mt-16 text-4xl font-bold tracking-tighter text-black dark:text-white sm:text-8xl">
           <span>Advent</span> of <span className="text-red-600">TypeScript</span>
         </h1>
+        </div>
         <div className="flex flex-col items-center justify-center gap-5">
           <p className="text-xl font-semibold">
             The first type challenge will unlock at{' '}

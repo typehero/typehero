@@ -1,0 +1,52 @@
+.sled {
+  opacity: 0;
+  animation:
+    sled 20s linear infinite,
+    sled-bounce 2s 1s ease-in-out infinite;
+  left: 40rem;
+  position: absolute;
+  top: -1.5rem;
+  left: 0;
+  animation-delay: 5s;
+}
+
+@keyframes sled {
+  0% {
+    opacity: 0;
+    left: 0;
+    top: 1rem;
+  }
+  80% {
+    opacity: 0;
+    left: 0;
+    top: 1rem;
+  }
+  85% {
+    opacity: 1;
+    left: 10%;
+    top: -1.5rem;
+  }
+  90% {
+    opacity: 1;
+    left: 20%;
+  }
+  100% {
+    opacity: 0;
+    left: 40%;
+  }
+}
+
+@keyframes sled-bounce {
+  0% {
+    top: -1.5rem;
+  }
+  40% {
+    top: -2rem;
+  }
+  60% {
+    top: -2rem;
+  }
+  100% {
+    top: -1.5rem;
+  }
+}
