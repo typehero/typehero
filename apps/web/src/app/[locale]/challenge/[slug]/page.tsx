@@ -44,7 +44,7 @@ export default async function Challenges({ params: { slug } }: Props) {
     const [, day = '1'] = slug.split('-');
     const daysPassed = daysAfterDecemberFirst();
 
-    if (parseInt(day) > daysPassed - 1) {
+    if (parseInt(day) > daysPassed) {
       return notFound();
     }
   }
