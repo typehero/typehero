@@ -198,12 +198,12 @@ export async function getBadges(userId: string): Promise<BadgeInfo[]> {
     },
   });
 
-  const numberOfInProgressHolidayChallenges =
+  const numberOfAttemptedHolidayChallenges =
     holidayTrack?.trackChallenges.filter((trackChallenge) => {
-      return trackChallenge.challenge.submission?.every((submission) => !submission.isSuccessful);
+      return (trackChallenge.challenge.submission?.length ?? 0) > 0;
     }).length ?? 0;
 
-  if (numberOfInProgressHolidayChallenges > 0) {
+  if (numberOfAttemptedHolidayChallenges > 0) {
     badges.push({ slug: 'aot-2023-bronze', name: 'Advent of TypeScript 2023 Bronze' });
   }
 
