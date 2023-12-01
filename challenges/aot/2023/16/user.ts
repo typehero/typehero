@@ -1,1 +1,1 @@
-type FindSanta<T, U> = unknown;
+type FindSanta = unknown;

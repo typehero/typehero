@@ -6,7 +6,6 @@ type Forest0 = [
   ['🎄', '🎄', '🎄', '🎄'],
   ['🎄', '🎄', '🎄', '🎄'],
 ];
-
 type test_0_actual = FindSanta<Forest0>;
 //   ^?
 type test_0_expected = [0, 0];
