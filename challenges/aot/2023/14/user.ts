@@ -1,1 +1,1 @@
-type DecipherNaughtyList<S extends string> = unknown;
+type DecipherNaughyList = unknown;
