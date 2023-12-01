@@ -1,1 +1,1 @@
-type RemoveNaughtyChildren<T, U> = unknown;
+type FilterChildrenBy = unknown;

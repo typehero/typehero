@@ -1,22 +1,22 @@
 import { Expect, Equal } from 'type-testing';
 
-type test_0_actual = RemoveNaughtyChildren<
+type test_0_actual = FilterChildrenBy<
   //   ^?
-  'good' | 'good' | 'good',
+  'nice' | 'nice' | 'nice',
   'naughty'
 >;
-type test_0_expected = 'good';
+type test_0_expected = 'nice';
 type test_0 = Expect<Equal<test_0_expected, test_0_actual>>;
 
-type test_1_actual = RemoveNaughtyChildren<
+type test_1_actual = FilterChildrenBy<
   //   ^?
-  'good' | 'naughty' | 'naughty',
+  'nice' | 'naughty' | 'naughty',
   'naughty'
 >;
-type test_1_expected = 'good';
+type test_1_expected = 'nice';
 type test_1 = Expect<Equal<test_1_expected, test_1_actual>>;
 
-type test_2_actual = RemoveNaughtyChildren<
+type test_2_actual = FilterChildrenBy<
   //   ^?
   string | number | (() => void),
   Function
