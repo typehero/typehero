@@ -7,6 +7,5 @@ type LiteralFunction = unknown;
 const literalString = undefined;
 const literalTrue = undefined;
 const literalNumber = Math.random() > 0.5 ? undefined : undefined;
-const almostPi = undefined;
 const literalObject = {};
 const literalFunction = () => {};
