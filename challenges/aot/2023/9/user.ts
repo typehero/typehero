@@ -1,1 +1,1 @@
-type Reverse<S> = unknown;
+type Reverse = unknown;
