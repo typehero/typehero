@@ -3,7 +3,7 @@ import { DifficultyBadge } from '@repo/ui/components/difficulty-badge';
 import { Progress } from '@repo/ui/components/progress';
 import { getSolvedChallenges } from './_actions';
 
-export const DIFFICULTIES = ['BEGINNER', 'EASY', 'MEDIUM', 'HARD', 'EXTREME'] as const;
+export const DIFFICULTIES = ['BEGINNER', 'EASY', 'MEDIUM', 'HARD', 'EXTREME', 'EVENT'] as const;
 
 interface ChallengesProgressProps {
   userId: string;

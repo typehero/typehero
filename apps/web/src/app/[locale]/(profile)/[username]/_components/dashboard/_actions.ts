@@ -139,6 +139,10 @@ export async function getSolvedChallenges(userId: string) {
       solved: 0,
       total: 0,
     },
+    EVENT: {
+      solved: 0,
+      total: 0,
+    },
   };
 
   // assign values to the challenges object
