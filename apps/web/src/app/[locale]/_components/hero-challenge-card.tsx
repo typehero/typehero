@@ -27,6 +27,8 @@ const COLORS_BY_DIFFICULTY = {
   MEDIUM: 'dark:bg-yellow-300 bg-yellow-600',
   HARD: 'dark:bg-red-300 bg-red-600',
   EXTREME: 'dark:bg-orange-300 bg-orange-600',
+  // this will never actually be used
+  EVENT: 'dark:bg-orange-300 bg-orange-600',
 };
 
 const codeLineProps = {

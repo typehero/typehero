@@ -25,6 +25,8 @@ const difficultyToNumber = {
   MEDIUM: 2,
   HARD: 3,
   EXTREME: 4,
+  // this will never actually be used
+  EVENT: 5,
 } as const;
 
 const TITLES_BY_TAG = {
@@ -38,6 +40,9 @@ const TITLES_BY_TAG = {
   HARD: 'bg-clip-text text-transparent select-none bg-gradient-to-r from-red-600 to-red-500 dark:from-red-300 dark:to-red-100',
   EXTREME:
     'bg-clip-text text-transparent select-none bg-gradient-to-r from-purple-600 to-purple-500 dark:from-purple-400 dark:to-purple-100',
+  // this will never actually be used
+  EVENT:
+    'bg-clip-text text-transparent select-none bg-gradient-to-r from-purple-600 to-purple-500 dark:from-purple-400 dark:to-purple-100',
 };
 
 export const COLORS_BY_TAGS = {
@@ -48,6 +53,8 @@ export const COLORS_BY_TAGS = {
   MEDIUM: 'dark:bg-yellow-300 bg-yellow-600/50',
   HARD: 'dark:bg-red-300 bg-red-600/50',
   EXTREME: 'dark:bg-purple-300 bg-purple-600/50',
+  // this will never actually be used
+  EVENT: 'dark:bg-purple-300 bg-purple-600/50',
 } as const;
 
 export async function ExploreSection({ title, tag, redirectRoute }: SectionProps) {

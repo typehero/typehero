@@ -28,6 +28,8 @@ const BGS_BY_DIFFICULTY = {
   MEDIUM: 'to-difficulty-medium/20 dark:to-difficulty-medium-dark/20',
   HARD: 'to-difficulty-hard/20 dark:to-difficulty-hard-dark/20',
   EXTREME: 'to-difficulty-extreme/20 dark:to-difficulty-extreme-dark/20',
+  // this will never actually be used
+  EVENT: 'to-difficulty-extreme/20 dark:to-difficulty-extreme-dark/20',
 } as const;
 
 // million-ignore
