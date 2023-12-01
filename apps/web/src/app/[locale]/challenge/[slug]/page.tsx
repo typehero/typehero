@@ -1,6 +1,6 @@
 import { auth, type Session } from '@repo/auth/server';
 import { notFound, redirect } from 'next/navigation';
-import { buildMetaForChallenge } from '~/app/metadata';
+import { buildMetaForChallenge, buildMetaForEventPage } from '~/app/metadata';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { isBetaUser } from '~/utils/server/is-beta-user';
 import { Comments } from '../_components/comments';
@@ -16,6 +16,13 @@ interface Props {
 }
 
 export async function generateMetadata({ params: { slug } }: Props) {
+  if (AOT_CHALLENGES.includes(slug)) {
+    return buildMetaForEventPage({
+      title: 'Advent of Typescript 2023 | TypeHero',
+      description: 'Advent of Typescript 2023',
+    });
+  }
+
   const { challenge } = await getChallengeRouteData(slug, null);
   const description = `Unlock your TypeScript potential by solving the ${challenge.name} challenge on TypeHero.`;
 
