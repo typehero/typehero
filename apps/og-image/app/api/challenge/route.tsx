@@ -27,6 +27,8 @@ export async function GET(req: Request) {
     MEDIUM: 'bg-[#f19c41]',
     HARD: 'bg-[#f87272]',
     EXTREME: 'bg-[#d8b4fe]',
+    // should never actually be used
+    EVENT: 'bg-[#d8b4fe]',
   };
 
   const GRADIENT_BY_DIFFICULTY = {
@@ -35,6 +37,8 @@ export async function GET(req: Request) {
     MEDIUM: '#66421b',
     HARD: '#5c2020',
     EXTREME: '#48345c',
+    // should never actually be used
+    EVENT: '#48345c',
   };
 
   const mogus_coords = Array.from(
