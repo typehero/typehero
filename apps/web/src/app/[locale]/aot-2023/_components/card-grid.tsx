@@ -32,7 +32,7 @@ async function getTrackChallenges(session: Session | null) {
             include: {
               submission: {
                 where: {
-                  userId: session?.user.id || '',
+                  userId: session?.user?.id || '',
                   isSuccessful: true,
                 },
                 select: {

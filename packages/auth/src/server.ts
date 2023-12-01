@@ -15,7 +15,7 @@ export type { Session, DefaultSession as DefaultAuthSession } from 'next-auth';
  */
 declare module 'next-auth' {
   interface Session extends DefaultSession {
-    user: DefaultSession['user'] & {
+    user?: DefaultSession['user'] & {
       id: string;
       role: RoleTypes[];
     };

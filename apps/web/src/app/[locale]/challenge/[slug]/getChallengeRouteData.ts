@@ -27,17 +27,17 @@ export const getChallengeRouteData = cache(async (slug: string, session: Session
       },
       vote: {
         where: {
-          userId: session?.user.id || '',
+          userId: session?.user?.id || '',
         },
       },
       bookmark: {
         where: {
-          userId: session?.user.id || '',
+          userId: session?.user?.id || '',
         },
       },
       submission: {
         where: {
-          userId: session?.user.id || '',
+          userId: session?.user?.id || '',
           isSuccessful: true,
         },
         take: 1,
@@ -58,7 +58,7 @@ export const getChallengeRouteData = cache(async (slug: string, session: Session
                 track: {
                   enrolledUsers: {
                     some: {
-                      id: session.user.id,
+                      id: session.user?.id,
                     },
                   },
                 },

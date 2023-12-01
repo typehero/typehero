@@ -46,7 +46,7 @@ export async function getChallengesByTagOrDifficulty(str: string, take?: number)
       },
       submission: {
         where: {
-          userId: session?.user.id || '',
+          userId: session?.user?.id || '',
           isSuccessful: true,
         },
         take: 1,
