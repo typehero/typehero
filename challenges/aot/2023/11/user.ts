@@ -1,1 +1,1 @@
-type SantaListProtector<T> = any;
+type SantaListProtector = unknown;
