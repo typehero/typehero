@@ -1,13 +1,18 @@
-### Rock, Paper, Scissors
+## Rock, Paper, Scissors
 
-Let's play Rock-Paper-Scissors in TypeScript! We have a type defined for checking the winner:
+It's Sunday and there's one week to go before the big day (Christmas Eve) when the elfs' work for the year will finally be complete. For the last 20 years the only game the elves have had to play together is StarCraft. They're looking for a fresh game to play.
 
-```typescript
-type WhoWins<Opponent, You> = unknown;
-```
+So, they get the idea to try a Rock, Paper, Scissors tournament.
 
-Your task is to enhance the `WhoWins` type to correctly determine the winner in a Rock-Paper-Scissors game. The game is represented by three emojis: Rock (👊🏾), Paper (🖐🏾), and Scissors (✌🏽).
+But the elves are sorta nerdy so they want to accomplish this using TypeScript types. The `WhoWins` should type to correctly determine the winner in a Rock-Paper-Scissors game. The first argument is the opponent and the second argument is you!
 
-Can you create the `WhoWins` type to accurately determine the winner in the Rock-Paper-Scissors game according to the provided test cases? Once solved, the type should correctly identify the result of the game between the two given emojis.
+## What's Rock, Paper, Scissors?
 
-Good luck and may the best emoji win!
+In case you haven't played it before, basically:
+
+- it's a two player game where each player picks one of three options: Rock (👊🏻), Paper (🖐🏾), and Scissors (✌🏽)
+- game rules:
+  - Rock crushes Scissors (Rock wins)
+  - Scissors cuts Paper (Scissors wins)
+  - Paper covers Rock (Paper wins)
+  - otherwise, a draw
