@@ -284,7 +284,7 @@ export function CodePanel(props: CodePanelProps) {
                 className="cursor-pointer rounded-lg duration-300"
                 onClick={handleSubmit}
               >
-                Submit{tsErrors === undefined && ' (open test cases)'}
+                {disabled && 'Login to '}Submit{tsErrors === undefined && ' (open test cases)'}
               </Button>
             </TooltipTrigger>
             {disabled && (
