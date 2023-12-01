@@ -1,5 +1,5 @@
 type GiftWrapper = {
-  present: any;
-  from: any;
-  to: any;
-};
+  present: unknown;
+  from: unknown;
+  to: unknown;
+}
