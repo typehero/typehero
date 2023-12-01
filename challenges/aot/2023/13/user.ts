@@ -1,1 +1,1 @@
-type DayCounter<L, H> = unknown;
+type DayCounter = unknown;
