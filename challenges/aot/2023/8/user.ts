@@ -1,1 +1,1 @@
-type RemoveMisbehavingPeople<T> = unknown;
+type RemoveNaughtyChildren = unknown;
