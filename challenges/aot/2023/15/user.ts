@@ -1,1 +1,1 @@
-type BoxToysByQuantity<T, N extends number> = unknown;
+type BoxToys = unknown;
