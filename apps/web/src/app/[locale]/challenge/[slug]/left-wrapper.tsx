@@ -151,6 +151,9 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
               router.push(`/challenge/${challenge.slug}`);
               isCollapsed && expandPanel();
             }}
+            onFocus={(e) => {
+              e.target.click();
+            }}
             value="description"
           >
             {isIconOnly ? <Text className="h-4 w-4" /> : 'Description'}
@@ -164,6 +167,9 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
               onClick={() => {
                 router.push(`/challenge/${challenge.slug}/solutions`);
                 isCollapsed && expandPanel();
+              }}
+              onFocus={(e) => {
+                e.target.click();
               }}
               value="solutions"
             >
@@ -182,6 +188,9 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
             onClick={() => {
               router.push(`/challenge/${challenge.slug}/submissions`);
               isCollapsed && expandPanel();
+            }}
+            onFocus={(e) => {
+              e.target.click();
             }}
             value="submissions"
           >
