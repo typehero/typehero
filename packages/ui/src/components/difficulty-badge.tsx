@@ -13,6 +13,8 @@ const COLORS_BY_DIFFICULTY = {
   MEDIUM: 'dark:bg-difficulty-medium-dark bg-difficulty-medium',
   HARD: 'dark:bg-difficulty-hard-dark bg-difficulty-hard',
   EXTREME: 'dark:bg-difficulty-extreme-dark bg-difficulty-extreme',
+  // this will never actually be used
+  EVENT: 'dark:bg-difficulty-extreme-dark bg-difficulty-extreme',
 };
 
 export function DifficultyBadge({ className, difficulty }: Props) {
