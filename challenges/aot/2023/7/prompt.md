@@ -14,7 +14,7 @@ _\[transcript of a slack conversation at 11:23pm between Santa and Chipper (one 
 >
 > _\[Chipper\]_ ok. I guess.
 >
-> _\[Santa\]_ Wonderful! Here are the inputs and outputs! That oughta be plenty for you! Ok, I gotta get some rest for a golf game I'm havin g tomorrow. Signing off!
+> _\[Santa\]_ Wonderful! Here are the inputs and outputs! That oughta be plenty for you! Ok, I gotta get some rest for a golf game I'm having tomorrow. Signing off!
 
 ## Developing From The Tests
 
@@ -22,4 +22,4 @@ As you can see, sometimes leadership like Santa manage to convince themselves th
 
 Start by identifying the inputs for our `AppendGood` type.  Ask yourself if there should be any generic type constraints on the inputs (there may not need to be, or at least right away).
 
-Then try to set up a scaffold that will at least regurn the same values for each property. Your next step is to transform the properties somehow..
+Then try to set up a scaffold that will at least return the same values for each property. Your next step is to transform the properties somehow..

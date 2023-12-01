@@ -1,1 +1,1 @@
-type AppendGood<T> = unknown;
+type AppendGood = unknown;
