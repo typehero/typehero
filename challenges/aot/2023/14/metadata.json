@@ -2,7 +2,7 @@
   "id": "day-14",
   "label": "Day Fourteen",
   "description": "Day fourteen of Advent of Typescript",
-  "difficulty": "beginner",
+  "difficulty": "event",
   "prerequisites": [],
   "author": "TypeHero"
 }

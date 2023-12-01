@@ -20,7 +20,7 @@
     "difficulty": {
       "description": "The difficulty level for this challenge.",
       "type": "string",
-      "enum": ["beginner", "easy", "medium", "hard", "extreme"]
+      "enum": ["beginner", "easy", "medium", "hard", "extreme", "event"]
     },
     "prerequisites": {
       "description": "An array of ids of other challenges that this challenge is written as to expect the reader to already understand.",
