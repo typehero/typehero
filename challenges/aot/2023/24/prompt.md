@@ -14,4 +14,4 @@ This challenge is going to be a culmination of all the days that came before.
 
 ## Thank You!
 
-We just want to say thank you joining us for the first Advent of TypeScript™! We hope to do many more in the future! Don't hesitate to leave feedback and tell us what you thought of it!
+We just want to say thank you for joining us for the first Advent of TypeScript™! We hope to do many more years in the future! Don't hesitate to leave feedback and tell us what you thought of it!
