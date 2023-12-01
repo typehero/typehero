@@ -8,7 +8,7 @@ _\[transcript of a slack conversation at 11:23pm between Santa and Chipper (one 
 >
 > _\[Santa\]_ It turns out I need the data formatted in a completely different way! The inputs and outputs all need to be different.
 >
-> _\[Chipper\]_ ok, so it sounds like the requirements have changed. did you ask my manager? it's late and I'm relaxing. I'm in the middle of a game of league of legends.
+> _\[Chipper\]_ ok, so it sounds like the requirements have changed. did you ask my manager? it's late and I'm relaxing. I'm in the middle of a game of League of Legends.
 >
 > _\[Santa\]_ Is that like RuneScape? Well anyway, would you mind helping me out in a pinch? Think of this as paying your dues for a better position later!
 >

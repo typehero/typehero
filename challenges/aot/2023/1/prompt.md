@@ -7,6 +7,6 @@ Santa's elves have provided Santa an API whereby Santa can submit his favorite c
 - `ginger-bread`
 - `chocolate-chip`
 
-But the elves have some kind of fancy code-gen build step (built in Rust, of course), so all Santa needs to do is update the `SantasFavoriteCookies` type.
+But the elves have some kind of fancy code-gen build step (built in Rust, of course), so all Santa needs to do is update the `SantasFavoriteCookies` type to accept either of his favorite cookies.
 
 Can you help?
