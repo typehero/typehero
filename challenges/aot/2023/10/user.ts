@@ -1,1 +1,1 @@
-type StreetSuffixTester<T, Suffix extends string> = unknown;
+type StreetSufixTester = unknown;

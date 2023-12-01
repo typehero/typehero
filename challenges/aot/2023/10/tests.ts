@@ -15,7 +15,7 @@ type test_2_actual = StreetSuffixTester<'Sugar Lane', 'Drive'>;
 type test_2_expected = false;
 type test_2 = Expect<Equal<test_2_expected, test_2_actual>>;
 
-type test_3_actual = StreetSuffixTester<'In The Abyss', 'invalid'>;
+type test_3_actual = StreetSuffixTester<'Fifth Dimensional Nebulo 9', 'invalid'>;
 //   ^?
 type test_3_expected = false;
 type test_3 = Expect<Equal<test_3_expected, test_3_actual>>;
