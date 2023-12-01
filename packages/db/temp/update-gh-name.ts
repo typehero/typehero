@@ -30,6 +30,7 @@ async function getUsers() {
         `https://api.github.com/user/${accountId?.providerAccountId}`,
         // https://github.com/settings/tokens
         // if this doesn't work try 'Bearer <token>' instead of 'token <token>'
+        // https://docs.github.com/en/rest/overview/authenticating-to-the-rest-api
         {
           headers: { Authorization: 'token <token>' },
         },
