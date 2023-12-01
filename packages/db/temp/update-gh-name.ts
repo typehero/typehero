@@ -28,6 +28,7 @@ async function getUsers() {
       const accountId = user.accounts[0];
       const githubUser = await axios.get(
         `https://api.github.com/user/${accountId?.providerAccountId}`,
+        // https://github.com/settings/tokens
         {
           headers: { Authorization: 'token <token>' },
         },
