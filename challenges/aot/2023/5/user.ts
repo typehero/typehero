@@ -1,1 +1,1 @@
-type SantasList<GoodList, BadList> = any;
+type SantasList = unknown;

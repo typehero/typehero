@@ -14,8 +14,8 @@ _\[a conversation in the North Pole kitchenette on the morning of December 4th b
 
 Clearly, Bernard is a bit disgruntled. Can you blame him? Alas, there's still more work to do. Bernard walks away and mutters to himself:
 
-> _\[Bernard\]_ Guess it's time drag myself through another pointless TypeScript type challenge with no practical application.
+> _\[Bernard\]_ Guess it's time to drag myself through another pointless TypeScript type challenge with no practical application.
 
 Poor Bernard. Let's help him out.
 
-Today's task is craft a type (`PresentDeliveryList`) that takes an object type as an input and then replaces the values at each property with an `Address`. We don't know in advance what properties will be provided, which is why it needs to be a generic type. Otherwise Bernard would probably just copy/pasta it to get throug the day.
+Today's task is to craft a type (`PresentDeliveryList`) that takes an object type as an input and then replaces the values at each property with an `Address`. We don't know in advance what properties will be provided, which is why it needs to be a generic type. Otherwise Bernard would probably just copy/pasta it to get through the day.
