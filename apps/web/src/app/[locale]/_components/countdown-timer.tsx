@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 const DateCard = ({ date, label }: { date: React.ReactNode; label: string }) => {
   return (
