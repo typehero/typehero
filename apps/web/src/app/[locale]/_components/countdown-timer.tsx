@@ -19,7 +19,7 @@ export const CountdownTimer = () => {
   const [remainingTime, setRemainingTime] = useState(
     Math.max(0, releaseDateTimeInMilliSeconds - Date.now()),
   );
-  
+
   useEffect(() => {
     const countdown = () => {
       const newRemainingTime = Math.max(0, releaseDateTimeInMilliSeconds.getTime() - Date.now());
