@@ -53,7 +53,7 @@ export const CountdownTimer = () => {
     <>
       <p className="text-center text-xl font-semibold">
         The next type challenge will unlock at <span className="text-primary">midnight(est)</span>{' '}
-        on December {appendNumberSuffix(Math.min(releaseDate.getDate() + 1, 25))}
+        on December {formatNumberWithSuffix(Math.min(releaseDate.getDate(), 25))}
       </p>
       <div className="flex gap-4 font-bold tabular-nums">
         <DateCard date={days} label="Days" />
@@ -65,21 +65,13 @@ export const CountdownTimer = () => {
   );
 };
 
-const appendNumberSuffix = (n: number) => {
+const formatNumberWithSuffix = (n: number) => {
+  const suffixes = ['th', 'st', 'nd', 'rd'];
   const lastDigit = n % 10;
-  const lastTwoDigits = n % 100;
+  const isSpecialCase = n >= 11 && n <= 13;
+  const suffix = isSpecialCase ? 'th' : suffixes[lastDigit] || 'th';
 
-  if (lastTwoDigits === 11 || lastTwoDigits === 12 || lastTwoDigits === 13) {
-    return `${n}th`;
-  }
-
-  return `${n}${
-    {
-      1: 'st',
-      2: 'nd',
-      3: 'rd',
-    }[lastDigit] || 'th'
-  }`;
+  return `${n}${suffix}`;
 };
 
 const calculateTimeComponents = (milliseconds: number, isFormatted = false) => {
