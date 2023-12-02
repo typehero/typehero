@@ -29,7 +29,7 @@ async function getTrackChallenges(session: Session | null) {
       trackChallenges: {
         include: {
           challenge: {
-            include: {
+            select: {
               submission: {
                 where: {
                   userId: session?.user.id || '',
@@ -40,6 +40,9 @@ async function getTrackChallenges(session: Session | null) {
                 },
                 take: 1,
               },
+              id: true,
+              name: true,
+              slug: true,
             },
           },
         },
@@ -50,13 +53,16 @@ async function getTrackChallenges(session: Session | null) {
     },
   });
 
-  return track?.trackChallenges.map((trackChallenge) => {
+  const r = track?.trackChallenges.map((trackChallenge) => {
     const { submission, ...challenge } = trackChallenge.challenge;
     return {
       ...challenge,
       hasSolved: trackChallenge.challenge.submission.length > 0,
     };
   });
+  console.log({ r });
+
+  return r;
 }
 
 function revealItems(items: Challenges) {
