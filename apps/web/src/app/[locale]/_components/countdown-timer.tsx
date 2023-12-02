@@ -13,18 +13,6 @@ const DateCard = ({ date, label }: { date: React.ReactNode; label: string }) => 
 };
 
 export const CountdownTimer = () => {
-  const calculateNextReleaseTime = () => {
-    const currentDate = new Date();
-    const releaseTime = new Date(currentDate);
-    releaseTime.setUTCHours(5, 0, 0, 0);
-
-    if (releaseTime.getTime() <= currentDate.getTime()) {
-      releaseTime.setDate(releaseTime.getDate() + 1);
-    }
-
-    return releaseTime;
-  };
-  
   const [releaseDate, setReleaseDate] = useState(() => {
     return calculateNextReleaseTime();
   });
@@ -40,7 +28,7 @@ export const CountdownTimer = () => {
 
       if (newRemainingTime === 0) {
         const nextReleaseDateTime = calculateNextReleaseTime();
-        setRemainingTime(nextReleaseDateTime.getTime()- Date.now());
+        setRemainingTime(nextReleaseDateTime.getTime() - Date.now());
         setReleaseDate(nextReleaseDateTime);
       }
     };
@@ -60,7 +48,7 @@ export const CountdownTimer = () => {
     <>
       <p className="text-center text-xl font-semibold">
         The next type challenge will unlock at <span className="text-primary">midnight(est)</span>{' '}
-        on December {formatNumberWithSuffix(Math.min(releaseDate.getDate(), 25))}
+        on December {formatNumberWithSuffix(Math.min(releaseDate.getUTCDate(), 25))}
       </p>
       <div className="flex gap-4 font-bold tabular-nums">
         <DateCard date={days} label="Days" />
@@ -70,6 +58,18 @@ export const CountdownTimer = () => {
       </div>
     </>
   );
+};
+
+const calculateNextReleaseTime = () => {
+  const currentDate = new Date();
+  const releaseTime = new Date(currentDate);
+  releaseTime.setUTCHours(5, 0, 0, 0);
+
+  if (releaseTime.getUTCHours() <= currentDate.getUTCHours()) {
+    releaseTime.setUTCDate(releaseTime.getUTCDate() + 1);
+  }
+
+  return releaseTime;
 };
 
 const formatNumberWithSuffix = (n: number) => {
