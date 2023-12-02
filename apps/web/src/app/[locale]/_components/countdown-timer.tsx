@@ -13,19 +13,19 @@ const DateCard = ({ date, label }: { date: React.ReactNode; label: string }) => 
 };
 
 export const CountdownTimer = () => {
-  const [releaseDateTimeInMilliSeconds, setReleaseDateTimeInMilliSeconds] = useState(() => {
+  const [releaseDate, setReleaseDate] = useState(() => {
     const date = new Date();
     date.setUTCHours(5, 0, 0, 0);
-    return date.getTime();
+    return date;
   });
 
   const [remainingTime, setRemainingTime] = useState(
-    Math.max(0, releaseDateTimeInMilliSeconds - Date.now()),
+    Math.max(0, releaseDate.getTime() - Date.now()),
   );
 
   useEffect(() => {
     const countdown = () => {
-      const newRemainingTime = Math.max(0, releaseDateTimeInMilliSeconds - Date.now());
+      const newRemainingTime = Math.max(0, releaseDate.getTime() - Date.now());
       setRemainingTime(newRemainingTime);
 
       if (newRemainingTime === 0) {
@@ -34,7 +34,7 @@ export const CountdownTimer = () => {
         nextReleaseDateTime.setDate(nextReleaseDateTime.getDate() + 1);
 
         setRemainingTime(nextReleaseDateTime.getTime() - Date.now());
-        setReleaseDateTimeInMilliSeconds(nextReleaseDateTime.getTime());
+        setReleaseDate(nextReleaseDateTime);
       }
     };
 
@@ -43,20 +43,43 @@ export const CountdownTimer = () => {
     return () => {
       clearInterval(timerId);
     };
-  }, [remainingTime, releaseDateTimeInMilliSeconds]);
+  }, [remainingTime, releaseDate]);
 
   const { days, hours, minutes, seconds } = calculateTimeComponents(remainingTime);
 
   if (remainingTime === 0) return null;
 
   return (
-    <div className="flex gap-4 font-bold tabular-nums">
-      <DateCard date={days} label="Days" />
-      <DateCard date={hours} label="Hours" />
-      <DateCard date={minutes} label="Minutes" />
-      <DateCard date={seconds} label="Seconds" />
-    </div>
+    <>
+      <p className="text-center text-xl font-semibold">
+        The next type challenge will unlock at <span className="text-primary">midnight(est)</span>{' '}
+        December {appendNumberSuffix(Math.min(releaseDate.getDate() + 1, 25))}
+      </p>
+      <div className="flex gap-4 font-bold tabular-nums">
+        <DateCard date={days} label="Days" />
+        <DateCard date={hours} label="Hours" />
+        <DateCard date={minutes} label="Minutes" />
+        <DateCard date={seconds} label="Seconds" />
+      </div>
+    </>
   );
+};
+
+const appendNumberSuffix = (n: number) => {
+  const lastDigit = n % 10;
+  const lastTwoDigits = n % 100;
+
+  if (lastTwoDigits === 11 || lastTwoDigits === 12 || lastTwoDigits === 13) {
+    return `${n}th`;
+  }
+
+  return `${n}${
+    {
+      1: 'st',
+      2: 'nd',
+      3: 'rd',
+    }[lastDigit] || 'th'
+  }`;
 };
 
 const calculateTimeComponents = (milliseconds: number, isFormatted = false) => {
