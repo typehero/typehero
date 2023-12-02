@@ -21,8 +21,8 @@ export async function AotLandingPage() {
         </div>
         <div className="flex flex-col items-center justify-center gap-5">
           <p className="text-center text-xl font-semibold">
-            The first type challenge will unlock at{' '}
-            <span className="text-primary">midnight(est)</span> on December 1st
+            The second type challenge will unlock at{' '}
+            <span className="text-primary">midnight(est)</span> on December 2nd
           </p>
           <CountdownTimer />
           <div className="flex w-full flex-col items-center justify-center gap-2 md:w-auto md:flex-row md:gap-5">
