@@ -29,7 +29,7 @@ async function getTrackChallenges(session: Session | null) {
       trackChallenges: {
         include: {
           challenge: {
-            include: {
+            select: {
               submission: {
                 where: {
                   userId: session?.user.id || '',
@@ -40,6 +40,9 @@ async function getTrackChallenges(session: Session | null) {
                 },
                 take: 1,
               },
+              id: true,
+              name: true,
+              slug: true,
             },
           },
         },
