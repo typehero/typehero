@@ -13,7 +13,7 @@ const DateCard = ({ date, label }: { date: React.ReactNode; label: string }) => 
 };
 
 export const CountdownTimer = () => {
-  const releaseDateTimeInMilliSeconds = new Date('2023-12-01T05:00:00.000Z').getTime();
+  const releaseDateTimeInMilliSeconds = new Date('2023-12-02T05:00:00.000Z').getTime();
   const [remainingTime, setRemainingTime] = useState(
     Math.max(0, releaseDateTimeInMilliSeconds - Date.now()),
   );
