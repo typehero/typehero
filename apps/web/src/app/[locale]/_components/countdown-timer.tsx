@@ -13,27 +13,32 @@ const DateCard = ({ date, label }: { date: React.ReactNode; label: string }) => 
 };
 
 export const CountdownTimer = () => {
+  const calculateNextReleaseTime = () => {
+    const currentDate = new Date();
+    const releaseTime = new Date(currentDate);
+    releaseTime.setUTCHours(5, 0, 0, 0);
+
+    return releaseTime.getTime() <= currentDate.getTime()
+      ? releaseTime.setDate(releaseTime.getDate() + 1)
+      : releaseTime.getTime();
+  };
+  
   const [releaseDate, setReleaseDate] = useState(() => {
-    const date = new Date();
-    date.setUTCHours(5, 0, 0, 0);
-    return date;
+    calculateNextReleaseTime();
   });
 
   const [remainingTime, setRemainingTime] = useState(
-    Math.max(0, releaseDate.getTime() - Date.now()),
+    Math.max(0, releaseDate - Date.now()),
   );
 
   useEffect(() => {
     const countdown = () => {
-      const newRemainingTime = Math.max(0, releaseDate.getTime() - Date.now());
+      const newRemainingTime = Math.max(0, releaseDate - Date.now());
       setRemainingTime(newRemainingTime);
 
       if (newRemainingTime === 0) {
-        const nextReleaseDateTime = new Date();
-        nextReleaseDateTime.setUTCHours(5, 0, 0, 0);
-        nextReleaseDateTime.setDate(nextReleaseDateTime.getDate() + 1);
-
-        setRemainingTime(nextReleaseDateTime.getTime() - Date.now());
+        const nextReleaseDateTime = calculateNextReleaseTime();
+        setRemainingTime(nextReleaseDateTime - Date.now());
         setReleaseDate(nextReleaseDateTime);
       }
     };
@@ -44,7 +49,7 @@ export const CountdownTimer = () => {
       clearInterval(timerId);
     };
   }, [remainingTime, releaseDate]);
-
+  
   const { days, hours, minutes, seconds } = calculateTimeComponents(remainingTime);
 
   if (remainingTime === 0) return null;
