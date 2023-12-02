@@ -13,15 +13,24 @@ const DateCard = ({ date, label }: { date: React.ReactNode; label: string }) => 
 };
 
 export const CountdownTimer = () => {
-  const releaseDateTimeInMilliSeconds = new Date('2023-12-02T05:00:00.000Z').getTime();
+  const [releaseDate, setReleaseDate] = useState(() => {
+    return calculateNextReleaseTime();
+  });
+
   const [remainingTime, setRemainingTime] = useState(
-    Math.max(0, releaseDateTimeInMilliSeconds - Date.now()),
+    Math.max(0, releaseDate.getTime() - Date.now()),
   );
 
   useEffect(() => {
     const countdown = () => {
-      const newRemainingTime = Math.max(0, releaseDateTimeInMilliSeconds - Date.now());
+      const newRemainingTime = Math.max(0, releaseDate.getTime() - Date.now());
       setRemainingTime(newRemainingTime);
+
+      if (newRemainingTime === 0) {
+        const nextReleaseDateTime = calculateNextReleaseTime();
+        setRemainingTime(nextReleaseDateTime.getTime() - Date.now());
+        setReleaseDate(nextReleaseDateTime);
+      }
     };
 
     const timerId = setInterval(countdown, 100);
@@ -29,20 +38,47 @@ export const CountdownTimer = () => {
     return () => {
       clearInterval(timerId);
     };
-  }, [remainingTime, releaseDateTimeInMilliSeconds]);
+  }, [remainingTime, releaseDate]);
 
   const { days, hours, minutes, seconds } = calculateTimeComponents(remainingTime);
 
   if (remainingTime === 0) return null;
 
   return (
-    <div className="flex gap-4 font-bold tabular-nums">
-      <DateCard date={days} label="Days" />
-      <DateCard date={hours} label="Hours" />
-      <DateCard date={minutes} label="Minutes" />
-      <DateCard date={seconds} label="Seconds" />
-    </div>
+    <>
+      <p className="text-center text-xl font-semibold">
+        The next type challenge will unlock at <span className="text-primary">midnight(est)</span>{' '}
+        on December {formatNumberWithSuffix(Math.min(releaseDate.getUTCDate(), 25))}
+      </p>
+      <div className="flex gap-4 font-bold tabular-nums">
+        <DateCard date={days} label="Days" />
+        <DateCard date={hours} label="Hours" />
+        <DateCard date={minutes} label="Minutes" />
+        <DateCard date={seconds} label="Seconds" />
+      </div>
+    </>
   );
+};
+
+const calculateNextReleaseTime = () => {
+  const currentDate = new Date();
+  const releaseTime = new Date(currentDate);
+  releaseTime.setUTCHours(5, 0, 0, 0);
+
+  if (releaseTime.getUTCHours() <= currentDate.getUTCHours()) {
+    releaseTime.setUTCDate(releaseTime.getUTCDate() + 1);
+  }
+
+  return releaseTime;
+};
+
+const formatNumberWithSuffix = (n: number) => {
+  const suffixes = ['th', 'st', 'nd', 'rd'];
+  const lastDigit = n % 10;
+  const isSpecialCase = n >= 11 && n <= 13;
+  const suffix = isSpecialCase ? 'th' : suffixes[lastDigit] || 'th';
+
+  return `${n}${suffix}`;
 };
 
 const calculateTimeComponents = (milliseconds: number, isFormatted = false) => {
