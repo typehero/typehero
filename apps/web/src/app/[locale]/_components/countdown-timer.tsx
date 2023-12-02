@@ -17,7 +17,7 @@ export const CountdownTimer = () => {
   releaseDateTimeInMilliSeconds.setUTCHours(5, 0, 0, 0);
 
   const [remainingTime, setRemainingTime] = useState(
-    Math.max(0, releaseDateTime.getTime() - Date.now())
+    Math.max(0, releaseDateTimeInMilliSeconds - Date.now()),
   );
   
   useEffect(() => {
