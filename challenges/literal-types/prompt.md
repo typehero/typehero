@@ -56,7 +56,7 @@ isItPartyTime('Monday');
 // ^?
 ```
 
-> /\* the above example assumes a 4 day workweek since 4 day workweeks are observed to increase employee productivity.
+> The above example assumes a 4 day workweek since 4 day workweeks are observed to increase employee productivity.
 
 The _return type_ for this function is _also_ a literal type union. Notice that you didn't have to specify the return type anywhere. It just _works_ this way in TypeScript. Nice.
 
