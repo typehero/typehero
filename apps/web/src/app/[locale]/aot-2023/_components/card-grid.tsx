@@ -53,16 +53,13 @@ async function getTrackChallenges(session: Session | null) {
     },
   });
 
-  const r = track?.trackChallenges.map((trackChallenge) => {
+  return track?.trackChallenges.map((trackChallenge) => {
     const { submission, ...challenge } = trackChallenge.challenge;
     return {
       ...challenge,
       hasSolved: trackChallenge.challenge.submission.length > 0,
     };
   });
-  console.log({ r });
-
-  return r;
 }
 
 function revealItems(items: Challenges) {
