@@ -13,15 +13,21 @@ const DateCard = ({ date, label }: { date: React.ReactNode; label: string }) => 
 };
 
 export const CountdownTimer = () => {
-  const releaseDateTimeInMilliSeconds = new Date('2023-12-02T05:00:00.000Z').getTime();
-  const [remainingTime, setRemainingTime] = useState(
-    Math.max(0, releaseDateTimeInMilliSeconds - Date.now()),
-  );
-
+  const releaseDateTimeInMilliSeconds = new Date();
+  releaseDateTime.setUTCHours(5, 0, 0, 0);
+  
   useEffect(() => {
     const countdown = () => {
-      const newRemainingTime = Math.max(0, releaseDateTimeInMilliSeconds - Date.now());
+      const newRemainingTime = Math.max(0, releaseDateTime.getTime() - Date.now());
       setRemainingTime(newRemainingTime);
+
+      if (newRemainingTime === 0) {
+        const nextReleaseDateTime = new Date();
+        nextReleaseDateTime.setUTCHours(5, 0, 0, 0);
+        nextReleaseDateTime.setDate(nextReleaseDateTime.getDate() + 1);
+
+        setRemainingTime(nextReleaseDateTime.getTime() - Date.now());
+      }
     };
 
     const timerId = setInterval(countdown, 100);
