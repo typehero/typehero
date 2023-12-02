@@ -18,9 +18,11 @@ export const CountdownTimer = () => {
     const releaseTime = new Date(currentDate);
     releaseTime.setUTCHours(5, 0, 0, 0);
 
-    return releaseTime.getTime() <= currentDate.getTime()
-      ? releaseTime.setDate(releaseTime.getDate() + 1)
-      : releaseTime.getTime();
+    if (releaseTime.getTime() <= currentDate.getTime()) {
+      releaseTime.setDate(releaseTime.getDate() + 1);
+    }
+
+    return releaseTime;
   };
   
   const [releaseDate, setReleaseDate] = useState(() => {
@@ -28,17 +30,17 @@ export const CountdownTimer = () => {
   });
 
   const [remainingTime, setRemainingTime] = useState(
-    Math.max(0, releaseDate - Date.now()),
+    Math.max(0, releaseDate.getTime() - Date.now()),
   );
 
   useEffect(() => {
     const countdown = () => {
-      const newRemainingTime = Math.max(0, releaseDate - Date.now());
+      const newRemainingTime = Math.max(0, releaseDate.getTime() - Date.now());
       setRemainingTime(newRemainingTime);
 
       if (newRemainingTime === 0) {
         const nextReleaseDateTime = calculateNextReleaseTime();
-        setRemainingTime(nextReleaseDateTime - Date.now());
+        setRemainingTime(nextReleaseDateTime.getTime()- Date.now());
         setReleaseDate(nextReleaseDateTime);
       }
     };
