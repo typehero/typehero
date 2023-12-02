@@ -51,10 +51,10 @@ export function Markdown({ children, className }: { children: string; className?
           <a className={clsx(className, 'text-blue-500')} {...props} />
         ),
         ul: ({ className, ...props }) => (
-          <ul className={clsx(className, 'list-disc ps-10')} {...props} />
+          <ul className={clsx(className, 'mb-4 list-disc ps-10')} {...props} />
         ),
         ol: ({ className, ...props }) => (
-          <ol className={clsx(className, 'list-decimal ps-10')} {...props} />
+          <ol className={clsx(className, 'mb-4 list-decimal ps-10')} {...props} />
         ),
         h1: ({ className, ...props }) => (
           <h1 className={clsx(className, 'mb-2 pb-2 text-3xl font-bold')} {...props} />
