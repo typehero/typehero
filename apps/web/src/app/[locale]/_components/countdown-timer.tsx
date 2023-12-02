@@ -24,7 +24,7 @@ export const CountdownTimer = () => {
   };
   
   const [releaseDate, setReleaseDate] = useState(() => {
-    calculateNextReleaseTime();
+    return calculateNextReleaseTime();
   });
 
   const [remainingTime, setRemainingTime] = useState(
