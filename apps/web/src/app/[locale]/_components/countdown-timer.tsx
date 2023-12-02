@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 
 const DateCard = ({ date, label }: { date: React.ReactNode; label: string }) => {
   return (
@@ -13,11 +13,11 @@ const DateCard = ({ date, label }: { date: React.ReactNode; label: string }) => 
 };
 
 export const CountdownTimer = () => {
-  const releaseDateTimeInMilliSeconds = useMemo(() => {
+  const [releaseDateTimeInMilliSeconds, setReleaseDateTimeInMilliSeconds] = useState(() => {
     const date = new Date();
     date.setUTCHours(5, 0, 0, 0);
-    return date;
-  }, []);
+    return date.getTime();
+  });
 
   const [remainingTime, setRemainingTime] = useState(
     Math.max(0, releaseDateTimeInMilliSeconds - Date.now()),
@@ -34,6 +34,7 @@ export const CountdownTimer = () => {
         nextReleaseDateTime.setDate(nextReleaseDateTime.getDate() + 1);
 
         setRemainingTime(nextReleaseDateTime.getTime() - Date.now());
+        setReleaseDateTimeInMilliSeconds(nextReleaseDateTime.getTime();
       }
     };
 
