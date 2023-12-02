@@ -53,7 +53,7 @@ export const CountdownTimer = () => {
     <>
       <p className="text-center text-xl font-semibold">
         The next type challenge will unlock at <span className="text-primary">midnight(est)</span>{' '}
-        December {appendNumberSuffix(Math.min(releaseDate.getDate() + 1, 25))}
+        on December {appendNumberSuffix(Math.min(releaseDate.getDate() + 1, 25))}
       </p>
       <div className="flex gap-4 font-bold tabular-nums">
         <DateCard date={days} label="Days" />
