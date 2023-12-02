@@ -49,7 +49,7 @@ export const CountdownTimer = () => {
       clearInterval(timerId);
     };
   }, [remainingTime, releaseDate]);
-  
+
   const { days, hours, minutes, seconds } = calculateTimeComponents(remainingTime);
 
   if (remainingTime === 0) return null;
