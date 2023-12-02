@@ -75,6 +75,11 @@ export async function getSolvedChallenges(userId: string) {
     where: {
       userId,
       isSuccessful: true,
+      challenge: {
+        NOT: {
+          difficulty: 'EVENT',
+        },
+      },
     },
     select: {
       challenge: {
