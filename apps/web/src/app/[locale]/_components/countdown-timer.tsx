@@ -25,7 +25,7 @@ export const CountdownTimer = () => {
 
   useEffect(() => {
     const countdown = () => {
-      const newRemainingTime = Math.max(0, releaseDateTimeInMilliSeconds.getTime() - Date.now());
+      const newRemainingTime = Math.max(0, releaseDateTimeInMilliSeconds - Date.now());
       setRemainingTime(newRemainingTime);
 
       if (newRemainingTime === 0) {
@@ -34,7 +34,7 @@ export const CountdownTimer = () => {
         nextReleaseDateTime.setDate(nextReleaseDateTime.getDate() + 1);
 
         setRemainingTime(nextReleaseDateTime.getTime() - Date.now());
-        setReleaseDateTimeInMilliSeconds(nextReleaseDateTime.getTime();
+        setReleaseDateTimeInMilliSeconds(nextReleaseDateTime.getTime());
       }
     };
 
