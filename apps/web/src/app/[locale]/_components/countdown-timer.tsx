@@ -15,6 +15,10 @@ const DateCard = ({ date, label }: { date: React.ReactNode; label: string }) => 
 export const CountdownTimer = () => {
   const releaseDateTimeInMilliSeconds = new Date();
   releaseDateTimeInMilliSeconds.setUTCHours(5, 0, 0, 0);
+
+  const [remainingTime, setRemainingTime] = useState(
+    Math.max(0, releaseDateTime.getTime() - Date.now())
+  );
   
   useEffect(() => {
     const countdown = () => {
