@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 252
+        "contributions": 259
     },
     {
         "login": "Hacksore",
@@ -1241,6 +1241,27 @@ export const contributors = [
         "contributions": 2
     },
     {
+        "login": "WVAviator",
+        "id": 11326285,
+        "node_id": "MDQ6VXNlcjExMzI2Mjg1",
+        "avatar_url": "https://avatars.githubusercontent.com/u/11326285?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/WVAviator",
+        "html_url": "https://github.com/WVAviator",
+        "followers_url": "https://api.github.com/users/WVAviator/followers",
+        "following_url": "https://api.github.com/users/WVAviator/following{/other_user}",
+        "gists_url": "https://api.github.com/users/WVAviator/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/WVAviator/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/WVAviator/subscriptions",
+        "organizations_url": "https://api.github.com/users/WVAviator/orgs",
+        "repos_url": "https://api.github.com/users/WVAviator/repos",
+        "events_url": "https://api.github.com/users/WVAviator/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/WVAviator/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 1
+    },
+    {
         "login": "4ndrs",
         "id": 31898900,
         "node_id": "MDQ6VXNlcjMxODk4OTAw",
@@ -1656,6 +1677,27 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/RhysSullivan/repos",
         "events_url": "https://api.github.com/users/RhysSullivan/events{/privacy}",
         "received_events_url": "https://api.github.com/users/RhysSullivan/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 1
+    },
+    {
+        "login": "romain-trotard",
+        "id": 17161484,
+        "node_id": "MDQ6VXNlcjE3MTYxNDg0",
+        "avatar_url": "https://avatars.githubusercontent.com/u/17161484?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/romain-trotard",
+        "html_url": "https://github.com/romain-trotard",
+        "followers_url": "https://api.github.com/users/romain-trotard/followers",
+        "following_url": "https://api.github.com/users/romain-trotard/following{/other_user}",
+        "gists_url": "https://api.github.com/users/romain-trotard/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/romain-trotard/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/romain-trotard/subscriptions",
+        "organizations_url": "https://api.github.com/users/romain-trotard/orgs",
+        "repos_url": "https://api.github.com/users/romain-trotard/repos",
+        "events_url": "https://api.github.com/users/romain-trotard/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/romain-trotard/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 1
