@@ -20,7 +20,7 @@ export async function CardGrid() {
 
 export type Challenges = NonNullable<Awaited<ReturnType<typeof getTrackChallenges>>>;
 async function getTrackChallenges(session: Session | null) {
-  const track = await prisma.track.findFirstOrThrow({
+  const track = await prisma.track.findFirst({
     where: {
       slug: 'advent-of-typescript-2023',
     },
@@ -65,7 +65,7 @@ function revealItems(items: Challenges) {
 
   const daysPassed = Math.floor((today.getTime() - startDate.getTime()) / MS_PER_DAY);
 
-  return items.map((item, index) => {
+  return items?.map((item, index) => {
     const isPastOrCurrentDay = index <= daysPassed;
     return { ...item, isRevealed: isPastOrCurrentDay };
   });
