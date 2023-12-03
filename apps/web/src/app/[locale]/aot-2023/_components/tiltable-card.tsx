@@ -114,6 +114,7 @@ export function TiltableCard({ index, challenge }: Props) {
         perspective: '1200px',
         transformStyle: 'preserve-3d',
         position: 'relative',
+        cursor: 'pointer',
       }}
     >
       <motion.div
