@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useRef, useState, type MouseEvent } from 'react';
+import { useRef, useState, type MouseEvent, useEffect } from 'react';
 import type { Challenges } from './card-grid';
 import clsx from 'clsx';
 
@@ -104,6 +104,13 @@ export function TiltableCard({ index, challenge }: Props) {
       setGlare({ x: 50, y: 50, opacity: 0 });
     }, 100);
   };
+
+  useEffect(() => {
+    if (!challenge.isRevealed) {
+      return;
+    }
+    router.prefetch(`/challenge/${challenge.slug}`);
+  }, [challenge, router]);
 
   return (
     <motion.div
