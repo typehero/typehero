@@ -20,7 +20,7 @@ export function Providers({ children }: Props) {
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-right" />
       <SessionProvider>
-        <ThemeProvider attribute="class">
+        <ThemeProvider attribute="class" disableTransitionOnChange>
           <FeatureFlagProvider>
             <TooltipProvider>{children}</TooltipProvider>
           </FeatureFlagProvider>
