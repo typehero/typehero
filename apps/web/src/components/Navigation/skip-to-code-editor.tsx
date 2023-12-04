@@ -1,12 +1,11 @@
 'use client';
-import { usePathname } from "next/navigation";
+import { usePathname } from 'next/navigation';
 
 export const SkipToCodeEditor = () => {
-
   const pathname = usePathname();
 
   if (!pathname.includes('challenge')) {
-    return null
+    return null;
   }
 
   return (
