@@ -1,5 +1,5 @@
 import { auth } from '@repo/auth/server';
-import { SolutionDetails } from '~/app/[locale]/challenge/[slug]/solutions/_components/solution-detail';
+import { SolutionDetails } from '~/app/[locale]/challenge/[slug]/@left/solutions/_components/solution-detail';
 import { Comments } from '~/app/[locale]/challenge/_components/comments';
 import { getPreselectedSolutionCommentMetadata } from '~/app/[locale]/challenge/_components/comments/getCommentRouteData';
 import { getSolutionIdRouteData } from '../../getSolutionIdRouteData';

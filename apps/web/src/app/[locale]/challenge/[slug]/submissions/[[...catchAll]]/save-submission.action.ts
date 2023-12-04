@@ -2,7 +2,7 @@
 import { prisma } from '@repo/db';
 import { revalidateTag } from 'next/cache';
 import type { ChallengeRouteData } from '../../getChallengeRouteData';
-import { createCacheKeyForSolutions } from '../../solutions/_components/_actions';
+import { createCacheKeyForSolutions } from '../../@left/solutions/_components/_actions';
 import {
   createChallengeSubmissionCacheKey,
   createCompletedSubmissionCacheKey,

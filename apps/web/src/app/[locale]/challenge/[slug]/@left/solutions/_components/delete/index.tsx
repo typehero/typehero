@@ -2,7 +2,7 @@ import type { DialogTriggerProps } from '@radix-ui/react-dialog';
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogTrigger } from '@repo/ui/components/dialog';
 import { TypographyLarge } from '@repo/ui/components/typography/large';
-import type { ChallengeSolution } from '~/app/[locale]/challenge/[slug]/solutions/[solutionId]/page';
+import type { ChallengeSolution } from '~/app/[locale]/challenge/[slug]/@left/solutions/[solutionId]/page';
 import { Button } from '@repo/ui/components/button';
 import { TypographyP } from '@repo/ui/components/paragraph';
 import { deleteSolution } from '../_actions';
