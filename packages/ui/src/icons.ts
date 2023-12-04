@@ -72,4 +72,5 @@ export {
   History,
   ArrowLeft,
   RectangleVertical,
+  SearchIcon,
 } from 'lucide-react';
