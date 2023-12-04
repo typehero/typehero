@@ -16,13 +16,7 @@ import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { TypographyH3 } from '@repo/ui/components/typography/h3';
 import { UserBadge } from '@repo/ui/components/user-badge';
-import {
-  Bookmark as BookmarkIcon,
-  Calendar,
-  CheckCircle,
-  Flag,
-  Share,
-} from '@repo/ui/icons';
+import { Bookmark as BookmarkIcon, Calendar, CheckCircle, Flag, Share } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { debounce } from 'lodash';
 import Link from 'next/link';
