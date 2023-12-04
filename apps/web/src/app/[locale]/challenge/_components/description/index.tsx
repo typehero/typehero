@@ -28,6 +28,7 @@ import { addOrRemoveBookmark } from '../bookmark.action';
 import { ShareForm } from '../share-form';
 import { Vote } from '../vote';
 import { AOT_CHALLENGES } from '../../[slug]/aot-slugs';
+import { Suggestions } from './suggestions';
 
 interface Props {
   challenge: ChallengeRouteData['challenge'];
@@ -175,6 +176,8 @@ export function Description({ challenge }: Props) {
       <div className="prose-invert prose-h3:text-xl mt-6 leading-7">
         <Markdown>{challenge.description}</Markdown>
       </div>
+      {/* More Challenges Suggestions */}
+      <Suggestions challengeId={challenge.id} />
     </div>
   );
 }

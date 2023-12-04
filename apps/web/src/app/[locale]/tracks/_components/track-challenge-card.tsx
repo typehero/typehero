@@ -20,6 +20,7 @@ interface TrackChallengeProps {
   isCompact?: boolean;
   /* Hide submission status */
   hideSubmissionStatus?: boolean;
+  className?: string;
 }
 
 const BGS_BY_DIFFICULTY = {
@@ -40,6 +41,7 @@ export function TrackChallenge({
   isSelected = false,
   isCompact = false,
   hideSubmissionStatus = false,
+  className,
 }: TrackChallengeProps) {
   const isMobile = useIsMobile();
   const backgroundColor = isCompleted
@@ -66,6 +68,7 @@ export function TrackChallenge({
             'group-hover/challenge:scale-[1.025] group-hover/challenge:bg-neutral-500/20 lg:group-hover/challenge:rounded-xl':
               !isMobile,
           },
+          className,
         )}
       >
         <div className="w-full space-y-2">
