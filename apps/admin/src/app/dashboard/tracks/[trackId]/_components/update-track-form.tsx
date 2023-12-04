@@ -232,7 +232,9 @@ export function UpdateTrackForm({ challenges, track }: Props) {
               <Link href="/?tab=tracks">
                 <Button variant="ghost">Cancel</Button>
               </Link>
-              <Button type="submit">Save</Button>
+              <Button type="submit" disabled={form.formState.isSubmitting}>
+                Save
+              </Button>
             </DialogFooter>
           </form>
         </Form>
