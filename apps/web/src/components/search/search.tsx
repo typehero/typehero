@@ -39,13 +39,13 @@ export function Search() {
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          className={cn(
-            'text-muted-foreground group relative w-full justify-start text-sm sm:pr-12 md:w-40 lg:w-64',
-          )}
+          className="text-muted-foreground w-30 group relative justify-start text-sm sm:pr-12 md:w-40 lg:w-64"
           onClick={() => setOpen(true)}
         >
-          <span className="hidden lg:inline-flex">Search...</span>
-          <span className="inline-flex lg:hidden">Search...</span>
+          <span className="sm:hidden">Search</span>
+          <span className="hidden w-20 truncate text-left sm:inline-block md:w-full">
+            Search Challenges...
+          </span>
           <kbd className="bg-muted dark:group-hover:bg-muted-foreground top-50% pointer-events-none absolute right-1.5 hidden h-5 select-none items-center gap-1 rounded border px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
             <span className="text-xs">⌘</span>K
           </kbd>
@@ -54,12 +54,12 @@ export function Search() {
       <SearchProvider>
         <SearchBoxContextProvider>
           <DialogContent
-            className="max-w-full overflow-y-auto md:max-w-[800px] lg:max-w-[800px]"
+            className="max-h-[80vh] max-w-full overflow-hidden md:max-w-[75vw] lg:max-w-[65vw]"
             displayX={false}
           >
             <SearchBox />
             <Separator />
-            <ScrollArea className="h-[400px] sm:h-[500px] md:h-[350px]">
+            <ScrollArea className="h-[60vh]">
               <Hits onClick={() => setOpen(false)} />
               <ScrollBar className="z-30" />
             </ScrollArea>
@@ -98,7 +98,7 @@ function Hits({ onClick }: HitsProps) {
 
         return (
           <div key={difficulty} className="flex flex-col items-start gap-4">
-            <div className="bg-background sticky top-0 z-30 w-full pb-1.5 pt-1">
+            <div className="bg-background sticky top-0 z-30 w-full py-2">
               <DifficultyBadge difficulty={difficulty} />
             </div>
             <div className="flex w-full flex-col gap-2">
