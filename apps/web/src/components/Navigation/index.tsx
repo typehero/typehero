@@ -104,7 +104,7 @@ async function LoginButton() {
 
   const isAdminOrMod = isAdminOrModerator(session);
 
-  return (session && session.user) ? (
+  return session && session.user ? (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button
