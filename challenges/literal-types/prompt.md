@@ -1,8 +1,6 @@
 ## The Problem Literal Types Solve
 
-JavaScript, like most programming languages has a concept of [primitive data types](https://typehero.dev/challenge/primitive-data-types). Primitive data types are things like `string`, `boolean`, `number`, and `object`.
-
-> side note: in JavaScript, arrays and functions are actually objects, but that's a topic for another time :)
+JavaScript, like most programming languages has a concept of [primitive data types](https://typehero.dev/challenge/primitive-data-types). Primitive data types are things like `string`, `number` and `boolean`.
 
 But TypeScript isn't _like_ most programming languages. It's better. It takes things to the next level by introducing _literal_ data types.
 
