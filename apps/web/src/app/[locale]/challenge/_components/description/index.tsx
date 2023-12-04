@@ -177,7 +177,7 @@ export function Description({ challenge }: Props) {
         <Markdown>{challenge.description}</Markdown>
       </div>
       {/* More Challenges Suggestions */}
-      <Suggestions challengeId={challenge.id} />
+      {!isAotChallenge && <Suggestions challengeId={challenge.id} />}
     </div>
   );
 }
