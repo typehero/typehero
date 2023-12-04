@@ -20,7 +20,6 @@ import {
   Bookmark as BookmarkIcon,
   Calendar,
   CheckCircle,
-  ChevronRight,
   Flag,
   Share,
 } from '@repo/ui/icons';
