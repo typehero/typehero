@@ -21,7 +21,7 @@ export function Suggestions({ challengeId }: { challengeId: number }) {
         <h3 className="text-foreground text-lg font-semibold md:text-xl">More Challenges</h3>
       </div>
       <div>
-        {similarChallenges?.map((challenge, idx) => {
+        {similarChallenges.map((challenge, idx) => {
           return (
             <Link href={`/challenge/${challenge.slug}`} key={idx}>
               <TrackChallenge
