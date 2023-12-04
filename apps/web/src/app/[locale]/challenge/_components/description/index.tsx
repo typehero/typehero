@@ -35,9 +35,7 @@ import { addOrRemoveBookmark } from '../bookmark.action';
 import { ShareForm } from '../share-form';
 import { Vote } from '../vote';
 import { AOT_CHALLENGES } from '../../[slug]/aot-slugs';
-import { useQuery } from '@tanstack/react-query';
-import { getSimilarChallenges } from '~/utils/server/get-similar-challenges';
-import { TrackChallenge } from '~/app/[locale]/tracks/_components/track-challenge-card';
+import { Suggestions } from './suggestions';
 
 interface Props {
   challenge: ChallengeRouteData['challenge'];
@@ -51,13 +49,6 @@ export interface FormValues {
 }
 
 export function Description({ challenge }: Props) {
-  const { data: similarChallenges } = useQuery({
-    queryKey: ['similar-challenges', challenge.id],
-    queryFn: () => {
-      return getSimilarChallenges(challenge.id, 3);
-    },
-  });
-
   const [hasBookmarked, setHasBookmarked] = useState(challenge.bookmark.length > 0);
   const session = useSession();
 
@@ -192,36 +183,8 @@ export function Description({ challenge }: Props) {
       <div className="prose-invert prose-h3:text-xl mt-6 leading-7">
         <Markdown>{challenge.description}</Markdown>
       </div>
-      <div>
-        {similarChallenges ? (
-          <>
-            <div className="flex items-center justify-between">
-              <h3 className="text-foreground text-lg font-semibold md:text-xl">More Challenges</h3>
-              {/* <Link href="/explore">
-                <Button size="sm" className="gap-1 rounded-full" variant="outline">
-                  Explore <ChevronRight size={13} />
-                </Button>
-              </Link> */}
-            </div>
-            <div>
-              {similarChallenges?.map((challenge, idx) => {
-                return (
-                  <Link href={`/challenge/${challenge.slug}`} key={idx}>
-                    <TrackChallenge
-                      className="to-neutral-500/10 px-3 py-2 dark:from-neutral-700/70 dark:to-neutral-700/70"
-                      challenge={{ ...challenge, submission: [] }}
-                      hideSubmissionStatus
-                      isCompleted={false}
-                      isCompact
-                      isInProgress={false}
-                    />
-                  </Link>
-                );
-              })}
-            </div>
-          </>
-        ) : null}
-      </div>
+      {/* More Challenges Suggestions */}
+      <Suggestions challengeId={challenge.id} />
     </div>
   );
 }
