@@ -59,7 +59,7 @@ export function Search() {
           >
             <SearchBox />
             <Separator />
-            <ScrollArea className="h-[500px] md:h-[350px]">
+            <ScrollArea className="h-[400px] sm:h-[500px] md:h-[350px]">
               <Hits onClick={() => setOpen(false)} />
               <ScrollBar className="z-30" />
             </ScrollArea>
@@ -98,7 +98,7 @@ function Hits({ onClick }: HitsProps) {
 
         return (
           <div key={difficulty} className="flex flex-col items-start gap-4">
-            <div className="bg-background sticky top-0 z-20 w-full pb-1.5 pt-1">
+            <div className="bg-background sticky top-0 z-30 w-full pb-1.5 pt-1">
               <DifficultyBadge difficulty={difficulty} />
             </div>
             <div className="flex w-full flex-col gap-2">
@@ -118,6 +118,7 @@ function Hit({ hit, onClick }: { hit: Challenge; onClick: OnClick }) {
 
   return (
     <Link
+      prefetch={false}
       onClick={onClick}
       href={`/challenge/${hit.slug}`}
       className="focus-visible:ring-ring hover:bg-foreground/20 bg-foreground/10 flex w-full flex-col items-start gap-2 overflow-hidden rounded-md px-2.5 py-2 transition-colors"
