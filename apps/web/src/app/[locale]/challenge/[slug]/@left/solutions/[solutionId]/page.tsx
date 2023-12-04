@@ -5,6 +5,7 @@ import { Comments } from '~/app/[locale]/challenge/_components/comments';
 import { getSolutionIdRouteData } from './getSolutionIdRouteData';
 import { isBetaUser } from '~/utils/server/is-beta-user';
 import { redirect } from 'next/navigation';
+import { Markdown } from '@repo/ui/components/markdown';
 
 interface Props {
   params: {
@@ -26,7 +27,11 @@ export default async function SolutionPage({ params: { solutionId, slug } }: Pro
 
   return (
     <div className="relative h-full">
-      <SolutionDetails solution={solution} />
+      <SolutionDetails solution={solution}>
+        <div className="prose-invert prose-h3:text-xl mt-6 leading-7">
+          <Markdown>{solution.description}</Markdown>
+        </div>
+      </SolutionDetails>
       <Comments rootId={solution.id!} type="SOLUTION" />
     </div>
   );

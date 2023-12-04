@@ -4,7 +4,6 @@ import { useSession } from '@repo/auth/react';
 import { ActionMenu } from '@repo/ui/components/action-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
 import { Button } from '@repo/ui/components/button';
-import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { TypographyLarge } from '@repo/ui/components/typography/large';
 import { toast } from '@repo/ui/components/use-toast';
@@ -20,14 +19,15 @@ import { pinOrUnpinSolution } from './_actions';
 import { isAdminOrModerator, isAuthor } from '~/utils/auth-guards';
 import { SolutionDeleteDialog } from './delete';
 import { useParams } from 'next/navigation';
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { EditSolution } from './edit-solution';
 
 interface Props {
   solution: ChallengeSolution;
+  children: ReactNode;
 }
 
-export function SolutionDetails({ solution }: Props) {
+export function SolutionDetails({ solution, children }: Props) {
   const { slug } = useParams();
   const { data: session } = useSession();
   const showPin = isAdminOrModerator(session);
@@ -168,11 +168,7 @@ export function SolutionDetails({ solution }: Props) {
               ) : null}
             </div>
           </div>
-          {!isEditing && (
-            <div className="prose-invert prose-h3:text-xl mt-6 leading-7">
-              <Markdown>{solution.description || ''}</Markdown>{' '}
-            </div>
-          )}
+          {!isEditing && children}
           {isEditing ? <EditSolution solution={solution} setIsEditing={setIsEditing} /> : null}
         </div>
       </div>
