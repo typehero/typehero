@@ -7,10 +7,12 @@ import { getChallengeRouteData } from './getChallengeRouteData';
 import { TrackVisibiltyProvider } from './use-track-visibility.hook';
 
 export default async function LayoutData({
-  children,
+  right,
+  left,
   params: { slug },
 }: {
-  children: React.ReactNode;
+  right: React.ReactNode;
+  left: React.ReactNode;
   params: { slug: string };
 }) {
   const session = await auth();
@@ -19,9 +21,7 @@ export default async function LayoutData({
   return (
     <ForceRenderUntilClient>
       <TrackVisibiltyProvider>
-        <ChallengeLayoutWrapper challenge={challenge} track={track}>
-          {children}
-        </ChallengeLayoutWrapper>
+        <ChallengeLayoutWrapper challenge={challenge} track={track} right={right} left={left} />
       </TrackVisibiltyProvider>
     </ForceRenderUntilClient>
   );

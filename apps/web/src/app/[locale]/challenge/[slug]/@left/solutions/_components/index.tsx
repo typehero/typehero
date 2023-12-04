@@ -12,10 +12,10 @@ import { getRelativeTime } from '~/utils/relativeTime';
 import { Badge } from '@repo/ui/components/badge';
 import { UserBadge } from '@repo/ui/components/user-badge';
 import { useParams } from 'next/navigation';
-import { Pagination } from '../../../_components/pagination';
+import { Pagination } from '../../../../_components/pagination';
 import { useQuery } from '@tanstack/react-query';
 import { SolutionsSkeleton } from './solution-skeleton';
-import { SortSelect } from '../../../_components/sort-select';
+import { SortSelect } from '../../../../_components/sort-select';
 
 interface Props {
   slug: string;

@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from '@repo/ui/components/card';
 import { notFound } from 'next/navigation';
-import { createCompletedSubmissionCacheKey } from '~/app/[locale]/challenge/[slug]/submissions/[[...catchAll]]/cache-keys';
+import { createCompletedSubmissionCacheKey } from '~/app/[locale]/challenge/[slug]/@left/submissions/cache-keys';
 import { withUnstableCache } from '~/utils/withUnstableCache';
 import { getChallengeHistoryByCategory } from '../_components/dashboard/_actions';
 import ChallengeHistory from '../_components/dashboard/challenge-history';

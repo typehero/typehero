@@ -8,8 +8,7 @@ import { FullscreenButton } from '../_components/fullscreen';
 import { ResetEditorButton } from '../_components/reset-editor-button';
 import { SettingsButton } from '../_components/settings/settings-button';
 import type { ChallengeRouteData } from './getChallengeRouteData';
-import { SubmissionOverview } from './submissions/[[...catchAll]]/_components/overview';
-import { saveSubmission } from './submissions/[[...catchAll]]/save-submission.action';
+import { saveSubmission } from './@left/submissions/save-submission.action';
 
 interface Props {
   challenge: ChallengeRouteData['challenge'];
@@ -22,10 +21,6 @@ export function Wrapper({ track, challenge }: Props) {
   const { data: session } = useSession();
 
   if (!challenge) return null;
-
-  if (segments[0] === 'submissions' && typeof segments[1] === 'string') {
-    return <SubmissionOverview submissionId={segments[1]} />;
-  }
 
   // Redirect to solution on successful submission and show suggestions
   async function handleSuccessfulSubmission(

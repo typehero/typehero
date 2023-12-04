@@ -1,7 +1,7 @@
 import { buildMetaForDefault } from '~/app/metadata';
-import { getChallengeRouteData } from '../getChallengeRouteData';
+import { getChallengeRouteData } from '../../getChallengeRouteData';
 import { Solutions } from './_components';
-import { AOT_CHALLENGES } from '../aot-slugs';
+import { AOT_CHALLENGES } from '../../aot-slugs';
 import { notFound } from 'next/navigation';
 
 interface Props {

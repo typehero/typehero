@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
 import { createNoProfanitySchemaWithValidate } from '~/utils/antiProfanityZod';
-import type { ChallengeSolution } from '~/app/[locale]/challenge/[slug]/solutions/[solutionId]/page';
+import type { ChallengeSolution } from '~/app/[locale]/challenge/[slug]/@left/solutions/[solutionId]/page';
 import { updateSolution } from './_actions';
 
 const formSchema = z.object({

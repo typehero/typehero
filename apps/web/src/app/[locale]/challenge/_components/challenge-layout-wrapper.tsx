@@ -4,15 +4,15 @@ import type { ChallengeRouteData } from '../[slug]/getChallengeRouteData';
 import { ChallengeLayout, MOBILE_BREAKPOINT } from './challenge-layout';
 import usePanelAdjustments from './usePanelAdjustments';
 import { LeftWrapper } from '../[slug]/left-wrapper';
-import { Wrapper } from '../[slug]/wrapper';
 
 interface Props {
   challenge: ChallengeRouteData['challenge'];
   track: ChallengeRouteData['track'];
-  children: ReactNode;
+  left: ReactNode;
+  right: ReactNode;
 }
 
-export function ChallengeLayoutWrapper({ challenge, track, children }: Props) {
+export function ChallengeLayoutWrapper({ challenge, track, right, left }: Props) {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > MOBILE_BREAKPOINT);
   const LEFT_PANEL_BREAKPOINT = isDesktop ? 500 : 318;
   const DEFAULT_DESKTOP_WIDTH_PX = `${LEFT_PANEL_BREAKPOINT}px`;
@@ -38,10 +38,10 @@ export function ChallengeLayoutWrapper({ challenge, track, children }: Props) {
           expandPanel={expandPanel}
           isDesktop={isDesktop}
         >
-          {children}
+          {left}
         </LeftWrapper>
       }
-      right={<Wrapper track={track} challenge={challenge} />}
+      right={right}
       {...props}
     />
   );

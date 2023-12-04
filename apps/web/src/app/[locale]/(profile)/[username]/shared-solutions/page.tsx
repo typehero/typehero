@@ -9,7 +9,7 @@ import {
 import { DataTable } from '@repo/ui/components/data-table';
 import { notFound } from 'next/navigation';
 import { withUnstableCache } from '~/utils/withUnstableCache';
-import { createCacheKeyForSharedSolutionsTab } from '../../../challenge/[slug]/solutions/_components/_actions';
+import { createCacheKeyForSharedSolutionsTab } from '../../../challenge/[slug]/@left/solutions/_components/_actions';
 import { sharedSolutionsColumns } from './_components/shared-solutions-columns';
 import { auth } from '@repo/auth/server';
 

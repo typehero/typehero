@@ -12,6 +12,7 @@ export type PreselectedCommentMetadata =
   | NonNullable<Awaited<ReturnType<typeof getPreselectedSolutionCommentMetadata>>>;
 
 export async function getPreselectedCommentMetadata(challengeId: number, commentId: number) {
+  if (!commentId) return;
   const challengeComments = await prisma.comment.findMany({
     where: {
       rootType: 'CHALLENGE',
@@ -49,6 +50,8 @@ export async function getPreselectedSolutionCommentMetadata(
   commentId: number,
   challengeId: number,
 ) {
+  if (!commentId) return;
+
   const solution = await prisma.sharedSolution.findFirst({
     where: {
       id: solutionId,
