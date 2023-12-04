@@ -123,7 +123,11 @@ export function SolutionEditor({ dismiss, challengeId, code }: Props) {
           >
             Cancel
           </Button>
-          <Button className="my-1 h-8 rounded-lg px-3 py-2" type="submit">
+          <Button
+            className="my-1 h-8 rounded-lg px-3 py-2"
+            type="submit"
+            disabled={form.formState.isSubmitting}
+          >
             Post
           </Button>
         </div>
