@@ -25,7 +25,7 @@ export async function AotLandingPage() {
             <a
               target="_blank"
               rel="noreferrer"
-              href="https://discord.com/invite/KPNUNQRB"
+              href="https://chat.typehero.dev"
               className="group flex w-full items-center justify-center gap-2 rounded-xl bg-[#5865F2] px-3 py-2 text-sm font-bold text-white duration-300 dark:bg-[#5865F2] md:mx-auto md:w-auto"
             >
               <svg
