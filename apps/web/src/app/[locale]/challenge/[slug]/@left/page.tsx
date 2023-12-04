@@ -10,10 +10,14 @@ import { Description } from '../../_components/description';
 import { AOT_CHALLENGES } from '../aot-slugs';
 import { getChallengeRouteData } from '../getChallengeRouteData';
 import { Markdown } from '@repo/ui/components/markdown';
+import { getPreselectedCommentMetadata } from '../../_components/comments/getCommentRouteData';
 
 interface Props {
   params: {
     slug: string;
+  };
+  searchParams: {
+    commentId?: string;
   };
 }
 
@@ -37,7 +41,7 @@ export async function generateMetadata({ params: { slug } }: Props) {
   });
 }
 
-export default async function Challenges({ params: { slug } }: Props) {
+export default async function Challenges({ params: { slug }, searchParams }: Props) {
   // early access you must be authorized
   const session = await auth();
   const isBeta = await isBetaUser(session);
@@ -60,6 +64,11 @@ export default async function Challenges({ params: { slug } }: Props) {
 
   const { challenge } = await getChallengeRouteData(slug, session);
 
+  const preselectedCommentMetadata = await getPreselectedCommentMetadata(
+    challenge.id,
+    Number(searchParams.commentId),
+  );
+
   return (
     <div className="relative h-full ">
       <Description challenge={challenge}>
@@ -67,7 +76,14 @@ export default async function Challenges({ params: { slug } }: Props) {
           <Markdown>{challenge.description}</Markdown>
         </div>
       </Description>
-      {!isAotChallenge ? <Comments rootId={challenge.id} type="CHALLENGE" /> : null}
+      {!isAotChallenge ? (
+        <Comments
+          rootId={challenge.id}
+          type="CHALLENGE"
+          preselectedCommentMetadata={preselectedCommentMetadata}
+          expanded={Boolean(preselectedCommentMetadata)}
+        />
+      ) : null}
     </div>
   );
 }
