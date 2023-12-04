@@ -12,7 +12,6 @@ import {
   DialogTrigger,
 } from '@repo/ui/components/dialog';
 import { DifficultyBadge } from '@repo/ui/components/difficulty-badge';
-import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { TypographyH3 } from '@repo/ui/components/typography/h3';
 import { UserBadge } from '@repo/ui/components/user-badge';
@@ -20,7 +19,7 @@ import { Bookmark as BookmarkIcon, Calendar, CheckCircle, Flag, Share } from '@r
 import clsx from 'clsx';
 import { debounce } from 'lodash';
 import Link from 'next/link';
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState, type ReactNode } from 'react';
 import { type ChallengeRouteData } from '~/app/[locale]/challenge/[slug]/getChallengeRouteData';
 import { ReportDialog } from '~/components/ReportDialog';
 import { getRelativeTime } from '~/utils/relativeTime';
@@ -31,6 +30,7 @@ import { AOT_CHALLENGES } from '../../[slug]/aot-slugs';
 
 interface Props {
   challenge: ChallengeRouteData['challenge'];
+  children: ReactNode;
 }
 
 export interface FormValues {
@@ -40,7 +40,7 @@ export interface FormValues {
   other: boolean;
 }
 
-export function Description({ challenge }: Props) {
+export function Description({ challenge, children }: Props) {
   const [hasBookmarked, setHasBookmarked] = useState(challenge.bookmark.length > 0);
   const session = useSession();
 
@@ -171,10 +171,7 @@ export function Description({ challenge }: Props) {
           </TooltipContent>
         </Tooltip>
       </div>
-      {/* Challenge Description */}
-      <div className="prose-invert prose-h3:text-xl mt-6 leading-7">
-        <Markdown>{challenge.description}</Markdown>
-      </div>
+      {children}
     </div>
   );
 }

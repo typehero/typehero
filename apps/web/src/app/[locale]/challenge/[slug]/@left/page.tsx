@@ -5,10 +5,11 @@ import { daysAfterDecemberFirst } from '~/utils/aot';
 import { getAllFlags } from '~/utils/feature-flags';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { isBetaUser } from '~/utils/server/is-beta-user';
-import { Comments } from '../_components/comments';
-import { Description } from '../_components/description';
-import { AOT_CHALLENGES } from './aot-slugs';
-import { getChallengeRouteData } from './getChallengeRouteData';
+import { Comments } from '../../_components/comments';
+import { Description } from '../../_components/description';
+import { AOT_CHALLENGES } from '../aot-slugs';
+import { getChallengeRouteData } from '../getChallengeRouteData';
+import { Markdown } from '@repo/ui/components/markdown';
 
 interface Props {
   params: {
@@ -61,7 +62,11 @@ export default async function Challenges({ params: { slug } }: Props) {
 
   return (
     <div className="relative h-full ">
-      <Description challenge={challenge} />
+      <Description challenge={challenge}>
+        <div className="prose-invert prose-h3:text-xl mt-6 leading-7">
+          <Markdown>{challenge.description}</Markdown>
+        </div>
+      </Description>
       {!isAotChallenge ? <Comments rootId={challenge.id} type="CHALLENGE" /> : null}
     </div>
   );
