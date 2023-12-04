@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 
-import { cn } from '@repo/ui/cn';
 import { SearchIcon, Loader2 as LoaderIcon } from '@repo/ui/icons';
 import { Button } from '@repo/ui/components/button';
 import { Separator } from '@repo/ui/components/separator';
