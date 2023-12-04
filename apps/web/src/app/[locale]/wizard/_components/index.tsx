@@ -174,6 +174,7 @@ export function Wizard() {
         onChange={(idx) => setStep(idx)}
         onNext={handleNextClick}
         onSubmit={form.handleSubmit(onSubmit)}
+        isSubmitting={form.formState.isSubmitting}
       />
     </div>
   );
