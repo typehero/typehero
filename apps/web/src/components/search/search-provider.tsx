@@ -5,7 +5,9 @@ import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, useHits, useInstantSearch } from 'react-instantsearch';
 
 const searchClient = algoliasearch(
+  // eslint-disable-next-line @typescript-eslint/dot-notation
   process.env['NEXT_PUBLIC_ALGOLIA_APP_ID'],
+  // eslint-disable-next-line @typescript-eslint/dot-notation
   process.env['NEXT_PUBLIC_ALGOLIA_API_KEY'],
 );
 
@@ -26,6 +28,8 @@ export function useSearchStatus() {
   return { status };
 }
 
+const initialState = {} as ChallengeHits;
+
 export function useSearchResult() {
   const { hits, results } = useHits<Challenge>();
   const query = results?.query;
@@ -39,7 +43,7 @@ export function useSearchResult() {
       acc[item.difficulty].push(item);
 
       return acc;
-    }, {} as ChallengeHits);
+    }, initialState);
   }, [hits]);
 
   return { results: groupedHits, query };
