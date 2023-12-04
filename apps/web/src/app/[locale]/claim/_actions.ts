@@ -22,7 +22,7 @@ export async function validateToken(claimFormData: FormSchema) {
       },
     },
     data: {
-      user: { connect: { id: session?.user.id } },
+      user: { connect: { id: session?.user?.id } },
     },
   });
 
@@ -41,7 +41,7 @@ export async function isValidToken(session: Session, claimFormData: FormSchema) 
         },
       },
       data: {
-        user: { connect: { id: session?.user.id } },
+        user: { connect: { id: session?.user?.id } },
       },
     });
     return true;

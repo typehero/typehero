@@ -6,7 +6,7 @@ import { useSession as useAuthSession } from 'next-auth/react';
 export { SessionProvider, signIn, signOut } from 'next-auth/react';
 
 interface Session extends DefaultSession {
-  user: DefaultSession['user'] & {
+  user?: DefaultSession['user'] & {
     id: string;
     role: RoleTypes[];
   };
