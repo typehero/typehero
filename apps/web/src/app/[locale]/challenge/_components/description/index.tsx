@@ -147,7 +147,7 @@ export function Description({ challenge }: Props) {
                   'border-blue-500 text-blue-500': hasBookmarked,
                 },
               )}
-              disabled={!session.data?.user.id}
+              disabled={!session.data?.user?.id}
               onClick={() => {
                 let shouldBookmark = false;
                 if (hasBookmarked) {
@@ -157,7 +157,7 @@ export function Description({ challenge }: Props) {
                   shouldBookmark = true;
                   setHasBookmarked(true);
                 }
-                debouncedBookmark(challenge.id, session.data?.user.id!, shouldBookmark)?.catch(
+                debouncedBookmark(challenge.id, session.data?.user?.id!, shouldBookmark)?.catch(
                   (e) => {
                     console.error(e);
                   },
@@ -168,7 +168,7 @@ export function Description({ challenge }: Props) {
             </Button>
           </TooltipTrigger>
           <TooltipContent>
-            <p>{session.data?.user.id ? 'Bookmark' : 'Login to Bookmark'}</p>
+            <p>{session.data?.user?.id ? 'Bookmark' : 'Login to Bookmark'}</p>
           </TooltipContent>
         </Tooltip>
       </div>

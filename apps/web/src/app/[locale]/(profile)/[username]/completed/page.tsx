@@ -23,7 +23,7 @@ export default async function CompletedPage({ params: { username: usernameFromQu
   const session = await auth();
   const [, username] = decodeURIComponent(usernameFromQuery).split('@');
 
-  if (!username || session?.user.name !== username) return notFound();
+  if (!username || session?.user?.name !== username) return notFound();
 
   const user = await prisma.user.findFirst({
     where: {

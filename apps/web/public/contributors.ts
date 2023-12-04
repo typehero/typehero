@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 259
+        "contributions": 260
     },
     {
         "login": "Hacksore",
@@ -1745,6 +1745,27 @@ export const contributors = [
         "contributions": 1
     },
     {
+        "login": "staranbeer",
+        "id": 62498540,
+        "node_id": "MDQ6VXNlcjYyNDk4NTQw",
+        "avatar_url": "https://avatars.githubusercontent.com/u/62498540?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/staranbeer",
+        "html_url": "https://github.com/staranbeer",
+        "followers_url": "https://api.github.com/users/staranbeer/followers",
+        "following_url": "https://api.github.com/users/staranbeer/following{/other_user}",
+        "gists_url": "https://api.github.com/users/staranbeer/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/staranbeer/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/staranbeer/subscriptions",
+        "organizations_url": "https://api.github.com/users/staranbeer/orgs",
+        "repos_url": "https://api.github.com/users/staranbeer/repos",
+        "events_url": "https://api.github.com/users/staranbeer/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/staranbeer/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 1
+    },
+    {
         "login": "thomasKn",
         "id": 10447155,
         "node_id": "MDQ6VXNlcjEwNDQ3MTU1",
@@ -1908,6 +1929,27 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/pizzaintheoven/repos",
         "events_url": "https://api.github.com/users/pizzaintheoven/events{/privacy}",
         "received_events_url": "https://api.github.com/users/pizzaintheoven/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 1
+    },
+    {
+        "login": "uncenter",
+        "id": 47499684,
+        "node_id": "MDQ6VXNlcjQ3NDk5Njg0",
+        "avatar_url": "https://avatars.githubusercontent.com/u/47499684?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/uncenter",
+        "html_url": "https://github.com/uncenter",
+        "followers_url": "https://api.github.com/users/uncenter/followers",
+        "following_url": "https://api.github.com/users/uncenter/following{/other_user}",
+        "gists_url": "https://api.github.com/users/uncenter/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/uncenter/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/uncenter/subscriptions",
+        "organizations_url": "https://api.github.com/users/uncenter/orgs",
+        "repos_url": "https://api.github.com/users/uncenter/repos",
+        "events_url": "https://api.github.com/users/uncenter/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/uncenter/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 1

@@ -239,7 +239,7 @@ function SingleComment({
 
   const loggedinUser = useSession();
 
-  const isAuthor = loggedinUser.data?.user.id === comment.user.id;
+  const isAuthor = loggedinUser.data?.user?.id === comment.user.id;
   const isAdminAndModerator = isAdminOrModerator(loggedinUser.data);
 
   const hasBeenEdited = comment.updatedAt.getTime() > comment.createdAt.getTime();

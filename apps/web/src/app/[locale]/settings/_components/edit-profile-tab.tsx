@@ -113,7 +113,9 @@ function ProfileForm({ user }: Props) {
           })}
         </div>
 
-        <Button type="submit">Update profile</Button>
+        <Button type="submit" disabled={form.formState.isSubmitting}>
+          Update profile
+        </Button>
       </form>
     </Form>
   );

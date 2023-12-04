@@ -25,7 +25,7 @@ export async function getSimilarChallenges(
 
     const solvedSolutions = await prisma.submission.findMany({
       where: {
-        userId: session?.user.id,
+        userId: session?.user?.id,
         isSuccessful: true,
       },
       select: {

@@ -67,7 +67,7 @@ async function getUserEnrolledTracks(session: Session) {
     where: {
       enrolledUsers: {
         some: {
-          id: session.user.id,
+          id: session.user?.id,
         },
       },
     },
@@ -78,7 +78,7 @@ async function getUserEnrolledTracks(session: Session) {
             include: {
               submission: {
                 where: {
-                  userId: session.user.id,
+                  userId: session.user?.id,
                 },
               },
             },
