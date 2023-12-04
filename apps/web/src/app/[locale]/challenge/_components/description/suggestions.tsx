@@ -19,11 +19,6 @@ export function Suggestions({ challengeId }: { challengeId: number }) {
     <div>
       <div className="flex items-center justify-between">
         <h3 className="text-foreground text-lg font-semibold md:text-xl">More Challenges</h3>
-        {/* <Link href="/explore">
-                <Button size="sm" className="gap-1 rounded-full" variant="outline">
-                  Explore <ChevronRight size={13} />
-                </Button>
-              </Link> */}
       </div>
       <div>
         {similarChallenges?.map((challenge, idx) => {
