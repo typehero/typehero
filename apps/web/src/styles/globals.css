@@ -754,3 +754,30 @@ a {
 body.mobile-nav-active {
   overflow: hidden;
 }
+
+@keyframes sparkle {
+  0% {
+    background-color: #2299dd;
+    opacity: 1;
+  }
+  50% {
+    background-color: #ffffff;
+    opacity: 0.5;
+  }
+  100% {
+    background-color: #2299dd;
+    opacity: 1;
+  }
+}
+
+.sparkling-snow {
+  animation: sparkle 1s linear infinite;
+}
+
+.custom-spinner-icon {
+  border: 2px solid #2299dd;
+  border-top: 2px solid #ffffff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+}

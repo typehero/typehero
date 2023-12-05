@@ -1,3 +1,4 @@
+import NextTopLoader from 'nextjs-toploader';
 import { Toaster } from '@repo/ui/components/toaster';
 import { Analytics } from '@vercel/analytics/react';
 import { Inter } from 'next/font/google';
@@ -66,6 +67,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body className={`${inter.className} flex flex-col`}>
+        <NextTopLoader
+          color="#2299DD"
+          initialPosition={0.08}
+          crawlSpeed={200}
+          height={5}
+          crawl={true}
+          showSpinner={false}
+          easing="ease"
+          speed={200}
+          shadow="0 0 10px #2299DD,0 0 5px #2299DD"
+          template='
+              <div class="bar sparkling-snow" role="bar"><div class="peg"></div></div>
+              <div class="spinner" role="spinner"><div class="custom-spinner-icon"></div></div>'
+          zIndex={1600}
+          showAtBottom={false}
+        />
         <Providers>
           <Navigation />
           {children}
