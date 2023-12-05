@@ -1,6 +1,6 @@
 import { debounce } from 'lodash';
 import * as React from 'react';
-import { useSearchBox as useAlgoliaSearchBox } from 'react-instantsearch';
+import { useSearchProviderInput } from './search-provider';
 
 interface SearchBoxContext {
   query: string;
@@ -10,17 +10,16 @@ interface SearchBoxContext {
 const searchBoxContext = React.createContext({} as SearchBoxContext);
 
 export function SearchBoxContextProvider({ children }: { children: React.ReactNode }) {
-  const { query, refine } = useAlgoliaSearchBox();
+  const { query, update } = useSearchProviderInput();
   const [inputValue, setInputValue] = React.useState(query);
   const debouncedRefine = React.useRef(
-    debounce((newQuery: string) => refine(newQuery), 300),
+    debounce((newQuery: string) => update(newQuery), 300),
   ).current;
 
   const setQuery = React.useCallback(
     (newQuery: string) => {
       setInputValue(newQuery);
       debouncedRefine(newQuery);
-      console.log({ newQuery });
     },
     [debouncedRefine],
   );

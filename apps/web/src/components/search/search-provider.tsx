@@ -2,7 +2,8 @@ import * as React from 'react';
 
 import type { Challenge } from '@repo/db/types';
 import algoliasearch from 'algoliasearch/lite';
-import { InstantSearch, useHits, useInstantSearch } from 'react-instantsearch';
+import { useHits, useInstantSearch, useSearchBox } from 'react-instantsearch';
+import { InstantSearchNext } from 'react-instantsearch-nextjs';
 
 const searchClient = algoliasearch(
   // eslint-disable-next-line @typescript-eslint/dot-notation
@@ -15,9 +16,9 @@ const INDEX_NAME = 'typehero';
 
 export function SearchProvider({ children }: { children: React.ReactNode }) {
   return (
-    <InstantSearch searchClient={searchClient} indexName={INDEX_NAME}>
+    <InstantSearchNext searchClient={searchClient} indexName={INDEX_NAME} routing>
       {children}
-    </InstantSearch>
+    </InstantSearchNext>
   );
 }
 
@@ -47,4 +48,14 @@ export function useSearchResult() {
   }, [hits]);
 
   return { results: groupedHits, query };
+}
+
+export function useSearchProviderInput() {
+  const { query, refine } = useSearchBox();
+
+  const update = (newQuery: string) => {
+    refine(newQuery);
+  };
+
+  return { query, update };
 }
