@@ -5,6 +5,7 @@ import { getAllFlags } from '~/utils/feature-flags';
 import { CountdownTimer } from '../../_components/countdown-timer';
 import { About } from './about';
 import { CardGrid } from './card-grid';
+import { FemPromo } from './fem-promo';
 
 export async function AotLandingPage() {
   const featureFlags = await getAllFlags();
@@ -57,6 +58,7 @@ export async function AotLandingPage() {
               </a>
             </Button>
           </div>
+          <FemPromo blurb="Elevate your TypeScript with our trusted partner" className="mt-5" />
         </div>
       </div>
       <CardGrid />
