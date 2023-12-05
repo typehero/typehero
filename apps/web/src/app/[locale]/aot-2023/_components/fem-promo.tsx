@@ -20,6 +20,8 @@ export function FemPromo({ blurb, className }: { blurb: string; className?: stri
   return (
     <a
       href="https://frontendmasters.com/learn/typescript"
+      target="_blank"
+      rel="noopener norferrer"
       className={cn(
         'group/card relative flex w-full flex-col items-center justify-center overflow-hidden rounded-sm bg-zinc-200 p-4 text-center duration-300 dark:bg-zinc-900 md:max-w-[800px]',
         className,
