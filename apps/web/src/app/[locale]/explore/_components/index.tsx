@@ -5,6 +5,7 @@ import { Footsies } from '~/components/footsies';
 import { isBetaUser } from '~/utils/server/is-beta-user';
 import { ExploreSection } from './explore-section';
 import { ExploreSectionSkeleton } from './explore-section-skeleton';
+import { FemPromo } from '../../aot-2023/_components/fem-promo';
 
 // CI fails without this
 export const dynamic = 'force-dynamic';
@@ -20,15 +21,18 @@ export async function Explore() {
   return (
     <>
       <div className="flex flex-col gap-8 py-8 md:gap-10 md:py-8">
-        <div className="container">
+        <div className="container text-center">
           <h1 className="mb-8 text-4xl font-bold tracking-tight text-neutral-900 dark:text-white">
             Explore
           </h1>
-          <p className=" max-w-[69ch] text-lg leading-10 text-neutral-600 dark:text-white/50">
+          <p className="mx-auto max-w-[69ch] text-lg leading-10 text-neutral-600 dark:text-white/50">
             Explore the challenges. Embrace the opportunity to grow, learn, and showcase your
             programming abilities. We hope you find the{' '}
             <span className="font-semibold dark:text-neutral-200">perfect</span> challenge!
           </p>
+        </div>
+        <div className="container flex items-center justify-center">
+          <FemPromo blurb="Elevate your TypeScript with our trusted partner" />
         </div>
         <Suspense fallback={<ExploreSectionSkeleton />}>
           <ExploreSection
