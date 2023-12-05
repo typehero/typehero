@@ -3,20 +3,6 @@ import { Sparkle } from '@repo/ui/icons';
 import Image from 'next/image';
 
 export function FemPromo({ blurb, className }: { blurb: string; className?: string }) {
-  // return (
-  //   <div
-  //     className={cn(
-  //       'container flex flex-col items-center gap-5 pb-8 text-center md:gap-10 md:py-5 ',
-  //       className,
-  //     )}
-  //   >
-  //     <a href="https://frontendmasters.com/learn/typescript/" target="_blank" rel="noopener">
-  //       <div className="mb-2 text-xl">{blurb}</div>
-  //       <Image src="/fem.svg" width="400" height="150" alt="" />
-  //     </a>
-  //   </div>
-  // );
-
   return (
     <a
       href="https://frontendmasters.com/learn/typescript"
