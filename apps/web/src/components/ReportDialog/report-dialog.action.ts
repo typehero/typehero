@@ -71,7 +71,7 @@ export async function addReport(
   report: ChallengeReport | CommentReport | SolutionReport | UserReport,
 ) {
   const reporter = await auth();
-  if (!reporter?.user.id) return 'not_logged_in';
+  if (!reporter?.user?.id) return 'not_logged_in';
 
   let filterData;
   switch (report.type) {

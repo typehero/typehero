@@ -1,4 +1,6 @@
 'use client';
+
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const DateCard = ({ date, label }: { date: React.ReactNode; label: string }) => {
@@ -13,6 +15,7 @@ const DateCard = ({ date, label }: { date: React.ReactNode; label: string }) => 
 };
 
 export const CountdownTimer = () => {
+  const router = useRouter();
   const [releaseDate, setReleaseDate] = useState(() => {
     return calculateNextReleaseTime();
   });
@@ -30,6 +33,7 @@ export const CountdownTimer = () => {
         const nextReleaseDateTime = calculateNextReleaseTime();
         setRemainingTime(nextReleaseDateTime.getTime() - Date.now());
         setReleaseDate(nextReleaseDateTime);
+        router.refresh();
       }
     };
 
@@ -38,7 +42,7 @@ export const CountdownTimer = () => {
     return () => {
       clearInterval(timerId);
     };
-  }, [remainingTime, releaseDate]);
+  }, [remainingTime, releaseDate, router]);
 
   const { days, hours, minutes, seconds } = calculateTimeComponents(remainingTime);
 

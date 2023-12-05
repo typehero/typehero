@@ -21,7 +21,7 @@ export async function incrementOrDecrementUpvote(
       commentId: rootType === 'COMMENT' ? id : undefined,
       sharedSolutionId: rootType === 'SHAREDSOLUTION' ? id : undefined,
       submissionId: rootType === 'SUBMISSION' ? id : undefined,
-      userId: session?.user.id ?? '',
+      userId: session?.user?.id ?? '',
     },
   });
 

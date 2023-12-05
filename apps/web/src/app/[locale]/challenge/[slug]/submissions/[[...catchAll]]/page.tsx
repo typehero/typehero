@@ -28,7 +28,7 @@ export default async function SubmissionPage({ params: { slug } }: Props) {
 
   const submissions = await withUnstableCache({
     fn: getChallengeSubmissions,
-    args: [session?.user.id ?? '', slug],
+    args: [session?.user?.id ?? '', slug],
     keys: ['all-challenge-submissions'],
     tags: [createChallengeSubmissionCacheKey(slug)],
   });

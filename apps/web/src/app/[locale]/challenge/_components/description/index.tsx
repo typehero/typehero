@@ -28,6 +28,7 @@ import { addOrRemoveBookmark } from '../bookmark.action';
 import { ShareForm } from '../share-form';
 import { Vote } from '../vote';
 import { AOT_CHALLENGES } from '../../[slug]/aot-slugs';
+import { Suggestions } from './suggestions';
 
 interface Props {
   challenge: ChallengeRouteData['challenge'];
@@ -146,7 +147,7 @@ export function Description({ challenge }: Props) {
                   'border-blue-500 text-blue-500': hasBookmarked,
                 },
               )}
-              disabled={!session.data?.user.id}
+              disabled={!session.data?.user?.id}
               onClick={() => {
                 let shouldBookmark = false;
                 if (hasBookmarked) {
@@ -156,7 +157,7 @@ export function Description({ challenge }: Props) {
                   shouldBookmark = true;
                   setHasBookmarked(true);
                 }
-                debouncedBookmark(challenge.id, session.data?.user.id!, shouldBookmark)?.catch(
+                debouncedBookmark(challenge.id, session.data?.user?.id!, shouldBookmark)?.catch(
                   (e) => {
                     console.error(e);
                   },
@@ -167,7 +168,7 @@ export function Description({ challenge }: Props) {
             </Button>
           </TooltipTrigger>
           <TooltipContent>
-            <p>{session.data?.user.id ? 'Bookmark' : 'Login to Bookmark'}</p>
+            <p>{session.data?.user?.id ? 'Bookmark' : 'Login to Bookmark'}</p>
           </TooltipContent>
         </Tooltip>
       </div>
@@ -175,6 +176,8 @@ export function Description({ challenge }: Props) {
       <div className="prose-invert prose-h3:text-xl mt-6 leading-7">
         <Markdown>{challenge.description}</Markdown>
       </div>
+      {/* More Challenges Suggestions */}
+      {!isAotChallenge && <Suggestions challengeId={challenge.id} />}
     </div>
   );
 }

@@ -51,7 +51,7 @@ export async function banUser(userId: string, reportId: number, banReason?: stri
       },
       data: {
         status: 'CLEARED',
-        moderatorId: session?.user.id,
+        moderatorId: session?.user?.id,
         updatedAt: new Date(),
       },
     }),
