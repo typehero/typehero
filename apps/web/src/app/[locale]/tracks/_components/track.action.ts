@@ -23,7 +23,7 @@ export async function enrollUserInTrack(id: number, slug: string) {
     data: {
       enrolledUsers: {
         connect: {
-          id: session?.user.id,
+          id: session?.user?.id,
         },
       },
     },
@@ -50,7 +50,7 @@ export async function unenrollUserFromTrack(id: number, slug: string) {
     data: {
       enrolledUsers: {
         disconnect: {
-          id: session?.user.id,
+          id: session?.user?.id,
         },
       },
     },
@@ -80,7 +80,7 @@ export const getTrackDetails = cache(async (slug: string) => {
             include: {
               submission: {
                 where: {
-                  userId: session?.user.id ?? '',
+                  userId: session?.user?.id ?? '',
                 },
               },
               user: {
@@ -94,7 +94,7 @@ export const getTrackDetails = cache(async (slug: string) => {
       },
       enrolledUsers: {
         where: {
-          id: session?.user.id ?? '',
+          id: session?.user?.id ?? '',
         },
         select: {
           id: true,
@@ -114,7 +114,7 @@ export async function getUserEnrolledTracks(session: Session) {
     where: {
       enrolledUsers: {
         some: {
-          id: session.user.id,
+          id: session.user?.id,
         },
       },
     },
@@ -125,7 +125,7 @@ export async function getUserEnrolledTracks(session: Session) {
             include: {
               submission: {
                 where: {
-                  userId: session.user.id,
+                  userId: session.user?.id,
                 },
               },
             },

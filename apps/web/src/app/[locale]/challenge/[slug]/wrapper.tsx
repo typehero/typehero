@@ -48,7 +48,6 @@ export function Wrapper({ track, challenge }: Props) {
 
         const submission = await saveSubmission({
           challenge,
-          userId: session?.user.id!,
           code,
           isSuccessful,
         });

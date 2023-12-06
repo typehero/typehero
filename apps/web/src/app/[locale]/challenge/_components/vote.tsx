@@ -79,7 +79,7 @@ export function Vote({
         </Button>
       </TooltipTrigger>
       <TooltipContent>
-        <p>{session.data?.user.id ? 'Upvote' : 'Login to Upvote'}</p>
+        <p>{session.data?.user?.id ? 'Upvote' : 'Login to Upvote'}</p>
       </TooltipContent>
     </Tooltip>
   );

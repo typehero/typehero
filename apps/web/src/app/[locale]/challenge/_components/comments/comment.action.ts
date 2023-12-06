@@ -18,7 +18,7 @@ interface CommentToCreate {
 export async function addComment(comment: CommentToCreate) {
   const session = await auth();
 
-  if (!session?.user.id) return 'unauthorized';
+  if (!session?.user?.id) return 'unauthorized';
   if (comment.text.length === 0) return 'text_is_empty';
   if (!session.user.id) return 'unauthorized';
   if (comment.text.length === 0) return 'text_is_empty';
@@ -41,7 +41,7 @@ export async function addComment(comment: CommentToCreate) {
 export async function replyComment(comment: CommentToCreate, parentId: number) {
   const session = await auth();
 
-  if (!session?.user.id) return 'unauthorized';
+  if (!session?.user?.id) return 'unauthorized';
   if (comment.text.length === 0) return 'text_is_empty';
   if (!session.user.id) return 'unauthorized';
   if (comment.text.length === 0) return 'text_is_empty';
@@ -65,7 +65,7 @@ export async function replyComment(comment: CommentToCreate, parentId: number) {
 export async function updateComment(text: string, id: number) {
   const session = await auth();
 
-  if (!session) return 'unauthorized';
+  if (!session || !session.user) return 'unauthorized';
   if (text.length === 0) return 'text_is_empty';
 
   const comment = await prisma.comment.findFirstOrThrow({

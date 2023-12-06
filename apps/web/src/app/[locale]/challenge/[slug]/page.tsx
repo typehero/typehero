@@ -1,13 +1,14 @@
 import { auth, type Session } from '@repo/auth/server';
 import { notFound, redirect } from 'next/navigation';
 import { buildMetaForChallenge, buildMetaForEventPage } from '~/app/metadata';
+import { daysAfterDecemberFirst } from '~/utils/aot';
+import { getAllFlags } from '~/utils/feature-flags';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { isBetaUser } from '~/utils/server/is-beta-user';
 import { Comments } from '../_components/comments';
 import { Description } from '../_components/description';
-import { getChallengeRouteData } from './getChallengeRouteData';
-import { getAllFlags } from '~/utils/feature-flags';
 import { AOT_CHALLENGES } from './aot-slugs';
+import { getChallengeRouteData } from './getChallengeRouteData';
 
 interface Props {
   params: {
@@ -68,14 +69,4 @@ export default async function Challenges({ params: { slug } }: Props) {
 
 export function isAuthor(session: Session | null, userId?: string | null) {
   return userId && session?.user?.id && userId === session?.user?.id;
-}
-
-export function daysAfterDecemberFirst() {
-  const MS_PER_DAY = 24 * 60 * 60 * 1000;
-  const startDate = new Date('2023-12-01T05:00:00.000Z').getTime();
-  const today = Date.now();
-
-  const daysPassed = Math.floor((today - startDate) / MS_PER_DAY);
-
-  return daysPassed;
 }

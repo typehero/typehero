@@ -14,7 +14,7 @@ export async function updateProfile(profileData: ProfileSchema) {
   const session = await auth();
 
   // 1. Checks that the user is logged in
-  if (!session?.user.id) return { error: 'unauthorized' };
+  if (!session?.user?.id) return { error: 'unauthorized' };
 
   // 2. test schema validation with zod
   profileSchema.parse(profileData);
@@ -29,7 +29,7 @@ export async function updateProfile(profileData: ProfileSchema) {
   const userLinksToCreate = profileData.userLinks.map((link) => ({
     url: link.url,
     user: {
-      connect: { id: session.user.id },
+      connect: { id: session.user?.id },
     },
   }));
 
