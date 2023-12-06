@@ -22,33 +22,18 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-type ChallengeHits = Record<Challenge['difficulty'], Challenge[]>;
-
 export function useSearchStatus() {
   const { status } = useInstantSearch();
   return { status };
 }
 
-const initialState = {} as ChallengeHits;
-
 export function useSearchResult() {
   const { hits, results } = useHits<Challenge>();
   const query = results?.query;
 
-  const groupedHits = React.useMemo(() => {
-    return hits.reduce((acc, item) => {
-      if (!acc[item.difficulty]) {
-        acc[item.difficulty] = [];
-      }
-
-      acc[item.difficulty].push(item);
-
-      return acc;
-    }, initialState);
-  }, [hits]);
-
-  return { results: groupedHits, query };
+  return { results: hits, query };
 }
+export type Result = ReturnType<typeof useSearchResult>['results'][number];
 
 export function useSearchProviderInput() {
   const { query, refine } = useSearchBox();

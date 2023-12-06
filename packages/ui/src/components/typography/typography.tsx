@@ -13,7 +13,7 @@ export interface TextProps<T extends TagOptions = 'text'> {
 
 export type TagOptions = keyof JSX.IntrinsicElements;
 
-const styles = cva<{
+export const styles = cva<{
   intent: {
     [K in Intent]: string;
   };
