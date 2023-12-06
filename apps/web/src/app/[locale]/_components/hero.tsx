@@ -164,7 +164,7 @@ export async function Hero() {
               <span className="animate-bg-gradient-to-center relative flex select-none items-center bg-gradient-to-r to-70% bg-[length:420%_420%] bg-clip-text bg-right-bottom text-transparent duration-500 group-hover:bg-left-top dark:from-yellow-500 dark:via-white dark:to-[#3178c6]">
                 <Sparkle className="animate-oldstar absolute  -left-1 top-0.5 mr-2 h-5 w-5 translate-x-0.5 stroke-[#3178c6] stroke-2 duration-500 group-hover:rotate-180 group-hover:scale-110 group-hover:stroke-yellow-600 dark:duration-500  " />
                 <Sparkle className="animate-newstar mr-2 h-4 w-4 stroke-[#3178c6] stroke-2 duration-500 group-hover:rotate-180 group-hover:scale-110 group-hover:fill-[#3178c6] dark:stroke-white dark:duration-500 dark:group-hover:fill-white" />{' '}
-                Star us on GitHub
+                {t('ghStars')}
               </span>
             </div>
           </a>
@@ -218,7 +218,7 @@ export async function Hero() {
                 <Link href="/explore">
                   <span className="text-primary inline-flex h-full w-fit items-center gap-2 rounded-[10px] bg-white px-4 py-2 transition-all duration-300">
                     <Compass className="h-4 w-4" />
-                    Explore
+                    {t('explore')}
                   </span>
                 </Link>
               </Button>
@@ -232,7 +232,7 @@ export async function Hero() {
                 <Link href="/explore">
                   <span className="inline-flex h-full w-fit items-center gap-2 rounded-xl px-4 py-2 transition-all duration-300 dark:bg-neutral-900 dark:text-white group-hover:dark:bg-black">
                     <Compass className="h-4 w-4" />
-                    Explore
+                    {t('explore')}
                   </span>
                 </Link>
               </Button>
