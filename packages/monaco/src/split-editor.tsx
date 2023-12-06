@@ -484,7 +484,7 @@ async function typeCheck(monaco: typeof monacoType) {
         endLineNumber: end.lineNumber,
         startColumn: start.column,
         endColumn: end.column,
-        message: d.messageText as string,
+        message: ts.flattenDiagnosticMessageText(d.messageText, '\n'),
       } satisfies monacoType.editor.IMarkerData;
     });
 
