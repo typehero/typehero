@@ -20,7 +20,7 @@ try {
         name: challenge.author,
       },
     });
-    const { author: _, ...challengeWithoutAuthor } = challenge;
+    const { author: _, description, ...challengeWithoutAuthor } = challenge;
     transactions.push(
       prisma.challenge.upsert({
         where: {
@@ -29,10 +29,12 @@ try {
         update: {
           ...challengeWithoutAuthor,
           userId: author.id,
+          description: `${description} \n\n <sub>prompt by [Dimitri Mitropoulos](https://github.com/dimitropoulos) of [MiTS](https://michigantypescript.com)</sub>`,
         },
         create: {
           ...challengeWithoutAuthor,
           userId: author.id,
+          description: `${description} \n\n <sub>prompt by [Dimitri Mitropoulos](https://github.com/dimitropoulos) of [MiTS](https://michigantypescript.com)</sub>`,
         },
       }),
     );
