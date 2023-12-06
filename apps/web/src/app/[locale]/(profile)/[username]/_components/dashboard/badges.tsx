@@ -27,7 +27,9 @@ const Badge = ({ slug, name }: BadgeInfo) => {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <Icon className="h-12 w-12" />
+        <span>
+          <Icon className="h-12 w-12" />
+        </span>
       </TooltipTrigger>
       <TooltipContent side="bottom">
         <span>{name}</span>
