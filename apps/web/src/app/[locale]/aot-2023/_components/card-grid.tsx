@@ -1,7 +1,7 @@
 import { prisma } from '@repo/db';
 import { TiltableCard } from './tiltable-card';
 import { auth, type Session } from '@repo/auth/server';
-import { daysAfterDecemberFirst } from '../../challenge/[slug]/page';
+import { daysAfterDecemberFirst } from '~/utils/aot';
 
 export async function CardGrid() {
   const session = await auth();
@@ -29,10 +29,10 @@ async function getTrackChallenges(session: Session | null) {
       trackChallenges: {
         include: {
           challenge: {
-            include: {
+            select: {
               submission: {
                 where: {
-                  userId: session?.user.id || '',
+                  userId: session?.user?.id || '',
                   isSuccessful: true,
                 },
                 select: {
@@ -40,6 +40,9 @@ async function getTrackChallenges(session: Session | null) {
                 },
                 take: 1,
               },
+              id: true,
+              name: true,
+              slug: true,
             },
           },
         },

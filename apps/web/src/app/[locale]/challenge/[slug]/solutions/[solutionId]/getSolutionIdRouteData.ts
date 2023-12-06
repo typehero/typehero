@@ -26,7 +26,7 @@ export const getSolutionIdRouteData = cache(
         },
         vote: {
           where: {
-            userId: session?.user.id || '',
+            userId: session?.user?.id || '',
           },
           select: {
             userId: true,

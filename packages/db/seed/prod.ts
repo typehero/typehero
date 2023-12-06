@@ -27,7 +27,7 @@ try {
       name: 'TypeHero',
       userLinks: {
         create: {
-          url: 'https://typhero.dev',
+          url: 'https://typehero.dev',
         },
       },
     },

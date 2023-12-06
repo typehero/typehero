@@ -7,7 +7,7 @@ import { type CreateChallengeSchema } from '.';
 export async function uploadChallenge(data: CreateChallengeSchema, isUserACreator: boolean) {
   const session = await auth();
 
-  if (!session) {
+  if (!session || !session.user) {
     throw new Error('Unauthorized');
   }
 

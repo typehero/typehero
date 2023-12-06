@@ -7,7 +7,7 @@ export async function isBetaUser(session: Session | null) {
 
   const isBetaUser = await prisma.betaTokens.findFirst({
     where: {
-      userId: session?.user.id ?? '',
+      userId: session?.user?.id ?? '',
     },
   });
 

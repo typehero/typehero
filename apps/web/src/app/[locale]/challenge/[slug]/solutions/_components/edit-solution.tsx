@@ -48,7 +48,7 @@ export function EditSolution({ solution, setIsEditing }: Props) {
         description: data.content ?? '',
         slug: slug as string,
         title: data.title ?? '',
-        userId: session.data?.user.id!,
+        userId: session.data?.user?.id!,
       });
 
       toast({
@@ -99,7 +99,11 @@ export function EditSolution({ solution, setIsEditing }: Props) {
           >
             Cancel
           </Button>
-          <Button className="h-8 rounded-lg px-3 py-2" type="submit">
+          <Button
+            className="h-8 rounded-lg px-3 py-2"
+            type="submit"
+            disabled={form.formState.isSubmitting}
+          >
             Update
           </Button>
         </div>
