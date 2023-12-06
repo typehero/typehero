@@ -53,7 +53,7 @@ export default async function NotFound() {
                 size="lg"
                 className="fancy-border-gradient bg-background relative mx-auto flex w-56 gap-4 border-none"
               >
-                {t('lucky')}
+                {t('luck')}
               </Button>
             </a>
           </div>
