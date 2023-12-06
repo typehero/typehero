@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 262
+        "contributions": 267
     },
     {
         "login": "Hacksore",
@@ -842,6 +842,27 @@ export const contributors = [
         "contributions": 3
     },
     {
+        "login": "WVAviator",
+        "id": 11326285,
+        "node_id": "MDQ6VXNlcjExMzI2Mjg1",
+        "avatar_url": "https://avatars.githubusercontent.com/u/11326285?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/WVAviator",
+        "html_url": "https://github.com/WVAviator",
+        "followers_url": "https://api.github.com/users/WVAviator/followers",
+        "following_url": "https://api.github.com/users/WVAviator/following{/other_user}",
+        "gists_url": "https://api.github.com/users/WVAviator/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/WVAviator/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/WVAviator/subscriptions",
+        "organizations_url": "https://api.github.com/users/WVAviator/orgs",
+        "repos_url": "https://api.github.com/users/WVAviator/repos",
+        "events_url": "https://api.github.com/users/WVAviator/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/WVAviator/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 2
+    },
+    {
         "login": "heyanurag",
         "id": 63957920,
         "node_id": "MDQ6VXNlcjYzOTU3OTIw",
@@ -1239,27 +1260,6 @@ export const contributors = [
         "type": "User",
         "site_admin": false,
         "contributions": 2
-    },
-    {
-        "login": "WVAviator",
-        "id": 11326285,
-        "node_id": "MDQ6VXNlcjExMzI2Mjg1",
-        "avatar_url": "https://avatars.githubusercontent.com/u/11326285?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/WVAviator",
-        "html_url": "https://github.com/WVAviator",
-        "followers_url": "https://api.github.com/users/WVAviator/followers",
-        "following_url": "https://api.github.com/users/WVAviator/following{/other_user}",
-        "gists_url": "https://api.github.com/users/WVAviator/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/WVAviator/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/WVAviator/subscriptions",
-        "organizations_url": "https://api.github.com/users/WVAviator/orgs",
-        "repos_url": "https://api.github.com/users/WVAviator/repos",
-        "events_url": "https://api.github.com/users/WVAviator/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/WVAviator/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 1
     },
     {
         "login": "4ndrs",
