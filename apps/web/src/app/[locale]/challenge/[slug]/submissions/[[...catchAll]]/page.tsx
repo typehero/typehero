@@ -28,7 +28,7 @@ export default async function SubmissionPage({ params: { slug } }: Props) {
 
   const submissions = await withUnstableCache({
     fn: getChallengeSubmissions,
-    args: [slug],
+    args: [session?.user?.id ?? '', slug],
     keys: ['all-challenge-submissions'],
     tags: [createChallengeSubmissionCacheKey(slug)],
   });
@@ -41,15 +41,13 @@ export default async function SubmissionPage({ params: { slug } }: Props) {
 }
 
 export type ChallengeSubmissions = NonNullable<Awaited<ReturnType<typeof getChallengeSubmissions>>>;
-const getChallengeSubmissions = cache(async (slug: string) => {
-  const session = await auth();
-
+const getChallengeSubmissions = cache(async (userId: string, slug: string) => {
   const challenge = await prisma.challenge.findFirstOrThrow({
     where: { slug },
     select: { id: true },
   });
   return prisma.submission.findMany({
-    where: { challengeId: challenge.id, userId: session?.user?.id || '' },
+    where: { challengeId: challenge.id, userId },
     orderBy: [
       {
         createdAt: 'desc',
