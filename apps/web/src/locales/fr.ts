@@ -2,8 +2,8 @@ export default {
   'landing.hero.description':
     'Connectez-vous, collaborez et évoluez avec une communauté de développeurs TypeScript. Améliorez vos compétences grâce à des défis de codage interactifs, des discussions et le partage des connaissances.',
   'landing.hero.ghStars': 'Étoile nous sur GitHub',
-  'landing.hero.buttons.waitlist': "S'inscrire sur la liste d'attente",
   'landing.hero.explore': 'Explorer',
+  'landing.hero.start_exploring': 'Commencez à explorer',
   'landing.features.badge': 'Nombreuses foncionalité, wow',
   'landing.features.title': "Qu'est-ce que TypeHero ?",
   'landing.features.description':
