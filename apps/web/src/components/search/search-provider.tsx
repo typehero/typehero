@@ -16,7 +16,7 @@ const INDEX_NAME = 'typehero';
 
 export function SearchProvider({ children }: { children: React.ReactNode }) {
   return (
-    <InstantSearchNext searchClient={searchClient} indexName={INDEX_NAME} routing>
+    <InstantSearchNext searchClient={searchClient} indexName={INDEX_NAME}>
       {children}
     </InstantSearchNext>
   );
