@@ -147,15 +147,10 @@ export function NewsletterForm() {
       </Form>
       <div className="mt-3">
         {mutation.status === 'success' && <AlertSuccess />}
-        {mutation.status === 'error' && (
-          <AlertDestructive
-            text={
-              // @ts-ignore
-              mutation.error?.message === 'Member Exists'
-                ? 'You have already subscribed using this email!'
-                : 'Something went wrong, please try again.'
-            }
-          />
+        {mutation.status === 'error' && mutation.error?.message === 'Member Exists' ? (
+          <AlertSuccess />
+        ) : (
+          <AlertDestructive text={'Something went wrong, please try again.'} />
         )}
       </div>
     </div>
