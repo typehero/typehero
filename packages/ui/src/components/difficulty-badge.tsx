@@ -7,7 +7,7 @@ interface Props {
   className?: string;
 }
 
-export const COLORS_BY_DIFFICULTY = {
+const COLORS_BY_DIFFICULTY = {
   BEGINNER: 'dark:bg-difficulty-beginner-dark bg-difficulty-beginner',
   EASY: 'dark:bg-difficulty-easy-dark bg-difficulty-easy',
   MEDIUM: 'dark:bg-difficulty-medium-dark bg-difficulty-medium',
