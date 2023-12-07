@@ -1,4 +1,3 @@
-import { auth } from '@repo/auth/server';
 import type { Metadata } from 'next';
 import { buildMetaForDefault } from '~/app/metadata';
 import { Wizard } from './_components';
@@ -11,7 +10,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Page() {
-  const session = await auth();
-
   return <Wizard />;
 }
