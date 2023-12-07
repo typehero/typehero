@@ -154,7 +154,8 @@ function RecentSearches({ onClick }: { onClick: OnClick }) {
   }
 
   return (
-    <div>
+    <div className="flex flex-col">
+      <span className="text-muted-foreground border-b p-4">Recent</span>
       {results.map((result) => (
         <div
           key={result.id}
