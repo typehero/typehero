@@ -22,6 +22,7 @@ enum Difficulty {
   MEDIUM
   HARD
   EXTREME
+  EVENT
 }
 
 enum RoleTypes {

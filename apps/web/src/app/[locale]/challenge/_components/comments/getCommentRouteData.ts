@@ -162,7 +162,7 @@ export async function getPaginatedComments({
           userId: true,
         },
         where: {
-          userId: session?.user.id || '',
+          userId: session?.user?.id || '',
         },
       },
       rootChallenge: {
@@ -230,7 +230,7 @@ export async function getAllComments({
           userId: true,
         },
         where: {
-          userId: session?.user.id || '',
+          userId: session?.user?.id || '',
         },
       },
       rootChallenge: {

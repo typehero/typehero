@@ -1,8 +1,6 @@
 ## The Problem Literal Types Solve
 
-JavaScript, like most programming languages has a concept of [primitive data types](https://typehero.dev/challenge/primitive-data-types). Primitive data types are things like `string`, `boolean`, `number`, and `object`.
-
-> side note: in JavaScript, arrays and functions are actually objects, but that's a topic for another time :)
+JavaScript, like most programming languages has a concept of [primitive data types](https://typehero.dev/challenge/primitive-data-types). Primitive data types are things like `string`, `number` and `boolean`.
 
 But TypeScript isn't _like_ most programming languages. It's better. It takes things to the next level by introducing _literal_ data types.
 
@@ -56,7 +54,7 @@ isItPartyTime('Monday');
 // ^?
 ```
 
-> /\* the above example assumes a 4 day workweek since 4 day workweeks are observed to increase employee productivity.
+> The above example assumes a 4 day workweek since 4 day workweeks are observed to increase employee productivity.
 
 The _return type_ for this function is _also_ a literal type union. Notice that you didn't have to specify the return type anywhere. It just _works_ this way in TypeScript. Nice.
 

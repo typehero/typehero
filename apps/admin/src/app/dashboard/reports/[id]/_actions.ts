@@ -92,7 +92,7 @@ export async function banChallenge(challengeId: number, reportId: number) {
       },
       data: {
         status: 'CLEARED',
-        moderatorId: session?.user.id,
+        moderatorId: session?.user?.id,
         updatedAt: new Date(),
       },
     }),
@@ -113,7 +113,7 @@ export async function dismissReport(reportId: number) {
     },
     data: {
       status: 'DISMISSED',
-      moderatorId: session?.user.id,
+      moderatorId: session?.user?.id,
       updatedAt: new Date(),
     },
   });
@@ -184,7 +184,7 @@ export async function banUser(userId: string, reportId: number, banReason?: stri
       },
       data: {
         status: 'CLEARED',
-        moderatorId: session?.user.id,
+        moderatorId: session?.user?.id,
         updatedAt: new Date(),
       },
     }),

@@ -90,6 +90,7 @@ export default function SplitEditor({
   const testPanelSection = useRef<HTMLDivElement>(null);
   const monacoRef = useRef<typeof import('monaco-editor')>();
   const editorRef = useRef<monacoType.editor.IStandaloneCodeEditor>();
+  const inlayHintsProviderDisposableRef = useRef<monacoType.IDisposable>();
 
   useEffect(() => {
     const saveHandler = (e: KeyboardEvent) => {
@@ -113,6 +114,7 @@ export default function SplitEditor({
 
     return () => {
       document.removeEventListener('keydown', saveHandler);
+      inlayHintsProviderDisposableRef.current?.dispose();
     };
   }, []);
 
@@ -324,10 +326,12 @@ export default function SplitEditor({
             const getTsWorker = await monaco.languages.typescript.getTypeScriptWorker();
             const tsWorker = await getTsWorker(model.uri);
 
-            monaco.languages.registerInlayHintsProvider(
+            const inlayHintsProviderDisposable = monaco.languages.registerInlayHintsProvider(
               'typescript',
               createTwoslashInlayProvider(monaco, tsWorker),
             );
+
+            inlayHintsProviderDisposableRef.current = inlayHintsProviderDisposable;
 
             if (hasImports(code)) {
               const actualCode = code
@@ -484,7 +488,7 @@ async function typeCheck(monaco: typeof monacoType) {
         endLineNumber: end.lineNumber,
         startColumn: start.column,
         endColumn: end.column,
-        message: d.messageText as string,
+        message: ts.flattenDiagnosticMessageText(d.messageText, '\n'),
       } satisfies monacoType.editor.IMarkerData;
     });
 

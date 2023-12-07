@@ -53,7 +53,7 @@ export function ClaimForm() {
           )}
         />
 
-        <Button className="h-10 rounded-xl" type="submit">
+        <Button className="h-10 rounded-xl" type="submit" disabled={form.formState.isSubmitting}>
           Submit
         </Button>
       </form>

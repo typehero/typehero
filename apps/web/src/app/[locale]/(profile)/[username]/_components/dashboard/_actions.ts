@@ -75,6 +75,11 @@ export async function getSolvedChallenges(userId: string) {
     where: {
       userId,
       isSuccessful: true,
+      challenge: {
+        NOT: {
+          difficulty: 'EVENT',
+        },
+      },
     },
     select: {
       challenge: {
@@ -101,6 +106,11 @@ export async function getSolvedChallenges(userId: string) {
   });
 
   const allChallenges = await prisma.challenge.groupBy({
+    where: {
+      NOT: {
+        difficulty: 'EVENT',
+      },
+    },
     by: ['difficulty'],
     _count: {
       _all: true,

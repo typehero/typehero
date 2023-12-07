@@ -5,6 +5,7 @@ import { getAllFlags } from '~/utils/feature-flags';
 import { CountdownTimer } from '../../_components/countdown-timer';
 import { About } from './about';
 import { CardGrid } from './card-grid';
+import { FemPromo } from './fem-promo';
 
 export async function AotLandingPage() {
   const featureFlags = await getAllFlags();
@@ -20,16 +21,12 @@ export async function AotLandingPage() {
           </h1>
         </div>
         <div className="flex flex-col items-center justify-center gap-5">
-          <p className="text-center text-xl font-semibold">
-            The first type challenge will unlock at{' '}
-            <span className="text-primary">midnight(est)</span> on December 1st
-          </p>
           <CountdownTimer />
           <div className="flex w-full flex-col items-center justify-center gap-2 md:w-auto md:flex-row md:gap-5">
             <a
               target="_blank"
               rel="noreferrer"
-              href="https://discord.com/invite/KPNUNQRB"
+              href="https://chat.typehero.dev"
               className="group flex w-full items-center justify-center gap-2 rounded-xl bg-[#5865F2] px-3 py-2 text-sm font-bold text-white duration-300 dark:bg-[#5865F2] md:mx-auto md:w-auto"
             >
               <svg
@@ -61,6 +58,7 @@ export async function AotLandingPage() {
               </a>
             </Button>
           </div>
+          <FemPromo blurb="Elevate your TypeScript with our trusted partner" className="mt-5" />
         </div>
       </div>
       <CardGrid />

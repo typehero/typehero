@@ -38,7 +38,7 @@ export async function Profile({ username: usernameFromQuery, children }: Props) 
   if (!user) return notFound();
 
   const session = await auth();
-  const isOwnProfile = session?.user.id === user.id;
+  const isOwnProfile = session?.user?.id === user.id;
 
   const badges = await getBadges(user.id);
 

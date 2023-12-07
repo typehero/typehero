@@ -48,7 +48,7 @@ export default async function SharedSolutionsPage({
   });
 
   const session = await auth();
-  const isOwnProfile = session?.user.id === user.id;
+  const isOwnProfile = session?.user?.id === user.id;
 
   return (
     <Card className="col-span-4 md:min-h-[calc(100vh_-_56px_-_6rem)]">
