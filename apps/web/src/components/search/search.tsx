@@ -40,7 +40,7 @@ export function Search() {
       </DialogTrigger>
       <SearchProvider>
         <DialogContent
-          className="max-h-[80vh] max-w-full gap-0 overflow-hidden rounded-sm p-0 sm:rounded-sm md:max-w-[75vw] lg:max-w-[65vw]"
+          className="max-h-[80vh] max-w-full gap-0 overflow-hidden rounded-sm p-0 sm:rounded-sm md:max-w-[75vw] lg:max-w-[60vw] xl:max-h-[60vh]"
           displayX={false}
         >
           <SearchContent onClick={() => setOpen(false)} />
