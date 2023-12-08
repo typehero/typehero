@@ -10,10 +10,12 @@ _\[unfortunately, Santa is conveniently forgetting that the `Reverse` type was c
 >
 > _\[Santa\]_ How difficult is it to understand what Reverse does!? `'rehsaD'` should be transformed into `'Dasher'`, `'recnaD'` should be transformed into `'Dancer'`, `'recnarP'` should be transformed into `'Prancer'`.. DO I NEED TO KEEP GOING?
 >
-> _\[floor manager\]_ Well you might be surprised. For example, should happen to multi-codepoint unicode characters?
+> _\[floor manager\]_ Well you might be surprised. For example, what should happen to multi-codepoint unicode characters?
 >
 > _\[Santa\]_ What are you on about with all that accessibility stuff again!
 >
 > _\[floor manager\]_ Accessibility is important, sir.
 >
 > _\[Santa\]_ Look, this is just an MVP. We can add accessibility later. Just get me my `Reverse` type! I'm having a hard time reading this stuff otherwise!
+
+<sub>prompt by [Dimitri Mitropoulos](https://github.com/dimitropoulos) of [MiTS](https://michigantypescript.com)</sub>
