@@ -1,8 +1,15 @@
+import { set } from 'lodash';
 import { useLocalStorage } from '~/utils/useLocalStorage';
 
 const SEARCH_LOCAL_STORAGE_KEY = '__TYPEHERO_SEARCH__';
 
-export function useRecentSearchesStorage<Item extends { id: number | string }>() {
+interface UseRecentSearchesStorageProps<Item extends { id: number | string }> {
+  limit?: number;
+}
+
+export function useRecentSearchesStorage<Item extends { id: number | string }>({
+  limit = 5,
+}: UseRecentSearchesStorageProps<Item> = {}) {
   const [storage, setStorage] = useLocalStorage(SEARCH_LOCAL_STORAGE_KEY, '[]');
 
   const getItems = () => {
@@ -18,6 +25,10 @@ export function useRecentSearchesStorage<Item extends { id: number | string }>()
 
         if (exists) {
           return;
+        }
+
+        if (items.length >= limit) {
+          items.pop();
         }
 
         setStorage(JSON.stringify([item, ...items]));
