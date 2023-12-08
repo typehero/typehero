@@ -17,5 +17,3 @@ _\[unfortunately, Santa is conveniently forgetting that the `Reverse` type was c
 > _\[floor manager\]_ Accessibility is important, sir.
 >
 > _\[Santa\]_ Look, this is just an MVP. We can add accessibility later. Just get me my `Reverse` type! I'm having a hard time reading this stuff otherwise!
-
-<sub>prompt by [Dimitri Mitropoulos](https://github.com/dimitropoulos) of [MiTS](https://michigantypescript.com)</sub>

@@ -29,5 +29,3 @@ Wow. What a pointless email. For once, calling a meeting would have been better.
 Good thing we got some experience reading the tests because this email may as well have said "do work. thanks." (lol).
 
 Off to the tests to see how this is actually supposed to work!
-
-<sub>prompt by [Dimitri Mitropoulos](https://github.com/dimitropoulos) of [MiTS](https://michigantypescript.com)</sub>
