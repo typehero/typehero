@@ -196,7 +196,7 @@ function Footer() {
         href="https://www.algolia.com/"
         rel="noopener noreferrer"
         target="_blank"
-        className="text-foreground "
+        className="text-[#003dff]"
       >
         <svg
           fill="currentColor"

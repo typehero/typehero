@@ -1,4 +1,3 @@
-import { set } from 'lodash';
 import { useLocalStorage } from '~/utils/useLocalStorage';
 
 const SEARCH_LOCAL_STORAGE_KEY = '__TYPEHERO_SEARCH__';
