@@ -1,6 +1,5 @@
 import { auth } from '@repo/auth/server';
-import { redirect } from 'next/navigation';
-import { isBetaUser } from '~/utils/server/is-beta-user';
+
 import { withUnstableCache } from '~/utils/withUnstableCache';
 import { TrackDetail } from '../_components/track-details';
 import { getTrackDetails } from '../_components/track.action';
@@ -13,14 +12,8 @@ interface Props {
   };
 }
 
-// todo: write a suspense skeleton...
 export default async function Page({ params }: Props) {
   const session = await auth();
-  const isBeta = await isBetaUser(session);
-
-  if (!isBeta) {
-    return redirect('/claim');
-  }
 
   return <TrackDetail slug={params.slug} />;
 }
