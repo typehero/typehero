@@ -14,10 +14,13 @@ import { ThemeButton } from './theme-button';
 import { NavWrapper } from './nav-wrapper';
 import { LoginLink } from './login-link';
 import { SignOutLink } from './signout-link';
+import { SkipToCodeEditor } from './skip-to-code-editor';
 import { getScopedI18n } from '~/locales/server';
 import { MobileNav } from './mobile-nav';
 import { NavLink } from './nav-link';
 import { Badge } from '@repo/ui/components/badge';
+import { Search } from '../search/search';
+import { Suspense } from 'react';
 
 export function getAdminUrl() {
   // reference for vercel.com
@@ -53,6 +56,7 @@ export async function Navigation() {
       <NavWrapper>
         <div className="flex w-full items-center justify-between">
           <div className="relative flex items-center gap-3">
+            <SkipToCodeEditor />
             <Link className="flex space-x-1.5 focus:outline-none focus-visible:ring-2" href="/">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -86,6 +90,9 @@ export async function Navigation() {
 
           <div className="flex">
             <div className="flex items-center justify-end gap-2">
+              <Suspense>
+                <Search />
+              </Suspense>
               <ThemeButton />
               {featureFlags?.enableLogin ? <LoginButton /> : null}
               <MobileNav>

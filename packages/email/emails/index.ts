@@ -1,1 +1,1 @@
-export * from './waitlist-user-signup';
+export * from './newsletter-user-signup';
