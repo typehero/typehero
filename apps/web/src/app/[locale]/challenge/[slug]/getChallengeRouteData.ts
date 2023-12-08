@@ -4,6 +4,7 @@ import { cache } from 'react';
 import { getAllFlags } from '~/utils/feature-flags';
 import { AOT_CHALLENGES } from './aot-slugs';
 import { daysAfterDecemberFirst } from '~/utils/aot';
+import { validateCompilerOptions } from '~/utils/validateCompilerOptions';
 
 export type ChallengeRouteData = NonNullable<Awaited<ReturnType<typeof getChallengeRouteData>>>;
 
@@ -56,6 +57,11 @@ export const getChallengeRouteData = cache(async (slug: string, session: Session
     },
   });
 
+  const tsconfig = challenge.tsconfig;
+  if (!validateCompilerOptions(tsconfig)) {
+    throw new Error(`Challenge "${challenge.slug}" has an invalid tsconfig`);
+  }
+
   /**
    * Select the first track that the user is enrolled in for this challenge.
    */
@@ -83,6 +89,7 @@ export const getChallengeRouteData = cache(async (slug: string, session: Session
     challenge: {
       ...challenge,
       hasSolved: challenge.submission.length > 0,
+      tsconfig,
     },
     track,
   };
