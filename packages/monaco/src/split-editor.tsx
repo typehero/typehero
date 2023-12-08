@@ -38,6 +38,7 @@ export interface SplitEditorProps {
   setIsTestPanelExpanded: (isExpanded: boolean) => void;
   tests: string;
   userCode: string;
+  tsconfig?: monacoType.languages.typescript.CompilerOptions;
   onValidate?: {
     tests?: OnValidate;
     user?: OnValidate;
@@ -79,6 +80,7 @@ export default function SplitEditor({
   tests,
   userCode,
   userEditorState,
+  tsconfig,
 }: SplitEditorProps) {
   const { toast } = useToast();
   const { settings, updateSettings } = useEditorSettingsStore();
@@ -308,14 +310,16 @@ export default function SplitEditor({
             const model = monaco.editor.getModel(monaco.Uri.parse(USER_CODE_PATH))!;
             const code = model.getValue();
             debouncedUserCodeAta(code);
+
             monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
-              ...monaco.languages.typescript.typescriptDefaults.getCompilerOptions(),
+              allowNonTsExtensions: true,
               strict: true,
               target: monaco.languages.typescript.ScriptTarget.ESNext,
               strictNullChecks: true,
               moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
               allowSyntheticDefaultImports: true,
               outDir: 'lib', // kills the override input file error
+              ...tsconfig,
             });
 
             monaco.languages.registerDocumentFormattingEditProvider(
