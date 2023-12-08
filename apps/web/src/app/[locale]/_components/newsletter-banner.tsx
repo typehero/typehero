@@ -16,7 +16,8 @@ export function NewsletterBanner() {
           <p className="leading-8 text-black/50 dark:text-white/50">
             <Balancer>
               Dive into the world of TypeScript excellence! Join us on the journey to becoming a
-              better TypeScript developer.
+              better TypeScript developer. By subscribing to the TypeHero newsletter, you will be at
+              the forefront of updates, insights, and exclusive content.
             </Balancer>
           </p>
         </div>

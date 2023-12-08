@@ -23,8 +23,9 @@ export function Newsletter({ params: { locale } }: { params: { locale: string } 
           </h1>
           <p className="leading-8 text-black/50 dark:text-white/50">
             <Balancer>
-              By subscribing to the TypeHero newsletter, you will be at the forefront of updates,
-              insights, and exclusive content.
+              Dive into the world of TypeScript excellence! Join us on the journey to becoming a
+              better TypeScript developer. By subscribing to the TypeHero newsletter, you will be at
+              the forefront of updates, insights, and exclusive content.
             </Balancer>
           </p>
           <NewsletterForm />
