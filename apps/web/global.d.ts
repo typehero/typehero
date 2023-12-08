@@ -14,5 +14,7 @@ declare namespace NodeJS {
     RESEND_API_KEY: string;
     EDGE_CONFIG: string;
     STAGING?: string;
+    NEXT_PUBLIC_ALGOLIA_APP_ID: string;
+    NEXT_PUBLIC_ALGOLIA_API_KEY: string;
   }
 }
