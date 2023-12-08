@@ -1,4 +1,4 @@
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import { PrismaAdapter } from '@auth/prisma-adapter';
 import type { Role, RoleTypes } from '@repo/db/types';
 import { type DefaultSession } from 'next-auth';
 import GitHubProvider from 'next-auth/providers/github';
