@@ -67,7 +67,7 @@ function ProfileForm({ user }: Props) {
       await updateProfile(data);
       toast({
         title: 'Profile Updated',
-        description: 'You profile has been successfully updated.',
+        description: 'Your profile has been successfully updated.',
         variant: 'success',
       });
     } catch (error) {
