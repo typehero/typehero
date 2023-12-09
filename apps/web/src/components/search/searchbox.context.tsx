@@ -13,7 +13,7 @@ export function SearchBoxContextProvider({ children }: { children: React.ReactNo
   const { query, update } = useSearchProviderInput();
   const [inputValue, setInputValue] = React.useState(query);
   const debouncedRefine = React.useRef(
-    debounce((newQuery: string) => update(newQuery), 300),
+    debounce((newQuery: string) => update(newQuery), 700),
   ).current;
 
   const setQuery = React.useCallback(

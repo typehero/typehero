@@ -19,8 +19,6 @@ import { getScopedI18n } from '~/locales/server';
 import { MobileNav } from './mobile-nav';
 import { NavLink } from './nav-link';
 import { Badge } from '@repo/ui/components/badge';
-import { Search } from '../search/search';
-import { Suspense } from 'react';
 
 export function getAdminUrl() {
   // reference for vercel.com
@@ -90,9 +88,9 @@ export async function Navigation() {
 
           <div className="flex">
             <div className="flex items-center justify-end gap-2">
-              <Suspense>
-                <Search />
-              </Suspense>
+              {/* <Suspense> */}
+              {/*   <Search /> */}
+              {/* </Suspense> */}
               <ThemeButton />
               {featureFlags?.enableLogin ? <LoginButton /> : null}
               <MobileNav>
