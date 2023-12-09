@@ -88,6 +88,17 @@ async function buildChallenge(pathToDirectory: string) {
           console.error('Error parsing JSON:', jsonError);
         }
       }
+      if (fileName === 'tsconfig') {
+        try {
+          const fileContents = await fs.promises.readFile(itemPath, 'utf8');
+          const jsonData = JSON.parse(fileContents);
+          if (jsonData.compilerOptions != null) {
+            challengeToCreate.tsconfig = jsonData.compilerOptions;
+          }
+        } catch (jsonError) {
+          console.error('Error parsing JSON:', jsonError);
+        }
+      }
       // @TODO: we'll ingest solutions later
       // const isWithinSolutionsDirectory = challengePath.split('/').at(-1) === 'solutions';
       //

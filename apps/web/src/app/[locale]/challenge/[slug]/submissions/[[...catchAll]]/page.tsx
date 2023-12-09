@@ -1,8 +1,7 @@
 import { auth } from '@repo/auth/server';
 import { prisma } from '@repo/db';
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { cache } from 'react';
-import { isBetaUser } from '~/utils/server/is-beta-user';
 import { withUnstableCache } from '~/utils/withUnstableCache';
 import { Submissions } from './_components';
 import { createChallengeSubmissionCacheKey } from './cache-keys';
@@ -20,11 +19,6 @@ export const metadata = {
 
 export default async function SubmissionPage({ params: { slug } }: Props) {
   const session = await auth();
-  const isBeta = await isBetaUser(session);
-
-  if (!isBeta) {
-    return redirect('/claim');
-  }
 
   const submissions = await withUnstableCache({
     fn: getChallengeSubmissions,
