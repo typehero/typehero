@@ -80,7 +80,16 @@ NEXTAUTH_SECRET="for local use you can just use a garble of letters"
 NEXTAUTH_URL="http://localhost:3000"
 ```
 
-### 5. Install dependencies
+### 5. Setup algolia for search
+
+Go to [algolia.com](https://www.algolia.com/apps/) and create a project, then copy in the secrets into your `.env`.
+
+```
+NEXT_PUBLIC_ALGOLIA_APP_ID=APP_ID
+NEXT_PUBLIC_ALGOLIA_API_KEY=API_KEY
+```
+
+### 6. Install dependencies
 
 Use `pnpm` to install dependencies.
 
@@ -88,14 +97,14 @@ Use `pnpm` to install dependencies.
 pnpm install
 ```
 
-### 6. Push Database Schema and Seed
+### 7. Push Database Schema and Seed
 
 ```
 pnpm db:push
 pnpm db:seed
 ```
 
-### 7. Running the dev server
+### 8. Running the dev server
 
 Finally, you can run the dev server:
 

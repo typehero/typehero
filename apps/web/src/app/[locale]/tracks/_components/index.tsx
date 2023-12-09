@@ -1,19 +1,8 @@
-import { auth } from '@repo/auth/server';
-import { redirect } from 'next/navigation';
-import { isBetaUser } from '~/utils/server/is-beta-user';
 import { EnrolledTrackSection } from './track-enrolled-section';
 import { TrackGrid } from './track-grid';
 import { Footsies } from '~/components/footsies';
 
 export async function Tracks() {
-  // early acces you must be authorized
-  const session = await auth();
-  const isBeta = await isBetaUser(session);
-
-  if (!isBeta) {
-    return redirect('/claim');
-  }
-
   return (
     <>
       <div className="flex flex-col gap-5 pb-8 md:gap-10 md:py-5">
