@@ -25,7 +25,7 @@ export async function OverviewTab({ user }: Props) {
           <CardTitle>Bio</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="w-full text-sm">
+          <div className="max-w-[900px] text-sm break-words">
             {hasBio ? (
               <Markdown>{user.bio}</Markdown>
             ) : (
