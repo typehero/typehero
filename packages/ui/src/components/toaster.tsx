@@ -38,8 +38,7 @@ export function Toaster() {
               {title ? <ToastTitle>{title}</ToastTitle> : null}
               {description ? <ToastDescription>{description}</ToastDescription> : null}
             </div>
-            {action}
-            <ToastClose />
+            {action ? action : <ToastClose />}
           </Toast>
         );
       })}
