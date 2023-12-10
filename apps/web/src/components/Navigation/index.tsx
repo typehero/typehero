@@ -10,7 +10,6 @@ import Link from 'next/link';
 import { isAdminOrModerator } from '~/utils/auth-guards';
 import { getAllFlags } from '~/utils/feature-flags';
 import { auth } from '@repo/auth/server';
-import { ThemeButton } from './theme-button';
 import { NavWrapper } from './nav-wrapper';
 import { LoginLink } from './login-link';
 import { SignOutLink } from './signout-link';
@@ -91,7 +90,6 @@ export async function Navigation() {
               {/* <Suspense> */}
               {/*   <Search /> */}
               {/* </Suspense> */}
-              <ThemeButton />
               {featureFlags?.enableLogin ? <LoginButton /> : null}
               <MobileNav>
                 <NavLinks />

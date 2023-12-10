@@ -5,6 +5,7 @@ import { Button } from '@repo/ui/components/button';
 import { Dialog, DialogContent, DialogTrigger } from '@repo/ui/components/dialog';
 import { SearchProvider } from './search-provider';
 import { SearchContent } from './search-content';
+import { SearchIcon } from '@repo/ui/icons';
 
 export function Search() {
   const [open, setOpen] = React.useState(false);
@@ -24,19 +25,7 @@ export function Search() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button
-          variant="outline"
-          className="text-muted-foreground w-30 group relative justify-start text-sm sm:pr-12 md:w-40 lg:w-64"
-          onClick={() => setOpen(true)}
-        >
-          <span className="sm:hidden">Search</span>
-          <span className="hidden w-20 truncate text-left sm:inline-block md:w-full">
-            Search Challenges...
-          </span>
-          <kbd className="bg-muted dark:group-hover:bg-muted-foreground top-50% pointer-events-none absolute right-1.5 hidden h-5 select-none items-center gap-1 rounded border px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
-            <span className="text-xs">⌘</span>K
-          </kbd>
-        </Button>
+        <SearchBar setOpen={setOpen} />
       </DialogTrigger>
       <SearchProvider>
         <DialogContent
@@ -47,5 +36,34 @@ export function Search() {
         </DialogContent>
       </SearchProvider>
     </Dialog>
+  );
+}
+
+function SearchBar({ setOpen }: { setOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
+  return (
+    <>
+      {/* Mobile Bar */}
+      <button
+        aria-label="mobile search icon"
+        className="rounded-lg p-2 focus:outline-none focus-visible:ring-2 lg:hidden"
+        onClick={() => setOpen(true)}
+      >
+        <SearchIcon className="h-5 w-5" />
+      </button>
+
+      {/* Desktop Bar */}
+      <Button
+        variant="outline"
+        className="text-muted-foreground hidden w-64 justify-between gap-3 text-sm lg:inline-flex"
+        onClick={() => setOpen(true)}
+      >
+        <SearchIcon />
+        <span className="sm:hidden">Search</span>
+        <span className="hidden w-20 truncate text-left sm:inline-block md:w-full">
+          Search Challenges...
+        </span>
+        <span className="text-xs">⌘K</span>
+      </Button>
+    </>
   );
 }
