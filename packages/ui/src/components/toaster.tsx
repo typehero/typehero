@@ -29,7 +29,7 @@ export function Toaster() {
           <Toast key={id} {...props} variant={variant}>
             <div className="z-10">
               {Icon && (
-                <div className="flex h-[50px] w-[50px] items-center justify-center rounded-full bg-white shadow-inner">
+                <div className="flex h-[50px] w-[50px] items-center justify-center rounded-full border-2 border-white bg-white shadow-[inset_3px_2px_2px_rgba(0,0,0,0.06)]">
                   {Icon}
                 </div>
               )}
