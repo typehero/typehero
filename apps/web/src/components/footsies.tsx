@@ -1,5 +1,6 @@
 import { Binary, Github, Twitter } from '@repo/ui/icons';
 import Link from 'next/link';
+import { ThemeButton } from './Navigation/theme-button';
 
 export function Footsies() {
   return (
@@ -9,22 +10,24 @@ export function Footsies() {
           Built with <Binary className="inline-block h-5 w-5 text-[#31bdc6]" /> by the Trash Devs
           community.
         </span>
-        <div className="flex gap-2">
+        <div className="flex items-center gap-2">
+          <ThemeButton />
+          <span className="px-2">|</span>
           <a
             target="_blank"
             rel="noreferrer"
-            className="group gap-1 md:inline-flex"
+            className="group rounded-lg p-2"
             href="https://github.com/typehero/typehero"
           >
-            <Github className="h-4 w-4 duration-150 group-hover:scale-110 group-hover:fill-black dark:group-hover:fill-white" />
+            <Github className="h-5 w-5 duration-150 group-hover:scale-110 group-hover:fill-black dark:group-hover:fill-white" />
           </a>
           <a
             target="_blank"
             rel="noreferrer"
-            className="group gap-1 md:inline-flex"
+            className="group rounded-lg p-2"
             href="https://twitter.com/typeheroapp"
           >
-            <Twitter className="h-4 w-4 duration-150 group-hover:scale-110 group-hover:fill-black dark:group-hover:fill-white" />
+            <Twitter className="h-5 w-5 duration-150 group-hover:scale-110 group-hover:fill-black dark:group-hover:fill-white" />
           </a>
         </div>
       </div>
