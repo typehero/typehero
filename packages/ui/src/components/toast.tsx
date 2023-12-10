@@ -65,7 +65,7 @@ const Toast = React.forwardRef<
       {...props}
     >
       <div className={cn(bgToastVariants({ variant }))} />
-      {props.children}
+      <div className="z-50 inline-flex gap-x-3">{props.children}</div>
     </ToastPrimitives.Root>
   );
 });
