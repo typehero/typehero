@@ -14,7 +14,7 @@ export function Footsies() {
           <a
             target="_blank"
             rel="noreferrer"
-            className="p-2"
+            className="group rounded-lg p-2"
             href="https://github.com/typehero/typehero"
           >
             <Github className="h-5 w-5 duration-150 group-hover:scale-110 group-hover:fill-black dark:group-hover:fill-white" />
@@ -22,7 +22,7 @@ export function Footsies() {
           <a
             target="_blank"
             rel="noreferrer"
-            className="p-2"
+            className="group rounded-lg p-2"
             href="https://twitter.com/typeheroapp"
           >
             <Twitter className="h-5 w-5 duration-150 group-hover:scale-110 group-hover:fill-black dark:group-hover:fill-white" />
