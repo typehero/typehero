@@ -1,13 +1,19 @@
 'use client';
+import { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { Moon, Sun } from '@repo/ui/icons';
 
 export function ThemeButton() {
+  const [mounted, setMounted] = useState(false);
   const { setTheme, resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <>
-      {resolvedTheme ?? (
+      {mounted ? (
         <button
           aria-label="theme button"
           className="group rounded-lg p-2 focus:outline-[#2563EB]"
@@ -29,7 +35,7 @@ export function ThemeButton() {
             />
           )}
         </button>
-      )}
+      ) : null}
     </>
   );
 }
