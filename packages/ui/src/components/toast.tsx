@@ -13,7 +13,7 @@ const ToastViewport = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Viewport
     className={cn(
-      'fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]',
+      'fixed top-10 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-14 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]',
       className,
     )}
     ref={ref}
@@ -65,7 +65,7 @@ const Toast = React.forwardRef<
       {...props}
     >
       <div className={cn(bgToastVariants({ variant }))} />
-      {props.children}
+      <div className="z-50 inline-flex w-full gap-x-3">{props.children}</div>
     </ToastPrimitives.Root>
   );
 });
