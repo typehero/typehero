@@ -46,6 +46,7 @@ function SearchBar({ setOpen }: { setOpen: React.Dispatch<React.SetStateAction<b
       <button
         aria-label="mobile search icon"
         className="rounded-lg p-2 focus:outline-none focus-visible:ring-2 lg:hidden"
+        onClick={() => setOpen(true)}
       >
         <SearchIcon className="h-5 w-5" />
       </button>
