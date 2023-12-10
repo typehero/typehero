@@ -87,9 +87,9 @@ export async function Navigation() {
 
           <div className="flex">
             <div className="flex items-center justify-end gap-2">
-              {/* <Suspense>
-                <Search />
-              </Suspense> */}
+              {/* <Suspense> */}
+              {/*   <Search /> */}
+              {/* </Suspense> */}
               {featureFlags?.enableLogin ? <LoginButton /> : null}
               <MobileNav>
                 <NavLinks />
