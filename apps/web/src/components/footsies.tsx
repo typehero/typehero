@@ -10,7 +10,9 @@ export function Footsies() {
           Built with <Binary className="inline-block h-5 w-5 text-[#31bdc6]" /> by the Trash Devs
           community.
         </span>
-        <div className="flex gap-2">
+        <div className="flex items-center gap-2">
+          <ThemeButton />
+          <span className="px-2">|</span>
           <a
             target="_blank"
             rel="noreferrer"
@@ -27,7 +29,6 @@ export function Footsies() {
           >
             <Twitter className="h-5 w-5 duration-150 group-hover:scale-110 group-hover:fill-black dark:group-hover:fill-white" />
           </a>
-          <ThemeButton />
         </div>
       </div>
       <div className="container flex flex-col justify-between gap-2 text-neutral-500 dark:text-neutral-400  md:flex-row md:items-end">
