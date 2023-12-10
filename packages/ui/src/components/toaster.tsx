@@ -38,8 +38,7 @@ export function Toaster() {
               {title ? <ToastTitle>{title}</ToastTitle> : null}
               {description ? <ToastDescription>{description}</ToastDescription> : null}
             </div>
-            {action}
-            <ToastClose />
+            <div className="ml-auto inline-flex">{action ? action : <ToastClose />}</div>
           </Toast>
         );
       })}
