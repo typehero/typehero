@@ -16,7 +16,7 @@ export function ThemeButton() {
       {mounted ? (
         <button
           aria-label="theme button"
-          className="group rounded-lg p-2"
+          className="group rounded-lg p-2 focus:outline-[#2563EB]"
           onClick={() => {
             setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
           }}
