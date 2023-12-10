@@ -48,8 +48,8 @@ const TITLES_BY_TAG = {
 export const COLORS_BY_TAGS = {
   POPULAR: 'dark:bg-pink-300 bg-pink-600/50',
   NEWEST: 'dark:bg-orange-300 bg-orange-500/50',
-  BEGINNER: 'dark:bg-blue-300 bg-blue-600/50',
-  EASY: 'dark:bg-green-300 bg-green-500/50',
+  BEGINNER: 'dark:bg-sky-300 bg-sky-600/50',
+  EASY: 'dark:bg-green-300 bg-green-600/50',
   MEDIUM: 'dark:bg-yellow-300 bg-yellow-600/50',
   HARD: 'dark:bg-red-300 bg-red-600/50',
   EXTREME: 'dark:bg-purple-300 bg-purple-600/50',
