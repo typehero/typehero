@@ -14,7 +14,7 @@ export function Footsies() {
           <a
             target="_blank"
             rel="noreferrer"
-            className="group gap-1 p-2 md:inline-flex"
+            className="p-2"
             href="https://github.com/typehero/typehero"
           >
             <Github className="h-5 w-5 duration-150 group-hover:scale-110 group-hover:fill-black dark:group-hover:fill-white" />
@@ -22,7 +22,7 @@ export function Footsies() {
           <a
             target="_blank"
             rel="noreferrer"
-            className="group gap-1 p-2 md:inline-flex"
+            className="p-2"
             href="https://twitter.com/typeheroapp"
           >
             <Twitter className="h-5 w-5 duration-150 group-hover:scale-110 group-hover:fill-black dark:group-hover:fill-white" />
