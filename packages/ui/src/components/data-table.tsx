@@ -100,7 +100,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
           </TableBody>
         </Table>
       </div>
-      <DataTablePagination table={table} />
+      {Boolean(table.getRowModel().rows?.length) && <DataTablePagination table={table} />}
     </div>
   );
 }
