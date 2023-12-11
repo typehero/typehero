@@ -19,6 +19,10 @@ import { MobileNav } from './mobile-nav';
 import { NavLink } from './nav-link';
 import { Badge } from '@repo/ui/components/badge';
 
+const session = await auth();
+
+const isAdminOrMod = isAdminOrModerator(session);
+
 export function getAdminUrl() {
   // reference for vercel.com
   if (process.env.VERCEL_URL) {
@@ -38,13 +42,32 @@ export async function Navigation() {
       {featureFlags?.enableExplore ? <NavLink title={t('explore')} href="/explore" /> : null}
       {featureFlags?.enableTracks ? <NavLink title={t('tracks')} href="/tracks" /> : null}
       {featureFlags?.enableHolidayEvent ? (
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 ">
           <NavLink title={t('advent')} href="/aot-2023" />
           <Badge className="h-4 bg-red-600 px-1.5" variant="default">
             New
           </Badge>
         </div>
       ) : null}
+      {session && session.user && (
+        <>
+          <hr className="ml-4" />
+          <NavLink title={'Profile'} href={`/@${session.user.name}`} mobileView={true} />
+          <NavLink title={'Settings'} href="/settings" mobileView={true} />
+
+          {isAdminOrMod ? <NavLink title={'Admin'} href={getAdminUrl()} mobileView={true} /> : null}
+          {isAdminOrMod ? (
+            <NavLink
+              title={'Challenge Playground'}
+              href="/challenge-playground"
+              mobileView={true}
+            />
+          ) : null}
+          <span className="ml-2 md:hidden">
+            <SignOutLink />
+          </span>
+        </>
+      )}
     </>
   );
 
@@ -103,16 +126,12 @@ export async function Navigation() {
 }
 
 async function LoginButton() {
-  const session = await auth();
-
-  const isAdminOrMod = isAdminOrModerator(session);
-
   return session && session.user ? (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button
           aria-label="profile button"
-          className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none focus-visible:ring-2"
+          className="focus:bg-accent hidden rounded-lg p-2 duration-300 focus:outline-none focus-visible:ring-2 md:block"
         >
           <User className="h-5 w-5" />
         </button>
