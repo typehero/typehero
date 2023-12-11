@@ -48,7 +48,7 @@ export function Markdown({ children, className }: { children: string; className?
       className={className}
       components={{
         a: ({ className, ...props }) => (
-          <a className={clsx(className, 'text-blue-500')} {...props} />
+          <a className={clsx(className, 'whitespace-nowrap text-blue-500')} {...props} />
         ),
         ul: ({ className, ...props }) => (
           <ul className={clsx(className, 'mb-4 list-disc ps-10')} {...props} />
