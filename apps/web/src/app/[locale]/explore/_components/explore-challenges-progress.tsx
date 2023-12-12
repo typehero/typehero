@@ -5,6 +5,8 @@ interface ExploreChallengesProgressionProps {
   total: number;
 }
 
+const SOLVED = "Solved";
+
 export async function ExploreChallengesProgression({
   completed,
   total,
@@ -15,7 +17,7 @@ export async function ExploreChallengesProgression({
         <CheckCircle className="stroke-green-600 dark:stroke-green-300" size={18} />
       )}
       <span className="text-muted-foreground text-sm">
-        {completed}/{total}
+        {completed}/{total} {SOLVED}
       </span>
     </>
   );
