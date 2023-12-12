@@ -66,7 +66,7 @@ type GroceryItem<Name, Price, InStock> = {
 };
 ```
 
-Now you can change pass arguments to this type:
+Now you can pass arguments to this type:
 
 ```ts
 type AvocadoToast = GroceryItem<'Avocado Toast', 12.99, true>;

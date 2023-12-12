@@ -1,5 +1,6 @@
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import { PrismaAdapter } from '@auth/prisma-adapter';
 import type { Role, RoleTypes } from '@repo/db/types';
+import type { Adapter } from '@auth/core/adapters';
 import { type DefaultSession } from 'next-auth';
 import GitHubProvider from 'next-auth/providers/github';
 import { prisma } from '@repo/db';
@@ -15,7 +16,7 @@ export type { Session, DefaultSession as DefaultAuthSession } from 'next-auth';
  */
 declare module 'next-auth' {
   interface Session extends DefaultSession {
-    user: DefaultSession['user'] & {
+    user?: DefaultSession['user'] & {
       id: string;
       role: RoleTypes[];
     };
@@ -104,7 +105,7 @@ export const {
       };
     },
   },
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
     GitHubProvider({
       clientId: process.env.GITHUB_ID!,

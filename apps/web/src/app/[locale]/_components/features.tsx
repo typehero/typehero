@@ -22,8 +22,10 @@ import {
   ChallengeCreationCard,
   CuratedTracksCard,
 } from './feature-card';
+import { getScopedI18n } from '~/locales/server';
 
-export function Features() {
+export async function Features() {
+  const t = await getScopedI18n('landing.features');
   return (
     <section className="relative overflow-hidden" id="features">
       <div className="mx-auto mb-[64px] grid max-w-[1400px] items-center justify-center px-4 sm:px-24 md:px-4 lg:px-24">
@@ -42,7 +44,7 @@ export function Features() {
                   >
                     <path d="m19.2 36.4-4.75-10.45L4 21.2l10.45-4.75L19.2 6l4.75 10.45L34.4 21.2l-10.45 4.75ZM36.4 42l-2.35-5.25-5.25-2.35 5.25-2.4 2.35-5.2 2.4 5.2 5.2 2.4-5.2 2.35Z" />
                   </svg>
-                  many features, wow{' '}
+                  {t('badge')}{' '}
                   <Image
                     className="absolute -bottom-1 right-1 translate-y-7 duration-300 group-hover:translate-y-0"
                     alt="doge smile"
@@ -54,10 +56,10 @@ export function Features() {
               </div>
             </a>
             <h1 className="text-4xl font-bold">
-              <Balancer>What&apos;s in TypeHero?</Balancer>
+              <Balancer>{t('title')}</Balancer>
             </h1>
-            <p className="text-black/50 dark:text-white/50">
-              <Balancer>All you need to become a TypeScript menace</Balancer>
+            <p className="text-black/60 dark:text-white/50">
+              <Balancer>{t('description')}</Balancer>
             </p>
           </div>
           <div className="relative z-10 grid w-full gap-4 md:grid-cols-2 lg:gap-8 [&>*:nth-child(3)]:hidden md:[&>*:nth-child(3)]:block">

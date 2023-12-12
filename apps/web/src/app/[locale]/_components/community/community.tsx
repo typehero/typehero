@@ -91,7 +91,7 @@ export function Community() {
               <h2 className="mt-2 text-center text-4xl font-bold lg:text-left">
                 Built by the community
               </h2>
-              <p className="max-w-[55ch] bg-transparent px-8 text-center leading-8 text-black/50 dark:text-white/50 lg:px-0 lg:text-left">
+              <p className="max-w-[55ch] bg-transparent px-8 text-center leading-8 text-black/60 dark:text-white/50 lg:px-0 lg:text-left">
                 TypeHero is free, open-source, and built by developers just like you. These are some
                 of the contributors who made this possible so far.
               </p>

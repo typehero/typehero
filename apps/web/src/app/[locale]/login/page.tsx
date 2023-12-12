@@ -15,7 +15,7 @@ export default async function Index({
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 text-center sm:w-[450px]">
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-4xl font-bold tracking-tight text-neutral-900 dark:text-white">
-                Welcome to Early Access!
+                Welcome to Public Beta!
               </h1>
               <p className="text-muted-foreground text-sm">
                 Start your typescript journey by logging in below.

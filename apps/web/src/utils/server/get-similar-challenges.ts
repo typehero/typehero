@@ -25,7 +25,7 @@ export async function getSimilarChallenges(
 
     const solvedSolutions = await prisma.submission.findMany({
       where: {
-        userId: session?.user.id,
+        userId: session?.user?.id,
         isSuccessful: true,
       },
       select: {
@@ -37,7 +37,7 @@ export async function getSimilarChallenges(
       where: {
         difficulty,
         id: {
-          notIn: solvedSolutions.flatMap((solution) => solution.challengeId),
+          notIn: [...solvedSolutions.flatMap((solution) => solution.challengeId), challengeId],
         },
       },
       take: maxChallenges,
@@ -47,7 +47,7 @@ export async function getSimilarChallenges(
       const firstUnsolved = await prisma.challenge.findMany({
         where: {
           id: {
-            notIn: solvedSolutions.flatMap((solution) => solution.challengeId),
+            notIn: [...solvedSolutions.flatMap((solution) => solution.challengeId), challengeId],
           },
         },
         take: maxChallenges,

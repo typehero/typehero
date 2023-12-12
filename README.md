@@ -21,7 +21,7 @@ the intricacies of TypeScript's typing system.
 
 ### ✨ Want to contribute?
 
-Please see the [`LOCAL.md`](/LOCAL.md) on how to get setup. Consider joining the [discord](https://discord.gg/trashdev) if you have any ideas/feedback. We'd love to hear from you!
+Please see the [`LOCAL.md`](/LOCAL.md) on how to get set up. Consider joining the [discord](https://discord.gg/trashdev) if you have any ideas/feedback. We'd love to hear from you!
 
 ### 💖 Sponsors
 

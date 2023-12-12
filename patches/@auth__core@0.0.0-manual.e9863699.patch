@@ -1,0 +1,114 @@
+diff --git a/providers/github.js b/providers/github.js
+index 4b28537419b55d799bbda68cea5936d8033520ef..aa511c6ee018e37a5ed880160da53447c197c5ab 100644
+--- a/providers/github.js
++++ b/providers/github.js
+@@ -60,57 +60,57 @@
+  * :::
+  */
+ export default function GitHub(config) {
+-    return {
+-        id: "github",
+-        name: "GitHub",
+-        type: "oauth",
+-        authorization: {
+-            url: "https://github.com/login/oauth/authorize",
+-            params: { scope: "read:user user:email" },
+-        },
+-        token: "https://github.com/login/oauth/access_token",
+-        userinfo: {
+-            url: "https://api.github.com/user",
+-            async request({ tokens, provider }) {
+-                const profile = await fetch(provider.userinfo?.url, {
+-                    headers: {
+-                        Authorization: `Bearer ${tokens.access_token}`,
+-                        "User-Agent": "authjs",
+-                    },
+-                }).then(async (res) => await res.json());
+-                if (!profile.email) {
+-                    // If the user does not have a public email, get another via the GitHub API
+-                    // See https://docs.github.com/en/rest/users/emails#list-public-email-addresses-for-the-authenticated-user
+-                    const res = await fetch("https://api.github.com/user/emails", {
+-                        headers: {
+-                            Authorization: `Bearer ${tokens.access_token}`,
+-                            "User-Agent": "authjs",
+-                        },
+-                    });
+-                    if (res.ok) {
+-                        const emails = await res.json();
+-                        profile.email = (emails.find((e) => e.primary) ?? emails[0]).email;
+-                    }
+-                }
+-                return profile;
++  return {
++    id: "github",
++    name: "GitHub",
++    type: "oauth",
++    authorization: {
++      url: "https://github.com/login/oauth/authorize",
++      params: { scope: "read:user user:email" },
++    },
++    token: "https://github.com/login/oauth/access_token",
++    userinfo: {
++      url: "https://api.github.com/user",
++      async request({ tokens, provider }) {
++        const profile = await fetch(provider.userinfo?.url, {
++          headers: {
++            Authorization: `Bearer ${tokens.access_token}`,
++            "User-Agent": "authjs",
++          },
++        }).then(async (res) => await res.json());
++        if (!profile.email) {
++          // If the user does not have a public email, get another via the GitHub API
++          // See https://docs.github.com/en/rest/users/emails#list-public-email-addresses-for-the-authenticated-user
++          const res = await fetch("https://api.github.com/user/emails", {
++            headers: {
++              Authorization: `Bearer ${tokens.access_token}`,
++              "User-Agent": "authjs",
+             },
+-        },
+-        profile(profile) {
+-            return {
+-                id: profile.id.toString(),
+-                name: profile.name ?? profile.login,
+-                email: profile.email,
+-                image: profile.avatar_url,
+-            };
+-        },
+-        style: {
+-            logo: "/github.svg",
+-            logoDark: "/github-dark.svg",
+-            bg: "#fff",
+-            bgDark: "#24292f",
+-            text: "#000",
+-            textDark: "#fff",
+-        },
+-        options: config,
+-    };
++          });
++          if (res.ok) {
++            const emails = await res.json();
++            profile.email = (emails.find((e) => e.primary) ?? emails[0]).email;
++          }
++        }
++        return profile;
++      },
++    },
++    profile(profile) {
++      return {
++        id: profile.id.toString(),
++        name: profile.login,
++        email: profile.email,
++        image: profile.avatar_url,
++      };
++    },
++    style: {
++      logo: "/github.svg",
++      logoDark: "/github-dark.svg",
++      bg: "#fff",
++      bgDark: "#24292f",
++      text: "#000",
++      textDark: "#fff",
++    },
++    options: config,
++  };
+ }

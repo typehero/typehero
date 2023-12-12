@@ -22,6 +22,7 @@ enum Difficulty {
   MEDIUM
   HARD
   EXTREME
+  EVENT
 }
 
 enum RoleTypes {
@@ -163,6 +164,7 @@ model Challenge {
   /// Test cases that need to be passed in order have the submission be accepted.
   tests            String          @db.MediumText
   status           ChallengeStatus @default(PENDING)
+  tsconfig         Json?
 
   user   User   @relation(fields: [userId], references: [id])
   userId String

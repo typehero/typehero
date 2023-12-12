@@ -1,6 +1,6 @@
 'use client';
 
-import { Check, PieChart, Loader2 } from '@repo/ui/icons';
+import { Check, PieChart } from '@repo/ui/icons';
 import { useIsMobile } from '~/utils/useIsMobile';
 
 import type { Challenge, Submission } from '@repo/db/types';
@@ -20,6 +20,7 @@ interface TrackChallengeProps {
   isCompact?: boolean;
   /* Hide submission status */
   hideSubmissionStatus?: boolean;
+  className?: string;
 }
 
 const BGS_BY_DIFFICULTY = {
@@ -28,6 +29,8 @@ const BGS_BY_DIFFICULTY = {
   MEDIUM: 'to-difficulty-medium/20 dark:to-difficulty-medium-dark/20',
   HARD: 'to-difficulty-hard/20 dark:to-difficulty-hard-dark/20',
   EXTREME: 'to-difficulty-extreme/20 dark:to-difficulty-extreme-dark/20',
+  // this will never actually be used
+  EVENT: 'to-difficulty-extreme/20 dark:to-difficulty-extreme-dark/20',
 } as const;
 
 // million-ignore
@@ -38,6 +41,7 @@ export function TrackChallenge({
   isSelected = false,
   isCompact = false,
   hideSubmissionStatus = false,
+  className,
 }: TrackChallengeProps) {
   const isMobile = useIsMobile();
   const backgroundColor = isCompleted
@@ -64,6 +68,7 @@ export function TrackChallenge({
             'group-hover/challenge:scale-[1.025] group-hover/challenge:bg-neutral-500/20 lg:group-hover/challenge:rounded-xl':
               !isMobile,
           },
+          className,
         )}
       >
         <div className="w-full space-y-2">

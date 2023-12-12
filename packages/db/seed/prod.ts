@@ -13,7 +13,7 @@ const __dirname = path.dirname(__filename);
 
 const challengePath = path.join(__dirname, '../../../challenges');
 
-export const slugify = (str: string) => str.toLowerCase().replace(/\s/g, '-');
+const slugify = (str: string) => str.toLowerCase().replace(/\s/g, '-');
 const TYPE_CHALLENGE_ID = uuidByString('type-challenges');
 const TYPEHERO_ID = uuidByString('typehero');
 
@@ -27,7 +27,7 @@ try {
       name: 'TypeHero',
       userLinks: {
         create: {
-          url: 'https://typhero.dev',
+          url: 'https://typehero.dev',
         },
       },
     },

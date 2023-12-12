@@ -20,6 +20,7 @@ export interface CodePanelProps {
     code: string;
     slug: string;
     tests: string;
+    tsconfig?: monaco.languages.typescript.CompilerOptions;
   };
   saveSubmission: (code: string, isSuccessful: boolean) => Promise<void>;
   submissionDisabled: boolean;
@@ -113,6 +114,7 @@ export function CodePanel(props: CodePanelProps) {
         setIsTestPanelExpanded={setIsTestPanelExpanded}
         tests={tests}
         userCode={code}
+        tsconfig={props.challenge.tsconfig}
         onMount={{
           tests: async (editor, monaco) => {
             const getTsWorker = await monaco.languages.typescript.getTypeScriptWorker();
@@ -284,7 +286,7 @@ export function CodePanel(props: CodePanelProps) {
                 className="cursor-pointer rounded-lg duration-300"
                 onClick={handleSubmit}
               >
-                Submit{tsErrors === undefined && ' (open test cases)'}
+                {disabled && 'Login to '}Submit{tsErrors === undefined && ' (open test cases)'}
               </Button>
             </TooltipTrigger>
             {disabled && (

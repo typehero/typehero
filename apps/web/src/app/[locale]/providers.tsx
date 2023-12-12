@@ -7,7 +7,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ThemeProvider } from 'next-themes';
 import React, { Suspense } from 'react';
 import { Toolbar } from '~/components/toolbar';
-import { I18nProviderClient } from '~/locales/client';
 import { FeatureFlagProvider } from '../feature-flag-provider';
 
 interface Props {
@@ -21,7 +20,7 @@ export function Providers({ children }: Props) {
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-right" />
       <SessionProvider>
-        <ThemeProvider attribute="class">
+        <ThemeProvider attribute="class" disableTransitionOnChange>
           <FeatureFlagProvider>
             <TooltipProvider>{children}</TooltipProvider>
           </FeatureFlagProvider>

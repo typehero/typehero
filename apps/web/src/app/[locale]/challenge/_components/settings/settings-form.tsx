@@ -146,7 +146,9 @@ export function SettingsForm() {
 
         <DialogFooter className="mt-3">
           <DialogPrimitive.Close asChild>
-            <Button type="submit">Save</Button>
+            <Button type="submit" disabled={form.formState.isSubmitting}>
+              Save
+            </Button>
           </DialogPrimitive.Close>
         </DialogFooter>
       </form>

@@ -1,7 +1,6 @@
 'use server';
 
 import { prisma } from '@repo/db';
-import { auth } from '@repo/auth/server';
 import type { DIFFICULTIES } from './challenges-progress';
 
 export type HistoricalChallenge = Awaited<ReturnType<typeof getChallengeHistoryByCategory>>[0];
@@ -76,6 +75,11 @@ export async function getSolvedChallenges(userId: string) {
     where: {
       userId,
       isSuccessful: true,
+      challenge: {
+        NOT: {
+          difficulty: 'EVENT',
+        },
+      },
     },
     select: {
       challenge: {
@@ -102,6 +106,11 @@ export async function getSolvedChallenges(userId: string) {
   });
 
   const allChallenges = await prisma.challenge.groupBy({
+    where: {
+      NOT: {
+        difficulty: 'EVENT',
+      },
+    },
     by: ['difficulty'],
     _count: {
       _all: true,
@@ -199,12 +208,12 @@ export async function getBadges(userId: string): Promise<BadgeInfo[]> {
     },
   });
 
-  const numberOfInProgressHolidayChallenges =
+  const numberOfAttemptedHolidayChallenges =
     holidayTrack?.trackChallenges.filter((trackChallenge) => {
-      return trackChallenge.challenge.submission?.every((submission) => !submission.isSuccessful);
+      return (trackChallenge.challenge.submission?.length ?? 0) > 0;
     }).length ?? 0;
 
-  if (numberOfInProgressHolidayChallenges > 0) {
+  if (numberOfAttemptedHolidayChallenges > 0) {
     badges.push({ slug: 'aot-2023-bronze', name: 'Advent of TypeScript 2023 Bronze' });
   }
 

@@ -36,8 +36,8 @@
     "picocolors": "^1.0.0",
     "prettier": "^3.0.2",
     "prettier-plugin-tailwindcss": "^0.4.1",
-    "turbo": "^1.10.16",
     "tsx": "^3.14.0",
+    "turbo": "^1.10.16",
     "type-testing": "0.2.0",
     "typescript": "^5.1.6",
     "vitest": "^0.34.6"
@@ -50,10 +50,10 @@
       ]
     },
     "patchedDependencies": {
-      "next-auth@4.22.1": "patches/next-auth@4.22.1.patch",
       "@monaco-editor/react@4.5.1": "patches/@monaco-editor__react@4.5.1.patch",
       "monaco-vim@0.4.0": "patches/monaco-vim@0.4.0.patch",
-      "@vercel/toolbar@0.1.1": "patches/@vercel__toolbar@0.1.1.patch"
+      "@vercel/toolbar@0.1.1": "patches/@vercel__toolbar@0.1.1.patch",
+      "@auth/core@0.0.0-manual.e9863699": "patches/@auth__core@0.0.0-manual.e9863699.patch"
     }
   }
 }

@@ -30,7 +30,7 @@ export async function getPaginatedSolutions({
       id: true,
       submission: {
         where: {
-          userId: session?.user.id || '',
+          userId: session?.user?.id || '',
           isSuccessful: true,
         },
         orderBy: [

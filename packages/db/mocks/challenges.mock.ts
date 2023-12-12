@@ -18,6 +18,12 @@ export interface InfoFile {
 
 const redundantChallenges = ['pick', 'flatten'];
 
+const tsconfigOverrides: Record<string, object> = {
+  'assert-array-index': {
+    noUncheckedIndexedAccess: true,
+  },
+};
+
 const creditLine = (author: string) =>
   `\n\n\nThis challenge was ported from [Type Challenges](https://tsch.js.org/) and was authored by [${author}](https://www.github.com/${author})`;
 
@@ -63,17 +69,20 @@ export async function loadChallengesFromTypeChallenge(isProd = false) {
       continue;
     }
 
-    if ((isProd && !redundantChallenges.includes(title.toLowerCase())) || !isProd) {
+    const slug = slugify(title);
+
+    if ((isProd && !redundantChallenges.includes(slug)) || !isProd) {
       arr.push({
         ...(isProd ? {} : { id: idNum }),
         name: title,
-        slug: slugify(title),
+        slug,
         description: descriptionWithCredit,
         status: ChallengeStatus.ACTIVE,
         code: prompt,
         tests: testData,
         difficulty: difficulty === 'warm' ? 'BEGINNER' : (difficulty.toUpperCase() as Difficulty),
         shortDescription: README.slice(0, 100),
+        ...(slug in tsconfigOverrides && { tsconfig: tsconfigOverrides[slug] }),
       });
     }
   }

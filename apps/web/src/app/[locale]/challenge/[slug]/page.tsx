@@ -1,13 +1,13 @@
 import { auth, type Session } from '@repo/auth/server';
-import { notFound, redirect } from 'next/navigation';
-import { buildMetaForChallenge } from '~/app/metadata';
+import { notFound } from 'next/navigation';
+import { buildMetaForChallenge, buildMetaForEventPage } from '~/app/metadata';
+import { daysAfterDecemberFirst } from '~/utils/aot';
+import { getAllFlags } from '~/utils/feature-flags';
 import { getRelativeTime } from '~/utils/relativeTime';
-import { isBetaUser } from '~/utils/server/is-beta-user';
 import { Comments } from '../_components/comments';
 import { Description } from '../_components/description';
-import { getChallengeRouteData } from './getChallengeRouteData';
-import { getAllFlags } from '~/utils/feature-flags';
 import { AOT_CHALLENGES } from './aot-slugs';
+import { getChallengeRouteData } from './getChallengeRouteData';
 
 interface Props {
   params: {
@@ -16,6 +16,13 @@ interface Props {
 }
 
 export async function generateMetadata({ params: { slug } }: Props) {
+  if (AOT_CHALLENGES.includes(slug)) {
+    return buildMetaForEventPage({
+      title: 'Advent of Typescript 2023 | TypeHero',
+      description: 'Advent of Typescript 2023',
+    });
+  }
+
   const { challenge } = await getChallengeRouteData(slug, null);
   const description = `Unlock your TypeScript potential by solving the ${challenge.name} challenge on TypeHero.`;
 
@@ -29,13 +36,7 @@ export async function generateMetadata({ params: { slug } }: Props) {
 }
 
 export default async function Challenges({ params: { slug } }: Props) {
-  // early access you must be authorized
   const session = await auth();
-  const isBeta = await isBetaUser(session);
-
-  if (!isBeta) {
-    return redirect('/claim');
-  }
 
   const { enableHolidayEvent } = await getAllFlags();
   const isAotChallenge = AOT_CHALLENGES.includes(slug);
@@ -44,7 +45,7 @@ export default async function Challenges({ params: { slug } }: Props) {
     const [, day = '1'] = slug.split('-');
     const daysPassed = daysAfterDecemberFirst();
 
-    if (parseInt(day) > daysPassed) {
+    if (parseInt(day) > daysPassed + 1) {
       return notFound();
     }
   }
@@ -61,14 +62,4 @@ export default async function Challenges({ params: { slug } }: Props) {
 
 export function isAuthor(session: Session | null, userId?: string | null) {
   return userId && session?.user?.id && userId === session?.user?.id;
-}
-
-const MS_PER_DAY = 24 * 60 * 60 * 1000;
-function daysAfterDecemberFirst() {
-  const startDate: Date = new Date('2023-12-01');
-  const today: Date = new Date();
-
-  const daysPassed = Math.floor((today.getTime() - startDate.getTime()) / MS_PER_DAY) + 1;
-
-  return daysPassed;
 }

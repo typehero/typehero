@@ -1,8 +1,5 @@
-import { auth } from '@repo/auth/server';
 import type { Metadata } from 'next';
-import { redirect } from 'next/navigation';
 import { buildMetaForDefault } from '~/app/metadata';
-import { isBetaUser } from '~/utils/server/is-beta-user';
 import { Wizard } from './_components';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -13,12 +10,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Page() {
-  const session = await auth();
-  const isBeta = await isBetaUser(session);
-
-  if (!isBeta) {
-    return redirect('/claim');
-  }
-
   return <Wizard />;
 }

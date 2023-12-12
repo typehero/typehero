@@ -22,7 +22,7 @@ export const UserSignupEmail = (props: { to: string }) => {
   return (
     <Html>
       <Head />
-      <Preview>You're on the TypeHero Waitlist!</Preview>
+      <Preview>You've subscribed to the TypeHero newsletter!</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-[40px] w-[465px] rounded border border-solid border-[#eaeaea] p-[20px]">
@@ -30,11 +30,11 @@ export const UserSignupEmail = (props: { to: string }) => {
               <Img src={`${baseUrl}/typehero.png`} width="64" height="auto" alt="TypeHero" />
             </Section>
             <Heading className="mx-0 my-[30px] p-0 text-[24px] font-bold text-black">
-              You're on the TypeHero Waitlist!
+              You've subscribed to the TypeHero newsletter!
             </Heading>
             <Text className="pb-2 text-[20px] leading-[24px] text-black">Hey there 👋</Text>
             <Text className="text-[14px] leading-[24px] text-black">
-              Thank you so much for signing up for the typehero waitlist, we really appreciate it.
+              Thank you so much for subscribing to the TypeHero newsletter, we really appreciate it.
             </Text>
             <Text className="text-[14px] leading-[24px] text-black">
               We are cooking extremely hard to bring you the best experience for doing type
@@ -55,7 +55,7 @@ export const UserSignupEmail = (props: { to: string }) => {
                 className="text-[14px] leading-[24px] text-black"
                 href={`${baseUrl}/unsubscribe?email=${props.to}`}
               >
-                Unsubscribe from the waitlist
+                Unsubscribe from the newsletter
               </a>
             </Container>
           </Container>
