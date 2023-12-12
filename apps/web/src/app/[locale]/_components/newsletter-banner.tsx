@@ -13,7 +13,7 @@ export function NewsletterBanner() {
           <h1 className="max-w-[13ch] text-4xl font-bold md:max-w-none">
             <Balancer>Stay Informed</Balancer>
           </h1>
-          <p className="leading-8 text-black/50 dark:text-white/50">
+          <p className="leading-8 text-black/60 dark:text-white/50">
             <Balancer>
               Dive into the world of TypeScript excellence! Join us on the journey to becoming a
               better TypeScript developer. By subscribing to the TypeHero newsletter, you will be at
