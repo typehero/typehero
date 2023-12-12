@@ -13,10 +13,11 @@
     "lint:fix": "eslint . --fix --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
     "start": "dotenv -e ../../.env next start",
     "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:ui": "playwright test --ui --ui-port=8080",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@axe-core/playwright": "^4.8.2",
     "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^3.1.1",
     "@mailchimp/mailchimp_marketing": "^3.0.80",

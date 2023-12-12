@@ -216,6 +216,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@axe-core/playwright':
+        specifier: ^4.8.2
+        version: 4.8.2(playwright-core@1.38.0)
       '@hookform/error-message':
         specifier: ^2.0.1
         version: 2.0.1(react-dom@18.2.0)(react-hook-form@7.45.1)(react@18.2.0)
@@ -979,6 +982,15 @@ packages:
       '@prisma/client': 5.0.0(prisma@5.0.0)
     transitivePeerDependencies:
       - nodemailer
+    dev: false
+
+  /@axe-core/playwright@4.8.2(playwright-core@1.38.0):
+    resolution: {integrity: sha512-9KOhX2tNuvqn9DzpBNyqoqNKRZBrexeSiN9irQ0sEdq8zH13JnatepCJxobuXn4UopNy6iIpP4342beMiH+MSQ==}
+    peerDependencies:
+      playwright-core: '>= 1.0.0'
+    dependencies:
+      axe-core: 4.8.2
+      playwright-core: 1.38.0
     dev: false
 
   /@babel/code-frame@7.22.10:
@@ -5687,6 +5699,11 @@ packages:
   /axe-core@4.7.2:
     resolution: {integrity: sha512-zIURGIS1E1Q4pcrMjp+nnEh+16G56eG/MUllJH8yEvw7asDo7Ac9uhC9KIH5jzpITueEZolfYglnCGIuSBz39g==}
     engines: {node: '>=4'}
+
+  /axe-core@4.8.2:
+    resolution: {integrity: sha512-/dlp0fxyM3R8YW7MFzaHWXrf4zzbr0vaYb23VBFCl83R7nWNPg/yaQw2Dc8jzCMmDVLhSdzH8MjrsuIUuvX+6g==}
+    engines: {node: '>=4'}
+    dev: false
 
   /axios@1.4.0:
     resolution: {integrity: sha512-S4XCWMEmzvo64T9GfvQDOXgYRDJ/wsSZc7Jvdgx5u1sd0JwsuPLqb3SYmusag+edF6ziyMensPVqLTSc1PiSEA==}
