@@ -5,19 +5,16 @@ interface ExploreChallengesProgressionProps {
   total: number;
 }
 
-const SOLVED = "Solved";
+const SOLVED = 'Solved';
 
 export async function ExploreChallengesProgression({
   completed,
-  total
+  total,
 }: ExploreChallengesProgressionProps) {
   return (
-    <div className="flex gap-1 items-center">
+    <div className="flex items-center gap-1">
       {completed === total && (
-        <CheckCircle
-          className="stroke-green-600 dark:stroke-green-300"
-          size={18}
-        />
+        <CheckCircle className="stroke-green-600 dark:stroke-green-300" size={18} />
       )}
       <span className="text-muted-foreground text-sm">
         {completed}/{total} {SOLVED}

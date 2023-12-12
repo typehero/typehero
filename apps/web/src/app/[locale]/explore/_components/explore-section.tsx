@@ -99,7 +99,7 @@ export async function ExploreSection({ title, tag, redirectRoute }: SectionProps
   return (
     <div>
       <div className="container flex items-center justify-between gap-3 px-4 pt-5">
-        <div className="flex flex-col gap-3 items-start sm:flex-row sm:items-center">
+        <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center">
           <h2 className={`relative text-3xl font-bold tracking-tight ${TITLES_BY_TAG[tag]}`}>
             <div
               className={`absolute -left-8 -z-10 h-12 w-32 rounded-full bg-pink-300/50 blur-3xl ${COLORS_BY_TAGS[tag]}`}
