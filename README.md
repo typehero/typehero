@@ -68,4 +68,13 @@ If you find our project interesting and want to support us please consider spons
       </a>
     </td>
   </tr>
+  <tr>
+    <td>
+      <a href="https://www.surgehq.ai/?utm_campaign=oss&utm_source=typehero" target="_parent">
+        <img src="./media/surge.svg" alt="Powered by Planetscale" title="Powered by Planetscale" width="150">
+      </a>
+    </td>
+    <td></td>
+    <td></td>
+  </tr>
 </table>
