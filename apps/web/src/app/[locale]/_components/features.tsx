@@ -58,7 +58,7 @@ export async function Features() {
             <h1 className="text-4xl font-bold">
               <Balancer>{t('title')}</Balancer>
             </h1>
-            <p className="text-black/50 dark:text-white/50">
+            <p className="text-black/60 dark:text-white/50">
               <Balancer>{t('description')}</Balancer>
             </p>
           </div>

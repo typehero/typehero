@@ -1,5 +1,5 @@
-/* The module for the Waitlist page background */
-.waitlistBackground {
+/* The module for the Newsletter page background */
+.newsletterBackground {
   top: -56px;
   background: linear-gradient(0deg, hsl(var(--background)) 0%, rgba(9, 9, 11, 0) 100%),
     linear-gradient(
@@ -17,7 +17,7 @@
 }
 
 .mybg {
-  background: url('../../../../../assets/images/waitlist-bg.webp');
+  background: url('../../../../../assets/images/newsletter-bg.webp');
   background-position-y: 33%;
   background-position-x: center;
   background-repeat: no-repeat;

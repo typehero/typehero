@@ -19,15 +19,15 @@ import clsx from 'clsx';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-const waitlistFormSchema = z.object({
+const newsletterFormSchema = z.object({
   name: z.string().min(1, 'Please enter your name'),
   email: z.string().email(),
   intention: z.string(),
 });
 
-export type WaitlistFormSchema = z.infer<typeof waitlistFormSchema>;
+export type NewsletterFormSchema = z.infer<typeof newsletterFormSchema>;
 
-export function WaitlistForm() {
+export function NewsletterForm() {
   const mutation = useMutation({
     mutationFn: subscribe,
     onSuccess: () => {
@@ -35,15 +35,15 @@ export function WaitlistForm() {
     },
   });
 
-  const form = useForm<WaitlistFormSchema>({
-    resolver: zodResolver(waitlistFormSchema),
+  const form = useForm<NewsletterFormSchema>({
+    resolver: zodResolver(newsletterFormSchema),
     defaultValues: {
       email: '',
       name: '',
     },
   });
 
-  async function onSubmit(data: WaitlistFormSchema) {
+  async function onSubmit(data: NewsletterFormSchema) {
     mutation.mutate(data);
   }
 
@@ -140,7 +140,7 @@ export function WaitlistForm() {
             type="submit"
           >
             <span className="h-full w-full rounded-[10px] bg-white px-4 py-2 text-center font-bold text-black transition-colors duration-300 group-hover:bg-blue-100 dark:bg-black dark:text-white group-hover:dark:bg-cyan-950">
-              {mutation.status === 'pending' ? 'Submitting...' : 'Join the waitlist'}
+              {mutation.status === 'pending' ? 'Submitting...' : 'Subscribe'}
             </span>
           </Button>
         </form>
@@ -152,7 +152,7 @@ export function WaitlistForm() {
             text={
               // @ts-ignore
               mutation.error?.message === 'Member Exists'
-                ? 'You are already added to the waitlist with this email. We will reach out to you soon.'
+                ? 'You have already subscribed using this email!'
                 : 'Something went wrong, please try again.'
             }
           />
@@ -178,7 +178,7 @@ export function AlertSuccess() {
     <Alert variant="success">
       <MailCheck className="h-4 w-4" />
       <AlertDescription className="pl-7 text-left text-white">
-        Thanks for signing up for the waitlist! Consider{' '}
+        Thanks for subscribing! Consider{' '}
         <a
           className="underline"
           href="https://twitter.com/typeheroapp"
@@ -193,7 +193,7 @@ export function AlertSuccess() {
   );
 }
 
-async function subscribe(data: WaitlistFormSchema) {
+async function subscribe(data: NewsletterFormSchema) {
   const response = await fetch('/api/subscribe', {
     method: 'POST',
     body: JSON.stringify(data),

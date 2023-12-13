@@ -1,10 +1,9 @@
 import { auth, type Session } from '@repo/auth/server';
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { buildMetaForChallenge, buildMetaForEventPage } from '~/app/metadata';
 import { daysAfterDecemberFirst } from '~/utils/aot';
 import { getAllFlags } from '~/utils/feature-flags';
 import { getRelativeTime } from '~/utils/relativeTime';
-import { isBetaUser } from '~/utils/server/is-beta-user';
 import { Comments } from '../_components/comments';
 import { Description } from '../_components/description';
 import { AOT_CHALLENGES } from './aot-slugs';
@@ -37,13 +36,7 @@ export async function generateMetadata({ params: { slug } }: Props) {
 }
 
 export default async function Challenges({ params: { slug } }: Props) {
-  // early access you must be authorized
   const session = await auth();
-  const isBeta = await isBetaUser(session);
-
-  if (!isBeta) {
-    return redirect('/claim');
-  }
 
   const { enableHolidayEvent } = await getAllFlags();
   const isAotChallenge = AOT_CHALLENGES.includes(slug);

@@ -3,8 +3,8 @@ import { buildMetaForDefault } from '~/app/metadata';
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildMetaForDefault({
-    title: 'Waitlist | TypeHero',
-    description: 'Join the waitlist for TypeHero and be the first to know when we launch!',
+    title: 'Newsletter | TypeHero',
+    description: 'Subscribe to the TypeHero newsletter and stay informed about our latest updates!',
   });
 }
-export { Waitlist as default } from './_components';
+export { Newsletter as default } from './_components';
