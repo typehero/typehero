@@ -4,7 +4,7 @@ Because the ability to create primitive types is the foundational idea behind Ty
 
 TypeScript is like a really really smart spellchecker. It helps you work faster when you're at your best, but it also saves you from misspelling words when you're under stress at 3am the night before a big term paper is due.
 
-Think about it for a second: spellcheckers work because there are encoded with rules about the vocabulary and syntax of English. Similarly, TypeScript has advanced knowledge about the vocabulary and syntax of JavaScript. But TypeScript can do even better because you can specify the type of your data. That allows TypeScript to make even better judgement calls about whether something you're trying to do is likely to be a bug (or not).
+Think about it for a second: spellcheckers work because they are encoded with rules about the vocabulary and syntax of English. Similarly, TypeScript has advanced knowledge about the vocabulary and syntax of JavaScript. But TypeScript can do even better because you can specify the type of your data. That allows TypeScript to make even better judgement calls about whether something you're trying to do is likely to be a bug (or not).
 
 ## What Does "Primitive" mean in this context?
 
