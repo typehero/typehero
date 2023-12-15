@@ -17,6 +17,8 @@ test.describe('homepage a11y', () => {
   test('homepage should not have any automatically detectable WCAG A or AA violations in light mode', async ({
     page,
   }) => {
+    // TODO: fix this type error
+    // @ts-expect-error
     const a11yScanResults = await new AxeBuilder({ page }).withTags(A11YTAGS).analyze();
 
     expect(a11yScanResults.violations).toEqual([]);
@@ -31,6 +33,8 @@ test.describe('homepage a11y', () => {
       })
       .click();
 
+    // TODO: fix this type error
+    // @ts-expect-error
     const a11yScanResults = await new AxeBuilder({ page }).withTags(A11YTAGS).analyze();
 
     expect(a11yScanResults.violations).toEqual([]);

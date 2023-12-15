@@ -68,7 +68,7 @@ export function SolutionDetails({ solution }: Props) {
                 <TypographyLarge>{solution.title}</TypographyLarge>
               </div>
               <div className="flex items-center gap-2">
-                <ReportDialog reportType="SOLUTION" solutionId={solution.id!}>
+                <ReportDialog reportType="SOLUTION" solutionId={solution.id}>
                   <ActionMenu
                     items={[
                       {
