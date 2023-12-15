@@ -47,8 +47,8 @@ export function TrackChallenge({
   const backgroundColor = isCompleted
     ? 'peer-checked:bg-green-600/80 peer-checked:dark:bg-green-300/80'
     : isInProgress
-    ? 'peer-checked:bg-orange-600/80 peer-checked:dark:bg-orange-300/80'
-    : '';
+      ? 'peer-checked:bg-orange-600/80 peer-checked:dark:bg-orange-300/80'
+      : '';
 
   return (
     <label
