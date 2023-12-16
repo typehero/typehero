@@ -16,7 +16,27 @@ const INDEX_NAME = 'typehero';
 
 export function SearchProvider({ children }: { children: React.ReactNode }) {
   return (
-    <InstantSearchNext searchClient={searchClient} indexName={INDEX_NAME}>
+    <InstantSearchNext
+      searchClient={{
+        ...searchClient,
+        search(requests) {
+          const isEmptyQuery = requests.every(({ params }) => !params?.query);
+          if (isEmptyQuery) {
+            return Promise.resolve({
+              results: requests.map(
+                () =>
+                  ({
+                    hits: [],
+                  }) as never,
+              ),
+            });
+          }
+
+          return searchClient.search(requests);
+        },
+      }}
+      indexName={INDEX_NAME}
+    >
       {children}
     </InstantSearchNext>
   );
