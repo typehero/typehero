@@ -16,6 +16,7 @@ import { Pagination } from '../../../_components/pagination';
 import { useQuery } from '@tanstack/react-query';
 import { SolutionsSkeleton } from './solution-skeleton';
 import { SortSelect } from '../../../_components/sort-select';
+import useQueryParamState from './useQueryParamState';
 
 interface Props {
   slug: string;
@@ -48,7 +49,7 @@ export function Solutions({ slug }: Props) {
   const [view, setView] = useState<View>('list');
   const commentContainerRef = useRef<HTMLDivElement>(null);
   const [sortKey, setSortKey] = useState<(typeof SORT_KEYS)[number]>(SORT_KEYS[0]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useQueryParamState<number>('page', 1);
   const queryKey = ['challenge-solutions', slug, page, sortKey.key, sortKey.order];
   const session = useSession();
 

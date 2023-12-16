@@ -19,7 +19,7 @@ import { Vote } from '../../../_components/vote';
 import { pinOrUnpinSolution } from './_actions';
 import { isAdminOrModerator, isAuthor } from '~/utils/auth-guards';
 import { SolutionDeleteDialog } from './delete';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { EditSolution } from './edit-solution';
 
@@ -32,6 +32,11 @@ export function SolutionDetails({ solution }: Props) {
   const { data: session } = useSession();
   const showPin = isAdminOrModerator(session);
   const [isEditing, setIsEditing] = useState(false);
+
+  const router = useRouter();
+  const handleClickLeftIcon = () => {
+    router.back();
+  };
 
   const handlePinClick = async () => {
     await pinOrUnpinSolution(solution.id, !solution.isPinned, slug as string);
@@ -53,11 +58,11 @@ export function SolutionDetails({ solution }: Props) {
         <div className="custom-scrollable-element flex-1 overflow-y-auto px-4 pb-16 pt-3">
           <div className="mb-5 flex flex-col gap-3">
             <div className="flex items-center gap-3">
-              <Link href={`/challenge/${slug}/solutions`} className="h-7 w-7">
+              <button onClick={handleClickLeftIcon} className="h-7 w-7">
                 <div className="rounded-full p-1 hover:bg-gray-200 hover:bg-opacity-10">
                   <ArrowLeft className="stroke-gray-500" size={20} />
                 </div>
-              </Link>
+              </button>
               <div className="flex items-center gap-2">
                 <Avatar className="h-7 w-7">
                   <AvatarImage alt="github profile picture" src={solution.user?.image ?? ''} />
