@@ -1,3 +1,5 @@
+import { auth } from '@repo/auth/server';
+import { Badge } from '@repo/ui/components/badge';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,17 +9,17 @@ import {
 } from '@repo/ui/components/dropdown-menu';
 import { Play, Settings, Settings2, User } from '@repo/ui/icons';
 import Link from 'next/link';
+import { Suspense } from 'react';
+import { getScopedI18n } from '~/locales/server';
 import { isAdminOrModerator } from '~/utils/auth-guards';
 import { getAllFlags } from '~/utils/feature-flags';
-import { auth } from '@repo/auth/server';
-import { NavWrapper } from './nav-wrapper';
+import { Search } from '../search/search';
 import { LoginLink } from './login-link';
-import { SignOutLink } from './signout-link';
-import { SkipToCodeEditor } from './skip-to-code-editor';
-import { getScopedI18n } from '~/locales/server';
 import { MobileNav } from './mobile-nav';
 import { NavLink } from './nav-link';
-import { Badge } from '@repo/ui/components/badge';
+import { NavWrapper } from './nav-wrapper';
+import { SignOutLink } from './signout-link';
+import { SkipToCodeEditor } from './skip-to-code-editor';
 
 export function getAdminUrl() {
   // reference for vercel.com
@@ -87,9 +89,9 @@ export async function Navigation() {
 
           <div className="flex">
             <div className="flex items-center justify-end gap-2">
-              {/* <Suspense> */}
-              {/*   <Search /> */}
-              {/* </Suspense> */}
+              <Suspense>
+                <Search />
+              </Suspense>
               {featureFlags?.enableLogin ? <LoginButton /> : null}
               <MobileNav>
                 <NavLinks />
