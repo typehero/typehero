@@ -29,7 +29,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     ...allChallenges.map((challenge) => ({
       url: `${URL}/challenges/${challenge.slug}`,
-      lastModified: new Date(challenge.updatedAt)
+      lastModified: new Date(challenge.updatedAt),
     })),
   ];
 }
