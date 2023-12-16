@@ -27,15 +27,16 @@ interface ViewMoreButtonProps {
 
 export function ViewMoreButton({ redirectRoute, tag }: ViewMoreButtonProps) {
   return (
-    <Link href={redirectRoute}>
-      <Button
-        className={`group items-center whitespace-nowrap rounded-full py-2 pl-4 pr-3 backdrop-blur-sm
+    <Button
+      asChild
+      className={`group items-center whitespace-nowrap rounded-full py-2 pl-4 pr-3 backdrop-blur-sm
   ${BUTTON_BY_TAGS[tag]}`}
-        variant="ghost"
-      >
+      variant="ghost"
+    >
+      <Link href={redirectRoute}>
         view more
         <ChevronRight className="ml-2 h-4 w-4 stroke-[3] duration-300 group-hover:translate-x-1" />
-      </Button>
-    </Link>
+      </Link>
+    </Button>
   );
 }
