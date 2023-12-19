@@ -7,7 +7,7 @@ function isMacOS() {
 
 export default function SearchBar({ setOpen }: { setOpen: (v: boolean) => void }) {
   const isMac = isMacOS();
-  const cmdOrCtrl = !isMac ? '⌘' : 'Ctrl ';
+  const cmdOrCtrl = isMac ? '⌘' : 'Ctrl ';
   return (
     <>
       {/* Mobile Bar */}
