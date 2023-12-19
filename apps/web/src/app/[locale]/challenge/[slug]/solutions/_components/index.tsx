@@ -17,6 +17,7 @@ import { useQuery } from '@tanstack/react-query';
 import { SolutionsSkeleton } from './solution-skeleton';
 import { SortSelect } from '../../../_components/sort-select';
 import useQueryParamState from './useQueryParamState';
+import useGetQueryString from './useGetQueryString';
 
 interface Props {
   slug: string;
@@ -145,10 +146,13 @@ function SolutionRow({
   solution: NonNullable<PaginatedSolution['sharedSolution']>[number];
 }) {
   const { slug } = useParams();
+  const queryString  =useGetQueryString()
   return (
-    <Link
+    <Link 
+    href ={`/challenge/${slug}/solutions/${solution.id}?${queryString}` }
+
       className="flex cursor-pointer flex-col gap-2 p-4 duration-300 hover:bg-neutral-100 dark:hover:bg-zinc-700/50"
-      href={`/challenge/${slug}/solutions/${solution.id}`}
+      // href={}
     >
       <h3 className="truncate font-bold">{solution.title}</h3>
       <div className="flex items-center gap-2">
