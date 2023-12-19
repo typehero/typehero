@@ -1,6 +1,6 @@
 'use client';
 
-import { Calendar, CheckCheck } from '@repo/ui/icons';
+import { CheckCheck } from '@repo/ui/icons';
 import { motion, type Variants } from 'framer-motion';
 import Link from 'next/link';
 
