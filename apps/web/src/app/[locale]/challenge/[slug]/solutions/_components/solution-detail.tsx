@@ -22,7 +22,7 @@ import { SolutionDeleteDialog } from './delete';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import { EditSolution } from './edit-solution';
-import useGetQueryString from './useGetQueryString';
+import { useGetQueryString } from './useGetQueryString';
 
 interface Props {
   solution: ChallengeSolution;
