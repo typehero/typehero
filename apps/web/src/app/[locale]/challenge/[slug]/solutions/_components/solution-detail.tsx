@@ -33,7 +33,7 @@ export function SolutionDetails({ solution }: Props) {
   const { data: session } = useSession();
   const showPin = isAdminOrModerator(session);
   const [isEditing, setIsEditing] = useState(false);
-  const queryString = useGetQueryString()
+  const queryString = useGetQueryString();
 
   const handlePinClick = async () => {
     await pinOrUnpinSolution(solution.id, !solution.isPinned, slug as string);

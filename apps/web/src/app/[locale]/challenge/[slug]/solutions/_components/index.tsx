@@ -146,11 +146,10 @@ function SolutionRow({
   solution: NonNullable<PaginatedSolution['sharedSolution']>[number];
 }) {
   const { slug } = useParams();
-  const queryString  =useGetQueryString()
+  const queryString = useGetQueryString();
   return (
-    <Link 
-    href ={`/challenge/${slug}/solutions/${solution.id}?${queryString}` }
-
+    <Link
+      href={`/challenge/${slug}/solutions/${solution.id}?${queryString}`}
       className="flex cursor-pointer flex-col gap-2 p-4 duration-300 hover:bg-neutral-100 dark:hover:bg-zinc-700/50"
       // href={}
     >
