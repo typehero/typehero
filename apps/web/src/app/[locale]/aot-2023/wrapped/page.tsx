@@ -4,8 +4,14 @@ import { LeastSolved } from './_components/least-solved';
 import { MostSolved } from './_components/most-solved';
 import { UserSummary } from './_components/user-summary';
 import { AOT_CHALLENGES } from '../../challenge/[slug]/aot-slugs';
+import { getStaticParams } from '~/locales/server';
+import { setStaticParamsLocale } from 'next-international/server';
 
-export default async function AotWrappedPage() {
+export function generateStaticParams() {
+  return getStaticParams();
+}
+export default async function Index({ params: { locale } }: { params: { locale: string } }) {
+  setStaticParamsLocale(locale);
   const mostSolved = await prisma.submission.groupBy({
     by: ['challengeId'],
     where: {
