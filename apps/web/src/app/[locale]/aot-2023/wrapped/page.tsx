@@ -1,106 +1,69 @@
 import { prisma } from '@repo/db';
+import { setStaticParamsLocale } from 'next-international/server';
+import { getStaticParams } from '~/locales/server';
+import { AOT_CHALLENGES } from '../../challenge/[slug]/aot-slugs';
 import { Hero } from './_components/hero';
-import { LeastSolved } from './_components/least-solved';
 import { MostSolved } from './_components/most-solved';
 import { UserSummary } from './_components/user-summary';
-import { AOT_CHALLENGES } from '../../challenge/[slug]/aot-slugs';
-import { getStaticParams } from '~/locales/server';
-import { setStaticParamsLocale } from 'next-international/server';
+import { Prisma } from '@repo/db/types';
+import { LeastSolved } from './_components/least-solved';
 
 export function generateStaticParams() {
   return getStaticParams();
 }
+export interface AotChallengeData {
+  challengeId: string;
+  name: string;
+  slug: string;
+  userCount: number;
+}
 export default async function Index({ params: { locale } }: { params: { locale: string } }) {
   setStaticParamsLocale(locale);
-  const mostSolved = await prisma.submission.groupBy({
-    by: ['challengeId'],
-    where: {
-      challenge: {
-        slug: {
-          in: AOT_CHALLENGES,
-        },
-      },
-      isSuccessful: true,
-    },
-    _count: {
-      challengeId: true,
-    },
-    orderBy: {
-      _count: {
-        challengeId: 'desc',
-      },
-    },
-    take: 3,
-  });
-  const leastSolved = await prisma.submission.groupBy({
-    by: ['challengeId'],
-    where: {
-      challenge: {
-        slug: {
-          in: AOT_CHALLENGES,
-        },
-      },
-      isSuccessful: true,
-    },
-    _count: {
-      challengeId: true,
-    },
-    orderBy: {
-      _count: {
-        challengeId: 'asc',
-      },
-    },
-    take: 3,
-  });
 
-  const mostSolvedChallengeMetadata = await prisma.challenge.findMany({
-    where: {
-      id: {
-        in: mostSolved.map((s) => s.challengeId),
-      },
-    },
-    select: {
-      id: true,
-      slug: true,
-      name: true,
-    },
-  });
+  const topThreeSolved = await prisma.$queryRaw<AotChallengeData[]>`
+    select name, slug, challengeId, count(T.userId) as userCount
+    from(
+      select DISTINCT challengeId, userId
+      from Submission
+      where isSuccessful = true
+    ) as T
+    LEFT JOIN Challenge ON Challenge.id = T.challengeId
+    WHERE slug in (${Prisma.join(AOT_CHALLENGES)})
+    group by challengeId, slug
+    order by userCount desc
+    limit 3
+    `;
 
-  const mostSolvedWithSlug = mostSolved.map((s) => {
-    const metadata = mostSolvedChallengeMetadata.find((slug) => slug.id === s.challengeId);
-    return {
-      ...s,
-      ...metadata,
-    };
-  });
+  const bottomThreeSolved = await prisma.$queryRaw<AotChallengeData[]>`
+    select name, slug, challengeId, count(T.userId) as userCount
+    from(
+      select DISTINCT challengeId, userId
+      from Submission
+      where isSuccessful = true
+    ) as T
+    LEFT JOIN Challenge ON Challenge.id = T.challengeId
+    WHERE slug in (${Prisma.join(AOT_CHALLENGES)})
+    group by challengeId, slug
+    order by userCount asc
+    limit 3
+    `;
 
-  const leastSolvedChallengeMetadata = await prisma.challenge.findMany({
-    where: {
-      id: {
-        in: leastSolved.map((s) => s.challengeId),
-      },
-    },
-    select: {
-      id: true,
-      slug: true,
-      name: true,
-    },
-  });
+  const top3 = topThreeSolved.map((r) => ({
+    ...r,
+    userCount: Number(r.userCount),
+  }));
 
-  const leastSolvedWithSlug = leastSolved.map((s) => {
-    const metadata = leastSolvedChallengeMetadata.find((slug) => slug.id === s.challengeId);
-    return {
-      ...s,
-      ...metadata,
-    };
-  });
+  const bottom3 = bottomThreeSolved.map((r) => ({
+    ...r,
+    userCount: Number(r.userCount),
+  }));
 
   return (
     <div>
       <Hero />
       <UserSummary />
-      <MostSolved mostSolved={mostSolvedWithSlug} />
-      <LeastSolved leastSolved={leastSolvedWithSlug} />
+      <MostSolved mostSolved={top3} />
+      <LeastSolved leastSolved={bottom3} />
     </div>
   );
 }
