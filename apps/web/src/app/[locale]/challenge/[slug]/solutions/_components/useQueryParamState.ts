@@ -2,10 +2,7 @@
 
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 
-export const useQueryParamState = <T extends number | string>(
-  key: string,
-  defaultValue: T,
-): [T, (value: T) => void] => {
+export const useQueryParamState = <T extends number | string>(key: string, defaultValue: T) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -24,5 +21,5 @@ export const useQueryParamState = <T extends number | string>(
     router.push(`${pathname}?${params.toString()}`);
   };
 
-  return [value, setQueryParam];
+  return [value, setQueryParam] as const;
 };
