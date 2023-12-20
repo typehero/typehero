@@ -1,4 +1,3 @@
-'use client';
 import { LogIn } from '@repo/ui/icons';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';

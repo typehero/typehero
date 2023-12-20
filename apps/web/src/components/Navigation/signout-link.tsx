@@ -1,4 +1,3 @@
-'use client';
 import { signOut } from '@repo/auth/react';
 import { Button } from '@repo/ui/components/button';
 import { useRouter } from 'next/navigation';

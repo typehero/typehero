@@ -1,10 +1,11 @@
+'use client'
 import { Github, Sparkle, Twitter, Compass } from '@repo/ui/icons';
 import Link from 'next/link';
 import { Balancer } from 'react-wrap-balancer';
 import { Button } from '@repo/ui/components/button';
 import { HeroIllustration, BackgroundGrid } from './hero-illustration';
-import { getScopedI18n } from '~/locales/server';
-import { auth } from '@repo/auth/server';
+import { useSession } from '@repo/auth/react';
+import { useScopedI18n } from '~/locales/client';
 
 function TypeHeroLogo3D() {
   return (
@@ -143,9 +144,9 @@ function BeamOfLight() {
   );
 }
 
-export async function Hero() {
-  const t = await getScopedI18n('landing.hero');
-  const session = await auth();
+export function Hero() {
+  const t = useScopedI18n('landing.hero');
+  const session = useSession();
   return (
     <section className="-mt-[56px] min-h-[calc(100vh)] overflow-hidden lg:min-h-0 lg:pt-[56px]">
       <div className="absolute inset-10 -z-30 overflow-hidden rounded-full opacity-70 lg:hidden">

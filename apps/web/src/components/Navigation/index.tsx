@@ -1,27 +1,16 @@
-import { auth } from '@repo/auth/server';
 import { Badge } from '@repo/ui/components/badge';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@repo/ui/components/dropdown-menu';
-import { Play, Settings, Settings2, User } from '@repo/ui/icons';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { getScopedI18n } from '~/locales/server';
-import { isAdminOrModerator } from '~/utils/auth-guards';
 import { getAllFlags } from '~/utils/feature-flags';
 import { Search } from '../search/search';
-import { LoginLink } from './login-link';
 import { MobileNav } from './mobile-nav';
 import { NavLink } from './nav-link';
 import { NavWrapper } from './nav-wrapper';
-import { SignOutLink } from './signout-link';
 import { SkipToCodeEditor } from './skip-to-code-editor';
+import { LoginButton } from './login-button';
 
-export function getAdminUrl() {
+function getAdminUrl() {
   // reference for vercel.com
   if (process.env.VERCEL_URL) {
     return `https://admin.typehero.dev`;
@@ -92,7 +81,7 @@ export async function Navigation() {
               <Suspense>
                 <Search />
               </Suspense>
-              {featureFlags?.enableLogin ? <LoginButton /> : null}
+              {featureFlags?.enableLogin ? <LoginButton adminUrl={getAdminUrl()} /> : null}
               <MobileNav>
                 <NavLinks />
               </MobileNav>
@@ -104,59 +93,3 @@ export async function Navigation() {
   );
 }
 
-async function LoginButton() {
-  const session = await auth();
-
-  const isAdminOrMod = isAdminOrModerator(session);
-
-  return session && session.user ? (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <button
-          aria-label="profile button"
-          className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none focus-visible:ring-2"
-        >
-          <User className="h-5 w-5" />
-        </button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align="end"
-        className="mt-[0.33rem] w-56 rounded-xl bg-white/50 backdrop-blur-sm dark:bg-neutral-950/50"
-      >
-        <Link className="block" href={`/@${session.user.name}`}>
-          <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
-            <User className="mr-2 h-4 w-4" />
-            <span>Profile</span>
-          </DropdownMenuItem>
-        </Link>
-        <Link className="block" href="/settings">
-          <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none">
-            <Settings2 className="mr-2 h-4 w-4" />
-            <span>Settings</span>
-          </DropdownMenuItem>
-        </Link>
-        {isAdminOrMod ? (
-          <a className="block" href={getAdminUrl()}>
-            <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
-              <Settings className="mr-2 h-4 w-4" />
-              <span>Admin</span>
-            </DropdownMenuItem>
-          </a>
-        ) : null}
-        {isAdminOrMod ? (
-          <a className="block" href="/challenge-playground">
-            <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
-              <Play className="mr-2 h-4 w-4" />
-              <span>Challenge Playground</span>
-            </DropdownMenuItem>
-          </a>
-        ) : null}
-        <DropdownMenuSeparator />
-
-        <SignOutLink />
-      </DropdownMenuContent>
-    </DropdownMenu>
-  ) : (
-    <LoginLink />
-  );
-}
