@@ -38,33 +38,41 @@ export async function Navigation() {
   const t = await getScopedI18n('navigation');
   const featureFlags = await getAllFlags();
 
-  const NavLinks = () => (
+  const TopSectionLinks = (
     <>
       {featureFlags?.enableExplore ? <NavLink title={t('explore')} href="/explore" /> : null}
       {featureFlags?.enableTracks ? <NavLink title={t('tracks')} href="/tracks" /> : null}
       {featureFlags?.enableHolidayEvent ? (
-        <div className="flex items-center gap-1 ">
+        <div className="flex items-center gap-1">
           <NavLink title={t('advent')} href="/aot-2023" />
           <Badge className="h-4 bg-red-600 px-1.5" variant="default">
             New
           </Badge>
         </div>
       ) : null}
-      {session?.user ? (
-        <>
-          <hr className="ml-4" />
-          <NavLink title="Profile" href={`/@${session.user.name}`} />
-          <NavLink title="Settings" href="/settings" />
+    </>
+  );
 
-          {isAdminOrMod ? <NavLink title="Admin" href={getAdminUrl()} /> : null}
-          {isAdminOrMod ? (
-            <NavLink title="Challenge Playground" href="/challenge-playground" />
-          ) : null}
-          <span className="ml-2 md:hidden">
-            <SignOutLink />
-          </span>
-        </>
-      ) : null}
+  const NavLinks = (
+    <>
+      <div className="ml-4 hidden items-center gap-4 md:flex">{TopSectionLinks}</div>
+      <div className="flex flex-col gap-5 pl-4 md:hidden">
+        {TopSectionLinks}
+        {session?.user ? (
+          <>
+            <hr />
+            <NavLink title="Profile" href={`/@${session.user.name}`} />
+            <NavLink title="Settings" href="/settings" />
+            {isAdminOrMod ? <NavLink title="Admin" href={getAdminUrl()} /> : null}
+            {isAdminOrMod ? (
+              <NavLink title="Challenge Playground" href="/challenge-playground" />
+            ) : null}
+            <SignOutLink className="px-0" />
+          </>
+        ) : (
+          <LoginLink className="px-0 hover:bg-transparent hover:dark:bg-transparent" />
+        )}
+      </div>
     </>
   );
 
@@ -100,9 +108,7 @@ export async function Navigation() {
                 hero <span className="text-muted-foreground bg-muted px-1 text-xs">BETA</span>
               </div>
             </Link>
-            <div className="hidden items-center md:flex">
-              <NavLinks />
-            </div>
+            <div className="hidden items-center md:ml-4 md:flex md:gap-4">{NavLinks}</div>
           </div>
 
           <div className="flex">
@@ -113,9 +119,7 @@ export async function Navigation() {
               {featureFlags?.enableLogin ? (
                 <LoginButton isAdminOrMod={isAdminOrMod} session={session} />
               ) : null}
-              <MobileNav>
-                <NavLinks />
-              </MobileNav>
+              <MobileNav>{NavLinks}</MobileNav>
             </div>
           </div>
         </div>
@@ -175,10 +179,12 @@ async function LoginButton({
         ) : null}
         <DropdownMenuSeparator />
 
-        <SignOutLink />
+        <SignOutLink className="w-full rounded-b-lg rounded-t-sm" />
       </DropdownMenuContent>
     </DropdownMenu>
   ) : (
-    <LoginLink />
+    <span className="hidden md:flex">
+      <LoginLink />
+    </span>
   );
 }
