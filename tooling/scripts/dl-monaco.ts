@@ -4,7 +4,7 @@ import path from 'node:path';
 import fetch from 'node-fetch';
 
 /** @link https://typescript.azureedge.net/indexes/releases.json */
-const TYPESCRIPT_VERSION = '5.2.2';
+const TYPESCRIPT_VERSION = '5.3.3';
 
 /** @link https://github.com/microsoft/TypeScript-Make-Monaco-Builds */
 const TS_CDN_BASE_URL = `https://typescript.azureedge.net/cdn/${TYPESCRIPT_VERSION}/monaco`;

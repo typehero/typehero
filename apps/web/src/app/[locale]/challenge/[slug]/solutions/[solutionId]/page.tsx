@@ -20,7 +20,7 @@ export default async function SolutionPage({ params: { solutionId, slug } }: Pro
   return (
     <div className="relative h-full">
       <SolutionDetails solution={solution} />
-      <Comments rootId={solution.id!} type="SOLUTION" />
+      <Comments rootId={solution.id} type="SOLUTION" />
     </div>
   );
 }

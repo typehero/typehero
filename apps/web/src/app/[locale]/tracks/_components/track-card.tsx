@@ -53,8 +53,8 @@ export function TrackCard({ track }: TrackProps) {
           isCompleted
             ? 'border-green-700 dark:border-green-500'
             : isEnrolled
-            ? 'border-[#3078c5] dark:border-blue-400'
-            : 'dark:group-hover:border-border group-hover:border-neutral-400 group-hover:shadow-xl group-focus:border-neutral-500 dark:group-hover:shadow dark:group-hover:shadow-neutral-400/70',
+              ? 'border-[#3078c5] dark:border-blue-400'
+              : 'dark:group-hover:border-border group-hover:border-neutral-400 group-hover:shadow-xl group-focus:border-neutral-500 dark:group-hover:shadow dark:group-hover:shadow-neutral-400/70',
         )}
       >
         <div className="absolute -bottom-12 -left-4 w-full -translate-x-1/4 translate-y-1/4 rotate-[30deg]">

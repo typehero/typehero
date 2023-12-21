@@ -1,10 +1,15 @@
+import { auth } from '@repo/auth/server';
 import type { Difficulty, Tags } from '@repo/db/types';
 import Link from 'next/link';
+import { ExploreChallengesProgression } from '~/app/[locale]/explore/_components/explore-challenges-progress';
 import { Carousel } from '~/components/carousel';
-import { ExploreCard } from './explore-card';
-import { getChallengesByTagOrDifficulty } from './explore.action';
-import { ViewMoreButton } from './view-more-button';
 import { getAllFlags } from '~/utils/feature-flags';
+import { ExploreCard } from './explore-card';
+import {
+  getChallengesByTagOrDifficulty,
+  getExploreChallengesLengthByTagOrDifficulty,
+} from './explore.action';
+import { ViewMoreButton } from './view-more-button';
 
 interface SectionProps {
   title: string;
@@ -58,51 +63,73 @@ export const COLORS_BY_TAGS = {
 } as const;
 
 export async function ExploreSection({ title, tag, redirectRoute }: SectionProps) {
+  const session = await auth();
   const { enableHolidayEvent } = await getAllFlags();
-  const challenges = await getChallengesByTagOrDifficulty(tag.trim().toUpperCase(), 6);
+  const challenges = await getChallengesByTagOrDifficulty(tag.trim().toUpperCase());
+  const challengesLength = await getExploreChallengesLengthByTagOrDifficulty(
+    tag.trim().toUpperCase(),
+  );
+
+  const sortedChallenges = challenges.sort((a, b) => {
+    const aHasSubmission = a?.submission?.length && a.submission.length > 0;
+    const bHasSubmission = b?.submission?.length && b.submission.length > 0;
+
+    if (aHasSubmission && !bHasSubmission) {
+      return 1;
+    }
+
+    if (!aHasSubmission && bHasSubmission) {
+      return -1;
+    }
+
+    return difficultyToNumber[a.difficulty] !== difficultyToNumber[b.difficulty]
+      ? difficultyToNumber[a.difficulty] - difficultyToNumber[b.difficulty]
+      : a.name.localeCompare(b.name);
+  });
+
+  const completedChallenges = sortedChallenges
+    .filter((exploreChallenge) => {
+      return (
+        exploreChallenge.submission.length &&
+        exploreChallenge.submission.some((submission) => submission.isSuccessful)
+      );
+    })
+    .map((exploreChallenge) => exploreChallenge.id);
+
   return (
     <div>
       <div className="container flex items-center justify-between gap-3 px-4 pt-5">
-        <h2 className={`relative text-3xl font-bold tracking-tight ${TITLES_BY_TAG[tag]}`}>
-          <div
-            className={`absolute -left-8 -z-10 h-12 w-32 rounded-full bg-pink-300/50 blur-3xl ${COLORS_BY_TAGS[tag]}`}
-          />
-          {title}
-        </h2>
+        <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center">
+          <h2 className={`relative text-3xl font-bold tracking-tight ${TITLES_BY_TAG[tag]}`}>
+            <div
+              className={`absolute -left-8 -z-10 h-12 w-32 rounded-full bg-pink-300/50 blur-3xl ${COLORS_BY_TAGS[tag]}`}
+            />
+            {title}
+          </h2>
+          {session ? (
+            <ExploreChallengesProgression
+              completed={completedChallenges.length}
+              total={challengesLength}
+            />
+          ) : null}
+        </div>
         <ViewMoreButton redirectRoute={redirectRoute} tag={tag} />
       </div>
       <section className="relative flex w-full flex-col overflow-hidden rounded-[2.5rem]">
         <Carousel>
-          {challenges
-            .sort((a, b) => {
-              const aHasSubmission = a?.submission?.length && a.submission.length > 0;
-              const bHasSubmission = b?.submission?.length && b.submission.length > 0;
-
-              if (aHasSubmission && !bHasSubmission) {
-                return 1;
-              }
-
-              if (!aHasSubmission && bHasSubmission) {
-                return -1;
-              }
-
-              return difficultyToNumber[a.difficulty] !== difficultyToNumber[b.difficulty]
-                ? difficultyToNumber[a.difficulty] - difficultyToNumber[b.difficulty]
-                : a.name.localeCompare(b.name);
-            })
-            .map((challenge) => (
-              <Link
-                className="group snap-center focus:outline-none sm:w-[330px] xl:w-[333px]"
-                href={`/challenge/${challenge.slug}`}
-                key={challenge.id}
-              >
-                <ExploreCard
-                  challenge={challenge}
-                  key={`challenge-${challenge.id}`}
-                  isHolidayEvent={Boolean(enableHolidayEvent)}
-                />
-              </Link>
-            ))}
+          {sortedChallenges.slice(0, 6).map((challenge) => (
+            <Link
+              className="group snap-center focus:outline-none sm:w-[330px] xl:w-[333px]"
+              href={`/challenge/${challenge.slug}`}
+              key={challenge.id}
+            >
+              <ExploreCard
+                challenge={challenge}
+                key={`challenge-${challenge.id}`}
+                isHolidayEvent={Boolean(enableHolidayEvent)}
+              />
+            </Link>
+          ))}
         </Carousel>
       </section>
     </div>

@@ -47,8 +47,8 @@ export function TrackChallenge({
   const backgroundColor = isCompleted
     ? 'peer-checked:bg-green-600/80 peer-checked:dark:bg-green-300/80'
     : isInProgress
-    ? 'peer-checked:bg-orange-600/80 peer-checked:dark:bg-orange-300/80'
-    : '';
+      ? 'peer-checked:bg-orange-600/80 peer-checked:dark:bg-orange-300/80'
+      : '';
 
   return (
     <label
@@ -154,6 +154,7 @@ export function MockTrackChallenge({ challenge }: { challenge: Challenge }) {
             className="peer absolute appearance-none"
             type="checkbox"
             id={challenge.id.toString()}
+            tabIndex={-1}
           />
           <div className="h-4 w-4 rounded-full border border-black/70 bg-black/10 duration-75 peer-checked:border-transparent peer-checked:bg-green-600/80 dark:border-white/50 dark:bg-white/10 peer-checked:dark:bg-green-300/80 sm:h-5 sm:w-5" />
           <Check className="absolute left-1 my-auto h-2 w-2 scale-0 stroke-[4] text-white duration-300 peer-checked:scale-100 dark:text-black sm:h-3 sm:w-3" />
