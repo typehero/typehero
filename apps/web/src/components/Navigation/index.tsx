@@ -9,7 +9,7 @@ import { Play, Settings, Settings2, User } from '@repo/ui/icons';
 import Link from 'next/link';
 import { isAdminOrModerator } from '~/utils/auth-guards';
 import { getAllFlags } from '~/utils/feature-flags';
-import { auth } from '@repo/auth/server';
+import { auth, type Session } from '@repo/auth/server';
 import { NavWrapper } from './nav-wrapper';
 import { LoginLink } from './login-link';
 import { SignOutLink } from './signout-link';
@@ -18,10 +18,8 @@ import { getScopedI18n } from '~/locales/server';
 import { MobileNav } from './mobile-nav';
 import { NavLink } from './nav-link';
 import { Badge } from '@repo/ui/components/badge';
-
-const session = await auth();
-
-const isAdminOrMod = isAdminOrModerator(session);
+import { Suspense } from 'react';
+import { Search } from '../search/search';
 
 export function getAdminUrl() {
   // reference for vercel.com
@@ -34,6 +32,9 @@ export function getAdminUrl() {
 }
 
 export async function Navigation() {
+  const session = await auth();
+
+  const isAdminOrMod = isAdminOrModerator(session);
   const t = await getScopedI18n('navigation');
   const featureFlags = await getAllFlags();
 
@@ -49,25 +50,21 @@ export async function Navigation() {
           </Badge>
         </div>
       ) : null}
-      {session && session.user && (
+      {session?.user ? (
         <>
           <hr className="ml-4" />
-          <NavLink title={'Profile'} href={`/@${session.user.name}`} mobileView={true} />
-          <NavLink title={'Settings'} href="/settings" mobileView={true} />
+          <NavLink title="Profile" href={`/@${session.user.name}`} />
+          <NavLink title="Settings" href="/settings" />
 
-          {isAdminOrMod ? <NavLink title={'Admin'} href={getAdminUrl()} mobileView={true} /> : null}
+          {isAdminOrMod ? <NavLink title="Admin" href={getAdminUrl()} /> : null}
           {isAdminOrMod ? (
-            <NavLink
-              title={'Challenge Playground'}
-              href="/challenge-playground"
-              mobileView={true}
-            />
+            <NavLink title="Challenge Playground" href="/challenge-playground" />
           ) : null}
           <span className="ml-2 md:hidden">
             <SignOutLink />
           </span>
         </>
-      )}
+      ) : null}
     </>
   );
 
@@ -110,10 +107,12 @@ export async function Navigation() {
 
           <div className="flex">
             <div className="flex items-center justify-end gap-2">
-              {/* <Suspense> */}
-              {/*   <Search /> */}
-              {/* </Suspense> */}
-              {featureFlags?.enableLogin ? <LoginButton /> : null}
+              <Suspense>
+                <Search />
+              </Suspense>
+              {featureFlags?.enableLogin ? (
+                <LoginButton isAdminOrMod={isAdminOrMod} session={session} />
+              ) : null}
               <MobileNav>
                 <NavLinks />
               </MobileNav>
@@ -125,8 +124,14 @@ export async function Navigation() {
   );
 }
 
-async function LoginButton() {
-  return session && session.user ? (
+async function LoginButton({
+  isAdminOrMod,
+  session,
+}: {
+  isAdminOrMod: boolean;
+  session: Session | null;
+}) {
+  return session?.user ? (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button
