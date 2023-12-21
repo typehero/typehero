@@ -1,6 +1,7 @@
 import { prisma } from '@repo/db';
 import Image from 'next/image';
 import { AOT_CHALLENGES } from '~/app/[locale]/challenge/[slug]/aot-slugs';
+import { MotionDiv } from '~/components/motion';
 
 export async function UserSummary() {
   const totalNumberOfAccountsDuringAot = await prisma.user.count({
@@ -45,7 +46,9 @@ export async function UserSummary() {
     <div className="h-screen w-full bg-red-800 text-white">
       <div className="flex h-full">
         <div className="hidden h-full w-full items-center justify-center border-r border-r-white/50 md:flex">
-          <Image src="/aot/santa_flying.png" width={200} height={200} alt="" className="" />
+          <MotionDiv animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 2 }}>
+            <Image src="/aot/santa_flying.png" width={200} height={200} alt="" />
+          </MotionDiv>
         </div>
         <div className="relative h-full w-full p-6">
           <div className="absolute left-6 top-6 text-4xl font-semibold tracking-tighter md:text-5xl">

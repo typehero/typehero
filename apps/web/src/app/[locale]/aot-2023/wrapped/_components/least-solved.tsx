@@ -37,14 +37,14 @@ export function LeastSolved({ leastSolved }: Props) {
             width={200}
             height={200}
             alt=""
-            className="absolute hidden -scale-x-100 sm:-bottom-20 sm:-left-36 sm:block"
+            className="absolute hidden -scale-x-100 sm:-bottom-7 sm:-left-44 sm:block"
           />
           <Image
             src="/aot/santa_dead.png"
             width={100}
             height={100}
             alt=""
-            className="absolute -bottom-5 -left-10 -scale-x-100 sm:hidden"
+            className="absolute -left-10 bottom-1 -scale-x-100 sm:hidden"
           />
         </div>
         <div className="flex flex-col gap-10">
