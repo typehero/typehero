@@ -2,7 +2,7 @@ import { Button } from '@repo/ui/components/button';
 import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { toast } from '@repo/ui/components/use-toast';
-import { CheckCircle2, Copy, Plus, Twitter, X, XCircle } from '@repo/ui/icons';
+import { CheckCircle2, Copy, Plus, Share, Twitter, X, XCircle } from '@repo/ui/icons';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useParams, useSearchParams } from 'next/navigation';
@@ -10,6 +10,7 @@ import { getRelativeTime } from '~/utils/relativeTime';
 import { getChallengeSubmissionById } from '../getChallengeSubmissions';
 import { Suggestions } from './suggestions';
 import { AOT_CHALLENGES } from '../../../aot-slugs';
+import lzstring from 'lz-string';
 
 interface Props {
   submissionId: string;
@@ -35,7 +36,7 @@ export function SubmissionOverview({ submissionId }: Props) {
 
   const track = searchParams.get('slug');
 
-  const copyToClipboard = async () => {
+  const copyCodeToClipboard = async () => {
     if (navigator.clipboard) {
       await navigator.clipboard.writeText(submission?.code ?? '').catch(console.error);
       toast({
@@ -43,6 +44,31 @@ export function SubmissionOverview({ submissionId }: Props) {
         description: 'Copied!',
       });
     }
+  };
+
+  const copyShareLinkToClipboard = async () => {
+    if (!navigator.clipboard || !submission) {
+      toast({
+        variant: 'destructive',
+        description: 'Could not copy to clipboard',
+      });
+
+      // should never happen
+      if (!submission) console.error("can't share - no submission found, eh?");
+
+      return;
+    }
+
+    let url = `${window.location.origin}/challenge/${slug}`;
+
+    const compressedCode = lzstring.compressToEncodedURIComponent(submission.code);
+    url += `?code=${compressedCode}`;
+
+    await navigator.clipboard.writeText(url).catch(console.error);
+    toast({
+      variant: 'success',
+      description: 'Share link copied!',
+    });
   };
 
   if (!submission) return null;
@@ -53,16 +79,28 @@ export function SubmissionOverview({ submissionId }: Props) {
         <Link href={`/challenge/${slug}/submissions`}>
           <X className="stroke-gray-500 hover:stroke-gray-400" size={20} />
         </Link>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button onClick={copyToClipboard} variant="ghost">
-              <Copy className="stroke-gray-500 hover:stroke-gray-400" size={20} />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Copy</p>
-          </TooltipContent>
-        </Tooltip>
+        <div className="flex items-end">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button onClick={copyShareLinkToClipboard} variant="ghost">
+                <Share className="stroke-gray-500 hover:stroke-gray-400" size={20} />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Share solution</p>
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button onClick={copyCodeToClipboard} variant="ghost">
+                <Copy className="stroke-gray-500 hover:stroke-gray-400" size={20} />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Copy</p>
+            </TooltipContent>
+          </Tooltip>
+        </div>
       </div>
       <div className="custom-scrollable-element h-fit overflow-y-scroll p-2">
         <div className="mb-2 flex items-center justify-between">
