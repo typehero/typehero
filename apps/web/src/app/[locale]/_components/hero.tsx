@@ -147,11 +147,11 @@ export async function Hero() {
   const t = await getScopedI18n('landing.hero');
   const session = await auth();
   return (
-    <section className="-mt-[56px] min-h-[calc(100vh)] overflow-hidden lg:min-h-0 lg:pt-[56px]">
+    <section className="pointer-events-none -mt-[56px] min-h-[calc(100vh)] overflow-hidden lg:min-h-0 lg:pt-[56px]">
       <div className="absolute inset-10 -z-30 overflow-hidden rounded-full opacity-70 lg:hidden">
         <BackgroundGrid />
       </div>
-      <div className="container relative grid min-h-screen items-center justify-center py-24 lg:min-h-0 lg:grid-cols-2 lg:py-0">
+      <div className="container relative grid min-h-screen items-center justify-center py-24 lg:min-h-0 lg:grid-cols-2 lg:py-0 [&>*]:pointer-events-auto">
         <BeamOfLight />
         <div className="flex w-full flex-col items-center justify-center gap-10 lg:items-start">
           <a
