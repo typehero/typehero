@@ -74,7 +74,7 @@ If you find our project interesting and want to support us please consider spons
         <img src="./media/surge.svg" alt="Powered by Planetscale" title="Powered by Planetscale" width="150">
       </a>
     </td>
-    <td></td>
+    <td>Testing Something</td>
     <td></td>
   </tr>
 </table>
