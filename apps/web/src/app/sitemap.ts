@@ -1,37 +1,35 @@
 import type { MetadataRoute } from 'next';
+import { prisma } from '@repo/db';
 
 const URL = 'https://typehero.dev';
-export default function sitemap(): MetadataRoute.Sitemap {
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const allChallenges = await prisma.challenge.findMany();
+
   return [
     {
       url: `${URL}/`,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 1,
     },
     {
       url: `${URL}/explore`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
     },
     {
       url: `${URL}/tracks`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.5,
     },
     {
       url: `${URL}/tos`,
       lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.5,
     },
     {
       url: `${URL}/privacy`,
       lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.5,
     },
+    ...allChallenges.map((challenge) => ({
+      url: `${URL}/challenges/${challenge.slug}`,
+      lastModified: new Date(challenge.updatedAt),
+    })),
   ];
 }

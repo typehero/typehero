@@ -103,6 +103,7 @@ export default function SplitEditor({
         wrapper.current.contains(document.activeElement)
       ) {
         e.preventDefault();
+        editorRef.current?.getAction('editor.action.formatDocument')?.run();
         toast({
           title: 'Saved',
           description: 'Your code has been saved',
@@ -118,7 +119,7 @@ export default function SplitEditor({
       document.removeEventListener('keydown', saveHandler);
       inlayHintsProviderDisposableRef.current?.dispose();
     };
-  }, []);
+  }, [editorRef]);
 
   useEffect(() => {
     monacoRef.current = monaco;
