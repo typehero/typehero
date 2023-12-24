@@ -47,6 +47,8 @@ Then we've got some more advanced ones that you don't need to worry about quite 
 
 And while we're in the weeds for a moment, you should be aware that _capitalized_ variants of these things do actually exist: `Number`, `String`, `Boolean`, `Symbol`, `Object`. But these refer to something quite different (i.e. JavaScript global objects) and should virtually never be used as types.
 
+# Another Simple Meaning of Primitive Data Type
+- we give every variable or anything that you deal with in Code A simple Type that will reaturn or what variable will contain , if it number so the type of it is number ,if it string i will give it type of string and so on
 ## Solving This Challenge
 
 To solve this challenge: add primitive types to the code until the errors go away.
