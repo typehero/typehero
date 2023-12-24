@@ -2165,6 +2165,27 @@ export const contributors = [
         "contributions": 1
     },
     {
+        "login": "ecyrbe",
+        "id": 633115,
+        "node_id": "MDQ6VXNlcjYzMzExNQ==",
+        "avatar_url": "https://avatars.githubusercontent.com/u/633115?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/ecyrbe",
+        "html_url": "https://github.com/ecyrbe",
+        "followers_url": "https://api.github.com/users/ecyrbe/followers",
+        "following_url": "https://api.github.com/users/ecyrbe/following{/other_user}",
+        "gists_url": "https://api.github.com/users/ecyrbe/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/ecyrbe/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/ecyrbe/subscriptions",
+        "organizations_url": "https://api.github.com/users/ecyrbe/orgs",
+        "repos_url": "https://api.github.com/users/ecyrbe/repos",
+        "events_url": "https://api.github.com/users/ecyrbe/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/ecyrbe/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 1
+    },
+    {
         "login": "hatsmaker",
         "id": 46636319,
         "node_id": "MDQ6VXNlcjQ2NjM2MzE5",
