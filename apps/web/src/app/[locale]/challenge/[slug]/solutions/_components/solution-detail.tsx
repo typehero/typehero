@@ -22,6 +22,7 @@ import { SolutionDeleteDialog } from './delete';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import { EditSolution } from './edit-solution';
+import { useGetQueryString } from './useGetQueryString';
 
 interface Props {
   solution: ChallengeSolution;
@@ -32,6 +33,7 @@ export function SolutionDetails({ solution }: Props) {
   const { data: session } = useSession();
   const showPin = isAdminOrModerator(session);
   const [isEditing, setIsEditing] = useState(false);
+  const queryString = useGetQueryString();
 
   const handlePinClick = async () => {
     await pinOrUnpinSolution(solution.id, !solution.isPinned, slug as string);
@@ -46,14 +48,13 @@ export function SolutionDetails({ solution }: Props) {
       });
     }
   };
-
   return (
     <div className="relative h-full">
       <div className="relative flex h-full flex-col">
         <div className="custom-scrollable-element flex-1 overflow-y-auto px-4 pb-16 pt-3">
           <div className="mb-5 flex flex-col gap-3">
             <div className="flex items-center gap-3">
-              <Link href={`/challenge/${slug}/solutions`} className="h-7 w-7">
+              <Link href={`/challenge/${slug}/solutions?${queryString}`} className="h-7 w-7">
                 <div className="rounded-full p-1 hover:bg-gray-200 hover:bg-opacity-10">
                   <ArrowLeft className="stroke-gray-500" size={20} />
                 </div>

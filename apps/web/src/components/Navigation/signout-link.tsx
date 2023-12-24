@@ -1,9 +1,10 @@
 'use client';
 import { signOut } from '@repo/auth/react';
 import { Button } from '@repo/ui/components/button';
+import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 
-export function SignOutLink() {
+export function SignOutLink({ className }: { className?: string }) {
   const router = useRouter();
 
   const handleSignOut = async () => {
@@ -12,7 +13,10 @@ export function SignOutLink() {
   };
   return (
     <Button
-      className="h-8 w-full justify-start rounded-b-lg rounded-t-sm bg-opacity-50 px-2 text-red-500 hover:bg-red-500/20 hover:text-red-500"
+      className={clsx(
+        'h-8 justify-start bg-opacity-50 px-2 text-red-500 hover:bg-red-500/20 hover:text-red-500',
+        className,
+      )}
       onClick={handleSignOut}
       variant="ghost"
     >
