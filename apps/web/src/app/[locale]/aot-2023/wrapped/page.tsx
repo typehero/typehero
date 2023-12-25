@@ -1,15 +1,15 @@
 import { prisma } from '@repo/db';
+import { Prisma } from '@repo/db/types';
 import { setStaticParamsLocale } from 'next-international/server';
+import { notFound } from 'next/navigation';
 import { getStaticParams } from '~/locales/server';
+import { daysAfterDecemberFirst } from '~/utils/aot';
+import { getAllFlags } from '~/utils/feature-flags';
 import { AOT_CHALLENGES } from '../../challenge/[slug]/aot-slugs';
 import { Hero } from './_components/hero';
+import { LeastSolved } from './_components/least-solved';
 import { MostSolved } from './_components/most-solved';
 import { UserSummary } from './_components/user-summary';
-import { Prisma } from '@repo/db/types';
-import { LeastSolved } from './_components/least-solved';
-import { getAllFlags } from '~/utils/feature-flags';
-import { daysAfterDecemberFirst } from '~/utils/aot';
-import { notFound } from 'next/navigation';
 
 export function generateStaticParams() {
   return getStaticParams();
