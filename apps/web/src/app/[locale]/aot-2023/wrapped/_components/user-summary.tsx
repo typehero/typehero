@@ -63,32 +63,32 @@ export async function UserSummary() {
               className="md:hidden"
             />
             <div className="flex items-end gap-5">
-              <div className="w-44 text-2xl font-bold md:text-6xl">
+              <div className="text-2xl font-bold md:w-44 md:text-6xl">
                 {formatThousandsWithK(totalNumberOfAccountsDuringAot)}
               </div>
-              <div className="text-xl md:text-2xl">Accounts Created</div>
+              <div className="text-md md:text-2xl">Accounts Created</div>
             </div>
             <div className="flex items-end gap-5">
-              <div className="w-44 text-2xl font-bold md:text-6xl">150K</div>
-              <div className="text-xl md:text-2xl">AOT Page Visits</div>
+              <div className="text-2xl font-bold md:w-44 md:text-6xl">150K</div>
+              <div className="text-md md:text-2xl">AOT Page Visits</div>
             </div>
             <div className="flex items-end gap-5">
-              <div className="w-44 text-2xl font-bold md:text-6xl">
+              <div className="text-2xl font-bold md:w-44 md:text-6xl">
                 {formatThousandsWithK(totalAotSubmissions)}
               </div>
-              <div className="text-xl md:text-2xl">Total Submissions</div>
+              <div className="text-md md:text-2xl">Total Submissions</div>
             </div>
             <div className="flex items-end gap-5">
-              <div className="w-44 text-2xl font-bold md:text-6xl">
+              <div className="text-2xl font-bold md:w-44 md:text-6xl">
                 {formatThousandsWithK(incorrectAotSubmissions)}
               </div>
-              <div className="text-xl md:text-2xl">Total Incorrect Submissions</div>
+              <div className="text-md md:text-2xl">Total Incorrect Submissions</div>
             </div>
             <div className="flex items-end gap-5">
-              <div className="w-44 text-2xl font-bold md:text-6xl">
+              <div className="text-2xl font-bold md:w-44 md:text-6xl">
                 {formatThousandsWithK(correctAotSubmissions)}
               </div>
-              <div className="text-xl md:text-2xl">Total Correct Submissions</div>
+              <div className="text-md md:text-2xl">Total Correct Submissions</div>
             </div>
           </div>
         </div>
