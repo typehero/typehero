@@ -28,7 +28,7 @@ export default async function Index({ params: { locale } }: { params: { locale: 
       where isSuccessful = true
     ) as T
     LEFT JOIN Challenge ON Challenge.id = T.challengeId
-    WHERE slug in (${Prisma.join(AOT_CHALLENGES)})
+    WHERE slug in (${Prisma.join(AOT_CHALLENGES.slice(0, -1))})
     group by challengeId, slug
     order by userCount desc
     limit 3
@@ -42,7 +42,7 @@ export default async function Index({ params: { locale } }: { params: { locale: 
       where isSuccessful = true
     ) as T
     LEFT JOIN Challenge ON Challenge.id = T.challengeId
-    WHERE slug in (${Prisma.join(AOT_CHALLENGES)})
+    WHERE slug in (${Prisma.join(AOT_CHALLENGES.slice(0, -1))})
     group by challengeId, slug
     order by userCount asc
     limit 3

@@ -69,7 +69,7 @@ export async function UserSummary() {
               <div className="text-xl md:text-2xl">Accounts Created</div>
             </div>
             <div className="flex items-end gap-5">
-              <div className="w-44 text-2xl font-bold md:text-6xl">128K</div>
+              <div className="w-44 text-2xl font-bold md:text-6xl">150K</div>
               <div className="text-xl md:text-2xl">AOT Page Visits</div>
             </div>
             <div className="flex items-end gap-5">
