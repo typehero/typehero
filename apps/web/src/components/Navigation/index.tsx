@@ -20,6 +20,8 @@ import { NavLink } from './nav-link';
 import { NavWrapper } from './nav-wrapper';
 import { SignOutLink } from './signout-link';
 import { SkipToCodeEditor } from './skip-to-code-editor';
+import { getChallengesByTagOrDifficulty } from '~/app/[locale]/explore/_components/explore.action';
+import { ExploreNav } from './explore-nav';
 
 export function getAdminUrl() {
   // reference for vercel.com
@@ -33,14 +35,16 @@ export function getAdminUrl() {
 
 export async function Navigation() {
   const session = await auth();
-
+  const popularChallenges = await getChallengesByTagOrDifficulty('popular', 12);
   const isAdminOrMod = isAdminOrModerator(session);
   const t = await getScopedI18n('navigation');
   const featureFlags = await getAllFlags();
 
   const TopSectionLinks = (
     <>
-      {featureFlags?.enableExplore ? <NavLink title={t('explore')} href="/explore" /> : null}
+      {featureFlags?.enableExplore ? (
+        <ExploreNav title={t('explore')} href="/explore" popularChallenges={popularChallenges} />
+      ) : null}
       {featureFlags?.enableTracks ? <NavLink title={t('tracks')} href="/tracks" /> : null}
       {featureFlags?.enableHolidayEvent ? (
         <div className="flex items-center gap-1">

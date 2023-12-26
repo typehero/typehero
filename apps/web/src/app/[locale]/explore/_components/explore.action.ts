@@ -58,6 +58,9 @@ export async function getChallengesByTagOrDifficulty(str: string, take?: number)
     }),
   });
 }
+export type getChallengesByTagOrDifficultyType = Awaited<
+  ReturnType<typeof getChallengesByTagOrDifficulty>
+>;
 
 /**
  * Fetches the length of how many challenges are in a
