@@ -2,16 +2,16 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 import { ExploreDrawer } from '~/app/[locale]/challenge/_components/explore-drawer';
-import type { getChallengesByTagOrDifficultyType } from '~/app/[locale]/explore/_components/explore.action';
+import type { ChallengesByTagOrDifficulty } from '~/app/[locale]/explore/_components/explore.action';
 import { usePathname } from 'next/navigation';
 
 export interface AllChallenges {
-  popularChallenges: getChallengesByTagOrDifficultyType;
-  beginnerChallenges: getChallengesByTagOrDifficultyType;
-  easyChallenges: getChallengesByTagOrDifficultyType;
-  mediumChallenges: getChallengesByTagOrDifficultyType;
-  hardChallenges: getChallengesByTagOrDifficultyType;
-  extremeChallenges: getChallengesByTagOrDifficultyType;
+  popularChallenges: ChallengesByTagOrDifficulty;
+  beginnerChallenges: ChallengesByTagOrDifficulty;
+  easyChallenges: ChallengesByTagOrDifficulty;
+  mediumChallenges: ChallengesByTagOrDifficulty;
+  hardChallenges: ChallengesByTagOrDifficulty;
+  extremeChallenges: ChallengesByTagOrDifficulty;
 }
 
 interface ExploreNavProps {

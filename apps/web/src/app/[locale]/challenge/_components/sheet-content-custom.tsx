@@ -1,12 +1,11 @@
-import { SheetContent, SheetHeader, SheetTitle } from '@repo/ui/components/sheet';
-import Link from 'next/link';
+import { SheetHeader, SheetTitle } from '@repo/ui/components/sheet';
 import { ChevronRight } from '@repo/ui/icons';
+import Link from 'next/link';
 
-import type { getChallengesByTagOrDifficultyType } from '../../explore/_components/explore.action';
-import { TrackChallenge } from '../../tracks/_components/track-challenge-card';
-import { TrackProgress } from '../../tracks/_components/track-progress';
 import { useEffect, useState } from 'react';
 import type { AllChallenges } from '~/components/Navigation/explore-nav';
+import { TrackChallenge } from '../../tracks/_components/track-challenge-card';
+import { TrackProgress } from '../../tracks/_components/track-progress';
 import { SelectDropdown } from './select-dropdown';
 
 interface Props {
@@ -40,11 +39,9 @@ export const SORT_KEYS = [
 ] as const;
 
 export function SheetContentCustom({ allChallenges }: Props) {
-  const [filterChallenges, setFilterChallenges] = useState<getChallengesByTagOrDifficultyType>(
-    allChallenges.popularChallenges,
-  );
+  const [filterChallenges, setFilterChallenges] = useState(allChallenges.popularChallenges);
   const [sortKey, setSortKey] = useState<(typeof SORT_KEYS)[number]>(SORT_KEYS[0]);
-  const [title, setTitle] = useState<string>('Recommended');
+  const [title, setTitle] = useState('Recommended');
 
   const handleValueChange = (value: string) => {
     setSortKey(SORT_KEYS.find((sk) => sk.value === value) ?? SORT_KEYS[0]);
