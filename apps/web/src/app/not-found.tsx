@@ -12,7 +12,7 @@ export default async function NotFound() {
 
   return (
     <>
-      <div className="relative -z-10 -mt-[56px] flex h-screen flex-col items-center justify-center gap-8 overflow-hidden">
+      <div className="relative -mt-[56px] flex h-screen flex-col items-center justify-center gap-8 overflow-hidden">
         <Image
           className="animate-amogfly absolute left-0 -z-10 mx-auto opacity-80"
           alt="Early Access"
