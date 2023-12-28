@@ -3,7 +3,6 @@ import type { Difficulty, Tags } from '@repo/db/types';
 import Link from 'next/link';
 import { ExploreChallengesProgression } from '~/app/[locale]/explore/_components/explore-challenges-progress';
 import { Carousel } from '~/components/carousel';
-import { getAllFlags } from '~/utils/feature-flags';
 import { ExploreCard } from './explore-card';
 import {
   getChallengesByTagOrDifficulty,
@@ -64,7 +63,6 @@ export const COLORS_BY_TAGS = {
 
 export async function ExploreSection({ title, tag, redirectRoute }: SectionProps) {
   const session = await auth();
-  const { enableHolidayEvent } = await getAllFlags();
   const challenges = await getChallengesByTagOrDifficulty(tag.trim().toUpperCase());
   const challengesLength = await getExploreChallengesLengthByTagOrDifficulty(
     tag.trim().toUpperCase(),
@@ -123,11 +121,7 @@ export async function ExploreSection({ title, tag, redirectRoute }: SectionProps
               href={`/challenge/${challenge.slug}`}
               key={challenge.id}
             >
-              <ExploreCard
-                challenge={challenge}
-                key={`challenge-${challenge.id}`}
-                isHolidayEvent={Boolean(enableHolidayEvent)}
-              />
+              <ExploreCard challenge={challenge} key={`challenge-${challenge.id}`} />
             </Link>
           ))}
         </Carousel>

@@ -77,7 +77,7 @@ export async function Navigation() {
   );
 
   return (
-    <header className="z-50 w-full">
+    <header className="w-full">
       <NavWrapper>
         <div className="flex w-full items-center justify-between">
           <div className="relative flex items-center gap-3">

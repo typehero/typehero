@@ -197,10 +197,13 @@ export function TiltableCard({ index, challenge }: Props) {
           </p>
         </motion.div>
       </motion.div>
-      <motion.div
+      <motion.a
+        href={`/challenge/${challenge.slug}`}
         onClick={(e) => {
           e.stopPropagation();
+          e.preventDefault();
           router.push(`/challenge/${challenge.slug}`);
+          return false;
         }}
         initial={{ rotateY: 180 }}
         animate={{ rotateY: isFlipped ? 0 : 180 }}
@@ -268,7 +271,7 @@ export function TiltableCard({ index, challenge }: Props) {
           )}
           <p className="text-xl font-bold text-white">{challenge.name}</p>
         </motion.div>
-      </motion.div>
+      </motion.a>
     </motion.div>
   );
 }

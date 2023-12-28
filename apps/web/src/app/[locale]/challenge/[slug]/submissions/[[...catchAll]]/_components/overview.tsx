@@ -4,13 +4,13 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/too
 import { toast } from '@repo/ui/components/use-toast';
 import { CheckCircle2, Copy, Plus, Share, Twitter, X, XCircle } from '@repo/ui/icons';
 import { useQuery } from '@tanstack/react-query';
+import lzstring from 'lz-string';
 import Link from 'next/link';
 import { useParams, useSearchParams } from 'next/navigation';
 import { getRelativeTime } from '~/utils/relativeTime';
+import { AOT_CHALLENGES } from '../../../aot-slugs';
 import { getChallengeSubmissionById } from '../getChallengeSubmissions';
 import { Suggestions } from './suggestions';
-import { AOT_CHALLENGES } from '../../../aot-slugs';
-import lzstring from 'lz-string';
 
 interface Props {
   submissionId: string;

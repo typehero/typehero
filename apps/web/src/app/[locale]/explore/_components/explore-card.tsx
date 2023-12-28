@@ -19,7 +19,6 @@ import {
 } from '@repo/ui/icons';
 import dynamic from 'next/dynamic';
 import type { ExploreChallengeData } from './explore.action';
-import { HolidayChristmasTree } from './aot-2023-explore-card';
 
 const RelativeTime = dynamic(() => import('./relative-time'), {
   ssr: false,
@@ -27,8 +26,6 @@ const RelativeTime = dynamic(() => import('./relative-time'), {
 
 interface ExploreCardProps {
   challenge: Awaited<ExploreChallengeData>[0];
-  //TODO: Delete after aot-2023
-  isHolidayEvent?: boolean;
 }
 
 const BORDERS_BY_DIFFICULTY = {
@@ -71,8 +68,8 @@ function ChallengeDifficultyIcon({ difficulty }: { difficulty: string }) {
     case 'EASY':
       return (
         <>
+          <Diamond className="group-hover/card:text-difficulty-easy dark:group-hover/card:text-difficulty-easy-dark absolute -right-5 -top-10 h-24 w-24 origin-top-right stroke-[0.66] text-black/10 duration-300 group-hover/card:rotate-6 group-hover/card:scale-90 dark:text-white/10" />
           <Diamond className="group-hover/card:text-difficulty-easy dark:group-hover/card:text-difficulty-easy-dark absolute -right-6 -top-12 h-36 w-36 rotate-12 stroke-[0.44] text-black/10 duration-500 group-hover/card:-translate-y-2 group-hover/card:translate-x-3 group-hover/card:rotate-6 group-hover/card:scale-90 dark:text-white/10" />
-          <Diamond className="group-hover/card:text-difficulty-easy dark:group-hover/card:text-difficulty-easy-dark group-hover/card:r0 absolute -right-6 -top-12 h-36 w-36 rotate-12 stroke-[0.44] text-black/10 duration-500 group-hover/card:-translate-y-2 group-hover/card:translate-x-3" />
         </>
       );
     case 'MEDIUM':
@@ -101,7 +98,7 @@ function ChallengeDifficultyIcon({ difficulty }: { difficulty: string }) {
   }
 }
 
-export async function ExploreCard({ challenge, isHolidayEvent = false }: ExploreCardProps) {
+export async function ExploreCard({ challenge }: ExploreCardProps) {
   const hasBeenSolved = challenge.submission.length > 0;
 
   return (
@@ -111,13 +108,7 @@ export async function ExploreCard({ challenge, isHolidayEvent = false }: Explore
       ${BORDERS_BY_DIFFICULTY[challenge.difficulty]}
       `}
     >
-      <>
-        {isHolidayEvent ? (
-          <HolidayChristmasTree difficulty={challenge.difficulty} />
-        ) : (
-          <ChallengeDifficultyIcon difficulty={challenge.difficulty} />
-        )}
-      </>
+      <ChallengeDifficultyIcon difficulty={challenge.difficulty} />
       <CardHeader className="relative flex flex-col items-start gap-1 py-5">
         <CardTitle className="max-w-[75%] truncate text-2xl duration-300">
           {challenge.name}
