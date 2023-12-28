@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 278
+        "contributions": 282
     },
     {
         "login": "Hacksore",
@@ -653,6 +653,27 @@ export const contributors = [
         "contributions": 4
     },
     {
+        "login": "invakid404",
+        "id": 38114607,
+        "node_id": "MDQ6VXNlcjM4MTE0NjA3",
+        "avatar_url": "https://avatars.githubusercontent.com/u/38114607?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/invakid404",
+        "html_url": "https://github.com/invakid404",
+        "followers_url": "https://api.github.com/users/invakid404/followers",
+        "following_url": "https://api.github.com/users/invakid404/following{/other_user}",
+        "gists_url": "https://api.github.com/users/invakid404/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/invakid404/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/invakid404/subscriptions",
+        "organizations_url": "https://api.github.com/users/invakid404/orgs",
+        "repos_url": "https://api.github.com/users/invakid404/repos",
+        "events_url": "https://api.github.com/users/invakid404/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/invakid404/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 4
+    },
+    {
         "login": "cosmiclasagnadev",
         "id": 28593720,
         "node_id": "MDQ6VXNlcjI4NTkzNzIw",
@@ -858,27 +879,6 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/G-R3/repos",
         "events_url": "https://api.github.com/users/G-R3/events{/privacy}",
         "received_events_url": "https://api.github.com/users/G-R3/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 3
-    },
-    {
-        "login": "invakid404",
-        "id": 38114607,
-        "node_id": "MDQ6VXNlcjM4MTE0NjA3",
-        "avatar_url": "https://avatars.githubusercontent.com/u/38114607?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/invakid404",
-        "html_url": "https://github.com/invakid404",
-        "followers_url": "https://api.github.com/users/invakid404/followers",
-        "following_url": "https://api.github.com/users/invakid404/following{/other_user}",
-        "gists_url": "https://api.github.com/users/invakid404/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/invakid404/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/invakid404/subscriptions",
-        "organizations_url": "https://api.github.com/users/invakid404/orgs",
-        "repos_url": "https://api.github.com/users/invakid404/repos",
-        "events_url": "https://api.github.com/users/invakid404/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/invakid404/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 3
