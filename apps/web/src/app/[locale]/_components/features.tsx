@@ -74,7 +74,7 @@ export async function Features() {
                 'scale-[190%] sm:scale-[120%] md:scale-100 rounded-2xl max-md:rounded-md left-[50%] sm:top-[49%] top-[69%] md:top-auto w-[50%] sm:left-[39%] md:-bottom-[2%] xl:-bottom-[12%] md:w-[77%]',
                 'md:group-hover:scale-105 md:group-hover:-translate-x-2',
               )}
-              description="Engage in TypeScript challenges to strengthen your grasp of the type system and advanced features"
+              description={t('imageCard.description')}
               bgClass="md:bg-gradient-to-br"
               image={{
                 dark1: FeatureCardChallengeDark2,
@@ -83,12 +83,12 @@ export async function Features() {
                 light2: FeatureCardChallengeLight1,
                 alt: 'Something',
               }}
-              title="Type Challenges"
+              title={t('imageCard.title')}
             />
             <CollaborativeEnvironmentCard
-              description="Developers can share solutions and engage in discussions through commenting"
+              description={t('collaborativeEnvironment.description')}
               bgClass="md:bg-gradient-to-bl"
-              title="Collaborative Environment"
+              title={t('collaborativeEnvironment.title')}
             />
             <ChallengeCreationCard
               step1img1Class={clsx(
@@ -133,9 +133,9 @@ export async function Features() {
               title="Challenge Creation"
             />
             <CuratedTracksCard
-              description="Tracks are curated challenges, spanning various topics and difficulty levels, to advance your TypeScript skills."
+              description={t('curatedTracks.description')}
               bgClass="md:bg-gradient-to-tl"
-              title="Learning Tracks"
+              title={t('curatedTracks.title')}
             />
           </div>
         </div>
