@@ -1,18 +1,18 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-import { useMemo, type ReactNode, useRef, useState, useEffect, useContext } from 'react';
+import { useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 
-import { FeatureFlagContext } from '~/app/feature-flag-provider';
 import { ChallengeTrackNavigation } from '~/app/[locale]/challenge/_components/challenge-track-navigation';
+import { FeatureFlagContext } from '~/app/feature-flag-provider';
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui/components/tabs';
 import { cn } from '@repo/ui/cn';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui/components/tabs';
 import { FlaskConical, History, Text } from '@repo/ui/icons';
 
+import { AOT_CHALLENGES } from './aot-slugs';
 import type { ChallengeRouteData } from './getChallengeRouteData';
 import { useTrackNavigationVisiblity } from './use-track-visibility.hook';
-import { AOT_CHALLENGES } from './aot-slugs';
 
 type Tab = 'description' | 'solutions' | 'submissions';
 interface Props {
@@ -132,8 +132,6 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
               'grid-rows-3 gap-2': isIconOnly,
               'grid-cols-3 gap-0.5': !isIconOnly,
               'rounded-tl-xl': !isTrackVisible,
-              'grid-cols-2 gap-0.5': isAotChallenge && !isIconOnly,
-              'grid-rows-2 gap-2': isAotChallenge && isIconOnly,
             },
           )}
           ref={tabsListRef}
@@ -158,24 +156,22 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
           >
             {isIconOnly ? <Text className="h-4 w-4" /> : 'Description'}
           </TabsTrigger>
-          {!isAotChallenge ? (
-            <TabsTrigger
-              className={cn(
-                'rounded-md duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700',
-                { 'p-4': isIconOnly },
-              )}
-              onClick={() => {
-                router.push(`/challenge/${challenge.slug}/solutions`);
-                isCollapsed && expandPanel();
-              }}
-              onFocus={(e) => {
-                e.target.click();
-              }}
-              value="solutions"
-            >
-              {isIconOnly ? <FlaskConical className="h-4 w-4" /> : 'Solutions'}
-            </TabsTrigger>
-          ) : null}
+          <TabsTrigger
+            className={cn(
+              'rounded-md duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700',
+              { 'p-4': isIconOnly },
+            )}
+            onClick={() => {
+              router.push(`/challenge/${challenge.slug}/solutions`);
+              isCollapsed && expandPanel();
+            }}
+            onFocus={(e) => {
+              e.target.click();
+            }}
+            value="solutions"
+          >
+            {isIconOnly ? <FlaskConical className="h-4 w-4" /> : 'Solutions'}
+          </TabsTrigger>
           <TabsTrigger
             className={cn(
               'rounded-md rounded-tr-lg duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700',
