@@ -1,15 +1,13 @@
 import { Button } from '@repo/ui/components/button';
 import { Markdown } from '@repo/ui/components/markdown';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
-import { toast } from '@repo/ui/components/use-toast';
-import { CheckCircle2, Copy, Plus, Twitter, X, XCircle } from '@repo/ui/icons';
+import { CheckCircle2, Plus, Twitter, X, XCircle } from '@repo/ui/icons';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useParams, useSearchParams } from 'next/navigation';
 import { getRelativeTime } from '~/utils/relativeTime';
+import { AOT_CHALLENGES } from '../../../aot-slugs';
 import { getChallengeSubmissionById } from '../getChallengeSubmissions';
 import { Suggestions } from './suggestions';
-import { AOT_CHALLENGES } from '../../../aot-slugs';
 
 interface Props {
   submissionId: string;
@@ -35,16 +33,6 @@ export function SubmissionOverview({ submissionId }: Props) {
 
   const track = searchParams.get('slug');
 
-  const copyToClipboard = async () => {
-    if (navigator.clipboard) {
-      await navigator.clipboard.writeText(submission?.code ?? '').catch(console.error);
-      toast({
-        variant: 'success',
-        description: 'Copied!',
-      });
-    }
-  };
-
   if (!submission) return null;
 
   return (
@@ -53,16 +41,6 @@ export function SubmissionOverview({ submissionId }: Props) {
         <Link href={`/challenge/${slug}/submissions`}>
           <X className="stroke-gray-500 hover:stroke-gray-400" size={20} />
         </Link>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button onClick={copyToClipboard} variant="ghost">
-              <Copy className="stroke-gray-500 hover:stroke-gray-400" size={20} />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Copy</p>
-          </TooltipContent>
-        </Tooltip>
       </div>
       <div className="custom-scrollable-element h-fit overflow-y-scroll p-2">
         <div className="mb-2 flex items-center justify-between">
