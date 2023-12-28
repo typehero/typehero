@@ -1,8 +1,16 @@
+import Image from 'next/image';
 import { cn } from '@repo/ui/cn';
 import { Sparkle } from '@repo/ui/icons';
-import Image from 'next/image';
+import { useScopedI18n } from '~/locales/client';
+import type { FC } from 'react';
 
-export function FemPromo({ blurb, className }: { blurb: string; className?: string }) {
+interface FemPromoProps {
+  className?: string;
+};
+
+export const FemPromo: FC<FemPromoProps> = async ({ className }) => {
+  const t = useScopedI18n('fem');
+
   return (
     <a
       href="https://frontendmasters.com/learn/typescript"
@@ -15,10 +23,9 @@ export function FemPromo({ blurb, className }: { blurb: string; className?: stri
     >
       <Sparkle className="group-hover/card:text-difficulty-extreme dark:group-hover/card:text-difficulty-extreme-dark absolute -right-4 -top-10 h-24 w-24 stroke-[0.5] text-black/10 duration-500 group-hover/card:-translate-x-4 group-hover/card:translate-y-10 group-hover/card:-rotate-[125deg] dark:text-white/10" />
       <Sparkle className="group-hover/card:text-difficulty-extreme dark:group-hover/card:text-difficulty-extreme-dark absolute -left-1 bottom-1 h-48 w-48  -rotate-12 stroke-[0.33] text-black/10 duration-700 group-hover/card:-translate-y-5  group-hover/card:translate-x-5 group-hover/card:rotate-[160deg]  group-hover/card:scale-75 dark:text-white/10" />
-      <div className="mb-2 md:text-xl">{blurb}</div>
-      {/* <Image src="/fem.svg" width="400" height="150" alt="" /> */}
-      <Image src="/fem-dark.png" width="400" height="150" alt="" className="hidden dark:block" />
-      <Image src="/fem-light.png" width="400" height="150" alt="" className="dark:hidden" />
+      <div className="mb-2 md:text-xl">{t('description')}</div>
+      <Image src="/fem-dark.png" width="400" height="150" alt="Frontend Masters" className="hidden dark:block" />
+      <Image src="/fem-light.png" width="400" height="150" alt="Frontend Masters" className="dark:hidden" />
     </a>
   );
 }

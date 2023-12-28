@@ -25,7 +25,7 @@ export async function Explore() {
           </p>
         </div>
         <div className="container flex items-center justify-center">
-          <FemPromo blurb="Elevate your TypeScript with our trusted partner" />
+          <FemPromo blurb="" />
         </div>
         <Suspense fallback={<ExploreSectionSkeleton />}>
           <ExploreSection
