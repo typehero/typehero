@@ -1,14 +1,18 @@
+import { auth } from '@repo/auth/server';
 import { Badge } from '@repo/ui/components/badge';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { getScopedI18n } from '~/locales/server';
+import { isAdminOrModerator } from '~/utils/auth-guards';
 import { getAllFlags } from '~/utils/feature-flags';
 import { Search } from '../search/search';
+import { LoginButton } from './login-button';
+import { LoginLink } from './login-link';
 import { MobileNav } from './mobile-nav';
 import { NavLink } from './nav-link';
 import { NavWrapper } from './nav-wrapper';
+import { SignOutLink } from './signout-link';
 import { SkipToCodeEditor } from './skip-to-code-editor';
-import { LoginButton } from './login-button';
 
 function getAdminUrl() {
   // reference for vercel.com
@@ -21,10 +25,13 @@ function getAdminUrl() {
 }
 
 export async function Navigation() {
+  const session = await auth();
+
+  const isAdminOrMod = isAdminOrModerator(session);
   const t = await getScopedI18n('navigation');
   const featureFlags = await getAllFlags();
 
-  const NavLinks = () => (
+  const TopSectionLinks = (
     <>
       {featureFlags?.enableExplore ? <NavLink title={t('explore')} href="/explore" /> : null}
       {featureFlags?.enableTracks ? <NavLink title={t('tracks')} href="/tracks" /> : null}
@@ -39,8 +46,31 @@ export async function Navigation() {
     </>
   );
 
+  const NavLinks = (
+    <>
+      <div className="ml-4 hidden items-center gap-4 md:flex">{TopSectionLinks}</div>
+      <div className="flex flex-col gap-5 pl-4 md:hidden">
+        {TopSectionLinks}
+        {session?.user ? (
+          <>
+            <hr />
+            <NavLink title="Profile" href={`/@${session.user.name}`} />
+            <NavLink title="Settings" href="/settings" />
+            {isAdminOrMod ? <NavLink title="Admin" href={getAdminUrl()} /> : null}
+            {isAdminOrMod ? (
+              <NavLink title="Challenge Playground" href="/challenge-playground" />
+            ) : null}
+            <SignOutLink className="px-0" />
+          </>
+        ) : (
+          <LoginLink className="px-0 hover:bg-transparent hover:dark:bg-transparent" />
+        )}
+      </div>
+    </>
+  );
+
   return (
-    <header className="z-50 w-full">
+    <header className="w-full">
       <NavWrapper>
         <div className="flex w-full items-center justify-between">
           <div className="relative flex items-center gap-3">
@@ -71,9 +101,7 @@ export async function Navigation() {
                 hero <span className="text-muted-foreground bg-muted px-1 text-xs">BETA</span>
               </div>
             </Link>
-            <div className="hidden items-center md:flex">
-              <NavLinks />
-            </div>
+            <div className="hidden items-center md:ml-4 md:flex md:gap-4">{NavLinks}</div>
           </div>
 
           <div className="flex">
@@ -82,9 +110,7 @@ export async function Navigation() {
                 <Search />
               </Suspense>
               {featureFlags?.enableLogin ? <LoginButton adminUrl={getAdminUrl()} /> : null}
-              <MobileNav>
-                <NavLinks />
-              </MobileNav>
+              <MobileNav>{NavLinks}</MobileNav>
             </div>
           </div>
         </div>
@@ -92,4 +118,3 @@ export async function Navigation() {
     </header>
   );
 }
-

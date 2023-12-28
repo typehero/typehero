@@ -1,19 +1,25 @@
 'use client';
 import { cn } from '@repo/ui/cn';
-import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { usePathname } from 'next/navigation';
+import React, { useEffect } from 'react';
 
 interface Props {
   children: React.ReactNode;
 }
 
 export function MobileNav({ children }: Props) {
+  const pathname = usePathname();
   const [open, setOpen] = React.useState(false);
   const [mounted, setMounted] = React.useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   //blocking scroll on open nav-menu
   useEffect(() => {
@@ -46,8 +52,6 @@ export function MobileNav({ children }: Props) {
         <motion.div
           key={open ? 'open' : 'close'}
           initial={{ opacity: 0 }}
-          // Clicking on link closes the nav
-          onClickCapture={() => setOpen(false)}
           animate={{ opacity: 1 }}
           className={`bg-background/80 left-0 top-[55px] z-10 flex h-full w-full flex-1 snap-y flex-col gap-5 justify-self-center border-b p-3 backdrop-blur-md md:mt-0 md:hidden md:pb-0 ${
             open ? 'absolute block w-full' : 'hidden'
