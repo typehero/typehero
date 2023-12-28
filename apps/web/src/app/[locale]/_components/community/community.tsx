@@ -91,9 +91,7 @@ export function Community() {
                   </span>
                 </div>
               </div>
-              <h2 className="mt-2 text-center text-4xl font-bold lg:text-left">
-                {t('title')}
-              </h2>
+              <h2 className="mt-2 text-center text-4xl font-bold lg:text-left">{t('title')}</h2>
               <p className="max-w-[55ch] bg-transparent px-8 text-center leading-8 text-black/60 dark:text-white/50 lg:px-0 lg:text-left">
                 {t('description')}
               </p>
