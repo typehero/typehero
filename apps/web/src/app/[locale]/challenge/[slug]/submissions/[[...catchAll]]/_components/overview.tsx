@@ -1,7 +1,9 @@
 import { Button } from '@repo/ui/components/button';
 import { Markdown } from '@repo/ui/components/markdown';
-import { CheckCircle2, Plus, Twitter, X, XCircle } from '@repo/ui/icons';
+import { toast } from '@repo/ui/components/use-toast';
+import { CheckCircle2, Plus, Share, Twitter, X, XCircle } from '@repo/ui/icons';
 import { useQuery } from '@tanstack/react-query';
+import lzstring from 'lz-string';
 import Link from 'next/link';
 import { useParams, useSearchParams } from 'next/navigation';
 import { getRelativeTime } from '~/utils/relativeTime';
@@ -32,6 +34,31 @@ export function SubmissionOverview({ submissionId }: Props) {
   const code = codifyForMarkdown(submission?.code.trimStart() ?? '');
 
   const track = searchParams.get('slug');
+
+  const copyShareLinkToClipboard = async () => {
+    if (!navigator.clipboard || !submission) {
+      toast({
+        variant: 'destructive',
+        description: 'Could not copy to clipboard',
+      });
+
+      // should never happen
+      if (!submission) console.error("can't share - no submission found, eh?");
+
+      return;
+    }
+
+    let url = `${window.location.origin}/challenge/${slug}`;
+
+    const compressedCode = lzstring.compressToEncodedURIComponent(submission.code);
+    url += `?code=${compressedCode}`;
+
+    await navigator.clipboard.writeText(url).catch(console.error);
+    toast({
+      variant: 'success',
+      description: 'Share link copied!',
+    });
+  };
 
   if (!submission) return null;
 
@@ -82,34 +109,44 @@ export function SubmissionOverview({ submissionId }: Props) {
         <div className="mb-3 px-3">
           <Markdown>{code}</Markdown>
         </div>
-        {isAotChallenge ? (
-          <div className="mb-3 flex gap-2 px-3">
-            <Button
-              asChild
-              className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
-              variant="outline"
-            >
-              <a
-                target="_blank"
-                rel="noreferrer"
-                className="gap-1 md:inline-flex"
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                  `I've completed ${submission.challenge.name} - Advent of TypeScript 2023`,
-                )}&url=https://typehero.dev/challenge/${slug}&hashtags=AdventOfTypescript`}
+        <div className="mb-3 flex gap-2 px-3">
+          <Button
+            className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
+            variant="outline"
+            onClick={copyShareLinkToClipboard}
+          >
+            <Share className="h-4 w-4" />
+            Share Code on Playground
+          </Button>
+          {isAotChallenge ? (
+            <>
+              <Button
+                asChild
+                className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
+                variant="outline"
               >
-                <Twitter className="h-4 w-4" />
-                Share on Twitter
-              </a>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              className="fancy-border-gradient relative border-none"
-            >
-              <Link href="/aot-2023">Back to Advent of TypeScript</Link>
-            </Button>
-          </div>
-        ) : null}
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  className="gap-1 md:inline-flex"
+                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                    `I've completed ${submission.challenge.name} - Advent of TypeScript 2023`,
+                  )}&url=https://typehero.dev/challenge/${slug}&hashtags=AdventOfTypescript`}
+                >
+                  <Twitter className="h-4 w-4" />
+                  Share on Twitter
+                </a>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                className="fancy-border-gradient relative border-none"
+              >
+                <Link href="/aot-2023">Back to Advent of TypeScript</Link>
+              </Button>
+            </>
+          ) : null}
+        </div>
       </div>
     </>
   );
