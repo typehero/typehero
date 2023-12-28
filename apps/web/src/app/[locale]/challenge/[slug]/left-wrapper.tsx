@@ -127,7 +127,7 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
       >
         <TabsList
           className={cn(
-            'bg-background/90 dark:bg-muted/90 sticky top-0 z-10 grid h-auto w-full border-b border-zinc-300 backdrop-blur-sm dark:border-zinc-700',
+            'bg-background/90 dark:bg-muted/90 sticky top-0 grid h-auto w-full border-b border-zinc-300 backdrop-blur-sm dark:border-zinc-700',
             {
               'grid-rows-3 gap-2': isIconOnly,
               'grid-cols-3 gap-0.5': !isIconOnly,
