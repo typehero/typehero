@@ -1,8 +1,5 @@
 import { auth, type Session } from '@repo/auth/server';
-import { notFound } from 'next/navigation';
 import { buildMetaForChallenge, buildMetaForEventPage } from '~/app/metadata';
-import { daysAfterDecemberFirst } from '~/utils/aot';
-import { getAllFlags } from '~/utils/feature-flags';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { Comments } from '../_components/comments';
 import { Description } from '../_components/description';
@@ -38,24 +35,12 @@ export async function generateMetadata({ params: { slug } }: Props) {
 export default async function Challenges({ params: { slug } }: Props) {
   const session = await auth();
 
-  const { enableHolidayEvent } = await getAllFlags();
-  const isAotChallenge = AOT_CHALLENGES.includes(slug);
-
-  if (enableHolidayEvent && isAotChallenge) {
-    const [, day = '1'] = slug.split('-');
-    const daysPassed = daysAfterDecemberFirst();
-
-    if (parseInt(day) > daysPassed + 1) {
-      return notFound();
-    }
-  }
-
   const { challenge } = await getChallengeRouteData(slug, session);
 
   return (
     <div className="relative h-full ">
       <Description challenge={challenge} />
-      {!isAotChallenge ? <Comments rootId={challenge.id} type="CHALLENGE" /> : null}
+      <Comments rootId={challenge.id} type="CHALLENGE" />
     </div>
   );
 }
