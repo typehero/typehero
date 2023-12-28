@@ -1,8 +1,7 @@
 import { Button } from '@repo/ui/components/button';
 import { Markdown } from '@repo/ui/components/markdown';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { toast } from '@repo/ui/components/use-toast';
-import { CheckCircle2, Copy, Plus, Share, Twitter, X, XCircle } from '@repo/ui/icons';
+import { CheckCircle2, Plus, Share, Twitter, X, XCircle } from '@repo/ui/icons';
 import { useQuery } from '@tanstack/react-query';
 import lzstring from 'lz-string';
 import Link from 'next/link';
@@ -35,16 +34,6 @@ export function SubmissionOverview({ submissionId }: Props) {
   const code = codifyForMarkdown(submission?.code.trimStart() ?? '');
 
   const track = searchParams.get('slug');
-
-  const copyCodeToClipboard = async () => {
-    if (navigator.clipboard) {
-      await navigator.clipboard.writeText(submission?.code ?? '').catch(console.error);
-      toast({
-        variant: 'success',
-        description: 'Copied!',
-      });
-    }
-  };
 
   const copyShareLinkToClipboard = async () => {
     if (!navigator.clipboard || !submission) {
@@ -79,28 +68,6 @@ export function SubmissionOverview({ submissionId }: Props) {
         <Link href={`/challenge/${slug}/submissions`}>
           <X className="stroke-gray-500 hover:stroke-gray-400" size={20} />
         </Link>
-        <div className="flex items-end">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button onClick={copyShareLinkToClipboard} variant="ghost">
-                <Share className="stroke-gray-500 hover:stroke-gray-400" size={20} />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Share solution</p>
-            </TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button onClick={copyCodeToClipboard} variant="ghost">
-                <Copy className="stroke-gray-500 hover:stroke-gray-400" size={20} />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Copy</p>
-            </TooltipContent>
-          </Tooltip>
-        </div>
       </div>
       <div className="custom-scrollable-element h-fit overflow-y-scroll p-2">
         <div className="mb-2 flex items-center justify-between">
@@ -142,34 +109,44 @@ export function SubmissionOverview({ submissionId }: Props) {
         <div className="mb-3 px-3">
           <Markdown>{code}</Markdown>
         </div>
-        {isAotChallenge ? (
-          <div className="mb-3 flex gap-2 px-3">
-            <Button
-              asChild
-              className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
-              variant="outline"
-            >
-              <a
-                target="_blank"
-                rel="noreferrer"
-                className="gap-1 md:inline-flex"
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                  `I've completed ${submission.challenge.name} - Advent of TypeScript 2023`,
-                )}&url=https://typehero.dev/challenge/${slug}&hashtags=AdventOfTypescript`}
+        <div className="mb-3 flex gap-2 px-3">
+          <Button
+            className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
+            variant="outline"
+            onClick={copyShareLinkToClipboard}
+          >
+            <Share className="h-4 w-4" />
+            Share Code on Playground
+          </Button>
+          {isAotChallenge ? (
+            <>
+              <Button
+                asChild
+                className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
+                variant="outline"
               >
-                <Twitter className="h-4 w-4" />
-                Share on Twitter
-              </a>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              className="fancy-border-gradient relative border-none"
-            >
-              <Link href="/aot-2023">Back to Advent of TypeScript</Link>
-            </Button>
-          </div>
-        ) : null}
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  className="gap-1 md:inline-flex"
+                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                    `I've completed ${submission.challenge.name} - Advent of TypeScript 2023`,
+                  )}&url=https://typehero.dev/challenge/${slug}&hashtags=AdventOfTypescript`}
+                >
+                  <Twitter className="h-4 w-4" />
+                  Share on Twitter
+                </a>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                className="fancy-border-gradient relative border-none"
+              >
+                <Link href="/aot-2023">Back to Advent of TypeScript</Link>
+              </Button>
+            </>
+          ) : null}
+        </div>
       </div>
     </>
   );
