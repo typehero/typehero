@@ -1,16 +1,16 @@
 'use client';
 import { createContext, useState, useContext, type PropsWithChildren } from 'react';
-import type { getChallengesByTagOrDifficultyType } from '~/app/[locale]/explore/_components/explore.action';
+import type { ChallengesByTagOrDifficulty } from '~/app/[locale]/explore/_components/explore.action';
 
 interface TrackContextType {
-  getTrack: getChallengesByTagOrDifficultyType | null;
-  setTrack: React.Dispatch<React.SetStateAction<getChallengesByTagOrDifficultyType | null>>;
+  getTrack: ChallengesByTagOrDifficulty | null;
+  setTrack: React.Dispatch<React.SetStateAction<ChallengesByTagOrDifficulty | null>>;
 }
 
 export const TrackContext = createContext<TrackContextType>({ getTrack: null, setTrack: () => {} });
 
 export const TrackProvider = ({ children }: PropsWithChildren) => {
-  const [getTrack, setTrack] = useState<getChallengesByTagOrDifficultyType | null>(null);
+  const [getTrack, setTrack] = useState<ChallengesByTagOrDifficulty | null>(null);
 
   return <TrackContext.Provider value={{ getTrack, setTrack }}>{children}</TrackContext.Provider>;
 };
