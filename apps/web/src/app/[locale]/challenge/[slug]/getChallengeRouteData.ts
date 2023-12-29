@@ -83,3 +83,42 @@ export const getChallengeRouteData = cache(async (slug: string, session: Session
     track,
   };
 });
+export const getCurrentChallenge = cache(async (slug: string, session: Session | null) => {
+  return prisma.challenge.findFirstOrThrow({
+    where: {
+      slug,
+      status: 'ACTIVE',
+    },
+    include: {
+      user: {
+        select: {
+          name: true,
+        },
+      },
+      _count: {
+        select: {
+          vote: true,
+        },
+      },
+      vote: {
+        where: {
+          userId: session?.user?.id || '',
+        },
+      },
+      bookmark: {
+        where: {
+          userId: session?.user?.id || '',
+        },
+      },
+      submission: {
+        where: {
+          userId: session?.user?.id || '',
+          isSuccessful: true,
+        },
+        take: 1,
+      },
+    },
+  });
+});
+
+export type GetCurrentChallengeType = Awaited<ReturnType<typeof getCurrentChallenge>>;
