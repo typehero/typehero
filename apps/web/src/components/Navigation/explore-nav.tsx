@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import type { getChallengesByTagOrDifficultyType } from '~/app/[locale]/explore/_components/explore.action';
 import { usePathname } from 'next/navigation';
-import { ProblemExplorer } from './problem-explorer';
+import { ProblemExplorerNav } from './problem-explorer-nav';
 
 export interface AllChallenges {
   popularChallenges: getChallengesByTagOrDifficultyType;
@@ -23,7 +23,7 @@ interface ExploreNavProps {
 export function ExploreNav({ href, title, allChallenges }: ExploreNavProps) {
   const pathname = usePathname();
   if (pathname.startsWith('/challenge')) {
-    return <ProblemExplorer allChallenges={allChallenges} />;
+    return <ProblemExplorerNav allChallenges={allChallenges} />;
   }
   return (
     <Link href={href}>
