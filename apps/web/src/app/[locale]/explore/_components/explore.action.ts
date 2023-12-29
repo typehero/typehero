@@ -58,7 +58,7 @@ export async function getChallengesByTagOrDifficulty(str: string, take?: number)
     }),
   });
 }
-export type getChallengesByTagOrDifficultyType = Awaited<
+export type ChallengesByTagOrDifficulty = Awaited<
   ReturnType<typeof getChallengesByTagOrDifficulty>
 >;
 
