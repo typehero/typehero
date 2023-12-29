@@ -1,83 +1,65 @@
-import { SheetContent, SheetHeader, SheetTitle } from '@repo/ui/components/sheet';
+import { SheetHeader, SheetTitle } from '@repo/ui/components/sheet';
 import Link from 'next/link';
 import { ChevronRight } from '@repo/ui/icons';
 
-import type { getChallengesByTagOrDifficultyType } from '../../explore/_components/explore.action';
 import { TrackChallenge } from '../../tracks/_components/track-challenge-card';
 import { TrackProgress } from '../../tracks/_components/track-progress';
-import { useEffect, useState } from 'react';
-import type { AllChallenges } from '~/components/Navigation/explore-nav';
+import { useState } from 'react';
+import { type AllChallenges } from '~/components/Navigation/explore-nav';
 import { SelectDropdown } from './select-dropdown';
+import { useChallengeRouteData } from '~/app/challenge-route-data.hook';
+import { SORT_KEYS, useSortingContext, useTrackContext } from '~/app/problem-explorer.hooks';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   allChallenges: AllChallenges;
 }
-export const SORT_KEYS = [
-  {
-    label: 'Popular',
-    value: 'popular',
-  },
-  {
-    label: 'Beginner',
-    value: 'beginner',
-  },
-  {
-    label: 'Easy',
-    value: 'easy',
-  },
-  {
-    label: 'Medium',
-    value: 'medium',
-  },
-  {
-    label: 'Hard',
-    value: 'hard',
-  },
-  {
-    label: 'Extreme',
-    value: 'extreme',
-  },
-] as const;
 
-export function SheetContentCustom({ allChallenges }: Props) {
-  const [filterChallenges, setFilterChallenges] = useState<getChallengesByTagOrDifficultyType>(
-    allChallenges.popularChallenges,
-  );
-  const [sortKey, setSortKey] = useState<(typeof SORT_KEYS)[number]>(SORT_KEYS[0]);
+export function ExplorerPanel({ allChallenges }: Props) {
+  const router = useRouter();
   const [title, setTitle] = useState<string>('Recommended');
+  const { sortKey, setSortKey } = useSortingContext();
+  const { getTrack, setTrack } = useTrackContext();
 
   const handleValueChange = (value: string) => {
+    if (value === 'popular') {
+      router.push(`/challenge/${allChallenges.popularChallenges[0]?.slug}`);
+      setTitle('Recommended');
+      setTrack(allChallenges.popularChallenges);
+    }
+    if (value === 'beginner') {
+      router.push(`/challenge/${allChallenges.beginnerChallenges[0]?.slug}`);
+      setTitle('Great for Beginners');
+      setTrack(allChallenges.beginnerChallenges);
+    }
+    if (value === 'easy') {
+      router.push(`/challenge/${allChallenges.easyChallenges[0]?.slug}`);
+      setTitle('Great for Learners');
+      setTrack(allChallenges.easyChallenges);
+    }
+    if (value === 'medium') {
+      router.push(`/challenge/${allChallenges.mediumChallenges[0]?.slug}`);
+      setTitle('Great for Enthusiasts');
+      setTrack(allChallenges.mediumChallenges);
+    }
+    if (value === 'hard') {
+      router.push(`/challenge/${allChallenges.hardChallenges[0]?.slug}`);
+      setTitle('Great for Experts');
+      setTrack(allChallenges.hardChallenges);
+    }
+    if (value === 'extreme') {
+      router.push(`/challenge/${allChallenges.extremeChallenges[0]?.slug}`);
+      setTitle('Great for Masters');
+      setTrack(allChallenges.extremeChallenges);
+    }
     setSortKey(SORT_KEYS.find((sk) => sk.value === value) ?? SORT_KEYS[0]);
   };
-  useEffect(() => {
-    if (sortKey.value === 'popular') {
-      setTitle('Recommended');
-      setFilterChallenges(allChallenges.popularChallenges);
-    }
-    if (sortKey.value === 'beginner') {
-      setTitle('Great for Beginners');
-      setFilterChallenges(allChallenges.beginnerChallenges);
-    }
-    if (sortKey.value === 'easy') {
-      setTitle('Great for Learners');
-      setFilterChallenges(allChallenges.easyChallenges);
-    }
-    if (sortKey.value === 'medium') {
-      setTitle('Great for Enthusiasts');
-      setFilterChallenges(allChallenges.mediumChallenges);
-    }
 
-    if (sortKey.value === 'hard') {
-      setTitle('Great for Experts');
-      setFilterChallenges(allChallenges.hardChallenges);
-    }
-    if (sortKey.value === 'extreme') {
-      setTitle('Great for Masters');
-      setFilterChallenges(allChallenges.extremeChallenges);
-    }
-  }, [allChallenges, sortKey.value]);
-
-  const challenges = filterChallenges;
+  const { currentChallenge } = useChallengeRouteData();
+  if (!getTrack) {
+    return <div>Loading...</div>;
+  }
+  const challenges = getTrack;
   const completedChallenges = challenges
     .filter((challenge) => {
       return (
@@ -130,7 +112,7 @@ export function SheetContentCustom({ allChallenges }: Props) {
                 challenge={challenge}
                 isCompleted={completedChallenges.includes(challenge.id)}
                 isInProgress={inProgressChallenges.includes(challenge.id)}
-                // isSelected={challenge.id === challengeId}
+                isSelected={challenge.id === currentChallenge?.id}
                 isCompact
               />
             </Link>

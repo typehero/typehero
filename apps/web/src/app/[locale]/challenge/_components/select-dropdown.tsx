@@ -1,28 +1,33 @@
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@repo/ui/components/select';
-import { SORT_KEYS } from './sheet-content-custom';
+import { SORT_KEYS, type SortKeyType } from '~/app/problem-explorer.hooks';
 
 export interface SelectDropdownProps {
-  sortKey: (typeof SORT_KEYS)[number];
+  sortKey: SortKeyType;
   handleValueChange: (value: string) => void;
 }
 
 export const SelectDropdown = ({ sortKey, handleValueChange }: SelectDropdownProps) => (
-  <Select value={sortKey.value} defaultValue="popular" onValueChange={handleValueChange}>
-    <SelectTrigger className="w-[120px]">
-      <SelectValue placeholder="Sort Key" />
+  <Select defaultValue={sortKey.value} onValueChange={handleValueChange}>
+    <SelectTrigger className="w-[190px]">
+      <SelectValue placeholder="Select Challenges" />
     </SelectTrigger>
     <SelectContent>
-      {SORT_KEYS.map((sortKey, index) => (
-        <SelectItem key={index} value={sortKey.value}>
-          {sortKey.label}
-        </SelectItem>
-      ))}
+      <SelectGroup>
+        <SelectLabel>Select Track</SelectLabel>
+        {SORT_KEYS.map((sortKey, index) => (
+          <SelectItem key={index} value={sortKey.value}>
+            {sortKey.label} Challenges
+          </SelectItem>
+        ))}
+      </SelectGroup>
     </SelectContent>
   </Select>
 );
