@@ -8,8 +8,6 @@ import { ThemeProvider } from 'next-themes';
 import React, { Suspense } from 'react';
 import { Toolbar } from '~/components/toolbar';
 import { FeatureFlagProvider } from '../feature-flag-provider';
-import { ChallegeRouteDataProvider } from '../challenge-route-data.hook';
-import { SortingProvider } from '../problem-explorer.hooks';
 
 interface Props {
   children: React.ReactNode;
@@ -24,11 +22,7 @@ export function Providers({ children }: Props) {
       <SessionProvider>
         <ThemeProvider attribute="class" disableTransitionOnChange>
           <FeatureFlagProvider>
-            <ChallegeRouteDataProvider>
-              <SortingProvider>
-                <TooltipProvider>{children}</TooltipProvider>
-              </SortingProvider>
-            </ChallegeRouteDataProvider>
+            <TooltipProvider>{children}</TooltipProvider>
           </FeatureFlagProvider>
           <Suspense>
             <Toolbar />
