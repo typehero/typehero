@@ -1,15 +1,13 @@
 import { Sheet, SheetContent, SheetTrigger } from '@repo/ui/components/sheet';
 import { ExplorerPanel } from './sheet-content-custom';
-import type { AllChallenges } from '~/components/Navigation/explore-nav';
 import type { ReactNode } from 'react';
 
 interface Props {
   children: ReactNode;
   asChild?: boolean;
-  allChallenges: AllChallenges;
 }
 
-export function ExploreDrawer({ children, asChild = false, allChallenges }: Props) {
+export function ExploreDrawer({ children, asChild = false }: Props) {
   return (
     <Sheet>
       <SheetTrigger asChild={asChild}>{children}</SheetTrigger>
@@ -17,7 +15,7 @@ export function ExploreDrawer({ children, asChild = false, allChallenges }: Prop
         className="flex w-full flex-col gap-8 overflow-y-scroll sm:max-w-[400px] md:max-w-[540px]"
         side="left"
       >
-        <ExplorerPanel allChallenges={allChallenges} />
+        <ExplorerPanel />
       </SheetContent>
     </Sheet>
   );

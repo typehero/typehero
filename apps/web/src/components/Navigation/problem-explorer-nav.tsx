@@ -1,19 +1,17 @@
 'use client';
 import { useChallengeRouteData } from '~/app/challenge-route-data.hook';
-import type { AllChallenges } from './explore-nav';
 import { useTrackContext } from '~/app/problem-explorer.hooks';
 import { useEffect, useMemo } from 'react';
 import { ExploreDrawer } from '~/app/[locale]/challenge/_components/explore-drawer';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from '@repo/ui/icons';
+import { useAllChallengesContext } from '~/app/all-challenges.hook';
 
-interface ProblemExplorerNavProps {
-  allChallenges: AllChallenges;
-}
-export function ProblemExplorerNav({ allChallenges }: ProblemExplorerNavProps) {
+export function ProblemExplorerNav() {
   const { currentChallenge } = useChallengeRouteData();
   const { setTrack, getTrack } = useTrackContext();
+  const { allChallenges } = useAllChallengesContext();
   useEffect(() => {
     // initally set Track to popularChallenges if getTrack is null
     if (!getTrack) {
@@ -51,7 +49,7 @@ export function ProblemExplorerNav({ allChallenges }: ProblemExplorerNavProps) {
 
   return (
     <div className="flex items-center gap-1.5">
-      <ExploreDrawer allChallenges={allChallenges} asChild>
+      <ExploreDrawer asChild>
         <span className="hover:text-foreground text-foreground/80 mr-1 cursor-pointer items-center transition-colors">
           <Tooltip delayDuration={0}>
             <TooltipTrigger asChild>
