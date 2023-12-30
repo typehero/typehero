@@ -53,9 +53,7 @@ export function ExplorerPanel() {
   };
 
   const { currentChallenge } = useChallengeRouteData();
-  if (!getTrack) {
-    return <div>Loading...</div>;
-  }
+
   const challenges = getTrack;
   const completedChallenges = challenges
     .filter((challenge) => {

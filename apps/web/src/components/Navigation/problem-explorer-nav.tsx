@@ -1,42 +1,33 @@
 'use client';
 import { useChallengeRouteData } from '~/app/challenge-route-data.hook';
 import { useTrackContext } from '~/app/problem-explorer.hooks';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { ExploreDrawer } from '~/app/[locale]/challenge/_components/explore-drawer';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from '@repo/ui/icons';
-import { useAllChallengesContext } from '~/app/all-challenges.hook';
 
 export function ProblemExplorerNav() {
   const { currentChallenge } = useChallengeRouteData();
-  const { setTrack, getTrack } = useTrackContext();
-  const { allChallenges } = useAllChallengesContext();
-  useEffect(() => {
-    // initally set Track to popularChallenges if getTrack is null
-    if (!getTrack) {
-      setTrack(allChallenges.popularChallenges);
-    }
-  }, [allChallenges, setTrack, getTrack]);
-
+  const { getTrack } = useTrackContext();
   const track = getTrack;
   const currentIndex = useMemo(() => {
-    if (!track?.length) return null;
+    if (!track.length) return null;
 
     const index = track.findIndex((x) => x.id === currentChallenge?.id);
     return index === -1 ? null : index;
   }, [track, currentChallenge]);
 
   const next = useMemo(() => {
-    if (!track?.length) return null;
+    if (!track.length) return null;
     if (currentIndex === null) return null;
 
     const nextIndex = currentIndex + 1;
-    return nextIndex < track?.length ? track[nextIndex] : null;
+    return nextIndex < track.length ? track[nextIndex] : null;
   }, [currentIndex, track]);
 
   const previous = useMemo(() => {
-    if (!track?.length) return null;
+    if (!track.length) return null;
     if (currentIndex === null) return null;
 
     const prevIndex = currentIndex - 1;
