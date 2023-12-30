@@ -9,6 +9,8 @@ import { OG_URL, tagline } from './metadata';
 import { AllChallengesProvider } from './all-challenges.hook';
 import { getAllChallenges } from './[locale]/explore/_components/explore.action';
 import { TrackProvider } from './problem-explorer.hooks';
+import { isEnrolledInAnyTrack } from './[locale]/challenge/[slug]/getChallengeRouteData';
+import { auth } from '@repo/auth/server';
 
 export function generateStaticParams() {
   return getStaticParams();
@@ -56,6 +58,8 @@ export const metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const allChallenges = await getAllChallenges();
+  const session = await auth();
+  const isExplorerDisabled = await isEnrolledInAnyTrack(session);
   return (
     <html suppressHydrationWarning lang="en">
       <head>
@@ -68,7 +72,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body className={`${inter.className} flex flex-col`}>
         <Providers>
           <AllChallengesProvider AC={allChallenges}>
-            <TrackProvider PC={allChallenges.popularChallenges}>
+            <TrackProvider isDisabled={isExplorerDisabled} PC={allChallenges.popularChallenges}>
               <Navigation />
               {children}
               <Toaster />
