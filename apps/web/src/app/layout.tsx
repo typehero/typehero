@@ -8,6 +8,7 @@ import { Providers } from './[locale]/providers';
 import { OG_URL, tagline } from './metadata';
 import { AllChallengesProvider } from './all-challenges.hook';
 import { getAllChallenges } from './[locale]/explore/_components/explore.action';
+import { TrackProvider } from './problem-explorer.hooks';
 
 export function generateStaticParams() {
   return getStaticParams();
@@ -67,9 +68,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body className={`${inter.className} flex flex-col`}>
         <Providers>
           <AllChallengesProvider AC={allChallenges}>
-            <Navigation />
-            {children}
-            <Toaster />
+            <TrackProvider PC={allChallenges.popularChallenges}>
+              <Navigation />
+              {children}
+              <Toaster />
+            </TrackProvider>
           </AllChallengesProvider>
         </Providers>
         <Analytics />

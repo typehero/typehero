@@ -3,14 +3,18 @@ import { createContext, useState, useContext, type PropsWithChildren } from 'rea
 import type { ChallengesByTagOrDifficulty } from '~/app/[locale]/explore/_components/explore.action';
 
 interface TrackContextType {
-  getTrack: ChallengesByTagOrDifficulty | null;
-  setTrack: React.Dispatch<React.SetStateAction<ChallengesByTagOrDifficulty | null>>;
+  getTrack: ChallengesByTagOrDifficulty;
+  setTrack: React.Dispatch<React.SetStateAction<ChallengesByTagOrDifficulty>>;
 }
 
-export const TrackContext = createContext<TrackContextType>({ getTrack: null, setTrack: () => {} });
+export const TrackContext = createContext<TrackContextType>({} as TrackContextType);
 
-export const TrackProvider = ({ children }: PropsWithChildren) => {
-  const [getTrack, setTrack] = useState<ChallengesByTagOrDifficulty | null>(null);
+interface TrackProviderProps {
+  children: React.ReactNode;
+  PC: ChallengesByTagOrDifficulty;
+}
+export const TrackProvider = ({ children, PC }: TrackProviderProps) => {
+  const [getTrack, setTrack] = useState<ChallengesByTagOrDifficulty>(PC);
 
   return <TrackContext.Provider value={{ getTrack, setTrack }}>{children}</TrackContext.Provider>;
 };

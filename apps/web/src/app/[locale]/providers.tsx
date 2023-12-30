@@ -9,7 +9,7 @@ import React, { Suspense } from 'react';
 import { Toolbar } from '~/components/toolbar';
 import { FeatureFlagProvider } from '../feature-flag-provider';
 import { ChallegeRouteDataProvider } from '../challenge-route-data.hook';
-import { SortingProvider, TrackProvider } from '../problem-explorer.hooks';
+import { SortingProvider } from '../problem-explorer.hooks';
 
 interface Props {
   children: React.ReactNode;
@@ -25,11 +25,9 @@ export function Providers({ children }: Props) {
         <ThemeProvider attribute="class" disableTransitionOnChange>
           <FeatureFlagProvider>
             <ChallegeRouteDataProvider>
-              <TrackProvider>
-                <SortingProvider>
-                  <TooltipProvider>{children}</TooltipProvider>
-                </SortingProvider>
-              </TrackProvider>
+              <SortingProvider>
+                <TooltipProvider>{children}</TooltipProvider>
+              </SortingProvider>
             </ChallegeRouteDataProvider>
           </FeatureFlagProvider>
           <Suspense>
