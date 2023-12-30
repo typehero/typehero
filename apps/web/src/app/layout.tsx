@@ -6,6 +6,8 @@ import { getStaticParams } from '~/locales/server';
 import '../styles/globals.css';
 import { Providers } from './[locale]/providers';
 import { OG_URL, tagline } from './metadata';
+import { AllChallengesProvider } from './all-challenges.hook';
+import { getAllChallenges } from './[locale]/explore/_components/explore.action';
 
 export function generateStaticParams() {
   return getStaticParams();
@@ -51,7 +53,8 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const allChallenges = await getAllChallenges();
   return (
     <html suppressHydrationWarning lang="en">
       <head>
@@ -63,9 +66,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${inter.className} flex flex-col`}>
         <Providers>
-          <Navigation />
-          {children}
-          <Toaster />
+          <AllChallengesProvider AC={allChallenges}>
+            <Navigation />
+            {children}
+            <Toaster />
+          </AllChallengesProvider>
         </Providers>
         <Analytics />
       </body>
