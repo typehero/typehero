@@ -122,3 +122,20 @@ export const getCurrentChallenge = cache(async (slug: string, session: Session |
 });
 
 export type GetCurrentChallengeType = Awaited<ReturnType<typeof getCurrentChallenge>>;
+
+export const isEnrolledInAnyTrack = cache(async (session: Session | null) => {
+  const userWithTrackCount = await prisma.user.findUnique({
+    where: { id: session?.user?.id },
+    select: {
+      _count: {
+        select: { tracks: true },
+      },
+    },
+  });
+
+  const numberOfTrack = userWithTrackCount?._count.tracks;
+  if (!numberOfTrack) {
+    return false;
+  }
+  return true;
+});
