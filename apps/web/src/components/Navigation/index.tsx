@@ -20,7 +20,6 @@ import { NavLink } from './nav-link';
 import { NavWrapper } from './nav-wrapper';
 import { SignOutLink } from './signout-link';
 import { SkipToCodeEditor } from './skip-to-code-editor';
-import { ExploreNav } from './explore-nav';
 
 export function getAdminUrl() {
   // reference for vercel.com
@@ -40,7 +39,7 @@ export async function Navigation() {
 
   const TopSectionLinks = (
     <>
-      {featureFlags?.enableExplore ? <ExploreNav title={t('explore')} href="/explore" /> : null}
+      {featureFlags?.enableExplore ? <NavLink title={t('explore')} href="/explore" /> : null}
       {featureFlags?.enableTracks ? <NavLink title={t('tracks')} href="/tracks" /> : null}
       {featureFlags?.enableHolidayEvent ? (
         <div className="flex items-center gap-1">
