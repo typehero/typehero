@@ -144,6 +144,7 @@ function CopyButton({ text }: { text: string }) {
                 onClick={copyToClipboard}
                 variant="ghost"
                 className="p-2 hover:bg-transparent dark:hover:bg-transparent"
+                aria-label="Copy code to clipboard"
               >
                 <Copy className="stroke-gray-500 hover:stroke-gray-400" size={20} />
               </Button>
