@@ -21,7 +21,9 @@ export const TrackProvider = ({ children, PC, isDisabled }: TrackProviderProps) 
   const [isExplorerDisabled, setIsExplorerDisabled] = useState<boolean>(isDisabled);
 
   return (
-    <TrackContext.Provider value={{ getTrack, setTrack, isExplorerDisabled, setIsExplorerDisabled }}>
+    <TrackContext.Provider
+      value={{ getTrack, setTrack, isExplorerDisabled, setIsExplorerDisabled }}
+    >
       {children}
     </TrackContext.Provider>
   );
