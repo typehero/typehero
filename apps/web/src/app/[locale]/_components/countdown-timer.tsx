@@ -15,6 +15,7 @@ const DateCard = ({ date, label }: { date: React.ReactNode; label: string }) => 
 };
 
 export const CountdownTimer = () => {
+  const december25th2023 = new Date(Date.UTC(2023, 11, 25));
   const [releaseDate, setReleaseDate] = useState(() => {
     return calculateNextReleaseTime();
   });
@@ -46,7 +47,7 @@ export const CountdownTimer = () => {
 
   const { days, hours, minutes, seconds } = calculateTimeComponents(remainingTime);
 
-  if (remainingTime === 0 || releaseDate.getUTCDate() > 25) {
+  if (remainingTime === 0 || releaseDate > december25th2023) {
     return (
       <>
         <p className="text-center text-xl font-semibold">Thats a wrap! See you next year!</p>
