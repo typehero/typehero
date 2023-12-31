@@ -1,5 +1,5 @@
 'use client';
-import { createContext, useState, useContext, type PropsWithChildren } from 'react';
+import { createContext, useState, useContext, type PropsWithChildren, useEffect } from 'react';
 import type {
   AllChallenges,
   ChallengesByTagOrDifficulty,
@@ -11,6 +11,8 @@ import {
 } from './get-challenges-and-title';
 
 interface ProblemExplorerContextType {
+  sortKey: SortKeyType;
+  setSortKey: React.Dispatch<React.SetStateAction<SortKeyType>>;
   title: ChallengeTitles;
   setTitle: React.Dispatch<React.SetStateAction<ChallengeTitles>>;
   isExplorerDisabled: boolean;
@@ -27,22 +29,32 @@ interface ProblemExplorerProviderProps {
   children: React.ReactNode;
   isDisabled: boolean;
   AC: AllChallenges;
+  trackName: ChallengeType;
 }
 export const ProblemExplorerProvider = ({
   children,
   AC,
   isDisabled,
+  trackName,
 }: ProblemExplorerProviderProps) => {
-  const trackName = localStorage.getItem('trackName') as ChallengeType;
-  const { challenges, thisTitle } = getChallengesAndTitle(trackName, AC);
-
+  const { challenges, thisTitle, key } = getChallengesAndTitle(trackName, AC);
   const [getTrack, setTrack] = useState<ChallengesByTagOrDifficulty>(challenges);
   const [title, setTitle] = useState<ChallengeTitles>(thisTitle);
+  const [sortKey, setSortKey] = useState<SortKeyType>(key);
   const [isExplorerDisabled, setIsExplorerDisabled] = useState<boolean>(isDisabled);
 
   return (
     <ProblemExplorerContext.Provider
-      value={{ title, setTitle, getTrack, setTrack, isExplorerDisabled, setIsExplorerDisabled }}
+      value={{
+        sortKey,
+        setSortKey,
+        title,
+        setTitle,
+        getTrack,
+        setTrack,
+        isExplorerDisabled,
+        setIsExplorerDisabled,
+      }}
     >
       {children}
     </ProblemExplorerContext.Provider>
@@ -88,29 +100,3 @@ export const SORT_KEYS = [
     value: 'extreme',
   },
 ] as const;
-
-interface SortingContextType {
-  sortKey: SortKeyType;
-  setSortKey: React.Dispatch<React.SetStateAction<SortKeyType>>;
-}
-
-export const SortingContext = createContext<SortingContextType>({
-  sortKey: SORT_KEYS[0],
-  setSortKey: () => {},
-});
-
-export const SortingProvider = ({ children }: PropsWithChildren) => {
-  const [sortKey, setSortKey] = useState<SortKeyType>(SORT_KEYS[0]);
-
-  return (
-    <SortingContext.Provider value={{ sortKey, setSortKey }}>{children}</SortingContext.Provider>
-  );
-};
-
-export const useSortingContext = () => {
-  const context = useContext(SortingContext);
-  if (context === undefined) {
-    throw new Error('use useSortingContext hook within SortingContextProvider');
-  }
-  return context;
-};

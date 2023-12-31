@@ -5,56 +5,52 @@ import { TrackChallenge } from '../../tracks/_components/track-challenge-card';
 import { TrackProgress } from '../../tracks/_components/track-progress';
 import { SelectDropdown } from './select-dropdown';
 import { useChallengeRouteData } from '~/app/challenge-route-data.hook';
-import {
-  SORT_KEYS,
-  useSortingContext,
-  useProblemExplorerContext,
-} from '~/app/problem-explorer.hooks';
+import { SORT_KEYS, useProblemExplorerContext } from '~/app/problem-explorer.hooks';
 import { useRouter } from 'next/navigation';
 import { useAllChallengesContext } from '~/app/all-challenges.hook';
 
 export function ExplorerPanel() {
   const router = useRouter();
-  const { sortKey, setSortKey } = useSortingContext();
-  const { getTrack, setTrack, title, setTitle } = useProblemExplorerContext();
+  const { getTrack, setTrack, title, setTitle, sortKey, setSortKey } = useProblemExplorerContext();
   const { allChallenges } = useAllChallengesContext();
 
   const handleValueChange = (value: string) => {
+    document.cookie = 'trackName='; // clear the old cookie first
     if (value === 'popular') {
       router.push(`/challenge/${allChallenges.popularChallenges[0]?.slug}`);
       setTitle('Recommended Challenges');
       setTrack(allChallenges.popularChallenges);
-      localStorage.setItem('trackName', 'popular');
+      document.cookie = 'trackName=popular';
     }
     if (value === 'beginner') {
       router.push(`/challenge/${allChallenges.beginnerChallenges[0]?.slug}`);
       setTitle('Great for Beginners');
       setTrack(allChallenges.beginnerChallenges);
-      localStorage.setItem('trackName', 'beginner');
+      document.cookie = 'trackName=beginner';
     }
     if (value === 'easy') {
       router.push(`/challenge/${allChallenges.easyChallenges[0]?.slug}`);
       setTitle('Great for Learners');
       setTrack(allChallenges.easyChallenges);
-      localStorage.setItem('trackName', 'easy');
+      document.cookie = 'trackName=easy';
     }
     if (value === 'medium') {
       router.push(`/challenge/${allChallenges.mediumChallenges[0]?.slug}`);
       setTitle('Great for Enthusiasts');
       setTrack(allChallenges.mediumChallenges);
-      localStorage.setItem('trackName', 'medium');
+      document.cookie = 'trackName=medium';
     }
     if (value === 'hard') {
       router.push(`/challenge/${allChallenges.hardChallenges[0]?.slug}`);
       setTitle('Great for Experts');
       setTrack(allChallenges.hardChallenges);
-      localStorage.setItem('trackName', 'hard');
+      document.cookie = 'trackName=hard';
     }
     if (value === 'extreme') {
       router.push(`/challenge/${allChallenges.extremeChallenges[0]?.slug}`);
       setTitle('Great for Masters');
       setTrack(allChallenges.extremeChallenges);
-      localStorage.setItem('trackName', 'extreme');
+      document.cookie = 'trackName=extreme';
     }
     setSortKey(SORT_KEYS.find((sk) => sk.value === value) ?? SORT_KEYS[0]);
   };
