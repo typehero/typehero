@@ -3,6 +3,8 @@ import { createContext, useState, useContext, type PropsWithChildren } from 'rea
 import type { ChallengesByTagOrDifficulty } from '~/app/[locale]/explore/_components/explore.action';
 
 interface ProblemExplorerContextType {
+  title: string;
+  setTitle: React.Dispatch<React.SetStateAction<string>>;
   isExplorerDisabled: boolean;
   setIsExplorerDisabled: React.Dispatch<React.SetStateAction<boolean>>;
   getTrack: ChallengesByTagOrDifficulty;
@@ -25,10 +27,11 @@ export const ProblemExplorerProvider = ({
 }: ProblemExplorerProviderProps) => {
   const [getTrack, setTrack] = useState<ChallengesByTagOrDifficulty>(PC);
   const [isExplorerDisabled, setIsExplorerDisabled] = useState<boolean>(isDisabled);
+  const [title, setTitle] = useState('Recommended Challenges');
 
   return (
     <ProblemExplorerContext.Provider
-      value={{ getTrack, setTrack, isExplorerDisabled, setIsExplorerDisabled }}
+      value={{ title, setTitle, getTrack, setTrack, isExplorerDisabled, setIsExplorerDisabled }}
     >
       {children}
     </ProblemExplorerContext.Provider>

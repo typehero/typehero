@@ -1,27 +1,28 @@
 import { SheetHeader, SheetTitle } from '@repo/ui/components/sheet';
 import Link from 'next/link';
 import { ChevronRight } from '@repo/ui/icons';
-
 import { TrackChallenge } from '../../tracks/_components/track-challenge-card';
 import { TrackProgress } from '../../tracks/_components/track-progress';
-import { useState } from 'react';
 import { SelectDropdown } from './select-dropdown';
 import { useChallengeRouteData } from '~/app/challenge-route-data.hook';
-import { SORT_KEYS, useSortingContext, useProblemExplorerContext } from '~/app/problem-explorer.hooks';
+import {
+  SORT_KEYS,
+  useSortingContext,
+  useProblemExplorerContext,
+} from '~/app/problem-explorer.hooks';
 import { useRouter } from 'next/navigation';
 import { useAllChallengesContext } from '~/app/all-challenges.hook';
 
 export function ExplorerPanel() {
   const router = useRouter();
-  const [title, setTitle] = useState<string>('Recommended');
   const { sortKey, setSortKey } = useSortingContext();
-  const { getTrack, setTrack } = useProblemExplorerContext();
+  const { getTrack, setTrack, title, setTitle } = useProblemExplorerContext();
   const { allChallenges } = useAllChallengesContext();
 
   const handleValueChange = (value: string) => {
     if (value === 'popular') {
       router.push(`/challenge/${allChallenges.popularChallenges[0]?.slug}`);
-      setTitle('Recommended');
+      setTitle('Recommended Challenges');
       setTrack(allChallenges.popularChallenges);
     }
     if (value === 'beginner') {

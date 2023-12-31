@@ -15,7 +15,7 @@ interface ProblemExplorerTrackNav {
 }
 export function ProblemExplorerTrackNav({ isCollapsed, className }: ProblemExplorerTrackNav) {
   const { currentChallenge } = useChallengeRouteData();
-  const { getTrack } = useProblemExplorerContext();
+  const { getTrack, title } = useProblemExplorerContext();
   const track = getTrack;
   const currentIndex = useMemo(() => {
     if (!track.length) return null;
@@ -63,7 +63,7 @@ export function ProblemExplorerTrackNav({ isCollapsed, className }: ProblemExplo
           <Swords className="h-4 w-4 shrink-0" />
           {Boolean(!isCollapsed) && (
             <span className="overflow-hidden text-ellipsis whitespace-nowrap">
-              Problem Explorer
+              {previous?.slug || next?.slug ? title : 'Problem Explorer'}
             </span>
           )}
         </Button>
