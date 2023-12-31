@@ -24,31 +24,37 @@ export function ExplorerPanel() {
       router.push(`/challenge/${allChallenges.popularChallenges[0]?.slug}`);
       setTitle('Recommended Challenges');
       setTrack(allChallenges.popularChallenges);
+      localStorage.setItem('trackName', 'popular');
     }
     if (value === 'beginner') {
       router.push(`/challenge/${allChallenges.beginnerChallenges[0]?.slug}`);
       setTitle('Great for Beginners');
       setTrack(allChallenges.beginnerChallenges);
+      localStorage.setItem('trackName', 'beginner');
     }
     if (value === 'easy') {
       router.push(`/challenge/${allChallenges.easyChallenges[0]?.slug}`);
       setTitle('Great for Learners');
       setTrack(allChallenges.easyChallenges);
+      localStorage.setItem('trackName', 'easy');
     }
     if (value === 'medium') {
       router.push(`/challenge/${allChallenges.mediumChallenges[0]?.slug}`);
       setTitle('Great for Enthusiasts');
       setTrack(allChallenges.mediumChallenges);
+      localStorage.setItem('trackName', 'medium');
     }
     if (value === 'hard') {
       router.push(`/challenge/${allChallenges.hardChallenges[0]?.slug}`);
       setTitle('Great for Experts');
       setTrack(allChallenges.hardChallenges);
+      localStorage.setItem('trackName', 'hard');
     }
     if (value === 'extreme') {
       router.push(`/challenge/${allChallenges.extremeChallenges[0]?.slug}`);
       setTitle('Great for Masters');
       setTrack(allChallenges.extremeChallenges);
+      localStorage.setItem('trackName', 'extreme');
     }
     setSortKey(SORT_KEYS.find((sk) => sk.value === value) ?? SORT_KEYS[0]);
   };

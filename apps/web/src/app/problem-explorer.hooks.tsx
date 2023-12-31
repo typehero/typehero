@@ -1,10 +1,18 @@
 'use client';
 import { createContext, useState, useContext, type PropsWithChildren } from 'react';
-import type { ChallengesByTagOrDifficulty } from '~/app/[locale]/explore/_components/explore.action';
+import type {
+  AllChallenges,
+  ChallengesByTagOrDifficulty,
+} from '~/app/[locale]/explore/_components/explore.action';
+import {
+  getChallengesAndTitle,
+  type ChallengeType,
+  type ChallengeTitles,
+} from './get-challenges-and-title';
 
 interface ProblemExplorerContextType {
-  title: string;
-  setTitle: React.Dispatch<React.SetStateAction<string>>;
+  title: ChallengeTitles;
+  setTitle: React.Dispatch<React.SetStateAction<ChallengeTitles>>;
   isExplorerDisabled: boolean;
   setIsExplorerDisabled: React.Dispatch<React.SetStateAction<boolean>>;
   getTrack: ChallengesByTagOrDifficulty;
@@ -18,16 +26,19 @@ export const ProblemExplorerContext = createContext<ProblemExplorerContextType>(
 interface ProblemExplorerProviderProps {
   children: React.ReactNode;
   isDisabled: boolean;
-  PC: ChallengesByTagOrDifficulty;
+  AC: AllChallenges;
 }
 export const ProblemExplorerProvider = ({
   children,
-  PC,
+  AC,
   isDisabled,
 }: ProblemExplorerProviderProps) => {
-  const [getTrack, setTrack] = useState<ChallengesByTagOrDifficulty>(PC);
+  const trackName = localStorage.getItem('trackName') as ChallengeType;
+  const { challenges, thisTitle } = getChallengesAndTitle(trackName, AC);
+
+  const [getTrack, setTrack] = useState<ChallengesByTagOrDifficulty>(challenges);
+  const [title, setTitle] = useState<ChallengeTitles>(thisTitle);
   const [isExplorerDisabled, setIsExplorerDisabled] = useState<boolean>(isDisabled);
-  const [title, setTitle] = useState('Recommended Challenges');
 
   return (
     <ProblemExplorerContext.Provider

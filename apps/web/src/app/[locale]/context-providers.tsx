@@ -16,7 +16,7 @@ export async function ContextProviders({ children }: Props) {
   const isExplorerDisabled = await isEnrolledInAnyTrack(session);
   return (
     <AllChallengesProvider AC={allChallenges}>
-      <ProblemExplorerProvider isDisabled={isExplorerDisabled} PC={allChallenges.popularChallenges}>
+      <ProblemExplorerProvider isDisabled={isExplorerDisabled} AC={allChallenges}>
         <ChallegeRouteDataProvider>
           <SortingProvider>{children}</SortingProvider>
         </ChallegeRouteDataProvider>
