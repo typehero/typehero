@@ -87,6 +87,9 @@
     },
     "test:e2e": {
       "outputs": ["playwright-report/**"]
+    },
+    "test:e2e:ui": {
+      "outputs": ["playwright-report/**"]
     }
   }
 }

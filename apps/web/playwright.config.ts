@@ -16,7 +16,6 @@ export default defineConfig({
     trace: process.env.CI ? 'on-first-retry' : 'retain-on-failure',
   },
   projects: [
-    { name: 'setup', testMatch: /.*\.setup\.ts/ },
     {
       name: 'chromium',
       use: {
@@ -26,7 +25,6 @@ export default defineConfig({
           permissions: ['clipboard-read', 'clipboard-write'],
         },
       },
-      dependencies: ['setup'],
     },
   ],
   webServer: {
