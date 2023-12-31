@@ -145,7 +145,25 @@ export function SubmissionOverview({ submissionId }: Props) {
                 <Link href="/aot-2023">Back to Advent of TypeScript</Link>
               </Button>
             </>
-          ) : null}
+          ) : (
+            <Button
+              asChild
+              className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
+              variant="outline"
+            >
+              <a
+                target="_blank"
+                rel="noreferrer"
+                className="gap-1 md:inline-flex"
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                  `I've completed ${submission.challenge.name} on TypeHero!`,
+                )}&url=https://typehero.dev/challenge/${slug}`}
+              >
+                <Twitter className="h-4 w-4" />
+                Share on Twitter
+              </a>
+            </Button>
+          )}
         </div>
       </div>
     </>
