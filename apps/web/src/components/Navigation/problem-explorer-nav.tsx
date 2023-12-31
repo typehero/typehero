@@ -1,6 +1,6 @@
 'use client';
 import { useChallengeRouteData } from '~/app/challenge-route-data.hook';
-import { useTrackContext } from '~/app/problem-explorer.hooks';
+import { useProblemExplorerContext } from '~/app/problem-explorer.hooks';
 import { useMemo } from 'react';
 import { ExploreDrawer } from '~/app/[locale]/challenge/_components/explore-drawer';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
@@ -9,7 +9,7 @@ import { ChevronLeft, ChevronRight } from '@repo/ui/icons';
 
 export function ProblemExplorerNav() {
   const { currentChallenge } = useChallengeRouteData();
-  const { getTrack } = useTrackContext();
+  const { getTrack } = useProblemExplorerContext();
   const track = getTrack;
   const currentIndex = useMemo(() => {
     if (!track.length) return null;

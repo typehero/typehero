@@ -7,7 +7,7 @@ import { TrackProgress } from '../../tracks/_components/track-progress';
 import { useState } from 'react';
 import { SelectDropdown } from './select-dropdown';
 import { useChallengeRouteData } from '~/app/challenge-route-data.hook';
-import { SORT_KEYS, useSortingContext, useTrackContext } from '~/app/problem-explorer.hooks';
+import { SORT_KEYS, useSortingContext, useProblemExplorerContext } from '~/app/problem-explorer.hooks';
 import { useRouter } from 'next/navigation';
 import { useAllChallengesContext } from '~/app/all-challenges.hook';
 
@@ -15,7 +15,7 @@ export function ExplorerPanel() {
   const router = useRouter();
   const [title, setTitle] = useState<string>('Recommended');
   const { sortKey, setSortKey } = useSortingContext();
-  const { getTrack, setTrack } = useTrackContext();
+  const { getTrack, setTrack } = useProblemExplorerContext();
   const { allChallenges } = useAllChallengesContext();
 
   const handleValueChange = (value: string) => {

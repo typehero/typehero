@@ -2,37 +2,43 @@
 import { createContext, useState, useContext, type PropsWithChildren } from 'react';
 import type { ChallengesByTagOrDifficulty } from '~/app/[locale]/explore/_components/explore.action';
 
-interface TrackContextType {
+interface ProblemExplorerContextType {
   isExplorerDisabled: boolean;
   setIsExplorerDisabled: React.Dispatch<React.SetStateAction<boolean>>;
   getTrack: ChallengesByTagOrDifficulty;
   setTrack: React.Dispatch<React.SetStateAction<ChallengesByTagOrDifficulty>>;
 }
 
-export const TrackContext = createContext<TrackContextType>({} as TrackContextType);
+export const ProblemExplorerContext = createContext<ProblemExplorerContextType>(
+  {} as ProblemExplorerContextType,
+);
 
-interface TrackProviderProps {
+interface ProblemExplorerProviderProps {
   children: React.ReactNode;
   isDisabled: boolean;
   PC: ChallengesByTagOrDifficulty;
 }
-export const TrackProvider = ({ children, PC, isDisabled }: TrackProviderProps) => {
+export const ProblemExplorerProvider = ({
+  children,
+  PC,
+  isDisabled,
+}: ProblemExplorerProviderProps) => {
   const [getTrack, setTrack] = useState<ChallengesByTagOrDifficulty>(PC);
   const [isExplorerDisabled, setIsExplorerDisabled] = useState<boolean>(isDisabled);
 
   return (
-    <TrackContext.Provider
+    <ProblemExplorerContext.Provider
       value={{ getTrack, setTrack, isExplorerDisabled, setIsExplorerDisabled }}
     >
       {children}
-    </TrackContext.Provider>
+    </ProblemExplorerContext.Provider>
   );
 };
 
-export const useTrackContext = () => {
-  const context = useContext(TrackContext);
+export const useProblemExplorerContext = () => {
+  const context = useContext(ProblemExplorerContext);
   if (context === undefined) {
-    throw new Error('use useTrackContext hook within TrackContextProvider');
+    throw new Error('use useProblemExplorerContext hook within ProblemExplorerContextProvider');
   }
   return context;
 };

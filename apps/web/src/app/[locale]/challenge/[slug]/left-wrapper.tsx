@@ -14,7 +14,7 @@ import { AOT_CHALLENGES } from './aot-slugs';
 import type { ChallengeRouteData } from './getChallengeRouteData';
 import { useTrackNavigationVisiblity } from './use-track-visibility.hook';
 import { ProblemExplorerTrackNav } from '~/components/Navigation/problem-explorer-track-nav';
-import { useTrackContext } from '~/app/problem-explorer.hooks';
+import { useProblemExplorerContext } from '~/app/problem-explorer.hooks';
 
 type Tab = 'description' | 'solutions' | 'submissions';
 interface Props {
@@ -29,7 +29,7 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
   const pathname = usePathname();
   const router = useRouter();
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const { isExplorerDisabled } = useTrackContext();
+  const { isExplorerDisabled } = useProblemExplorerContext();
 
   const featureFlags = useContext(FeatureFlagContext);
 
