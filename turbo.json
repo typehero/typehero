@@ -90,6 +90,10 @@
     },
     "test:e2e:ui": {
       "outputs": ["playwright-report/**"]
+    },
+    "test:e2e:inspector":{
+      "outputs": ["playwright-report/**"]
+    }
     }
   }
 }

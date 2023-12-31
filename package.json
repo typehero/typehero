@@ -27,6 +27,7 @@
     "test:e2e": "turbo test:e2e",
     "test:e2e:install": "playwright install",
     "test:e2e:ui": "turbo test:e2e:ui",
+    "test:e2e:inspector": "turbo test:e2e:inspector",
     "tunnel": "cloudflared tunnel --url http://localhost:3000",
     "typecheck": "turbo typecheck --continue"
   },
