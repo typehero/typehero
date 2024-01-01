@@ -5,4 +5,7 @@ module.exports = {
   parserOptions: {
     project: `${__dirname}/tsconfig.json`,
   },
+  rules: {
+    'import/no-extraneous-dependencies': 'off',
+  },
 };
