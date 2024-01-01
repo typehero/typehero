@@ -1,7 +1,7 @@
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import type { Role, RoleTypes } from '@repo/db/types';
 import type { Adapter } from '@auth/core/adapters';
-import { type DefaultSession } from 'next-auth';
+import { type DefaultSession, type User } from 'next-auth';
 import GitHubProvider from 'next-auth/providers/github';
 import { prisma } from '@repo/db';
 import NextAuth from './next-auth';
@@ -15,8 +15,8 @@ export type { Session, DefaultSession as DefaultAuthSession } from 'next-auth';
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
 declare module 'next-auth' {
-  interface Session extends DefaultSession {
-    user?: DefaultSession['user'] & {
+  interface Session {
+    user: DefaultSession['user'] & {
       id: string;
       role: RoleTypes[];
     };
@@ -100,7 +100,7 @@ export const {
           ...session.user,
           id: user.id,
           role: userRoles,
-          createAt: user.createdAt,
+          createdAt: user.createdAt,
         },
       };
     },
@@ -110,6 +110,13 @@ export const {
     GitHubProvider({
       clientId: process.env.GITHUB_ID!,
       clientSecret: process.env.GITHUB_SECRET!,
+      profile: (p) =>
+        ({
+          id: p.id.toString(),
+          name: p.login,
+          email: p.email,
+          image: p.avatar_url,
+        }) as User, // TODO: Remove typecast
     }),
   ],
 });

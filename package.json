@@ -52,8 +52,7 @@
     "patchedDependencies": {
       "@monaco-editor/react@4.5.1": "patches/@monaco-editor__react@4.5.1.patch",
       "monaco-vim@0.4.0": "patches/monaco-vim@0.4.0.patch",
-      "@vercel/toolbar@0.1.1": "patches/@vercel__toolbar@0.1.1.patch",
-      "@auth/core@0.0.0-manual.e9863699": "patches/@auth__core@0.0.0-manual.e9863699.patch"
+      "@vercel/toolbar@0.1.1": "patches/@vercel__toolbar@0.1.1.patch"
     }
   }
 }
