@@ -45,6 +45,10 @@ yarn-error.log*
 # turbo
 .turbo
 
+# nitro
+.nitro
+.output
+
 # typescript
 *.tsbuildinfo
 
