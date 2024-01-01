@@ -80,7 +80,7 @@ export const {
         },
         include: { roles: true },
       }) as Promise<AdapterUser>,
-    // Override getUser method to include roles. Avoids a second db query in session callback
+    // Override getSessionAndUser method to include roles. Avoids a second db query in session callback
     getSessionAndUser: async (sessionToken) => {
       const userAndSession = await prisma.session.findUnique({
         where: { sessionToken },
