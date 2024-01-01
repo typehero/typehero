@@ -1,5 +1,5 @@
 {
-  "name": "@acme/auth-proxy",
+  "name": "auth-proxy",
   "private": true,
   "type": "module",
   "scripts": {
