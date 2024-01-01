@@ -11,6 +11,12 @@ export default eventHandler((event) =>
       Github({
         clientId: process.env.GITHUB_ID,
         clientSecret: process.env.GITHUB_SECRET,
+        profile: (p) => ({
+          id: p.id.toString(),
+          name: p.login,
+          email: p.email,
+          image: p.avatar_url,
+        }),
       }),
     ],
   }),
