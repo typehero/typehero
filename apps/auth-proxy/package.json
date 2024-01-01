@@ -22,11 +22,5 @@
     "nitropack": "^2.8.1",
     "prettier": "^3.1.1",
     "typescript": "^5.3.3"
-  },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "@repo/lint/node"
-    ]
   }
 }
