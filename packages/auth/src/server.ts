@@ -69,12 +69,8 @@ export const {
           name: data.name ?? '',
           roles: {
             connectOrCreate: {
-              where: {
-                role: 'USER',
-              },
-              create: {
-                role: 'USER',
-              },
+              where: { role: 'USER' },
+              create: { role: 'USER' },
             },
           },
         },
