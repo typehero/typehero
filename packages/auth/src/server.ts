@@ -1,6 +1,6 @@
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import type { Role, RoleTypes } from '@repo/db/types';
-import type { Adapter } from '@auth/core/adapters';
+import type { Adapter, AdapterUser, AdapterSession } from '@auth/core/adapters';
 import { type DefaultSession, type User } from 'next-auth';
 import GitHubProvider from 'next-auth/providers/github';
 import { prisma } from '@repo/db';
@@ -59,53 +59,50 @@ export const {
       },
     },
   },
-  callbacks: {
-    session: async ({ session, user }) => {
-      let userRoles: RoleTypes[] = [];
-      if (user.roles) {
-        userRoles = user.roles.reduce((acc: RoleTypes[], role) => {
-          acc.push(role.role);
-          return acc;
-        }, []);
-      }
-      if (!userRoles.includes('USER')) {
-        const updatedUser = await prisma.user.update({
-          where: {
-            id: user.id,
-          },
-          data: {
-            roles: {
-              connectOrCreate: {
-                where: {
-                  role: 'USER',
-                },
-                create: {
-                  role: 'USER',
-                },
+  adapter: {
+    ...(PrismaAdapter(prisma) as Adapter),
+    // Override createUser method to add default USER role
+    createUser: (data) =>
+      prisma.user.create({
+        data: {
+          ...data,
+          name: data.name ?? '',
+          roles: {
+            connectOrCreate: {
+              where: {
+                role: 'USER',
+              },
+              create: {
+                role: 'USER',
               },
             },
           },
-          include: {
-            roles: true,
-          },
-        });
-        userRoles = updatedUser.roles.reduce((acc: RoleTypes[], role) => {
-          acc.push(role.role);
-          return acc;
-        }, []);
-      }
+        },
+        include: { roles: true },
+      }) as Promise<AdapterUser>,
+    // Override getUser method to include roles. Avoids a second db query in session callback
+    getSessionAndUser: async (sessionToken) => {
+      const userAndSession = await prisma.session.findUnique({
+        where: { sessionToken },
+        include: { user: { include: { roles: true } } },
+      });
+      if (!userAndSession) return null;
+      const { user, ...session } = userAndSession;
+      return { user, session } as { session: AdapterSession; user: AdapterUser };
+    },
+  },
+  callbacks: {
+    session: async ({ session, user }) => {
       return {
         ...session,
         user: {
           ...session.user,
           id: user.id,
-          role: userRoles,
-          createdAt: user.createdAt,
+          role: user.roles.map((r) => r.role),
         },
       };
     },
   },
-  adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
     GitHubProvider({
       clientId: process.env.GITHUB_ID!,
