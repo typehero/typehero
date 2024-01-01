@@ -28,6 +28,5 @@
     "extends": [
       "@repo/lint/node"
     ]
-  },
-  "prettier": "@acme/prettier-config"
+  }
 }
