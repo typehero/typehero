@@ -2,7 +2,7 @@ import { Auth } from '@auth/core';
 import Github from '@auth/core/providers/github';
 import { eventHandler, toWebRequest } from 'h3';
 
-export default eventHandler(async (event) =>
+export default eventHandler((event) =>
   Auth(toWebRequest(event), {
     secret: process.env.AUTH_SECRET,
     trustHost: !!process.env.VERCEL,
