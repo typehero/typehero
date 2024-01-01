@@ -1,4 +1,4 @@
 {
-  "extends": "@acme/tsconfig/base.json",
+  "extends": "@repo/tsconfig/base.json",
   "include": ["routes"]
 }
