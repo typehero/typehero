@@ -11,8 +11,8 @@ export async function Footsies() {
       <div className="container flex flex-col-reverse justify-between gap-2 md:flex-row md:items-end">
         <span>
           {
-          // @ts-ignore It's work but the typing of lib is not updated
-          t('built', {icon: <Binary className="inline-block h-5 w-5 text-[#31bdc6]" />,})
+            // @ts-ignore It's work but the typing of lib is not updated
+            t('built', { icon: <Binary className="inline-block h-5 w-5 text-[#31bdc6]" /> })
           }
         </span>
         <div className="flex items-center gap-2">
