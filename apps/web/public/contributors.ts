@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 286
+        "contributions": 288
     },
     {
         "login": "Hacksore",
@@ -1703,6 +1703,27 @@ export const contributors = [
         "contributions": 1
     },
     {
+        "login": "juliusmarminge",
+        "id": 51714798,
+        "node_id": "MDQ6VXNlcjUxNzE0Nzk4",
+        "avatar_url": "https://avatars.githubusercontent.com/u/51714798?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/juliusmarminge",
+        "html_url": "https://github.com/juliusmarminge",
+        "followers_url": "https://api.github.com/users/juliusmarminge/followers",
+        "following_url": "https://api.github.com/users/juliusmarminge/following{/other_user}",
+        "gists_url": "https://api.github.com/users/juliusmarminge/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/juliusmarminge/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/juliusmarminge/subscriptions",
+        "organizations_url": "https://api.github.com/users/juliusmarminge/orgs",
+        "repos_url": "https://api.github.com/users/juliusmarminge/repos",
+        "events_url": "https://api.github.com/users/juliusmarminge/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/juliusmarminge/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 1
+    },
+    {
         "login": "kunal00000",
         "id": 92316166,
         "node_id": "U_kgDOBYCiBg",
@@ -1761,6 +1782,27 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/retconned/repos",
         "events_url": "https://api.github.com/users/retconned/events{/privacy}",
         "received_events_url": "https://api.github.com/users/retconned/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 1
+    },
+    {
+        "login": "mdwiltfong",
+        "id": 76107997,
+        "node_id": "MDQ6VXNlcjc2MTA3OTk3",
+        "avatar_url": "https://avatars.githubusercontent.com/u/76107997?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/mdwiltfong",
+        "html_url": "https://github.com/mdwiltfong",
+        "followers_url": "https://api.github.com/users/mdwiltfong/followers",
+        "following_url": "https://api.github.com/users/mdwiltfong/following{/other_user}",
+        "gists_url": "https://api.github.com/users/mdwiltfong/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/mdwiltfong/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/mdwiltfong/subscriptions",
+        "organizations_url": "https://api.github.com/users/mdwiltfong/orgs",
+        "repos_url": "https://api.github.com/users/mdwiltfong/repos",
+        "events_url": "https://api.github.com/users/mdwiltfong/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/mdwiltfong/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 1
