@@ -62,7 +62,7 @@ The _return type_ for this function is _also_ a literal type union. Notice that 
 
 If you're thinking to yourself:
 
-> Why are type literals even necessary?  Lots of languages don't have anything like this and they seem to get along just fine with primitive types like `string` and `number` and `boolean`.
+> Why are type literals even necessary? Lots of languages don't have anything like this and they seem to get along just fine with primitive types like `string` and `number` and `boolean`.
 
 The TLDR; is: once you pair type unions with literals, you can start _discriminating_ inputs based on one particular literal instance of a type versus another, TypeScript suddenly becomes capable of doing some pretty amazing static analysis on your code that you could never do if all you had were primitive types. If that's unpalatable to you, there's always COBOL. Try that out instead maybe?
 

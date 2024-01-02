@@ -14,6 +14,7 @@
     "start": "dotenv -e ../../.env next start",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui --ui-port=8080",
+    "test:e2e:inspector": "playwright test $1 --debug",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

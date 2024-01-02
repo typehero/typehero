@@ -60,6 +60,14 @@ export function SubmissionOverview({ submissionId }: Props) {
     });
   };
 
+  const tweet = isAotChallenge
+    ? `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+        `I've completed ${submission?.challenge.name} - Advent of TypeScript 2023`,
+      )}&url=https://typehero.dev/challenge/${slug}&hashtags=AdventOfTypescript`
+    : `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+        `I've completed ${submission?.challenge.name} on TypeHero!`,
+      )}&url=https://typehero.dev/challenge/${slug}`;
+
   if (!submission) return null;
 
   return (
@@ -118,33 +126,24 @@ export function SubmissionOverview({ submissionId }: Props) {
             <Share className="h-4 w-4" />
             Share Code on Playground
           </Button>
+          <Button
+            asChild
+            className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
+            variant="outline"
+          >
+            <a target="_blank" rel="noreferrer" className="gap-1 md:inline-flex" href={tweet}>
+              <Twitter className="h-4 w-4" />
+              Share on Twitter
+            </a>
+          </Button>
           {isAotChallenge ? (
-            <>
-              <Button
-                asChild
-                className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
-                variant="outline"
-              >
-                <a
-                  target="_blank"
-                  rel="noreferrer"
-                  className="gap-1 md:inline-flex"
-                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                    `I've completed ${submission.challenge.name} - Advent of TypeScript 2023`,
-                  )}&url=https://typehero.dev/challenge/${slug}&hashtags=AdventOfTypescript`}
-                >
-                  <Twitter className="h-4 w-4" />
-                  Share on Twitter
-                </a>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                className="fancy-border-gradient relative border-none"
-              >
-                <Link href="/aot-2023">Back to Advent of TypeScript</Link>
-              </Button>
-            </>
+            <Button
+              asChild
+              variant="outline"
+              className="fancy-border-gradient relative border-none"
+            >
+              <Link href="/aot-2023">Back to Advent of TypeScript</Link>
+            </Button>
           ) : null}
         </div>
       </div>
