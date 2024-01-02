@@ -184,6 +184,12 @@ In the event you need to troubleshoot the end-to-end tests, you can run Playwrig
 
 In addition you can use [Playwright Inspector](https://playwright.dev/docs/debug#playwright-inspector) to debug tests, which is a debugger that Playwright maintains. It automatically stops at each test suite, as well as each test case within them. As a result, you can debug a specific test suite by running `pnpm test:e2e:inspector -- {testName}`
 
+### Troubleshooting A11y
+
+In the event the end-to-end tests find an A11y violation, the playwright report will contain more information. Such as the description of the violation, a link to Deque University that will explain the violation as well as some ways to fix it, and finally the HTML that is causing the violation.
+
+You can access the playwright report by first running `pnpm test:e2e`. After it has completed, you can run `pnpm exec playwright show-report` to see the HTML report, or simply open the `index.html` file under `apps/web/playwright-report`.
+
 ## FAQ
 
 <details>
