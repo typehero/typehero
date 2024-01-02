@@ -1,4 +1,4 @@
-import axe from '@axe-core/playwright/node_modules/axe-core/axe';
+import type axe from '@axe-core/playwright/node_modules/axe-core/axe';
 
 function A11yLogger(violations: typeof axe.AxeResults.violations): void {
   violations.forEach((violation) => {
