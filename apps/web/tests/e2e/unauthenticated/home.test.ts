@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { A11YTAGS } from '../constant';
+import A11yLogger from 'playwright/utils/a11yLogger';
 
 test.use({ storageState: 'playwright/.auth/unauthenticated.json' });
 
@@ -36,7 +37,12 @@ test.describe('homepage a11y', () => {
     // TODO: fix this type error
     // @ts-expect-error
     const a11yScanResults = await new AxeBuilder({ page }).withTags(A11YTAGS).analyze();
-
+    page.locator('data');
+    await test.step('log a11y violations', () => {
+      if (a11yScanResults.violations.length > 0) {
+        console.table(A11yLogger(a11yScanResults.violations));
+      }
+    });
     expect(a11yScanResults.violations).toEqual([]);
   });
 });
