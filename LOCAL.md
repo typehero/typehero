@@ -80,7 +80,16 @@ NEXTAUTH_SECRET="for local use you can just use a garble of letters"
 NEXTAUTH_URL="http://localhost:3000"
 ```
 
-### 5. Install dependencies
+### 5. Setup algolia for search
+
+Go to [algolia.com](https://www.algolia.com/apps/) and create a project, then copy in the secrets into your `.env`.
+
+```
+NEXT_PUBLIC_ALGOLIA_APP_ID=APP_ID
+NEXT_PUBLIC_ALGOLIA_API_KEY=API_KEY
+```
+
+### 6. Install dependencies
 
 Use `pnpm` to install dependencies.
 
@@ -88,14 +97,14 @@ Use `pnpm` to install dependencies.
 pnpm install
 ```
 
-### 6. Push Database Schema and Seed
+### 7. Push Database Schema and Seed
 
 ```
 pnpm db:push
 pnpm db:seed
 ```
 
-### 7. Running the dev server
+### 8. Running the dev server
 
 Finally, you can run the dev server:
 
@@ -168,6 +177,12 @@ Terminal 2:
 ```
 pnpm test:e2e
 ```
+
+### Running Tests in UI Mode
+
+In the event you need to troubleshoot the end-to-end tests, you can run Playwright in [UI mode](https://playwright.dev/docs/test-ui-mode). You can do this by running `pnpm test:e2e:ui`. This will spin up a playwright server on localhost:8080, which will provide a playwright app that you can use to view a series of snapshots.
+
+In addition you can use [Playwright Inspector](https://playwright.dev/docs/debug#playwright-inspector) to debug tests, which is a debugger that Playwright maintains. It automatically stops at each test suite, as well as each test case within them. As a result, you can debug a specific test suite by running `pnpm test:e2e:inspector -- {testName}`
 
 ## FAQ
 

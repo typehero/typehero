@@ -26,6 +26,8 @@
     "refresh": "turbo db:reset db:seed --concurrency=1",
     "test:e2e": "turbo test:e2e",
     "test:e2e:install": "playwright install",
+    "test:e2e:ui": "turbo test:e2e:ui",
+    "test:e2e:inspector": "turbo test:e2e:inspector",
     "tunnel": "cloudflared tunnel --url http://localhost:3000",
     "typecheck": "turbo typecheck --continue"
   },
@@ -34,12 +36,12 @@
     "cspell": "^7.3.8",
     "markdownlint-cli2": "^0.10.0",
     "picocolors": "^1.0.0",
-    "prettier": "^3.0.2",
-    "prettier-plugin-tailwindcss": "^0.4.1",
+    "prettier": "^3.1.1",
+    "prettier-plugin-tailwindcss": "^0.5.9",
     "tsx": "^3.14.0",
     "turbo": "^1.10.16",
     "type-testing": "0.2.0",
-    "typescript": "^5.1.6",
+    "typescript": "^5.3.3",
     "vitest": "^0.34.6"
   },
   "packageManager": "pnpm@8.6.9",
@@ -52,8 +54,7 @@
     "patchedDependencies": {
       "@monaco-editor/react@4.5.1": "patches/@monaco-editor__react@4.5.1.patch",
       "monaco-vim@0.4.0": "patches/monaco-vim@0.4.0.patch",
-      "@vercel/toolbar@0.1.1": "patches/@vercel__toolbar@0.1.1.patch",
-      "@auth/core@0.0.0-manual.e9863699": "patches/@auth__core@0.0.0-manual.e9863699.patch"
+      "@vercel/toolbar@0.1.1": "patches/@vercel__toolbar@0.1.1.patch"
     }
   }
 }

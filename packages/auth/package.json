@@ -28,9 +28,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@next-auth/prisma-adapter": "^1.0.7",
+    "@auth/prisma-adapter": "^1.0.12",
     "@repo/db": "workspace:*",
-    "next-auth": "5.0.0-beta.3"
+    "next-auth": "5.0.0-beta.4"
   },
   "devDependencies": {
     "@repo/lint": "workspace:*",
@@ -39,6 +39,6 @@
     "eslint": "^8.45.0",
     "prisma": "^5.0.0",
     "tsup": "5.12.0",
-    "typescript": "^5.1.6"
+    "typescript": "^5.3.3"
   }
 }

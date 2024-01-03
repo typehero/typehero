@@ -1,8 +1,6 @@
 ## The Problem Literal Types Solve
 
-JavaScript, like most programming languages has a concept of [primitive data types](https://typehero.dev/challenge/primitive-data-types). Primitive data types are things like `string`, `boolean`, `number`, and `object`.
-
-> side note: in JavaScript, arrays and functions are actually objects, but that's a topic for another time :)
+JavaScript, like most programming languages has a concept of [primitive data types](https://typehero.dev/challenge/primitive-data-types). Primitive data types are things like `string`, `number` and `boolean`.
 
 But TypeScript isn't _like_ most programming languages. It's better. It takes things to the next level by introducing _literal_ data types.
 
@@ -64,7 +62,7 @@ The _return type_ for this function is _also_ a literal type union. Notice that 
 
 If you're thinking to yourself:
 
-> Why are type literals even necessary?  Lots of languages don't have anything like this and they seem to get along just fine with primitive types like `string` and `number` and `boolean`.
+> Why are type literals even necessary? Lots of languages don't have anything like this and they seem to get along just fine with primitive types like `string` and `number` and `boolean`.
 
 The TLDR; is: once you pair type unions with literals, you can start _discriminating_ inputs based on one particular literal instance of a type versus another, TypeScript suddenly becomes capable of doing some pretty amazing static analysis on your code that you could never do if all you had were primitive types. If that's unpalatable to you, there's always COBOL. Try that out instead maybe?
 

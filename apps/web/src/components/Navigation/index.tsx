@@ -1,3 +1,5 @@
+import { auth, type Session } from '@repo/auth/server';
+import { Badge } from '@repo/ui/components/badge';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,17 +9,17 @@ import {
 } from '@repo/ui/components/dropdown-menu';
 import { Play, Settings, Settings2, User } from '@repo/ui/icons';
 import Link from 'next/link';
+import { Suspense } from 'react';
+import { getScopedI18n } from '~/locales/server';
 import { isAdminOrModerator } from '~/utils/auth-guards';
 import { getAllFlags } from '~/utils/feature-flags';
-import { auth } from '@repo/auth/server';
-import { ThemeButton } from './theme-button';
-import { NavWrapper } from './nav-wrapper';
+import { Search } from '../search/search';
 import { LoginLink } from './login-link';
-import { SignOutLink } from './signout-link';
-import { getScopedI18n } from '~/locales/server';
 import { MobileNav } from './mobile-nav';
 import { NavLink } from './nav-link';
-import { Badge } from '@repo/ui/components/badge';
+import { NavWrapper } from './nav-wrapper';
+import { SignOutLink } from './signout-link';
+import { SkipToCodeEditor } from './skip-to-code-editor';
 
 export function getAdminUrl() {
   // reference for vercel.com
@@ -30,10 +32,13 @@ export function getAdminUrl() {
 }
 
 export async function Navigation() {
+  const session = await auth();
+
+  const isAdminOrMod = isAdminOrModerator(session);
   const t = await getScopedI18n('navigation');
   const featureFlags = await getAllFlags();
 
-  const NavLinks = () => (
+  const TopSectionLinks = (
     <>
       {featureFlags?.enableExplore ? <NavLink title={t('explore')} href="/explore" /> : null}
       {featureFlags?.enableTracks ? <NavLink title={t('tracks')} href="/tracks" /> : null}
@@ -48,11 +53,35 @@ export async function Navigation() {
     </>
   );
 
+  const NavLinks = (
+    <>
+      <div className="ml-4 hidden items-center gap-4 md:flex">{TopSectionLinks}</div>
+      <div className="flex flex-col gap-5 pl-4 md:hidden">
+        {TopSectionLinks}
+        {session?.user ? (
+          <>
+            <hr />
+            <NavLink title="Profile" href={`/@${session.user.name}`} />
+            <NavLink title="Settings" href="/settings" />
+            {isAdminOrMod ? <NavLink title="Admin" href={getAdminUrl()} /> : null}
+            {isAdminOrMod ? (
+              <NavLink title="Challenge Playground" href="/challenge-playground" />
+            ) : null}
+            <SignOutLink className="px-0" />
+          </>
+        ) : (
+          <LoginLink className="px-0 hover:bg-transparent hover:dark:bg-transparent" />
+        )}
+      </div>
+    </>
+  );
+
   return (
-    <header className="z-50 w-full">
+    <header className="w-full">
       <NavWrapper>
         <div className="flex w-full items-center justify-between">
           <div className="relative flex items-center gap-3">
+            <SkipToCodeEditor />
             <Link className="flex space-x-1.5 focus:outline-none focus-visible:ring-2" href="/">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -79,18 +108,18 @@ export async function Navigation() {
                 hero <span className="text-muted-foreground bg-muted px-1 text-xs">BETA</span>
               </div>
             </Link>
-            <div className="hidden items-center md:flex">
-              <NavLinks />
-            </div>
+            <div className="hidden items-center md:ml-4 md:flex md:gap-4">{NavLinks}</div>
           </div>
 
           <div className="flex">
             <div className="flex items-center justify-end gap-2">
-              <ThemeButton />
-              {featureFlags?.enableLogin ? <LoginButton /> : null}
-              <MobileNav>
-                <NavLinks />
-              </MobileNav>
+              <Suspense>
+                <Search />
+              </Suspense>
+              {featureFlags?.enableLogin ? (
+                <LoginButton isAdminOrMod={isAdminOrMod} session={session} />
+              ) : null}
+              <MobileNav>{NavLinks}</MobileNav>
             </div>
           </div>
         </div>
@@ -99,17 +128,19 @@ export async function Navigation() {
   );
 }
 
-async function LoginButton() {
-  const session = await auth();
-
-  const isAdminOrMod = isAdminOrModerator(session);
-
-  return session ? (
+async function LoginButton({
+  isAdminOrMod,
+  session,
+}: {
+  isAdminOrMod: boolean;
+  session: Session | null;
+}) {
+  return session?.user ? (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button
           aria-label="profile button"
-          className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none focus-visible:ring-2"
+          className="focus:bg-accent hidden rounded-lg p-2 duration-300 focus:outline-none focus-visible:ring-2 md:block"
         >
           <User className="h-5 w-5" />
         </button>
@@ -148,10 +179,12 @@ async function LoginButton() {
         ) : null}
         <DropdownMenuSeparator />
 
-        <SignOutLink />
+        <SignOutLink className="w-full rounded-b-lg rounded-t-sm" />
       </DropdownMenuContent>
     </DropdownMenu>
   ) : (
-    <LoginLink />
+    <span className="hidden md:flex">
+      <LoginLink />
+    </span>
   );
 }

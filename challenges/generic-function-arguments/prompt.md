@@ -36,7 +36,7 @@ const createRow = (
 Similarly to how we used the `<` and `>` for our `Row` interface, we place the `<` and `>` right before the parenthesis that start our function's arguments.
 
 ```ts
-const createRow = <T,>(label: string, value: T, disabled = false) => ({
+const createRow = <T>(label: string, value: T, disabled = false) => ({
   //...
 });
 ```

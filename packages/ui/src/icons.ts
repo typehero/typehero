@@ -10,6 +10,7 @@ export {
   Brush,
   Calendar,
   Check,
+  CheckCheck,
   CheckCircle,
   CheckCircle2,
   ChevronDown,
@@ -72,4 +73,5 @@ export {
   History,
   ArrowLeft,
   RectangleVertical,
+  SearchIcon,
 } from 'lucide-react';

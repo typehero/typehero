@@ -123,7 +123,9 @@ export function AddTrackForm({ toggle }: Props) {
           )}
         />
         <DialogFooter className="py-3">
-          <Button type="submit">Save</Button>
+          <Button type="submit" disabled={form.formState.isSubmitting}>
+            Save
+          </Button>
         </DialogFooter>
       </form>
     </Form>

@@ -59,7 +59,7 @@
     "monaco-vim": "^0.4.0",
     "next": "14.0.1",
     "next-themes": "^0.2.1",
-    "prettier": "^3.0.2",
+    "prettier": "^3.1.1",
     "react": "^18.2.0",
     "react-hook-form": "^7.45.1",
     "zustand": "^4.3.9"
@@ -68,6 +68,6 @@
     "@repo/lint": "workspace:*",
     "@repo/tsconfig": "workspace:*",
     "eslint": "^8.45.0",
-    "typescript": "^5.1.6"
+    "typescript": "^5.3.3"
   }
 }

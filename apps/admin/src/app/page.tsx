@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 
 async function Admin() {
   const session = await auth();
-  const roles = session?.user.role ?? [];
+  const roles = session?.user?.role ?? [];
 
   const isMod = roles.includes(RoleTypes.MODERATOR);
   const isAdmin = roles.includes(RoleTypes.ADMIN);

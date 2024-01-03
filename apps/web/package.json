@@ -13,10 +13,12 @@
     "lint:fix": "eslint . --fix --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
     "start": "dotenv -e ../../.env next start",
     "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:ui": "playwright test --ui --ui-port=8080",
+    "test:e2e:inspector": "playwright test $1 --debug",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@axe-core/playwright": "^4.8.2",
     "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^3.1.1",
     "@mailchimp/mailchimp_marketing": "^3.0.80",
@@ -42,6 +44,7 @@
     "@vercel/analytics": "^1.1.1",
     "@vercel/edge-config": "^0.2.1",
     "@vercel/toolbar": "^0.1.1",
+    "algoliasearch": "^4.20.0",
     "bad-words": "^3.0.4",
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
@@ -60,6 +63,8 @@
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.45.1",
+    "react-instantsearch": "^7.3.0",
+    "react-instantsearch-nextjs": "^0.1.5",
     "react-intersection-observer": "^9.5.2",
     "react-markdown": "^8.0.7",
     "react-select": "^5.7.4",
@@ -92,10 +97,10 @@
     "eslint-config-next": "^13.4.10",
     "eslint-plugin-import": "^2.27.5",
     "postcss": "^8.4.26",
-    "prettier": "^3.0.2",
-    "prettier-plugin-tailwindcss": "^0.4.1",
+    "prettier": "^3.1.1",
+    "prettier-plugin-tailwindcss": "^0.5.9",
     "raw-loader": "^4.0.2",
     "tailwindcss": "^3.3.3",
-    "typescript": "^5.1.6"
+    "typescript": "^5.3.3"
   }
 }

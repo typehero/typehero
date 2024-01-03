@@ -1,8 +1,6 @@
-'use client';
-
 import { Button } from '@repo/ui/components/button';
 import { ChevronRight } from '@repo/ui/icons';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export const BUTTON_BY_TAGS = {
   POPULAR:
@@ -28,18 +26,17 @@ interface ViewMoreButtonProps {
 }
 
 export function ViewMoreButton({ redirectRoute, tag }: ViewMoreButtonProps) {
-  const router = useRouter();
   return (
     <Button
+      asChild
       className={`group items-center whitespace-nowrap rounded-full py-2 pl-4 pr-3 backdrop-blur-sm
   ${BUTTON_BY_TAGS[tag]}`}
-      onClick={() => {
-        router.push(redirectRoute);
-      }}
       variant="ghost"
     >
-      view more
-      <ChevronRight className="ml-2 h-4 w-4 stroke-[3] duration-300 group-hover:translate-x-1" />
+      <Link href={redirectRoute}>
+        view more
+        <ChevronRight className="ml-2 h-4 w-4 stroke-[3] duration-300 group-hover:translate-x-1" />
+      </Link>
     </Button>
   );
 }

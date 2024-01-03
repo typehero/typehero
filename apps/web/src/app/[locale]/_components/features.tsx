@@ -22,8 +22,10 @@ import {
   ChallengeCreationCard,
   CuratedTracksCard,
 } from './feature-card';
+import { getScopedI18n } from '~/locales/server';
 
-export function Features() {
+export async function Features() {
+  const t = await getScopedI18n('landing.features');
   return (
     <section className="relative overflow-hidden" id="features">
       <div className="mx-auto mb-[64px] grid max-w-[1400px] items-center justify-center px-4 sm:px-24 md:px-4 lg:px-24">
@@ -42,7 +44,7 @@ export function Features() {
                   >
                     <path d="m19.2 36.4-4.75-10.45L4 21.2l10.45-4.75L19.2 6l4.75 10.45L34.4 21.2l-10.45 4.75ZM36.4 42l-2.35-5.25-5.25-2.35 5.25-2.4 2.35-5.2 2.4 5.2 5.2 2.4-5.2 2.35Z" />
                   </svg>
-                  many features, wow{' '}
+                  {t('badge')}{' '}
                   <Image
                     className="absolute -bottom-1 right-1 translate-y-7 duration-300 group-hover:translate-y-0"
                     alt="doge smile"
@@ -54,10 +56,10 @@ export function Features() {
               </div>
             </a>
             <h1 className="text-4xl font-bold">
-              <Balancer>What&apos;s in TypeHero?</Balancer>
+              <Balancer>{t('title')}</Balancer>
             </h1>
-            <p className="text-black/50 dark:text-white/50">
-              <Balancer>All you need to become a TypeScript menace</Balancer>
+            <p className="text-black/60 dark:text-white/50">
+              <Balancer>{t('description')}</Balancer>
             </p>
           </div>
           <div className="relative z-10 grid w-full gap-4 md:grid-cols-2 lg:gap-8 [&>*:nth-child(3)]:hidden md:[&>*:nth-child(3)]:block">
@@ -72,7 +74,7 @@ export function Features() {
                 'scale-[190%] sm:scale-[120%] md:scale-100 rounded-2xl max-md:rounded-md left-[50%] sm:top-[49%] top-[69%] md:top-auto w-[50%] sm:left-[39%] md:-bottom-[2%] xl:-bottom-[12%] md:w-[77%]',
                 'md:group-hover:scale-105 md:group-hover:-translate-x-2',
               )}
-              description="Engage in TypeScript challenges to strengthen your grasp of the type system and advanced features"
+              description={t('imageCard.description')}
               bgClass="md:bg-gradient-to-br"
               image={{
                 dark1: FeatureCardChallengeDark2,
@@ -81,12 +83,12 @@ export function Features() {
                 light2: FeatureCardChallengeLight1,
                 alt: 'Something',
               }}
-              title="Type Challenges"
+              title={t('imageCard.title')}
             />
             <CollaborativeEnvironmentCard
-              description="Developers can share solutions and engage in discussions through commenting"
+              description={t('collaborativeEnvironment.description')}
               bgClass="md:bg-gradient-to-bl"
-              title="Collaborative Environment"
+              title={t('collaborativeEnvironment.title')}
             />
             <ChallengeCreationCard
               step1img1Class={clsx(
@@ -131,9 +133,9 @@ export function Features() {
               title="Challenge Creation"
             />
             <CuratedTracksCard
-              description="Tracks are curated challenges, spanning various topics and difficulty levels, to advance your TypeScript skills."
+              description={t('curatedTracks.description')}
               bgClass="md:bg-gradient-to-tl"
-              title="Learning Tracks"
+              title={t('curatedTracks.title')}
             />
           </div>
         </div>

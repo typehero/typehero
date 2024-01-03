@@ -12,7 +12,7 @@ export default async function NotFound() {
 
   return (
     <>
-      <div className="relative -mt-[56px] flex h-screen flex-col items-center justify-center gap-8 overflow-hidden">
+      <div className="pointer-events-none relative -mt-[56px] flex h-screen flex-col items-center justify-center gap-8 overflow-hidden [&>*]:pointer-events-auto">
         <Image
           className="animate-amogfly absolute left-0 -z-10 mx-auto opacity-80"
           alt="Early Access"
@@ -44,7 +44,7 @@ export default async function NotFound() {
           <div className="flex flex-col gap-4">
             <a href="/explore">
               <Button className="w-56" variant="default" size="lg">
-                Go to explore
+                {t('explore')}
               </Button>
             </a>
             <a href={`/challenge/${randomChallengeSlug}`}>
@@ -53,7 +53,7 @@ export default async function NotFound() {
                 size="lg"
                 className="fancy-border-gradient bg-background relative mx-auto flex w-56 gap-4 border-none"
               >
-                I'm feeling lucky
+                {t('luck')}
               </Button>
             </a>
           </div>
@@ -61,7 +61,7 @@ export default async function NotFound() {
           <div>
             <a href="/">
               <Button variant="default" size="lg">
-                Go to home
+                {t('home')}
               </Button>
             </a>
           </div>

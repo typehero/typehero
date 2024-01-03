@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 const DateCard = ({ date, label }: { date: React.ReactNode; label: string }) => {
@@ -15,7 +15,7 @@ const DateCard = ({ date, label }: { date: React.ReactNode; label: string }) => 
 };
 
 export const CountdownTimer = () => {
-  const router = useRouter();
+  const december25th2023 = new Date(Date.UTC(2023, 11, 25));
   const [releaseDate, setReleaseDate] = useState(() => {
     return calculateNextReleaseTime();
   });
@@ -31,9 +31,10 @@ export const CountdownTimer = () => {
 
       if (newRemainingTime === 0) {
         const nextReleaseDateTime = calculateNextReleaseTime();
+        if (nextReleaseDateTime.getUTCDate() > 25) return;
+
         setRemainingTime(nextReleaseDateTime.getTime() - Date.now());
         setReleaseDate(nextReleaseDateTime);
-        router.refresh();
       }
     };
 
@@ -42,12 +43,20 @@ export const CountdownTimer = () => {
     return () => {
       clearInterval(timerId);
     };
-  }, [remainingTime, releaseDate, router]);
+  }, [remainingTime, releaseDate]);
 
   const { days, hours, minutes, seconds } = calculateTimeComponents(remainingTime);
 
-  if (remainingTime === 0) return null;
-
+  if (remainingTime === 0 || releaseDate > december25th2023) {
+    return (
+      <>
+        <p className="text-center text-xl font-semibold">Thats a wrap! See you next year!</p>
+        <p className="text-center text-xl font-semibold">
+          <Image src="/aot/santa_dead.png" width={200} height={200} alt="" className="" />
+        </p>
+      </>
+    );
+  }
   return (
     <>
       <p className="text-center text-xl font-semibold">

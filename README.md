@@ -21,7 +21,7 @@ the intricacies of TypeScript's typing system.
 
 ### ✨ Want to contribute?
 
-Please see the [`LOCAL.md`](/LOCAL.md) on how to get setup. Consider joining the [discord](https://discord.gg/trashdev) if you have any ideas/feedback. We'd love to hear from you!
+Please see the [`LOCAL.md`](/LOCAL.md) on how to get set up. Consider joining the [discord](https://discord.gg/trashdev) if you have any ideas/feedback. We'd love to hear from you!
 
 ### 💖 Sponsors
 
@@ -67,5 +67,14 @@ If you find our project interesting and want to support us please consider spons
         <img src="./media/kinde.jpg" alt="Kinde Logo" title="Kinde" width="70">
       </a>
     </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://www.surgehq.ai/?utm_campaign=oss&utm_source=typehero" target="_parent">
+        <img src="./media/surge.svg" alt="Powered by Planetscale" title="Powered by Planetscale" width="150">
+      </a>
+    </td>
+    <td></td>
+    <td></td>
   </tr>
 </table>
