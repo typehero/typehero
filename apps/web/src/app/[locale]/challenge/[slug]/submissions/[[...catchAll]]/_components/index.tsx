@@ -29,7 +29,7 @@ export function Submissions({ submissions }: Props) {
   return (
     <div className="relative h-full">
       {submissions.length !== 0 ? (
-        <div className="bg-background/70 dark:bg-muted/70 absolute right-0 top-0 z-10 flex w-full gap-2 border-b border-zinc-300 p-2 px-4 backdrop-blur-sm dark:border-zinc-700">
+        <div className="bg-background/70 dark:bg-muted/70 absolute right-0 top-0 flex w-full gap-2 border-b border-zinc-300 p-2 px-4 backdrop-blur-sm dark:border-zinc-700">
           <div
             className={`flex cursor-pointer gap-2 rounded-lg px-4 py-1 duration-300  ${
               selectedStatus === 'all'
