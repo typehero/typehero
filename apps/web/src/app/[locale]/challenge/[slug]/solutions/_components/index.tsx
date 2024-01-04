@@ -18,6 +18,7 @@ import { SolutionsSkeleton } from './solution-skeleton';
 import { SortSelect } from '../../../_components/sort-select';
 import { useGetQueryString } from './useGetQueryString';
 import { useQueryParamState } from './useQueryParamState';
+import { useLocalStorage } from '~/utils/useLocalStorage';
 
 interface Props {
   slug: string;
@@ -49,7 +50,10 @@ type View = 'details' | 'editor' | 'list';
 export function Solutions({ slug }: Props) {
   const [view, setView] = useState<View>('list');
   const commentContainerRef = useRef<HTMLDivElement>(null);
-  const [sortKey, setSortKey] = useState<(typeof SORT_KEYS)[number]>(SORT_KEYS[0]);
+  const [storageKey, setStorageKey] = useLocalStorage('sortKey', 'newest');
+  const [sortKey, setSortKey] = useState<(typeof SORT_KEYS)[number]>(
+    SORT_KEYS.find((sk) => sk.value === storageKey) ?? SORT_KEYS[0],
+  );
   const [page, setPage] = useQueryParamState<number>('page', 1);
   const queryKey = ['challenge-solutions', slug, page, sortKey.key, sortKey.order];
   const session = useSession();
@@ -64,6 +68,7 @@ export function Solutions({ slug }: Props) {
 
   const handleValueChange = (value: string) => {
     setSortKey(SORT_KEYS.find((sk) => sk.value === value) ?? SORT_KEYS[0]);
+    setStorageKey(value);
     setPage(1);
   };
 
