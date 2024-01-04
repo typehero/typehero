@@ -39,5 +39,6 @@ module.exports = {
   rules: {
     ...rules,
     'unused-imports/no-unused-imports': 'error',
+    'eslint-comments/disable-enable-pair': 'off'
   },
 };
