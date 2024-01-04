@@ -3,6 +3,7 @@ import { readdir, readFile, rm } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { simpleGit } from 'simple-git';
 import { parse } from 'yaml';
+import type { CompilerOptions } from 'typescript';
 
 const slugify = (str: string) => str.toLowerCase().replace(/\s/g, '-').replace(/\./g, '-');
 export interface InfoFile {
@@ -14,15 +15,10 @@ export interface InfoFile {
   };
   tags: string;
   difficulty: 'easy' | 'extreme' | 'hard' | 'medium' | 'warm';
+  tsconfig?: CompilerOptions;
 }
 
 const redundantChallenges = ['pick', 'flatten'];
-
-const tsconfigOverrides: Record<string, object> = {
-  'assert-array-index': {
-    noUncheckedIndexedAccess: true,
-  },
-};
 
 const creditLine = (author: string) =>
   `\n\n\nThis challenge was ported from [Type Challenges](https://tsch.js.org/) and was authored by [${author}](https://www.github.com/${author})`;
@@ -45,7 +41,7 @@ export async function loadChallengesFromTypeChallenge(isProd = false) {
   for (const dir of folders) {
     const infoFile = resolve('./tmp/type-challenges/questions', dir.name, 'info.yml');
     const contents = await readFile(infoFile).then((r) => r.toString());
-    const { title, difficulty, author } = parse(contents) as InfoFile;
+    const { title, difficulty, author, tsconfig } = parse(contents) as InfoFile;
 
     const README = await readFile(resolve(QUESTIONS_PATH, dir.name, 'README.md')).then((r) =>
       r.toString().replace(/<!--info-(header|footer)-start-->.*?<!--info-\1-end-->/g, ''),
@@ -82,7 +78,7 @@ export async function loadChallengesFromTypeChallenge(isProd = false) {
         tests: testData,
         difficulty: difficulty === 'warm' ? 'BEGINNER' : (difficulty.toUpperCase() as Difficulty),
         shortDescription: README.slice(0, 100),
-        ...(slug in tsconfigOverrides && { tsconfig: tsconfigOverrides[slug] }),
+        ...(tsconfig != null && { tsconfig: tsconfig as Prisma.InputJsonValue }),
       });
     }
   }
