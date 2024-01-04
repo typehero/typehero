@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useIsMobile } from '~/utils/useIsMobile';
 import { HeroChallengeCard } from './hero-challenge-card';
+import { useScopedI18n } from '~/locales/client';
 
 export function BackgroundGrid() {
   return (
@@ -20,6 +21,7 @@ export function BackgroundGrid() {
 
 export function HeroIllustration() {
   const isMobile = useIsMobile();
+  const t = useScopedI18n('landing.hero');
 
   if (isMobile) {
     return null;
@@ -50,8 +52,8 @@ export function HeroIllustration() {
           username="bigmang"
           className="absolute"
           difficulty="EASY"
-          prompt="Implement a union type of number and string"
-          title="Implement a union type of number and string"
+          prompt={t('challenge1.prompt')}
+          title={t('challenge1.title')}
         />
       </motion.div>
       <motion.div
@@ -74,8 +76,8 @@ export function HeroIllustration() {
           username="matt"
           className="absolute"
           difficulty="HARD"
-          prompt="Convert a string literal to a number"
-          title="String to Number"
+          prompt={t('challenge2.prompt')}
+          title={t('challenge2.title')}
         />
       </motion.div>
     </div>
