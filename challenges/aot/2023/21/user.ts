@@ -1,3 +1,4 @@
+// prettier-ignore
 type TicTacToeChip = '❌' | '⭕';
 type TicTacToeEndState = '❌ Won' | '⭕ Won' | 'Draw';
 type TicTacToeState = TicTacToeChip | TicTacToeEndState;
