@@ -97,6 +97,10 @@
   }
 }
 
+::-webkit-scrollbar {
+  width: 0px;
+}
+
 html,
 body,
 #__next,
