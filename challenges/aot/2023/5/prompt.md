@@ -7,16 +7,20 @@ It's been a tough year for Santa's workshop. The elves are a little behind sched
 Normally the elves get lists like this
 
 ```ts
-const badList = ["Tommy", "Trash", "Queen Blattaria", /* ... many more ... */];
-const goodList = ["Jon", "David", "Captain Spectacular", /* ... many more ... */];
+const badList = ['Tommy', 'Trash', 'Queen Blattaria' /* ... many more ... */];
+const goodList = ['Jon', 'David', 'Captain Spectacular' /* ... many more ... */];
 ```
 
 And they copy-pasta all the values into a TypeScript type to provide to Santa like this
 
 ```ts
 type SantasList = [
-  "Tommy", "Trash", "Queen Blattaria", /* ... many more ... */
-  "Jon", "David", "Captain Spectacular", /* ... many more ... */
+  'Tommy',
+  'Trash',
+  'Queen Blattaria' /* ... many more ... */,
+  'Jon',
+  'David',
+  'Captain Spectacular' /* ... many more ... */,
 ];
 ```
 

@@ -9,6 +9,7 @@ Before arranging themselves in this configuration, the reindeer left Santa a for
 Oh.. and what's that... also Vixen seems to have left a separate note
 
 > _make sure `Validate` is a predicate_
+>
 > - _Vixen_
 
 Well that's sorta condescending. Vixen seems to be assuming we already know that a "predicate" is just a fancy computer science term for a function that returns `true` or `false`. Oh well. That's Vixen for you.

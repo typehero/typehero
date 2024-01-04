@@ -20,6 +20,6 @@ _\[transcript of a slack conversation at 11:23pm between Santa and Chipper (one 
 
 As you can see, sometimes leadership like Santa manage to convince themselves they have fantastic product vision, you'll get little more than basic inputs and outputs, and you'll have to figure out the behavior from there. Don't be flustered. Take a look at the tests and try to figure out what the behavior is supposed to be.
 
-Start by identifying the inputs for our `AppendGood` type.  Ask yourself if there should be any generic type constraints on the inputs (there may not need to be, or at least right away).
+Start by identifying the inputs for our `AppendGood` type. Ask yourself if there should be any generic type constraints on the inputs (there may not need to be, or at least right away).
 
 Then try to set up a scaffold that will at least return the same values for each property. Your next step is to transform the properties somehow..

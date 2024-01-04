@@ -5,9 +5,9 @@ Your goal for this challenge is to take an input like `Hi` and turn it into ASCI
 So for example `Hi` would turn into:
 
 ```
-█ █ █ 
-█▀█ █ 
-▀ ▀ █ 
+█ █ █
+█▀█ █
+▀ ▀ █
 ```
 
 ### _but there's a twist!_

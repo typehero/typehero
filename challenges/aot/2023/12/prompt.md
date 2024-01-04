@@ -1,4 +1,4 @@
-## Find Santa 
+## Find Santa
 
 Strange as it may sound.. Santa went to college with someone that works at a big silicon valley networking company. They've been buddies for years. So much so that in 2023 Santa pushed the workshop's board until they approved budget to get WiFi on the entire campus. That way Santa can browse TikTok as he walks from building to building across the campus.
 

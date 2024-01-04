@@ -2,7 +2,7 @@
 
 It's a little known fact that Santa's reindeer are orienteering experts. They're very particular, actually.
 
-To do this work well, they need to do some basic validation on the addresses. There were hopes among some reindeer to introduce a validation library this year, but there was simply too much infighting.  It's kindof a mess. You see..
+To do this work well, they need to do some basic validation on the addresses. There were hopes among some reindeer to introduce a validation library this year, but there was simply too much infighting. It's kindof a mess. You see..
 
 - Comet and Vixen want to use Zod because they heard from a YouTuber they like that it's the best (they haven't actually looked ito anything else).
 - Cupid and Rudolph are simply too used to JSON Schema with AJV. They don't want to learn a new thing. They both had popular webpack plugins in the past that are no longer used by anyone and now they're a little bitter about change (in general).

@@ -1,7 +1,7 @@
 type TicTacToeChip = '❌' | '⭕';
 type TicTacToeEndState = '❌ Won' | '⭕ Won' | 'Draw';
 type TicTacToeState = TicTacToeChip | TicTacToeEndState;
-type TicTacToeEmptyCell = '  '
+type TicTacToeEmptyCell = '  ';
 type TicTacToeCell = TicTacToeChip | TicTacToeEmptyCell;
 type TicTacToeYPositions = 'top' | 'middle' | 'bottom';
 type TicTacToeXPositions = 'left' | 'center' | 'right';
@@ -12,11 +12,7 @@ type TicTacToeGame = {
   state: TicTacToeState;
 };
 
-type EmptyBoard = [
-  ['  ', '  ', '  '], 
-  ['  ', '  ', '  '], 
-  ['  ', '  ', '  ']
-];
+type EmptyBoard = [['  ', '  ', '  '], ['  ', '  ', '  '], ['  ', '  ', '  ']];
 
 type NewGame = {
   board: EmptyBoard;
