@@ -3,9 +3,13 @@
 import { auth } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import { revalidatePath } from 'next/cache';
+import { assertAdmin } from '~/utils/auth-guards';
 
 export type BannedUsers = NonNullable<Awaited<ReturnType<typeof getBannedUsers>>>;
 export async function getBannedUsers() {
+  const session = await auth();
+  assertAdmin(session);
+
   return prisma.user.findMany({
     where: {
       status: 'BANNED',
@@ -21,6 +25,7 @@ export async function getBannedUsers() {
  */
 export async function banUser(userId: string, reportId: number, banReason?: string) {
   const session = await auth();
+  assertAdmin(session);
 
   await prisma.$transaction([
     prisma.user.update({
@@ -72,6 +77,9 @@ export async function banUser(userId: string, reportId: number, banReason?: stri
  * @returns
  */
 export async function unbanUser(userId: string) {
+  const session = await auth();
+  assertAdmin(session);
+
   revalidatePath('/');
   return prisma.$transaction([
     prisma.challenge.updateMany({
