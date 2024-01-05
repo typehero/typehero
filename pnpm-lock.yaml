@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  '@auth/core': 0.19.0
+
 patchedDependencies:
   '@monaco-editor/react@4.5.1':
     hash: xep4qb27qzc6gvlhv2fxe3r2ka
@@ -180,7 +183,7 @@ importers:
   apps/auth-proxy:
     dependencies:
       '@auth/core':
-        specifier: ^0.19.0
+        specifier: 0.19.0
         version: 0.19.0
     devDependencies:
       '@repo/lint':
@@ -764,7 +767,7 @@ importers:
     dependencies:
       '@next/eslint-plugin-next':
         specifier: canary
-        version: 14.0.5-canary.31
+        version: 13.4.20-canary.0
       '@repo/tsconfig':
         specifier: workspace:*
         version: link:../config-typescript
@@ -776,7 +779,7 @@ importers:
         version: 5.62.0(eslint@8.45.0)(typescript@5.3.3)
       '@vercel/style-guide':
         specifier: ^4.0.2
-        version: 4.0.2(@next/eslint-plugin-next@14.0.5-canary.31)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 4.0.2(@next/eslint-plugin-next@13.4.20-canary.0)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3)
       eslint:
         specifier: ^8.45.0
         version: 8.45.0
@@ -959,22 +962,6 @@ packages:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.18
-    dev: false
-
-  /@auth/core@0.18.4:
-    resolution: {integrity: sha512-GsNhsP1xE/3FoNS3dVkPjqRljLNJ4iyL2OLv3klQGNvw3bMpROFcK4lqhx7+pPHiamnVaYt2vg1xbB+lsNaevg==}
-    peerDependencies:
-      nodemailer: ^6.8.0
-    peerDependenciesMeta:
-      nodemailer:
-        optional: true
-    dependencies:
-      '@panva/hkdf': 1.1.1
-      cookie: 0.6.0
-      jose: 5.1.3
-      oauth4webapi: 2.4.0
-      preact: 10.11.3
-      preact-render-to-string: 5.2.3(preact@10.11.3)
     dev: false
 
   /@auth/core@0.19.0:
@@ -2830,8 +2817,8 @@ packages:
       glob: 7.1.7
     dev: true
 
-  /@next/eslint-plugin-next@14.0.5-canary.31:
-    resolution: {integrity: sha512-yf05GwNkj45zz1Pvw/jfjemv3t8d2S+XBplUpfoda6HkTfcUWLOKfltsYUHLCCG8mIqvZ2W5CmGSKUS9/wAnug==}
+  /@next/eslint-plugin-next@13.4.20-canary.0:
+    resolution: {integrity: sha512-vFC1meiw/awh2xJZMWaoECsfZbgkt2fF3HIg8f2fSM/w41Z86L1SS7SjKmpbbD87yq3tiqgqHmFv0JCych4g4g==}
     dependencies:
       glob: 7.1.7
     dev: false
@@ -5995,7 +5982,7 @@ packages:
       yoga-wasm-web: 0.3.0
     dev: false
 
-  /@vercel/style-guide@4.0.2(@next/eslint-plugin-next@14.0.5-canary.31)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3):
+  /@vercel/style-guide@4.0.2(@next/eslint-plugin-next@13.4.20-canary.0)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3):
     resolution: {integrity: sha512-FroL+oOePzhw7n/I+f7zr4WNroGHT/+2TlW6WH9+CVSjMNsEyu7Qstj2mI5gWIBjT1Y2ZImKPppCzI2cIYmNZw==}
     engines: {node: '>=16'}
     peerDependencies:
@@ -6015,7 +6002,7 @@ packages:
     dependencies:
       '@babel/core': 7.22.10
       '@babel/eslint-parser': 7.22.10(@babel/core@7.22.10)(eslint@8.45.0)
-      '@next/eslint-plugin-next': 14.0.5-canary.31
+      '@next/eslint-plugin-next': 13.4.20-canary.0
       '@rushstack/eslint-patch': 1.3.2
       '@typescript-eslint/eslint-plugin': 5.59.1(@typescript-eslint/parser@5.62.0)(eslint@8.45.0)(typescript@5.3.3)
       '@typescript-eslint/parser': 5.62.0(eslint@8.45.0)(typescript@5.3.3)
@@ -11308,7 +11295,7 @@ packages:
       nodemailer:
         optional: true
     dependencies:
-      '@auth/core': 0.18.4
+      '@auth/core': 0.19.0
       next: 14.0.1(@babel/core@7.22.10)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
     dev: false
