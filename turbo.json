@@ -1,5 +1,4 @@
 {
-  "experimentalSpaces": { "id": "space_CWwpUyi1jEpIayj8iSDdz2Ze" },
   "globalEnv": ["NEXT_PUBLIC_ALGOLIA_APP_ID", "NEXT_PUBLIC_ALGOLIA_API_KEY"],
   "pipeline": {
     "build": {

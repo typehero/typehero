@@ -1,7 +1,5 @@
 import { PrismaAdapter } from '@auth/prisma-adapter';
-import type { Role, RoleTypes } from '@repo/db/types';
-import type { Adapter, AdapterUser, AdapterSession } from '@auth/core/adapters';
-import { type DefaultSession, type User } from 'next-auth';
+import type { Role, RoleTypes, User } from '@repo/db/types';
 import GitHubProvider from 'next-auth/providers/github';
 import { prisma } from '@repo/db';
 import NextAuth from './next-auth';
@@ -16,14 +14,12 @@ export type { Session, DefaultSession as DefaultAuthSession } from 'next-auth';
  */
 declare module 'next-auth' {
   interface Session {
-    user: DefaultSession['user'] & {
-      id: string;
-      role: RoleTypes[];
-    };
+    user: User & { role: RoleTypes[] };
   }
+}
 
-  interface User {
-    createdAt: Date;
+declare module '@auth/core/adapters' {
+  interface AdapterUser extends User {
     roles: Role[];
   }
 }
@@ -60,10 +56,10 @@ export const {
     },
   },
   adapter: {
-    ...(PrismaAdapter(prisma) as Adapter),
+    ...PrismaAdapter(prisma),
     // Override createUser method to add default USER role
-    createUser: (data) =>
-      prisma.user.create({
+    createUser: async (data) => {
+      const user = await prisma.user.create({
         data: {
           ...data,
           name: data.name ?? '',
@@ -75,7 +71,9 @@ export const {
           },
         },
         include: { roles: true },
-      }) as Promise<AdapterUser>,
+      });
+      return user;
+    },
     // Override getSessionAndUser method to include roles. Avoids a second db query in session callback
     getSessionAndUser: async (sessionToken) => {
       const userAndSession = await prisma.session.findUnique({
@@ -84,11 +82,14 @@ export const {
       });
       if (!userAndSession) return null;
       const { user, ...session } = userAndSession;
-      return { user, session } as { session: AdapterSession; user: AdapterUser };
+      return { user, session };
     },
   },
   callbacks: {
-    session: async ({ session, user }) => {
+    session: async (opts) => {
+      if (!('user' in opts)) throw new Error("unreachable, we're not using JWT");
+
+      const { session, user } = opts;
       return {
         ...session,
         user: {
@@ -103,13 +104,12 @@ export const {
     GitHubProvider({
       clientId: process.env.GITHUB_ID!,
       clientSecret: process.env.GITHUB_SECRET!,
-      profile: (p) =>
-        ({
-          id: p.id.toString(),
-          name: p.login,
-          email: p.email,
-          image: p.avatar_url,
-        }) as User, // TODO: Remove typecast
+      profile: (p) => ({
+        id: p.id.toString(),
+        name: p.login,
+        email: p.email,
+        image: p.avatar_url,
+      }),
     }),
   ],
 });
