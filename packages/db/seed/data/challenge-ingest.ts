@@ -12,8 +12,8 @@ export async function ingestChallenges(challengePath: string) {
 
       if (
         itemPath.includes('blank') ||
-        itemPath.includes('solutions') ||
-        itemPath.includes('aot')
+        itemPath.includes('solutions')
+        // itemPath.includes('aot')
       ) {
         continue;
       }
