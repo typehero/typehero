@@ -1,4 +1,6 @@
+import { auth } from '@repo/auth/server';
 import { prisma } from '@repo/db';
+import { assertAdmin } from '~/utils/auth-guards';
 import { UpdateTrackForm } from './_components/update-track-form';
 
 export interface Props {
@@ -8,6 +10,9 @@ export interface Props {
 }
 
 export default async function (props: Props) {
+  const session = await auth();
+  assertAdmin(session);
+
   const track = await getTrackById(Number(props.params.trackId));
   const challenges = await getChallenges();
 

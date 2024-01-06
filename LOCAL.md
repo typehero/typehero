@@ -178,6 +178,12 @@ Terminal 2:
 pnpm test:e2e
 ```
 
+### Running Tests in UI Mode
+
+In the event you need to troubleshoot the end-to-end tests, you can run Playwright in [UI mode](https://playwright.dev/docs/test-ui-mode). You can do this by running `pnpm test:e2e:ui`. This will spin up a playwright server on localhost:8080, which will provide a playwright app that you can use to view a series of snapshots.
+
+In addition you can use [Playwright Inspector](https://playwright.dev/docs/debug#playwright-inspector) to debug tests, which is a debugger that Playwright maintains. It automatically stops at each test suite, as well as each test case within them. As a result, you can debug a specific test suite by running `pnpm test:e2e:inspector -- {testName}`
+
 ## FAQ
 
 <details>

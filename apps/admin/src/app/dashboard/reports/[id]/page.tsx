@@ -1,8 +1,10 @@
+import { auth } from '@repo/auth/server';
 import { Alert, AlertDescription, AlertTitle } from '@repo/ui/components/alert';
 import { Markdown } from '@repo/ui/components/markdown';
 import { Text } from '@repo/ui/components/typography/typography';
 import { AlertCircle, ChevronLeft } from '@repo/ui/icons';
 import Link from 'next/link';
+import { assertAdmin } from '~/utils/auth-guards';
 import { getReport, type ReportWithInfo } from './_actions';
 import { ChallengeReport } from './_components/challenge.report';
 import { CommentReport } from './_components/comment.report';
@@ -38,6 +40,9 @@ const getComponentByType = (type: ReportWithInfo['type']) => {
   }[type];
 };
 export default async function ({ params: { id } }: Props) {
+  const session = await auth();
+  assertAdmin(session);
+
   const report = await getReport(Number(id));
 
   const ReportComponent = getComponentByType(report.type);

@@ -2,6 +2,7 @@ import type { Difficulty } from '@repo/db/types';
 import { clsx } from 'clsx';
 import { motion, type SVGMotionProps } from 'framer-motion';
 import type { ReactNode } from 'react';
+import { useScopedI18n } from '~/locales/client';
 
 function getRandomWidth() {
   const min = 100;
@@ -44,8 +45,10 @@ export function HeroChallengeCard({
   prompt,
   title,
   className,
-  difficulty,
+  difficulty = 'HARD',
 }: FakeChallengeCardProps) {
+  const t = useScopedI18n('general');
+
   return (
     <div
       className={clsx(className, {
@@ -56,11 +59,9 @@ export function HeroChallengeCard({
       <p className="translate-x-1 text-lg font-medium">{title}</p>
       <div className="flex gap-3">
         <div
-          className={`inline-flex w-fit translate-x-1 items-center rounded-full border border-transparent px-2.5 py-0.5 text-xs font-semibold text-white duration-300 group-hover/card:-translate-x-0 group-hover/card:-translate-y-1 group-hover/card:shadow-[0.5rem_0.5rem_0.25rem_-0.25rem_#0004] dark:text-black ${
-            COLORS_BY_DIFFICULTY[difficulty || 'HARD']
-          }`}
+          className={`inline-flex w-fit translate-x-1 items-center rounded-full border border-transparent px-2.5 py-0.5 text-xs font-semibold text-white duration-300 group-hover/card:-translate-x-0 group-hover/card:-translate-y-1 group-hover/card:shadow-[0.5rem_0.5rem_0.25rem_-0.25rem_#0004] dark:text-black ${COLORS_BY_DIFFICULTY[difficulty]}`}
         >
-          {difficulty || 'HARD'}
+          {t(`difficulty.${difficulty}`).toUpperCase()}
         </div>
         <div className="flex w-fit items-center justify-center rounded-full bg-transparent bg-zinc-600 px-2.5 py-1 pl-1.5 pr-2 text-xs font-bold text-neutral-50 duration-300 group-hover/card:-translate-x-1 group-hover/card:-translate-y-1 group-hover/card:shadow-[0.5rem_0.5rem_0.25rem_-0.25rem_#0004] dark:bg-zinc-700 dark:text-white">
           @{username}

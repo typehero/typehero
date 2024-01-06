@@ -16,6 +16,8 @@ export default defineConfig({
     trace: process.env.CI ? 'on-first-retry' : 'retain-on-failure',
   },
   projects: [
+    { name: 'authenticated', testMatch: /.*\.authenticated\.ts/ },
+    { name: 'unauthenticated', testMatch: /.*\.unauthenticated\.ts/ },
     { name: 'setup', testMatch: /.*\.setup\.ts/ },
     {
       name: 'chromium',

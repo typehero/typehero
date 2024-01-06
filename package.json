@@ -26,6 +26,8 @@
     "refresh": "turbo db:reset db:seed --concurrency=1",
     "test:e2e": "turbo test:e2e",
     "test:e2e:install": "playwright install",
+    "test:e2e:ui": "turbo test:e2e:ui",
+    "test:e2e:inspector": "turbo test:e2e:inspector",
     "tunnel": "cloudflared tunnel --url http://localhost:3000",
     "typecheck": "turbo typecheck --continue"
   },
@@ -52,8 +54,7 @@
     "patchedDependencies": {
       "@monaco-editor/react@4.5.1": "patches/@monaco-editor__react@4.5.1.patch",
       "monaco-vim@0.4.0": "patches/monaco-vim@0.4.0.patch",
-      "@vercel/toolbar@0.1.1": "patches/@vercel__toolbar@0.1.1.patch",
-      "@auth/core@0.0.0-manual.e9863699": "patches/@auth__core@0.0.0-manual.e9863699.patch"
+      "@vercel/toolbar@0.1.1": "patches/@vercel__toolbar@0.1.1.patch"
     }
   }
 }

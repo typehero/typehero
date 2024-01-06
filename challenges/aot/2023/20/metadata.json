@@ -1,0 +1,8 @@
+{
+  "id": "day-20",
+  "label": "Day Twenty",
+  "description": "Day twenty of Advent of Typescript",
+  "difficulty": "event",
+  "prerequisites": [],
+  "author": "TypeHero"
+}
