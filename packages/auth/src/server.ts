@@ -14,7 +14,7 @@ export type { Session, DefaultSession as DefaultAuthSession } from 'next-auth';
  */
 declare module 'next-auth' {
   interface Session {
-    user: User & { roles: RoleTypes[] };
+    user: User & { role: RoleTypes[] };
   }
 }
 
