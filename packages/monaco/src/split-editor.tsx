@@ -299,7 +299,7 @@ export default function SplitEditor({
         className="h-full overflow-hidden focus:border focus:border-blue-500"
       >
         <CodeEditor
-          className="overflow-hidden"
+          className="challenge-editor-code overflow-hidden"
           height={userEditorState && settings.bindings === 'vim' ? 'calc(100% - 36px)' : '100%'}
           defaultPath={USER_CODE_PATH}
           onMount={async (editor, monaco) => {
@@ -412,6 +412,7 @@ export default function SplitEditor({
           ref={testPanel}
         >
           <CodeEditor
+            className="challenge-editor-test"
             options={{
               lineNumbers: 'off',
               renderValidationDecorations: 'on',

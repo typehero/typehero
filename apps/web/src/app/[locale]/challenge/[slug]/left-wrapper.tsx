@@ -138,7 +138,7 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
         >
           <TabsTrigger
             className={cn(
-              'rounded-md duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700',
+              'challenge-tab-description rounded-md duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700',
               {
                 'p-4': isIconOnly,
                 'rounded-tl-xl': !isTrackVisible,
@@ -158,7 +158,7 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
           </TabsTrigger>
           <TabsTrigger
             className={cn(
-              'rounded-md duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700',
+              'challenge-tab-solutions rounded-md duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700',
               { 'p-4': isIconOnly },
             )}
             onClick={() => {
@@ -174,7 +174,7 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
           </TabsTrigger>
           <TabsTrigger
             className={cn(
-              'rounded-md rounded-tr-lg duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700',
+              'challenge-tab-submissions rounded-md rounded-tr-lg duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700',
               {
                 'p-4': isIconOnly,
                 'rounded-tr-xl': !isTrackVisible,

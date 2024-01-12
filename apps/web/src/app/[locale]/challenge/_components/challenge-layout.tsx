@@ -1,6 +1,7 @@
 import { useEffect, useRef, type ReactNode, useState, type MutableRefObject, useMemo } from 'react';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { useTour } from '@reactour/tour';
 import { useFullscreenSettingsStore } from './fullscreen';
 import { getEventDeltas } from '@repo/monaco/utils';
 
@@ -62,6 +63,7 @@ export function ChallengeLayout({
 
   const { settings, updateSettings } = useLayoutSettingsStore();
   const { fssettings, updateFSSettings } = useFullscreenSettingsStore();
+  const { setIsOpen } = useTour();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const LEFT_PANEL_BREAKPOINT = isDesktop ? 500 : 318;
@@ -111,6 +113,18 @@ export function ChallengeLayout({
     _COLLAPSED_MOBILE_HEIGHT,
     _COLLAPSED_DESKTOP_WIDTH,
   ]);
+
+  useEffect(() => {
+    const storedTourAreas = localStorage.getItem('tourAreas');
+    if (!storedTourAreas) {
+      const tourAreas = storedTourAreas ? JSON.parse(storedTourAreas) : {};
+      console.log({ tourAreas });
+      tourAreas.solveChallenge !== 'true' && setIsOpen(true);
+
+      tourAreas.solveChallenge = 'true';
+      localStorage.setItem('tourAreas', JSON.stringify(tourAreas));
+    }
+  }, []);
 
   useEffect(() => {
     const ref = resizer.current;

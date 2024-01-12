@@ -5,6 +5,8 @@ import { ChallengeLayout, MOBILE_BREAKPOINT } from './challenge-layout';
 import usePanelAdjustments from './usePanelAdjustments';
 import { LeftWrapper } from '../[slug]/left-wrapper';
 import { Wrapper } from '../[slug]/wrapper';
+import { TourProvider } from '@reactour/tour';
+import challengeSteps from './challenge-steps';
 
 interface Props {
   challenge: ChallengeRouteData['challenge'];
@@ -30,19 +32,35 @@ export function ChallengeLayoutWrapper({ challenge, track, children }: Props) {
   };
 
   return (
-    <ChallengeLayout
-      left={
-        <LeftWrapper
-          challenge={challenge}
-          track={track}
-          expandPanel={expandPanel}
-          isDesktop={isDesktop}
-        >
-          {children}
-        </LeftWrapper>
-      }
-      right={<Wrapper track={track} challenge={challenge} />}
-      {...props}
-    />
+    <TourProvider
+      steps={challengeSteps}
+      styles={{
+        popover: (base) => ({
+          ...base,
+          '--reactour-accent': '#3078c5',
+          borderRadius: 10,
+          color: 'black',
+        }),
+        maskArea: (base) => ({ ...base, rx: 10 }),
+        maskWrapper: (base) => ({ ...base, color: '#3078c5' }),
+        badge: (base) => ({ ...base, left: 'auto', right: '-0.8125em' }),
+        close: (base) => ({ ...base, right: 'auto', left: 8, top: 8 }),
+      }}
+    >
+      <ChallengeLayout
+        left={
+          <LeftWrapper
+            challenge={challenge}
+            track={track}
+            expandPanel={expandPanel}
+            isDesktop={isDesktop}
+          >
+            {children}
+          </LeftWrapper>
+        }
+        right={<Wrapper track={track} challenge={challenge} />}
+        {...props}
+      />
+    </TourProvider>
   );
 }
