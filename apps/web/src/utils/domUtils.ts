@@ -2,22 +2,21 @@
  * This will paste the given text into the textarea element
  */
 export function insertText(newText: string, textarea: HTMLTextAreaElement) {
-  // make sure it's selected when we go to pasta
-  textarea.focus();
+  // Get the current cursor position
+  const cursorPos = textarea.selectionStart;
 
-  let pasted = true;
-  try {
-    if (!document.execCommand('insertText', false, newText)) {
-      pasted = false;
-    }
-  } catch (e) {
-    console.error('error caught:', e);
-    pasted = false;
-  }
+  // Get the text before and after the cursor position
+  const textBefore = textarea.value.substring(0, cursorPos);
+  const textAfter = textarea.value.substring(cursorPos);
 
-  if (!pasted) {
-    console.error('paste unsuccessful, execCommand not supported');
-  }
+  // Insert the new text at the cursor position
+  textarea.value = textBefore + newText + textAfter;
 
-  return pasted;
+  // Move the cursor to the end of the inserted text
+  const newCursorPos = cursorPos + newText.length;
+  textarea.setSelectionRange(newCursorPos, newCursorPos);
+
+  // Optionally, trigger the input event to update any event listeners
+  const inputEvent = new Event('input');
+  textarea.dispatchEvent(inputEvent);
 }
