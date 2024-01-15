@@ -13,6 +13,21 @@ export const appearanceFormSchema = z.object({
 
 export type ApperenceFormSchema = z.infer<typeof appearanceFormSchema>;
 
+// returns true/false if the url contains a https: proto
+const validUrlWithHttps = z.string().refine(
+  (url) => {
+    try {
+      const parsedUrl = new URL(url);
+      return ['https:', 'http:'].includes(parsedUrl.protocol);
+    } catch (error) {
+      return false;
+    }
+  },
+  {
+    message: "URL must have the 'http(s)' protocol",
+  },
+);
+
 export const profileSchema = z.object({
   bio: createNoProfanitySchemaWithValidate((str) => str.max(256)),
   userLinks: z.array(
@@ -20,6 +35,7 @@ export const profileSchema = z.object({
       id: z.union([z.string(), z.null()]),
       url: z.union([
         createNoProfanitySchemaWithValidate((str) => str.url().max(256)),
+        validUrlWithHttps,
         z.literal(''),
       ]),
     }),
