@@ -40,7 +40,7 @@
     "@tanstack/react-query-devtools": "^5.8.1",
     "@tanstack/react-table": "^8.9.3",
     "@uiw/react-md-editor": "^3.23.3",
-    "@uploadthing/react": "^5.5.0",
+    "@uploadthing/react": "^6.1.0",
     "@vercel/analytics": "^1.1.1",
     "@vercel/edge-config": "^0.2.1",
     "@vercel/toolbar": "^0.1.1",

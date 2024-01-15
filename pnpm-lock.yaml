@@ -305,8 +305,8 @@ importers:
         specifier: ^3.23.3
         version: 3.23.3(@types/react@18.2.20)(react-dom@18.2.0)(react@18.2.0)
       '@uploadthing/react':
-        specifier: ^5.5.0
-        version: 5.5.0(react-dropzone@14.2.3)(react@18.2.0)(uploadthing@6.1.1)(zod@3.21.4)
+        specifier: ^6.1.0
+        version: 6.1.0(next@14.0.1)(react@18.2.0)(uploadthing@6.1.1)
       '@vercel/analytics':
         specifier: ^1.1.1
         version: 1.1.1
@@ -5902,33 +5902,25 @@ packages:
     resolution: {integrity: sha512-ZUo1JHOPPMZDsUw1mOhhVDIvJGlsjj6T0xJ/YJtulyJwL43S9B5pxg1cHcRuTEgjaxj7B55jiqQ6r9mDrrjH9A==}
     dev: false
 
-  /@uploadthing/react@5.5.0(react-dropzone@14.2.3)(react@18.2.0)(uploadthing@6.1.1)(zod@3.21.4):
-    resolution: {integrity: sha512-50VduVEqDJwEyT9GDxCAzI5V28/5tD9Rddsmwt/ciCJG8J+sg3C9oHAvhEm9MWYf3h0YVi/fgtpYLg64Y8PSAA==}
+  /@uploadthing/react@6.1.0(next@14.0.1)(react@18.2.0)(uploadthing@6.1.1):
+    resolution: {integrity: sha512-UCck0Jd6wJvvmVMMjlOzgGQghEvWv8Pw+IWxsWMvrD/UHiZX7cWc7TgVy88tiAdtuvgatCLfoOsemBMAIhTFdw==}
     peerDependencies:
+      next: '*'
       react: ^17.0.2 || ^18.0.0
-      react-dropzone: ^14.2.3
-      uploadthing: ^5.0.0
+      uploadthing: ^6.0.0
+    peerDependenciesMeta:
+      next:
+        optional: true
     dependencies:
-      '@uploadthing/shared': 5.2.1(zod@3.21.4)
+      '@uploadthing/shared': 6.0.3(@uploadthing/mime-types@0.2.2)
+      attr-accept: 2.2.2
+      file-selector: 0.6.0
+      next: 14.0.1(@babel/core@7.22.10)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
-      react-dropzone: 14.2.3(react@18.2.0)
       tailwind-merge: 1.14.0
       uploadthing: 6.1.1
     transitivePeerDependencies:
       - '@uploadthing/mime-types'
-      - zod
-    dev: false
-
-  /@uploadthing/shared@5.2.1(zod@3.21.4):
-    resolution: {integrity: sha512-ISb78wuHqU5F/7TVw/3eO0VHQdSx3qdN7I4R4knHynuWFjgJjfUsc+zAAAtpo0UZlwfjIQIv/WtSwxdlNxRPGw==}
-    peerDependencies:
-      '@uploadthing/mime-types': ^0.2.0
-      zod: ^3.21.4
-    peerDependenciesMeta:
-      '@uploadthing/mime-types':
-        optional: true
-    dependencies:
-      zod: 3.21.4
     dev: false
 
   /@uploadthing/shared@6.0.3(@uploadthing/mime-types@0.2.2):
@@ -12402,18 +12394,6 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
-    dev: false
-
-  /react-dropzone@14.2.3(react@18.2.0):
-    resolution: {integrity: sha512-O3om8I+PkFKbxCukfIR3QAGftYXDZfOE2N1mr/7qebQJHs7U+/RSL/9xomJNpRg9kM5h9soQSdf0Gc7OHF5Fug==}
-    engines: {node: '>= 10.13'}
-    peerDependencies:
-      react: '>= 16.8 || 18.0.0'
-    dependencies:
-      attr-accept: 2.2.2
-      file-selector: 0.6.0
-      prop-types: 15.8.1
-      react: 18.2.0
     dev: false
 
   /react-email@1.9.3:
