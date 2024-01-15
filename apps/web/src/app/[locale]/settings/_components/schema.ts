@@ -13,7 +13,7 @@ export const appearanceFormSchema = z.object({
 
 export type ApperenceFormSchema = z.infer<typeof appearanceFormSchema>;
 
-// returns true/false if the url contains a https: proto
+// returns true/false if the url contains a https/http proto
 const validUrlWithHttps = z.string().refine(
   (url) => {
     try {
