@@ -34,7 +34,6 @@ export const profileSchema = z.object({
     z.object({
       id: z.union([z.string(), z.null()]),
       url: z.union([
-        createNoProfanitySchemaWithValidate((str) => str.url().max(256)),
         validUrlWithHttpOrHttps,
         z.literal(''),
       ]),
