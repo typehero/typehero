@@ -14,7 +14,7 @@ export const appearanceFormSchema = z.object({
 export type ApperenceFormSchema = z.infer<typeof appearanceFormSchema>;
 
 // returns true/false if the url contains a https/http proto
-const validUrlWithHttps = z.string().refine(
+const validUrlWithHttpOrHttps = z.string().refine(
   (url) => {
     try {
       const parsedUrl = new URL(url);
@@ -35,7 +35,7 @@ export const profileSchema = z.object({
       id: z.union([z.string(), z.null()]),
       url: z.union([
         createNoProfanitySchemaWithValidate((str) => str.url().max(256)),
-        validUrlWithHttps,
+        validUrlWithHttpOrHttps,
         z.literal(''),
       ]),
     }),
