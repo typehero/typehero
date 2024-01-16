@@ -76,7 +76,7 @@
     "tailwindcss-animate": "^1.0.6",
     "unified": "^10.1.2",
     "unist-util-visit": "^5.0.0",
-    "uploadthing": "^6.1.1",
+    "uploadthing": "^6.1.2-canary.c9fd820",
     "zod": "^3.21.4",
     "zustand": "^4.3.9"
   },
