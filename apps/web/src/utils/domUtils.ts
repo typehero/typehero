@@ -1,5 +1,6 @@
+// FIXME: this won't work in a controlled component need to figure it out
 /**
- * This will paste the given text into the textarea element
+ * This will insert the given text into the textarea element
  */
 export function insertText(newText: string, textarea: HTMLTextAreaElement) {
   // Get the current cursor position
