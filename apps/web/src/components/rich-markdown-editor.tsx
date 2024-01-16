@@ -99,7 +99,7 @@ export function RichMarkdownEditor({
 
       // insert string at cursor position by calling on change
       insertText(
-        `![${uploadedFile?.fileKey}](${uploadedFile?.fileUrl})`,
+        `![${uploadedFile?.key}](${uploadedFile?.url})`,
         // @ts-expect-error
         editorRef.current.textarea,
       );
