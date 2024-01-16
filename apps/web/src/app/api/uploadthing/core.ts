@@ -18,12 +18,12 @@ const f = createUploadthing({
 type ValidFileTypes = 'audio' | 'blob' | 'image' | 'video';
 type FileRouterInput =
   | Record<
-    ValidFileTypes,
-    {
-      maxFileSize: '4MB';
-      maxFileCount: number;
-    }
-  >
+      ValidFileTypes,
+      {
+        maxFileSize: '4MB';
+        maxFileCount: number;
+      }
+    >
   | ValidFileTypes[];
 
 // control the file sizes for all image types
