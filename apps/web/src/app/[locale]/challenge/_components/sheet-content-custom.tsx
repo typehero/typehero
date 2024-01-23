@@ -8,49 +8,50 @@ import { useChallengeRouteData } from '~/app/challenge-route-data.hook';
 import { SORT_KEYS, useProblemExplorerContext } from '~/app/problem-explorer.hooks';
 import { useRouter } from 'next/navigation';
 import { useAllChallengesContext } from '~/app/all-challenges.hook';
+import { useLocalStorage } from '~/utils/useLocalStorage';
 
 export function ExplorerPanel() {
   const router = useRouter();
+  const [, setTrackNameStorage] = useLocalStorage('trackName', 'popular');
   const { getTrack, setTrack, title, setTitle, sortKey, setSortKey } = useProblemExplorerContext();
   const { allChallenges } = useAllChallengesContext();
 
   const handleValueChange = (value: string) => {
-    document.cookie = 'trackName='; // clear the old cookie first
     if (value === 'popular') {
       router.push(`/challenge/${allChallenges.popularChallenges[0]?.slug}`);
       setTitle('Recommended Challenges');
       setTrack(allChallenges.popularChallenges);
-      document.cookie = 'trackName=popular';
+      setTrackNameStorage('popular');
     }
     if (value === 'beginner') {
       router.push(`/challenge/${allChallenges.beginnerChallenges[0]?.slug}`);
       setTitle('Great for Beginners');
       setTrack(allChallenges.beginnerChallenges);
-      document.cookie = 'trackName=beginner';
+      setTrackNameStorage('beginner');
     }
     if (value === 'easy') {
       router.push(`/challenge/${allChallenges.easyChallenges[0]?.slug}`);
       setTitle('Great for Learners');
       setTrack(allChallenges.easyChallenges);
-      document.cookie = 'trackName=easy';
+      setTrackNameStorage('easy');
     }
     if (value === 'medium') {
       router.push(`/challenge/${allChallenges.mediumChallenges[0]?.slug}`);
       setTitle('Great for Enthusiasts');
       setTrack(allChallenges.mediumChallenges);
-      document.cookie = 'trackName=medium';
+      setTrackNameStorage('medium');
     }
     if (value === 'hard') {
       router.push(`/challenge/${allChallenges.hardChallenges[0]?.slug}`);
       setTitle('Great for Experts');
       setTrack(allChallenges.hardChallenges);
-      document.cookie = 'trackName=hard';
+      setTrackNameStorage('hard');
     }
     if (value === 'extreme') {
       router.push(`/challenge/${allChallenges.extremeChallenges[0]?.slug}`);
       setTitle('Great for Masters');
       setTrack(allChallenges.extremeChallenges);
-      document.cookie = 'trackName=extreme';
+      setTrackNameStorage('extreme');
     }
     setSortKey(SORT_KEYS.find((sk) => sk.value === value) ?? SORT_KEYS[0]);
   };

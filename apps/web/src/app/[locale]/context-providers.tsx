@@ -16,13 +16,11 @@ export async function ContextProviders({ children }: Props) {
   const allChallenges = await getAllChallenges();
   const session = await auth();
   const isExplorerDisabled = await isEnrolledInAnyTrack(session);
-  const trackName = cookies().get('trackName')?.value as ChallengeType;
   return (
     <AllChallengesProvider AC={allChallenges}>
       <ProblemExplorerProvider
         isDisabled={isExplorerDisabled}
         AC={allChallenges}
-        trackName={trackName}
       >
         <ChallegeRouteDataProvider>{children}</ChallegeRouteDataProvider>
       </ProblemExplorerProvider>

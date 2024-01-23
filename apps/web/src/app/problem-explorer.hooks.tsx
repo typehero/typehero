@@ -9,6 +9,7 @@ import {
   type ChallengeType,
   type ChallengeTitles,
 } from './get-challenges-and-title';
+import { useLocalStorage } from '~/utils/useLocalStorage';
 
 interface ProblemExplorerContextType {
   sortKey: SortKeyType;
@@ -29,14 +30,14 @@ interface ProblemExplorerProviderProps {
   children: React.ReactNode;
   isDisabled: boolean;
   AC: AllChallenges;
-  trackName: ChallengeType;
 }
 export const ProblemExplorerProvider = ({
   children,
   AC,
   isDisabled,
-  trackName,
 }: ProblemExplorerProviderProps) => {
+  const [trackStorage] = useLocalStorage('trackName', 'popular');
+  const trackName = trackStorage as ChallengeType;
   const { challenges, thisTitle, key } = getChallengesAndTitle(trackName, AC);
   const [getTrack, setTrack] = useState<ChallengesByTagOrDifficulty>(challenges);
   const [title, setTitle] = useState<ChallengeTitles>(thisTitle);
