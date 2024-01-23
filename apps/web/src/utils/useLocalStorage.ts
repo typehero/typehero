@@ -5,9 +5,8 @@ export function useLocalStorage(key: string, initialValue: string): [string, (v:
     try {
       if (window !== undefined) {
         return window.localStorage.getItem(key) || initialValue;
-      } else {
-        return initialValue;
       }
+      return initialValue;
     } catch (error) {
       console.error(error);
       return initialValue;

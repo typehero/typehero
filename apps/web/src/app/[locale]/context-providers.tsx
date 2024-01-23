@@ -5,8 +5,6 @@ import { AllChallengesProvider } from '../all-challenges.hook';
 import { getAllChallenges } from './explore/_components/explore.action';
 import { auth } from '@repo/auth/server';
 import { isEnrolledInAnyTrack } from './challenge/[slug]/getChallengeRouteData';
-import { cookies } from 'next/dist/client/components/headers';
-import type { ChallengeType } from '../get-challenges-and-title';
 
 interface Props {
   children: React.ReactNode;
@@ -18,10 +16,7 @@ export async function ContextProviders({ children }: Props) {
   const isExplorerDisabled = await isEnrolledInAnyTrack(session);
   return (
     <AllChallengesProvider AC={allChallenges}>
-      <ProblemExplorerProvider
-        isDisabled={isExplorerDisabled}
-        AC={allChallenges}
-      >
+      <ProblemExplorerProvider isDisabled={isExplorerDisabled} AC={allChallenges}>
         <ChallegeRouteDataProvider>{children}</ChallegeRouteDataProvider>
       </ProblemExplorerProvider>
     </AllChallengesProvider>
