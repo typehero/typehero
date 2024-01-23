@@ -1,5 +1,5 @@
 'use client';
-import { createContext, useState, useContext, type PropsWithChildren, useEffect } from 'react';
+import { createContext, useState, useContext } from 'react';
 import type {
   AllChallenges,
   ChallengesByTagOrDifficulty,
