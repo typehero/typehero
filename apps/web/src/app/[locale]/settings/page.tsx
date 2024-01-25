@@ -1,7 +1,7 @@
 import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import type { Metadata } from 'next';
-import { NewSettings } from './_components/new-settings';
+import { Settings } from './_components/settings';
 import { buildMetaForDefault } from '~/app/metadata';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -32,7 +32,7 @@ export default async function SettingsPage() {
 
   return (
     <>
-      <NewSettings user={profileData} />
+      <Settings user={profileData} />
     </>
   );
 }

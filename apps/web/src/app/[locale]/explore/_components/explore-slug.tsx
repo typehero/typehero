@@ -22,7 +22,7 @@ export async function ExploreSlug({ slug }: ExploreSlugProps) {
         {challenges.map((challenge) => (
           <Link
             className="group block w-[95%] focus:outline-none sm:w-[330px] xl:w-[333px]"
-            href={`/challenge/${challenge.id}`}
+            href={`/challenge/${challenge.slug}`}
             key={challenge.id}
           >
             <ExploreCard key={`challenge-${challenge.id}`} challenge={challenge} />

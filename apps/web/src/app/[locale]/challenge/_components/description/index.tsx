@@ -1,12 +1,12 @@
 'use client';
 
 import { useSession } from '@repo/auth/react';
-import { Bookmark as BookmarkIcon, Calendar, Flag, Share } from '@repo/ui/icons';
+import { Bookmark as BookmarkIcon, Calendar, CheckCircle, Flag, Share } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { debounce } from 'lodash';
 import Link from 'next/link';
 import { useRef, useState } from 'react';
-import { type ChallengeRouteData } from '~/app/[locale]/challenge/[id]/getChallengeRouteData';
+import { type ChallengeRouteData } from '~/app/[locale]/challenge/[slug]/getChallengeRouteData';
 import { ReportDialog } from '~/components/ReportDialog';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { addOrRemoveBookmark } from '../bookmark.action';
@@ -25,10 +25,11 @@ import {
 } from '@repo/ui/components/dialog';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { Markdown } from '@repo/ui/components/markdown';
-import { Button } from '@repo/ui/components/button';
+import { Button, buttonVariants } from '@repo/ui/components/button';
+import { cn } from '@repo/ui/cn';
 
 interface Props {
-  challenge: ChallengeRouteData;
+  challenge: ChallengeRouteData['challenge'];
 }
 
 export interface FormValues {
@@ -81,12 +82,22 @@ export function Description({ challenge }: Props) {
         <UserBadge username={challenge.user.name} linkComponent={Link} />
         <div className="text-muted-foreground flex items-center gap-2">
           <Calendar className=" h-4 w-4" />
-          <span className="text-xs">{getRelativeTime(challenge.updatedAt)}</span>
+          <span className="text-xs">Last updated {getRelativeTime(challenge.updatedAt)}</span>
         </div>
       </div>
       {/* Difficulty & Action Buttons */}
       <div className="mt-3 flex items-center gap-3">
         <DifficultyBadge difficulty={challenge.difficulty} />
+        {challenge.hasSolved ? (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <CheckCircle className="stroke-green-600 dark:stroke-green-300" size={20} />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Solved</p>
+            </TooltipContent>
+          </Tooltip>
+        ) : null}
         <Vote
           voteCount={challenge._count.vote}
           initialHasVoted={challenge.vote.length > 0}
@@ -98,9 +109,14 @@ export function Description({ challenge }: Props) {
           <DialogTrigger>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button className="text-accent-foreground" size="xs" variant="secondary">
+                <div
+                  className={cn(
+                    buttonVariants({ variant: 'secondary', size: 'xs' }),
+                    'rounded-full',
+                  )}
+                >
                   <Share className="h-4 w-4" />
-                </Button>
+                </div>
               </TooltipTrigger>
               <TooltipContent>
                 <p>Share</p>
@@ -153,7 +169,7 @@ export function Description({ challenge }: Props) {
         </Tooltip>
       </div>
       {/* Challenge Description */}
-      <div className="prose-invert prose-h3:text-xl mt-6 leading-8">
+      <div className="prose-invert prose-h3:text-xl mt-6 leading-7">
         <Markdown>{challenge.description}</Markdown>
       </div>
     </div>

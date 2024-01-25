@@ -105,7 +105,7 @@ model User {
   roles         Role[]
 
   /// this is the bio that shows up on the profile page
-  bio       String     @default("") @db.VarChar(256)
+  bio       String     @default("") @db.VarChar(1000)
   /// this is the twitter URL that shows up on the profile page
   userLinks UserLink[]
 
@@ -130,6 +130,7 @@ model User {
 
   imageUpload ImageUpload[]
   tracks      Track[]
+  BetaTokens  BetaTokens[]
 }
 
 model VerificationToken {
@@ -151,7 +152,8 @@ model Challenge {
   createdAt        DateTime        @default(now())
   updatedAt        DateTime        @updatedAt
   difficulty       Difficulty
-  name             String
+  name             String          @unique
+  slug             String          @unique
   /// this is the description to describe the challenge on description panel
   description      String          @db.MediumText
   /// this is a short blue thats shown on the explore card
@@ -250,6 +252,8 @@ model Bookmark {
   userId      String
   challenge   Challenge? @relation(fields: [challengeId], references: [id])
   challengeId Int?
+
+  createdAt DateTime? @default(now())
 
   @@index([userId])
   @@index([challengeId])
@@ -384,7 +388,7 @@ model TrackChallenge {
   orderId     Int
   challengeId Int
   challenge   Challenge @relation(fields: [challengeId], references: [id])
-  Track       Track?    @relation(fields: [trackId], references: [id])
+  track       Track?    @relation(fields: [trackId], references: [id])
   trackId     Int?
 
   @@unique([challengeId, orderId])
@@ -394,9 +398,22 @@ model TrackChallenge {
 
 model Track {
   id              Int              @id @default(autoincrement())
-  title           String
+  name            String           @unique
+  slug            String           @unique
   description     String           @db.MediumText
+  /// determines if a track can be seen on tracks page
   visible         Boolean          @default(true)
+  /// use this to display coming soon UI
+  isComingSoon    Boolean          @default(false)
   trackChallenges TrackChallenge[]
   enrolledUsers   User[]
+}
+
+model BetaTokens {
+  id     Int     @id @default(autoincrement())
+  token  String  @unique
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String?
+
+  @@index([userId])
 }

@@ -1,13 +1,12 @@
 import type { Difficulty, Tags } from '@repo/db/types';
 import Link from 'next/link';
-import { ExploreCard } from './explore-card';
-import type { ExploreChallengeData } from './explore.action';
-import { ViewMoreButton } from './view-more-button';
 import { Carousel } from '~/components/carousel';
+import { ExploreCard } from './explore-card';
+import { getChallengesByTagOrDifficulty } from './explore.action';
+import { ViewMoreButton } from './view-more-button';
 
 interface SectionProps {
   title: string;
-  fetcher: (tagOrDifficulty: string, take: number) => ExploreChallengeData;
   /**
    * This is used by UI to apply the right colors. You still need to manually specify the
    * `redirectRoute` for view-more button to work.
@@ -50,8 +49,8 @@ export const COLORS_BY_TAGS = {
   EXTREME: 'dark:bg-purple-300 bg-purple-600/50',
 } as const;
 
-export async function ExploreSection({ title, fetcher, tag, redirectRoute }: SectionProps) {
-  const challenges = await fetcher(tag.trim().toUpperCase(), 6);
+export async function ExploreSection({ title, tag, redirectRoute }: SectionProps) {
+  const challenges = await getChallengesByTagOrDifficulty(tag.trim().toUpperCase(), 6);
   return (
     <div>
       <div className="container flex items-center justify-between gap-3 px-4 pt-5">
@@ -66,15 +65,26 @@ export async function ExploreSection({ title, fetcher, tag, redirectRoute }: Sec
       <section className="relative flex w-full flex-col overflow-hidden rounded-[2.5rem]">
         <Carousel>
           {challenges
-            .sort((a, b) =>
-              difficultyToNumber[a.difficulty] !== difficultyToNumber[b.difficulty]
+            .sort((a, b) => {
+              const aHasSubmission = a?.submission?.length && a.submission.length > 0;
+              const bHasSubmission = b?.submission?.length && b.submission.length > 0;
+
+              if (aHasSubmission && !bHasSubmission) {
+                return 1;
+              }
+
+              if (!aHasSubmission && bHasSubmission) {
+                return -1;
+              }
+
+              return difficultyToNumber[a.difficulty] !== difficultyToNumber[b.difficulty]
                 ? difficultyToNumber[a.difficulty] - difficultyToNumber[b.difficulty]
-                : a.name.localeCompare(b.name),
-            )
+                : a.name.localeCompare(b.name);
+            })
             .map((challenge) => (
               <Link
                 className="group snap-center focus:outline-none sm:w-[330px] xl:w-[333px]"
-                href={`/challenge/${challenge.id}`}
+                href={`/challenge/${challenge.slug}`}
                 key={challenge.id}
               >
                 <ExploreCard challenge={challenge} key={`challenge-${challenge.id}`} />

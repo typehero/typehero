@@ -1,0 +1,8 @@
+{
+  "id": "generic-function-arguments",
+  "label": "Generic Function Arguments",
+  "description": "Give generic function types to your functions",
+  "difficulty": "beginner",
+  "prerequisites": ["generic-type-arguments", "literal-types"],
+  "author": "dimitropoulos"
+}

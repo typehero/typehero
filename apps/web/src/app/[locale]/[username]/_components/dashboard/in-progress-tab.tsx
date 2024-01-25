@@ -1,64 +1,38 @@
 import { prisma } from '@repo/db';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@repo/ui/components/table';
-import Link from 'next/link';
-import { getRelativeTime } from '~/utils/relativeTime';
+import { createInProgressSubmissionCacheKey } from '~/app/[locale]/challenge/[slug]/submissions/[[...catchAll]]/save-submission.action';
 import { withUnstableCache } from '~/utils/withUnstableCache';
+import ChallengeHistory from './challenge-history';
 
 export async function InProgressTab({ userId }: { userId: string }) {
   const challenges = await withUnstableCache({
     fn: getInProgressChallenges,
     args: [userId],
-    keys: ['in-progress-challenges'],
-    tags: ['challenges'],
+    keys: [`in-progress-challenges`],
+    tags: [createInProgressSubmissionCacheKey(userId)],
   });
 
-  return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Challenge</TableHead>
-          <TableHead>Last Submission</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {challenges.map((challenge) => (
-          <TableRow key={challenge.id}>
-            <TableCell className="font-medium underline">
-              <Link href={`/challenge/${challenge.id}`}>{challenge.name}</Link>
-            </TableCell>
-            <TableCell>{getRelativeTime(challenge.submission[0]!.createdAt)}</TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
-  );
+  return <ChallengeHistory challenges={challenges} />;
 }
 
-async function getInProgressChallenges(id: string) {
+async function getInProgressChallenges(userId: string) {
   const challenges = await prisma.challenge.findMany({
     where: {
       AND: [
         {
           submission: {
             none: {
-              userId: id,
+              userId,
               isSuccessful: true,
             },
           },
         },
         // Make sure there is at least one submission
-        { submission: { some: { userId: id, isSuccessful: false } } },
+        { submission: { some: { userId, isSuccessful: false } } },
       ],
     },
     select: {
       id: true,
+      slug: true,
       name: true,
       submission: {
         orderBy: {

@@ -1,5 +1,7 @@
-import { buildMetaForUser } from '~/app/metadata';
-import { Profile } from './_components/profile';
+import { buildMetaForDefault, buildMetaForUser } from '~/app/metadata';
+import { prisma } from '@repo/db';
+import { OverviewTab } from './_components/dashboard/overview-tab';
+import { notFound } from 'next/navigation';
 
 interface Props {
   params: {
@@ -7,16 +9,64 @@ interface Props {
   };
 }
 
-export default function Page({ params }: Props) {
-  return <Profile username={params.username} />;
+export default async function Page({ params: { username: usernameFromQuery } }: Props) {
+  const [, username] = decodeURIComponent(usernameFromQuery).split('@');
+
+  if (!username) return notFound();
+
+  const user = await prisma.user.findFirst({
+    where: {
+      name: {
+        equals: username,
+      },
+    },
+    select: {
+      id: true,
+      createdAt: true,
+      bio: true,
+      image: true,
+      name: true,
+      userLinks: true,
+    },
+  });
+
+  if (!user) return notFound();
+  return <OverviewTab user={user} />;
 }
 
-export async function generateMetadata({ params: { username } }: Props) {
-  const name = decodeURIComponent(username).substring(1);
+export async function generateMetadata({ params: { username: usernameFromQuery } }: Props) {
+  const [, username] = decodeURIComponent(usernameFromQuery).split('@');
 
-  return buildMetaForUser({
-    username: name,
-    title: `${name}'s profile | TypeHero`,
-    description: `View the profile of ${name} on TypeHero.`,
+  if (!username) return {};
+
+  const user = await prisma.user.findFirst({
+    where: {
+      name: {
+        equals: username,
+      },
+    },
+    select: {
+      id: true,
+      createdAt: true,
+      bio: true,
+      image: true,
+      name: true,
+    },
+  });
+
+  const bio = user ? user.bio : '';
+  const avatar = user && user.image ? user.image : '';
+
+  if (username)
+    return buildMetaForUser({
+      username,
+      title: `${username}'s profile | TypeHero`,
+      description: `View the profile of ${username} on TypeHero.`,
+      bio,
+      avatar,
+    });
+  return buildMetaForDefault({
+    title: 'Profile | TypeHero',
+    description: 'View the profile of a user on TypeHero.',
   });
 }

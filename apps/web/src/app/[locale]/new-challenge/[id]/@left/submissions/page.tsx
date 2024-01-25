@@ -1,3 +1,10 @@
+
+export function generateMetaData() {
+  return {
+    title: 'submissions, please?'
+  }
+}
+
 export default function () {
   return (
     <div>

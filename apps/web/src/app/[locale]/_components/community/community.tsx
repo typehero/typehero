@@ -1,16 +1,56 @@
 'use client';
 
-import { For } from 'million/react';
 import { GitBranch } from '@repo/ui/icons';
 import { clsx } from 'clsx';
 import { type CSSProperties } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { contributors } from '../../../../../public/contributors';
 import styles from './community.module.css';
-import Image from 'next/image';
+import { useEffect, useRef } from 'react';
+import { Contributor } from './contributor';
 
 // million-ignore
 export function Community() {
+  const innerScrollerRef = useRef<HTMLDivElement | null>(null);
+  const innerScrollerRef2 = useRef<HTMLDivElement | null>(null);
+  const innerScrollerRef3 = useRef<HTMLDivElement | null>(null);
+  const innerScrollerRef4 = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (innerScrollerRef.current) {
+      const scrollerContent = Array.from(innerScrollerRef.current.children) as HTMLElement[];
+      scrollerContent.forEach((child) => {
+        const duplicatedNode = child.cloneNode(true) as HTMLElement;
+        duplicatedNode.setAttribute('aria-hidden', 'true');
+        innerScrollerRef.current!.appendChild(duplicatedNode);
+      });
+    }
+    if (innerScrollerRef2.current) {
+      const scrollerContent = Array.from(innerScrollerRef2.current.children) as HTMLElement[];
+      scrollerContent.forEach((child) => {
+        const duplicatedNode = child.cloneNode(true) as HTMLElement;
+        duplicatedNode.setAttribute('aria-hidden', 'true');
+        innerScrollerRef2.current!.appendChild(duplicatedNode);
+      });
+    }
+    if (innerScrollerRef3.current) {
+      const scrollerContent = Array.from(innerScrollerRef3.current.children) as HTMLElement[];
+      scrollerContent.forEach((child) => {
+        const duplicatedNode = child.cloneNode(true) as HTMLElement;
+        duplicatedNode.setAttribute('aria-hidden', 'true');
+        innerScrollerRef3.current!.appendChild(duplicatedNode);
+      });
+    }
+    if (innerScrollerRef4.current) {
+      const scrollerContent = Array.from(innerScrollerRef4.current.children) as HTMLElement[];
+      scrollerContent.forEach((child) => {
+        const duplicatedNode = child.cloneNode(true) as HTMLElement;
+        duplicatedNode.setAttribute('aria-hidden', 'true');
+        innerScrollerRef4.current!.appendChild(duplicatedNode);
+      });
+    }
+  }, []);
+
   type WrapperStyle = CSSProperties & {
     '--bottom': string;
   };
@@ -39,12 +79,12 @@ export function Community() {
       <section className={clsx(styles.backdrop, 'relative -mb-[1px] pb-[1px]')}>
         <div className="backdrop-blur-md">
           <div className="container flex flex-col justify-center pt-[128px] lg:flex-row lg:items-center lg:pb-[148px]">
-            <div className="flex flex-1 flex-col items-center gap-6 pb-36 lg:items-start lg:pb-0">
+            <div className="flex flex-1 flex-col items-center gap-6 pb-12 lg:items-start lg:pb-0">
               <div className="rounded-full bg-gradient-to-r from-[#31bdc6] to-[#3178c6] p-[1px] brightness-90 contrast-150 dark:brightness-125 dark:contrast-100">
                 <div className="rounded-full bg-white/80 px-3 py-1 dark:bg-black/80">
                   <span className="flex items-center bg-gradient-to-r from-[#31bdc6] to-[#3178c6] bg-clip-text text-transparent">
-                    <GitBranch className="mr-2 h-4 w-4 stroke-[#31bdc6] stroke-2" /> By developers,
-                    for developers
+                    <GitBranch className="h-4 w-4 stroke-[#31bdc6] stroke-2 sm:mr-2" />
+                    <span className="hidden sm:block">By developers, for developers</span>
                   </span>
                 </div>
               </div>
@@ -55,7 +95,7 @@ export function Community() {
                 TypeHero is free, open-source, and built by developers just like you. These are some
                 of the contributors who made this possible so far.
               </p>
-              <div className="flex flex-col gap-3 sm:flex-row">
+              <div className="flex flex-col-reverse gap-3 sm:flex-row">
                 <a
                   target="_blank"
                   rel="noreferrer"
@@ -94,28 +134,62 @@ export function Community() {
                 </a>
               </div>
             </div>
-            <div className="relative flex-1 pb-36 pl-4 lg:pb-0">
-              {/* mobile width = w-16(4rem) * 4items  +  gap-x-3(0.75rem) * 3gaps */}
-              {/* medium width = 4rem * 5items + 0.75rem * 4gaps = 23rem  */}
-              {/* large width = 4rem * 6items + 0.75rem * 5gaps =  */}
-              <div className="honeycomboverride mx-auto flex w-[18.25rem] flex-wrap gap-x-3 gap-y-1 sm:w-[23rem] xl:w-[27.75rem] xl:[&>*:nth-child(11n_+_1)]:ml-[2.375rem] [&>*:nth-child(7n_+_1)]:ml-[2.375rem] sm:[&>*:nth-child(7n_+_1)]:ml-0 sm:[&>*:nth-child(9n_+_1)]:ml-[2.375rem] xl:[&>*:nth-child(9n_+_1)]:ml-0">
+            {/* honeycomb grid */}
+            <div className="hidden flex-1 pb-0 pl-6 xl:block">
+              {/* xl width = w-16(4rem) * 8items  +  px-1.5(0.75rem) * 8paddings = 38rem */}
+              <div className="honeycomboverride ml-auto flex flex-wrap xl:w-[38rem] ">
                 {contributors.map((contributor) => (
-                  <a
-                    className="group rounded-full duration-300 hover:scale-125 focus:outline-none focus:duration-0 focus-visible:ring-0 active:scale-105 active:duration-100"
-                    href={contributor.html_url}
-                    key={contributor.id}
-                    rel="noopener"
-                    target="_blank"
-                  >
-                    <Image
-                      className="honeycombchild h-16 w-16 rounded-3xl bg-cover duration-300 group-hover:rounded-[2rem] group-focus:outline-none group-focus:duration-0 group-focus-visible:ring-2 group-active:rounded-3xl group-active:duration-100"
-                      src={contributor.avatar_url}
-                      width={64}
-                      height={64}
-                      alt={`${contributor.login}'s GitHub avatar`}
-                    />
-                  </a>
+                  <Contributor contributor={contributor} key={contributor.id} />
                 ))}
+              </div>
+            </div>
+            {/* autoscrolled */}
+            <div className="pb-16 sm:pb-24 lg:pb-0 lg:pl-8 xl:hidden">
+              <div className="infinite-scroll-x-container mx-auto hover:shadow-[0_0_10rem_10rem_#fff8] dark:hover:shadow-[0_0_10rem_10rem_#0008] lg:w-[25rem] xl:w-[35rem]">
+                <div
+                  ref={innerScrollerRef}
+                  className="infinite-scroll-x relative flex w-max flex-nowrap py-1.5"
+                >
+                  {contributors.slice(0, contributors.length / 4).map((contributor) => (
+                    <Contributor contributor={contributor} key={contributor.id} />
+                  ))}
+                </div>
+              </div>
+              <div className="infinite-scroll-x-container mx-auto hover:shadow-[0_0_10rem_10rem_#fff8] dark:hover:shadow-[0_0_10rem_10rem_#0008] lg:w-[25rem] xl:w-[35rem]">
+                <div
+                  ref={innerScrollerRef2}
+                  className="infinite-scroll-x-reverse relative flex w-max flex-nowrap py-1.5"
+                >
+                  {contributors
+                    .slice(contributors.length / 4, (contributors.length / 4) * 2)
+                    .map((contributor) => (
+                      <Contributor contributor={contributor} key={contributor.id} />
+                    ))}
+                </div>
+              </div>
+              <div className="infinite-scroll-x-container mx-auto hover:shadow-[0_0_10rem_10rem_#fff8] dark:hover:shadow-[0_0_10rem_10rem_#0008] lg:w-[25rem] xl:w-[35rem]">
+                <div
+                  ref={innerScrollerRef3}
+                  className="infinite-scroll-x relative flex w-max flex-nowrap py-1.5"
+                >
+                  {contributors
+                    .slice((contributors.length / 4) * 2, (contributors.length / 4) * 3)
+                    .map((contributor) => (
+                      <Contributor contributor={contributor} key={contributor.id} />
+                    ))}
+                </div>
+              </div>
+              <div className="infinite-scroll-x-container mx-auto hover:shadow-[0_0_10rem_10rem_#fff8] dark:hover:shadow-[0_0_10rem_10rem_#0008] lg:w-[25rem] xl:w-[35rem]">
+                <div
+                  ref={innerScrollerRef4}
+                  className="infinite-scroll-x-reverse relative flex w-max flex-nowrap py-1.5"
+                >
+                  {contributors
+                    .slice((contributors.length / 4) * 3, contributors.length)
+                    .map((contributor) => (
+                      <Contributor contributor={contributor} key={contributor.id} />
+                    ))}
+                </div>
               </div>
             </div>
           </div>

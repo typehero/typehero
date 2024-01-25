@@ -18,7 +18,7 @@ import { DialogFooter } from '@repo/ui/components/dialog';
 import { Button } from '@repo/ui/components/button';
 
 const formSchema = z.object({
-  title: z.string().min(3),
+  name: z.string().min(3),
   description: z.string().min(10),
   visible: z.boolean(),
 });
@@ -35,7 +35,7 @@ export function AddTrackForm({ toggle }: Props) {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: '',
+      name: '',
       description: '',
       visible: false,
     },
@@ -72,10 +72,10 @@ export function AddTrackForm({ toggle }: Props) {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
-          name="title"
+          name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Track Title:</FormLabel>
+              <FormLabel>Track Name:</FormLabel>
               <FormControl>
                 <Input
                   className="rounded-xl bg-neutral-200 dark:bg-neutral-800"

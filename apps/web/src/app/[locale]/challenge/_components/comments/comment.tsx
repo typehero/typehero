@@ -37,6 +37,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
 import { Button } from '@repo/ui/components/button';
 import { CommentSkeleton } from './comment-skeleton';
+import { isAdminOrModerator } from '~/utils/auth-guards';
 
 interface SingleCommentProps {
   comment: PaginatedComments['comments'][number];
@@ -263,8 +264,7 @@ function SingleComment({
   replyQueryKey,
   preselectedCommentMetadata,
 }: SingleCommentProps) {
-  const params = useParams();
-  const challengeId = params.id as string;
+  const { slug } = useParams();
   const searchParams = useSearchParams();
   const replyId = searchParams.get('replyId');
   const queryClient = useQueryClient();
@@ -302,9 +302,9 @@ function SingleComment({
     }
   }
 
-  async function copyPathNotifyUser(isReply: boolean, challengeId: string) {
+  async function copyPathNotifyUser(isReply: boolean, slug: string) {
     try {
-      await copyCommentUrlToClipboard(isReply, challengeId);
+      await copyCommentUrlToClipboard(isReply, slug);
       toast({
         title: 'Success!',
         variant: 'success',
@@ -320,13 +320,13 @@ function SingleComment({
     }
   }
 
-  async function copyCommentUrlToClipboard(isReply: boolean, challengeId: string) {
+  async function copyCommentUrlToClipboard(isReply: boolean, slug: string) {
     const commentId = isReply ? comment.parentId : comment.id;
     const paramsObj = { replyId: String(comment.id) };
     const searchParams = new URLSearchParams(paramsObj);
 
     const { rootType, rootSolutionId } = comment;
-    const baseURL = `${window.location.origin}/challenge/${challengeId}`;
+    const baseURL = `${window.location.origin}/challenge/${slug}`;
     const hasGetParams = isReply ? `?${searchParams.toString()}` : '';
 
     const shareUrl =
@@ -340,6 +340,9 @@ function SingleComment({
   const loggedinUser = useSession();
 
   const isAuthor = loggedinUser.data?.user.id === comment.user.id;
+  const isAdminAndModerator = isAdminOrModerator(loggedinUser.data);
+
+  const hasBeenEdited = comment.updatedAt.getTime() > comment.createdAt.getTime();
 
   useEffect(() => {
     if (!isHighlighted) return;
@@ -374,6 +377,7 @@ function SingleComment({
             </Avatar>
             <UserBadge username={comment.user.name ?? ''} linkComponent={Link} />
           </div>
+
           <Tooltip delayDuration={0.05}>
             <TooltipTrigger asChild>
               <div className="text-muted-foreground flex items-center gap-2 whitespace-nowrap text-xs">
@@ -390,6 +394,15 @@ function SingleComment({
       {!isEditing && (
         <div className="-mb-1">
           <ExpandableContent content={comment.text} />
+          {hasBeenEdited ? (
+            <div className="text-muted-foreground flex items-center gap-2 whitespace-nowrap text-xs">
+              Last edited at
+              {new Intl.DateTimeFormat(undefined, {
+                timeStyle: 'short',
+                dateStyle: 'short',
+              }).format(comment.updatedAt)}
+            </div>
+          ) : null}
         </div>
       )}
       {isEditing ? (
@@ -435,7 +448,7 @@ function SingleComment({
                   size="xs"
                   className="gap-2"
                   onClick={() => {
-                    copyPathNotifyUser(Boolean(isReply), challengeId);
+                    copyPathNotifyUser(Boolean(isReply), slug as string);
                   }}
                 >
                   <Share className="h-3 w-3" />
@@ -472,30 +485,30 @@ function SingleComment({
                 </TooltipContent>
               </Tooltip>
             ) : null}
-            {isAuthor ? (
+            {isAuthor || isAdminAndModerator ? (
               <Tooltip>
-                <TooltipTrigger asChild>
-                  <CommentDeleteDialog asChild comment={comment}>
+                <CommentDeleteDialog asChild comment={comment}>
+                  <TooltipTrigger asChild>
                     <Button variant="secondary" size="xs">
                       <Trash2 className="h-3 w-3" />
                       <span className="sr-only">Delete this comment</span>
                     </Button>
-                  </CommentDeleteDialog>
-                </TooltipTrigger>
+                  </TooltipTrigger>
+                </CommentDeleteDialog>
                 <TooltipContent>
                   <p>Delete</p>
                 </TooltipContent>
               </Tooltip>
             ) : (
               <Tooltip>
-                <TooltipTrigger asChild>
-                  <ReportDialog triggerAsChild commentId={comment.id} reportType="COMMENT">
+                <ReportDialog triggerAsChild commentId={comment.id} reportType="COMMENT">
+                  <TooltipTrigger asChild>
                     <Button variant="secondary" size="xs">
                       <Flag className="h-3 w-3" />
                       <span className="sr-only">Report this comment</span>
                     </Button>
-                  </ReportDialog>
-                </TooltipTrigger>
+                  </TooltipTrigger>
+                </ReportDialog>
                 <TooltipContent>
                   <p>Report</p>
                 </TooltipContent>

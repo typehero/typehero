@@ -3,6 +3,7 @@
 import { getServerAuthSession } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import type { Comment, CommentRoot, PrismaClient } from '@repo/db/types';
+import { isAdminOrModerator, isAuthor } from '~/utils/auth-guards';
 
 /**
  *
@@ -64,29 +65,40 @@ export async function replyComment(comment: CommentToCreate, parentId: number) {
 export async function updateComment(text: string, id: number) {
   const session = await getServerAuthSession();
 
-  if (!session?.user.id) return 'unauthorized';
+  if (!session) return 'unauthorized';
   if (text.length === 0) return 'text_is_empty';
-  if (!session.user.id) return 'unauthorized';
+
+  const comment = await prisma.comment.findFirstOrThrow({
+    where: {
+      id,
+    },
+  });
+
+  const isAuthorized = isAdminOrModerator(session) || isAuthor(session, comment.userId);
+  if (!isAuthorized) {
+    return 'unauthorized';
+  }
 
   return await prisma.comment.update({
     where: {
       id,
+      userId: session.user.id,
     },
     data: {
       text,
-      userId: session.user.id,
     },
   });
 }
 /**
- * Delete's a comment given a comment id. It must
- * be your own comment.
- * @props comment_id The id of the comment.
+ * Deletes a comment given a comment ID. The user must be the author of the comment or have the role of 'ADMIN' or 'MODERATOR'.
+ * @param comment_id The ID of the comment to be deleted.
+ * @param author The ID of the user who authored the comment.
+ * @returns 'unauthorized' if the user is not authorized, 'invalid_comment' if the comment ID is not provided, or undefined if the comment is successfully deleted.
  */
 export async function deleteComment(comment_id: number) {
   const session = await getServerAuthSession();
 
-  if (!session?.user.id) return 'unauthorized';
+  if (!session) return 'unauthorized';
   if (!comment_id) return 'invalid_comment';
 
   const rootComment = await prisma.comment.findFirstOrThrow({
@@ -94,6 +106,11 @@ export async function deleteComment(comment_id: number) {
       id: comment_id,
     },
   });
+
+  const isAuthorized = isAdminOrModerator(session) || isAuthor(session, rootComment.userId);
+  if (!isAuthorized) {
+    return 'unauthorized';
+  }
 
   await deleteCommentWithChildren(prisma, rootComment);
 }

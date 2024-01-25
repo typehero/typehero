@@ -1,7 +1,6 @@
 'use client';
 
-import { signIn, signOut, useSession } from '@repo/auth/react';
-import { type RoleTypes } from '@repo/db/types';
+import { signOut, useSession } from '@repo/auth/react';
 import { Button } from '@repo/ui/components/button';
 import {
   DropdownMenu,
@@ -30,21 +29,13 @@ export function getAdminUrl() {
   return `http://localhost:3001`;
 }
 
-const roleTypes: typeof RoleTypes = {
-  USER: 'USER',
-  ADMIN: 'ADMIN',
-  MODERATOR: 'MODERATOR',
-  CREATOR: 'CREATOR',
-};
-
 export function Navigation() {
   const { fssettings } = useFullscreenSettingsStore();
   const pathname = usePathname();
-  const { data } = useSession();
   const featureFlags = useContext(FeatureFlagContext);
 
   return (
-    <header className="z-0 w-full">
+    <header className="z-50 w-full">
       {!fssettings.isFullscreen && (
         <nav
           className={`flex h-14 items-center text-sm font-medium ${
@@ -54,14 +45,14 @@ export function Navigation() {
           <div className="flex w-full items-center justify-between">
             <div className="relative flex items-center gap-3">
               <Link
-                className="flex items-center space-x-2 focus:outline-none focus-visible:ring-2"
+                className="flex items-center space-x-1.5 focus:outline-none focus-visible:ring-2"
                 href="/"
               >
                 <svg
-                  className="h-8 w-8 rounded-md bg-[#3178C6] p-[2px]"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
                   viewBox="0 0 38 38"
                   fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
                 >
                   <rect width="38" height="38" rx="4.5" fill="#3178C6" />
                   <path
@@ -82,7 +73,7 @@ export function Navigation() {
                   hero
                 </span>
               </Link>
-              {featureFlags?.exploreButton ? (
+              {featureFlags?.enableExplore ? (
                 <Link href="/explore" className="ml-4">
                   <div
                     className={clsx('hover:text-foreground text-foreground/80 transition-colors', {
@@ -93,7 +84,7 @@ export function Navigation() {
                   </div>
                 </Link>
               ) : null}
-              {featureFlags?.tracksButton ? (
+              {featureFlags?.enableTracks ? (
                 <Link href="/tracks" className="ml-4">
                   <div
                     className={clsx('hover:text-foreground text-foreground/80 transition-colors', {
@@ -108,7 +99,7 @@ export function Navigation() {
             <div className="flex">
               <div className="flex items-center justify-end gap-2">
                 <ThemeButton />
-                {featureFlags?.loginButton ? <LoginButton /> : null}
+                {featureFlags?.enableLogin ? <LoginButton /> : null}
               </div>
             </div>
           </div>
@@ -145,28 +136,23 @@ function ThemeButton() {
   );
 }
 
+const BLACKLISTED_LOGIN_REDIRECT_PATHS = ['/', '/login'];
+
 function LoginButton() {
-  const [loading, setLoading] = useState(false);
   const { data: session, status } = useSession();
   const router = useRouter();
+  const pathname = usePathname();
 
   const isAdminOrMod = isAdminOrModerator(session);
 
-  // NOTE: 1. loading == true -> 2. signIn() -> 3. session status == 'loading' (loading == false)
-  const handleSignIn = async () => {
-    try {
-      setLoading(true);
-      // page reloads after sign in, so no need to setLoading(false), othersiwe ugly visual glitch
-      await signIn('github', { redirect: false });
-    } catch (error) {
-      // only set loading to false if there was an error and page didn't reload after sign in
-      setLoading(false);
-    }
-  };
   const handleSignOut = async () => {
     await signOut({ redirect: false });
     router.refresh();
   };
+
+  const isBlacklistedPath = BLACKLISTED_LOGIN_REDIRECT_PATHS.some((blacklistedPath) => {
+    return blacklistedPath === pathname;
+  });
 
   return session ? (
     <DropdownMenu>
@@ -221,12 +207,16 @@ function LoginButton() {
       </DropdownMenuContent>
     </DropdownMenu>
   ) : (
-    <Button
+    <Link
       className="focus:bg-accent w-20 rounded-lg bg-transparent p-2 text-black duration-300 hover:bg-gray-200 focus:outline-none dark:text-white hover:dark:bg-gray-800"
-      disabled={loading || status === 'loading'}
-      onClick={handleSignIn}
+      href={{
+        pathname: '/login',
+        query: {
+          ...(!isBlacklistedPath && { redirectTo: pathname }),
+        },
+      }}
     >
-      {loading || status === 'loading' ? (
+      {status === 'loading' ? (
         <Loader2 className="h-5 w-5 animate-spin" />
       ) : (
         <div className="flex items-center space-x-2">
@@ -234,6 +224,6 @@ function LoginButton() {
           <span className="dark:text-white">Login</span>
         </div>
       )}
-    </Button>
+    </Link>
   );
 }

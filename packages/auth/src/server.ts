@@ -34,27 +34,27 @@ if (!process.env.GITHUB_SECRET) {
   throw new Error('No GITHUB_SECRET has been provided.');
 }
 
-const useSecureCookies = Boolean(process.env.VERCEL_URL);
+const useSecureCookies = process.env.VERCEL_ENV === 'production';
+const cookiePrefix = useSecureCookies ? '__Secure-' : '';
+const cookieDomain = useSecureCookies ? 'typehero.dev' : undefined;
 
 export const authOptions: NextAuthOptions = {
+  pages: {
+    signIn: '/login',
+  },
   cookies: {
     sessionToken: {
-      name: `${useSecureCookies ? '__Secure-' : ''}next-auth.session-token`,
+      name: `${cookiePrefix}next-auth.session-token`,
       options: {
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
-        domain: useSecureCookies ? 'typehero.dev' : process.env.VERCEL_URL,
+        domain: cookieDomain,
         secure: useSecureCookies,
       },
     },
   },
   callbacks: {
-    redirect: ({ url, baseUrl }) => {
-      if (url.startsWith('/')) return `${baseUrl}${url}`;
-      else if (new URL(url).origin === baseUrl) return url;
-      return baseUrl;
-    },
     session: async ({ session, user }) => {
       // 1. State
       let userRoles: RoleTypes[] = [];

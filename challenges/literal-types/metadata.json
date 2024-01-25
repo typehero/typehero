@@ -1,0 +1,8 @@
+{
+  "id": "literal-types",
+  "label": "Literal Types",
+  "description": "TypeScript can be more specific than `string` or `number`.  It can remember literal values.",
+  "difficulty": "beginner",
+  "prerequisites": ["primitive-data-types", "type-unions"],
+  "author": "dimitropoulos"
+}
