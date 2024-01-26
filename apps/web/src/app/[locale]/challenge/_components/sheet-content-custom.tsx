@@ -6,49 +6,41 @@ import { TrackProgress } from '../../tracks/_components/track-progress';
 import { SelectDropdown } from './select-dropdown';
 import { useChallengeRouteData } from '~/app/challenge-route-data.hook';
 import { SORT_KEYS, useProblemExplorerContext } from '~/app/problem-explorer.hooks';
-import { useRouter } from 'next/navigation';
 import { useAllChallengesContext } from '~/app/all-challenges.hook';
 import { useLocalStorage } from '~/utils/useLocalStorage';
 
 export function ExplorerPanel() {
-  const router = useRouter();
   const [, setTrackNameStorage] = useLocalStorage('trackName', 'popular');
   const { getTrack, setTrack, title, setTitle, sortKey, setSortKey } = useProblemExplorerContext();
   const { allChallenges } = useAllChallengesContext();
 
   const handleValueChange = (value: string) => {
     if (value === 'popular') {
-      router.push(`/challenge/${allChallenges.popularChallenges[0]?.slug}`);
       setTitle('Recommended Challenges');
       setTrack(allChallenges.popularChallenges);
       setTrackNameStorage('popular');
     }
     if (value === 'beginner') {
-      router.push(`/challenge/${allChallenges.beginnerChallenges[0]?.slug}`);
       setTitle('Great for Beginners');
       setTrack(allChallenges.beginnerChallenges);
       setTrackNameStorage('beginner');
     }
     if (value === 'easy') {
-      router.push(`/challenge/${allChallenges.easyChallenges[0]?.slug}`);
       setTitle('Great for Learners');
       setTrack(allChallenges.easyChallenges);
       setTrackNameStorage('easy');
     }
     if (value === 'medium') {
-      router.push(`/challenge/${allChallenges.mediumChallenges[0]?.slug}`);
       setTitle('Great for Enthusiasts');
       setTrack(allChallenges.mediumChallenges);
       setTrackNameStorage('medium');
     }
     if (value === 'hard') {
-      router.push(`/challenge/${allChallenges.hardChallenges[0]?.slug}`);
       setTitle('Great for Experts');
       setTrack(allChallenges.hardChallenges);
       setTrackNameStorage('hard');
     }
     if (value === 'extreme') {
-      router.push(`/challenge/${allChallenges.extremeChallenges[0]?.slug}`);
       setTitle('Great for Masters');
       setTrack(allChallenges.extremeChallenges);
       setTrackNameStorage('extreme');
