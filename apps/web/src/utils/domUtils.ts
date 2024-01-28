@@ -1,23 +1,29 @@
-// FIXME: this won't work in a controlled component need to figure it out
 /**
- * This will insert the given text into the textarea element
+ * This will insert the given text at the caret position into the textarea element
  */
 export function insertText(newText: string, textarea: HTMLTextAreaElement) {
-  // Get the current cursor position
-  const cursorPos = textarea.selectionStart;
+  // @ts-ignore - i don't care that you error
+  const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+    window.HTMLTextAreaElement.prototype,
+    'value',
+  ).set;
 
-  // Get the text before and after the cursor position
-  const textBefore = textarea.value.substring(0, cursorPos);
-  const textAfter = textarea.value.substring(cursorPos);
+  if (!nativeInputValueSetter) return;
 
-  // Insert the new text at the cursor position
-  textarea.value = textBefore + newText + textAfter;
+  // get left value of the textarea
+  const left = textarea.value.substring(0, textarea.selectionStart);
 
-  // Move the cursor to the end of the inserted text
-  const newCursorPos = cursorPos + newText.length;
-  textarea.setSelectionRange(newCursorPos, newCursorPos);
+  // get right value of the textarea
+  const right = textarea.value.substring(textarea.selectionEnd, textarea.value.length);
+  nativeInputValueSetter.call(textarea, left + newText + right);
 
-  // Optionally, trigger the input event to update any event listeners
-  const inputEvent = new Event('input');
+  // set the caret position to the end of the new text
+  const newCaretPosition = left.length + newText.length;
+
+  // make sure to keep focus on the textarea
+  textarea.focus();
+  textarea.setSelectionRange(newCaretPosition, newCaretPosition);
+
+  const inputEvent = new Event('input', { bubbles: true });
   textarea.dispatchEvent(inputEvent);
 }
