@@ -164,16 +164,6 @@ export function RichMarkdownEditor({
 
   return (
     <div className="h-full flex-1 selection:bg-blue-400/50 selection:text-white">
-      <button
-        type="button"
-        onClick={(e) => {
-          e.preventDefault();
-          // @ts-expect-error
-          insertText('this should work no?', editorRef.current?.textarea);
-        }}
-      >
-        testing
-      </button>
       <MDEditor
         components={{
           toolbar: (command) => {
