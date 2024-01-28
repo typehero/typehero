@@ -305,8 +305,8 @@ importers:
         specifier: ^3.23.3
         version: 3.23.3(@types/react@18.2.20)(react-dom@18.2.0)(react@18.2.0)
       '@uploadthing/react':
-        specifier: ^5.5.0
-        version: 5.5.0(react-dropzone@14.2.3)(react@18.2.0)(uploadthing@5.5.2)(zod@3.21.4)
+        specifier: ^6.2.2
+        version: 6.2.2(next@14.0.1)(react@18.2.0)(uploadthing@6.3.1)
       '@vercel/analytics':
         specifier: ^1.1.1
         version: 1.1.1
@@ -413,8 +413,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
       uploadthing:
-        specifier: ^5.5.2
-        version: 5.5.2(zod@3.21.4)
+        specifier: 6.3.1
+        version: 6.3.1
       zod:
         specifier: ^3.21.4
         version: 3.21.4
@@ -764,7 +764,7 @@ importers:
     dependencies:
       '@next/eslint-plugin-next':
         specifier: canary
-        version: 14.0.5-canary.35
+        version: 14.0.5-canary.52
       '@repo/tsconfig':
         specifier: workspace:*
         version: link:../config-typescript
@@ -776,7 +776,7 @@ importers:
         version: 5.62.0(eslint@8.45.0)(typescript@5.3.3)
       '@vercel/style-guide':
         specifier: ^4.0.2
-        version: 4.0.2(@next/eslint-plugin-next@14.0.5-canary.35)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 4.0.2(@next/eslint-plugin-next@14.0.5-canary.52)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3)
       eslint:
         specifier: ^8.45.0
         version: 8.45.0
@@ -2814,8 +2814,8 @@ packages:
       glob: 7.1.7
     dev: true
 
-  /@next/eslint-plugin-next@14.0.5-canary.35:
-    resolution: {integrity: sha512-E49+IC/7hwVFl9Z5bdPvS95MYtqAR6Zsza39vGGtDrZi3uxRe4b1DXdTlLuYpIT+LOLrZLYx/j9hoiViYmfGgQ==}
+  /@next/eslint-plugin-next@14.0.5-canary.52:
+    resolution: {integrity: sha512-jdYG/tA65388cqi8fhx4eIm/qxUNh+v7Qvx578+BaZyv72RPuw74eReAfbJoidv5YAnJ5upXrJcXxO/9ir2xGQ==}
     dependencies:
       glob: 7.1.7
     dev: false
@@ -3432,7 +3432,7 @@ packages:
       is-glob: 4.0.3
       open: 9.1.0
       picocolors: 1.0.0
-      tslib: 2.6.0
+      tslib: 2.6.2
 
   /@playwright/test@1.38.0:
     resolution: {integrity: sha512-xis/RXXsLxwThKnlIXouxmIvvT3zvQj1JE39GsNieMUrMpb3/GySHDh2j8itCG22qKVD4MYLBp7xB73cUW/UUw==}
@@ -5091,7 +5091,7 @@ packages:
       '@sentry/core': 7.73.0
       '@sentry/types': 7.73.0
       '@sentry/utils': 7.73.0
-      tslib: 2.6.0
+      tslib: 2.6.2
     dev: false
 
   /@sentry/browser@7.73.0:
@@ -5103,7 +5103,7 @@ packages:
       '@sentry/replay': 7.73.0
       '@sentry/types': 7.73.0
       '@sentry/utils': 7.73.0
-      tslib: 2.6.0
+      tslib: 2.6.2
     dev: false
 
   /@sentry/cli@1.75.2:
@@ -5898,38 +5898,49 @@ packages:
   /@ungap/structured-clone@1.2.0:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
-  /@uploadthing/mime-types@0.2.1:
-    resolution: {integrity: sha512-UDySsPbdi7wp52WG7mp5CiZwaTvokDubqhm1xhFm73Bqhp0PsGbwSSF5PdCXH4fe8Y4EKGrMyWQ4i1fF9+DVVQ==}
+  /@uploadthing/dropzone@0.1.1:
+    resolution: {integrity: sha512-ohlnFQfNr/UmImfipVo4uiBj1HQL7dp/sWBD96iAajc6RaQuYnHATGaSaISpCjZTeoLkksuu4/LR8vU9nSzpvQ==}
+    dependencies:
+      attr-accept: 2.2.2
+      file-selector: 0.6.0
     dev: false
 
-  /@uploadthing/react@5.5.0(react-dropzone@14.2.3)(react@18.2.0)(uploadthing@5.5.2)(zod@3.21.4):
-    resolution: {integrity: sha512-50VduVEqDJwEyT9GDxCAzI5V28/5tD9Rddsmwt/ciCJG8J+sg3C9oHAvhEm9MWYf3h0YVi/fgtpYLg64Y8PSAA==}
+  /@uploadthing/mime-types@0.2.2:
+    resolution: {integrity: sha512-ZUo1JHOPPMZDsUw1mOhhVDIvJGlsjj6T0xJ/YJtulyJwL43S9B5pxg1cHcRuTEgjaxj7B55jiqQ6r9mDrrjH9A==}
+    dev: false
+
+  /@uploadthing/react@6.2.2(next@14.0.1)(react@18.2.0)(uploadthing@6.3.1):
+    resolution: {integrity: sha512-fDfVooLTbC5/FM1o/chPDf5i8DRxCOeRSuRl0R6yh/jIHTdDO2kwXeM5DTaBazJmaEabh5GB+I9Rwg8nU0QdVA==}
     peerDependencies:
+      next: '*'
       react: ^17.0.2 || ^18.0.0
-      react-dropzone: ^14.2.3
-      uploadthing: ^5.0.0
+      uploadthing: ^6.0.0
+    peerDependenciesMeta:
+      next:
+        optional: true
     dependencies:
-      '@uploadthing/shared': 5.2.1(@uploadthing/mime-types@0.2.1)(zod@3.21.4)
+      '@uploadthing/dropzone': 0.1.1
+      '@uploadthing/shared': 6.2.0(@uploadthing/mime-types@0.2.2)
+      attr-accept: 2.2.2
+      file-selector: 0.6.0
+      next: 14.0.1(@babel/core@7.22.10)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
-      react-dropzone: 14.2.3(react@18.2.0)
       tailwind-merge: 1.14.0
-      uploadthing: 5.5.2(zod@3.21.4)
+      uploadthing: 6.3.1
     transitivePeerDependencies:
       - '@uploadthing/mime-types'
-      - zod
     dev: false
 
-  /@uploadthing/shared@5.2.1(@uploadthing/mime-types@0.2.1)(zod@3.21.4):
-    resolution: {integrity: sha512-ISb78wuHqU5F/7TVw/3eO0VHQdSx3qdN7I4R4knHynuWFjgJjfUsc+zAAAtpo0UZlwfjIQIv/WtSwxdlNxRPGw==}
+  /@uploadthing/shared@6.2.0(@uploadthing/mime-types@0.2.2):
+    resolution: {integrity: sha512-GMC1gwZa9X48RZwuY7gGse7E8TXYMAMUNaYWEQL2ctVhMZv7viCPyMyZ0yMqBsQmOeGfbmycPnUeNE9IuesJGg==}
     peerDependencies:
-      '@uploadthing/mime-types': ^0.2.0
-      zod: ^3.21.4
+      '@uploadthing/mime-types': ^0.2.2
     peerDependenciesMeta:
       '@uploadthing/mime-types':
         optional: true
     dependencies:
-      '@uploadthing/mime-types': 0.2.1
-      zod: 3.21.4
+      '@uploadthing/mime-types': 0.2.2
+      std-env: 3.7.0
     dev: false
 
   /@vercel/analytics@1.1.1:
@@ -5979,7 +5990,7 @@ packages:
       yoga-wasm-web: 0.3.0
     dev: false
 
-  /@vercel/style-guide@4.0.2(@next/eslint-plugin-next@14.0.5-canary.35)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3):
+  /@vercel/style-guide@4.0.2(@next/eslint-plugin-next@14.0.5-canary.52)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3):
     resolution: {integrity: sha512-FroL+oOePzhw7n/I+f7zr4WNroGHT/+2TlW6WH9+CVSjMNsEyu7Qstj2mI5gWIBjT1Y2ZImKPppCzI2cIYmNZw==}
     engines: {node: '>=16'}
     peerDependencies:
@@ -5999,7 +6010,7 @@ packages:
     dependencies:
       '@babel/core': 7.22.10
       '@babel/eslint-parser': 7.22.10(@babel/core@7.22.10)(eslint@8.45.0)
-      '@next/eslint-plugin-next': 14.0.5-canary.35
+      '@next/eslint-plugin-next': 14.0.5-canary.52
       '@rushstack/eslint-patch': 1.3.2
       '@typescript-eslint/eslint-plugin': 5.59.1(@typescript-eslint/parser@5.62.0)(eslint@8.45.0)(typescript@5.3.3)
       '@typescript-eslint/parser': 5.62.0(eslint@8.45.0)(typescript@5.3.3)
@@ -7111,7 +7122,6 @@ packages:
   /consola@3.2.3:
     resolution: {integrity: sha512-I5qxpzLv+sJhTVEoLYNcTW+bThDCPsit0vLNKShZx6rLtpilNpmmeTPaeqJb9ZE9dV3DGaeby6Vuhrw38WjeyQ==}
     engines: {node: ^14.18.0 || >=16.10.0}
-    dev: true
 
   /console-control-strings@1.1.0:
     resolution: {integrity: sha512-ty/fTekppD2fIwRvnZAVdeOiGd1c7YXEixbgJTNzqcxJWKQnjJ/V1bNEEE6hygpM3WjwHFUVK6HTjWSzV4a8sQ==}
@@ -12394,18 +12404,6 @@ packages:
       scheduler: 0.23.0
     dev: false
 
-  /react-dropzone@14.2.3(react@18.2.0):
-    resolution: {integrity: sha512-O3om8I+PkFKbxCukfIR3QAGftYXDZfOE2N1mr/7qebQJHs7U+/RSL/9xomJNpRg9kM5h9soQSdf0Gc7OHF5Fug==}
-    engines: {node: '>= 10.13'}
-    peerDependencies:
-      react: '>= 16.8 || 18.0.0'
-    dependencies:
-      attr-accept: 2.2.2
-      file-selector: 0.6.0
-      prop-types: 15.8.1
-      react: 18.2.0
-    dev: false
-
   /react-email@1.9.3:
     resolution: {integrity: sha512-pD+uVG6GoJR03Kzkk5KHPlc/TtUZ/UYs/hfakeRP6Ma/Oja0fOw4gjYGXQo0zwwqEM5OdLQOdS3qBCJyRYrqVw==}
     engines: {node: '>=16.0.0'}
@@ -12537,7 +12535,7 @@ packages:
       '@types/react': 18.2.20
       react: 18.2.0
       react-style-singleton: 2.2.1(@types/react@18.2.20)(react@18.2.0)
-      tslib: 2.6.0
+      tslib: 2.6.2
     dev: false
 
   /react-remove-scroll@2.5.4(@types/react@18.2.20)(react@18.2.0):
@@ -12554,7 +12552,7 @@ packages:
       react: 18.2.0
       react-remove-scroll-bar: 2.3.4(@types/react@18.2.20)(react@18.2.0)
       react-style-singleton: 2.2.1(@types/react@18.2.20)(react@18.2.0)
-      tslib: 2.6.0
+      tslib: 2.6.2
       use-callback-ref: 1.3.0(@types/react@18.2.20)(react@18.2.0)
       use-sidecar: 1.1.2(@types/react@18.2.20)(react@18.2.0)
     dev: false
@@ -12613,7 +12611,7 @@ packages:
       get-nonce: 1.0.1
       invariant: 2.2.4
       react: 18.2.0
-      tslib: 2.6.0
+      tslib: 2.6.2
     dev: false
 
   /react-syntax-highlighter@15.5.0(react@18.2.0):
@@ -13407,7 +13405,6 @@ packages:
 
   /std-env@3.7.0:
     resolution: {integrity: sha512-JPbdCEQLj1w5GilpiHAx3qJvFndqybBysA3qUOnznweH4QbNYUsW/ea8QzSrnh0vNsezMMw5bcVool8lM0gwzg==}
-    dev: true
 
   /streamsearch@1.1.0:
     resolution: {integrity: sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==}
@@ -13873,7 +13870,6 @@ packages:
 
   /tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
-    dev: false
 
   /tsup@5.12.0(typescript@5.3.3):
     resolution: {integrity: sha512-FGZZNikQYGlEPtKEnz04hEniEO9ctP0rfWOdDeJCpFY4sqQe+TE90YNsv/1g0FshXoGYAOTFDYAVHg6Ovh003Q==}
@@ -14411,13 +14407,14 @@ packages:
       escalade: 3.1.1
       picocolors: 1.0.0
 
-  /uploadthing@5.5.2(zod@3.21.4):
-    resolution: {integrity: sha512-PvCPzXHr1xMFh5qN9ef9gL1KOeQhKLII58bOEwT6+DaN8nWmFtXRd66PDMkoEInYuC7U1Cacuvc1oniEQF5pAw==}
+  /uploadthing@6.3.1:
+    resolution: {integrity: sha512-eqbUpxSYtofT/aqqXHlaNJhpK94st6rGeEr8d2QmL0gHWKauS9w7J4jQ5Q7Jfmb2kMJj+pXW3duydkev/5G6Mw==}
+    engines: {node: '>=18.13.0'}
     dependencies:
-      '@uploadthing/mime-types': 0.2.1
-      '@uploadthing/shared': 5.2.1(@uploadthing/mime-types@0.2.1)(zod@3.21.4)
-    transitivePeerDependencies:
-      - zod
+      '@uploadthing/mime-types': 0.2.2
+      '@uploadthing/shared': 6.2.0(@uploadthing/mime-types@0.2.2)
+      consola: 3.2.3
+      std-env: 3.7.0
     dev: false
 
   /uqr@0.1.2:
@@ -14445,7 +14442,7 @@ packages:
     dependencies:
       '@types/react': 18.2.20
       react: 18.2.0
-      tslib: 2.6.0
+      tslib: 2.6.2
     dev: false
 
   /use-isomorphic-layout-effect@1.1.2(@types/react@18.2.20)(react@18.2.0):
@@ -14474,7 +14471,7 @@ packages:
       '@types/react': 18.2.20
       detect-node-es: 1.1.0
       react: 18.2.0
-      tslib: 2.6.0
+      tslib: 2.6.2
     dev: false
 
   /use-sync-external-store@1.2.0(react@18.2.0):

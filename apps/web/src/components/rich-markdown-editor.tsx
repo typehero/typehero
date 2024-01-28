@@ -94,12 +94,13 @@ export function RichMarkdownEditor({
   const { startUpload } = useUploadThing('imageUploader', {
     onClientUploadComplete: (res) => {
       if (!res) return;
-      // fist file in the array
-      const uploadedFile = res[0];
+      // first file in the array
+      const [uploadedFile] = res;
 
       // insert string at cursor position by calling on change
+      const markdownImageEmbed = `![${uploadedFile?.name}](${uploadedFile?.url})`;
       insertText(
-        `![${uploadedFile?.fileKey}](${uploadedFile?.fileUrl})`,
+        markdownImageEmbed,
         // @ts-expect-error
         editorRef.current.textarea,
       );
@@ -142,24 +143,23 @@ export function RichMarkdownEditor({
   }, [startUpload, allowImageUpload]);
 
   const handlePasta = async (event: React.ClipboardEvent<HTMLDivElement>) => {
+    event.preventDefault();
+
     // only allow image if it's enabled
     if (!allowImageUpload) return;
 
-    const items = event.clipboardData.items;
-    if (!items) return;
-    // upload the image to and endpoint
-    for (const item of items) {
-      if (item.kind === 'file') {
-        const blob = item.getAsFile();
-        if (!blob) return;
+    const [firstImage] = event.clipboardData.items;
+    if (!firstImage) return;
+    if (firstImage.kind !== 'file') return;
 
-        // update state for the loading spinner
-        setIsImageUploading(true);
+    const blob = firstImage.getAsFile();
+    if (!blob) return;
 
-        // upload to the endpoint
-        await startUpload([blob]);
-      }
-    }
+    // update state for the loading spinner
+    setIsImageUploading(true);
+
+    // upload to the endpoint
+    await startUpload([blob]);
   };
 
   return (
