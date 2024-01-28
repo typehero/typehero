@@ -40,7 +40,7 @@
     "@tanstack/react-query-devtools": "^5.8.1",
     "@tanstack/react-table": "^8.9.3",
     "@uiw/react-md-editor": "^3.23.3",
-    "@uploadthing/react": "^6.1.0",
+    "@uploadthing/react": "^6.2.2",
     "@vercel/analytics": "^1.1.1",
     "@vercel/edge-config": "^0.2.1",
     "@vercel/toolbar": "^0.1.1",
@@ -76,7 +76,7 @@
     "tailwindcss-animate": "^1.0.6",
     "unified": "^10.1.2",
     "unist-util-visit": "^5.0.0",
-    "uploadthing": "^6.1.2-canary.c9fd820",
+    "uploadthing": "6.3.1",
     "zod": "^3.21.4",
     "zustand": "^4.3.9"
   },
