@@ -74,6 +74,7 @@ const challengesDir = `${repoRoot}/challenges/`;
 export const getChallengeIds = () => {
   return readdirSync(challengesDir)
     .filter((id) => id !== 'blank')
+    .filter((id) => id !== 'aot')
     .filter((id) => statSync(join(challengesDir, id)).isDirectory())
     .filter((id) => statSync(join(challengesDir, id, 'metadata.json')).isFile())
     .filter((id) => statSync(join(challengesDir, id, 'tsconfig.json')).isFile());
