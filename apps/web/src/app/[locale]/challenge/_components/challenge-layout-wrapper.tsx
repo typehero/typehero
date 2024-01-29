@@ -15,7 +15,7 @@ interface Props {
 }
 
 interface Base {
-  [key: string]: string | number;
+  [key: string]: number | string;
 }
 
 export function ChallengeLayoutWrapper({ challenge, track, children }: Props) {
