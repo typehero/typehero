@@ -14,6 +14,10 @@ interface Props {
   children: ReactNode;
 }
 
+interface Base {
+  [key: string]: string | number;
+}
+
 export function ChallengeLayoutWrapper({ challenge, track, children }: Props) {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > MOBILE_BREAKPOINT);
   const LEFT_PANEL_BREAKPOINT = isDesktop ? 500 : 318;
@@ -35,16 +39,16 @@ export function ChallengeLayoutWrapper({ challenge, track, children }: Props) {
     <TourProvider
       steps={challengeSteps}
       styles={{
-        popover: (base) => ({
+        popover: (base: Base) => ({
           ...base,
           '--reactour-accent': '#3078c5',
           borderRadius: 10,
           color: 'black',
         }),
-        maskArea: (base) => ({ ...base, rx: 10 }),
-        maskWrapper: (base) => ({ ...base, color: '#3078c5' }),
-        badge: (base) => ({ ...base, left: 'auto', right: '-0.8125em' }),
-        close: (base) => ({ ...base, right: 'auto', left: 8, top: 8 }),
+        maskArea: (base: Base) => ({ ...base, rx: 10 }),
+        maskWrapper: (base: Base) => ({ ...base, color: '#3078c5' }),
+        badge: (base: Base) => ({ ...base, left: 'auto', right: '-0.8125em' }),
+        close: (base: Base) => ({ ...base, right: 'auto', left: 8, top: 8 }),
       }}
     >
       <ChallengeLayout

@@ -118,13 +118,12 @@ export function ChallengeLayout({
     const storedTourAreas = localStorage.getItem('tourAreas');
     if (!storedTourAreas) {
       const tourAreas = storedTourAreas ? JSON.parse(storedTourAreas) : {};
-      console.log({ tourAreas });
       tourAreas.solveChallenge !== 'true' && setIsOpen(true);
 
       tourAreas.solveChallenge = 'true';
       localStorage.setItem('tourAreas', JSON.stringify(tourAreas));
     }
-  }, []);
+  }, [setIsOpen]);
 
   useEffect(() => {
     const ref = resizer.current;
