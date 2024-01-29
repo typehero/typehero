@@ -14,9 +14,7 @@ interface Props {
   children: ReactNode;
 }
 
-interface Base {
-  [key: string]: number | string;
-}
+type Base = Record<string, number | string>;
 
 export function ChallengeLayoutWrapper({ challenge, track, children }: Props) {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > MOBILE_BREAKPOINT);
