@@ -41,7 +41,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/Hacksore/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 107
+        "contributions": 108
     },
     {
         "login": "PickleNik",
@@ -2144,22 +2144,22 @@ export const contributors = [
         "contributions": 1
     },
     {
-        "login": "Gmarksa",
+        "login": "gm-m",
         "id": 25366153,
         "node_id": "MDQ6VXNlcjI1MzY2MTUz",
         "avatar_url": "https://avatars.githubusercontent.com/u/25366153?v=4",
         "gravatar_id": "",
-        "url": "https://api.github.com/users/Gmarksa",
-        "html_url": "https://github.com/Gmarksa",
-        "followers_url": "https://api.github.com/users/Gmarksa/followers",
-        "following_url": "https://api.github.com/users/Gmarksa/following{/other_user}",
-        "gists_url": "https://api.github.com/users/Gmarksa/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/Gmarksa/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/Gmarksa/subscriptions",
-        "organizations_url": "https://api.github.com/users/Gmarksa/orgs",
-        "repos_url": "https://api.github.com/users/Gmarksa/repos",
-        "events_url": "https://api.github.com/users/Gmarksa/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/Gmarksa/received_events",
+        "url": "https://api.github.com/users/gm-m",
+        "html_url": "https://github.com/gm-m",
+        "followers_url": "https://api.github.com/users/gm-m/followers",
+        "following_url": "https://api.github.com/users/gm-m/following{/other_user}",
+        "gists_url": "https://api.github.com/users/gm-m/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/gm-m/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/gm-m/subscriptions",
+        "organizations_url": "https://api.github.com/users/gm-m/orgs",
+        "repos_url": "https://api.github.com/users/gm-m/repos",
+        "events_url": "https://api.github.com/users/gm-m/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/gm-m/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 1
