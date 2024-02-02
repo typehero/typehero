@@ -22,11 +22,8 @@ export function ActionButton({ action, text, trackId, slug }: EnrollButtonProps)
       disabled={isLoading}
       onClick={async () => {
         setIsLoading(true);
-        if (text === 'Enroll') {
-          setIsExplorerDisabled(true);
-        } else {
-          setIsExplorerDisabled(false);
-        }
+        setIsExplorerDisabled(text === 'Enroll');
+
         try {
           await action(trackId, slug);
           toast({
