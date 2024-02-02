@@ -8,6 +8,7 @@ import {
   getChallengesAndTitle,
   type ChallengeType,
   type ChallengeTitles,
+  type SortKeyType,
 } from './get-challenges-and-title';
 import { useLocalStorage } from '~/utils/useLocalStorage';
 
@@ -38,9 +39,9 @@ export const ProblemExplorerProvider = ({
 }: ProblemExplorerProviderProps) => {
   const [trackStorage] = useLocalStorage('trackName', 'popular');
   const trackName = trackStorage as ChallengeType;
-  const { challenges, thisTitle, key } = getChallengesAndTitle(trackName, AC);
+  const { challenges, title: currentTitle, key } = getChallengesAndTitle(trackName, AC);
   const [getTrack, setTrack] = useState<ChallengesByTagOrDifficulty>(challenges);
-  const [title, setTitle] = useState<ChallengeTitles>(thisTitle);
+  const [title, setTitle] = useState<ChallengeTitles>(currentTitle);
   const [sortKey, setSortKey] = useState<SortKeyType>(key);
   const [isExplorerDisabled, setIsExplorerDisabled] = useState<boolean>(isDisabled);
 
@@ -69,35 +70,3 @@ export const useProblemExplorerContext = () => {
   }
   return context;
 };
-
-export interface SortKeyType {
-  label: 'Beginner' | 'Easy' | 'Extreme' | 'Hard' | 'Medium' | 'Popular';
-  value: 'beginner' | 'easy' | 'extreme' | 'hard' | 'medium' | 'popular';
-}
-
-export const SORT_KEYS = [
-  {
-    label: 'Popular',
-    value: 'popular',
-  },
-  {
-    label: 'Beginner',
-    value: 'beginner',
-  },
-  {
-    label: 'Easy',
-    value: 'easy',
-  },
-  {
-    label: 'Medium',
-    value: 'medium',
-  },
-  {
-    label: 'Hard',
-    value: 'hard',
-  },
-  {
-    label: 'Extreme',
-    value: 'extreme',
-  },
-] as const;

@@ -5,9 +5,10 @@ import { TrackChallenge } from '../../tracks/_components/track-challenge-card';
 import { TrackProgress } from '../../tracks/_components/track-progress';
 import { SelectDropdown } from './select-dropdown';
 import { useChallengeRouteData } from '~/app/challenge-route-data.hook';
-import { SORT_KEYS, useProblemExplorerContext } from '~/app/problem-explorer.hooks';
+import { useProblemExplorerContext } from '~/app/problem-explorer.hooks';
 import { useAllChallengesContext } from '~/app/all-challenges.hook';
 import { useLocalStorage } from '~/utils/useLocalStorage';
+import { getChallengesAndTitle, type ChallengeType } from '~/app/get-challenges-and-title';
 
 export function ExplorerPanel() {
   const [, setTrackNameStorage] = useLocalStorage('trackName', 'popular');
@@ -15,37 +16,11 @@ export function ExplorerPanel() {
   const { allChallenges } = useAllChallengesContext();
 
   const handleValueChange = (value: string) => {
-    if (value === 'popular') {
-      setTitle('Recommended Challenges');
-      setTrack(allChallenges.popularChallenges);
-      setTrackNameStorage('popular');
-    }
-    if (value === 'beginner') {
-      setTitle('Great for Beginners');
-      setTrack(allChallenges.beginnerChallenges);
-      setTrackNameStorage('beginner');
-    }
-    if (value === 'easy') {
-      setTitle('Great for Learners');
-      setTrack(allChallenges.easyChallenges);
-      setTrackNameStorage('easy');
-    }
-    if (value === 'medium') {
-      setTitle('Great for Enthusiasts');
-      setTrack(allChallenges.mediumChallenges);
-      setTrackNameStorage('medium');
-    }
-    if (value === 'hard') {
-      setTitle('Great for Experts');
-      setTrack(allChallenges.hardChallenges);
-      setTrackNameStorage('hard');
-    }
-    if (value === 'extreme') {
-      setTitle('Great for Masters');
-      setTrack(allChallenges.extremeChallenges);
-      setTrackNameStorage('extreme');
-    }
-    setSortKey(SORT_KEYS.find((sk) => sk.value === value) ?? SORT_KEYS[0]);
+    const { title, challenges, key } = getChallengesAndTitle(value as ChallengeType, allChallenges);
+    setTitle(title);
+    setTrack(challenges);
+    setTrackNameStorage(value);
+    setSortKey(key);
   };
 
   const { currentChallenge } = useChallengeRouteData();

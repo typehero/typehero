@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@repo/ui/components/select';
-import { SORT_KEYS, type SortKeyType } from '~/app/problem-explorer.hooks';
+import { SORT_KEYS, type SortKeyType } from '~/app/get-challenges-and-title';
 
 export interface SelectDropdownProps {
   sortKey: SortKeyType;

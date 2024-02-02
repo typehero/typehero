@@ -2,9 +2,42 @@ import type {
   AllChallenges,
   ChallengesByTagOrDifficulty,
 } from './[locale]/explore/_components/explore.action';
-import { SORT_KEYS, type SortKeyType } from './problem-explorer.hooks';
 
-export type ChallengeType = 'beginner' | 'easy' | 'extreme' | 'hard' | 'medium' | 'popular';
+export const SORT_KEYS = [
+  {
+    label: 'Popular',
+    value: 'popular',
+  },
+  {
+    label: 'Beginner',
+    value: 'beginner',
+  },
+  {
+    label: 'Easy',
+    value: 'easy',
+  },
+  {
+    label: 'Medium',
+    value: 'medium',
+  },
+  {
+    label: 'Hard',
+    value: 'hard',
+  },
+  {
+    label: 'Extreme',
+    value: 'extreme',
+  },
+] as const;
+
+export type ChallengeLabelType = (typeof SORT_KEYS)[number]['label'];
+
+export type ChallengeType = (typeof SORT_KEYS)[number]['value'];
+
+export interface SortKeyType {
+  label: ChallengeLabelType;
+  value: ChallengeType;
+}
 export type ChallengeTitles =
   | 'Great for Beginners'
   | 'Great for Enthusiasts'
@@ -14,7 +47,7 @@ export type ChallengeTitles =
   | 'Recommended Challenges';
 
 interface ChallengeResult {
-  thisTitle: ChallengeTitles;
+  title: ChallengeTitles;
   challenges: ChallengesByTagOrDifficulty;
   key: SortKeyType;
 }
@@ -25,43 +58,43 @@ export function getChallengesAndTitle(
   switch (trackName) {
     case 'popular':
       return {
-        thisTitle: 'Recommended Challenges',
+        title: 'Recommended Challenges',
         challenges: AC.popularChallenges,
         key: SORT_KEYS[0],
       };
     case 'beginner':
       return {
-        thisTitle: 'Great for Beginners',
+        title: 'Great for Beginners',
         challenges: AC.beginnerChallenges,
         key: SORT_KEYS[1],
       };
     case 'easy':
       return {
-        thisTitle: 'Great for Learners',
+        title: 'Great for Learners',
         challenges: AC.easyChallenges,
         key: SORT_KEYS[2],
       };
     case 'medium':
       return {
-        thisTitle: 'Great for Enthusiasts',
+        title: 'Great for Enthusiasts',
         challenges: AC.mediumChallenges,
         key: SORT_KEYS[3],
       };
     case 'hard':
       return {
-        thisTitle: 'Great for Experts',
+        title: 'Great for Experts',
         challenges: AC.hardChallenges,
         key: SORT_KEYS[4],
       };
     case 'extreme':
       return {
-        thisTitle: 'Great for Masters',
+        title: 'Great for Masters',
         challenges: AC.extremeChallenges,
         key: SORT_KEYS[5],
       };
     default:
       return {
-        thisTitle: 'Recommended Challenges',
+        title: 'Recommended Challenges',
         challenges: AC.popularChallenges,
         key: SORT_KEYS[0],
       };
