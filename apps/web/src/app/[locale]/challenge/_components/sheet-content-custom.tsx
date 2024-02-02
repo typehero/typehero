@@ -9,6 +9,7 @@ import { useProblemExplorerContext } from '~/app/problem-explorer.hooks';
 import { useAllChallengesContext } from '~/app/all-challenges.hook';
 import { useLocalStorage } from '~/utils/useLocalStorage';
 import { getChallengesAndTitle, type ChallengeType } from '~/app/get-challenges-and-title';
+import { useMemo } from 'react';
 
 export function ExplorerPanel() {
   const [, setTrackNameStorage] = useLocalStorage('trackName', 'popular');
@@ -26,23 +27,31 @@ export function ExplorerPanel() {
   const { currentChallenge } = useChallengeRouteData();
 
   const challenges = getTrack;
-  const completedChallenges = challenges
-    .filter((challenge) => {
-      return (
-        challenge.submission.length &&
-        challenge.submission.some((submission) => submission.isSuccessful)
-      );
-    })
-    .map((challenge) => challenge.id);
+  const completedChallenges = useMemo(
+    () =>
+      challenges
+        .filter((challenge) => {
+          return (
+            challenge.submission.length &&
+            challenge.submission.some((submission) => submission.isSuccessful)
+          );
+        })
+        .map((challenge) => challenge.id),
+    [challenges],
+  );
 
-  const inProgressChallenges = challenges
-    .filter((challenge) => {
-      return (
-        challenge.submission.length &&
-        challenge.submission.every((submission) => !submission.isSuccessful)
-      );
-    })
-    .map((challenge) => challenge.id);
+  const inProgressChallenges = useMemo(
+    () =>
+      challenges
+        .filter((challenge) => {
+          return (
+            challenge.submission.length &&
+            challenge.submission.every((submission) => !submission.isSuccessful)
+          );
+        })
+        .map((challenge) => challenge.id),
+    [challenges],
+  );
   return (
     <>
       <SheetHeader>
