@@ -2,7 +2,18 @@ import { createUploadthing, type FileRouter } from 'uploadthing/next';
 import { prisma } from '@repo/db';
 import { auth } from '@repo/auth/server';
 
-const f = createUploadthing();
+const f = createUploadthing({
+  /**
+   * Log out more information about the error, but don't return it to the client
+   * @see https://docs.uploadthing.com/errors#error-formatting
+   */
+  errorFormatter: (err) => {
+    console.log('Error uploading file', err.message);
+    console.log('  - Above error caused by:', err.cause);
+
+    return { message: err.message };
+  },
+});
 
 type ValidFileTypes = 'audio' | 'blob' | 'image' | 'video';
 type FileRouterInput =
