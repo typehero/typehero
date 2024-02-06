@@ -41,7 +41,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/Hacksore/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 108
+        "contributions": 109
     },
     {
         "login": "PickleNik",
@@ -443,22 +443,22 @@ export const contributors = [
         "contributions": 8
     },
     {
-        "login": "typesafegh",
+        "login": "typesafeui",
         "id": 135900154,
         "node_id": "U_kgDOCBmr-g",
         "avatar_url": "https://avatars.githubusercontent.com/u/135900154?v=4",
         "gravatar_id": "",
-        "url": "https://api.github.com/users/typesafegh",
-        "html_url": "https://github.com/typesafegh",
-        "followers_url": "https://api.github.com/users/typesafegh/followers",
-        "following_url": "https://api.github.com/users/typesafegh/following{/other_user}",
-        "gists_url": "https://api.github.com/users/typesafegh/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/typesafegh/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/typesafegh/subscriptions",
-        "organizations_url": "https://api.github.com/users/typesafegh/orgs",
-        "repos_url": "https://api.github.com/users/typesafegh/repos",
-        "events_url": "https://api.github.com/users/typesafegh/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/typesafegh/received_events",
+        "url": "https://api.github.com/users/typesafeui",
+        "html_url": "https://github.com/typesafeui",
+        "followers_url": "https://api.github.com/users/typesafeui/followers",
+        "following_url": "https://api.github.com/users/typesafeui/following{/other_user}",
+        "gists_url": "https://api.github.com/users/typesafeui/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/typesafeui/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/typesafeui/subscriptions",
+        "organizations_url": "https://api.github.com/users/typesafeui/orgs",
+        "repos_url": "https://api.github.com/users/typesafeui/repos",
+        "events_url": "https://api.github.com/users/typesafeui/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/typesafeui/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 8
