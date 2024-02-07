@@ -53,7 +53,7 @@ In TypeScript, even if you provide `never` or `unknown` or `any`, the value will
 
 ## Solving This Challenge
 
-Your goal is to create some types that have have the correct default argument.
+Your goal is to create some types that have the correct default argument.
 
 The second type, `TSConfig`, should feel a bit difficult, but if you get stuck, feel free to check out the little hint below:
 
