@@ -1,9 +1,12 @@
 import { useState } from 'react';
 
 export function useLocalStorage(key: string, initialValue: string): [string, (v: string) => void] {
-  const [storedValue, setStoredValue] = useState(() => {
+  const [storedValue, setStoredValue] = useState<string>(() => {
     try {
-      return window.localStorage.getItem(key) || initialValue;
+      if (window !== undefined) {
+        return window.localStorage.getItem(key) || initialValue;
+      }
+      return initialValue;
     } catch (error) {
       console.error(error);
       return initialValue;

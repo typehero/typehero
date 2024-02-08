@@ -58,6 +58,9 @@ export async function getChallengesByTagOrDifficulty(str: string, take?: number)
     }),
   });
 }
+export type ChallengesByTagOrDifficulty = Awaited<
+  ReturnType<typeof getChallengesByTagOrDifficulty>
+>;
 
 /**
  * Fetches the length of how many challenges are in a
@@ -79,3 +82,31 @@ export const getExploreChallengesLengthByTagOrDifficulty = cache((str: string) =
     },
   });
 });
+
+export const getAllChallenges = cache(async () => {
+  const popularChallenges = await getChallengesByTagOrDifficulty('popular', 12);
+  const beginnerChallenges = await getChallengesByTagOrDifficulty('beginner');
+  const easyChallenges = await getChallengesByTagOrDifficulty('easy');
+  const mediumChallenges = await getChallengesByTagOrDifficulty('medium');
+  const hardChallenges = await getChallengesByTagOrDifficulty('hard');
+  const extremeChallenges = await getChallengesByTagOrDifficulty('extreme');
+
+  const allChallenges: AllChallenges = {
+    popularChallenges,
+    beginnerChallenges,
+    easyChallenges,
+    mediumChallenges,
+    hardChallenges,
+    extremeChallenges,
+  };
+  return allChallenges;
+});
+
+export interface AllChallenges {
+  popularChallenges: ChallengesByTagOrDifficulty;
+  beginnerChallenges: ChallengesByTagOrDifficulty;
+  easyChallenges: ChallengesByTagOrDifficulty;
+  mediumChallenges: ChallengesByTagOrDifficulty;
+  hardChallenges: ChallengesByTagOrDifficulty;
+  extremeChallenges: ChallengesByTagOrDifficulty;
+}
