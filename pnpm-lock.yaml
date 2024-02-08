@@ -265,6 +265,9 @@ importers:
       '@radix-ui/react-dialog':
         specifier: ^1.0.4
         version: 1.0.4(@types/react-dom@18.2.7)(@types/react@18.2.20)(react-dom@18.2.0)(react@18.2.0)
+      '@reactour/tour':
+        specifier: ^3.6.1
+        version: 3.6.1(react@18.2.0)
       '@repo/auth':
         specifier: workspace:*
         version: link:../../packages/auth
@@ -4790,6 +4793,45 @@ packages:
       react: 18.2.0
     dev: false
 
+  /@reactour/mask@1.1.0(react@18.2.0):
+    resolution: {integrity: sha512-GkJMLuTs3vTsm4Ryq2uXcE4sMzRP1p4xSd6juSOMqbHa7IVD/UiLCLqJWHR9xGSQPbYhpZAZAORUG5cS0U5tBA==}
+    peerDependencies:
+      react: 16.x || 17.x || 18.x
+    dependencies:
+      '@reactour/utils': 0.5.0(react@18.2.0)
+      react: 18.2.0
+    dev: false
+
+  /@reactour/popover@1.1.1(react@18.2.0):
+    resolution: {integrity: sha512-BouulO0sXfmuHSPX8FwCYI0fMeT+VsWqk7UTao3NQcUC5H903ZeKOV2GYpwSJtRUQhsyNEu1Q8cEruGRf1SOXQ==}
+    peerDependencies:
+      react: 16.x || 17.x || 18.x
+    dependencies:
+      '@reactour/utils': 0.5.0(react@18.2.0)
+      react: 18.2.0
+    dev: false
+
+  /@reactour/tour@3.6.1(react@18.2.0):
+    resolution: {integrity: sha512-vzmgbm4T7n5gh0cjc4Zi4G3K29dXQyEdi/o7ZYLpNcisJ0hwP5jNKH7BgckrHWEGldBxYSWl34tsRmHcyxporQ==}
+    peerDependencies:
+      react: 16.x || 17.x || 18.x
+    dependencies:
+      '@reactour/mask': 1.1.0(react@18.2.0)
+      '@reactour/popover': 1.1.1(react@18.2.0)
+      '@reactour/utils': 0.5.0(react@18.2.0)
+      react: 18.2.0
+    dev: false
+
+  /@reactour/utils@0.5.0(react@18.2.0):
+    resolution: {integrity: sha512-yQs5Nm/Dg1xRM7d/S/UILBV5OInrTgrjGzgc81/RP5khqdO5KnpOaC46yF83kDtCalte8X3RCwp+F2YA509k1w==}
+    peerDependencies:
+      react: 16.x || 17.x || 18.x
+    dependencies:
+      '@rooks/use-mutation-observer': 4.11.2(react@18.2.0)
+      react: 18.2.0
+      resize-observer-polyfill: 1.5.1
+    dev: false
+
   /@resvg/resvg-wasm@2.0.0-alpha.4:
     resolution: {integrity: sha512-pWIG9a/x1ky8gXKRhPH1OPKpHFoMN1ISLbJ+O+gPXQHIAKhNd5I28RlWf7q576hAOQA9JZTlo3p/M2uyLzJmmw==}
     engines: {node: '>= 10'}
@@ -5073,6 +5115,14 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@rooks/use-mutation-observer@4.11.2(react@18.2.0):
+    resolution: {integrity: sha512-vpsdrZdr6TkB1zZJcHx+fR1YC/pHs2BaqcuYiEGjBVbwY5xcC49+h0hAUtQKHth3oJqXfIX/Ng8S7s5HFHdM/A==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /@rushstack/eslint-patch@1.3.2:
     resolution: {integrity: sha512-V+MvGwaHH03hYhY+k6Ef/xKd6RYlc4q8WBx+2ANmipHJcKuktNcI/NgEsJgdSUF6Lw32njT6OnrRsKYCdgHjYw==}
@@ -12940,6 +12990,10 @@ packages:
       type-fest: 3.13.0
     transitivePeerDependencies:
       - debug
+    dev: false
+
+  /resize-observer-polyfill@1.5.1:
+    resolution: {integrity: sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==}
     dev: false
 
   /resolve-from@4.0.0:
