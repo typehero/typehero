@@ -9,7 +9,7 @@ import clsx from 'clsx';
 import lzstring from 'lz-string';
 import type * as monaco from 'monaco-editor';
 import { usePathname, useSearchParams } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useResetEditor } from './editor-hooks';
 import SplitEditor, { TESTS_PATH, USER_CODE_PATH } from './split-editor';
 import { useLocalStorage } from './useLocalStorage';
@@ -41,6 +41,7 @@ export function CodePanel(props: CodePanelProps) {
   const isPlayground = pathname.includes('playground');
   const { toast } = useToast();
   const [tsErrors, setTsErrors] = useState<TsErrors>();
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
   const [isTestPanelExpanded, setIsTestPanelExpanded] = useState(true);
   const [localStorageCode, setLocalStorageCode] = useLocalStorage(
     props.challenge.slug !== 'test-slug' ? `challenge-${props.challenge.slug}` : '',
@@ -101,6 +102,22 @@ export function CodePanel(props: CodePanelProps) {
   };
   const hasFailingTest = tsErrors?.some((e) => e.length) ?? false;
 
+  useEffect(() => {
+    const onSubmit = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.code === 'KeyY') {
+        e.preventDefault();
+        if (submitButtonRef.current) {
+          submitButtonRef.current.click();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', onSubmit);
+
+    return () => {
+      document.removeEventListener('keydown', onSubmit);
+    };
+  }, []);
   return (
     <>
       <div className="sticky top-0 flex h-[40px] shrink-0 items-center justify-end gap-4 border-b border-zinc-300 bg-white px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
@@ -285,6 +302,7 @@ export function CodePanel(props: CodePanelProps) {
                 size="sm"
                 className="cursor-pointer rounded-lg duration-300"
                 onClick={handleSubmit}
+                ref={submitButtonRef}
               >
                 {disabled && 'Login to '}Submit{tsErrors === undefined && ' (open test cases)'}
               </Button>
