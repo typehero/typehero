@@ -119,8 +119,13 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
           className={cn('border-b border-zinc-300 p-1 dark:border-zinc-700')}
         />
       )}
-
-      {Boolean(isTrackVisible && !hasEnrolledTrackForChallenge && !isExplorerDisabled) && (
+      {Boolean(isTrackVisible && !hasEnrolledTrackForChallenge) && (
+        <ProblemExplorerTrackNav
+          isCollapsed={isCollapsed}
+          className={cn('border-b border-zinc-300 p-1 dark:border-zinc-700')}
+        />
+      )}
+      {Boolean(isTrackVisible && !isExplorerDisabled) && (
         <ProblemExplorerTrackNav
           isCollapsed={isCollapsed}
           className={cn('border-b border-zinc-300 p-1 dark:border-zinc-700')}
