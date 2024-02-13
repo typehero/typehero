@@ -30,7 +30,7 @@ It's a bit confusing at first, but primitive types are defined with _lowercase_ 
 
 Here are some of the basic types:
 
-- `number`: since JavaScript only has one real number type (IEEE-754 64-bit floating point numbers), so too does TypeScript then not define types like `short` and `long` or types like `uint32` or `uint16` like you might be used to in other languages. Instead we just use `number` for everything.
+- `number`: since JavaScript only has one real number type (IEEE-754 64-bit floating point numbers),similarly, TypeScript does not define types like `short` and `long` or types like `uint32` or `uint16` like you might be used to in other languages. Instead we just use `number` for everything.
 - `string`: a variable length set of characters (UTF-16).
 - `boolean`: Don't let this next sentence keep you up at night if it sounds strange, but just keep in the back of your mind that boolean isn't actually a primitive type deep down in TypeScript internals. It's a little different from string or number since it is just an alias for the union of `true` and `false`. It doesn't _widen_ like `number` and `string` do, and thus is slightly inconsistent. If that didn't make sense to you right now don't worry. This problem almost never surfaces in a way that's problematic so you're clear to just consider it a primitive type. Also, the way TypeScript handles `boolean` is actually the more correct way to model things from a ["Set theory"](https://en.wikipedia.org/wiki/Set_theory) standpoint.
 - `null`: this is technically really a "literal type", but it refers to the type of the `null` value in JavaScript. Since `null` is special, it gets its own type.
