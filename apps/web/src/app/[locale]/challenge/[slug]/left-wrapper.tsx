@@ -14,7 +14,6 @@ import { AOT_CHALLENGES } from './aot-slugs';
 import type { ChallengeRouteData } from './getChallengeRouteData';
 import { useTrackNavigationVisiblity } from './use-track-visibility.hook';
 import { ProblemExplorerTrackNav } from '~/components/Navigation/problem-explorer-track-nav';
-import { useProblemExplorerContext } from '~/app/problem-explorer.hooks';
 
 type Tab = 'description' | 'solutions' | 'submissions';
 interface Props {
@@ -29,7 +28,6 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
   const pathname = usePathname();
   const router = useRouter();
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const { isExplorerDisabled } = useProblemExplorerContext();
 
   const featureFlags = useContext(FeatureFlagContext);
 
@@ -120,12 +118,6 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
         />
       )}
       {Boolean(isTrackVisible && !hasEnrolledTrackForChallenge) && (
-        <ProblemExplorerTrackNav
-          isCollapsed={isCollapsed}
-          className={cn('border-b border-zinc-300 p-1 dark:border-zinc-700')}
-        />
-      )}
-      {Boolean(isTrackVisible && !isExplorerDisabled) && (
         <ProblemExplorerTrackNav
           isCollapsed={isCollapsed}
           className={cn('border-b border-zinc-300 p-1 dark:border-zinc-700')}
