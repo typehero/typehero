@@ -293,7 +293,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/me-imfhd/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 13
+        "contributions": 14
     },
     {
         "login": "falcon-head",
