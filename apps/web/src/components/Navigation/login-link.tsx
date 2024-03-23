@@ -1,4 +1,3 @@
-'use client';
 import { LogIn } from '@repo/ui/icons';
 import clsx from 'clsx';
 import Link from 'next/link';
