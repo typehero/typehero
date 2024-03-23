@@ -95,6 +95,17 @@ export default function SplitEditor({
   const inlayHintsProviderDisposableRef = useRef<monacoType.IDisposable>();
 
   useEffect(() => {
+    const keepEditorFocusedOnHoverCloseVim = (e: KeyboardEvent) => {
+      // In VIM mode, if the type hint hover is open, and we use the keyboard
+      // to close it, it's blured and nothing is focused anymore, so this
+      // is a workaround to keep the editor focused.
+      if (settings.bindings !== 'vim') {
+        return;
+      }
+      if (document.activeElement === document.body) { // nothing is focused
+        editorRef.current?.focus();
+      }
+    }
     const saveHandler = (e: KeyboardEvent) => {
       if (
         (e.ctrlKey || e.metaKey) &&
@@ -114,9 +125,11 @@ export default function SplitEditor({
     };
 
     document.addEventListener('keydown', saveHandler);
+    document.addEventListener('keydown', keepEditorFocusedOnHoverCloseVim);
 
     return () => {
       document.removeEventListener('keydown', saveHandler);
+      document.removeEventListener('keydown', keepEditorFocusedOnHoverCloseVim);
       inlayHintsProviderDisposableRef.current?.dispose();
     };
   }, [editorRef]);
