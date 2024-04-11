@@ -13,13 +13,23 @@ interface ExploreSlugProps {
 export async function ExploreSlug({ slug }: ExploreSlugProps) {
   const challenges = await getChallengesByTagOrDifficulty(slug);
 
+  const sortedChallenges = challenges.sort((a, b) => {
+    const aHasSuccessfulSubmission = a?.submission?.some((submission) => submission.isSuccessful);
+    const bHasSubmission = b?.submission?.some((submission) => submission.isSuccessful);
+
+    if (aHasSuccessfulSubmission && !bHasSubmission) return 1;
+    if (!aHasSuccessfulSubmission && bHasSubmission) return -1;
+
+    return 0;
+  });
+
   return (
     <div className="container flex flex-col items-center gap-8 py-5 md:gap-16 md:pb-20">
       <div className="flex space-y-2">
         <TypographyH3>{toPascalCase(slug)}</TypographyH3>
       </div>
       <div className="flex w-full flex-wrap justify-center gap-6">
-        {challenges.map((challenge) => (
+        {sortedChallenges.map((challenge) => (
           <Link
             className="group block w-[95%] focus:outline-none sm:w-[330px] xl:w-[333px]"
             href={`/challenge/${challenge.slug}`}
