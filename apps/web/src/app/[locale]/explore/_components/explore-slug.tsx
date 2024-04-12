@@ -15,10 +15,10 @@ export async function ExploreSlug({ slug }: ExploreSlugProps) {
 
   const sortedChallenges = challenges.sort((a, b) => {
     const aHasSuccessfulSubmission = a?.submission?.some((submission) => submission.isSuccessful);
-    const bHasSubmission = b?.submission?.some((submission) => submission.isSuccessful);
+    const bHasSuccessfulSubmission = b?.submission?.some((submission) => submission.isSuccessful);
 
-    if (aHasSuccessfulSubmission && !bHasSubmission) return 1;
-    if (!aHasSuccessfulSubmission && bHasSubmission) return -1;
+    if (aHasSuccessfulSubmission && !bHasSuccessfulSubmission) return 1;
+    if (!aHasSuccessfulSubmission && bHasSuccessfulSubmission) return -1;
 
     return 0;
   });
