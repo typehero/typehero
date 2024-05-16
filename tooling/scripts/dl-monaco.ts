@@ -7,7 +7,7 @@ import fetch from 'node-fetch';
 const TYPESCRIPT_VERSION = '5.3.3';
 
 /** @link https://github.com/microsoft/TypeScript-Make-Monaco-Builds */
-const TS_CDN_BASE_URL = `https://typescript.azureedge.net/cdn/${TYPESCRIPT_VERSION}/monaco`;
+const TS_CDN_BASE_URL = `https://playgroundcdn.typescriptlang.org/cdn/${TYPESCRIPT_VERSION}/monaco`;
 
 async function fetchFile({
   url,
