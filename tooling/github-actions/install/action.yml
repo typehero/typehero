@@ -8,9 +8,9 @@ runs:
       with:
         node-version: 18
 
-    - name: Install pnpm
-      shell: bash
-      run: npm i -g pnpm turbo
+    - uses: pnpm/action-setup@v4
+      with:
+        version: 8
 
     - uses: actions/cache@v3
       name: pnpm-cache
