@@ -13,8 +13,7 @@ Provide your values as needed.
 
 ### 2 Configure your database
 
-You can either use PlanetScale or a local Docker container to run your database.
-Use either 2.a or 2.b for the next step.
+You can use a local Docker container to run your database, or any other remote MySQL host you prefer that is compatible with Prisma.
 
 ### 2.a Local Database (using Docker)
 
@@ -23,18 +22,6 @@ Starting the docker container
 ```
 docker compose up -d
 ```
-
-### 2.b Remote Database (using PlanetScale)
-
-[Follow the PlanetScale quick start guide to get started][planetscale-quick-start]
-
-After creating an account and creating a database using the steps above:
-
-1. Click either the big "Connect" button or the "connect to your database" Link.
-   ![connect](./media/connect.png)
-
-2. Select "Connect with Prisma" and copy the `DATABASE_URL` for your `.env`
-   ![getting the connection string](./media/getting-connection-string.png)
 
 ### 3. Create a new GitHub OAuth Application
 
@@ -120,7 +107,6 @@ Once the server is running you can seed and sync data
    [http://localhost:3000/api/auth/github](http://localhost:3000/api/auth/github)
    to authenticate with GitHub OAuth.
 
-[planetscale-quick-start]: https://planetscale.com/docs/tutorials/planetscale-quick-start-guide
 [new-oauth]: https://github.com/settings/applications/new
 
 ### Make Yourself an Admin

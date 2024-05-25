@@ -29,7 +29,6 @@
     "@radix-ui/react-dialog": "^1.0.4",
     "@repo/auth": "workspace:*",
     "@repo/db": "workspace:*",
-    "@repo/emails": "workspace:*",
     "@repo/lint": "workspace:*",
     "@repo/monaco": "workspace:*",
     "@repo/og-image": "workspace:*",
