@@ -1,47 +1,19 @@
-import { prisma } from '@repo/db';
 import Image from 'next/image';
-import { AOT_CHALLENGES } from '~/app/[locale]/challenge/[slug]/aot-slugs';
 import { MotionDiv } from '~/components/motion';
+import type { StaticParams } from '../page';
 
-export async function UserSummary() {
-  const totalNumberOfAccountsDuringAot = await prisma.user.count({
-    where: {
-      createdAt: {
-        gte: new Date('2023-12-01T00:00:00.000Z'),
-        lte: new Date('2023-12-25T23:59:59.999Z'),
-      },
-    },
-  });
-  const totalAotSubmissions = await prisma.submission.count({
-    where: {
-      challenge: {
-        slug: {
-          in: AOT_CHALLENGES,
-        },
-      },
-    },
-  });
-  const incorrectAotSubmissions = await prisma.submission.count({
-    where: {
-      challenge: {
-        slug: {
-          in: AOT_CHALLENGES,
-        },
-      },
-      isSuccessful: false,
-    },
-  });
-  const correctAotSubmissions = await prisma.submission.count({
-    where: {
-      challenge: {
-        slug: {
-          in: AOT_CHALLENGES,
-        },
-      },
-      isSuccessful: true,
-    },
-  });
-
+interface Props {
+  totalAotSubmissions: StaticParams['totalAotSubmissions'];
+  correctAotSubmissions: StaticParams['correctAotSubmissions'];
+  incorrectAotSubmissions: StaticParams['incorrectAotSubmissions'];
+  totalNumberOfAccountsDuringAot: StaticParams['totalNumberOfAccountsDuringAot'];
+}
+export async function UserSummary({
+  totalAotSubmissions,
+  correctAotSubmissions,
+  incorrectAotSubmissions,
+  totalNumberOfAccountsDuringAot,
+}: Props) {
   return (
     <div className="h-screen w-full bg-red-800 text-white">
       <div className="flex h-full">
