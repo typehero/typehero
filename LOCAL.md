@@ -2,7 +2,7 @@
 
 [![Join the Trash Discord](https://discordapp.com/api/guilds/796594544980000808/widget.png?style=banner2)][trash-discord]
 
-[trash-discord]: https://discord.gg/trashdev
+[trash-discord]: https://discord.gg/WjZhvVbFHM
 
 To contribute you will first need to fork the repo and make some adjustments to
 get it up and running on your local machine. Below are the steps to follow for you to get TypeHero to run on your local machine.

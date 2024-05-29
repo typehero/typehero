@@ -1,6 +1,6 @@
 <p align=center >
   <img alt="GitHub" height=20 src="https://img.shields.io/github/stars/typehero/typehero?style=&logo=github&logoColor=white&label=Stars&labelColor=%23111&color=%23111" />
-  <a href="https://discord.gg/trashdev" target="_parent">
+  <a href="https://discord.gg/WjZhvVbFHM" target="_parent">
     <img alt="Discord" height=20 src="https://img.shields.io/discord/796594544980000808?style=&logo=discord&logoColor=white&label=%20&labelColor=%237389D8&color=%237389D8" />
   </a>
   <a href="https://twitter.com/typeheroapp" target="_parent">
@@ -21,7 +21,7 @@ the intricacies of TypeScript's typing system.
 
 ### ✨ Want to contribute?
 
-Please see the [`LOCAL.md`](/LOCAL.md) on how to get set up. Consider joining the [discord](https://discord.gg/trashdev) if you have any ideas/feedback. We'd love to hear from you!
+Please see the [`LOCAL.md`](/LOCAL.md) on how to get set up. Consider joining the [discord](https://discord.gg/WjZhvVbFHM) if you have any ideas/feedback. We'd love to hear from you!
 
 ### 💖 Sponsors
 
