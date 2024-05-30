@@ -11,6 +11,7 @@ import { LeastSolved } from './_components/least-solved';
 import { MostSolved } from './_components/most-solved';
 import { UserSummary } from './_components/user-summary';
 
+export const dynamicParams = false;
 export function generateStaticParams() {
   return getStaticParams();
 }
