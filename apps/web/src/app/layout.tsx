@@ -2,15 +2,10 @@ import { Toaster } from '@repo/ui/components/toaster';
 import { Analytics } from '@vercel/analytics/react';
 import { Inter } from 'next/font/google';
 import { Navigation } from '~/components/Navigation';
-import { getStaticParams } from '~/locales/server';
 import '../styles/globals.css';
 import { Providers } from './[locale]/providers';
 import { OG_URL, tagline } from './metadata';
 import { ContextProviders } from './[locale]/context-providers';
-
-export function generateStaticParams() {
-  return getStaticParams();
-}
 
 const inter = Inter({ subsets: ['latin'] });
 
