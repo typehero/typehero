@@ -1,10 +1,7 @@
 import { prisma } from '@repo/db';
 import { Prisma } from '@repo/db/types';
 import { setStaticParamsLocale } from 'next-international/server';
-import { notFound } from 'next/navigation';
 import { getStaticParams } from '~/locales/server';
-import { daysAfterDecemberFirst } from '~/utils/aot';
-import { getAllFlags } from '~/utils/feature-flags';
 import { AOT_CHALLENGES } from '../../challenge/[slug]/aot-slugs';
 import { Hero } from './_components/hero';
 import { LeastSolved } from './_components/least-solved';
@@ -24,15 +21,6 @@ export interface AotChallengeData {
 }
 export default async function Index({ params: { locale } }: { params: { locale: string } }) {
   setStaticParamsLocale(locale);
-
-  const { enableHolidayEvent } = await getAllFlags();
-  if (enableHolidayEvent) {
-    const daysPassed = daysAfterDecemberFirst();
-
-    if (daysPassed + 1 < 25) {
-      return notFound();
-    }
-  }
 
   const topThreeSolved = await prisma.$queryRaw<AotChallengeData[]>`
     select name, slug, challengeId, count(T.userId) as userCount
