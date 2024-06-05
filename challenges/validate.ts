@@ -70,14 +70,29 @@ Finally, as an almost entirely different task: this script runs each solution an
 
 const repoRoot = join(__dirname, '..');
 const challengesDir = `${repoRoot}/challenges/`;
+const aotChallengesDir = `${challengesDir}aot`;
 
 export const getChallengeIds = () => {
-  return readdirSync(challengesDir)
+  const challengeIds = readdirSync(challengesDir)
     .filter((id) => id !== 'blank')
     .filter((id) => id !== 'aot')
     .filter((id) => statSync(join(challengesDir, id)).isDirectory())
     .filter((id) => statSync(join(challengesDir, id, 'metadata.json')).isFile())
     .filter((id) => statSync(join(challengesDir, id, 'tsconfig.json')).isFile());
+  const aotChallengeIds = {};
+
+  const aotYears = readdirSync(aotChallengesDir).filter((file) => file !== 'metadata.schema.json');
+  aotYears.forEach((year) => {
+    aotChallengeIds[year] = readdirSync(join(aotChallengesDir, year))
+      .filter((id) => statSync(join(aotChallengesDir, year, id)).isDirectory())
+      .filter((id) => statSync(join(aotChallengesDir, year, id, 'metadata.json')).isFile())
+      .filter((id) => statSync(join(aotChallengesDir, year, id, 'tsconfig.json')).isFile());
+  });
+
+  return {
+    challengeIds,
+    aotChallengeIds,
+  };
 };
 
 const getMetadata = (id: string) => {
@@ -93,10 +108,12 @@ const getMetadata = (id: string) => {
   };
 };
 
-const validateMetadataSchema = (ids: string[]) => {
+const validateMetadataSchema = (ids: string[], isAot = false) => {
   const ajv = new Ajv();
 
-  const schema = JSON.parse(readFileSync(join(challengesDir, 'metadata.schema.json'), 'utf8'));
+  const schema = JSON.parse(
+    readFileSync(join(isAot ? aotChallengesDir : challengesDir, 'metadata.schema.json'), 'utf8'),
+  );
 
   const validate = ajv.compile(schema);
 
@@ -142,15 +159,18 @@ const validatePrerequisiteIds = (id: string, _: number, ids: string[]) => {
 };
 
 const validateMetadataFiles = () => {
-  const challengeIds = getChallengeIds();
-
+  const { challengeIds, aotChallengeIds } = getChallengeIds();
+  for (const year in aotChallengeIds) {
+    validateMetadataSchema(aotChallengeIds[year], true);
+  }
   validateMetadataSchema(challengeIds);
   challengeIds.forEach(ensureChallengeIdMatchesDirectory);
   challengeIds.forEach(validatePrerequisiteIds);
 };
 
 const validateTests = () => {
-  getChallengeIds()
+  const { challengeIds, aotChallengeIds } = getChallengeIds();
+  challengeIds
     .filter((id) => {
       const path = join(challengesDir, id, 'solutions');
       statSync(path).isDirectory();
