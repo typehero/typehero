@@ -33,7 +33,6 @@ export function getAdminUrl() {
 
 export async function Navigation() {
   const session = await auth();
-
   const isAdminOrMod = isAdminOrModerator(session);
   const t = await getScopedI18n('navigation');
   const featureFlags = await getAllFlags();

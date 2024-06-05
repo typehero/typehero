@@ -83,3 +83,62 @@ export const getChallengeRouteData = cache(async (slug: string, session: Session
     track,
   };
 });
+export const getCurrentChallenge = cache(async (slug: string, session: Session | null) => {
+  return prisma.challenge.findFirstOrThrow({
+    where: {
+      slug,
+      status: 'ACTIVE',
+    },
+    include: {
+      user: {
+        select: {
+          name: true,
+        },
+      },
+      _count: {
+        select: {
+          vote: true,
+        },
+      },
+      vote: {
+        where: {
+          userId: session?.user?.id || '',
+        },
+      },
+      bookmark: {
+        where: {
+          userId: session?.user?.id || '',
+        },
+      },
+      submission: {
+        where: {
+          userId: session?.user?.id || '',
+          isSuccessful: true,
+        },
+        take: 1,
+      },
+    },
+  });
+});
+
+export type GetCurrentChallengeType = Awaited<ReturnType<typeof getCurrentChallenge>>;
+
+export const isEnrolledInAnyTrack = cache(async (session: Session | null) => {
+  if (!session) {
+    return false;
+  }
+  const userWithTrackCount = await prisma.user.findUnique({
+    where: { id: session?.user?.id },
+    select: {
+      _count: {
+        select: { tracks: true },
+      },
+    },
+  });
+
+  const numberOfTrack = userWithTrackCount?._count.tracks;
+  if (!numberOfTrack) {
+    return false;
+  }
+  return true;
+});

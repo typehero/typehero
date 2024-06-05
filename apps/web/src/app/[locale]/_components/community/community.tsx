@@ -99,7 +99,7 @@ export function Community() {
                 <a
                   target="_blank"
                   rel="noreferrer"
-                  href="https://discord.gg/trashdev"
+                  href="https://discord.gg/WjZhvVbFHM"
                   className="group mx-auto flex items-center gap-2 rounded-xl bg-neutral-200 px-3 py-2 text-sm font-bold duration-300 hover:bg-[#5865F2] hover:text-white dark:bg-neutral-800 dark:hover:bg-[#5865F2]"
                 >
                   <svg

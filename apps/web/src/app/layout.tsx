@@ -6,6 +6,7 @@ import { getStaticParams } from '~/locales/server';
 import '../styles/globals.css';
 import { Providers } from './[locale]/providers';
 import { OG_URL, tagline } from './metadata';
+import { ContextProviders } from './[locale]/context-providers';
 
 export function generateStaticParams() {
   return getStaticParams();
@@ -63,9 +64,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${inter.className} flex flex-col`}>
         <Providers>
-          <Navigation />
-          {children}
-          <Toaster />
+          <ContextProviders>
+            <Navigation />
+            {children}
+            <Toaster />
+          </ContextProviders>
         </Providers>
         <Analytics />
       </body>
