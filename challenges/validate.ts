@@ -95,8 +95,12 @@ export const getChallengeIds = () => {
   };
 };
 
-const getMetadata = (id: string) => {
-  const metadataFilePath = join(challengesDir, id, 'metadata.json');
+const getMetadata = (id: string, isAot = false, year: string | undefined = undefined) => {
+  const metadataFilePath = join(
+    isAot ? aotChallengesDir + `/${year}` : challengesDir,
+    id,
+    'metadata.json',
+  );
   const metadataFile = readFileSync(metadataFilePath, 'utf8');
   const metadata = JSON.parse(metadataFile) as {
     id: string;
@@ -108,7 +112,11 @@ const getMetadata = (id: string) => {
   };
 };
 
-const validateMetadataSchema = (ids: string[], isAot = false) => {
+const validateMetadataSchema = (
+  ids: string[],
+  isAot = false,
+  year: string | undefined = undefined,
+) => {
   const ajv = new Ajv();
 
   const schema = JSON.parse(
@@ -118,7 +126,7 @@ const validateMetadataSchema = (ids: string[], isAot = false) => {
   const validate = ajv.compile(schema);
 
   ids.forEach((id) => {
-    const { metadata, metadataFilePath } = getMetadata(id);
+    const { metadata, metadataFilePath } = getMetadata(id, isAot, year);
 
     if (!validate(metadata)) {
       console.error(
@@ -161,7 +169,7 @@ const validatePrerequisiteIds = (id: string, _: number, ids: string[]) => {
 const validateMetadataFiles = () => {
   const { challengeIds, aotChallengeIds } = getChallengeIds();
   for (const year in aotChallengeIds) {
-    validateMetadataSchema(aotChallengeIds[year], true);
+    validateMetadataSchema(aotChallengeIds[year], true, year);
   }
   validateMetadataSchema(challengeIds);
   challengeIds.forEach(ensureChallengeIdMatchesDirectory);

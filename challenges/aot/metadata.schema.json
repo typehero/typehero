@@ -9,7 +9,7 @@
     },
     "label": {
       "description": "The day of the advent month the challenge is for. Follows `Day <number>`",
-      "maxLength": 7,
+      "maxLength": 30,
       "type": "string"
     },
     "description": {
@@ -25,7 +25,9 @@
     "prerequisites": {
       "description": "Recommended challenges to do before the respective AOT challenge",
       "maxLength": 30,
-      "type": "string"
+      "items": {
+        "type": "string"
+      }
     },
     "author": {
       "description": "The person who wrote the challenge",
