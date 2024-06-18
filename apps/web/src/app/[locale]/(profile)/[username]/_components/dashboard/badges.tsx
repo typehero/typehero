@@ -11,6 +11,7 @@ import {
   HolidayPlatinumBadge,
   HolidaySilverBadge,
 } from '../badges/aot-2023-badge';
+import { toast } from '@repo/ui/components/use-toast';
 
 const SlugToBadgeIcon: Record<BadgeInfo['slug'], FC<{ className: string }>> = {
   'aot-2023-bronze': HolidayBronzeBadge,
@@ -26,8 +27,16 @@ const Badge = ({ slug, name }: BadgeInfo) => {
 
   return (
     <Tooltip>
-      <TooltipTrigger asChild>
-        <span>
+      <TooltipTrigger>
+        <span
+          onClick={(e) => {
+            navigator.clipboard.writeText(e.currentTarget.innerHTML);
+            toast({
+              title: 'Copied to clipboard',
+              variant: 'success',
+            });
+          }}
+        >
           <Icon className="h-12 w-12" />
         </span>
       </TooltipTrigger>
