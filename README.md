@@ -41,7 +41,7 @@ If you find our project interesting and want to support us please consider spons
     </td>
     <td>
       <a href="https://www.webdevopen.com/" target="_parent">
-        <img src="./media/open.png" alt="Open Bootcamp Logo" title="Open Bootcamp" width="75">
+        <img src="./media/open.png" alt="Open Bootcamp Logo" title="Open Bootcamp" width="160">
       </a>
     </td>
   </tr>
