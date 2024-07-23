@@ -20,7 +20,7 @@ import { Bookmark as BookmarkIcon, Calendar, CheckCircle, Flag, Share } from '@r
 import clsx from 'clsx';
 import { debounce } from 'lodash';
 import Link from 'next/link';
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState, useEffect } from 'react';
 import { type ChallengeRouteData } from '~/app/[locale]/challenge/[slug]/getChallengeRouteData';
 import { ReportDialog } from '~/components/ReportDialog';
 import { getRelativeTime } from '~/utils/relativeTime';
@@ -43,6 +43,7 @@ export interface FormValues {
 
 export function Description({ challenge }: Props) {
   const [hasBookmarked, setHasBookmarked] = useState(challenge.bookmark.length > 0);
+  const descriptionRef = useRef<HTMLDivElement | null>(null);
   const session = useSession();
 
   const isAotChallenge = useMemo(() => AOT_CHALLENGES.includes(challenge.slug), [challenge.slug]);
@@ -60,8 +61,39 @@ export function Description({ challenge }: Props) {
     }, 500),
   ).current;
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const ref = descriptionRef.current;
+      const scrollAmount = 50;
+
+      if (!ref) return;
+
+      if (ref.contains(document.activeElement)) {
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          ref.scrollBy({ top: scrollAmount, behavior: 'smooth' });
+        }
+
+        if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          ref.scrollBy({ top: -scrollAmount, behavior: 'smooth' });
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
   return (
-    <div className="custom-scrollable-element h-full overflow-y-auto px-4 pb-36 pt-3">
+    <div
+      className="custom-scrollable-element h-full overflow-y-auto px-4 pb-36 pt-3 focus:outline-none"
+      ref={descriptionRef}
+      tabIndex={0}
+    >
       <div className="flex items-center">
         <TypographyH3 className="mr-auto max-w-[75%] items-center truncate text-2xl font-bold">
           {challenge.name}
