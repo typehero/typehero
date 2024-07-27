@@ -61,7 +61,11 @@ export function Description({ challenge }: Props) {
   ).current;
 
   return (
-    <div className="custom-scrollable-element h-full overflow-y-auto px-4 pb-36 pt-3">
+    <div
+      // eslint-disable-next-line
+      tabIndex={0}
+      className="custom-scrollable-element h-full overflow-y-auto px-4 pb-36 pt-3 outline-none"
+    >
       <div className="flex items-center">
         <TypographyH3 className="mr-auto max-w-[75%] items-center truncate text-2xl font-bold">
           {challenge.name}
