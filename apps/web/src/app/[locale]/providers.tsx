@@ -13,9 +13,9 @@ interface Props {
   children: React.ReactNode;
 }
 
-const queryClient = new QueryClient();
-
 export function Providers({ children }: Props) {
+  const [queryClient] = React.useState(() => new QueryClient());
+
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-right" />
