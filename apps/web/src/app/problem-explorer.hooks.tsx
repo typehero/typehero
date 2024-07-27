@@ -3,7 +3,7 @@ import { createContext, useState, useContext } from 'react';
 import type {
   AllChallenges,
   ChallengesByTagOrDifficulty,
-} from '~/app/[locale]/explore/_components/explore.action';
+} from '~/app/explore/_components/explore.action';
 import {
   getChallengesAndTitle,
   type ChallengeType,

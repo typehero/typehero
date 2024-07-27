@@ -1,0 +1,51 @@
+/* The module for the background of the banner on the landing page */
+.backdrop {
+  background: linear-gradient(
+      3deg,
+      hsl(var(--background)) 50%,
+      hsl(var(--background) / 0.75) 66%,
+      hsl(var(--background) / 0.5) 77%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    linear-gradient(
+      225deg,
+      rgba(59, 131, 199, 0) 44.51%,
+      rgba(59, 131, 199, 0.17) 75.5%,
+      rgba(49, 120, 198, 0.3) 100%
+    ),
+    url('../../assets/images/background_pattern.webp');
+  background-size: cover;
+  background-position-x: center;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 3000px) {
+  .backdrop {
+    background-position-x: 50%;
+    background-size: 3300px;
+  }
+}
+
+@media (max-width: 2000px) {
+  .backdrop {
+    background-position-x: 50%;
+    background-size: 2200px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .backdrop {
+    background-position-x: 50%;
+    background-size: 1800px;
+  }
+}
+@media (max-width: 768px) {
+  .backdrop {
+    background-position-x: 60%;
+  }
+}
+@media (max-width: 480px) {
+  .backdrop {
+    background-position-x: 70%;
+  }
+}

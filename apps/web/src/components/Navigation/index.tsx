@@ -10,7 +10,6 @@ import {
 import { Play, Settings, Settings2, User } from '@repo/ui/icons';
 import Link from 'next/link';
 import { Suspense } from 'react';
-import { getScopedI18n } from '~/locales/server';
 import { isAdminOrModerator } from '~/utils/auth-guards';
 import { getAllFlags } from '~/utils/feature-flags';
 import { Search } from '../search/search';
@@ -34,16 +33,15 @@ export function getAdminUrl() {
 export async function Navigation() {
   const session = await auth();
   const isAdminOrMod = isAdminOrModerator(session);
-  const t = await getScopedI18n('navigation');
   const featureFlags = await getAllFlags();
 
   const TopSectionLinks = (
     <>
-      {featureFlags?.enableExplore ? <NavLink title={t('explore')} href="/explore" /> : null}
-      {featureFlags?.enableTracks ? <NavLink title={t('tracks')} href="/tracks" /> : null}
+      {featureFlags?.enableExplore ? <NavLink title="Explore" href="/explore" /> : null}
+      {featureFlags?.enableTracks ? <NavLink title="Tracks" href="/tracks" /> : null}
       {featureFlags?.enableHolidayEvent ? (
         <div className="flex items-center gap-1">
-          <NavLink title={t('advent')} href="/aot-2023" />
+          <NavLink title="Advent of TypeScript" href="/aot-2023" />
           <Badge className="h-4 bg-red-600 px-1.5" variant="default">
             New
           </Badge>

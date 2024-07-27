@@ -2,15 +2,10 @@ import { Toaster } from '@repo/ui/components/toaster';
 import { Analytics } from '@vercel/analytics/react';
 import { Inter } from 'next/font/google';
 import { Navigation } from '~/components/Navigation';
-import { getStaticParams } from '~/locales/server';
 import '../styles/globals.css';
-import { Providers } from './[locale]/providers';
 import { OG_URL, tagline } from './metadata';
-import { ContextProviders } from './[locale]/context-providers';
-
-export function generateStaticParams() {
-  return getStaticParams();
-}
+import { Providers } from './providers';
+import { ContextProviders } from './context-providers';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -64,11 +59,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${inter.className} flex flex-col`}>
         <Providers>
+          <Navigation />
+          {/* this is broken and need to fix */}
           <ContextProviders>
-            <Navigation />
-            {children}
-            <Toaster />
+            <main className="flex-1">{children}</main>
           </ContextProviders>
+          <Toaster />
         </Providers>
         <Analytics />
       </body>
