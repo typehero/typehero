@@ -1,13 +1,10 @@
 import { Button } from '@repo/ui/components/button';
 import Image from 'next/image';
-import { getScopedI18n } from '~/locales/server';
 import { getRandomChallenge } from '~/utils/server/get-random-challenge';
 
 export const dynamic = 'force-dynamic';
 
 export default async function NotFound() {
-  const t = await getScopedI18n('404');
-
   const randomChallengeSlug = await getRandomChallenge();
 
   return (
@@ -35,16 +32,14 @@ export default async function NotFound() {
             404
           </h1>
           <p className="px-6 text-center font-mono text-base md:px-0 md:text-xl">
-            {/* Looks Like You Took a Wrong Turn at the Interface. <br className="hidden md:inline" />
-          Let's Get You Back on Track */}
-            {t('message')}
+            Page not found, sus
           </p>
         </div>
         {randomChallengeSlug !== null ? (
           <div className="flex flex-col gap-4">
             <a href="/explore">
               <Button className="w-56" variant="default" size="lg">
-                {t('explore')}
+                Go to explore
               </Button>
             </a>
             <a href={`/challenge/${randomChallengeSlug}`}>
@@ -53,7 +48,7 @@ export default async function NotFound() {
                 size="lg"
                 className="fancy-border-gradient bg-background relative mx-auto flex w-56 gap-4 border-none"
               >
-                {t('luck')}
+                I'm feeling lucky
               </Button>
             </a>
           </div>
@@ -61,7 +56,7 @@ export default async function NotFound() {
           <div>
             <a href="/">
               <Button variant="default" size="lg">
-                {t('home')}
+                Go to home
               </Button>
             </a>
           </div>

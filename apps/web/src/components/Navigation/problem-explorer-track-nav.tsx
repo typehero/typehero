@@ -2,7 +2,7 @@
 import { useChallengeRouteData } from '~/app/challenge-route-data.hook';
 import { useProblemExplorerContext } from '~/app/problem-explorer.hooks';
 import { useMemo } from 'react';
-import { ExploreDrawer } from '~/app/[locale]/challenge/_components/explore-drawer';
+import { ExploreDrawer } from '~/app/challenge/_components/explore-drawer';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight, Swords } from '@repo/ui/icons';
