@@ -40,8 +40,8 @@ If you find our project interesting and want to support us please consider spons
       </a>
     </td>
     <td>
-      <a href="https://www.theopenbootcamp.com/" target="_parent">
-        <img src="./media/open-bootcamp.png" alt="Open Bootcamp Logo" title="Open Bootcamp" width="75">
+      <a href="https://www.webdevopen.com/" target="_parent">
+        <img src="./media/open.png" alt="Open Bootcamp Logo" title="Open Bootcamp" width="160">
       </a>
     </td>
   </tr>

@@ -1,7 +1,7 @@
 import type {
   AllChallenges,
   ChallengesByTagOrDifficulty,
-} from './[locale]/explore/_components/explore.action';
+} from './explore/_components/explore.action';
 
 export const SORT_KEYS = [
   {
