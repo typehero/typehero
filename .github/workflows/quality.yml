@@ -96,7 +96,6 @@ jobs:
           GITHUB_ID: ' '
           GITHUB_SECRET: ' '
           NEXTAUTH_SECRET: 'kGvjABB9ZZsxhYFyxMT4ApohaIvfuNSRMIthI+usjA0='
-          NEXTAUTH_SECRET: 'kGvjABB9ZZsxhYFyxMT4ApohaIvfuNSRMIthI+usjA0='
           NEXTAUTH_URL: http://localhost:3000
 
       - name: Run Playwright tests
