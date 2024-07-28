@@ -95,6 +95,7 @@ jobs:
         env:
           GITHUB_ID: ' '
           GITHUB_SECRET: ' '
+          NEXTAUTH_SECRET: 'kGvjABB9ZZsxhYFyxMT4ApohaIvfuNSRMIthI+usjA0='
 
       - name: Run Playwright tests
         run: turbo test:e2e --continue
@@ -102,7 +103,6 @@ jobs:
           DATABASE_URL: mysql://dev:dev@localhost/typehero
           GITHUB_ID: ' '
           GITHUB_SECRET: ' '
-          AUTH_SECRET: 'kGvjABB9ZZsxhYFyxMT4ApohaIvfuNSRMIthI+usjA0='
           NEXTAUTH_SECRET: 'kGvjABB9ZZsxhYFyxMT4ApohaIvfuNSRMIthI+usjA0='
           NEXTAUTH_URL: http://localhost:3000
 
