@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { useFullscreenSettingsStore } from '~/app/[locale]/challenge/_components/fullscreen';
+import { useFullscreenSettingsStore } from '~/app/challenge/_components/fullscreen';
 
 export function NavWrapper({ children }: { children: React.ReactNode }) {
   const { fssettings } = useFullscreenSettingsStore();

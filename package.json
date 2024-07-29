@@ -43,7 +43,7 @@
     "typescript": "^5.3.3",
     "vitest": "^0.34.6"
   },
-  "packageManager": "pnpm@8.15.8",
+  "packageManager": "pnpm@9.6.0",
   "pnpm": {
     "overrides": {
       "@auth/core": "0.19.0"
@@ -58,5 +58,8 @@
       "monaco-vim@0.4.0": "patches/monaco-vim@0.4.0.patch",
       "@vercel/toolbar@0.1.1": "patches/@vercel__toolbar@0.1.1.patch"
     }
+  },
+  "dependencies": {
+    "pnpm": "^8.15.8"
   }
 }
