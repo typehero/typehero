@@ -1,1 +1,1 @@
-type StreetSufixTester = unknown;
+type StreetSuffixTester = unknown;
