@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "the day of the advent month following the format `day-number` ",
+      "maxLength": 6,
+      "type": "string"
+    },
+    "label": {
+      "description": "The day of the advent month the challenge is for. Follows `Day <number>`",
+      "maxLength": 30,
+      "type": "string"
+    },
+    "description": {
+      "description": "Short summary of the challenge",
+      "maxLength": 40,
+      "type": "string"
+    },
+    "difficulty": {
+      "description": "Since AOT is an annual event, the challenge may not have a specific difficutly. It will always be `event`",
+      "maxLength": 5,
+      "type": "string"
+    },
+    "prerequisites": {
+      "description": "Recommended challenges to do before the respective AOT challenge",
+      "maxLength": 30,
+      "items": {
+        "type": "string"
+      }
+    },
+    "author": {
+      "description": "The person who wrote the challenge",
+      "maxLength": 15,
+      "type": "string"
+    }
+  }
+}
