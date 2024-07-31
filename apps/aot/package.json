@@ -3,10 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "build": "dotenv -e ../../.env next build",
+    "clean": "rm -rf .next dist node_modules",
+    "dev": "dotenv -e ../../.env next dev --turbo -- -p 3001",
+    "format": "prettier . --check --cache --cache-location=\"node_modules/.cache/prettiercache\"",
+    "format:fix": "prettier . --write --cache --cache-location=\"node_modules/.cache/prettiercache\" --log-level=warn",
+    "lint": "eslint . --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
+    "lint:fix": "eslint . --fix --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
     "start": "next start",
-    "lint": "next lint"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "react": "^18",
