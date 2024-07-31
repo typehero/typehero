@@ -19,6 +19,10 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@repo/lint": "workspace:*",
+    "@repo/tsconfig": "workspace:*",
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@tailwindcss/typography": "^0.5.9",
     "@types/node": "^20.4.2",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
@@ -27,7 +31,7 @@
     "eslint-config-next": "^13.4.10",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.3",
-    "@repo/tsconfig": "workspace:*",
+    "tailwindcss-animate": "^1.0.6",
     "typescript": "^5.3.3"
   }
 }
