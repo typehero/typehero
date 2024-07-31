@@ -4,9 +4,7 @@
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
     "baseUrl": ".",
     "paths": {
-      "~/*": [
-        "src/*"
-      ]
+      "~/*": ["src/*"]
     },
     "plugins": [
       {
@@ -26,12 +24,9 @@
     "postcss.config.cjs",
     // to make sure `@repo/monaco` doesn't break
     "../../packages/monaco/monaco-editor.d.ts",
-    "../../packages/monaco/monaco-vim.d.ts"
-, "postcss.config.mjs", "postcss.config.mjs"  ],
-  "exclude": [
-    "node_modules",
-    ".next",
-    "public",
-    "playwright-report"
-  ]
+    "../../packages/monaco/monaco-vim.d.ts",
+    "postcss.config.mjs",
+    "postcss.config.mjs"
+  ],
+  "exclude": ["node_modules", ".next", "public", "playwright-report"]
 }
