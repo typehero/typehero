@@ -10,7 +10,7 @@
 
 ![typehero header](./media/og-hub-banner.png)
 
-### 👋 About Us
+### 👋 About
 
 TypeScript's typing system can be very powerful when used correctly. The problem
 is that most developers or engineers don't use much more than they have to in
