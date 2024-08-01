@@ -12,7 +12,7 @@ export type { Session, DefaultSession as DefaultAuthSession } from 'next-auth';
  *
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
-declare module '@auth/core' {
+declare module 'next-auth' {
   interface Session {
     user: User & { role: RoleTypes[] };
   }
