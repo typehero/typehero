@@ -3,7 +3,7 @@ import { useState } from 'react';
 export function useLocalStorage(key: string, initialValue: string): [string, (v: string) => void] {
   const [storedValue, setStoredValue] = useState<string>(() => {
     try {
-      if (window !== undefined) {
+      if (typeof window !== 'undefined') {
         return window.localStorage.getItem(key) || initialValue;
       }
       return initialValue;
