@@ -1,3 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?><Error><Code>BlobNotFound</Code><Message>The specified blob does not exist.
-RequestId:9ae1e099-e01e-0050-2152-2fbddb000000
-Time:2023-12-15T12:28:07.9056657Z</Message></Error>
+<!DOCTYPE html><html><head><title>WebContentNotFound</title></head><body><h1>The requested content does not exist.</h1><p><ul><li>HttpStatusCode: 404</li><li>ErrorCode: WebContentNotFound</li><li>RequestId : 08470bd5-b01e-0000-3982-e47f8b000000</li><li>TimeStamp : 2024-08-02T02:21:26.1307003Z</li></ul></p></body></html>

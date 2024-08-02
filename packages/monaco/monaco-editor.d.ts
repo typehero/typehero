@@ -1,4 +1,4 @@
-// GENERATED WITH TS: 5.3.3
+// GENERATED WITH TS: 5.5.4
 /*!-----------------------------------------------------------
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Type definitions for monaco-editor
@@ -627,6 +627,7 @@ export class Position {
      * Test if `obj` is an `IPosition`.
      */
     static isIPosition(obj: any): obj is IPosition;
+    toJSON(): IPosition;
 }
 
 /**
@@ -979,6 +980,8 @@ export namespace editor {
      */
     export function createDiffEditor(domElement: HTMLElement, options?: IStandaloneDiffEditorConstructionOptions, override?: IEditorOverrideServices): IStandaloneDiffEditor;
 
+    export function createMultiFileDiffEditor(domElement: HTMLElement, override?: IEditorOverrideServices): any;
+
     /**
      * Description of a command contribution
      */
@@ -1253,7 +1256,7 @@ export namespace editor {
          */
         label: string;
         /**
-         * Precondition rule.
+         * Precondition rule. The value should be a [context key expression](https://code.visualstudio.com/docs/getstarted/keybindings#_when-clause-contexts).
          */
         precondition?: string;
         /**
@@ -1320,7 +1323,7 @@ export namespace editor {
          * Controls whether completions should be computed based on words in the document.
          * Defaults to true.
          */
-        wordBasedSuggestions?: boolean;
+        wordBasedSuggestions?: 'off' | 'currentDocument' | 'matchingDocuments' | 'allDocuments';
         /**
          * Controls whether word based completions should be included from opened documents of the same language or any language.
          */
@@ -1438,6 +1441,13 @@ export namespace editor {
     }
     export interface ICommandHandler {
         (...args: any[]): void;
+    }
+    export interface ILocalizedString {
+        original: string;
+        value: string;
+    }
+    export interface ICommandMetadata {
+        readonly description: ILocalizedString | string;
     }
 
     export interface IContextKey<T extends ContextKeyValue = ContextKeyValue> {
@@ -1575,7 +1585,29 @@ export namespace editor {
      */
     export enum GlyphMarginLane {
         Left = 1,
-        Right = 2
+        Center = 2,
+        Right = 3
+    }
+
+    export interface IGlyphMarginLanesModel {
+        /**
+         * The number of lanes that should be rendered in the editor.
+         */
+        readonly requiredLanes: number;
+        /**
+         * Gets the lanes that should be rendered starting at a given line number.
+         */
+        getLanesAtLine(lineNumber: number): GlyphMarginLane[];
+        /**
+         * Resets the model and ensures it can contain at least `maxLine` lines.
+         */
+        reset(maxLine: number): void;
+        /**
+         * Registers that a lane should be visible at the Range in the model.
+         * @param persist - if true, notes that the lane should always be visible,
+         * even on lines where there's no specific request for that lane.
+         */
+        push(lane: GlyphMarginLane, range: Range, persist?: boolean): void;
     }
 
     /**
@@ -1584,6 +1616,14 @@ export namespace editor {
     export enum MinimapPosition {
         Inline = 1,
         Gutter = 2
+    }
+
+    /**
+     * Section header style.
+     */
+    export enum MinimapSectionHeaderStyle {
+        Normal = 1,
+        Underlined = 2
     }
 
     export interface IDecorationOptions {
@@ -1604,6 +1644,11 @@ export namespace editor {
          * The position in the glyph margin.
          */
         position: GlyphMarginLane;
+        /**
+         * Whether the glyph margin lane in {@link position} should be rendered even
+         * outside of this decoration's range.
+         */
+        persistLane?: boolean;
     }
 
     /**
@@ -1624,6 +1669,14 @@ export namespace editor {
          * The position in the minimap.
          */
         position: MinimapPosition;
+        /**
+         * If the decoration is for a section header, which header style.
+         */
+        sectionHeaderStyle?: MinimapSectionHeaderStyle | null;
+        /**
+         * If the decoration is for a section header, the header text.
+         */
+        sectionHeaderText?: string | null;
     }
 
     /**
@@ -1660,6 +1713,10 @@ export namespace editor {
          */
         hoverMessage?: IMarkdownString | IMarkdownString[] | null;
         /**
+         * Array of MarkdownString to render as the line number message.
+         */
+        lineNumberHoverMessage?: IMarkdownString | IMarkdownString[] | null;
+        /**
          * Should the decoration expand to encompass a whole line.
          */
         isWholeLine?: boolean;
@@ -1694,6 +1751,14 @@ export namespace editor {
          * If set, the decoration will be rendered in the lines decorations with this CSS class name.
          */
         linesDecorationsClassName?: string | null;
+        /**
+         * Controls the tooltip text of the line decoration.
+         */
+        linesDecorationsTooltip?: string | null;
+        /**
+         * If set, the decoration will be rendered on the line number.
+         */
+        lineNumberClassName?: string | null;
         /**
          * If set, the decoration will be rendered in the lines decorations with this CSS class name, but only for the first line in case of line wrapping.
          */
@@ -2439,7 +2504,7 @@ export namespace editor {
         modified: ITextModel;
     }
 
-    export interface IDiffEditorViewModel {
+    export interface IDiffEditorViewModel extends IDisposable {
         readonly model: IDiffEditorModel;
         waitForDiff(): Promise<void>;
     }
@@ -2474,6 +2539,7 @@ export namespace editor {
         readonly id: string;
         readonly label: string;
         readonly alias: string;
+        readonly metadata: ICommandMetadata | undefined;
         isSupported(): boolean;
         run(args?: unknown): Promise<void>;
     }
@@ -2563,8 +2629,11 @@ export namespace editor {
          * be called when the container of the editor gets resized.
          *
          * If a dimension is passed in, the passed in value will be used.
+         *
+         * By default, this will also render the editor immediately.
+         * If you prefer to delay rendering to the next animation frame, use postponeRendering == true.
          */
-        layout(dimension?: IDimension): void;
+        layout(dimension?: IDimension, postponeRendering?: boolean): void;
         /**
          * Brings browser focus to the editor text
          */
@@ -2773,6 +2842,10 @@ export namespace editor {
          */
         set(newDecorations: readonly IModelDeltaDecoration[]): string[];
         /**
+         * Append `newDecorations` to this collection.
+         */
+        append(newDecorations: readonly IModelDeltaDecoration[]): string[];
+        /**
          * Remove all previous decorations.
          */
         clear(): void;
@@ -2886,6 +2959,7 @@ export namespace editor {
         readonly affectsMinimap: boolean;
         readonly affectsOverviewRuler: boolean;
         readonly affectsGlyphMargin: boolean;
+        readonly affectsLineNumber: boolean;
     }
 
     export interface IModelOptionsChangedEvent {
@@ -3049,6 +3123,13 @@ export namespace editor {
          * Defaults to empty array.
          */
         rulers?: (number | IRulerOption)[];
+        /**
+         * Locales used for segmenting lines into words when doing word related navigations or operations.
+         *
+         * Specify the BCP 47 language tag of the word you wish to recognize (e.g., ja, zh-CN, zh-Hant-TW, etc.).
+         * Defaults to empty array
+         */
+        wordSegmenterLocales?: string | string[];
         /**
          * A string containing the word separators used when doing word navigation.
          * Defaults to `~!@#$%^&*()-=+[{]}\\|;:\'",.<>/?
@@ -3402,6 +3483,7 @@ export namespace editor {
          */
         suggest?: ISuggestOptions;
         inlineSuggest?: IInlineSuggestOptions;
+        experimentalInlineEdit?: IInlineEditOptions;
         /**
          * Smart select options.
          */
@@ -3533,9 +3615,12 @@ export namespace editor {
         selectionHighlight?: boolean;
         /**
          * Enable semantic occurrences highlight.
-         * Defaults to true.
+         * Defaults to 'singleFile'.
+         * 'off' disables occurrence highlighting
+         * 'singleFile' triggers occurrence highlighting in the current document
+         * 'multiFile'  triggers occurrence highlighting across valid open documents
          */
-        occurrencesHighlight?: boolean;
+        occurrencesHighlight?: 'off' | 'singleFile' | 'multiFile';
         /**
          * Show code lens
          * Defaults to true.
@@ -3761,6 +3846,10 @@ export namespace editor {
          * Default to true.
          */
         renderMarginRevertIcon?: boolean;
+        /**
+         * Indicates if the gutter menu should be rendered.
+        */
+        renderGutterMenu?: boolean;
         /**
          * Original model should be editable?
          * Defaults to false.
@@ -4115,15 +4204,24 @@ export namespace editor {
         readonly minimapCanvasOuterHeight: number;
     }
 
+    export enum ShowLightbulbIconMode {
+        Off = 'off',
+        OnCode = 'onCode',
+        On = 'on'
+    }
+
     /**
      * Configuration options for editor lightbulb
      */
     export interface IEditorLightbulbOptions {
         /**
          * Enable the lightbulb code action.
-         * Defaults to true.
+         * The three possible values are `off`, `on` and `onCode` and the default is `onCode`.
+         * `off` disables the code action menu.
+         * `on` shows the code action menu on code and on empty lines.
+         * `onCode` shows the code action menu on code only.
          */
-        enabled?: boolean;
+        enabled?: ShowLightbulbIconMode;
     }
 
     export interface IEditorStickyScrollOptions {
@@ -4213,6 +4311,22 @@ export namespace editor {
          * Relative size of the font in the minimap. Defaults to 1.
          */
         scale?: number;
+        /**
+         * Whether to show named regions as section headers. Defaults to true.
+         */
+        showRegionSectionHeaders?: boolean;
+        /**
+         * Whether to show MARK: comments as section headers. Defaults to true.
+         */
+        showMarkSectionHeaders?: boolean;
+        /**
+         * Font size of section headers. Defaults to 9.
+         */
+        sectionHeaderFontSize?: number;
+        /**
+         * Spacing between the section header characters (in CSS px). Defaults to 1.
+         */
+        sectionHeaderLetterSpacing?: number;
     }
 
     /**
@@ -4358,6 +4472,11 @@ export namespace editor {
          * Defaults to false.
          */
         scrollByPage?: boolean;
+        /**
+         * When set, the horizontal scrollbar will not increase content height.
+         * Defaults to false.
+         */
+        ignoreHorizontalScrollbarInContentHeight?: boolean;
     }
 
     export interface InternalEditorScrollbarOptions {
@@ -4374,6 +4493,7 @@ export namespace editor {
         readonly verticalScrollbarSize: number;
         readonly verticalSliderSize: number;
         readonly scrollByPage: boolean;
+        readonly ignoreHorizontalScrollbarInContentHeight: boolean;
     }
 
     export type InUntrustedWorkspace = 'inUntrustedWorkspace';
@@ -4425,12 +4545,33 @@ export namespace editor {
          * Defaults to `prefix`.
         */
         mode?: 'prefix' | 'subword' | 'subwordSmart';
-        showToolbar?: 'always' | 'onHover';
+        showToolbar?: 'always' | 'onHover' | 'never';
         suppressSuggestions?: boolean;
         /**
          * Does not clear active inline suggestions when the editor loses focus.
          */
         keepOnBlur?: boolean;
+        /**
+         * Font family for inline suggestions.
+         */
+        fontFamily?: string | 'default';
+    }
+
+    export interface IInlineEditOptions {
+        /**
+         * Enable or disable the rendering of automatic inline edit.
+        */
+        enabled?: boolean;
+        showToolbar?: 'always' | 'onHover' | 'never';
+        /**
+         * Font family for inline suggestions.
+         */
+        fontFamily?: string | 'default';
+        /**
+         * Does not clear active inline suggestions when the editor loses focus.
+         */
+        keepOnBlur?: boolean;
+        backgroundColoring?: boolean;
     }
 
     export interface IBracketPairColorizationOptions {
@@ -4768,91 +4909,93 @@ export namespace editor {
         hover = 60,
         inDiffEditor = 61,
         inlineSuggest = 62,
-        letterSpacing = 63,
-        lightbulb = 64,
-        lineDecorationsWidth = 65,
-        lineHeight = 66,
-        lineNumbers = 67,
-        lineNumbersMinChars = 68,
-        linkedEditing = 69,
-        links = 70,
-        matchBrackets = 71,
-        minimap = 72,
-        mouseStyle = 73,
-        mouseWheelScrollSensitivity = 74,
-        mouseWheelZoom = 75,
-        multiCursorMergeOverlapping = 76,
-        multiCursorModifier = 77,
-        multiCursorPaste = 78,
-        multiCursorLimit = 79,
-        occurrencesHighlight = 80,
-        overviewRulerBorder = 81,
-        overviewRulerLanes = 82,
-        padding = 83,
-        pasteAs = 84,
-        parameterHints = 85,
-        peekWidgetDefaultFocus = 86,
-        definitionLinkOpensInPeek = 87,
-        quickSuggestions = 88,
-        quickSuggestionsDelay = 89,
-        readOnly = 90,
-        readOnlyMessage = 91,
-        renameOnType = 92,
-        renderControlCharacters = 93,
-        renderFinalNewline = 94,
-        renderLineHighlight = 95,
-        renderLineHighlightOnlyWhenFocus = 96,
-        renderValidationDecorations = 97,
-        renderWhitespace = 98,
-        revealHorizontalRightPadding = 99,
-        roundedSelection = 100,
-        rulers = 101,
-        scrollbar = 102,
-        scrollBeyondLastColumn = 103,
-        scrollBeyondLastLine = 104,
-        scrollPredominantAxis = 105,
-        selectionClipboard = 106,
-        selectionHighlight = 107,
-        selectOnLineNumbers = 108,
-        showFoldingControls = 109,
-        showUnused = 110,
-        snippetSuggestions = 111,
-        smartSelect = 112,
-        smoothScrolling = 113,
-        stickyScroll = 114,
-        stickyTabStops = 115,
-        stopRenderingLineAfter = 116,
-        suggest = 117,
-        suggestFontSize = 118,
-        suggestLineHeight = 119,
-        suggestOnTriggerCharacters = 120,
-        suggestSelection = 121,
-        tabCompletion = 122,
-        tabIndex = 123,
-        unicodeHighlighting = 124,
-        unusualLineTerminators = 125,
-        useShadowDOM = 126,
-        useTabStops = 127,
-        wordBreak = 128,
-        wordSeparators = 129,
-        wordWrap = 130,
-        wordWrapBreakAfterCharacters = 131,
-        wordWrapBreakBeforeCharacters = 132,
-        wordWrapColumn = 133,
-        wordWrapOverride1 = 134,
-        wordWrapOverride2 = 135,
-        wrappingIndent = 136,
-        wrappingStrategy = 137,
-        showDeprecated = 138,
-        inlayHints = 139,
-        editorClassName = 140,
-        pixelRatio = 141,
-        tabFocusMode = 142,
-        layoutInfo = 143,
-        wrappingInfo = 144,
-        defaultColorDecorators = 145,
-        colorDecoratorsActivatedOn = 146,
-        inlineCompletionsAccessibilityVerbose = 147
+        inlineEdit = 63,
+        letterSpacing = 64,
+        lightbulb = 65,
+        lineDecorationsWidth = 66,
+        lineHeight = 67,
+        lineNumbers = 68,
+        lineNumbersMinChars = 69,
+        linkedEditing = 70,
+        links = 71,
+        matchBrackets = 72,
+        minimap = 73,
+        mouseStyle = 74,
+        mouseWheelScrollSensitivity = 75,
+        mouseWheelZoom = 76,
+        multiCursorMergeOverlapping = 77,
+        multiCursorModifier = 78,
+        multiCursorPaste = 79,
+        multiCursorLimit = 80,
+        occurrencesHighlight = 81,
+        overviewRulerBorder = 82,
+        overviewRulerLanes = 83,
+        padding = 84,
+        pasteAs = 85,
+        parameterHints = 86,
+        peekWidgetDefaultFocus = 87,
+        definitionLinkOpensInPeek = 88,
+        quickSuggestions = 89,
+        quickSuggestionsDelay = 90,
+        readOnly = 91,
+        readOnlyMessage = 92,
+        renameOnType = 93,
+        renderControlCharacters = 94,
+        renderFinalNewline = 95,
+        renderLineHighlight = 96,
+        renderLineHighlightOnlyWhenFocus = 97,
+        renderValidationDecorations = 98,
+        renderWhitespace = 99,
+        revealHorizontalRightPadding = 100,
+        roundedSelection = 101,
+        rulers = 102,
+        scrollbar = 103,
+        scrollBeyondLastColumn = 104,
+        scrollBeyondLastLine = 105,
+        scrollPredominantAxis = 106,
+        selectionClipboard = 107,
+        selectionHighlight = 108,
+        selectOnLineNumbers = 109,
+        showFoldingControls = 110,
+        showUnused = 111,
+        snippetSuggestions = 112,
+        smartSelect = 113,
+        smoothScrolling = 114,
+        stickyScroll = 115,
+        stickyTabStops = 116,
+        stopRenderingLineAfter = 117,
+        suggest = 118,
+        suggestFontSize = 119,
+        suggestLineHeight = 120,
+        suggestOnTriggerCharacters = 121,
+        suggestSelection = 122,
+        tabCompletion = 123,
+        tabIndex = 124,
+        unicodeHighlighting = 125,
+        unusualLineTerminators = 126,
+        useShadowDOM = 127,
+        useTabStops = 128,
+        wordBreak = 129,
+        wordSegmenterLocales = 130,
+        wordSeparators = 131,
+        wordWrap = 132,
+        wordWrapBreakAfterCharacters = 133,
+        wordWrapBreakBeforeCharacters = 134,
+        wordWrapColumn = 135,
+        wordWrapOverride1 = 136,
+        wordWrapOverride2 = 137,
+        wrappingIndent = 138,
+        wrappingStrategy = 139,
+        showDeprecated = 140,
+        inlayHints = 141,
+        editorClassName = 142,
+        pixelRatio = 143,
+        tabFocusMode = 144,
+        layoutInfo = 145,
+        wrappingInfo = 146,
+        defaultColorDecorators = 147,
+        colorDecoratorsActivatedOn = 148,
+        inlineCompletionsAccessibilityVerbose = 149
     }
 
     export const EditorOptions: {
@@ -4938,7 +5081,7 @@ export namespace editor {
         multiCursorModifier: IEditorOption<EditorOption.multiCursorModifier, 'altKey' | 'metaKey' | 'ctrlKey'>;
         multiCursorPaste: IEditorOption<EditorOption.multiCursorPaste, 'spread' | 'full'>;
         multiCursorLimit: IEditorOption<EditorOption.multiCursorLimit, number>;
-        occurrencesHighlight: IEditorOption<EditorOption.occurrencesHighlight, boolean>;
+        occurrencesHighlight: IEditorOption<EditorOption.occurrencesHighlight, 'off' | 'singleFile' | 'multiFile'>;
         overviewRulerBorder: IEditorOption<EditorOption.overviewRulerBorder, boolean>;
         overviewRulerLanes: IEditorOption<EditorOption.overviewRulerLanes, number>;
         padding: IEditorOption<EditorOption.padding, Readonly<Required<IEditorPaddingOptions>>>;
@@ -4977,6 +5120,7 @@ export namespace editor {
         stopRenderingLineAfter: IEditorOption<EditorOption.stopRenderingLineAfter, number>;
         suggest: IEditorOption<EditorOption.suggest, Readonly<Required<ISuggestOptions>>>;
         inlineSuggest: IEditorOption<EditorOption.inlineSuggest, Readonly<Required<IInlineSuggestOptions>>>;
+        inlineEdit: IEditorOption<EditorOption.inlineEdit, Readonly<Required<IInlineEditOptions>>>;
         inlineCompletionsAccessibilityVerbose: IEditorOption<EditorOption.inlineCompletionsAccessibilityVerbose, boolean>;
         suggestFontSize: IEditorOption<EditorOption.suggestFontSize, number>;
         suggestLineHeight: IEditorOption<EditorOption.suggestLineHeight, number>;
@@ -4989,6 +5133,7 @@ export namespace editor {
         useShadowDOM: IEditorOption<EditorOption.useShadowDOM, boolean>;
         useTabStops: IEditorOption<EditorOption.useTabStops, boolean>;
         wordBreak: IEditorOption<EditorOption.wordBreak, 'normal' | 'keepAll'>;
+        wordSegmenterLocales: IEditorOption<EditorOption.wordSegmenterLocales, {}>;
         wordSeparators: IEditorOption<EditorOption.wordSeparators, string>;
         wordWrap: IEditorOption<EditorOption.wordWrap, 'on' | 'off' | 'wordWrapColumn' | 'bounded'>;
         wordWrapBreakAfterCharacters: IEditorOption<EditorOption.wordWrapBreakAfterCharacters, string>;
@@ -5230,19 +5375,46 @@ export namespace editor {
     }
 
     /**
+     * Represents editor-relative coordinates of an overlay widget.
+     */
+    export interface IOverlayWidgetPositionCoordinates {
+        /**
+         * The top position for the overlay widget, relative to the editor.
+         */
+        top: number;
+        /**
+         * The left position for the overlay widget, relative to the editor.
+         */
+        left: number;
+    }
+
+    /**
      * A position for rendering overlay widgets.
      */
     export interface IOverlayWidgetPosition {
         /**
          * The position preference for the overlay widget.
          */
-        preference: OverlayWidgetPositionPreference | null;
+        preference: OverlayWidgetPositionPreference | IOverlayWidgetPositionCoordinates | null;
+        /**
+         * When set, stacks with other overlay widgets with the same preference,
+         * in an order determined by the ordinal value.
+         */
+        stackOridinal?: number;
     }
 
     /**
      * An overlay widgets renders on top of the text.
      */
     export interface IOverlayWidget {
+        /**
+         * Event fired when the widget layout changes.
+         */
+        onDidLayout?: IEvent<void>;
+        /**
+         * Render this overlay widget in a location where it could overflow the editor's view dom node.
+         */
+        allowEditorOverflow?: boolean;
         /**
          * Get a unique identifier of the overlay widget.
          */
@@ -5394,6 +5566,7 @@ export namespace editor {
         readonly isAfterLines: boolean;
         readonly glyphMarginLeft: number;
         readonly glyphMarginWidth: number;
+        readonly glyphMarginLane?: GlyphMarginLane;
         readonly lineNumbersWidth: number;
         readonly offsetX: number;
     }
@@ -5497,6 +5670,7 @@ export namespace editor {
     export interface IPasteEvent {
         readonly range: Range;
         readonly languageId: string | null;
+        readonly clipboardEvent?: ClipboardEvent;
     }
 
     export interface IDiffEditorConstructionOptions extends IDiffEditorOptions, IEditorConstructionOptions {
@@ -5554,6 +5728,11 @@ export namespace editor {
          * @event
          */
         readonly onDidChangeCursorSelection: IEvent<ICursorSelectionChangedEvent>;
+        /**
+         * An event emitted when the model of this editor is about to change (e.g. from `editor.setModel()`).
+         * @event
+         */
+        readonly onWillChangeModel: IEvent<IModelChangedEvent>;
         /**
          * An event emitted when the model of this editor has changed (e.g. `editor.setModel()`).
          * @event
@@ -5657,6 +5836,18 @@ export namespace editor {
          * @event
          */
         readonly onDidChangeHiddenAreas: IEvent<void>;
+        /**
+         * Some editor operations fire multiple events at once.
+         * To allow users to react to multiple events fired by a single operation,
+         * the editor fires a begin update before the operation and an end update after the operation.
+         * Whenever the editor fires `onBeginUpdate`, it will also fire `onEndUpdate` once the operation finishes.
+         * Note that not all operations are bracketed by `onBeginUpdate` and `onEndUpdate`.
+        */
+        readonly onBeginUpdate: IEvent<void>;
+        /**
+         * Fires after the editor completes the operation it fired `onBeginUpdate` for.
+        */
+        readonly onEndUpdate: IEvent<void>;
         /**
          * Saves current view state of the editor in a serializable object.
          */
@@ -5981,8 +6172,18 @@ export namespace editor {
          * Update the editor's options after the editor has been created.
          */
         updateOptions(newOptions: IDiffEditorOptions): void;
+        /**
+         * Jumps to the next or previous diff.
+         */
+        goToDiff(target: 'next' | 'previous'): void;
+        /**
+         * Scrolls to the first diff.
+         * (Waits until the diff computation finished.)
+         */
+        revealFirstDiff(): unknown;
         accessibleDiffViewerNext(): void;
         accessibleDiffViewerPrev(): void;
+        handleInitialized(): void;
     }
 
     export class FontInfo extends BareFontInfo {
@@ -6223,6 +6424,11 @@ export namespace languages {
     export function registerRenameProvider(languageSelector: LanguageSelector, provider: RenameProvider): IDisposable;
 
     /**
+     * Register a new symbol-name provider (e.g., when a symbol is being renamed, show new possible symbol-names)
+     */
+    export function registerNewSymbolNameProvider(languageSelector: LanguageSelector, provider: NewSymbolNamesProvider): IDisposable;
+
+    /**
      * Register a signature help provider (used by e.g. parameter hints).
      */
     export function registerSignatureHelpProvider(languageSelector: LanguageSelector, provider: SignatureHelpProvider): IDisposable;
@@ -6339,6 +6545,8 @@ export namespace languages {
      * Register an inline completions provider.
      */
     export function registerInlineCompletionsProvider(languageSelector: LanguageSelector, provider: InlineCompletionsProvider): IDisposable;
+
+    export function registerInlineEditProvider(languageSelector: LanguageSelector, provider: InlineEditProvider): IDisposable;
 
     /**
      * Register an inlay hints provider.
@@ -6654,19 +6862,56 @@ export namespace languages {
          * current position itself.
          */
         range?: IRange;
+        /**
+         * Can increase the verbosity of the hover
+         */
+        canIncreaseVerbosity?: boolean;
+        /**
+         * Can decrease the verbosity of the hover
+         */
+        canDecreaseVerbosity?: boolean;
     }
 
     /**
      * The hover provider interface defines the contract between extensions and
      * the [hover](https://code.visualstudio.com/docs/editor/intellisense)-feature.
      */
-    export interface HoverProvider {
+    export interface HoverProvider<THover = Hover> {
         /**
-         * Provide a hover for the given position and document. Multiple hovers at the same
+         * Provide a hover for the given position, context and document. Multiple hovers at the same
          * position will be merged by the editor. A hover can have a range which defaults
          * to the word range at the position when omitted.
          */
-        provideHover(model: editor.ITextModel, position: Position, token: CancellationToken): ProviderResult<Hover>;
+        provideHover(model: editor.ITextModel, position: Position, token: CancellationToken, context?: HoverContext<THover>): ProviderResult<THover>;
+    }
+
+    export interface HoverContext<THover = Hover> {
+        /**
+         * Hover verbosity request
+         */
+        verbosityRequest?: HoverVerbosityRequest<THover>;
+    }
+
+    export interface HoverVerbosityRequest<THover = Hover> {
+        /**
+         * The delta by which to increase/decrease the hover verbosity level
+         */
+        verbosityDelta: number;
+        /**
+         * The previous hover for the same position
+         */
+        previousHover: THover;
+    }
+
+    export enum HoverVerbosityAction {
+        /**
+         * Increase the verbosity of the hover
+         */
+        Increase = 0,
+        /**
+         * Decrease the verbosity of the hover
+         */
+        Decrease = 1
     }
 
     export enum CompletionItemKind {
@@ -6821,6 +7066,22 @@ export namespace languages {
     }
 
     /**
+     * Info provided on partial acceptance.
+     */
+    export interface PartialAcceptInfo {
+        kind: PartialAcceptTriggerKind;
+    }
+
+    /**
+     * How a partial acceptance was triggered.
+     */
+    export enum PartialAcceptTriggerKind {
+        Word = 0,
+        Line = 1,
+        Suggest = 2
+    }
+
+    /**
      * How a suggest provider was triggered.
      */
     export enum CompletionTriggerKind {
@@ -6966,7 +7227,7 @@ export namespace languages {
         /**
          * Will be called when an item is partially accepted.
          */
-        handlePartialAccept?(completions: T, item: T['items'][number], acceptedCharacters: number): void;
+        handlePartialAccept?(completions: T, item: T['items'][number], acceptedCharacters: number, info: PartialAcceptInfo): void;
         /**
          * Will be called when a completions list is no longer in use and can be garbage-collected.
         */
@@ -6991,7 +7252,9 @@ export namespace languages {
         diagnostics?: editor.IMarkerData[];
         kind?: string;
         isPreferred?: boolean;
+        isAI?: boolean;
         disabled?: string;
+        ranges?: IRange[];
     }
 
     export enum CodeActionTriggerType {
@@ -7133,6 +7396,20 @@ export namespace languages {
     }
 
     /**
+     * Represents a set of document highlights for a specific Uri.
+     */
+    export interface MultiDocumentHighlight {
+        /**
+         * The Uri of the document that the highlights belong to.
+         */
+        uri: Uri;
+        /**
+         * The set of highlights for the document.
+         */
+        highlights: DocumentHighlight[];
+    }
+
+    /**
      * The document highlight provider interface defines the contract between extensions and
      * the word-highlight-feature.
      */
@@ -7142,6 +7419,27 @@ export namespace languages {
          * all exit-points of a function.
          */
         provideDocumentHighlights(model: editor.ITextModel, position: Position, token: CancellationToken): ProviderResult<DocumentHighlight[]>;
+    }
+
+    /**
+     * A provider that can provide document highlights across multiple documents.
+     */
+    export interface MultiDocumentHighlightProvider {
+        readonly selector: LanguageSelector;
+        /**
+         * Provide a Map of Uri --> document highlights, like all occurrences of a variable or
+         * all exit-points of a function.
+         *
+         * Used in cases such as split view, notebooks, etc. where there can be multiple documents
+         * with shared symbols.
+         *
+         * @param primaryModel The primary text model.
+         * @param position The position at which to provide document highlights.
+         * @param otherModels The other text models to search for document highlights.
+         * @param token A cancellation token.
+         * @returns A map of Uri to document highlights.
+         */
+        provideMultiDocumentHighlights(primaryModel: editor.ITextModel, position: Position, otherModels: editor.ITextModel[], token: CancellationToken): ProviderResult<Map<Uri, DocumentHighlight[]>>;
     }
 
     /**
@@ -7620,6 +7918,25 @@ export namespace languages {
         resolveRenameLocation?(model: editor.ITextModel, position: Position, token: CancellationToken): ProviderResult<RenameLocation & Rejection>;
     }
 
+    export enum NewSymbolNameTag {
+        AIGenerated = 1
+    }
+
+    export enum NewSymbolNameTriggerKind {
+        Invoke = 0,
+        Automatic = 1
+    }
+
+    export interface NewSymbolName {
+        readonly newSymbolName: string;
+        readonly tags?: readonly NewSymbolNameTag[];
+    }
+
+    export interface NewSymbolNamesProvider {
+        supportsAutomaticNewSymbolNamesTriggerKind?: Promise<boolean | undefined>;
+        provideNewSymbolNames(model: editor.ITextModel, range: IRange, triggerKind: NewSymbolNameTriggerKind, token: CancellationToken): ProviderResult<NewSymbolName[]>;
+    }
+
     export interface Command {
         id: string;
         title: string;
@@ -7627,11 +7944,17 @@ export namespace languages {
         arguments?: any[];
     }
 
+    export interface CommentAuthorInformation {
+        name: string;
+        iconPath?: UriComponents;
+    }
+
     export interface PendingCommentThread {
         body: string;
-        range: IRange;
+        range: IRange | undefined;
         uri: Uri;
-        owner: string;
+        uniqueOwner: string;
+        isReply: boolean;
     }
 
     export interface CodeLens {
@@ -7741,6 +8064,27 @@ export namespace languages {
          * @returns A provider result of text edits.
          */
         provideMappedEdits(document: editor.ITextModel, codeBlocks: string[], context: MappedEditsContext, token: CancellationToken): Promise<WorkspaceEdit | null>;
+    }
+
+    export interface IInlineEdit {
+        text: string;
+        range: IRange;
+        accepted?: Command;
+        rejected?: Command;
+    }
+
+    export interface IInlineEditContext {
+        triggerKind: InlineEditTriggerKind;
+    }
+
+    export enum InlineEditTriggerKind {
+        Invoke = 0,
+        Automatic = 1
+    }
+
+    export interface InlineEditProvider<T extends IInlineEdit = IInlineEdit> {
+        provideInlineEdit(model: editor.ITextModel, context: IInlineEditContext, token: CancellationToken): ProviderResult<T>;
+        freeInlineEdit(edit: T): void;
     }
 
     export interface ILanguageExtensionPoint {
@@ -8288,6 +8632,127 @@ export namespace languages.html {
  *--------------------------------------------------------------------------------------------*/
 
 export namespace languages.json {
+    export interface BaseASTNode {
+        readonly type: 'object' | 'array' | 'property' | 'string' | 'number' | 'boolean' | 'null';
+        readonly parent?: ASTNode;
+        readonly offset: number;
+        readonly length: number;
+        readonly children?: ASTNode[];
+        readonly value?: string | boolean | number | null;
+    }
+    export interface ObjectASTNode extends BaseASTNode {
+        readonly type: 'object';
+        readonly properties: PropertyASTNode[];
+        readonly children: ASTNode[];
+    }
+    export interface PropertyASTNode extends BaseASTNode {
+        readonly type: 'property';
+        readonly keyNode: StringASTNode;
+        readonly valueNode?: ASTNode;
+        readonly colonOffset?: number;
+        readonly children: ASTNode[];
+    }
+    export interface ArrayASTNode extends BaseASTNode {
+        readonly type: 'array';
+        readonly items: ASTNode[];
+        readonly children: ASTNode[];
+    }
+    export interface StringASTNode extends BaseASTNode {
+        readonly type: 'string';
+        readonly value: string;
+    }
+    export interface NumberASTNode extends BaseASTNode {
+        readonly type: 'number';
+        readonly value: number;
+        readonly isInteger: boolean;
+    }
+    export interface BooleanASTNode extends BaseASTNode {
+        readonly type: 'boolean';
+        readonly value: boolean;
+    }
+    export interface NullASTNode extends BaseASTNode {
+        readonly type: 'null';
+        readonly value: null;
+    }
+    export type ASTNode = ObjectASTNode | PropertyASTNode | ArrayASTNode | StringASTNode | NumberASTNode | BooleanASTNode | NullASTNode;
+    export type JSONDocument = {
+        root: ASTNode | undefined;
+        getNodeFromOffset(offset: number, includeRightBound?: boolean): ASTNode | undefined;
+    };
+    export type JSONSchemaRef = JSONSchema | boolean;
+    export interface JSONSchemaMap {
+        [name: string]: JSONSchemaRef;
+    }
+    export interface JSONSchema {
+        id?: string;
+        $id?: string;
+        $schema?: string;
+        type?: string | string[];
+        title?: string;
+        default?: any;
+        definitions?: {
+            [name: string]: JSONSchema;
+        };
+        description?: string;
+        properties?: JSONSchemaMap;
+        patternProperties?: JSONSchemaMap;
+        additionalProperties?: boolean | JSONSchemaRef;
+        minProperties?: number;
+        maxProperties?: number;
+        dependencies?: JSONSchemaMap | {
+            [prop: string]: string[];
+        };
+        items?: JSONSchemaRef | JSONSchemaRef[];
+        minItems?: number;
+        maxItems?: number;
+        uniqueItems?: boolean;
+        additionalItems?: boolean | JSONSchemaRef;
+        pattern?: string;
+        minLength?: number;
+        maxLength?: number;
+        minimum?: number;
+        maximum?: number;
+        exclusiveMinimum?: boolean | number;
+        exclusiveMaximum?: boolean | number;
+        multipleOf?: number;
+        required?: string[];
+        $ref?: string;
+        anyOf?: JSONSchemaRef[];
+        allOf?: JSONSchemaRef[];
+        oneOf?: JSONSchemaRef[];
+        not?: JSONSchemaRef;
+        enum?: any[];
+        format?: string;
+        const?: any;
+        contains?: JSONSchemaRef;
+        propertyNames?: JSONSchemaRef;
+        examples?: any[];
+        $comment?: string;
+        if?: JSONSchemaRef;
+        then?: JSONSchemaRef;
+        else?: JSONSchemaRef;
+        defaultSnippets?: {
+            label?: string;
+            description?: string;
+            markdownDescription?: string;
+            body?: any;
+            bodyText?: string;
+        }[];
+        errorMessage?: string;
+        patternErrorMessage?: string;
+        deprecationMessage?: string;
+        enumDescriptions?: string[];
+        markdownEnumDescriptions?: string[];
+        markdownDescription?: string;
+        doNotSuggest?: boolean;
+        suggestSortText?: string;
+        allowComments?: boolean;
+        allowTrailingCommas?: boolean;
+    }
+    export interface MatchingSchema {
+        node: ASTNode;
+        schema: JSONSchema;
+    }
     export interface DiagnosticsOptions {
         /**
          * If set, the validator will be enabled and perform syntax and schema based validation,
@@ -8392,6 +8857,11 @@ export namespace languages.json {
         setModeConfiguration(modeConfiguration: ModeConfiguration): void;
     }
     export const jsonDefaults: LanguageServiceDefaults;
+    export interface IJSONWorker {
+        parseJSONDocument(uri: string): Promise<JSONDocument | null>;
+        getMatchingSchemas(uri: string): Promise<MatchingSchema[]>;
+    }
+    export const getWorker: () => Promise<(...uris: Uri[]) => Promise<IJSONWorker>>;
 }
 
 /*---------------------------------------------------------------------------------------------
@@ -8586,9 +9056,10 @@ export namespace languages.typescript {
         length: number | undefined;
         messageText: string | DiagnosticMessageChain;
     }
-    interface EmitOutput {
+    export interface EmitOutput {
         outputFiles: OutputFile[];
         emitSkipped: boolean;
+        diagnostics?: Diagnostic[];
     }
     interface OutputFile {
         name: string;
@@ -8818,7 +9289,7 @@ export namespace languages.typescript {
          * Get transpiled output for the given file.
          * @returns `typescript.EmitOutput`
          */
-        getEmitOutput(fileName: string): Promise<EmitOutput>;
+        getEmitOutput(fileName: string, emitOnlyDtsFiles?: boolean, forceDtsEmit?: boolean): Promise<EmitOutput>;
         /**
          * Get possible code fixes at the given position in the file.
          * @param formatOptions `typescript.FormatCodeOptions`
