@@ -1,11 +1,11 @@
 'use client';
-import { useChallengeRouteData } from '~/app/challenge-route-data.hook';
 import { useProblemExplorerContext } from '~/app/problem-explorer.hooks';
 import { useMemo } from 'react';
 import { ExploreDrawer } from '~/app/challenge/_components/explore-drawer';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from '@repo/ui/icons';
+import { useChallengeRouteData } from '~/app/challenge/[slug]/challenge-route-data.hook';
 
 export function ProblemExplorerNav() {
   const { currentChallenge } = useChallengeRouteData();

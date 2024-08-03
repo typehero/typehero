@@ -1,6 +1,6 @@
 'use client';
 import { createContext, useState, useContext } from 'react';
-import { type AllChallenges } from './explore/_components/explore.action';
+import type { AllChallenges } from '~/app/explore/_components/explore.action';
 
 interface AllChallengesContextType {
   allChallenges: AllChallenges;

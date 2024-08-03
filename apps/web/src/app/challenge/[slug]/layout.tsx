@@ -5,6 +5,7 @@ import { ForceRenderUntilClient } from '@repo/ui/components/force-render-until-c
 
 import { getChallengeRouteData } from './getChallengeRouteData';
 import { TrackVisibiltyProvider } from './use-track-visibility.hook';
+import { ContextProviders } from './context-providers';
 
 export default async function LayoutData({
   children,
@@ -18,11 +19,13 @@ export default async function LayoutData({
 
   return (
     <ForceRenderUntilClient>
-      <TrackVisibiltyProvider>
-        <ChallengeLayoutWrapper challenge={challenge} track={track}>
-          {children}
-        </ChallengeLayoutWrapper>
-      </TrackVisibiltyProvider>
+      <ContextProviders>
+        <TrackVisibiltyProvider>
+          <ChallengeLayoutWrapper challenge={challenge} track={track}>
+            {children}
+          </ChallengeLayoutWrapper>
+        </TrackVisibiltyProvider>
+      </ContextProviders>
     </ForceRenderUntilClient>
   );
 }
