@@ -4,12 +4,12 @@ import { ChevronRight } from '@repo/ui/icons';
 import { TrackChallenge } from '../../tracks/_components/track-challenge-card';
 import { TrackProgress } from '../../tracks/_components/track-progress';
 import { SelectDropdown } from './select-dropdown';
-import { useChallengeRouteData } from '~/app/challenge-route-data.hook';
 import { useProblemExplorerContext } from '~/app/problem-explorer.hooks';
-import { useAllChallengesContext } from '~/app/all-challenges.hook';
 import { useLocalStorage } from '~/utils/useLocalStorage';
 import { getChallengesAndTitle, type ChallengeType } from '~/app/get-challenges-and-title';
 import { useMemo } from 'react';
+import { useChallengeRouteData } from '../[slug]/challenge-route-data.hook';
+import { useAllChallengesContext } from '../[slug]/all-challenges.hook';
 
 export function ExplorerPanel() {
   const [, setTrackNameStorage] = useLocalStorage('trackName', 'popular');

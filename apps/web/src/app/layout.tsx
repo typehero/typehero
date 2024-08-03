@@ -5,7 +5,6 @@ import { Navigation } from '~/components/Navigation';
 import '../styles/globals.css';
 import { OG_URL, tagline } from './metadata';
 import { Providers } from './providers';
-import { ContextProviders } from './context-providers';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -60,10 +59,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${inter.className} flex flex-col`}>
         <Providers>
           <Navigation />
-          {/* this is broken and need to fix */}
-          <ContextProviders>
-            <main className="flex-1">{children}</main>
-          </ContextProviders>
+          <main className="flex-1">{children}</main>
           <Toaster />
         </Providers>
         <Analytics />

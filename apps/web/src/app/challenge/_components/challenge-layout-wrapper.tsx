@@ -5,7 +5,7 @@ import { ChallengeLayout, MOBILE_BREAKPOINT } from './challenge-layout';
 import usePanelAdjustments from './usePanelAdjustments';
 import { LeftWrapper } from '../[slug]/left-wrapper';
 import { Wrapper } from '../[slug]/wrapper';
-import { useChallengeRouteData } from '~/app/challenge-route-data.hook';
+import { useChallengeRouteData } from '../[slug]/challenge-route-data.hook';
 
 interface Props {
   challenge: ChallengeRouteData['challenge'];

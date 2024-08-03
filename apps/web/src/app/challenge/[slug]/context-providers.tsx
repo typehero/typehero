@@ -1,10 +1,10 @@
 import React from 'react';
-import { ChallegeRouteDataProvider } from './challenge-route-data.hook';
-import { ProblemExplorerProvider } from './problem-explorer.hooks';
-import { AllChallengesProvider } from './all-challenges.hook';
-import { getAllChallenges } from './explore/_components/explore.action';
 import { auth } from '@repo/auth/server';
-import { isEnrolledInAnyTrack } from './challenge/[slug]/getChallengeRouteData';
+import { getAllChallenges } from '~/app/explore/_components/explore.action';
+import { isEnrolledInAnyTrack } from './getChallengeRouteData';
+import { AllChallengesProvider } from './all-challenges.hook';
+import { ProblemExplorerProvider } from '~/app/problem-explorer.hooks';
+import { ChallegeRouteDataProvider } from './challenge-route-data.hook';
 
 interface Props {
   children: React.ReactNode;
