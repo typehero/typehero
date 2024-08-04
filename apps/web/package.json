@@ -42,6 +42,7 @@
     "@uploadthing/react": "^6.2.2",
     "@vercel/analytics": "^1.1.1",
     "@vercel/edge-config": "^0.2.1",
+    "@vercel/speed-insights": "^1.0.12",
     "@vercel/toolbar": "^0.1.1",
     "algoliasearch": "^4.20.0",
     "bad-words": "^3.0.4",
