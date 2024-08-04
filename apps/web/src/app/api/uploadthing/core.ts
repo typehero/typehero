@@ -1,6 +1,6 @@
 import { createUploadthing, type FileRouter } from 'uploadthing/next';
 import { prisma } from '@repo/db';
-import { auth } from '@repo/auth/server';
+import { auth } from '~/server/auth';
 
 const f = createUploadthing({
   /**

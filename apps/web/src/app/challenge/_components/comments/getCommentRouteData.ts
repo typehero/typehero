@@ -1,5 +1,5 @@
 'use server';
-import { auth } from '@repo/auth/server';
+import { auth } from '~/server/auth';
 import { prisma } from '@repo/db';
 import type { CommentRoot } from '@repo/db/types';
 import { orderBy, type SortKey, type SortOrder } from '~/utils/sorting';

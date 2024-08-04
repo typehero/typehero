@@ -1,6 +1,6 @@
 'use server';
 
-import { auth } from '@repo/auth/server';
+import { auth } from '~/server/auth';
 import { prisma } from '@repo/db';
 import type { Comment, CommentRoot, PrismaClient } from '@repo/db/types';
 import { isAdminOrModerator, isAuthor } from '~/utils/auth-guards';

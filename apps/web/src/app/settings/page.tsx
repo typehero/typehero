@@ -1,4 +1,4 @@
-import { auth } from '@repo/auth/server';
+import { auth } from '~/server/auth';
 import { prisma } from '@repo/db';
 import type { Metadata } from 'next';
 import { Settings } from './_components/settings';

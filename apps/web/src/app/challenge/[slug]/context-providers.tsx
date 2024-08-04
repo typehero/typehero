@@ -1,5 +1,5 @@
 import React from 'react';
-import { auth } from '@repo/auth/server';
+import { auth } from '~/server/auth';
 import { getAllChallenges } from '~/app/explore/_components/explore.action';
 import { isEnrolledInAnyTrack } from './getChallengeRouteData';
 import { AllChallengesProvider } from './all-challenges.hook';

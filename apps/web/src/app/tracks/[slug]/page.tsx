@@ -1,4 +1,4 @@
-import { auth } from '@repo/auth/server';
+import { auth } from '~/server/auth';
 
 import { withUnstableCache } from '~/utils/withUnstableCache';
 import { TrackDetail } from '../_components/track-details';

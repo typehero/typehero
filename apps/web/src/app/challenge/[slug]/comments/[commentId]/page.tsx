@@ -1,4 +1,4 @@
-import { auth } from '@repo/auth/server';
+import { auth } from '~/server/auth';
 import { Comments } from '../../../_components/comments';
 import { getPreselectedCommentMetadata } from '../../../_components/comments/getCommentRouteData';
 import { Description } from '../../../_components/description';

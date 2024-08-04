@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Balancer } from 'react-wrap-balancer';
 import { Button } from '@repo/ui/components/button';
 import { HeroIllustration, BackgroundGrid } from './hero-illustration';
-import { auth } from '@repo/auth/server';
+import { auth } from '~/server/auth';
 
 function TypeHeroLogo3D() {
   return (

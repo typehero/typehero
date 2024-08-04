@@ -1,7 +1,7 @@
-import { auth } from '@repo/auth/server';
 import { RoleTypes } from '@repo/db/types';
 import { Lock } from '@repo/ui/icons';
 import { redirect } from 'next/navigation';
+import { auth } from '~/server/auth';
 
 async function Admin() {
   const session = await auth();

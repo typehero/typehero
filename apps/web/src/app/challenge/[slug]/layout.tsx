@@ -1,6 +1,6 @@
 import { ChallengeLayoutWrapper } from '~/app/challenge/_components/challenge-layout-wrapper';
 
-import { auth } from '@repo/auth/server';
+import { auth } from '~/server/auth';
 import { ForceRenderUntilClient } from '@repo/ui/components/force-render-until-client';
 
 import { getChallengeRouteData } from './getChallengeRouteData';

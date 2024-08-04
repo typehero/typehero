@@ -11,7 +11,7 @@ import { createCompletedSubmissionCacheKey } from '~/app/challenge/[slug]/submis
 import { withUnstableCache } from '~/utils/withUnstableCache';
 import { getChallengeHistoryByCategory } from '../_components/dashboard/_actions';
 import ChallengeHistory from '../_components/dashboard/challenge-history';
-import { auth } from '@repo/auth/server';
+import { auth } from '~/server/auth';
 
 interface Props {
   params: {

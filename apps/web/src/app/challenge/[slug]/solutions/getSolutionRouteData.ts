@@ -1,6 +1,6 @@
 'use server';
 import { prisma } from '@repo/db';
-import { auth } from '@repo/auth/server';
+import { auth } from '~/server/auth';
 import type { SortKey, SortOrder } from '~/utils/sorting';
 import { orderBy } from '~/utils/sorting';
 

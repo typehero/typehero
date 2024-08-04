@@ -1,4 +1,4 @@
-import { auth } from '@repo/auth/server';
+import { auth } from '~/server/auth';
 import type { Difficulty, Tags } from '@repo/db/types';
 import Link from 'next/link';
 import { ExploreChallengesProgression } from '~/app/explore/_components/explore-challenges-progress';

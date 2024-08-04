@@ -1,7 +1,7 @@
 'use server';
 
 import { prisma } from '@repo/db';
-import { auth } from '@repo/auth/server';
+import { auth } from '~/server/auth';
 import { type CreateChallengeSchema } from '.';
 
 export async function uploadChallenge(data: CreateChallengeSchema, isUserACreator: boolean) {
