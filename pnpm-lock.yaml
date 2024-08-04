@@ -540,7 +540,7 @@ importers:
     dependencies:
       '@auth/prisma-adapter':
         specifier: ^1.0.13
-        version: 1.0.13(@prisma/client@5.7.0(prisma@5.0.0))
+        version: 1.0.13(@prisma/client@5.7.0(prisma@5.7.0))
       '@repo/db':
         specifier: workspace:*
         version: link:../db
@@ -561,8 +561,8 @@ importers:
         specifier: ^8.45.0
         version: 8.45.0
       prisma:
-        specifier: ^5.0.0
-        version: 5.0.0
+        specifier: 5.7.0
+        version: 5.7.0
       tsup:
         specifier: 5.12.0
         version: 5.12.0(postcss@8.4.31)(typescript@5.3.3)
@@ -573,8 +573,8 @@ importers:
   packages/db:
     dependencies:
       '@prisma/client':
-        specifier: ^5.0.0
-        version: 5.7.0(prisma@5.0.0)
+        specifier: 5.7.0
+        version: 5.7.0(prisma@5.7.0)
     devDependencies:
       '@faker-js/faker':
         specifier: ^8.0.2
@@ -595,8 +595,8 @@ importers:
         specifier: ^8.45.0
         version: 8.45.0
       prisma:
-        specifier: ^5.0.0
-        version: 5.0.0
+        specifier: 5.7.0
+        version: 5.7.0
       simple-git:
         specifier: ^3.19.1
         version: 3.19.1
@@ -805,7 +805,7 @@ importers:
     dependencies:
       '@next/eslint-plugin-next':
         specifier: canary
-        version: 15.0.0-canary.96
+        version: 15.0.0-canary.101
       '@repo/tsconfig':
         specifier: workspace:*
         version: link:../config-typescript
@@ -817,7 +817,7 @@ importers:
         version: 5.62.0(eslint@8.45.0)(typescript@5.3.3)
       '@vercel/style-guide':
         specifier: ^4.0.2
-        version: 4.0.2(@next/eslint-plugin-next@15.0.0-canary.96)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 4.0.2(@next/eslint-plugin-next@15.0.0-canary.101)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3)
       eslint:
         specifier: ^8.45.0
         version: 8.45.0
@@ -1894,8 +1894,8 @@ packages:
   '@next/eslint-plugin-next@13.4.10':
     resolution: {integrity: sha512-YJqyq6vk39JQfvaNtN83t/p5Jy45+bazRL+V4QI8FPd3FBqFYMEsULiwRLgSJMgFqkk4t4JbeZurz+gILEAFpA==}
 
-  '@next/eslint-plugin-next@15.0.0-canary.96':
-    resolution: {integrity: sha512-F5kmcqnyDxpUA9AT1BmiwgVUPEHoyNoO+J3VroFySXcqn5ILd8KTXwbbzyvN4NnTYQh2rCpg6ibfJjGaHRMFOQ==}
+  '@next/eslint-plugin-next@15.0.0-canary.101':
+    resolution: {integrity: sha512-dKqDu3omRlS3k/ibQAp8QIwRJL46HxpXR2x9QXrw+XLe7NAzIDG6NUlJhMCcNhy9TLDikCwmnC7AJzOLtuEuSQ==}
 
   '@next/swc-darwin-arm64@14.2.5':
     resolution: {integrity: sha512-/9zVxJ+K9lrzSGli1///ujyRfon/ZneeZ+v4ptpiPoOU+GKZnm8Wj8ELWU1Pm7GHltYRBklmXMTUqM/DqQ99FQ==}
@@ -2176,8 +2176,20 @@ packages:
       prisma:
         optional: true
 
-  '@prisma/engines@5.0.0':
-    resolution: {integrity: sha512-kyT/8fd0OpWmhAU5YnY7eP31brW1q1YrTGoblWrhQJDiN/1K+Z8S1kylcmtjqx5wsUGcP1HBWutayA/jtyt+sg==}
+  '@prisma/debug@5.7.0':
+    resolution: {integrity: sha512-tZ+MOjWlVvz1kOEhNYMa4QUGURY+kgOUBqLHYIV8jmCsMuvA1tWcn7qtIMLzYWCbDcQT4ZS8xDgK0R2gl6/0wA==}
+
+  '@prisma/engines-version@5.7.0-41.79fb5193cf0a8fdbef536e4b4a159cad677ab1b9':
+    resolution: {integrity: sha512-V6tgRVi62jRwTm0Hglky3Scwjr/AKFBFtS+MdbsBr7UOuiu1TKLPc6xfPiyEN1+bYqjEtjxwGsHgahcJsd1rNg==}
+
+  '@prisma/engines@5.7.0':
+    resolution: {integrity: sha512-TkOMgMm60n5YgEKPn9erIvFX2/QuWnl3GBo6yTRyZKk5O5KQertXiNnrYgSLy0SpsKmhovEPQb+D4l0SzyE7XA==}
+
+  '@prisma/fetch-engine@5.7.0':
+    resolution: {integrity: sha512-zIn/qmO+N/3FYe7/L9o+yZseIU8ivh4NdPKSkQRIHfg2QVTVMnbhGoTcecbxfVubeTp+DjcbjS0H9fCuM4W04w==}
+
+  '@prisma/get-platform@5.7.0':
+    resolution: {integrity: sha512-ZeV/Op4bZsWXuw5Tg05WwRI8BlKiRFhsixPcAM+5BKYSiUZiMKIi713tfT3drBq8+T0E1arNZgYSA9QYcglWNA==}
 
   '@radix-ui/number@1.0.1':
     resolution: {integrity: sha512-T5gIdVO2mmPW3NNhjNgEP3cqMXjXL9UbO0BzWcXfvdBs+BohbQxvd/K5hSVKmn9/lbTdsQVKbUcP5WLCwvUbBg==}
@@ -6621,8 +6633,8 @@ packages:
     resolution: {integrity: sha512-G9xUchgTEiNpormdYBl+Pha50gOUovT18IvAe7EYMZ1/f9W/WWMPRn+xI68yXNMUk3QXHDwo/1wV/4NejVNe1w==}
     engines: {node: '>=0.10.0'}
 
-  prisma@5.0.0:
-    resolution: {integrity: sha512-KYWk83Fhi1FH59jSpavAYTt2eoMVW9YKgu8ci0kuUnt6Dup5Qy47pcB4/TLmiPAbhGrxxSz7gsSnJcCmkyPANA==}
+  prisma@5.7.0:
+    resolution: {integrity: sha512-0rcfXO2ErmGAtxnuTNHQT9ztL0zZheQjOI/VNJzdq87C3TlGPQtMqtM+KCwU6XtmkoEr7vbCQqA7HF9IY0ST+Q==}
     engines: {node: '>=16.13'}
     hasBin: true
 
@@ -8119,10 +8131,10 @@ snapshots:
       preact: 10.11.3
       preact-render-to-string: 5.2.3(preact@10.11.3)
 
-  '@auth/prisma-adapter@1.0.13(@prisma/client@5.7.0(prisma@5.0.0))':
+  '@auth/prisma-adapter@1.0.13(@prisma/client@5.7.0(prisma@5.7.0))':
     dependencies:
       '@auth/core': 0.19.0
-      '@prisma/client': 5.7.0(prisma@5.0.0)
+      '@prisma/client': 5.7.0(prisma@5.7.0)
     transitivePeerDependencies:
       - nodemailer
 
@@ -8953,7 +8965,7 @@ snapshots:
     dependencies:
       glob: 7.1.7
 
-  '@next/eslint-plugin-next@15.0.0-canary.96':
+  '@next/eslint-plugin-next@15.0.0-canary.101':
     dependencies:
       fast-glob: 3.3.1
 
@@ -9232,11 +9244,30 @@ snapshots:
 
   '@polka/url@1.0.0-next.21': {}
 
-  '@prisma/client@5.7.0(prisma@5.0.0)':
+  '@prisma/client@5.7.0(prisma@5.7.0)':
     optionalDependencies:
-      prisma: 5.0.0
+      prisma: 5.7.0
 
-  '@prisma/engines@5.0.0': {}
+  '@prisma/debug@5.7.0': {}
+
+  '@prisma/engines-version@5.7.0-41.79fb5193cf0a8fdbef536e4b4a159cad677ab1b9': {}
+
+  '@prisma/engines@5.7.0':
+    dependencies:
+      '@prisma/debug': 5.7.0
+      '@prisma/engines-version': 5.7.0-41.79fb5193cf0a8fdbef536e4b4a159cad677ab1b9
+      '@prisma/fetch-engine': 5.7.0
+      '@prisma/get-platform': 5.7.0
+
+  '@prisma/fetch-engine@5.7.0':
+    dependencies:
+      '@prisma/debug': 5.7.0
+      '@prisma/engines-version': 5.7.0-41.79fb5193cf0a8fdbef536e4b4a159cad677ab1b9
+      '@prisma/get-platform': 5.7.0
+
+  '@prisma/get-platform@5.7.0':
+    dependencies:
+      '@prisma/debug': 5.7.0
 
   '@radix-ui/number@1.0.1':
     dependencies:
@@ -10768,7 +10799,7 @@ snapshots:
       satori: 0.0.46
       yoga-wasm-web: 0.3.0
 
-  '@vercel/style-guide@4.0.2(@next/eslint-plugin-next@15.0.0-canary.96)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3)':
+  '@vercel/style-guide@4.0.2(@next/eslint-plugin-next@15.0.0-canary.101)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3)':
     dependencies:
       '@babel/core': 7.22.10
       '@babel/eslint-parser': 7.22.10(@babel/core@7.22.10)(eslint@8.45.0)
@@ -10790,7 +10821,7 @@ snapshots:
       eslint-plugin-unicorn: 43.0.2(eslint@8.45.0)
       prettier-plugin-packagejson: 2.4.3(prettier@3.1.1)
     optionalDependencies:
-      '@next/eslint-plugin-next': 15.0.0-canary.96
+      '@next/eslint-plugin-next': 15.0.0-canary.101
       eslint: 8.45.0
       prettier: 3.1.1
       typescript: 5.3.3
@@ -14736,9 +14767,9 @@ snapshots:
       extend-shallow: 2.0.1
       js-beautify: 1.14.9
 
-  prisma@5.0.0:
+  prisma@5.7.0:
     dependencies:
-      '@prisma/engines': 5.0.0
+      '@prisma/engines': 5.7.0
 
   prismjs@1.27.0: {}
 
