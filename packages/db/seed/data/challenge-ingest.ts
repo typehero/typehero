@@ -2,7 +2,8 @@ import { type Prisma } from '@prisma/client';
 import fs from 'node:fs';
 import path from 'node:path';
 
-export async function ingestChallenges(challengePath: string) {
+const defaultExcludes = ['blank', 'solutions', 'aot'];
+export async function ingestChallenges(challengePath: string, excludes = defaultExcludes) {
   const challengesToCreate: (Prisma.ChallengeCreateManyInput & { author: string })[] = [];
   try {
     const items = await fs.promises.readdir(challengePath);
@@ -10,18 +11,14 @@ export async function ingestChallenges(challengePath: string) {
     for (const item of items) {
       const itemPath = path.join(challengePath, item);
 
-      if (
-        itemPath.includes('blank') ||
-        itemPath.includes('solutions') ||
-        itemPath.includes('aot')
-      ) {
+      if (excludes.some((x) => itemPath.includes(x))) {
         continue;
       }
 
       const stats = await fs.promises.stat(itemPath);
 
       if (stats.isDirectory()) {
-        const challengeToCreate = await buildChallenge(itemPath);
+        const challengeToCreate = await buildChallenge(itemPath, excludes);
         challengesToCreate.push(challengeToCreate);
       }
     }
@@ -32,7 +29,7 @@ export async function ingestChallenges(challengePath: string) {
   return challengesToCreate;
 }
 
-async function buildChallenge(pathToDirectory: string) {
+async function buildChallenge(pathToDirectory: string, excludes: string[]) {
   const challengeToCreate: Prisma.ChallengeCreateManyInput & { author: string } = {
     status: 'ACTIVE',
   } as Prisma.ChallengeCreateManyInput & { author: string };
@@ -42,7 +39,7 @@ async function buildChallenge(pathToDirectory: string) {
   for (const file of files) {
     const itemPath = path.join(pathToDirectory, file);
 
-    if (itemPath.includes('blank') || itemPath.includes('solutions')) {
+    if (excludes.some((x) => itemPath.includes(x))) {
       continue;
     }
 

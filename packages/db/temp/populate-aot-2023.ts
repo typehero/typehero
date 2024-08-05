@@ -8,10 +8,11 @@ const __dirname = path.dirname(__filename);
 
 const challengePath = path.join(__dirname, '../../../challenges/aot/2023');
 
+const excludes = ['blank', 'solutions'];
 export const slugify = (str: string) => str.toLowerCase().replace(/\s/g, '-');
 
 try {
-  const challengesToUpdateOrCreate = await ingestChallenges(challengePath);
+  const challengesToUpdateOrCreate = await ingestChallenges(challengePath, excludes);
 
   const transactions = [];
   for (const challenge of challengesToUpdateOrCreate) {
@@ -39,6 +40,7 @@ try {
       }),
     );
   }
+
   await prisma.$transaction(transactions);
 
   await prisma.$disconnect();
