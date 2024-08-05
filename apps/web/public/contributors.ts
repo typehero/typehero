@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 365
+        "contributions": 367
     },
     {
         "login": "Hacksore",
@@ -695,22 +695,22 @@ export const contributors = [
         "contributions": 4
     },
     {
-        "login": "billc-dev",
+        "login": "billdotdev",
         "id": 71155598,
         "node_id": "MDQ6VXNlcjcxMTU1NTk4",
         "avatar_url": "https://avatars.githubusercontent.com/u/71155598?v=4",
         "gravatar_id": "",
-        "url": "https://api.github.com/users/billc-dev",
-        "html_url": "https://github.com/billc-dev",
-        "followers_url": "https://api.github.com/users/billc-dev/followers",
-        "following_url": "https://api.github.com/users/billc-dev/following{/other_user}",
-        "gists_url": "https://api.github.com/users/billc-dev/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/billc-dev/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/billc-dev/subscriptions",
-        "organizations_url": "https://api.github.com/users/billc-dev/orgs",
-        "repos_url": "https://api.github.com/users/billc-dev/repos",
-        "events_url": "https://api.github.com/users/billc-dev/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/billc-dev/received_events",
+        "url": "https://api.github.com/users/billdotdev",
+        "html_url": "https://github.com/billdotdev",
+        "followers_url": "https://api.github.com/users/billdotdev/followers",
+        "following_url": "https://api.github.com/users/billdotdev/following{/other_user}",
+        "gists_url": "https://api.github.com/users/billdotdev/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/billdotdev/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/billdotdev/subscriptions",
+        "organizations_url": "https://api.github.com/users/billdotdev/orgs",
+        "repos_url": "https://api.github.com/users/billdotdev/repos",
+        "events_url": "https://api.github.com/users/billdotdev/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/billdotdev/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 4
