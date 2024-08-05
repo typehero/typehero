@@ -123,8 +123,8 @@ importers:
         specifier: ^1.0.6
         version: 1.0.6(tailwindcss@3.4.7)
       zod:
-        specifier: ^3.21.4
-        version: 3.21.4
+        specifier: 3.23.3
+        version: 3.23.3
     devDependencies:
       '@repo/tsconfig':
         specifier: workspace:*
@@ -192,6 +192,9 @@ importers:
       '@trpc/server':
         specifier: ^11.0.0-rc.446
         version: 11.0.0-rc.477
+      '@vercel/edge-config':
+        specifier: ^0.2.1
+        version: 0.2.1
       next:
         specifier: 14.2.5
         version: 14.2.5(@playwright/test@1.38.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -312,8 +315,8 @@ importers:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
       zod:
-        specifier: ^3.21.4
-        version: 3.21.4
+        specifier: 3.23.3
+        version: 3.23.3
     devDependencies:
       '@repo/lint':
         specifier: workspace:*
@@ -847,7 +850,7 @@ importers:
     dependencies:
       '@next/eslint-plugin-next':
         specifier: canary
-        version: 15.0.0-canary.101
+        version: 15.0.0-canary.102
       '@repo/tsconfig':
         specifier: workspace:*
         version: link:../config-typescript
@@ -859,7 +862,7 @@ importers:
         version: 5.62.0(eslint@8.45.0)(typescript@5.3.3)
       '@vercel/style-guide':
         specifier: ^4.0.2
-        version: 4.0.2(@next/eslint-plugin-next@15.0.0-canary.101)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 4.0.2(@next/eslint-plugin-next@15.0.0-canary.102)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3)
       eslint:
         specifier: ^8.45.0
         version: 8.45.0
@@ -1936,8 +1939,8 @@ packages:
   '@next/eslint-plugin-next@13.4.10':
     resolution: {integrity: sha512-YJqyq6vk39JQfvaNtN83t/p5Jy45+bazRL+V4QI8FPd3FBqFYMEsULiwRLgSJMgFqkk4t4JbeZurz+gILEAFpA==}
 
-  '@next/eslint-plugin-next@15.0.0-canary.101':
-    resolution: {integrity: sha512-dKqDu3omRlS3k/ibQAp8QIwRJL46HxpXR2x9QXrw+XLe7NAzIDG6NUlJhMCcNhy9TLDikCwmnC7AJzOLtuEuSQ==}
+  '@next/eslint-plugin-next@15.0.0-canary.102':
+    resolution: {integrity: sha512-aj4QSfkm3HWi0Mqc82ouVzKpb3WHxWqB4XMzZJGbkweKAFAbCyymA337vTVfHnVzU9lOC3OcBxMbxudgIjtBrg==}
 
   '@next/swc-darwin-arm64@14.2.5':
     resolution: {integrity: sha512-/9zVxJ+K9lrzSGli1///ujyRfon/ZneeZ+v4ptpiPoOU+GKZnm8Wj8ELWU1Pm7GHltYRBklmXMTUqM/DqQ99FQ==}
@@ -8114,9 +8117,6 @@ packages:
     resolution: {integrity: sha512-UfZ0oa0C8LI58wJ+moL46BDIMgCQbnsb+2PoiJYtonhBsMh2bq1eRBVkvjfVsqbEHd9/EgKPUuL9saSSsec8OA==}
     engines: {node: '>= 12.0.0'}
 
-  zod@3.21.4:
-    resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
-
   zod@3.23.3:
     resolution: {integrity: sha512-tPvq1B/2Yu/dh2uAIH2/BhUlUeLIUvAjr6dpL/75I0pCYefHgjhXk1o1Kob3kTU8C7yU1j396jFHlsVWFi9ogg==}
 
@@ -9061,7 +9061,7 @@ snapshots:
     dependencies:
       glob: 7.1.7
 
-  '@next/eslint-plugin-next@15.0.0-canary.101':
+  '@next/eslint-plugin-next@15.0.0-canary.102':
     dependencies:
       fast-glob: 3.3.1
 
@@ -10920,7 +10920,7 @@ snapshots:
       next: 14.2.5(@playwright/test@1.38.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
 
-  '@vercel/style-guide@4.0.2(@next/eslint-plugin-next@15.0.0-canary.101)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3)':
+  '@vercel/style-guide@4.0.2(@next/eslint-plugin-next@15.0.0-canary.102)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3)':
     dependencies:
       '@babel/core': 7.22.10
       '@babel/eslint-parser': 7.22.10(@babel/core@7.22.10)(eslint@8.45.0)
@@ -10942,7 +10942,7 @@ snapshots:
       eslint-plugin-unicorn: 43.0.2(eslint@8.45.0)
       prettier-plugin-packagejson: 2.4.3(prettier@3.1.1)
     optionalDependencies:
-      '@next/eslint-plugin-next': 15.0.0-canary.101
+      '@next/eslint-plugin-next': 15.0.0-canary.102
       eslint: 8.45.0
       prettier: 3.1.1
       typescript: 5.3.3
@@ -16490,8 +16490,6 @@ snapshots:
       archiver-utils: 4.0.1
       compress-commons: 5.0.1
       readable-stream: 3.6.2
-
-  zod@3.21.4: {}
 
   zod@3.23.3: {}
 

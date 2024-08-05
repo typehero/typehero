@@ -18,8 +18,8 @@ export async function AotLandingPage() {
       <div className="flex flex-col gap-5 pb-8 md:gap-10 md:py-5">
         <div className="container">
           <div className="relative mx-auto w-fit text-center">
-            <div className="absolute left-0 top-0 -z-10 hidden h-full w-full transform-gpu bg-gradient-to-r from-red-500 via-red-600 to-green-500 opacity-70 blur-3xl dark:block sm:opacity-40" />
-            <h1 className="mb-10 mt-16 text-4xl font-bold tracking-tighter text-black dark:text-white sm:text-8xl">
+            <div className="absolute left-0 top-0 -z-10 hidden h-full w-full transform-gpu bg-gradient-to-r from-red-500 via-red-600 to-green-500 opacity-70 blur-3xl sm:opacity-40 dark:block" />
+            <h1 className="mb-10 mt-16 text-4xl font-bold tracking-tighter text-black sm:text-8xl dark:text-white">
               <span>Advent</span> of <span className="text-red-600">TypeScript</span>
             </h1>
           </div>
@@ -36,7 +36,7 @@ export async function AotLandingPage() {
                 target="_blank"
                 rel="noreferrer"
                 href="https://chat.typehero.dev"
-                className="group flex w-full items-center justify-center gap-2 rounded-xl bg-[#5865F2] px-3 py-2 text-sm font-bold text-white duration-300 dark:bg-[#5865F2] md:mx-auto md:w-auto"
+                className="group flex w-full items-center justify-center gap-2 rounded-xl bg-[#5865F2] px-3 py-2 text-sm font-bold text-white duration-300 md:mx-auto md:w-auto dark:bg-[#5865F2]"
               >
                 <svg
                   className="h-4 w-4 fill-current group-hover:rotate-[360deg]"
@@ -53,7 +53,7 @@ export async function AotLandingPage() {
               <About className="w-full md:w-auto" />
               <Button
                 asChild
-                className="flex w-full items-center justify-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white md:w-auto"
+                className="flex w-full items-center justify-center gap-2 rounded-xl border-2 px-4 py-2 md:w-auto dark:text-white"
                 variant="outline"
               >
                 <a

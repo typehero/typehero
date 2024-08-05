@@ -1,5 +1,6 @@
 'use client';
 
+import { signIn, signOut, useSession } from '@repo/auth/react';
 import { Button } from '@repo/ui/components/button';
 import {
   DropdownMenu,
@@ -9,7 +10,7 @@ import {
 import { Loader2, LogIn, Moon, Sun, User } from '@repo/ui/icons';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
-import { signIn, signOut, useSession } from '@repo/auth/react';
+import { NavLink } from './nav-link';
 
 export function Navigation() {
   return (
@@ -43,6 +44,11 @@ export function Navigation() {
                 hero
               </span>
             </a>
+          </div>
+          <div className="items-center md:ml-4 md:flex md:gap-4">
+            <NavLink title="About" href="/about" />
+            <NavLink title="Events" href="/events" />
+            <NavLink title="Leaderboard" href="/leaderboard" />
           </div>
           <div className="flex">
             <div className="flex items-center justify-end gap-2">

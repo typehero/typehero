@@ -29,7 +29,7 @@ export function MostSolved({ mostSolved }: Props) {
     <div className="flex h-screen w-full justify-center gap-2 bg-gradient-to-l from-green-100 to-30% dark:from-green-950">
       <div className="flex flex-col items-center justify-center gap-4 pt-20">
         <div className="relative">
-          <p className="mb-10 text-5xl font-bold tracking-tighter text-green-950 dark:text-green-50 sm:mx-[-130px] sm:text-8xl">
+          <p className="mb-10 text-5xl font-bold tracking-tighter text-green-950 sm:mx-[-130px] sm:text-8xl dark:text-green-50">
             MOST SOLVED
           </p>
           <Image

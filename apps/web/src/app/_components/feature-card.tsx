@@ -76,7 +76,7 @@ function FeatureCard({
         <div className="m-6 min-h-[330px] w-full sm:m-10 md:min-h-[450px]">
           <div className="flex w-5/6 flex-col gap-3 sm:w-4/6 md:w-4/5 xl:w-4/6">
             <h2 className="text-xl font-bold tracking-tight md:text-xl">{title}</h2>
-            <p className="text-sm leading-5 text-zinc-600 dark:text-zinc-400 sm:text-base sm:leading-7">
+            <p className="text-sm leading-5 text-zinc-600 sm:text-base sm:leading-7 dark:text-zinc-400">
               {description}
             </p>
           </div>

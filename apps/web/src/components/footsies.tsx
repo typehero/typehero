@@ -33,7 +33,7 @@ export async function Footsies() {
           </a>
         </div>
       </div>
-      <div className="container flex flex-col justify-between gap-2 text-neutral-500 dark:text-neutral-400  md:flex-row md:items-end">
+      <div className="container flex flex-col justify-between gap-2 text-neutral-500 md:flex-row  md:items-end dark:text-neutral-400">
         <span>
           <Link
             href="/privacy"
