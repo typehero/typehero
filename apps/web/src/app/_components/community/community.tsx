@@ -91,7 +91,7 @@ export function Community() {
               <h2 className="mt-2 text-center text-4xl font-bold lg:text-left">
                 Built by the community
               </h2>
-              <p className="max-w-[55ch] bg-transparent px-8 text-center leading-8 text-black/60 dark:text-white/50 lg:px-0 lg:text-left">
+              <p className="max-w-[55ch] bg-transparent px-8 text-center leading-8 text-black/60 lg:px-0 lg:text-left dark:text-white/50">
                 TypeHero is free, open-source, and built by developers just like you. These are
                 some\nof the contributors who made this possible so far.
               </p>
@@ -145,7 +145,7 @@ export function Community() {
             </div>
             {/* autoscrolled */}
             <div className="pb-16 sm:pb-24 lg:pb-0 lg:pl-8 xl:hidden">
-              <div className="infinite-scroll-x-container mx-auto hover:shadow-[0_0_10rem_10rem_#fff8] dark:hover:shadow-[0_0_10rem_10rem_#0008] lg:w-[25rem] xl:w-[35rem]">
+              <div className="infinite-scroll-x-container mx-auto hover:shadow-[0_0_10rem_10rem_#fff8] lg:w-[25rem] xl:w-[35rem] dark:hover:shadow-[0_0_10rem_10rem_#0008]">
                 <div
                   ref={innerScrollerRef}
                   className="infinite-scroll-x relative flex w-max flex-nowrap py-1.5"
@@ -155,7 +155,7 @@ export function Community() {
                   ))}
                 </div>
               </div>
-              <div className="infinite-scroll-x-container mx-auto hover:shadow-[0_0_10rem_10rem_#fff8] dark:hover:shadow-[0_0_10rem_10rem_#0008] lg:w-[25rem] xl:w-[35rem]">
+              <div className="infinite-scroll-x-container mx-auto hover:shadow-[0_0_10rem_10rem_#fff8] lg:w-[25rem] xl:w-[35rem] dark:hover:shadow-[0_0_10rem_10rem_#0008]">
                 <div
                   ref={innerScrollerRef2}
                   className="infinite-scroll-x-reverse relative flex w-max flex-nowrap py-1.5"
@@ -167,7 +167,7 @@ export function Community() {
                     ))}
                 </div>
               </div>
-              <div className="infinite-scroll-x-container mx-auto hover:shadow-[0_0_10rem_10rem_#fff8] dark:hover:shadow-[0_0_10rem_10rem_#0008] lg:w-[25rem] xl:w-[35rem]">
+              <div className="infinite-scroll-x-container mx-auto hover:shadow-[0_0_10rem_10rem_#fff8] lg:w-[25rem] xl:w-[35rem] dark:hover:shadow-[0_0_10rem_10rem_#0008]">
                 <div
                   ref={innerScrollerRef3}
                   className="infinite-scroll-x relative flex w-max flex-nowrap py-1.5"
@@ -179,7 +179,7 @@ export function Community() {
                     ))}
                 </div>
               </div>
-              <div className="infinite-scroll-x-container mx-auto hover:shadow-[0_0_10rem_10rem_#fff8] dark:hover:shadow-[0_0_10rem_10rem_#0008] lg:w-[25rem] xl:w-[35rem]">
+              <div className="infinite-scroll-x-container mx-auto hover:shadow-[0_0_10rem_10rem_#fff8] lg:w-[25rem] xl:w-[35rem] dark:hover:shadow-[0_0_10rem_10rem_#0008]">
                 <div
                   ref={innerScrollerRef4}
                   className="infinite-scroll-x-reverse relative flex w-max flex-nowrap py-1.5"

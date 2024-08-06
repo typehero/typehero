@@ -29,7 +29,7 @@ export function LeastSolved({ leastSolved }: Props) {
     <div className="flex h-screen w-full justify-center gap-2 bg-gradient-to-l from-red-100 to-30% dark:from-red-950">
       <div className="flex flex-col items-center justify-center gap-4 pt-20">
         <div className="relative">
-          <p className="mb-10 text-5xl font-bold tracking-tighter text-red-950 dark:text-red-50 sm:mx-[-130px] sm:text-8xl">
+          <p className="mb-10 text-5xl font-bold tracking-tighter text-red-950 sm:mx-[-130px] sm:text-8xl dark:text-red-50">
             LEAST SOLVED
           </p>
           <Image

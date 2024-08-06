@@ -1,6 +1,6 @@
 import { prisma } from '@repo/db';
 import { SolutionDetails } from '../_components/solution-detail';
-import { auth } from '@repo/auth/server';
+import { auth } from '~/server/auth';
 import { Comments } from '~/app/challenge/_components/comments';
 import { getSolutionIdRouteData } from './getSolutionIdRouteData';
 

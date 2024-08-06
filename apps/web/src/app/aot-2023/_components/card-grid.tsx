@@ -1,7 +1,8 @@
 import { prisma } from '@repo/db';
 import { TiltableCard } from './tiltable-card';
-import { auth, type Session } from '@repo/auth/server';
+import { type Session } from '@repo/auth/server';
 import { daysAfterDecemberFirst } from '~/utils/aot';
+import { auth } from '~/server/auth';
 
 export async function CardGrid() {
   const session = await auth();

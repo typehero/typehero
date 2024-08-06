@@ -1,10 +1,11 @@
 'use server';
 
-import { auth, type Session } from '@repo/auth/server';
+import { type Session } from '@repo/auth/server';
 import { prisma } from '@repo/db';
 import { revalidateTag } from 'next/cache';
 import { cache } from 'react';
 import { track } from '@vercel/analytics/server';
+import { auth } from '~/server/auth';
 
 /**
  * Enrolls the session user in the track given a track id.

@@ -1,1 +1,3 @@
-export { GET, POST } from '@repo/auth/server';
+import { handlers } from '~/server/auth';
+
+export const { GET, POST } = handlers;

@@ -2,7 +2,7 @@ import { ForceRenderUntilClient } from '@repo/ui/components/force-render-until-c
 import { isAdminOrModerator } from '~/utils/auth-guards';
 import { redirect } from 'next/navigation';
 import { ChallengePlaygroundLayoutWrapper } from './challenge-playground-layout-wrapper';
-import { auth } from '@repo/auth/server';
+import { auth } from '~/server/auth';
 
 export default async function LayoutData({ children }: { children: React.ReactNode }) {
   const session = await auth();

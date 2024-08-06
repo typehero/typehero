@@ -1,4 +1,4 @@
-import { auth, type Session } from '@repo/auth/server';
+import { type Session } from '@repo/auth/server';
 import { Badge } from '@repo/ui/components/badge';
 import {
   DropdownMenu,
@@ -19,6 +19,7 @@ import { NavLink } from './nav-link';
 import { NavWrapper } from './nav-wrapper';
 import { SignOutLink } from './signout-link';
 import { SkipToCodeEditor } from './skip-to-code-editor';
+import { auth } from '~/server/auth';
 
 export function getAdminUrl() {
   // reference for vercel.com

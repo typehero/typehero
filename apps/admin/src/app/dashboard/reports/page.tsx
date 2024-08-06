@@ -1,4 +1,4 @@
-import { auth } from '@repo/auth/server';
+import { auth } from '~/server/auth';
 import { DataTable } from '@repo/ui/components/data-table';
 import { assertAdmin } from '~/utils/auth-guards';
 import { getReports } from './_actions';

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Balancer } from 'react-wrap-balancer';
 import { Button } from '@repo/ui/components/button';
 import { HeroIllustration, BackgroundGrid } from './hero-illustration';
-import { auth } from '@repo/auth/server';
+import { auth } from '~/server/auth';
 
 function TypeHeroLogo3D() {
   return (
@@ -170,14 +170,14 @@ export async function Hero() {
             <div className="absolute left-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-x-[15%] -translate-y-[50%] rounded-full bg-slate-400/10 blur-3xl dark:block" />
             <div className="absolute right-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-y-[40%] rounded-full bg-[#3178c6]/20 blur-3xl dark:block" />
             <TypeHeroLogo3D />
-            <h1 className="animate-bg-gradient-to-center-title dark:to-69% select-none bg-gradient-to-br from-[#3178c6] from-[69%] to-black/0 bg-clip-text bg-right-bottom text-6xl font-extrabold text-transparent dark:from-white dark:from-30% dark:via-[#3178c6] dark:to-[#3178c6] dark:bg-[length:300%_300%] sm:text-8xl sm:leading-[5.5rem]">
+            <h1 className="animate-bg-gradient-to-center-title dark:to-69% select-none bg-gradient-to-br from-[#3178c6] from-[69%] to-black/0 bg-clip-text bg-right-bottom text-6xl font-extrabold text-transparent sm:text-8xl sm:leading-[5.5rem] dark:from-white dark:from-30% dark:via-[#3178c6] dark:to-[#3178c6] dark:bg-[length:300%_300%]">
               type
               <br />
               hero
             </h1>
           </div>
 
-          <p className="max-w-[55ch] bg-transparent text-center font-medium leading-8 text-black/60 dark:text-white/50 sm:px-8 lg:px-0 lg:text-left">
+          <p className="max-w-[55ch] bg-transparent text-center font-medium leading-8 text-black/60 sm:px-8 lg:px-0 lg:text-left dark:text-white/50">
             <Balancer>
               Connect, collaborate, and grow with a community of TypeScript developers. Elevate your
               skills through interactive coding challenges, discussions, and knowledge sharing
@@ -186,7 +186,7 @@ export async function Hero() {
           <div className="flex flex-col-reverse gap-3 md:flex-row">
             <Button
               asChild
-              className="hero-join-button-dark group relative mx-auto hidden w-fit overflow-hidden rounded-xl p-[1px] font-bold transition-all duration-300 dark:block dark:hover:shadow-[0_0_2rem_-0.5rem_#fff8] md:mr-0 lg:mr-auto"
+              className="hero-join-button-dark group relative mx-auto hidden w-fit overflow-hidden rounded-xl p-[1px] font-bold transition-all duration-300 md:mr-0 lg:mr-auto dark:block dark:hover:shadow-[0_0_2rem_-0.5rem_#fff8]"
               variant="outline"
             >
               <Link href="/explore">

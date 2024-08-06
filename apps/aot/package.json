@@ -2,6 +2,7 @@
   "name": "aot",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@9.6.0",
   "scripts": {
     "build": "dotenv -e ../../.env next build",
     "clean": "rm -rf .next dist node_modules",
@@ -14,13 +15,28 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@tanstack/react-query": "5.51.21",
+    "@trpc/client": "^11.0.0-rc.446",
+    "@trpc/react-query": "^11.0.0-rc.446",
+    "@trpc/server": "^11.0.0-rc.446",
+    "@vercel/edge-config": "^0.2.1",
+    "clsx": "^2.0.0",
     "next": "14.2.5",
+    "next-themes": "^0.2.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "server-only": "^0.0.1",
+    "superjson": "^2.2.1",
+    "zod": "3.23.3"
   },
   "devDependencies": {
+    "@repo/auth": "workspace:*",
+    "@repo/db": "workspace:*",
     "@repo/lint": "workspace:*",
+    "@repo/monaco": "workspace:*",
+    "@repo/og-image": "workspace:*",
     "@repo/tsconfig": "workspace:*",
+    "@repo/ui": "workspace:*",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/typography": "^0.5.9",
     "@types/node": "^20.4.2",

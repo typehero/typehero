@@ -2,7 +2,7 @@ import { prisma } from '@repo/db';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Dashboard } from './dashboard';
-import { auth } from '@repo/auth/server';
+import { auth } from '~/server/auth';
 import { getBadges } from './dashboard/_actions';
 
 interface Props {

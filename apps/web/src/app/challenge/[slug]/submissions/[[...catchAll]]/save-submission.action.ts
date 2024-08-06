@@ -1,5 +1,5 @@
 'use server';
-import { auth } from '@repo/auth/server';
+import { auth } from '~/server/auth';
 import { prisma } from '@repo/db';
 import { revalidateTag } from 'next/cache';
 import type { ChallengeRouteData } from '../../getChallengeRouteData';

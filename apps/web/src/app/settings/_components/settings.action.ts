@@ -1,6 +1,6 @@
 'use server';
 
-import { auth } from '@repo/auth/server';
+import { auth } from '~/server/auth';
 import { revalidatePath } from 'next/cache';
 import { prisma } from '@repo/db';
 import type { ProfileSchema } from './schema';

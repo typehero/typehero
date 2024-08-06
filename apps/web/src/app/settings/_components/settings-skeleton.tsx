@@ -15,7 +15,7 @@ export function SettingsSkeleton() {
         </div>
       </div>
       <div className="relative flex shrink grow flex-col items-center justify-center space-y-4 rounded-3xl border border-zinc-700 py-10 md:w-2/3">
-        <Skeleton className="max-w-80 h-4 w-5/6 rounded-2xl bg-zinc-300 text-neutral-900 dark:bg-zinc-700 dark:text-white" />
+        <Skeleton className="h-4 w-5/6 max-w-80 rounded-2xl bg-zinc-300 text-neutral-900 dark:bg-zinc-700 dark:text-white" />
         <Skeleton className="h-4 w-60 rounded-2xl bg-zinc-300 text-neutral-900 dark:bg-zinc-700 dark:text-white" />
         <Skeleton className="h-4 w-20 rounded-2xl bg-zinc-300 text-neutral-900 dark:bg-zinc-700 dark:text-white" />
       </div>
@@ -27,7 +27,7 @@ export function TabsTriggerSkeleton() {
   return (
     <div className="flex h-6 flex-row items-center gap-2 rounded-xl  border border-zinc-700 px-2 py-4 md:w-64">
       <Skeleton className="h-4 w-4 rounded-md border border-zinc-300 bg-zinc-300 dark:bg-zinc-700" />
-      <Skeleton className="hidden h-4 w-16 rounded-2xl bg-zinc-300 text-neutral-900 dark:bg-zinc-700 dark:text-white md:block" />
+      <Skeleton className="hidden h-4 w-16 rounded-2xl bg-zinc-300 text-neutral-900 md:block dark:bg-zinc-700 dark:text-white" />
     </div>
   );
 }

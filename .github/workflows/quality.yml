@@ -95,8 +95,9 @@ jobs:
         env:
           GITHUB_ID: ' '
           GITHUB_SECRET: ' '
+          GITHUB_AOT_ID: ' '
+          GITHUB_AOT_SECRET: ' '
           NEXTAUTH_SECRET: 'kGvjABB9ZZsxhYFyxMT4ApohaIvfuNSRMIthI+usjA0='
-          NEXTAUTH_URL: http://localhost:3000
 
       - name: Run Playwright tests
         run: turbo test:e2e --continue
@@ -104,8 +105,9 @@ jobs:
           DATABASE_URL: mysql://dev:dev@localhost/typehero
           GITHUB_ID: ' '
           GITHUB_SECRET: ' '
+          GITHUB_AOT_ID: ' '
+          GITHUB_AOT_SECRET: ' '
           NEXTAUTH_SECRET: 'kGvjABB9ZZsxhYFyxMT4ApohaIvfuNSRMIthI+usjA0='
-          NEXTAUTH_URL: http://localhost:3000
 
       - name: Upload report
         if: always()

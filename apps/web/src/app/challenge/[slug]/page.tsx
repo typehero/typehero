@@ -1,10 +1,11 @@
-import { auth, type Session } from '@repo/auth/server';
+import { type Session } from '@repo/auth/server';
 import { buildMetaForChallenge, buildMetaForEventPage } from '~/app/metadata';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { Comments } from '../_components/comments';
 import { Description } from '../_components/description';
 import { AOT_CHALLENGES } from './aot-slugs';
 import { getChallengeRouteData } from './getChallengeRouteData';
+import { auth } from '~/server/auth';
 
 interface Props {
   params: {

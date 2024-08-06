@@ -35,8 +35,8 @@
     "@repo/ui": "workspace:*",
     "@sentry/nextjs": "^7.73.0",
     "@t3-oss/env-nextjs": "^0.6.0",
-    "@tanstack/react-query": "^5.8.1",
-    "@tanstack/react-query-devtools": "^5.8.1",
+    "@tanstack/react-query": "5.51.21",
+    "@tanstack/react-query-devtools": "5.51.21",
     "@tanstack/react-table": "^8.9.3",
     "@uiw/react-md-editor": "^3.23.3",
     "@uploadthing/react": "^6.2.2",
@@ -76,7 +76,7 @@
     "unified": "^10.1.2",
     "unist-util-visit": "^5.0.0",
     "uploadthing": "6.3.1",
-    "zod": "^3.21.4",
+    "zod": "3.23.3",
     "zustand": "^4.3.9"
   },
   "devDependencies": {

@@ -12,7 +12,7 @@ export function Newsletter({ params: { locale } }: { params: { locale: string } 
       />
       <div className="container grid h-full place-items-center">
         <div className="mx-auto flex max-w-[700px] flex-col items-center justify-center gap-8 text-center">
-          <h1 className="text-3xl font-bold text-neutral-950 dark:text-neutral-50 md:text-5xl">
+          <h1 className="text-3xl font-bold text-neutral-950 md:text-5xl dark:text-neutral-50">
             <Balancer>
               Subscribe to be part of the{' '}
               <span className="bg-gradient-to-r from-[#3178c6] to-black bg-clip-text font-black text-transparent dark:from-blue-400 dark:to-emerald-400">

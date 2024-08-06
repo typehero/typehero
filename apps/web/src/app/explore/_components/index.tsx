@@ -1,4 +1,4 @@
-import { auth } from '@repo/auth/server';
+import { auth } from '~/server/auth';
 import { Suspense } from 'react';
 import { Footsies } from '~/components/footsies';
 import { ExploreSection } from './explore-section';

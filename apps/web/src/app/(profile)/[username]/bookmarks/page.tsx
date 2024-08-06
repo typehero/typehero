@@ -11,7 +11,7 @@ import { withUnstableCache } from '~/utils/withUnstableCache';
 import { createCacheKeyForBookmarksTab } from '../../../challenge/_components/bookmark.action';
 import { DataTable } from '@repo/ui/components/data-table';
 import { bookmarkedChallengedColumns } from './_components/bookmarked-challenges-columns';
-import { auth } from '@repo/auth/server';
+import { auth } from '~/server/auth';
 
 interface Props {
   params: {

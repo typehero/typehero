@@ -1,6 +1,5 @@
-import { auth } from '@repo/auth/server';
+import { auth } from '~/server/auth';
 
-import { withUnstableCache } from '~/utils/withUnstableCache';
 import { TrackDetail } from '../_components/track-details';
 import { getTrackDetails } from '../_components/track.action';
 
@@ -19,12 +18,7 @@ export default async function Page({ params }: Props) {
 }
 
 export async function generateMetadata({ params: { slug } }: Props) {
-  const track = await withUnstableCache({
-    fn: getTrackDetails,
-    args: [slug],
-    keys: [`track-${slug}-detail`],
-    tags: [`track-${slug}-detail`],
-  });
+  const track = await getTrackDetails(slug);
 
   if (!track) {
     return {

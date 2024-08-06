@@ -2,7 +2,7 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 import type { Role, RoleTypes, User } from '@repo/db/types';
 import GitHubProvider from 'next-auth/providers/github';
 import { prisma } from '@repo/db';
-import NextAuth from './next-auth';
+import type { NextAuthConfig } from 'next-auth';
 
 export type { Session, DefaultSession as DefaultAuthSession } from 'next-auth';
 
@@ -24,36 +24,13 @@ declare module '@auth/core/adapters' {
   }
 }
 
-if (!process.env.GITHUB_ID) {
-  throw new Error('No GITHUB_ID has been provided.');
-}
-
-if (!process.env.GITHUB_SECRET) {
-  throw new Error('No GITHUB_SECRET has been provided.');
-}
-
 const useSecureCookies = process.env.VERCEL_ENV === 'production';
 const cookiePrefix = useSecureCookies ? '__Secure-' : '';
 const cookieDomain = useSecureCookies ? 'typehero.dev' : undefined;
 
-export const {
-  handlers: { GET, POST },
-  auth,
-} = NextAuth({
+export const baseNextAuthConfig: Omit<NextAuthConfig, 'providers'> = {
   pages: {
     signIn: '/login',
-  },
-  cookies: {
-    sessionToken: {
-      name: `${cookiePrefix}next-auth.session-token`,
-      options: {
-        httpOnly: true,
-        sameSite: 'lax',
-        path: '/',
-        domain: cookieDomain,
-        secure: useSecureCookies,
-      },
-    },
   },
   adapter: {
     ...PrismaAdapter(prisma),
@@ -100,16 +77,17 @@ export const {
       };
     },
   },
-  providers: [
-    GitHubProvider({
-      clientId: process.env.GITHUB_ID!,
-      clientSecret: process.env.GITHUB_SECRET!,
-      profile: (p) => ({
-        id: p.id.toString(),
-        name: p.login,
-        email: p.email,
-        image: p.avatar_url,
-      }),
+};
+
+export const createGitHubProvider = (clientId: string, clientSecret: string) => {
+  return GitHubProvider({
+    clientId,
+    clientSecret,
+    profile: (p) => ({
+      id: p.id.toString(),
+      name: p.login,
+      email: p.email,
+      image: p.avatar_url,
     }),
-  ],
-});
+  });
+};
