@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 362
+        "contributions": 367
     },
     {
         "login": "Hacksore",
@@ -62,7 +62,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/PickleNik/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 95
+        "contributions": 96
     },
     {
         "login": "QuiiBz",
@@ -695,22 +695,22 @@ export const contributors = [
         "contributions": 4
     },
     {
-        "login": "billc-dev",
+        "login": "billdotdev",
         "id": 71155598,
         "node_id": "MDQ6VXNlcjcxMTU1NTk4",
         "avatar_url": "https://avatars.githubusercontent.com/u/71155598?v=4",
         "gravatar_id": "",
-        "url": "https://api.github.com/users/billc-dev",
-        "html_url": "https://github.com/billc-dev",
-        "followers_url": "https://api.github.com/users/billc-dev/followers",
-        "following_url": "https://api.github.com/users/billc-dev/following{/other_user}",
-        "gists_url": "https://api.github.com/users/billc-dev/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/billc-dev/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/billc-dev/subscriptions",
-        "organizations_url": "https://api.github.com/users/billc-dev/orgs",
-        "repos_url": "https://api.github.com/users/billc-dev/repos",
-        "events_url": "https://api.github.com/users/billc-dev/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/billc-dev/received_events",
+        "url": "https://api.github.com/users/billdotdev",
+        "html_url": "https://github.com/billdotdev",
+        "followers_url": "https://api.github.com/users/billdotdev/followers",
+        "following_url": "https://api.github.com/users/billdotdev/following{/other_user}",
+        "gists_url": "https://api.github.com/users/billdotdev/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/billdotdev/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/billdotdev/subscriptions",
+        "organizations_url": "https://api.github.com/users/billdotdev/orgs",
+        "repos_url": "https://api.github.com/users/billdotdev/repos",
+        "events_url": "https://api.github.com/users/billdotdev/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/billdotdev/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 4
@@ -1745,6 +1745,27 @@ export const contributors = [
         "contributions": 1
     },
     {
+        "login": "wesjune",
+        "id": 47883837,
+        "node_id": "MDQ6VXNlcjQ3ODgzODM3",
+        "avatar_url": "https://avatars.githubusercontent.com/u/47883837?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/wesjune",
+        "html_url": "https://github.com/wesjune",
+        "followers_url": "https://api.github.com/users/wesjune/followers",
+        "following_url": "https://api.github.com/users/wesjune/following{/other_user}",
+        "gists_url": "https://api.github.com/users/wesjune/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/wesjune/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/wesjune/subscriptions",
+        "organizations_url": "https://api.github.com/users/wesjune/orgs",
+        "repos_url": "https://api.github.com/users/wesjune/repos",
+        "events_url": "https://api.github.com/users/wesjune/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/wesjune/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 1
+    },
+    {
         "login": "WillGarman",
         "id": 73144742,
         "node_id": "MDQ6VXNlcjczMTQ0NzQy",
@@ -2139,6 +2160,27 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/eduardoRoth/repos",
         "events_url": "https://api.github.com/users/eduardoRoth/events{/privacy}",
         "received_events_url": "https://api.github.com/users/eduardoRoth/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 1
+    },
+    {
+        "login": "kfahad5607",
+        "id": 62707456,
+        "node_id": "MDQ6VXNlcjYyNzA3NDU2",
+        "avatar_url": "https://avatars.githubusercontent.com/u/62707456?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kfahad5607",
+        "html_url": "https://github.com/kfahad5607",
+        "followers_url": "https://api.github.com/users/kfahad5607/followers",
+        "following_url": "https://api.github.com/users/kfahad5607/following{/other_user}",
+        "gists_url": "https://api.github.com/users/kfahad5607/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/kfahad5607/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/kfahad5607/subscriptions",
+        "organizations_url": "https://api.github.com/users/kfahad5607/orgs",
+        "repos_url": "https://api.github.com/users/kfahad5607/repos",
+        "events_url": "https://api.github.com/users/kfahad5607/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/kfahad5607/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 1

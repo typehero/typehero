@@ -16,7 +16,7 @@ So basically, it means "ancient" or "undeveloped"? huh???
 
 Nope. That's actually not the way the word is used in this context. If you keep reading down the list, you'll find a less common definition:
 
-> 3: not developed or derived from anything else.
+> 2: not developed or derived from anything else.
 
 Ahhh. Yes. That one makes more sense. That's what primitive types are. They are the base units of information from which everything else is derived.
 
