@@ -1,5 +1,5 @@
 import { defaultShouldDehydrateQuery, QueryClient } from '@tanstack/react-query';
-import SuperJSON from 'superjson';
+import { default as SuperJSON } from 'superjson';
 
 export const createQueryClient = () =>
   new QueryClient({
