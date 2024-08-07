@@ -1,12 +1,8 @@
 {
-  "extends": [
-    "//"
-  ],
+  "extends": ["//"],
   "tasks": {
     "db:generate": {
-      "outputs": [
-        "../../node_modules/.prisma/**"
-      ],
+      "outputs": ["../../node_modules/.prisma/**"],
       "outputLogs": "new-only"
     },
     "db:deploy": {
@@ -19,15 +15,11 @@
       "cache": false
     },
     "db:seed": {
-      "dependsOn": [
-        "db:push"
-      ],
+      "dependsOn": ["db:push"],
       "cache": false
     },
     "db:prod:seed": {
-      "dependsOn": [
-        "db:push"
-      ],
+      "dependsOn": ["db:push"],
       "cache": false
     },
     "db:studio": {

@@ -1,15 +1,11 @@
 {
-  "extends": [
-    "//"
-  ],
+  "extends": ["//"],
   "tasks": {
     "start": {
       "cache": false
     },
     "lint": {
-      "env": [
-        "ANALYZE"
-      ]
+      "env": ["ANALYZE"]
     }
   }
 }
