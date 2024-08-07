@@ -43,9 +43,6 @@ export async function Navigation() {
       {featureFlags?.enableHolidayEvent ? (
         <div className="flex items-center gap-1">
           <NavLink title="Advent of TypeScript" href="/aot-2023" />
-          <Badge className="h-4 bg-red-600 px-1.5" variant="default">
-            New
-          </Badge>
         </div>
       ) : null}
     </>
