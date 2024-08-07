@@ -88,10 +88,12 @@
       "cache": false
     },
     "test:e2e": {
-      "outputs": ["playwright-report/**"]
+      "outputs": ["playwright-report/**"],
+      "env": ["GITHUB_ID"]
     },
     "test:e2e:ui": {
-      "outputs": ["playwright-report/**"]
+      "outputs": ["playwright-report/**"],
+      "env": ["GITHUB_ID"]
     },
     "test:e2e:inspector": {
       "outputs": ["playwright-report/**"]
