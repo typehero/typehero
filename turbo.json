@@ -1,9 +1,19 @@
 {
-  "globalEnv": ["NEXT_PUBLIC_ALGOLIA_APP_ID", "NEXT_PUBLIC_ALGOLIA_API_KEY"],
-  "pipeline": {
+  "globalEnv": [
+    "NEXT_PUBLIC_ALGOLIA_APP_ID",
+    "NEXT_PUBLIC_ALGOLIA_API_KEY"
+  ],
+  "tasks": {
     "build": {
-      "dependsOn": ["^build", "@repo/db#db:generate"],
-      "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
+      "dependsOn": [
+        "^build",
+        "@repo/db#db:generate"
+      ],
+      "outputs": [
+        "dist/**",
+        ".next/**",
+        "!.next/cache/**"
+      ],
       "env": [
         "VERCEL",
         "VERCEL_URL",
@@ -35,66 +45,112 @@
       ]
     },
     "topo": {
-      "dependsOn": ["^topo"]
+      "dependsOn": [
+        "^topo"
+      ]
     },
     "//#format": {
-      "outputs": ["node_modules/.cache/prettiercache"],
-      "outputMode": "errors-only"
+      "outputs": [
+        "node_modules/.cache/prettiercache"
+      ],
+      "outputLogs": "errors-only"
     },
     "format": {
-      "dependsOn": ["@repo/db#db:generate", "^topo"],
-      "outputs": ["node_modules/.cache/prettiercache"],
-      "outputMode": "errors-only"
+      "dependsOn": [
+        "@repo/db#db:generate",
+        "^topo"
+      ],
+      "outputs": [
+        "node_modules/.cache/prettiercache"
+      ],
+      "outputLogs": "errors-only"
     },
     "//#format:fix": {
-      "outputs": ["node_modules/.cache/prettiercache"],
-      "outputMode": "errors-only"
+      "outputs": [
+        "node_modules/.cache/prettiercache"
+      ],
+      "outputLogs": "errors-only"
     },
     "format:fix": {
-      "dependsOn": ["@repo/db#db:generate", "^topo"],
-      "outputs": ["node_modules/.cache/prettiercache"],
-      "outputMode": "errors-only"
+      "dependsOn": [
+        "@repo/db#db:generate",
+        "^topo"
+      ],
+      "outputs": [
+        "node_modules/.cache/prettiercache"
+      ],
+      "outputLogs": "errors-only"
     },
     "//#lint": {
-      "outputs": ["node_modules/.cache/.eslintcache"],
-      "outputMode": "errors-only"
+      "outputs": [
+        "node_modules/.cache/.eslintcache"
+      ],
+      "outputLogs": "errors-only"
     },
     "lint": {
-      "dependsOn": ["@repo/db#db:generate", "^topo"],
-      "outputs": ["node_modules/.cache/.eslintcache"],
-      "outputMode": "errors-only"
+      "dependsOn": [
+        "@repo/db#db:generate",
+        "^topo"
+      ],
+      "outputs": [
+        "node_modules/.cache/.eslintcache"
+      ],
+      "outputLogs": "errors-only"
     },
     "//#lint:fix": {
-      "dependsOn": ["@repo/db#db:generate", "^topo"],
-      "outputs": ["node_modules/.cache/.eslintcache"],
-      "outputMode": "errors-only"
+      "dependsOn": [
+        "@repo/db#db:generate",
+        "^topo"
+      ],
+      "outputs": [
+        "node_modules/.cache/.eslintcache"
+      ],
+      "outputLogs": "errors-only"
     },
     "lint:fix": {
-      "dependsOn": ["@repo/db#db:generate", "^topo"],
-      "outputs": ["node_modules/.cache/.eslintcache"],
-      "outputMode": "errors-only"
+      "dependsOn": [
+        "@repo/db#db:generate",
+        "^topo"
+      ],
+      "outputs": [
+        "node_modules/.cache/.eslintcache"
+      ],
+      "outputLogs": "errors-only"
     },
     "typecheck": {
-      "dependsOn": ["@repo/db#db:generate", "^topo"],
-      "outputs": ["node_modules/.cache/tsbuildinfo.json"],
-      "outputMode": "errors-only"
+      "dependsOn": [
+        "@repo/db#db:generate",
+        "^topo"
+      ],
+      "outputs": [
+        "node_modules/.cache/tsbuildinfo.json"
+      ],
+      "outputLogs": "errors-only"
     },
     "clean": {
       "cache": false
     },
     "dev": {
-      "dependsOn": ["@repo/db#db:generate"],
+      "dependsOn": [
+        "@repo/db#db:generate"
+      ],
       "persistent": true,
       "cache": false
     },
     "test:e2e": {
-      "outputs": ["playwright-report/**"]
+      "outputs": [
+        "playwright-report/**"
+      ]
     },
     "test:e2e:ui": {
-      "outputs": ["playwright-report/**"]
+      "outputs": [
+        "playwright-report/**"
+      ]
     },
     "test:e2e:inspector": {
-      "outputs": ["playwright-report/**"]
+      "outputs": [
+        "playwright-report/**"
+      ]
     }
   }
 }

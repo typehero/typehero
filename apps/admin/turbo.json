@@ -1,6 +1,8 @@
 {
-  "extends": ["//"],
-  "pipeline": {
+  "extends": [
+    "//"
+  ],
+  "tasks": {
     "start": {
       "cache": false
     }
