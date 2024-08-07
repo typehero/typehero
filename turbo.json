@@ -89,11 +89,11 @@
     },
     "test:e2e": {
       "outputs": ["playwright-report/**"],
-      "env": ["GITHUB_ID"]
+      "env": ["GITHUB_ID", "GITHUB_SECRET"]
     },
     "test:e2e:ui": {
       "outputs": ["playwright-report/**"],
-      "env": ["GITHUB_ID"]
+      "env": ["GITHUB_ID", "GITHUB_SECRET"]
     },
     "test:e2e:inspector": {
       "outputs": ["playwright-report/**"]
