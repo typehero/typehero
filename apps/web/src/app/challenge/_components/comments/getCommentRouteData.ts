@@ -134,7 +134,7 @@ export async function getPaginatedComments({
   });
 
   const comments = await prisma.comment.findMany({
-    skip: (page - 1) * take,
+    skip: ((page || 1) - 1) * take,
     take,
     where: {
       rootType,
