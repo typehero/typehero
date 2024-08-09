@@ -16,6 +16,8 @@ enum NotificationType {
   LIKE
   REPLY
   MENTION
+  MISC
+  SYSTEM
 }
 
 enum Tags {
