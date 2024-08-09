@@ -447,6 +447,7 @@ model Notification {
   comment          Comment?         @relation(fields: [commentId], references: [id])
   /// could be comment text or solution title to avoid having to join to grab this data
   content          String?
+  url              String?
 
   @@index([toUserId])
   @@index([fromUserId])
