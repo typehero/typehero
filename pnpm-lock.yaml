@@ -337,6 +337,97 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
 
+  apps/url-shortner:
+    dependencies:
+      '@tanstack/react-query':
+        specifier: 5.51.21
+        version: 5.51.21(react@18.2.0)
+      '@vercel/edge-config':
+        specifier: ^0.2.1
+        version: 0.2.1
+      clsx:
+        specifier: ^2.0.0
+        version: 2.0.0
+      next:
+        specifier: 14.2.5
+        version: 14.2.5(@playwright/test@1.38.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      next-themes:
+        specifier: ^0.2.1
+        version: 0.2.1(next@14.2.5(@playwright/test@1.38.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      react:
+        specifier: 18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: 18.2.0
+        version: 18.2.0(react@18.2.0)
+      server-only:
+        specifier: ^0.0.1
+        version: 0.0.1
+      superjson:
+        specifier: ^2.2.1
+        version: 2.2.1
+      zod:
+        specifier: 3.23.3
+        version: 3.23.3
+    devDependencies:
+      '@repo/auth':
+        specifier: workspace:*
+        version: link:../../packages/auth
+      '@repo/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@repo/lint':
+        specifier: workspace:*
+        version: link:../../tooling/config-eslint
+      '@repo/monaco':
+        specifier: workspace:*
+        version: link:../../packages/monaco
+      '@repo/og-image':
+        specifier: workspace:*
+        version: link:../og-image
+      '@repo/tsconfig':
+        specifier: workspace:*
+        version: link:../../tooling/config-typescript
+      '@repo/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      '@tailwindcss/container-queries':
+        specifier: ^0.1.1
+        version: 0.1.1(tailwindcss@3.4.7)
+      '@tailwindcss/typography':
+        specifier: ^0.5.9
+        version: 0.5.9(tailwindcss@3.4.7)
+      '@types/node':
+        specifier: ^20.4.2
+        version: 20.10.4
+      '@types/react':
+        specifier: ^18.2.20
+        version: 18.2.20
+      '@types/react-dom':
+        specifier: ^18.2.7
+        version: 18.2.7
+      autoprefixer:
+        specifier: ^10.4.14
+        version: 10.4.14(postcss@8.4.31)
+      eslint:
+        specifier: ^8.45.0
+        version: 8.56.0
+      eslint-config-next:
+        specifier: ^13.4.10
+        version: 13.4.10(eslint@8.56.0)(typescript@5.3.3)
+      postcss:
+        specifier: ^8.4.31
+        version: 8.4.31
+      tailwindcss:
+        specifier: 3.4.7
+        version: 3.4.7
+      tailwindcss-animate:
+        specifier: ^1.0.6
+        version: 1.0.6(tailwindcss@3.4.7)
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
+
   apps/web:
     dependencies:
       '@axe-core/playwright':
@@ -853,7 +944,7 @@ importers:
     dependencies:
       '@next/eslint-plugin-next':
         specifier: canary
-        version: 15.0.0-canary.103
+        version: 15.0.0-canary.110
       '@repo/tsconfig':
         specifier: workspace:*
         version: link:../config-typescript
@@ -865,7 +956,7 @@ importers:
         version: 5.62.0(eslint@8.45.0)(typescript@5.3.3)
       '@vercel/style-guide':
         specifier: ^4.0.2
-        version: 4.0.2(@next/eslint-plugin-next@15.0.0-canary.103)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 4.0.2(@next/eslint-plugin-next@15.0.0-canary.110)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3)
       eslint:
         specifier: ^8.45.0
         version: 8.45.0
@@ -1942,8 +2033,8 @@ packages:
   '@next/eslint-plugin-next@13.4.10':
     resolution: {integrity: sha512-YJqyq6vk39JQfvaNtN83t/p5Jy45+bazRL+V4QI8FPd3FBqFYMEsULiwRLgSJMgFqkk4t4JbeZurz+gILEAFpA==}
 
-  '@next/eslint-plugin-next@15.0.0-canary.103':
-    resolution: {integrity: sha512-0k+NTwLbjYEVrjCHZgbD0sypI2u0pnHOiPKKS5uOJmi43OLyVyqx8HlmBKHORmQue6lh9Aut749MO4+c9+B6WA==}
+  '@next/eslint-plugin-next@15.0.0-canary.110':
+    resolution: {integrity: sha512-f/o5IP5B5308LOZwWJGcJ8JRcZFfvWYsc6x1iFgV8mNsTzb3Uc5mjRfVrjzUVKJg+0Tm3hxU1CYzXXiKSmNW/A==}
 
   '@next/swc-darwin-arm64@14.2.5':
     resolution: {integrity: sha512-/9zVxJ+K9lrzSGli1///ujyRfon/ZneeZ+v4ptpiPoOU+GKZnm8Wj8ELWU1Pm7GHltYRBklmXMTUqM/DqQ99FQ==}
@@ -7403,7 +7494,7 @@ packages:
   superagent@3.8.1:
     resolution: {integrity: sha512-VMBFLYgFuRdfeNQSMLbxGSLfmXL/xc+OO+BZp41Za/NRDBet/BNbkRJrYzCUu0u4GU0i/ml2dtT8b9qgkw9z6Q==}
     engines: {node: '>= 4.0'}
-    deprecated: Please upgrade to v7.0.2+ of superagent.  We have fixed numerous issues with streams, form-data, attach(), filesystem errors not bubbling up (ENOENT on attach()), and all tests are now passing.  See the releases tab for more information at <https://github.com/visionmedia/superagent/releases>.
+    deprecated: Please upgrade to v9.0.0+ as we have fixed a public vulnerability with formidable dependency. Note that v9.0.0+ requires Node.js v14.18.0+. See https://github.com/ladjs/superagent/pull/1800 for insight. This project is supported and maintained by the team at Forward Email @ https://forwardemail.net
 
   superjson@1.12.4:
     resolution: {integrity: sha512-vkpPQAxdCg9SLfPv5GPC5fnGrui/WryktoN9O5+Zif/14QIMjw+RITf/5LbBh+9QpBFb3KNvJth+puz2H8o6GQ==}
@@ -9049,7 +9140,7 @@ snapshots:
     dependencies:
       glob: 7.1.7
 
-  '@next/eslint-plugin-next@15.0.0-canary.103':
+  '@next/eslint-plugin-next@15.0.0-canary.110':
     dependencies:
       fast-glob: 3.3.1
 
@@ -10899,7 +10990,7 @@ snapshots:
       next: 14.2.5(@playwright/test@1.38.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
 
-  '@vercel/style-guide@4.0.2(@next/eslint-plugin-next@15.0.0-canary.103)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3)':
+  '@vercel/style-guide@4.0.2(@next/eslint-plugin-next@15.0.0-canary.110)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3)':
     dependencies:
       '@babel/core': 7.22.10
       '@babel/eslint-parser': 7.22.10(@babel/core@7.22.10)(eslint@8.45.0)
@@ -10921,7 +11012,7 @@ snapshots:
       eslint-plugin-unicorn: 43.0.2(eslint@8.45.0)
       prettier-plugin-packagejson: 2.4.3(prettier@3.1.1)
     optionalDependencies:
-      '@next/eslint-plugin-next': 15.0.0-canary.103
+      '@next/eslint-plugin-next': 15.0.0-canary.110
       eslint: 8.45.0
       prettier: 3.1.1
       typescript: 5.3.3

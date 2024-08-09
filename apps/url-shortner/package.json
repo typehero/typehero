@@ -1,0 +1,50 @@
+{
+  "name": "url-shortner",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@9.6.0",
+  "scripts": {
+    "build": "dotenv -e ../../.env next build",
+    "clean": "rm -rf .next dist node_modules",
+    "dev": "dotenv -e ../../.env next dev --turbo -- -p 3030",
+    "format": "prettier . --check --cache --cache-location=\"node_modules/.cache/prettiercache\"",
+    "format:fix": "prettier . --write --cache --cache-location=\"node_modules/.cache/prettiercache\" --log-level=warn",
+    "lint": "eslint . --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
+    "lint:fix": "eslint . --fix --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "5.51.21",
+    "@vercel/edge-config": "^0.2.1",
+    "clsx": "^2.0.0",
+    "next": "14.2.5",
+    "next-themes": "^0.2.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "server-only": "^0.0.1",
+    "superjson": "^2.2.1",
+    "zod": "3.23.3"
+  },
+  "devDependencies": {
+    "@repo/auth": "workspace:*",
+    "@repo/db": "workspace:*",
+    "@repo/lint": "workspace:*",
+    "@repo/monaco": "workspace:*",
+    "@repo/og-image": "workspace:*",
+    "@repo/tsconfig": "workspace:*",
+    "@repo/ui": "workspace:*",
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@tailwindcss/typography": "^0.5.9",
+    "@types/node": "^20.4.2",
+    "@types/react": "^18.2.20",
+    "@types/react-dom": "^18.2.7",
+    "autoprefixer": "^10.4.14",
+    "eslint": "^8.45.0",
+    "eslint-config-next": "^13.4.10",
+    "postcss": "^8.4.31",
+    "tailwindcss": "3.4.7",
+    "tailwindcss-animate": "^1.0.6",
+    "typescript": "^5.3.3"
+  }
+}
