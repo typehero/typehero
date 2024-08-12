@@ -18,6 +18,7 @@
     "@tanstack/react-query": "5.51.21",
     "@vercel/edge-config": "^0.2.1",
     "clsx": "^2.0.0",
+    "nanoid": "^5.0.7",
     "next": "14.2.5",
     "next-themes": "^0.2.1",
     "react": "18.2.0",

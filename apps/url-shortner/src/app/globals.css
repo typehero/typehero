@@ -2,32 +2,755 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --gradient-angle: 360deg;
+
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 45%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+
+    --card: 0 0% 100%;
+    --card-hovered: 0 0% 98%;
+    --card-foreground: 240 10% 3.9%;
+
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+
+    --primary: 211 61% 48%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: ;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --error-label: 0 84.2% 60.2%;
+
+    --ring: 240 5% 64.9%;
+
+    --radius: 0.5rem;
+
+    --difficulty-beginner: 201 96% 32%;
+    --difficulty-easy: 150 100% 25%;
+    --difficulty-medium: 35 92% 33%;
+    --difficulty-hard: 0 72% 51%;
+    --difficulty-extreme: 262 83% 58%;
+
+    --difficulty-beginner-dark: 199 69% 72%;
+    --difficulty-easy-dark: 142 77% 73%;
+    --difficulty-medium-dark: 31 86% 60%;
+    --difficulty-hard-dark: 0 91% 71%;
+    --difficulty-extreme-dark: 269 97% 85%;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+
+    --card: 240 10% 3.9%;
+    --card-hovered: 240 10% 6.9%;
+    --card-foreground: 0 0% 98%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+
+    --primary: 211 61% 48%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: ;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 85.7% 97.3%;
+
+    --error-label: 0 92.2% 64.9%;
+
+    --ring: 240 3.7% 15.9%;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+html,
+body,
+#__next,
+main {
+  scroll-padding-top: 64px;
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+.from-background {
+  --tw-gradient-from: hsl(var(--background)) var(--tw-gradient-from-position);
+}
+
+.w-md-editor-content {
+  @apply bg-background dark:bg-muted;
+}
+
+.w-md-editor-toolbar {
+  @apply flex w-full gap-2;
+  /* border-b border-b-zinc-300 */
+  border-bottom: 1px solid rgb(212 212 216) !important;
+  /* bg-background (in light mode) */
+  background: #fff !important;
+}
+
+/* dark:border-b-zinc-300 dark:bg-muted */
+.dark .w-md-editor-toolbar {
+  border-bottom: 1px solid rgb(63 63 70) !important;
+  background: hsl(240 3.7% 15.9%) !important;
+}
+
+.w-md-editor-toolbar-divider {
+  @apply bg-zinc-300 dark:bg-zinc-700;
+  /* TODO: not aligned center vertically */
+  height: 1.5rem !important;
+}
+.w-md-editor-toolbar ul {
+  @apply flex items-center;
+}
+.w-md-editor-toolbar ul li.active button {
+  @apply text-black dark:text-white;
+}
+.w-md-editor-toolbar ul li button {
+  @apply flex h-8 w-auto min-w-[2rem] items-center justify-center rounded-md p-1 text-neutral-500 hover:bg-neutral-200 hover:text-black dark:hover:bg-zinc-700 dark:hover:text-white;
+}
+.w-md-editor-toolbar ul li button[disabled] {
+  @apply cursor-default text-neutral-700 hover:bg-transparent hover:text-neutral-700;
+}
+.w-md-editor-toolbar ul li button svg {
+  @apply h-4 w-4;
+}
+.w-md-editor {
+  background: var(--muted) !important;
+}
+
+.w-md-editor-preview {
+  padding: 1rem !important;
+  box-shadow: inset 1px 0 0 0 rgb(212 212 216) !important;
+}
+.dark .w-md-editor-preview {
+  box-shadow: inset 1px 0 0 0 rgb(63 63 70) !important;
+}
+
+.w-md-editor-preview .wmde-markdown {
+  @apply bg-muted;
+}
+.wmde-markdown ol {
+  list-style: null !important;
+}
+
+.wmde-markdown ul {
+  list-style: unset !important;
+}
+.custom-scrollable-element::-webkit-scrollbar {
+  width: 0.6rem;
+}
+.custom-scrollable-element::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+.custom-scrollable-element::-webkit-scrollbar-thumb {
+  @apply rounded-l-xl bg-neutral-300/50 dark:bg-zinc-700/50;
+}
+
+.custom-scrollable-element::-webkit-scrollbar-thumb:hover {
+  @apply bg-neutral-300 dark:bg-zinc-600;
+}
+
+.moving-grid-background {
+  will-change: transform;
+  background-size: 3rem 3rem;
+  background-image: linear-gradient(to right, #8882 1px, transparent 1px),
+    linear-gradient(to bottom, #8882 1px, transparent 1px);
+  animation: movingbackground 90s linear infinite !important;
+}
+
+.features-background-mask {
+  mask-image: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 1) 100%);
+  -webkit-mask-image: linear-gradient(
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 1) 100%
+  );
+}
+
+.animated-feature-cards::before {
+  @apply pointer-events-none absolute select-none rounded-3xl opacity-0 transition-opacity duration-300 hover:opacity-100;
+  background: radial-gradient(
+    1000px circle at var(--x) var(--y),
+    #3aecf8 0,
+    #5295dc 25%,
+    rgba(255, 255, 255, 0) 50%,
+    transparent 80%
+  );
+  z-index: -1;
+  content: '';
+  inset: -1px;
+}
+
+#container {
+  mask: linear-gradient(90deg, #0000, #000 10% 80%, #0000);
+  -webkit-mask: linear-gradient(90deg, #0000, #000 10% 80%, #0000);
+}
+
+@media (min-width: 1400px) {
+  #container {
+    /* here we calculate the diffrence between screen width and the container width (1400px)
+    then split that on half to make carousel align left with the rest of the content and i added some rems to aligned perfectly */
+    padding-left: calc(((100vw - 1400px) + 12rem) / 2);
+  }
+}
+
+@media (max-width: 768px) {
+  .animated-feature-cards::before {
+    background: none !important;
+  }
+}
+
+@keyframes movingbackground {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(0, -50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moving-grid-background {
+    animation: none !important;
+  }
+}
+
+.container {
+  @apply mx-auto max-w-[1400px] px-4 md:px-24;
+}
+
+@property --gradient-angle {
+  syntax: '<angle>'; /* <- defined as type angle for the transition to work */
+  initial-value: 360deg;
+  inherits: false;
+}
+
+.hero-join-button {
   background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    var(--gradient-angle),
+    hsla(211, 60%, 48%, 0.7),
+    hsla(211, 60%, 48%, 0.3),
+    #3178c6,
+    hsla(211, 60%, 48%, 0.5)
+  );
+  animation: gradient-rotate 5s linear infinite reverse;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+.hero-join-button-dark {
+  background: linear-gradient(
+    var(--gradient-angle),
+    hsla(0, 0%, 100%, 0.5),
+    hsla(0, 0%, 100%, 0.1),
+    #fff,
+    hsla(0, 0%, 100%, 0.3)
+  ) !important;
+  animation: gradient-rotate 5s linear infinite reverse;
+}
+
+.wl-form-button {
+  background: linear-gradient(var(--gradient-angle), #34d399, #60a5fa, #ff88ff, #ff8844);
+  animation: gradient-rotate 5s linear infinite reverse;
+}
+
+.animate-beam {
+  opacity: 0;
+  transform: translate(-72%, -62%) scale(0.5);
+  animation: beam 2s 0.75s ease 1 forwards;
+}
+
+@keyframes beam {
+  to {
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
   }
+}
+
+/* portrait */
+@media (orientation: portrait) {
+  .animate-beam {
+    opacity: 0;
+    transform: translate(-62%, -40%) scale(0.5);
+    animation: beam 2s 0.75s ease 1 forwards;
+  }
+}
+
+/* tablet */
+@media (max-width: 1025px) {
+  @keyframes beam {
+    to {
+      opacity: 1;
+      transform: translate(-40%, -40%) scale(1);
+    }
+  }
+}
+
+.animate-newstar {
+  opacity: 0;
+  animation: newstar 1.5s 0.95s ease 1 forwards;
+}
+.animate-oldstar {
+  opacity: 1;
+  animation: oldstar 1.5s 0.95s ease 1 forwards;
+}
+
+@keyframes newstar {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes oldstar {
+  to {
+    opacity: 0;
+  }
+}
+
+.animate-bg-gradient-to-center {
+  animation: bg-to-center 1s 0.75s ease 1 forwards;
+}
+.animate-bg-gradient-to-center-title {
+  animation: bg-to-center 1s 0.95s ease 1 forwards;
+}
+
+@keyframes bg-to-center {
+  to {
+    background-position: center;
+  }
+}
+
+.animate-logo-light {
+  filter: brightness(90%);
+  animation: logo-light 1.25s 0.85s ease 1 forwards;
+}
+@keyframes logo-light {
+  to {
+    filter: brightness(110%);
+  }
+}
+
+.animate-3d-logo {
+  opacity: 0.1;
+  animation: logo-3d 1.25s 0.85s ease 1 forwards;
+}
+@keyframes logo-3d {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes gradient-rotate {
+  0% {
+    --gradient-angle: 360deg;
+  }
+
+  100% {
+    --gradient-angle: 0deg;
+  }
+}
+
+.lampcontainer {
+  position: relative;
+  margin-top: -330px;
+  contain: layout;
+  height: 420px;
+}
+
+.lamp {
+  width: 100%;
+  height: 400px;
+  position: relative;
+  margin-bottom: -400px;
+  pointer-events: none;
+  user-select: none;
+  --first: conic-gradient(
+    from 90deg at 80% 50%,
+    hsl(var(--background)),
+    hsl(var(--background)),
+    var(--bottom)
+  );
+  --second: conic-gradient(
+    from 270deg at 20% 50%,
+    var(--bottom),
+    hsl(var(--background)),
+    hsl(var(--background))
+  );
+  -webkit-mask-image: radial-gradient(100% 50% at center center, black, transparent);
+  background-image: var(--first), var(--second);
+  background-attachment:;
+  background-origin:;
+  background-clip:;
+  background-color:;
+  background-position-x: 1%, 99%;
+  background-position-y: 0%, 0%;
+  background-size:
+    50% 100%,
+    50% 100%;
+  opacity: 1;
+  transform-origin: center center;
+  background-repeat: no-repeat;
+}
+
+.lamp::after {
+  content: '';
+  position: absolute;
+  inset: 0px 0px 50%;
+  overflow: hidden;
+  opacity: 0.1;
+  -webkit-mask-image: radial-gradient(140px 50% at 50% 100%, black, transparent);
+  mask-image: radial-gradient(140px 50% at 50% 100%, black, transparent);
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome Safari */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* comments feature card animations */
+
+.comment1 {
+  opacity: 0;
+  animation: fadeUp 0.6s ease-in-out 1 forwards;
+}
+
+.comment2 {
+  opacity: 0;
+  animation: fadeUp 0.6s 0.9s ease-in-out 1 forwards;
+}
+
+.comment3 {
+  opacity: 0;
+  animation: fadeUp 0.6s 1.1s ease-in-out 1 forwards;
+}
+
+.amoguwusus {
+  opacity: 0;
+  animation: amog 7.5s 1.6s ease-in-out infinite forwards;
+}
+
+@keyframes amog {
+  0% {
+    opacity: 1;
+    transform: translateY(69px);
+  }
+  6% {
+    transform: translateX(0) translateY(16px);
+  }
+  20% {
+    transform: translateX(0) translateY(16px);
+  }
+  22% {
+    transform: translateX(0) translateY(0px);
+  }
+  24% {
+    transform: translateX(0) translateY(16px);
+  }
+  40% {
+    opacity: 1;
+    transform: translateX(666px) translateY(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(666px) translateY(0px);
+  }
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+* {
+  @apply focus:ring-blue-600 group-focus:ring-blue-600;
+}
+
+a {
+  @apply focus:outline-none focus-visible:ring-2;
+}
+
+.infinite-scroll-x-container {
+  overflow: hidden;
+  mask: linear-gradient(to right, transparent, white 20%, white 80%, transparent);
+  -webkit-mask: linear-gradient(to right, transparent, white 20%, white 80%, transparent);
+}
+.infinite-scroll-x {
+  animation: infinite-scroll-x 120s linear infinite;
+}
+
+.infinite-scroll-x-reverse {
+  animation: infinite-scroll-x 120s linear infinite reverse;
+}
+
+.infinite-scroll-x:hover,
+.infinite-scroll-x-reverse:hover {
+  animation-play-state: paused;
+}
+
+@keyframes infinite-scroll-x {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (min-width: 1280px) {
+  .honeycomboverride > *:first-child {
+    margin-left: -4.75rem !important;
+  }
+  .honeycomboverride > *:nth-child(8) {
+    margin-left: 0rem !important;
+  }
+  .honeycomboverride > *:nth-child(10) {
+    margin-left: -2.375rem !important;
+  }
+  .honeycomboverride > *:nth-child(26) {
+    margin-left: 2.375rem !important;
+  }
+  .honeycomboverride > *:nth-child(15n + 26) {
+    margin-left: 2.375rem !important;
+  }
+}
+
+.fancy-border-gradient::before {
+  inset: 0;
+  content: '';
+  --angle: 0deg;
+  position: absolute;
+  border-radius: inherit;
+  padding: 1.5px; /* control the border thickness */
+  background: conic-gradient(
+    from var(--angle),
+    #3178c622,
+    #3178c644 35%,
+    #3178c688 39%,
+    #3178c6,
+    #3178c688 61%,
+    #3178c644 65%,
+    #3178c622
+  );
+  -webkit-mask-composite: xor;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  animation: 3s rotate linear infinite;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+@keyframes rotate {
+  to {
+    --angle: 360deg;
+  }
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.animate-amogup {
+  opacity: 0;
+  transform: translateY(50%);
+  animation: amogup 1s 0.25s ease 1 forwards;
+}
+
+@keyframes amogup {
+  to {
+    opacity: 0.5;
+    transform: translateY(0%);
+  }
+}
+
+.ReactQueryDevtools > button {
+  margin-bottom: 5rem !important;
+}
+
+/* overrides silly annoying shadcn default */
+/* it doesn't transition shadows by default */
+.shadcnoverridetransition {
+  transition: all 0.3s ease !important;
+}
+.shadcnoverridetransition:active {
+  transition: all 0.075s ease !important;
+}
+
+.stars {
+  background-size: 200px 200px;
+  background-image: radial-gradient(2px 2px at 40px 60px, #ccc, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 20px 50px, white, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 30px 100px, white, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 40px 60px, white, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 110px 90px, white, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 190px 150px, white, rgba(0, 0, 0, 0));
+  background-repeat: repeat;
+}
+
+.stars:first-of-type {
+  animation: stars-move-right-1 200s linear infinite;
+}
+
+.stars:nth-of-type(2) {
+  background-image: radial-gradient(2px 2px at 25px 35px, #ccc, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 55px 20px, white, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 69px 42px, white, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 42px 69px, white, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 32px 90px, white, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 150px 190px, white, rgba(0, 0, 0, 0));
+  animation: stars-move-right-2 111s linear infinite;
+}
+
+.stars:nth-of-type(3) {
+  background-image: radial-gradient(2px 2px at 60px 40px, #ccc, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 50px 20px, white, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 100px 30px, white, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 60px 40px, white, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 90px 110px, white, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 150px 190px, white, rgba(0, 0, 0, 0));
+  animation: stars-move-right-3 69s linear infinite;
+}
+
+@keyframes stars-move-right-1 {
+  to {
+    transform: translateX(100%);
+  }
+}
+@keyframes stars-move-right-2 {
+  to {
+    transform: translateX(100%) scale(2);
+  }
+}
+@keyframes stars-move-right-3 {
+  to {
+    transform: translateX(100%) scale(3);
+  }
+}
+
+.animate-amogfly {
+  transform: translateX(-33vw);
+  animation: amogfly 15s 2s linear infinite forwards;
+}
+
+.th-amogfly {
+  transform: translateX(-33vw);
+  animation: thfly 25s 15.25s linear infinite forwards;
+}
+
+@keyframes thfly {
+  0% {
+    transform: translateX(-33vw);
+  }
+  100% {
+    transform: translateX(1337vw) rotate(6969deg);
+  }
+}
+
+@keyframes amogfly {
+  0% {
+    transform: translateX(-33vw);
+    filter: hue-rotate(0deg) brightness(200%);
+  }
+  100% {
+    transform: translateX(200vw) rotate(1337deg);
+    filter: hue-rotate(720deg) brightness(200%);
+  }
+}
+
+.aot-card::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: -7px;
+  left: -3px;
+  right: 0;
+  height: 23px;
+  background:
+    url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACsAAAAXCAYAAACS5bYWAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABFpJREFUeNrUV0tIo1cUvpkYjQ4xxSA6DxuNqG0dtaUKOgs3s6i0dFd3pSsXdjeIixakiGA34sZuXCkoONLFwJTK4GMYLYXg29gatTpiXurkbd7vv9/5ub+IxuhA7eiFQ5Kbc8/57ne/e87/ywRBYLdl3GG3aNwqsLJ0k0tLS+fmcnNzWUVFBVMoFGx2djarvLxcm5OTw+bm5iytra2xc4ExNjY27iqVyvvwK6CpeDzuCYVC1urq6qDA9UcfPp+PHR4esmAwKK6tr68/l5/8rgQ2Ozub1dbWyiYmJooaGxt/VqvV38jlchX9l0qlwoFA4DWS/RKLxRxFRUVf5+XlPcaaT2AP0sVPJBL2SCRiAPBpu93+vKamZo/Ae71eZjabWV1dXVqw7CKwp43ksrCw8Bhg7MJ/PLDZ5PHx8cz29vYT5JGD/bSYLgTrcDgYdk6siSc6NjZWDaAe4ZoHQL+cmZnRpZPnhWDpD8kw7uKo9ML/NMCsd2tr61vkzboMrEyv138M7TyLRqMWMBsX3sMgaZhMpp+AR5EJrCocDpuEGzKg4x8khs+CVWxubvZfR9JkMik4nU7BarUKLpeLmLsKuwIqTLynp4fqmIzASrqQT09Pf1VVVfX0KsWZ6uHBwQHTaDSsoKAgo6/H4xHLEcrVyRwuEisrKzs5XrrIVAVwiUVDKRRrL+YI32ewdVhMApuHWvcj6vids6J2u90MF4yBHUZNgKoEBaRBQalJqFSqtJfUYrGIlQX+ydXVVTN+u0tKSjQNDQ1axJVl2iTypebn55d7e3v/kqoDgZU1NTU9LCws/Py0M+2ekuGincxJ3yF+18jIyHJLS0slQJUWFxczrBeBE0vE5tHRkbixlZWVfSR8gTX/0P5gH7S1tX3Z3t7+BW8qAvwSfr8/jA0EIRM/qoFtampqbW9vTw+XA+ojUruVd3Z2tvb19T2TQFEim81GgVJoCvvj4+NLOJZgaWmpemdn5y3a6BbcnJDAw8HBwac6ne6eqCW5XDwB3qVSqM9/DAwMUNy/eVLabT7sI25qwgujThCBhWE+mAt2yNc4SQKSZrOQQE1HS22VJkmPAGTr7+//fX19fRk+Zgq0trbGeFAKEAQT98BSqKOj47vm5uaa/Px8JeIk4GcaHh6eWlxcfAU/A8xG67BxAX3fwdcbYUpSDJ06Z49Ak8ZC3OL8f3YiA4PBYKdLQ2AJ9OTk5GpXV9cQiCVh79M94QtlPLDUE/1gPNrd3f0W33W4cBoco48zQuy/IZYAMnGqlSc4c66L9JruQUaSARXeT8HGKzxAqFBekni6+h46+pMzGiJGMgTOJh1yU/KNEGDvZWvfBawkA9ppwGg0mrRa7SOI2g+gxOgbJIpdFpj72PnxSnPX8vqRxTURgBQWKisrH+GThOm+CtAzoK/9/Uiqq/6hoaHfdnd3jaOjo7/yY7yxbwqkWy3sQzpS2C6YirwvUJk0y7hurfyGRrnduPGvAAMASmo8wzeVwfsAAAAASUVORK5CYII=)
+      no-repeat 0 0,
+    url(data:image/png;base64,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)
+      no-repeat 50% 0,
+    url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAXCAYAAACFxybfAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAodJREFUeNrsVb1rWlEUv2pN/GqspKRSKFYXWzEloIWif0Fn6dJChQ7OQil0qd3EzcEpg0OgdHDr4CQODk7VRlLMEIVqApX4We0zflR9/Z1Ui4T34ksaaAYP/Hzc673n/M6550PG8zz73yKjn0wm83fDYDAwo9HINBrNnwOQg4MDs0ql2lQqlfdAWont7ng8Pjw+Ps44nc4G1pI9EXWaSOzt7TGO42aH5Pv7+08ajUZ0MBiUeXEZd7vdL5VK5fX29rZ+5tQiEmdxKrlcjsEYczgcynK5/BKKv/IXFNz/XiqVXkHdjUuRIA9SqdRD8or/R8Ez9fr9fqHVakUR4c2z0REjIQuHw2ZcrPBXLCA0RHTezEdHjIQqkUhEr9I4HOILhQLf6/VoOUFEvDMiQiToDx1Cdz+bzZ6bUFarlel0OkkVUK/XWbvdPoVer5fh3ntsfwJ+CJ2XA4p0Op1bpBgJyxDehQQ6nQ5DZXHBYDBZq9V+EhFUndnr9drEqoc2bwJbwGPgtohuVSwWe2Gz2TZMJpNgRKi6qtUqg2EWj8dTgUDgo0KhWPN4PC70EvXOzs67fD6/S6kiRIKeZA1YJ2MiJNbdbvfTUCjkV6vVK2hcDF8GI2w0GrGTkxM2HA5PDxaLxSOfz/cWEfk81X0XIMMFgJJ/srBjCgk8IdcfuVyuZ36//7nFYtkQyAMumUzuRiKRD0jMFLa+AZOpYwqgB/ziBVqmVBKUO7eAB/R0WG/Z7XaTVqtdbTabHJL6EK2djBaBPHA0NSqpbUsiMUeEBgpF4Q5AbZrmSJ/yEWgBTaBNHl9kdkgmMUeG7qwAq9PqovceTA3zlxlgsuswyuXsGsiSxJLEkoSY/BZgAEjRodi+uBruAAAAAElFTkSuQmCC)
+      no-repeat 100% 0;
+}
+
+.hamburger .line {
+  width: 20px;
+  height: 2px;
+  background-color: hsl(var(--foreground));
+  display: block;
+  -webkit-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.hamburger {
+  padding: 5px;
+}
+
+.hamburger:hover {
+  cursor: pointer;
+}
+
+.hamburger .line:nth-child(1) {
+  height: 2px;
+}
+
+.hamburger.is-active .line:nth-child(1) {
+  height: 2px;
+  -webkit-transform: translateY(5px) rotate(45deg);
+  -ms-transform: translateY(5px) rotate(45deg);
+  -o-transform: translateY(5px) rotate(45deg);
+  transform: translateY(5px) rotate(45deg);
+}
+
+.hamburger.is-active .line:nth-child(2) {
+  -webkit-transform: translateY(-5px) rotate(-45deg);
+  -ms-transform: translateY(-5px) rotate(-45deg);
+  -o-transform: translateY(-5px) rotate(-45deg);
+  transform: translateY(-5px) rotate(-45deg);
+}
+
+body.mobile-nav-active {
+  overflow: hidden;
 }
