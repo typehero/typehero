@@ -1,13 +1,7 @@
 {
   "extends": "@repo/tsconfig/react-library.json",
   "compilerOptions": {
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
-    "baseUrl": ".",
-    "paths": {
-      "~/*": [
-        "src/*"
-      ]
-    }
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
   "include": [
     "**/*.ts",

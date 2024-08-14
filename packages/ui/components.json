@@ -10,8 +10,8 @@
     "cssVariables": true
   },
   "aliases": {
-    "components": "~/components",
-    "utils": "~/cn",
-    "ui": "~/components"
+    "components": "@repo/ui/components",
+    "utils": "@repo/ui/cn",
+    "ui": "src/components"
   }
 }
