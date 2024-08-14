@@ -7,6 +7,7 @@ import { Popover, PopoverAnchor, PopoverContent } from '@repo/ui/components/popo
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import { searchUsers } from './actions';
+import { useToast } from '@repo/ui/components/use-toast';
 
 interface Props {
   isOpen: boolean;
@@ -15,9 +16,11 @@ interface Props {
 }
 
 export function UserResults({ isOpen, onSelectedUser, query }: Props) {
+  const { toast } = useToast();
   const popoverRef = useRef<HTMLDivElement | null>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const { data: users } = useQuery({
+  const { data: users, error } = useQuery({
+    retry: false,
     staleTime: 10000,
     queryKey: ['search-users', query],
     queryFn: () => {
@@ -31,6 +34,16 @@ export function UserResults({ isOpen, onSelectedUser, query }: Props) {
   useEffect(() => {
     setSelectedIndex(0);
   }, [query]);
+
+  useEffect(() => {
+    if (error) {
+      toast({
+        title: 'Query limit exceeded!',
+        description: 'Usernames are limited to 39 characters.',
+        variant: 'destructive',
+      });
+    }
+  }, [error]);
 
   useEffect(() => {
     const controller = new AbortController();

@@ -19,7 +19,7 @@ export function MentionInput(props: Props) {
   const [text, setText] = useState('');
   const [query, setQuery] = useState('');
   const [isQuerying, setIsQuerying] = useState(false);
-  const deferredQuery = useDebouncedValue(query);
+  const deferredQuery = useDebouncedValue(query, 750);
 
   const onSelectedUser = (user: string) => {
     const newText = insert(user);
