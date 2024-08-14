@@ -1,46 +1,53 @@
 'use client';
 
-import { Textarea } from '@repo/ui/components/textarea';
-import { useRef, useState, type ChangeEvent, type KeyboardEvent } from 'react';
+import { Textarea, type TextareaProps } from '@repo/ui/components/textarea';
+import { useState, type ChangeEvent, type KeyboardEvent, type RefObject } from 'react';
 import { useDebouncedValue } from '~/utils/useDebouncedValue';
 import { UserResults } from './user-results';
 
 const NO_OP_KEYS = ['ArrowDown', 'ArrowUp', 'Tab', 'Enter'];
 
-export function MentionInput() {
-  const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
+type Modify<T, R> = Omit<T, keyof R> & R;
+type Props = Modify<
+  TextareaProps,
+  {
+    forwardedRef: RefObject<HTMLTextAreaElement>;
+    onChange: (e: string) => void;
+  }
+>;
+export function MentionInput(props: Props) {
   const [text, setText] = useState('');
   const [query, setQuery] = useState('');
-  // const [selectedUser, setSelectUser] = useState('');
   const [isQuerying, setIsQuerying] = useState(false);
   const deferredQuery = useDebouncedValue(query);
 
   const onSelectedUser = (user: string) => {
-    insert(user);
+    const newText = insert(user);
+    setText(newText);
+    setIsQuerying(false);
+    setQuery('');
+    props.onChange?.(newText);
   };
 
   const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.currentTarget.value;
     setText(text);
+    props.onChange?.(text);
   };
 
   const insert = (username: string) => {
-    if (!textAreaRef.current || !query) {
-      return;
+    if (!props.forwardedRef.current || !query) {
+      return '';
     }
 
-    const text = textAreaRef.current.value;
+    const text = props.forwardedRef.current.value;
     const queryToFind = `@${query}`;
     const startIndex = text.indexOf(queryToFind);
     const endIndex = startIndex + queryToFind.length;
 
-    const wrappedUserName = `[@${username}](/@${username})`;
+    const wrappedUserName = `[@${username}](/@${encodeURI(username)})`;
 
-    const newText = text.slice(0, startIndex) + wrappedUserName + text.slice(endIndex);
-
-    setText(newText);
-    setIsQuerying(false);
-    setQuery('');
+    return text.slice(0, startIndex) + wrappedUserName + text.slice(endIndex);
   };
 
   // this handles the scenario where a user uses arrow keys
@@ -73,6 +80,8 @@ export function MentionInput() {
     } else {
       setIsQuerying(false);
     }
+
+    props.onKeyUp?.(e);
   };
 
   const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -81,18 +90,20 @@ export function MentionInput() {
     if (isQuerying && NO_OP_KEYS.includes(e.key)) {
       e.preventDefault();
     }
+
+    props.onKeyDown?.(e);
   };
 
   return (
     <div className="relative">
       <Textarea
+        {...props}
         autoFocus
         className="resize-none border-0 px-3 py-2 focus-visible:ring-0 md:max-h-[calc(100vh_-_232px)]"
         onChange={onChange}
         onKeyUp={onKeyUp}
         onKeyDown={onKeyDown}
-        value={text}
-        ref={textAreaRef}
+        ref={props.forwardedRef}
       />
       <UserResults query={deferredQuery} isOpen={isQuerying} onSelectedUser={onSelectedUser} />
     </div>
