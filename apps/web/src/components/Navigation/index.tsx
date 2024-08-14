@@ -1,5 +1,4 @@
 import { type Session } from '@repo/auth/server';
-import { Badge } from '@repo/ui/components/badge';
 import {
   DropdownMenu,
   DropdownMenuContent,
