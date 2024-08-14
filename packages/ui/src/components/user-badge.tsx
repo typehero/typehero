@@ -1,6 +1,6 @@
 import type { NextjsLinkComponentType } from '../types';
-import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip';
 import { Button } from './button';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from './hover-card';
 
 export interface UserBadgeProps {
   username: string;
@@ -11,22 +11,22 @@ function UserBadge(props: UserBadgeProps) {
   const Link = props.linkComponent;
 
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>
+    <HoverCard>
+      <HoverCardTrigger asChild>
         <Link href={`/@${props.username}`} className="focus:outline-none focus-visible:ring-0">
           <Button className="-ml-2 font-bold" variant="ghost" size="xs">
-            @{props.username}
+            +@{props.username}
           </Button>
         </Link>
-      </TooltipTrigger>
-      <TooltipContent
+      </HoverCardTrigger>
+      <HoverCardContent
         align="start"
         avoidCollisions={false}
         className="rounded-2xl rounded-bl-sm px-3 py-1 text-xs invert"
       >
         <span>Author</span>
-      </TooltipContent>
-    </Tooltip>
+      </HoverCardContent>
+    </HoverCard>
   );
 }
 
