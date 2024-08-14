@@ -436,6 +436,7 @@ model Notification {
   id               Int              @id @default(autoincrement())
   createdAt        DateTime         @default(now())
   updatedAt        DateTime         @updatedAt
+  isRead           Boolean          @default(false)
   type             NotificationType
   toUser           User             @relation("notificationToUser", fields: [toUserId], references: [id])
   toUserId         String
