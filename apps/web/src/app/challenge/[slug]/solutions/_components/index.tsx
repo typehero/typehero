@@ -19,6 +19,7 @@ import { SortSelect } from '../../../_components/sort-select';
 import { useGetQueryString } from './useGetQueryString';
 import { useQueryParamState } from './useQueryParamState';
 import { useLocalStorage } from '~/utils/useLocalStorage';
+import { EnhancedUserBadge } from '../../../_components/comments/enhanced-user-badge';
 
 interface Props {
   slug: string;
@@ -159,7 +160,8 @@ function SolutionRow({
     >
       <h3 className="truncate font-bold">{solution.title}</h3>
       <div className="flex items-center gap-2">
-        <UserBadge username={solution.user?.name ?? ''} linkComponent={Link} />
+        <EnhancedUserBadge username={solution.user?.name ?? ''} />
+        {/* <EnhancedUserBadge username={'dca123'} /> */}
         <div className="text-muted-foreground flex flex-1 items-center gap-2">
           <Calendar className=" h-4 w-4" />
           <span className="text-xs">{getRelativeTime(solution.createdAt)}</span>

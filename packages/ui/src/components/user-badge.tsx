@@ -1,30 +1,33 @@
 import type { NextjsLinkComponentType } from '../types';
 import { Button } from './button';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from './hover-card';
+import type { PropsWithChildren } from 'react';
 
 export interface UserBadgeProps {
   username: string;
   linkComponent: NextjsLinkComponentType;
+  onMouseOver?: () => void;
 }
 
-function UserBadge(props: UserBadgeProps) {
+function UserBadge(props: PropsWithChildren<UserBadgeProps>) {
   const Link = props.linkComponent;
 
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
         <Link href={`/@${props.username}`} className="focus:outline-none focus-visible:ring-0">
-          <Button className="-ml-2 font-bold" variant="ghost" size="xs">
-            +@{props.username}
+          <Button
+            className="-ml-2 font-bold"
+            variant="ghost"
+            size="xs"
+            onMouseOver={props.onMouseOver}
+          >
+            @{props.username}
           </Button>
         </Link>
       </HoverCardTrigger>
-      <HoverCardContent
-        align="start"
-        avoidCollisions={false}
-        className="rounded-2xl rounded-bl-sm px-3 py-1 text-xs invert"
-      >
-        <span>Author</span>
+      <HoverCardContent align="start" avoidCollisions={false} className="w-full">
+        {props.children}
       </HoverCardContent>
     </HoverCard>
   );
