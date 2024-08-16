@@ -89,11 +89,25 @@
     },
     "test:e2e": {
       "outputs": ["playwright-report/**"],
-      "env": ["GITHUB_ID", "GITHUB_SECRET", "DATABASE_URL"]
+      "env": [
+        "AUTH_SECRET",
+        "DATABASE_URL",
+        "GITHUB_ID",
+        "GITHUB_SECRET",
+        "NEXTAUTH_SECRET",
+        "NEXTAUTH_URL"
+      ]
     },
     "test:e2e:ui": {
       "outputs": ["playwright-report/**"],
-      "env": ["GITHUB_ID", "GITHUB_SECRET", "DATABASE_URL"]
+      "env": [
+        "AUTH_SECRET",
+        "DATABASE_URL",
+        "GITHUB_ID",
+        "GITHUB_SECRET",
+        "NEXTAUTH_SECRET",
+        "NEXTAUTH_URL"
+      ]
     },
     "test:e2e:inspector": {
       "outputs": ["playwright-report/**"]

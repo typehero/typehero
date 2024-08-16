@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "rhel-openssl-1.0.x"]
 }
 
@@ -10,6 +10,14 @@ datasource db {
   provider     = "mysql"
   url          = env("DATABASE_URL")
   relationMode = "prisma"
+}
+
+enum NotificationType {
+  LIKE
+  REPLY
+  MENTION
+  MISC
+  SYSTEM
 }
 
 enum Tags {
@@ -101,7 +109,7 @@ model User {
   id String @id @default(uuid())
 
   name          String
-  email         String   @unique
+  email         String    @unique
   emailVerified DateTime?
   image         String?
   roles         Role[]
@@ -130,9 +138,11 @@ model User {
   reportsAbout Report[] @relation("reported_user")
   moderated    Report[] @relation("report_moderator")
 
-  imageUpload ImageUpload[]
-  tracks      Track[]
-  BetaTokens  BetaTokens[]
+  imageUpload          ImageUpload[]
+  tracks               Track[]
+  BetaTokens           BetaTokens[]
+  toUserNotification   Notification[] @relation("notificationToUser")
+  fromUserNotification Notification[] @relation("notificationFromUser")
 }
 
 model VerificationToken {
@@ -216,18 +226,19 @@ model Vote {
 
 /// This is a public solution created by a user for a challenge
 model SharedSolution {
-  id              Int        @id @default(autoincrement())
-  createdAt       DateTime   @default(now())
-  isPinned        Boolean    @default(false)
+  id              Int            @id @default(autoincrement())
+  createdAt       DateTime       @default(now())
+  isPinned        Boolean        @default(false)
   title           String
-  description     String     @db.MediumText
+  description     String         @db.MediumText
   vote            Vote[]
-  user            User?      @relation(fields: [userId], references: [id])
+  user            User?          @relation(fields: [userId], references: [id])
   userId          String?
-  challenge       Challenge? @relation(fields: [challengeId], references: [id])
+  challenge       Challenge?     @relation(fields: [challengeId], references: [id])
   challengeId     Int?
   solutionComment Comment[]
   Report          Report[]
+  Notification    Notification[]
 
   @@index([userId])
   @@index([challengeId])
@@ -357,9 +368,10 @@ model Comment {
   rootSolution   SharedSolution? @relation(fields: [rootSolutionId], references: [id])
   Report         Report[]        @relation("report_comment")
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  vote      Vote[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  vote         Vote[]
+  Notification Notification[]
 
   @@index([rootSolutionId])
   @@index([rootChallengeId])
@@ -418,4 +430,28 @@ model BetaTokens {
   userId String?
 
   @@index([userId])
+}
+
+model Notification {
+  id               Int              @id @default(autoincrement())
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  isRead           Boolean          @default(false)
+  type             NotificationType
+  toUser           User             @relation("notificationToUser", fields: [toUserId], references: [id])
+  toUserId         String
+  fromUser         User             @relation("notificationFromUser", fields: [fromUserId], references: [id])
+  fromUserId       String
+  sharedSolutionId Int?
+  sharedSolution   SharedSolution?  @relation(fields: [sharedSolutionId], references: [id])
+  commentId        Int?
+  comment          Comment?         @relation(fields: [commentId], references: [id])
+  /// could be comment text or solution title to avoid having to join to grab this data
+  content          String?
+  url              String?
+
+  @@index([toUserId])
+  @@index([fromUserId])
+  @@index([sharedSolutionId])
+  @@index([commentId])
 }
