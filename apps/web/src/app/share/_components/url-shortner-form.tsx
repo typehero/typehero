@@ -15,11 +15,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { useToast } from '@repo/ui/components/use-toast';
-import { createShortURLWithSlug } from '~/actions/create-url-with-slug';
-import { createShortURL } from '~/actions/create-url';
+import { createShortURLWithSlug } from '../_actions/create-url-with-slug';
+import { createShortURL } from '../_actions/create-url';
 import { Clipboard, ExternalLink } from '@repo/ui/icons';
-import { Alert, AlertDescription, AlertTitle } from '@repo/ui/components/alert';
-import Link from 'next/link';
+import { getBaseUrl } from '~/utils/getBaseUrl';
 
 const FormSchema = z.object({
   url: z.string().url({
@@ -30,9 +29,9 @@ const FormSchema = z.object({
 
 export function URLShortnerForm() {
   const [shortURL, setShortURL] = React.useState<string | null>(null);
-  const [error, setError] = React.useState<string | null>(null);
+  const [loading, setLoading] = React.useState<boolean>(false);
   const { toast } = useToast();
-  const SHORT_URL_LINK = process.env.NEXT_PUBLIC_SHORT_URL_LINK || 'localhost:3030';
+  const baseURL = `${getBaseUrl()}/share`;
   const form = useForm<z.infer<typeof FormSchema>>({
     mode: 'onChange',
     resolver: zodResolver(FormSchema),
@@ -42,46 +41,62 @@ export function URLShortnerForm() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  const handleShareClick = async () => {
+    if (navigator.clipboard) {
+      const url = window.location.href;
+      await navigator.clipboard.writeText(url);
+      toast({
+        variant: 'success',
+        description: 'Link To Short URL Copied!',
+        title: 'Copied',
+      });
+    }
+  };
+
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    setLoading(true);
     setShortURL(null);
     if (data.slug && data.slug.length > 0) {
-      createShortURLWithSlug(data.url, data.slug).then((shortURL) => {
-        if (shortURL) {
+      const shortURL = await createShortURLWithSlug(data.url, data.slug);
+      if (shortURL) {
+        toast({
+          title: 'Short URL created',
+          description: shortURL,
+          variant: 'success',
+        });
+        setShortURL(shortURL);
+      } else {
+        if (shortURL === null) {
           toast({
-            title: 'Short URL created',
-            description: shortURL,
-            variant: 'success',
-          });
-          setShortURL(shortURL);
-        } else {
-          toast({
-            title: 'Slug already exists',
+            title: `Slug '/${data.slug}' already exists`,
             description: 'Please try another slug',
             variant: 'destructive',
           });
-          if (shortURL === null) setError(`Slug '/${data.slug}' already exists for another URL`);
-          else setError('Error creating short URL');
-        }
-      });
-    } else {
-      createShortURL(data.url).then((shortURL) => {
-        if (shortURL) {
+        } else
           toast({
-            title: 'Short URL created',
-            description: shortURL,
-            variant: 'success',
-          });
-          setShortURL(shortURL);
-        } else {
-          toast({
-            title: 'Error creating short URL',
-            description: 'Please try again',
+            title: 'Something went wrong',
+            description: 'Error creating short URL',
             variant: 'destructive',
           });
-          setError('Error creating short URL');
-        }
-      });
+      }
+    } else {
+      const shortURL = await createShortURL(data.url);
+      if (shortURL) {
+        toast({
+          title: 'Short URL created',
+          description: shortURL,
+          variant: 'success',
+        });
+        setShortURL(shortURL);
+      } else {
+        toast({
+          title: 'Error creating short URL',
+          description: 'Please try again',
+          variant: 'destructive',
+        });
+      }
     }
+    setLoading(false);
   }
 
   return (
@@ -114,7 +129,7 @@ export function URLShortnerForm() {
               <FormControl>
                 <div className="flex items-center">
                   <p className="border-r-none rounded-l-lg border border-slate-400 bg-slate-100 p-[5.5px] px-3 text-lg dark:border-slate-800 dark:bg-slate-800">
-                    {SHORT_URL_LINK}/
+                    {baseURL}/
                   </p>
                   <Input
                     placeholder="virus-link"
@@ -131,7 +146,10 @@ export function URLShortnerForm() {
 
         <Button
           disabled={
-            !form.formState.isDirty || !form.formState.isValid || form.formState.isSubmitting
+            !form.formState.isDirty ||
+            !form.formState.isValid ||
+            form.formState.isSubmitting ||
+            loading
           }
           type="submit"
           variant="secondary"
@@ -140,13 +158,13 @@ export function URLShortnerForm() {
           Shorten
         </Button>
         {shortURL && (
-          <div className="flex w-full items-center gap-2">
+          <div className="flex w-full flex-col items-center gap-2 md:flex-row">
             <div className="flex-grow rounded-xl border border-green-900 px-4 py-1.5">
-              <span className="text-muted-foreground mr-2 text-sm">Short URL: </span>
-              <span>{shortURL}</span>
+              <span className="text-muted-foreground mr-1 text-sm">Short URL: </span>
+              <span className="text-sm">{shortURL}</span>
             </div>
             <div className="flex items-center gap-2">
-              <Button size="sm" type="button" variant="secondary">
+              <Button onClick={handleShareClick} size="sm" type="button" variant="secondary">
                 <Clipboard className="mr-1 h-4 w-4" />
                 Copy
               </Button>
@@ -158,12 +176,6 @@ export function URLShortnerForm() {
               </a>
             </div>
           </div>
-        )}
-        {error && (
-          <Alert variant="destructive">
-            <AlertTitle>Error</AlertTitle>
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
         )}
       </form>
     </Form>

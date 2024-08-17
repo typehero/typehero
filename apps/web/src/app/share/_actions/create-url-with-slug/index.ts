@@ -1,9 +1,11 @@
 'use server';
 import { auth } from '~/server/auth';
 import { prisma } from '@repo/db';
+import { getBaseUrl } from '~/utils/getBaseUrl';
 
 export async function createShortURLWithSlug(url: string, slug: string): Promise<string | null> {
   const session = await auth();
+  const baseURL = getBaseUrl();
   if (!session) {
     return null;
   }
@@ -35,6 +37,6 @@ export async function createShortURLWithSlug(url: string, slug: string): Promise
     },
   });
 
-  const newURL = `${process.env.NEXT_PUBLIC_SHORT_URL_LINK || 'http://localhost:3030'}/${slug}`;
+  const newURL = `${baseURL}/share/${slug}`;
   return newURL;
 }

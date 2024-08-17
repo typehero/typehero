@@ -1,14 +1,16 @@
 'use server';
 import { auth } from '~/server/auth';
-import { newSlug } from '~/utils/slug';
+import { newShortURLSlug } from '~/utils/shortUrlSlug';
 import { prisma } from '@repo/db';
+import { getBaseUrl } from '~/utils/getBaseUrl';
 
 export async function createShortURL(url: string): Promise<string | null> {
   const session = await auth();
+  const baseURL = getBaseUrl();
   if (!session) {
     return null;
   }
-  const slug = newSlug();
+  const slug = newShortURLSlug();
 
   await prisma.shortURL.create({
     data: {
@@ -22,6 +24,6 @@ export async function createShortURL(url: string): Promise<string | null> {
     },
   });
 
-  const newURL = `${process.env.NEXT_PUBLIC_SHORT_URL_LINK || 'http://localhost:3030'}/${slug}`;
+  const newURL = `${baseURL}/share/${slug}`;
   return newURL;
 }
