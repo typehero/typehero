@@ -149,6 +149,7 @@ export async function getPaginatedComments({
           id: true,
           name: true,
           image: true,
+          roles: true,
         },
       },
       _count: {
@@ -217,6 +218,7 @@ export async function getAllComments({
           id: true,
           name: true,
           image: true,
+          roles: true,
         },
       },
       _count: {

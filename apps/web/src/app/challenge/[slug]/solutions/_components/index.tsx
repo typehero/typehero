@@ -10,7 +10,6 @@ import { SubmitSolution } from './submit-solution';
 import { type PaginatedSolution, getPaginatedSolutions } from '../getSolutionRouteData';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { Badge } from '@repo/ui/components/badge';
-import { UserBadge } from '@repo/ui/components/user-badge';
 import { useParams } from 'next/navigation';
 import { Pagination } from '../../../_components/pagination';
 import { useQuery } from '@tanstack/react-query';
@@ -19,7 +18,7 @@ import { SortSelect } from '../../../_components/sort-select';
 import { useGetQueryString } from './useGetQueryString';
 import { useQueryParamState } from './useQueryParamState';
 import { useLocalStorage } from '~/utils/useLocalStorage';
-import { EnhancedUserBadge } from '../../../_components/comments/enhanced-user-badge';
+import { UserBadge } from '../../../_components/comments/enhanced-user-badge';
 
 interface Props {
   slug: string;
@@ -160,10 +159,7 @@ function SolutionRow({
     >
       <h3 className="truncate font-bold">{solution.title}</h3>
       <div className="flex items-center gap-2">
-        <EnhancedUserBadge
-          username={solution.user?.name ?? ''}
-          roles={solution.user?.roles ?? []}
-        />
+        <UserBadge username={solution.user?.name ?? ''} roles={solution.user?.roles ?? []} />
         {/* <EnhancedUserBadge username={'dca123'} /> */}
         <div className="text-muted-foreground flex flex-1 items-center gap-2">
           <Calendar className=" h-4 w-4" />

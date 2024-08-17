@@ -1,5 +1,4 @@
 'use client';
-import { UserBadge } from '@repo/ui/components/user-badge';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
 import Link from 'next/link';
@@ -13,40 +12,59 @@ import { SlugToBadgeIcon } from '~/app/(profile)/[username]/_components/dashboar
 import { type BadgeInfo } from '~/app/(profile)/[username]/_components/dashboard/_actions';
 import { cn } from '@repo/ui/cn';
 import type { Role } from '@repo/db/types';
+import { Button } from '@repo/ui/components/button';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@repo/ui/components/hover-card';
 
-export function EnhancedUserBadge(props: { username: string; roles: Role[] }) {
-  const [enabled, setEnabled] = useState(false);
+export function UserBadge(props: { username: string; roles: Role[] }) {
+  const [queryEnabled, setQueryEnabled] = useState(false);
   const query = useQuery({
     queryKey: ['profile-hover-card', props.username],
     queryFn: () => getProfileData(props.username),
-    enabled,
+    enabled: queryEnabled,
   });
   const onMouseOver = () => {
-    setEnabled(true);
+    setQueryEnabled(true);
   };
   const textColor = getGradient(props.roles);
+  const isCompact = query.isSuccess && query.data.bio === '' && query.data.titles.length < 1;
+  console.log({ isCompact });
   return (
-    <UserBadge
-      username={props.username}
-      linkComponent={Link}
-      onMouseOver={onMouseOver}
-      className={textColor}
-    >
-      <div className="flex flex-row space-x-4">
-        <div className="flex flex-col items-center space-y-2">
-          <Avatar>
-            <AvatarImage src={query.data?.image ?? ''} />
-            <AvatarFallback>{query.data?.name.substring(0, 1)}</AvatarFallback>
-          </Avatar>
-          {query.isSuccess ? <Badges data={query.data.badges} /> : null}
-        </div>
-        <div className="space-y-2">
-          <h1 className={cn('text-md inline-flex font-bold', textColor)}>@{props.username}</h1>
-          {query.isSuccess ? <Titles data={query.data.titles} /> : null}
-          <p className="text-sm ">{query.data?.bio}</p>
-        </div>
-      </div>
-    </UserBadge>
+    <HoverCardWrapper
+      usernameComponent={
+        <Link href={`/@${props.username}`} className="focus:outline-none focus-visible:ring-0">
+          <Button className="-ml-2 font-bold" variant="ghost" size="xs" onMouseOver={onMouseOver}>
+            <span className={textColor}>@{props.username}</span>
+          </Button>
+        </Link>
+      }
+      onHoverComponent={
+        isCompact ? (
+          <div className="flex flex-col items-center space-y-2">
+            <h1 className={cn('text-md inline-flex font-bold', textColor)}>@{props.username}</h1>
+            <Avatar>
+              <AvatarImage src={query.data.image ?? ''} />
+              <AvatarFallback>{query.data.name.substring(0, 1)}</AvatarFallback>
+            </Avatar>
+            {query.isSuccess ? <Badges data={query.data.badges} /> : null}
+          </div>
+        ) : (
+          <div className="flex flex-row space-x-4">
+            <div className="flex flex-col items-center space-y-2">
+              <Avatar>
+                <AvatarImage src={query.data?.image ?? ''} />
+                <AvatarFallback>{query.data?.name.substring(0, 1)}</AvatarFallback>
+              </Avatar>
+              {query.isSuccess ? <Badges data={query.data.badges} /> : null}
+            </div>
+            <div className="space-y-2">
+              <h1 className={cn('text-md inline-flex font-bold', textColor)}>@{props.username}</h1>
+              {query.isSuccess ? <Titles data={query.data.titles} /> : null}
+              <p className="text-sm ">{query.data?.bio}</p>
+            </div>
+          </div>
+        )
+      }
+    />
   );
 }
 
@@ -58,8 +76,8 @@ const SlugToTitleIcon: Record<TitleInfo['type'], LucideIcon> = {
 
 const SlugToClassName: Record<TitleInfo['type'], string> = {
   admin: 'from-rose-400 to-orange-300',
-  supporter: 'from-cyan-200 to-cyan-400',
-  contributor: 'from-amber-200 to-yellow-500',
+  contributor: 'bg-gradient-to-r from-sky-400 to-cyan-300',
+  supporter: 'bg-gradient-to-r from-teal-200 to-teal-500',
 };
 
 function getGradient(roles: Role[]) {
@@ -67,13 +85,13 @@ function getGradient(roles: Role[]) {
   if (roles.find((r) => r.role === 'ADMIN')) {
     return gradient + SlugToClassName.admin;
   }
-  if (roles.find((r) => r.role === 'SUPPORTER')) {
-    return gradient + SlugToClassName.supporter;
-  }
   if (roles.find((r) => r.role === 'CONTRIBUTOR')) {
     return gradient + SlugToClassName.contributor;
   }
-  return 'text-red-500';
+  if (roles.find((r) => r.role === 'SUPPORTER')) {
+    return gradient + SlugToClassName.supporter;
+  }
+  return 'text-foreground';
 }
 
 function Titles(props: { data: TitleInfo[] }) {
@@ -100,7 +118,20 @@ function Badges(props: { data: BadgeInfo[] }) {
         const Icon = SlugToBadgeIcon[b.slug];
         return <Icon className="h-10 w-10" key={b.slug} />;
       })}
-      <HolidayPlatinumBadge className={className} />
     </div>
+  );
+}
+
+function HoverCardWrapper(props: {
+  usernameComponent: React.ReactElement;
+  onHoverComponent: React.ReactElement;
+}) {
+  return (
+    <HoverCard>
+      <HoverCardTrigger asChild>{props.usernameComponent}</HoverCardTrigger>
+      <HoverCardContent align="start" avoidCollisions={false} className="w-full">
+        {props.onHoverComponent}
+      </HoverCardContent>
+    </HoverCard>
   );
 }

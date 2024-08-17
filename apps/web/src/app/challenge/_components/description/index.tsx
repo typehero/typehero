@@ -15,11 +15,9 @@ import { DifficultyBadge } from '@repo/ui/components/difficulty-badge';
 import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { TypographyH3 } from '@repo/ui/components/typography/h3';
-import { UserBadge } from '@repo/ui/components/user-badge';
 import { Bookmark as BookmarkIcon, Calendar, CheckCircle, Flag, Share } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { debounce } from 'lodash';
-import Link from 'next/link';
 import { useMemo, useRef, useState } from 'react';
 import { type ChallengeRouteData } from '~/app/challenge/[slug]/getChallengeRouteData';
 import { ReportDialog } from '~/components/ReportDialog';
@@ -29,6 +27,7 @@ import { ShareForm } from '../share-form';
 import { Vote } from '../vote';
 import { AOT_CHALLENGES } from '../../[slug]/aot-slugs';
 import { Suggestions } from './suggestions';
+import { UserBadge } from '../comments/enhanced-user-badge';
 
 interface Props {
   challenge: ChallengeRouteData['challenge'];
@@ -87,7 +86,7 @@ export function Description({ challenge }: Props) {
       </div>
       {/* Author & Time */}
       <div className="mt-2 flex items-center gap-4">
-        <UserBadge username={challenge.user.name} linkComponent={Link} />
+        <UserBadge username={challenge.user.name} roles={challenge.user.roles} />
         <div className="text-muted-foreground flex items-center gap-2">
           <Calendar className=" h-4 w-4" />
           <span className="text-xs">Last updated {getRelativeTime(challenge.updatedAt)}</span>

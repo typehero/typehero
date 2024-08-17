@@ -5,7 +5,6 @@ import { type CommentRoot } from '@repo/db/types';
 import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { toast } from '@repo/ui/components/use-toast';
-import { UserBadge } from '@repo/ui/components/user-badge';
 import {
   ChevronDown,
   ChevronUp,
@@ -18,7 +17,6 @@ import {
   MoreHorizontal,
 } from '@repo/ui/icons';
 import clsx from 'clsx';
-import Link from 'next/link';
 import { useParams, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { z } from 'zod';
@@ -33,6 +31,7 @@ import { Button } from '@repo/ui/components/button';
 import { CommentSkeleton } from './comment-skeleton';
 import { isAdminOrModerator } from '~/utils/auth-guards';
 import { useCommentsReplies } from './comments.hooks';
+import { UserBadge } from './enhanced-user-badge';
 
 interface SingleCommentProps {
   comment: PaginatedComments['comments'][number];
@@ -275,7 +274,7 @@ function SingleComment({
                 {comment.user?.name.substring(0, 1)}
               </AvatarFallback>
             </Avatar>
-            <UserBadge username={comment.user.name ?? ''} linkComponent={Link} />
+            <UserBadge username={comment.user.name ?? ''} roles={comment.user.roles ?? []} />
           </div>
 
           <Tooltip delayDuration={0.05}>
