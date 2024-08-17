@@ -21,11 +21,7 @@ export async function getProfileData(username: string) {
     throw new Error('User not found');
   }
   const badges = await getBadges(user.id);
-  const titles = getTitles({
-    roles: user.roles,
-    isSupporter: true,
-    isContributor: true,
-  });
+  const titles = getTitles(user.roles);
   return {
     ...user,
     titles,
@@ -34,15 +30,15 @@ export async function getProfileData(username: string) {
 }
 
 export type TitleInfo = ReturnType<typeof getTitles>[number];
-function getTitles(user: { roles: Role[]; isContributor: boolean; isSupporter: boolean }) {
+function getTitles(roles: Role[]) {
   const flairs = [];
-  if (user.roles.find((r) => r.role === RoleTypes.ADMIN)) {
+  if (roles.find((r) => r.role === RoleTypes.ADMIN)) {
     flairs.push({ type: 'admin', label: 'Admin' } as const);
   }
-  if (user.isContributor) {
-    flairs.push({ type: 'contributor', label: 'Wizard' } as const);
+  if (roles.find((r) => r.role === RoleTypes.CONTRIBUTOR)) {
+    flairs.push({ type: 'contributor', label: 'Contributor' } as const);
   }
-  if (user.isSupporter) {
+  if (roles.find((r) => r.role === RoleTypes.SUPPORTER)) {
     flairs.push({ type: 'supporter', label: 'Hero' } as const);
   }
   return flairs;

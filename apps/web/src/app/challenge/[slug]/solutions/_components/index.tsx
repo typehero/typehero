@@ -160,7 +160,10 @@ function SolutionRow({
     >
       <h3 className="truncate font-bold">{solution.title}</h3>
       <div className="flex items-center gap-2">
-        <EnhancedUserBadge username={solution.user?.name ?? ''} />
+        <EnhancedUserBadge
+          username={solution.user?.name ?? ''}
+          roles={solution.user?.roles ?? []}
+        />
         {/* <EnhancedUserBadge username={'dca123'} /> */}
         <div className="text-muted-foreground flex flex-1 items-center gap-2">
           <Calendar className=" h-4 w-4" />

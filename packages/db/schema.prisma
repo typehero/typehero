@@ -31,6 +31,8 @@ enum RoleTypes {
   ADMIN
   MODERATOR
   CREATOR
+  SUPPORTER
+  CONTRIBUTOR
 }
 
 enum UserStatus {

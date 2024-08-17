@@ -7,13 +7,14 @@ export interface UserBadgeProps {
   username: string;
   linkComponent: NextjsLinkComponentType;
   onMouseOver?: () => void;
+  className?: string;
 }
 
 function UserBadge(props: PropsWithChildren<UserBadgeProps>) {
   const Link = props.linkComponent;
 
   return (
-    <HoverCard>
+    <HoverCard open={true}>
       <HoverCardTrigger asChild>
         <Link href={`/@${props.username}`} className="focus:outline-none focus-visible:ring-0">
           <Button
@@ -22,7 +23,7 @@ function UserBadge(props: PropsWithChildren<UserBadgeProps>) {
             size="xs"
             onMouseOver={props.onMouseOver}
           >
-            @{props.username}
+            <span className={props.className}>@{props.username}</span>
           </Button>
         </Link>
       </HoverCardTrigger>
