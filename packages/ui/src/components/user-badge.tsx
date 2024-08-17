@@ -14,7 +14,7 @@ function UserBadge(props: PropsWithChildren<UserBadgeProps>) {
   const Link = props.linkComponent;
 
   return (
-    <HoverCard open={true}>
+    <HoverCard>
       <HoverCardTrigger asChild>
         <Link href={`/@${props.username}`} className="focus:outline-none focus-visible:ring-0">
           <Button
