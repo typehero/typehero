@@ -44,7 +44,9 @@ export function UserBadge(props: { username: string; roles: Role[] }) {
               <AvatarImage src={query.data.image ?? ''} />
               <AvatarFallback>{query.data.name.substring(0, 1)}</AvatarFallback>
             </Avatar>
-            {query.isSuccess ? <Badges data={query.data.badges} /> : null}
+            {query.isSuccess && query.data.badges.length > 0 ? (
+              <Badges data={query.data.badges} />
+            ) : null}
           </div>
         ) : (
           <div className="flex flex-row space-x-4">
