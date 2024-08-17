@@ -4,7 +4,6 @@ import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar'
 import Link from 'next/link';
 import { Badge } from '@repo/ui/components/badge';
 import { Shield, Sword, Wand2, type LucideIcon } from '@repo/ui/icons';
-import { HolidayPlatinumBadge } from '~/app/(profile)/[username]/_components/badges/aot-2023-badge';
 import { useQuery } from '@tanstack/react-query';
 import { getProfileData, type TitleInfo } from './enhanced-user-badge.getProfileData';
 import { useState } from 'react';
@@ -27,7 +26,6 @@ export function UserBadge(props: { username: string; roles: Role[] }) {
   };
   const textColor = getGradient(props.roles);
   const isCompact = query.isSuccess && query.data.bio === '' && query.data.titles.length < 1;
-  console.log({ isCompact });
   return (
     <HoverCardWrapper
       usernameComponent={
@@ -38,6 +36,7 @@ export function UserBadge(props: { username: string; roles: Role[] }) {
         </Link>
       }
       onHoverComponent={
+        //When a user does not have a bio & they have no titles, then a compact version is shown
         isCompact ? (
           <div className="flex flex-col items-center space-y-2">
             <h1 className={cn('text-md inline-flex font-bold', textColor)}>@{props.username}</h1>
@@ -111,7 +110,6 @@ function Titles(props: { data: TitleInfo[] }) {
 }
 
 function Badges(props: { data: BadgeInfo[] }) {
-  const className = 'h-10 w-10';
   return (
     <div className="flex flex-row space-x-[-15px]">
       {props.data.map((b) => {
