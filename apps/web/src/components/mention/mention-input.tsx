@@ -105,7 +105,12 @@ export function MentionInput(props: Props) {
         onKeyDown={onKeyDown}
         ref={props.forwardedRef}
       />
-      <UserResults query={deferredQuery} isOpen={isQuerying} onSelectedUser={onSelectedUser} />
+      <UserResults
+        query={deferredQuery}
+        isOpen={isQuerying}
+        onFocusOutside={() => setIsQuerying(false)}
+        onSelectedUser={onSelectedUser}
+      />
     </div>
   );
 }

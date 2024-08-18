@@ -12,10 +12,11 @@ import { useToast } from '@repo/ui/components/use-toast';
 interface Props {
   isOpen: boolean;
   query: string;
+  onFocusOutside: () => void;
   onSelectedUser: (user: string) => void;
 }
 
-export function UserResults({ isOpen, onSelectedUser, query }: Props) {
+export function UserResults({ isOpen, onFocusOutside, onSelectedUser, query }: Props) {
   const { toast } = useToast();
   const popoverRef = useRef<HTMLDivElement | null>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -101,8 +102,9 @@ export function UserResults({ isOpen, onSelectedUser, query }: Props) {
       <PopoverAnchor className="absolute bottom-0 left-0" />
       <PopoverContent
         ref={popoverRef}
-        className="h-80 w-80 overflow-y-auto p-0"
+        className="absolute left-0 h-80 w-80 overflow-y-auto p-0 shadow-md shadow-neutral-500"
         onOpenAutoFocus={(e) => e.preventDefault()}
+        onInteractOutside={onFocusOutside}
       >
         <ul>
           {users?.map((user, index) => {
