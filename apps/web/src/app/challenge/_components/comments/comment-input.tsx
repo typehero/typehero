@@ -65,7 +65,6 @@ export function CommentInput({ mode, onCancel, placeholder, onSubmit, defaultVal
                     onKeyDown={(e) => {
                       if (isSubmitting) {
                         e.preventDefault();
-                        return;
                       }
                     }}
                     placeholder={

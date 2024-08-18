@@ -67,7 +67,7 @@ export function MentionInput(props: Props) {
     const lastWordBeforeCursor = textBeforeCursor.split(/\s+/).pop();
     const firstWordAfterCursor = textAfterCursor.split(/\s+/).shift() || '';
 
-    const fullWord = lastWordBeforeCursor + firstWordAfterCursor;
+    const fullWord = `${lastWordBeforeCursor}${firstWordAfterCursor}`;
 
     if (fullWord?.startsWith('@')) {
       const [, query = ''] = fullWord.split('@');

@@ -43,7 +43,7 @@ export function UserResults({ isOpen, onSelectedUser, query }: Props) {
         variant: 'destructive',
       });
     }
-  }, [error]);
+  }, [error, toast]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -94,7 +94,7 @@ export function UserResults({ isOpen, onSelectedUser, query }: Props) {
     );
 
     return () => controller.abort();
-  }, [selectedIndex, users]);
+  }, [onSelectedUser, selectedIndex, users]);
 
   return (
     <Popover open={isOpen}>
