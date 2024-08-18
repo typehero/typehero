@@ -83,7 +83,7 @@ export function UserResults({ isOpen, onSelectedUser, query }: Props) {
     window.addEventListener(
       'keyup',
       (e) => {
-        if (e.key === 'Tab' || e.key === 'Enter') {
+        if ((e.key === 'Tab' || e.key === 'Enter') && isOpen) {
           const selectedUser = users?.[selectedIndex];
           if (selectedUser) {
             onSelectedUser(selectedUser.name);
@@ -94,7 +94,7 @@ export function UserResults({ isOpen, onSelectedUser, query }: Props) {
     );
 
     return () => controller.abort();
-  }, [onSelectedUser, selectedIndex, users]);
+  }, [onSelectedUser, selectedIndex, isOpen, users]);
 
   return (
     <Popover open={isOpen}>
