@@ -32,6 +32,8 @@ import { CommentSkeleton } from './comment-skeleton';
 import { isAdminOrModerator } from '~/utils/auth-guards';
 import { useCommentsReplies } from './comments.hooks';
 import { UserBadge } from './enhanced-user-badge';
+import type { ChallengeRouteData } from '../../[slug]/getChallengeRouteData';
+import type { SolutionRouteData } from '../../[slug]/solutions/[solutionId]/getSolutionIdRouteData';
 
 interface SingleCommentProps {
   comment: PaginatedComments['comments'][number];
@@ -47,7 +49,7 @@ interface SingleCommentProps {
 
 type CommentProps = SingleCommentProps & {
   preselectedCommentMetadata?: PreselectedCommentMetadata;
-  rootId: number;
+  root: ChallengeRouteData['challenge'] | SolutionRouteData;
   type: CommentRoot;
   deleteComment: (commentId: number) => Promise<void>;
   updateComment: (text: string, commentId: number) => Promise<void>;
@@ -79,7 +81,7 @@ export function Comment({
   comment,
   preselectedCommentMetadata,
   readonly = false,
-  rootId,
+  root,
   type,
   deleteComment,
   updateComment,
@@ -103,9 +105,9 @@ export function Comment({
     showLoadMoreRepliesBtn,
   } = useCommentsReplies({
     enabled: showReplies,
-    rootId,
+    root,
     type,
-    parentCommentId: comment.id,
+    parentComment: comment,
     preselectedReplyId: hasPreselectedReply ? Number(replyId) : undefined,
   });
 

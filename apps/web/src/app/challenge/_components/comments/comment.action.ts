@@ -4,62 +4,142 @@ import { auth } from '~/server/auth';
 import { prisma } from '@repo/db';
 import type { Comment, CommentRoot, PrismaClient } from '@repo/db/types';
 import { isAdminOrModerator, isAuthor } from '~/utils/auth-guards';
+import type { PaginatedComments } from './getCommentRouteData';
+import type { ChallengeRouteData } from '../../[slug]/getChallengeRouteData';
+import type { SolutionRouteData } from '../../[slug]/solutions/[solutionId]/getSolutionIdRouteData';
+import { getMentionsFromComment } from './getMentionsFromComment';
 
 /**
- *
  * @param comment a Challenge or Solution-based comment.
  * @returns the prisma create response.
  */
 interface CommentToCreate {
   text: string;
   rootType: CommentRoot;
-  rootId: number;
+  root: ChallengeRouteData['challenge'] | SolutionRouteData;
 }
 export async function addComment(comment: CommentToCreate) {
   const session = await auth();
 
   if (!session?.user?.id) return 'unauthorized';
   if (comment.text.length === 0) return 'text_is_empty';
-  if (!session.user.id) return 'unauthorized';
-  if (comment.text.length === 0) return 'text_is_empty';
 
-  const { rootId, ...commentToCreate } = {
-    ...comment,
+  const commentToCreate = {
+    text: comment.text,
+    rootType: comment.rootType,
     ...(comment.rootType === 'CHALLENGE'
-      ? { rootChallengeId: comment.rootId }
-      : { rootSolutionId: comment.rootId }),
+      ? { rootChallengeId: comment.root.id }
+      : { rootSolutionId: comment.root.id }),
   };
 
-  return await prisma.comment.create({
+  const commentThatWasCreated = await prisma.comment.create({
     data: {
       ...commentToCreate,
       userId: session.user.id,
     },
   });
+
+  // don't notify the solution/challenge author if they are mentioned to avoid double notifications or the comment author since they
+  // shouldn't be able to notify themselves (e.g: tag themselves in their own comment)
+  const mentions = getMentionsFromComment(commentToCreate.text).filter(
+    (mention) => mention !== comment.root.user?.name && mention !== session.user.name,
+  );
+
+  // don't block on notification logic
+  Promise.allSettled([
+    ...mentions.map(async (mention) => {
+      const validMention = await prisma.user.findFirst({
+        where: {
+          name: mention,
+        },
+      });
+
+      if (!validMention) {
+        return Promise.resolve();
+      }
+
+      return prisma.notification.create({
+        data: {
+          type: 'MENTION',
+          commentId: commentThatWasCreated.id,
+          fromUserId: session.user.id,
+          toUserId: validMention.id,
+        },
+      });
+    }),
+    prisma.notification.create({
+      data: {
+        type: 'REPLY',
+        commentId: commentThatWasCreated.id,
+        fromUserId: session.user.id,
+        toUserId: comment.root.userId!,
+      },
+    }),
+  ]).catch(console.error);
 }
 
-export async function replyComment(comment: CommentToCreate, parentId: number) {
+export async function replyComment(
+  comment: CommentToCreate,
+  parentComment: PaginatedComments['comments'][number],
+) {
   const session = await auth();
 
   if (!session?.user?.id) return 'unauthorized';
   if (comment.text.length === 0) return 'text_is_empty';
-  if (!session.user.id) return 'unauthorized';
-  if (comment.text.length === 0) return 'text_is_empty';
 
-  const { rootId, ...commentToCreate } = {
-    ...comment,
+  const commentToCreate = {
+    text: comment.text,
+    rootType: comment.rootType,
     ...(comment.rootType === 'CHALLENGE'
-      ? { rootChallengeId: comment.rootId }
-      : { rootSolutionId: comment.rootId }),
+      ? { rootChallengeId: comment.root.id }
+      : { rootSolutionId: comment.root.id }),
   };
 
-  return await prisma.comment.create({
+  await prisma.comment.create({
     data: {
       ...commentToCreate,
-      parentId,
+      parentId: parentComment.id,
       userId: session.user.id,
     },
   });
+
+  // don't notify the parent comment author if they are mentioned to avoid double notifications or the comment author since they
+  // shouldn't be able to notify themselves (e.g: tag themselves in their own comment)
+  const mentions = getMentionsFromComment(commentToCreate.text).filter(
+    (mention) => mention != parentComment.user.name && mention != session.user.name,
+  );
+
+  // dont block on notification logic
+  Promise.allSettled([
+    ...mentions.map(async (mention) => {
+      const validMention = await prisma.user.findFirst({
+        where: {
+          name: mention,
+        },
+      });
+
+      if (!validMention) {
+        return Promise.resolve();
+      }
+
+      return prisma.notification.create({
+        data: {
+          type: 'MENTION',
+          commentId: comment.root.id,
+          fromUserId: session.user.id,
+          toUserId: validMention.id,
+        },
+      });
+    }),
+    prisma.notification.create({
+      data: {
+        type: 'REPLY',
+        commentId: comment.root.id,
+        fromUserId: session.user.id,
+        toUserId: parentComment.userId,
+      },
+    }),
+  ]).catch(console.error);
 }
 
 export async function updateComment(text: string, id: number) {

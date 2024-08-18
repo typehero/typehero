@@ -111,9 +111,15 @@ export function UserResults({ isOpen, onSelectedUser, query }: Props) {
                 <Button
                   className={cn(
                     selectedIndex === index ? 'bg-neutral-200/50 dark:bg-neutral-700/50' : '',
-                    'flex w-full justify-start gap-2 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50',
+                    'flex w-full justify-start gap-2 rounded-none hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50',
                   )}
                   variant="ghost"
+                  onClick={() => {
+                    const selectedUser = users?.[index];
+                    if (selectedUser) {
+                      onSelectedUser(selectedUser.name);
+                    }
+                  }}
                 >
                   <Avatar className="h-7 w-7">
                     <AvatarImage alt="github profile picture" src={user?.image ?? ''} />

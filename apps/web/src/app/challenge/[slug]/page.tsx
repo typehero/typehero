@@ -41,7 +41,7 @@ export default async function Challenges({ params: { slug } }: Props) {
   return (
     <div className="relative h-full ">
       <Description challenge={challenge} />
-      <Comments rootId={challenge.id} type="CHALLENGE" />
+      <Comments root={challenge} type="CHALLENGE" />
     </div>
   );
 }

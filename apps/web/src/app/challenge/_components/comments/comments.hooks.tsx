@@ -7,7 +7,11 @@ import {
 import { useEffect, useReducer } from 'react';
 
 import { commentErrors, sortKeys } from './comments.constants';
-import { getAllComments, getPaginatedComments } from './getCommentRouteData';
+import {
+  getAllComments,
+  getPaginatedComments,
+  type PaginatedComments,
+} from './getCommentRouteData';
 import type { CommentRoot } from '@repo/db/types';
 import {
   addComment as addCommentAction,
@@ -16,6 +20,8 @@ import {
   updateComment as updateCommentAction,
 } from './comment.action';
 import { toast } from '@repo/ui/components/use-toast';
+import type { ChallengeRouteData } from '../../[slug]/getChallengeRouteData';
+import type { SolutionRouteData } from '../../[slug]/solutions/[solutionId]/getSolutionIdRouteData';
 
 const getRootQueryKey = (rootId: number, type: CommentRoot) =>
   `${type.toLowerCase()}-${rootId}-comments`;
@@ -28,7 +34,7 @@ interface CommentsMeta {
 }
 
 interface DefaultCommentsProps {
-  rootId: number;
+  root: ChallengeRouteData['challenge'] | SolutionRouteData;
   type: CommentRoot;
 }
 
@@ -36,7 +42,7 @@ interface UseCommentsProps extends DefaultCommentsProps {
   initialPage?: number;
 }
 
-export function useComments({ type, rootId, initialPage }: UseCommentsProps) {
+export function useComments({ type, root, initialPage }: UseCommentsProps) {
   const queryClient = useQueryClient();
   const [commentsMeta, updateCommentsMeta] = useReducer(
     (state: CommentsMeta, action: Partial<CommentsMeta>) => ({ ...state, ...action }),
@@ -47,7 +53,7 @@ export function useComments({ type, rootId, initialPage }: UseCommentsProps) {
   );
 
   const getQueryKey = ({ sort, page }: { sort: string; page: number }) => [
-    getRootQueryKey(rootId, type),
+    getRootQueryKey(root.id, type),
     sort,
     page,
   ];
@@ -56,7 +62,7 @@ export function useComments({ type, rootId, initialPage }: UseCommentsProps) {
     queryKey: getQueryKey({ sort: commentsMeta.sort.value, page: commentsMeta.page }),
     queryFn: () => {
       return getPaginatedComments({
-        rootId,
+        rootId: root.id,
         page: commentsMeta.page,
         rootType: type,
         sortKey: commentsMeta.sort.key,
@@ -113,7 +119,7 @@ export function useComments({ type, rootId, initialPage }: UseCommentsProps) {
     try {
       const res = await addCommentAction({
         text,
-        rootId,
+        root,
         rootType: type,
       });
       if (res === 'text_is_empty') {
@@ -169,7 +175,7 @@ export function useComments({ type, rootId, initialPage }: UseCommentsProps) {
 }
 
 interface UseCommentRepliesProps extends DefaultCommentsProps {
-  parentCommentId: number;
+  parentComment: PaginatedComments['comments'][number];
   enabled: boolean;
   preselectedReplyId?: number;
 }
@@ -177,19 +183,19 @@ interface UseCommentRepliesProps extends DefaultCommentsProps {
 const REPLIES_PAGESIZE = 5;
 
 export function useCommentsReplies({
-  rootId,
+  root,
   type,
-  parentCommentId,
+  parentComment,
   enabled,
   preselectedReplyId,
 }: UseCommentRepliesProps) {
   const queryClient = useQueryClient();
-  const rootQueryKey = [getRootQueryKey(rootId, type)];
-  const queryKey = [...rootQueryKey, `comment-${parentCommentId}-replies`];
+  const rootQueryKey = [getRootQueryKey(root.id, type)];
+  const queryKey = [...rootQueryKey, `comment-${parentComment.id}-replies`];
 
   const { data: replies } = useQuery({
     queryKey,
-    queryFn: () => getAllComments({ rootId, rootType: type, parentId: parentCommentId }),
+    queryFn: () => getAllComments({ rootId: root.id, rootType: type, parentId: parentComment.id }),
     staleTime: 5000,
     enabled,
   });
@@ -239,10 +245,10 @@ export function useCommentsReplies({
       const res = await replyComment(
         {
           text,
-          rootId,
+          root,
           rootType: type,
         },
-        parentCommentId,
+        parentComment,
       );
       if (res === 'text_is_empty') {
         toast(commentErrors.empty);
