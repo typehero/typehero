@@ -69,13 +69,13 @@ export function UserBadge(props: { username: string; roles: Role[] }) {
   );
 }
 
-const SlugToTitleIcon: Record<TitleInfo['type'], LucideIcon> = {
+const TITLE_TO_ICON: Record<TitleInfo['type'], LucideIcon> = {
   admin: Shield,
   supporter: Sword,
   contributor: Wand2,
 };
 
-const SlugToClassName: Record<TitleInfo['type'], string> = {
+const TITLE_TO_CLASSNAME: Record<TitleInfo['type'], string> = {
   admin: 'from-rose-400 to-orange-300',
   contributor: 'bg-gradient-to-r from-sky-400 to-cyan-300',
   supporter: 'bg-gradient-to-r from-teal-200 to-teal-500',
@@ -84,13 +84,13 @@ const SlugToClassName: Record<TitleInfo['type'], string> = {
 function getGradient(roles: Role[]) {
   const gradient = 'bg-gradient-to-r bg-clip-text text-transparent ';
   if (roles.find((r) => r.role === 'ADMIN')) {
-    return gradient + SlugToClassName.admin;
+    return gradient + TITLE_TO_CLASSNAME.admin;
   }
   if (roles.find((r) => r.role === 'CONTRIBUTOR')) {
-    return gradient + SlugToClassName.contributor;
+    return gradient + TITLE_TO_CLASSNAME.contributor;
   }
   if (roles.find((r) => r.role === 'SUPPORTER')) {
-    return gradient + SlugToClassName.supporter;
+    return gradient + TITLE_TO_CLASSNAME.supporter;
   }
   return 'text-foreground';
 }
@@ -99,7 +99,7 @@ function Titles(props: { data: TitleInfo[] }) {
   return (
     <div className="flex flex-row space-x-2">
       {props.data.map((t) => {
-        const Icon = SlugToTitleIcon[t.type];
+        const Icon = TITLE_TO_ICON[t.type];
         return (
           <Badge className="rounded-md" key={t.type}>
             <Icon className="h-5 w-5 pr-1" />

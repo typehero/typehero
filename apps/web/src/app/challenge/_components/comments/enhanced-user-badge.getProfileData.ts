@@ -5,7 +5,7 @@ import { RoleTypes, type Role } from '@repo/db/types';
 import { getBadges } from '~/app/(profile)/[username]/_components/dashboard/_actions';
 
 export async function getProfileData(username: string) {
-  const user = await prisma.user.findFirst({
+  const user = await prisma.user.findFirstOrThrow({
     where: {
       name: username,
     },
@@ -17,9 +17,7 @@ export async function getProfileData(username: string) {
       roles: true,
     },
   });
-  if (user === null) {
-    throw new Error('User not found');
-  }
+
   const badges = await getBadges(user.id);
   const titles = getTitles(user.roles);
   return {
@@ -31,15 +29,15 @@ export async function getProfileData(username: string) {
 
 export type TitleInfo = ReturnType<typeof getTitles>[number];
 function getTitles(roles: Role[]) {
-  const flairs = [];
+  const flairs: { type: string; label: string }[] = [];
   if (roles.find((r) => r.role === RoleTypes.ADMIN)) {
-    flairs.push({ type: 'admin', label: 'Admin' } as const);
+    flairs.push({ type: 'admin', label: 'Admin' });
   }
   if (roles.find((r) => r.role === RoleTypes.CONTRIBUTOR)) {
-    flairs.push({ type: 'contributor', label: 'Contributor' } as const);
+    flairs.push({ type: 'contributor', label: 'Contributor' });
   }
   if (roles.find((r) => r.role === RoleTypes.SUPPORTER)) {
-    flairs.push({ type: 'supporter', label: 'Hero' } as const);
+    flairs.push({ type: 'supporter', label: 'Hero' });
   }
   return flairs;
 }

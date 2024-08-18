@@ -48,7 +48,14 @@ module.exports = {
     'eslint-comments/no-unlimited-disable': 'off',
     'prefer-named-capture-group': 'off',
     'prefer-regex-literals': 'off',
-    '@typescript-eslint/naming-convention': 'off',
+    '@typescript-eslint/naming-convention': [
+      'warn',
+      {
+        selector: 'variable',
+        modifiers: ['const', 'global'],
+        format: ['UPPER_CASE'],
+      },
+    ],
     'import/no-default-export': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
     '@typescript-eslint/no-unnecessary-condition': 'off',
