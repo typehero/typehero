@@ -55,6 +55,12 @@ module.exports = {
         modifiers: ['const', 'global'],
         format: ['UPPER_CASE'],
       },
+      {
+        selector: 'variable',
+        modifiers: ['const', 'global'],
+        types: ['function'],
+        format: null,
+      },
     ],
     'import/no-default-export': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
