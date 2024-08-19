@@ -154,7 +154,7 @@ function HoverCardWrapper(props: {
   onHoverComponent: React.ReactElement;
 }) {
   return (
-    <HoverCard open>
+    <HoverCard>
       <HoverCardTrigger asChild>{props.usernameComponent}</HoverCardTrigger>
       <HoverCardContent align="start" avoidCollisions={false} className="w-min rounded-lg">
         {props.onHoverComponent}
