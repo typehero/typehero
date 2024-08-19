@@ -24,46 +24,71 @@ export function UserBadge(props: { username: string; roles: Role[] }) {
   const onMouseOver = () => {
     setQueryEnabled(true);
   };
-  const textColor = getGradient(props.roles);
+  const gradient = getGradient(props.roles);
   const isCompact = query.isSuccess && query.data.bio === '' && query.data.titles.length < 1;
+
   return (
     <HoverCardWrapper
       usernameComponent={
         <Link href={`/@${props.username}`} className="focus:outline-none focus-visible:ring-0">
           <Button className="-ml-2 font-bold" variant="ghost" size="xs" onMouseOver={onMouseOver}>
-            <span className={textColor}>@{props.username}</span>
+            <span
+              className={cn('bg-gradient-to-r bg-clip-text font-bold text-transparent', gradient)}
+            >
+              @{props.username}
+            </span>
           </Button>
         </Link>
       }
       onHoverComponent={
         //When a user does not have a bio & they have no titles, then a compact version is shown
-        isCompact ? (
-          <div className="flex flex-col items-center space-y-2">
-            <h1 className={cn('text-md inline-flex font-bold', textColor)}>@{props.username}</h1>
-            <Avatar>
-              <AvatarImage src={query.data.image ?? ''} />
-              <AvatarFallback>{query.data.name.substring(0, 1)}</AvatarFallback>
-            </Avatar>
-            {query.isSuccess && query.data.badges.length > 0 ? (
-              <Badges data={query.data.badges} />
-            ) : null}
-          </div>
-        ) : (
-          <div className="flex flex-row space-x-4">
+        <Link href={`@${props.username}`}>
+          {isCompact ? (
             <div className="flex flex-col items-center space-y-2">
-              <Avatar>
-                <AvatarImage src={query.data?.image ?? ''} />
-                <AvatarFallback>{query.data?.name.substring(0, 1)}</AvatarFallback>
-              </Avatar>
-              {query.isSuccess ? <Badges data={query.data.badges} /> : null}
+              <h1
+                className={cn(
+                  'text-md inline-flex bg-gradient-to-r bg-clip-text font-bold text-transparent',
+                  gradient,
+                )}
+              >
+                @{props.username}
+              </h1>
+              <div className={cn('rounded-full bg-gradient-to-r p-0.5', gradient)}>
+                <Avatar className="h-14 w-14">
+                  <AvatarImage src={query.data.image ?? ''} />
+                  <AvatarFallback>{query.data.name.substring(0, 1)}</AvatarFallback>
+                </Avatar>
+              </div>
+              {query.isSuccess && query.data.badges.length > 0 ? (
+                <Badges data={query.data.badges} />
+              ) : null}
             </div>
-            <div className="space-y-2">
-              <h1 className={cn('text-md inline-flex font-bold', textColor)}>@{props.username}</h1>
-              {query.isSuccess ? <Titles data={query.data.titles} /> : null}
-              <p className="text-sm ">{query.data?.bio}</p>
+          ) : (
+            <div className="flex flex-row space-x-4">
+              <div className="flex flex-col items-center space-y-2">
+                <div className={cn('rounded-full bg-gradient-to-r p-0.5', gradient)}>
+                  <Avatar className={cn('h-14 w-14 ')}>
+                    <AvatarImage src={query.data?.image ?? ''} />
+                    <AvatarFallback>{query.data?.name.substring(0, 1)}</AvatarFallback>
+                  </Avatar>
+                </div>
+                {query.isSuccess ? <Badges data={query.data.badges} /> : null}
+              </div>
+              <div className="max-w-[calc(39ch)] space-y-2">
+                <h1
+                  className={cn(
+                    'text-md inline-flex bg-gradient-to-r bg-clip-text font-bold text-transparent',
+                    gradient,
+                  )}
+                >
+                  @{props.username}
+                </h1>
+                {query.isSuccess ? <Titles data={query.data.titles} /> : null}
+                <p className="line-clamp-2 max-w-max text-sm text-zinc-200">{query.data?.bio}</p>
+              </div>
             </div>
-          </div>
-        )
+          )}
+        </Link>
       }
     />
   );
@@ -82,15 +107,14 @@ const TITLE_TO_CLASSNAME: Record<TitleInfo['type'], string> = {
 };
 
 function getGradient(roles: Role[]) {
-  const gradient = 'bg-gradient-to-r bg-clip-text text-transparent ';
   if (roles.find((r) => r.role === 'ADMIN')) {
-    return gradient + TITLE_TO_CLASSNAME.admin;
+    return TITLE_TO_CLASSNAME.admin;
   }
   if (roles.find((r) => r.role === 'CONTRIBUTOR')) {
-    return gradient + TITLE_TO_CLASSNAME.contributor;
+    return TITLE_TO_CLASSNAME.contributor;
   }
   if (roles.find((r) => r.role === 'SUPPORTER')) {
-    return gradient + TITLE_TO_CLASSNAME.supporter;
+    return TITLE_TO_CLASSNAME.supporter;
   }
   return 'text-foreground';
 }
@@ -101,7 +125,10 @@ function Titles(props: { data: TitleInfo[] }) {
       {props.data.map((t) => {
         const Icon = TITLE_TO_ICON[t.type];
         return (
-          <Badge className="rounded-md" key={t.type}>
+          <Badge
+            className="rounded-full bg-gradient-to-br from-sky-600 to-sky-700 px-2  "
+            key={t.type}
+          >
             <Icon className="h-5 w-5 pr-1" />
             {t.label}
           </Badge>
@@ -127,9 +154,9 @@ function HoverCardWrapper(props: {
   onHoverComponent: React.ReactElement;
 }) {
   return (
-    <HoverCard>
+    <HoverCard open>
       <HoverCardTrigger asChild>{props.usernameComponent}</HoverCardTrigger>
-      <HoverCardContent align="start" avoidCollisions={false} className="w-full">
+      <HoverCardContent align="start" avoidCollisions={false} className="w-min rounded-lg">
         {props.onHoverComponent}
       </HoverCardContent>
     </HoverCard>

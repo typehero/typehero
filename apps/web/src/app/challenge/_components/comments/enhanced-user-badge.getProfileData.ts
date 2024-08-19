@@ -29,7 +29,7 @@ export async function getProfileData(username: string) {
 
 export type TitleInfo = ReturnType<typeof getTitles>[number];
 function getTitles(roles: Role[]) {
-  const flairs: { type: string; label: string }[] = [];
+  const flairs: { type: 'admin' | 'contributor' | 'supporter'; label: string }[] = [];
   if (roles.find((r) => r.role === RoleTypes.ADMIN)) {
     flairs.push({ type: 'admin', label: 'Admin' });
   }
