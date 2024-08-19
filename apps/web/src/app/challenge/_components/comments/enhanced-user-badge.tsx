@@ -20,6 +20,7 @@ export function UserBadge(props: { username: string; roles: Role[] }) {
     queryKey: ['profile-hover-card', props.username],
     queryFn: () => getProfileData(props.username),
     enabled: queryEnabled,
+    staleTime: 60 * 1000,
   });
   const onMouseOver = () => {
     setQueryEnabled(true);
@@ -47,7 +48,7 @@ export function UserBadge(props: { username: string; roles: Role[] }) {
             <div className="flex flex-col items-center space-y-2">
               <h1
                 className={cn(
-                  'text-md inline-flex bg-gradient-to-r bg-clip-text font-bold text-transparent',
+                  'text-md inline-flex min-w-max bg-gradient-to-r bg-clip-text font-bold text-transparent',
                   gradient,
                 )}
               >
@@ -77,7 +78,7 @@ export function UserBadge(props: { username: string; roles: Role[] }) {
               <div className="max-w-[calc(39ch)] space-y-2">
                 <h1
                   className={cn(
-                    'text-md inline-flex bg-gradient-to-r bg-clip-text font-bold text-transparent',
+                    'text-md inline-flex min-w-max bg-gradient-to-r bg-clip-text font-bold text-transparent',
                     gradient,
                   )}
                 >
