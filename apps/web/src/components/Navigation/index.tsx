@@ -19,6 +19,7 @@ import { NavWrapper } from './nav-wrapper';
 import { SignOutLink } from './signout-link';
 import { SkipToCodeEditor } from './skip-to-code-editor';
 import { auth } from '~/server/auth';
+import { NotificationLink } from './notification-link';
 
 export function getAdminUrl() {
   // reference for vercel.com
@@ -110,6 +111,7 @@ export async function Navigation() {
               <Suspense>
                 <Search />
               </Suspense>
+              <NotificationLink />
               {featureFlags?.enableLogin ? (
                 <LoginButton isAdminOrMod={isAdminOrMod} session={session} />
               ) : null}

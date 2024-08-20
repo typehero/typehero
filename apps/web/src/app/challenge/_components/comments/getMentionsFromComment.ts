@@ -1,6 +1,6 @@
 export function getMentionsFromComment(text: string) {
-  // Regex pattern to match mentions in the format [@username](/@username)
-  const pattern = /\[@([^\]]+)\]\(\/@\1\)/g;
+  // Regex pattern to match mentions in the format @username
+  const pattern = /@[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}/g;
 
   const mentions = [];
 
