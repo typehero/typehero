@@ -13,7 +13,7 @@ import { vscDarkPlus } from '../themes/vs-dark-plus';
 import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip';
 import { Button } from './button';
 import { Check, Copy } from '../icons';
-// import rehypeRaw from 'rehype-raw';
+import { userMentions } from './utils/mentions.js';
 
 const HTML_COMMENT_REGEX = new RegExp('<!--([\\s\\S]*?)-->', 'g');
 
@@ -110,7 +110,7 @@ export function Markdown({ children, className }: { children: string; className?
       // FIXME: this is vuln to XSS and I don't know why we use it, let's remove it
       // or add in a sanitizer lib like: https://github.com/rehypejs/rehype-sanitize
       // rehypePlugins={[rehypeRaw as any]}
-      remarkPlugins={[removeHtmlComments, remarkGfm]}
+      remarkPlugins={[removeHtmlComments, remarkGfm, userMentions]}
     >
       {children}
     </ReactMarkdown>
