@@ -102,7 +102,7 @@ export function UserResults({ isOpen, onFocusOutside, onSelectedUser, query }: P
       <PopoverAnchor className="absolute bottom-0 left-0" />
       <PopoverContent
         ref={popoverRef}
-        className="absolute left-0 h-80 w-80 overflow-y-auto p-0 shadow-md shadow-neutral-500"
+        className="absolute left-0 h-80 w-80 overflow-y-auto bg-zinc-900 p-0 shadow-lg shadow-neutral-500"
         onOpenAutoFocus={(e) => e.preventDefault()}
         onInteractOutside={onFocusOutside}
       >
@@ -112,8 +112,8 @@ export function UserResults({ isOpen, onFocusOutside, onSelectedUser, query }: P
               <li key={user.id}>
                 <Button
                   className={cn(
-                    selectedIndex === index ? 'bg-neutral-200/50 dark:bg-neutral-700/50' : '',
-                    'flex w-full justify-start gap-2 rounded-none hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50',
+                    selectedIndex === index ? 'dark:bg-zinc-600/50' : '',
+                    'flex w-full justify-start gap-2 rounded-none  dark:hover:bg-zinc-600/50',
                   )}
                   variant="ghost"
                   onClick={() => {
