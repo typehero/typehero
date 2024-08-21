@@ -1,5 +1,9 @@
 import { findAndReplace } from 'mdast-util-find-and-replace';
 
+/**
+ * yoinked from https://github.com/remarkjs/remark-github/blob/main/lib/index.js#L177
+ * courtesy of @hacksore
+ */
 export function buildUrl(values) {
   const base = '';
 

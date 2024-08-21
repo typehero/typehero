@@ -35,22 +35,25 @@ export function MentionInput(props: Props) {
     props.onChange?.(text);
   };
 
-  const insert = (username: string) => {
-    if (!props.forwardedRef.current || !query) {
-      return '';
-    }
-
-    const text = props.forwardedRef.current.value;
-
-    const cursorPosition = props.forwardedRef.current.selectionStart;
-
+  const getWordOnCursor = (text: string, cursorPosition: number) => {
     const textBeforeCursor = text.slice(0, cursorPosition);
     const textAfterCursor = text.slice(cursorPosition);
 
     const lastWordBeforeCursor = textBeforeCursor.split(/\s+/).pop();
     const firstWordAfterCursor = textAfterCursor.split(/\s+/).shift() || '';
 
-    const fullWord = `${lastWordBeforeCursor}${firstWordAfterCursor}`;
+    return `${lastWordBeforeCursor}${firstWordAfterCursor}`;
+  };
+
+  const insert = (username: string) => {
+    if (!props.forwardedRef.current || !query) {
+      return '';
+    }
+
+    const text = props.forwardedRef.current.value;
+    const cursorPosition = props.forwardedRef.current.selectionStart;
+
+    const fullWord = getWordOnCursor(text, cursorPosition);
 
     return (
       text.slice(0, cursorPosition - fullWord.length) + `@${username}` + text.slice(cursorPosition)
@@ -68,13 +71,7 @@ export function MentionInput(props: Props) {
     }
     const cursorPosition = e.currentTarget.selectionStart;
 
-    const textBeforeCursor = text.slice(0, cursorPosition);
-    const textAfterCursor = text.slice(cursorPosition);
-
-    const lastWordBeforeCursor = textBeforeCursor.split(/\s+/).pop();
-    const firstWordAfterCursor = textAfterCursor.split(/\s+/).shift() || '';
-
-    const fullWord = `${lastWordBeforeCursor}${firstWordAfterCursor}`;
+    const fullWord = getWordOnCursor(text, cursorPosition);
 
     if (fullWord?.startsWith('@')) {
       const [, query = ''] = fullWord.split('@');
