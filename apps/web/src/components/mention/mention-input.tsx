@@ -41,13 +41,20 @@ export function MentionInput(props: Props) {
     }
 
     const text = props.forwardedRef.current.value;
-    const queryToFind = `@${query}`;
-    // @BUG: this doesnt work if users have the same starting letters
-    // probably need to use selectionStart from the text area start from there
-    const startIndex = text.indexOf(queryToFind);
-    const endIndex = startIndex + queryToFind.length;
 
-    return text.slice(0, startIndex) + `@${encodeURI(username)}` + text.slice(endIndex);
+    const cursorPosition = props.forwardedRef.current.selectionStart;
+
+    const textBeforeCursor = text.slice(0, cursorPosition);
+    const textAfterCursor = text.slice(cursorPosition);
+
+    const lastWordBeforeCursor = textBeforeCursor.split(/\s+/).pop();
+    const firstWordAfterCursor = textAfterCursor.split(/\s+/).shift() || '';
+
+    const fullWord = `${lastWordBeforeCursor}${firstWordAfterCursor}`;
+
+    return (
+      text.slice(0, cursorPosition - fullWord.length) + `@${username}` + text.slice(cursorPosition)
+    );
   };
 
   // this handles the scenario where a user uses arrow keys
