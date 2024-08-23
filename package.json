@@ -60,6 +60,7 @@
     }
   },
   "dependencies": {
-    "pnpm": "^8.15.8"
+    "pnpm": "^8.15.8",
+    "typehero": "file:"
   }
 }

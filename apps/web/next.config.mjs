@@ -53,7 +53,7 @@ const nextConfig = {
       },
     ],
   },
-  swcMinify: true,
+  // swcMinify: true,
 };
 const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',

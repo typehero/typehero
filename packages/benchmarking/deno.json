@@ -1,0 +1,5 @@
+{
+  "imports": {
+    "@ark/attest": "npm:@ark/attest@latest"
+  }
+}

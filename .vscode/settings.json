@@ -1,6 +1,9 @@
 {
   "typescript.tsdk": "node_modules/typescript/lib",
   "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
+  "deno.enablePaths": [
+    "./packages/benchmarking",
+  ],
   "json.schemas": [
     {
       "fileMatch": ["tsconfig.*.json"],

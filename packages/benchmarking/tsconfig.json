@@ -1,0 +1,8 @@
+{
+  "extends": "@repo/tsconfig/base.json",
+  "include": [
+    "./src",
+    "./lib",
+    "./bin"
+  ]
+}
