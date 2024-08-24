@@ -53,7 +53,7 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
   return (
     <div
       className={clsx(
-        'bg-background/90 dark:border-b-muted dark:bg-muted/90 absolute bottom-0 max-h-full w-full overflow-hidden border-t border-zinc-300 duration-300 before:absolute before:inset-0 before:backdrop-blur-sm dark:border-zinc-700 ',
+        'bg-background/90 dark:border-b-muted dark:bg-muted/90 absolute bottom-0 max-h-full w-full overflow-hidden border-t border-zinc-300 backdrop-blur-sm duration-300 dark:border-zinc-700 ',
         {
           'lg:border-t-none': showComments,
         },
