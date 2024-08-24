@@ -1,6 +1,6 @@
 'use server';
 import { auth } from '~/server/auth';
-import { newShortURLSlug } from '~/utils/shortUrlSlug';
+import { newShortURLSlug } from '../shortUrlSlug';
 import { prisma } from '@repo/db';
 import { getBaseUrl } from '~/utils/getBaseUrl';
 

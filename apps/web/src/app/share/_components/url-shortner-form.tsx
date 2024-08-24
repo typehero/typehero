@@ -29,7 +29,6 @@ const FormSchema = z.object({
 
 export function URLShortnerForm() {
   const [shortURL, setShortURL] = React.useState<string | null>(null);
-  const [loading, setLoading] = React.useState<boolean>(false);
   const { toast } = useToast();
   const baseURL = `${getBaseUrl()}/share`;
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -54,7 +53,6 @@ export function URLShortnerForm() {
   };
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    setLoading(true);
     setShortURL(null);
     if (data.slug && data.slug.length > 0) {
       const shortURL = await createShortURLWithSlug(data.url, data.slug);
@@ -96,7 +94,6 @@ export function URLShortnerForm() {
         });
       }
     }
-    setLoading(false);
   }
 
   return (
@@ -146,10 +143,7 @@ export function URLShortnerForm() {
 
         <Button
           disabled={
-            !form.formState.isDirty ||
-            !form.formState.isValid ||
-            form.formState.isSubmitting ||
-            loading
+            !form.formState.isDirty || !form.formState.isValid || form.formState.isSubmitting
           }
           type="submit"
           variant="secondary"
