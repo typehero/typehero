@@ -425,7 +425,7 @@ model BetaTokens {
 model ShortURL {
   id           Int        @id @default(autoincrement())
   /// the original full url that we want to shorten e.g. https://www.url.com
-  originalUrl  String
+  originalUrl  String     @db.MediumText
   /// slug for the short url e.g. url.com/[shortUrlSlug]
   shortUrlSlug String     @unique
   createdAt    DateTime   @default(now())
@@ -438,5 +438,4 @@ model ShortURL {
 
   @@index([userId])
   @@index([shortUrlSlug])
-  @@index([originalUrl])
 }
