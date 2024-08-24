@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "build": "esbuild src/lambda.ts --bundle --platform=node --sourcemap --minify --target=es2020 --outfile=dist/index.js",
     "cdk": "cdk",
     "ts-node": "ts-node"
   },
@@ -17,12 +17,11 @@
     "aws-cdk-lib": "2.151.0",
     "constructs": "^10.0.0",
     "source-map-support": "^0.5.21",
-    "ts-morph": "^23.0.0"
-  },
-  "devDependencies": {
-    "aws-cdk": "2.151.0",
-    "ts-node": "^10.9.2",
+    "ts-morph": "^23.0.0",
     "tsx": "^4.17.0",
     "typescript": "~5.5.3"
+  },
+  "devDependencies": {
+    "aws-cdk": "2.151.0"
   }
 }

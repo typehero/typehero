@@ -4,13 +4,11 @@
     "specifiers": {
       "npm:@ark/attest@^0.12.1": "npm:@ark/attest@0.12.1_typescript@5.5.4_prettier@3.3.3",
       "npm:@ark/attest@latest": "npm:@ark/attest@0.12.1_typescript@5.5.4_prettier@3.3.3",
-      "npm:@types/node": "npm:@types/node@18.16.19",
       "npm:aws-cdk-lib@2.151.0": "npm:aws-cdk-lib@2.151.0_constructs@10.3.0",
       "npm:aws-cdk@2.151.0": "npm:aws-cdk@2.151.0",
       "npm:constructs@^10.0.0": "npm:constructs@10.3.0",
       "npm:source-map-support@^0.5.21": "npm:source-map-support@0.5.21",
       "npm:ts-morph@^23.0.0": "npm:ts-morph@23.0.0",
-      "npm:ts-node@^10.9.2": "npm:ts-node@10.9.2_@types+node@18.16.19_typescript@5.5.4",
       "npm:tsx@^4.17.0": "npm:tsx@4.17.0",
       "npm:typescript@~5.5.3": "npm:typescript@5.5.4"
     },
@@ -57,12 +55,6 @@
       "@balena/dockerignore@1.0.2": {
         "integrity": "sha512-wMue2Sy4GAVTk6Ic4tJVcnfdau+gx2EnG7S+uAEe+TWJFqE4YoWN4/H8MSLj4eYJKxGg26lZwboEniNiNwZQ6Q==",
         "dependencies": {}
-      },
-      "@cspotcode/source-map-support@0.8.1": {
-        "integrity": "sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==",
-        "dependencies": {
-          "@jridgewell/trace-mapping": "@jridgewell/trace-mapping@0.3.9"
-        }
       },
       "@esbuild/aix-ppc64@0.23.1": {
         "integrity": "sha512-6VhYk1diRqrhBAqpJEdjASR/+WVRtfjpqKuNw11cLiaWpAT/Uu+nokB+UJnevzy/P9C/ty6AOe0dwueMrGh/iQ==",
@@ -160,21 +152,6 @@
         "integrity": "sha512-BHpFFeslkWrXWyUPnbKm+xYYVYruCinGcftSBaa8zoF9hZO4BcSCFUvHVTtzpIY6YzUnYtuEhZ+C9iEXjxnasg==",
         "dependencies": {}
       },
-      "@jridgewell/resolve-uri@3.1.2": {
-        "integrity": "sha512-bRISgCIjP20/tbWSPWMEi54QVPRZExkuD9lJL+UIxUKtwVJA8wW1Trb1jMs1RFXo1CBTNZ/5hpC9QvmKWdopKw==",
-        "dependencies": {}
-      },
-      "@jridgewell/sourcemap-codec@1.5.0": {
-        "integrity": "sha512-gv3ZRaISU3fjPAgNsriBRqGWQL6quFx04YMPW/zD8XMLsU32mhCCbfbO6KZFLjvYpCZ8zyDEgqsgf+PwPaM7GQ==",
-        "dependencies": {}
-      },
-      "@jridgewell/trace-mapping@0.3.9": {
-        "integrity": "sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==",
-        "dependencies": {
-          "@jridgewell/resolve-uri": "@jridgewell/resolve-uri@3.1.2",
-          "@jridgewell/sourcemap-codec": "@jridgewell/sourcemap-codec@1.5.0"
-        }
-      },
       "@nodelib/fs.scandir@2.1.5": {
         "integrity": "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==",
         "dependencies": {
@@ -209,26 +186,6 @@
           "path-browserify": "path-browserify@1.0.1"
         }
       },
-      "@tsconfig/node10@1.0.11": {
-        "integrity": "sha512-DcRjDCujK/kCk/cUe8Xz8ZSpm8mS3mNNpta+jGCA6USEDfktlNvm1+IuZ9eTcDbNk41BHwpHHeW+N1lKCz4zOw==",
-        "dependencies": {}
-      },
-      "@tsconfig/node12@1.0.11": {
-        "integrity": "sha512-cqefuRsh12pWyGsIoBKJA9luFu3mRxCA+ORZvA4ktLSzIuCUtWVxGIuXigEwO5/ywWFMZ2QEGKWvkZG1zDMTag==",
-        "dependencies": {}
-      },
-      "@tsconfig/node14@1.0.3": {
-        "integrity": "sha512-ysT8mhdixWK6Hw3i1V2AeRqZ5WfXg1G43mqoYlM2nc6388Fq5jcXyr5mRsqViLx/GJYdoL0bfXD8nmF+Zn/Iow==",
-        "dependencies": {}
-      },
-      "@tsconfig/node16@1.0.4": {
-        "integrity": "sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==",
-        "dependencies": {}
-      },
-      "@types/node@18.16.19": {
-        "integrity": "sha512-IXl7o+R9iti9eBW4Wg2hx1xQDig183jj7YLn8F7udNceyfkbn1ZxmzZXuak20gR40D7pIkIY1kYGx5VIGbaHKA==",
-        "dependencies": {}
-      },
       "@typescript/analyze-trace@0.10.1": {
         "integrity": "sha512-RnlSOPh14QbopGCApgkSx5UBgGda5MX1cHqp2fsqfiDyCwGL/m1jaeB9fzu7didVS81LQqGZZuxFBcg8YU8EVw==",
         "dependencies": {
@@ -249,16 +206,6 @@
           "typescript": "typescript@5.5.4"
         }
       },
-      "acorn-walk@8.3.3": {
-        "integrity": "sha512-MxXdReSRhGO7VlFe1bRG/oI7/mdLV9B9JJT0N8vZOhF7gFRR5l3M8W9G8JxmKV+JC5mGqJ0QvqfSOLsCPa4nUw==",
-        "dependencies": {
-          "acorn": "acorn@8.12.1"
-        }
-      },
-      "acorn@8.12.1": {
-        "integrity": "sha512-tcpGyI9zbizT9JbV6oYE477V6mTlXvvi0T0G3SNIYE2apm/G5huBa1+K89VGeovbg+jycCrfhl3ADxErOuO6Jg==",
-        "dependencies": {}
-      },
       "ajv@8.17.1": {
         "integrity": "sha512-B/gBuNg5SiMTrPkC+A2+cW0RszwxYmn6VYxB/inlBStS5nx6xHIt/ehKRhIMhqusl7a8LjQoZnjCs5vhwxOQ1g==",
         "dependencies": {
@@ -277,10 +224,6 @@
         "dependencies": {
           "color-convert": "color-convert@2.0.1"
         }
-      },
-      "arg@4.1.3": {
-        "integrity": "sha512-58S9QDqG0Xx27YwPSt9fJxivjYl432YCwfDMfZ+71RAqUrZef7LrKQZ3LHLOwCS4FLNBplP533Zx895SeOCHvA==",
-        "dependencies": {}
       },
       "arktype@2.0.0-beta.6": {
         "integrity": "sha512-tbH5/h0z371sgrJIAhZhH2BcrErWv8uQIPVcLmknJ8ffov5/ZbMNufrQ3hG9avGKTcVnVmdQoPhl1WuKuagqXA==",
@@ -387,19 +330,11 @@
         "integrity": "sha512-vbK8i3rIb/xwZxSpTjz3SagHn1qq9BChLEfy5Hf6fB3/2eFbrwt2n9kHwQcS0CPTRBesreeAcsJfMq2229FnbQ==",
         "dependencies": {}
       },
-      "create-require@1.1.1": {
-        "integrity": "sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==",
-        "dependencies": {}
-      },
       "debug@4.3.6": {
         "integrity": "sha512-O/09Bd4Z1fBrU4VzkhFqVgpPzaGbw6Sm9FEkBT1A/YBXQFGuuSxa1dN2nxgxS34JmKXqYx8CZAwEVoJFImUXIg==",
         "dependencies": {
           "ms": "ms@2.1.2"
         }
-      },
-      "diff@4.0.2": {
-        "integrity": "sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==",
-        "dependencies": {}
       },
       "emoji-regex@8.0.0": {
         "integrity": "sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==",
@@ -566,10 +501,6 @@
       },
       "lodash.truncate@4.4.2": {
         "integrity": "sha512-jttmRe7bRse52OsWIMDLaXxWqRAmtIUccAQ3garviCqJjafXOfNMO0yMfNpdD6zbGaTU0P5Nz7e7gAT6cKmJRw==",
-        "dependencies": {}
-      },
-      "make-error@1.3.6": {
-        "integrity": "sha512-s8UhlNe7vPKomQhC1qFelMokr/Sc3AgNbso3n74mVPA5LTZwkB9NlXf4XPamLxJE8h0gh73rM94xvwRT2CVInw==",
         "dependencies": {}
       },
       "make-synchronized@0.2.9": {
@@ -765,26 +696,6 @@
           "code-block-writer": "code-block-writer@13.0.2"
         }
       },
-      "ts-node@10.9.2_@types+node@18.16.19_typescript@5.5.4": {
-        "integrity": "sha512-f0FFpIdcHgn8zcPSbf1dRevwt047YMnaiJM3u2w2RewrB+fob/zePZcrOyQoLMMO7aBIddLcQIEK5dYjkLnGrQ==",
-        "dependencies": {
-          "@cspotcode/source-map-support": "@cspotcode/source-map-support@0.8.1",
-          "@tsconfig/node10": "@tsconfig/node10@1.0.11",
-          "@tsconfig/node12": "@tsconfig/node12@1.0.11",
-          "@tsconfig/node14": "@tsconfig/node14@1.0.3",
-          "@tsconfig/node16": "@tsconfig/node16@1.0.4",
-          "@types/node": "@types/node@18.16.19",
-          "acorn": "acorn@8.12.1",
-          "acorn-walk": "acorn-walk@8.3.3",
-          "arg": "arg@4.1.3",
-          "create-require": "create-require@1.1.1",
-          "diff": "diff@4.0.2",
-          "make-error": "make-error@1.3.6",
-          "typescript": "typescript@5.5.4",
-          "v8-compile-cache-lib": "v8-compile-cache-lib@3.0.1",
-          "yn": "yn@3.1.1"
-        }
-      },
       "tsx@4.17.0": {
         "integrity": "sha512-eN4mnDA5UMKDt4YZixo9tBioibaMBpoxBkD+rIPAjVmYERSG0/dWEY1CEFuV89CgASlKL499q8AhmkMnnjtOJg==",
         "dependencies": {
@@ -803,10 +714,6 @@
       },
       "util-deprecate@1.0.2": {
         "integrity": "sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==",
-        "dependencies": {}
-      },
-      "v8-compile-cache-lib@3.0.1": {
-        "integrity": "sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==",
         "dependencies": {}
       },
       "wrap-ansi@7.0.0": {
@@ -841,15 +748,28 @@
           "yargs-parser": "yargs-parser@20.2.9"
         }
       },
-      "yn@3.1.1": {
-        "integrity": "sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==",
-        "dependencies": {}
-      },
       "yocto-queue@0.1.0": {
         "integrity": "sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==",
         "dependencies": {}
       }
     }
   },
-  "remote": {}
+  "remote": {},
+  "workspace": {
+    "dependencies": [
+      "npm:@ark/attest@latest"
+    ],
+    "packageJson": {
+      "dependencies": [
+        "npm:@ark/attest@^0.12.1",
+        "npm:aws-cdk-lib@2.151.0",
+        "npm:aws-cdk@2.151.0",
+        "npm:constructs@^10.0.0",
+        "npm:source-map-support@^0.5.21",
+        "npm:ts-morph@^23.0.0",
+        "npm:tsx@^4.17.0",
+        "npm:typescript@~5.5.3"
+      ]
+    }
+  }
 }

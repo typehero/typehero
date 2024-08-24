@@ -9,5 +9,4 @@ type MyAwaited<T extends PromiseLike<any>> = T extends PromiseLike<infer R>
 bench('Testing', () => {
   return 'bob' as any as MyAwaited<Promise<string>>;
 })
-  .mean([0.22, 'ns'])
-  .types([403, 'instantiations']);
+  .mean()
