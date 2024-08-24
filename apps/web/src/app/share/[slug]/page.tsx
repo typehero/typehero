@@ -1,6 +1,6 @@
 import { notFound, permanentRedirect } from 'next/navigation';
 import { getLongURL } from '../_actions/get-long-url';
-import { updateClickCount } from '../_actions/update-click-count';
+import { updateClick } from '../_actions/update-click-count';
 
 type Props = {
   params: {
@@ -14,7 +14,7 @@ export default async function Page({ params }: Props) {
 
   if (!longURL) return notFound();
 
-  await updateClickCount(slug);
+  await updateClick(slug);
 
   return permanentRedirect(longURL);
 }

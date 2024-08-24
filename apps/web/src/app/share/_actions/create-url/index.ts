@@ -3,6 +3,7 @@ import { auth } from '~/server/auth';
 import { newShortURLSlug } from '../shortUrlSlug';
 import { prisma } from '@repo/db';
 import { getBaseUrl } from '~/utils/getBaseUrl';
+import { THREE_MONTHS } from '../increment-time';
 
 export async function createShortURL(url: string): Promise<string | null> {
   const session = await auth();
@@ -16,6 +17,7 @@ export async function createShortURL(url: string): Promise<string | null> {
     data: {
       shortUrlSlug: slug,
       originalUrl: url,
+      expiresAt: new Date(Date.now() + THREE_MONTHS),
       user: {
         connect: {
           id: session.user.id,
