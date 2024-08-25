@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { findAndReplace } from 'mdast-util-find-and-replace';
 
 /**

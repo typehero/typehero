@@ -19,6 +19,7 @@ export const getSolutionIdRouteData = cache(
       include: {
         user: {
           select: {
+            id: true,
             name: true,
             image: true,
             roles: true,

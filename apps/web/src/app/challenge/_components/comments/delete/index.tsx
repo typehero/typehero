@@ -7,7 +7,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/too
 import { TypographyLarge } from '@repo/ui/components/typography/large';
 
 import { useState } from 'react';
-import { getRelativeTime } from '~/utils/relativeTime';
+import { getRelativeTimeStrict } from '~/utils/relativeTime';
 
 import { type PaginatedComments } from '../getCommentRouteData';
 
@@ -44,7 +44,7 @@ export function CommentDeleteDialog({
               <Tooltip delayDuration={0.05}>
                 <TooltipTrigger asChild>
                   <span className="mr-2 whitespace-nowrap text-sm text-neutral-500">
-                    {getRelativeTime(comment.createdAt)}
+                    {getRelativeTimeStrict(comment.createdAt)}
                   </span>
                 </TooltipTrigger>
                 <TooltipContent align="start" className="rounded-xl">

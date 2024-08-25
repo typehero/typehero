@@ -13,7 +13,7 @@ import {
 } from '@repo/ui/components/tabs';
 import { Bookmark, CheckCircle, ChevronRightSquare, Play, Settings, Text } from '@repo/ui/icons';
 
-import { getRelativeTime } from '~/utils/relativeTime';
+import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import { stripProtocolAndWWW } from '~/utils/stringUtils';
 
 import { type BadgeInfo } from './_actions';
@@ -96,7 +96,7 @@ export function Dashboard({ user, isOwnProfile, badges, children }: Props) {
                 className="text-muted-foreground tracking-tight"
                 title={`Joined ${user.createdAt.toString()}`}
               >
-                Joined {getRelativeTime(user.createdAt)}
+                Joined {getRelativeTimeStrict(user.createdAt)}
               </span>
             </div>
             {Boolean(filteredProfileLinks.length > 0) && (

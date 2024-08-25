@@ -168,12 +168,18 @@ export async function getPaginatedComments({
       },
       rootChallenge: {
         select: {
+          slug: true,
           name: true,
         },
       },
       rootSolution: {
         select: {
           title: true,
+          challenge: {
+            select: {
+              slug: true,
+            },
+          },
         },
       },
     },
@@ -238,6 +244,7 @@ export async function getAllComments({
       },
       rootChallenge: {
         select: {
+          slug: true,
           name: true,
         },
       },

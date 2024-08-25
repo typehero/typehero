@@ -8,7 +8,7 @@ import { SolutionEditor } from './solution-editor';
 import { NoSolutions } from './nosolutions';
 import { SubmitSolution } from './submit-solution';
 import { type PaginatedSolution, getPaginatedSolutions } from '../getSolutionRouteData';
-import { getRelativeTime } from '~/utils/relativeTime';
+import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import { Badge } from '@repo/ui/components/badge';
 import { useParams } from 'next/navigation';
 import { Pagination } from '../../../_components/pagination';
@@ -169,7 +169,7 @@ function SolutionRow({
         />
         <div className="text-muted-foreground flex flex-1 items-center gap-2">
           <Calendar className=" h-4 w-4" />
-          <span className="text-xs">{getRelativeTime(solution.createdAt)}</span>
+          <span className="text-xs">{getRelativeTimeStrict(solution.createdAt)}</span>
         </div>
         {solution.isPinned ? (
           <Badge className="dark:bg-difficulty-beginner-dark bg-difficulty-beginner text-white duration-300 dark:text-black">

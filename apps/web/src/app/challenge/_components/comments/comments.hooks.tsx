@@ -33,14 +33,17 @@ interface CommentsMeta {
   sort: SortItem;
 }
 
-interface DefaultCommentsProps {
-  root: ChallengeRouteData['challenge'] | SolutionRouteData;
-  type: CommentRoot;
-}
-
-interface UseCommentsProps extends DefaultCommentsProps {
-  initialPage?: number;
-}
+type UseCommentsProps =
+  | {
+      root: ChallengeRouteData['challenge'];
+      type: 'CHALLENGE';
+      initialPage?: number;
+    }
+  | {
+      root: SolutionRouteData;
+      type: 'SOLUTION';
+      initialPage?: number;
+    };
 
 export function useComments({ type, root, initialPage }: UseCommentsProps) {
   const queryClient = useQueryClient();
@@ -117,11 +120,14 @@ export function useComments({ type, root, initialPage }: UseCommentsProps) {
 
   const addComment = async (text: string) => {
     try {
-      const res = await addCommentAction({
-        text,
-        root,
-        rootType: type,
-      });
+      const res = await addCommentAction(
+        // @ts-ignore
+        {
+          text,
+          root,
+          rootType: type,
+        },
+      );
       if (res === 'text_is_empty') {
         toast(commentErrors.empty);
       } else if (res === 'unauthorized') {
@@ -174,11 +180,21 @@ export function useComments({ type, root, initialPage }: UseCommentsProps) {
   };
 }
 
-interface UseCommentRepliesProps extends DefaultCommentsProps {
-  parentComment: PaginatedComments['comments'][number];
-  enabled: boolean;
-  preselectedReplyId?: number;
-}
+type UseCommentRepliesProps =
+  | {
+      root: ChallengeRouteData['challenge'];
+      type: 'CHALLENGE';
+      parentComment: PaginatedComments['comments'][number];
+      enabled: boolean;
+      preselectedReplyId?: number;
+    }
+  | {
+      root: SolutionRouteData;
+      type: 'SOLUTION';
+      parentComment: PaginatedComments['comments'][number];
+      enabled: boolean;
+      preselectedReplyId?: number;
+    };
 
 const REPLIES_PAGESIZE = 5;
 
@@ -242,7 +258,9 @@ export function useCommentsReplies({
 
   const addReplyComment = async (text: string) => {
     try {
+      // @ts-ignore
       const res = await replyComment(
+        // @ts-ignore
         {
           text,
           root,

@@ -21,7 +21,7 @@ import { useParams, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { z } from 'zod';
 import { ReportDialog } from '~/components/ReportDialog';
-import { getRelativeTime } from '~/utils/relativeTime';
+import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import { Vote } from '../vote';
 import { CommentInput } from './comment-input';
 import { CommentDeleteDialog } from './delete';
@@ -290,7 +290,7 @@ function SingleComment({
             <TooltipTrigger asChild>
               <div className="text-muted-foreground flex items-center gap-2 whitespace-nowrap text-xs">
                 <Calendar className="h-4 w-4" />
-                <span>{getRelativeTime(comment.createdAt)}</span>
+                <span>{getRelativeTimeStrict(comment.createdAt)}</span>
               </div>
             </TooltipTrigger>
             <TooltipContent align="start" alignOffset={-55} className="rounded-xl">
@@ -332,6 +332,9 @@ function SingleComment({
         {!readonly && (
           <>
             <Vote
+              comment={comment}
+              toUserId={comment.user.id}
+              challengeSlug={comment.rootChallenge?.slug ?? ''}
               voteCount={comment._count.vote}
               initialHasVoted={comment.vote.length > 0}
               disabled={!session?.data?.user?.id || comment.userId === session?.data?.user?.id}

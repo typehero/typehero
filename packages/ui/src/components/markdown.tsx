@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { userMentions } from './utils/mentions.js';
+import { userMentions } from './utils/mentions';
 import { useTheme } from 'next-themes';
 import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
@@ -42,7 +42,15 @@ function removeHtmlComments(): Transformer {
   };
 }
 
-export function Markdown({ children, className }: { children: string; className?: string }) {
+export function Markdown({
+  children,
+  className,
+  disableMentions = false,
+}: {
+  children: string;
+  className?: string;
+  disableMentions?: boolean;
+}) {
   const { theme } = useTheme();
   const syntaxHighlighterTheme = theme === 'light' ? vs : vscDarkPlus;
 
@@ -110,7 +118,7 @@ export function Markdown({ children, className }: { children: string; className?
       // FIXME: this is vuln to XSS and I don't know why we use it, let's remove it
       // or add in a sanitizer lib like: https://github.com/rehypejs/rehype-sanitize
       // rehypePlugins={[rehypeRaw as any]}
-      remarkPlugins={[removeHtmlComments, remarkGfm, userMentions]}
+      remarkPlugins={[removeHtmlComments, remarkGfm, ...(disableMentions ? [] : [userMentions])]}
     >
       {children}
     </ReactMarkdown>

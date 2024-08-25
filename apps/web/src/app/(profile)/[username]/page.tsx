@@ -2,7 +2,7 @@ import { buildMetaForDefault, buildMetaForUser } from '~/app/metadata';
 import { prisma } from '@repo/db';
 import { OverviewTab } from './_components/dashboard/overview-tab';
 import { notFound } from 'next/navigation';
-import { getRelativeTime } from '~/utils/relativeTime';
+import { getRelativeTimeStrict } from '~/utils/relativeTime';
 
 interface Props {
   params: {
@@ -57,7 +57,7 @@ export async function generateMetadata({ params: { username: usernameFromQuery }
 
   const avatar = user && user.image ? user.image : '';
   const date = user?.createdAt!;
-  const dateSince = getRelativeTime(date);
+  const dateSince = getRelativeTimeStrict(date);
 
   if (username)
     return buildMetaForUser({

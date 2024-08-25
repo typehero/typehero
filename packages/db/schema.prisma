@@ -190,6 +190,7 @@ model Challenge {
   sharedSolution SharedSolution[]
   Report         Report[]         @relation("report_challenge")
   TrackChallenge TrackChallenge[]
+  Notification   Notification[]
 
   @@index([userId])
 }
@@ -444,16 +445,21 @@ model Notification {
   toUserId         String
   fromUser         User             @relation("notificationFromUser", fields: [fromUserId], references: [id])
   fromUserId       String
-  sharedSolutionId Int?
-  sharedSolution   SharedSolution?  @relation(fields: [sharedSolutionId], references: [id])
   commentId        Int?
   comment          Comment?         @relation(fields: [commentId], references: [id])
   /// could be comment text or solution title to avoid having to join to grab this data
   content          String?
-  url              String?
+  /// can be used to replace the blurb (eg: mention you in a comment)
+  blurb            String?
+  url              String
+  Challenge        Challenge?       @relation(fields: [challengeId], references: [id])
+  challengeId      Int?
+  SharedSolution   SharedSolution?  @relation(fields: [sharedSolutionId], references: [id])
+  sharedSolutionId Int?
 
   @@index([toUserId])
   @@index([fromUserId])
-  @@index([sharedSolutionId])
   @@index([commentId])
+  @@index([challengeId])
+  @@index([sharedSolutionId])
 }

@@ -102,7 +102,7 @@ export function UserResults({ isOpen, onFocusOutside, onSelectedUser, query }: P
       <PopoverAnchor className="absolute bottom-0 left-0" />
       <PopoverContent
         ref={popoverRef}
-        className="absolute left-0 h-80 w-80 overflow-y-auto bg-zinc-100 p-0 shadow-lg shadow-neutral-500 dark:bg-zinc-900"
+        className="absolute left-0 h-80 w-80 overflow-y-auto  border-gray-700 bg-zinc-100 p-0 dark:bg-zinc-900"
         onOpenAutoFocus={(e) => e.preventDefault()}
         onInteractOutside={onFocusOutside}
       >
@@ -110,27 +110,29 @@ export function UserResults({ isOpen, onFocusOutside, onSelectedUser, query }: P
           {users?.map((user, index) => {
             return (
               <li key={user.id}>
-                <Button
-                  className={cn(
-                    selectedIndex === index ? 'bg-zinc-400/50 dark:bg-zinc-600/50' : '',
-                    'flex w-full justify-start gap-2 rounded-none  hover:bg-zinc-400/50 dark:hover:bg-zinc-600/50',
-                  )}
-                  variant="ghost"
+                <button
                   onClick={() => {
                     const selectedUser = users?.[index];
                     if (selectedUser) {
                       onSelectedUser(selectedUser.name);
                     }
                   }}
+                  className={cn(
+                    selectedIndex === index ? 'bg-zinc-400/50 dark:bg-zinc-600/50' : '',
+                    'flex w-full cursor-pointer justify-start gap-3 rounded-none px-4 py-3  hover:bg-zinc-400/50 dark:hover:bg-zinc-600/50',
+                  )}
                 >
-                  <Avatar className="h-7 w-7">
-                    <AvatarImage alt="github profile picture" src={user?.image ?? ''} />
-                    <AvatarFallback className="border border-zinc-300 dark:border-zinc-600">
-                      {user?.name.substring(0, 1)}
+                  <Avatar className="h-10 w-10 border border-gray-700">
+                    <AvatarImage src={user.image ?? ''} alt="user avatar" />
+                    <AvatarFallback className="bg-gray-700 text-white">
+                      {user?.name.charAt(0)}
                     </AvatarFallback>
                   </Avatar>
-                  <div>{user.name}</div>
-                </Button>
+                  <div className="flex flex-col">
+                    <span className="font-bold text-white">{user.name}</span>
+                    <span className="text-sm text-gray-500">@{user.name}</span>
+                  </div>
+                </button>
               </li>
             );
           })}
