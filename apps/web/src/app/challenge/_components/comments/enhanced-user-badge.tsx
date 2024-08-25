@@ -32,7 +32,13 @@ export function UserBadge(props: { username: string; roles: Role[] }) {
     <HoverCardWrapper
       usernameComponent={
         <Link href={`/@${props.username}`} className="focus:outline-none focus-visible:ring-0">
-          <Button className="-ml-2 font-bold" variant="ghost" size="xs" onMouseOver={onMouseOver}>
+          <Button
+            className="-ml-2 font-bold "
+            asChild
+            variant="ghost"
+            size="xs"
+            onMouseOver={onMouseOver}
+          >
             <span
               className={cn('bg-gradient-to-r bg-clip-text font-bold text-transparent', gradient)}
             >
@@ -44,51 +50,37 @@ export function UserBadge(props: { username: string; roles: Role[] }) {
       onHoverComponent={
         //When a user does not have a bio & they have no titles, then a compact version is shown
         <Link href={`@${props.username}`}>
-          {isCompact ? (
+          <div className="flex w-max flex-row space-x-4">
             <div className="flex flex-col items-center space-y-2">
-              <h1
-                className={cn(
-                  'text-md inline-flex min-w-max bg-gradient-to-r bg-clip-text font-bold text-transparent',
-                  gradient,
-                )}
-              >
-                @{props.username}
-              </h1>
-              <div className={cn('rounded-full bg-gradient-to-r p-0.5', gradient)}>
-                <Avatar className="h-14 w-14">
-                  <AvatarImage src={query.data.image ?? ''} />
-                  <AvatarFallback>{query.data.name.substring(0, 1)}</AvatarFallback>
-                </Avatar>
-              </div>
-              {query.isSuccess && query.data.badges.length > 0 ? (
-                <Badges data={query.data.badges} />
-              ) : null}
-            </div>
-          ) : (
-            <div className="flex flex-row space-x-4">
-              <div className="flex flex-col items-center space-y-2">
-                <div className={cn('rounded-full bg-gradient-to-r p-0.5', gradient)}>
-                  <Avatar className={cn('h-14 w-14 ')}>
-                    <AvatarImage src={query.data?.image ?? ''} />
-                    <AvatarFallback>{query.data?.name.substring(0, 1)}</AvatarFallback>
-                  </Avatar>
-                </div>
-                {query.isSuccess ? <Badges data={query.data.badges} /> : null}
-              </div>
-              <div className="max-w-[calc(39ch)] space-y-2">
+              <div className="w-fit max-w-[calc(39ch)] space-y-2">
                 <h1
                   className={cn(
-                    'text-md inline-flex min-w-max bg-gradient-to-r bg-clip-text font-bold text-transparent',
+                    'inline-flex min-w-max bg-gradient-to-r bg-clip-text font-extrabold text-transparent',
                     gradient,
                   )}
                 >
                   @{props.username}
                 </h1>
-                {query.isSuccess ? <Titles data={query.data.titles} /> : null}
-                <p className="line-clamp-2 max-w-max text-sm text-zinc-200">{query.data?.bio}</p>
+              </div>
+              <div>
+                <div className={cn('w-min rounded-full bg-gradient-to-r p-0.5', gradient)}>
+                  <Avatar className="h-14 w-14">
+                    <AvatarImage src={query.data?.image ?? ''} />
+                    <AvatarFallback>{props.username.substring(0, 1)}</AvatarFallback>
+                  </Avatar>
+                </div>
               </div>
             </div>
-          )}
+            {query.isSuccess && !isCompact ? (
+              <div className="flex max-w-72 flex-col space-y-2">
+                <p className="line-clamp-2 text-sm font-light text-zinc-300">
+                  {query.data.bio === '' ? 'This user has no bio' : query.data.bio}
+                </p>
+                <Titles data={query.data.titles} />
+                <Badges data={query.data.badges} />
+              </div>
+            ) : null}
+          </div>
         </Link>
       }
     />
@@ -141,7 +133,7 @@ function Titles(props: { data: TitleInfo[] }) {
 
 function Badges(props: { data: BadgeInfo[] }) {
   return (
-    <div className="flex flex-row space-x-[-15px]">
+    <div className="flex flex-row space-x-0.5">
       {props.data.map((b) => {
         const Icon = SlugToBadgeIcon[b.slug];
         return <Icon className="h-10 w-10" key={b.slug} />;
@@ -157,7 +149,7 @@ function HoverCardWrapper(props: {
   return (
     <HoverCard>
       <HoverCardTrigger asChild>{props.usernameComponent}</HoverCardTrigger>
-      <HoverCardContent align="start" avoidCollisions={false} className="w-min rounded-lg">
+      <HoverCardContent align="start" avoidCollisions={false} className="w-min rounded-lg ">
         {props.onHoverComponent}
       </HoverCardContent>
     </HoverCard>

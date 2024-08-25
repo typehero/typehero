@@ -60,9 +60,9 @@ export function HolidayBronzeBadge({ className }: { className?: string }) {
           y2="210.54"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#714F24" />
-          <stop offset="0.5625" stop-color="#D27D13" />
-          <stop offset="1" stop-color="#5E3D13" />
+          <stop stopColor="#714F24" />
+          <stop offset="0.5625" stopColor="#D27D13" />
+          <stop offset="1" stopColor="#5E3D13" />
         </linearGradient>
       </defs>
     </svg>
@@ -130,9 +130,9 @@ export function HolidaySilverBadge({ className }: { className?: string }) {
           y2="215.658"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#3D5954" />
-          <stop offset="0.614583" stop-color="#9BCBC2" />
-          <stop offset="1" stop-color="#48625D" />
+          <stop stopColor="#3D5954" />
+          <stop offset="0.614583" stopColor="#9BCBC2" />
+          <stop offset="1" stopColor="#48625D" />
         </linearGradient>
       </defs>
     </svg>
@@ -200,9 +200,9 @@ export function HolidayGoldBadge({ className }: { className?: string }) {
           y2="209.652"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#BC9B28" />
-          <stop offset="0.619792" stop-color="#FFC700" />
-          <stop offset="1" stop-color="#B59112" />
+          <stop stopColor="#BC9B28" />
+          <stop offset="0.619792" stopColor="#FFC700" />
+          <stop offset="1" stopColor="#B59112" />
         </linearGradient>
       </defs>
     </svg>
@@ -270,9 +270,9 @@ export function HolidayPlatinumBadge({ className }: { className?: string }) {
           y2="212.197"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#2EECEC" />
-          <stop offset="0.677083" stop-color="#00A184" />
-          <stop offset="1" stop-color="#0F7562" />
+          <stop stopColor="#2EECEC" />
+          <stop offset="0.677083" stopColor="#00A184" />
+          <stop offset="1" stopColor="#0F7562" />
         </linearGradient>
       </defs>
     </svg>
