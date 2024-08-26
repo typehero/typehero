@@ -28,7 +28,7 @@ export default function NotificationPage({ notifications }: { notifications: Not
       mutation.mutate(notis);
       client.setQueryData([NOTIFICATION_QUERY_KEY], 0);
     };
-  }, [client, mutation]);
+  }, []);
 
   const EmptyState = ({ type }: { type: 'all' | 'mentions' }) => (
     <div className="flex h-full flex-col items-center justify-center p-4 text-center">
