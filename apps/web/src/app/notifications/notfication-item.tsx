@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import { useInView } from 'react-intersection-observer';
 import { getRelativeTime } from '~/utils/relativeTime';
 import type { Notification } from './page';
+import { cn } from '@repo/ui/cn';
 
 const BLURBS = {
   MENTION: 'mentioned you in a comment',
@@ -25,7 +26,7 @@ export function NotificationItem({
   notification: Notification;
   onSeen: (v: number) => void;
 }) {
-  const { ref, inView, entry } = useInView({
+  const { ref } = useInView({
     triggerOnce: true,
     onChange() {
       onSeen(notification.id);
@@ -48,7 +49,10 @@ export function NotificationItem({
     <button
       ref={ref}
       onClick={() => router.push(notification.url || buildUrl())}
-      className="border-border hover:bg-muted/50 focus:ring-primary w-full border-b p-4 text-left outline-none transition-colors last:border-b-0 focus:outline-none"
+      className={cn(
+        !notification.isRead ? 'bg-sky-300/20 hover:bg-sky-300/30' : 'hover:bg-muted/50',
+        'border-border focus:ring-primary w-full border-b p-4 text-left outline-none transition-colors last:border-b-0 focus:outline-none',
+      )}
     >
       <div className="flex items-start space-x-4">
         <Avatar className="h-10 w-10">
