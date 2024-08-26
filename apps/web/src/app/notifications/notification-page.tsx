@@ -28,6 +28,7 @@ export default function NotificationPage({ notifications }: { notifications: Not
       mutation.mutate(notis);
       client.setQueryData([NOTIFICATION_QUERY_KEY], 0);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const EmptyState = ({ type }: { type: 'all' | 'mentions' }) => (

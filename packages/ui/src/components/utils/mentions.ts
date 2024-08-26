@@ -42,7 +42,7 @@ export function userMentions() {
     function replaceMention(value, username, match) {
       if (
         /[\w`]/.test(match.input.charAt(match.index - 1)) ||
-        /[/\w`]/.test(match.input.charAt(match.index + value.length))
+        /[/\w`]/.test(match.input.charAt(Number(match.index) + Number(value.length)))
       ) {
         return false;
       }

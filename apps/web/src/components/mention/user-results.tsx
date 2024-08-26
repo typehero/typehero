@@ -2,7 +2,6 @@
 
 import { cn } from '@repo/ui/cn';
 import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
-import { Button } from '@repo/ui/components/button';
 import { Popover, PopoverAnchor, PopoverContent } from '@repo/ui/components/popover';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
@@ -129,7 +128,7 @@ export function UserResults({ isOpen, onFocusOutside, onSelectedUser, query }: P
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col">
-                    <span className="font-bold text-sm text-white">{user.name}</span>
+                    <span className="text-sm font-bold text-white">{user.name}</span>
                     <span className="text-xs text-gray-500">@{user.name}</span>
                   </div>
                 </button>
