@@ -3,33 +3,43 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui/components/tabs';
 import { AlertCircle, AtSign, Bell } from '@repo/ui/icons';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { NOTIFICATION_QUERY_KEY } from '~/components/Navigation/notification-link';
 import { NotificationItem } from './notfication-item';
 import type { Notification } from './page';
 import { markNotificationsAsRead } from './notification.actions';
 
 export default function NotificationPage({ notifications }: { notifications: Notification[] }) {
-  const seenNotifications = useRef<number[]>([]);
+  const seenNotifications = useRef(new Set<number>());
+  const timeoutRef = useRef<number>();
   const client = useQueryClient();
   const mutation = useMutation({
     mutationFn: markNotificationsAsRead,
+    onSuccess() {},
   });
 
   const mentionNotifications = notifications.filter((n) => n.type === 'MENTION');
 
   const onSeen = (id: number) => {
-    seenNotifications.current.push(id);
-  };
+    const copy = new Set(seenNotifications.current);
+    copy.add(id);
+    seenNotifications.current.add(id);
+    const timeoutId = Math.random();
+    timeoutRef.current = timeoutId;
 
-  useEffect(() => {
-    const notis = seenNotifications.current;
-    return () => {
-      mutation.mutate(notis);
-      client.setQueryData([NOTIFICATION_QUERY_KEY], 0);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    window.setTimeout(() => {
+      if (timeoutId === timeoutRef.current) {
+        mutation.mutate(Array.from(seenNotifications.current), {
+          onSuccess: () => {
+            for (const id of copy) {
+              seenNotifications.current.delete(id);
+            }
+          },
+        });
+        client.setQueryData([NOTIFICATION_QUERY_KEY], 0);
+      }
+    }, 500);
+  };
 
   const EmptyState = ({ type }: { type: 'all' | 'mentions' }) => (
     <div className="flex h-full flex-col items-center justify-center p-4 text-center">
@@ -71,7 +81,7 @@ export default function NotificationPage({ notifications }: { notifications: Not
             <EmptyState type="all" />
           )}
         </TabsContent>
-        <TabsContent value="mentions">
+        <TabsContent value="mentions" className="border-border border">
           {mentionNotifications.length > 0 ? (
             mentionNotifications.map((notification) => (
               <NotificationItem key={notification.id} notification={notification} onSeen={onSeen} />

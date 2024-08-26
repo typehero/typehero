@@ -4,6 +4,8 @@ import type { Metadata } from 'next';
 import { auth } from '~/server/auth';
 import NotificationPage from './notification-page';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Notifications',
 };
@@ -52,8 +54,13 @@ async function getNotifications(session: Session) {
       },
       type: true,
     },
-    orderBy: {
-      createdAt: 'desc',
-    },
+    orderBy: [
+      {
+        isRead: 'asc',
+      },
+      {
+        createdAt: 'desc',
+      },
+    ],
   });
 }

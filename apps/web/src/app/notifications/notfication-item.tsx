@@ -28,7 +28,9 @@ export function NotificationItem({
 }) {
   const { ref } = useInView({
     triggerOnce: true,
-    onChange() {
+    threshold: 0.8,
+    onChange(inView) {
+      if (notification.isRead || !inView) return;
       onSeen(notification.id);
     },
   });
