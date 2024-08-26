@@ -38,12 +38,12 @@ export function Comments({ preselectedCommentMetadata, root, type, expanded = fa
     changeSorting,
     deleteComment,
     updateComment,
-  // @ts-ignore
   } = useComments({
-    type,
+    rootType: type,
     root,
     initialPage: preselectedCommentMetadata?.page,
-  });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } as any);
 
   const handleChangePage = (page: number) => {
     changePage(page);

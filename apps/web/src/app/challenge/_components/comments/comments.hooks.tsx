@@ -36,16 +36,17 @@ interface CommentsMeta {
 type UseCommentsProps =
   | {
       root: ChallengeRouteData['challenge'];
-      type: 'CHALLENGE';
+      rootType: 'CHALLENGE';
       initialPage?: number;
     }
   | {
       root: SolutionRouteData;
-      type: 'SOLUTION';
+      rootType: 'SOLUTION';
       initialPage?: number;
     };
 
-export function useComments({ type, root, initialPage }: UseCommentsProps) {
+export function useComments(props: UseCommentsProps) {
+  const { rootType, root, initialPage } = props;
   const queryClient = useQueryClient();
   const [commentsMeta, updateCommentsMeta] = useReducer(
     (state: CommentsMeta, action: Partial<CommentsMeta>) => ({ ...state, ...action }),
@@ -56,7 +57,7 @@ export function useComments({ type, root, initialPage }: UseCommentsProps) {
   );
 
   const getQueryKey = ({ sort, page }: { sort: string; page: number }) => [
-    getRootQueryKey(root.id, type),
+    getRootQueryKey(root.id, rootType),
     sort,
     page,
   ];
@@ -67,7 +68,7 @@ export function useComments({ type, root, initialPage }: UseCommentsProps) {
       return getPaginatedComments({
         rootId: root.id,
         page: commentsMeta.page,
-        rootType: type,
+        rootType,
         sortKey: commentsMeta.sort.key,
         sortOrder: commentsMeta.sort.order,
       });
@@ -120,14 +121,11 @@ export function useComments({ type, root, initialPage }: UseCommentsProps) {
 
   const addComment = async (text: string) => {
     try {
-      const res = await addCommentAction(
-        // @ts-ignore
-        {
-          text,
-          root,
-          rootType: type,
-        },
-      );
+      const { initialPage: _, ...rest } = props;
+      const res = await addCommentAction({
+        ...rest,
+        text,
+      });
       if (res === 'text_is_empty') {
         toast(commentErrors.empty);
       } else if (res === 'unauthorized') {
