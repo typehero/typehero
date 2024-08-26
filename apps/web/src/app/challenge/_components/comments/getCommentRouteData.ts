@@ -220,6 +220,7 @@ export async function getAllComments({
           name: true,
           image: true,
           roles: true,
+          bio: true,
         },
       },
       _count: {
