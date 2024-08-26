@@ -46,10 +46,12 @@ export function Markdown({
   children,
   className,
   disableMentions = false,
+  disableCopy = false,
 }: {
   children: string;
   className?: string;
   disableMentions?: boolean;
+  disableCopy?: boolean;
 }) {
   const { theme } = useTheme();
   const syntaxHighlighterTheme = theme === 'light' ? vs : vscDarkPlus;
@@ -84,7 +86,7 @@ export function Markdown({
           const match = /language-(\w+)/.exec(className || '');
           return !inline && match ? (
             <div className="relative">
-              <CopyButton text={String(children).replace(/\n$/, '')} />
+              {!disableCopy ? <CopyButton text={String(children).replace(/\n$/, '')} /> : null}
               <SyntaxHighlighter
                 PreTag="section" // parent tag
                 className={clsx(className, 'rounded-xl dark:rounded-md')}

@@ -95,7 +95,7 @@ export function NotificationItem({ notification }: { notification: Notification 
         ? // if a user edits the comment and deletes the contents just hide it
           notification.comment?.text && (
             <div className="bg-muted text-foreground ml-14 mt-1 overflow-hidden rounded-md p-3 text-sm">
-              <Markdown disableMentions className="ml-9 mt-1 rounded-md">
+              <Markdown disableMentions disableCopy className="ml-9 mt-1 rounded-md">
                 {notification.comment.text}
               </Markdown>
             </div>
