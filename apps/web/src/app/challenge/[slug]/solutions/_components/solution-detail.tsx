@@ -87,7 +87,14 @@ export function SolutionDetails({ solution }: Props) {
             </div>
             {/* Author, Time, Action Buttons */}
             <div className="flex items-center gap-4">
-              <UserBadge username={solution.user?.name ?? ''} roles={solution.user?.roles ?? []} />
+              <UserBadge
+                user={{
+                  name: solution.user?.name ?? '',
+                  image: solution.user?.image ?? '',
+                  bio: solution.user?.bio ?? '',
+                  roles: solution.user?.roles ?? [],
+                }}
+              />
               <div className="text-muted-foreground flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
                 <span className="text-xs">{getRelativeTime(solution.createdAt)}</span>

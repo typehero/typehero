@@ -274,7 +274,14 @@ function SingleComment({
                 {comment.user?.name.substring(0, 1)}
               </AvatarFallback>
             </Avatar>
-            <UserBadge username={comment.user.name ?? ''} roles={comment.user.roles ?? []} />
+            <UserBadge
+              user={{
+                name: comment.user?.name ?? '',
+                image: comment.user?.image ?? '',
+                bio: comment.user?.bio ?? '',
+                roles: comment.user?.roles ?? [],
+              }}
+            />
           </div>
 
           <Tooltip delayDuration={0.05}>

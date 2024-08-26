@@ -20,6 +20,8 @@ export const getChallengeRouteData = cache(async (slug: string, session: Session
         select: {
           name: true,
           roles: true,
+          bio: true,
+          image: true,
         },
       },
       _count: {

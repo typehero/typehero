@@ -86,7 +86,14 @@ export function Description({ challenge }: Props) {
       </div>
       {/* Author & Time */}
       <div className="mt-2 flex items-center gap-4">
-        <UserBadge username={challenge.user.name} roles={challenge.user.roles} />
+        <UserBadge
+          user={{
+            name: challenge.user?.name ?? '',
+            image: challenge.user?.image ?? '',
+            bio: challenge.user?.bio ?? '',
+            roles: challenge.user?.roles ?? [],
+          }}
+        />
         <div className="text-muted-foreground flex items-center gap-2">
           <Calendar className=" h-4 w-4" />
           <span className="text-xs">Last updated {getRelativeTime(challenge.updatedAt)}</span>

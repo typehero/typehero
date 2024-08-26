@@ -150,6 +150,7 @@ export async function getPaginatedComments({
           name: true,
           image: true,
           roles: true,
+          bio: true,
         },
       },
       _count: {
