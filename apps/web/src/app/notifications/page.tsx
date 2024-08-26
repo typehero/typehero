@@ -39,19 +39,6 @@ async function getNotifications(session: Session) {
         select: {
           id: true,
           rootType: true,
-          rootChallenge: {
-            select: {
-              slug: true,
-            },
-          },
-          rootSolution: {
-            select: {
-              id: true,
-              challenge: {
-                select: { slug: true },
-              },
-            },
-          },
           text: true,
         },
       },
