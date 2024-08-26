@@ -11,7 +11,7 @@ type Modify<T, R> = Omit<T, keyof R> & R;
 type Props = Modify<
   TextareaProps,
   {
-    forwardedRef: RefObject<HTMLTextAreaElement>;
+    forwardedref: RefObject<HTMLTextAreaElement>;
     onChange: (e: string) => void;
   }
 >;
@@ -46,18 +46,18 @@ export function MentionInput(props: Props) {
   };
 
   const insert = (username: string) => {
-    if (!props.forwardedRef.current || !query) {
+    if (!props.forwardedref.current || !query) {
       return '';
     }
 
-    const text = props.forwardedRef.current.value;
-    const cursorPosition = props.forwardedRef.current.selectionStart;
+    const text = props.forwardedref.current.value;
+    const cursorPosition = props.forwardedref.current.selectionStart;
 
     const fullWord = getWordOnCursor(text, cursorPosition);
 
-    return (
-      text.slice(0, cursorPosition - fullWord.length) + `@${username}` + text.slice(cursorPosition)
-    );
+    return `${text.slice(0, cursorPosition - fullWord.length)}@${username}${text.slice(
+      cursorPosition,
+    )}`;
   };
 
   // this handles the scenario where a user uses arrow keys
@@ -107,7 +107,7 @@ export function MentionInput(props: Props) {
         onChange={onChange}
         onKeyUp={onKeyUp}
         onKeyDown={onKeyDown}
-        ref={props.forwardedRef}
+        ref={props.forwardedref}
       />
       <UserResults
         query={deferredQuery}

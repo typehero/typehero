@@ -72,7 +72,7 @@ export function CommentInput({ mode, onCancel, placeholder, onSubmit, defaultVal
                         ? 'You need to be logged in to comment.'
                         : 'Enter your comment here.'
                     }
-                    forwardedRef={textAreaRef}
+                    forwardedref={textAreaRef}
                     value={value}
                   />
                   <FormMessage className="absolute h-8 pl-3 leading-8" />

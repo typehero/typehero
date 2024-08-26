@@ -73,9 +73,6 @@ export async function addComment(comment: CommentToCreate) {
     (mention) => mention !== comment.root.user?.name && mention !== session.user.name,
   );
 
-  console.log(`**********`);
-  console.log({ mentions });
-  console.log(`**********`);
   // don't block on notification logic
   Promise.all([
     ...mentions.map(async (mention) => {
@@ -85,7 +82,6 @@ export async function addComment(comment: CommentToCreate) {
         },
       });
 
-      console.log({ validMention });
       if (!validMention) {
         return Promise.resolve();
       }

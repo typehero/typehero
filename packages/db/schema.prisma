@@ -451,6 +451,7 @@ model Notification {
   content          String?
   /// can be used to replace the blurb (eg: mention you in a comment)
   blurb            String?
+  /// use this instead of building the url on the fly (avoids a lot of joins and perf hits to build a string)
   url              String
   Challenge        Challenge?       @relation(fields: [challengeId], references: [id])
   challengeId      Int?

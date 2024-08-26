@@ -129,8 +129,8 @@ export function UserResults({ isOpen, onFocusOutside, onSelectedUser, query }: P
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col">
-                    <span className="font-bold text-white">{user.name}</span>
-                    <span className="text-sm text-gray-500">@{user.name}</span>
+                    <span className="font-bold text-sm text-white">{user.name}</span>
+                    <span className="text-xs text-gray-500">@{user.name}</span>
                   </div>
                 </button>
               </li>
