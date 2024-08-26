@@ -110,7 +110,7 @@ export function NotificationItem({
               <Markdown
                 disableMentions
                 disableCopy
-                className="ml-9 mt-1 max-h-[300px] overflow-y-auto rounded-md"
+                className="m-1 max-h-[300px] overflow-y-auto rounded-md"
               >
                 {notification.comment.text}
               </Markdown>
