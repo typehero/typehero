@@ -103,6 +103,7 @@ export function Comment({
     updateReplyComment,
     deleteReplyComment,
     showLoadMoreRepliesBtn,
+    // @ts-ignore
   } = useCommentsReplies({
     enabled: showReplies,
     root,

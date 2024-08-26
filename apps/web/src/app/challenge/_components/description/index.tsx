@@ -118,6 +118,8 @@ export function Description({ challenge }: Props) {
           disabled={!session?.data?.user?.id}
           rootType="CHALLENGE"
           rootId={challenge?.id}
+          toUserId={challenge.user.name}
+          challengeSlug={challenge.slug}
         />
         <Dialog>
           <DialogTrigger>

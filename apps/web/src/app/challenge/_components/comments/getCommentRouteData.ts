@@ -251,6 +251,11 @@ export async function getAllComments({
       rootSolution: {
         select: {
           title: true,
+          challenge: {
+            select: {
+              slug: true,
+            },
+          },
         },
       },
     },

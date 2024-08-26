@@ -5,9 +5,10 @@ import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar'
 import { Markdown } from '@repo/ui/components/markdown';
 import { AlertCircle, AtSign, Heart, MessageCircle, ShieldAlert } from '@repo/ui/icons';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useInView } from 'react-intersection-observer';
 import { getRelativeTime } from '~/utils/relativeTime';
 import type { Notification } from './page';
-import { useRouter } from 'next/navigation';
 
 const BLURBS = {
   MENTION: 'mentioned you in a comment',
@@ -17,9 +18,20 @@ const BLURBS = {
   REPLY: 'replied to you',
 } satisfies Record<NotificationType, string | ((v: string) => string)>;
 
-export function NotificationItem({ notification }: { notification: Notification }) {
+export function NotificationItem({
+  notification,
+  onSeen,
+}: {
+  notification: Notification;
+  onSeen: (v: number) => void;
+}) {
+  const { ref, inView, entry } = useInView({
+    triggerOnce: true,
+    onChange() {
+      onSeen(notification.id);
+    },
+  });
   const router = useRouter();
-
   const getBlurb = (notification: Notification) => {
     if (notification.type === 'LIKE') {
       const type = notification.comment ? 'comment' : 'solution';
@@ -34,6 +46,7 @@ export function NotificationItem({ notification }: { notification: Notification 
   };
   return (
     <button
+      ref={ref}
       onClick={() => router.push(notification.url || buildUrl())}
       className="border-border hover:bg-muted/50 focus:ring-primary w-full border-b p-4 text-left outline-none transition-colors last:border-b-0 focus:outline-none"
     >
@@ -84,11 +97,6 @@ export function NotificationItem({ notification }: { notification: Notification 
           {getRelativeTime(notification.createdAt)}
         </div>
       </div>
-      {/* {(notification.type === 'mention' || notification.type === 'reply') && (
-          <div className="bg-muted text-foreground ml-14 mt-1 rounded-md p-3 text-sm">
-            {notification.tweetContent}
-          </div>
-        )} */}
       {notification.type === 'MENTION' ||
       notification.type === 'REPLY' ||
       notification.type === 'LIKE'

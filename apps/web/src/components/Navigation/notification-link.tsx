@@ -6,10 +6,13 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { getNotificationCount } from './navigation.actions';
 
+export const NOTIFICATION_QUERY_KEY = 'notificationCounts';
 export function NotificationLink({ notificationCount }: { notificationCount: number }) {
+  // eventually lift this higher and pull new data and insert new rows into the notifications
+  // view if user is currently looking at it (example: twitter notif view)
   const { data: count } = useQuery({
     initialData: notificationCount,
-    queryKey: ['notificationCounts'],
+    queryKey: [NOTIFICATION_QUERY_KEY],
     queryFn: () => getNotificationCount(),
     refetchInterval: 60000, // one minute
   });

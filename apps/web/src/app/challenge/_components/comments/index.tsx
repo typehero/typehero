@@ -38,6 +38,7 @@ export function Comments({ preselectedCommentMetadata, root, type, expanded = fa
     changeSorting,
     deleteComment,
     updateComment,
+  // @ts-ignore
   } = useComments({
     type,
     root,
