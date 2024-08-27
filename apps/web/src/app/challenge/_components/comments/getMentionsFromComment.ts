@@ -9,5 +9,5 @@ export function getMentionsFromComment(text: string) {
     mentions.push(match[1]);
   }
 
-  return Array.from(new Set(mentions));
+  return Array.from(new Set(mentions)).slice(0, 10);
 }
