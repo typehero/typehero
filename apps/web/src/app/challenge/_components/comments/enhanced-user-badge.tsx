@@ -44,7 +44,8 @@ export function UserBadge(props: UserBadgeProps) {
     setQueryEnabled(true);
   };
   const gradient = getGradient(props.user.roles);
-  const shouldShowHoverCard = props.user.bio !== '' && props.user.roles.length > 1;
+  const shouldShowHoverCard =
+    props.user.bio !== '' || props.user.roles.length > 1 || query.data.titles.length > 1;
   return (
     <HoverCardWrapper
       enabled={shouldShowHoverCard}
