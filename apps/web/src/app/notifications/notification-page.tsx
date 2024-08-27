@@ -6,8 +6,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRef } from 'react';
 import { NOTIFICATION_QUERY_KEY } from '~/components/Navigation/notification-link';
 import { NotificationItem } from './notfication-item';
-import type { Notification } from './page';
 import { markNotificationsAsRead } from './notification.actions';
+import type { Notification } from './page';
 
 export default function NotificationPage({ notifications }: { notifications: Notification[] }) {
   const seenNotifications = useRef(new Set<number>());
@@ -21,23 +21,21 @@ export default function NotificationPage({ notifications }: { notifications: Not
   const mentionNotifications = notifications.filter((n) => n.type === 'MENTION');
 
   const onSeen = (id: number) => {
+    seenNotifications.current.add(id);
     const copy = new Set(seenNotifications.current);
     copy.add(id);
-    seenNotifications.current.add(id);
-    const timeoutId = Math.random();
-    timeoutRef.current = timeoutId;
+    clearTimeout(timeoutRef.current);
 
-    window.setTimeout(() => {
-      if (timeoutId === timeoutRef.current) {
-        mutation.mutate(Array.from(seenNotifications.current), {
-          onSuccess: () => {
-            for (const id of copy) {
-              seenNotifications.current.delete(id);
-            }
-          },
-        });
-        client.setQueryData([NOTIFICATION_QUERY_KEY], 0);
-      }
+    timeoutRef.current = window.setTimeout(() => {
+      timeoutRef.current = undefined;
+      mutation.mutate(Array.from(seenNotifications.current), {
+        onSuccess: () => {
+          for (const id of copy) {
+            seenNotifications.current.delete(id);
+          }
+        },
+      });
+      client.setQueryData([NOTIFICATION_QUERY_KEY], 0);
     }, 500);
   };
 
