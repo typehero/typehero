@@ -181,7 +181,8 @@ function HoverCardWrapper(props: {
       <HoverCardTrigger asChild>{props.usernameComponent}</HoverCardTrigger>
       <HoverCardContent
         align="start"
-        avoidCollisions={false}
+        side="bottom"
+        avoidCollisions
         className="w-min rounded-lg bg-zinc-100 dark:bg-zinc-900"
       >
         {props.onHoverComponent}
