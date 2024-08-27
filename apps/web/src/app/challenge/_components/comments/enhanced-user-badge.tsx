@@ -68,9 +68,9 @@ export function UserBadge(props: UserBadgeProps) {
       }
       onHoverComponent={
         //When a user does not have a bio & they have no titles, then a compact version is shown
-        <Link href={`@${props.user.name}`}>
+        <Link href={`/@${props.user.name}`}>
           <div className="flex flex-row space-x-4">
-            <div className="flex min-w-20 flex-col items-center space-y-2">
+            <div className="flex min-w-20 flex-col items-center justify-center space-y-2">
               <div className={cn('w-min rounded-full bg-gradient-to-r p-0.5', gradient)}>
                 <Avatar className="h-14 w-14">
                   <AvatarImage src={query.data.image ?? ''} />
@@ -82,21 +82,19 @@ export function UserBadge(props: UserBadgeProps) {
 
               {query.isRefetching ? (
                 <Skeleton className="h-full w-full" />
-              ) : (
+              ) : query.data.badges.length > 0 ? (
                 <Badges data={query.data.badges} />
-              )}
+              ) : null}
             </div>
-            <div className="flex flex-col space-y-2">
-              <div className="min-w-[calc(39ch)] space-y-2">
-                <h1
-                  className={cn(
-                    'inline-flex min-w-max bg-gradient-to-r bg-clip-text font-extrabold text-transparent',
-                    gradient,
-                  )}
-                >
-                  {/* @Mystic_Wanderer_Of_Shadow_Realm_23 */}@{props.user.name}
-                </h1>
-              </div>
+            <div className="flex w-max max-w-[calc(39ch)] flex-col space-y-2 ">
+              <h1
+                className={cn(
+                  'inline-flex bg-gradient-to-r bg-clip-text font-extrabold text-transparent',
+                  gradient,
+                )}
+              >
+                {/* @Mystic_Wanderer_Of_Shadow_Realm_23 */}@{props.user.name}
+              </h1>
 
               <Titles data={query.data.titles} />
               <p className="line-clamp-2 text-sm font-light text-zinc-300">
