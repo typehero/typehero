@@ -87,7 +87,7 @@ export function UserBadge(props: UserBadgeProps) {
               )}
             </div>
             <div className="flex flex-col space-y-2">
-              <div className="w-fit max-w-[calc(39ch)] space-y-2">
+              <div className="min-w-[calc(39ch)] space-y-2">
                 <h1
                   className={cn(
                     'inline-flex min-w-max bg-gradient-to-r bg-clip-text font-extrabold text-transparent',
