@@ -4,17 +4,9 @@
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
     "baseUrl": ".",
     "paths": {
-      "@repo/ui/*": [
-        "./src/*"
-      ]
+      "@repo/ui/*": ["./src/*"]
     }
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "../../apps/web/src/components/ui/footsies.tsx"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["**/*.ts", "**/*.tsx", "../../apps/web/src/components/ui/footsies.tsx"],
+  "exclude": ["node_modules"]
 }
