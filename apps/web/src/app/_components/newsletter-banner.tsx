@@ -15,8 +15,8 @@ export async function NewsletterBanner() {
           </h1>
           <p className="leading-8 text-black/60 dark:text-white/50">
             <Balancer>
-              Interested in the future of the platform? Be the first to get updates on content,
-              new\nfeatures, and more!
+              Interested in the future of the platform? Be the first to get updates on content, new
+              features, and more!
             </Balancer>
           </p>
         </div>
