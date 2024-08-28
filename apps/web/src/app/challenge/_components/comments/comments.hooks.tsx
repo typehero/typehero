@@ -93,7 +93,10 @@ export function useComments({ type, rootId, initialPage }: UseCommentsProps) {
           description: 'The comment was successfully deleted.',
         });
       }
-      const newPage = data?.comments.length === 1 ? commentsMeta.page - 1 : commentsMeta.page;
+      const newPage =
+        data?.comments.length === 1 && commentsMeta.page > 1
+          ? commentsMeta.page - 1
+          : commentsMeta.page;
       changePage(newPage);
       queryClient.invalidateQueries({
         queryKey: getQueryKey({ sort: commentsMeta.sort.value, page: newPage }),
