@@ -42,7 +42,7 @@ export async function getNotifications({
 
   const notifications = await prisma.notification.findMany({
     take: 5,
-    skip: 1,
+    skip: cursor ? 1 : 0,
     cursor: cursor ? { id: cursor } : undefined,
     where: {
       toUserId: session.user.id,
