@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useInView } from 'react-intersection-observer';
 import { getRelativeTime } from '~/utils/relativeTime';
-import type { Notification } from './page';
+import type { Notification } from './notification.actions';
 import { cn } from '@repo/ui/cn';
 
 const BLURBS = {
