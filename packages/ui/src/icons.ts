@@ -74,4 +74,6 @@ export {
   ArrowLeft,
   RectangleVertical,
   SearchIcon,
+  Wand2,
+  type LucideIcon,
 } from 'lucide-react';

@@ -53,6 +53,9 @@ export async function getPaginatedSolutions({
           user: {
             select: {
               name: true,
+              roles: true,
+              image: true,
+              bio: true,
             },
           },
           _count: {

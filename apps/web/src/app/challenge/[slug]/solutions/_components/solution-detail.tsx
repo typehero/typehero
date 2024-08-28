@@ -8,7 +8,6 @@ import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { TypographyLarge } from '@repo/ui/components/typography/large';
 import { toast } from '@repo/ui/components/use-toast';
-import { UserBadge } from '@repo/ui/components/user-badge';
 import { Calendar, Flag, Pin, Share, Trash, ArrowLeft, Pencil } from '@repo/ui/icons';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -23,6 +22,7 @@ import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import { EditSolution } from './edit-solution';
 import { useGetQueryString } from './useGetQueryString';
+import { UserBadge } from '~/app/challenge/_components/comments/enhanced-user-badge';
 
 interface Props {
   solution: ChallengeSolution;
@@ -87,7 +87,14 @@ export function SolutionDetails({ solution }: Props) {
             </div>
             {/* Author, Time, Action Buttons */}
             <div className="flex items-center gap-4">
-              <UserBadge username={solution.user?.name ?? ''} linkComponent={Link} />
+              <UserBadge
+                user={{
+                  name: solution.user?.name ?? '',
+                  image: solution.user?.image ?? '',
+                  bio: solution.user?.bio ?? '',
+                  roles: solution.user?.roles ?? [],
+                }}
+              />
               <div className="text-muted-foreground flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
                 <span className="text-xs">{getRelativeTime(solution.createdAt)}</span>
