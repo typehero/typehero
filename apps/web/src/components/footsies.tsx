@@ -7,7 +7,7 @@ export async function Footsies() {
     <footer className="flex flex-col items-center gap-2 px-8 pb-12 text-sm font-light sm:px-16 sm:pb-20 sm:pt-6 md:px-0 md:py-12">
       <div className="container flex flex-col-reverse justify-between gap-2 md:flex-row md:items-end">
         <span>
-          Built with <Binary className="inline-block h-5 w-5 text-[#31bdc6]" /> by the Trash Devs \n
+          Built with <Binary className="inline-block h-5 w-5 text-[#31bdc6]" /> by the Trash Devs
           community.
         </span>
         <div className="flex items-center gap-2">
