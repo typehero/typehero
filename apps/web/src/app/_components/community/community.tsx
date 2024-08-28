@@ -92,8 +92,8 @@ export function Community() {
                 Built by the community
               </h2>
               <p className="max-w-[55ch] bg-transparent px-8 text-center leading-8 text-black/60 lg:px-0 lg:text-left dark:text-white/50">
-                TypeHero is free, open-source, and built by developers just like you. These are
-                some of the contributors who made this possible so far.
+                TypeHero is free, open-source, and built by developers just like you. These are some
+                of the contributors who made this possible so far.
               </p>
               <div className="flex flex-col-reverse gap-3 sm:flex-row">
                 <a
