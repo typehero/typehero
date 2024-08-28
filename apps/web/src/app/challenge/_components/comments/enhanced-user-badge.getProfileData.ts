@@ -23,7 +23,6 @@ export async function getProfileData(username: string) {
   return {
     ...user,
     titles,
-    // badges: [...badges, ...badges],
     badges: badges.slice(0, 3),
   };
 }

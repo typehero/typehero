@@ -93,7 +93,7 @@ export function UserBadge(props: UserBadgeProps) {
                   gradient,
                 )}
               >
-                {/* @Mystic_Wanderer_Of_Shadow_Realm_2345678 */}@{props.user.name}
+                @{props.user.name}
               </h1>
 
               <Titles data={query.data.titles} />
