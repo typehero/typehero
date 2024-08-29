@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
       where: {
         accounts: {
           some: {
-            id: {
+            providerAccountId: {
               in: contributors.map((c) => `${c.id}`),
             },
           },
