@@ -94,8 +94,6 @@ export function useComments(props: UseCommentsProps) {
       const res = await deleteCommentAction(commentId);
       if (res === 'unauthorized') {
         toast(commentErrors.unauthorized);
-      } else if (res === 'invalid_comment') {
-        toast(commentErrors.invalidId);
       } else {
         toast({
           title: 'Comment Deleted',
@@ -303,8 +301,6 @@ export function useCommentsReplies({
       const res = await deleteCommentAction(commentId);
       if (res === 'unauthorized') {
         toast(commentErrors.unauthorized);
-      } else if (res === 'invalid_comment') {
-        toast(commentErrors.invalidId);
       } else {
         toast({
           title: 'Comment Deleted',

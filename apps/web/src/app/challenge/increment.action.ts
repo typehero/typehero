@@ -89,5 +89,22 @@ export async function incrementOrDecrementUpvote({
         id: voteExists.id,
       },
     });
+
+    const notificationToDelete = await prisma.notification.findFirst({
+      where: {
+        type: 'LIKE',
+        fromUserId: session.user.id,
+        challengeId: rootType === 'CHALLENGE' ? rootId : undefined,
+        commentId: rootType === 'COMMENT' ? rootId : undefined,
+        sharedSolutionId: rootType === 'SHAREDSOLUTION' ? rootId : undefined,
+        toUserId,
+      },
+    });
+
+    await prisma.notification.delete({
+      where: {
+        id: notificationToDelete?.id,
+      },
+    });
   }
 }
