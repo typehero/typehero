@@ -54,12 +54,11 @@ export async function getPreselectedSolutionCommentMetadata(
       id: solutionId,
       challengeId,
     },
-    orderBy: {
-      createdAt: 'desc',
-    },
     select: {
       id: true,
-      solutionComment: true,
+      solutionComment: {
+        orderBy: { createdAt: 'desc' },
+      },
     },
   });
 
