@@ -3,7 +3,7 @@ import { auth } from '~/server/auth';
 import NotificationPage from './notification-page';
 
 export const metadata: Metadata = {
-  title: 'Notifications',
+  title: 'Notifications | TypeHero',
 };
 
 export default async function Page() {
