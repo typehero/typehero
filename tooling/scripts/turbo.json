@@ -3,7 +3,7 @@
     "//"
   ],
   "globalEnv": [
-    "GITHUB_TOKEN"
+    "GH_TOKEN"
   ],
   "tasks": {
     "dl-monaco": {

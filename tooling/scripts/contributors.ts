@@ -8,13 +8,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 async function getOcto() {
-  if (!process.env.GITHUB_TOKEN) {
-    console.error('No GitHub token provided. Please set GITHUB_TOKEN env var.');
+  if (!process.env.GH_TOKEN) {
+    console.error('No GitHub token provided. Please set GH_TOKEN env var.');
     process.exit(1);
   }
 
-  const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
-  
+  const octokit = new Octokit({ auth: process.env.GH_TOKEN });
+
   // get paginated contributors
   const res = await octokit.paginate(octokit.rest.repos.listContributors, {
     owner: "typehero",
@@ -24,7 +24,7 @@ async function getOcto() {
 
   const contributors = res.map((contributor) => contributor).filter(contributor => contributor.type !== 'Bot');
   return contributors
-  
+
 }
 
 async function start() {
