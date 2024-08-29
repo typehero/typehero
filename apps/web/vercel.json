@@ -4,7 +4,7 @@
   "buildCommand": "turbo build",
   "crons": [
     {
-      "path": "/api/sync-contributors",
+      "path": "/api/cron/sync-contributors",
       "schedule": "0 0 * * *"
     }
   ]
