@@ -15,7 +15,6 @@ export function NotificationsAll({ onSeen }: { onSeen: (v: number) => void }) {
       return getNotifications({ cursor: pageParam });
     },
     getNextPageParam: (lastPage) => {
-      console.log({ cursore: lastPage.cursor });
       return lastPage?.cursor;
     },
   });
@@ -24,7 +23,7 @@ export function NotificationsAll({ onSeen }: { onSeen: (v: number) => void }) {
     return null;
   }
 
-  if (!data) {
+  if (data?.pages[0]?.notifications.length === 0) {
     return <Empty type="all" />;
   }
 

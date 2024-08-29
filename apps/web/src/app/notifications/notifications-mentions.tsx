@@ -21,7 +21,7 @@ export function NotificationsMentions({ onSeen }: { onSeen: (v: number) => void 
     return null;
   }
 
-  if (!data) {
+  if (data?.pages[0]?.notifications.length === 0) {
     return <Empty type="mentions" />;
   }
 
