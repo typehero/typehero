@@ -70,7 +70,9 @@ export async function addComment(comment: CommentToCreate) {
   // don't notify the solution/challenge author if they are mentioned to avoid double notifications or the comment author since they
   // shouldn't be able to notify themselves (e.g: tag themselves in their own comment)
   const mentions = getMentionsFromComment(commentToCreate.text).filter(
-    (mention) => mention !== comment.root.user?.name && mention !== session.user.name,
+    (mention) =>
+      mention?.toLowerCase() !== comment.root.user?.name.toLowerCase() &&
+      mention?.toLowerCase() !== session.user.name.toLowerCase(),
   );
 
   // don't block on notification logic
@@ -151,7 +153,9 @@ export async function replyComment(
   // don't notify the parent comment author if they are mentioned to avoid double notifications or the comment author since they
   // shouldn't be able to notify themselves (e.g: tag themselves in their own comment)
   const mentions = getMentionsFromComment(replyToCreate.text).filter(
-    (mention) => mention != parentComment.user.name && mention != session.user.name,
+    (mention) =>
+      mention?.toLowerCase() != parentComment.user.name.toLowerCase() &&
+      mention?.toLowerCase() != session.user.name.toLowerCase(),
   );
 
   // dont block on notification logic
