@@ -115,7 +115,7 @@ export async function Navigation() {
               <Suspense>
                 <Search />
               </Suspense>
-              <NotificationLink notificationCount={notificationCount} />
+              {session ? <NotificationLink notificationCount={notificationCount} /> : null}
               {featureFlags?.enableLogin ? (
                 <LoginButton isAdminOrMod={isAdminOrMod} session={session} />
               ) : null}
