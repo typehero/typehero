@@ -15,12 +15,12 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  const allUsers = contributors.map((contributor) => ({ id: `${contributor.id}`, name: contributor.login }));
+  const allUserIds = contributors.map((contributor) => `${contributor.id}`);
 
   const usersToUpdate = await prisma.user.findMany({
     where: {
       id : {
-        in: allUsers.map((user) => user.id),
+        in: allUserIds,
       },
       roles: {
         none: {
