@@ -15,23 +15,26 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  // TODO: is there a way to do this in a single update query?
-  for (const contributor of contributors) {
-    console.log(`Adding contributor: ${contributor.login} (${contributor.id})`);
+  const allUsers = contributors.map((contributor) => ({ id: `${contributor.id}`, name: contributor.login }));
 
-    // NOTE: this is because you might only have yourself in the local db so you can't update others
-    const hasUser = await prisma.user.findUnique({
-      where: { id: `${contributor.id}` },
-    });
+  const usersToUpdate = await prisma.user.findMany({
+    where: {
+      id : {
+        in: allUsers.map((user) => user.id),
+      },
+      roles: {
+        none: {
+          role: RoleTypes.CONTRIBUTOR,
+        },
+      }
+    },
+  });
 
-    if (!hasUser) {
-      console.log('user not in db skipping');
-      continue;
-    }
+  for (const user of usersToUpdate) {
+    console.log(`Adding contributor role to: ${user.name} (${user.id})`);
 
-    // add CONTRIBUTORS role to the user
     await prisma.user.update({
-      where: { id: `${contributor.id}` },
+      where: { id: `${user.id}` },
       data: {
         roles: {
           connectOrCreate: {
@@ -48,5 +51,5 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  return Response.json({ success: true });
+  return Response.json({ success: true, updateCount: usersToUpdate.length });
 }
