@@ -42,9 +42,7 @@ export async function GET(request: NextRequest) {
       (contributorId) => `('${contributorRole.id}', '${contributorId}')`,
     );
     updateCount +=
-      await prisma.$executeRaw`insert ignore into "_RoleToUser" ("A", "B") values ${values.join(
-        ',',
-      )}`;
+      await prisma.$executeRaw`insert ignore into _RoleToUser (A, B) values ${values.join(',')}`;
   }
 
   return Response.json({ success: true, updateCount });
