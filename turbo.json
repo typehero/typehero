@@ -11,6 +11,7 @@
         "STAGING",
         "NODE_ENV",
         "DATABASE_URL",
+        "GITHUB_TOKEN",
         "GITHUB_ID",
         "GITHUB_SECRET",
         "GITHUB_AOT_ID",
