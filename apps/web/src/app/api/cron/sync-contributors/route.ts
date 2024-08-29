@@ -34,8 +34,12 @@ export async function GET(request: NextRequest) {
   const contributorIds = (
     await prisma.user.findMany({
       where: {
-        id: {
-          in: contributors.map((c) => `${c.id}`),
+        accounts: {
+          some: {
+            providerAccountId: {
+              in: contributors.map((c) => `${c.id}`),
+            },
+          },
         },
       },
       select: {
