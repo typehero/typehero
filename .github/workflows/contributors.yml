@@ -21,7 +21,7 @@ jobs:
       contents: write
       pull-requests: write
     env:
-      GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -30,7 +30,7 @@ jobs:
         uses: ./tooling/github-actions/install
 
       - name: Run contributors script
-        run: turbo dl-git
+        run: npx tsx tooling/scripts/contributors.ts
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
