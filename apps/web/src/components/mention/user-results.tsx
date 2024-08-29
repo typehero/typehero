@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import { searchUsers } from './actions';
 import { useToast } from '@repo/ui/components/use-toast';
+import { Loader } from '../loader';
 
 interface Props {
   isOpen: boolean;
@@ -19,7 +20,11 @@ export function UserResults({ isOpen, onFocusOutside, onSelectedUser, query }: P
   const { toast } = useToast();
   const popoverRef = useRef<HTMLDivElement | null>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const { data: users, error } = useQuery({
+  const {
+    data: users,
+    isLoading,
+    error,
+  } = useQuery({
     retry: false,
     staleTime: 10000,
     queryKey: ['search-users', query],
@@ -105,37 +110,51 @@ export function UserResults({ isOpen, onFocusOutside, onSelectedUser, query }: P
         onOpenAutoFocus={(e) => e.preventDefault()}
         onInteractOutside={onFocusOutside}
       >
-        <ul>
-          {users?.map((user, index) => {
-            return (
-              <li key={user.id}>
-                <button
-                  onClick={() => {
-                    const selectedUser = users?.[index];
-                    if (selectedUser) {
-                      onSelectedUser(selectedUser.name);
-                    }
-                  }}
-                  className={cn(
-                    selectedIndex === index ? 'bg-zinc-400/50 dark:bg-zinc-600/50' : '',
-                    'flex w-full cursor-pointer justify-start gap-3 rounded-none px-4 py-3  hover:bg-zinc-400/50 dark:hover:bg-zinc-600/50',
-                  )}
-                >
-                  <Avatar className="h-10 w-10 border border-gray-700">
-                    <AvatarImage src={user.image ?? ''} alt="user avatar" />
-                    <AvatarFallback className="bg-gray-700 text-white">
-                      {user?.name.charAt(0)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="flex flex-col">
-                    <span className="text-sm font-bold text-white">{user.name}</span>
-                    <span className="text-xs text-gray-500">@{user.name}</span>
-                  </div>
-                </button>
-              </li>
-            );
-          })}
-        </ul>
+        {isLoading ? (
+          <div className="flex h-full items-center justify-center text-lg font-semibold">
+            <Loader className="h-8 w-8" />
+          </div>
+        ) : (
+          <>
+            {(users?.length ?? 0) > 0 ? (
+              <ul>
+                {users?.map((user, index) => {
+                  return (
+                    <li key={user.id}>
+                      <button
+                        onClick={() => {
+                          const selectedUser = users?.[index];
+                          if (selectedUser) {
+                            onSelectedUser(selectedUser.name);
+                          }
+                        }}
+                        className={cn(
+                          selectedIndex === index ? 'bg-zinc-400/50 dark:bg-zinc-600/50' : '',
+                          'flex w-full cursor-pointer justify-start gap-3 rounded-none px-4 py-3  hover:bg-zinc-400/50 dark:hover:bg-zinc-600/50',
+                        )}
+                      >
+                        <Avatar className="h-10 w-10 border border-gray-700">
+                          <AvatarImage src={user.image ?? ''} alt="user avatar" />
+                          <AvatarFallback className="bg-gray-700 text-white">
+                            {user?.name.charAt(0)}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="flex flex-col">
+                          <span className="text-sm font-bold text-white">{user.name}</span>
+                          <span className="text-xs text-gray-500">@{user.name}</span>
+                        </div>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <div className="flex h-full items-center justify-center text-lg font-semibold">
+                Users not found.
+              </div>
+            )}
+          </>
+        )}
       </PopoverContent>
     </Popover>
   );
