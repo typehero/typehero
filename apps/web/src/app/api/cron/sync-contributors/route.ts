@@ -1,4 +1,4 @@
-import { NextResponse, type NextRequest } from 'next/server';
+import { type NextRequest } from 'next/server';
 import { prisma } from '@repo/db';
 
 import { contributors } from '../../../../../public/contributors';
@@ -31,7 +31,16 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  const contributorIds = contributors.map((c) => c.id);
+  const contributorIds = (await prisma.user.findMany({
+    where: {
+      id: {
+        in: contributors.map((c) => `${c.id}`),
+      },
+    },
+    select: {
+      id: true
+    }
+  })).map((c) => c.id);
 
   let updateCount = 0;
 
@@ -39,10 +48,11 @@ export async function GET(request: NextRequest) {
     const contributorsPartition = contributorIds.splice(0, MAX_PARTITION_SIZE);
 
     const values = contributorsPartition.map(
-      (contributorId) => `('${contributorRole.id}', '${contributorId}')`,
+      (contributorId) => `('${contributorRole!.id}', '${contributorId}')`,
     );
-    updateCount +=
-      await prisma.$executeRaw`insert ignore into _RoleToUser (A, B) values ${values.join(',')}`;
+    updateCount += await prisma.$executeRawUnsafe(
+      `insert ignore into _RoleToUser (A, B) values ${values.join(',')}`,
+    );
   }
 
   return Response.json({ success: true, updateCount });
