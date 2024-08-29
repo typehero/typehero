@@ -1,5 +1,11 @@
 {
   "ignoreCommand": "npx turbo-ignore",
   "framework": "nextjs",
-  "buildCommand": "turbo build"
+  "buildCommand": "turbo build",
+  "crons": [
+    {
+      "path": "/api/sync-contributors",
+      "schedule": "0 0 * * *"
+    }
+  ]
 }

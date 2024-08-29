@@ -27,6 +27,7 @@
         "USERNAME",
         "PASSWORD",
         "CI",
+        "CRON_SECRET",
         "MAILCHIMP_API_KEY",
         "MAILCHIMP_AUDIENCE_ID",
         "MAILCHIMP_API_SERVER",
