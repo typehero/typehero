@@ -21,7 +21,7 @@ import { debounce } from 'lodash';
 import { useMemo, useRef, useState } from 'react';
 import { type ChallengeRouteData } from '~/app/challenge/[slug]/getChallengeRouteData';
 import { ReportDialog } from '~/components/ReportDialog';
-import { getRelativeTime } from '~/utils/relativeTime';
+import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import { addOrRemoveBookmark } from '../bookmark.action';
 import { ShareForm } from '../share-form';
 import { Vote } from '../vote';
@@ -96,7 +96,7 @@ export function Description({ challenge }: Props) {
         />
         <div className="text-muted-foreground flex items-center gap-2">
           <Calendar className=" h-4 w-4" />
-          <span className="text-xs">Last updated {getRelativeTime(challenge.updatedAt)}</span>
+          <span className="text-xs">Last updated {getRelativeTimeStrict(challenge.updatedAt)}</span>
         </div>
       </div>
       {/* Difficulty & Action Buttons */}
@@ -118,6 +118,8 @@ export function Description({ challenge }: Props) {
           disabled={!session?.data?.user?.id}
           rootType="CHALLENGE"
           rootId={challenge?.id}
+          toUserId={challenge.user.name}
+          challengeSlug={challenge.slug}
         />
         <Dialog>
           <DialogTrigger>

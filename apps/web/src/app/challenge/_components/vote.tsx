@@ -1,7 +1,7 @@
 'use client';
 
 import { useSession } from '@repo/auth/react';
-import type { VoteType } from '@repo/db/types';
+import type { Comment, VoteType } from '@repo/db/types';
 import { ThumbsUp } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { debounce } from 'lodash';
@@ -9,31 +9,60 @@ import { useRef, useState } from 'react';
 import { incrementOrDecrementUpvote } from '../increment.action';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { Button } from '@repo/ui/components/button';
+import type { PaginatedComments } from './comments/getCommentRouteData';
+
+interface ChallengeCommentVoteProps {
+  type: 'COMMENT';
+  comment: Comment;
+}
+
+interface ChallengeVoteProps {
+  type: 'CHALLENGE';
+  comment: Comment;
+}
+
+interface SharedSolutionVoteProps {
+  type: 'SHAREDSOLUTION';
+  comment: Comment;
+}
 
 interface VoteProps {
   voteCount: number;
   initialHasVoted?: boolean;
   rootId: number;
+  // user id of the content thats being liked
+  toUserId: string;
+  challengeSlug: string;
   rootType: VoteType;
   disabled?: boolean;
   onVote?: (didUpvote: boolean) => void;
+  comment?: PaginatedComments['comments'][number];
 }
 
 export function Vote({
+  challengeSlug,
   voteCount,
   initialHasVoted,
   rootId,
   rootType,
   disabled,
   onVote,
+  toUserId,
+  comment,
 }: VoteProps) {
   const [votes, setVotes] = useState(voteCount);
   const [hasVoted, setHasVoted] = useState(initialHasVoted);
   const session = useSession();
-
   const debouncedIncrement = useRef(
     debounce(async (shouldIncrement: boolean) => {
-      await incrementOrDecrementUpvote(rootId, rootType, shouldIncrement);
+      await incrementOrDecrementUpvote({
+        comment,
+        rootId,
+        rootType,
+        shouldIncrement,
+        toUserId,
+        challengeSlug,
+      });
     }, 500),
   ).current;
 

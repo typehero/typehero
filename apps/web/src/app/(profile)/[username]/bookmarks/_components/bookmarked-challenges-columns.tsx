@@ -1,7 +1,7 @@
 'use client';
 
 import { type ColumnDef } from '@tanstack/react-table';
-import { getRelativeTime } from '~/utils/relativeTime';
+import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import Link from 'next/link';
 import type { BookmarkedChallenge } from '../page';
 
@@ -18,6 +18,6 @@ export const bookmarkedChallengedColumns: ColumnDef<BookmarkedChallenge>[] = [
   {
     accessorKey: 'createdAt',
     header: 'Date',
-    cell: ({ row }) => getRelativeTime(row.original.createdAt!),
+    cell: ({ row }) => getRelativeTimeStrict(row.original.createdAt!),
   },
 ];

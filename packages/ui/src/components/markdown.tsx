@@ -1,6 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
+import { userMentions } from './utils/mentions';
 import { useTheme } from 'next-themes';
 import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
@@ -13,7 +14,6 @@ import { vscDarkPlus } from '../themes/vs-dark-plus';
 import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip';
 import { Button } from './button';
 import { Check, Copy } from '../icons';
-// import rehypeRaw from 'rehype-raw';
 
 const HTML_COMMENT_REGEX = new RegExp('<!--([\\s\\S]*?)-->', 'g');
 
@@ -42,7 +42,17 @@ function removeHtmlComments(): Transformer {
   };
 }
 
-export function Markdown({ children, className }: { children: string; className?: string }) {
+export function Markdown({
+  children,
+  className,
+  disableMentions = false,
+  disableCopy = false,
+}: {
+  children: string;
+  className?: string;
+  disableMentions?: boolean;
+  disableCopy?: boolean;
+}) {
   const { theme } = useTheme();
   const syntaxHighlighterTheme = theme === 'light' ? vs : vscDarkPlus;
 
@@ -76,7 +86,7 @@ export function Markdown({ children, className }: { children: string; className?
           const match = /language-(\w+)/.exec(className || '');
           return !inline && match ? (
             <div className="relative">
-              <CopyButton text={String(children).replace(/\n$/, '')} />
+              {!disableCopy ? <CopyButton text={String(children).replace(/\n$/, '')} /> : null}
               <SyntaxHighlighter
                 PreTag="section" // parent tag
                 className={clsx(className, 'rounded-xl dark:rounded-md')}
@@ -110,7 +120,7 @@ export function Markdown({ children, className }: { children: string; className?
       // FIXME: this is vuln to XSS and I don't know why we use it, let's remove it
       // or add in a sanitizer lib like: https://github.com/rehypejs/rehype-sanitize
       // rehypePlugins={[rehypeRaw as any]}
-      remarkPlugins={[removeHtmlComments, remarkGfm]}
+      remarkPlugins={[removeHtmlComments, remarkGfm, ...(disableMentions ? [] : [userMentions])]}
     >
       {children}
     </ReactMarkdown>

@@ -1,5 +1,5 @@
-import { getRelativeTime } from '~/utils/relativeTime';
+import { getRelativeTimeStrict } from '~/utils/relativeTime';
 
 export default function RelativeTime({ date }: { date: Date }) {
-  return <>{getRelativeTime(date)}</>;
+  return <>{getRelativeTimeStrict(date)}</>;
 }

@@ -13,7 +13,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import type { ChallengeSolution } from '~/app/challenge/[slug]/solutions/[solutionId]/page';
 import { ReportDialog } from '~/components/ReportDialog';
-import { getRelativeTime } from '~/utils/relativeTime';
+import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import { Vote } from '../../../_components/vote';
 import { pinOrUnpinSolution } from './_actions';
 import { isAdminOrModerator, isAuthor } from '~/utils/auth-guards';
@@ -97,11 +97,13 @@ export function SolutionDetails({ solution }: Props) {
               />
               <div className="text-muted-foreground flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
-                <span className="text-xs">{getRelativeTime(solution.createdAt)}</span>
+                <span className="text-xs">{getRelativeTimeStrict(solution.createdAt)}</span>
               </div>
             </div>
             <div className="flex items-center gap-3">
               <Vote
+                challengeSlug={solution.challenge?.slug ?? ''}
+                toUserId={solution.user?.id!}
                 voteCount={solution._count.vote}
                 initialHasVoted={solution.vote.length > 0}
                 disabled={!session?.user?.id || solution.userId === session?.user?.id}

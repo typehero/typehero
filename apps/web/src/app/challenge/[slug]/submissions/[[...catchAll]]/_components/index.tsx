@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import NoSubmissions from './nosubmissions';
-import { getRelativeTime } from '~/utils/relativeTime';
+import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import type { ChallengeSubmissions } from '../page';
 import { useParams } from 'next/navigation';
 
@@ -90,7 +90,7 @@ function SubmissionRow({ submission }: { submission: Submission }) {
         </div>
         <div className="text-muted-foreground flex items-center gap-2">
           <Calendar className=" h-4 w-4" />
-          <span className="text-xs">{getRelativeTime(submission.createdAt)}</span>
+          <span className="text-xs">{getRelativeTimeStrict(submission.createdAt)}</span>
         </div>
       </Link>
     </li>

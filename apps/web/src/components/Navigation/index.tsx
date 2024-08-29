@@ -19,6 +19,8 @@ import { NavWrapper } from './nav-wrapper';
 import { SignOutLink } from './signout-link';
 import { SkipToCodeEditor } from './skip-to-code-editor';
 import { auth } from '~/server/auth';
+import { NotificationLink } from './notification-link';
+import { getNotificationCount } from './navigation.actions';
 
 export function getAdminUrl() {
   // reference for vercel.com
@@ -31,9 +33,12 @@ export function getAdminUrl() {
 }
 
 export async function Navigation() {
-  const session = await auth();
+  const [session, featureFlags, notificationCount] = await Promise.all([
+    auth(),
+    getAllFlags(),
+    getNotificationCount(),
+  ]);
   const isAdminOrMod = isAdminOrModerator(session);
-  const featureFlags = await getAllFlags();
 
   const TopSectionLinks = (
     <>
@@ -110,6 +115,7 @@ export async function Navigation() {
               <Suspense>
                 <Search />
               </Suspense>
+              {session ? <NotificationLink notificationCount={notificationCount} /> : null}
               {featureFlags?.enableLogin ? (
                 <LoginButton isAdminOrMod={isAdminOrMod} session={session} />
               ) : null}

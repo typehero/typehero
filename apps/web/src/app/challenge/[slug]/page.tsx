@@ -1,6 +1,6 @@
 import { type Session } from '@repo/auth/server';
 import { buildMetaForChallenge, buildMetaForEventPage } from '~/app/metadata';
-import { getRelativeTime } from '~/utils/relativeTime';
+import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import { Comments } from '../_components/comments';
 import { Description } from '../_components/description';
 import { AOT_CHALLENGES } from './aot-slugs';
@@ -29,7 +29,7 @@ export async function generateMetadata({ params: { slug } }: Props) {
     description,
     username: challenge.user.name,
     difficulty: challenge.difficulty,
-    date: getRelativeTime(challenge.createdAt),
+    date: getRelativeTimeStrict(challenge.createdAt),
   });
 }
 
@@ -41,7 +41,7 @@ export default async function Challenges({ params: { slug } }: Props) {
   return (
     <div className="relative h-full ">
       <Description challenge={challenge} />
-      <Comments rootId={challenge.id} type="CHALLENGE" />
+      <Comments root={challenge} type="CHALLENGE" />
     </div>
   );
 }
