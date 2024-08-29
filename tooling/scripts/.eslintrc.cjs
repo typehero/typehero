@@ -12,7 +12,7 @@ module.exports = {
     'turbo/no-undeclared-env-vars': [
       'error',
       {
-        allowList: ['GITHUB_TOKEN'],
+        allowList: ['GH_TOKEN'],
       },
     ],
   },
