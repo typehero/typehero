@@ -17,15 +17,17 @@ export async function GET(request: NextRequest) {
 
   const MAX_PARTITION_SIZE = 60;
 
-  const contributorRole = await prisma.role.findFirst({
+  let contributorRole = await prisma.role.findFirst({
     where: {
       role: RoleTypes.CONTRIBUTOR,
     },
   });
 
   if (!contributorRole) {
-    return new NextResponse('No contributor role 💀', {
-      status: 500,
+    contributorRole = await prisma.role.create({
+      data: {
+        role: RoleTypes.CONTRIBUTOR,
+      },
     });
   }
 
