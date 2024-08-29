@@ -31,16 +31,18 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  const contributorIds = (await prisma.user.findMany({
-    where: {
-      id: {
-        in: contributors.map((c) => `${c.id}`),
+  const contributorIds = (
+    await prisma.user.findMany({
+      where: {
+        id: {
+          in: contributors.map((c) => `${c.id}`),
+        },
       },
-    },
-    select: {
-      id: true
-    }
-  })).map((c) => c.id);
+      select: {
+        id: true,
+      },
+    })
+  ).map((c) => c.id);
 
   let updateCount = 0;
 
