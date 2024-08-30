@@ -65,6 +65,8 @@ UPLOADTHING_APP_ID="very_real_uploadthing_app_id"
 # https://next-auth.js.org/configuration/options#secret
 NEXTAUTH_SECRET="for local use you can just use a garble of letters"
 NEXTAUTH_URL="http://localhost:3000"
+GITHUB_AOT_ID=asdf
+GITHUB_AOT_SECRET=asdf
 ```
 
 ### 5. Setup algolia for search
