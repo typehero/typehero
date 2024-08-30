@@ -69,7 +69,7 @@ export function UserBadge(props: UserBadgeProps) {
       onHoverComponent={
         //When a user does not have a bio & they have no titles, then a compact version is shown
         <Link href={`/@${props.user.name}`}>
-          <div className="flex flex-row space-x-4">
+          <div className="flex flex-row space-x-2">
             <div className="flex min-w-20 flex-col items-center justify-center space-y-2">
               <div className={cn('w-min rounded-full bg-gradient-to-r p-0.5', gradient)}>
                 <Avatar className="h-14 w-14">
@@ -89,7 +89,7 @@ export function UserBadge(props: UserBadgeProps) {
             <div className="flex w-max max-w-[calc(39ch)] flex-col space-y-2 ">
               <h1
                 className={cn(
-                  'inline-flex bg-gradient-to-r bg-clip-text font-extrabold text-transparent',
+                  'w-min bg-gradient-to-r bg-clip-text font-extrabold text-transparent',
                   gradient,
                 )}
               >
@@ -115,9 +115,10 @@ const TITLE_TO_ICON: Record<TitleInfo['type'], LucideIcon> = {
 };
 
 const TITLE_TO_CLASSNAME: Record<TitleInfo['type'], string> = {
-  admin: 'from-rose-400 to-orange-300',
-  contributor: 'bg-gradient-to-r from-sky-400 to-cyan-300',
-  supporter: 'bg-gradient-to-r from-teal-200 to-teal-500',
+  admin: 'bg-gradient-to-r from-rose-400 to-orange-500 dark:from-rose-400 dark:to-orange-300',
+  contributor: 'bg-gradient-to-r from-sky-400 to-cyan-600 dark:from-sky-400 dark:to-cyan-300',
+  supporter:
+    'bg-gradient-to-r from-emerald-500 to-emerald-600 dark:from-emerald-200 dark:to-emerald-500',
 };
 
 function getGradient(roles: Role[]) {
