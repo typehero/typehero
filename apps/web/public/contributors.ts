@@ -20,7 +20,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/bautistaaa/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 371
+        "contributions": 374
     },
     {
         "login": "Hacksore",
@@ -41,7 +41,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/Hacksore/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 118
+        "contributions": 120
     },
     {
         "login": "PickleNik",
@@ -1556,6 +1556,27 @@ export const contributors = [
         "contributions": 1
     },
     {
+        "login": "swalker326",
+        "id": 8460808,
+        "node_id": "MDQ6VXNlcjg0NjA4MDg=",
+        "avatar_url": "https://avatars.githubusercontent.com/u/8460808?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/swalker326",
+        "html_url": "https://github.com/swalker326",
+        "followers_url": "https://api.github.com/users/swalker326/followers",
+        "following_url": "https://api.github.com/users/swalker326/following{/other_user}",
+        "gists_url": "https://api.github.com/users/swalker326/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/swalker326/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/swalker326/subscriptions",
+        "organizations_url": "https://api.github.com/users/swalker326/orgs",
+        "repos_url": "https://api.github.com/users/swalker326/repos",
+        "events_url": "https://api.github.com/users/swalker326/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/swalker326/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 1
+    },
+    {
         "login": "romain-trotard",
         "id": 17161484,
         "node_id": "MDQ6VXNlcjE3MTYxNDg0",
@@ -1698,27 +1719,6 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/NickHeiner/repos",
         "events_url": "https://api.github.com/users/NickHeiner/events{/privacy}",
         "received_events_url": "https://api.github.com/users/NickHeiner/received_events",
-        "type": "User",
-        "site_admin": false,
-        "contributions": 1
-    },
-    {
-        "login": "4ndrs",
-        "id": 31898900,
-        "node_id": "MDQ6VXNlcjMxODk4OTAw",
-        "avatar_url": "https://avatars.githubusercontent.com/u/31898900?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/4ndrs",
-        "html_url": "https://github.com/4ndrs",
-        "followers_url": "https://api.github.com/users/4ndrs/followers",
-        "following_url": "https://api.github.com/users/4ndrs/following{/other_user}",
-        "gists_url": "https://api.github.com/users/4ndrs/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/4ndrs/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/4ndrs/subscriptions",
-        "organizations_url": "https://api.github.com/users/4ndrs/orgs",
-        "repos_url": "https://api.github.com/users/4ndrs/repos",
-        "events_url": "https://api.github.com/users/4ndrs/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/4ndrs/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 1
@@ -2013,6 +2013,27 @@ export const contributors = [
         "repos_url": "https://api.github.com/users/uncenter/repos",
         "events_url": "https://api.github.com/users/uncenter/events{/privacy}",
         "received_events_url": "https://api.github.com/users/uncenter/received_events",
+        "type": "User",
+        "site_admin": false,
+        "contributions": 1
+    },
+    {
+        "login": "4ndrs",
+        "id": 31898900,
+        "node_id": "MDQ6VXNlcjMxODk4OTAw",
+        "avatar_url": "https://avatars.githubusercontent.com/u/31898900?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/4ndrs",
+        "html_url": "https://github.com/4ndrs",
+        "followers_url": "https://api.github.com/users/4ndrs/followers",
+        "following_url": "https://api.github.com/users/4ndrs/following{/other_user}",
+        "gists_url": "https://api.github.com/users/4ndrs/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/4ndrs/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/4ndrs/subscriptions",
+        "organizations_url": "https://api.github.com/users/4ndrs/orgs",
+        "repos_url": "https://api.github.com/users/4ndrs/repos",
+        "events_url": "https://api.github.com/users/4ndrs/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/4ndrs/received_events",
         "type": "User",
         "site_admin": false,
         "contributions": 1
