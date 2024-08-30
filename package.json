@@ -22,6 +22,7 @@
     "lint:markdown": "markdownlint-cli2 \"challenges/**/*.md\" \"#**/node_modules\" && cspell challenges/** --no-progress",
     "lint:markdown:validate": "tsx challenges/validate.ts",
     "lint:fix": "eslint . --fix --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
+    "package-check": "pnpm dlx sherif@latest --ignore-rule root-package-dependencies",
     "refresh": "turbo db:reset db:seed --concurrency=1",
     "test:e2e": "turbo test:e2e",
     "test:e2e:install": "playwright install",
