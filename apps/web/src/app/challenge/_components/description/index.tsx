@@ -29,6 +29,7 @@ import { ShareForm } from '../share-form';
 import { Vote } from '../vote';
 import { AOT_CHALLENGES } from '../../[slug]/aot-slugs';
 import { Suggestions } from './suggestions';
+import { ShareUrlWrapper } from '~/components/share-url-wrapper';
 
 interface Props {
   challenge: ChallengeRouteData['challenge'];
@@ -113,33 +114,21 @@ export function Description({ challenge }: Props) {
           rootType="CHALLENGE"
           rootId={challenge?.id}
         />
-        <Dialog>
-          <DialogTrigger>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div
-                  className={cn(
-                    buttonVariants({ variant: 'secondary', size: 'xs' }),
-                    'rounded-full',
-                  )}
-                >
-                  <Share className="h-4 w-4" />
-                </div>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Share</p>
-              </TooltipContent>
-            </Tooltip>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Share</DialogTitle>
-            </DialogHeader>
-            <div className="pt-4">
-              <ShareForm />
-            </div>
-          </DialogContent>
-        </Dialog>
+        <ShareUrlWrapper isChallenge>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div
+                className={cn(buttonVariants({ variant: 'secondary', size: 'xs' }), 'rounded-full')}
+              >
+                <Share className="h-4 w-4" />
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Share</p>
+            </TooltipContent>
+          </Tooltip>
+        </ShareUrlWrapper>
+
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
