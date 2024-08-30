@@ -97,7 +97,7 @@ export function UserBadge(props: UserBadgeProps) {
               </h1>
 
               <Titles data={query.data.titles} />
-              <p className="line-clamp-2 text-sm font-light text-zinc-300">
+              <p className="line-clamp-2 text-sm font-light text-zinc-700 dark:text-zinc-300">
                 {query.data.bio === '' ? 'This user has no bio' : query.data.bio}
               </p>
             </div>
