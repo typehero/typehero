@@ -71,7 +71,7 @@ export function UserBadge(props: UserBadgeProps) {
         <Link href={`/@${props.user.name}`}>
           <div className="flex flex-row space-x-2">
             <div className="flex min-w-20 flex-col items-center justify-center space-y-2">
-              <div className={cn('w-min rounded-full bg-gradient-to-r p-[2px]', gradient)}>
+              <div className={cn('w-min rounded-full bg-gradient-to-r p-0.5', gradient)}>
                 <Avatar className="h-14 w-14">
                   <AvatarImage src={query.data.image ?? ''} />
                   <AvatarFallback className="capitalize">
