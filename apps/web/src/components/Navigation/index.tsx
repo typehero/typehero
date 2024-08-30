@@ -21,6 +21,7 @@ import { SkipToCodeEditor } from './skip-to-code-editor';
 import { auth } from '~/server/auth';
 import { NotificationLink } from './notification-link';
 import { getNotificationCount } from './navigation.actions';
+import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
 
 export function getAdminUrl() {
   // reference for vercel.com
@@ -140,9 +141,14 @@ async function LoginButton({
       <DropdownMenuTrigger asChild>
         <button
           aria-label="profile button"
-          className="focus:bg-accent hidden rounded-lg p-2 duration-300 focus:outline-none focus-visible:ring-2 md:block"
+          className="hidden rounded-lg p-2 duration-300 focus:outline-none focus-visible:ring-2 md:block"
         >
-          <User className="h-5 w-5" />
+          <Avatar className="h-7 w-7">
+            <AvatarImage src={session.user.image ?? ''} alt="user avatar" />
+            <AvatarFallback className="bg-gray-700 text-white">
+              {session.user?.name.charAt(0)}
+            </AvatarFallback>
+          </Avatar>
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
