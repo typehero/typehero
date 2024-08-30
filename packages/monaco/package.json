@@ -60,7 +60,7 @@
     "next": "14.2.5",
     "next-themes": "^0.2.1",
     "prettier": "^3.1.1",
-    "react": "^18.2.0",
+    "react": "18.2.0",
     "react-hook-form": "^7.45.1",
     "zustand": "^4.3.9"
   },
