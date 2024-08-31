@@ -69,6 +69,19 @@ jobs:
       - name: Run TypeScript type check
         run: turbo typecheck --continue
 
+  sherif:
+    name: Sherif
+    needs: typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install
+        uses: ./tooling/github-actions/install
+
+      - name: Run Sherif
+        run: pnpm package-check
   e2e:
     name: E2E
     timeout-minutes: 30
