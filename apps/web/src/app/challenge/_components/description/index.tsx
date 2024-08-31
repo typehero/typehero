@@ -25,11 +25,10 @@ import { type ChallengeRouteData } from '~/app/challenge/[slug]/getChallengeRout
 import { ReportDialog } from '~/components/ReportDialog';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { addOrRemoveBookmark } from '../bookmark.action';
-import { ShareForm } from '../share-form';
 import { Vote } from '../vote';
 import { AOT_CHALLENGES } from '../../[slug]/aot-slugs';
 import { Suggestions } from './suggestions';
-import { ShareUrlWrapper } from '~/components/share-url-wrapper';
+import { ShareUrl } from '~/components/share-url';
 
 interface Props {
   challenge: ChallengeRouteData['challenge'];
@@ -114,20 +113,33 @@ export function Description({ challenge }: Props) {
           rootType="CHALLENGE"
           rootId={challenge?.id}
         />
-        <ShareUrlWrapper isChallenge>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div
-                className={cn(buttonVariants({ variant: 'secondary', size: 'xs' }), 'rounded-full')}
-              >
-                <Share className="h-4 w-4" />
-              </div>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Share</p>
-            </TooltipContent>
-          </Tooltip>
-        </ShareUrlWrapper>
+        <Dialog>
+          <DialogTrigger>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div
+                  className={cn(
+                    buttonVariants({ variant: 'secondary', size: 'xs' }),
+                    'rounded-full',
+                  )}
+                >
+                  <Share className="h-4 w-4" />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Share</p>
+              </TooltipContent>
+            </Tooltip>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Share</DialogTitle>
+            </DialogHeader>
+            <div className="pt-4">
+              <ShareUrl isChallenge />
+            </div>
+          </DialogContent>
+        </Dialog>
 
         <Tooltip>
           <TooltipTrigger asChild>
