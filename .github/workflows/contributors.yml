@@ -36,6 +36,8 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           commit-message: 'chore: update contributors'
+          committer: GitHub <noreply@github.com>
+          author: GitHub <noreply@github.com>
           title: 'chore: update contributors'
           branch: chore/update-contributors
           base: main
