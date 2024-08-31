@@ -63,8 +63,7 @@ export function URLShortnerForm() {
           variant: 'success',
         });
         setShortURL(shortURL);
-      } else {
-        if (shortURL === null) {
+      } else if (shortURL === null) {
           toast({
             title: `Slug '/${data.slug}' already exists`,
             description: 'Please try another slug',
@@ -76,7 +75,6 @@ export function URLShortnerForm() {
             description: 'Error creating short URL',
             variant: 'destructive',
           });
-      }
     } else {
       const shortURL = await createShortURL(data.url);
       if (shortURL) {
@@ -122,7 +120,7 @@ export function URLShortnerForm() {
           name="slug"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{'Custom Slug (Optional)'}</FormLabel>
+              <FormLabel>Custom Slug (Optional)</FormLabel>
               <FormControl>
                 <div className="flex items-center">
                   <p className="border-r-none rounded-l-lg border border-slate-400 bg-slate-100 p-[5.5px] px-3 text-lg dark:border-slate-800 dark:bg-slate-800">
@@ -135,7 +133,7 @@ export function URLShortnerForm() {
                   />
                 </div>
               </FormControl>
-              <FormDescription>{'Leave empty to auto-generate a slug'}</FormDescription>
+              <FormDescription>Leave empty to auto-generate a slug</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -151,8 +149,7 @@ export function URLShortnerForm() {
         >
           Shorten
         </Button>
-        {shortURL && (
-          <div className="flex w-full flex-col items-center gap-2 md:flex-row">
+        {shortURL ? <div className="flex w-full flex-col items-center gap-2 md:flex-row">
             <div className="flex-grow rounded-xl border border-green-900 px-4 py-1.5">
               <span className="text-muted-foreground mr-1 text-sm">Short URL: </span>
               <span className="text-sm">{shortURL}</span>
@@ -169,8 +166,7 @@ export function URLShortnerForm() {
                 </Button>
               </a>
             </div>
-          </div>
-        )}
+          </div> : null}
       </form>
     </Form>
   );

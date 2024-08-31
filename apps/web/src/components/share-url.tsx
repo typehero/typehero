@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState, useCallback, Suspense } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import lzstring from 'lz-string';
 import { createShortURL } from '~/app/share/_actions/create-url';

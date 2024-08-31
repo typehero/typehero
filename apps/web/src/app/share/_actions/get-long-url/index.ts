@@ -1,4 +1,5 @@
 import { prisma } from '@repo/db';
+
 export async function getLongURL(slug: string): Promise<string | null> {
   const url = await prisma.shortURL.findUnique({
     where: {
@@ -7,5 +8,5 @@ export async function getLongURL(slug: string): Promise<string | null> {
   });
   if (url) {
     return url.originalUrl;
-  } else return null;
+  } return null;
 }
