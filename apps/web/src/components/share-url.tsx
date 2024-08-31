@@ -7,39 +7,38 @@ import { useLocalStorage } from '~/utils/useLocalStorage';
 import { Checkbox } from '@repo/ui/components/checkbox';
 import { CheckCircle2, Clipboard } from '@repo/ui/icons';
 import { DialogFooter } from '@repo/ui/components/dialog';
+import { useToast } from '@repo/ui/components/use-toast';
 
 interface ShareShortUrlProps {
-  longUrl?: string;
   desciprtion?: string;
-  isChallenge: boolean;
+  isChallenge?: boolean;
 }
 
-export function ShareUrl({ longUrl, desciprtion, isChallenge }: ShareShortUrlProps) {
+export function ShareUrl({ desciprtion, isChallenge = false }: ShareShortUrlProps) {
   const { slug } = useParams();
+  const { toast } = useToast();
+  const shareType = isChallenge ? 'challenge' : 'playground';
   const [state, setState] = useState<'copied' | 'idle' | 'loading'>('idle');
-  const [copyWithCode, setCopyWithCode] = useState(false);
-  const [codeToCompress] = useLocalStorage(`challenge-${slug}`, '');
+  // enable copy with code by default on playground
+  const [copyWithCode, setCopyWithCode] = useState(shareType === 'playground');
+  const [codeToCompress] = useLocalStorage(`${shareType}-${slug}`, '');
   const [shortUrl, setShortUrl] = useState('');
-  const challengeUrl = `${window.location.origin}/challenge/${slug}`;
-
-  if (!isChallenge && !longUrl) {
-    throw new Error("'longUrl' is required for non-challenge share url component.");
-  }
+  const url = `${window.location.origin}/${shareType}/${slug}`;
 
   const genShortUrl = useCallback(async () => {
-    let long = longUrl ?? challengeUrl;
+    let long = url;
     if (copyWithCode && codeToCompress) {
       const compressedCode = lzstring.compressToEncodedURIComponent(codeToCompress);
       long += `?code=${compressedCode}`;
     }
-    // if it's a challenge, we don't need to create a short url
-    if (copyWithCode || !isChallenge) {
+    // if there's no code to copy, we don't need to create a short url
+    if (copyWithCode) {
       const url = await createShortURL(long);
       // if we can't create a short url, return the long url
       return url ?? long;
     }
     return long;
-  }, [longUrl, challengeUrl, copyWithCode, codeToCompress, isChallenge]);
+  }, [url, copyWithCode, codeToCompress]);
 
   const copyToClipboard = useCallback(async () => {
     setState('loading');
@@ -49,13 +48,21 @@ export function ShareUrl({ longUrl, desciprtion, isChallenge }: ShareShortUrlPro
       if (navigator.clipboard && state !== 'copied') {
         await navigator.clipboard.writeText(shortUrl);
         setState('copied');
+        toast({
+          title: 'URL Copied!!',
+          description: 'Share url is copied to your clipboard.',
+        });
         window.setTimeout(() => setState('idle'), 3000);
       }
     } catch (e) {
       console.error('copyToClipboard', e);
       setState('idle');
+      toast({
+        title: 'Copy Failed!!',
+        variant: 'destructive',
+      });
     }
-  }, [genShortUrl, state, shortUrl]);
+  }, [genShortUrl, state, shortUrl, toast]);
 
   const onCopyWithCodeChange = useCallback((checked: boolean) => {
     setCopyWithCode(checked);
@@ -68,7 +75,7 @@ export function ShareUrl({ longUrl, desciprtion, isChallenge }: ShareShortUrlPro
         aria-disabled={state === 'loading'}
         className="rounded-lg border border-black/20 bg-white px-4 py-2 aria-disabled:cursor-not-allowed aria-disabled:opacity-50 dark:border-white/20 dark:bg-black"
       >
-        {shortUrl.length === 0 ? challengeUrl : shortUrl}
+        {shortUrl.length === 0 ? url : shortUrl}
       </code>
       <DialogFooter>
         <div className="flex items-center justify-end gap-2">
