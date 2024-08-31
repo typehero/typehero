@@ -2,12 +2,12 @@ import { Loader2 } from '@repo/ui/icons';
 import { useSession } from '@repo/auth/react';
 import { useEffect, useRef, useState, type RefObject } from 'react';
 import { Button } from '@repo/ui/components/button';
-import { Textarea } from '@repo/ui/components/textarea';
 import { Markdown } from '@repo/ui/components/markdown';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormField, FormItem, FormMessage } from '@repo/ui/components/form';
 import { singleFieldSchema, type SingleFieldSchema } from '~/utils/zodSingleStringField';
+import { MentionInput } from '~/components/mention/mention-input';
 
 interface Props {
   mode: 'create' | 'edit' | 'reply';
@@ -54,7 +54,7 @@ export function CommentInput({ mode, onCancel, placeholder, onSubmit, defaultVal
               name="text"
               render={({ field }) => (
                 <FormItem>
-                  <Textarea
+                  <MentionInput
                     disabled={!session?.user}
                     autoFocus
                     className="resize-none border-0 px-3 py-2 focus-visible:ring-0 md:max-h-[calc(100vh_-_232px)]"
@@ -65,11 +65,6 @@ export function CommentInput({ mode, onCancel, placeholder, onSubmit, defaultVal
                     onKeyDown={(e) => {
                       if (isSubmitting) {
                         e.preventDefault();
-                        return;
-                      }
-                      if (e.key === 'Enter' && e.shiftKey) {
-                        form.handleSubmit(submitComment);
-                        e.preventDefault();
                       }
                     }}
                     placeholder={
@@ -77,7 +72,7 @@ export function CommentInput({ mode, onCancel, placeholder, onSubmit, defaultVal
                         ? 'You need to be logged in to comment.'
                         : 'Enter your comment here.'
                     }
-                    ref={textAreaRef}
+                    forwardedref={textAreaRef}
                     value={value}
                   />
                   <FormMessage className="absolute h-8 pl-3 leading-8" />

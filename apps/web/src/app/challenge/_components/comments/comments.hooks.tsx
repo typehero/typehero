@@ -7,7 +7,11 @@ import {
 import { useEffect, useReducer } from 'react';
 
 import { commentErrors, sortKeys } from './comments.constants';
-import { getAllComments, getPaginatedComments } from './getCommentRouteData';
+import {
+  getAllComments,
+  getPaginatedComments,
+  type PaginatedComments,
+} from './getCommentRouteData';
 import type { CommentRoot } from '@repo/db/types';
 import {
   addComment as addCommentAction,
@@ -16,6 +20,8 @@ import {
   updateComment as updateCommentAction,
 } from './comment.action';
 import { toast } from '@repo/ui/components/use-toast';
+import type { ChallengeRouteData } from '../../[slug]/getChallengeRouteData';
+import type { SolutionRouteData } from '../../[slug]/solutions/[solutionId]/getSolutionIdRouteData';
 
 const getRootQueryKey = (rootId: number, type: CommentRoot) =>
   `${type.toLowerCase()}-${rootId}-comments`;
@@ -27,16 +33,20 @@ interface CommentsMeta {
   sort: SortItem;
 }
 
-interface DefaultCommentsProps {
-  rootId: number;
-  type: CommentRoot;
-}
+type UseCommentsProps =
+  | {
+      root: ChallengeRouteData['challenge'];
+      rootType: 'CHALLENGE';
+      initialPage?: number;
+    }
+  | {
+      root: SolutionRouteData;
+      rootType: 'SOLUTION';
+      initialPage?: number;
+    };
 
-interface UseCommentsProps extends DefaultCommentsProps {
-  initialPage?: number;
-}
-
-export function useComments({ type, rootId, initialPage }: UseCommentsProps) {
+export function useComments(props: UseCommentsProps) {
+  const { rootType, root, initialPage } = props;
   const queryClient = useQueryClient();
   const [commentsMeta, updateCommentsMeta] = useReducer(
     (state: CommentsMeta, action: Partial<CommentsMeta>) => ({ ...state, ...action }),
@@ -47,7 +57,7 @@ export function useComments({ type, rootId, initialPage }: UseCommentsProps) {
   );
 
   const getQueryKey = ({ sort, page }: { sort: string; page: number }) => [
-    getRootQueryKey(rootId, type),
+    getRootQueryKey(root.id, rootType),
     sort,
     page,
   ];
@@ -56,9 +66,9 @@ export function useComments({ type, rootId, initialPage }: UseCommentsProps) {
     queryKey: getQueryKey({ sort: commentsMeta.sort.value, page: commentsMeta.page }),
     queryFn: () => {
       return getPaginatedComments({
-        rootId,
+        rootId: root.id,
         page: commentsMeta.page,
-        rootType: type,
+        rootType,
         sortKey: commentsMeta.sort.key,
         sortOrder: commentsMeta.sort.order,
       });
@@ -84,8 +94,6 @@ export function useComments({ type, rootId, initialPage }: UseCommentsProps) {
       const res = await deleteCommentAction(commentId);
       if (res === 'unauthorized') {
         toast(commentErrors.unauthorized);
-      } else if (res === 'invalid_comment') {
-        toast(commentErrors.invalidId);
       } else {
         toast({
           title: 'Comment Deleted',
@@ -93,7 +101,10 @@ export function useComments({ type, rootId, initialPage }: UseCommentsProps) {
           description: 'The comment was successfully deleted.',
         });
       }
-      const newPage = data?.comments.length === 1 ? commentsMeta.page - 1 : commentsMeta.page;
+      const newPage =
+        data?.comments.length === 1 && commentsMeta.page > 1
+          ? commentsMeta.page - 1
+          : commentsMeta.page;
       changePage(newPage);
       queryClient.invalidateQueries({
         queryKey: getQueryKey({ sort: commentsMeta.sort.value, page: newPage }),
@@ -108,10 +119,10 @@ export function useComments({ type, rootId, initialPage }: UseCommentsProps) {
 
   const addComment = async (text: string) => {
     try {
+      const { initialPage: _, ...rest } = props;
       const res = await addCommentAction({
+        ...rest,
         text,
-        rootId,
-        rootType: type,
       });
       if (res === 'text_is_empty') {
         toast(commentErrors.empty);
@@ -165,28 +176,38 @@ export function useComments({ type, rootId, initialPage }: UseCommentsProps) {
   };
 }
 
-interface UseCommentRepliesProps extends DefaultCommentsProps {
-  parentCommentId: number;
-  enabled: boolean;
-  preselectedReplyId?: number;
-}
+type UseCommentRepliesProps =
+  | {
+      root: ChallengeRouteData['challenge'];
+      type: 'CHALLENGE';
+      parentComment: PaginatedComments['comments'][number];
+      enabled: boolean;
+      preselectedReplyId?: number;
+    }
+  | {
+      root: SolutionRouteData;
+      type: 'SOLUTION';
+      parentComment: PaginatedComments['comments'][number];
+      enabled: boolean;
+      preselectedReplyId?: number;
+    };
 
 const REPLIES_PAGESIZE = 5;
 
 export function useCommentsReplies({
-  rootId,
+  root,
   type,
-  parentCommentId,
+  parentComment,
   enabled,
   preselectedReplyId,
 }: UseCommentRepliesProps) {
   const queryClient = useQueryClient();
-  const rootQueryKey = [getRootQueryKey(rootId, type)];
-  const queryKey = [...rootQueryKey, `comment-${parentCommentId}-replies`];
+  const rootQueryKey = [getRootQueryKey(root.id, type)];
+  const queryKey = [...rootQueryKey, `comment-${parentComment.id}-replies`];
 
   const { data: replies } = useQuery({
     queryKey,
-    queryFn: () => getAllComments({ rootId, rootType: type, parentId: parentCommentId }),
+    queryFn: () => getAllComments({ rootId: root.id, rootType: type, parentId: parentComment.id }),
     staleTime: 5000,
     enabled,
   });
@@ -233,13 +254,15 @@ export function useCommentsReplies({
 
   const addReplyComment = async (text: string) => {
     try {
+      // @ts-ignore
       const res = await replyComment(
+        // @ts-ignore
         {
           text,
-          rootId,
+          root,
           rootType: type,
         },
-        parentCommentId,
+        parentComment,
       );
       if (res === 'text_is_empty') {
         toast(commentErrors.empty);
@@ -278,8 +301,6 @@ export function useCommentsReplies({
       const res = await deleteCommentAction(commentId);
       if (res === 'unauthorized') {
         toast(commentErrors.unauthorized);
-      } else if (res === 'invalid_comment') {
-        toast(commentErrors.invalidId);
       } else {
         toast({
           title: 'Comment Deleted',

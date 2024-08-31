@@ -2,7 +2,7 @@
 
 import { type ColumnDef } from '@tanstack/react-table';
 import Link from 'next/link';
-import { getRelativeTime } from '~/utils/relativeTime';
+import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import type { HistoricalChallenge } from './_actions';
 
 export const columns: ColumnDef<HistoricalChallenge>[] = [
@@ -18,6 +18,6 @@ export const columns: ColumnDef<HistoricalChallenge>[] = [
   {
     accessorKey: 'submissionDate',
     header: 'Last Submission',
-    cell: ({ row }) => getRelativeTime(row.original.submissionDate!),
+    cell: ({ row }) => getRelativeTimeStrict(row.original.submissionDate!),
   },
 ];

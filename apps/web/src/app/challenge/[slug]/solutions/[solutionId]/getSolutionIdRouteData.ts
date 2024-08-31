@@ -3,6 +3,8 @@ import { prisma } from '@repo/db';
 import { type Session } from '@repo/auth/server';
 import { redirect } from 'next/navigation';
 
+export type SolutionRouteData = NonNullable<Awaited<ReturnType<typeof getSolutionIdRouteData>>>;
+
 export const getSolutionIdRouteData = cache(
   async (slug: string, solutionId: string, session: Session | null) => {
     const challenge = await prisma.challenge.findFirstOrThrow({
@@ -17,8 +19,11 @@ export const getSolutionIdRouteData = cache(
       include: {
         user: {
           select: {
+            id: true,
             name: true,
             image: true,
+            roles: true,
+            bio: true,
           },
         },
         _count: {

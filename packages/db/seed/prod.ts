@@ -38,7 +38,7 @@ try {
     create: {
       id: TYPE_CHALLENGE_ID,
       email: 'fake@email.com',
-      name: 'Type Challenges',
+      name: 'type-challenges',
       userLinks: {
         create: {
           url: 'https://tsch.js.org/',

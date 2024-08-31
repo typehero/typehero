@@ -1,7 +1,7 @@
 'use client';
 
 import { type ColumnDef } from '@tanstack/react-table';
-import { getRelativeTime } from '~/utils/relativeTime';
+import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import Link from 'next/link';
 import type { SharedSolution } from '../page';
 
@@ -34,6 +34,6 @@ export const sharedSolutionsColumns: ColumnDef<SharedSolution>[] = [
   {
     accessorKey: 'createdAt',
     header: 'Date',
-    cell: ({ row }) => getRelativeTime(row.original.createdAt),
+    cell: ({ row }) => getRelativeTimeStrict(row.original.createdAt),
   },
 ];

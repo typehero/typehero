@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import lzstring from 'lz-string';
 import Link from 'next/link';
 import { useParams, useSearchParams } from 'next/navigation';
-import { getRelativeTime } from '~/utils/relativeTime';
+import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import { AOT_CHALLENGES } from '../../../aot-slugs';
 import { getChallengeSubmissionById } from '../getChallengeSubmissions';
 import { Suggestions } from './suggestions';
@@ -95,7 +95,7 @@ export function SubmissionOverview({ submissionId }: Props) {
               {submission.isSuccessful ? 'Accepted' : 'Rejected'}
             </div>
             <div className="px-3 text-sm text-neutral-500">
-              Submitted {getRelativeTime(submission.createdAt)}
+              Submitted {getRelativeTimeStrict(submission.createdAt)}
             </div>
           </div>
           {!isAotChallenge && (

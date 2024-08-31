@@ -15,19 +15,18 @@ import { DifficultyBadge } from '@repo/ui/components/difficulty-badge';
 import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { TypographyH3 } from '@repo/ui/components/typography/h3';
-import { UserBadge } from '@repo/ui/components/user-badge';
 import { Bookmark as BookmarkIcon, Calendar, CheckCircle, Flag, Share } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { debounce } from 'lodash';
-import Link from 'next/link';
 import { useMemo, useRef, useState } from 'react';
 import { type ChallengeRouteData } from '~/app/challenge/[slug]/getChallengeRouteData';
 import { ReportDialog } from '~/components/ReportDialog';
-import { getRelativeTime } from '~/utils/relativeTime';
+import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import { addOrRemoveBookmark } from '../bookmark.action';
 import { Vote } from '../vote';
 import { AOT_CHALLENGES } from '../../[slug]/aot-slugs';
 import { Suggestions } from './suggestions';
+import { UserBadge } from '../comments/enhanced-user-badge';
 import { ShareUrl } from '~/components/share-url';
 
 interface Props {
@@ -87,10 +86,17 @@ export function Description({ challenge }: Props) {
       </div>
       {/* Author & Time */}
       <div className="mt-2 flex items-center gap-4">
-        <UserBadge username={challenge.user.name} linkComponent={Link} />
+        <UserBadge
+          user={{
+            name: challenge.user?.name ?? '',
+            image: challenge.user?.image ?? '',
+            bio: challenge.user?.bio ?? '',
+            roles: challenge.user?.roles ?? [],
+          }}
+        />
         <div className="text-muted-foreground flex items-center gap-2">
           <Calendar className=" h-4 w-4" />
-          <span className="text-xs">Last updated {getRelativeTime(challenge.updatedAt)}</span>
+          <span className="text-xs">Last updated {getRelativeTimeStrict(challenge.updatedAt)}</span>
         </div>
       </div>
       {/* Difficulty & Action Buttons */}
@@ -112,6 +118,8 @@ export function Description({ challenge }: Props) {
           disabled={!session?.data?.user?.id}
           rootType="CHALLENGE"
           rootId={challenge?.id}
+          toUserId={challenge.user.name}
+          challengeSlug={challenge.slug}
         />
         <Dialog>
           <DialogTrigger>

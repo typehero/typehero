@@ -143,14 +143,14 @@ export function RichMarkdownEditor({
   }, [startUpload, allowImageUpload]);
 
   const handlePasta = async (event: React.ClipboardEvent<HTMLDivElement>) => {
-    event.preventDefault();
-
     // only allow image if it's enabled
     if (!allowImageUpload) return;
 
     const [firstImage] = event.clipboardData.items;
     if (!firstImage) return;
     if (firstImage.kind !== 'file') return;
+
+    event.preventDefault();
 
     const blob = firstImage.getAsFile();
     if (!blob) return;

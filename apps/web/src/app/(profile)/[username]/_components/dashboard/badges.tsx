@@ -13,7 +13,7 @@ import {
 } from '../badges/aot-2023-badge';
 import { toast } from '@repo/ui/components/use-toast';
 
-const SlugToBadgeIcon: Record<BadgeInfo['slug'], FC<{ className: string }>> = {
+export const SlugToBadgeIcon: Record<BadgeInfo['slug'], FC<{ className: string }>> = {
   'aot-2023-bronze': HolidayBronzeBadge,
   'aot-2023-silver': HolidaySilverBadge,
   'aot-2023-gold': HolidayGoldBadge,

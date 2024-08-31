@@ -37,8 +37,8 @@
     "picocolors": "^1.0.0",
     "prettier": "^3.1.1",
     "prettier-plugin-tailwindcss": "^0.5.9",
-    "tsx": "^3.14.0",
-    "turbo": "^1.13.0",
+    "tsx": "4.19.0",
+    "turbo": "^2.0.12",
     "type-testing": "0.2.0",
     "typescript": "^5.3.3",
     "vitest": "^0.34.6"

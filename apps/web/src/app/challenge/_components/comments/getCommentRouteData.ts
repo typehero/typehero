@@ -54,12 +54,11 @@ export async function getPreselectedSolutionCommentMetadata(
       id: solutionId,
       challengeId,
     },
-    orderBy: {
-      createdAt: 'desc',
-    },
     select: {
       id: true,
-      solutionComment: true,
+      solutionComment: {
+        orderBy: { createdAt: 'desc' },
+      },
     },
   });
 
@@ -134,7 +133,7 @@ export async function getPaginatedComments({
   });
 
   const comments = await prisma.comment.findMany({
-    skip: (page - 1) * take,
+    skip: ((page || 1) - 1) * take,
     take,
     where: {
       rootType,
@@ -149,6 +148,8 @@ export async function getPaginatedComments({
           id: true,
           name: true,
           image: true,
+          roles: true,
+          bio: true,
         },
       },
       _count: {
@@ -167,12 +168,18 @@ export async function getPaginatedComments({
       },
       rootChallenge: {
         select: {
+          slug: true,
           name: true,
         },
       },
       rootSolution: {
         select: {
           title: true,
+          challenge: {
+            select: {
+              slug: true,
+            },
+          },
         },
       },
     },
@@ -217,6 +224,8 @@ export async function getAllComments({
           id: true,
           name: true,
           image: true,
+          roles: true,
+          bio: true,
         },
       },
       _count: {
@@ -235,12 +244,18 @@ export async function getAllComments({
       },
       rootChallenge: {
         select: {
+          slug: true,
           name: true,
         },
       },
       rootSolution: {
         select: {
           title: true,
+          challenge: {
+            select: {
+              slug: true,
+            },
+          },
         },
       },
     },

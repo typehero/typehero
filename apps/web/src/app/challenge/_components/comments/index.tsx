@@ -14,16 +14,18 @@ import { SortSelect } from '../sort-select';
 import { useComments } from './comments.hooks';
 import { sortKeys } from './comments.constants';
 import { useTrackNavigationVisiblity } from '../../[slug]/use-track-visibility.hook';
+import type { ChallengeRouteData } from '../../[slug]/getChallengeRouteData';
+import type { SolutionRouteData } from '../../[slug]/solutions/[solutionId]/getSolutionIdRouteData';
 
 interface Props {
   preselectedCommentMetadata?: PreselectedCommentMetadata;
   expanded?: boolean;
-  rootId: number;
+  root: ChallengeRouteData['challenge'] | SolutionRouteData;
   type: CommentRoot;
 }
 
 // million-ignore
-export function Comments({ preselectedCommentMetadata, rootId, type, expanded = false }: Props) {
+export function Comments({ preselectedCommentMetadata, root, type, expanded = false }: Props) {
   const { isTrackTitleVisible } = useTrackNavigationVisiblity();
   const [showComments, setShowComments] = useState(expanded);
   const commentContainerRef = useRef<HTMLDivElement>(null);
@@ -37,10 +39,11 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
     deleteComment,
     updateComment,
   } = useComments({
-    type,
-    rootId,
+    rootType: type,
+    root,
     initialPage: preselectedCommentMetadata?.page,
-  });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } as any);
 
   const handleChangePage = (page: number) => {
     changePage(page);
@@ -53,7 +56,7 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
   return (
     <div
       className={clsx(
-        'bg-background/90 dark:border-b-muted dark:bg-muted/90 absolute bottom-0 max-h-full w-full overflow-hidden border-t border-zinc-300 backdrop-blur-sm duration-300 dark:border-zinc-700',
+        'bg-background/90 dark:border-b-muted dark:bg-muted/90 absolute bottom-0 max-h-full w-full overflow-hidden border-t border-zinc-300 backdrop-blur-sm duration-300 dark:border-zinc-700 ',
         {
           'lg:border-t-none': showComments,
         },
@@ -112,7 +115,7 @@ export function Comments({ preselectedCommentMetadata, rootId, type, expanded = 
                     key={comment.id}
                     preselectedCommentMetadata={preselectedCommentMetadata}
                     comment={comment}
-                    rootId={rootId}
+                    root={root}
                     type={type}
                     deleteComment={deleteComment}
                     updateComment={updateComment}

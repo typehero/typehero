@@ -5,7 +5,6 @@ import { type CommentRoot } from '@repo/db/types';
 import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { toast } from '@repo/ui/components/use-toast';
-import { UserBadge } from '@repo/ui/components/user-badge';
 import {
   ChevronDown,
   ChevronUp,
@@ -18,12 +17,11 @@ import {
   MoreHorizontal,
 } from '@repo/ui/icons';
 import clsx from 'clsx';
-import Link from 'next/link';
 import { useParams, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { z } from 'zod';
 import { ReportDialog } from '~/components/ReportDialog';
-import { getRelativeTime } from '~/utils/relativeTime';
+import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import { Vote } from '../vote';
 import { CommentInput } from './comment-input';
 import { CommentDeleteDialog } from './delete';
@@ -33,6 +31,9 @@ import { Button } from '@repo/ui/components/button';
 import { CommentSkeleton } from './comment-skeleton';
 import { isAdminOrModerator } from '~/utils/auth-guards';
 import { useCommentsReplies } from './comments.hooks';
+import { UserBadge } from './enhanced-user-badge';
+import type { ChallengeRouteData } from '../../[slug]/getChallengeRouteData';
+import type { SolutionRouteData } from '../../[slug]/solutions/[solutionId]/getSolutionIdRouteData';
 
 interface SingleCommentProps {
   comment: PaginatedComments['comments'][number];
@@ -48,7 +49,7 @@ interface SingleCommentProps {
 
 type CommentProps = SingleCommentProps & {
   preselectedCommentMetadata?: PreselectedCommentMetadata;
-  rootId: number;
+  root: ChallengeRouteData['challenge'] | SolutionRouteData;
   type: CommentRoot;
   deleteComment: (commentId: number) => Promise<void>;
   updateComment: (text: string, commentId: number) => Promise<void>;
@@ -80,7 +81,7 @@ export function Comment({
   comment,
   preselectedCommentMetadata,
   readonly = false,
-  rootId,
+  root,
   type,
   deleteComment,
   updateComment,
@@ -102,11 +103,12 @@ export function Comment({
     updateReplyComment,
     deleteReplyComment,
     showLoadMoreRepliesBtn,
+    // @ts-ignore
   } = useCommentsReplies({
     enabled: showReplies,
-    rootId,
+    root,
     type,
-    parentCommentId: comment.id,
+    parentComment: comment,
     preselectedReplyId: hasPreselectedReply ? Number(replyId) : undefined,
   });
 
@@ -275,14 +277,21 @@ function SingleComment({
                 {comment.user?.name.substring(0, 1)}
               </AvatarFallback>
             </Avatar>
-            <UserBadge username={comment.user.name ?? ''} linkComponent={Link} />
+            <UserBadge
+              user={{
+                name: comment.user?.name ?? '',
+                image: comment.user?.image ?? '',
+                bio: comment.user?.bio ?? '',
+                roles: comment.user?.roles ?? [],
+              }}
+            />
           </div>
 
           <Tooltip delayDuration={0.05}>
             <TooltipTrigger asChild>
               <div className="text-muted-foreground flex items-center gap-2 whitespace-nowrap text-xs">
                 <Calendar className="h-4 w-4" />
-                <span>{getRelativeTime(comment.createdAt)}</span>
+                <span>{getRelativeTimeStrict(comment.createdAt)}</span>
               </div>
             </TooltipTrigger>
             <TooltipContent align="start" alignOffset={-55} className="rounded-xl">
@@ -324,6 +333,9 @@ function SingleComment({
         {!readonly && (
           <>
             <Vote
+              comment={comment}
+              toUserId={comment.user.id}
+              challengeSlug={comment.rootChallenge?.slug ?? ''}
               voteCount={comment._count.vote}
               initialHasVoted={comment.vote.length > 0}
               disabled={!session?.data?.user?.id || comment.userId === session?.data?.user?.id}
