@@ -41,6 +41,7 @@
       }
     },
     "ignore": [
+      "**/public/",
       "tooling/**",
       "challenges/**",
       "**/monaco-editor.d.ts",
@@ -77,5 +78,10 @@
     "indentStyle": "space",
     "indentWidth": 2,
     "lineWidth": 100
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single"
+    }
   }
 }
