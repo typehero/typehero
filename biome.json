@@ -5,7 +5,7 @@
     "enabled": true,
     "rules": {
       "nursery": {
-        "useSortedClasses": "error"
+        "useSortedClasses": "warn"
       },
       "recommended": false,
       "a11y": {
@@ -41,8 +41,6 @@
       }
     },
     "ignore": [
-      "apps/**",
-      "packages/**",
       "tooling/**",
       "challenges/**",
       "**/monaco-editor.d.ts",
@@ -68,8 +66,6 @@
   ],
   "formatter": {
     "ignore": [
-      "apps/**",
-      "packages/**",
       "tooling/**",
       "challenges/**",
       "**/monaco-editor.d.ts",
