@@ -32,9 +32,9 @@ export function ThemeButton() {
             layout
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
           >
-            {t === 'system' && <Laptop aria-hidden="true" className={'size-4'} />}
-            {t === 'light' && <Sun aria-hidden="true" className={'size-4'} />}
-            {t === 'dark' && <Moon aria-hidden="true" className={'size-4'} />}
+            {t === 'system' && <Laptop aria-hidden="true" className="size-4" />}
+            {t === 'light' && <Sun aria-hidden="true" className="size-4" />}
+            {t === 'dark' && <Moon aria-hidden="true" className="size-4" />}
           </motion.button>
         );
       })}
