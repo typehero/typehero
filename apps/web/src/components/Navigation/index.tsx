@@ -59,11 +59,22 @@ export async function Navigation() {
       <div className="ml-4 hidden items-center gap-4 md:flex">{TopSectionLinks}</div>
       <div className="flex flex-col gap-5 pl-4 md:hidden">
         {TopSectionLinks}
+        {!session?.user && (
+          <div className="flex items-center gap-2">
+            <span>Theme</span>
+            <ThemeButton />
+          </div>
+        )}
+
         {session?.user ? (
           <>
             <hr />
             <NavLink title="Profile" href={`/@${session.user.name}`} />
             <NavLink title="Settings" href="/settings" />
+            <div className="flex items-center gap-2">
+              <span>Theme</span>
+              <ThemeButton />
+            </div>
             {isAdminOrMod ? <NavLink title="Admin" href={getAdminUrl()} /> : null}
             {isAdminOrMod ? (
               <NavLink title="Challenge Playground" href="/challenge-playground" />
