@@ -79,7 +79,8 @@ export function ShareUrl({ desciprtion, isChallenge = false }: ShareShortUrlProp
       </code>
       <DialogFooter>
         <div className="flex items-center justify-end gap-2">
-          {codeToCompress ? (
+          {/* Checkbox not needed in playground */}
+          {codeToCompress && isChallenge ? (
             <div className="flex h-fit items-center justify-center gap-2 text-xs">
               <Checkbox
                 id="copy-with-code"
