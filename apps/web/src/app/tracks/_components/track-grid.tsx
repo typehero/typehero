@@ -45,7 +45,7 @@ async function getTracks(session: Session | null) {
             include: {
               submission: {
                 where: {
-                  userId: session?.user?.id,
+                  userId: session?.user?.id ?? '',
                 },
               },
             },
