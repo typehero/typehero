@@ -6,7 +6,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@repo/ui/components/dropdown-menu';
-import { Play, Settings, Settings2, User } from '@repo/ui/icons';
+import { Play, Settings, Settings2, User, Palette } from '@repo/ui/icons';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { isAdminOrModerator } from '~/utils/auth-guards';
@@ -22,6 +22,7 @@ import { auth } from '~/server/auth';
 import { NotificationLink } from './notification-link';
 import { getNotificationCount } from './navigation.actions';
 import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
+import { ThemeButton } from './theme-button';
 
 export function getAdminUrl() {
   // reference for vercel.com
@@ -167,6 +168,14 @@ async function LoginButton({
             <span>Settings</span>
           </DropdownMenuItem>
         </Link>
+        <DropdownMenuSeparator />
+        <div className="flex items-center justify-between rounded-lg px-2 py-0.5 text-sm ">
+          <div className="flex items-center">
+            <Palette className="mr-2 h-4 w-4" />
+            <span>Theme</span>
+          </div>
+          <ThemeButton />
+        </div>
         {isAdminOrMod ? (
           <a className="block" href={getAdminUrl()}>
             <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
