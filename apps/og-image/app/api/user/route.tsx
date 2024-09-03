@@ -1,5 +1,5 @@
 import { ImageResponse } from '@vercel/og';
-import { fetchFont, userParam } from '@repo/og-utils/src';
+import { fetchFont, userParam } from '@repo/og-utils';
 import { Grid } from 'app/components/grid';
 import { Logo } from 'app/components/logo';
 

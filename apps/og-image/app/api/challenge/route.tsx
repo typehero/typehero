@@ -1,5 +1,5 @@
 import { ImageResponse } from '@vercel/og';
-import { fetchFont, challengeParam } from '@repo/og-utils/src';
+import { fetchFont, challengeParam } from '@repo/og-utils';
 import { Logo3d } from 'app/components/logo3d';
 import { Grid } from 'app/components/grid';
 

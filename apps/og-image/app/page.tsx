@@ -4,7 +4,7 @@
 
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { challengeParam, userParam } from '@repo/og-utils/src';
+import { challengeParam, userParam } from '@repo/og-utils';
 import './app.css';
 
 const ogImageUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api/landing` : '';
