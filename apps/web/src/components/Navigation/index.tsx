@@ -6,7 +6,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@repo/ui/components/dropdown-menu';
-import { ExternalLink, Play, Settings, Settings2, User } from '@repo/ui/icons';
+import { ExternalLink, Play, Settings, Settings2, User, Palette } from '@repo/ui/icons';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { isAdmin, isAdminOrModerator } from '~/utils/auth-guards';
@@ -22,6 +22,7 @@ import { auth } from '~/server/auth';
 import { NotificationLink } from './notification-link';
 import { getNotificationCount } from './navigation.actions';
 import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
+import { ThemeButton } from './theme-button';
 
 export function getAdminUrl() {
   // reference for vercel.com
@@ -59,11 +60,22 @@ export async function Navigation() {
       <div className="ml-4 hidden items-center gap-4 md:flex">{TopSectionLinks}</div>
       <div className="flex flex-col gap-5 pl-4 md:hidden">
         {TopSectionLinks}
+        {!session?.user && (
+          <div className="flex items-center gap-2">
+            <span>Theme</span>
+            <ThemeButton />
+          </div>
+        )}
+
         {session?.user ? (
           <>
             <hr />
             <NavLink title="Profile" href={`/@${session.user.name}`} />
             <NavLink title="Settings" href="/settings" />
+            <div className="flex items-center gap-2">
+              <span>Theme</span>
+              <ThemeButton />
+            </div>
             {isAdminOrMod ? <NavLink title="Admin" href={getAdminUrl()} /> : null}
             {isAdminOrMod ? (
               <NavLink title="Challenge Playground" href="/challenge-playground" />
@@ -171,6 +183,14 @@ async function LoginButton({
             <span>Settings</span>
           </DropdownMenuItem>
         </Link>
+        <DropdownMenuSeparator />
+        <div className="flex items-center justify-between rounded-lg px-2 py-0.5 text-sm ">
+          <div className="flex items-center">
+            <Palette className="mr-2 h-4 w-4" />
+            <span>Theme</span>
+          </div>
+          <ThemeButton />
+        </div>
         {isAdminOrMod ? (
           <a className="block" href={getAdminUrl()}>
             <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">

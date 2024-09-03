@@ -7,7 +7,7 @@ if (!process.env.GITHUB_AOT_ID) {
 }
 
 if (!process.env.GITHUB_AOT_SECRET) {
-  throw new Error('No GITHUB__AOT_SECRET has been provided.');
+  throw new Error('No GITHUB_AOT_SECRET has been provided.');
 }
 
 export const authOptions = {

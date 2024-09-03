@@ -22,6 +22,8 @@
     "lint:markdown": "markdownlint-cli2 \"challenges/**/*.md\" \"#**/node_modules\" && cspell challenges/** --no-progress",
     "lint:markdown:validate": "tsx challenges/validate.ts",
     "lint:fix": "eslint . --fix --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
+    "package-check": "pnpm dlx sherif@latest --ignore-rule root-package-dependencies",
+    "package-check:fix": "pnpm dlx sherif@latest --ignore-rule root-package-dependencies --fix",
     "refresh": "turbo db:reset db:seed --concurrency=1",
     "test:e2e": "turbo test:e2e",
     "test:e2e:install": "playwright install",
@@ -55,8 +57,7 @@
     },
     "patchedDependencies": {
       "@monaco-editor/react@4.5.1": "patches/@monaco-editor__react@4.5.1.patch",
-      "monaco-vim@0.4.0": "patches/monaco-vim@0.4.0.patch",
-      "@vercel/toolbar@0.1.1": "patches/@vercel__toolbar@0.1.1.patch"
+      "monaco-vim@0.4.0": "patches/monaco-vim@0.4.0.patch"
     }
   },
   "dependencies": {
