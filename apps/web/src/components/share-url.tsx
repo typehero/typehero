@@ -23,6 +23,7 @@ export function ShareUrl({ desciprtion, isChallenge = false }: ShareShortUrlProp
   const [copyWithCode, setCopyWithCode] = useState(shareType === 'playground');
   const [codeToCompress] = useLocalStorage(`${shareType}-${slug}`, '');
   const [shortUrl, setShortUrl] = useState('');
+  const [previousCode, setPreviousCode] = useState('');
   const url = `${window.location.origin}/${shareType}/${slug}`;
 
   const genShortUrl = useCallback(async () => {
@@ -30,20 +31,24 @@ export function ShareUrl({ desciprtion, isChallenge = false }: ShareShortUrlProp
     if (copyWithCode && codeToCompress) {
       const compressedCode = lzstring.compressToEncodedURIComponent(codeToCompress);
       long += `?code=${compressedCode}`;
-      // if there's no code to copy, we don't need to create a short url.
-      const url = await createShortURL(long);
-      // if we can't create a short url, return the long url
-      return url ?? long;
+
+      // Check if the code has changed
+      if (codeToCompress !== previousCode) {
+        const short = await createShortURL(long);
+        setPreviousCode(codeToCompress);
+        return short ?? long;
+      }
+      return shortUrl;
     }
     return long;
-  }, [url, copyWithCode, codeToCompress]);
+  }, [url, copyWithCode, codeToCompress, previousCode, shortUrl]);
 
   const copyToClipboard = useCallback(async () => {
     setState('loading');
     const short = await genShortUrl();
     setShortUrl(short);
     try {
-      if (navigator.clipboard && state !== 'copied') {
+      if (navigator.clipboard) {
         await navigator.clipboard.writeText(shortUrl);
         setState('copied');
         toast({
@@ -60,7 +65,7 @@ export function ShareUrl({ desciprtion, isChallenge = false }: ShareShortUrlProp
         variant: 'destructive',
       });
     }
-  }, [genShortUrl, state, shortUrl, toast]);
+  }, [genShortUrl, shortUrl, toast]);
 
   const onCopyWithCodeChange = useCallback((checked: boolean) => {
     setCopyWithCode(checked);
@@ -71,7 +76,7 @@ export function ShareUrl({ desciprtion, isChallenge = false }: ShareShortUrlProp
       <p>{desciprtion ?? 'Copy this url to share with your friends!'}</p>
       <code
         aria-disabled={state === 'loading'}
-        className="rounded-lg border border-black/20 bg-white px-4 py-2 aria-disabled:cursor-not-allowed aria-disabled:opacity-50 dark:border-white/20 dark:bg-black"
+        className="break-all rounded-lg border border-black/20 bg-white px-4 py-2 aria-disabled:cursor-not-allowed aria-disabled:opacity-50 dark:border-white/20 dark:bg-black"
       >
         {shortUrl.length === 0 ? url : shortUrl}
       </code>
