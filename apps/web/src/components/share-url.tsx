@@ -8,6 +8,7 @@ import { Checkbox } from '@repo/ui/components/checkbox';
 import { CheckCircle2, Clipboard } from '@repo/ui/icons';
 import { DialogFooter } from '@repo/ui/components/dialog';
 import { useToast } from '@repo/ui/components/use-toast';
+import { isShorthandPropertyAssignment } from 'typescript';
 
 interface ShareShortUrlProps {
   desciprtion?: string;
@@ -49,7 +50,7 @@ export function ShareUrl({ desciprtion, isChallenge = false }: ShareShortUrlProp
     setShortUrl(short);
     try {
       if (navigator.clipboard) {
-        await navigator.clipboard.writeText(shortUrl);
+        await navigator.clipboard.writeText(short);
         setState('copied');
         toast({
           title: 'URL Copied!!',
@@ -65,7 +66,7 @@ export function ShareUrl({ desciprtion, isChallenge = false }: ShareShortUrlProp
         variant: 'destructive',
       });
     }
-  }, [genShortUrl, shortUrl, toast]);
+  }, [genShortUrl, toast]);
 
   const onCopyWithCodeChange = useCallback((checked: boolean) => {
     setCopyWithCode(checked);
