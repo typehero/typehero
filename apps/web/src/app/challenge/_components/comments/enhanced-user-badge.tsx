@@ -13,7 +13,7 @@ import { cn } from '@repo/ui/cn';
 import { type Role } from '@repo/db/types';
 import { Button } from '@repo/ui/components/button';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@repo/ui/components/hover-card';
-import { getTitles, type TitleInfo } from './enhanced-user-badge.getTitles';
+import { getGradient, getTitles, type TitleInfo } from './enhanced-user-badge.getTitles';
 import { Skeleton } from '@repo/ui/components/skeleton';
 
 interface UserBadgeProps {
@@ -114,27 +114,7 @@ const TITLE_TO_ICON: Record<TitleInfo['type'], LucideIcon> = {
   contributor: Wand2,
 };
 
-const TITLE_TO_CLASSNAME: Record<TitleInfo['type'], string> = {
-  admin: 'bg-gradient-to-r from-rose-400 to-orange-500 dark:from-rose-400 dark:to-orange-300',
-  contributor: 'bg-gradient-to-r from-sky-400 to-cyan-600 dark:from-sky-400 dark:to-cyan-300',
-  supporter:
-    'bg-gradient-to-r from-emerald-500 to-emerald-600 dark:from-emerald-200 dark:to-emerald-500',
-};
-
-function getGradient(roles: Role[]) {
-  if (roles.find((r) => r.role === 'ADMIN')) {
-    return TITLE_TO_CLASSNAME.admin;
-  }
-  if (roles.find((r) => r.role === 'CONTRIBUTOR')) {
-    return TITLE_TO_CLASSNAME.contributor;
-  }
-  if (roles.find((r) => r.role === 'SUPPORTER')) {
-    return TITLE_TO_CLASSNAME.supporter;
-  }
-  return 'text-foreground';
-}
-
-function Titles(props: { data: TitleInfo[] }) {
+export function Titles(props: { data: TitleInfo[] }) {
   return (
     <div className="flex flex-row space-x-2">
       {props.data.map((t) => {

@@ -5,6 +5,7 @@
   "exports": {
     "./types": "./src/types.ts",
     "./icons": "./src/icons.ts",
+    "./recharts": "./src/recharts.ts",
     "./cn": "./src/cn.ts",
     "./components/*": "./src/components/*"
   },
@@ -15,6 +16,9 @@
       ],
       "icons": [
         "./src/icons.ts"
+      ],
+      "recharts": [
+        "./src/recharts.ts"
       ],
       "cn": [
         "./src/cn.ts"
@@ -57,13 +61,14 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "lucide-react": "^0.260.0",
-    "next-themes": "^0.2.1",
     "mdast-util-find-and-replace": "^3.0.1",
+    "next-themes": "^0.2.1",
     "react": "18.2.0",
     "react-day-picker": "^8.8.0",
     "react-hook-form": "^7.45.1",
     "react-markdown": "^8.0.7",
     "react-syntax-highlighter": "^15.5.0",
+    "recharts": "^2.12.7",
     "rehype-raw": "^7.0.0",
     "remark-gfm": "^3.0.1",
     "tailwind-merge": "^1.14.0",

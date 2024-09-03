@@ -79,5 +79,6 @@ export {
   RectangleVertical,
   SearchIcon,
   Wand2,
+  TrendingUp,
   type LucideIcon,
 } from 'lucide-react';
