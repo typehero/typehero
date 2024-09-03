@@ -2,19 +2,6 @@
   "name": "@repo/og-image",
   "private": true,
   "type": "module",
-  "exports": {
-    ".": "./utils/zodParams.ts"
-  },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "./utils/zodParams.ts"
-      ],
-      "types": [
-        "./utils/zodParams.ts"
-      ]
-    }
-  },
   "scripts": {
     "build": "next build",
     "dev": "next dev --turbo -p 4200",
@@ -29,6 +16,7 @@
   },
   "devDependencies": {
     "@repo/lint": "workspace:*",
+    "@repo/og-utils": "workspace:*",
     "@repo/tsconfig": "workspace:*",
     "@types/node": "^20.4.2",
     "@types/react": "^18.2.20",
