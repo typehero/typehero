@@ -30,9 +30,7 @@ export function ShareUrl({ desciprtion, isChallenge = false }: ShareShortUrlProp
     if (copyWithCode && codeToCompress) {
       const compressedCode = lzstring.compressToEncodedURIComponent(codeToCompress);
       long += `?code=${compressedCode}`;
-    }
-    // if there's no code to copy, we don't need to create a short url
-    if (copyWithCode) {
+      // if there's no code to copy, we don't need to create a short url.
       const url = await createShortURL(long);
       // if we can't create a short url, return the long url
       return url ?? long;
