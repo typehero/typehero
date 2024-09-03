@@ -1,7 +1,7 @@
-import { cache } from 'react';
-import { prisma } from '@repo/db';
 import { type Session } from '@repo/auth/server';
+import { prisma } from '@repo/db';
 import { redirect } from 'next/navigation';
+import { cache } from 'react';
 
 export type SolutionRouteData = NonNullable<Awaited<ReturnType<typeof getSolutionIdRouteData>>>;
 

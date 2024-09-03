@@ -23,12 +23,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Navigation />
           <main className="py-5">
             <div className="space-y-0.5 px-4">
-              <h2 className="text-2xl font-bold tracking-tight">Admin</h2>
+              <h2 className="font-bold text-2xl tracking-tight">Admin</h2>
               <p className="text-muted-foreground">
                 The dashboard for all things moderation, administration, and more.
               </p>
             </div>
-            <div className="bg-border my-6 h-[1px] w-full shrink-0" />
+            <div className="my-6 h-[1px] w-full shrink-0 bg-border" />
             <div className="h-full">{children}</div>
           </main>
           <Toaster />

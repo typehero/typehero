@@ -1,5 +1,6 @@
 'use client';
 
+import { AlertTriangle, CheckCircle2, InfoIcon } from 'lucide-react';
 import {
   Toast,
   ToastClose,
@@ -9,7 +10,6 @@ import {
   ToastViewport,
 } from './toast';
 import { useToast } from './use-toast';
-import { CheckCircle2, AlertTriangle, InfoIcon } from 'lucide-react';
 
 const ICONS = {
   default: <InfoIcon fill="#8B5CF6" color="#fff" size={32} />,

@@ -13,7 +13,7 @@ export function BackgroundGrid() {
         initial={{ opacity: 0 }}
         transition={{ duration: 0.6, delay: 0.6 }}
       />
-      <div className="shadow-background absolute h-full w-full rounded-full shadow-[inset_0_0_5rem_3rem]" />
+      <div className="absolute h-full w-full rounded-full shadow-[inset_0_0_5rem_3rem] shadow-background" />
     </div>
   );
 }
@@ -27,7 +27,7 @@ export function HeroIllustration() {
 
   return (
     <div className="relative hidden h-[800px] overflow-visible rounded-full lg:block">
-      <div className="absolute -inset-40 top-1/2 -z-30 -translate-y-1/2 translate-x-[-30px] overflow-hidden rounded-full">
+      <div className="-inset-40 -z-30 -translate-y-1/2 absolute top-1/2 translate-x-[-30px] overflow-hidden rounded-full">
         <BackgroundGrid />
       </div>
 

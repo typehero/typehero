@@ -38,12 +38,12 @@ export function CommentDeleteDialog({
         <div className="flex flex-col gap-1 p-3 pt-2">
           <div className="flex items-start justify-between pr-[0.4rem]">
             <div className="flex items-center gap-1">
-              <span className="-ml-[0.33rem] flex h-auto w-fit items-center rounded-full bg-transparent py-1 pl-[0.33rem] pr-2 text-xs font-bold text-neutral-700 hover:bg-black/10 dark:text-white dark:hover:bg-white/20">
+              <span className="-ml-[0.33rem] flex h-auto w-fit items-center rounded-full bg-transparent py-1 pr-2 pl-[0.33rem] font-bold text-neutral-700 text-xs hover:bg-black/10 dark:text-white dark:hover:bg-white/20">
                 @{comment.user.name}
               </span>
               <Tooltip delayDuration={0.05}>
                 <TooltipTrigger asChild>
-                  <span className="mr-2 whitespace-nowrap text-sm text-neutral-500">
+                  <span className="mr-2 whitespace-nowrap text-neutral-500 text-sm">
                     {getRelativeTimeStrict(comment.createdAt)}
                   </span>
                 </TooltipTrigger>

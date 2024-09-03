@@ -1,7 +1,7 @@
 import { prisma } from '@repo/db';
-import { SolutionDetails } from '../_components/solution-detail';
-import { auth } from '~/server/auth';
 import { Comments } from '~/app/challenge/_components/comments';
+import { auth } from '~/server/auth';
+import { SolutionDetails } from '../_components/solution-detail';
 import { getSolutionIdRouteData } from './getSolutionIdRouteData';
 
 interface Props {

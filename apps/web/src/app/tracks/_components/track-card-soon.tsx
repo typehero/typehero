@@ -19,7 +19,7 @@ export const BGS_BY_TRACK: Record<number, string> = {
 export const bgsArray = Object.values(BGS_BY_TRACK);
 
 const EnrolledBadge = ({ text = 'Enrolled' }: { text?: string }) => (
-  <div className="text-background absolute left-0 top-0 z-10 rounded-br-xl bg-blue-400 px-5 py-1.5 text-sm font-bold">
+  <div className="absolute top-0 left-0 z-10 rounded-br-xl bg-blue-400 px-5 py-1.5 font-bold text-background text-sm">
     {text}
   </div>
 );
@@ -37,17 +37,17 @@ export function TrackCardSoon({ track }: TrackProps) {
             : 'group-hover:border-neutral-400/50 group-focus:border-neutral-500 dark:group-hover:border-neutral-400/50',
         )}
       >
-        <div className="absolute -bottom-12 -left-4 w-full -translate-x-1/4 translate-y-1/4 rotate-[30deg]">
-          <div className="-ml-4 h-12 w-full border-t border-neutral-500/50 bg-gradient-to-r from-neutral-100 to-transparent duration-500 dark:border-neutral-700/50 dark:from-neutral-900 dark:group-hover:brightness-150" />
-          <div className="-ml-8 h-12 w-full border-t border-neutral-500/50 bg-gradient-to-r from-neutral-100 to-transparent duration-500  dark:border-neutral-700/50 dark:from-neutral-900 dark:group-hover:brightness-150" />
-          <div className="-ml-12 h-12 w-full border-t border-neutral-500/50 bg-gradient-to-r from-neutral-100 to-transparent duration-500 dark:border-neutral-700/50 dark:from-neutral-900 dark:group-hover:brightness-150" />
-          <div className="-ml-16 h-12 w-full border-t border-neutral-500/50 bg-gradient-to-r from-neutral-100 to-transparent duration-500 dark:border-neutral-700/50 dark:from-neutral-900 dark:group-hover:brightness-150" />
+        <div className="-bottom-12 -left-4 -translate-x-1/4 absolute w-full translate-y-1/4 rotate-[30deg]">
+          <div className="-ml-4 h-12 w-full border-neutral-500/50 border-t bg-gradient-to-r from-neutral-100 to-transparent duration-500 dark:border-neutral-700/50 dark:from-neutral-900 dark:group-hover:brightness-150" />
+          <div className="-ml-8 h-12 w-full border-neutral-500/50 border-t bg-gradient-to-r from-neutral-100 to-transparent duration-500 dark:border-neutral-700/50 dark:from-neutral-900 dark:group-hover:brightness-150" />
+          <div className="-ml-12 h-12 w-full border-neutral-500/50 border-t bg-gradient-to-r from-neutral-100 to-transparent duration-500 dark:border-neutral-700/50 dark:from-neutral-900 dark:group-hover:brightness-150" />
+          <div className="-ml-16 h-12 w-full border-neutral-500/50 border-t bg-gradient-to-r from-neutral-100 to-transparent duration-500 dark:border-neutral-700/50 dark:from-neutral-900 dark:group-hover:brightness-150" />
         </div>
         {isEnrolled ? <EnrolledBadge /> : null}
         <CardContent className="relative z-10 flex flex-col items-center gap-6 p-9">
           <div
             className={clsx(
-              `relative bg-gradient-to-r from-neutral-500/10 from-10% to-neutral-500/50 to-100% dark:from-neutral-900 dark:to-neutral-500/50`,
+              `relative bg-gradient-to-r from-10% from-neutral-500/10 to-100% to-neutral-500/50 dark:from-neutral-900 dark:to-neutral-500/50`,
               'flex h-24 w-24 flex-none items-center justify-center rounded-2xl',
             )}
           >
@@ -60,7 +60,7 @@ export function TrackCardSoon({ track }: TrackProps) {
             />
           </div>
           <div className="text-center font-semibold capitalize tracking-wide">{track.name}</div>
-          <div className="text-muted-foreground line-clamp-3 text-center text-sm tracking-wide">
+          <div className="line-clamp-3 text-center text-muted-foreground text-sm tracking-wide">
             This track is still in development. <br /> Check back soon!
             <br />
           </div>

@@ -1,9 +1,9 @@
-import { ChallengeStatus, type Difficulty, type Prisma } from '@prisma/client';
-import { readdir, readFile, rm } from 'node:fs/promises';
+import { readFile, readdir, rm } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { ChallengeStatus, type Difficulty, type Prisma } from '@prisma/client';
 import { simpleGit } from 'simple-git';
-import { parse } from 'yaml';
 import type { CompilerOptions } from 'typescript';
+import { parse } from 'yaml';
 
 const slugify = (str: string) => str.toLowerCase().replace(/\s/g, '-').replace(/\./g, '-');
 export interface InfoFile {

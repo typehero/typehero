@@ -1,7 +1,7 @@
 'use client'; // Error components must be Client Components
 
-import { Text } from '@repo/ui/components/typography/typography';
 import { Button } from '@repo/ui/components/button';
+import { Text } from '@repo/ui/components/typography/typography';
 
 export default function Error({ reset }: { reset: () => void }) {
   return (

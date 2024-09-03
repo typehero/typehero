@@ -10,18 +10,10 @@
   },
   "typesVersions": {
     "*": {
-      "types": [
-        "./src/types.ts"
-      ],
-      "icons": [
-        "./src/icons.ts"
-      ],
-      "cn": [
-        "./src/cn.ts"
-      ],
-      "components/*": [
-        "./src/components/*"
-      ]
+      "types": ["./src/types.ts"],
+      "icons": ["./src/icons.ts"],
+      "cn": ["./src/cn.ts"],
+      "components/*": ["./src/components/*"]
     }
   },
   "scripts": {

@@ -1,4 +1,4 @@
-import { Expect, Equal } from 'type-testing';
+import { Equal, Expect } from 'type-testing';
 
 type test_Name = Expect<Equal<Name, string>>;
 type test_Year = Expect<Equal<Year, number>>;

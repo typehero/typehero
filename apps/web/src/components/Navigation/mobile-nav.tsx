@@ -40,7 +40,7 @@ export function MobileNav({ children }: Props) {
           {/* Hamburger Icon */}
           <button
             className={cn(
-              'hamburger  rounded-lg p-4 duration-300 focus:outline-none ',
+              'hamburger rounded-lg p-4 duration-300 focus:outline-none ',
               open ? 'is-active' : '',
             )}
             onClick={() => setOpen((prev) => !prev)}
@@ -53,7 +53,7 @@ export function MobileNav({ children }: Props) {
           key={open ? 'open' : 'close'}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className={`bg-background/80 left-0 top-[55px] z-10 flex h-full w-full flex-1 snap-y flex-col gap-5 justify-self-center border-b p-3 backdrop-blur-md md:mt-0 md:hidden md:pb-0 ${
+          className={`top-[55px] left-0 z-10 flex h-full w-full flex-1 snap-y flex-col gap-5 justify-self-center border-b bg-background/80 p-3 backdrop-blur-md md:mt-0 md:hidden md:pb-0 ${
             open ? 'absolute block w-full' : 'hidden'
           }`}
         >

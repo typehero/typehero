@@ -24,4 +24,3 @@
   ],
   "exclude": ["node_modules", ".next", "public"]
 }
-

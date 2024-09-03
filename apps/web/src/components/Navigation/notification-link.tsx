@@ -7,7 +7,11 @@ import Link from 'next/link';
 import { getNotificationCount } from './navigation.actions';
 
 export const NOTIFICATION_QUERY_KEY = 'notificationCounts';
-export function NotificationLink({ notificationCount }: { notificationCount: number }) {
+export function NotificationLink({
+  notificationCount,
+}: {
+  notificationCount: number;
+}) {
   // eventually lift this higher and pull new data and insert new rows into the notifications
   // view if user is currently looking at it (example: twitter notif view)
   const { data: count } = useQuery({
@@ -29,7 +33,7 @@ export function NotificationLink({ notificationCount }: { notificationCount: num
         {count > 0 && (
           <span
             className={clsx(
-              "absolute right-[2%] top-[4%] grid min-h-[18px] min-w-[18px] -translate-y-2/4 translate-x-2/4 place-items-center rounded-full bg-red-500 text-xs font-medium leading-none text-white content-['']",
+              "-translate-y-2/4 absolute top-[4%] right-[2%] grid min-h-[18px] min-w-[18px] translate-x-2/4 place-items-center rounded-full bg-red-500 font-medium text-white text-xs leading-none content-['']",
               count > 9 && 'w-7',
               count > 20 && 'w-8',
             )}

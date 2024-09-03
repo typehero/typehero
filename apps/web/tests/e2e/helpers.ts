@@ -1,5 +1,5 @@
-import type { Page } from '@playwright/test';
 import os from 'node:os';
+import type { Page } from '@playwright/test';
 
 export async function ctrlC(page: Page): Promise<void> {
   const isMac = os.platform() === 'darwin';

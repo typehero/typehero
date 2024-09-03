@@ -2,38 +2,38 @@
 
 import { useSession } from '@repo/auth/react';
 import { type CommentRoot } from '@repo/db/types';
+import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
+import { Button } from '@repo/ui/components/button';
 import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { toast } from '@repo/ui/components/use-toast';
 import {
+  Calendar,
   ChevronDown,
   ChevronUp,
-  Calendar,
   Flag,
+  MoreHorizontal,
   Pencil,
   Reply,
   Share,
   Trash2,
-  MoreHorizontal,
 } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { useParams, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { z } from 'zod';
 import { ReportDialog } from '~/components/ReportDialog';
-import { getRelativeTimeStrict } from '~/utils/relativeTime';
-import { Vote } from '../vote';
-import { CommentInput } from './comment-input';
-import { CommentDeleteDialog } from './delete';
-import { type PaginatedComments, type PreselectedCommentMetadata } from './getCommentRouteData';
-import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
-import { Button } from '@repo/ui/components/button';
-import { CommentSkeleton } from './comment-skeleton';
 import { isAdminOrModerator } from '~/utils/auth-guards';
-import { useCommentsReplies } from './comments.hooks';
-import { UserBadge } from './enhanced-user-badge';
+import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import type { ChallengeRouteData } from '../../[slug]/getChallengeRouteData';
 import type { SolutionRouteData } from '../../[slug]/solutions/[solutionId]/getSolutionIdRouteData';
+import { Vote } from '../vote';
+import { CommentInput } from './comment-input';
+import { CommentSkeleton } from './comment-skeleton';
+import { useCommentsReplies } from './comments.hooks';
+import { CommentDeleteDialog } from './delete';
+import { UserBadge } from './enhanced-user-badge';
+import { type PaginatedComments, type PreselectedCommentMetadata } from './getCommentRouteData';
 
 interface SingleCommentProps {
   comment: PaginatedComments['comments'][number];
@@ -129,7 +129,7 @@ export function Comment({
       />
       {isReplying ? (
         <div className="relative mt-2 pb-2 pl-8">
-          <Reply className="absolute left-2 top-2 h-4 w-4 opacity-50" />
+          <Reply className="absolute top-2 left-2 h-4 w-4 opacity-50" />
           <CommentInput
             mode="edit"
             onCancel={() => {
@@ -147,7 +147,7 @@ export function Comment({
       {showReplies && status === 'pending' ? <CommentSkeleton /> : null}
       {showReplies ? (
         <>
-          <div className="flex flex-col gap-1 pl-6 pt-1">
+          <div className="flex flex-col gap-1 pt-1 pl-6">
             {data?.pages.flatMap((page) =>
               page.replies.map((reply) => (
                 // this is a reply
@@ -165,7 +165,7 @@ export function Comment({
           {showLoadMoreRepliesBtn ? (
             <Button
               variant="ghost"
-              className="gap-1 text-xs text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
+              className="gap-1 text-neutral-500 text-xs duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
               onClick={() => fetchNextPage()}
             >
               <MoreHorizontal size={24} />
@@ -289,7 +289,7 @@ function SingleComment({
 
           <Tooltip delayDuration={0.05}>
             <TooltipTrigger asChild>
-              <div className="text-muted-foreground flex items-center gap-2 whitespace-nowrap text-xs">
+              <div className="flex items-center gap-2 whitespace-nowrap text-muted-foreground text-xs">
                 <Calendar className="h-4 w-4" />
                 <span>{getRelativeTimeStrict(comment.createdAt)}</span>
               </div>
@@ -304,7 +304,7 @@ function SingleComment({
         <div className="-mb-1">
           <ExpandableContent content={comment.text} />
           {hasBeenEdited ? (
-            <div className="text-muted-foreground flex items-center gap-2 whitespace-nowrap text-xs">
+            <div className="flex items-center gap-2 whitespace-nowrap text-muted-foreground text-xs">
               Last edited at{' '}
               {new Intl.DateTimeFormat(undefined, {
                 timeStyle: 'short',
@@ -484,7 +484,7 @@ function ExpandableContent({ content }: { content: string }) {
           className="absolute top-0 flex h-full w-full cursor-pointer items-end bg-gradient-to-b from-transparent to-white dark:to-zinc-800"
           onClick={() => setExpanded(true)}
         >
-          <div className="text-md text-label-1 dark:text-dark-label-1 flex w-full items-center justify-center hover:bg-transparent">
+          <div className="flex w-full items-center justify-center text-label-1 text-md hover:bg-transparent dark:text-dark-label-1">
             Read more
           </div>
         </div>

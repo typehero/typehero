@@ -9,11 +9,11 @@ export default async function Index({
   };
 }) {
   return (
-    <div className="container -mt-[56px] flex h-screen flex-col items-center justify-center">
+    <div className="-mt-[56px] container flex h-screen flex-col items-center justify-center">
       <div className="lg:p-8">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 text-center sm:w-[450px]">
           <div className="flex flex-col space-y-2 text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-neutral-900 dark:text-white">
+            <h1 className="font-bold text-4xl text-neutral-900 tracking-tight dark:text-white">
               Welcome to Public Beta!
             </h1>
             <p className="text-muted-foreground text-sm">
@@ -21,13 +21,13 @@ export default async function Index({
             </p>
           </div>
           <LoginButton redirectTo={searchParams.redirectTo ?? '/explore'} />
-          <p className="text-muted-foreground mx-auto px-8 text-sm sm:w-[350px]">
+          <p className="mx-auto px-8 text-muted-foreground text-sm sm:w-[350px]">
             By clicking Login, you agree to our <br />
-            <Link href="/tos" className="hover:text-primary underline underline-offset-4">
+            <Link href="/tos" className="underline underline-offset-4 hover:text-primary">
               Terms of Service
             </Link>{' '}
             and{' '}
-            <Link href="/privacy" className="hover:text-primary underline underline-offset-4">
+            <Link href="/privacy" className="underline underline-offset-4 hover:text-primary">
               Privacy Policy
             </Link>
             .

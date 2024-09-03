@@ -58,12 +58,11 @@ export function ShareForm() {
             </div>
           )}
           <button
-            className={`flex items-center justify-between space-x-2 rounded-lg px-2 py-1 duration-300 active:scale-75
-        ${
-          copied
-            ? 'border border-green-500 text-green-500 dark:border-green-700 dark:bg-green-700 dark:text-white'
-            : 'border border-black/20  text-black hover:bg-gray-100 dark:bg-white'
-        }`}
+            className={`flex items-center justify-between space-x-2 rounded-lg px-2 py-1 duration-300 active:scale-75 ${
+              copied
+                ? 'border border-green-500 text-green-500 dark:border-green-700 dark:bg-green-700 dark:text-white'
+                : 'border border-black/20 text-black hover:bg-gray-100 dark:bg-white'
+            }`}
             onClick={copyToClipboard}
           >
             <span>{copied ? 'Copied!' : 'Copy'}</span>

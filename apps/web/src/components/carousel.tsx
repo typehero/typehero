@@ -2,7 +2,7 @@
 
 import { ChevronLeft, ChevronRight } from '@repo/ui/icons';
 import clsx from 'clsx';
-import { useEffect, useRef, useState, type ReactNode, useCallback, useId } from 'react';
+import { type ReactNode, useCallback, useEffect, useId, useRef, useState } from 'react';
 import { useResizeObserver } from '~/utils/useResizeObserver';
 
 interface Props {
@@ -84,7 +84,7 @@ export function Carousel({ children }: Props) {
       {children}
       <button
         className={clsx(
-          'absolute left-40 top-1/2 hidden -translate-y-1/2 rounded-[5rem] border border-neutral-400 bg-neutral-200/50 px-2 py-4 backdrop-blur-sm duration-300 focus:outline-none focus-visible:ring-2 active:scale-75 dark:border-neutral-600 dark:bg-neutral-700/50',
+          '-translate-y-1/2 absolute top-1/2 left-40 hidden rounded-[5rem] border border-neutral-400 bg-neutral-200/50 px-2 py-4 backdrop-blur-sm duration-300 focus:outline-none focus-visible:ring-2 active:scale-75 dark:border-neutral-600 dark:bg-neutral-700/50',
           showLeftButton && 'sm:block',
         )}
         id={`slideLeft-${id}`}
@@ -95,7 +95,7 @@ export function Carousel({ children }: Props) {
       </button>
       <button
         className={clsx(
-          'absolute right-40 top-1/2 hidden -translate-y-1/2 rounded-[5rem] border border-neutral-400 bg-neutral-200/50 px-2 py-4 backdrop-blur-sm duration-300 focus:outline-none focus-visible:ring-2 active:scale-75 dark:border-neutral-600 dark:bg-neutral-700/50',
+          '-translate-y-1/2 absolute top-1/2 right-40 hidden rounded-[5rem] border border-neutral-400 bg-neutral-200/50 px-2 py-4 backdrop-blur-sm duration-300 focus:outline-none focus-visible:ring-2 active:scale-75 dark:border-neutral-600 dark:bg-neutral-700/50',
           showRightButton && 'sm:block',
         )}
         id={`slideRight-${id}`}

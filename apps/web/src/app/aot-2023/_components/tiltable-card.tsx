@@ -1,11 +1,11 @@
 'use client';
 
+import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useRef, useState, type MouseEvent, useEffect } from 'react';
+import { type MouseEvent, useEffect, useRef, useState } from 'react';
 import type { Challenges } from './card-grid';
-import clsx from 'clsx';
 
 interface Props {
   challenge: Challenges[0] & { isRevealed: boolean };
@@ -189,7 +189,7 @@ export function TiltableCard({ index, challenge }: Props) {
           />
           <p
             className={clsx(
-              'absolute bottom-4 right-4 text-xl font-bold text-white',
+              'absolute right-4 bottom-4 font-bold text-white text-xl',
               !challenge.isRevealed && 'opacity-50',
             )}
           >
@@ -265,11 +265,11 @@ export function TiltableCard({ index, challenge }: Props) {
             }}
           />
           {Boolean(challenge.hasSolved) && (
-            <div className="absolute left-[-46px] top-[12px] w-[170px] -rotate-45 transform bg-gradient-to-r from-yellow-400 to-yellow-100 py-1 font-semibold text-black drop-shadow-md">
+            <div className="-rotate-45 absolute top-[12px] left-[-46px] w-[170px] transform bg-gradient-to-r from-yellow-400 to-yellow-100 py-1 font-semibold text-black drop-shadow-md">
               <span className="ml-12">Solved</span>
             </div>
           )}
-          <p className="text-xl font-bold text-white">{challenge.name}</p>
+          <p className="font-bold text-white text-xl">{challenge.name}</p>
         </motion.div>
       </motion.a>
     </motion.div>

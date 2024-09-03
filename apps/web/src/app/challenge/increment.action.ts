@@ -1,7 +1,7 @@
 'use server';
-import { auth } from '~/server/auth';
 import { prisma } from '@repo/db';
 import type { VoteType } from '@repo/db/types';
+import { auth } from '~/server/auth';
 import type { PaginatedComments } from './_components/comments/getCommentRouteData';
 
 export async function incrementOrDecrementUpvote({

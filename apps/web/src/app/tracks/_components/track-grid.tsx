@@ -1,8 +1,8 @@
 import { type Session } from '@repo/auth/server';
 import { prisma } from '@repo/db';
+import { auth } from '~/server/auth';
 import { TrackCard } from './track-card';
 import { TrackCardSoon } from './track-card-soon';
-import { auth } from '~/server/auth';
 
 export async function TrackGrid() {
   const session = await auth();
@@ -11,7 +11,7 @@ export async function TrackGrid() {
 
   return (
     <div className="container">
-      <section className="w-[calc(100% + 8rem)] grid grid-cols-1 gap-4 sm:px-8 md:-mx-16 md:grid-cols-2 md:px-0 lg:mx-0 lg:w-full xl:grid-cols-3 2xl:gap-8">
+      <section className="+ 8rem)] md:-mx-16 grid w-[calc(100% grid-cols-1 gap-4 sm:px-8 md:grid-cols-2 md:px-0 lg:mx-0 lg:w-full xl:grid-cols-3 2xl:gap-8">
         {tracks?.map((track) => {
           if (track.isComingSoon) {
             return <TrackCardSoon key={`track-${track.id}`} track={track} />;

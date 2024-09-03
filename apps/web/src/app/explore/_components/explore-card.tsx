@@ -61,36 +61,36 @@ function ChallengeDifficultyIcon({ difficulty }: { difficulty: string }) {
     case 'BEGINNER':
       return (
         <>
-          <Circle className="group-hover/card:text-difficulty-beginner dark:group-hover/card:text-difficulty-beginner-dark absolute -right-4 -top-8 h-24 w-24 origin-top-right stroke-[0.5] text-black/10 duration-300 group-hover/card:scale-90 dark:text-white/10" />
-          <Circle className="group-hover/card:text-difficulty-beginner dark:group-hover/card:text-difficulty-beginner-dark absolute -right-4 -top-8 h-32 w-32 origin-top-right stroke-[0.4] text-black/10 duration-500 group-hover/card:scale-90 dark:text-white/10" />
+          <Circle className="-right-4 -top-8 absolute h-24 w-24 origin-top-right stroke-[0.5] text-black/10 duration-300 group-hover/card:scale-90 group-hover/card:text-difficulty-beginner dark:text-white/10 dark:group-hover/card:text-difficulty-beginner-dark" />
+          <Circle className="-right-4 -top-8 absolute h-32 w-32 origin-top-right stroke-[0.4] text-black/10 duration-500 group-hover/card:scale-90 group-hover/card:text-difficulty-beginner dark:text-white/10 dark:group-hover/card:text-difficulty-beginner-dark" />
         </>
       );
     case 'EASY':
       return (
         <>
-          <Diamond className="group-hover/card:text-difficulty-easy dark:group-hover/card:text-difficulty-easy-dark absolute -right-5 -top-10 h-24 w-24 origin-top-right stroke-[0.66] text-black/10 duration-300 group-hover/card:rotate-6 group-hover/card:scale-90 dark:text-white/10" />
-          <Diamond className="group-hover/card:text-difficulty-easy dark:group-hover/card:text-difficulty-easy-dark absolute -right-6 -top-12 h-36 w-36 rotate-12 stroke-[0.44] text-black/10 duration-500 group-hover/card:-translate-y-2 group-hover/card:translate-x-3 group-hover/card:rotate-6 group-hover/card:scale-90 dark:text-white/10" />
+          <Diamond className="-right-5 -top-10 absolute h-24 w-24 origin-top-right stroke-[0.66] text-black/10 duration-300 group-hover/card:rotate-6 group-hover/card:scale-90 group-hover/card:text-difficulty-easy dark:text-white/10 dark:group-hover/card:text-difficulty-easy-dark" />
+          <Diamond className="-right-6 -top-12 group-hover/card:-translate-y-2 absolute h-36 w-36 rotate-12 stroke-[0.44] text-black/10 duration-500 group-hover/card:translate-x-3 group-hover/card:rotate-6 group-hover/card:scale-90 group-hover/card:text-difficulty-easy dark:text-white/10 dark:group-hover/card:text-difficulty-easy-dark" />
         </>
       );
     case 'MEDIUM':
       return (
         <>
-          <Triangle className="group-hover/card:text-difficulty-medium dark:group-hover/card:text-difficulty-medium-dark absolute -right-5 -top-5 h-16 w-16 rotate-0 stroke-[0.75] text-black/10 duration-500 group-hover/card:-translate-x-10 group-hover/card:translate-y-10 group-hover/card:rotate-[90deg] dark:text-white/10" />
-          <Triangle className="group-hover/card:text-difficulty-medium dark:group-hover/card:text-difficulty-medium-dark absolute -right-14 -top-16 h-36 w-36 rotate-12 stroke-[0.4] text-black/10 duration-300 group-hover/card:translate-x-3 group-hover/card:rotate-[30deg] group-hover/card:scale-50 group-hover/card:stroke-[0.66] dark:text-white/10" />
+          <Triangle className="-right-5 -top-5 group-hover/card:-translate-x-10 absolute h-16 w-16 rotate-0 stroke-[0.75] text-black/10 duration-500 group-hover/card:translate-y-10 group-hover/card:rotate-[90deg] group-hover/card:text-difficulty-medium dark:text-white/10 dark:group-hover/card:text-difficulty-medium-dark" />
+          <Triangle className="-right-14 -top-16 absolute h-36 w-36 rotate-12 stroke-[0.4] text-black/10 duration-300 group-hover/card:translate-x-3 group-hover/card:rotate-[30deg] group-hover/card:scale-50 group-hover/card:stroke-[0.66] group-hover/card:text-difficulty-medium dark:text-white/10 dark:group-hover/card:text-difficulty-medium-dark" />
         </>
       );
     case 'HARD':
       return (
         <>
-          <Plus className="group-hover/card:text-difficulty-hard dark:group-hover/card:text-difficulty-hard-dark absolute -right-4 -top-8 h-24 w-24 stroke-[0.5] text-black/10 duration-300 group-hover/card:scale-0 dark:text-white/10" />
-          <Plus className="group-hover/card:text-difficulty-hard dark:group-hover/card:text-difficulty-hard-dark absolute -right-4 -top-8 h-32 w-32 stroke-[0.5] text-black/10 duration-500 group-hover/card:-translate-y-5 group-hover/card:translate-x-9 group-hover/card:-rotate-90 group-hover/card:scale-75 dark:text-white/10" />
+          <Plus className="-right-4 -top-8 absolute h-24 w-24 stroke-[0.5] text-black/10 duration-300 group-hover/card:scale-0 group-hover/card:text-difficulty-hard dark:text-white/10 dark:group-hover/card:text-difficulty-hard-dark" />
+          <Plus className="-right-4 -top-8 group-hover/card:-translate-y-5 group-hover/card:-rotate-90 absolute h-32 w-32 stroke-[0.5] text-black/10 duration-500 group-hover/card:translate-x-9 group-hover/card:scale-75 group-hover/card:text-difficulty-hard dark:text-white/10 dark:group-hover/card:text-difficulty-hard-dark" />
         </>
       );
     case 'EXTREME':
       return (
         <>
-          <Sparkle className="group-hover/card:text-difficulty-extreme dark:group-hover/card:text-difficulty-extreme-dark absolute -right-4 -top-10 h-24 w-24 stroke-[0.5] text-black/10 duration-500 group-hover/card:-translate-x-4 group-hover/card:translate-y-10 group-hover/card:-rotate-[125deg] dark:text-white/10" />
-          <Sparkle className="group-hover/card:text-difficulty-extreme dark:group-hover/card:text-difficulty-extreme-dark absolute -right-14 -top-24 h-48 w-48 origin-top-right -rotate-3 stroke-[0.33] text-black/10 duration-300 group-hover/card:scale-50 dark:text-white/10" />
+          <Sparkle className="-right-4 -top-10 group-hover/card:-translate-x-4 group-hover/card:-rotate-[125deg] absolute h-24 w-24 stroke-[0.5] text-black/10 duration-500 group-hover/card:translate-y-10 group-hover/card:text-difficulty-extreme dark:text-white/10 dark:group-hover/card:text-difficulty-extreme-dark" />
+          <Sparkle className="-right-14 -top-24 -rotate-3 absolute h-48 w-48 origin-top-right stroke-[0.33] text-black/10 duration-300 group-hover/card:scale-50 group-hover/card:text-difficulty-extreme dark:text-white/10 dark:group-hover/card:text-difficulty-extreme-dark" />
         </>
       );
     default:
@@ -103,10 +103,7 @@ export async function ExploreCard({ challenge }: ExploreCardProps) {
 
   return (
     <Card
-      className={`group/card bg-background hover:bg-card-hovered relative overflow-hidden duration-300 sm:min-w-[300px] xl:min-w-[333px]
-      ${SHADOWS_BY_DIFFICULTY[challenge.difficulty]}
-      ${BORDERS_BY_DIFFICULTY[challenge.difficulty]}
-      `}
+      className={`group/card relative overflow-hidden bg-background duration-300 hover:bg-card-hovered sm:min-w-[300px] xl:min-w-[333px] ${SHADOWS_BY_DIFFICULTY[challenge.difficulty]}${BORDERS_BY_DIFFICULTY[challenge.difficulty]}`}
     >
       <ChallengeDifficultyIcon difficulty={challenge.difficulty} />
       <CardHeader className="relative flex flex-col items-start gap-1 py-5">
@@ -130,10 +127,10 @@ export async function ExploreCard({ challenge }: ExploreCardProps) {
       </CardHeader>
       <CardContent className="relative flex flex-col justify-between gap-2 rounded-xl p-6 pb-0 duration-300">
         <div className="flex items-center gap-2">
-          <div className="-ml-[0.33rem] flex h-auto w-fit items-center whitespace-nowrap rounded-full bg-transparent py-1 pl-[0.33rem] pr-2 text-xs font-bold text-neutral-700 duration-300 hover:bg-black/10 dark:text-white dark:hover:bg-white/20">
+          <div className="-ml-[0.33rem] flex h-auto w-fit items-center whitespace-nowrap rounded-full bg-transparent py-1 pr-2 pl-[0.33rem] font-bold text-neutral-700 text-xs duration-300 hover:bg-black/10 dark:text-white dark:hover:bg-white/20">
             @{challenge.user.name}
           </div>
-          <div className="text-muted-foreground whitespace-nowrap text-sm">
+          <div className="whitespace-nowrap text-muted-foreground text-sm">
             <RelativeTime date={challenge.updatedAt} />
           </div>
         </div>

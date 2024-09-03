@@ -1,6 +1,6 @@
 import { type Difficulty } from '@repo/db/types';
-import { Badge } from './badge';
 import { cn } from '../cn';
+import { Badge } from './badge';
 
 interface Props {
   difficulty: Difficulty;

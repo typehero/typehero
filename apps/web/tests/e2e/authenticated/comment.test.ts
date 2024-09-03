@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { prisma } from '@repo/db';
 import { USER } from '../constant';
 import { ctrlV, wrapTypescriptCode } from '../helpers';

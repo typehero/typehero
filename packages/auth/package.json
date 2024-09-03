@@ -9,15 +9,9 @@
   },
   "typesVersions": {
     "*": {
-      "react": [
-        "./src/react.ts"
-      ],
-      "server": [
-        "./src/server.ts"
-      ],
-      "next-auth": [
-        "./src/next-auth.ts"
-      ]
+      "react": ["./src/react.ts"],
+      "server": ["./src/server.ts"],
+      "next-auth": ["./src/next-auth.ts"]
     }
   },
   "scripts": {

@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { Button } from '@repo/ui/components/button';
+import { useEffect, useState } from 'react';
 import { useLocalStorage } from '~/utils/useLocalStorage';
 
 export const CookieBanner = () => {
@@ -17,8 +17,8 @@ export const CookieBanner = () => {
   }
 
   return (
-    <div className="animate-in fade-in bg-background fixed bottom-0 right-0 z-[999] flex w-full flex-col gap-2 rounded-b-none rounded-t-2xl border p-4 sm:bottom-2 sm:right-2 sm:w-[330px] sm:rounded-2xl">
-      <div className="text-center text-xl font-semibold">TypeHero Uses Cookies 🍪</div>
+    <div className="fade-in fixed right-0 bottom-0 z-[999] flex w-full animate-in flex-col gap-2 rounded-t-2xl rounded-b-none border bg-background p-4 sm:right-2 sm:bottom-2 sm:w-[330px] sm:rounded-2xl">
+      <div className="text-center font-semibold text-xl">TypeHero Uses Cookies 🍪</div>
       <div className="text-sm">
         We use cookies to improve your experience. By using TypeHero, you consent to our use of
         cookies.

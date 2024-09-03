@@ -1,8 +1,8 @@
-import { auth } from '~/server/auth';
 import { prisma } from '@repo/db';
 import type { Metadata } from 'next';
-import { Settings } from './_components/settings';
 import { buildMetaForDefault } from '~/app/metadata';
+import { auth } from '~/server/auth';
+import { Settings } from './_components/settings';
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildMetaForDefault({

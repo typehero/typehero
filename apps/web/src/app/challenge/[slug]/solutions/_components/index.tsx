@@ -1,24 +1,24 @@
 'use client';
 
-import { Calendar, MessageCircle, ThumbsUp } from '@repo/ui/icons';
 import { useSession } from '@repo/auth/react';
-import Link from 'next/link';
-import { useRef, useState } from 'react';
-import { SolutionEditor } from './solution-editor';
-import { NoSolutions } from './nosolutions';
-import { SubmitSolution } from './submit-solution';
-import { type PaginatedSolution, getPaginatedSolutions } from '../getSolutionRouteData';
-import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import { Badge } from '@repo/ui/components/badge';
-import { useParams } from 'next/navigation';
-import { Pagination } from '../../../_components/pagination';
+import { Calendar, MessageCircle, ThumbsUp } from '@repo/ui/icons';
 import { useQuery } from '@tanstack/react-query';
-import { SolutionsSkeleton } from './solution-skeleton';
-import { SortSelect } from '../../../_components/sort-select';
-import { useGetQueryString } from './useGetQueryString';
-import { useQueryParamState } from './useQueryParamState';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
+import { useRef, useState } from 'react';
+import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import { useLocalStorage } from '~/utils/useLocalStorage';
 import { UserBadge } from '../../../_components/comments/enhanced-user-badge';
+import { Pagination } from '../../../_components/pagination';
+import { SortSelect } from '../../../_components/sort-select';
+import { type PaginatedSolution, getPaginatedSolutions } from '../getSolutionRouteData';
+import { NoSolutions } from './nosolutions';
+import { SolutionEditor } from './solution-editor';
+import { SolutionsSkeleton } from './solution-skeleton';
+import { SubmitSolution } from './submit-solution';
+import { useGetQueryString } from './useGetQueryString';
+import { useQueryParamState } from './useQueryParamState';
 
 interface Props {
   slug: string;
@@ -98,7 +98,7 @@ export function Solutions({ slug }: Props) {
             <>
               {status === 'pending' && <SolutionsSkeleton />}
               {status === 'success' && (
-                <div className="bg-background/70 dark:bg-muted/70 flex w-full justify-end border-b border-zinc-300 p-2 backdrop-blur-sm dark:border-zinc-700">
+                <div className="flex w-full justify-end border-zinc-300 border-b bg-background/70 p-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/70">
                   <SubmitSolution disabled={Boolean(!loggedInUserHasSolution)} setView={setView} />
                 </div>
               )}
@@ -167,12 +167,12 @@ function SolutionRow({
             roles: solution.user?.roles ?? [],
           }}
         />
-        <div className="text-muted-foreground flex flex-1 items-center gap-2">
+        <div className="flex flex-1 items-center gap-2 text-muted-foreground">
           <Calendar className=" h-4 w-4" />
           <span className="text-xs">{getRelativeTimeStrict(solution.createdAt)}</span>
         </div>
         {solution.isPinned ? (
-          <Badge className="dark:bg-difficulty-beginner-dark bg-difficulty-beginner text-white duration-300 dark:text-black">
+          <Badge className="bg-difficulty-beginner text-white duration-300 dark:bg-difficulty-beginner-dark dark:text-black">
             Pinned
           </Badge>
         ) : null}

@@ -7,22 +7,22 @@ export function AdventofTSBanner() {
     <div className="container mt-11 flex min-h-[500px] justify-center md:mt-[128px] lg:mb-[148px]">
       <div className="content max-w-[900px] overflow-hidden rounded-3xl">
         <SnowCanvas />
-        <div className="absolute left-0 top-0 h-full w-full">
+        <div className="absolute top-0 left-0 h-full w-full">
           <div className="flex flex-col p-10">
-            <h1 className="text-6xl font-bold tracking-tighter text-white sm:text-8xl">
+            <h1 className="font-bold text-6xl text-white tracking-tighter sm:text-8xl">
               <span>Advent</span> of <span className="text-red-600">TypeScript</span>
             </h1>
           </div>
           <div className="ground absolute bottom-0 h-[160px] w-full bg-[#f6f9fa]">
             <div className="pointer-events-none relative top-8 flex justify-center">
               <div className="z-10 h-[200px] w-[600px] rounded-[100%] bg-[#e8f2f6] bg-gradient-to-b from-[#dee8f1] to-[#f6f9fa] to-[60px]" />
-              <div className="absolute right-[150px] top-[-120px] z-0 -rotate-6 items-center justify-center md:right-[210px] md:rotate-6">
+              <div className="-rotate-6 absolute top-[-120px] right-[150px] z-0 items-center justify-center md:right-[210px] md:rotate-6">
                 <Image
                   src="/santa-hat.png"
                   alt=""
                   height="200"
                   width="200"
-                  className="absolute -right-[58px] -top-20"
+                  className="-right-[58px] -top-20 absolute"
                 />
                 <svg
                   width="171"
@@ -49,7 +49,7 @@ export function AdventofTSBanner() {
               </div>
               <div
                 id="snowman"
-                className="absolute bottom-[100px] left-[200px] z-30 -scale-x-100 md:scale-x-100"
+                className="-scale-x-100 absolute bottom-[100px] left-[200px] z-30 md:scale-x-100"
               >
                 <svg
                   width="212"
@@ -194,7 +194,7 @@ export function AdventofTSBanner() {
                   </defs>
                 </svg>
               </div>
-              <div className="absolute bottom-[100px] right-[50px] z-30 mt-44 text-2xl font-semibold tracking-tighter text-red-600 md:text-4xl">
+              <div className="absolute right-[50px] bottom-[100px] z-30 mt-44 font-semibold text-2xl text-red-600 tracking-tighter md:text-4xl">
                 Coming December 1st
               </div>
             </div>

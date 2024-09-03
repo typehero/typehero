@@ -1,4 +1,4 @@
-import { Expect, Equal } from 'type-testing';
+import { Equal, Expect } from 'type-testing';
 
 type TwelveDaysOfChristmas = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 type test_0_actual = DayCounter<1, 12>;

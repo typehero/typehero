@@ -1,6 +1,6 @@
 import { Sheet, SheetContent, SheetTrigger } from '@repo/ui/components/sheet';
-import { ExplorerPanel } from './sheet-content-custom';
 import type { ReactNode } from 'react';
+import { ExplorerPanel } from './sheet-content-custom';
 
 interface Props {
   children: ReactNode;

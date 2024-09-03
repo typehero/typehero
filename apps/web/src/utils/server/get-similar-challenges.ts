@@ -1,7 +1,7 @@
 'use server';
-import { auth } from '~/server/auth';
 import { prisma } from '@repo/db';
 import type { Challenge } from '@repo/db/types';
+import { auth } from '~/server/auth';
 
 /**
  * Get similar **unsolved** challenges for the given challengeId

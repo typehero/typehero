@@ -1,10 +1,10 @@
 'use server';
 
-import { auth } from '~/server/auth';
 import { prisma } from '@repo/db';
-import { Tags, type Difficulty } from '@repo/db/types';
-import { AOT_CHALLENGES } from '../../challenge/[slug]/aot-slugs';
+import { type Difficulty, Tags } from '@repo/db/types';
 import { cache } from 'react';
+import { auth } from '~/server/auth';
+import { AOT_CHALLENGES } from '../../challenge/[slug]/aot-slugs';
 
 export type ExploreChallengeData = ReturnType<typeof getChallengesByTagOrDifficulty>;
 const allTags: Tags[] = Object.values(Tags);

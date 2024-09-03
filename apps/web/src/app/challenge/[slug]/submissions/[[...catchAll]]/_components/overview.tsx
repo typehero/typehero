@@ -72,7 +72,7 @@ export function SubmissionOverview({ submissionId }: Props) {
 
   return (
     <>
-      <div className="sticky top-0 flex h-[40px] items-center justify-between  border-b border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
+      <div className="sticky top-0 flex h-[40px] items-center justify-between border-zinc-300 border-b px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
         <Link href={`/challenge/${slug}/submissions`}>
           <X className="stroke-gray-500 hover:stroke-gray-400" size={20} />
         </Link>
@@ -83,8 +83,8 @@ export function SubmissionOverview({ submissionId }: Props) {
             <div
               className={`flex items-center gap-1 px-3 py-1 text-xl ${
                 submission.isSuccessful
-                  ? ' text-emerald-600  dark:text-emerald-400 '
-                  : ' text-rose-600  dark:text-rose-400 '
+                  ? ' text-emerald-600 dark:text-emerald-400 '
+                  : ' text-rose-600 dark:text-rose-400 '
               }`}
             >
               {submission.isSuccessful ? (
@@ -94,14 +94,14 @@ export function SubmissionOverview({ submissionId }: Props) {
               )}
               {submission.isSuccessful ? 'Accepted' : 'Rejected'}
             </div>
-            <div className="px-3 text-sm text-neutral-500">
+            <div className="px-3 text-neutral-500 text-sm">
               Submitted {getRelativeTimeStrict(submission.createdAt)}
             </div>
           </div>
           {!isAotChallenge && (
             <div>
               <Link
-                className="bg-primary flex h-8 items-center gap-1 rounded-lg px-3 py-2 text-sm text-white"
+                className="flex h-8 items-center gap-1 rounded-lg bg-primary px-3 py-2 text-sm text-white"
                 href={`/challenge/${slug}/solutions`}
               >
                 <Plus size={16} /> Solution

@@ -1,8 +1,8 @@
 'use server';
-import { auth } from '~/server/auth';
 import { prisma } from '@repo/db';
 import type { CommentRoot } from '@repo/db/types';
-import { orderBy, type SortKey, type SortOrder } from '~/utils/sorting';
+import { auth } from '~/server/auth';
+import { type SortKey, type SortOrder, orderBy } from '~/utils/sorting';
 
 const PAGESIZE = 10;
 

@@ -1,9 +1,9 @@
 'use client';
 
-import { type ColumnDef } from '@tanstack/react-table';
-import type { AdminReport } from '../_actions';
-import Link from 'next/link';
 import { Button } from '@repo/ui/components/button';
+import { type ColumnDef } from '@tanstack/react-table';
+import Link from 'next/link';
+import type { AdminReport } from '../_actions';
 
 export const columns: ColumnDef<AdminReport>[] = [
   {

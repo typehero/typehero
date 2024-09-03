@@ -14,30 +14,14 @@
   },
   "typesVersions": {
     "*": {
-      "*": [
-        "./src/index.tsx"
-      ],
-      "code-editor": [
-        "./src/code-editor.tsx"
-      ],
-      "settings-store": [
-        "./src/settings-store.ts"
-      ],
-      "vim-mode": [
-        "./src/vim-mode.tsx"
-      ],
-      "twoslash": [
-        "./src/twoslash.ts"
-      ],
-      "prettier": [
-        "./src/prettier.ts"
-      ],
-      "editor-hooks": [
-        "./src/editor-hooks.ts"
-      ],
-      "utils": [
-        "./src/utils.ts"
-      ]
+      "*": ["./src/index.tsx"],
+      "code-editor": ["./src/code-editor.tsx"],
+      "settings-store": ["./src/settings-store.ts"],
+      "vim-mode": ["./src/vim-mode.tsx"],
+      "twoslash": ["./src/twoslash.ts"],
+      "prettier": ["./src/prettier.ts"],
+      "editor-hooks": ["./src/editor-hooks.ts"],
+      "utils": ["./src/utils.ts"]
     }
   },
   "scripts": {

@@ -4,6 +4,7 @@ import { Button } from '@repo/ui/components/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@repo/ui/components/form';
 import { Input } from '@repo/ui/components/input';
 import { useToast } from '@repo/ui/components/use-toast';
+import { useQueryClient } from '@tanstack/react-query';
 import { useTheme } from 'next-themes';
 import { useParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
@@ -11,7 +12,6 @@ import { z } from 'zod';
 import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
 import { createNoProfanitySchemaWithValidate } from '~/utils/antiProfanityZod';
 import { postSolution } from './_actions';
-import { useQueryClient } from '@tanstack/react-query';
 
 const getDefaultMarkdown = (solution: string) => `
 ## Thoughts
@@ -97,7 +97,7 @@ export function SolutionEditor({ dismiss, challengeId, code }: Props) {
   return (
     <Form {...form}>
       <form className="relative flex h-full flex-col" onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="bg-background/90 dark:bg-muted/90 sticky right-0 top-0 z-10 flex w-full items-start justify-between gap-2 border-b border-zinc-300 bg-opacity-20 p-1 pr-2 backdrop-blur-sm dark:border-zinc-700">
+        <div className="sticky top-0 right-0 z-10 flex w-full items-start justify-between gap-2 border-zinc-300 border-b bg-background/90 bg-opacity-20 p-1 pr-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
           <div className="flex-1">
             <FormField
               control={form.control}
@@ -117,7 +117,7 @@ export function SolutionEditor({ dismiss, challengeId, code }: Props) {
             />
           </div>
           <Button
-            className="my-1 h-8 rounded-lg bg-white px-3 py-2 text-black hover:bg-zinc-200 focus-visible:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:focus-visible:bg-zinc-700"
+            className="my-1 h-8 rounded-lg bg-white px-3 py-2 text-black hover:bg-zinc-200 focus-visible:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:focus-visible:bg-zinc-700 dark:hover:bg-zinc-700"
             onClick={dismiss}
             type="button"
           >

@@ -1,9 +1,9 @@
-import { Github, Sparkle, Twitter, Compass } from '@repo/ui/icons';
+import { Button } from '@repo/ui/components/button';
+import { Compass, Github, Sparkle, Twitter } from '@repo/ui/icons';
 import Link from 'next/link';
 import { Balancer } from 'react-wrap-balancer';
-import { Button } from '@repo/ui/components/button';
-import { HeroIllustration, BackgroundGrid } from './hero-illustration';
 import { auth } from '~/server/auth';
+import { BackgroundGrid, HeroIllustration } from './hero-illustration';
 
 function TypeHeroLogo3D() {
   return (
@@ -29,7 +29,7 @@ function TypeHeroLogo3D() {
           fill="white"
         />
       </g>
-      <g className="animate-logo-light hidden dark:block">
+      <g className="hidden animate-logo-light dark:block">
         <path
           d="M0 74.9605C0 33.561 33.561 0 74.9605 0H558.039C599.439 0 633 33.561 633 74.9605V558.039C633 599.439 599.439 633 558.039 633H74.9605C33.561 633 0 599.439 0 558.039V74.9605Z"
           fill="#3178C6"
@@ -45,7 +45,7 @@ function TypeHeroLogo3D() {
           fill="white"
         />
       </g>
-      <g className="animate-3d-logo hidden dark:block" filter="url(#filter0_ii_1050_32)">
+      <g className="hidden animate-3d-logo dark:block" filter="url(#filter0_ii_1050_32)">
         <path
           d="M0 74.9605C0 33.561 33.561 0 74.9605 0H558.039C599.439 0 633 33.561 633 74.9605V558.039C633 599.439 599.439 633 558.039 633H74.9605C33.561 633 0 599.439 0 558.039V74.9605Z"
           fill="#3178C6"
@@ -107,7 +107,7 @@ function TypeHeroLogo3D() {
 function BeamOfLight() {
   return (
     <svg
-      className="animate-beam pointer-events-none absolute left-0 top-0 z-[-1] h-[169%] w-[138%] lg:w-[84%]"
+      className="pointer-events-none absolute top-0 left-0 z-[-1] h-[169%] w-[138%] animate-beam lg:w-[84%]"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 3787 2842"
       fill="none"
@@ -145,8 +145,8 @@ function BeamOfLight() {
 export async function Hero() {
   const session = await auth();
   return (
-    <section className="pointer-events-none -mt-[56px] min-h-[calc(100vh)] overflow-hidden lg:min-h-0 lg:pt-[56px]">
-      <div className="absolute inset-10 -z-30 overflow-hidden rounded-full opacity-70 lg:hidden">
+    <section className="-mt-[56px] pointer-events-none min-h-[calc(100vh)] overflow-hidden lg:min-h-0 lg:pt-[56px]">
+      <div className="-z-30 absolute inset-10 overflow-hidden rounded-full opacity-70 lg:hidden">
         <BackgroundGrid />
       </div>
       <div className="container relative grid min-h-screen items-center justify-center py-24 lg:min-h-0 lg:grid-cols-2 lg:py-0 [&>*]:pointer-events-auto">
@@ -156,28 +156,28 @@ export async function Hero() {
             target="_blank"
             rel="noreferrer"
             href="https://github.com/typehero/typehero"
-            className="animate-bg-gradient-to-center group rounded-full bg-gradient-to-r from-yellow-600 via-[#3178c6] to-[#3178c6] to-70% bg-[length:420%_420%] bg-right-bottom p-[1px] brightness-90 contrast-150 duration-500 hover:bg-left-top hover:shadow-[0_0_2rem_-0.5rem_#3178c6] dark:from-yellow-500 dark:via-white dark:to-[#3178c6] dark:brightness-125 dark:contrast-100 dark:hover:shadow-[0_0_2rem_-0.5rem_#fff8]"
+            className="group animate-bg-gradient-to-center rounded-full bg-[length:420%_420%] bg-gradient-to-r bg-right-bottom from-yellow-600 via-[#3178c6] to-70% to-[#3178c6] p-[1px] brightness-90 contrast-150 duration-500 hover:bg-left-top hover:shadow-[0_0_2rem_-0.5rem_#3178c6] dark:from-yellow-500 dark:via-white dark:to-[#3178c6] dark:brightness-125 dark:contrast-100 dark:hover:shadow-[0_0_2rem_-0.5rem_#fff8]"
           >
             <div className="rounded-full bg-white/80 px-3 py-1 dark:bg-black/80">
-              <span className="animate-bg-gradient-to-center relative flex select-none items-center bg-gradient-to-r to-70% bg-[length:420%_420%] bg-clip-text bg-right-bottom text-transparent duration-500 group-hover:bg-left-top dark:from-yellow-500 dark:via-white dark:to-[#3178c6]">
-                <Sparkle className="animate-oldstar absolute  -left-1 top-0.5 mr-2 h-5 w-5 translate-x-0.5 stroke-[#3178c6] stroke-2 duration-500 group-hover:rotate-180 group-hover:scale-110 group-hover:stroke-yellow-600 dark:duration-500  " />
-                <Sparkle className="animate-newstar mr-2 h-4 w-4 stroke-[#3178c6] stroke-2 duration-500 group-hover:rotate-180 group-hover:scale-110 group-hover:fill-[#3178c6] dark:stroke-white dark:duration-500 dark:group-hover:fill-white" />{' '}
+              <span className="relative flex animate-bg-gradient-to-center select-none items-center bg-[length:420%_420%] bg-gradient-to-r bg-right-bottom to-70% bg-clip-text text-transparent duration-500 group-hover:bg-left-top dark:from-yellow-500 dark:via-white dark:to-[#3178c6]">
+                <Sparkle className="-left-1 absolute top-0.5 mr-2 h-5 w-5 translate-x-0.5 animate-oldstar stroke-2 stroke-[#3178c6] duration-500 group-hover:rotate-180 group-hover:scale-110 group-hover:stroke-yellow-600 dark:duration-500 " />
+                <Sparkle className="mr-2 h-4 w-4 animate-newstar stroke-2 stroke-[#3178c6] duration-500 group-hover:rotate-180 group-hover:scale-110 group-hover:fill-[#3178c6] dark:stroke-white dark:duration-500 dark:group-hover:fill-white" />{' '}
                 Star us on GitHub
               </span>
             </div>
           </a>
           <div className="relative flex w-full items-center justify-center gap-4 lg:justify-start">
-            <div className="absolute left-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-x-[15%] -translate-y-[50%] rounded-full bg-slate-400/10 blur-3xl dark:block" />
-            <div className="absolute right-1/2 top-1/2 -z-10 hidden h-56 w-56 -translate-y-[40%] rounded-full bg-[#3178c6]/20 blur-3xl dark:block" />
+            <div className="-z-10 -translate-x-[15%] -translate-y-[50%] absolute top-1/2 left-1/2 hidden h-56 w-56 rounded-full bg-slate-400/10 blur-3xl dark:block" />
+            <div className="-z-10 -translate-y-[40%] absolute top-1/2 right-1/2 hidden h-56 w-56 rounded-full bg-[#3178c6]/20 blur-3xl dark:block" />
             <TypeHeroLogo3D />
-            <h1 className="animate-bg-gradient-to-center-title dark:to-69% select-none bg-gradient-to-br from-[#3178c6] from-[69%] to-black/0 bg-clip-text bg-right-bottom text-6xl font-extrabold text-transparent sm:text-8xl sm:leading-[5.5rem] dark:from-white dark:from-30% dark:via-[#3178c6] dark:to-[#3178c6] dark:bg-[length:300%_300%]">
+            <h1 className="animate-bg-gradient-to-center-title select-none bg-gradient-to-br bg-right-bottom from-[#3178c6] from-[69%] to-black/0 bg-clip-text font-extrabold text-6xl text-transparent sm:text-8xl sm:leading-[5.5rem] dark:bg-[length:300%_300%] dark:from-30% dark:from-white dark:via-[#3178c6] dark:to-69% dark:to-[#3178c6]">
               type
               <br />
               hero
             </h1>
           </div>
 
-          <p className="max-w-[55ch] bg-transparent text-center font-medium leading-8 text-black/60 sm:px-8 lg:px-0 lg:text-left dark:text-white/50">
+          <p className="max-w-[55ch] bg-transparent text-center font-medium text-black/60 leading-8 sm:px-8 lg:px-0 lg:text-left dark:text-white/50">
             <Balancer>
               Connect, collaborate, and grow with a community of TypeScript developers. Elevate your
               skills through interactive coding challenges, discussions, and knowledge sharing

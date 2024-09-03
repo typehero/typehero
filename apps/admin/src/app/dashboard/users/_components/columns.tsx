@@ -2,7 +2,7 @@
 
 import { Button } from '@repo/ui/components/button';
 import { type ColumnDef } from '@tanstack/react-table';
-import { unbanUser, type BannedUsers } from '../_actions';
+import { type BannedUsers, unbanUser } from '../_actions';
 
 export const columns: ColumnDef<BannedUsers[0]>[] = [
   {

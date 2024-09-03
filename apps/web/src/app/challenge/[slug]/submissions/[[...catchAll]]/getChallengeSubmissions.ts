@@ -1,7 +1,7 @@
 'use server';
 
-import { cache } from 'react';
 import { prisma } from '@repo/db';
+import { cache } from 'react';
 
 export const getChallengeSubmissionById = cache((id: string) => {
   return prisma.submission.findFirst({

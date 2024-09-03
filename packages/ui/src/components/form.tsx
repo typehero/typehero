@@ -1,8 +1,8 @@
 'use client';
 
-import * as React from 'react';
 import type * as LabelPrimitive from '@radix-ui/react-label';
 import { Slot } from '@radix-ui/react-slot';
+import * as React from 'react';
 import {
   Controller,
   type ControllerProps,
@@ -143,7 +143,7 @@ const FormMessage = React.forwardRef<
 
   return (
     <p
-      className={cn('text-destructive dark:text-error-label text-sm font-medium', className)}
+      className={cn('font-medium text-destructive text-sm dark:text-error-label', className)}
       id={formMessageId}
       ref={ref}
       {...props}

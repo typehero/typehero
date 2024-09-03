@@ -3,10 +3,10 @@
 import { GitBranch } from '@repo/ui/icons';
 import { clsx } from 'clsx';
 import { type CSSProperties } from 'react';
+import { useEffect, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { contributors } from '../../../../public/contributors';
 import styles from './community.module.css';
-import { useEffect, useRef } from 'react';
 import { Contributor } from './contributor';
 
 // million-ignore
@@ -76,22 +76,22 @@ export function Community() {
         />
       </div>
       {/* backdrop styles don't apply for the last pixel row of the elment for some reason no there's p and m offsets*/}
-      <section className={clsx(styles.backdrop, 'relative -mb-[1px] pb-[1px]')}>
+      <section className={clsx(styles.backdrop, '-mb-[1px] relative pb-[1px]')}>
         <div className="backdrop-blur-md">
           <div className="container flex flex-col justify-center pt-[128px] lg:flex-row lg:items-center lg:pb-[148px]">
             <div className="flex flex-1 flex-col items-center gap-6 pb-12 lg:items-start lg:pb-0">
               <div className="rounded-full bg-gradient-to-r from-[#31bdc6] to-[#3178c6] p-[1px] brightness-90 contrast-150 dark:brightness-125 dark:contrast-100">
                 <div className="rounded-full bg-white/80 px-3 py-1 dark:bg-black/80">
                   <span className="flex select-none items-center bg-gradient-to-r from-[#31bdc6] to-[#3178c6] bg-clip-text text-transparent">
-                    <GitBranch className="h-4 w-4 stroke-[#31bdc6] stroke-2 sm:mr-2" />
+                    <GitBranch className="h-4 w-4 stroke-2 stroke-[#31bdc6] sm:mr-2" />
                     <span className="hidden sm:block">By developers, for developers</span>
                   </span>
                 </div>
               </div>
-              <h2 className="mt-2 text-center text-4xl font-bold lg:text-left">
+              <h2 className="mt-2 text-center font-bold text-4xl lg:text-left">
                 Built by the community
               </h2>
-              <p className="max-w-[55ch] bg-transparent px-8 text-center leading-8 text-black/60 lg:px-0 lg:text-left dark:text-white/50">
+              <p className="max-w-[55ch] bg-transparent px-8 text-center text-black/60 leading-8 lg:px-0 lg:text-left dark:text-white/50">
                 TypeHero is free, open-source, and built by developers just like you. These are some
                 of the contributors who made this possible so far.
               </p>
@@ -100,7 +100,7 @@ export function Community() {
                   target="_blank"
                   rel="noreferrer"
                   href="https://discord.gg/WjZhvVbFHM"
-                  className="group mx-auto flex items-center gap-2 rounded-xl bg-neutral-200 px-3 py-2 text-sm font-bold duration-300 hover:bg-[#5865F2] hover:text-white dark:bg-neutral-800 dark:hover:bg-[#5865F2]"
+                  className="group mx-auto flex items-center gap-2 rounded-xl bg-neutral-200 px-3 py-2 font-bold text-sm duration-300 hover:bg-[#5865F2] hover:text-white dark:bg-neutral-800 dark:hover:bg-[#5865F2]"
                 >
                   <svg
                     className="h-4 w-4 fill-current group-hover:rotate-[360deg]"
@@ -118,10 +118,10 @@ export function Community() {
                   target="_blank"
                   rel="noreferrer"
                   href="https://github.com/typehero/typehero/blob/main/CONTRIBUTING.md"
-                  className="group flex items-center gap-2 rounded-xl bg-neutral-200 px-3 py-2 text-sm font-bold duration-300 hover:bg-black hover:text-white dark:bg-neutral-800 dark:hover:bg-white dark:hover:text-black"
+                  className="group flex items-center gap-2 rounded-xl bg-neutral-200 px-3 py-2 font-bold text-sm duration-300 hover:bg-black hover:text-white dark:bg-neutral-800 dark:hover:bg-white dark:hover:text-black"
                 >
                   <svg
-                    className="h-4 w-4 fill-current group-hover:-rotate-[360deg]"
+                    className="group-hover:-rotate-[360deg] h-4 w-4 fill-current"
                     role="img"
                     style={{ transition: 'color 0s, transform 0.3s' }}
                     viewBox="0 0 24 24"

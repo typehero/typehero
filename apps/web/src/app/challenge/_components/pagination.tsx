@@ -40,7 +40,7 @@ export function Pagination({
       </Button>
       {pages.map((page) => (
         <Button
-          className={clsx('border-border dark:border-ring border', {
+          className={clsx('border border-border dark:border-ring', {
             'bg-border dark:bg-neutral-700': page === currentPage,
           })}
           key={`pagination-${page}`}

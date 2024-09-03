@@ -1,4 +1,4 @@
-import { Expect, Equal } from 'type-testing';
+import { Equal, Expect } from 'type-testing';
 
 const height = 500;
 const width = 700;

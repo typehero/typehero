@@ -6,24 +6,24 @@ export function ComingSoon() {
       {/* bottom light */}
       <div className="fixed bottom-0 h-12 w-screen translate-y-1/2 animate-pulse rounded-[100%] bg-white/50 blur-3xl" />
       {/* background timer */}
-      <div className="absolute left-1/2 top-1/2 grid -translate-x-1/2 -translate-y-1/2 grid-cols-4 opacity-30">
+      <div className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 grid grid-cols-4 opacity-30">
         <div className="h-48 w-36 rounded-3xl bg-white/30 p-1">
-          <div className="grid h-full w-full place-items-center rounded-2xl bg-gradient-to-b from-white/30 to-black/30 text-7xl font-black text-neutral-300">
+          <div className="grid h-full w-full place-items-center rounded-2xl bg-gradient-to-b from-white/30 to-black/30 font-black text-7xl text-neutral-300">
             0
           </div>
         </div>
         <div className="h-48 w-36 rounded-3xl bg-white/30 p-1">
-          <div className="grid h-full w-full place-items-center rounded-2xl bg-gradient-to-b from-white/30 to-black/30 text-7xl font-black text-neutral-300">
+          <div className="grid h-full w-full place-items-center rounded-2xl bg-gradient-to-b from-white/30 to-black/30 font-black text-7xl text-neutral-300">
             69
           </div>
         </div>
         <div className="h-48 w-36 rounded-3xl bg-white/30 p-1">
-          <div className="grid h-full w-full place-items-center rounded-2xl bg-gradient-to-b from-white/30 to-black/30 text-7xl font-black text-neutral-300">
+          <div className="grid h-full w-full place-items-center rounded-2xl bg-gradient-to-b from-white/30 to-black/30 font-black text-7xl text-neutral-300">
             69
           </div>
         </div>
         <div className="h-48 w-36 rounded-3xl bg-white/30 p-1">
-          <div className="grid h-full w-full place-items-center rounded-2xl bg-gradient-to-b from-white/30 to-black/30 text-7xl font-black text-neutral-300">
+          <div className="grid h-full w-full place-items-center rounded-2xl bg-gradient-to-b from-white/30 to-black/30 font-black text-7xl text-neutral-300">
             69
           </div>
         </div>
@@ -40,7 +40,7 @@ export function ComingSoon() {
         </div>
       </div>
       <h1 className="z-10 my-12 text-4xl sm:text-6xl">Coming Soon</h1>
-      <p className="z-10 font-mono text-lg font-light text-white/50">
+      <p className="z-10 font-light font-mono text-lg text-white/50">
         Practice on{' '}
         <a
           href="https://typehero.dev"

@@ -1,7 +1,7 @@
-import type { ReportWithInfo } from '../_actions';
 import { Button } from '@repo/ui/components/button';
 import { toast } from '@repo/ui/components/use-toast';
 import router from 'next/router';
+import type { ReportWithInfo } from '../_actions';
 import { banChallenge, deleteComment, deleteSolution } from '../_actions';
 
 export const ExtraActionsButton = ({ report }: { report: ReportWithInfo }) => {

@@ -1,4 +1,4 @@
-import { Expect, Equal } from 'type-testing';
+import { Equal, Expect } from 'type-testing';
 
 type test_ApiRequest_explicitPost = Expect<
   Equal<ApiRequest<string, 'POST'>, { data: string; method: 'POST' }>

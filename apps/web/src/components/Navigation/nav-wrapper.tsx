@@ -11,7 +11,7 @@ export function NavWrapper({ children }: { children: React.ReactNode }) {
 
   return (
     <nav
-      className={`flex h-14 items-center text-sm font-medium ${
+      className={`flex h-14 items-center font-medium text-sm ${
         pathname?.startsWith('/challenge') ? 'px-4' : 'container'
       }`}
     >

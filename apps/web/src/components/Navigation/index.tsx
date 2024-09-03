@@ -1,4 +1,5 @@
 import { type Session } from '@repo/auth/server';
+import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,9 +7,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@repo/ui/components/dropdown-menu';
-import { Play, Settings, Settings2, User, Palette } from '@repo/ui/icons';
+import { Palette, Play, Settings, Settings2, User } from '@repo/ui/icons';
 import Link from 'next/link';
 import { Suspense } from 'react';
+import { auth } from '~/server/auth';
 import { isAdminOrModerator } from '~/utils/auth-guards';
 import { getAllFlags } from '~/utils/feature-flags';
 import { Search } from '../search/search';
@@ -16,12 +18,10 @@ import { LoginLink } from './login-link';
 import { MobileNav } from './mobile-nav';
 import { NavLink } from './nav-link';
 import { NavWrapper } from './nav-wrapper';
+import { getNotificationCount } from './navigation.actions';
+import { NotificationLink } from './notification-link';
 import { SignOutLink } from './signout-link';
 import { SkipToCodeEditor } from './skip-to-code-editor';
-import { auth } from '~/server/auth';
-import { NotificationLink } from './notification-link';
-import { getNotificationCount } from './navigation.actions';
-import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
 import { ThemeButton } from './theme-button';
 
 export function getAdminUrl() {
@@ -117,7 +117,7 @@ export async function Navigation() {
               <div className="font-bold leading-3">
                 type
                 <br />
-                hero <span className="text-muted-foreground bg-muted px-1 text-xs">BETA</span>
+                hero <span className="bg-muted px-1 text-muted-foreground text-xs">BETA</span>
               </div>
             </Link>
             <div className="hidden items-center md:ml-4 md:flex md:gap-4">{NavLinks}</div>
@@ -168,13 +168,13 @@ async function LoginButton({
         className="mt-[0.33rem] w-56 rounded-xl bg-white/50 backdrop-blur-sm dark:bg-neutral-950/50"
       >
         <Link className="block" href={`/@${session.user.name}`}>
-          <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
+          <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none dark:hover:bg-neutral-700/50">
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
           </DropdownMenuItem>
         </Link>
         <Link className="block" href="/settings">
-          <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none">
+          <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none">
             <Settings2 className="mr-2 h-4 w-4" />
             <span>Settings</span>
           </DropdownMenuItem>
@@ -189,7 +189,7 @@ async function LoginButton({
         </div>
         {isAdminOrMod ? (
           <a className="block" href={getAdminUrl()}>
-            <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
+            <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none dark:hover:bg-neutral-700/50">
               <Settings className="mr-2 h-4 w-4" />
               <span>Admin</span>
             </DropdownMenuItem>
@@ -197,7 +197,7 @@ async function LoginButton({
         ) : null}
         {isAdminOrMod ? (
           <a className="block" href="/challenge-playground">
-            <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
+            <DropdownMenuItem className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none dark:hover:bg-neutral-700/50">
               <Play className="mr-2 h-4 w-4" />
               <span>Challenge Playground</span>
             </DropdownMenuItem>
@@ -205,7 +205,7 @@ async function LoginButton({
         ) : null}
         <DropdownMenuSeparator />
 
-        <SignOutLink className="w-full rounded-b-lg rounded-t-sm" />
+        <SignOutLink className="w-full rounded-t-sm rounded-b-lg" />
       </DropdownMenuContent>
     </DropdownMenu>
   ) : (

@@ -1,4 +1,4 @@
-import { RoleTypes, type Role } from '@repo/db/types';
+import { type Role, RoleTypes } from '@repo/db/types';
 
 export type TitleInfo = ReturnType<typeof getTitles>[number];
 export function getTitles(roles: Role[]) {

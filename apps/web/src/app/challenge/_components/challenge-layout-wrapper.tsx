@@ -1,11 +1,11 @@
 'use client';
-import { useState, type ReactNode, useEffect } from 'react';
+import { type ReactNode, useEffect, useState } from 'react';
+import { useChallengeRouteData } from '../[slug]/challenge-route-data.hook';
 import type { ChallengeRouteData } from '../[slug]/getChallengeRouteData';
-import { ChallengeLayout, MOBILE_BREAKPOINT } from './challenge-layout';
-import usePanelAdjustments from './usePanelAdjustments';
 import { LeftWrapper } from '../[slug]/left-wrapper';
 import { Wrapper } from '../[slug]/wrapper';
-import { useChallengeRouteData } from '../[slug]/challenge-route-data.hook';
+import { ChallengeLayout, MOBILE_BREAKPOINT } from './challenge-layout';
+import usePanelAdjustments from './usePanelAdjustments';
 
 interface Props {
   challenge: ChallengeRouteData['challenge'];

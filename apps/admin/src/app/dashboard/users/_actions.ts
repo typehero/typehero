@@ -1,8 +1,8 @@
 'use server';
 
-import { auth } from '~/server/auth';
 import { prisma } from '@repo/db';
 import { revalidatePath } from 'next/cache';
+import { auth } from '~/server/auth';
 import { assertAdmin } from '~/utils/auth-guards';
 
 export type BannedUsers = NonNullable<Awaited<ReturnType<typeof getBannedUsers>>>;

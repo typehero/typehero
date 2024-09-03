@@ -1,6 +1,6 @@
 import type { NextjsLinkComponentType } from '../types';
-import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip';
 import { Button } from './button';
+import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip';
 
 export interface UserBadgeProps {
   username: string;

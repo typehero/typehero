@@ -1,19 +1,19 @@
 'use client';
 
 import clsx from 'clsx';
-import { userMentions } from './utils/mentions';
 import { useTheme } from 'next-themes';
 import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import remarkGfm from 'remark-gfm';
 import type { Transformer } from 'unified';
-import { SKIP, visit, type BuildVisitor } from 'unist-util-visit';
+import { type BuildVisitor, SKIP, visit } from 'unist-util-visit';
+import { Check, Copy } from '../icons';
 import { vs } from '../themes/vs';
 import { vscDarkPlus } from '../themes/vs-dark-plus';
-import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip';
 import { Button } from './button';
-import { Check, Copy } from '../icons';
+import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip';
+import { userMentions } from './utils/mentions';
 
 const HTML_COMMENT_REGEX = new RegExp('<!--([\\s\\S]*?)-->', 'g');
 
@@ -71,13 +71,13 @@ export function Markdown({
           <ol className={clsx(className, 'mb-4 list-decimal ps-10')} {...props} />
         ),
         h1: ({ className, ...props }) => (
-          <h1 className={clsx(className, 'mb-2 pb-2 text-3xl font-bold')} {...props} />
+          <h1 className={clsx(className, 'mb-2 pb-2 font-bold text-3xl')} {...props} />
         ),
         h2: ({ className, ...props }) => (
-          <h2 className={clsx(className, 'mb-2 pb-2 text-2xl font-bold')} {...props} />
+          <h2 className={clsx(className, 'mb-2 pb-2 font-bold text-2xl')} {...props} />
         ),
         h3: ({ className, ...props }) => (
-          <h3 className={clsx(className, 'mb-2 pb-2 text-xl font-bold')} {...props} />
+          <h3 className={clsx(className, 'mb-2 pb-2 font-bold text-xl')} {...props} />
         ),
         p: ({ className, ...props }) => (
           <p className={clsx(className, 'mb-4 overflow-hidden text-ellipsis')} {...props} />

@@ -1,8 +1,8 @@
-import { type NextRequest } from 'next/server';
 import { prisma } from '@repo/db';
+import { type NextRequest } from 'next/server';
 
-import { contributors } from '../../../../../public/contributors';
 import { RoleTypes } from '@repo/db/types';
+import { contributors } from '../../../../../public/contributors';
 
 export const dynamic = 'force-dynamic';
 

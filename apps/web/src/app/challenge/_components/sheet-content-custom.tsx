@@ -1,15 +1,15 @@
 import { SheetHeader, SheetTitle } from '@repo/ui/components/sheet';
-import Link from 'next/link';
 import { ChevronRight } from '@repo/ui/icons';
-import { TrackChallenge } from '../../tracks/_components/track-challenge-card';
-import { TrackProgress } from '../../tracks/_components/track-progress';
-import { SelectDropdown } from './select-dropdown';
+import Link from 'next/link';
+import { useMemo } from 'react';
+import { type ChallengeType, getChallengesAndTitle } from '~/app/get-challenges-and-title';
 import { useProblemExplorerContext } from '~/app/problem-explorer.hooks';
 import { useLocalStorage } from '~/utils/useLocalStorage';
-import { getChallengesAndTitle, type ChallengeType } from '~/app/get-challenges-and-title';
-import { useMemo } from 'react';
-import { useChallengeRouteData } from '../[slug]/challenge-route-data.hook';
+import { TrackChallenge } from '../../tracks/_components/track-challenge-card';
+import { TrackProgress } from '../../tracks/_components/track-progress';
 import { useAllChallengesContext } from '../[slug]/all-challenges.hook';
+import { useChallengeRouteData } from '../[slug]/challenge-route-data.hook';
+import { SelectDropdown } from './select-dropdown';
 
 export function ExplorerPanel() {
   const [, setTrackNameStorage] = useLocalStorage('trackName', 'popular');
@@ -58,7 +58,7 @@ export function ExplorerPanel() {
         <SheetTitle>
           <Link
             href="/explore"
-            className="text-foreground flex max-w-full items-center justify-start gap-4 text-xl font-semibold"
+            className="flex max-w-full items-center justify-start gap-4 font-semibold text-foreground text-xl"
           >
             <span className="overflow-hidden text-ellipsis whitespace-nowrap">
               Explore all challenges

@@ -1,20 +1,20 @@
-import { readdirSync, readFileSync, statSync } from 'fs';
+import { readFileSync, readdirSync, statSync } from 'fs';
 import { join } from 'path';
 import Ajv from 'ajv';
 import {
+  sys,
   CompilerHost,
   CompilerOptions,
+  ResolvedModuleWithFailedLookupLocations,
+  ScriptKind,
+  ScriptTarget,
   createProgram,
   createSourceFile,
   flattenDiagnosticMessageText,
   formatDiagnosticsWithColorAndContext,
   getPreEmitDiagnostics,
   readConfigFile,
-  ResolvedModuleWithFailedLookupLocations,
   resolveModuleName,
-  ScriptKind,
-  ScriptTarget,
-  sys,
 } from 'typescript';
 
 import picocolors from 'picocolors';

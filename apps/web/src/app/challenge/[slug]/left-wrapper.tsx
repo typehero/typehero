@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-import { useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { type ReactNode, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import { ChallengeTrackNavigation } from '~/app/challenge/_components/challenge-track-navigation';
 import { FeatureFlagContext } from '~/app/feature-flag-provider';
@@ -10,10 +10,10 @@ import { cn } from '@repo/ui/cn';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui/components/tabs';
 import { FlaskConical, History, Text } from '@repo/ui/icons';
 
+import { ProblemExplorerTrackNav } from '~/components/Navigation/problem-explorer-track-nav';
 import { AOT_CHALLENGES } from './aot-slugs';
 import type { ChallengeRouteData } from './getChallengeRouteData';
 import { useTrackNavigationVisiblity } from './use-track-visibility.hook';
-import { ProblemExplorerTrackNav } from '~/components/Navigation/problem-explorer-track-nav';
 
 type Tab = 'description' | 'solutions' | 'submissions';
 interface Props {
@@ -114,13 +114,13 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
           challenge={challenge}
           track={track}
           isCollapsed={isCollapsed}
-          className={cn('border-b border-zinc-300 p-1 dark:border-zinc-700')}
+          className={cn('border-zinc-300 border-b p-1 dark:border-zinc-700')}
         />
       )}
       {Boolean(isTrackVisible && !hasEnrolledTrackForChallenge) && (
         <ProblemExplorerTrackNav
           isCollapsed={isCollapsed}
-          className={cn('border-b border-zinc-300 p-1 dark:border-zinc-700')}
+          className={cn('border-zinc-300 border-b p-1 dark:border-zinc-700')}
         />
       )}
       <Tabs
@@ -130,7 +130,7 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
       >
         <TabsList
           className={cn(
-            'bg-background/90 dark:bg-muted/90 sticky top-0 grid h-auto w-full border-b border-zinc-300 backdrop-blur-sm dark:border-zinc-700',
+            'sticky top-0 grid h-auto w-full border-zinc-300 border-b bg-background/90 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90',
             {
               'grid-rows-3 gap-2': isIconOnly,
               'grid-cols-3 gap-0.5': !isIconOnly,
@@ -141,7 +141,7 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
         >
           <TabsTrigger
             className={cn(
-              'rounded-md duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700',
+              'rounded-md duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700 dark:hover:bg-neutral-700/50',
               {
                 'p-4': isIconOnly,
                 'rounded-tl-xl': !isTrackVisible,
@@ -161,7 +161,7 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
           </TabsTrigger>
           <TabsTrigger
             className={cn(
-              'rounded-md duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700',
+              'rounded-md duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700 dark:hover:bg-neutral-700/50',
               { 'p-4': isIconOnly },
             )}
             onClick={() => {
@@ -177,7 +177,7 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
           </TabsTrigger>
           <TabsTrigger
             className={cn(
-              'rounded-md rounded-tr-lg duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700',
+              'rounded-md rounded-tr-lg duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:data-[state=active]:bg-neutral-700 dark:hover:bg-neutral-700/50',
               {
                 'p-4': isIconOnly,
                 'rounded-tr-xl': !isTrackVisible,

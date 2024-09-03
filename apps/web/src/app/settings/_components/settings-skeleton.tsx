@@ -25,7 +25,7 @@ export function SettingsSkeleton() {
 
 export function TabsTriggerSkeleton() {
   return (
-    <div className="flex h-6 flex-row items-center gap-2 rounded-xl  border border-zinc-700 px-2 py-4 md:w-64">
+    <div className="flex h-6 flex-row items-center gap-2 rounded-xl border border-zinc-700 px-2 py-4 md:w-64">
       <Skeleton className="h-4 w-4 rounded-md border border-zinc-300 bg-zinc-300 dark:bg-zinc-700" />
       <Skeleton className="hidden h-4 w-16 rounded-2xl bg-zinc-300 text-neutral-900 md:block dark:bg-zinc-700 dark:text-white" />
     </div>

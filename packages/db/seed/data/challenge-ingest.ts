@@ -1,6 +1,6 @@
-import { type Prisma } from '@prisma/client';
 import fs from 'node:fs';
 import path from 'node:path';
+import { type Prisma } from '@prisma/client';
 
 const defaultExcludes = ['blank', 'solutions', 'aot'];
 export async function ingestChallenges(challengePath: string, excludes = defaultExcludes) {

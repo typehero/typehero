@@ -51,7 +51,7 @@ export async function UserSummary() {
           </MotionDiv>
         </div>
         <div className="relative h-full w-full p-6">
-          <div className="absolute left-6 top-6 text-4xl font-semibold tracking-tighter md:text-5xl">
+          <div className="absolute top-6 left-6 font-semibold text-4xl tracking-tighter md:text-5xl">
             General Metrics
           </div>
           <div className="flex h-full flex-col gap-7 pt-36 md:justify-center md:pt-0">
@@ -63,29 +63,29 @@ export async function UserSummary() {
               className="md:hidden"
             />
             <div className="flex items-end gap-5">
-              <div className="text-2xl font-bold md:w-44 md:text-6xl">
+              <div className="font-bold text-2xl md:w-44 md:text-6xl">
                 {formatThousandsWithK(totalNumberOfAccountsDuringAot)}
               </div>
               <div className="text-md md:text-2xl">Accounts Created</div>
             </div>
             <div className="flex items-end gap-5">
-              <div className="text-2xl font-bold md:w-44 md:text-6xl">150K</div>
+              <div className="font-bold text-2xl md:w-44 md:text-6xl">150K</div>
               <div className="text-md md:text-2xl">AOT Page Visits</div>
             </div>
             <div className="flex items-end gap-5">
-              <div className="text-2xl font-bold md:w-44 md:text-6xl">
+              <div className="font-bold text-2xl md:w-44 md:text-6xl">
                 {formatThousandsWithK(totalAotSubmissions)}
               </div>
               <div className="text-md md:text-2xl">Total Submissions</div>
             </div>
             <div className="flex items-end gap-5">
-              <div className="text-2xl font-bold md:w-44 md:text-6xl">
+              <div className="font-bold text-2xl md:w-44 md:text-6xl">
                 {formatThousandsWithK(incorrectAotSubmissions)}
               </div>
               <div className="text-md md:text-2xl">Total Incorrect Submissions</div>
             </div>
             <div className="flex items-end gap-5">
-              <div className="text-2xl font-bold md:w-44 md:text-6xl">
+              <div className="font-bold text-2xl md:w-44 md:text-6xl">
                 {formatThousandsWithK(correctAotSubmissions)}
               </div>
               <div className="text-md md:text-2xl">Total Correct Submissions</div>

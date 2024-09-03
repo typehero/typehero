@@ -2,12 +2,12 @@ import { Button } from '@repo/ui/components/button';
 import { Github } from '@repo/ui/icons';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
 import { getAllFlags } from '~/utils/feature-flags';
 import { CountdownTimer } from '../../_components/countdown-timer';
 import { About } from './about';
-import { CardGrid } from './card-grid';
-import { Suspense } from 'react';
 import { AOTCardSkeleton } from './aot-card-skeleton';
+import { CardGrid } from './card-grid';
 
 export async function AotLandingPage() {
   const featureFlags = await getAllFlags();
@@ -18,8 +18,8 @@ export async function AotLandingPage() {
       <div className="flex flex-col gap-5 pb-8 md:gap-10 md:py-5">
         <div className="container">
           <div className="relative mx-auto w-fit text-center">
-            <div className="absolute left-0 top-0 -z-10 hidden h-full w-full transform-gpu bg-gradient-to-r from-red-500 via-red-600 to-green-500 opacity-70 blur-3xl sm:opacity-40 dark:block" />
-            <h1 className="mb-10 mt-16 text-4xl font-bold tracking-tighter text-black sm:text-8xl dark:text-white">
+            <div className="-z-10 absolute top-0 left-0 hidden h-full w-full transform-gpu bg-gradient-to-r from-red-500 via-red-600 to-green-500 opacity-70 blur-3xl sm:opacity-40 dark:block" />
+            <h1 className="mt-16 mb-10 font-bold text-4xl text-black tracking-tighter sm:text-8xl dark:text-white">
               <span>Advent</span> of <span className="text-red-600">TypeScript</span>
             </h1>
           </div>
@@ -28,7 +28,7 @@ export async function AotLandingPage() {
             <div className="flex w-full flex-col items-center justify-center gap-2 md:w-auto md:flex-row md:gap-5">
               <Link
                 href="/aot-2023/wrapped"
-                className="group flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 px-3 py-2 text-sm font-bold text-white duration-300 md:mx-auto md:w-auto"
+                className="group flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 px-3 py-2 font-bold text-sm text-white duration-300 md:mx-auto md:w-auto"
               >
                 See the results!
               </Link>
@@ -36,7 +36,7 @@ export async function AotLandingPage() {
                 target="_blank"
                 rel="noreferrer"
                 href="https://chat.typehero.dev"
-                className="group flex w-full items-center justify-center gap-2 rounded-xl bg-[#5865F2] px-3 py-2 text-sm font-bold text-white duration-300 md:mx-auto md:w-auto dark:bg-[#5865F2]"
+                className="group flex w-full items-center justify-center gap-2 rounded-xl bg-[#5865F2] px-3 py-2 font-bold text-sm text-white duration-300 md:mx-auto md:w-auto dark:bg-[#5865F2]"
               >
                 <svg
                   className="h-4 w-4 fill-current group-hover:rotate-[360deg]"

@@ -1,1 +1,1 @@
-import { Expect, Equal } from 'type-testing';
+import { Equal, Expect } from 'type-testing';

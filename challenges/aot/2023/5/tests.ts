@@ -1,4 +1,4 @@
-import { Expect, Equal } from 'type-testing';
+import { Equal, Expect } from 'type-testing';
 
 const bads = ['tommy', 'trash'] as const;
 const goods = ['bash', 'tru'] as const;

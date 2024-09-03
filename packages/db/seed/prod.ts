@@ -3,9 +3,9 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import uuidByString from 'uuid-by-string';
+import { loadChallengesFromTypeChallenge } from '../mocks/challenges.mock';
 import { prisma } from '../src';
 import { ingestChallenges } from './data/challenge-ingest';
-import { loadChallengesFromTypeChallenge } from '../mocks/challenges.mock';
 import { tracks } from './data/tracks';
 
 const __filename = fileURLToPath(import.meta.url);

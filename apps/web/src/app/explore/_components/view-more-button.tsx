@@ -29,8 +29,7 @@ export function ViewMoreButton({ redirectRoute, tag }: ViewMoreButtonProps) {
   return (
     <Button
       asChild
-      className={`group items-center whitespace-nowrap rounded-full py-2 pl-4 pr-3 backdrop-blur-sm
-  ${BUTTON_BY_TAGS[tag]}`}
+      className={`group items-center whitespace-nowrap rounded-full py-2 pr-3 pl-4 backdrop-blur-sm ${BUTTON_BY_TAGS[tag]}`}
       variant="ghost"
     >
       <Link href={redirectRoute}>

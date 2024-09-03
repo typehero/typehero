@@ -3,7 +3,7 @@
 import { Expandable } from '@repo/ui/components/expandable';
 import { Markdown } from '@repo/ui/components/markdown';
 import { Text } from '@repo/ui/components/typography/typography';
-import { getReportedUserInformation, type ReportWithInfo } from '../_actions';
+import { type ReportWithInfo, getReportedUserInformation } from '../_actions';
 
 interface UserReportProps {
   report: NonNullable<ReportWithInfo>;
@@ -80,7 +80,7 @@ export async function UserReport({ report }: UserReportProps) {
             open={i === 0}
           >
             <div className="mt-4 rounded-lg bg-zinc-800 p-4" key={`challenge-${ch.id}`}>
-              <section className="mb-4 border-b border-slate-500 pb-4">
+              <section className="mb-4 border-slate-500 border-b pb-4">
                 <div className="font-semibold">Short description</div>
                 <Markdown>{ch.shortDescription}</Markdown>
               </section>

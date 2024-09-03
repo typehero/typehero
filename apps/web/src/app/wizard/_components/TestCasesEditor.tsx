@@ -82,7 +82,7 @@ export function TestCasesEditor({ form, hasTsErrors, setTsErrors }: Props) {
           return (
             <FormItem className="flex-1">
               <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-300 dark:border-zinc-700">
-                <div className="sticky top-0 flex h-[40px] flex-row-reverse items-center border-b border-zinc-300 px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
+                <div className="sticky top-0 flex h-[40px] flex-row-reverse items-center border-zinc-300 border-b px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
                   <SettingsButton />
                 </div>
                 <div className="w-full flex-1">
@@ -97,7 +97,7 @@ export function TestCasesEditor({ form, hasTsErrors, setTsErrors }: Props) {
                 </div>
                 <FormMessage className="pl-2" />
                 {!hasTsErrors && (
-                  <div className="text-destructive pl-2 text-sm font-medium">
+                  <div className="pl-2 font-medium text-destructive text-sm">
                     You must have failing test cases
                   </div>
                 )}

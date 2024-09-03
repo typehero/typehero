@@ -1,16 +1,16 @@
 'use client';
-import { createContext, useState, useContext } from 'react';
+import { createContext, useContext, useState } from 'react';
 import type {
   AllChallenges,
   ChallengesByTagOrDifficulty,
 } from '~/app/explore/_components/explore.action';
-import {
-  getChallengesAndTitle,
-  type ChallengeType,
-  type ChallengeTitles,
-  type SortKeyType,
-} from './get-challenges-and-title';
 import { useLocalStorage } from '~/utils/useLocalStorage';
+import {
+  type ChallengeTitles,
+  type ChallengeType,
+  type SortKeyType,
+  getChallengesAndTitle,
+} from './get-challenges-and-title';
 
 interface ProblemExplorerContextType {
   sortKey: SortKeyType;

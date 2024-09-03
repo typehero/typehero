@@ -10,10 +10,10 @@ export async function Explore() {
     <>
       <div className="flex flex-col gap-8 py-8 md:gap-10 md:py-8">
         <div className="container text-center">
-          <h1 className="mb-8 text-4xl font-bold tracking-tight text-neutral-900 dark:text-white">
+          <h1 className="mb-8 font-bold text-4xl text-neutral-900 tracking-tight dark:text-white">
             Explore
           </h1>
-          <p className="mx-auto max-w-[69ch] text-lg leading-10 text-neutral-600 dark:text-white/50">
+          <p className="mx-auto max-w-[69ch] text-lg text-neutral-600 leading-10 dark:text-white/50">
             Explore the challenges. Embrace the opportunity to grow, learn, and showcase your
             programming abilities. We hope you find the{' '}
             <span className="font-semibold dark:text-neutral-200">perfect</span> challenge!

@@ -1,9 +1,9 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { useTheme } from 'next-themes';
-import { Laptop, Moon, Sun } from '@repo/ui/icons';
 import { cn } from '@repo/ui/cn';
+import { Laptop, Moon, Sun } from '@repo/ui/icons';
 import { motion } from 'framer-motion';
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 
 const themes = ['system', 'light', 'dark'] as const;
 

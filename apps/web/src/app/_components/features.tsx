@@ -1,6 +1,6 @@
-import { Balancer } from 'react-wrap-balancer';
 import clsx from 'clsx';
 import Image from 'next/image';
+import { Balancer } from 'react-wrap-balancer';
 import DogeSmile from '~/assets/images/doge.webp';
 import FeatureCardChallengeDark1 from '~/assets/images/feature_card_challenge_dark1.png';
 import FeatureCardChallengeDark2 from '~/assets/images/feature_card_challenge_dark2.png';
@@ -10,17 +10,17 @@ import Step1Dark1 from '~/assets/images/step1dark1.png';
 import Step1Dark2 from '~/assets/images/step1dark2.png';
 import Step1Light1 from '~/assets/images/step1light1.png';
 import Step1Light2 from '~/assets/images/step1light2.png';
-import Step2Light1 from '~/assets/images/step2light1.png';
-import Step2Light2 from '~/assets/images/step2light2.png';
 import Step2Dark1 from '~/assets/images/step2dark1.png';
 import Step2Dark2 from '~/assets/images/step2dark2.png';
-import Step3Light from '~/assets/images/step3light.png';
+import Step2Light1 from '~/assets/images/step2light1.png';
+import Step2Light2 from '~/assets/images/step2light2.png';
 import Step3Dark from '~/assets/images/step3dark.png';
+import Step3Light from '~/assets/images/step3light.png';
 import {
-  ImageCard,
-  CollaborativeEnvironmentCard,
   ChallengeCreationCard,
+  CollaborativeEnvironmentCard,
   CuratedTracksCard,
+  ImageCard,
 } from './feature-card';
 
 export async function Features() {
@@ -44,7 +44,7 @@ export async function Features() {
                   </svg>
                   many features, wow{' '}
                   <Image
-                    className="absolute -bottom-1 right-1 translate-y-7 duration-300 group-hover:translate-y-0"
+                    className="-bottom-1 absolute right-1 translate-y-7 duration-300 group-hover:translate-y-0"
                     alt="doge smile"
                     height="28"
                     width="28"
@@ -53,7 +53,7 @@ export async function Features() {
                 </span>
               </div>
             </a>
-            <h1 className="text-4xl font-bold">
+            <h1 className="font-bold text-4xl">
               <Balancer>What's in TypeHero?</Balancer>
             </h1>
             <p className="text-black/60 dark:text-white/50">

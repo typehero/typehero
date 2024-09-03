@@ -1,7 +1,7 @@
-import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { A11YTAGS } from '../constant';
+import { expect, test } from '@playwright/test';
 import A11yError from 'playwright/utils/a11yLogger';
+import { A11YTAGS } from '../constant';
 
 test.use({ storageState: 'playwright/.auth/unauthenticated.json' });
 

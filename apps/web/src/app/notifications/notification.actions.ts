@@ -1,7 +1,7 @@
 'use server';
 
-import { auth } from '~/server/auth';
 import { prisma } from '@repo/db';
+import { auth } from '~/server/auth';
 
 export async function markNotificationsAsRead(ids: number[]) {
   const session = await auth();

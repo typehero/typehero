@@ -12,10 +12,10 @@ import {
 } from '@repo/ui/components/form';
 import { Input } from '@repo/ui/components/input';
 import { useToast } from '@repo/ui/components/use-toast';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { createTrack } from '../tracks.actions';
-import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
   name: z.string().min(3),

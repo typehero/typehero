@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { prisma } from '@repo/db';
 
 test.use({ storageState: 'playwright/.auth/unauthenticated.json' });

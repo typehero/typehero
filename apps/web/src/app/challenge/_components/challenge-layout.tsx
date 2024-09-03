@@ -1,8 +1,8 @@
-import { useEffect, useRef, type ReactNode, useState, type MutableRefObject, useMemo } from 'react';
+import { getEventDeltas } from '@repo/monaco/utils';
+import { type MutableRefObject, type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useFullscreenSettingsStore } from './fullscreen';
-import { getEventDeltas } from '@repo/monaco/utils';
 
 export const DEFAULT_SETTINGS = {
   width: '500px',
@@ -302,7 +302,7 @@ export function ChallengeLayout({
         }
         ref={resizer}
       >
-        <div className="group-hover:bg-primary group-active:bg-primary group-hover:dark:bg-primary absolute left-1/2 top-1/2 h-1 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neutral-400 duration-300 group-active:duration-75 lg:h-24 lg:w-1 dark:bg-neutral-700" />
+        <div className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 h-1 w-24 rounded-full bg-neutral-400 duration-300 group-hover:bg-primary group-active:bg-primary group-active:duration-75 lg:h-24 lg:w-1 dark:bg-neutral-700 group-hover:dark:bg-primary" />
       </div>
       <div
         className="flex min-h-[90px] w-full flex-1 flex-grow flex-col overflow-hidden rounded-2xl border border-zinc-300 lg:min-w-[500px] dark:border-zinc-700"

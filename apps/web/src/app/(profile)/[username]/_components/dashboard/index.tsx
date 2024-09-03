@@ -1,7 +1,7 @@
 'use client';
-import { useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { useEffect, useMemo } from 'react';
 
 import type { User } from '@repo/db/types';
 import { MagicIcon } from '@repo/ui/components/magic-icon';
@@ -87,7 +87,7 @@ export function Dashboard({ user, isOwnProfile, badges, children }: Props) {
         <VerticalTabsList>
           <div className="flex flex-col items-center gap-4 md:items-start">
             <div
-              className="h-32 w-32 rounded-3xl bg-cover bg-center bg-no-repeat md:h-64 md:w-64"
+              className="h-32 w-32 rounded-3xl bg-center bg-cover bg-no-repeat md:h-64 md:w-64"
               style={{ backgroundImage: `url(${user.image ?? '/avatar.jpeg'})` }}
             />
             <div className="flex flex-col items-center gap-2 md:w-full md:items-start">
@@ -175,7 +175,7 @@ export function Dashboard({ user, isOwnProfile, badges, children }: Props) {
                   </VerticalTabsTrigger>
                   <Link
                     href="/settings"
-                    className="border-border dark:border-ring data-[state=active]:bg-border ring-offset-background focus-visible:ring-ring data-[state=active]:text-foreground flex items-center justify-center gap-3 whitespace-nowrap rounded-xl border px-1.5 py-1.5 text-sm font-medium transition-all duration-300 hover:bg-neutral-200/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm md:justify-normal md:px-3 dark:hover:bg-neutral-700/50"
+                    className="flex items-center justify-center gap-3 whitespace-nowrap rounded-xl border border-border px-1.5 py-1.5 font-medium text-sm ring-offset-background transition-all duration-300 hover:bg-neutral-200/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-border data-[state=active]:text-foreground data-[state=active]:shadow-sm md:justify-normal md:px-3 dark:border-ring dark:hover:bg-neutral-700/50"
                   >
                     <Settings className="h-4 w-4" />
                     <span className="hidden md:block">Settings</span>

@@ -3,6 +3,7 @@
 import { createTwoslashInlayProvider } from './twoslash';
 
 import { type OnChange, type OnMount, type OnValidate } from '@monaco-editor/react';
+import { useToast } from '@repo/ui/components/use-toast';
 import { setupTypeAcquisition } from '@typescript/ata';
 import clsx from 'clsx';
 import debounce from 'lodash/debounce';
@@ -15,7 +16,6 @@ import { useResetEditor } from './editor-hooks';
 import { PrettierFormatProvider } from './prettier';
 import { useEditorSettingsStore } from './settings-store';
 import { getEventDeltas } from './utils';
-import { useToast } from '@repo/ui/components/use-toast';
 
 function preventSelection(event: Event) {
   event.preventDefault();
@@ -397,13 +397,13 @@ export default function SplitEditor({
       </section>
       <div className="transition-all" ref={testPanelSection}>
         <div
-          className="group cursor-row-resize border-y border-zinc-200 bg-zinc-100 p-2 dark:border-zinc-700 dark:bg-zinc-800"
+          className="group cursor-row-resize border-zinc-200 border-y bg-zinc-100 p-2 dark:border-zinc-700 dark:bg-zinc-800"
           ref={resizer}
           onDoubleClick={() => {
             setIsTestPanelExpanded(false);
           }}
         >
-          <div className="group-hover:bg-primary group-hover:dark:bg-primary group-active:bg-primary m-auto h-1 w-24 rounded-full bg-zinc-300 duration-300 dark:bg-zinc-700" />
+          <div className="m-auto h-1 w-24 rounded-full bg-zinc-300 duration-300 group-hover:bg-primary group-active:bg-primary dark:bg-zinc-700 group-hover:dark:bg-primary" />
         </div>
         <div
           style={{

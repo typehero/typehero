@@ -12,8 +12,8 @@ import { useToast } from '@repo/ui/components/use-toast';
 
 import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
 
+import { type ProfileSchema, profileSchema } from './schema';
 import { updateProfile } from './settings.action';
-import { profileSchema, type ProfileSchema } from './schema';
 
 interface Props {
   user: User & { userLinks: { id: string | null; url: string }[] };
@@ -93,7 +93,7 @@ function ProfileForm({ user }: Props) {
           )}
         />
         <div className="flex flex-col items-start space-y-3 pt-8">
-          <h4 className="text-sm font-medium">Social Links</h4>
+          <h4 className="font-medium text-sm">Social Links</h4>
           {fields.map((val, i) => {
             return (
               <FormItem className="mb-3" key={`url-link-${i}`}>

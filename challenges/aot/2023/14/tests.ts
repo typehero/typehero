@@ -1,4 +1,4 @@
-import { Expect, Equal } from 'type-testing';
+import { Equal, Expect } from 'type-testing';
 
 type test_0_actual = DecipherNaughtyList<'timmy/jimmy'>;
 //   ^?

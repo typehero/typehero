@@ -1,8 +1,8 @@
 'use client';
 
 import { type ColumnDef } from '@tanstack/react-table';
-import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import Link from 'next/link';
+import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import type { BookmarkedChallenge } from '../page';
 
 export const bookmarkedChallengedColumns: ColumnDef<BookmarkedChallenge>[] = [

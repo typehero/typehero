@@ -1,7 +1,7 @@
 'use client';
 
 import { Textarea, type TextareaProps } from '@repo/ui/components/textarea';
-import { useState, type ChangeEvent, type KeyboardEvent, type RefObject } from 'react';
+import { type ChangeEvent, type KeyboardEvent, type RefObject, useState } from 'react';
 import { useDebouncedValue } from '~/utils/useDebouncedValue';
 import { UserResults } from './user-results';
 

@@ -1,11 +1,11 @@
 'use client';
 
-import { useWatch } from 'react-hook-form';
 import { FormField, FormItem, FormMessage } from '@repo/ui/components/form';
-import { TypographyH3 } from '@repo/ui/components/typography/h3';
 import { Markdown } from '@repo/ui/components/markdown';
-import { type WizardForm } from '.';
+import { TypographyH3 } from '@repo/ui/components/typography/h3';
+import { useWatch } from 'react-hook-form';
 import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
+import { type WizardForm } from '.';
 
 interface Props {
   form: WizardForm;
@@ -38,7 +38,7 @@ export function DescriptionEditor({ form }: Props) {
             }}
           />
         </div>
-        <div className="w-full rounded-l-2xl rounded-r-2xl border border-zinc-300 bg-white p-3 md:h-full md:rounded-l-xl dark:border-zinc-700 dark:bg-zinc-800">
+        <div className="w-full rounded-r-2xl rounded-l-2xl border border-zinc-300 bg-white p-3 md:h-full md:rounded-l-xl dark:border-zinc-700 dark:bg-zinc-800">
           <Markdown>{description}</Markdown>
         </div>
       </div>

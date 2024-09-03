@@ -8,21 +8,21 @@ import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { TypographyLarge } from '@repo/ui/components/typography/large';
 import { toast } from '@repo/ui/components/use-toast';
-import { Calendar, Flag, Pin, Share, Trash, ArrowLeft, Pencil } from '@repo/ui/icons';
+import { ArrowLeft, Calendar, Flag, Pencil, Pin, Share, Trash } from '@repo/ui/icons';
 import clsx from 'clsx';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
+import { useState } from 'react';
 import type { ChallengeSolution } from '~/app/challenge/[slug]/solutions/[solutionId]/page';
+import { UserBadge } from '~/app/challenge/_components/comments/enhanced-user-badge';
 import { ReportDialog } from '~/components/ReportDialog';
+import { isAdminOrModerator, isAuthor } from '~/utils/auth-guards';
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import { Vote } from '../../../_components/vote';
 import { pinOrUnpinSolution } from './_actions';
-import { isAdminOrModerator, isAuthor } from '~/utils/auth-guards';
 import { SolutionDeleteDialog } from './delete';
-import { useParams } from 'next/navigation';
-import { useState } from 'react';
 import { EditSolution } from './edit-solution';
 import { useGetQueryString } from './useGetQueryString';
-import { UserBadge } from '~/app/challenge/_components/comments/enhanced-user-badge';
 
 interface Props {
   solution: ChallengeSolution;
@@ -51,7 +51,7 @@ export function SolutionDetails({ solution }: Props) {
   return (
     <div className="relative h-full">
       <div className="relative flex h-full flex-col">
-        <div className="custom-scrollable-element flex-1 overflow-y-auto px-4 pb-16 pt-3">
+        <div className="custom-scrollable-element flex-1 overflow-y-auto px-4 pt-3 pb-16">
           <div className="mb-5 flex flex-col gap-3">
             <div className="flex items-center gap-3">
               <Link href={`/challenge/${slug}/solutions?${queryString}`} className="h-7 w-7">
@@ -95,7 +95,7 @@ export function SolutionDetails({ solution }: Props) {
                   roles: solution.user?.roles ?? [],
                 }}
               />
-              <div className="text-muted-foreground flex items-center gap-2">
+              <div className="flex items-center gap-2 text-muted-foreground">
                 <Calendar className="h-4 w-4" />
                 <span className="text-xs">{getRelativeTimeStrict(solution.createdAt)}</span>
               </div>
@@ -136,7 +136,7 @@ export function SolutionDetails({ solution }: Props) {
                   variant="secondary"
                   size="xs"
                   className={clsx(
-                    'gap-2 border border-transparent [&:not(:disabled)]:hover:border-emerald-600  [&:not(:disabled)]:hover:text-emerald-600',
+                    'gap-2 border border-transparent [&:not(:disabled)]:hover:border-emerald-600 [&:not(:disabled)]:hover:text-emerald-600',
                     {
                       'border-emerald-600 text-emerald-600': solution.isPinned,
                     },
@@ -179,7 +179,7 @@ export function SolutionDetails({ solution }: Props) {
             </div>
           </div>
           {!isEditing && (
-            <div className="prose-invert prose-h3:text-xl mt-6 leading-7">
+            <div className="prose-invert mt-6 prose-h3:text-xl leading-7">
               <Markdown>{solution.description || ''}</Markdown>{' '}
             </div>
           )}

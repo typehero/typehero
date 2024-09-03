@@ -1,10 +1,10 @@
+import { toast } from '@repo/ui/components/use-toast';
+import MDEditor, { EditorContext, commands, type ICommand } from '@uiw/react-md-editor';
 import { useTheme } from 'next-themes';
 import type { ChangeEvent } from 'react';
 import { useContext, useEffect, useRef, useState } from 'react';
-import MDEditor, { EditorContext, commands, type ICommand } from '@uiw/react-md-editor';
 import { insertText } from '~/utils/domUtils';
 import { useUploadThing } from '~/utils/useUploadthing';
-import { toast } from '@repo/ui/components/use-toast';
 
 const codePreview: ICommand = {
   name: 'preview',

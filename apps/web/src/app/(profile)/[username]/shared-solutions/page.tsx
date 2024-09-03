@@ -8,10 +8,10 @@ import {
 } from '@repo/ui/components/card';
 import { DataTable } from '@repo/ui/components/data-table';
 import { notFound } from 'next/navigation';
+import { auth } from '~/server/auth';
 import { withUnstableCache } from '~/utils/withUnstableCache';
 import { createCacheKeyForSharedSolutionsTab } from '../../../challenge/[slug]/solutions/_components/_actions';
 import { sharedSolutionsColumns } from './_components/shared-solutions-columns';
-import { auth } from '~/server/auth';
 
 interface Props {
   params: {
@@ -54,7 +54,7 @@ export default async function SharedSolutionsPage({
     <Card className="col-span-4 md:min-h-[calc(100vh_-_56px_-_6rem)]">
       <CardHeader>
         <CardTitle>Shared Solutions</CardTitle>
-        <CardDescription className="text-muted-foreground mb-4 text-sm">
+        <CardDescription className="mb-4 text-muted-foreground text-sm">
           {isOwnProfile ? 'Your' : `${user.name}'s`} shared challenge solutions.
         </CardDescription>
       </CardHeader>

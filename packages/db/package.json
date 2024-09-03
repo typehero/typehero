@@ -9,12 +9,8 @@
   },
   "typesVersions": {
     "*": {
-      "*": [
-        "./src/index.ts"
-      ],
-      "types": [
-        "./src/types.ts"
-      ]
+      "*": ["./src/index.ts"],
+      "types": ["./src/types.ts"]
     }
   },
   "scripts": {

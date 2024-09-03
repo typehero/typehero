@@ -24,7 +24,7 @@ export function LoginButton({ redirectTo }: { redirectTo: string }) {
         variant="outline"
         onClick={handleSignIn}
         disabled={state === 'pending'}
-        className="fancy-border-gradient hover:bg-background relative mx-auto flex gap-4 border-none"
+        className="fancy-border-gradient relative mx-auto flex gap-4 border-none hover:bg-background"
       >
         Login with GitHub{' '}
         <svg

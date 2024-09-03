@@ -1,8 +1,8 @@
-import { buildMetaForDefault, buildMetaForUser } from '~/app/metadata';
 import { prisma } from '@repo/db';
-import { OverviewTab } from './_components/dashboard/overview-tab';
 import { notFound } from 'next/navigation';
+import { buildMetaForDefault, buildMetaForUser } from '~/app/metadata';
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
+import { OverviewTab } from './_components/dashboard/overview-tab';
 
 interface Props {
   params: {

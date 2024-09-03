@@ -1,11 +1,11 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import type { ErrorResponse } from '@mailchimp/mailchimp_marketing';
 import { Alert, AlertDescription } from '@repo/ui/components/alert';
 import { Button } from '@repo/ui/components/button';
 import { Form, FormControl, FormField, FormItem } from '@repo/ui/components/form';
 import { Input } from '@repo/ui/components/input';
-import type { ErrorResponse } from '@mailchimp/mailchimp_marketing';
 import {
   Select,
   SelectContent,
@@ -59,9 +59,9 @@ export function NewsletterForm() {
                 <FormControl>
                   <Input
                     className={clsx({
-                      'rounded-b-none rounded-t-xl border border-b-0 border-red-600 bg-white/50 backdrop-blur-md dark:border-red-400 dark:bg-neutral-950/50':
+                      'rounded-t-xl rounded-b-none border border-red-600 border-b-0 bg-white/50 backdrop-blur-md dark:border-red-400 dark:bg-neutral-950/50':
                         form.formState.errors.name,
-                      'rounded-b-none rounded-t-xl border-b-0 border-black/30 bg-white/20 backdrop-blur-md dark:border-white/30 dark:bg-neutral-950/20':
+                      'rounded-t-xl rounded-b-none border-black/30 border-b-0 bg-white/20 backdrop-blur-md dark:border-white/30 dark:bg-neutral-950/20':
                         !form.formState.errors.name,
                     })}
                     {...field}
@@ -106,9 +106,9 @@ export function NewsletterForm() {
                   <FormControl>
                     <SelectTrigger
                       className={clsx({
-                        'rounded-b-xl rounded-t-none border border-t-0 border-red-600 bg-white/50 backdrop-blur-md dark:border-red-400 dark:bg-neutral-950/50':
+                        'rounded-t-none rounded-b-xl border border-red-600 border-t-0 bg-white/50 backdrop-blur-md dark:border-red-400 dark:bg-neutral-950/50':
                           form.formState.errors.intention,
-                        'rounded-b-xl rounded-t-none border-t-0 border-black/30 bg-white/20 backdrop-blur-md dark:border-white/30 dark:bg-neutral-950/20':
+                        'rounded-t-none rounded-b-xl border-black/30 border-t-0 bg-white/20 backdrop-blur-md dark:border-white/30 dark:bg-neutral-950/20':
                           !form.formState.errors.intention,
                       })}
                     >

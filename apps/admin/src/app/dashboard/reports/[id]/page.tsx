@@ -1,11 +1,11 @@
-import { auth } from '~/server/auth';
 import { Alert, AlertDescription, AlertTitle } from '@repo/ui/components/alert';
 import { Markdown } from '@repo/ui/components/markdown';
 import { Text } from '@repo/ui/components/typography/typography';
 import { AlertCircle, ChevronLeft } from '@repo/ui/icons';
 import Link from 'next/link';
+import { auth } from '~/server/auth';
 import { assertAdmin } from '~/utils/auth-guards';
-import { getReport, type ReportWithInfo } from './_actions';
+import { type ReportWithInfo, getReport } from './_actions';
 import { ChallengeReport } from './_components/challenge.report';
 import { CommentReport } from './_components/comment.report';
 import { SolutionReport } from './_components/solution.report';
@@ -48,12 +48,12 @@ export default async function ({ params: { id } }: Props) {
   const ReportComponent = getComponentByType(report.type);
 
   return (
-    <div className="container  ">
+    <div className="container ">
       <Link className="inline-flex gap-2" href="/">
         {' '}
         <ChevronLeft /> <span>Back to reports</span>
       </Link>
-      <div className="bg-background/80 sticky top-0 z-50 flex items-center justify-between">
+      <div className="sticky top-0 z-50 flex items-center justify-between bg-background/80">
         <Text color="primary" intent="h1">
           {getTitle(report.type)}
         </Text>

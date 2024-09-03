@@ -1,4 +1,4 @@
-import { Expect, Equal, Extends } from 'type-testing';
+import { Equal, Expect, Extends } from 'type-testing';
 
 /*/////
 

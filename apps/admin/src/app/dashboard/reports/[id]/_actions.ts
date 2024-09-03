@@ -1,8 +1,8 @@
 'use server';
-import { auth } from '~/server/auth';
 import { prisma } from '@repo/db';
 import { type Prisma, type Report } from '@repo/db/types';
 import { cache } from 'react';
+import { auth } from '~/server/auth';
 import { assertAdmin } from '~/utils/auth-guards';
 
 // FML this was obnoxious to do

@@ -1,5 +1,3 @@
-import { Settings } from '@repo/ui/icons';
-import { SettingsForm } from './settings-form';
 import {
   Dialog,
   DialogContent,
@@ -8,6 +6,8 @@ import {
   DialogTrigger,
 } from '@repo/ui/components/dialog';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
+import { Settings } from '@repo/ui/icons';
+import { SettingsForm } from './settings-form';
 
 export function SettingsButton() {
   return (
@@ -15,7 +15,7 @@ export function SettingsButton() {
       <DialogTrigger>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Settings className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" size={20} />
+            <Settings className="stroke-1 stroke-zinc-500 hover:stroke-zinc-400" size={20} />
           </TooltipTrigger>
           <TooltipContent className="px-2 py-1">Settings</TooltipContent>
         </Tooltip>

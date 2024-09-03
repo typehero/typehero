@@ -1,5 +1,5 @@
 'use client';
-import { createContext, useState, useContext, type PropsWithChildren } from 'react';
+import { type PropsWithChildren, createContext, useContext, useState } from 'react';
 import type { GetCurrentChallengeType } from './getChallengeRouteData';
 
 interface ChallengeRouteDataContextType {

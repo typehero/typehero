@@ -10,7 +10,7 @@ export function Hero() {
         alt="background with shapes"
         className="z-0 opacity-40"
       />
-      <h1 className="z-10 text-center text-4xl font-bold tracking-tighter md:mb-5 md:text-8xl">
+      <h1 className="z-10 text-center font-bold text-4xl tracking-tighter md:mb-5 md:text-8xl">
         Advent of <span className="text-red-600">Typescript</span>
       </h1>
       <div className="relative flex">
@@ -19,9 +19,9 @@ export function Hero() {
           width={150}
           height={150}
           alt=""
-          className="absolute -left-[150px] -scale-x-100 transform"
+          className="-left-[150px] -scale-x-100 absolute transform"
         />
-        <p className="z-10 text-4xl font-bold tracking-tighter text-green-600 md:text-8xl">
+        <p className="z-10 font-bold text-4xl text-green-600 tracking-tighter md:text-8xl">
           Wrapped
         </p>
       </div>

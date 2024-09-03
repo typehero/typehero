@@ -26,7 +26,7 @@ export function PersonalTrackCard({ track }: PersonalTrackCardProps) {
   return (
     <Card
       className={clsx(
-        'group/card bg-background hover:bg-card-hovered relative overflow-hidden duration-300 sm:min-w-[300px] xl:min-w-[333px]',
+        'group/card relative overflow-hidden bg-background duration-300 hover:bg-card-hovered sm:min-w-[300px] xl:min-w-[333px]',
         'dark:group-focus:blue-blue-300 hover:border-blue-500 group-focus:border-blue-500 dark:hover:border-blue-300',
         'hover:shadow-[0_0_1rem_-0.15rem_#a7d8f9] group-focus:shadow-[0_0_1rem_-0.15rem_#a7d8f9]',
       )}

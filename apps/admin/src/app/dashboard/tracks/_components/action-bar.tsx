@@ -1,5 +1,6 @@
 'use client';
 
+import { Button } from '@repo/ui/components/button';
 import {
   Dialog,
   DialogContent,
@@ -7,7 +8,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@repo/ui/components/dialog';
-import { Button } from '@repo/ui/components/button';
 import { useState } from 'react';
 import { AddTrackForm } from './add-track-form';
 

@@ -1,5 +1,5 @@
-import type { Metadata } from 'next';
 import { challengeParam, userParam } from '@repo/og-image';
+import type { Metadata } from 'next';
 
 export const OG_URL =
   process.env.NODE_ENV !== 'production' ? 'http://localhost:4200' : 'https://og.typehero.dev';

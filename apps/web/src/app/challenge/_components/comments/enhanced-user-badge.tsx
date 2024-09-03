@@ -1,20 +1,20 @@
 'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
-import Link from 'next/link';
-import { Badge } from '@repo/ui/components/badge';
-import { Shield, Sword, Wand2, type LucideIcon } from '@repo/ui/icons';
-import { useQuery } from '@tanstack/react-query';
-import { getProfileData } from './enhanced-user-badge.getProfileData';
-import { useState } from 'react';
-import { SlugToBadgeIcon } from '~/app/(profile)/[username]/_components/dashboard/badges';
-import { type BadgeInfo } from '~/app/(profile)/[username]/_components/dashboard/_actions';
-import { cn } from '@repo/ui/cn';
 import { type Role } from '@repo/db/types';
+import { cn } from '@repo/ui/cn';
+import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
+import { Badge } from '@repo/ui/components/badge';
 import { Button } from '@repo/ui/components/button';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@repo/ui/components/hover-card';
-import { getTitles, type TitleInfo } from './enhanced-user-badge.getTitles';
 import { Skeleton } from '@repo/ui/components/skeleton';
+import { type LucideIcon, Shield, Sword, Wand2 } from '@repo/ui/icons';
+import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
+import { useState } from 'react';
+import { type BadgeInfo } from '~/app/(profile)/[username]/_components/dashboard/_actions';
+import { SlugToBadgeIcon } from '~/app/(profile)/[username]/_components/dashboard/badges';
+import { getProfileData } from './enhanced-user-badge.getProfileData';
+import { type TitleInfo, getTitles } from './enhanced-user-badge.getTitles';
 
 interface UserBadgeProps {
   user: {
@@ -97,7 +97,7 @@ export function UserBadge(props: UserBadgeProps) {
               </h1>
 
               <Titles data={query.data.titles} />
-              <p className="line-clamp-2 text-sm font-light text-zinc-700 dark:text-zinc-300">
+              <p className="line-clamp-2 font-light text-sm text-zinc-700 dark:text-zinc-300">
                 {query.data.bio === '' ? 'This user has no bio' : query.data.bio}
               </p>
             </div>
@@ -141,7 +141,7 @@ function Titles(props: { data: TitleInfo[] }) {
         const Icon = TITLE_TO_ICON[t.type];
         return (
           <Badge
-            className="rounded-full bg-gradient-to-br from-sky-600 to-sky-700 px-2  "
+            className="rounded-full bg-gradient-to-br from-sky-600 to-sky-700 px-2 "
             key={t.type}
           >
             <Icon className="h-5 w-5 pr-1" />

@@ -1,12 +1,10 @@
 'use client';
-
-import React from 'react';
-import { MoreHorizontal, type LucideIcon } from 'lucide-react';
+import { type LucideIcon, MoreHorizontal } from 'lucide-react';
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuTrigger,
 } from './dropdown-menu';
 
 export interface ActionMenuItem {
@@ -31,7 +29,7 @@ export function ActionMenu(props: ActionMenuProps) {
           const Icon = item.icon;
           return (
             <DropdownMenuItem
-              className="flex items-center gap-2 py-2 pl-3 pr-0"
+              className="flex items-center gap-2 py-2 pr-0 pl-3"
               key={item.key}
               onClick={() => props.onChange(item)}
             >

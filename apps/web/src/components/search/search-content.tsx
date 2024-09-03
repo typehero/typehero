@@ -1,14 +1,14 @@
 import { DialogClose } from '@radix-ui/react-dialog';
 import type { Challenge } from '@repo/db/types';
 import { DifficultyBadge } from '@repo/ui/components/difficulty-badge';
+import { ScrollArea, ScrollBar } from '@repo/ui/components/scroll-area';
+import { Text } from '@repo/ui/components/typography/typography';
+import { Loader2 as LoaderIcon, SearchIcon, X as XIcon } from '@repo/ui/icons';
 import Link from 'next/link';
 import { Highlight } from 'react-instantsearch';
+import { type Result, useSearchResult, useSearchStatus } from './search-provider';
 import { SearchBoxContextProvider, useSearchBox } from './searchbox.context';
-import { useSearchResult, useSearchStatus, type Result } from './search-provider';
 import { useRecentSearchesStorage } from './use-recent-searches-storage';
-import { Text } from '@repo/ui/components/typography/typography';
-import { SearchIcon, Loader2 as LoaderIcon, X as XIcon } from '@repo/ui/icons';
-import { ScrollArea, ScrollBar } from '@repo/ui/components/scroll-area';
 
 function useRecentSearches() {
   return useRecentSearchesStorage<Challenge>();
@@ -63,7 +63,7 @@ function Result({ result, onClick }: { result: Result; onClick: OnClick }) {
         onAdd(result);
       }}
       href={`/challenge/${result.slug}`}
-      className="focus-visible:ring-ring hover:bg-foreground/10 flex w-full flex-col items-start justify-center gap-2 overflow-hidden border-b p-6 transition-colors"
+      className="flex w-full flex-col items-start justify-center gap-2 overflow-hidden border-b p-6 transition-colors hover:bg-foreground/10 focus-visible:ring-ring"
     >
       <div className="flex items-start gap-2">
         <DifficultyBadge difficulty={result.difficulty} className="w-[80px] justify-center" />
@@ -89,16 +89,16 @@ function ProposedPhrases() {
 
   return (
     <div className="flex flex-col">
-      <span className="text-muted-foreground border-b px-4 pb-4">Try searching for:</span>
+      <span className="border-b px-4 pb-4 text-muted-foreground">Try searching for:</span>
       <button
         onClick={updateQuery('Easy')}
-        className="focus-visible:ring-ring hover:bg-foreground/10 flex w-full flex-col items-start justify-center gap-2 overflow-hidden border-b p-6 transition-colors"
+        className="flex w-full flex-col items-start justify-center gap-2 overflow-hidden border-b p-6 transition-colors hover:bg-foreground/10 focus-visible:ring-ring"
       >
         Easy
       </button>
       <button
         onClick={updateQuery('Extreme')}
-        className="focus-visible:ring-ring hover:bg-foreground/10 flex w-full flex-col items-start justify-center gap-2 overflow-hidden border-b p-6 transition-colors"
+        className="flex w-full flex-col items-start justify-center gap-2 overflow-hidden border-b p-6 transition-colors hover:bg-foreground/10 focus-visible:ring-ring"
       >
         Extreme
       </button>
@@ -122,7 +122,7 @@ function Topbar() {
       <input
         aria-label="Search for a challenge"
         type="search"
-        className="focus-visible:ring-ring placeholder:text-muted-foreground flex h-10 w-full flex-grow rounded-md bg-transparent px-2 text-sm outline-none"
+        className="flex h-10 w-full flex-grow rounded-md bg-transparent px-2 text-sm outline-none placeholder:text-muted-foreground focus-visible:ring-ring"
         placeholder="Search for a challenge..."
         value={query}
         onChange={(event) => {
@@ -130,7 +130,7 @@ function Topbar() {
         }}
       />
       <DialogClose className="hidden md:block">
-        <kbd className="bg-muted dark:group-hover:bg-muted-foreground pointer-events-none hidden h-8 select-none items-center gap-1 rounded border px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
+        <kbd className="pointer-events-none hidden h-8 select-none items-center gap-1 rounded border bg-muted px-1.5 font-medium font-mono text-[10px] opacity-100 sm:flex dark:group-hover:bg-muted-foreground">
           <span className="text-xs">esc</span>
         </kbd>
       </DialogClose>
@@ -155,11 +155,11 @@ function RecentSearches({ onClick }: { onClick: OnClick }) {
 
   return (
     <div className="flex flex-col">
-      <span className="text-muted-foreground border-b p-4">Recent</span>
+      <span className="border-b p-4 text-muted-foreground">Recent</span>
       {results.map((result) => (
         <div
           key={result.id}
-          className="hover:bg-foreground/10 focus-within:bg-foreground/10 flex items-center justify-between border-b px-6 transition-colors "
+          className="flex items-center justify-between border-b px-6 transition-colors focus-within:bg-foreground/10 hover:bg-foreground/10 "
         >
           <Link
             prefetch={false}
@@ -188,7 +188,7 @@ function Footer() {
     <footer className="flex h-[60px] items-center justify-end gap-2 border-t p-4">
       <Text
         intent="leading"
-        className="text-foreground/60 flex select-none items-center justify-center text-sm"
+        className="flex select-none items-center justify-center text-foreground/60 text-sm"
       >
         Powered by
       </Text>

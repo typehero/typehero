@@ -1,5 +1,5 @@
-import { auth } from '~/server/auth';
 import { DataTable } from '@repo/ui/components/data-table';
+import { auth } from '~/server/auth';
 import { assertAdmin } from '~/utils/auth-guards';
 import { getReports } from './_actions';
 import { columns } from './_components/columns';

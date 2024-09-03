@@ -1,27 +1,27 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSession } from '@repo/auth/react';
+import type { TsErrors } from '@repo/monaco';
+import { Form } from '@repo/ui/components/form';
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
-import { useForm, type UseFormReturn } from 'react-hook-form';
+import { type UseFormReturn, useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { useSession } from '@repo/auth/react';
-import { Form } from '@repo/ui/components/form';
-import type { TsErrors } from '@repo/monaco';
-import { ChallengeCardEditor } from './ChallengeCardEditor';
-import { DescriptionEditor } from './DescriptionEditor';
-import { Steps } from './Steps';
-import { NextBack } from './NextBack';
-import { Summary } from './Summary';
-import { TestCasesEditor } from './TestCasesEditor';
-import { uploadChallenge } from './create.action';
-import DEFAULT_CHALLENGE_TEMPLATE from './default-challenge.md';
-import DEFAULT_TEST_CASES from './default-tests.md';
-import DEFAULT_DESCRIPTION from './default-description.md';
 import {
   createNoProfanitySchema,
   createNoProfanitySchemaWithValidate,
 } from '~/utils/antiProfanityZod';
+import { ChallengeCardEditor } from './ChallengeCardEditor';
+import { DescriptionEditor } from './DescriptionEditor';
+import { NextBack } from './NextBack';
+import { Steps } from './Steps';
+import { Summary } from './Summary';
+import { TestCasesEditor } from './TestCasesEditor';
+import { uploadChallenge } from './create.action';
+import DEFAULT_CHALLENGE_TEMPLATE from './default-challenge.md';
+import DEFAULT_DESCRIPTION from './default-description.md';
+import DEFAULT_TEST_CASES from './default-tests.md';
 
 export const enum STEPS {
   ChallengeCard,
@@ -150,7 +150,7 @@ export function Wizard() {
   }
 
   return (
-    <div className="flex h-full flex-col gap-4 pb-4 pt-4 lg:gap-6 lg:pb-8">
+    <div className="flex h-full flex-col gap-4 pt-4 pb-4 lg:gap-6 lg:pb-8">
       {/* we cant nest this in the form because it causes the editor to resize inifinitely hence the onSubmit(wtf..) */}
       <Steps current={step} onChange={(idx) => setStep(idx)} steps={steps} />
       {rendered ? (

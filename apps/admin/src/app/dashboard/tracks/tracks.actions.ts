@@ -1,8 +1,8 @@
 'use server';
 
-import { auth } from '~/server/auth';
 import { prisma } from '@repo/db';
 import { type Prisma } from '@repo/db/types';
+import { auth } from '~/server/auth';
 import { assertAdmin } from '~/utils/auth-guards';
 
 export async function getTracks() {

@@ -1,8 +1,8 @@
 'use client';
 
 import type * as monaco from 'monaco-editor';
-import { useEffect, useRef } from 'react';
 import { VimMode, initVimMode } from 'monaco-vim';
+import { useEffect, useRef } from 'react';
 import { DEFAULT_SETTINGS, useEditorSettingsStore } from './settings-store';
 
 VimMode.Vim.defineEx('MonacoCommand', 'M', function monacoExCommand(ctx, { args }) {

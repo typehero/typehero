@@ -1,11 +1,24 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
-  "organizeImports": { "enabled": true },
+  "organizeImports": {
+    "enabled": true,
+    "ignore": [
+      "**/public/**",
+      "**/.next/**",
+      ".vscode/",
+      "tooling/**",
+      "challenges/**",
+      "**/monaco-editor.d.ts",
+      "**/next-env.d.ts",
+      "**/node_modules/",
+      "**/dist/"
+    ]
+  },
   "linter": {
     "enabled": true,
     "rules": {
       "nursery": {
-        "useSortedClasses": "warn"
+        "useSortedClasses": "error"
       },
       "recommended": false,
       "a11y": {
@@ -41,7 +54,9 @@
       }
     },
     "ignore": [
-      "**/public/",
+      "**/public/**",
+      "**/.next/**",
+      ".vscode/",
       "tooling/**",
       "challenges/**",
       "**/monaco-editor.d.ts",
@@ -69,6 +84,10 @@
     "ignore": [
       "tooling/**",
       "challenges/**",
+      "**/.next/**",
+      "public/",
+      "**/public/",
+      ".vscode/",
       "**/monaco-editor.d.ts",
       "**/next-env.d.ts",
       "**/node_modules/",

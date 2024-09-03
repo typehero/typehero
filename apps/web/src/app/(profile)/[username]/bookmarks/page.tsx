@@ -6,12 +6,12 @@ import {
   CardHeader,
   CardTitle,
 } from '@repo/ui/components/card';
+import { DataTable } from '@repo/ui/components/data-table';
 import { notFound } from 'next/navigation';
+import { auth } from '~/server/auth';
 import { withUnstableCache } from '~/utils/withUnstableCache';
 import { createCacheKeyForBookmarksTab } from '../../../challenge/_components/bookmark.action';
-import { DataTable } from '@repo/ui/components/data-table';
 import { bookmarkedChallengedColumns } from './_components/bookmarked-challenges-columns';
-import { auth } from '~/server/auth';
 
 interface Props {
   params: {
@@ -49,7 +49,7 @@ export default async function BookmarksPage({ params: { username: usernameFromQu
     <Card className="col-span-4 md:min-h-[calc(100vh_-_56px_-_6rem)]">
       <CardHeader>
         <CardTitle>Bookmarks</CardTitle>
-        <CardDescription className="text-muted-foreground mb-4 text-sm">
+        <CardDescription className="mb-4 text-muted-foreground text-sm">
           Your bookmarked challenges.
         </CardDescription>
       </CardHeader>

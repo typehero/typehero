@@ -2,9 +2,9 @@
 
 import { type Session } from '@repo/auth/server';
 import { prisma } from '@repo/db';
+import { track } from '@vercel/analytics/server';
 import { revalidateTag } from 'next/cache';
 import { cache } from 'react';
-import { track } from '@vercel/analytics/server';
 import { auth } from '~/server/auth';
 
 /**

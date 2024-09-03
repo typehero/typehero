@@ -16,7 +16,7 @@ export function EnrolledTrackCardSkeleton() {
             <Skeleton className="h-6 w-16 rounded-full bg-zinc-300 dark:bg-zinc-700" />
           </CardTitle>
         </CardHeader>
-        <CardContent className="group-hover:bg-card-hovered relative rounded-xl p-6 duration-300">
+        <CardContent className="relative rounded-xl p-6 duration-300 group-hover:bg-card-hovered">
           <CardDescription className="relative h-14 max-w-[75%] overflow-hidden pb-4">
             <div className="pointer-events-none absolute inset-0 h-full w-full shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card))] duration-300 group-hover:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))] group-focus:shadow-[inset_0_-1.5rem_1rem_-0.5rem_hsl(var(--card-hovered))]" />
             <Skeleton className="h-6 w-full rounded-full bg-zinc-300 dark:bg-zinc-700" />
@@ -29,7 +29,7 @@ export function EnrolledTrackCardSkeleton() {
 
 export function AllTracksCardSkeleton() {
   return (
-    <Card className="md:w-72lg:mx-0 flex h-72 w-full flex-col items-center justify-center gap-4 sm:px-8 lg:w-full">
+    <Card className="flex h-72 w-full flex-col items-center justify-center gap-4 sm:px-8 md:w-72lg:mx-0 lg:w-full">
       <Skeleton className="h-20 w-20 rounded-xl bg-zinc-300 dark:bg-zinc-700" />
       <Skeleton className="mt-1 h-4 w-40 rounded-xl bg-zinc-300 dark:bg-zinc-700" />
       <Skeleton className="mt-1 h-8 w-52 rounded-xl bg-zinc-300 dark:bg-zinc-700" />

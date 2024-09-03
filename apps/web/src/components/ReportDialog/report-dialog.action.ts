@@ -1,8 +1,8 @@
 'use server';
 
-import { auth } from '~/server/auth';
 import { prisma } from '@repo/db';
 import { type Prisma, type Report } from '@repo/db/types';
+import { auth } from '~/server/auth';
 
 export interface ReportBase {
   issues: Prisma.ReportIssueCreateWithoutReportInput[];

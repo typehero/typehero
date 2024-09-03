@@ -6,22 +6,22 @@ import {
 } from '@tanstack/react-query';
 import { useEffect, useReducer } from 'react';
 
-import { commentErrors, sortKeys } from './comments.constants';
-import {
-  getAllComments,
-  getPaginatedComments,
-  type PaginatedComments,
-} from './getCommentRouteData';
 import type { CommentRoot } from '@repo/db/types';
+import { toast } from '@repo/ui/components/use-toast';
+import type { ChallengeRouteData } from '../../[slug]/getChallengeRouteData';
+import type { SolutionRouteData } from '../../[slug]/solutions/[solutionId]/getSolutionIdRouteData';
 import {
   addComment as addCommentAction,
   deleteComment as deleteCommentAction,
   replyComment,
   updateComment as updateCommentAction,
 } from './comment.action';
-import { toast } from '@repo/ui/components/use-toast';
-import type { ChallengeRouteData } from '../../[slug]/getChallengeRouteData';
-import type { SolutionRouteData } from '../../[slug]/solutions/[solutionId]/getSolutionIdRouteData';
+import { commentErrors, sortKeys } from './comments.constants';
+import {
+  type PaginatedComments,
+  getAllComments,
+  getPaginatedComments,
+} from './getCommentRouteData';
 
 const getRootQueryKey = (rootId: number, type: CommentRoot) =>
   `${type.toLowerCase()}-${rootId}-comments`;

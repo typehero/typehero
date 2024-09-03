@@ -3,9 +3,9 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { Navigation } from '~/components/navigation';
-import { Providers } from './providers';
 import { getAllFlags } from '~/utils/feature-flag';
 import { ComingSoon } from './coming-soon';
+import { Providers } from './providers';
 
 const inter = Inter({ subsets: ['latin'] });
 

@@ -75,7 +75,7 @@ function ThemeButton() {
       {mounted ? (
         <button
           aria-label="theme button"
-          className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none"
+          className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none"
           onClick={() => {
             setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
           }}
@@ -115,7 +115,7 @@ function LoginButton() {
       <DropdownMenuTrigger asChild>
         <button
           aria-label="profile button"
-          className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none"
+          className="rounded-lg p-2 duration-300 focus:bg-accent focus:outline-none"
         >
           <User className="h-5 w-5" />
         </button>
@@ -125,7 +125,7 @@ function LoginButton() {
         className="mt-[0.33rem] w-56 rounded-xl bg-white/50 backdrop-blur-sm dark:bg-neutral-950/50"
       >
         <Button
-          className="h-8 w-full justify-start rounded-b-lg rounded-t-sm bg-opacity-50 px-2 text-red-500 hover:bg-red-500/20 hover:text-red-500"
+          className="h-8 w-full justify-start rounded-t-sm rounded-b-lg bg-opacity-50 px-2 text-red-500 hover:bg-red-500/20 hover:text-red-500"
           onClick={handleSignOut}
           variant="ghost"
         >
@@ -135,7 +135,7 @@ function LoginButton() {
     </DropdownMenu>
   ) : (
     <Button
-      className="focus:bg-accent w-20 rounded-lg bg-transparent p-2 text-black duration-300 hover:bg-gray-200 focus:outline-none dark:text-white hover:dark:bg-gray-800"
+      className="w-20 rounded-lg bg-transparent p-2 text-black duration-300 hover:bg-gray-200 focus:bg-accent focus:outline-none dark:text-white hover:dark:bg-gray-800"
       disabled={loading || status === 'loading'}
       onClick={handleSignIn}
     >

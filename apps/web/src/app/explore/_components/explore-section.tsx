@@ -1,8 +1,8 @@
-import { auth } from '~/server/auth';
 import type { Difficulty, Tags } from '@repo/db/types';
 import Link from 'next/link';
 import { ExploreChallengesProgression } from '~/app/explore/_components/explore-challenges-progress';
 import { Carousel } from '~/components/carousel';
+import { auth } from '~/server/auth';
 import { ExploreCard } from './explore-card';
 import {
   getChallengesByTagOrDifficulty,
@@ -98,9 +98,9 @@ export async function ExploreSection({ title, tag, redirectRoute }: SectionProps
     <div>
       <div className="container flex items-center justify-between gap-3 px-4 pt-5">
         <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center">
-          <h2 className={`relative text-3xl font-bold tracking-tight ${TITLES_BY_TAG[tag]}`}>
+          <h2 className={`relative font-bold text-3xl tracking-tight ${TITLES_BY_TAG[tag]}`}>
             <div
-              className={`absolute -left-8 -z-10 h-12 w-32 rounded-full bg-pink-300/50 blur-3xl ${COLORS_BY_TAGS[tag]}`}
+              className={`-left-8 -z-10 absolute h-12 w-32 rounded-full bg-pink-300/50 blur-3xl ${COLORS_BY_TAGS[tag]}`}
             />
             {title}
           </h2>

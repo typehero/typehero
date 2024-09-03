@@ -4,10 +4,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { type ReactNode } from 'react';
 
-import type { getTrackDetails } from '~/app/tracks/_components/track.action';
 import { TrackChallenge } from '~/app/tracks/_components/track-challenge-card';
 import { TrackProgress } from '~/app/tracks/_components/track-progress';
+import type { getTrackDetails } from '~/app/tracks/_components/track.action';
 
+import type { Challenge } from '@repo/db/types';
 import { Button } from '@repo/ui/components/button';
 import {
   Sheet,
@@ -16,7 +17,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@repo/ui/components/sheet';
-import type { Challenge } from '@repo/db/types';
 import { ChevronRight } from '@repo/ui/icons';
 
 interface Props {
@@ -58,7 +58,7 @@ export function ChallengeTrackOutline({ children, challenge, track, asChild = fa
           <SheetTitle>
             <Button
               variant="ghost"
-              className="text-foreground flex max-w-full justify-start gap-4 text-lg font-semibold"
+              className="flex max-w-full justify-start gap-4 font-semibold text-foreground text-lg"
               onClick={() => router.push(`/tracks/${track.slug}`)}
             >
               <span className="overflow-hidden text-ellipsis whitespace-nowrap">{track.name}</span>

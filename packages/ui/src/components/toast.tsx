@@ -1,8 +1,8 @@
 'use client';
-import * as React from 'react';
 import * as ToastPrimitives from '@radix-ui/react-toast';
-import { cva, type VariantProps } from 'class-variance-authority';
+import { type VariantProps, cva } from 'class-variance-authority';
 import { X } from 'lucide-react';
+import * as React from 'react';
 import { cn } from '../cn';
 
 const ToastProvider = ToastPrimitives.Provider;
@@ -13,7 +13,7 @@ const ToastViewport = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Viewport
     className={cn(
-      'fixed top-10 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-14 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]',
+      'fixed top-10 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:top-auto sm:right-0 sm:bottom-14 sm:flex-col md:max-w-[420px]',
       className,
     )}
     ref={ref}
@@ -77,7 +77,7 @@ const ToastAction = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Action
     className={cn(
-      'ring-offset-background focus:ring-ring group-[.destructive]:border-destructive-foreground group-[.destructive]:dark:hover:text-destructive-foreground group-[.destructive]:hover:bg-destructive-foreground group-[.destructive]:hover:text-destructive-foreground group-[.destructive]:focus:ring-destructive inline-flex h-8 shrink-0 items-center justify-center rounded-md border border-black bg-transparent px-3 text-sm font-medium transition-colors hover:bg-transparent/10 focus:outline-none focus:ring-2 focus:ring-offset-0 disabled:pointer-events-none disabled:opacity-50 group-[.destructive]:hover:bg-transparent/10 dark:border-white',
+      'inline-flex h-8 shrink-0 items-center justify-center rounded-md border border-black bg-transparent px-3 font-medium text-sm ring-offset-background transition-colors hover:bg-transparent/10 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-0 disabled:pointer-events-none disabled:opacity-50 group-[.destructive]:border-destructive-foreground group-[.destructive]:focus:ring-destructive group-[.destructive]:hover:bg-destructive-foreground group-[.destructive]:hover:bg-transparent/10 group-[.destructive]:hover:text-destructive-foreground dark:border-white group-[.destructive]:dark:hover:text-destructive-foreground',
       className,
     )}
     ref={ref}
@@ -92,7 +92,7 @@ const ToastClose = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Close
     className={cn(
-      'text-foreground/50 hover:text-foreground absolute right-2 top-2 rounded-md p-1 opacity-0 transition-opacity focus:opacity-100 focus:outline-none focus:ring-2 group-hover:opacity-100 group-[.destructive]:text-red-300 group-[.destructive]:hover:text-red-50 group-[.destructive]:focus:ring-red-400 group-[.destructive]:focus:ring-offset-red-600',
+      'absolute top-2 right-2 rounded-md p-1 text-foreground/50 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 focus:outline-none focus:ring-2 group-hover:opacity-100 group-[.destructive]:text-red-300 group-[.destructive]:focus:ring-red-400 group-[.destructive]:focus:ring-offset-red-600 group-[.destructive]:hover:text-red-50',
       className,
     )}
     ref={ref}
@@ -109,7 +109,7 @@ const ToastTitle = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Title>
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Title
-    className={cn('z-10 text-sm font-semibold', className)}
+    className={cn('z-10 font-semibold text-sm', className)}
     ref={ref}
     {...props}
   />
@@ -121,7 +121,7 @@ const ToastDescription = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Description>
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Description
-    className={cn('z-10 text-sm text-black/50 opacity-90 dark:text-white/50', className)}
+    className={cn('z-10 text-black/50 text-sm opacity-90 dark:text-white/50', className)}
     ref={ref}
     {...props}
   />

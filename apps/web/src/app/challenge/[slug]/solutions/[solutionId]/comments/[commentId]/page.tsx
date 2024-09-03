@@ -1,7 +1,7 @@
-import { auth } from '~/server/auth';
 import { SolutionDetails } from '~/app/challenge/[slug]/solutions/_components/solution-detail';
 import { Comments } from '~/app/challenge/_components/comments';
 import { getPreselectedSolutionCommentMetadata } from '~/app/challenge/_components/comments/getCommentRouteData';
+import { auth } from '~/server/auth';
 import { getSolutionIdRouteData } from '../../getSolutionIdRouteData';
 
 interface Props {

@@ -3,11 +3,11 @@
 import { cn } from '@repo/ui/cn';
 import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
 import { Popover, PopoverAnchor, PopoverContent } from '@repo/ui/components/popover';
+import { useToast } from '@repo/ui/components/use-toast';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
-import { searchUsers } from './actions';
-import { useToast } from '@repo/ui/components/use-toast';
 import { Loader } from '../loader';
+import { searchUsers } from './actions';
 
 interface Props {
   isOpen: boolean;
@@ -111,7 +111,7 @@ export function UserResults({ isOpen, onFocusOutside, onSelectedUser, query }: P
         onInteractOutside={onFocusOutside}
       >
         {isLoading ? (
-          <div className="flex h-full items-center justify-center text-lg font-semibold">
+          <div className="flex h-full items-center justify-center font-semibold text-lg">
             <Loader className="h-8 w-8" />
           </div>
         ) : (
@@ -130,7 +130,7 @@ export function UserResults({ isOpen, onFocusOutside, onSelectedUser, query }: P
                         }}
                         className={cn(
                           selectedIndex === index ? 'bg-zinc-400/50 dark:bg-zinc-600/50' : '',
-                          'flex w-full cursor-pointer justify-start gap-3 rounded-none px-4 py-3  hover:bg-zinc-400/50 dark:hover:bg-zinc-600/50',
+                          'flex w-full cursor-pointer justify-start gap-3 rounded-none px-4 py-3 hover:bg-zinc-400/50 dark:hover:bg-zinc-600/50',
                         )}
                       >
                         <Avatar className="h-10 w-10 border border-gray-500 dark:border-gray-700">
@@ -140,10 +140,10 @@ export function UserResults({ isOpen, onFocusOutside, onSelectedUser, query }: P
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex flex-col">
-                          <span className="text-sm font-bold text-gray-900 dark:text-white">
+                          <span className="font-bold text-gray-900 text-sm dark:text-white">
                             {user.name}
                           </span>
-                          <span className="text-xs text-gray-600 dark:text-gray-500">
+                          <span className="text-gray-600 text-xs dark:text-gray-500">
                             @{user.name}
                           </span>
                         </div>
@@ -153,7 +153,7 @@ export function UserResults({ isOpen, onFocusOutside, onSelectedUser, query }: P
                 })}
               </ul>
             ) : (
-              <div className="flex h-full items-center justify-center text-lg font-semibold">
+              <div className="flex h-full items-center justify-center font-semibold text-lg">
                 Users not found.
               </div>
             )}

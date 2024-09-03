@@ -1,10 +1,10 @@
 import React from 'react';
-import { auth } from '~/server/auth';
 import { getAllChallenges } from '~/app/explore/_components/explore.action';
-import { isEnrolledInAnyTrack } from './getChallengeRouteData';
-import { AllChallengesProvider } from './all-challenges.hook';
 import { ProblemExplorerProvider } from '~/app/problem-explorer.hooks';
+import { auth } from '~/server/auth';
+import { AllChallengesProvider } from './all-challenges.hook';
 import { ChallegeRouteDataProvider } from './challenge-route-data.hook';
+import { isEnrolledInAnyTrack } from './getChallengeRouteData';
 
 interface Props {
   children: React.ReactNode;

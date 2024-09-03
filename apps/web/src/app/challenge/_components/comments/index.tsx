@@ -4,18 +4,18 @@ import type { CommentRoot } from '@repo/db/types';
 import { ChevronDown, MessageCircle } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { useRef, useState } from 'react';
+import type { ChallengeRouteData } from '../../[slug]/getChallengeRouteData';
+import type { SolutionRouteData } from '../../[slug]/solutions/[solutionId]/getSolutionIdRouteData';
+import { useTrackNavigationVisiblity } from '../../[slug]/use-track-visibility.hook';
+import { Pagination } from '../pagination';
+import { SortSelect } from '../sort-select';
 import { Comment } from './comment';
 import { CommentInput } from './comment-input';
 import { CommentSkeleton } from './comment-skeleton';
+import { sortKeys } from './comments.constants';
+import { useComments } from './comments.hooks';
 import { type PreselectedCommentMetadata } from './getCommentRouteData';
 import NoComments from './nocomments';
-import { Pagination } from '../pagination';
-import { SortSelect } from '../sort-select';
-import { useComments } from './comments.hooks';
-import { sortKeys } from './comments.constants';
-import { useTrackNavigationVisiblity } from '../../[slug]/use-track-visibility.hook';
-import type { ChallengeRouteData } from '../../[slug]/getChallengeRouteData';
-import type { SolutionRouteData } from '../../[slug]/solutions/[solutionId]/getSolutionIdRouteData';
 
 interface Props {
   preselectedCommentMetadata?: PreselectedCommentMetadata;
@@ -56,7 +56,7 @@ export function Comments({ preselectedCommentMetadata, root, type, expanded = fa
   return (
     <div
       className={clsx(
-        'bg-background/90 dark:border-b-muted dark:bg-muted/90 absolute bottom-0 max-h-full w-full overflow-hidden border-t border-zinc-300 backdrop-blur-sm duration-300 dark:border-zinc-700 ',
+        'absolute bottom-0 max-h-full w-full overflow-hidden border-zinc-300 border-t bg-background/90 backdrop-blur-sm duration-300 dark:border-zinc-700 dark:border-b-muted dark:bg-muted/90 ',
         {
           'lg:border-t-none': showComments,
         },
@@ -94,7 +94,7 @@ export function Comments({ preselectedCommentMetadata, root, type, expanded = fa
           )}
           ref={commentContainerRef}
         >
-          <div className="m-2 mb-4 mt-0">
+          <div className="m-2 mt-0 mb-4">
             <CommentInput mode="create" onSubmit={addComment} />
           </div>
           {(data?.comments.length ?? 0) > 0 && (

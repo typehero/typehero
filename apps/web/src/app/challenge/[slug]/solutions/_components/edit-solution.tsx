@@ -8,9 +8,9 @@ import { useTheme } from 'next-themes';
 import { useParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import type { ChallengeSolution } from '~/app/challenge/[slug]/solutions/[solutionId]/page';
 import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
 import { createNoProfanitySchemaWithValidate } from '~/utils/antiProfanityZod';
-import type { ChallengeSolution } from '~/app/challenge/[slug]/solutions/[solutionId]/page';
 import { updateSolution } from './_actions';
 
 const formSchema = z.object({
@@ -73,7 +73,7 @@ export function EditSolution({ solution, setIsEditing }: Props) {
   return (
     <Form {...form}>
       <form className="relative flex h-full flex-col" onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="bg-background/90 dark:bg-muted/90 sticky right-0 top-0 flex w-full items-center justify-between gap-2 border-b border-zinc-300 bg-opacity-20 p-1 pr-2 backdrop-blur-sm dark:border-zinc-700">
+        <div className="sticky top-0 right-0 flex w-full items-center justify-between gap-2 border-zinc-300 border-b bg-background/90 bg-opacity-20 p-1 pr-2 backdrop-blur-sm dark:border-zinc-700 dark:bg-muted/90">
           <div className="flex-1">
             <FormField
               control={form.control}
@@ -93,7 +93,7 @@ export function EditSolution({ solution, setIsEditing }: Props) {
             />
           </div>
           <Button
-            className="h-8 rounded-lg bg-white px-3 py-2 text-black hover:bg-zinc-200 focus-visible:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:focus-visible:bg-zinc-700"
+            className="h-8 rounded-lg bg-white px-3 py-2 text-black hover:bg-zinc-200 focus-visible:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:focus-visible:bg-zinc-700 dark:hover:bg-zinc-700"
             onClick={() => setIsEditing(false)}
             type="button"
           >

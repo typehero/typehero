@@ -1,11 +1,11 @@
 'use client';
-import { useProblemExplorerContext } from '~/app/problem-explorer.hooks';
-import { useMemo } from 'react';
-import { ExploreDrawer } from '~/app/challenge/_components/explore-drawer';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
-import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from '@repo/ui/icons';
+import Link from 'next/link';
+import { useMemo } from 'react';
 import { useChallengeRouteData } from '~/app/challenge/[slug]/challenge-route-data.hook';
+import { ExploreDrawer } from '~/app/challenge/_components/explore-drawer';
+import { useProblemExplorerContext } from '~/app/problem-explorer.hooks';
 
 export function ProblemExplorerNav() {
   const { currentChallenge } = useChallengeRouteData();
@@ -41,7 +41,7 @@ export function ProblemExplorerNav() {
   return (
     <div className="flex items-center gap-1.5">
       <ExploreDrawer asChild>
-        <span className="hover:text-foreground text-foreground/80 mr-1 cursor-pointer items-center transition-colors">
+        <span className="mr-1 cursor-pointer items-center text-foreground/80 transition-colors hover:text-foreground">
           <Tooltip delayDuration={0}>
             <TooltipTrigger asChild>
               <span>Explorer</span>
@@ -57,12 +57,12 @@ export function ProblemExplorerNav() {
               {previous?.slug ? (
                 <Link
                   href={`/challenge/${previous?.slug}`}
-                  className="hover:bg-accent hover:text-accent-foreground  border-muted text-foreground/80  cursor-pointer rounded-sm border p-0.5 transition-colors dark:hover:bg-zinc-900"
+                  className="cursor-pointer rounded-sm border border-muted p-0.5 text-foreground/80 transition-colors hover:bg-accent hover:text-accent-foreground dark:hover:bg-zinc-900"
                 >
                   <ChevronLeft className="h-5 w-5" />
                 </Link>
               ) : (
-                <span className="border-muted text-foreground/80 cursor-not-allowed rounded-sm  border p-0.5 opacity-50 transition-colors dark:hover:bg-zinc-900">
+                <span className="cursor-not-allowed rounded-sm border border-muted p-0.5 text-foreground/80 opacity-50 transition-colors dark:hover:bg-zinc-900">
                   <ChevronLeft className="h-5 w-5" />
                 </span>
               )}
@@ -74,12 +74,12 @@ export function ProblemExplorerNav() {
               {next?.slug ? (
                 <Link
                   href={`/challenge/${next?.slug}`}
-                  className="hover:bg-accent hover:text-accent-foreground  border-muted text-foreground/80  cursor-pointer rounded-sm border p-0.5 transition-colors dark:hover:bg-zinc-900"
+                  className="cursor-pointer rounded-sm border border-muted p-0.5 text-foreground/80 transition-colors hover:bg-accent hover:text-accent-foreground dark:hover:bg-zinc-900"
                 >
                   <ChevronRight className="h-5 w-5" />
                 </Link>
               ) : (
-                <span className="border-muted text-foreground/80 cursor-not-allowed rounded-sm  border p-0.5 opacity-50 transition-colors dark:hover:bg-zinc-900">
+                <span className="cursor-not-allowed rounded-sm border border-muted p-0.5 text-foreground/80 opacity-50 transition-colors dark:hover:bg-zinc-900">
                   <ChevronRight className="h-5 w-5" />
                 </span>
               )}

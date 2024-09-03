@@ -19,7 +19,7 @@ export function Suggestions({ challengeId }: { challengeId: number }) {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h3 className="text-foreground text-lg font-semibold md:text-xl">More Challenges</h3>
+        <h3 className="font-semibold text-foreground text-lg md:text-xl">More Challenges</h3>
       </div>
       {status === 'pending' ? (
         <SuggestionsSkeleton />

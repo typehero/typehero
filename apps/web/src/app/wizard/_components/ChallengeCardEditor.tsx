@@ -1,20 +1,20 @@
 'use client';
 
-import { useWatch } from 'react-hook-form';
-import type { WizardForm } from '.';
-import type { ExploreChallengeData } from '~/app/explore/_components/explore.action';
-import { ExploreCard } from '~/app/explore/_components/explore-card';
-import { TypographyH3 } from '@repo/ui/components/typography/h3';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@repo/ui/components/form';
-import { Textarea } from '@repo/ui/components/textarea';
+import { Input } from '@repo/ui/components/input';
 import {
   Select,
-  SelectItem,
   SelectContent,
+  SelectItem,
   SelectTrigger,
   SelectValue,
 } from '@repo/ui/components/select';
-import { Input } from '@repo/ui/components/input';
+import { Textarea } from '@repo/ui/components/textarea';
+import { TypographyH3 } from '@repo/ui/components/typography/h3';
+import { useWatch } from 'react-hook-form';
+import { ExploreCard } from '~/app/explore/_components/explore-card';
+import type { ExploreChallengeData } from '~/app/explore/_components/explore.action';
+import type { WizardForm } from '.';
 
 interface Props {
   form: WizardForm;

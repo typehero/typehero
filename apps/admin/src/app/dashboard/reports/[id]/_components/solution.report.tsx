@@ -22,7 +22,7 @@ export async function SolutionReport({ report }: { report: NonNullable<ReportWit
 
   return (
     <div className="rounded-lg border border-slate-700 bg-zinc-800 p-3">
-      <header className="mb-4 border-b border-zinc-600 py-4">
+      <header className="mb-4 border-zinc-600 border-b py-4">
         <Text intent="h1">{report.solution.title}</Text>
         Solution for:{' '}
         <Link

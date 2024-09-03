@@ -1,8 +1,8 @@
 'use client';
 
 import { type ColumnDef } from '@tanstack/react-table';
-import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import Link from 'next/link';
+import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import type { SharedSolution } from '../page';
 
 export const sharedSolutionsColumns: ColumnDef<SharedSolution>[] = [

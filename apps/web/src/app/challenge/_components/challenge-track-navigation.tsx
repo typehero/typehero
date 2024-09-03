@@ -7,10 +7,10 @@ import { useMemo } from 'react';
 import { type ChallengeRouteData } from '~/app/challenge/[slug]/getChallengeRouteData';
 import { getTrackDetails } from '~/app/tracks/_components/track.action';
 
+import { cn } from '@repo/ui/cn';
 import { Button } from '@repo/ui/components/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
-import { cn } from '@repo/ui/cn';
-import { Swords, ChevronLeft, ChevronRight } from '@repo/ui/icons';
+import { ChevronLeft, ChevronRight, Swords } from '@repo/ui/icons';
 
 import { ChallengeTrackOutline } from './challenge-track-outline';
 
@@ -63,7 +63,7 @@ export function ChallengeTrackNavigation({ challenge, track, isCollapsed, classN
       className={cn(
         {
           'flex h-[44px] items-center gap-1': !isCollapsed,
-          'text-muted-foreground inline-flex h-auto': isCollapsed,
+          'inline-flex h-auto text-muted-foreground': isCollapsed,
         },
         className,
       )}

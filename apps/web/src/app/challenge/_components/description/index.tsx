@@ -22,12 +22,12 @@ import { useMemo, useRef, useState } from 'react';
 import { type ChallengeRouteData } from '~/app/challenge/[slug]/getChallengeRouteData';
 import { ReportDialog } from '~/components/ReportDialog';
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
+import { AOT_CHALLENGES } from '../../[slug]/aot-slugs';
 import { addOrRemoveBookmark } from '../bookmark.action';
+import { UserBadge } from '../comments/enhanced-user-badge';
 import { ShareForm } from '../share-form';
 import { Vote } from '../vote';
-import { AOT_CHALLENGES } from '../../[slug]/aot-slugs';
 import { Suggestions } from './suggestions';
-import { UserBadge } from '../comments/enhanced-user-badge';
 
 interface Props {
   challenge: ChallengeRouteData['challenge'];
@@ -63,10 +63,10 @@ export function Description({ challenge }: Props) {
     <div
       // eslint-disable-next-line
       tabIndex={0}
-      className="custom-scrollable-element h-full overflow-y-auto px-4 pb-36 pt-3 outline-none"
+      className="custom-scrollable-element h-full overflow-y-auto px-4 pt-3 pb-36 outline-none"
     >
       <div className="flex items-center">
-        <TypographyH3 className="mr-auto max-w-[75%] items-center truncate text-2xl font-bold">
+        <TypographyH3 className="mr-auto max-w-[75%] items-center truncate font-bold text-2xl">
           {challenge.name}
         </TypographyH3>
         <ReportDialog challengeId={challenge.id} reportType="CHALLENGE">
@@ -94,7 +94,7 @@ export function Description({ challenge }: Props) {
             roles: challenge.user?.roles ?? [],
           }}
         />
-        <div className="text-muted-foreground flex items-center gap-2">
+        <div className="flex items-center gap-2 text-muted-foreground">
           <Calendar className=" h-4 w-4" />
           <span className="text-xs">Last updated {getRelativeTimeStrict(challenge.updatedAt)}</span>
         </div>
@@ -185,7 +185,7 @@ export function Description({ challenge }: Props) {
         </Tooltip>
       </div>
       {/* Challenge Description */}
-      <div className="prose-invert prose-h3:text-xl mt-6 leading-7">
+      <div className="prose-invert mt-6 prose-h3:text-xl leading-7">
         <Markdown>{challenge.description}</Markdown>
       </div>
       {/* More Challenges Suggestions */}

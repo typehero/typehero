@@ -1,6 +1,7 @@
 'use client';
 
 import type { NotificationType } from '@repo/db/types';
+import { cn } from '@repo/ui/cn';
 import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
 import { Markdown } from '@repo/ui/components/markdown';
 import { AlertCircle, AtSign, Heart, MessageCircle, ShieldAlert } from '@repo/ui/icons';
@@ -9,7 +10,6 @@ import { useRouter } from 'next/navigation';
 import { useInView } from 'react-intersection-observer';
 import { getRelativeTime } from '~/utils/relativeTime';
 import type { Notification } from './notification.actions';
-import { cn } from '@repo/ui/cn';
 
 const BLURBS = {
   MENTION: 'mentioned you in a comment',
@@ -53,7 +53,7 @@ export function NotificationItem({
       onClick={() => router.push(notification.url || buildUrl())}
       className={cn(
         !notification.isRead ? 'bg-sky-300/20 hover:bg-sky-300/30' : 'hover:bg-muted/50',
-        'border-border focus:ring-primary w-full border-b p-4 text-left outline-none transition-colors last:border-b-0 focus:outline-none',
+        'w-full border-border border-b p-4 text-left outline-none transition-colors last:border-b-0 focus:outline-none focus:ring-primary',
       )}
     >
       <div className="flex items-start space-x-4">
@@ -71,26 +71,26 @@ export function NotificationItem({
           <div className="flex items-center space-x-2">
             <Link
               href={`/@${notification.fromUser.name}`}
-              className="focus:ring-primary relative z-10 rounded-sm text-sm font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2"
+              className="relative z-10 rounded-sm font-medium text-sm hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
               onClick={(e) => e.stopPropagation()}
             >
               {notification.fromUser.name}
             </Link>
             <div className="flex-shrink-0">
               {notification.type === 'LIKE' && (
-                <Heart className="h-4 w-4 text-red-500  dark:text-red-400" />
+                <Heart className="h-4 w-4 text-red-500 dark:text-red-400" />
               )}
               {notification.type === 'MENTION' && (
-                <AtSign className="h-4 w-4 text-blue-500  dark:text-blue-400" />
+                <AtSign className="h-4 w-4 text-blue-500 dark:text-blue-400" />
               )}
               {notification.type === 'REPLY' && (
-                <MessageCircle className="h-4 w-4 text-purple-500  dark:text-purple-400" />
+                <MessageCircle className="h-4 w-4 text-purple-500 dark:text-purple-400" />
               )}
               {notification.type === 'MISC' && (
-                <AlertCircle className="h-4 w-4 text-orange-500  dark:text-orange-400" />
+                <AlertCircle className="h-4 w-4 text-orange-500 dark:text-orange-400" />
               )}
               {notification.type === 'SYSTEM' && (
-                <ShieldAlert className="h-4 w-4 text-yellow-500  dark:text-yellow-400" />
+                <ShieldAlert className="h-4 w-4 text-yellow-500 dark:text-yellow-400" />
               )}
             </div>
           </div>
@@ -98,7 +98,7 @@ export function NotificationItem({
             {notification.blurb ?? getBlurb(notification)}
           </p>
         </div>
-        <div className="text-muted-foreground flex-shrink-0 text-xs">
+        <div className="flex-shrink-0 text-muted-foreground text-xs">
           {' '}
           {getRelativeTime(notification.createdAt)}
         </div>
@@ -108,7 +108,7 @@ export function NotificationItem({
       notification.type === 'LIKE'
         ? // if a user edits the comment and deletes the contents just hide it
           notification.comment?.text && (
-            <div className="bg-muted text-foreground ml-14 mt-1 overflow-hidden rounded-md p-3 text-sm">
+            <div className="mt-1 ml-14 overflow-hidden rounded-md bg-muted p-3 text-foreground text-sm">
               <Markdown
                 disableMentions
                 disableCopy

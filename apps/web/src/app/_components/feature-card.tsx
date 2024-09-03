@@ -6,15 +6,15 @@ import { Markdown } from '@repo/ui/components/markdown';
 import { Reply } from '@repo/ui/icons';
 import clsx from 'clsx';
 import {
+  type MotionStyle,
+  type MotionValue,
   motion,
   useMotionTemplate,
   useMotionValue,
-  type MotionStyle,
-  type MotionValue,
 } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import Image, { type StaticImageData } from 'next/image';
-import { useEffect, useState, type MouseEvent } from 'react';
+import { type MouseEvent, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useIsMobile } from '~/utils/useIsMobile';
 import { MockTrackChallenge } from '../tracks/_components/track-challenge-card';
@@ -75,8 +75,8 @@ function FeatureCard({
       >
         <div className="m-6 min-h-[330px] w-full sm:m-10 md:min-h-[450px]">
           <div className="flex w-5/6 flex-col gap-3 sm:w-4/6 md:w-4/5 xl:w-4/6">
-            <h2 className="text-xl font-bold tracking-tight md:text-xl">{title}</h2>
-            <p className="text-sm leading-5 text-zinc-600 sm:text-base sm:leading-7 dark:text-zinc-400">
+            <h2 className="font-bold text-xl tracking-tight md:text-xl">{title}</h2>
+            <p className="text-sm text-zinc-600 leading-5 sm:text-base sm:leading-7 dark:text-zinc-400">
               {description}
             </p>
           </div>
@@ -204,7 +204,7 @@ export function ChallengeCreationCard({
       <div
         className={clsx(
           { 'translate-x-0 opacity-0': step < 3 },
-          'absolute left-1/2 top-1/2 flex w-[80%] -translate-x-1/2 -translate-y-[33%] flex-col gap-12 text-center text-2xl font-bold transition-all duration-500 md:w-[50%]',
+          '-translate-x-1/2 -translate-y-[33%] absolute top-1/2 left-1/2 flex w-[80%] flex-col gap-12 text-center font-bold text-2xl transition-all duration-500 md:w-[50%]',
         )}
       >
         <div>🎉</div>
@@ -279,7 +279,7 @@ export function ChallengeCreationCard({
               maxWidth: 'unset',
             }}
           />
-          <div className="absolute -right-4 bottom-4 w-full">
+          <div className="-right-4 absolute bottom-4 w-full">
             <Steps current={step} onChange={() => {}} steps={steps} />
           </div>
         </>
@@ -354,13 +354,13 @@ export function ChallengeCreationCard({
               maxWidth: 'unset',
             }}
           />
-          <div className="absolute -right-4 bottom-4 w-full">
+          <div className="-right-4 absolute bottom-4 w-full">
             <Steps current={step} onChange={() => {}} steps={steps} />
           </div>
         </>
       )}
       <div
-        className="absolute left-0 top-0 z-50 h-full w-full cursor-pointer"
+        className="absolute top-0 left-0 z-50 h-full w-full cursor-pointer"
         onClick={() => increment()}
       />
     </FeatureCard>
@@ -375,7 +375,7 @@ function Badge({ name }: { name: string }) {
   return (
     <Button
       tabIndex={-1}
-      className="-ml-[0.33rem] flex h-auto w-fit items-center rounded-full bg-transparent py-1 pl-[0.33rem] pr-2 text-xs font-bold text-neutral-700 hover:bg-black/10 dark:text-white dark:hover:bg-white/20"
+      className="-ml-[0.33rem] flex h-auto w-fit items-center rounded-full bg-transparent py-1 pr-2 pl-[0.33rem] font-bold text-neutral-700 text-xs hover:bg-black/10 dark:text-white dark:hover:bg-white/20"
       size="sm"
     >
       @{name}
@@ -391,7 +391,7 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
     <FeatureCard {...props}>
       <div
         ref={ref}
-        className="absolute inset-0 left-[23px] top-[25%] flex w-[100%] flex-col gap-3 pt-4 max-md:scale-90 sm:left-[33px] sm:top-[35%] md:left-[37px] md:top-[30%]"
+        className="absolute inset-0 top-[25%] left-[23px] flex w-[100%] flex-col gap-3 pt-4 max-md:scale-90 sm:top-[35%] sm:left-[33px] md:top-[30%] md:left-[37px]"
       >
         <div
           className={clsx(
@@ -402,7 +402,7 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
         >
           <div className="flex items-center gap-2">
             <Badge name="dax" />
-            <div className="text-xs text-neutral-500">5 years ago</div>
+            <div className="text-neutral-500 text-xs">5 years ago</div>
           </div>
           Implementing Pick in TypeScript is hard, can anyone help?
         </div>
@@ -413,10 +413,10 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
             'md:hover:bg-neutral-500/20',
           )}
         >
-          <Reply className="absolute -left-8 h-4 w-4 opacity-50" />
+          <Reply className="-left-8 absolute h-4 w-4 opacity-50" />
           <div className="flex items-center gap-2">
             <Badge name="trash" />
-            <div className="text-xs text-neutral-500">just now</div>
+            <div className="text-neutral-500 text-xs">just now</div>
           </div>
           ez, the answer is
           <Markdown>{solutionComment}</Markdown>
@@ -428,10 +428,10 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
             'md:hover:bg-neutral-500/20',
           )}
         >
-          <Reply className="absolute -left-8 h-4 w-4 opacity-50" />
+          <Reply className="-left-8 absolute h-4 w-4 opacity-50" />
           <div className="flex items-center gap-2">
             <Badge name="nikita" />
-            <div className="text-xs text-neutral-500">just now</div>
+            <div className="text-neutral-500 text-xs">just now</div>
           </div>
           <Image
             className={clsx({ amoguwusus: inView }, 'hidden opacity-0 xl:block')}
@@ -462,8 +462,8 @@ export function CuratedTracksCard(props: CardProps) {
           'max-md:scale-110 md:top-[42%] lg:top-[38%]',
         )}
       >
-        <div className="flex w-[69%] items-center justify-between gap-3 rounded-b-lg rounded-t-xl bg-neutral-500/10 p-2 pl-3 md:w-[82%] xl:w-[69%]">
-          <span className="flex items-center gap-1 text-xs font-semibold tracking-wide">
+        <div className="flex w-[69%] items-center justify-between gap-3 rounded-t-xl rounded-b-lg bg-neutral-500/10 p-2 pl-3 md:w-[82%] xl:w-[69%]">
+          <span className="flex items-center gap-1 font-semibold text-xs tracking-wide">
             TypeScript Foundations
           </span>
         </div>

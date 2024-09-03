@@ -1,7 +1,7 @@
 'use server';
-import { auth } from '~/server/auth';
 import { prisma } from '@repo/db';
 import { revalidateTag } from 'next/cache';
+import { auth } from '~/server/auth';
 import { isAdminOrModerator, isAuthor } from '~/utils/auth-guards';
 import type { ChallengeSolution } from '../[solutionId]/page';
 

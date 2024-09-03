@@ -1,17 +1,17 @@
 import { type FC } from 'react';
 
 import { cn } from '@repo/ui/cn';
-import { Text } from '@repo/ui/components/typography/typography';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
+import { Text } from '@repo/ui/components/typography/typography';
 
-import { type BadgeInfo } from './_actions';
+import { toast } from '@repo/ui/components/use-toast';
 import {
   HolidayBronzeBadge,
   HolidayGoldBadge,
   HolidayPlatinumBadge,
   HolidaySilverBadge,
 } from '../badges/aot-2023-badge';
-import { toast } from '@repo/ui/components/use-toast';
+import { type BadgeInfo } from './_actions';
 
 export const SlugToBadgeIcon: Record<BadgeInfo['slug'], FC<{ className: string }>> = {
   'aot-2023-bronze': HolidayBronzeBadge,
@@ -56,7 +56,7 @@ export const Badges = ({ badges, className }: BadgesProps) => {
   if (badges.length === 0) return null;
 
   return (
-    <div className={cn('border-border flex flex-col gap-4 border-t py-4', className)}>
+    <div className={cn('flex flex-col gap-4 border-border border-t py-4', className)}>
       <Text intent="leading">Badges</Text>
       <div className="flex flex-wrap gap-2">
         {badges.map((badge) => (

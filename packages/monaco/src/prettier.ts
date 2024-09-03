@@ -1,8 +1,8 @@
-import prettier from 'prettier/standalone';
+import type * as monaco from 'monaco-editor';
+import type { Options } from 'prettier';
 import estree from 'prettier/plugins/estree';
 import typescript from 'prettier/plugins/typescript';
-import type { Options } from 'prettier';
-import type * as monaco from 'monaco-editor';
+import prettier from 'prettier/standalone';
 
 // TODO: use the settings store for the config
 const prettierConfig = {

@@ -1,6 +1,5 @@
 import { cn } from '@repo/ui/cn';
 import { Loader2 } from '@repo/ui/icons';
-import React from 'react';
 
 export function Loader({ className }: { className?: string }) {
   return (

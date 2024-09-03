@@ -2,12 +2,12 @@ import Link from 'next/link';
 
 import { Swords } from '@repo/ui/icons';
 import { clsx } from 'clsx';
+import { notFound } from 'next/navigation';
+import { Footsies } from '~/components/footsies';
 import { ActionButton } from './enroll-button';
 import { TrackChallenge } from './track-challenge-card';
 import { TrackProgress } from './track-progress';
 import { enrollUserInTrack, getTrackDetails, unenrollUserFromTrack } from './track.action';
-import { Footsies } from '~/components/footsies';
-import { notFound } from 'next/navigation';
 
 interface TrackDetailProps {
   slug: string;
@@ -52,12 +52,12 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
 
   return (
     <>
-      <div className="container flex flex-col items-center gap-8 pb-8 pt-5 sm:pb-12 md:pb-0">
+      <div className="container flex flex-col items-center gap-8 pt-5 pb-8 sm:pb-12 md:pb-0">
         <div className="flex w-full flex-col justify-between gap-8 sm:flex-row sm:items-center sm:gap-8">
           <div className="flex gap-6">
             <div
               className={clsx(
-                `bg-gradient-to-r from-neutral-500/10 from-10% ${
+                `bg-gradient-to-r from-10% from-neutral-500/10 ${
                   BGS_BY_TRACK[track.id % bgsArray.length]
                 } relative to-100% dark:from-neutral-500/20`,
                 'hidden h-24 w-24 flex-none items-center justify-center rounded-2xl sm:flex',
@@ -72,10 +72,10 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
               />
             </div>
             <div className="flex flex-col gap-2">
-              <h1 className="text-3xl font-bold tracking-tight text-neutral-900 dark:text-white">
+              <h1 className="font-bold text-3xl text-neutral-900 tracking-tight dark:text-white">
                 {track.name}
               </h1>
-              <p className="text-md max-w-[69ch] text-neutral-600 dark:text-white/50">
+              <p className="max-w-[69ch] text-md text-neutral-600 dark:text-white/50">
                 {track.description}
               </p>
             </div>

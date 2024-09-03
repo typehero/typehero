@@ -1,4 +1,4 @@
-import { Expect, Equal } from 'type-testing';
+import { Equal, Expect } from 'type-testing';
 
 type Cars = ["Bugatti", "Ferarri", "Lambo", "Porsche", "Toyota Corolla"]
 

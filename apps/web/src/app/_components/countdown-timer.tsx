@@ -50,8 +50,8 @@ export const CountdownTimer = () => {
   if (remainingTime === 0 || releaseDate > december25th2023) {
     return (
       <>
-        <p className="text-center text-xl font-semibold">Thats a wrap! See you next year!</p>
-        <p className="text-center text-xl font-semibold">
+        <p className="text-center font-semibold text-xl">Thats a wrap! See you next year!</p>
+        <p className="text-center font-semibold text-xl">
           <Image src="/aot/santa_dead.png" width={200} height={200} alt="" className="" />
         </p>
       </>
@@ -59,7 +59,7 @@ export const CountdownTimer = () => {
   }
   return (
     <>
-      <p className="text-center text-xl font-semibold">
+      <p className="text-center font-semibold text-xl">
         The next type challenge will unlock at <span className="text-primary">midnight(est)</span>{' '}
         on December {formatNumberWithSuffix(Math.min(releaseDate.getUTCDate(), 25))}
       </p>

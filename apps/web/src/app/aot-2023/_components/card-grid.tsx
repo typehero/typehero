@@ -1,8 +1,8 @@
-import { prisma } from '@repo/db';
-import { TiltableCard } from './tiltable-card';
 import { type Session } from '@repo/auth/server';
-import { daysAfterDecemberFirst } from '~/utils/aot';
+import { prisma } from '@repo/db';
 import { auth } from '~/server/auth';
+import { daysAfterDecemberFirst } from '~/utils/aot';
+import { TiltableCard } from './tiltable-card';
 
 export async function CardGrid() {
   const session = await auth();
@@ -11,7 +11,7 @@ export async function CardGrid() {
 
   return (
     <div className="container">
-      <section className="w-[calc(100% + 8rem)] grid grid-cols-[repeat(1,240px)] justify-center gap-4 sm:px-8 md:-mx-16 md:grid-cols-[repeat(3,240px)] md:px-0 lg:mx-0 lg:w-full xl:grid-cols-[repeat(4,240px)] 2xl:gap-8">
+      <section className="+ 8rem)] md:-mx-16 grid w-[calc(100% grid-cols-[repeat(1,240px)] justify-center gap-4 sm:px-8 md:grid-cols-[repeat(3,240px)] md:px-0 lg:mx-0 lg:w-full xl:grid-cols-[repeat(4,240px)] 2xl:gap-8">
         {challengesToReveal?.map((challenge, i) => {
           return <TiltableCard key={challenge.id} index={i} challenge={challenge} />;
         })}

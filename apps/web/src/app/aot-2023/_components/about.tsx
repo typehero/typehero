@@ -12,9 +12,9 @@ import {
 import { BadgeInfo } from '@repo/ui/icons';
 import {
   HolidayBronzeBadge,
-  HolidaySilverBadge,
   HolidayGoldBadge,
   HolidayPlatinumBadge,
+  HolidaySilverBadge,
 } from '../../(profile)/[username]/_components/badges/aot-2023-badge';
 
 export function About({ className }: { className?: string }) {
@@ -41,7 +41,7 @@ export function About({ className }: { className?: string }) {
       >
         <SheetHeader>
           <SheetTitle>
-            <h2 className="text-4xl font-semibold tracking-tighter">About</h2>
+            <h2 className="font-semibold text-4xl tracking-tighter">About</h2>
           </SheetTitle>
         </SheetHeader>
         <div className="flex flex-col gap-5 text-lg tracking-tight">
@@ -51,7 +51,7 @@ export function About({ className }: { className?: string }) {
             like what you see, consider sharing the event with your friends. And if you have any
             questions, feel free to reach out to us on Discord or GitHub.
           </p>
-          <h3 className="text-2xl font-semibold tracking-tighter">Tips</h3>
+          <h3 className="font-semibold text-2xl tracking-tighter">Tips</h3>
           <p>
             <span className="font-bold text-red-600">1.</span> You might find using the{' '}
             <a
@@ -92,13 +92,13 @@ export function About({ className }: { className?: string }) {
               target="_blank"
               rel="noreferrer"
               href="https://github.com/typehero/typehero"
-              className="font-bold  underline"
+              className="font-bold underline"
             >
               Github
             </a>{' '}
             after the event, so be sure to give it a star!
           </p>
-          <h3 className="text-2xl font-semibold tracking-tighter">Rewards</h3>
+          <h3 className="font-semibold text-2xl tracking-tighter">Rewards</h3>
           <p>
             Earn and collect Advent of TypeScript badges on your journey! Once earned, these badges
             will be proudly displayed as achievements on your public profile. Happy coding! ☃️

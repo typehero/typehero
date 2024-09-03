@@ -14,7 +14,7 @@ export function LoginLink({ className }: { className?: string }) {
   return (
     <Link
       className={clsx(
-        'focus:bg-accent w-20 rounded-lg bg-transparent p-2 text-black duration-300 hover:bg-gray-200 focus:outline-none dark:text-white hover:dark:bg-gray-800',
+        'w-20 rounded-lg bg-transparent p-2 text-black duration-300 hover:bg-gray-200 focus:bg-accent focus:outline-none dark:text-white hover:dark:bg-gray-800',
         className,
       )}
       href={{

@@ -16,7 +16,7 @@ export function Contributor({ contributor }: { contributor: Contributor }) {
       rel="noopener"
       target="_blank"
     >
-      <span className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 scale-90 whitespace-nowrap rounded-full border bg-white/75 px-3 py-1 text-sm opacity-0 shadow-xl backdrop-blur-md duration-300 group-hover:scale-100 group-hover:opacity-100 dark:bg-black/50">
+      <span className="-translate-x-1/2 -translate-y-1/2 pointer-events-none absolute top-1/2 left-1/2 scale-90 whitespace-nowrap rounded-full border bg-white/75 px-3 py-1 text-sm opacity-0 shadow-xl backdrop-blur-md duration-300 group-hover:scale-100 group-hover:opacity-100 dark:bg-black/50">
         {contributor.login}
       </span>
       <Image

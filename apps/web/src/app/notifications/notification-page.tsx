@@ -38,22 +38,22 @@ export default function NotificationPage() {
   };
 
   return (
-    <div className="bg-background mx-auto min-w-[300px] max-w-3xl rounded-lg ">
+    <div className="mx-auto min-w-[300px] max-w-3xl rounded-lg bg-background ">
       <div className="p-4">
-        <h2 className="text-foreground flex items-center text-xl font-bold">
+        <h2 className="flex items-center font-bold text-foreground text-xl">
           <Bell className="mr-2 h-5 w-5" />
           Notifications
         </h2>
       </div>
       <Tabs defaultValue="all" className="w-full">
-        <TabsList className="bg-muted grid w-full grid-cols-2">
+        <TabsList className="grid w-full grid-cols-2 bg-muted">
           <TabsTrigger value="all">All</TabsTrigger>
           <TabsTrigger value="mentions">Mentions</TabsTrigger>
         </TabsList>
-        <TabsContent value="all" className="border-border border">
+        <TabsContent value="all" className="border border-border">
           <NotificationsAll onSeen={onSeen} />
         </TabsContent>
-        <TabsContent value="mentions" className="border-border border">
+        <TabsContent value="mentions" className="border border-border">
           <NotificationsMentions onSeen={onSeen} />
         </TabsContent>
       </Tabs>

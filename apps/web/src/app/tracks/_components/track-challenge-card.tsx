@@ -4,10 +4,10 @@ import { Check, PieChart } from '@repo/ui/icons';
 import { useIsMobile } from '~/utils/useIsMobile';
 
 import type { Challenge, Submission } from '@repo/db/types';
+import { cn } from '@repo/ui/cn';
 import { Badge } from '@repo/ui/components/badge';
 import { DifficultyBadge } from '@repo/ui/components/difficulty-badge';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
-import { cn } from '@repo/ui/cn';
 
 interface TrackChallengeProps {
   challenge: Challenge & {
@@ -59,10 +59,10 @@ export function TrackChallenge({
         className={cn(
           BGS_BY_DIFFICULTY[challenge.difficulty],
           'flex w-full items-center justify-between gap-3 rounded-3xl lg:rounded-lg',
-          'bg-gradient-to-r from-neutral-500/10 from-70% to-100% dark:from-neutral-900/70',
+          'bg-gradient-to-r from-70% from-neutral-500/10 to-100% dark:from-neutral-900/70',
           'p-4 text-black/90 duration-300 group-active/challenge:bg-neutral-500/40 group-active/challenge:duration-75 dark:text-white/90',
           {
-            'from-blue-600/30 from-10% dark:from-neutral-500/30': isSelected,
+            'from-10% from-blue-600/30 dark:from-neutral-500/30': isSelected,
           },
           {
             'group-hover/challenge:scale-[1.025] group-hover/challenge:bg-neutral-500/20 lg:group-hover/challenge:rounded-xl':
@@ -77,7 +77,7 @@ export function TrackChallenge({
               {!hideSubmissionStatus && (
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <div className="relative hidden gap-3 pr-1.5 pt-2 md:flex md:flex-row lg:items-center lg:pr-0 lg:pt-0">
+                    <div className="relative hidden gap-3 pt-2 pr-1.5 md:flex md:flex-row lg:items-center lg:pt-0 lg:pr-0">
                       <input
                         className="peer hidden appearance-none"
                         type="checkbox"
@@ -105,7 +105,7 @@ export function TrackChallenge({
                 </Tooltip>
               )}
               <div className="flex w-full flex-col items-start gap-3 lg:flex-row">
-                <div className="flex w-full justify-between gap-2 text-lg font-bold lg:w-auto lg:text-base lg:font-normal">
+                <div className="flex w-full justify-between gap-2 font-bold text-lg lg:w-auto lg:font-normal lg:text-base">
                   <span className={cn({ 'font-bold': isSelected })}>{challenge.name}</span>
                   <div className="flex flex-row items-start gap-3 lg:hidden">
                     <DifficultyBadge difficulty={challenge.difficulty} />
@@ -141,7 +141,7 @@ export function MockTrackChallenge({ challenge }: { challenge: Challenge }) {
         className={cn(
           BGS_BY_DIFFICULTY[challenge.difficulty],
           'flex w-full items-center justify-between gap-3 overflow-hidden rounded-lg',
-          'bg-gradient-to-r from-neutral-500/10 from-70% to-100% dark:from-neutral-500/20',
+          'bg-gradient-to-r from-70% from-neutral-500/10 to-100% dark:from-neutral-500/20',
           'p-2 pl-3 text-black/90 duration-300 group-active/challenge:bg-neutral-500/40 group-active/challenge:duration-75 md:p-4 dark:text-white/90',
           {
             'group-hover/challenge:scale-105 group-hover/challenge:rounded-xl group-hover/challenge:bg-neutral-500/20':

@@ -6,7 +6,7 @@ export function EnrolledTracksSkeleton() {
     <div className="sm:px-8 md:px-0">
       <div className="container p-4">
         {/* TITLE  */}
-        <div className="mb-2 mt-8">
+        <div className="mt-8 mb-2">
           <Skeleton className="h-8 w-20 rounded-lg bg-zinc-300 dark:bg-zinc-700" />
         </div>
 
@@ -19,7 +19,7 @@ export function EnrolledTracksSkeleton() {
       {/* All Tracks List */}
       <div className="container p-4">
         {/* TITLE  */}
-        <div className="mb-8 mt-8">
+        <div className="mt-8 mb-8">
           <Skeleton className="h-8 w-20 rounded-lg bg-zinc-300 dark:bg-zinc-700" />
         </div>
 
@@ -30,7 +30,7 @@ export function EnrolledTracksSkeleton() {
         </div>
 
         {/* CARDS */}
-        <div className="container mb-6 grid grid-cols-1 gap-3 sm:px-8 md:-mx-16 md:grid-cols-2 md:px-0 lg:mx-0 lg:w-full xl:grid-cols-3 2xl:gap-8">
+        <div className="md:-mx-16 container mb-6 grid grid-cols-1 gap-3 sm:px-8 md:grid-cols-2 md:px-0 lg:mx-0 lg:w-full xl:grid-cols-3 2xl:gap-8">
           {Array.from({ length: 3 }, (_, idx) => (
             <AllTracksCardSkeleton key={idx} />
           ))}

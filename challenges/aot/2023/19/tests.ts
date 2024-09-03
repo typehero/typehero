@@ -1,4 +1,4 @@
-import { Expect, Equal } from 'type-testing';
+import { Equal, Expect } from 'type-testing';
 
 type test_0_actual = Rebuild<[2, 1, 3, 3, 1, 1, 2]>;
 //   ^?

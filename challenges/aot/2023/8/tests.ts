@@ -1,4 +1,4 @@
-import { Expect, Equal } from 'type-testing';
+import { Equal, Expect } from 'type-testing';
 
 type SantasList = {
   naughty_tom: { address: '1 candy cane lane' };

@@ -53,7 +53,7 @@ export function Suggestions({ track, challengeId }: SuggestionsProps) {
       {trackDetails && next ? (
         <>
           <div className="flex items-center justify-between p-3">
-            <h3 className="text-foreground/70 flex items-center gap-2 text-lg font-semibold md:text-xl">
+            <h3 className="flex items-center gap-2 font-semibold text-foreground/70 text-lg md:text-xl">
               <Swords size={26} />
               {`Next Up in ${trackDetails?.name}`}
             </h3>
@@ -79,7 +79,7 @@ export function Suggestions({ track, challengeId }: SuggestionsProps) {
       {similarChallenges ? (
         <>
           <div className="flex items-center justify-between p-3">
-            <h3 className="text-foreground/70 text-lg font-semibold md:text-xl">More Challenges</h3>
+            <h3 className="font-semibold text-foreground/70 text-lg md:text-xl">More Challenges</h3>
             <Link href="/explore">
               <Button size="sm" className="gap-1 rounded-full" variant="outline">
                 Explore <ChevronRight size={13} />

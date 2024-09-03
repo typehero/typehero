@@ -8,10 +8,10 @@ import {
 } from '@repo/ui/components/card';
 import { notFound } from 'next/navigation';
 import { createInProgressSubmissionCacheKey } from '~/app/challenge/[slug]/submissions/[[...catchAll]]/cache-keys';
+import { auth } from '~/server/auth';
 import { withUnstableCache } from '~/utils/withUnstableCache';
 import { getChallengeHistoryByCategory } from '../_components/dashboard/_actions';
 import ChallengeHistory from '../_components/dashboard/challenge-history';
-import { auth } from '~/server/auth';
 
 interface Props {
   params: {
@@ -49,7 +49,7 @@ export default async function InProgressPage({ params: { username: usernameFromQ
     <Card className="col-span-4 md:min-h-[calc(100vh_-_56px_-_6rem)]">
       <CardHeader>
         <CardTitle>In-Progress</CardTitle>
-        <CardDescription className="text-muted-foreground mb-4 text-sm">
+        <CardDescription className="mb-4 text-muted-foreground text-sm">
           Your in-progress challenges.
         </CardDescription>
       </CardHeader>

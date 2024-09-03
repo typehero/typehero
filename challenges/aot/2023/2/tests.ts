@@ -1,4 +1,4 @@
-import { Expect, Equal } from 'type-testing';
+import { Equal, Expect } from 'type-testing';
 
 type test_SantaToTrash_actual = GiftWrapper<'Car', 'Santa', 'Trash'>;
 //   ^?

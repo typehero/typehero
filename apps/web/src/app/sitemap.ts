@@ -1,5 +1,5 @@
-import type { MetadataRoute } from 'next';
 import { prisma } from '@repo/db';
+import type { MetadataRoute } from 'next';
 
 const URL = 'https://typehero.dev';
 
