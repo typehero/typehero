@@ -8,5 +8,6 @@ export async function getLongURL(slug: string): Promise<string | null> {
   });
   if (url) {
     return url.originalUrl;
-  } return null;
+  }
+  return null;
 }
