@@ -1,2 +1,2 @@
-export * from "./fetchFont";
-export * from "./zodParams";
+export * from './fetchFont';
+export * from './zodParams';

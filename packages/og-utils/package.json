@@ -5,7 +5,6 @@
   "exports": {
     ".": "./src/index.ts"
   },
-
   "typesVersions": {
     "*": {
       "*": [
@@ -27,5 +26,8 @@
     "@types/node": "^20.4.2",
     "eslint": "^8.45.0",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "zod": "3.23.3"
   }
 }
