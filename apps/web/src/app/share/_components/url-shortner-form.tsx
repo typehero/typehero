@@ -64,17 +64,17 @@ export function URLShortnerForm() {
         });
         setShortURL(shortURL);
       } else if (shortURL === null) {
-          toast({
-            title: `Slug '/${data.slug}' already exists`,
-            description: 'Please try another slug',
-            variant: 'destructive',
-          });
-        } else
-          toast({
-            title: 'Something went wrong',
-            description: 'Error creating short URL',
-            variant: 'destructive',
-          });
+        toast({
+          title: `Slug '/${data.slug}' already exists`,
+          description: 'Please try another slug',
+          variant: 'destructive',
+        });
+      } else
+        toast({
+          title: 'Something went wrong',
+          description: 'Error creating short URL',
+          variant: 'destructive',
+        });
     } else {
       const shortURL = await createShortURL(data.url);
       if (shortURL) {
@@ -149,7 +149,8 @@ export function URLShortnerForm() {
         >
           Shorten
         </Button>
-        {shortURL ? <div className="flex w-full flex-col items-center gap-2 md:flex-row">
+        {shortURL ? (
+          <div className="flex w-full flex-col items-center gap-2 md:flex-row">
             <div className="flex-grow rounded-xl border border-green-900 px-4 py-1.5">
               <span className="text-muted-foreground mr-1 text-sm">Short URL: </span>
               <span className="text-sm">{shortURL}</span>
@@ -166,7 +167,8 @@ export function URLShortnerForm() {
                 </Button>
               </a>
             </div>
-          </div> : null}
+          </div>
+        ) : null}
       </form>
     </Form>
   );
