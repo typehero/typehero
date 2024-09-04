@@ -1,6 +1,6 @@
 'use client';
 
-import { type User } from '@repo/db/types';
+import type { User } from '@repo/db/types';
 import { Button } from '@repo/ui/components/button';
 import {
   Dialog,
@@ -16,7 +16,8 @@ import { toast } from '@repo/ui/components/use-toast';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import type { ReportWithInfo } from './_actions';
-import { banChallenge, banUser, deleteComment, deleteSolution, dismissReport } from './_actions';
+import { banUser, dismissReport } from './_actions';
+import { ExtraActionsButton } from './_components/extra-actions.report';
 
 export interface ReportActionsProps {
   report: NonNullable<ReportWithInfo>;
@@ -44,36 +45,6 @@ export function ReportActions({ report }: ReportActionsProps) {
         return report.solution?.user;
     }
   }, [report]);
-
-  async function handleDeleteComment(commentId: number, reportId: number) {
-    try {
-      await deleteComment(commentId, reportId);
-      toast({
-        title: 'Success',
-        description: <p>Comment deleted successfully</p>,
-      });
-      router.push('/?tab=reports');
-    } catch (e) {
-      toast({
-        title: 'Error',
-        variant: 'destructive',
-        description: <p>An error occurred. Please try again later.</p>,
-      });
-    }
-  }
-
-  async function handleDisableChallenge(challengeId: number, reportId: number) {
-    try {
-      await banChallenge(challengeId, reportId);
-      router.push('/?tab=reports');
-    } catch (e) {
-      toast({
-        title: 'Error',
-        variant: 'destructive',
-        description: <p>An error occurred. Please try again later</p>,
-      });
-    }
-  }
 
   async function handleBanUser(userId: string, reportId: number, banReason?: string) {
     try {
@@ -110,21 +81,6 @@ export function ReportActions({ report }: ReportActionsProps) {
     }
   }
 
-  async function handleRemoveSolution(solutionId: number) {
-    const response = await deleteSolution(solutionId, report.id);
-    if (response === 'ok') {
-      toast({
-        title: 'Successfully removed solution',
-      });
-      router.push('/?tab=reports');
-    } else {
-      toast({
-        title: 'Error',
-        description: <p>Something has gone wrong. Please try again later.</p>,
-      });
-    }
-  }
-
   return (
     <div className="flex gap-2">
       <Button
@@ -135,33 +91,7 @@ export function ReportActions({ report }: ReportActionsProps) {
         Ban @{user?.name ?? 'unknown user'}
       </Button>
 
-      {report.type === 'CHALLENGE' && (
-        <Button
-          disabled={report.moderatorId !== null}
-          onClick={() => handleDisableChallenge(report.challengeId!, report.id)}
-        >
-          Disable Challenge
-        </Button>
-      )}
-
-      {report.type === 'SOLUTION' && (
-        <Button
-          disabled={report.moderator !== null}
-          onClick={() => handleRemoveSolution(report.solutionId!)}
-        >
-          Remove Solution
-        </Button>
-      )}
-
-      {report.type === 'COMMENT' && (
-        <Button
-          disabled={report.moderatorId !== null}
-          onClick={() => handleDeleteComment(report.commentId!, report.id)}
-          variant="destructive"
-        >
-          Delete Comment
-        </Button>
-      )}
+      <ExtraActionsButton report={report} />
 
       <Button disabled={report.moderatorId !== null} onClick={() => handleDismissReport(report.id)}>
         Dismiss Report

@@ -23,11 +23,11 @@ import { type ChallengeRouteData } from '~/app/challenge/[slug]/getChallengeRout
 import { ReportDialog } from '~/components/ReportDialog';
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import { addOrRemoveBookmark } from '../bookmark.action';
-import { ShareForm } from '../share-form';
 import { Vote } from '../vote';
 import { AOT_CHALLENGES } from '../../[slug]/aot-slugs';
 import { Suggestions } from './suggestions';
 import { UserBadge } from '../comments/enhanced-user-badge';
+import { ShareUrl } from '~/components/share-url';
 
 interface Props {
   challenge: ChallengeRouteData['challenge'];
@@ -144,10 +144,11 @@ export function Description({ challenge }: Props) {
               <DialogTitle>Share</DialogTitle>
             </DialogHeader>
             <div className="pt-4">
-              <ShareForm />
+              <ShareUrl isChallenge />
             </div>
           </DialogContent>
         </Dialog>
+
         <Tooltip>
           <TooltipTrigger asChild>
             <Button

@@ -18,7 +18,7 @@
   "devDependencies": {
     "@repo/lint": "workspace:*",
     "@repo/tsconfig": "workspace:*",
-    "eslint": "^8.56.0",
+    "eslint": "^8.45.0",
     "nitropack": "^2.8.1",
     "prettier": "^3.1.1",
     "typescript": "^5.3.3"
