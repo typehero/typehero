@@ -18,6 +18,7 @@ export const getChallengeRouteData = cache(async (slug: string, session: Session
     include: {
       user: {
         select: {
+          id: true,
           name: true,
           roles: true,
           bio: true,
