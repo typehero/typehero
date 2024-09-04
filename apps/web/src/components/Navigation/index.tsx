@@ -6,10 +6,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@repo/ui/components/dropdown-menu';
-import { Play, Settings, Settings2, User, Palette } from '@repo/ui/icons';
+import { ExternalLink, Play, Settings, Settings2, User, Palette } from '@repo/ui/icons';
 import Link from 'next/link';
 import { Suspense } from 'react';
-import { isAdminOrModerator } from '~/utils/auth-guards';
+import { isAdmin, isAdminOrModerator } from '~/utils/auth-guards';
 import { getAllFlags } from '~/utils/feature-flags';
 import { Search } from '../search/search';
 import { LoginLink } from './login-link';
@@ -41,6 +41,7 @@ export async function Navigation() {
     getNotificationCount(),
   ]);
   const isAdminOrMod = isAdminOrModerator(session);
+  const isAdminRole = isAdmin(session);
 
   const TopSectionLinks = (
     <>
@@ -79,6 +80,7 @@ export async function Navigation() {
             {isAdminOrMod ? (
               <NavLink title="Challenge Playground" href="/challenge-playground" />
             ) : null}
+            {isAdminRole ? <NavLink title="URL Shortner" href="/share" /> : null}
             <SignOutLink className="px-0" />
           </>
         ) : (
@@ -130,7 +132,7 @@ export async function Navigation() {
               </Suspense>
               {session ? <NotificationLink notificationCount={notificationCount} /> : null}
               {featureFlags?.enableLogin ? (
-                <LoginButton isAdminOrMod={isAdminOrMod} session={session} />
+                <LoginButton isAdminOrMod={isAdminOrMod} session={session} isAdmin={isAdminRole} />
               ) : null}
               <MobileNav>{NavLinks}</MobileNav>
             </div>
@@ -143,9 +145,11 @@ export async function Navigation() {
 
 async function LoginButton({
   isAdminOrMod,
+  isAdmin,
   session,
 }: {
   isAdminOrMod: boolean;
+  isAdmin: boolean;
   session: Session | null;
 }) {
   return session?.user ? (
@@ -200,6 +204,14 @@ async function LoginButton({
             <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
               <Play className="mr-2 h-4 w-4" />
               <span>Challenge Playground</span>
+            </DropdownMenuItem>
+          </a>
+        ) : null}
+        {isAdmin ? (
+          <a className="block" href="/share">
+            <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
+              <ExternalLink className="mr-2 h-4 w-4" />
+              <span>URL Shortner</span>
             </DropdownMenuItem>
           </a>
         ) : null}

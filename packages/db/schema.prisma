@@ -143,6 +143,7 @@ model User {
   imageUpload          ImageUpload[]
   tracks               Track[]
   BetaTokens           BetaTokens[]
+  shortUrls            ShortURL[]
   toUserNotification   Notification[] @relation("notificationToUser")
   fromUserNotification Notification[] @relation("notificationFromUser")
 }
@@ -463,4 +464,22 @@ model Notification {
   @@index([commentId])
   @@index([challengeId])
   @@index([sharedSolutionId])
+}
+
+model ShortURL {
+  id           Int        @id @default(autoincrement())
+  /// the original full url that we want to shorten e.g. https://www.url.com
+  originalUrl  String     @db.MediumText
+  /// slug for the short url e.g. url.com/[shortUrlSlug]
+  shortUrlSlug String     @unique
+  createdAt    DateTime   @default(now())
+  /// the time the short url will expire
+  expiresAt    DateTime?
+  /// the number of times the short url has redirected to the original url
+  clicks       Int        @default(0)
+  userId       String?
+  user         User?      @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([shortUrlSlug])
 }
