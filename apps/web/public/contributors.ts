@@ -167,7 +167,7 @@ export const contributors = [
         "received_events_url": "https://api.github.com/users/zaCKoZAck0/received_events",
         "type": "User",
         "site_admin": false,
-        "contributions": 21
+        "contributions": 23
     },
     {
         "login": "aakash19here",
