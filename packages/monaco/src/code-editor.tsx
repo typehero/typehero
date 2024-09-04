@@ -40,8 +40,8 @@ const DEFAULT_OPTIONS = {
 export type CodeEditorProps = Omit<EditorProps, 'theme'>;
 
 export function CodeEditor({ onChange, onMount, options, value, ...props }: CodeEditorProps) {
-  const { theme } = useTheme();
-  const editorTheme = theme === 'light' ? 'light' : 'vs-dark';
+  const { resolvedTheme } = useTheme();
+  const editorTheme = resolvedTheme === 'light' ? 'light' : 'vs-dark';
   const { settings } = useEditorSettingsStore();
   const editorOptions = useMemo(() => {
     return {

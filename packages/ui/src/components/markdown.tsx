@@ -53,8 +53,8 @@ export function Markdown({
   disableMentions?: boolean;
   disableCopy?: boolean;
 }) {
-  const { theme } = useTheme();
-  const syntaxHighlighterTheme = theme === 'light' ? vs : vscDarkPlus;
+  const { resolvedTheme } = useTheme();
+  const syntaxHighlighterTheme = resolvedTheme === 'light' ? vs : vscDarkPlus;
 
   return (
     <ReactMarkdown
