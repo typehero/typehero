@@ -5,8 +5,12 @@ export function getBaseUrl() {
   }
   // When rendering on the server, we return an absolute URL
 
-  // reference for vercel.com
-  if (process.env.VERCEL_URL) {
+  // reference: https://vercel.com/docs/projects/environment-variables/system-environment-variables#system-environment-variables
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL && process.env.VERCEL_ENV === 'production') {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  }
+
+  if (process.env.VERCEL_URL && process.env.VERCEL_ENV === 'preview') {
     return `https://${process.env.VERCEL_URL}`;
   }
 
