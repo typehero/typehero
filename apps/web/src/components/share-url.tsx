@@ -12,36 +12,39 @@ import { useToast } from '@repo/ui/components/use-toast';
 interface ShareShortUrlProps {
   desciprtion?: string;
   isChallenge?: boolean;
+  code?: string;
+  longUrl?: string;
 }
 
-export function ShareUrl({ desciprtion, isChallenge = false }: ShareShortUrlProps) {
+export function ShareUrl({ desciprtion, isChallenge = false, code, longUrl }: ShareShortUrlProps) {
   const { slug } = useParams();
   const { toast } = useToast();
   const shareType = isChallenge ? 'challenge' : 'playground';
   const [state, setState] = useState<'copied' | 'idle' | 'loading'>('idle');
-  // enable copy with code by default on playground
-  const [copyWithCode, setCopyWithCode] = useState(shareType === 'playground');
-  const [codeToCompress] = useLocalStorage(`${shareType}-${slug}`, '');
+  // enable copy with code by default on playground, or we are provided with code
+  const [copyWithCode, setCopyWithCode] = useState(shareType === 'playground' || Boolean(code));
+  const [localStorageCode] = useLocalStorage(`${shareType}-${slug}`, '');
   const [shortUrl, setShortUrl] = useState('');
   const [previousCode, setPreviousCode] = useState('');
-  const url = `${window.location.origin}/${shareType}/${slug}`;
+  const url = longUrl ?? `${window.location.origin}/${shareType}/${slug}`;
 
   const genShortUrl = useCallback(async () => {
     let long = url;
-    if (copyWithCode && codeToCompress) {
-      const compressedCode = lzstring.compressToEncodedURIComponent(codeToCompress);
+    const fullCode = code ?? localStorageCode;
+    if (copyWithCode && fullCode) {
+      const compressedCode = lzstring.compressToEncodedURIComponent(fullCode);
       long += `?code=${compressedCode}`;
 
       // Check if the code has changed
-      if (codeToCompress !== previousCode) {
+      if (fullCode !== previousCode) {
         const short = await createShortURL(long);
-        setPreviousCode(codeToCompress);
+        setPreviousCode(fullCode);
         return short ?? long;
       }
       return shortUrl;
     }
     return long;
-  }, [url, copyWithCode, codeToCompress, previousCode, shortUrl]);
+  }, [url, code, localStorageCode, copyWithCode, previousCode, shortUrl]);
 
   const copyToClipboard = useCallback(async () => {
     setState('loading');
@@ -78,12 +81,12 @@ export function ShareUrl({ desciprtion, isChallenge = false }: ShareShortUrlProp
         aria-disabled={state === 'loading'}
         className="break-all rounded-lg border border-black/20 bg-white px-4 py-2 aria-disabled:cursor-not-allowed aria-disabled:opacity-50 dark:border-white/20 dark:bg-black"
       >
-        {shortUrl.length === 0 ? url : shortUrl}
+        {shortUrl.length === 0 ? (code ? 'Copy to Generate URL!' : url) : shortUrl}
       </code>
       <DialogFooter>
         <div className="flex items-center justify-end gap-2">
-          {/* Checkbox not needed in playground */}
-          {codeToCompress && isChallenge ? (
+          {/* Checkbox not needed in playground, or we already are providing code */}
+          {localStorageCode && isChallenge && !code ? (
             <div className="flex h-fit items-center justify-center gap-2 text-xs">
               <Checkbox
                 id="copy-with-code"
