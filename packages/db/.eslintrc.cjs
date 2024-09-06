@@ -5,4 +5,5 @@ module.exports = {
   parserOptions: {
     project: `${__dirname}/tsconfig.json`,
   },
+  ignorePatterns: [`mocks/test-overrides/*.ts`],
 };
