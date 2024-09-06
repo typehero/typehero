@@ -40,11 +40,18 @@ export async function createShortURL(
     }
   }
 
-  await prisma.shortURL.create({
-    data: {
+  await prisma.shortURL.upsert({
+    where: {
+      shortUrlSlug: slug,
+    },
+    update: {
+      originalUrl: url,
+      expiresAt: config.expiresAt || new Date(Date.now() + THREE_MONTHS),
+    },
+    create: {
       shortUrlSlug: slug,
       originalUrl: url,
-      expiresAt: config.expiresAt ?? new Date(Date.now() + THREE_MONTHS),
+      expiresAt: config.expiresAt || new Date(Date.now() + THREE_MONTHS),
     },
   });
 
