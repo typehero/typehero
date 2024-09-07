@@ -32,25 +32,21 @@ export async function createShortURLWithSlug(
     return null;
   }
 
-  try {
-    await prisma.shortURL.upsert({
-      where: {
-        shortUrlSlug: slug,
-      },
-      update: {
-        originalUrl: url,
-        expiresAt,
-      },
-      create: {
-        shortUrlSlug: slug,
-        originalUrl: url,
-        expiresAt,
-      },
-    });
+  await prisma.shortURL.upsert({
+    where: {
+      shortUrlSlug: slug,
+    },
+    update: {
+      originalUrl: url,
+      expiresAt,
+    },
+    create: {
+      shortUrlSlug: slug,
+      originalUrl: url,
+      expiresAt,
+    },
+  });
 
-    const newURL = `${baseURL}/share/${slug}`;
-    return newURL;
-  } catch (error) {
-    throw new Error('Failed to create short URL');
-  }
+  const newURL = `${baseURL}/share/${slug}`;
+  return newURL;
 }
