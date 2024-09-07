@@ -77,8 +77,45 @@ export async function getNotifications({
       {
         createdAt: 'desc',
       },
+      {
+        id: 'desc',
+      },
     ],
   });
 
-  return { notifications, cursor: notifications.at(-1)?.id };
+  if (notifications.length === 0) {
+    return {
+      notifications: [],
+      cursor: undefined,
+    };
+  }
+
+  const nextPage = await prisma.notification.findMany({
+    take: 1,
+    skip: 1,
+    cursor: { id: notifications.at(-1)?.id },
+    where: {
+      toUserId: session.user.id,
+      type: mentionsOnly ? 'MENTION' : undefined,
+    },
+    select: {
+      id: true,
+    },
+    orderBy: [
+      {
+        isRead: 'asc',
+      },
+      {
+        createdAt: 'desc',
+      },
+      {
+        id: 'desc',
+      },
+    ],
+  });
+
+  return {
+    notifications,
+    cursor: nextPage.length > 0 ? notifications.at(-1)?.id : undefined,
+  };
 }
