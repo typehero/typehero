@@ -34,7 +34,7 @@ const FormSchema = z.object({
   overwrite: z.boolean().default(false).optional(),
 });
 
-export function URLShortnerForm() {
+export function URLShortenerForm() {
   const [shortURL, setShortURL] = React.useState<string | null>(null);
   const { toast } = useToast();
   const form = useForm<z.infer<typeof FormSchema>>({

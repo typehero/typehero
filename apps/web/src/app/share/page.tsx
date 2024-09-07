@@ -1,11 +1,11 @@
 import { isAdmin } from '~/utils/auth-guards';
 import { GreetUser } from './_components/greet-user';
-import { URLShortnerForm } from './_components/url-shortner-form';
+import { URLShortenerForm } from './_components/url-shortener-form';
 import { auth } from '~/server/auth';
 import { notFound } from 'next/navigation';
 
 export const metadata = {
-  title: 'URL Shortner | TypeHero - Admin',
+  title: 'URL Shortener | TypeHero - Admin',
   description: '.',
 };
 
@@ -18,10 +18,10 @@ export default async function Home() {
     <main className="relative flex w-screen items-center justify-center">
       <div className="w-full max-w-xl rounded-xl border p-6 shadow">
         <h1 className="text-primary rounded-2xl p-1 text-center text-lg font-bold md:text-xl">
-          TypeHero URL Shortner
+          TypeHero URL Shortener
         </h1>
         <GreetUser />
-        <URLShortnerForm />
+        <URLShortenerForm />
       </div>
     </main>
   );
