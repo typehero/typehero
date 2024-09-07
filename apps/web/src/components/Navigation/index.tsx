@@ -80,7 +80,7 @@ export async function Navigation() {
             {isAdminOrMod ? (
               <NavLink title="Challenge Playground" href="/challenge-playground" />
             ) : null}
-            {isAdminRole ? <NavLink title="URL Shortner" href="/share" /> : null}
+            {isAdminRole ? <NavLink title="URL Shortener" href="/share" /> : null}
             <SignOutLink className="px-0" />
           </>
         ) : (
@@ -211,7 +211,7 @@ async function LoginButton({
           <a className="block" href="/share">
             <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
               <ExternalLink className="mr-2 h-4 w-4" />
-              <span>URL Shortner</span>
+              <span>URL Shortener</span>
             </DropdownMenuItem>
           </a>
         ) : null}

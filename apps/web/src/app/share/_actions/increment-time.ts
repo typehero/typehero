@@ -6,3 +6,5 @@ export const ONE_MONTH =
   30; // days (1 month)
 
 export const THREE_MONTHS = ONE_MONTH * 3;
+
+export const ONE_YEAR = ONE_MONTH * 12;

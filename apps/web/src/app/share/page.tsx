@@ -1,8 +1,13 @@
 import { isAdmin } from '~/utils/auth-guards';
 import { GreetUser } from './_components/greet-user';
-import { URLShortnerForm } from './_components/url-shortner-form';
+import { URLShortenerForm } from './_components/url-shortener-form';
 import { auth } from '~/server/auth';
 import { notFound } from 'next/navigation';
+
+export const metadata = {
+  title: 'URL Shortener | TypeHero - Admin',
+  description: '.',
+};
 
 export default async function Home() {
   const session = await auth();
@@ -10,15 +15,13 @@ export default async function Home() {
     return notFound();
   }
   return (
-    <main className="relative flex h-screen w-screen items-center justify-center">
-      <div className="relative space-y-2 p-2">
-        <div className="z-10 rounded-xl border p-6 shadow">
-          <h1 className="text-primary/50 rounded-2xl p-4 text-2xl font-bold md:text-5xl">
-            TypeHero URL Shortner
-          </h1>
-          <GreetUser />
-          <URLShortnerForm />
-        </div>
+    <main className="relative flex w-screen items-center justify-center">
+      <div className="w-full max-w-xl rounded-xl border p-6 shadow">
+        <h1 className="text-primary rounded-2xl p-1 text-center text-lg font-bold md:text-xl">
+          TypeHero URL Shortener
+        </h1>
+        <GreetUser />
+        <URLShortenerForm />
       </div>
     </main>
   );

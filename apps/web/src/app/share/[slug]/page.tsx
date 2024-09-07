@@ -10,11 +10,12 @@ interface Props {
 
 export default async function Page({ params }: Props) {
   const { slug } = params;
-  const longURL = await getLongURL(slug);
+  const url = await getLongURL(slug);
 
-  if (!longURL) return notFound();
+  // If the URL does not exist or has expired, return a 404
+  if (!url || (url.expiresAt && url.expiresAt <= new Date())) return notFound();
 
   await updateClick(slug);
 
-  return permanentRedirect(longURL);
+  return permanentRedirect(url.originalUrl);
 }

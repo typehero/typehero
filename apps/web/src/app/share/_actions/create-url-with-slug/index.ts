@@ -5,7 +5,12 @@ import { getBaseUrl } from '~/utils/getBaseUrl';
 import { THREE_MONTHS } from '../increment-time';
 import { isAdmin } from '~/utils/auth-guards';
 
-export async function createShortURLWithSlug(url: string, slug: string): Promise<string | null> {
+export async function createShortURLWithSlug(
+  url: string,
+  slug: string,
+  expiresAt = new Date(Date.now() + THREE_MONTHS),
+  overwrite = false,
+): Promise<string | null> {
   const session = await auth();
   const baseURL = getBaseUrl();
   if (!session) {
@@ -23,20 +28,22 @@ export async function createShortURLWithSlug(url: string, slug: string): Promise
     },
   });
 
-  if (existingSlug) {
+  if (existingSlug && !overwrite) {
     return null;
   }
 
-  await prisma.shortURL.create({
-    data: {
+  await prisma.shortURL.upsert({
+    where: {
+      shortUrlSlug: slug,
+    },
+    update: {
+      originalUrl: url,
+      expiresAt,
+    },
+    create: {
       shortUrlSlug: slug,
       originalUrl: url,
-      expiresAt: new Date(Date.now() + THREE_MONTHS),
-      user: {
-        connect: {
-          id: session.user.id,
-        },
-      },
+      expiresAt,
     },
   });
 
