@@ -80,5 +80,6 @@ export {
   SearchIcon,
   Wand2,
   TrendingUp,
+  Award,
   type LucideIcon,
 } from 'lucide-react';

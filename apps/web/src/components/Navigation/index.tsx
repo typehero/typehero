@@ -145,7 +145,7 @@ async function LoginButton({
         >
           <Avatar className="h-7 w-7">
             <AvatarImage src={session.user.image ?? ''} alt="user avatar" />
-            <AvatarFallback className="bg-gray-700 text-white">
+            <AvatarFallback className="bg-gray-700 uppercase text-white">
               {session.user?.name.charAt(0)}
             </AvatarFallback>
           </Avatar>

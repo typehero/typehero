@@ -28,7 +28,7 @@ interface ExploreCardProps {
   challenge: Awaited<ExploreChallengeData>[0];
 }
 
-const BORDERS_BY_DIFFICULTY = {
+export const BORDERS_BY_DIFFICULTY = {
   BEGINNER:
     'dark:hover:border-difficulty-beginner-dark hover:border-difficulty-beginner dark:group-focus:border-difficulty-beginner-dark group-focus:border-difficulty-beginner',
   EASY: 'dark:hover:border-difficulty-easy-dark hover:border-difficulty-easy dark:group-focus:border-difficulty-easy-dark group-focus:border-difficulty-easy',
@@ -42,7 +42,7 @@ const BORDERS_BY_DIFFICULTY = {
     'dark:hover:border-difficulty-extreme-dark hover:border-difficulty-extreme dark:group-focus:border-difficulty-extreme-dark group-focus:border-difficulty-extreme',
 };
 
-const SHADOWS_BY_DIFFICULTY = {
+export const SHADOWS_BY_DIFFICULTY = {
   BEGINNER:
     'hover:shadow-beginner group-focus:shadow-beginner dark:hover:shadow-beginner-dark dark:group-focus:shadow-beginner-dark',
   EASY: 'hover:shadow-easy group-focus:shadow-easy dark:hover:shadow-easy-dark dark:group-focus:shadow-easy-dark',
@@ -56,7 +56,7 @@ const SHADOWS_BY_DIFFICULTY = {
     'hover:shadow-extreme group-focus:shadow-extreme dark:hover:shadow-extreme-dark dark:group-focus:shadow-extreme-dark',
 };
 
-function ChallengeDifficultyIcon({ difficulty }: { difficulty: string }) {
+export function ChallengeDifficultyIcon({ difficulty }: { difficulty: string }) {
   switch (difficulty) {
     case 'BEGINNER':
       return (
