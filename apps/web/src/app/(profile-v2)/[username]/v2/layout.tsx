@@ -19,7 +19,9 @@ import { SharedSolutionCard } from './_components/shared-solution-card';
 import { ActivityChart, generateSampleData } from './_components/activity-chart';
 import { Feed, generateFeedDate } from './_components/feed';
 
-export default async function ProfilePage(props: { params: { username: string } }) {
+export default async function LayoutPage(
+  props: React.PropsWithChildren<{ params: { username: string } }>,
+) {
   const [, username] = decodeURIComponent(props.params.username).split('@');
   if (username === undefined) {
     notFound();
@@ -48,9 +50,49 @@ export default async function ProfilePage(props: { params: { username: string } 
   return (
     <div className="container py-8">
       <div className="flex flex-row space-x-5">
-        <div className="flex max-w-64 flex-col space-y-4"></div>
+        <div className="flex max-w-64 flex-col space-y-4">
+          <Avatar className="h-64 w-64 rounded-lg">
+            <AvatarImage src={user.image ?? ''} />
+            <AvatarFallback className="rounded-lg uppercase">
+              {user.name.slice(0, 1)}
+            </AvatarFallback>
+          </Avatar>
+          <div className="flex flex-col space-y-3">
+            <div className="flex flex-col space-y-1">
+              <h1
+                className={cn(
+                  'w-min bg-gradient-to-r bg-clip-text text-3xl font-bold text-transparent',
+                  gradient,
+                )}
+              >
+                {user.name}
+              </h1>
+              <Titles data={titles} />
+              <p className="text-muted-foreground tracking-tight">
+                Joined {getRelativeTime(user.createdAt)}
+              </p>
+            </div>
+            <p className="text-card-foreground w-full break-words">{user.bio}</p>
+            <div className="flex flex-row items-center space-x-2">
+              <Twitter className="h-7 w-7" />
+              <Github className="h-7 w-7" />
+            </div>
+            <div>
+              <h2>Badges</h2>
+              <Badges data={badges} />
+            </div>
+          </div>
+        </div>
         <div className="flex flex-col space-y-4">
-          <div className="flex h-fit w-full flex-row justify-center space-x-2"></div>
+          <div className="flex h-fit w-full flex-row justify-center space-x-2">
+            <div className="flex h-fit w-full flex-row space-x-3">
+              <ProgressChart completed={50} max={100} difficulty="Beginner" />
+              <ProgressChart completed={80} max={100} difficulty="Easy" />
+              <ProgressChart completed={100} max={100} difficulty="Medium" />
+              <ProgressChart completed={80} max={100} difficulty="Hard" />
+              <ProgressChart completed={80} max={100} difficulty="Expert" />
+            </div>
+          </div>
           <div className="flex w-fit flex-row space-x-2">
             <SharedSolutionCard
               solution={{
@@ -86,31 +128,20 @@ export default async function ProfilePage(props: { params: { username: string } 
               }}
             />
           </div>
-          <div className="flex flex-row justify-between space-x-4">
-            <div className="max-w-[40%] space-y-2">
-              <h1 className="text-lg font-semibold">Feed</h1>
-              <Feed activity={generateFeedDate()} />
-            </div>
-            <div className="max-w-[40%] space-y-2">
-              <h1 className="text-lg font-semibold">Recent Activity</h1>
-              <ActivityChart days={generateSampleData()} />
-            </div>
-            <div className="space-y-2">
-              <StatCard title="Global Leaderboard Rank" data="1,567" />
-              <StatCard title="Global Leaderboard Rank" data="1,567" />
-            </div>
-          </div>
+          <div className="flex flex-row justify-between space-x-4">{props.children}</div>
         </div>
       </div>
     </div>
   );
 }
 
-function StatCard(props: { title: string; data: string }) {
+function Badges(props: { data: BadgeInfo[] }) {
   return (
-    <div className="space-y-0.5">
-      <h1>{props.title}</h1>
-      <p className="text-4xl font-bold">{props.data}</p>
+    <div className="flex flex-row space-x-2">
+      {props.data.map((b) => {
+        const Icon = SlugToBadgeIcon[b.slug];
+        return <Icon className="h-10 w-10" key={b.slug} />;
+      })}
     </div>
   );
 }
