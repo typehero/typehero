@@ -72,9 +72,6 @@ export async function getNotifications({
     },
     orderBy: [
       {
-        isRead: 'asc',
-      },
-      {
         createdAt: 'desc',
       },
       {
@@ -103,9 +100,6 @@ export async function getNotifications({
     },
     orderBy: [
       {
-        isRead: 'asc',
-      },
-      {
         createdAt: 'desc',
       },
       {
@@ -118,4 +112,20 @@ export async function getNotifications({
     notifications,
     cursor: nextPage.length > 0 ? notifications.at(-1)?.id : undefined,
   };
+}
+
+export async function markAllAsRead() {
+  const session = await auth();
+  if (!session) {
+    throw new Error('not authenticated');
+  }
+
+  await prisma.notification.updateMany({
+    where: {
+      toUserId: session.user.id ?? '',
+    },
+    data: {
+      isRead: true,
+    },
+  });
 }
