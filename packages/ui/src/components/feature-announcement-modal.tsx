@@ -126,8 +126,8 @@ export function FeatureAnnouncementModal() {
             className="rounded-full bg-gradient-to-r from-[#31bdc6] to-[#3178c6] p-[1px] brightness-90 contrast-150 dark:brightness-125 dark:contrast-100"
           >
             <div className="rounded-full bg-white/80 px-3 py-1 dark:bg-black/80">
-              <span className="flex select-none items-center bg-gradient-to-r from-[#31bdc6] to-[#3178c6] bg-clip-text text-transparent">
-                <span className="hidden sm:block">Got it, thanks!</span>
+              <span className="flex select-none items-center justify-center bg-gradient-to-r from-[#31bdc6] to-[#3178c6] bg-clip-text text-transparent">
+                <span>Got it, thanks!</span>
               </span>
             </div>
           </div>
