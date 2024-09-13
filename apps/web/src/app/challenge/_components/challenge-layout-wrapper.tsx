@@ -4,7 +4,7 @@ import type { ChallengeRouteData } from '../[slug]/getChallengeRouteData';
 import { ChallengeLayout, MOBILE_BREAKPOINT } from './challenge-layout';
 import usePanelAdjustments from './usePanelAdjustments';
 import { LeftWrapper } from '../[slug]/left-wrapper';
-import { Wrapper } from '../[slug]/wrapper';
+import { RightWrapper } from '../[slug]/right-wrapper';
 import { useChallengeRouteData } from '../[slug]/challenge-route-data.hook';
 
 interface Props {
@@ -48,7 +48,7 @@ export function ChallengeLayoutWrapper({ challenge, track, children }: Props) {
           {children}
         </LeftWrapper>
       }
-      right={<Wrapper track={track} challenge={challenge} />}
+      right={<RightWrapper track={track} challenge={challenge} />}
       {...props}
     />
   );
