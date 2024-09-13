@@ -2,6 +2,8 @@
 
 import { auth } from '~/server/auth';
 import { prisma } from '@repo/db';
+import { headers } from 'next/headers';
+import { rateLimit } from '~/utils/rateLimit';
 
 export async function markNotificationsAsRead(ids: number[]) {
   const session = await auth();
@@ -41,7 +43,7 @@ export async function getNotifications({
   }
 
   const notifications = await prisma.notification.findMany({
-    take: 5,
+    take: 50,
     skip: cursor ? 1 : 0,
     cursor: cursor ? { id: cursor } : undefined,
     where: {
@@ -72,13 +74,66 @@ export async function getNotifications({
     },
     orderBy: [
       {
-        isRead: 'asc',
+        createdAt: 'desc',
       },
       {
-        createdAt: 'desc',
+        id: 'desc',
       },
     ],
   });
 
-  return { notifications, cursor: notifications.at(-1)?.id };
+  if (notifications.length === 0) {
+    return {
+      notifications: [],
+      cursor: undefined,
+    };
+  }
+
+  const nextPage = await prisma.notification.findMany({
+    take: 1,
+    skip: 1,
+    cursor: { id: notifications.at(-1)?.id },
+    where: {
+      toUserId: session.user.id,
+      type: mentionsOnly ? 'MENTION' : undefined,
+    },
+    select: {
+      id: true,
+    },
+    orderBy: [
+      {
+        createdAt: 'desc',
+      },
+      {
+        id: 'desc',
+      },
+    ],
+  });
+
+  return {
+    notifications,
+    cursor: nextPage.length > 0 ? notifications.at(-1)?.id : undefined,
+  };
+}
+
+export async function markAllAsRead() {
+  const ip = headers().get('x-forwarded-for') ?? 'unknown';
+  const isRateLimited = rateLimit(ip);
+  if (isRateLimited) {
+    throw new Error('Rate limit exceeded');
+  }
+
+  const session = await auth();
+  if (!session) {
+    throw new Error('not authenticated');
+  }
+
+  await prisma.notification.updateMany({
+    where: {
+      toUserId: session.user.id ?? '',
+    },
+    data: {
+      isRead: true,
+    },
+  });
 }

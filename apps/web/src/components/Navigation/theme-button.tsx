@@ -1,41 +1,53 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
-import { Moon, Sun } from '@repo/ui/icons';
+import { Laptop, Moon, Sun } from '@repo/ui/icons';
+import { cn } from '@repo/ui/cn';
+import { motion } from 'framer-motion';
+
+const themes = ['system', 'light', 'dark'] as const;
 
 export function ThemeButton() {
   const [mounted, setMounted] = useState(false);
-  const { setTheme, resolvedTheme } = useTheme();
+  const { setTheme, theme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  if (!mounted) return null;
+
   return (
-    <>
-      {mounted ? (
-        <button
-          aria-label="theme button"
-          className="group rounded-lg p-2 focus:outline-[#2563EB]"
-          onClick={() => {
-            setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
-          }}
-          type="button"
-        >
-          {resolvedTheme === 'dark' && (
-            <Moon
-              aria-hidden="true"
-              className="h-5 w-5 duration-150 group-hover:scale-110 group-hover:fill-black dark:group-hover:fill-white"
-            />
-          )}
-          {resolvedTheme === 'light' && (
-            <Sun
-              aria-hidden="true"
-              className="h-5 w-5 duration-150 group-hover:scale-110 group-hover:fill-black dark:group-hover:fill-white"
-            />
-          )}
-        </button>
-      ) : null}
-    </>
+    <div className={cn('flex items-center rounded-full border p-0.5')}>
+      {themes.map((t) => {
+        const isActive = theme === t;
+        return (
+          <motion.button
+            key={t}
+            className={cn('rounded-full p-1.5', isActive && 'bg-secondary')}
+            onClick={() => setTheme(t)}
+            aria-label="theme button"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            layout
+            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+          >
+            {t === 'system' && <Laptop aria-hidden="true" className="size-4" />}
+            {t === 'light' && (
+              <Sun
+                aria-hidden="true"
+                className={cn('size-4', isActive && 'fill-black dark:fill-white')}
+              />
+            )}
+            {t === 'dark' && (
+              <Moon
+                aria-hidden="true"
+                className={cn('size-4', isActive && 'fill-black dark:fill-white')}
+              />
+            )}
+          </motion.button>
+        );
+      })}
+    </div>
   );
 }

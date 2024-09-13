@@ -1,6 +1,5 @@
 import { ImageResponse } from '@vercel/og';
-import { challengeParam } from 'utils/zodParams';
-import { fetchFont } from 'utils/fetchFont';
+import { fetchFont, challengeParam } from '@repo/og-utils';
 import { Logo3d } from 'app/components/logo3d';
 import { Grid } from 'app/components/grid';
 
@@ -53,7 +52,7 @@ export async function GET(req: Request) {
   const random_mogus_coord = mogus_coords[Math.floor(Math.random() * mogus_coords.length)] ?? '';
   let title = props.title === null ? null : props.title.split(' | ')[0]?.trim();
   if (title && title?.length > 45) {
-    title = title.slice(0, 40) + '…';
+    title = `${title.slice(0, 40)  }…`;
   }
 
   const HOST =

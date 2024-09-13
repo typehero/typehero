@@ -1,6 +1,7 @@
 'use client';
 
 import { Bell } from '@repo/ui/icons';
+import { track } from '@vercel/analytics';
 import { useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -19,6 +20,9 @@ export function NotificationLink({ notificationCount }: { notificationCount: num
 
   return (
     <Link
+      onClick={() => {
+        track('notifications');
+      }}
       aria-label="notification page link"
       href={{
         pathname: '/notifications',

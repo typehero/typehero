@@ -57,7 +57,7 @@ export function MentionInput(props: Props) {
 
     return `${text.slice(0, cursorPosition - fullWord.length)}@${username}${text.slice(
       cursorPosition,
-    )}`;
+    )} `;
   };
 
   // this handles the scenario where a user uses arrow keys
