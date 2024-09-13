@@ -16,7 +16,7 @@ interface Props {
   track: ChallengeRouteData['track'];
 }
 
-export function Wrapper({ track, challenge }: Props) {
+export function RightWrapper({ track, challenge }: Props) {
   const router = useRouter();
   const segments = useSelectedLayoutSegments();
   const { data: session } = useSession();
