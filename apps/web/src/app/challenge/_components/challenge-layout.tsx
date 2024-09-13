@@ -1,7 +1,7 @@
 import { useEffect, useRef, type ReactNode, useState, type MutableRefObject, useMemo } from 'react';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { useFullscreenSettingsStore } from './fullscreen';
+import { useFullscreenSettingsStore } from '../../../components/fullscreen-button';
 import { getEventDeltas } from '@repo/monaco/utils';
 
 export const DEFAULT_SETTINGS = {
