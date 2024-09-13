@@ -44,8 +44,8 @@ export function UserBadge(props: UserBadgeProps) {
     setQueryEnabled(true);
   };
   const gradient = getGradient(props.user.roles);
-  const shouldShowHoverCard =
-    props.user.bio !== '' || props.user.roles.length > 1 || query.data.titles.length > 1;
+  const shouldShowHoverCard = props.user.bio !== '' || query.data.titles.length > 0;
+
   return (
     <HoverCardWrapper
       enabled={shouldShowHoverCard}
@@ -89,7 +89,7 @@ export function UserBadge(props: UserBadgeProps) {
             <div className="flex w-max max-w-[calc(39ch)] flex-col space-y-2 ">
               <h1
                 className={cn(
-                  'w-min bg-gradient-to-r bg-clip-text font-extrabold text-transparent',
+                  'bg-gradient-to-r bg-clip-text font-extrabold text-transparent',
                   gradient,
                 )}
               >
