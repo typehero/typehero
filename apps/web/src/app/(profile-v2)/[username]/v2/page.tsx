@@ -1,23 +1,12 @@
 import { prisma } from '@repo/db';
-import { cn } from '@repo/ui/cn';
-import { Avatar, AvatarImage, AvatarFallback } from '@repo/ui/components/avatar';
-import { Github, Twitter } from '@repo/ui/icons';
 import { notFound } from 'next/navigation';
-import {
-  getBadges,
-  type BadgeInfo,
-} from '~/app/(profile)/[username]/_components/dashboard/_actions';
-import { SlugToBadgeIcon } from '~/app/(profile)/[username]/_components/dashboard/badges';
-import { Titles } from '~/app/challenge/_components/comments/enhanced-user-badge';
-import {
-  getTitles,
-  getGradient,
-} from '~/app/challenge/_components/comments/enhanced-user-badge.getTitles';
-import { getRelativeTime } from '~/utils/relativeTime';
 import { ProgressChart } from './_components/progress-chart';
 import { SharedSolutionCard } from './_components/shared-solution-card';
 import { ActivityChart, generateSampleData } from './_components/activity-chart';
 import { Feed, generateFeedDate } from './_components/feed';
+import { Button } from '@repo/ui/components/button';
+import { ArrowUpRight } from '@repo/ui/icons';
+import { Separator } from '@repo/ui/components/separator';
 
 export default async function ProfilePage(props: { params: { username: string } }) {
   const [, username] = decodeURIComponent(props.params.username).split('@');
@@ -41,65 +30,83 @@ export default async function ProfilePage(props: { params: { username: string } 
     notFound();
   }
 
-  const titles = getTitles(user.roles);
-  const gradient = getGradient(user.roles);
-  const badges = await getBadges(user.id);
-
   return (
-    <div className="container py-8">
+    <div className="flex flex-col space-y-10">
+      <div className="space-y-2">
+        <div className="flex w-full flex-row justify-between">
+          <h1 className="text-muted-foreground text-lg tracking-wide ">Challenge Progress</h1>
+          <Button size="xs" variant="link" className="text-muted-foreground hover:text-primary">
+            view completed challenges
+            <ArrowUpRight className="h-4 w-4" />
+          </Button>
+        </div>
+        <div className="flex h-fit w-full flex-row space-x-5">
+          <ProgressChart completed={50} max={100} difficulty="Beginner" />
+          <ProgressChart completed={80} max={100} difficulty="Easy" />
+          <ProgressChart completed={100} max={100} difficulty="Medium" />
+          <ProgressChart completed={69} max={100} difficulty="Hard" />
+          <ProgressChart completed={42} max={100} difficulty="Expert" />
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <div className="flex w-full flex-row justify-between">
+          <h1 className="text-muted-foreground text-lg tracking-wide ">Shared Solutions</h1>
+          <Button size="xs" variant="link" className="text-muted-foreground hover:text-primary">
+            view all
+            <ArrowUpRight className="h-4 w-4" />
+          </Button>
+        </div>
+        <div className="flex w-fit flex-row space-x-6">
+          <SharedSolutionCard
+            solution={{
+              isPinned: true,
+              voteCount: 10,
+              commentCount: 6,
+              challenge: {
+                name: 'Awaited',
+                difficulty: 'MEDIUM',
+              },
+            }}
+          />
+          <SharedSolutionCard
+            solution={{
+              isPinned: true,
+              voteCount: 10,
+              commentCount: 6,
+              challenge: {
+                name: 'Awaited',
+                difficulty: 'MEDIUM',
+              },
+            }}
+          />
+          <SharedSolutionCard
+            solution={{
+              isPinned: true,
+              voteCount: 10,
+              commentCount: 6,
+              challenge: {
+                name: 'Awaited',
+                difficulty: 'MEDIUM',
+              },
+            }}
+          />
+        </div>
+      </div>
+
       <div className="flex flex-row space-x-5">
-        <div className="flex max-w-64 flex-col space-y-4"></div>
-        <div className="flex flex-col space-y-4">
-          <div className="flex h-fit w-full flex-row justify-center space-x-2"></div>
-          <div className="flex w-fit flex-row space-x-2">
-            <SharedSolutionCard
-              solution={{
-                isPinned: true,
-                voteCount: 10,
-                commentCount: 6,
-                challenge: {
-                  name: 'Awaited',
-                  difficulty: 'MEDIUM',
-                },
-              }}
-            />
-            <SharedSolutionCard
-              solution={{
-                isPinned: true,
-                voteCount: 10,
-                commentCount: 6,
-                challenge: {
-                  name: 'Awaited',
-                  difficulty: 'MEDIUM',
-                },
-              }}
-            />
-            <SharedSolutionCard
-              solution={{
-                isPinned: true,
-                voteCount: 10,
-                commentCount: 6,
-                challenge: {
-                  name: 'Awaited',
-                  difficulty: 'MEDIUM',
-                },
-              }}
-            />
+        <div className="w-full space-y-2">
+          <h1 className="text-muted-foreground text-lg tracking-wide ">Stats</h1>
+          <div className="grid grid-cols-2 justify-between gap-y-5">
+            <StatCard title="Global Leaderboard Rank" data="1,567" />
+            <StatCard title="Global Leaderboard Rank" data="1,567" />
+            <StatCard title="Global Leaderboard Rank" data="1,567" />
+            <StatCard title="Global Leaderboard Rank" data="1,567" />
           </div>
-          <div className="flex flex-row justify-between space-x-4">
-            <div className="max-w-[40%] space-y-2">
-              <h1 className="text-lg font-semibold">Feed</h1>
-              <Feed activity={generateFeedDate()} />
-            </div>
-            <div className="max-w-[40%] space-y-2">
-              <h1 className="text-lg font-semibold">Recent Activity</h1>
-              <ActivityChart days={generateSampleData()} />
-            </div>
-            <div className="space-y-2">
-              <StatCard title="Global Leaderboard Rank" data="1,567" />
-              <StatCard title="Global Leaderboard Rank" data="1,567" />
-            </div>
-          </div>
+        </div>
+        <div className="space-y-2">
+          <h1 className="text-muted-foreground text-lg tracking-wide ">Recent Activity</h1>
+          <ActivityChart days={generateSampleData()} />
         </div>
       </div>
     </div>

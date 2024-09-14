@@ -9,7 +9,7 @@ import { format, eachDayOfInterval, startOfWeek, subDays } from 'date-fns';
 
 export function generateSampleData() {
   const endDate = new Date();
-  endDate.setDate(4);
+  // endDate.setDate(4);
   const startDate = startOfWeek(subDays(endDate, 60), { weekStartsOn: 1 });
   const days = eachDayOfInterval({ start: startDate, end: endDate }).map((date) => ({
     date,
@@ -28,16 +28,14 @@ function getColor(count: number) {
 }
 function DayBox(props: { date: Date; count: number }) {
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger>
-          <div className={cn('h-5 w-5 ', getColor(props.count))}> </div>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>{format(props.date, 'eee MMMM dd yyyy')}</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <Tooltip>
+      <TooltipTrigger>
+        <div className={cn('h-5 w-5 rounded-[1px] ', getColor(props.count))}> </div>
+      </TooltipTrigger>
+      <TooltipContent>
+        <p>{format(props.date, 'eee MMMM dd yyyy')}</p>
+      </TooltipContent>
+    </Tooltip>
   );
 }
 interface DayInfo {
@@ -70,27 +68,34 @@ function groupDaysByWeek(days: DayInfo[]) {
     weeks.push({ days: week, isNewMonth });
     month = format(week[0].date, 'MMM');
   }
+
+  //Prevents the first two months from stacking next to each other.
+  if (weeks[1] && weeks[1].isNewMonth && weeks[0]) {
+    weeks[0].isNewMonth = false;
+  }
   return weeks;
 }
 
 export function ActivityChart(props: { days: { date: Date; count: number }[] }) {
   const weeks = groupDaysByWeek(props.days);
   return (
-    <div className="relative flex flex-row gap-1 pt-4">
-      {weeks.map((week) => {
-        return (
-          <div key={week.days.toString()} className=" flex flex-col gap-1">
-            {week.isNewMonth && week.days[0] ? (
-              <span className="text-muted-foreground absolute -top-1 text-sm tracking-tight">
-                {format(week.days[0].date, 'MMM')}
-              </span>
-            ) : null}
-            {week.days.map((day) => (
-              <DayBox key={day.date.toString()} date={day.date} count={day.count} />
-            ))}
-          </div>
-        );
-      })}
+    <div className="relative flex flex-row gap-1.5 pt-4">
+      <TooltipProvider>
+        {weeks.map((week) => {
+          return (
+            <div key={week.days.toString()} className="flex flex-col gap-1.5">
+              {week.isNewMonth && week.days[0] ? (
+                <span className="text-muted-foreground absolute -top-1 text-sm tracking-tight">
+                  {format(week.days[0].date, 'MMM')}
+                </span>
+              ) : null}
+              {week.days.map((day) => (
+                <DayBox key={day.date.toString()} date={day.date} count={day.count} />
+              ))}
+            </div>
+          );
+        })}
+      </TooltipProvider>
     </div>
   );
 }

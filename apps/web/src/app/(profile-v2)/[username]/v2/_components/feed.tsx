@@ -54,11 +54,9 @@ export function generateFeedDate() {
 }
 export function Feed(props: { activity: Array<Activity> }) {
   return (
-    <div className="flex flex-col space-y-8">
+    <div className="flex flex-col space-y-10">
       {props.activity.map((a, index) => (
-        <div key={a.toString()}>
-          <FeedItem activityItem={a} isLastItem={index === props.activity.length - 1} />
-        </div>
+        <FeedItem key={index} activityItem={a} isLastItem={index === props.activity.length - 1} />
       ))}
     </div>
   );
@@ -86,7 +84,7 @@ function FeedItem(props: { activityItem: Activity; isLastItem: boolean }) {
       <div className="relative flex flex-col items-center">
         <Icon className="h-5 w-5" />
         {!props.isLastItem ? (
-          <Separator orientation="vertical" decorative className="absolute top-6" />
+          <Separator orientation="vertical" decorative className="absolute top-7" />
         ) : null}
       </div>
       <div>

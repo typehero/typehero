@@ -16,8 +16,7 @@ import {
 import { getRelativeTime } from '~/utils/relativeTime';
 import { ProgressChart } from './_components/progress-chart';
 import { SharedSolutionCard } from './_components/shared-solution-card';
-import { ActivityChart, generateSampleData } from './_components/activity-chart';
-import { Feed, generateFeedDate } from './_components/feed';
+import { Button } from '@repo/ui/components/button';
 
 export default async function LayoutPage(
   props: React.PropsWithChildren<{ params: { username: string } }>,
@@ -49,7 +48,7 @@ export default async function LayoutPage(
 
   return (
     <div className="container py-8">
-      <div className="flex flex-row space-x-5">
+      <div className="flex flex-row space-x-12">
         <div className="flex max-w-64 flex-col space-y-4">
           <Avatar className="h-64 w-64 rounded-lg">
             <AvatarImage src={user.image ?? ''} />
@@ -68,14 +67,18 @@ export default async function LayoutPage(
                 {user.name}
               </h1>
               <Titles data={titles} />
-              <p className="text-muted-foreground tracking-tight">
+              <p className="text-muted-foreground text-sm tracking-tight">
                 Joined {getRelativeTime(user.createdAt)}
               </p>
             </div>
             <p className="text-card-foreground w-full break-words">{user.bio}</p>
             <div className="flex flex-row items-center space-x-2">
-              <Twitter className="h-7 w-7" />
-              <Github className="h-7 w-7" />
+              <Button variant="ghost" size="sm" className="p-2">
+                <Twitter className="h-7 w-7" />
+              </Button>
+              <Button variant="ghost" size="sm" className="p-2">
+                <Github className="h-7 w-7" />
+              </Button>
             </div>
             <div>
               <h2>Badges</h2>
@@ -83,53 +86,7 @@ export default async function LayoutPage(
             </div>
           </div>
         </div>
-        <div className="flex flex-col space-y-4">
-          <div className="flex h-fit w-full flex-row justify-center space-x-2">
-            <div className="flex h-fit w-full flex-row space-x-3">
-              <ProgressChart completed={50} max={100} difficulty="Beginner" />
-              <ProgressChart completed={80} max={100} difficulty="Easy" />
-              <ProgressChart completed={100} max={100} difficulty="Medium" />
-              <ProgressChart completed={80} max={100} difficulty="Hard" />
-              <ProgressChart completed={80} max={100} difficulty="Expert" />
-            </div>
-          </div>
-          <div className="flex w-fit flex-row space-x-2">
-            <SharedSolutionCard
-              solution={{
-                isPinned: true,
-                voteCount: 10,
-                commentCount: 6,
-                challenge: {
-                  name: 'Awaited',
-                  difficulty: 'MEDIUM',
-                },
-              }}
-            />
-            <SharedSolutionCard
-              solution={{
-                isPinned: true,
-                voteCount: 10,
-                commentCount: 6,
-                challenge: {
-                  name: 'Awaited',
-                  difficulty: 'MEDIUM',
-                },
-              }}
-            />
-            <SharedSolutionCard
-              solution={{
-                isPinned: true,
-                voteCount: 10,
-                commentCount: 6,
-                challenge: {
-                  name: 'Awaited',
-                  difficulty: 'MEDIUM',
-                },
-              }}
-            />
-          </div>
-          <div className="flex flex-row justify-between space-x-4">{props.children}</div>
-        </div>
+        {props.children}
       </div>
     </div>
   );
