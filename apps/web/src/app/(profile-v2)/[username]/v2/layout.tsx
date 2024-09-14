@@ -1,7 +1,7 @@
 import { prisma } from '@repo/db';
 import { cn } from '@repo/ui/cn';
 import { Avatar, AvatarImage, AvatarFallback } from '@repo/ui/components/avatar';
-import { Github, Twitter } from '@repo/ui/icons';
+import { ArrowUpRight, Github, Twitter } from '@repo/ui/icons';
 import { notFound } from 'next/navigation';
 import {
   getBadges,
@@ -14,8 +14,6 @@ import {
   getGradient,
 } from '~/app/challenge/_components/comments/enhanced-user-badge.getTitles';
 import { getRelativeTime } from '~/utils/relativeTime';
-import { ProgressChart } from './_components/progress-chart';
-import { SharedSolutionCard } from './_components/shared-solution-card';
 import { Button } from '@repo/ui/components/button';
 
 export default async function LayoutPage(
@@ -81,7 +79,19 @@ export default async function LayoutPage(
               </Button>
             </div>
             <div>
-              <h2>Badges</h2>
+              <div className="flex flex-row justify-between">
+                <h2>
+                  Badges <span className="text-muted-foreground text-xs">(1/4)</span>
+                </h2>
+                <Button
+                  size="xs"
+                  variant="link"
+                  className="text-muted-foreground hover:text-primary"
+                >
+                  view all badges
+                  <ArrowUpRight className="h-4 w-4" />
+                </Button>
+              </div>
               <Badges data={badges} />
             </div>
           </div>

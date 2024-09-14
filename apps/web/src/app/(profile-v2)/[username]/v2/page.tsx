@@ -7,6 +7,7 @@ import { Feed, generateFeedDate } from './_components/feed';
 import { Button } from '@repo/ui/components/button';
 import { ArrowUpRight } from '@repo/ui/icons';
 import { Separator } from '@repo/ui/components/separator';
+import Link from 'next/link';
 
 export default async function ProfilePage(props: { params: { username: string } }) {
   const [, username] = decodeURIComponent(props.params.username).split('@');
@@ -35,9 +36,16 @@ export default async function ProfilePage(props: { params: { username: string } 
       <div className="space-y-2">
         <div className="flex w-full flex-row justify-between">
           <h1 className="text-muted-foreground text-lg tracking-wide ">Challenge Progress</h1>
-          <Button size="xs" variant="link" className="text-muted-foreground hover:text-primary">
-            view completed challenges
-            <ArrowUpRight className="h-4 w-4" />
+          <Button
+            asChild
+            size="xs"
+            variant="link"
+            className="text-muted-foreground hover:text-primary"
+          >
+            <Link href="./v2/completed">
+              view completed challenges
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
           </Button>
         </div>
         <div className="flex h-fit w-full flex-row space-x-5">
@@ -52,9 +60,16 @@ export default async function ProfilePage(props: { params: { username: string } 
       <div className="space-y-2">
         <div className="flex w-full flex-row justify-between">
           <h1 className="text-muted-foreground text-lg tracking-wide ">Shared Solutions</h1>
-          <Button size="xs" variant="link" className="text-muted-foreground hover:text-primary">
-            view all
-            <ArrowUpRight className="h-4 w-4" />
+          <Button
+            asChild
+            size="xs"
+            variant="link"
+            className="text-muted-foreground hover:text-primary"
+          >
+            <Link href="./v2/shared-solutions">
+              view all
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
           </Button>
         </div>
         <div className="flex w-fit flex-row space-x-6">
@@ -99,9 +114,9 @@ export default async function ProfilePage(props: { params: { username: string } 
           <h1 className="text-muted-foreground text-lg tracking-wide ">Stats</h1>
           <div className="grid grid-cols-2 justify-between gap-y-5">
             <StatCard title="Global Leaderboard Rank" data="1,567" />
-            <StatCard title="Global Leaderboard Rank" data="1,567" />
-            <StatCard title="Global Leaderboard Rank" data="1,567" />
-            <StatCard title="Global Leaderboard Rank" data="1,567" />
+            <StatCard title="Advent of Typescript 2024 Rank" data="1,567" />
+            <StatCard title="Challenged Completed" data="97" secondaryData="/ 143" />
+            <StatCard title="Max Submissions Streak" data="5" secondaryData="days" />
           </div>
         </div>
         <div className="space-y-2">
@@ -113,11 +128,14 @@ export default async function ProfilePage(props: { params: { username: string } 
   );
 }
 
-function StatCard(props: { title: string; data: string }) {
+function StatCard(props: { title: string; data: string; secondaryData?: string }) {
   return (
     <div className="space-y-0.5">
       <h1>{props.title}</h1>
-      <p className="text-4xl font-bold">{props.data}</p>
+      <div className="flex flex-row items-baseline space-x-1.5">
+        <p className="text-4xl font-bold">{props.data}</p>
+        {props.secondaryData !== undefined ? <p>{props.secondaryData}</p> : null}
+      </div>
     </div>
   );
 }

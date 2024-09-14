@@ -19,14 +19,12 @@ import {
 } from '@repo/ui/icons';
 import dynamic from 'next/dynamic';
 import type { ExploreChallengeData } from './explore.action';
+import type { Difficulty, Submission } from '@repo/db/types';
+import { cn } from '@repo/ui/cn';
 
 const RelativeTime = dynamic(() => import('./relative-time'), {
   ssr: false,
 });
-
-interface ExploreCardProps {
-  challenge: Awaited<ExploreChallengeData>[0];
-}
 
 export const BORDERS_BY_DIFFICULTY = {
   BEGINNER:
@@ -98,15 +96,34 @@ export function ChallengeDifficultyIcon({ difficulty }: { difficulty: string }) 
   }
 }
 
-export async function ExploreCard({ challenge }: ExploreCardProps) {
+export interface ExploreCardProps {
+  challenge: {
+    difficulty: Difficulty;
+    name: string;
+    _count: {
+      comment: number;
+      vote: number;
+    };
+    submission: Submission[];
+    user: {
+      name: string;
+    };
+    updatedAt: Date;
+    shortDescription: string;
+  };
+}
+export function ExploreCard({ challenge, className }: ExploreCardProps & { className?: string }) {
   const hasBeenSolved = challenge.submission.length > 0;
 
   return (
     <Card
-      className={`group/card bg-background hover:bg-card-hovered relative overflow-hidden duration-300 sm:min-w-[300px] xl:min-w-[333px]
+      className={cn(
+        `group/card bg-background hover:bg-card-hovered relative overflow-hidden duration-300 sm:min-w-[300px] xl:min-w-[333px]
       ${SHADOWS_BY_DIFFICULTY[challenge.difficulty]}
       ${BORDERS_BY_DIFFICULTY[challenge.difficulty]}
-      `}
+      `,
+        className,
+      )}
     >
       <ChallengeDifficultyIcon difficulty={challenge.difficulty} />
       <CardHeader className="relative flex flex-col items-start gap-1 py-5">
