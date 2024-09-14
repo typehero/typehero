@@ -68,7 +68,7 @@ export function Markdown({
           <ul className={clsx(className, 'mb-4 list-disc ps-10')} {...props} />
         ),
         ol: ({ className, ...props }) => (
-          <ol className={clsx(className, 'mb-4 list-decimal ps-10')} {...props} />
+          <ol className={clsx(className, 'mb-4 list-decimal ps-10')} {...props} ordered="true"/>
         ),
         h1: ({ className, ...props }) => (
           <h1 className={clsx(className, 'mb-2 pb-2 text-3xl font-bold')} {...props} />
