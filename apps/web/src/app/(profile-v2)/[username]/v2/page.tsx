@@ -2,12 +2,27 @@ import { prisma } from '@repo/db';
 import { notFound } from 'next/navigation';
 import { ProgressChart } from './_components/progress-chart';
 import { SharedSolutionCard } from './_components/shared-solution-card';
-import { ActivityChart, generateSampleData } from './_components/activity-chart';
-import { Feed, generateFeedDate } from './_components/feed';
 import { Button } from '@repo/ui/components/button';
 import { ArrowUpRight } from '@repo/ui/icons';
-import { Separator } from '@repo/ui/components/separator';
 import Link from 'next/link';
+import { ActivityChart2 } from './_components/activity-chart-v2';
+import { startOfWeek, eachDayOfInterval, subDays, getDay, getMonth } from 'date-fns';
+import { getWeek } from 'date-fns/esm';
+
+export function generateSampleData() {
+  const endDate = new Date();
+  // endDate.setDate(4);
+  const startDate = startOfWeek(subDays(endDate, 60), { weekStartsOn: 0 });
+  const days = eachDayOfInterval({ start: startDate, end: endDate }).map((date) => ({
+    date,
+    day: getDay(date),
+    week: getWeek(date),
+    month: getMonth(date),
+    count: Math.floor(Math.random() * 5),
+  }));
+  console.log({ startDate, endDate, count: days.length });
+  return days;
+}
 
 export default async function ProfilePage(props: { params: { username: string } }) {
   const [, username] = decodeURIComponent(props.params.username).split('@');
@@ -121,7 +136,7 @@ export default async function ProfilePage(props: { params: { username: string } 
         </div>
         <div className="space-y-2">
           <h1 className="text-muted-foreground text-lg tracking-wide ">Recent Activity</h1>
-          <ActivityChart days={generateSampleData()} />
+          <ActivityChart2 data={generateSampleData()} />
         </div>
       </div>
     </div>

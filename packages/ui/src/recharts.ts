@@ -5,4 +5,12 @@ export {
   PolarAngleAxis,
   RadialBar,
   RadialBarChart,
+  Scatter,
+  ScatterChart,
+  XAxis,
+  YAxis,
+  ZAxis,
+  CartesianGrid,
+  Cell,
+  Rectangle,
 } from 'recharts';

@@ -92,6 +92,12 @@
 
     --ring: 240 3.7% 15.9%;
 
+    --difficulty-beginner: 199 69% 72%;
+    --difficulty-easy: 142 77% 73%;
+    --difficulty-medium: 31 86% 60%;
+    --difficulty-hard: 0 91% 71%;
+    --difficulty-extreme: 269 97% 85%;
+
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
