@@ -13,7 +13,7 @@ export function generateSampleData() {
   const startDate = startOfWeek(subDays(endDate, 60), { weekStartsOn: 1 });
   const days = eachDayOfInterval({ start: startDate, end: endDate }).map((date) => ({
     date,
-    count: Math.floor(Math.random() * 5),
+    activity: Math.floor(Math.random() * 5),
   }));
   console.log({ startDate, endDate, count: days.length });
   return days;
@@ -26,11 +26,11 @@ function getColor(count: number) {
   }
   return 'bg-sky-500';
 }
-function DayBox(props: { date: Date; count: number }) {
+function DayBox(props: { date: Date; activity: number }) {
   return (
     <Tooltip>
       <TooltipTrigger>
-        <div className={cn('h-5 w-5 rounded-[1px] ', getColor(props.count))}> </div>
+        <div className={cn('h-5 w-5 rounded-[1px] ', getColor(props.activity))}> </div>
       </TooltipTrigger>
       <TooltipContent>
         <p>{format(props.date, 'eee MMMM dd yyyy')}</p>
@@ -40,7 +40,7 @@ function DayBox(props: { date: Date; count: number }) {
 }
 interface DayInfo {
   date: Date;
-  count: number;
+  activity: number;
 }
 
 /* Gets a list of days and groups it by the week.
@@ -76,7 +76,7 @@ function groupDaysByWeek(days: DayInfo[]) {
   return weeks;
 }
 
-export function ActivityChart(props: { days: { date: Date; count: number }[] }) {
+export function ActivityChart(props: { days: { date: Date; activity: number }[] }) {
   const weeks = groupDaysByWeek(props.days);
   return (
     <div className="relative flex flex-row gap-1.5 pt-4">
@@ -90,7 +90,7 @@ export function ActivityChart(props: { days: { date: Date; count: number }[] }) 
                 </span>
               ) : null}
               {week.days.map((day) => (
-                <DayBox key={day.date.toString()} date={day.date} count={day.count} />
+                <DayBox key={day.date.toString()} date={day.date} activity={day.activity} />
               ))}
             </div>
           );

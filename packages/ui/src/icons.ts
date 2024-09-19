@@ -31,6 +31,7 @@ export {
   Diamond,
   ExternalLink,
   Flag,
+  FileCode,
   FlaskConical,
   GitBranch,
   Github,
