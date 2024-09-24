@@ -34,6 +34,7 @@ import { useCommentsReplies } from './comments.hooks';
 import { UserBadge } from './enhanced-user-badge';
 import type { ChallengeRouteData } from '../../[slug]/getChallengeRouteData';
 import type { SolutionRouteData } from '../../[slug]/solutions/[solutionId]/getSolutionIdRouteData';
+import { DefaultAvatar } from '~/components/default-avatar';
 
 interface SingleCommentProps {
   comment: PaginatedComments['comments'][number];
@@ -273,8 +274,8 @@ function SingleComment({
           <div className="flex items-center gap-2">
             <Avatar className="h-7 w-7">
               <AvatarImage alt="github profile picture" src={comment.user?.image ?? ''} />
-              <AvatarFallback className="border border-zinc-300 dark:border-zinc-600">
-                {comment.user?.name.substring(0, 1)}
+              <AvatarFallback>
+                <DefaultAvatar width={50} height={50} />{' '}
               </AvatarFallback>
             </Avatar>
             <UserBadge
