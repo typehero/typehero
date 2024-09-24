@@ -24,6 +24,7 @@ import { EditSolution } from './edit-solution';
 import { useGetQueryString } from './useGetQueryString';
 import { UserBadge } from '~/app/challenge/_components/comments/enhanced-user-badge';
 import { useQueryClient } from '@tanstack/react-query';
+import { DefaultAvatar } from '~/components/default-avatar';
 
 interface Props {
   solution: ChallengeSolution;
@@ -67,8 +68,8 @@ export function SolutionDetails({ solution }: Props) {
               <div className="flex items-center gap-2">
                 <Avatar className="h-7 w-7">
                   <AvatarImage alt="github profile picture" src={solution.user?.image ?? ''} />
-                  <AvatarFallback className="border border-zinc-300 dark:border-zinc-600">
-                    {solution.user?.name.substring(0, 1)}
+                  <AvatarFallback>
+                    <DefaultAvatar />
                   </AvatarFallback>
                 </Avatar>
                 <TypographyLarge>{solution.title}</TypographyLarge>

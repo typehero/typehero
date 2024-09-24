@@ -15,6 +15,7 @@ import { Button } from '@repo/ui/components/button';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@repo/ui/components/hover-card';
 import { getTitles, type TitleInfo } from './enhanced-user-badge.getTitles';
 import { Skeleton } from '@repo/ui/components/skeleton';
+import { DefaultAvatar } from '~/components/default-avatar';
 
 interface UserBadgeProps {
   user: {
@@ -74,8 +75,8 @@ export function UserBadge(props: UserBadgeProps) {
               <div className={cn('w-min rounded-full bg-gradient-to-r p-0.5', gradient)}>
                 <Avatar className="h-14 w-14">
                   <AvatarImage src={query.data.image ?? ''} />
-                  <AvatarFallback className="capitalize">
-                    {props.user.name.substring(0, 1)}
+                  <AvatarFallback>
+                    <DefaultAvatar />
                   </AvatarFallback>
                 </Avatar>
               </div>

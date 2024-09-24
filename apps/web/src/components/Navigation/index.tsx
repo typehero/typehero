@@ -23,6 +23,7 @@ import { NotificationLink } from './notification-link';
 import { getNotificationCount } from './navigation.actions';
 import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
 import { ThemeButton } from './theme-button';
+import { DefaultAvatar } from '../default-avatar';
 
 export function getAdminUrl() {
   // reference for vercel.com
@@ -45,8 +46,8 @@ export async function Navigation() {
 
   const TopSectionLinks = (
     <>
-      {featureFlags?.enableExplore ? <NavLink title="Explore" href="/explore" /> : null}
-      {featureFlags?.enableTracks ? <NavLink title="Tracks" href="/tracks" /> : null}
+      <NavLink title="Explore" href="/explore" />
+      <NavLink title="Tracks" href="/tracks" />
       {featureFlags?.enableHolidayEvent ? (
         <div className="flex items-center gap-1">
           <NavLink title="Advent of TypeScript" href="/aot-2023" />
@@ -161,8 +162,8 @@ async function LoginButton({
         >
           <Avatar className="h-7 w-7">
             <AvatarImage src={session.user.image ?? ''} alt="user avatar" />
-            <AvatarFallback className="bg-gray-700 text-white">
-              {session.user?.name.charAt(0)}
+            <AvatarFallback>
+              <DefaultAvatar />
             </AvatarFallback>
           </Avatar>
         </button>

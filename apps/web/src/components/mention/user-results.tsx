@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import { searchUsers } from './actions';
 import { useToast } from '@repo/ui/components/use-toast';
 import { Loader } from '../loader';
+import { DefaultAvatar } from '../default-avatar';
 
 interface Props {
   isOpen: boolean;
@@ -135,8 +136,8 @@ export function UserResults({ isOpen, onFocusOutside, onSelectedUser, query }: P
                       >
                         <Avatar className="h-10 w-10 border border-gray-500 dark:border-gray-700">
                           <AvatarImage src={user.image ?? ''} alt="user avatar" />
-                          <AvatarFallback className="bg-gray-700 text-white">
-                            {user?.name.charAt(0)}
+                          <AvatarFallback>
+                            <DefaultAvatar />
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex flex-col">

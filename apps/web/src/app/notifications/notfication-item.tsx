@@ -10,6 +10,7 @@ import { useInView } from 'react-intersection-observer';
 import { getRelativeTime } from '~/utils/relativeTime';
 import type { Notification } from './notification.actions';
 import { cn } from '@repo/ui/cn';
+import { DefaultAvatar } from '~/components/default-avatar';
 
 const BLURBS = {
   MENTION: 'mentioned you in a comment',
@@ -64,7 +65,9 @@ export function NotificationItem({
               alt={`${notification.fromUser.name} profile photo`}
             />
           ) : (
-            <AvatarFallback>{notification.fromUser.name.charAt(0)}</AvatarFallback>
+            <AvatarFallback>
+              <DefaultAvatar />
+            </AvatarFallback>
           )}
         </Avatar>
         <div className="flex-grow">
