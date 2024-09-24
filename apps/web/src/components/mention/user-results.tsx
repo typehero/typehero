@@ -137,7 +137,7 @@ export function UserResults({ isOpen, onFocusOutside, onSelectedUser, query }: P
                         <Avatar className="h-10 w-10 border border-gray-500 dark:border-gray-700">
                           <AvatarImage src={user.image ?? ''} alt="user avatar" />
                           <AvatarFallback>
-                            <DefaultAvatar width={50} height={50} />
+                            <DefaultAvatar />
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex flex-col">

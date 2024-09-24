@@ -48,7 +48,6 @@ export async function Navigation() {
     <>
       <NavLink title="Explore" href="/explore" />
       <NavLink title="Tracks" href="/tracks" />
-      <NavLink title="Playground" href="/play" />
       {featureFlags?.enableHolidayEvent ? (
         <div className="flex items-center gap-1">
           <NavLink title="Advent of TypeScript" href="/aot-2023" />
@@ -164,7 +163,7 @@ async function LoginButton({
           <Avatar className="h-7 w-7">
             <AvatarImage src={session.user.image ?? ''} alt="user avatar" />
             <AvatarFallback>
-              <DefaultAvatar width={50} height={50} />
+              <DefaultAvatar />
             </AvatarFallback>
           </Avatar>
         </button>

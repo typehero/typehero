@@ -76,7 +76,7 @@ export function UserBadge(props: UserBadgeProps) {
                 <Avatar className="h-14 w-14">
                   <AvatarImage src={query.data.image ?? ''} />
                   <AvatarFallback>
-                    <DefaultAvatar width={50} height={50} />{' '}
+                    <DefaultAvatar />
                   </AvatarFallback>
                 </Avatar>
               </div>

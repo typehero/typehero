@@ -7,6 +7,8 @@ export function DefaultAvatar(props: ComponentProps<'svg'>) {
       viewBox="0 0 200 200"
       fill="none"
       shape-rendering="auto"
+      width={50}
+      height={50}
       {...props}
     >
       <mask id="viewboxMask">

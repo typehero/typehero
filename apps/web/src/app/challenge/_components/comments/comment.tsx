@@ -275,7 +275,7 @@ function SingleComment({
             <Avatar className="h-7 w-7">
               <AvatarImage alt="github profile picture" src={comment.user?.image ?? ''} />
               <AvatarFallback>
-                <DefaultAvatar width={50} height={50} />{' '}
+                <DefaultAvatar />
               </AvatarFallback>
             </Avatar>
             <UserBadge

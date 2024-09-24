@@ -66,7 +66,7 @@ export function NotificationItem({
             />
           ) : (
             <AvatarFallback>
-              <DefaultAvatar width={50} height={50} />
+              <DefaultAvatar />
             </AvatarFallback>
           )}
         </Avatar>

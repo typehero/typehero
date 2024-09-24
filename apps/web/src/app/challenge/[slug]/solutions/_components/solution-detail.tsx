@@ -69,7 +69,7 @@ export function SolutionDetails({ solution }: Props) {
                 <Avatar className="h-7 w-7">
                   <AvatarImage alt="github profile picture" src={solution.user?.image ?? ''} />
                   <AvatarFallback>
-                    <DefaultAvatar width={50} height={50} />
+                    <DefaultAvatar />
                   </AvatarFallback>
                 </Avatar>
                 <TypographyLarge>{solution.title}</TypographyLarge>
