@@ -3,9 +3,11 @@
   "version": "0.1.1",
   "private": true,
   "exports": {
-    ".": "./src/index.tsx",
+    "./*": "./src/*",
+    "./code-panel": "./src/code-panel.tsx",
     "./code-editor": "./src/code-editor.tsx",
     "./settings-store": "./src/settings-store.ts",
+    "./split-editor": "./src/split-editor.tsx",
     "./vim-mode": "./src/vim-mode.tsx",
     "./twoslash": "./src/twoslash.ts",
     "./prettier": "./src/prettier.ts",
@@ -15,10 +17,16 @@
   "typesVersions": {
     "*": {
       "*": [
-        "./src/index.tsx"
+        "./src/*"
+      ],
+      "code-panel": [
+        "./src/code-panel.tsx"
       ],
       "code-editor": [
         "./src/code-editor.tsx"
+      ],
+      "split-editor": [
+        "./src/split-editor.tsx"
       ],
       "settings-store": [
         "./src/settings-store.ts"

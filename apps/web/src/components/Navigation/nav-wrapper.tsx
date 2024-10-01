@@ -9,10 +9,12 @@ export function NavWrapper({ children }: { children: React.ReactNode }) {
 
   if (fssettings.isFullscreen) return <></>;
 
+  const shouldBeFullWidth = pathname?.startsWith('/challenge') || pathname?.startsWith('/play');
+
   return (
     <nav
       className={`flex h-14 items-center text-sm font-medium ${
-        pathname?.startsWith('/challenge') ? 'px-4' : 'container'
+        shouldBeFullWidth ? 'px-4' : 'container'
       }`}
     >
       {children}

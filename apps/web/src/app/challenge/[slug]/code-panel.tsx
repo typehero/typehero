@@ -10,9 +10,9 @@ import lzstring from 'lz-string';
 import type * as monaco from 'monaco-editor';
 import { usePathname, useSearchParams } from 'next/navigation';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useResetEditor } from './editor-hooks';
-import SplitEditor, { TESTS_PATH, USER_CODE_PATH } from './split-editor';
-import { useLocalStorage } from './useLocalStorage';
+import { useResetEditor } from '@repo/monaco/editor-hooks';
+import { SplitEditor, TESTS_PATH, USER_CODE_PATH } from '@repo/monaco/split-editor';
+import { useLocalStorage } from '@repo/monaco/useLocalStorage';
 
 export interface CodePanelProps {
   challenge: {

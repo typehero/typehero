@@ -1,6 +1,5 @@
 'use client';
 import { useSession } from '@repo/auth/react';
-import { CodePanel } from '@repo/monaco';
 import { track as vercelTrack } from '@vercel/analytics';
 import { useRouter, useSelectedLayoutSegments } from 'next/navigation';
 import { EditorShortcutsButton } from '../_components/editor-shortcuts/editor-shortcuts-button';
@@ -10,6 +9,7 @@ import { SettingsButton } from '../_components/settings/settings-button';
 import type { ChallengeRouteData } from './getChallengeRouteData';
 import { SubmissionOverview } from './submissions/[[...catchAll]]/_components/overview';
 import { saveSubmission } from './submissions/[[...catchAll]]/save-submission.action';
+import { CodePanel } from './code-panel';
 
 interface Props {
   challenge: ChallengeRouteData['challenge'];

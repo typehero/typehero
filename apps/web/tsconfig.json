@@ -25,6 +25,6 @@
     // to make sure `@repo/monaco` doesn't break
     "../../packages/monaco/monaco-editor.d.ts",
     "../../packages/monaco/monaco-vim.d.ts"
-  ],
+, "../../packages/monaco/src/playground-editor.tsx"  ],
   "exclude": ["node_modules", ".next", "public", "playwright-report"]
 }

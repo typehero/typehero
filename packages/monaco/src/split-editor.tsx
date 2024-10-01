@@ -68,7 +68,7 @@ const getActualCode = (code: string) =>
     .join('\n');
 
 // million-ignore
-export default function SplitEditor({
+export function SplitEditor({
   className,
   isTestsReadonly = true,
   expandTestPanel,
@@ -128,7 +128,7 @@ export default function SplitEditor({
     editorRef.current = userEditorState;
   }, [userEditorState]);
 
-  // i moved this into onMount to avpid the monacoRef stuff but then you can really debounce it
+  // i moved this into onMount to avoid the monacoRef stuff but then you can really debounce it
   const [ata] = useState(() =>
     setupTypeAcquisition({
       projectName: 'TypeHero Playground',

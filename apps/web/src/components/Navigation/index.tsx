@@ -48,6 +48,7 @@ export async function Navigation() {
     <>
       <NavLink title="Explore" href="/explore" />
       <NavLink title="Tracks" href="/tracks" />
+      <NavLink title="Playground" href="/play" />
       {featureFlags?.enableHolidayEvent ? (
         <div className="flex items-center gap-1">
           <NavLink title="Advent of TypeScript" href="/aot-2023" />
