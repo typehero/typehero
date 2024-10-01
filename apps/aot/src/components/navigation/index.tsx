@@ -15,7 +15,7 @@ import Link from 'next/link';
 
 export function Navigation() {
   return (
-    <header className="z-0 w-full">
+    <header className="z-0 w-full fixed">
       <nav className="flex h-14 items-center px-4">
         <div className="flex w-full items-center justify-between">
           <div className="relative flex gap-3">
@@ -46,10 +46,10 @@ export function Navigation() {
               </span>
             </Link>
           </div>
-          <div className="items-center md:ml-4 md:flex md:gap-4">
+          <div className="items-center hidden md:ml-4 mt-32 md:mt-0 md:flex rounded-full bg-white/10 border-white/20 backdrop-blur border p-2">
             <NavLink title="About" href="/about" />
-            <NavLink title="Events" href="/events" />
             <NavLink title="Leaderboard" href="/leaderboard" />
+            <NavLink title="Events" href="/events" />
           </div>
           <div className="flex">
             <div className="flex items-center justify-end gap-2">
