@@ -12,8 +12,13 @@ interface EnrollButtonProps {
   slug: string;
 }
 
+interface CustomError extends Error {
+  statusCode?: number;
+}
+
 export function ActionButton({ action, text, trackId, slug }: EnrollButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
+
   return (
     <Button
       className="shadcnoverridetransition select-none rounded-3xl bg-black text-white shadow-[0px_16px_6px_-16px_#ff4,4px_2px_4px_-2px_#f4f,-4px_2px_4px_-2px_#4f4] hover:-translate-y-1 hover:bg-neutral-800 hover:shadow-[0px_16px_6px_-12px_#ff4,4px_6px_6px_-2px_#f4f,-4px_6px_6px_-2px_#4f4] active:translate-y-0 active:scale-[0.99] active:shadow-[0px_10px_3px_-16px_#ff4,8px_0px_2px_-2px_#f4f,-8px_0px_2px_-2px_#4f4] dark:bg-white dark:text-black dark:hover:bg-white dark:hover:brightness-125 dark:hover:saturate-150"
@@ -28,11 +33,12 @@ export function ActionButton({ action, text, trackId, slug }: EnrollButtonProps)
             variant: 'success',
             description: <p>You're now successfully {text.toLowerCase()}ed the track.</p>,
           });
-          setIsLoading(false);
-        } catch (error) {
-          error instanceof Error && error.message === 'User is not logged in'
-            ? toast({
-                title: `Please Login to continue`,
+        } catch (error: unknown) { // Here we use `unknown` to dealwith unknow errors
+          if (error instanceof Error) {
+            const customError = error as CustomError;
+            if (customError.message === 'User is not logged in' || customError.statusCode === 401) {
+              toast({
+                title: 'Please Login to continue',
                 variant: 'destructive',
                 description: (
                   <p>
@@ -42,14 +48,25 @@ export function ActionButton({ action, text, trackId, slug }: EnrollButtonProps)
                     </a>
                   </p>
                 ),
-              })
-            : toast({
-                title: `Error`,
+              });
+            } else {
+              toast({
+                title: 'Error',
                 variant: 'destructive',
                 description: (
                   <p>There was an error trying to {text.toLowerCase()} you from the track.</p>
                 ),
               });
+            }
+          } else {
+            // Handle unexpected non-Error objects if needed
+            toast({
+              title: 'Unknown Error',
+              variant: 'destructive',
+              description: <p>Something went wrong, but the error type is not recognized.</p>,
+            });
+          }
+        } finally {
           setIsLoading(false);
         }
       }}
