@@ -255,7 +255,7 @@ export async function getBadges(userId: string): Promise<AllBadges[]> {
     if (!!highestBadge) {
       badges.push({
         slug: highestBadge.slug,
-        name: `Completed ${currQuery} Badge`,
+        name: `Completed ${currQuery} Difficulty Badge`,
         shortName: currQuery.Difficulty.toLowerCase()
       });
     }
