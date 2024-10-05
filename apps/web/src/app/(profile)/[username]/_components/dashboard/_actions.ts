@@ -2,6 +2,9 @@
 
 import {prisma} from '@repo/db';
 import type {DIFFICULTIES} from './challenges-progress';
+import type {AdventChallenges, Difficulty} from "./_domain_actions";
+import {AdventChallengeFn, DifficultyBadgesFn} from "./_domain_actions";
+import {AdventRetrieveData, DifficultyRetrieveData} from "~/app/(profile)/[username]/_components/dashboard/_db_actions";
 
 export type HistoricalChallenge = Awaited<ReturnType<typeof getChallengeHistoryByCategory>>[0];
 
@@ -167,8 +170,8 @@ export async function getSolvedChallenges(userId: string) {
   };
 }
 
-type AotBadges = 'aot-2023-bronze' | 'aot-2023-silver' | 'aot-2023-gold' | 'aot-2023-platinum';
-type BadgeLevels = 'bronze' | 'silver' | 'gold' | 'platinum';
+export type AotBadges = 'aot-2023-bronze' | 'aot-2023-silver' | 'aot-2023-gold' | 'aot-2023-platinum';
+export type BadgeLevels = 'bronze' | 'silver' | 'gold' | 'platinum';
 
 export interface Badges<T> {
   slug: T;
@@ -181,86 +184,12 @@ export type AllBadges = Badges<BadgeLevels | AotBadges>;
 export async function getBadges(userId: string): Promise<AllBadges[]> {
   const badges: AllBadges[] = [];
 
-  // Advent Badge Query
-  const holidayTrack = await prisma.track.findFirst({
-    where: {
-      slug: 'advent-of-typescript-2023',
-    },
-    include: {
-      trackChallenges: {
-        orderBy: {
-          orderId: 'asc',
-        },
-        include: {
-          challenge: {
-            include: {
-              submission: {
-                where: {
-                  userId,
-                },
-              },
-            },
-          },
-        },
-      },
-      enrolledUsers: {
-        where: {
-          id: userId,
-        },
-        select: {
-          id: true,
-        },
-      },
-    },
-  });
-  // Advent Badge Logic
-  const numberOfAttemptedHolidayChallenges =
-    holidayTrack?.trackChallenges.filter((trackChallenge) => {
-      return (trackChallenge.challenge.submission?.length ?? 0) > 0;
-    }).length ?? 0;
+  const advent: AdventChallenges = await AdventRetrieveData(userId);
+  const difficulty: Difficulty[] = await DifficultyRetrieveData(userId);
 
-  if (numberOfAttemptedHolidayChallenges > 0) {
-    badges.push({slug: 'aot-2023-bronze', name: 'Advent of TypeScript 2023 Bronze', shortName: 'Advent'});
-  }
-
-  const numberOfCompletedHolidayChallenges =
-    holidayTrack?.trackChallenges.filter((trackChallenge) => {
-      return trackChallenge.challenge.submission?.some((submission) => submission.isSuccessful);
-    }).length ?? 0;
-
-  if (numberOfCompletedHolidayChallenges >= 5) {
-    badges.push({slug: 'aot-2023-silver', name: 'Advent of TypeScript 2023 Silver', shortName: 'Advent' });
-  }
-
-  if (numberOfCompletedHolidayChallenges >= 15) {
-    badges.push({slug: 'aot-2023-gold', name: 'Advent of TypeScript 2023 Gold', shortName: 'Advent' });
-  }
-
-  if (numberOfCompletedHolidayChallenges >= 25) {
-    badges.push({slug: 'aot-2023-platinum', name: 'Advent of TypeScript 2023 Platinum', shortName: 'Advent' });
-  }
-
-  // Difficulty Level Badge Query
-  const difficultyQuery = await prisma.$queryRaw`SELECT Difficulty, COUNT(Id) as TotalCompleted FROM (SELECT DISTINCT Difficulty, Challenge.Id FROM Submission JOIN Challenge ON Submission.challengeId = Challenge.Id WHERE Submission.userId = ${userId} AND IsSuccessful = 1) unique_query GROUP BY Difficulty `;
-
-  // Difficulty Level Badge Logic
-  const thresholds: { slug: BadgeLevels, threshold: number }[] = [
-    { slug: 'platinum', threshold: 8 },
-    { slug: 'gold', threshold: 6 },
-    { slug: 'silver', threshold: 4 },
-    { slug: 'bronze', threshold: 2 },
-  ];
-  difficultyQuery.forEach(currQuery => {
-    const [highestBadge] = thresholds.filter(x => currQuery.TotalCompleted >= x.threshold);
-    if (!!highestBadge) {
-      badges.push({
-        slug: highestBadge.slug,
-        name: `Completed ${currQuery.Difficulty[0] + currQuery.Difficulty.substring(1).toLowerCase()} Difficulty Badge`,
-        shortName: currQuery.Difficulty.toLowerCase()
-      });
-    }
-  })
-
+  AdventChallengeFn(badges, advent);
+  DifficultyBadgesFn(badges, difficulty);
 
   return badges;
 }
+
