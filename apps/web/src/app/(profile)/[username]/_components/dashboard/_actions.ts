@@ -220,7 +220,7 @@ export async function getBadges(userId: string): Promise<AllBadges[]> {
     }).length ?? 0;
 
   if (numberOfAttemptedHolidayChallenges > 0) {
-    badges.push({slug: 'aot-2023-bronze', name: 'Advent of TypeScript 2023 Bronze', shortName: 'Advent 2023'});
+    badges.push({slug: 'aot-2023-bronze', name: 'Advent of TypeScript 2023 Bronze', shortName: 'Advent'});
   }
 
   const numberOfCompletedHolidayChallenges =
@@ -229,20 +229,19 @@ export async function getBadges(userId: string): Promise<AllBadges[]> {
     }).length ?? 0;
 
   if (numberOfCompletedHolidayChallenges >= 5) {
-    badges.push({slug: 'aot-2023-silver', name: 'Advent of TypeScript 2023 Silver', shortName: 'Advent 2023' });
+    badges.push({slug: 'aot-2023-silver', name: 'Advent of TypeScript 2023 Silver', shortName: 'Advent' });
   }
 
   if (numberOfCompletedHolidayChallenges >= 15) {
-    badges.push({slug: 'aot-2023-gold', name: 'Advent of TypeScript 2023 Gold', shortName: 'Advent 2023' });
+    badges.push({slug: 'aot-2023-gold', name: 'Advent of TypeScript 2023 Gold', shortName: 'Advent' });
   }
 
   if (numberOfCompletedHolidayChallenges >= 25) {
-    badges.push({slug: 'aot-2023-platinum', name: 'Advent of TypeScript 2023 Platinum', shortName: 'Advent 2023' });
+    badges.push({slug: 'aot-2023-platinum', name: 'Advent of TypeScript 2023 Platinum', shortName: 'Advent' });
   }
 
   // Difficulty Level Badge Query
-  // TODO add completed
-  const difficultyQuery = await prisma.$queryRaw`SELECT Difficulty, COUNT(Id) as TotalCompleted FROM (SELECT Difficulty, Challenge.Id FROM Submission JOIN Challenge ON Submission.challengeId = Challenge.Id WHERE Submission.userId = ${userId}) unique_query GROUP BY Difficulty `;
+  const difficultyQuery = await prisma.$queryRaw`SELECT Difficulty, COUNT(Id) as TotalCompleted FROM (SELECT DISTINCT Difficulty, Challenge.Id FROM Submission JOIN Challenge ON Submission.challengeId = Challenge.Id WHERE Submission.userId = ${userId} AND IsSuccessful = 1) unique_query GROUP BY Difficulty `;
 
   // Difficulty Level Badge Logic
   const thresholds: { slug: BadgeLevels, threshold: number }[] = [

@@ -66,7 +66,7 @@ export function HolidayBronzeBadge({ className }: { className?: string }) {
         </linearGradient>
       </defs>
     </svg>
-  <p className="text-xs">Advent 2023</p>
+  <p className="text-xs">Advent</p>
 </>
   );
 }
@@ -138,7 +138,7 @@ export function HolidaySilverBadge({ className }: { className?: string }) {
         </linearGradient>
       </defs>
     </svg>
-  <p className="text-xs">Advent 2023</p>
+  <p className="text-xs">Advent</p>
 </>
   );
 }
@@ -210,7 +210,7 @@ export function HolidayGoldBadge({ className }: { className?: string }) {
         </linearGradient>
       </defs>
     </svg>
-  <p className="text-xs">Advent 2023</p></>
+  <p className="text-xs">Advent</p></>
   );
 }
 
@@ -282,7 +282,7 @@ export function HolidayPlatinumBadge({ className }: { className?: string }) {
         </linearGradient>
       </defs>
     </svg>
-  <p className="text-xs">Advent 2023</p>
+  <p className="text-xs">Advent</p>
 </>
 
 );

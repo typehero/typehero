@@ -61,7 +61,7 @@ export function Platinum({ className, shortName }: { className?: string, shortNa
           </linearGradient>
         </defs>
       </svg>
-      <p className="text-xs">{shortName}</p>
+      <p className="text-xs capitalize">{shortName}</p>
     </>
 
   );

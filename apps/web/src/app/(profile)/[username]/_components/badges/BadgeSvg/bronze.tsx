@@ -62,7 +62,7 @@ export function Bronze({ className, shortName }: { className?: string, shortName
           </linearGradient>
         </defs>
       </svg>
-      <p className="text-xs">{shortName}</p>
+      <p className="text-xs capitalize">{shortName}</p>
     </>
 
   );
