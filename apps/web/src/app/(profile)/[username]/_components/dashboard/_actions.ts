@@ -251,7 +251,7 @@ export async function getBadges(userId: string): Promise<AllBadges[]> {
     { slug: 'bronze', threshold: 2 },
   ];
   difficultyQuery.forEach(currQuery => {
-    const [highestBadge] = thresholds.filter(x => x.threshold <= currQuery.TotalCompleted);
+    const [highestBadge] = thresholds.filter(x => currQuery.TotalCompleted >= x.threshold);
     if (!!highestBadge) {
       badges.push({
         slug: highestBadge.slug,
