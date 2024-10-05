@@ -1,10 +1,13 @@
 'use server';
 
-import type {AdventChallenges} from "~/app/(profile)/[username]/_components/dashboard/_domain_actions";
-import {prisma} from "@repo/db";
+import type {
+  AdventChallenges,
+  Difficulty,
+} from '~/app/(profile)/[username]/_components/dashboard/_domain_actions';
+import { prisma } from '@repo/db';
 
 export async function AdventRetrieveData(userId: string) {
-  const advent: AdventChallenges = await prisma.track.findFirst({
+  const advent: AdventChallenges | null = await prisma.track.findFirst({
     where: {
       slug: 'advent-of-typescript-2023',
     },
@@ -39,5 +42,7 @@ export async function AdventRetrieveData(userId: string) {
 }
 
 export async function DifficultyRetrieveData(userId: string) {
-  return await prisma.$queryRaw`SELECT Difficulty, COUNT(Id) as TotalCompleted FROM (SELECT DISTINCT Difficulty, Challenge.Id FROM Submission JOIN Challenge ON Submission.challengeId = Challenge.Id WHERE Submission.userId = ${userId} AND IsSuccessful = 1) unique_query GROUP BY Difficulty `;
+  const data: Difficulty[] | null =
+    await prisma.$queryRaw`SELECT Difficulty, COUNT(Id) as TotalCompleted FROM (SELECT DISTINCT Difficulty, Challenge.Id FROM Submission JOIN Challenge ON Submission.challengeId = Challenge.Id WHERE Submission.userId = ${userId} AND IsSuccessful = 1) unique_query GROUP BY Difficulty `;
+  return data;
 }

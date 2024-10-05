@@ -1,10 +1,13 @@
 'use server';
 
-import {prisma} from '@repo/db';
-import type {DIFFICULTIES} from './challenges-progress';
-import type {AdventChallenges, Difficulty} from "./_domain_actions";
-import {AdventChallengeFn, DifficultyBadgesFn} from "./_domain_actions";
-import {AdventRetrieveData, DifficultyRetrieveData} from "~/app/(profile)/[username]/_components/dashboard/_db_actions";
+import { prisma } from '@repo/db';
+import type { DIFFICULTIES } from './challenges-progress';
+import type { AdventChallenges, Difficulty } from './_domain_actions';
+import { AdventChallengeFn, DifficultyBadgesFn } from './_domain_actions';
+import {
+  AdventRetrieveData,
+  DifficultyRetrieveData,
+} from '~/app/(profile)/[username]/_components/dashboard/_db_actions';
 
 export type HistoricalChallenge = Awaited<ReturnType<typeof getChallengeHistoryByCategory>>[0];
 
@@ -23,7 +26,7 @@ const getPredicateByType = (type: HistoryType, userId: string) => {
             },
           },
           // Make sure there is at least one submission
-          {submission: {some: {userId, isSuccessful: false}}},
+          { submission: { some: { userId, isSuccessful: false } } },
         ],
       };
     case 'completed':
@@ -170,7 +173,13 @@ export async function getSolvedChallenges(userId: string) {
   };
 }
 
-export type AotBadges = 'aot-2023-bronze' | 'aot-2023-silver' | 'aot-2023-gold' | 'aot-2023-platinum';
+export type AotBadges =
+// eslint-disable-next-line @typescript-eslint/sort-type-constituents
+  | 'aot-2023-bronze'
+  | 'aot-2023-silver'
+  | 'aot-2023-gold'
+  | 'aot-2023-platinum';
+// eslint-disable-next-line @typescript-eslint/sort-type-constituents
 export type BadgeLevels = 'bronze' | 'silver' | 'gold' | 'platinum';
 
 export interface Badges<T> {
@@ -192,4 +201,3 @@ export async function getBadges(userId: string): Promise<AllBadges[]> {
 
   return badges;
 }
-
