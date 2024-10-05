@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getProfileData } from './enhanced-user-badge.getProfileData';
 import { useState } from 'react';
 import { SlugToBadgeIcon } from '~/app/(profile)/[username]/_components/dashboard/badges';
-import { type BadgeInfo } from '~/app/(profile)/[username]/_components/dashboard/_actions';
+import { type AOT2023 } from '~/app/(profile)/[username]/_components/dashboard/_actions';
 import { cn } from '@repo/ui/cn';
 import { type Role } from '@repo/db/types';
 import { Button } from '@repo/ui/components/button';
@@ -154,7 +154,7 @@ function Titles(props: { data: TitleInfo[] }) {
   );
 }
 
-function Badges(props: { data: BadgeInfo[] }) {
+function Badges(props: { data: AOT2023[] }) {
   return (
     <div className="flex flex-row space-x-[-15px]">
       {props.data.map((b) => {

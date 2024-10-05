@@ -1,6 +1,6 @@
 export function HolidayBronzeBadge({ className }: { className?: string }) {
   return (
-    <svg
+    <><svg
       className={className}
       width="250"
       height="250"
@@ -10,7 +10,7 @@ export function HolidayBronzeBadge({ className }: { className?: string }) {
     >
       <mask
         id="mask0_16_29"
-        style={{ maskType: 'alpha' }}
+        style={{maskType: 'alpha'}}
         maskUnits="userSpaceOnUse"
         x="16"
         y="3"
@@ -23,8 +23,8 @@ export function HolidayBronzeBadge({ className }: { className?: string }) {
         />
       </mask>
       <g mask="url(#mask0_16_29)">
-        <rect width="250" height="250" fill="#D9D9D9" />
-        <rect width="250" height="250" fill="url(#paint0_linear_16_29)" />
+        <rect width="250" height="250" fill="#D9D9D9"/>
+        <rect width="250" height="250" fill="url(#paint0_linear_16_29)"/>
         <path
           d="M74.3309 80.3861L92.2816 71.0789L110.232 80.3861L106.8 60.6722L121.326 46.7073L101.257 43.8349L92.2816 25.899L83.3068 43.8349L63.2314 46.7073L77.7586 60.6722L74.3309 80.3861Z"
           fill="white"
@@ -60,18 +60,20 @@ export function HolidayBronzeBadge({ className }: { className?: string }) {
           y2="210.54"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#714F24" />
-          <stop offset="0.5625" stopColor="#D27D13" />
-          <stop offset="1" stopColor="#5E3D13" />
+          <stop stopColor="#714F24"/>
+          <stop offset="0.5625" stopColor="#D27D13"/>
+          <stop offset="1" stopColor="#5E3D13"/>
         </linearGradient>
       </defs>
     </svg>
+  <p className="text-xs">Advent 2023</p>
+</>
   );
 }
 
 export function HolidaySilverBadge({ className }: { className?: string }) {
   return (
-    <svg
+    <><svg
       className={className}
       width="250"
       height="250"
@@ -81,7 +83,7 @@ export function HolidaySilverBadge({ className }: { className?: string }) {
     >
       <mask
         id="mask0_13_495"
-        style={{ maskType: 'alpha' }}
+        style={{maskType: 'alpha'}}
         maskUnits="userSpaceOnUse"
         x="16"
         y="3"
@@ -94,7 +96,7 @@ export function HolidaySilverBadge({ className }: { className?: string }) {
         />
       </mask>
       <g mask="url(#mask0_13_495)">
-        <rect width="250" height="250" fill="url(#paint0_linear_13_495)" />
+        <rect width="250" height="250" fill="url(#paint0_linear_13_495)"/>
         <path
           d="M74.3309 80.3861L92.2815 71.0789L110.232 80.3861L106.8 60.6722L121.326 46.7073L101.257 43.8349L92.2815 25.899L83.3068 43.8349L63.2314 46.7073L77.7586 60.6722L74.3309 80.3861Z"
           fill="white"
@@ -130,18 +132,20 @@ export function HolidaySilverBadge({ className }: { className?: string }) {
           y2="215.658"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#3D5954" />
-          <stop offset="0.614583" stopColor="#9BCBC2" />
-          <stop offset="1" stopColor="#48625D" />
+          <stop stopColor="#3D5954"/>
+          <stop offset="0.614583" stopColor="#9BCBC2"/>
+          <stop offset="1" stopColor="#48625D"/>
         </linearGradient>
       </defs>
     </svg>
+  <p className="text-xs">Advent 2023</p>
+</>
   );
 }
 
 export function HolidayGoldBadge({ className }: { className?: string }) {
   return (
-    <svg
+    <><svg
       className={className}
       width="250"
       height="250"
@@ -206,12 +210,14 @@ export function HolidayGoldBadge({ className }: { className?: string }) {
         </linearGradient>
       </defs>
     </svg>
+  <p className="text-xs">Advent 2023</p></>
   );
 }
 
 export function HolidayPlatinumBadge({ className }: { className?: string }) {
   return (
-    <svg
+    <>
+      <svg
       className={className}
       width="250"
       height="250"
@@ -221,7 +227,7 @@ export function HolidayPlatinumBadge({ className }: { className?: string }) {
     >
       <mask
         id="mask0_16_74"
-        style={{ maskType: 'alpha' }}
+        style={{maskType: 'alpha'}}
         maskUnits="userSpaceOnUse"
         x="16"
         y="3"
@@ -234,7 +240,7 @@ export function HolidayPlatinumBadge({ className }: { className?: string }) {
         />
       </mask>
       <g mask="url(#mask0_16_74)">
-        <rect width="250" height="250" fill="url(#paint0_linear_16_74)" />
+        <rect width="250" height="250" fill="url(#paint0_linear_16_74)"/>
         <path
           d="M74.3309 80.3861L92.2816 71.0789L110.232 80.3861L106.8 60.6722L121.326 46.7073L101.257 43.8349L92.2816 25.899L83.3068 43.8349L63.2314 46.7073L77.7586 60.6722L74.3309 80.3861Z"
           fill="white"
@@ -270,11 +276,14 @@ export function HolidayPlatinumBadge({ className }: { className?: string }) {
           y2="212.197"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#2EECEC" />
-          <stop offset="0.677083" stopColor="#00A184" />
-          <stop offset="1" stopColor="#0F7562" />
+          <stop stopColor="#2EECEC"/>
+          <stop offset="0.677083" stopColor="#00A184"/>
+          <stop offset="1" stopColor="#0F7562"/>
         </linearGradient>
       </defs>
     </svg>
-  );
+  <p className="text-xs">Advent 2023</p>
+</>
+
+);
 }

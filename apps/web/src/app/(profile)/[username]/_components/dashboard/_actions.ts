@@ -1,7 +1,7 @@
 'use server';
 
-import { prisma } from '@repo/db';
-import type { DIFFICULTIES } from './challenges-progress';
+import {prisma} from '@repo/db';
+import type {DIFFICULTIES} from './challenges-progress';
 
 export type HistoricalChallenge = Awaited<ReturnType<typeof getChallengeHistoryByCategory>>[0];
 
@@ -20,7 +20,7 @@ const getPredicateByType = (type: HistoryType, userId: string) => {
             },
           },
           // Make sure there is at least one submission
-          { submission: { some: { userId, isSuccessful: false } } },
+          {submission: {some: {userId, isSuccessful: false}}},
         ],
       };
     case 'completed':
@@ -167,15 +167,21 @@ export async function getSolvedChallenges(userId: string) {
   };
 }
 
-export interface BadgeInfo {
-  // eslint-disable-next-line @typescript-eslint/sort-type-constituents
-  slug: 'aot-2023-bronze' | 'aot-2023-silver' | 'aot-2023-gold' | 'aot-2023-platinum';
+type AotBadges = 'aot-2023-bronze' | 'aot-2023-silver' | 'aot-2023-gold' | 'aot-2023-platinum';
+type BadgeLevels = 'bronze' | 'silver' | 'gold' | 'platinum';
+
+export interface Badges<T> {
+  slug: T;
   name: string;
+  shortName: string;
 }
 
-export async function getBadges(userId: string): Promise<BadgeInfo[]> {
-  const badges: BadgeInfo[] = [];
+export type AllBadges = Badges<BadgeLevels | AotBadges>;
 
+export async function getBadges(userId: string): Promise<AllBadges[]> {
+  const badges: AllBadges[] = [];
+
+  // Advent Badge Query
   const holidayTrack = await prisma.track.findFirst({
     where: {
       slug: 'advent-of-typescript-2023',
@@ -207,14 +213,14 @@ export async function getBadges(userId: string): Promise<BadgeInfo[]> {
       },
     },
   });
-
+  // Advent Badge Logic
   const numberOfAttemptedHolidayChallenges =
     holidayTrack?.trackChallenges.filter((trackChallenge) => {
       return (trackChallenge.challenge.submission?.length ?? 0) > 0;
     }).length ?? 0;
 
   if (numberOfAttemptedHolidayChallenges > 0) {
-    badges.push({ slug: 'aot-2023-bronze', name: 'Advent of TypeScript 2023 Bronze' });
+    badges.push({slug: 'aot-2023-bronze', name: 'Advent of TypeScript 2023 Bronze', shortName: 'Advent 2023'});
   }
 
   const numberOfCompletedHolidayChallenges =
@@ -223,16 +229,39 @@ export async function getBadges(userId: string): Promise<BadgeInfo[]> {
     }).length ?? 0;
 
   if (numberOfCompletedHolidayChallenges >= 5) {
-    badges.push({ slug: 'aot-2023-silver', name: 'Advent of TypeScript 2023 Silver' });
+    badges.push({slug: 'aot-2023-silver', name: 'Advent of TypeScript 2023 Silver', shortName: 'Advent 2023' });
   }
 
   if (numberOfCompletedHolidayChallenges >= 15) {
-    badges.push({ slug: 'aot-2023-gold', name: 'Advent of TypeScript 2023 Gold' });
+    badges.push({slug: 'aot-2023-gold', name: 'Advent of TypeScript 2023 Gold', shortName: 'Advent 2023' });
   }
 
   if (numberOfCompletedHolidayChallenges >= 25) {
-    badges.push({ slug: 'aot-2023-platinum', name: 'Advent of TypeScript 2023 Platinum' });
+    badges.push({slug: 'aot-2023-platinum', name: 'Advent of TypeScript 2023 Platinum', shortName: 'Advent 2023' });
   }
+
+  // Difficulty Level Badge Query
+  // TODO add completed
+  const difficultyQuery = await prisma.$queryRaw`SELECT Difficulty, COUNT(Id) as TotalCompleted FROM (SELECT Difficulty, Challenge.Id FROM Submission JOIN Challenge ON Submission.challengeId = Challenge.Id WHERE Submission.userId = ${userId}) unique_query GROUP BY Difficulty `;
+
+  // Difficulty Level Badge Logic
+  const thresholds: { slug: BadgeLevels, threshold: number }[] = [
+    { slug: 'platinum', threshold: 8 },
+    { slug: 'gold', threshold: 6 },
+    { slug: 'silver', threshold: 4 },
+    { slug: 'bronze', threshold: 2 },
+  ];
+  difficultyQuery.forEach(currQuery => {
+    const [highestBadge] = thresholds.filter(x => x.threshold <= currQuery.TotalCompleted);
+    if (!!highestBadge) {
+      badges.push({
+        slug: highestBadge.slug,
+        name: `Completed ${currQuery} Badge`,
+        shortName: currQuery.Difficulty.toLowerCase()
+      });
+    }
+  })
+
 
   return badges;
 }

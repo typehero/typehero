@@ -4,7 +4,7 @@ import { cn } from '@repo/ui/cn';
 import { Text } from '@repo/ui/components/typography/typography';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 
-import { type BadgeInfo } from './_actions';
+import {AllBadges} from './_actions';
 import {
   HolidayBronzeBadge,
   HolidayGoldBadge,
@@ -12,15 +12,20 @@ import {
   HolidaySilverBadge,
 } from '../badges/aot-2023-badge';
 import { toast } from '@repo/ui/components/use-toast';
+import {BronzeBadge, GoldBadge, PlatinumBadge, SilverBadge} from "../badges/badge-svg";
 
-export const SlugToBadgeIcon: Record<BadgeInfo['slug'], FC<{ className: string }>> = {
+export const SlugToBadgeIcon: Record<AllBadges['slug'], FC<{ className: string; shortName?: string }>> = {
   'aot-2023-bronze': HolidayBronzeBadge,
   'aot-2023-silver': HolidaySilverBadge,
   'aot-2023-gold': HolidayGoldBadge,
   'aot-2023-platinum': HolidayPlatinumBadge,
+  'bronze': BronzeBadge,
+  'silver': SilverBadge,
+  'gold': GoldBadge,
+  'platinum': PlatinumBadge,
 };
 
-const Badge = ({ slug, name }: BadgeInfo) => {
+const Badge = ({ slug, name, shortName }: AllBadges) => {
   const Icon = SlugToBadgeIcon[slug];
 
   if (Icon === undefined) return null;
@@ -37,7 +42,7 @@ const Badge = ({ slug, name }: BadgeInfo) => {
             });
           }}
         >
-          <Icon className="h-12 w-12" />
+          <Icon className="h-12 w-12" shortName={shortName} />
         </span>
       </TooltipTrigger>
       <TooltipContent side="bottom">
@@ -48,7 +53,7 @@ const Badge = ({ slug, name }: BadgeInfo) => {
 };
 
 interface BadgesProps {
-  badges: BadgeInfo[];
+  badges: AllBadges[];
   className?: string;
 }
 
