@@ -1,5 +1,5 @@
 {
-  "globalEnv": ["NEXT_PUBLIC_ALGOLIA_APP_ID", "NEXT_PUBLIC_ALGOLIA_API_KEY"],
+  "globalEnv": ["DATABASE_URL"],
   "tasks": {
     "build": {
       "dependsOn": ["^build", "@repo/db#db:generate"],
@@ -34,7 +34,9 @@
         "MAILCHIMP_AUDIENCE_ID",
         "MAILCHIMP_API_SERVER",
         "NEXT_PUBLIC_ALGOLIA_API_KEY",
-        "NEXT_PUBLIC_ALGOLIA_APP_ID"
+        "NEXT_PUBLIC_ALGOLIA_APP_ID",
+        "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY",
+        "STRIPE_SECRET_KEY"
       ]
     },
     "topo": {
