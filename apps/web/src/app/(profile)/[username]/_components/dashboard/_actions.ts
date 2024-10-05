@@ -188,16 +188,16 @@ export interface Badges<T> {
   shortName: string;
 }
 
-export type AllBadges = Badges<BadgeLevels | AotBadges>;
+export type AllBadges = Badges<AotBadges | BadgeLevels>;
 
 export async function getBadges(userId: string): Promise<AllBadges[]> {
   const badges: AllBadges[] = [];
 
-  const advent: AdventChallenges = await AdventRetrieveData(userId);
-  const difficulty: Difficulty[] = await DifficultyRetrieveData(userId);
+  const advent: AdventChallenges | null = await AdventRetrieveData(userId);
+  const difficulty: Difficulty[] | null = await DifficultyRetrieveData(userId);
 
-  AdventChallengeFn(badges, advent);
-  DifficultyBadgesFn(badges, difficulty);
+  await AdventChallengeFn(badges, advent);
+  await DifficultyBadgesFn(badges, difficulty ?? []);
 
   return badges;
 }

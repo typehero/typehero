@@ -2,10 +2,16 @@
 
 import type { AllBadges, BadgeLevels } from './_actions';
 
-export type Difficulty = { Difficulty: string; TotalCompleted: number };
-export type AdventChallenges = { trackChallenges: { challenge: { submission: any[] } }[] };
+export interface Difficulty {
+  Difficulty: string;
+  TotalCompleted: number;
+}
 
-export const AdventChallengeFn = async (badges: AllBadges[], advent: AdventChallenges) => {
+export interface AdventChallenges {
+  trackChallenges: { challenge: { submission: { isSuccessful: boolean }[] } }[];
+}
+
+export const AdventChallengeFn = async (badges: AllBadges[], advent: AdventChallenges | null) => {
   // Advent Badge Logic
   const numberOfAttemptedHolidayChallenges =
     advent?.trackChallenges.filter((trackChallenge) => {
