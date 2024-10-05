@@ -15,6 +15,9 @@ import {
 } from '~/app/challenge/_components/comments/enhanced-user-badge.getTitles';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { Button } from '@repo/ui/components/button';
+import { title } from 'process';
+import { BackgroundGrid } from '~/app/_components/hero-illustration';
+import { ProgressChart } from './_components-v2/progress-chart';
 
 export default async function LayoutPage(
   props: React.PropsWithChildren<{ params: { username: string } }>,
@@ -42,20 +45,25 @@ export default async function LayoutPage(
 
   const titles = getTitles(user.roles);
   const gradient = getGradient(user.roles);
-  const badges = await getBadges(user.id);
 
   return (
-    <div className="container py-8">
-      <div className="flex flex-row space-x-12">
-        <div className="flex max-w-64 flex-col space-y-4">
-          <Avatar className="h-64 w-64 rounded-lg">
-            <AvatarImage src={user.image ?? ''} />
-            <AvatarFallback className="rounded-lg uppercase">
-              {user.name.slice(0, 1)}
-            </AvatarFallback>
-          </Avatar>
-          <div className="flex flex-col space-y-3">
-            <div className="flex flex-col space-y-1">
+    <div className="container pt-16">
+      <div className="relative flex flex-row items-center justify-between">
+        <div className="absolute -inset-40 top-1/2 -z-30 -translate-y-1/2 translate-x-[-30px] overflow-hidden rounded-full">
+          <BackgroundGrid />
+        </div>
+        <div className="space-y-4">
+          <div className="flex flex-row items-end space-x-6">
+            <Avatar className="h-48 w-48 rounded-lg">
+              <AvatarImage src={user.image ?? ''} alt={`${user.name} profile picture`} />
+              <AvatarFallback className="rounded-lg capitalize">
+                {user.name.slice(0, 1)}
+              </AvatarFallback>
+            </Avatar>
+            <div
+              className={`absolute -left-8 top-8 -z-10 h-[100px] w-[300px] rounded-full blur-[140px] ${gradient}`}
+            />
+            <div className="flex flex-col space-y-2">
               <h1
                 className={cn(
                   'w-min bg-gradient-to-r bg-clip-text text-3xl font-bold text-transparent',
@@ -65,50 +73,64 @@ export default async function LayoutPage(
                 {user.name}
               </h1>
               <Titles data={titles} />
-              <p className="text-muted-foreground text-sm tracking-tight">
+              <h2 className="text-muted-foreground text-sm tracking-tight">
                 Joined {getRelativeTime(user.createdAt)}
-              </p>
-            </div>
-            <p className="text-card-foreground w-full break-words">{user.bio}</p>
-            <div className="flex flex-row items-center space-x-2">
-              <Button variant="ghost" size="sm" className="p-2">
-                <Twitter className="h-7 w-7" />
-              </Button>
-              <Button variant="ghost" size="sm" className="p-2">
-                <Github className="h-7 w-7" />
-              </Button>
-            </div>
-            <div>
-              <div className="flex flex-row justify-between">
-                <h2>
-                  Badges <span className="text-muted-foreground text-xs">(1/4)</span>
-                </h2>
-                <Button
-                  size="xs"
-                  variant="link"
-                  className="text-muted-foreground hover:text-primary"
-                >
-                  view all badges
-                  <ArrowUpRight className="h-4 w-4" />
+              </h2>
+              <div className="flex flex-row space-x-1">
+                <Button variant="ghost" size="sm" className="p-2">
+                  <Twitter className="h-7 w-7" />
+                </Button>
+                <Button variant="ghost" size="sm" className="p-2">
+                  <Github className="h-7 w-7" />
                 </Button>
               </div>
-              <Badges data={badges} />
             </div>
           </div>
+          <div className="max-w-[60ch]">
+            <p className="tracking-tight">{user.bio}</p>
+          </div>
         </div>
-        {props.children}
+        <ProgressChart />
       </div>
+      {props.children}
     </div>
   );
 }
 
-function Badges(props: { data: BadgeInfo[] }) {
+function BeamOfLight() {
   return (
-    <div className="flex flex-row space-x-2">
-      {props.data.map((b) => {
-        const Icon = SlugToBadgeIcon[b.slug];
-        return <Icon className="h-10 w-10" key={b.slug} />;
-      })}
-    </div>
+    <svg
+      className="animate-beam pointer-events-none absolute left-0 top-0 z-[-1] h-[169%] w-[138%] lg:w-[84%]"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 3787 2842"
+      fill="none"
+    >
+      <g filter="url(#filter0_f_1065_8)">
+        <ellipse
+          cx="1924.71"
+          cy="273.501"
+          rx="1924.71"
+          ry="273.501"
+          transform="matrix(-0.822377 -0.568943 -0.568943 0.822377 3631.88 2291.09)"
+          fill="white"
+          fillOpacity="0.21"
+        />
+      </g>
+      <defs>
+        <filter
+          id="filter0_f_1065_8"
+          x="0.860352"
+          y="0.838989"
+          width="3785.16"
+          height="2840.26"
+          filterUnits="userSpaceOnUse"
+          colorInterpolationFilters="sRGB"
+        >
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+          <feGaussianBlur stdDeviation="151" result="effect1_foregroundBlur_1065_8" />
+        </filter>
+      </defs>
+    </svg>
   );
 }

@@ -28,12 +28,12 @@ const chartConfig = {
 
 export function ActivityChart2(props: { data: ReturnType<typeof generateSampleData> }) {
   return (
-    <ChartContainer config={chartConfig} className="h-[200px] w-[250px]">
+    <ChartContainer config={chartConfig} className="h-[250px] w-[350px]">
       <ScatterChart data={props.data} accessibilityLayer>
         <ChartTooltip
           cursor={false}
           content={(props) => {
-            const payload = props.payload[0]?.payload;
+            const payload = (props.payload?.[0]?.payload as Record<string, number>) ?? {};
             const customPayload = Object.entries(payload ?? {})
               .filter(([key]) => key === 'comments' || key === 'badges' || key === 'submissions')
               .map(([key, val]) => ({ name: key, value: val, payload }));
@@ -44,7 +44,7 @@ export function ActivityChart2(props: { data: ReturnType<typeof generateSampleDa
           }}
         />
         <XAxis
-          orientation="top"
+          orientation="bottom"
           dataKey="week"
           type="category"
           allowDuplicatedCategory={false}
@@ -59,7 +59,7 @@ export function ActivityChart2(props: { data: ReturnType<typeof generateSampleDa
         <ZAxis dataKey="activity" type="number" />
         <Scatter
           shape={(item) => {
-            const squareLength = 16;
+            const squareLength = 24;
             const borderV = 10;
             const borderH = 17;
             // console.log(item);

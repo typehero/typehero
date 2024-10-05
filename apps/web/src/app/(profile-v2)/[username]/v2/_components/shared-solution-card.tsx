@@ -18,7 +18,7 @@ export async function SharedSolutionCard(props: {
 }) {
   return (
     <Card
-      className={`group/card bg-background hover:bg-card-hovered relative overflow-hidden duration-300 sm:min-w-[200px] xl:min-w-[260px]
+      className={`group/card bg-background hover:bg-card-hovered xl:min-w-[333px]} relative overflow-hidden duration-300 sm:min-w-[300px]
       ${SHADOWS_BY_DIFFICULTY[props.solution.challenge.difficulty]}
       ${BORDERS_BY_DIFFICULTY[props.solution.challenge.difficulty]}
       `}
