@@ -64,7 +64,7 @@ export function ActionButton({ action, text, trackId, slug }: EnrollButtonProps)
             toast({
               title: 'Unknown Error',
               variant: 'destructive',
-              description: <p>Something went wrong, but the error type is not recognized.</p>,
+              description: <p>Something went wrong</p>,
             });
           }
         } finally {
