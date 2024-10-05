@@ -3,13 +3,21 @@ import { notFound } from 'next/navigation';
 import { ProgressChart } from './_components-v2/progress-chart';
 import { SharedSolutionCard } from './_components/shared-solution-card';
 import { Button } from '@repo/ui/components/button';
-import { ArrowUpRight } from '@repo/ui/icons';
+import { ArrowUpRight, Github, Twitter } from '@repo/ui/icons';
 import Link from 'next/link';
 import { ActivityChart2 } from './_components/activity-chart-v2';
 import { getWeek, startOfWeek, eachDayOfInterval, subDays, getDay, getMonth } from 'date-fns';
-import { ActivityChart } from './_components/activity-chart';
 import { Badges } from './_components-v2/badges';
 import { getBadges } from '~/app/(profile)/[username]/_components/dashboard/_actions';
+import { cn } from '@repo/ui/cn';
+import { Avatar, AvatarImage, AvatarFallback } from '@repo/ui/components/avatar';
+import { Titles } from '~/app/challenge/_components/comments/enhanced-user-badge';
+import {
+  getTitles,
+  getGradient,
+} from '~/app/challenge/_components/comments/enhanced-user-badge.getTitles';
+import { getRelativeTime } from '~/utils/relativeTime';
+import { Card } from '@repo/ui/components/card';
 
 const hardcodedGitHubActivity = [
   {
@@ -741,66 +749,116 @@ export default async function ProfilePage(props: { params: { username: string } 
     notFound();
   }
   const badges = await getBadges(user.id);
+  const titles = getTitles(user.roles);
+  const gradient = getGradient(user.roles);
 
   return (
-    <div className="space-y-8 pt-10">
-      <div className="flex flex-row justify-between">
-        <div className="flex flex-col space-y-4">
-          <Button
-            asChild
-            size="xs"
-            variant="link"
-            className="text-muted-foreground hover:text-primary w-fit text-lg "
-          >
-            <Link href="./v2/completed">
-              Shared Solutions
-              <ArrowUpRight className="ml-1 h-4 w-4 " />
-            </Link>
-          </Button>
-          <div className="flex flex-col space-y-2">
-            <SharedSolutionCard
-              solution={{
-                isPinned: true,
-                voteCount: 10,
-                commentCount: 6,
-                challenge: {
-                  name: 'Awaited',
-                  difficulty: 'MEDIUM',
-                },
-              }}
-            />
-            <SharedSolutionCard
-              solution={{
-                isPinned: false,
-                voteCount: 10,
-                commentCount: 6,
-                challenge: {
-                  name: 'Awaited',
-                  difficulty: 'MEDIUM',
-                },
-              }}
-            />
-            <SharedSolutionCard
-              solution={{
-                isPinned: false,
-                voteCount: 10,
-                commentCount: 6,
-                challenge: {
-                  name: 'Awaited',
-                  difficulty: 'MEDIUM',
-                },
-              }}
-            />
+    <div className="container pt-16">
+      <div className="grid grid-cols-6 grid-rows-2 gap-8">
+        <Card className="relative col-span-3 bg-zinc-100 p-8 dark:bg-zinc-900">
+          <Avatar className="absolute -inset-4 h-56 w-56 rounded-lg">
+            <AvatarImage src={user.image ?? ''} alt={`${user.name} profile picture`} />
+            <AvatarFallback className="rounded-lg capitalize">
+              {user.name.slice(0, 1)}
+            </AvatarFallback>
+          </Avatar>
+          <div className="space-y-16">
+            <div className="ml-52 flex flex-col space-y-2">
+              <h1
+                className={cn(
+                  'w-min bg-gradient-to-r bg-clip-text text-3xl font-bold text-transparent',
+                  gradient,
+                )}
+              >
+                {user.name}
+              </h1>
+              <Titles data={titles} />
+              <h2 className="text-muted-foreground text-sm tracking-tight">
+                Joined {getRelativeTime(user.createdAt)}
+              </h2>
+              <div className="flex flex-row space-x-1">
+                <Button variant="ghost" size="sm" className="p-2">
+                  <Twitter className="h-7 w-7" />
+                </Button>
+                <Button variant="ghost" size="sm" className="p-2">
+                  <Github className="h-7 w-7" />
+                </Button>
+              </div>
+            </div>
+            <div className="max-w-[60ch]">
+              <p className="leading-7 tracking-tight">{user.bio}</p>
+            </div>
           </div>
-        </div>
-        <div className="space-y-2">
-          <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Badges</h1>
-          <Badges data={badges} />
-        </div>
-        <div className="space-y-2">
-          <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Recent Activity</h1>
-          <ActivityChart2 data={generateSampleData()} />
-        </div>
+        </Card>
+
+        <Card className="col-span-3 bg-zinc-100 p-12 dark:bg-zinc-900">
+          <ProgressChart />
+        </Card>
+
+        <Card className="col-span-2 bg-zinc-100 p-6 dark:bg-zinc-900">
+          <div className="flex flex-col space-y-4">
+            <Button
+              asChild
+              size="xs"
+              variant="link"
+              className="text-muted-foreground hover:text-primary w-fit text-lg "
+            >
+              <Link href="./v2/completed">
+                Shared Solutions
+                <ArrowUpRight className="ml-1 h-4 w-4 " />
+              </Link>
+            </Button>
+            <div className="flex flex-col space-y-2">
+              <SharedSolutionCard
+                solution={{
+                  isPinned: true,
+                  voteCount: 10,
+                  commentCount: 6,
+                  challenge: {
+                    name: 'Awaited',
+                    difficulty: 'MEDIUM',
+                  },
+                }}
+              />
+              <SharedSolutionCard
+                solution={{
+                  isPinned: false,
+                  voteCount: 10,
+                  commentCount: 6,
+                  challenge: {
+                    name: 'Awaited',
+                    difficulty: 'MEDIUM',
+                  },
+                }}
+              />
+              <SharedSolutionCard
+                solution={{
+                  isPinned: false,
+                  voteCount: 10,
+                  commentCount: 6,
+                  challenge: {
+                    name: 'Awaited',
+                    difficulty: 'MEDIUM',
+                  },
+                }}
+              />
+            </div>
+          </div>
+        </Card>
+
+        <Card className="col-span-2 bg-zinc-100 p-6 dark:bg-zinc-900">
+          <div className="space-y-2">
+            <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Badges</h1>
+            <Badges data={badges} />
+          </div>
+        </Card>
+
+        <Card className="col-span-2 bg-zinc-100 p-6 dark:bg-zinc-900">
+          <div className="space-y-2">
+            <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Recent Activity</h1>
+            <ActivityChart2 data={generateSampleData()} />
+          </div>
+        </Card>
       </div>
     </div>
   );
