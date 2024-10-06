@@ -195,16 +195,21 @@ export interface Badges<T> {
 export type AllBadges = Badges<AotBadges | DifficultyCompletion | SubmittedSolutions>;
 
 export async function getBadges(userId: string): Promise<AllBadges[]> {
-  const badges: AllBadges[] = [];
+  const currentBadgeStatus: AllBadges[] = [];
 
+  // Retrieve current data from db
   const advent: AdventChallenges | null = await AdventRetrieveData(userId);
   const difficulty: Difficulty[] | null = await DifficultyRetrieveData(userId);
   const sharedSolutions: SharedTotals[] | null = await SharedSolutionRetrieveData(userId);
-  console.log(sharedSolutions)
 
-  await AdventChallengeFn(badges, advent);
-  await DifficultyBadgesFn(badges, difficulty ?? []);
-  await SharedBadgesFn(badges, sharedSolutions ?? []);
+  // determine badges user should have
+  await AdventChallengeFn(currentBadgeStatus, advent);
+  await DifficultyBadgesFn(currentBadgeStatus, difficulty ?? []);
+  await SharedBadgesFn(currentBadgeStatus, sharedSolutions ?? []);
 
-  return badges;
+  // TODO: Retrieve Awarded Badges From Feed
+
+  // TODO: Award Missing Badges
+
+  return currentBadgeStatus;
 }

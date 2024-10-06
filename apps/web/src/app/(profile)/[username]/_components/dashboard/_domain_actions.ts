@@ -88,7 +88,6 @@ export const DifficultyBadgesFn = async (badges: AllBadges[], query: Difficulty[
   });
 };
 
-// Have 3 likes on a SharedSolution, thresholds are given in code for bronze/silver/gold/plat
 export const SharedBadgesFn = async (badges: AllBadges[], query: SharedTotals[]) => {
   const thresholds: { slug: SubmittedSolutions; threshold: number }[] = [
     { slug: 'platinum', threshold: 6 },
