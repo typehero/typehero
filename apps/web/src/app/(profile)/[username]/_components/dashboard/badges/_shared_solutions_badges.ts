@@ -4,13 +4,7 @@ import { prisma } from '@repo/db';
 import type {AllBadges, BadgeFn} from "../_actions";
 
 // eslint-disable-next-line @typescript-eslint/sort-type-constituents
-export type DifficultyCompletion = 'BEGINNER' | 'EASY' | 'MEDIUM' | 'HARD' | 'EXTREME';
-// eslint-disable-next-line @typescript-eslint/sort-type-constituents
 export type SolutionBadges = 'bronze' | 'silver' | 'gold' | 'platinum';
-export interface Difficulty {
-  Difficulty: DifficultyCompletion;
-  TotalCompleted: number;
-}
 
 export interface SharedTotals {
   TotalCompleted: number;
