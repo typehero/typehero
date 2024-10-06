@@ -1,11 +1,6 @@
 'use server';
 import { prisma } from '@repo/db';
 import type {AllBadges, BadgeFn} from "~/app/(profile)/[username]/_components/dashboard/_actions";
-import {
-  AdventChallengeFn,
-  type AdventChallenges,
-  AdventRetrieveData
-} from "~/app/(profile)/[username]/_components/dashboard/badges/_advent_badges";
 
 // eslint-disable-next-line @typescript-eslint/sort-type-constituents
 export type DifficultyBadges = 'BEGINNER' | 'EASY' | 'MEDIUM' | 'HARD' | 'EXTREME';
