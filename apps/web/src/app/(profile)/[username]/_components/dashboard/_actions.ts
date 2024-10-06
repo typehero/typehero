@@ -2,11 +2,17 @@
 
 import { prisma } from '@repo/db';
 import type { DIFFICULTIES } from './challenges-progress';
-import {type AdventChallenges, type Difficulty, SharedBadgesFn, type SharedTotals} from './_domain_actions';
+import {
+  type AdventChallenges,
+  type DifficultyCompletion,
+  type Difficulty,
+  SharedBadgesFn,
+  type SharedTotals, type SubmittedSolutions
+} from './_domain_actions';
 import { AdventChallengeFn, DifficultyBadgesFn } from './_domain_actions';
 import {
   AdventRetrieveData,
-  DifficultyRetrieveData, SharedDifficultyRetrieveData,
+  DifficultyRetrieveData, SharedSolutionRetrieveData,
 } from '~/app/(profile)/[username]/_components/dashboard/_db_actions';
 
 export type HistoricalChallenge = Awaited<ReturnType<typeof getChallengeHistoryByCategory>>[0];
@@ -179,8 +185,6 @@ export type AotBadges =
   | 'aot-2023-silver'
   | 'aot-2023-gold'
   | 'aot-2023-platinum';
-// eslint-disable-next-line @typescript-eslint/sort-type-constituents
-export type BadgeLevels = 'bronze' | 'silver' | 'gold' | 'platinum';
 
 export interface Badges<T> {
   slug: T;
@@ -188,14 +192,14 @@ export interface Badges<T> {
   shortName: string;
 }
 
-export type AllBadges = Badges<AotBadges | BadgeLevels>;
+export type AllBadges = Badges<AotBadges | DifficultyCompletion | SubmittedSolutions>;
 
 export async function getBadges(userId: string): Promise<AllBadges[]> {
   const badges: AllBadges[] = [];
 
   const advent: AdventChallenges | null = await AdventRetrieveData(userId);
   const difficulty: Difficulty[] | null = await DifficultyRetrieveData(userId);
-  const sharedSolutions: SharedTotals[] | null = await SharedDifficultyRetrieveData(userId);
+  const sharedSolutions: SharedTotals[] | null = await SharedSolutionRetrieveData(userId);
   console.log(sharedSolutions)
 
   await AdventChallengeFn(badges, advent);

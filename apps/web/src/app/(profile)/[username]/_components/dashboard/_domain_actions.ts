@@ -1,9 +1,13 @@
 'use server';
 
-import type { AllBadges, BadgeLevels } from './_actions';
+import type { AllBadges } from './_actions';
 
+// eslint-disable-next-line @typescript-eslint/sort-type-constituents
+export type DifficultyCompletion = 'BEGINNER' | 'EASY' | 'MEDIUM' | 'HARD' | 'EXTREME';
+// eslint-disable-next-line @typescript-eslint/sort-type-constituents
+export type SubmittedSolutions = 'bronze' | 'silver' | 'gold' | 'platinum';
 export interface Difficulty {
-  Difficulty: string;
+  Difficulty: DifficultyCompletion;
   TotalCompleted: number;
 }
 
@@ -61,22 +65,24 @@ export const AdventChallengeFn = async (badges: AllBadges[], advent: AdventChall
 };
 
 export const DifficultyBadgesFn = async (badges: AllBadges[], query: Difficulty[]) => {
-  const thresholds: { slug: BadgeLevels; threshold: number }[] = [
-    { slug: 'platinum', threshold: 8 },
-    { slug: 'gold', threshold: 6 },
-    { slug: 'silver', threshold: 4 },
-    { slug: 'bronze', threshold: 2 },
+  const thresholds: { difficulty: DifficultyCompletion; threshold: number }[] = [
+    { difficulty: 'BEGINNER', threshold: 1 },
+    { difficulty: 'EASY', threshold: 13 },
+    { difficulty: 'MEDIUM', threshold: 97 },
+    { difficulty: 'HARD', threshold: 54 },
+    { difficulty: 'EXTREME', threshold: 17 },
   ];
   query.forEach((currQuery) => {
-    const [highestBadge] = thresholds.filter((x) => currQuery.TotalCompleted >= x.threshold);
-    if (highestBadge) {
+    const levelThreshold = thresholds.find((x) => x.difficulty.toUpperCase() === currQuery.Difficulty);
+    const completedAllChallenges = levelThreshold?.threshold === Number(currQuery.TotalCompleted);
+    if (completedAllChallenges) {
       const pascalCase = `${currQuery.Difficulty[0]}${currQuery.Difficulty.substring(
         1,
       ).toLowerCase()}`;
       badges.push({
-        slug: highestBadge.slug,
+        slug: currQuery.Difficulty,
         name: `Completed ${pascalCase} Difficulty Badge`,
-        shortName: `Solutions`,
+        shortName: currQuery.Difficulty?.toLowerCase(),
       });
     }
   });
@@ -84,7 +90,7 @@ export const DifficultyBadgesFn = async (badges: AllBadges[], query: Difficulty[
 
 // Have 3 likes on a SharedSolution, thresholds are given in code for bronze/silver/gold/plat
 export const SharedBadgesFn = async (badges: AllBadges[], query: SharedTotals[]) => {
-  const thresholds: { slug: BadgeLevels; threshold: number }[] = [
+  const thresholds: { slug: SubmittedSolutions; threshold: number }[] = [
     { slug: 'platinum', threshold: 6 },
     { slug: 'gold', threshold: 4 },
     { slug: 'silver', threshold: 2 },
@@ -95,7 +101,7 @@ export const SharedBadgesFn = async (badges: AllBadges[], query: SharedTotals[])
   if (highestBadge) {
     badges.push({
       slug: highestBadge.slug,
-      name: `Completed Triple Liked Shared Solution Badge`,
+      name: `Completed ${highestBadge.slug} Unique Solutions Badge`,
       shortName: `Shared`,
     });
   }
