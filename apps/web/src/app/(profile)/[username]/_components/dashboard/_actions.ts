@@ -2,18 +2,12 @@
 
 import { prisma } from '@repo/db';
 import type { DIFFICULTIES } from './challenges-progress';
+import { type DifficultyBadges, difficultyBadgesFn } from './badges/_difficulty_badges';
 import {
-  type AdventChallenges,
-  type DifficultyCompletion,
-  type Difficulty,
-  SharedBadgesFn,
-  type SharedTotals, type SubmittedSolutions
-} from './_domain_actions';
-import { AdventChallengeFn, DifficultyBadgesFn } from './_domain_actions';
-import {
-  AdventRetrieveData,
-  DifficultyRetrieveData, SharedSolutionRetrieveData,
-} from '~/app/(profile)/[username]/_components/dashboard/_db_actions';
+  sharedSolutionsBadgesFn,
+  type SolutionBadges,
+} from './badges/_shared_solutions_badges';
+import {adventBadgesFn, type AotBadges} from './badges/_advent_badges';
 
 export type HistoricalChallenge = Awaited<ReturnType<typeof getChallengeHistoryByCategory>>[0];
 
@@ -179,37 +173,27 @@ export async function getSolvedChallenges(userId: string) {
   };
 }
 
-export type AotBadges =
-// eslint-disable-next-line @typescript-eslint/sort-type-constituents
-  | 'aot-2023-bronze'
-  | 'aot-2023-silver'
-  | 'aot-2023-gold'
-  | 'aot-2023-platinum';
-
 export interface Badges<T> {
   slug: T;
   name: string;
   shortName: string;
 }
 
-export type AllBadges = Badges<AotBadges | DifficultyCompletion | SubmittedSolutions>;
+export type AllBadges = Badges<AotBadges | DifficultyBadges | SolutionBadges>;
+
+export type BadgeFn = ({ userId, badges }: { userId: string; badges: AllBadges[] }) => Promise<void>;
 
 export async function getBadges(userId: string): Promise<AllBadges[]> {
-  const currentBadgeStatus: AllBadges[] = [];
+  const badges: AllBadges[] = [];
+  const badgeCalculations: BadgeFn[] = [
+    adventBadgesFn,
+    difficultyBadgesFn,
+    sharedSolutionsBadgesFn,
+  ];
 
-  // Retrieve current data from db
-  const advent: AdventChallenges | null = await AdventRetrieveData(userId);
-  const difficulty: Difficulty[] | null = await DifficultyRetrieveData(userId);
-  const sharedSolutions: SharedTotals[] | null = await SharedSolutionRetrieveData(userId);
+  for (const badgeFn of badgeCalculations) {
+    await badgeFn({ userId, badges });
+  }
 
-  // determine badges user should have
-  await AdventChallengeFn(currentBadgeStatus, advent);
-  await DifficultyBadgesFn(currentBadgeStatus, difficulty ?? []);
-  await SharedBadgesFn(currentBadgeStatus, sharedSolutions ?? []);
-
-  // TODO: Retrieve Awarded Badges From Feed
-
-  // TODO: Award Missing Badges
-
-  return currentBadgeStatus;
+  return badges;
 }
