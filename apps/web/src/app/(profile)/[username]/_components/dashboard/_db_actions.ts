@@ -46,3 +46,8 @@ export async function DifficultyRetrieveData(userId: string) {
     await prisma.$queryRaw`SELECT Difficulty, COUNT(Id) as TotalCompleted FROM (SELECT DISTINCT Difficulty, Challenge.Id FROM Submission JOIN Challenge ON Submission.challengeId = Challenge.Id WHERE Submission.userId = ${userId} AND IsSuccessful = 1) unique_query GROUP BY Difficulty `;
   return data;
 }
+export async function SharedDifficultyRetrieveData(userId: string) {
+  const data: Difficulty[] | null =
+    await prisma.$queryRaw`SELECT COUNT(Id) as TotalCompleted FROM (SELECT DISTINCT Difficulty, Challenge.Id FROM SharedSolution JOIN Challenge ON SharedSolution.challengeId = Challenge.Id JOIN Vote ON SharedSolution.Id = Vote.SharedSolutionId WHERE SharedSolution.userId = ${userId} AND rootType = 'SHAREDSOLUTION') unique_query GROUP BY Difficulty `;
+  return data;
+}

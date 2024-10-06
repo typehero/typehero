@@ -7,6 +7,10 @@ export interface Difficulty {
   TotalCompleted: number;
 }
 
+export interface SharedTotals {
+  TotalCompleted: number;
+}
+
 export interface AdventChallenges {
   trackChallenges: { challenge: { submission: { isSuccessful: boolean }[] } }[];
 }
@@ -57,7 +61,6 @@ export const AdventChallengeFn = async (badges: AllBadges[], advent: AdventChall
 };
 
 export const DifficultyBadgesFn = async (badges: AllBadges[], query: Difficulty[]) => {
-  // Difficulty Level Badge Logic
   const thresholds: { slug: BadgeLevels; threshold: number }[] = [
     { slug: 'platinum', threshold: 8 },
     { slug: 'gold', threshold: 6 },
@@ -73,8 +76,27 @@ export const DifficultyBadgesFn = async (badges: AllBadges[], query: Difficulty[
       badges.push({
         slug: highestBadge.slug,
         name: `Completed ${pascalCase} Difficulty Badge`,
-        shortName: currQuery.Difficulty.toLowerCase(),
+        shortName: `Solutions`,
       });
     }
   });
+};
+
+// Have 3 likes on a SharedSolution, thresholds are given in code for bronze/silver/gold/plat
+export const SharedBadgesFn = async (badges: AllBadges[], query: SharedTotals[]) => {
+  const thresholds: { slug: BadgeLevels; threshold: number }[] = [
+    { slug: 'platinum', threshold: 6 },
+    { slug: 'gold', threshold: 4 },
+    { slug: 'silver', threshold: 2 },
+    { slug: 'bronze', threshold: 0 },
+  ];
+  const total = query?.[0]?.TotalCompleted || 0;
+  const [highestBadge] = thresholds.filter((x) => total >= x.threshold);
+  if (highestBadge) {
+    badges.push({
+      slug: highestBadge.slug,
+      name: `Completed Triple Liked Shared Solution Badge`,
+      shortName: `Shared`,
+    });
+  }
 };

@@ -2,11 +2,11 @@
 
 import { prisma } from '@repo/db';
 import type { DIFFICULTIES } from './challenges-progress';
-import type { AdventChallenges, Difficulty } from './_domain_actions';
+import {type AdventChallenges, type Difficulty, SharedBadgesFn, type SharedTotals} from './_domain_actions';
 import { AdventChallengeFn, DifficultyBadgesFn } from './_domain_actions';
 import {
   AdventRetrieveData,
-  DifficultyRetrieveData,
+  DifficultyRetrieveData, SharedDifficultyRetrieveData,
 } from '~/app/(profile)/[username]/_components/dashboard/_db_actions';
 
 export type HistoricalChallenge = Awaited<ReturnType<typeof getChallengeHistoryByCategory>>[0];
@@ -195,9 +195,12 @@ export async function getBadges(userId: string): Promise<AllBadges[]> {
 
   const advent: AdventChallenges | null = await AdventRetrieveData(userId);
   const difficulty: Difficulty[] | null = await DifficultyRetrieveData(userId);
+  const sharedSolutions: SharedTotals[] | null = await SharedDifficultyRetrieveData(userId);
+  console.log(sharedSolutions)
 
   await AdventChallengeFn(badges, advent);
   await DifficultyBadgesFn(badges, difficulty ?? []);
+  await SharedBadgesFn(badges, sharedSolutions ?? []);
 
   return badges;
 }

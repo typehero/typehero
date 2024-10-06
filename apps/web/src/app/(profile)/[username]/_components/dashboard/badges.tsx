@@ -4,7 +4,7 @@ import { cn } from '@repo/ui/cn';
 import { Text } from '@repo/ui/components/typography/typography';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 
-import {AllBadges} from './_actions';
+import type { AllBadges } from './_actions';
 import {
   HolidayBronzeBadge,
   HolidayGoldBadge,
@@ -35,11 +35,14 @@ const Badge = ({ slug, name, shortName }: AllBadges) => {
       <TooltipTrigger>
         <span
           onClick={(e) => {
-            navigator.clipboard.writeText(e.currentTarget.innerHTML);
-            toast({
-              title: 'Copied to clipboard',
-              variant: 'success',
-            });
+            navigator.clipboard.writeText(e.currentTarget.innerHTML)
+              .then(_x => {
+                toast({
+                  title: 'Copied to clipboard',
+                  variant: 'success',
+                });
+              })
+              .catch();
           }}
         >
           <Icon className="h-12 w-12" shortName={shortName} />
