@@ -2,19 +2,6 @@
   "name": "@repo/og-image",
   "private": true,
   "type": "module",
-  "exports": {
-    ".": "./utils/zodParams.ts"
-  },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "./utils/zodParams.ts"
-      ],
-      "types": [
-        "./utils/zodParams.ts"
-      ]
-    }
-  },
   "scripts": {
     "build": "next build",
     "dev": "next dev --turbo -p 4200",
@@ -24,11 +11,11 @@
     "@vercel/og": "^1.0.0",
     "next": "14.2.5",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "zod": "3.23.3"
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@repo/lint": "workspace:*",
+    "@repo/og-utils": "workspace:*",
     "@repo/tsconfig": "workspace:*",
     "@types/node": "^20.4.2",
     "@types/react": "^18.2.20",

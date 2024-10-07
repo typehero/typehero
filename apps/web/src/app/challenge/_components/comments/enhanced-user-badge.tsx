@@ -15,6 +15,7 @@ import { Button } from '@repo/ui/components/button';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@repo/ui/components/hover-card';
 import { getGradient, getTitles, type TitleInfo } from './enhanced-user-badge.getTitles';
 import { Skeleton } from '@repo/ui/components/skeleton';
+import { DefaultAvatar } from '~/components/default-avatar';
 
 interface UserBadgeProps {
   user: {
@@ -44,8 +45,8 @@ export function UserBadge(props: UserBadgeProps) {
     setQueryEnabled(true);
   };
   const gradient = getGradient(props.user.roles);
-  const shouldShowHoverCard =
-    props.user.bio !== '' || props.user.roles.length > 1 || query.data.titles.length > 1;
+  const shouldShowHoverCard = props.user.bio !== '' || query.data.titles.length > 0;
+
   return (
     <HoverCardWrapper
       enabled={shouldShowHoverCard}
@@ -74,8 +75,8 @@ export function UserBadge(props: UserBadgeProps) {
               <div className={cn('w-min rounded-full bg-gradient-to-r p-0.5', gradient)}>
                 <Avatar className="h-14 w-14">
                   <AvatarImage src={query.data.image ?? ''} />
-                  <AvatarFallback className="capitalize">
-                    {props.user.name.substring(0, 1)}
+                  <AvatarFallback>
+                    <DefaultAvatar />
                   </AvatarFallback>
                 </Avatar>
               </div>
@@ -89,7 +90,7 @@ export function UserBadge(props: UserBadgeProps) {
             <div className="flex w-max max-w-[calc(39ch)] flex-col space-y-2 ">
               <h1
                 className={cn(
-                  'w-min bg-gradient-to-r bg-clip-text font-extrabold text-transparent',
+                  'bg-gradient-to-r bg-clip-text font-extrabold text-transparent',
                   gradient,
                 )}
               >

@@ -1,9 +1,10 @@
+/* eslint-disable eslint-comments/disable-enable-pair */
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { challengeParam, userParam } from 'utils/zodParams';
+import { challengeParam, userParam } from '@repo/og-utils';
 import './app.css';
 
 const ogImageUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api/landing` : '';

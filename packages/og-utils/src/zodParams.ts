@@ -64,6 +64,6 @@ export const userParam = zodParams(
   z.object({
     username: truncatedWordSchema({ maxCharacters: 70 }),
     avatar: z.string().optional(),
-    dateSince: z.string()
+    dateSince: z.string(),
   }),
 );

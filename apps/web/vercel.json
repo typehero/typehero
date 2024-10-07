@@ -4,6 +4,10 @@
   "buildCommand": "turbo build",
   "crons": [
     {
+      "path": "/api/cron/short-url-cleanup",
+      "schedule": "0 0 1 * *"
+    },
+    {
       "path": "/api/cron/sync-contributors",
       "schedule": "0 0 * * *"
     }

@@ -4,7 +4,7 @@ import { CodePanel } from '@repo/monaco';
 import { track as vercelTrack } from '@vercel/analytics';
 import { useRouter, useSelectedLayoutSegments } from 'next/navigation';
 import { EditorShortcutsButton } from '../_components/editor-shortcuts/editor-shortcuts-button';
-import { FullscreenButton } from '../_components/fullscreen';
+import { FullscreenButton } from '../../../components/fullscreen-button';
 import { ResetEditorButton } from '../_components/reset-editor-button';
 import { SettingsButton } from '../_components/settings/settings-button';
 import type { ChallengeRouteData } from './getChallengeRouteData';
@@ -16,7 +16,7 @@ interface Props {
   track: ChallengeRouteData['track'];
 }
 
-export function Wrapper({ track, challenge }: Props) {
+export function RightWrapper({ track, challenge }: Props) {
   const router = useRouter();
   const segments = useSelectedLayoutSegments();
   const { data: session } = useSession();

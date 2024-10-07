@@ -1,15 +1,22 @@
 import { Button } from '@repo/ui/components/button';
 import { Markdown } from '@repo/ui/components/markdown';
-import { toast } from '@repo/ui/components/use-toast';
 import { CheckCircle2, Plus, Share, Twitter, X, XCircle } from '@repo/ui/icons';
 import { useQuery } from '@tanstack/react-query';
-import lzstring from 'lz-string';
 import Link from 'next/link';
 import { useParams, useSearchParams } from 'next/navigation';
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import { AOT_CHALLENGES } from '../../../aot-slugs';
 import { getChallengeSubmissionById } from '../getChallengeSubmissions';
 import { Suggestions } from './suggestions';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@repo/ui/components/dialog';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
+import { ShareUrl } from '~/components/share-url';
 
 interface Props {
   submissionId: string;
@@ -34,31 +41,6 @@ export function SubmissionOverview({ submissionId }: Props) {
   const code = codifyForMarkdown(submission?.code.trimStart() ?? '');
 
   const track = searchParams.get('slug');
-
-  const copyShareLinkToClipboard = async () => {
-    if (!navigator.clipboard || !submission) {
-      toast({
-        variant: 'destructive',
-        description: 'Could not copy to clipboard',
-      });
-
-      // should never happen
-      if (!submission) console.error("can't share - no submission found, eh?");
-
-      return;
-    }
-
-    let url = `${window.location.origin}/challenge/${slug}`;
-
-    const compressedCode = lzstring.compressToEncodedURIComponent(submission.code);
-    url += `?code=${compressedCode}`;
-
-    await navigator.clipboard.writeText(url).catch(console.error);
-    toast({
-      variant: 'success',
-      description: 'Share link copied!',
-    });
-  };
 
   const tweet = isAotChallenge
     ? `https://twitter.com/intent/tweet?text=${encodeURIComponent(
@@ -101,10 +83,10 @@ export function SubmissionOverview({ submissionId }: Props) {
           {!isAotChallenge && (
             <div>
               <Link
-                className="bg-primary flex h-8 items-center gap-1 rounded-lg px-3 py-2 text-sm text-white"
+                className="bg-primary flex h-8 items-center gap-1 rounded-lg py-2 pl-2 pr-3 text-sm text-white"
                 href={`/challenge/${slug}/solutions`}
               >
-                <Plus size={16} /> Solution
+                <Plus size={16} /> Share your Solution
               </Link>
             </div>
           )}
@@ -118,14 +100,36 @@ export function SubmissionOverview({ submissionId }: Props) {
           <Markdown>{code}</Markdown>
         </div>
         <div className="mb-3 flex gap-2 px-3">
-          <Button
-            className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
-            variant="outline"
-            onClick={copyShareLinkToClipboard}
-          >
-            <Share className="h-4 w-4" />
-            Share Code on Playground
-          </Button>
+          <Dialog>
+            <DialogTrigger>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
+                    variant="outline"
+                  >
+                    <Share className="h-4 w-4" />
+                    Share Code on Playground
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Share Challenge with Code</p>
+                </TooltipContent>
+              </Tooltip>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Share</DialogTitle>
+              </DialogHeader>
+              <div className="pt-4">
+                <ShareUrl
+                  isChallenge
+                  code={submission.code}
+                  desciprtion="Click Copy to Share code on Playground."
+                />
+              </div>
+            </DialogContent>
+          </Dialog>
           <Button
             asChild
             className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"

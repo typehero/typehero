@@ -6,10 +6,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@repo/ui/components/dropdown-menu';
-import { Play, Settings, Settings2, User } from '@repo/ui/icons';
+import { ExternalLink, Play, Settings, Settings2, User, Palette } from '@repo/ui/icons';
 import Link from 'next/link';
 import { Suspense } from 'react';
-import { isAdminOrModerator } from '~/utils/auth-guards';
+import { isAdmin, isAdminOrModerator } from '~/utils/auth-guards';
 import { getAllFlags } from '~/utils/feature-flags';
 import { Search } from '../search/search';
 import { LoginLink } from './login-link';
@@ -22,6 +22,8 @@ import { auth } from '~/server/auth';
 import { NotificationLink } from './notification-link';
 import { getNotificationCount } from './navigation.actions';
 import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
+import { ThemeButton } from './theme-button';
+import { DefaultAvatar } from '../default-avatar';
 
 export function getAdminUrl() {
   // reference for vercel.com
@@ -40,11 +42,12 @@ export async function Navigation() {
     getNotificationCount(),
   ]);
   const isAdminOrMod = isAdminOrModerator(session);
+  const isAdminRole = isAdmin(session);
 
   const TopSectionLinks = (
     <>
-      {featureFlags?.enableExplore ? <NavLink title="Explore" href="/explore" /> : null}
-      {featureFlags?.enableTracks ? <NavLink title="Tracks" href="/tracks" /> : null}
+      <NavLink title="Explore" href="/explore" />
+      <NavLink title="Tracks" href="/tracks" />
       {featureFlags?.enableHolidayEvent ? (
         <div className="flex items-center gap-1">
           <NavLink title="Advent of TypeScript" href="/aot-2023" />
@@ -58,15 +61,27 @@ export async function Navigation() {
       <div className="ml-4 hidden items-center gap-4 md:flex">{TopSectionLinks}</div>
       <div className="flex flex-col gap-5 pl-4 md:hidden">
         {TopSectionLinks}
+        {!session?.user && (
+          <div className="flex items-center gap-2">
+            <span>Theme</span>
+            <ThemeButton />
+          </div>
+        )}
+
         {session?.user ? (
           <>
             <hr />
             <NavLink title="Profile" href={`/@${session.user.name}`} />
             <NavLink title="Settings" href="/settings" />
+            <div className="flex items-center gap-2">
+              <span>Theme</span>
+              <ThemeButton />
+            </div>
             {isAdminOrMod ? <NavLink title="Admin" href={getAdminUrl()} /> : null}
             {isAdminOrMod ? (
               <NavLink title="Challenge Playground" href="/challenge-playground" />
             ) : null}
+            {isAdminRole ? <NavLink title="URL Shortener" href="/share" /> : null}
             <SignOutLink className="px-0" />
           </>
         ) : (
@@ -118,7 +133,7 @@ export async function Navigation() {
               </Suspense>
               {session ? <NotificationLink notificationCount={notificationCount} /> : null}
               {featureFlags?.enableLogin ? (
-                <LoginButton isAdminOrMod={isAdminOrMod} session={session} />
+                <LoginButton isAdminOrMod={isAdminOrMod} session={session} isAdmin={isAdminRole} />
               ) : null}
               <MobileNav>{NavLinks}</MobileNav>
             </div>
@@ -131,9 +146,11 @@ export async function Navigation() {
 
 async function LoginButton({
   isAdminOrMod,
+  isAdmin,
   session,
 }: {
   isAdminOrMod: boolean;
+  isAdmin: boolean;
   session: Session | null;
 }) {
   return session?.user ? (
@@ -145,8 +162,8 @@ async function LoginButton({
         >
           <Avatar className="h-7 w-7">
             <AvatarImage src={session.user.image ?? ''} alt="user avatar" />
-            <AvatarFallback className="bg-gray-700 uppercase text-white">
-              {session.user?.name.charAt(0)}
+            <AvatarFallback>
+              <DefaultAvatar />
             </AvatarFallback>
           </Avatar>
         </button>
@@ -167,6 +184,14 @@ async function LoginButton({
             <span>Settings</span>
           </DropdownMenuItem>
         </Link>
+        <DropdownMenuSeparator />
+        <div className="flex items-center justify-between rounded-lg px-2 py-0.5 text-sm ">
+          <div className="flex items-center">
+            <Palette className="mr-2 h-4 w-4" />
+            <span>Theme</span>
+          </div>
+          <ThemeButton />
+        </div>
         {isAdminOrMod ? (
           <a className="block" href={getAdminUrl()}>
             <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
@@ -180,6 +205,14 @@ async function LoginButton({
             <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
               <Play className="mr-2 h-4 w-4" />
               <span>Challenge Playground</span>
+            </DropdownMenuItem>
+          </a>
+        ) : null}
+        {isAdmin ? (
+          <a className="block" href="/share">
+            <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
+              <ExternalLink className="mr-2 h-4 w-4" />
+              <span>URL Shortener</span>
             </DropdownMenuItem>
           </a>
         ) : null}

@@ -23,6 +23,8 @@ import { useState } from 'react';
 import { EditSolution } from './edit-solution';
 import { useGetQueryString } from './useGetQueryString';
 import { UserBadge } from '~/app/challenge/_components/comments/enhanced-user-badge';
+import { useQueryClient } from '@tanstack/react-query';
+import { DefaultAvatar } from '~/components/default-avatar';
 
 interface Props {
   solution: ChallengeSolution;
@@ -34,9 +36,13 @@ export function SolutionDetails({ solution }: Props) {
   const showPin = isAdminOrModerator(session);
   const [isEditing, setIsEditing] = useState(false);
   const queryString = useGetQueryString();
+  const queryClient = useQueryClient();
 
   const handlePinClick = async () => {
     await pinOrUnpinSolution(solution.id, !solution.isPinned, slug as string);
+    queryClient.invalidateQueries({
+      queryKey: ['challenge-solutions', slug],
+    });
   };
   const handleShareClick = async () => {
     if (navigator.clipboard) {
@@ -62,8 +68,8 @@ export function SolutionDetails({ solution }: Props) {
               <div className="flex items-center gap-2">
                 <Avatar className="h-7 w-7">
                   <AvatarImage alt="github profile picture" src={solution.user?.image ?? ''} />
-                  <AvatarFallback className="border border-zinc-300 dark:border-zinc-600">
-                    {solution.user?.name.substring(0, 1)}
+                  <AvatarFallback>
+                    <DefaultAvatar />
                   </AvatarFallback>
                 </Avatar>
                 <TypographyLarge>{solution.title}</TypographyLarge>

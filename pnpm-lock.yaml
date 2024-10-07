@@ -11,9 +11,6 @@ patchedDependencies:
   '@monaco-editor/react@4.5.1':
     hash: xep4qb27qzc6gvlhv2fxe3r2ka
     path: patches/@monaco-editor__react@4.5.1.patch
-  '@vercel/toolbar@0.1.1':
-    hash: mukejyv3x4f3mriytfjb3reaxi
-    path: patches/@vercel__toolbar@0.1.1.patch
   monaco-vim@0.4.0:
     hash: j3oqxjoadtct3pc6tokddngzsm
     path: patches/monaco-vim@0.4.0.patch
@@ -232,9 +229,9 @@ importers:
       '@repo/monaco':
         specifier: workspace:*
         version: link:../../packages/monaco
-      '@repo/og-image':
+      '@repo/og-utils':
         specifier: workspace:*
-        version: link:../og-image
+        version: link:../../packages/og-utils
       '@repo/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/config-typescript
@@ -317,13 +314,13 @@ importers:
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
-      zod:
-        specifier: 3.23.3
-        version: 3.23.3
     devDependencies:
       '@repo/lint':
         specifier: workspace:*
         version: link:../../tooling/config-eslint
+      '@repo/og-utils':
+        specifier: workspace:*
+        version: link:../../packages/og-utils
       '@repo/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/config-typescript
@@ -378,9 +375,9 @@ importers:
       '@repo/monaco':
         specifier: workspace:*
         version: link:../../packages/monaco
-      '@repo/og-image':
+      '@repo/og-utils':
         specifier: workspace:*
-        version: link:../og-image
+        version: link:../../packages/og-utils
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -415,8 +412,8 @@ importers:
         specifier: ^1.0.12
         version: 1.0.12(next@14.2.5(@babel/core@7.22.10)(@playwright/test@1.38.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
       '@vercel/toolbar':
-        specifier: ^0.1.1
-        version: 0.1.1(patch_hash=mukejyv3x4f3mriytfjb3reaxi)(next@14.2.5(@babel/core@7.22.10)(@playwright/test@1.38.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))
+        specifier: ^0.1.18
+        version: 0.1.22(next@14.2.5(@babel/core@7.22.10)(@playwright/test@1.38.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(vite@4.5.0(@types/node@20.4.2)(terser@5.32.0))
       algoliasearch:
         specifier: ^4.20.0
         version: 4.20.0
@@ -447,6 +444,9 @@ importers:
       monaco-vim:
         specifier: ^0.4.0
         version: 0.4.0(patch_hash=j3oqxjoadtct3pc6tokddngzsm)(monaco-editor@0.50.0)
+      nanoid:
+        specifier: ^5.0.7
+        version: 5.0.7
       next:
         specifier: 14.2.5
         version: 14.2.5(@babel/core@7.22.10)(@playwright/test@1.38.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -725,6 +725,28 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
 
+  packages/og-utils:
+    dependencies:
+      zod:
+        specifier: 3.23.3
+        version: 3.23.3
+    devDependencies:
+      '@repo/lint':
+        specifier: workspace:*
+        version: link:../../tooling/config-eslint
+      '@repo/tsconfig':
+        specifier: workspace:*
+        version: link:../../tooling/config-typescript
+      '@types/node':
+        specifier: ^20.4.2
+        version: 20.16.5
+      eslint:
+        specifier: ^8.45.0
+        version: 8.56.0
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
+
   packages/ui:
     dependencies:
       '@radix-ui/react-alert-dialog':
@@ -865,7 +887,7 @@ importers:
     dependencies:
       '@next/eslint-plugin-next':
         specifier: canary
-        version: 15.0.0-canary.155
+        version: 15.0.0-canary.179
       '@repo/tsconfig':
         specifier: workspace:*
         version: link:../config-typescript
@@ -877,7 +899,7 @@ importers:
         version: 5.62.0(eslint@8.45.0)(typescript@5.3.3)
       '@vercel/style-guide':
         specifier: ^4.0.2
-        version: 4.0.2(@next/eslint-plugin-next@15.0.0-canary.155)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 4.0.2(@next/eslint-plugin-next@15.0.0-canary.179)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3)
       eslint:
         specifier: ^8.45.0
         version: 8.45.0
@@ -1980,8 +2002,8 @@ packages:
   '@next/eslint-plugin-next@13.4.10':
     resolution: {integrity: sha512-YJqyq6vk39JQfvaNtN83t/p5Jy45+bazRL+V4QI8FPd3FBqFYMEsULiwRLgSJMgFqkk4t4JbeZurz+gILEAFpA==}
 
-  '@next/eslint-plugin-next@15.0.0-canary.155':
-    resolution: {integrity: sha512-AbqKhyft02f1oCi6Byk4edj6B/6Y7uamCfTOn1NDP0hOy3J7ShMDCJIwlT4ioUjwZ9Bm3jycCqDciBK+pmI4/Q==}
+  '@next/eslint-plugin-next@15.0.0-canary.179':
+    resolution: {integrity: sha512-WeO7BnD2fypxAD5B76kksSeujmjEwwua7acEZmzoLaDppHy4vt+YbIRObpmWtTuB3ojVF1KoT9eUCdkwjseCBA==}
 
   '@next/swc-darwin-arm64@14.2.5':
     resolution: {integrity: sha512-/9zVxJ+K9lrzSGli1///ujyRfon/ZneeZ+v4ptpiPoOU+GKZnm8Wj8ELWU1Pm7GHltYRBklmXMTUqM/DqQ99FQ==}
@@ -2248,6 +2270,7 @@ packages:
   '@playwright/test@1.38.0':
     resolution: {integrity: sha512-xis/RXXsLxwThKnlIXouxmIvvT3zvQj1JE39GsNieMUrMpb3/GySHDh2j8itCG22qKVD4MYLBp7xB73cUW/UUw==}
     engines: {node: '>=16'}
+    deprecated: Please update to the latest version of Playwright to test up-to-date browsers.
     hasBin: true
 
   '@polka/url@1.0.0-next.21':
@@ -3858,10 +3881,19 @@ packages:
       typescript:
         optional: true
 
-  '@vercel/toolbar@0.1.1':
-    resolution: {integrity: sha512-mN7Tg2dgAew0kLtq3doBF8IaGY4/RJfDbH81sGolOqKco50g75u8pJm+3PfRLxBWGkpz3/QB2tKQvg6/HlnaHA==}
+  '@vercel/toolbar@0.1.22':
+    resolution: {integrity: sha512-f+IbPrWn1t3PpbBYtQXbvkrJ7xLzxu1f29bx5ZPF1r2OMXJYOw48/Q/0kz5ukPXGVhOHYyOX/0c8OpYYy8tt2Q==}
     peerDependencies:
       next: '>=11.0.0'
+      react: '>=17'
+      vite: '>=5'
+    peerDependenciesMeta:
+      next:
+        optional: true
+      react:
+        optional: true
+      vite:
+        optional: true
 
   '@vitest/expect@0.34.6':
     resolution: {integrity: sha512-QUzKpUQRc1qC7qdGo7rMK3AkETI7w18gTCUrsNnyjjJKYiuUB9+TQK3QnR1unhCnWRC0AbKv2omLGQDF/mIjOw==}
@@ -5383,10 +5415,6 @@ packages:
     resolution: {integrity: sha512-v2ZsoEuVHYy8ZIlYqwPe/39Cy+cFDzp4dXPaxNvkEuouymu+2Jbz0PxpKarJHYJTmv2HWT3O382qY8l4jMWthw==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
-  flat-cache@3.0.4:
-    resolution: {integrity: sha512-dm9s5Pw7Jc0GvMYbshN6zchCA9RgQlzzEZX3vylR9IqFfS8XciblUXOKfW6SiuJ0e13eDYZoZV5wdrev7P3Nwg==}
-    engines: {node: ^10.12.0 || >=12.0.0}
-
   flat-cache@3.1.1:
     resolution: {integrity: sha512-/qM2b3LUIaIgviBQovTLvijfyOQXPtSRnRK26ksj2J7rzPIecePUIpJsZ4T02Qg+xiAEKIs5K8dsHEd+VaKa/Q==}
     engines: {node: '>=12.0.0'}
@@ -5394,9 +5422,6 @@ packages:
   flat@5.0.2:
     resolution: {integrity: sha512-b6suED+5/3rTpUBdG1gupIl8MPFCAMA0QXwmljLhvCUKcUvdE4gWky9zpuGCcXHOsz4J9wPGNWq6OKpmIzz3hQ==}
     hasBin: true
-
-  flatted@3.2.7:
-    resolution: {integrity: sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==}
 
   flatted@3.2.9:
     resolution: {integrity: sha512-36yxDn5H7OFZQla0/jFJmbIKTdZAQHngCedGxiMmpNfEZM0sdEeT+WczLQrjK6D7o2aiyLYDnkw0R3JK0Qv1RQ==}
@@ -6577,6 +6602,11 @@ packages:
   nanoid@3.3.6:
     resolution: {integrity: sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
+
+  nanoid@5.0.7:
+    resolution: {integrity: sha512-oLxFY2gd2IqnjcYyOXD8XGCftpGtZP2AbHbOkthDkvRywH5ayNtPVy9YlOPcHckXzbLTCHpkb7FB+yuxKV13pQ==}
+    engines: {node: ^18 || >=20}
     hasBin: true
 
   natural-compare-lite@1.4.0:
@@ -7821,7 +7851,7 @@ packages:
   superagent@3.8.1:
     resolution: {integrity: sha512-VMBFLYgFuRdfeNQSMLbxGSLfmXL/xc+OO+BZp41Za/NRDBet/BNbkRJrYzCUu0u4GU0i/ml2dtT8b9qgkw9z6Q==}
     engines: {node: '>= 4.0'}
-    deprecated: Please upgrade to v7.0.2+ of superagent.  We have fixed numerous issues with streams, form-data, attach(), filesystem errors not bubbling up (ENOENT on attach()), and all tests are now passing.  See the releases tab for more information at <https://github.com/visionmedia/superagent/releases>.
+    deprecated: Please upgrade to v9.0.0+ as we have fixed a public vulnerability with formidable dependency. Note that v9.0.0+ requires Node.js v14.18.0+. See https://github.com/ladjs/superagent/pull/1800 for insight. This project is supported and maintained by the team at Forward Email @ https://forwardemail.net
 
   superjson@2.2.1:
     resolution: {integrity: sha512-8iGv75BYOa0xRJHK5vRLEjE2H/i4lulTjzpUXic3Eg8akftYjkmQDa8JARQ42rlczXyFR3IeRoeFCc7RxHsYZA==}
@@ -9265,7 +9295,7 @@ snapshots:
   '@eslint-community/eslint-utils@4.4.0(eslint@8.56.0)':
     dependencies:
       eslint: 8.56.0
-      eslint-visitor-keys: 3.4.1
+      eslint-visitor-keys: 3.4.3
 
   '@eslint-community/regexpp@4.5.1': {}
 
@@ -9493,7 +9523,7 @@ snapshots:
     dependencies:
       glob: 7.1.7
 
-  '@next/eslint-plugin-next@15.0.0-canary.155':
+  '@next/eslint-plugin-next@15.0.0-canary.179':
     dependencies:
       fast-glob: 3.3.1
 
@@ -11281,7 +11311,7 @@ snapshots:
 
   '@types/http-proxy@1.17.14':
     dependencies:
-      '@types/node': 20.10.4
+      '@types/node': 20.16.5
 
   '@types/json-schema@7.0.12': {}
 
@@ -11291,7 +11321,7 @@ snapshots:
 
   '@types/jsonwebtoken@9.0.2':
     dependencies:
-      '@types/node': 20.10.4
+      '@types/node': 20.16.5
 
   '@types/lodash@4.14.195': {}
 
@@ -11309,7 +11339,7 @@ snapshots:
 
   '@types/node-fetch@2.6.4':
     dependencies:
-      '@types/node': 20.10.4
+      '@types/node': 20.16.5
       form-data: 3.0.1
 
   '@types/node@20.10.4':
@@ -11588,7 +11618,7 @@ snapshots:
       next: 14.2.5(@babel/core@7.22.10)(@playwright/test@1.38.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
 
-  '@vercel/style-guide@4.0.2(@next/eslint-plugin-next@15.0.0-canary.155)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3)':
+  '@vercel/style-guide@4.0.2(@next/eslint-plugin-next@15.0.0-canary.179)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3)':
     dependencies:
       '@babel/core': 7.22.10
       '@babel/eslint-parser': 7.22.10(@babel/core@7.22.10)(eslint@8.45.0)
@@ -11610,7 +11640,7 @@ snapshots:
       eslint-plugin-unicorn: 43.0.2(eslint@8.45.0)
       prettier-plugin-packagejson: 2.4.3(prettier@3.1.1)
     optionalDependencies:
-      '@next/eslint-plugin-next': 15.0.0-canary.155
+      '@next/eslint-plugin-next': 15.0.0-canary.179
       eslint: 8.45.0
       prettier: 3.1.1
       typescript: 5.3.3
@@ -11620,14 +11650,18 @@ snapshots:
       - jest
       - supports-color
 
-  '@vercel/toolbar@0.1.1(patch_hash=mukejyv3x4f3mriytfjb3reaxi)(next@14.2.5(@babel/core@7.22.10)(@playwright/test@1.38.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))':
+  '@vercel/toolbar@0.1.22(next@14.2.5(@babel/core@7.22.10)(@playwright/test@1.38.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(vite@4.5.0(@types/node@20.4.2)(terser@5.32.0))':
     dependencies:
       '@tinyhttp/app': 1.3.0
       chokidar: 3.5.3
       execa: 5.1.1
       find-up: 5.0.0
       get-port: 5.1.1
+      strip-ansi: 6.0.1
+    optionalDependencies:
       next: 14.2.5(@babel/core@7.22.10)(@playwright/test@1.38.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      react: 18.2.0
+      vite: 4.5.0(@types/node@20.4.2)(terser@5.32.0)
 
   '@vitest/expect@0.34.6':
     dependencies:
@@ -13516,7 +13550,7 @@ snapshots:
 
   file-entry-cache@6.0.1:
     dependencies:
-      flat-cache: 3.0.4
+      flat-cache: 3.1.1
 
   file-entry-cache@7.0.1:
     dependencies:
@@ -13549,11 +13583,6 @@ snapshots:
       locate-path: 7.2.0
       path-exists: 5.0.0
 
-  flat-cache@3.0.4:
-    dependencies:
-      flatted: 3.2.7
-      rimraf: 3.0.2
-
   flat-cache@3.1.1:
     dependencies:
       flatted: 3.2.9
@@ -13561,8 +13590,6 @@ snapshots:
       rimraf: 3.0.2
 
   flat@5.0.2: {}
-
-  flatted@3.2.7: {}
 
   flatted@3.2.9: {}
 
@@ -14994,6 +15021,8 @@ snapshots:
       thenify-all: 1.6.0
 
   nanoid@3.3.6: {}
+
+  nanoid@5.0.7: {}
 
   natural-compare-lite@1.4.0: {}
 
@@ -17056,14 +17085,14 @@ snapshots:
       d3-time: 3.1.0
       d3-timer: 3.0.1
 
-  vite-node@0.34.6(@types/node@20.10.4)(terser@5.32.0):
+  vite-node@0.34.6(@types/node@20.16.5)(terser@5.32.0):
     dependencies:
       cac: 6.7.14
       debug: 4.3.4
       mlly: 1.4.2
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 4.5.0(@types/node@20.10.4)(terser@5.32.0)
+      vite: 4.5.0(@types/node@20.16.5)(terser@5.32.0)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -17074,21 +17103,32 @@ snapshots:
       - supports-color
       - terser
 
-  vite@4.5.0(@types/node@20.10.4)(terser@5.32.0):
+  vite@4.5.0(@types/node@20.16.5)(terser@5.32.0):
     dependencies:
       esbuild: 0.18.20
       postcss: 8.4.31
       rollup: 3.28.1
     optionalDependencies:
-      '@types/node': 20.10.4
+      '@types/node': 20.16.5
       fsevents: 2.3.3
       terser: 5.32.0
+
+  vite@4.5.0(@types/node@20.4.2)(terser@5.32.0):
+    dependencies:
+      esbuild: 0.18.20
+      postcss: 8.4.31
+      rollup: 3.28.1
+    optionalDependencies:
+      '@types/node': 20.4.2
+      fsevents: 2.3.3
+      terser: 5.32.0
+    optional: true
 
   vitest@0.34.6(playwright@1.38.0)(terser@5.32.0):
     dependencies:
       '@types/chai': 4.3.9
       '@types/chai-subset': 1.3.4
-      '@types/node': 20.10.4
+      '@types/node': 20.16.5
       '@vitest/expect': 0.34.6
       '@vitest/runner': 0.34.6
       '@vitest/snapshot': 0.34.6
@@ -17107,8 +17147,8 @@ snapshots:
       strip-literal: 1.3.0
       tinybench: 2.5.1
       tinypool: 0.7.0
-      vite: 4.5.0(@types/node@20.10.4)(terser@5.32.0)
-      vite-node: 0.34.6(@types/node@20.10.4)(terser@5.32.0)
+      vite: 4.5.0(@types/node@20.16.5)(terser@5.32.0)
+      vite-node: 0.34.6(@types/node@20.16.5)(terser@5.32.0)
       why-is-node-running: 2.2.2
     optionalDependencies:
       playwright: 1.38.0
