@@ -1,5 +1,6 @@
 import { Button } from '@repo/ui/components/button';
 import Image from 'next/image';
+import Link from 'next/link';
 import { getRandomChallenge } from '~/utils/server/get-random-challenge';
 
 export const dynamic = 'force-dynamic';
@@ -37,12 +38,12 @@ export default async function NotFound() {
         </div>
         {randomChallengeSlug !== null ? (
           <div className="flex flex-col gap-4">
-            <a href="/explore">
+            <Link href="/explore">
               <Button className="w-56" variant="default" size="lg">
                 Go to explore
               </Button>
-            </a>
-            <a href={`/challenge/${randomChallengeSlug}`}>
+            </Link>
+            <Link href={`/challenge/${randomChallengeSlug}`}>
               <Button
                 variant="outline"
                 size="lg"
@@ -50,15 +51,15 @@ export default async function NotFound() {
               >
                 I'm feeling lucky
               </Button>
-            </a>
+            </Link>
           </div>
         ) : (
           <div>
-            <a href="/">
+            <Link href="/">
               <Button variant="default" size="lg">
                 Go to home
               </Button>
-            </a>
+            </Link>
           </div>
         )}
       </div>

@@ -1,20 +1,16 @@
 'use client';
-import { Difficulty } from '@repo/db/types';
-import { Button } from '@repo/ui/components/button';
+import type { Difficulty } from '@repo/db/types';
 import { useState } from 'react';
 import { ExploreCard, type ExploreCardProps } from '~/app/explore/_components/explore-card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui/components/tabs';
 import { ToggleGroup, ToggleGroupItem } from '@repo/ui/components/toggle-group';
-import { color, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { cn } from '@repo/ui/cn';
 import { Alert } from '@repo/ui/components/alert';
-import Link from 'next/link';
-import { selectWord } from '@uiw/react-md-editor';
 
 type FilterOptions = Exclude<Difficulty, 'EVENT'> | 'ALL';
 
 export function Challenges(props: {
-  challenges: Array<ExploreCardProps['challenge'] & { id: number }>;
+  challenges: (ExploreCardProps['challenge'] & { id: number })[];
 }) {
   const [filter, setFilter] = useState<FilterOptions>('ALL');
   const filteredChallenges = props.challenges.filter((c) => {
@@ -52,7 +48,7 @@ const DIFFICULTY_COLOR_MAP: Record<FilterOptions, string> = {
 };
 
 function FilterBar(props: { filter: FilterOptions; setFilter: (val: FilterOptions) => void }) {
-  const [hoveredDifficulty, setHoveredDifficulty] = useState<null | FilterOptions>(null);
+  const [hoveredDifficulty, setHoveredDifficulty] = useState<FilterOptions | null>(null);
   const difficulties: FilterOptions[] = ['ALL', 'BEGINNER', 'EASY', 'MEDIUM', 'HARD', 'EXTREME'];
   const [lastSelected, setLastSelected] = useState<FilterOptions>('ALL');
 

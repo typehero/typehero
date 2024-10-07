@@ -3,7 +3,6 @@
 import {
   Label,
   PolarAngleAxis,
-  PolarGrid,
   PolarRadiusAxis,
   RadialBar,
   RadialBarChart,
@@ -14,8 +13,6 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-  ChartLegend,
-  ChartLegendContent,
 } from '@repo/ui/components/chart';
 
 export const description = 'A radial chart with a grid';

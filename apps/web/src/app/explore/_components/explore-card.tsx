@@ -18,7 +18,6 @@ import {
   Triangle,
 } from '@repo/ui/icons';
 import dynamic from 'next/dynamic';
-import type { ExploreChallengeData } from './explore.action';
 import type { Difficulty, Submission } from '@repo/db/types';
 import { cn } from '@repo/ui/cn';
 

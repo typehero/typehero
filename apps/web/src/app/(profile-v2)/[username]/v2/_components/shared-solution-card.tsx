@@ -1,5 +1,5 @@
-import { Card, CardHeader, CardContent, CardTitle } from '@repo/ui/components/card';
-import { CheckCircle, MessageCircle, ThumbsUp } from '@repo/ui/icons';
+import { Card, CardHeader, CardTitle } from '@repo/ui/components/card';
+import { MessageCircle, ThumbsUp } from '@repo/ui/icons';
 
 import type { Difficulty } from '@repo/db/types';
 import {
@@ -8,6 +8,7 @@ import {
   ChallengeDifficultyIcon,
 } from '~/app/explore/_components/explore-card';
 import { Badge } from '@repo/ui/components/badge';
+
 export async function SharedSolutionCard(props: {
   solution: {
     commentCount: number;

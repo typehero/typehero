@@ -11,6 +11,7 @@ import { Loader2, LogIn, Moon, Sun, User } from '@repo/ui/icons';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { NavLink } from './nav-link';
+import Link from 'next/link';
 
 export function Navigation() {
   return (
@@ -18,7 +19,7 @@ export function Navigation() {
       <nav className="flex h-14 items-center px-4">
         <div className="flex w-full items-center justify-between">
           <div className="relative flex gap-3">
-            <a className="flex items-center space-x-2 duration-300" href="/">
+            <Link className="flex items-center space-x-2 duration-300" href="/">
               <svg
                 className="h-8 w-8 rounded-md bg-[#3178C6] p-[2px]"
                 viewBox="0 0 38 38"
@@ -43,7 +44,7 @@ export function Navigation() {
                 <br />
                 hero
               </span>
-            </a>
+            </Link>
           </div>
           <div className="items-center md:ml-4 md:flex md:gap-4">
             <NavLink title="About" href="/about" />
