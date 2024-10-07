@@ -25,7 +25,7 @@ export function Badges(props: { data: BadgeInfo[] }) {
 
 function BadgesStuff(props: { data: BadgeInfo[] }) {
   return (
-    <div className="grid grid-cols-3 gap-4  ">
+    <div className="mx-auto grid w-fit grid-cols-3 gap-4  ">
       {props.data.map((b) => {
         const Icon = SlugToBadgeIcon[b.slug];
         return (

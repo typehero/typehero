@@ -754,8 +754,8 @@ export default async function ProfilePage(props: { params: { username: string } 
 
   return (
     <div className="container pt-16">
-      <div className="grid grid-cols-6 grid-rows-2 gap-8">
-        <Card className="relative col-span-3 bg-zinc-100 p-8 dark:bg-zinc-900">
+      <div className="grid grid-cols-1 grid-rows-2 gap-8 md:grid-cols-8">
+        <Card className="relative col-span-4 bg-zinc-100 p-8 dark:bg-zinc-900">
           <Avatar className="absolute -inset-4 h-56 w-56 rounded-lg">
             <AvatarImage src={user.image ?? ''} alt={`${user.name} profile picture`} />
             <AvatarFallback className="rounded-lg capitalize">
@@ -791,11 +791,11 @@ export default async function ProfilePage(props: { params: { username: string } 
           </div>
         </Card>
 
-        <Card className="col-span-3 bg-zinc-100 p-12 dark:bg-zinc-900">
+        <Card className="col-span-4 bg-zinc-100 p-12 dark:bg-zinc-900">
           <ProgressChart />
         </Card>
 
-        <Card className="col-span-2 bg-zinc-100 p-6 dark:bg-zinc-900">
+        <Card className="col-span-3 bg-zinc-100 p-6 dark:bg-zinc-900">
           <div className="flex flex-col space-y-4">
             <Button
               asChild
@@ -846,14 +846,14 @@ export default async function ProfilePage(props: { params: { username: string } 
           </div>
         </Card>
 
-        <Card className="col-span-2 bg-zinc-100 p-6 dark:bg-zinc-900">
+        <Card className="col-span-2 h-fit bg-zinc-100 p-6 dark:bg-zinc-900">
           <div className="space-y-2">
             <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Badges</h1>
             <Badges data={badges} />
           </div>
         </Card>
 
-        <Card className="col-span-2 bg-zinc-100 p-6 dark:bg-zinc-900">
+        <Card className="col-span-3 h-fit bg-zinc-100 p-6 dark:bg-zinc-900">
           <div className="space-y-2">
             <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Recent Activity</h1>
             <ActivityChart2 data={generateSampleData()} />
