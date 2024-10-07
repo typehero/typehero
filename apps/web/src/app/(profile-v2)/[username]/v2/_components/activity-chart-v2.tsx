@@ -2,13 +2,12 @@
 import {
   ChartContainer,
   type ChartConfig,
-  ChartLegend,
   ChartTooltip,
   ChartTooltipContent,
 } from '@repo/ui/components/chart';
-import { Scatter, ScatterChart, CartesianGrid, XAxis, YAxis, ZAxis } from '@repo/ui/recharts';
+import { Scatter, ScatterChart, XAxis, YAxis, ZAxis } from '@repo/ui/recharts';
 import type { generateSampleData } from '../page';
-import { format, getMonth, setWeek, startOfYear, subDays } from 'date-fns';
+import { format, setWeek, startOfYear } from 'date-fns';
 import { MessageCircle, FileCode, Award } from '@repo/ui/icons';
 
 const chartConfig = {
@@ -32,15 +31,15 @@ export function ActivityChart2(props: { data: ReturnType<typeof generateSampleDa
       <ScatterChart data={props.data} accessibilityLayer>
         <ChartTooltip
           cursor={false}
-          content={(props) => {
-            const payload = (props.payload?.[0]?.payload as Record<string, number>) ?? {};
-            const customPayload = Object.entries(payload ?? {})
+          content={({ payload, content, ...props }) => {
+            const innerPayload = (payload?.[0]?.payload as Record<string, number>) ?? {};
+            const customPayload = Object.entries(innerPayload ?? {})
               .filter(([key]) => key === 'comments' || key === 'badges' || key === 'submissions')
               .map(([key, val]) => ({ name: key, value: val, payload }));
             return <ChartTooltipContent {...props} payload={customPayload} />;
           }}
           labelFormatter={(_, [val]) => {
-            return format(val?.payload.date, 'dd MMM');
+            return format(val?.payload[0].payload.date, 'dd MMM');
           }}
         />
         <XAxis
@@ -58,27 +57,29 @@ export function ActivityChart2(props: { data: ReturnType<typeof generateSampleDa
         <YAxis dataKey="day" type="category" allowDuplicatedCategory={false} hide />
         <ZAxis dataKey="activity" type="number" />
         <Scatter
-          shape={(item) => {
+          // ReCharts has this type defined as Record<string, any> so attempting
+          // to overide it throws an error
+          shape={(item: unknown) => {
+            const { cx, cy, activity } = item as { cx: number; cy: number; activity: number };
             const squareLength = 24;
             const borderV = 10;
             const borderH = 17;
-            // console.log(item);
             return (
               <g>
                 <rect
-                  x={item.cx - borderH / 2 - squareLength / 2}
-                  y={item.cy - borderV / 2 - squareLength / 2}
+                  x={cx - borderH / 2 - squareLength / 2}
+                  y={cy - borderV / 2 - squareLength / 2}
                   width={squareLength + borderH}
                   height={squareLength + borderV}
                   // className="fill-zinc-500"
                   className="fill-zinc-100 dark:fill-zinc-900"
                 />
                 <rect
-                  x={item.cx - squareLength / 2}
-                  y={item.cy - squareLength / 2}
+                  x={cx - squareLength / 2}
+                  y={cy - squareLength / 2}
                   width={squareLength}
                   height={squareLength}
-                  className={getColor(item.activity)}
+                  className={getColor(activity)}
                   rx={2}
                 />
               </g>
@@ -102,7 +103,6 @@ function getColor(count: number) {
   }
   return 'fill-sky-600/100';
 }
-const monthMap: Record<number, string> = {};
 function getMonthFromWeek(weekNumber: number, idx: number) {
   const year = new Date().getFullYear();
   // Create a date object for the first day of the given year
@@ -112,7 +112,6 @@ function getMonthFromWeek(weekNumber: number, idx: number) {
   const targetDate = setWeek(firstDayOfYear, weekNumber, { weekStartsOn: 1 });
   if (weekNumber % 4 === 0) {
     return format(targetDate, 'MMM');
-  } else {
-    return '';
   }
+  return '';
 }

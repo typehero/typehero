@@ -13,7 +13,7 @@ export function Badges(props: { data: BadgeInfo[] }) {
     { slug: 'aot-2023-silver', name: 'Advent of TypeScript 2023 Bronze' },
     { slug: 'aot-2023-gold', name: 'Advent of TypeScript 2023 Bronze' },
     { slug: 'aot-2023-platinum', name: 'Advent of TypeScript 2023 Bronze' },
-  ];
+  ] as BadgeInfo[];
   return (
     <div>
       <TooltipProvider>

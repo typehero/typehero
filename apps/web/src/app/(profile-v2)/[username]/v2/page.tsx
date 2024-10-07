@@ -1,13 +1,12 @@
 import { prisma } from '@repo/db';
 import { notFound } from 'next/navigation';
-import { ProgressChart } from './_components-v2/progress-chart';
+import { ProgressChart } from './_components/progress-chart';
 import { SharedSolutionCard } from './_components/shared-solution-card';
 import { Button } from '@repo/ui/components/button';
 import { ArrowUpRight, Github, Twitter } from '@repo/ui/icons';
 import Link from 'next/link';
 import { ActivityChart2 } from './_components/activity-chart-v2';
 import { getWeek, startOfWeek, eachDayOfInterval, subDays, getDay, getMonth } from 'date-fns';
-import { Badges } from './_components-v2/badges';
 import { getBadges } from '~/app/(profile)/[username]/_components/dashboard/_actions';
 import { cn } from '@repo/ui/cn';
 import { Avatar, AvatarImage, AvatarFallback } from '@repo/ui/components/avatar';
@@ -18,6 +17,7 @@ import {
 } from '~/app/challenge/_components/comments/enhanced-user-badge.getTitles';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { Card } from '@repo/ui/components/card';
+import { Badges } from './_components/badges';
 
 const hardcodedGitHubActivity = [
   {
@@ -874,7 +874,7 @@ export default async function ProfilePage(props: { params: { username: string } 
   );
 }
 
-function StatCard(props: { title: string; data: string; secondaryData?: string }) {
+/* function StatCard(props: { title: string; data: string; secondaryData?: string }) {
   return (
     <div className="space-y-0.5">
       <h1 className="text-muted-foreground tracking-tight">{props.title}</h1>
@@ -884,4 +884,4 @@ function StatCard(props: { title: string; data: string; secondaryData?: string }
       </div>
     </div>
   );
-}
+} */

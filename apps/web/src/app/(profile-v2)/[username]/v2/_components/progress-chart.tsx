@@ -2,90 +2,161 @@
 
 import {
   Label,
-  PolarRadiusAxis,
   PolarAngleAxis,
+  PolarGrid,
+  PolarRadiusAxis,
   RadialBar,
   RadialBarChart,
 } from '@repo/ui/recharts';
 
-import { type ChartConfig, ChartContainer } from '@repo/ui/components/chart';
-import { cn } from '@repo/ui/cn';
+import {
+  type ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  ChartLegend,
+  ChartLegendContent,
+} from '@repo/ui/components/chart';
 
-export const description = 'A radial chart with text';
+export const description = 'A radial chart with a grid';
+
+const chartData = [
+  {
+    difficulty: 'beginner',
+    completedPercentage: 25,
+    completed: 20,
+    fill: 'var(--color-beginner)',
+  },
+  {
+    difficulty: 'easy',
+    completedPercentage: 66.67,
+    completed: 20,
+    fill: 'var(--color-easy)',
+  },
+  {
+    difficulty: 'medium',
+    completedPercentage: 100,
+    completed: 20,
+    fill: 'var(--color-medium)',
+  },
+  {
+    difficulty: 'hard',
+    completedPercentage: 75,
+    completed: 20,
+    fill: 'var(--color-hard)',
+  },
+  {
+    difficulty: 'expert',
+    completedPercentage: 30,
+    completed: 20,
+    fill: 'var(--color-expert)',
+  },
+];
 
 const chartConfig = {
-  completed: {
-    label: 'Completed',
+  beginner: {
+    label: 'Beginner',
+    color: 'hsl(var(--chart-1))',
+  },
+  easy: {
+    label: 'Easy',
+    color: 'hsl(var(--chart-2))',
+  },
+  medium: {
+    label: 'Medium',
+    color: 'hsl(var(--chart-3))',
+  },
+  hard: {
+    label: 'Hard',
+    color: 'hsl(var(--chart-4))',
+  },
+  expert: {
+    label: 'Expert',
+    color: 'hsl(var(--chart-5))',
   },
 } satisfies ChartConfig;
 
-type Difficulty = 'Beginner' | 'Easy' | 'Expert' | 'Hard' | 'Medium';
-//TODO: Change to css variables
-const colorConfig: Record<Difficulty, [string, string]> = {
-  Beginner: ['hsl( 198.6, 88.7%, 48.4% )', 'hsl( 188.7, 94.5%, 42.7% )'],
-  Easy: ['hsl(142.1, 70.6%, 45.3%)', 'hsl(160.1, 84.1% ,39.4%)'],
-  Medium: ['hsl(37.7, 92.1% ,50.2%)', 'hsl(47.9 ,95.8% ,53.1%)'],
-  Hard: ['hsl(24.6, 95% ,53.1%)', 'hsl(0 ,72.2% ,50.6%)'],
-  Expert: ['hsl(263.4, 70%, 50.4%)', 'hsl(270 ,95.2% ,75.3%)'],
-};
-//TODO: Remove
-const DEBUG = false;
-export function ProgressChart(props: { completed: number; max: number; difficulty: Difficulty }) {
-  const percentage = (props.completed / props.max) * 100;
-  const data = [{ completed: percentage }];
+export function ProgressChart() {
+  const totalCompleted = 80;
   return (
-    <ChartContainer
-      config={chartConfig}
-      className={cn('mx-auto aspect-square w-full max-w-full ', DEBUG && 'border border-zinc-700')}
-    >
-      <RadialBarChart
-        data={data}
-        startAngle={90}
-        endAngle={-270}
-        innerRadius={'90%'}
-        outerRadius={'90%'}
-        barSize={20}
-      >
-        <defs>
-          <linearGradient id={`${props.difficulty}-colorGradient`} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor={colorConfig[props.difficulty][0]} stopOpacity={1} />
-            <stop offset="100%" stopColor={colorConfig[props.difficulty][1]} stopOpacity={1} />
-          </linearGradient>
-        </defs>
-        <RadialBar
-          fill={`url(#${props.difficulty}-colorGradient)`}
-          dataKey="completed"
-          background
-          cornerRadius={10}
-        />
-        <PolarAngleAxis domain={[0, 100]} type="number" tick={false} />
-        <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
-          <Label
-            content={({ viewBox }) => {
-              if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
-                console.log({ viewBox });
-                return (
-                  <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
-                    <tspan x={viewBox.cx} y="30%" className="fill-muted-foreground">
-                      {props.difficulty}
-                    </tspan>
-                    <tspan
+    <div className="flex flex-row space-x-4">
+      <div className="grid h-fit grid-flow-col grid-rows-4 gap-6">
+        {chartData.map((d) => (
+          <LegendItem
+            key={d.difficulty}
+            completed={d.completed}
+            difficulty={d.difficulty}
+            config={chartConfig}
+          />
+        ))}
+      </div>
+      <ChartContainer config={chartConfig} className="aspect-square h-[280px] ">
+        <RadialBarChart
+          data={chartData}
+          innerRadius={50}
+          outerRadius={140}
+          startAngle={90}
+          endAngle={-270}
+          barCategoryGap={3}
+        >
+          <ChartTooltip
+            cursor={false}
+            content={<ChartTooltipContent hideLabel nameKey="difficulty" />}
+          />
+          <PolarAngleAxis domain={[0, 100]} type="number" tickLine={false} tick={false} />
+          <PolarRadiusAxis type="category" tick={false} tickLine={false} axisLine={false}>
+            <Label
+              content={({ viewBox }) => {
+                if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
+                  return (
+                    <text
                       x={viewBox.cx}
                       y={viewBox.cy}
-                      className="fill-foreground text-xl font-bold lg:text-xl xl:text-4xl"
+                      textAnchor="middle"
+                      dominantBaseline="middle"
                     >
-                      {data[0]?.completed}%
-                    </tspan>
-                    <tspan x={viewBox.cx} y="65%" className="fill-muted-foreground">
-                      {props.completed} / {props.max}
-                    </tspan>
-                  </text>
-                );
-              }
-            }}
-          />
-        </PolarRadiusAxis>
-      </RadialBarChart>
-    </ChartContainer>
+                      <tspan
+                        x={viewBox.cx}
+                        dy={-15}
+                        y={viewBox.cy}
+                        className="fill-muted-foreground"
+                      >
+                        Total
+                      </tspan>
+                      <tspan
+                        y={viewBox.cy}
+                        x={viewBox.cx}
+                        dy={15}
+                        className="fill-foreground text-4xl font-bold"
+                      >
+                        {totalCompleted}
+                      </tspan>
+                    </text>
+                  );
+                }
+              }}
+            />
+          </PolarRadiusAxis>
+          <RadialBar dataKey="completedPercentage" cornerRadius={10} />
+        </RadialBarChart>
+      </ChartContainer>
+    </div>
+  );
+}
+
+function LegendItem(props: { difficulty: string; completed: number; config: ChartConfig }) {
+  return (
+    <div>
+      <div className="flex flex-row space-x-2">
+        <div
+          className="mt-1.5 h-2.5 w-2.5 rounded-full"
+          style={{ backgroundColor: props.config[props.difficulty]?.color }}
+        />
+        <div>
+          <h1 className="text-muted-foreground">{props.config[props.difficulty]?.label}</h1>
+          <h2 className="text-3xl">{props.completed}</h2>
+        </div>
+      </div>
+    </div>
   );
 }
