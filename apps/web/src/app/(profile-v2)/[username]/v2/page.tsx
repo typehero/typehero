@@ -755,47 +755,57 @@ export default async function ProfilePage(props: { params: { username: string } 
   return (
     <div className="container pt-16">
       <div className="grid grid-cols-1 grid-rows-2 gap-8 md:grid-cols-8">
-        <Card className="relative col-span-4 bg-zinc-100 p-8 dark:bg-zinc-900">
-          <Avatar className="absolute -inset-4 h-56 w-56 rounded-lg">
-            <AvatarImage src={user.image ?? ''} alt={`${user.name} profile picture`} />
-            <AvatarFallback className="rounded-lg capitalize">
-              {user.name.slice(0, 1)}
-            </AvatarFallback>
-          </Avatar>
-          <div className="space-y-16">
-            <div className="ml-52 flex flex-col space-y-2">
-              <h1
+        <div className="relative col-span-4">
+          <Card className="group h-full overflow-hidden bg-zinc-100 p-8 dark:bg-zinc-900/60">
+            <Avatar className="absolute -inset-4 z-10 h-56 w-56 rounded-lg transition group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:-rotate-1">
+              <AvatarImage src={user.image ?? ''} alt={`${user.name} profile picture`} />
+              <AvatarFallback className="rounded-lg capitalize">
+                {user.name.slice(0, 1)}
+              </AvatarFallback>
+            </Avatar>
+            <div className="relative z-0">
+              <div
                 className={cn(
-                  'w-min bg-gradient-to-r bg-clip-text text-3xl font-bold text-transparent',
+                  'absolute inset-4 h-[120px] w-[120px] overflow-hidden rounded-full blur-3xl',
                   gradient,
                 )}
-              >
-                {user.name}
-              </h1>
-              <Titles data={titles} />
-              <h2 className="text-muted-foreground text-sm tracking-tight">
-                Joined {getRelativeTime(user.createdAt)}
-              </h2>
-              <div className="flex flex-row space-x-1">
-                <Button variant="ghost" size="sm" className="p-2">
-                  <Twitter className="h-7 w-7" />
-                </Button>
-                <Button variant="ghost" size="sm" className="p-2">
-                  <Github className="h-7 w-7" />
-                </Button>
+              />
+            </div>
+            <div className="space-y-6">
+              <div className="ml-52 mt-8 flex flex-col space-y-2">
+                <h1
+                  className={cn(
+                    'w-min bg-gradient-to-r bg-clip-text text-3xl font-bold text-transparent',
+                    gradient,
+                  )}
+                >
+                  {user.name}
+                </h1>
+                <Titles data={titles} />
+                <h2 className="text-muted-foreground text-sm tracking-tight">
+                  Joined {getRelativeTime(user.createdAt)}
+                </h2>
+                <div className="flex flex-row space-x-1">
+                  <Button variant="ghost" size="sm" className="p-2">
+                    <Twitter className="h-7 w-7" />
+                  </Button>
+                  <Button variant="ghost" size="sm" className="p-2">
+                    <Github className="h-7 w-7" />
+                  </Button>
+                </div>
+              </div>
+              <div className="max-w-[60ch]">
+                <p className="leading-7 tracking-tight">{user.bio}</p>
               </div>
             </div>
-            <div className="max-w-[60ch]">
-              <p className="leading-7 tracking-tight">{user.bio}</p>
-            </div>
-          </div>
-        </Card>
+          </Card>
+        </div>
 
-        <Card className="col-span-4 bg-zinc-100 p-12 dark:bg-zinc-900">
+        <Card className="col-span-4 bg-zinc-100 p-12 dark:bg-zinc-900/60">
           <ProgressChart />
         </Card>
 
-        <Card className="col-span-3 bg-zinc-100 p-6 dark:bg-zinc-900">
+        <Card className="col-span-3 bg-zinc-100 p-6 dark:bg-zinc-900/60">
           <div className="flex flex-col space-y-4">
             <Button
               asChild
@@ -846,15 +856,15 @@ export default async function ProfilePage(props: { params: { username: string } 
           </div>
         </Card>
 
-        <Card className="col-span-2 h-fit bg-zinc-100 p-6 dark:bg-zinc-900">
+        <Card className="col-span-2 h-fit bg-zinc-100 p-6 dark:bg-zinc-900/60">
           <div className="space-y-2">
             <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Badges</h1>
             <Badges data={badges} />
           </div>
         </Card>
 
-        <Card className="col-span-3 h-fit bg-zinc-100 p-6 dark:bg-zinc-900">
-          <div className="space-y-2">
+        <Card className="col-span-3 h-fit bg-zinc-100 p-6 px-12 dark:bg-zinc-900/60">
+          <div className="w-fit space-y-2">
             <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Recent Activity</h1>
             <ActivityChart2 data={generateSampleData()} />
           </div>
