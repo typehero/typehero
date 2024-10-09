@@ -3,7 +3,11 @@ import { stripe } from '../_utils/stripe';
 import { auth } from '~/server/auth';
 import { prisma } from '@repo/db';
 import { Prisma } from '@repo/db/types';
-import { Content } from './content';
+import dynamic from 'next/dynamic';
+
+const ContentNoSSR = dynamic(() => import('./content'), {
+  ssr: false,
+});
 
 export default async function ResultPage({
   searchParams,
@@ -30,8 +34,8 @@ export default async function ResultPage({
     checkoutSession.amount_total &&
     checkoutSession.amount_total > 0
   ) {
-    const d = (checkoutSession.amount_total / 100).toFixed(2);
-    const amount = new Prisma.Decimal(12.2);
+    const amountTotal = (checkoutSession.amount_total / 100).toFixed(2);
+    const amount = new Prisma.Decimal(amountTotal);
     await prisma.user.update({
       where: { id: session.user.id },
       data: {
@@ -66,5 +70,5 @@ export default async function ResultPage({
     );
   }
 
-  return <Content />;
+  return <ContentNoSSR />;
 }

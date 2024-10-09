@@ -443,6 +443,7 @@ model Donations {
   userId                  String
   amount                  Decimal @db.Decimal(9, 2)
   stripeCheckoutSessionId String  @unique
+  createdAt DateTime? @default(now())
 
   @@index([userId])
 }

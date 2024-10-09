@@ -4,7 +4,7 @@ import { useSession } from '@repo/auth/react';
 import { Button } from '@repo/ui/components/button';
 import Confetti from 'react-confetti';
 
-export function Content() {
+export default function Content() {
   const session = useSession();
 
   const thankYouMessage = session?.user?.name

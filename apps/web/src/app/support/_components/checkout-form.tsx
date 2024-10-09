@@ -65,7 +65,7 @@ export default function CheckoutForm() {
     if (!isCustomAmount) {
       return;
     }
-    form.setValue('amount', form.getValues('customAmount'));
+    form.setValue('amount', form.getValues('customAmount')!);
   }, [isCustomAmount, form]);
 
   return (
