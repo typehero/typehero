@@ -1,7 +1,8 @@
 'use client';
 
-import type React from 'react';
-import { motion, useMotionTemplate, useMotionValue, MotionStyle, MotionValue } from 'framer-motion';
+import React from 'react';
+import type { MotionStyle, MotionValue } from 'framer-motion';
+import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
 import { useIsMobile } from '~/utils/useIsMobile';
 import { cn } from '@repo/ui/cn';
 
