@@ -14,6 +14,8 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@repo/ui/components/chart';
+import Link from 'next/link';
+import { ArrowUpRight } from '@repo/ui/icons';
 
 export const description = 'A radial chart with a grid';
 
@@ -77,7 +79,7 @@ export function ProgressChart() {
   const totalCompleted = 80;
   return (
     <div className="flex flex-row space-x-4">
-      <div className="grid h-fit grid-flow-col grid-rows-4 gap-6">
+      <div className="grid h-fit grid-flow-col grid-rows-3 gap-6">
         {chartData.map((d) => (
           <LegendItem
             key={d.difficulty}
@@ -98,7 +100,7 @@ export function ProgressChart() {
         >
           <ChartTooltip
             cursor={false}
-            content={<ChartTooltipContent hideLabel nameKey="difficulty" />}
+            content={<ChartTooltipContent hideLabel nameKey="difficulty" tooltipUnit="%" />}
           />
           <PolarAngleAxis domain={[0, 100]} type="number" tickLine={false} tick={false} />
           <PolarRadiusAxis type="category" tick={false} tickLine={false} axisLine={false}>
@@ -106,29 +108,35 @@ export function ProgressChart() {
               content={({ viewBox }) => {
                 if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
                   return (
-                    <text
-                      x={viewBox.cx}
-                      y={viewBox.cy}
-                      textAnchor="middle"
-                      dominantBaseline="middle"
-                    >
-                      <tspan
+                    <Link href="./v2/completed" className="group">
+                      <text
                         x={viewBox.cx}
-                        dy={-15}
                         y={viewBox.cy}
-                        className="fill-muted-foreground"
+                        textAnchor="middle"
+                        dominantBaseline="middle"
                       >
-                        Total
-                      </tspan>
-                      <tspan
-                        y={viewBox.cy}
-                        x={viewBox.cx}
-                        dy={15}
-                        className="fill-foreground text-4xl font-bold"
-                      >
-                        {totalCompleted}
-                      </tspan>
-                    </text>
+                        <tspan
+                          x={viewBox.cx}
+                          dy={-15}
+                          y={viewBox.cy}
+                          className="fill-muted-foreground group-hover:underline"
+                        >
+                          Total
+                        </tspan>
+                        <ArrowUpRight className="ml-1 h-4 w-4 " />
+                        <tspan
+                          y={viewBox.cy}
+                          x={viewBox.cx}
+                          dy={15}
+                          className="fill-foreground text-4xl font-bold"
+                        >
+                          {totalCompleted}
+                        </tspan>
+                      </text>
+                      <foreignObject x={viewBox.cx + 15} y={viewBox.cy - 25} width="20" height="20">
+                        <ArrowUpRight className="text-muted-foreground h-4 w-4" />
+                      </foreignObject>
+                    </Link>
                   );
                 }
               }}

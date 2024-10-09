@@ -5,20 +5,21 @@ import type { MotionStyle, MotionValue } from 'framer-motion';
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
 import { useIsMobile } from '~/utils/useIsMobile';
 import { cn } from '@repo/ui/cn';
+import { Card } from '@repo/ui/components/card';
+import styles from './card-radial-bg.module.css';
 
 type WrapperStyle = MotionStyle & {
   '--x': MotionValue<string>;
   '--y': MotionValue<string>;
 };
-export function NiceCard(
+export function CardWithRadialBg(
   props: React.PropsWithChildren<{ gradient?: string; className?: string }>,
 ) {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const isMobile = useIsMobile();
-  console.log('hi ?');
+
   function handleMouseMove(event: React.MouseEvent) {
-    console.log('hi ?');
     if (isMobile) return;
     const boundingRect = event.currentTarget.getBoundingClientRect();
     mouseX.set(event.clientX - boundingRect.left);
@@ -26,16 +27,22 @@ export function NiceCard(
   }
   return (
     <motion.div
-      className={cn('animated-feature-cards relative', props.className)}
+      className={cn(styles['radial-bg'], 'relative h-fit', props.className)}
       onMouseMove={handleMouseMove}
       style={
         {
           '--x': useMotionTemplate`${mouseX}px`,
           '--y': useMotionTemplate`${mouseY}px`,
+          '--color-center': '#3aecf8',
+          '--color-mid': '#5295dc',
+          '--color-fade': 'rgba(255, 255, 255, 0)',
+          '--color-outer': 'transparent',
         } as WrapperStyle
       }
     >
-      {props.children}
+      <Card className="border bg-transparent bg-gradient-to-br from-neutral-50 to-neutral-100 transition hover:border-transparent dark:from-neutral-900/95 dark:to-neutral-950/95">
+        {props.children}
+      </Card>
     </motion.div>
   );
 }

@@ -5,7 +5,7 @@ import { SharedSolutionCard } from './_components/shared-solution-card';
 import { Button } from '@repo/ui/components/button';
 import { ArrowUpRight, Github, Twitter } from '@repo/ui/icons';
 import Link from 'next/link';
-import { ActivityChart2 } from './_components/activity-chart-v2';
+import { ActivityChart2 } from './_components/activity-chart';
 import { getWeek, startOfWeek, eachDayOfInterval, subDays, getDay, getMonth } from 'date-fns';
 import { getBadges } from '~/app/(profile)/[username]/_components/dashboard/_actions';
 import { cn } from '@repo/ui/cn';
@@ -16,9 +16,9 @@ import {
   getGradient,
 } from '~/app/challenge/_components/comments/enhanced-user-badge.getTitles';
 import { getRelativeTime } from '~/utils/relativeTime';
-import { Card, CardContent, CardDescription, CardHeader } from '@repo/ui/components/card';
+import { CardContent, CardHeader } from '@repo/ui/components/card';
 import { Badges } from './_components/badges';
-import { NiceCard } from './_components/nice-cards';
+import { CardWithRadialBg } from './_components/card-radial-bg';
 import { BackgroundGrid } from '~/app/_components/hero-illustration';
 
 const hardcodedGitHubActivity = [
@@ -756,19 +756,17 @@ export default async function ProfilePage(props: { params: { username: string } 
 
   return (
     <div className="container space-y-8 pt-16">
-      <div className="relative flex flex-row justify-between space-x-4">
+      <div className="relative flex flex-row justify-between ">
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <BackgroundGrid />
         </div>
         <div className="relative">
-          <div className="relative z-0">
-            <div
-              className={cn(
-                'absolute inset-4 h-[120px] w-[120px] overflow-hidden rounded-full blur-3xl',
-                gradient,
-              )}
-            />
-          </div>
+          <div
+            className={cn(
+              'absolute inset-10 h-[160px] w-[160px] overflow-hidden rounded-full blur-3xl',
+              gradient,
+            )}
+          />
           <div className="flex h-full flex-col justify-center space-y-3">
             <div className="flex flex-row items-end space-x-4">
               <Avatar className="z-10 h-56 w-56 rounded-lg transition group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:-rotate-1">
@@ -806,87 +804,81 @@ export default async function ProfilePage(props: { params: { username: string } 
           </div>
         </div>
 
-        <div className="">
+        <div className="h-fit items-center">
           <ProgressChart />
         </div>
       </div>
 
       <div className="grid grid-cols-1 grid-rows-2 gap-8 md:grid-cols-8">
-        <NiceCard className="col-span-3">
-          <Card className="border bg-transparent bg-gradient-to-br from-neutral-50 to-neutral-100 transition hover:border-transparent dark:from-neutral-900/95 dark:to-neutral-950/95">
-            <CardHeader>
-              <Button
-                asChild
-                size="xs"
-                variant="link"
-                className="text-muted-foreground hover:text-primary w-fit text-lg "
-              >
-                <Link href="./v2/completed">
-                  Shared Solutions
-                  <ArrowUpRight className="ml-1 h-4 w-4 " />
-                </Link>
-              </Button>
-            </CardHeader>
+        <CardWithRadialBg className="col-span-3">
+          <CardHeader>
+            <Button
+              asChild
+              size="xs"
+              variant="link"
+              className="text-muted-foreground hover:text-primary w-fit text-lg "
+            >
+              <Link href="./v2/completed">
+                Shared Solutions
+                <ArrowUpRight className="ml-1 h-4 w-4 " />
+              </Link>
+            </Button>
+          </CardHeader>
 
-            <CardContent className="flex flex-col space-y-2">
-              <SharedSolutionCard
-                solution={{
-                  isPinned: true,
-                  voteCount: 10,
-                  commentCount: 6,
-                  challenge: {
-                    name: 'Awaited',
-                    difficulty: 'MEDIUM',
-                  },
-                }}
-              />
-              <SharedSolutionCard
-                solution={{
-                  isPinned: false,
-                  voteCount: 10,
-                  commentCount: 6,
-                  challenge: {
-                    name: 'Awaited',
-                    difficulty: 'MEDIUM',
-                  },
-                }}
-              />
-              <SharedSolutionCard
-                solution={{
-                  isPinned: false,
-                  voteCount: 10,
-                  commentCount: 6,
-                  challenge: {
-                    name: 'Awaited',
-                    difficulty: 'MEDIUM',
-                  },
-                }}
-              />
-            </CardContent>
-          </Card>
-        </NiceCard>
+          <CardContent className="flex flex-col space-y-2">
+            <SharedSolutionCard
+              solution={{
+                isPinned: true,
+                voteCount: 10,
+                commentCount: 6,
+                challenge: {
+                  name: 'Awaited',
+                  difficulty: 'MEDIUM',
+                },
+              }}
+            />
+            <SharedSolutionCard
+              solution={{
+                isPinned: false,
+                voteCount: 10,
+                commentCount: 6,
+                challenge: {
+                  name: 'Awaited',
+                  difficulty: 'MEDIUM',
+                },
+              }}
+            />
+            <SharedSolutionCard
+              solution={{
+                isPinned: false,
+                voteCount: 10,
+                commentCount: 6,
+                challenge: {
+                  name: 'Awaited',
+                  difficulty: 'MEDIUM',
+                },
+              }}
+            />
+          </CardContent>
+        </CardWithRadialBg>
 
-        <NiceCard className="col-span-2 w-fit">
-          <Card className="h-full border bg-transparent bg-gradient-to-br from-neutral-50 to-neutral-100 transition hover:border-transparent dark:from-neutral-900/95 dark:to-neutral-950/95">
-            <CardHeader>
-              <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Badges</h1>
-            </CardHeader>
-            <CardContent>
-              <Badges data={badges} />
-            </CardContent>
-          </Card>
-        </NiceCard>
+        <CardWithRadialBg className="col-span-2 w-fit">
+          <CardHeader>
+            <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Badges</h1>
+          </CardHeader>
+          <CardContent>
+            <Badges data={badges} />
+          </CardContent>
+        </CardWithRadialBg>
 
-        <NiceCard className="col-span-3 h-fit w-fit">
-          <Card className="border bg-transparent bg-gradient-to-br from-neutral-50 to-neutral-100 transition hover:border-transparent dark:from-neutral-900/95 dark:to-neutral-950/95">
-            <CardHeader>
-              <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Recent Activity</h1>
-            </CardHeader>
-            <CardContent>
-              <ActivityChart2 data={generateSampleData()} />
-            </CardContent>
-          </Card>
-        </NiceCard>
+        <CardWithRadialBg className="col-span-3 h-fit w-fit">
+          <CardHeader>
+            <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Recent Activity</h1>
+          </CardHeader>
+          <CardContent>
+            <ActivityChart2 data={generateSampleData()} />
+          </CardContent>
+        </CardWithRadialBg>
       </div>
     </div>
   );
