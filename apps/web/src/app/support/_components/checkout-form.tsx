@@ -1,7 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@repo/ui/components/button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@repo/ui/components/card';
 import {
   Form,
   FormControl,
@@ -10,22 +13,12 @@ import {
   FormLabel,
   FormMessage,
 } from '@repo/ui/components/form';
-import { NumericFormat } from 'react-number-format';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@repo/ui/components/input';
-import { Button } from '@repo/ui/components/button';
-import { RadioGroup, RadioGroupItem } from '@repo/ui/components/radio-group';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@repo/ui/components/card';
 import { Label } from '@repo/ui/components/label';
+import { RadioGroup, RadioGroupItem } from '@repo/ui/components/radio-group';
+import { useForm } from 'react-hook-form';
+import { NumericFormat } from 'react-number-format';
+import { z } from 'zod';
 import { createCheckoutSession } from '../_actions/stripe';
 
 const AMOUNTS = ['5', '10', '20', '50', '100'];
@@ -36,7 +29,6 @@ export default function CheckoutForm() {
     amount: z.string().refine(
       (val) => {
         const number = parseFloat(val);
-        console.log({ val, number });
 
         if (val === 'custom') {
           return true;
@@ -68,15 +60,22 @@ export default function CheckoutForm() {
 
   const watchAmount = form.watch('amount');
 
+  // kill me
+  useEffect(() => {
+    if (!isCustomAmount) {
+      return;
+    }
+    form.setValue('amount', form.getValues('customAmount'));
+  }, [isCustomAmount, form]);
+
   return (
-    <Card className="mx-auto w-full max-w-lg">
-      <CardHeader>
-        <CardTitle>Make a Donation</CardTitle>
-        <CardDescription>Support our cause with a one-time donation</CardDescription>
+    <Card className="w-full border-transparent">
+      <CardHeader className="px-0 pt-0">
+        <CardTitle>Select an amount</CardTitle>
       </CardHeader>
       <Form {...form}>
         <form className="z-10 flex flex-col space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 px-0">
             {Boolean(isCustomAmount) && (
               <FormField
                 control={form.control}
@@ -87,6 +86,7 @@ export default function CheckoutForm() {
                     <FormControl>
                       <NumericFormat
                         {...field}
+                        allowNegative={false}
                         defaultValue={field.value}
                         customInput={Input}
                         thousandSeparator=","
@@ -148,13 +148,16 @@ export default function CheckoutForm() {
               )}
             />
           </CardContent>
-          <CardFooter>
+          <CardFooter className="px-0">
             <Button
               type="submit"
               variant="secondary"
               className="border border-slate-400 dark:border-slate-800"
             >
-              Donate ${parseFloat(watchAmount).toFixed(2)}
+              Donate{' '}
+              {Number.isNaN(parseFloat(watchAmount))
+                ? `a valid amount!`
+                : `$${parseFloat(watchAmount).toFixed(2)}`}
             </Button>
           </CardFooter>
         </form>

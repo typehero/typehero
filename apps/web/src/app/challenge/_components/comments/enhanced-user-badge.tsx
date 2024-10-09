@@ -16,6 +16,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from '@repo/ui/componen
 import { getTitles, type TitleInfo } from './enhanced-user-badge.getTitles';
 import { Skeleton } from '@repo/ui/components/skeleton';
 import { DefaultAvatar } from '~/components/default-avatar';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 
 interface UserBadgeProps {
   user: {
@@ -44,6 +45,7 @@ export function UserBadge(props: UserBadgeProps) {
   const onMouseOver = () => {
     setQueryEnabled(true);
   };
+  console.log(props.user.roles);
   const gradient = getGradient(props.user.roles);
   const shouldShowHoverCard = props.user.bio !== '' || query.data.titles.length > 0;
 
@@ -141,13 +143,15 @@ function Titles(props: { data: TitleInfo[] }) {
       {props.data.map((t) => {
         const Icon = TITLE_TO_ICON[t.type];
         return (
-          <Badge
-            className="rounded-full bg-gradient-to-br from-sky-600 to-sky-700 px-2  "
-            key={t.type}
-          >
-            <Icon className="h-5 w-5 pr-1" />
-            {t.label}
-          </Badge>
+          <Tooltip key={t.type}>
+            <TooltipTrigger asChild>
+              <Badge className="rounded-full bg-gradient-to-br from-sky-600 to-sky-700 px-2  ">
+                <Icon className="h-5 w-5 pr-1" />
+                {t.label}
+              </Badge>
+            </TooltipTrigger>
+            <TooltipContent>{t.description}</TooltipContent>
+          </Tooltip>
         );
       })}
     </div>
