@@ -39,8 +39,8 @@ function BadgesStuff(props: { data: BadgeInfo[] }) {
           </Tooltip>
         );
       })}
-      {props.data.length < 9
-        ? Array.from({ length: 9 - props.data.length }).map((i) => (
+      {props.data.length < 12
+        ? Array.from({ length: 12 - props.data.length }).map((i) => (
             <EmptyBadge key={`empty-badge-${i}`} />
           ))
         : null}

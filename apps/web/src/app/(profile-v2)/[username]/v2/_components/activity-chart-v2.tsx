@@ -72,7 +72,7 @@ export function ActivityChart2(props: { data: ReturnType<typeof generateSampleDa
                   width={squareLength + borderH}
                   height={squareLength + borderV}
                   // className="fill-zinc-500"
-                  className="fill-zinc-100 dark:fill-zinc-900"
+                  className="fill-transparent"
                 />
                 <rect
                   x={cx - squareLength / 2}

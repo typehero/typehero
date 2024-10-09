@@ -16,8 +16,10 @@ import {
   getGradient,
 } from '~/app/challenge/_components/comments/enhanced-user-badge.getTitles';
 import { getRelativeTime } from '~/utils/relativeTime';
-import { Card } from '@repo/ui/components/card';
+import { Card, CardContent, CardDescription, CardHeader } from '@repo/ui/components/card';
 import { Badges } from './_components/badges';
+import { NiceCard } from './_components/nice-cards';
+import { BackgroundGrid } from '~/app/_components/hero-illustration';
 
 const hardcodedGitHubActivity = [
   {
@@ -753,26 +755,29 @@ export default async function ProfilePage(props: { params: { username: string } 
   const gradient = getGradient(user.roles);
 
   return (
-    <div className="container pt-16">
-      <div className="grid grid-cols-1 grid-rows-2 gap-8 md:grid-cols-8">
-        <div className="relative col-span-4">
-          <Card className="group h-full overflow-hidden bg-zinc-100 p-8 dark:bg-zinc-900/60">
-            <Avatar className="absolute -inset-4 z-10 h-56 w-56 rounded-lg transition group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:-rotate-1">
-              <AvatarImage src={user.image ?? ''} alt={`${user.name} profile picture`} />
-              <AvatarFallback className="rounded-lg capitalize">
-                {user.name.slice(0, 1)}
-              </AvatarFallback>
-            </Avatar>
-            <div className="relative z-0">
-              <div
-                className={cn(
-                  'absolute inset-4 h-[120px] w-[120px] overflow-hidden rounded-full blur-3xl',
-                  gradient,
-                )}
-              />
-            </div>
-            <div className="space-y-6">
-              <div className="ml-52 mt-8 flex flex-col space-y-2">
+    <div className="container space-y-8 pt-16">
+      <div className="relative flex flex-row justify-between space-x-4">
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <BackgroundGrid />
+        </div>
+        <div className="relative">
+          <div className="relative z-0">
+            <div
+              className={cn(
+                'absolute inset-4 h-[120px] w-[120px] overflow-hidden rounded-full blur-3xl',
+                gradient,
+              )}
+            />
+          </div>
+          <div className="flex h-full flex-col justify-center space-y-3">
+            <div className="flex flex-row items-end space-x-4">
+              <Avatar className="z-10 h-56 w-56 rounded-lg transition group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:-rotate-1">
+                <AvatarImage src={user.image ?? ''} alt={`${user.name} profile picture`} />
+                <AvatarFallback className="rounded-lg capitalize">
+                  {user.name.slice(0, 1)}
+                </AvatarFallback>
+              </Avatar>
+              <div className="ml-56 flex flex-col space-y-2">
                 <h1
                   className={cn(
                     'w-min bg-gradient-to-r bg-clip-text text-3xl font-bold text-transparent',
@@ -794,31 +799,36 @@ export default async function ProfilePage(props: { params: { username: string } 
                   </Button>
                 </div>
               </div>
-              <div className="max-w-[60ch]">
-                <p className="leading-7 tracking-tight">{user.bio}</p>
-              </div>
             </div>
-          </Card>
+            <div className="max-w-[60ch]">
+              <p className="leading-7 tracking-tight">{user.bio}</p>
+            </div>
+          </div>
         </div>
 
-        <Card className="col-span-4 bg-zinc-100 p-12 dark:bg-zinc-900/60">
+        <div className="">
           <ProgressChart />
-        </Card>
+        </div>
+      </div>
 
-        <Card className="col-span-3 bg-zinc-100 p-6 dark:bg-zinc-900/60">
-          <div className="flex flex-col space-y-4">
-            <Button
-              asChild
-              size="xs"
-              variant="link"
-              className="text-muted-foreground hover:text-primary w-fit text-lg "
-            >
-              <Link href="./v2/completed">
-                Shared Solutions
-                <ArrowUpRight className="ml-1 h-4 w-4 " />
-              </Link>
-            </Button>
-            <div className="flex flex-col space-y-2">
+      <div className="grid grid-cols-1 grid-rows-2 gap-8 md:grid-cols-8">
+        <NiceCard className="col-span-3">
+          <Card className="border bg-transparent bg-gradient-to-br from-neutral-50 to-neutral-100 transition hover:border-transparent dark:from-neutral-900/95 dark:to-neutral-950/95">
+            <CardHeader>
+              <Button
+                asChild
+                size="xs"
+                variant="link"
+                className="text-muted-foreground hover:text-primary w-fit text-lg "
+              >
+                <Link href="./v2/completed">
+                  Shared Solutions
+                  <ArrowUpRight className="ml-1 h-4 w-4 " />
+                </Link>
+              </Button>
+            </CardHeader>
+
+            <CardContent className="flex flex-col space-y-2">
               <SharedSolutionCard
                 solution={{
                   isPinned: true,
@@ -852,23 +862,31 @@ export default async function ProfilePage(props: { params: { username: string } 
                   },
                 }}
               />
-            </div>
-          </div>
-        </Card>
+            </CardContent>
+          </Card>
+        </NiceCard>
 
-        <Card className="col-span-2 h-fit bg-zinc-100 p-6 dark:bg-zinc-900/60">
-          <div className="space-y-2">
-            <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Badges</h1>
-            <Badges data={badges} />
-          </div>
-        </Card>
+        <NiceCard className="col-span-2 w-fit">
+          <Card className="h-full border bg-transparent bg-gradient-to-br from-neutral-50 to-neutral-100 transition hover:border-transparent dark:from-neutral-900/95 dark:to-neutral-950/95">
+            <CardHeader>
+              <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Badges</h1>
+            </CardHeader>
+            <CardContent>
+              <Badges data={badges} />
+            </CardContent>
+          </Card>
+        </NiceCard>
 
-        <Card className="col-span-3 h-fit bg-zinc-100 p-6 px-12 dark:bg-zinc-900/60">
-          <div className="w-fit space-y-2">
-            <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Recent Activity</h1>
-            <ActivityChart2 data={generateSampleData()} />
-          </div>
-        </Card>
+        <NiceCard className="col-span-3 h-fit w-fit">
+          <Card className="border bg-transparent bg-gradient-to-br from-neutral-50 to-neutral-100 transition hover:border-transparent dark:from-neutral-900/95 dark:to-neutral-950/95">
+            <CardHeader>
+              <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Recent Activity</h1>
+            </CardHeader>
+            <CardContent>
+              <ActivityChart2 data={generateSampleData()} />
+            </CardContent>
+          </Card>
+        </NiceCard>
       </div>
     </div>
   );
