@@ -64,6 +64,9 @@ export function FeatureAnnouncementModal() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent
+        onPointerDownOutside={() => {
+          localStorage.setItem('hasSeenFeatureAnnouncement', 'true');
+        }}
         displayX={false}
         className="max-h-[90vh] overflow-y-auto sm:max-w-[550px] sm:rounded-sm"
       >
