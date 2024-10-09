@@ -2,6 +2,7 @@
 
 import { useSession } from '@repo/auth/react';
 import { Button } from '@repo/ui/components/button';
+import Link from 'next/link';
 import Confetti from 'react-confetti';
 
 export default function Content() {
@@ -18,11 +19,11 @@ export default function Content() {
           {thankYouMessage}
         </h1>
         <div className="flex flex-col gap-4">
-          <a href="/explore">
+          <Link href="/explore">
             <Button className="w-56" variant="default" size="lg">
               Go to explore
             </Button>
-          </a>
+          </Link>
         </div>
       </div>
       <Confetti />
