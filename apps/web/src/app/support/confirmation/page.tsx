@@ -3,6 +3,7 @@ import { stripe } from '../_utils/stripe';
 import { auth } from '~/server/auth';
 import { prisma } from '@repo/db';
 import { Prisma } from '@repo/db/types';
+import { Content } from './content';
 
 export default async function ResultPage({
   searchParams,
@@ -30,7 +31,6 @@ export default async function ResultPage({
     checkoutSession.amount_total > 0
   ) {
     const d = (checkoutSession.amount_total / 100).toFixed(2);
-    console.log({ d });
     const amount = new Prisma.Decimal(12.2);
     await prisma.user.update({
       where: { id: session.user.id },
@@ -56,12 +56,15 @@ export default async function ResultPage({
     });
   }
 
-  return (
-    <>
-      <h2>Status: {paymentIntent.status}</h2>
-      <h3>Checkout Session response:</h3>
-      <pre>{JSON.stringify(checkoutSession, null, 2)}</pre>
-      <pre>{JSON.stringify(session, null, 2)}</pre>
-    </>
-  );
+  if (paymentIntent.status !== 'succeeded') {
+    return (
+      <div className="container flex h-full flex-col items-center justify-center p-4">
+        <h1 className="mb-8 text-4xl font-bold tracking-tight text-neutral-900 dark:text-white">
+          Something went wrong.
+        </h1>
+      </div>
+    );
+  }
+
+  return <Content />;
 }

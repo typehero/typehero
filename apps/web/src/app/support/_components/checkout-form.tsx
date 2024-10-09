@@ -21,7 +21,7 @@ import { NumericFormat } from 'react-number-format';
 import { z } from 'zod';
 import { createCheckoutSession } from '../_actions/stripe';
 
-const AMOUNTS = ['5', '10', '20', '50', '100'];
+const AMOUNTS = ['5', '10', '25'];
 
 export default function CheckoutForm() {
   const [isCustomAmount, setIsCustomAmount] = useState(false);
@@ -69,13 +69,13 @@ export default function CheckoutForm() {
   }, [isCustomAmount, form]);
 
   return (
-    <Card className="w-full border-transparent">
-      <CardHeader className="px-0 pt-0">
+    <Card className="h-auto w-full border bg-transparent bg-gradient-to-br from-neutral-50 to-neutral-100 transition hover:border-transparent dark:from-neutral-900/95 dark:to-neutral-950/95">
+      <CardHeader>
         <CardTitle>Select an amount</CardTitle>
       </CardHeader>
       <Form {...form}>
         <form className="z-10 flex flex-col space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
-          <CardContent className="space-y-4 px-0">
+          <CardContent className="space-y-4">
             {Boolean(isCustomAmount) && (
               <FormField
                 control={form.control}
@@ -148,7 +148,7 @@ export default function CheckoutForm() {
               )}
             />
           </CardContent>
-          <CardFooter className="px-0">
+          <CardFooter>
             <Button
               type="submit"
               variant="secondary"

@@ -45,7 +45,7 @@ export function UserBadge(props: UserBadgeProps) {
   const onMouseOver = () => {
     setQueryEnabled(true);
   };
-  console.log(props.user.roles);
+
   const gradient = getGradient(props.user.roles);
   const shouldShowHoverCard = props.user.bio !== '' || query.data.titles.length > 0;
 
@@ -121,7 +121,7 @@ const TITLE_TO_CLASSNAME: Record<TitleInfo['type'], string> = {
   admin: 'bg-gradient-to-r from-rose-400 to-orange-500 dark:from-rose-400 dark:to-orange-300',
   contributor: 'bg-gradient-to-r from-sky-400 to-cyan-600 dark:from-sky-400 dark:to-cyan-300',
   supporter:
-    'bg-gradient-to-r from-emerald-500 to-emerald-600 dark:from-emerald-200 dark:to-emerald-500',
+    'bg-gradient-to-r from-yellow-500 to-yellow-600 dark:from-yellow-200 dark:to-yellow-500',
 };
 
 function getGradient(roles: Role[]) {
