@@ -35,11 +35,11 @@ export default async function DonatePage() {
       </div>
       <Button
         asChild
-        className="donate-stripe-link-btn group relative hidden w-fit overflow-hidden rounded-xl p-[1px] font-bold transition-all duration-300 md:mr-0 lg:mr-auto dark:block"
+        className="donate-stripe-link-btn group relative w-fit overflow-hidden rounded-xl p-[1px] font-bold transition-all duration-300 md:mr-0 lg:mr-auto"
         variant="outline"
       >
         <a href="https://donate.stripe.com/7sIdR1c992mdf1m000">
-          <span className="inline-flex h-full w-fit items-center gap-2 rounded-xl px-4 py-2 transition-all duration-300 dark:bg-neutral-900 dark:text-white">
+          <span className="inline-flex h-full w-fit items-center gap-2 rounded-xl bg-white px-4 py-2 text-black transition-all duration-300 dark:bg-neutral-900 dark:text-white">
             Click to Donate
           </span>
         </a>
