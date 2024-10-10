@@ -131,7 +131,7 @@ export async function Navigation() {
               <Suspense>
                 <Search />
               </Suspense>
-              <Link className="donate-btn" href="/support">
+              <Link className="donate-btn text-black dark:text-white" href="/support">
                 Support Us
               </Link>
               {session ? <NotificationLink notificationCount={notificationCount} /> : null}
