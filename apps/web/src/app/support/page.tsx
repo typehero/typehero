@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import CheckoutForm from './_components/checkout-form';
 import { auth } from '~/server/auth';
 import { Button } from '@repo/ui/components/button';
 
