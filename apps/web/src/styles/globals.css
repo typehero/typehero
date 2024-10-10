@@ -281,6 +281,17 @@ main {
   animation: gradient-rotate 5s linear infinite reverse;
 }
 
+.donate-stripe-link-btn {
+  background: linear-gradient(
+    var(--gradient-angle),
+    hsla(46, 97%, 65%, 0.5),
+    hsla(46, 97%, 65%, 0.1),
+    hsla(46, 97%, 65%, 1),
+    hsla(46, 97%, 65%, 0.3)
+  ) !important;
+  animation: gradient-rotate 5s linear infinite reverse;
+}
+
 .wl-form-button {
   background: linear-gradient(var(--gradient-angle), #34d399, #60a5fa, #ff88ff, #ff8844);
   animation: gradient-rotate 5s linear infinite reverse;

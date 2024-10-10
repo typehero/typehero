@@ -441,7 +441,7 @@ model Donation {
   id                      Int     @id @default(autoincrement())
   user                    User    @relation(fields: [userId], references: [id])
   userId                  String
-  amount                  Decimal @db.Decimal(9, 2)
+  amount                  Int
   stripeCheckoutSessionId String  @unique
   createdAt DateTime? @default(now())
 
