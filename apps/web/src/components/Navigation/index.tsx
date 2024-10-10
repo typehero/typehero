@@ -128,12 +128,12 @@ export async function Navigation() {
 
           <div className="flex">
             <div className="flex items-center justify-end gap-2">
-              <Link className="donate-btn" href="/support">
-                Support Us
-              </Link>
               <Suspense>
                 <Search />
               </Suspense>
+              <Link className="donate-btn" href="/support">
+                Support Us
+              </Link>
               {session ? <NotificationLink notificationCount={notificationCount} /> : null}
               {featureFlags?.enableLogin ? (
                 <LoginButton isAdminOrMod={isAdminOrMod} session={session} isAdmin={isAdminRole} />

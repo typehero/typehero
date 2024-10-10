@@ -143,7 +143,7 @@ model User {
   imageUpload          ImageUpload[]
   tracks               Track[]
   BetaTokens           BetaTokens[]
-  donations            Donations[]
+  donations            Donation[]
   shortUrls            ShortURL[]
   toUserNotification   Notification[] @relation("notificationToUser")
   fromUserNotification Notification[] @relation("notificationFromUser")
@@ -437,7 +437,7 @@ model BetaTokens {
   @@index([userId])
 }
 
-model Donations {
+model Donation {
   id                      Int     @id @default(autoincrement())
   user                    User    @relation(fields: [userId], references: [id])
   userId                  String

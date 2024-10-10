@@ -3,7 +3,7 @@ import CheckoutForm from './_components/checkout-form';
 import { auth } from '~/server/auth';
 
 export const metadata: Metadata = {
-  title: 'Donate with hosted Checkout | Next.js + TypeScript Example',
+  title: 'Support the Platform | TypeHero',
 };
 
 export default async function DonatePage() {
