@@ -779,7 +779,7 @@ body.mobile-nav-active {
 }
 
 .donate-btn:hover:before {
-  animation: shimmer 0.8s linear forwards;
+  animation: shimmer 1.69s linear infinite;
 }
 
 @keyframes shimmer {
@@ -787,11 +787,11 @@ body.mobile-nav-active {
     opacity: 1;
     transform: translateX(-100%) translateY(0rem) rotate(-30deg);
   }
-  50% {
+  42% {
     opacity: 1;
     transform: translateX(0%) translateY(0rem) rotate(-30deg);
   }
-  100% {
+  69% {
     opacity: 0;
     transform: translateX(100%) translateY(-1rem) rotate(-30deg);
   }
