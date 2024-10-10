@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Confetti from 'react-confetti';
 
 export default function Content() {
-  const session = useSession();
+  const { data: session } = useSession();
 
   const thankYouMessage = session?.user?.name
     ? `Thank you ${session.user.name} for you donation!`
@@ -21,12 +21,12 @@ export default function Content() {
         <div className="flex flex-col gap-4">
           <Link href="/explore">
             <Button className="w-56" variant="default" size="lg">
-              Go to explore
+              Explore Our Challenges
             </Button>
           </Link>
         </div>
       </div>
-      <Confetti />
+      <Confetti recycle={false} />
     </>
   );
 }
