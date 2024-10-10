@@ -754,3 +754,45 @@ a {
 body.mobile-nav-active {
   overflow: hidden;
 }
+
+.donate-btn {
+  background: #facc15;
+  color: black;
+  border: none;
+  font-size: 1rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.donate-btn:before {
+  content: '';
+  background: #ffffff80;
+  filter: blur(8px);
+  width: 150%;
+  height: 1rem;
+  position: absolute;
+  top: 50%;
+  transform: rotate(-30deg) translateX(-100%) translateY(-25%);
+  opacity: 0;
+}
+
+.donate-btn:hover:before {
+  animation: shimmer 0.8s linear forwards;
+}
+
+@keyframes shimmer {
+  0% {
+    opacity: 1;
+    transform: translateX(-100%) translateY(0rem) rotate(-30deg);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(0%) translateY(0rem) rotate(-30deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100%) translateY(-1rem) rotate(-30deg);
+  }
+}

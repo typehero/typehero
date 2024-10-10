@@ -49,6 +49,9 @@ export function Navigation() {
             <div className="flex items-center justify-end gap-2">
               <ThemeButton />
               <LoginButton />
+              <Link className='donate-btn' href="/support">
+                Donate
+              </Link>
             </div>
           </div>
         </div>
