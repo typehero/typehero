@@ -128,6 +128,9 @@ export async function Navigation() {
 
           <div className="flex">
             <div className="flex items-center justify-end gap-2">
+              <Link className="donate-btn" href="/support">
+                Support Us
+              </Link>
               <Suspense>
                 <Search />
               </Suspense>
