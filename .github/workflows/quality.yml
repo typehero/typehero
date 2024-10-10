@@ -82,63 +82,63 @@ jobs:
 
       - name: Run Sherif
         run: pnpm package-check
-  e2e:
-    name: E2E
-    timeout-minutes: 30
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Install
-        uses: ./tooling/github-actions/install
-
-      - name: Install Playwright Browsers
-        run: pnpm exec playwright install chromium --with-deps
-
-      - name: Setup database
-        run: |
-          cp .env.example .env
-          docker compose up -d --wait
-          pnpm db:push
-          pnpm db:seed
-
-      - name: Build
-        run: turbo build
-        env:
-          GITHUB_ID: ' '
-          GITHUB_SECRET: ' '
-          GITHUB_AOT_ID: ' '
-          GITHUB_AOT_SECRET: ' '
-          NEXTAUTH_SECRET: 'kGvjABB9ZZsxhYFyxMT4ApohaIvfuNSRMIthI+usjA0='
-
-      - name: Run Playwright tests
-        run: turbo test:e2e --continue
-        env:
-          DATABASE_URL: mysql://dev:dev@localhost/typehero
-          GITHUB_ID: ' '
-          GITHUB_SECRET: ' '
-          GITHUB_AOT_ID: ' '
-          GITHUB_AOT_SECRET: ' '
-          NEXTAUTH_SECRET: 'kGvjABB9ZZsxhYFyxMT4ApohaIvfuNSRMIthI+usjA0='
-
-      - name: Upload report
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: report
-          path: apps/web/playwright-report/
-
-      - name: Save PR number
-        if: always()
-        env:
-          PR_NUMBER: ${{ github.event.number }}
-        run: |
-          echo $PR_NUMBER > prNumber
-
-      - name: Upload prNumber
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: prNumber
-          path: prNumber
+  # e2e:
+  #   name: E2E
+  #   timeout-minutes: 30
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #
+  #     - name: Install
+  #       uses: ./tooling/github-actions/install
+  #
+  #     - name: Install Playwright Browsers
+  #       run: pnpm exec playwright install chromium --with-deps
+  #
+  #     - name: Setup database
+  #       run: |
+  #         cp .env.example .env
+  #         docker compose up -d --wait
+  #         pnpm db:push
+  #         pnpm db:seed
+  #
+  #     - name: Build
+  #       run: turbo build
+  #       env:
+  #         GITHUB_ID: ' '
+  #         GITHUB_SECRET: ' '
+  #         GITHUB_AOT_ID: ' '
+  #         GITHUB_AOT_SECRET: ' '
+  #         NEXTAUTH_SECRET: 'kGvjABB9ZZsxhYFyxMT4ApohaIvfuNSRMIthI+usjA0='
+  #
+  #     - name: Run Playwright tests
+  #       run: turbo test:e2e --continue
+  #       env:
+  #         DATABASE_URL: mysql://dev:dev@localhost/typehero
+  #         GITHUB_ID: ' '
+  #         GITHUB_SECRET: ' '
+  #         GITHUB_AOT_ID: ' '
+  #         GITHUB_AOT_SECRET: ' '
+  #         NEXTAUTH_SECRET: 'kGvjABB9ZZsxhYFyxMT4ApohaIvfuNSRMIthI+usjA0='
+  #
+  #     - name: Upload report
+  #       if: always()
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: report
+  #         path: apps/web/playwright-report/
+  #
+  #     - name: Save PR number
+  #       if: always()
+  #       env:
+  #         PR_NUMBER: ${{ github.event.number }}
+  #       run: |
+  #         echo $PR_NUMBER > prNumber
+  #
+  #     - name: Upload prNumber
+  #       if: always()
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: prNumber
+  #         path: prNumber

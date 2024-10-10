@@ -16,6 +16,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from '@repo/ui/componen
 import { getTitles, type TitleInfo } from './enhanced-user-badge.getTitles';
 import { Skeleton } from '@repo/ui/components/skeleton';
 import { DefaultAvatar } from '~/components/default-avatar';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 
 interface UserBadgeProps {
   user: {
@@ -44,6 +45,7 @@ export function UserBadge(props: UserBadgeProps) {
   const onMouseOver = () => {
     setQueryEnabled(true);
   };
+
   const gradient = getGradient(props.user.roles);
   const shouldShowHoverCard = props.user.bio !== '' || query.data.titles.length > 0;
 
@@ -119,7 +121,7 @@ const TITLE_TO_CLASSNAME: Record<TitleInfo['type'], string> = {
   admin: 'bg-gradient-to-r from-rose-400 to-orange-500 dark:from-rose-400 dark:to-orange-300',
   contributor: 'bg-gradient-to-r from-sky-400 to-cyan-600 dark:from-sky-400 dark:to-cyan-300',
   supporter:
-    'bg-gradient-to-r from-emerald-500 to-emerald-600 dark:from-emerald-200 dark:to-emerald-500',
+    'bg-gradient-to-r from-yellow-500 to-yellow-600 dark:from-yellow-200 dark:to-yellow-500',
 };
 
 function getGradient(roles: Role[]) {
@@ -141,13 +143,15 @@ function Titles(props: { data: TitleInfo[] }) {
       {props.data.map((t) => {
         const Icon = TITLE_TO_ICON[t.type];
         return (
-          <Badge
-            className="rounded-full bg-gradient-to-br from-sky-600 to-sky-700 px-2  "
-            key={t.type}
-          >
-            <Icon className="h-5 w-5 pr-1" />
-            {t.label}
-          </Badge>
+          <Tooltip key={t.type}>
+            <TooltipTrigger asChild>
+              <Badge className="rounded-full bg-gradient-to-br from-sky-600 to-sky-700 px-2  ">
+                <Icon className="h-5 w-5 pr-1" />
+                {t.label}
+              </Badge>
+            </TooltipTrigger>
+            <TooltipContent>{t.description}</TooltipContent>
+          </Tooltip>
         );
       })}
     </div>

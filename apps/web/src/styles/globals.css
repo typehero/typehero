@@ -281,6 +281,17 @@ main {
   animation: gradient-rotate 5s linear infinite reverse;
 }
 
+.donate-stripe-link-btn {
+  background: linear-gradient(
+    var(--gradient-angle),
+    hsla(46, 97%, 65%, 0.5),
+    hsla(46, 97%, 65%, 0.1),
+    hsla(46, 97%, 65%, 1),
+    hsla(46, 97%, 65%, 0.3)
+  ) !important;
+  animation: gradient-rotate 5s linear infinite reverse;
+}
+
 .wl-form-button {
   background: linear-gradient(var(--gradient-angle), #34d399, #60a5fa, #ff88ff, #ff8844);
   animation: gradient-rotate 5s linear infinite reverse;
@@ -753,4 +764,45 @@ a {
 
 body.mobile-nav-active {
   overflow: hidden;
+}
+
+.donate-btn {
+  border: 1px solid #bea74b;
+  color: white;
+  font-size: 1rem;
+  padding: 0.4rem 1.25rem;
+  border-radius: 1.1rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.donate-btn:before {
+  content: '';
+  background: #ffffff80;
+  filter: blur(8px);
+  width: 150%;
+  height: 1rem;
+  position: absolute;
+  top: 50%;
+  transform: rotate(-30deg) translateX(-100%) translateY(-25%);
+  opacity: 0;
+}
+
+.donate-btn:hover:before {
+  animation: shimmer 1.69s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    opacity: 1;
+    transform: translateX(-100%) translateY(0rem) rotate(-30deg);
+  }
+  42% {
+    opacity: 1;
+    transform: translateX(0%) translateY(0rem) rotate(-30deg);
+  }
+  69% {
+    opacity: 0;
+    transform: translateX(100%) translateY(-1rem) rotate(-30deg);
+  }
 }
