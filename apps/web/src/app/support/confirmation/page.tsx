@@ -47,10 +47,13 @@ export default async function ResultPage({
           },
         },
         roles: {
-          upsert: {
-            where: { role: 'SUPPORTER' },
-            create: { role: 'SUPPORTER' },
-            update: {},
+          connectOrCreate: {
+            where: {
+              role: 'SUPPORTER',
+            },
+            create: {
+              role: 'SUPPORTER',
+            },
           },
         },
       },
