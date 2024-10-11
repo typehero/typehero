@@ -4,6 +4,7 @@ import { Button } from '@repo/ui/components/button';
 import { toast } from '@repo/ui/components/use-toast';
 import { useState } from 'react';
 import type { enrollUserInTrack, unenrollUserFromTrack } from './track.action';
+import Link from 'next/link';
 
 interface EnrollButtonProps {
   action: typeof enrollUserInTrack | typeof unenrollUserFromTrack;
@@ -45,9 +46,9 @@ export function ActionButton({ action, text, trackId, slug }: EnrollButtonProps)
                 description: (
                   <p>
                     You must be logged in to enroll in a track.{' '}
-                    <a href="/login" className="font-bold underline">
+                    <Link href="/login" className="font-bold underline">
                       Login
-                    </a>
+                    </Link>
                   </p>
                 ),
               })
