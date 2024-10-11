@@ -758,12 +758,12 @@ export default async function ProfilePage(props: { params: { username: string } 
     <div className="container space-y-8 pt-16">
       <MovingGrid>
         <div className="relative flex flex-row items-start justify-between">
-          <div
+          {/* <div
             className={cn(
               'absolute inset-10 h-[160px] w-[160px] overflow-hidden rounded-full blur-3xl',
               gradient,
             )}
-          />
+          /> */}
           <div className="flex h-full flex-col justify-center space-y-3">
             <div className="flex flex-row items-end space-x-4">
               <Avatar className="z-10 h-56 w-56 rounded-lg transition group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:-rotate-1">
