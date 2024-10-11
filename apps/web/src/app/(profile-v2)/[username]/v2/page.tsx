@@ -859,7 +859,7 @@ export default async function ProfilePage(props: { params: { username: string } 
           </CardContent>
         </CardWithRadialBg>
 
-        <CardWithRadialBg className="col-span-2 w-fit">
+        <CardWithRadialBg className="col-span-2 ">
           <CardHeader>
             <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Badges</h1>
           </CardHeader>
