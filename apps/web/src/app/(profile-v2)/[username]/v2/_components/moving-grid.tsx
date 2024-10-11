@@ -1,20 +1,21 @@
 'use client';
-
-import React from 'react';
-import type { MotionStyle, MotionValue } from 'framer-motion';
-import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
-import { useIsMobile } from '~/utils/useIsMobile';
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  type MotionStyle,
+  type MotionValue,
+} from 'framer-motion';
+import styles from './moving-grid.module.css';
 import { cn } from '@repo/ui/cn';
-import { Card } from '@repo/ui/components/card';
-import styles from './card-radial-bg.module.css';
+import { useIsMobile } from '~/utils/useIsMobile';
 
 type WrapperStyle = MotionStyle & {
   '--x': MotionValue<string>;
   '--y': MotionValue<string>;
 };
-export function CardWithRadialBg(
-  props: React.PropsWithChildren<{ gradient?: string; className?: string }>,
-) {
+
+export function MovingGrid(props: React.PropsWithChildren<{}>) {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const isMobile = useIsMobile();
@@ -25,10 +26,11 @@ export function CardWithRadialBg(
     mouseX.set(event.clientX - boundingRect.left);
     mouseY.set(event.clientY - boundingRect.top);
   }
+
   return (
     <motion.div
-      className={cn(styles['radial-bg'], 'relative', props.className)}
       onMouseMove={handleMouseMove}
+      className={cn('relative overflow-hidden', styles['radial-bg'])}
       style={
         {
           '--x': useMotionTemplate`${mouseX}px`,
@@ -40,9 +42,9 @@ export function CardWithRadialBg(
         } as WrapperStyle
       }
     >
-      <Card className="h-full border bg-transparent bg-gradient-to-br from-neutral-50 to-neutral-100 transition hover:border-transparent dark:from-neutral-900/95 dark:to-neutral-950/95">
-        {props.children}
-      </Card>
+      <motion.div className={cn('absolute h-[200%] w-full', styles['moving-grid-background'])} />
+      <div className="shadow-background absolute h-full w-full shadow-[inset_0_0_5rem_3.5rem]" />
+      {props.children}
     </motion.div>
   );
 }

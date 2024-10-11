@@ -46,7 +46,7 @@ const chartData = [
   },
   {
     difficulty: 'expert',
-    completedPercentage: 30,
+    completedPercentage: 100,
     completed: 20,
     fill: 'var(--color-expert)',
   },
@@ -78,7 +78,7 @@ const chartConfig = {
 export function ProgressChart() {
   const totalCompleted = 80;
   return (
-    <div className="flex flex-row space-x-4">
+    <div className="flex flex-row items-start space-x-4">
       <div className="grid h-fit grid-flow-col grid-rows-3 gap-6">
         {chartData.map((d) => (
           <LegendItem
@@ -133,7 +133,12 @@ export function ProgressChart() {
                           {totalCompleted}
                         </tspan>
                       </text>
-                      <foreignObject x={viewBox.cx + 15} y={viewBox.cy - 25} width="20" height="20">
+                      <foreignObject
+                        x={(viewBox.cx ?? 0) + 15}
+                        y={(viewBox.cy ?? 0) - 25}
+                        width="20"
+                        height="20"
+                      >
                         <ArrowUpRight className="text-muted-foreground h-4 w-4" />
                       </foreignObject>
                     </Link>

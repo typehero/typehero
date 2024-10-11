@@ -19,7 +19,7 @@ import { getRelativeTime } from '~/utils/relativeTime';
 import { CardContent, CardHeader } from '@repo/ui/components/card';
 import { Badges } from './_components/badges';
 import { CardWithRadialBg } from './_components/card-radial-bg';
-import { BackgroundGrid } from '~/app/_components/hero-illustration';
+import { MovingGrid } from './_components/moving-grid';
 
 const hardcodedGitHubActivity = [
   {
@@ -756,11 +756,8 @@ export default async function ProfilePage(props: { params: { username: string } 
 
   return (
     <div className="container space-y-8 pt-16">
-      <div className="relative flex flex-row justify-between ">
-        <div className="absolute inset-0 -z-10 overflow-hidden">
-          <BackgroundGrid />
-        </div>
-        <div className="relative">
+      <MovingGrid>
+        <div className="relative flex flex-row items-start justify-between">
           <div
             className={cn(
               'absolute inset-10 h-[160px] w-[160px] overflow-hidden rounded-full blur-3xl',
@@ -802,14 +799,14 @@ export default async function ProfilePage(props: { params: { username: string } 
               <p className="leading-7 tracking-tight">{user.bio}</p>
             </div>
           </div>
-        </div>
 
-        <div className="h-fit items-center">
-          <ProgressChart />
+          <div className="h-fit items-center">
+            <ProgressChart />
+          </div>
         </div>
-      </div>
+      </MovingGrid>
 
-      <div className="grid grid-cols-1 grid-rows-2 gap-8 md:grid-cols-8">
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-8">
         <CardWithRadialBg className="col-span-3">
           <CardHeader>
             <Button

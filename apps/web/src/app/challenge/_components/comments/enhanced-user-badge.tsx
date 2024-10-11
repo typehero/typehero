@@ -116,6 +116,9 @@ const TITLE_TO_ICON: Record<TitleInfo['type'], LucideIcon> = {
 };
 
 export function Titles(props: { data: TitleInfo[] }) {
+  if (props.data.length === 0) {
+    return null;
+  }
   return (
     <div className="flex flex-row space-x-2">
       {props.data.map((t) => {
