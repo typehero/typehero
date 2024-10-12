@@ -1,6 +1,6 @@
 'use server';
 import { prisma } from '@repo/db';
-import type {AllBadges, BadgeFn} from "~/app/(profile)/[username]/_components/dashboard/_actions";
+import type {AllBadgeObjs, BadgeFn} from "~/app/(profile)/[username]/_components/dashboard/_actions";
 
 // eslint-disable-next-line @typescript-eslint/sort-type-constituents
 export type DifficultyBadges = 'BEGINNER' | 'EASY' | 'MEDIUM' | 'HARD' | 'EXTREME';
@@ -15,11 +15,11 @@ export const difficultyBadgesFn: BadgeFn =
            badges,
          }: {
     userId: string;
-    badges: AllBadges[];
+    badges: AllBadgeObjs;
   }) => {
     // DifficultyBadges
     const difficulty: Difficulty[] | null = await DifficultyRetrieveData(userId);
-    await DifficultyBadgesFn(badges, difficulty ?? []);
+    return await DifficultyBadgesFn(badges, difficulty ?? []);
   };
 
 export async function DifficultyRetrieveData(userId: string) {
@@ -27,7 +27,7 @@ export async function DifficultyRetrieveData(userId: string) {
     await prisma.$queryRaw`SELECT Difficulty, COUNT(Id) as TotalCompleted FROM (SELECT DISTINCT Difficulty, Challenge.Id FROM Submission JOIN Challenge ON Submission.challengeId = Challenge.Id WHERE Submission.userId = ${userId} AND IsSuccessful = 1) unique_query GROUP BY Difficulty `;
   return data;
 }
-export const DifficultyBadgesFn = async (badges: AllBadges[], query: Difficulty[]) => {
+export const DifficultyBadgesFn = async (badges: AllBadgeObjs, query: Difficulty[]) => {
   const thresholds: { difficulty: DifficultyBadges; threshold: number }[] = [
     { difficulty: 'BEGINNER', threshold: 1 },
     { difficulty: 'EASY', threshold: 13 },
@@ -42,11 +42,12 @@ export const DifficultyBadgesFn = async (badges: AllBadges[], query: Difficulty[
       const pascalCase = `${currQuery.Difficulty[0]}${currQuery.Difficulty.substring(
         1,
       ).toLowerCase()}`;
-      badges.push({
+      badges = { ...badges, [currQuery.Difficulty]: {
         slug: currQuery.Difficulty,
         name: `Completed ${pascalCase} Difficulty Badge`,
         shortName: currQuery.Difficulty?.toLowerCase(),
-      });
+      }};
     }
   });
+  return badges;
 };

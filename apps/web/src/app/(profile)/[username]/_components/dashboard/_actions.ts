@@ -179,12 +179,26 @@ export interface Badges<T> {
   shortName: string;
 }
 
-export type AllBadges = Badges<AotBadges | DifficultyBadges | SolutionBadges>;
+type BadgeTypes = AotBadges | DifficultyBadges | SolutionBadges;
+export type BadgeObj<T> = {
+  [key in BadgeTypes]?: {
+    slug: key;
+    name: string;
+    shortName: string;
+  };
+};
 
-export type BadgeFn = ({ userId, badges }: { userId: string; badges: AllBadges[] }) => Promise<void>;
+export type AllBadges = Badges<BadgeTypes>;
+export type AllBadgeObjs = BadgeObj<BadgeTypes>;
 
-export async function getBadges(userId: string): Promise<AllBadges[]> {
-  const badges: AllBadges[] = [];
+export type BadgeFn = ({ userId, badges }: { userId: string; badges: AllBadgeObjs }) => Promise<AllBadgeObjs>;
+
+export async function getBadges(userId: string): Promise<AllBadgeObjs> {
+  let badges: AllBadgeObjs = {};
+
+  // retrieve current badges
+  const userBadges: { slug: string; }[] = await prisma.$queryRaw`SELECT badge_name AS slug FROM UserBadges WHERE user_id=${userId}`;
+
   const badgeCalculations: BadgeFn[] = [
     adventBadgesFn,
     difficultyBadgesFn,
@@ -192,7 +206,16 @@ export async function getBadges(userId: string): Promise<AllBadges[]> {
   ];
 
   for (const badgeFn of badgeCalculations) {
-    await badgeFn({ userId, badges });
+    badges = await badgeFn({ userId, badges });
+  }
+
+  const missingBadges = Object.values(badges)
+    .filter(x =>
+      !userBadges
+        .map(x => x.slug)
+        .includes(x.slug));
+  for (const badge of missingBadges) {
+    await prisma.$queryRaw`INSERT INTO UserBadges(badge_name, achievement_date, user_id) VALUES(${badge.slug}, ${new Date(Date.now()).toISOString().slice(0, 10).replace('T', ' ')}, ${userId})`;
   }
 
   return badges;

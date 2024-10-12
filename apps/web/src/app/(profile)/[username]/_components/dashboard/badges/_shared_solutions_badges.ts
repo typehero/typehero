@@ -1,7 +1,7 @@
 'use server';
 
 import { prisma } from '@repo/db';
-import type {AllBadges, BadgeFn} from "../_actions";
+import type {AllBadgeObjs, BadgeFn} from "../_actions";
 
 // eslint-disable-next-line @typescript-eslint/sort-type-constituents
 export type SolutionBadges = 'bronze' | 'silver' | 'gold' | 'platinum';
@@ -16,11 +16,11 @@ export const sharedSolutionsBadgesFn: BadgeFn =
            badges,
          }: {
     userId: string;
-    badges: AllBadges[];
+    badges: AllBadgeObjs;
   }) => {
     // Shared Solutions Badges
     const sharedSolutions: SharedTotals[] | null = await SharedSolutionRetrieveData(userId);
-    await SharedBadgesFn(badges, sharedSolutions ?? []);
+    return await SharedBadgesFn(badges, sharedSolutions ?? []);
   };
 
 export async function SharedSolutionRetrieveData(userId: string) {
@@ -29,7 +29,7 @@ export async function SharedSolutionRetrieveData(userId: string) {
   return data;
 }
 
-export const SharedBadgesFn = async (badges: AllBadges[], query: SharedTotals[]) => {
+export const SharedBadgesFn = async (badges: AllBadgeObjs, query: SharedTotals[]) => {
   const thresholds: { slug: SolutionBadges; threshold: number }[] = [
     { slug: 'platinum', threshold: 6 },
     { slug: 'gold', threshold: 4 },
@@ -39,10 +39,12 @@ export const SharedBadgesFn = async (badges: AllBadges[], query: SharedTotals[])
   const total = query?.[0]?.TotalCompleted || 0;
   const [highestBadge] = thresholds.filter((x) => total >= x.threshold);
   if (highestBadge) {
-    badges.push({
+    const badgeName = `${highestBadge.slug[0]?.toUpperCase()}${highestBadge.slug.substring(1)} Unique Solutions Badge`;
+    badges = {...badges, [highestBadge.slug]: {
       slug: highestBadge.slug,
-      name: `Completed ${highestBadge.slug} Unique Solutions Badge`,
+      name: `Completed ${badgeName}`,
       shortName: `Shared`,
-    });
+    }};
   }
+  return badges
 };

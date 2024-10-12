@@ -4,7 +4,7 @@ import { cn } from '@repo/ui/cn';
 import { Text } from '@repo/ui/components/typography/typography';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 
-import type { AllBadges } from './_actions';
+import type {AllBadgeObjs, AllBadges} from './_actions';
 import {
   HolidayBronzeBadge,
   HolidayGoldBadge,
@@ -14,7 +14,7 @@ import {
 import { toast } from '@repo/ui/components/use-toast';
 import {BronzeBadge, GoldBadge, PlatinumBadge, SilverBadge} from "../badges/badge-svg";
 
-export const SlugToBadgeIcon: Record<AllBadges['slug'], FC<{ className: string; shortName?: string }>> = {
+export const SlugToBadgeIcon: Record<keyof AllBadgeObjs, FC<{ className: string; shortName?: string }>> = {
   'aot-2023-bronze': HolidayBronzeBadge,
   'aot-2023-silver': HolidaySilverBadge,
   'aot-2023-gold': HolidayGoldBadge,
@@ -32,6 +32,7 @@ export const SlugToBadgeIcon: Record<AllBadges['slug'], FC<{ className: string; 
 
 const Badge = ({ slug, name, shortName }: AllBadges) => {
   const Icon = SlugToBadgeIcon[slug];
+  console.log(slug)
 
   if (Icon === undefined) return null;
 
@@ -72,7 +73,7 @@ export const Badges = ({ badges, className }: BadgesProps) => {
     <div className={cn('border-border flex flex-col gap-4 border-t py-4', className)}>
       <Text intent="leading">Badges</Text>
       <div className="flex flex-wrap gap-2">
-        {badges.map((badge) => (
+        {Object.values(badges).map((badge) => (
           <Badge key={badge.slug} {...badge} />
         ))}
       </div>

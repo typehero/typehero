@@ -1,4 +1,4 @@
-import type {AllBadges, BadgeFn} from "../_actions";
+import type {AllBadgeObjs, AllBadges, BadgeFn} from "../_actions";
 import {prisma} from "@repo/db";
 
 export interface AdventChallenges {
@@ -15,10 +15,10 @@ export const adventBadgesFn: BadgeFn =
            badges,
          }: {
     userId: string;
-    badges: AllBadges[];
-  }) => {
+    badges: AllBadgeObjs;
+  }): Promise<AllBadgeObjs> => {
     const advent: AdventChallenges | null = await AdventRetrieveData(userId);
-    await AdventChallengeFn(badges, advent);
+    return await AdventChallengeFn(badges, advent);
   };
 export async function AdventRetrieveData(userId: string) {
   const advent: AdventChallenges | null = await prisma.track.findFirst({
@@ -54,7 +54,7 @@ export async function AdventRetrieveData(userId: string) {
   });
   return advent;
 }
-export const AdventChallengeFn = async (badges: AllBadges[], advent: AdventChallenges | null) => {
+export const AdventChallengeFn = async (badges: AllBadgeObjs, advent: AdventChallenges | null) => {
   // Advent Badge Logic
   const numberOfAttemptedHolidayChallenges =
     advent?.trackChallenges.filter((trackChallenge) => {
@@ -62,11 +62,11 @@ export const AdventChallengeFn = async (badges: AllBadges[], advent: AdventChall
     }).length ?? 0;
 
   if (numberOfAttemptedHolidayChallenges > 0) {
-    badges.push({
+    badges["aot-2023-bronze"] = {
       slug: 'aot-2023-bronze',
       name: 'Advent of TypeScript 2023 Bronze',
       shortName: 'Advent',
-    });
+    };
   }
 
   const numberOfCompletedHolidayChallenges =
@@ -75,28 +75,29 @@ export const AdventChallengeFn = async (badges: AllBadges[], advent: AdventChall
     }).length ?? 0;
 
   if (numberOfCompletedHolidayChallenges >= 5) {
-    badges.push({
+    badges["aot-2023-silver"] = {
       slug: 'aot-2023-silver',
       name: 'Advent of TypeScript 2023 Silver',
       shortName: 'Advent',
-    });
+    };
   }
 
   if (numberOfCompletedHolidayChallenges >= 15) {
-    badges.push({
+    badges["aot-2023-gold"] = {
       slug: 'aot-2023-gold',
       name: 'Advent of TypeScript 2023 Gold',
       shortName: 'Advent',
-    });
+    };
   }
 
   if (numberOfCompletedHolidayChallenges >= 25) {
-    badges.push({
+    badges["aot-2023-platinum"] = {
       slug: 'aot-2023-platinum',
       name: 'Advent of TypeScript 2023 Platinum',
       shortName: 'Advent',
-    });
+    };
   }
+  return badges;
 };
 
 
