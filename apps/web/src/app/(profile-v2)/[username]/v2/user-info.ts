@@ -166,9 +166,9 @@ export async function getUserActivity(userId: string) {
       day: getDay(date),
       week: getWeek(date),
       month: getMonth(date),
+      submissions,
       comments,
       badges,
-      submissions,
       activity,
     };
   });

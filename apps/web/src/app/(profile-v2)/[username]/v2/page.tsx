@@ -748,6 +748,10 @@ export default async function ProfilePage(props: { params: { username: string } 
       roles: true,
       createdAt: true,
       sharedSolution: {
+        take: 3,
+        orderBy: {
+          createdAt: 'desc',
+        },
         select: {
           id: true,
           _count: {
@@ -814,9 +818,20 @@ export default async function ProfilePage(props: { params: { username: string } 
                 </div>
               </div>
             </div>
-            <div className="max-w-[60ch]">
-              <p className="leading-7 tracking-tight">{user.bio}</p>
-            </div>
+            {user.bio === '' && isOwnProfile ? (
+              <div className="space-y-3 p-4">
+                <h1 className="text-center">
+                  ? 'You haven’t added a bio yet—tell others a bit about yourself!'
+                </h1>
+                <Button asChild variant="outline" className="text-center">
+                  <Link href="./v2/all">Update your bio</Link>
+                </Button>
+              </div>
+            ) : (
+              <div className="max-w-[60ch]">
+                <p className="leading-7 tracking-tight">{user.bio}</p>
+              </div>
+            )}
           </div>
 
           <div className="h-fit items-center">
@@ -852,9 +867,11 @@ export default async function ProfilePage(props: { params: { username: string } 
                     ? "It looks like you haven't shared any solutions yet."
                     : `It looks like @${username} hasn't shared any solutions yet.`}
                 </h1>
-                <Button asChild variant="link" className="text-center">
-                  <Link href="./v2/all">Explore completed solutions and share your own!</Link>
-                </Button>
+                {isOwnProfile ? (
+                  <Button asChild variant="link" className="text-center">
+                    <Link href="./v2/all">Explore completed solutions and share your own!</Link>
+                  </Button>
+                ) : null}
               </CardContent>
             ) : (
               <CardContent className="flex flex-col space-y-2">
