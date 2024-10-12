@@ -196,9 +196,7 @@ export type BadgeFn = ({ userId, badges }: { userId: string; badges: AllBadgeObj
 export async function getBadges(userId: string): Promise<AllBadgeObjs> {
   let badges: AllBadgeObjs = {};
 
-  // retrieve current badges
-  const userBadges: { slug: string; }[] = await prisma.$queryRaw`SELECT badge_name AS slug FROM UserBadges WHERE user_id=${userId}`;
-
+  // calculate badges user has achieved
   const badgeCalculations: BadgeFn[] = [
     adventBadgesFn,
     difficultyBadgesFn,
@@ -209,6 +207,10 @@ export async function getBadges(userId: string): Promise<AllBadgeObjs> {
     badges = await badgeFn({ userId, badges });
   }
 
+  // retrieve current awarded badges
+  const userBadges: { slug: string; }[] = await prisma.$queryRaw`SELECT badge_name AS slug FROM UserBadges WHERE user_id=${userId}`;
+
+  // award missing badges
   const missingBadges = Object.values(badges)
     .filter(x =>
       !userBadges
