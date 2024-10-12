@@ -5,7 +5,7 @@ import { SharedSolutionCard } from './_components/shared-solution-card';
 import { Button } from '@repo/ui/components/button';
 import { ArrowUpRight, Github, Twitter } from '@repo/ui/icons';
 import Link from 'next/link';
-import { ActivityChart2 } from './_components/activity-chart';
+import { ActivityChart } from './_components/activity-chart';
 import { getWeek, startOfWeek, eachDayOfInterval, subDays, getDay, getMonth } from 'date-fns';
 import { getBadges } from '~/app/(profile)/[username]/_components/dashboard/_actions';
 import { cn } from '@repo/ui/cn';
@@ -17,9 +17,11 @@ import {
 } from '~/app/challenge/_components/comments/enhanced-user-badge.getTitles';
 import { getRelativeTime } from '~/utils/relativeTime';
 import { CardContent, CardHeader } from '@repo/ui/components/card';
-import { Badges } from './_components/badges';
+import { Badges, EmptyBadge } from './_components/badges';
 import { CardWithRadialBg } from './_components/card-radial-bg';
 import { MovingGrid } from './_components/moving-grid';
+import { getChartData, getUserActivity } from './user-info';
+import { auth } from '~/server/auth';
 
 const hardcodedGitHubActivity = [
   {
@@ -745,6 +747,24 @@ export default async function ProfilePage(props: { params: { username: string } 
       image: true,
       roles: true,
       createdAt: true,
+      sharedSolution: {
+        select: {
+          id: true,
+          _count: {
+            select: {
+              vote: true,
+              solutionComment: true,
+            },
+          },
+          isPinned: true,
+          challenge: {
+            select: {
+              name: true,
+              difficulty: true,
+            },
+          },
+        },
+      },
     },
   });
   if (user === null) {
@@ -753,17 +773,16 @@ export default async function ProfilePage(props: { params: { username: string } 
   const badges = await getBadges(user.id);
   const titles = getTitles(user.roles);
   const gradient = getGradient(user.roles);
+  const progressData = await getChartData(user.id);
+  const activityData = await getUserActivity(user.id);
+
+  const session = await auth();
+  const isOwnProfile = session?.user?.id === user.id;
 
   return (
     <div className="container space-y-8 pt-16">
       <MovingGrid>
         <div className="relative flex flex-row items-start justify-between">
-          {/* <div
-            className={cn(
-              'absolute inset-10 h-[160px] w-[160px] overflow-hidden rounded-full blur-3xl',
-              gradient,
-            )}
-          /> */}
           <div className="flex h-full flex-col justify-center space-y-3">
             <div className="flex flex-row items-end space-x-4">
               <Avatar className="z-10 h-56 w-56 rounded-lg transition group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:-rotate-1">
@@ -801,71 +820,87 @@ export default async function ProfilePage(props: { params: { username: string } 
           </div>
 
           <div className="h-fit items-center">
-            <ProgressChart />
+            <ProgressChart
+              totalCompleted={progressData.totalSolved}
+              chartData={progressData.chartData}
+            />
           </div>
         </div>
       </MovingGrid>
 
       <div className="grid grid-cols-1 gap-8 md:grid-cols-8">
         <CardWithRadialBg className="col-span-3">
-          <CardHeader>
-            <Button
-              asChild
-              size="xs"
-              variant="link"
-              className="text-muted-foreground hover:text-primary w-fit text-lg "
-            >
-              <Link href="./v2/completed">
-                Shared Solutions
-                <ArrowUpRight className="ml-1 h-4 w-4 " />
-              </Link>
-            </Button>
-          </CardHeader>
+          <div className="flex h-full flex-col">
+            <CardHeader>
+              <Button
+                asChild
+                size="xs"
+                variant="link"
+                className="text-muted-foreground hover:text-primary w-fit text-lg "
+              >
+                <Link href="./v2/completed">
+                  Shared Solutions
+                  <ArrowUpRight className="ml-1 h-4 w-4 " />
+                </Link>
+              </Button>
+            </CardHeader>
 
-          <CardContent className="flex flex-col space-y-2">
-            <SharedSolutionCard
-              solution={{
-                isPinned: true,
-                voteCount: 10,
-                commentCount: 6,
-                challenge: {
-                  name: 'Awaited',
-                  difficulty: 'MEDIUM',
-                },
-              }}
-            />
-            <SharedSolutionCard
-              solution={{
-                isPinned: false,
-                voteCount: 10,
-                commentCount: 6,
-                challenge: {
-                  name: 'Awaited',
-                  difficulty: 'MEDIUM',
-                },
-              }}
-            />
-            <SharedSolutionCard
-              solution={{
-                isPinned: false,
-                voteCount: 10,
-                commentCount: 6,
-                challenge: {
-                  name: 'Awaited',
-                  difficulty: 'MEDIUM',
-                },
-              }}
-            />
-          </CardContent>
+            {user.sharedSolution.length === 0 ? (
+              <CardContent className="flex h-full w-full grow flex-col items-center justify-center space-y-3 px-16">
+                <h1 className="text-center">
+                  {isOwnProfile
+                    ? "It looks like you haven't shared any solutions yet."
+                    : `It looks like @${username} hasn't shared any solutions yet.`}
+                </h1>
+                <Button asChild variant="link" className="text-center">
+                  <Link href="./v2/all">Explore completed solutions and share your own!</Link>
+                </Button>
+              </CardContent>
+            ) : (
+              <CardContent className="flex flex-col space-y-2">
+                {user.sharedSolution.map((s) => (
+                  <SharedSolutionCard
+                    key={s.id}
+                    solution={{
+                      isPinned: s.isPinned,
+                      voteCount: s._count.vote,
+                      commentCount: s._count.solutionComment,
+                      challenge: {
+                        name: s.challenge?.name ?? '',
+                        difficulty: s.challenge?.difficulty ?? 'EASY',
+                      },
+                    }}
+                  />
+                ))}
+              </CardContent>
+            )}
+          </div>
         </CardWithRadialBg>
 
         <CardWithRadialBg className="col-span-2 ">
-          <CardHeader>
-            <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Badges</h1>
-          </CardHeader>
-          <CardContent>
-            <Badges data={badges} />
-          </CardContent>
+          <div className="flex h-full flex-col">
+            <CardHeader>
+              <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Badges</h1>
+            </CardHeader>
+            {badges.length === 0 ? (
+              <CardContent className="flex h-full w-full grow flex-col items-center justify-center space-y-3  ">
+                <h1 className="text-center">
+                  {isOwnProfile
+                    ? "You haven't earned a badge yet - keep going, you're close!"
+                    : `@${username} is yet to discover an achievement !`}
+                </h1>
+                <div className="mx-auto grid w-fit grid-cols-3 gap-4  ">
+                  {Array.from({ length: 6 }).map((i) => (
+                    <EmptyBadge key={`empty-badge-${i}`} />
+                  ))}
+                </div>
+              </CardContent>
+            ) : (
+              <CardContent>
+                <Badges data={badges} />
+              </CardContent>
+            )}
+          </div>
         </CardWithRadialBg>
 
         <CardWithRadialBg className="col-span-3 h-fit w-fit">
@@ -873,7 +908,7 @@ export default async function ProfilePage(props: { params: { username: string } 
             <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Recent Activity</h1>
           </CardHeader>
           <CardContent>
-            <ActivityChart2 data={generateSampleData()} />
+            <ActivityChart data={activityData} />
           </CardContent>
         </CardWithRadialBg>
       </div>
@@ -881,6 +916,7 @@ export default async function ProfilePage(props: { params: { username: string } 
   );
 }
 
+/* To be used when we have stats in the future */
 /* function StatCard(props: { title: string; data: string; secondaryData?: string }) {
   return (
     <div className="space-y-0.5">

@@ -8,16 +8,16 @@ import {
 } from '@repo/ui/components/tooltip';
 
 export function Badges(props: { data: BadgeInfo[] }) {
-  const data = [
+  /* const data = [
     { slug: 'aot-2023-bronze', name: 'Advent of TypeScript 2023 Bronze' },
     { slug: 'aot-2023-silver', name: 'Advent of TypeScript 2023 Bronze' },
     { slug: 'aot-2023-gold', name: 'Advent of TypeScript 2023 Bronze' },
     { slug: 'aot-2023-platinum', name: 'Advent of TypeScript 2023 Bronze' },
-  ] as BadgeInfo[];
+  ] as BadgeInfo[]; */
   return (
     <div>
       <TooltipProvider>
-        <BadgesStuff data={data} />
+        <BadgesStuff data={props.data} />
       </TooltipProvider>
     </div>
   );
@@ -48,7 +48,7 @@ function BadgesStuff(props: { data: BadgeInfo[] }) {
   );
 }
 
-function EmptyBadge() {
+export function EmptyBadge() {
   return (
     <svg
       width="52"

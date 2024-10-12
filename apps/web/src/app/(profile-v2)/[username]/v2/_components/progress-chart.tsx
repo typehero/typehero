@@ -19,7 +19,7 @@ import { ArrowUpRight } from '@repo/ui/icons';
 
 export const description = 'A radial chart with a grid';
 
-const chartData = [
+/* const chartData = [
   {
     difficulty: 'beginner',
     completedPercentage: 25,
@@ -50,37 +50,44 @@ const chartData = [
     completed: 20,
     fill: 'var(--color-expert)',
   },
-];
+]; */
 
 const chartConfig = {
-  beginner: {
+  BEGINNER: {
     label: 'Beginner',
     color: 'hsl(var(--chart-1))',
   },
-  easy: {
+  EASY: {
     label: 'Easy',
     color: 'hsl(var(--chart-2))',
   },
-  medium: {
+  MEDIUM: {
     label: 'Medium',
     color: 'hsl(var(--chart-3))',
   },
-  hard: {
+  HARD: {
     label: 'Hard',
     color: 'hsl(var(--chart-4))',
   },
-  expert: {
-    label: 'Expert',
+  EXTREME: {
+    label: 'Extreme',
     color: 'hsl(var(--chart-5))',
   },
 } satisfies ChartConfig;
 
-export function ProgressChart() {
-  const totalCompleted = 80;
+export function ProgressChart(props: {
+  chartData: {
+    difficulty: string;
+    completed: number;
+    completedPercentage: number;
+  }[];
+  totalCompleted: number;
+}) {
+  console.log(props.chartData);
   return (
     <div className="flex flex-row items-start space-x-4">
       <div className="grid h-fit grid-flow-col grid-rows-3 gap-6">
-        {chartData.map((d) => (
+        {props.chartData.map((d) => (
           <LegendItem
             key={d.difficulty}
             completed={d.completed}
@@ -89,9 +96,12 @@ export function ProgressChart() {
           />
         ))}
       </div>
-      <ChartContainer config={chartConfig} className="aspect-square h-[280px] ">
+      <ChartContainer
+        config={chartConfig}
+        className="[&_.recharts-radial-bar-background-sector]:fill-muted/40 aspect-square h-[280px]"
+      >
         <RadialBarChart
-          data={chartData}
+          data={props.chartData}
           innerRadius={50}
           outerRadius={140}
           startAngle={90}
@@ -130,7 +140,7 @@ export function ProgressChart() {
                           dy={15}
                           className="fill-foreground text-4xl font-bold"
                         >
-                          {totalCompleted}
+                          {props.totalCompleted}
                         </tspan>
                       </text>
                       <foreignObject
@@ -147,7 +157,15 @@ export function ProgressChart() {
               }}
             />
           </PolarRadiusAxis>
-          <RadialBar dataKey="completedPercentage" cornerRadius={10} />
+          <RadialBar
+            dataKey="completedPercentage"
+            cornerRadius={10}
+            minPointSize={-3}
+            background={{
+              className: undefined,
+              fill: '#fff',
+            }}
+          />
         </RadialBarChart>
       </ChartContainer>
     </div>

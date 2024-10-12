@@ -6,7 +6,6 @@ import {
   ChartTooltipContent,
 } from '@repo/ui/components/chart';
 import { Scatter, ScatterChart, XAxis, YAxis, ZAxis } from '@repo/ui/recharts';
-import type { generateSampleData } from '../page';
 import { format, setWeek, startOfYear } from 'date-fns';
 import { MessageCircle, FileCode, Award } from '@repo/ui/icons';
 
@@ -25,9 +24,20 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function ActivityChart2(props: { data: ReturnType<typeof generateSampleData> }) {
+export function ActivityChart(props: {
+  data: {
+    date: Date;
+    day: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+    week: number;
+    month: number;
+    comments: number;
+    badges: number;
+    submissions: number;
+    activity: number;
+  }[];
+}) {
   return (
-    <ChartContainer config={chartConfig} className="h-[250px] w-[350px]">
+    <ChartContainer config={chartConfig} className="h-[250px] w-[300px]">
       <ScatterChart data={props.data} accessibilityLayer>
         <ChartTooltip
           cursor={false}
@@ -63,7 +73,7 @@ export function ActivityChart2(props: { data: ReturnType<typeof generateSampleDa
             const { cx, cy, activity } = item as { cx: number; cy: number; activity: number };
             const squareLength = 24;
             const borderV = 10;
-            const borderH = 17;
+            const borderH = 10;
             return (
               <g>
                 <rect
@@ -71,7 +81,6 @@ export function ActivityChart2(props: { data: ReturnType<typeof generateSampleDa
                   y={cy - borderV / 2 - squareLength / 2}
                   width={squareLength + borderH}
                   height={squareLength + borderV}
-                  // className="fill-zinc-500"
                   className="fill-transparent"
                 />
                 <rect
@@ -110,7 +119,7 @@ function getMonthFromWeek(weekNumber: number, idx: number) {
 
   // Set the week number
   const targetDate = setWeek(firstDayOfYear, weekNumber, { weekStartsOn: 1 });
-  if (weekNumber % 4 === 0) {
+  if (idx % 4 === 0) {
     return format(targetDate, 'MMM');
   }
   return '';
