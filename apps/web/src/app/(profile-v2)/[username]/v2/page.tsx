@@ -20,7 +20,7 @@ import { CardContent, CardHeader } from '@repo/ui/components/card';
 import { Badges, EmptyBadge } from './_components/badges';
 import { CardWithRadialBg } from './_components/card-radial-bg';
 import { MovingGrid } from './_components/moving-grid';
-import { getChartData, getUserActivity } from './user-info';
+import { getProgressData, getUserActivity } from './user-info';
 import { auth } from '~/server/auth';
 
 const hardcodedGitHubActivity = [
@@ -773,7 +773,7 @@ export default async function ProfilePage(props: { params: { username: string } 
   const badges = await getBadges(user.id);
   const titles = getTitles(user.roles);
   const gradient = getGradient(user.roles);
-  const progressData = await getChartData(user.id);
+  const progressData = await getProgressData(user.id);
   const activityData = await getUserActivity(user.id);
 
   const session = await auth();

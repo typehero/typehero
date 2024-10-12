@@ -12,7 +12,7 @@ import {
 
 type Difficulty = Exclude<DifficultyWithEvent, 'EVENT'>;
 
-export async function getChartData(userId: string) {
+export async function getProgressData(userId: string) {
   // Get all successful submissions for the user
   const successfulSubmissions = await prisma.submission.findMany({
     where: {

@@ -83,7 +83,6 @@ export function ProgressChart(props: {
   }[];
   totalCompleted: number;
 }) {
-  console.log(props.chartData);
   return (
     <div className="flex flex-row items-start space-x-4">
       <div className="grid h-fit grid-flow-col grid-rows-3 gap-6">
@@ -160,7 +159,7 @@ export function ProgressChart(props: {
           <RadialBar
             dataKey="completedPercentage"
             cornerRadius={10}
-            minPointSize={-3}
+            minPointSize={-1}
             background={{
               className: undefined,
               fill: '#fff',
