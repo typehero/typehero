@@ -6,22 +6,20 @@ import {
   AwardDifficultyBadge,
   DifficultyBadgeKeys,
   type DifficultyBadges,
-  DifficultyBadgesFn,
-  difficultyBadgesFn
+  difficultyBadgesFn,
 } from './badges/_difficulty_badges';
 import {
   AwardSolutionBadge,
-  sharedSolutionsBadgesFn, SolutionBadgeKeys,
+  sharedSolutionsBadgesFn,
+  SolutionBadgeKeys,
   type SolutionBadges,
 } from './badges/_shared_solutions_badges';
 import {
   adventBadgesFn,
-  type AdventChallenges,
   AotBadgeKeys,
   type AotBadges,
-  CreateAdventBadges
+  CreateAdventBadges,
 } from './badges/_advent_badges';
-import {DifficultyBadge} from "@repo/ui/src/components/difficulty-badge";
 
 export type HistoricalChallenge = Awaited<ReturnType<typeof getChallengeHistoryByCategory>>[0];
 
@@ -239,23 +237,19 @@ export async function fillInMissingBadges(userId: string): Promise<AllBadgeObjs>
 }
 
 const mapBadgeToFn = {
-  [DifficultyBadgeKeys[0]]: (badge: DifficultyBadges) => AwardDifficultyBadge(badge),
-  [DifficultyBadgeKeys[1]]: (badge: DifficultyBadges) => AwardDifficultyBadge(badge),
-  [DifficultyBadgeKeys[2]]: (badge: DifficultyBadges) => AwardDifficultyBadge(badge),
-  [DifficultyBadgeKeys[3]]: (badge: DifficultyBadges) => AwardDifficultyBadge(badge),
-  [DifficultyBadgeKeys[4]]: (badge: DifficultyBadges) => AwardDifficultyBadge(badge),
-  [SolutionBadgeKeys[0]]: (badge: SolutionBadges) => AwardSolutionBadge(badge),
-  [SolutionBadgeKeys[1]]: (badge: SolutionBadges) => AwardSolutionBadge(badge),
-  [SolutionBadgeKeys[2]]: (badge: SolutionBadges) => AwardSolutionBadge(badge),
-  [SolutionBadgeKeys[3]]: (badge: SolutionBadges) => AwardSolutionBadge(badge),
-  [AotBadgeKeys[0]]: (badge: AotBadges) =>
-    CreateAdventBadges(badge, `Advent of Typescript 2023 Bronze`),
-  [AotBadgeKeys[1]]: (badge: AotBadges) =>
-    CreateAdventBadges(badge, `Advent of Typescript 2023 Silver`),
-  [AotBadgeKeys[2]]: (badge: AotBadges) =>
-    CreateAdventBadges(badge, `Advent of Typescript 2023 Gold`),
-  [AotBadgeKeys[3]]: (badge: AotBadges) =>
-    CreateAdventBadges(badge, `Advent of Typescript 2023 Platinum`),
+  [DifficultyBadgeKeys[0]]: AwardDifficultyBadge(DifficultyBadgeKeys[0]),
+  [DifficultyBadgeKeys[1]]: AwardDifficultyBadge(DifficultyBadgeKeys[1]),
+  [DifficultyBadgeKeys[2]]: AwardDifficultyBadge(DifficultyBadgeKeys[2]),
+  [DifficultyBadgeKeys[3]]: AwardDifficultyBadge(DifficultyBadgeKeys[3]),
+  [DifficultyBadgeKeys[4]]: AwardDifficultyBadge(DifficultyBadgeKeys[4]),
+  [SolutionBadgeKeys[0]]: AwardSolutionBadge(SolutionBadgeKeys[0]),
+  [SolutionBadgeKeys[1]]: AwardSolutionBadge(SolutionBadgeKeys[1]),
+  [SolutionBadgeKeys[2]]: AwardSolutionBadge(SolutionBadgeKeys[2]),
+  [SolutionBadgeKeys[3]]: AwardSolutionBadge(SolutionBadgeKeys[3]),
+  [AotBadgeKeys[0]]: CreateAdventBadges(AotBadgeKeys[0], `Advent of Typescript 2023 Bronze`),
+  [AotBadgeKeys[1]]: CreateAdventBadges(AotBadgeKeys[1], `Advent of Typescript 2023 Silver`),
+  [AotBadgeKeys[2]]: CreateAdventBadges(AotBadgeKeys[2], `Advent of Typescript 2023 Gold`),
+  [AotBadgeKeys[3]]: CreateAdventBadges(AotBadgeKeys[3], `Advent of Typescript 2023 Platinum`),
 };
 export async function getBadges(userId: string): Promise<AllBadgeObjs> {
   let badges: AllBadgeObjs = {};
@@ -265,8 +259,7 @@ export async function getBadges(userId: string): Promise<AllBadgeObjs> {
     await prisma.$queryRaw`SELECT badge_name AS slug FROM UserBadges WHERE user_id=${userId}`;
 
   userBadges.forEach(({slug}: { slug: AotBadges | DifficultyBadges | SolutionBadges }) => {
-    const addBadge = mapBadgeToFn[slug as DifficultyBadges](slug as DifficultyBadges);
-    badges = Object.assign(badges, addBadge);
+    badges = Object.assign(badges, mapBadgeToFn[slug]);
   })
 
   return badges;
