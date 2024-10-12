@@ -1,9 +1,8 @@
-'use server';
 import { prisma } from '@repo/db';
 import type {AllBadgeObjs, BadgeFn} from "~/app/(profile)/[username]/_components/dashboard/_actions";
+export const DifficultyBadgeKeys = ['BEGINNER', 'EASY', 'MEDIUM', 'HARD', 'EXTREME'] as const;
 
-// eslint-disable-next-line @typescript-eslint/sort-type-constituents
-export type DifficultyBadges = 'BEGINNER' | 'EASY' | 'MEDIUM' | 'HARD' | 'EXTREME';
+export type DifficultyBadges = typeof DifficultyBadgeKeys[number];
 export interface Difficulty {
   Difficulty: DifficultyBadges;
   TotalCompleted: number;
@@ -27,6 +26,17 @@ export async function DifficultyRetrieveData(userId: string) {
     await prisma.$queryRaw`SELECT Difficulty, COUNT(Id) as TotalCompleted FROM (SELECT DISTINCT Difficulty, Challenge.Id FROM Submission JOIN Challenge ON Submission.challengeId = Challenge.Id WHERE Submission.userId = ${userId} AND IsSuccessful = 1) unique_query GROUP BY Difficulty `;
   return data;
 }
+
+export const AwardDifficultyBadge = (slug: DifficultyBadges) => {
+  const pascalCase = `${slug[0]}${slug.substring(1).toLowerCase()}`;
+  return {
+    [slug]: {
+      slug,
+      name: `Completed ${pascalCase} Difficulty Badge`,
+      shortName: slug?.toLowerCase(),
+    }};
+}
+
 export const DifficultyBadgesFn = async (badges: AllBadgeObjs, query: Difficulty[]) => {
   const thresholds: { difficulty: DifficultyBadges; threshold: number }[] = [
     { difficulty: 'BEGINNER', threshold: 1 },
@@ -39,14 +49,7 @@ export const DifficultyBadgesFn = async (badges: AllBadgeObjs, query: Difficulty
     const levelThreshold = thresholds.find((x) => x.difficulty.toUpperCase() === currQuery.Difficulty);
     const completedAllChallenges = levelThreshold?.threshold === Number(currQuery.TotalCompleted);
     if (completedAllChallenges) {
-      const pascalCase = `${currQuery.Difficulty[0]}${currQuery.Difficulty.substring(
-        1,
-      ).toLowerCase()}`;
-      badges = { ...badges, [currQuery.Difficulty]: {
-        slug: currQuery.Difficulty,
-        name: `Completed ${pascalCase} Difficulty Badge`,
-        shortName: currQuery.Difficulty?.toLowerCase(),
-      }};
+      badges = Object.assign(badges, AwardDifficultyBadge(currQuery?.Difficulty));
     }
   });
   return badges;
