@@ -5,6 +5,7 @@ import { toast } from '@repo/ui/components/use-toast';
 import { useState } from 'react';
 import type { enrollUserInTrack, unenrollUserFromTrack } from './track.action';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface EnrollButtonProps {
   action: typeof enrollUserInTrack | typeof unenrollUserFromTrack;
@@ -13,11 +14,8 @@ interface EnrollButtonProps {
   slug: string;
 }
 
-interface CustomError extends Error {
-  statusCode?: number;
-}
-
 export function ActionButton({ action, text, trackId, slug }: EnrollButtonProps) {
+  const path = usePathname();
   const [isLoading, setIsLoading] = useState(false);
 
   return (
@@ -36,31 +34,16 @@ export function ActionButton({ action, text, trackId, slug }: EnrollButtonProps)
           });
         } catch (error: unknown) {
           if (error instanceof Error) {
-            const customError = error as CustomError;
-            if (customError.message === 'User is not logged in' || customError.statusCode === 401) {
-              // Capture current URL to redirect back after login
-              const currentUrl = encodeURIComponent(window.location.href); 
+            if (error.message === 'User is not logged in') {
               toast({
                 title: 'Please Login to continue',
                 variant: 'destructive',
                 description: (
                   <p>
                     You must be logged in to enroll in a track.{' '}
-                    <Link href="/login" className="font-bold underline">
+                    <Link href={`/login?redirectTo=${path}`} className="font-bold underline">
                       Login
                     </Link>
-                  </p>
-                ),
-              })
-            : toast({
-                title: `Error`,
-                variant: 'destructive',
-                description: (
-                  <p>
-                    You must be logged in to enroll in a track.{' '}
-                    <a href={`/login?redirect_to=${currentUrl}`} className="font-bold underline">
-                      Login
-                    </a>
                   </p>
                 ),
               });
