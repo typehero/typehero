@@ -26,7 +26,12 @@ export function ActionButton({ action, text, trackId, slug }: EnrollButtonProps)
         setIsLoading(true);
 
         try {
-          await action(trackId, slug);
+          //i hate this
+          const maybeAnError = await action(trackId, slug);
+          if (maybeAnError === 'User is not logged in') {
+            throw new Error('User is not logged in');
+          }
+
           toast({
             title: 'Success',
             variant: 'success',
