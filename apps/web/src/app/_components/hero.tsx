@@ -149,7 +149,7 @@ export async function Hero() {
       <div className="absolute inset-10 -z-30 overflow-hidden rounded-full opacity-70 lg:hidden">
         <BackgroundGrid />
       </div>
-      <div className="container -mt-[3rem] relative grid min-h-screen items-center justify-center py-24 lg:min-h-0 lg:grid-cols-2 lg:py-0 [&>*]:pointer-events-auto">
+      <div className="container relative -mt-[3rem] grid min-h-screen items-center justify-center py-24 lg:min-h-0 lg:grid-cols-2 lg:py-0 [&>*]:pointer-events-auto">
         <BeamOfLight />
         <div className="flex w-full flex-col items-center justify-center gap-10 lg:items-start">
           <a

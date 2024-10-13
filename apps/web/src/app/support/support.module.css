@@ -2,13 +2,12 @@
 .supportBackground {
   animation: fade 5s linear infinite alternate;
   background: 
-    /* linear-gradient(0deg, hsl(var(--background)) 0%, rgba(9, 9, 11, 0) 50%), */
-    radial-gradient(
-      ellipse 100% 55% at 50% 100%,
-      #0000 0%,
-      hsl(46 97% 65% / 0.13),
-      #0000 150%
-    );
+    /* linear-gradient(0deg, hsl(var(--background)) 0%, rgba(9, 9, 11, 0) 50%), */ radial-gradient(
+    ellipse 100% 55% at 50% 100%,
+    #0000 0%,
+    hsl(46 97% 65% / 0.13),
+    #0000 150%
+  );
 }
 
 .donateStripeLinkBtn {

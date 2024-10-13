@@ -131,7 +131,10 @@ export async function Navigation() {
               <Suspense>
                 <Search />
               </Suspense>
-              <Link className="donate-btn border border-[#bea74b66] py-2 px-3 rounded-md relative overflow-hidden hover:bg-[#eed15f] dark:hover:bg-[#bea74b44] duration-300 text-black dark:text-white" href="/support">
+              <Link
+                className="donate-btn relative overflow-hidden rounded-md border border-[#bea74b66] px-3 py-2 text-black duration-300 hover:bg-[#eed15f] dark:text-white dark:hover:bg-[#bea74b44]"
+                href="/support"
+              >
                 Support Us
               </Link>
               {session ? <NotificationLink notificationCount={notificationCount} /> : null}
