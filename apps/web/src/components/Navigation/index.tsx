@@ -59,7 +59,7 @@ export async function Navigation() {
   const NavLinks = (
     <>
       <div className="ml-4 hidden items-center gap-4 md:flex">{TopSectionLinks}</div>
-      <div className="flex flex-col gap-5 pl-4 md:hidden">
+      <div className="flex flex-col gap-5 pl-2 md:hidden">
         {TopSectionLinks}
         {!session?.user && (
           <div className="flex items-center gap-2">
@@ -131,7 +131,7 @@ export async function Navigation() {
               <Suspense>
                 <Search />
               </Suspense>
-              <Link className="donate-btn text-black dark:text-white" href="/support">
+              <Link className="donate-btn border border-[#bea74b66] py-2 px-3 rounded-md relative overflow-hidden hover:bg-[#eed15f] dark:hover:bg-[#bea74b44] duration-300 text-black dark:text-white" href="/support">
                 Support Us
               </Link>
               {session ? <NotificationLink notificationCount={notificationCount} /> : null}

@@ -1,0 +1,43 @@
+/* The module for the Newsletter page background */
+.supportBackground {
+  animation: fade 5s linear infinite alternate;
+  background: 
+    /* linear-gradient(0deg, hsl(var(--background)) 0%, rgba(9, 9, 11, 0) 50%), */
+    radial-gradient(
+      ellipse 100% 55% at 50% 100%,
+      #0000 0%,
+      hsl(46 97% 65% / 0.13),
+      #0000 150%
+    );
+}
+
+.donateStripeLinkBtn {
+  background: linear-gradient(
+    var(--gradient-angle),
+    hsla(46, 97%, 65%, 0.5),
+    hsla(46, 97%, 65%, 0.1),
+    hsla(46, 97%, 65%, 1),
+    hsla(46, 97%, 65%, 0.3)
+  ) !important;
+  animation: gradient-rotate 5s linear infinite reverse;
+}
+
+@keyframes gradient-rotate {
+  0% {
+    --gradient-angle: 360deg;
+  }
+
+  100% {
+    --gradient-angle: 0deg;
+  }
+}
+
+@keyframes fade {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.5;
+  }
+}
