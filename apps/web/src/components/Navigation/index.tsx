@@ -50,7 +50,7 @@ export async function Navigation() {
       <NavLink title="Tracks" href="/tracks" />
       {featureFlags?.enableHolidayEvent ? (
         <div className="flex items-center gap-1">
-          <NavLink title="Advent of TypeScript" href="/aot-2023" />
+          <NavLink title="Advent of TS" href="/aot-2023" />
         </div>
       ) : null}
     </>
@@ -58,8 +58,8 @@ export async function Navigation() {
 
   const NavLinks = (
     <>
-      <div className="ml-4 hidden items-center gap-4 md:flex">{TopSectionLinks}</div>
-      <div className="flex flex-col gap-5 pl-4 md:hidden">
+      <div className="hidden items-center gap-4 md:flex">{TopSectionLinks}</div>
+      <div className="flex flex-col gap-5 pl-2 md:hidden">
         {TopSectionLinks}
         {!session?.user && (
           <div className="flex items-center gap-2">
@@ -95,7 +95,7 @@ export async function Navigation() {
     <header className="w-full">
       <NavWrapper>
         <div className="flex w-full items-center justify-between">
-          <div className="relative flex items-center gap-3">
+          <div className="relative flex items-center gap-4">
             <SkipToCodeEditor />
             <Link className="flex space-x-1.5 focus:outline-none focus-visible:ring-2" href="/">
               <svg
@@ -123,7 +123,7 @@ export async function Navigation() {
                 hero <span className="text-muted-foreground bg-muted px-1 text-xs">BETA</span>
               </div>
             </Link>
-            <div className="hidden items-center md:ml-4 md:flex md:gap-4">{NavLinks}</div>
+            <div className="hidden items-center md:flex md:gap-4">{NavLinks}</div>
           </div>
 
           <div className="flex">
@@ -131,7 +131,10 @@ export async function Navigation() {
               <Suspense>
                 <Search />
               </Suspense>
-              <Link className="donate-btn text-black dark:text-white" href="/support">
+              <Link
+                className="donate-btn relative overflow-hidden rounded-md border border-[#bea74b66] px-3 py-2 text-black duration-300 hover:bg-[#eed15f] dark:text-white dark:hover:bg-[#bea74b44]"
+                href="/support"
+              >
                 Support Us
               </Link>
               {session ? <NotificationLink notificationCount={notificationCount} /> : null}
