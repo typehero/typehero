@@ -71,29 +71,27 @@ export const CreateAdventBadges = (slug: AotBadges | DifficultyBadges | Solution
 
 export const AdventChallengeFn = async (badges: AllBadgeObjs, advent: AdventChallenges | null) => {
   // Advent Badge Logic
-  const numberOfAttemptedHolidayChallenges =
+  const attemptedChallenges =
     advent?.trackChallenges.filter((trackChallenge) => {
       return (trackChallenge.challenge.submission?.length ?? 0) > 0;
     }).length ?? 0;
 
-  if (numberOfAttemptedHolidayChallenges > 0) {
-    Object.assign(badges, CreateAdventBadges('aot-2023-bronze'));
-  }
-
-  const numberOfCompletedHolidayChallenges =
+  const completedChallenges =
     advent?.trackChallenges.filter((trackChallenge) => {
       return trackChallenge.challenge.submission?.some((submission) => submission.isSuccessful);
     }).length ?? 0;
-  let badgeLevel: 'gold' | 'platinum' | 'silver' | undefined;
-  if (numberOfCompletedHolidayChallenges >= 5) {
+
+  let badgeLevel: 'bronze' | 'gold' | 'platinum' | 'silver' | undefined;
+  if (attemptedChallenges > 0) {
+    badgeLevel = 'bronze';
+  }
+  if (completedChallenges >= 5) {
     badgeLevel = 'silver';
-    Object.assign(badges, CreateAdventBadges('aot-2023-silver'));
   }
-  if (numberOfCompletedHolidayChallenges >= 15) {
+  if (completedChallenges >= 15) {
     badgeLevel = 'gold';
-    Object.assign(badges, CreateAdventBadges('aot-2023-gold'));
   }
-  if (numberOfCompletedHolidayChallenges >= 25) {
+  if (completedChallenges >= 25) {
     badgeLevel = 'platinum';
   }
   if (badgeLevel) {
