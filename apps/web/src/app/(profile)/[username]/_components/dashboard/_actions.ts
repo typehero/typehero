@@ -15,7 +15,7 @@ import {
   type SolutionBadges,
 } from './badges/_shared_solutions_badges';
 import {
-  adventBadgesFn,
+  adventBadgesFn, type AdventChallenges,
   AotBadgeKeys,
   type AotBadges,
   CreateAdventBadges,
@@ -211,7 +211,7 @@ const badgeCalculations: BadgeFn[] = [
   sharedSolutionsBadgesFn,
 ];
 
-// TODO: where does this actually go? on submissions?
+// TODO: If the submission is successful this gets called, is the right spot?
 export async function fillInMissingBadges(userId: string): Promise<AllBadgeObjs> {
   let badges: AllBadgeObjs = {};
 
@@ -232,25 +232,9 @@ export async function fillInMissingBadges(userId: string): Promise<AllBadgeObjs>
   for (const badge of missingBadges) {
     await prisma.$queryRaw`INSERT INTO UserBadges(badge_name, achievement_date, user_id) VALUES(${badge.slug}, ${new Date(Date.now()).toISOString().slice(0, 10).replace('T', ' ')}, ${userId})`;
   }
-
   return badges;
 }
 
-const mapBadgeToFn = {
-  [DifficultyBadgeKeys[0]]: AwardDifficultyBadge(DifficultyBadgeKeys[0]),
-  [DifficultyBadgeKeys[1]]: AwardDifficultyBadge(DifficultyBadgeKeys[1]),
-  [DifficultyBadgeKeys[2]]: AwardDifficultyBadge(DifficultyBadgeKeys[2]),
-  [DifficultyBadgeKeys[3]]: AwardDifficultyBadge(DifficultyBadgeKeys[3]),
-  [DifficultyBadgeKeys[4]]: AwardDifficultyBadge(DifficultyBadgeKeys[4]),
-  [SolutionBadgeKeys[0]]: AwardSolutionBadge(SolutionBadgeKeys[0]),
-  [SolutionBadgeKeys[1]]: AwardSolutionBadge(SolutionBadgeKeys[1]),
-  [SolutionBadgeKeys[2]]: AwardSolutionBadge(SolutionBadgeKeys[2]),
-  [SolutionBadgeKeys[3]]: AwardSolutionBadge(SolutionBadgeKeys[3]),
-  [AotBadgeKeys[0]]: CreateAdventBadges(AotBadgeKeys[0], `Advent of Typescript 2023 Bronze`),
-  [AotBadgeKeys[1]]: CreateAdventBadges(AotBadgeKeys[1], `Advent of Typescript 2023 Silver`),
-  [AotBadgeKeys[2]]: CreateAdventBadges(AotBadgeKeys[2], `Advent of Typescript 2023 Gold`),
-  [AotBadgeKeys[3]]: CreateAdventBadges(AotBadgeKeys[3], `Advent of Typescript 2023 Platinum`),
-};
 export async function getBadges(userId: string): Promise<AllBadgeObjs> {
   let badges: AllBadgeObjs = {};
 
@@ -259,7 +243,10 @@ export async function getBadges(userId: string): Promise<AllBadgeObjs> {
     await prisma.$queryRaw`SELECT badge_name AS slug FROM UserBadges WHERE user_id=${userId}`;
 
   userBadges.forEach(({slug}: { slug: AotBadges | DifficultyBadges | SolutionBadges }) => {
-    badges = Object.assign(badges, mapBadgeToFn[slug]);
+    const badge = AwardDifficultyBadge(slug) ||
+      AwardSolutionBadge(slug) ||
+      CreateAdventBadges(slug);
+    badges = Object.assign(badges, badge);
   })
 
   return badges;

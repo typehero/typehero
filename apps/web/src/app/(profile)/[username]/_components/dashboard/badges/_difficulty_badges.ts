@@ -1,5 +1,7 @@
 import { prisma } from '@repo/db';
 import type {AllBadgeObjs, BadgeFn} from "~/app/(profile)/[username]/_components/dashboard/_actions";
+import type {SolutionBadges} from "~/app/(profile)/[username]/_components/dashboard/badges/_shared_solutions_badges";
+import type {AotBadges} from "~/app/(profile)/[username]/_components/dashboard/badges/_advent_badges";
 export const DifficultyBadgeKeys = ['BEGINNER', 'EASY', 'MEDIUM', 'HARD', 'EXTREME'] as const;
 
 export type DifficultyBadges = typeof DifficultyBadgeKeys[number];
@@ -27,7 +29,7 @@ export async function DifficultyRetrieveData(userId: string) {
   return data;
 }
 
-export const AwardDifficultyBadge = (slug: DifficultyBadges) => {
+export const AwardDifficultyBadge = (slug: AotBadges | DifficultyBadges | SolutionBadges ): slug is DifficultyBadges => {
   const pascalCase = `${slug[0]}${slug.substring(1).toLowerCase()}`;
   return {
     [slug]: {

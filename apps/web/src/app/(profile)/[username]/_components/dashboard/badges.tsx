@@ -32,7 +32,6 @@ export const SlugToBadgeIcon: Record<keyof AllBadgeObjs, FC<{ className: string;
 
 const Badge = ({ slug, name, shortName }: AllBadges) => {
   const Icon = SlugToBadgeIcon[slug];
-  console.log(slug)
 
   if (Icon === undefined) return null;
 

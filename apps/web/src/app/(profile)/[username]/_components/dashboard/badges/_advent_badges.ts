@@ -1,5 +1,7 @@
 import type {AllBadgeObjs, BadgeFn} from "../_actions";
 import {prisma} from "@repo/db";
+import type {DifficultyBadges} from "~/app/(profile)/[username]/_components/dashboard/badges/_difficulty_badges";
+import type {SolutionBadges} from "~/app/(profile)/[username]/_components/dashboard/badges/_shared_solutions_badges";
 
 export interface AdventChallenges {
   trackChallenges: { challenge: { submission: { isSuccessful: boolean }[] } }[];
@@ -55,11 +57,13 @@ export async function AdventRetrieveData(userId: string) {
   return advent;
 }
 
-export const CreateAdventBadges = (slug: AotBadges, name: string) => {
+export const CreateAdventBadges = (slug: AotBadges | DifficultyBadges | SolutionBadges): slug is AotBadges => {
+  const badgeColor = slug.split('-')[2];
+  const badgeLevel = `${badgeColor[0]}${badgeColor.substring(1)}`
   return {
     [slug]: {
       slug,
-      name,
+      name: `Advent of Typescript 2023 ${badgeLevel}`,
       shortName: 'Advent'
     }
   }
@@ -73,7 +77,7 @@ export const AdventChallengeFn = async (badges: AllBadgeObjs, advent: AdventChal
     }).length ?? 0;
 
   if (numberOfAttemptedHolidayChallenges > 0) {
-    Object.assign(badges, CreateAdventBadges('aot-2023-bronze', 'Advent of TypeScript 2023 Bronze'));
+    Object.assign(badges, CreateAdventBadges('aot-2023-bronze'));
   }
 
   const numberOfCompletedHolidayChallenges =
@@ -83,19 +87,18 @@ export const AdventChallengeFn = async (badges: AllBadgeObjs, advent: AdventChal
   let badgeLevel: 'gold' | 'platinum' | 'silver' | undefined;
   if (numberOfCompletedHolidayChallenges >= 5) {
     badgeLevel = 'silver';
-    Object.assign(badges, CreateAdventBadges('aot-2023-silver', 'Advent of TypeScript 2023 Silver'));
+    Object.assign(badges, CreateAdventBadges('aot-2023-silver'));
   }
   if (numberOfCompletedHolidayChallenges >= 15) {
     badgeLevel = 'gold';
-    Object.assign(badges, CreateAdventBadges('aot-2023-gold', 'Advent of TypeScript 2023 Gold'));
+    Object.assign(badges, CreateAdventBadges('aot-2023-gold'));
   }
   if (numberOfCompletedHolidayChallenges >= 25) {
     badgeLevel = 'platinum';
   }
   if (badgeLevel) {
     Object.assign(badges, CreateAdventBadges(
-      `aot-2023-${badgeLevel}`,
-      `Advent of TypeScript 2023 ${badgeLevel[0]}${badgeLevel.substring(1)}`));
+      `aot-2023-${badgeLevel}`));
   }
   return badges;
 };

@@ -1,5 +1,7 @@
 import { prisma } from '@repo/db';
 import type {AllBadgeObjs, BadgeFn} from "../_actions";
+import type {DifficultyBadges} from "~/app/(profile)/[username]/_components/dashboard/badges/_difficulty_badges";
+import type {AotBadges} from "~/app/(profile)/[username]/_components/dashboard/badges/_advent_badges";
 
 export const SolutionBadgeKeys = ['bronze', 'silver', 'gold', 'platinum'] as const;
 
@@ -28,7 +30,7 @@ export const SharedSolutionRetrieveData = async (userId: string) => {
   return data;
 }
 
-export const AwardSolutionBadge = (slug: SolutionBadges) => {
+export const AwardSolutionBadge = (slug: AotBadges | DifficultyBadges | SolutionBadges): slug is SolutionBadges => {
   const badgeName = `${slug[0]?.toUpperCase()}${slug.substring(
     1,
   )} Unique Solutions Badge`;
