@@ -59,7 +59,7 @@ export async function AdventRetrieveData(userId: string) {
 
 export const CreateAdventBadges = (slug: AotBadges | DifficultyBadges | SolutionBadges): slug is AotBadges => {
   const badgeColor = slug.split('-')[2];
-  const badgeLevel = `${badgeColor[0]}${badgeColor.substring(1)}`
+  const badgeLevel = `${badgeColor[0].toUpperCase()}${badgeColor.substring(1)}`
   return {
     [slug]: {
       slug,
