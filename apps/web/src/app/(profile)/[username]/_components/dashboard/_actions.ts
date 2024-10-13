@@ -2,6 +2,24 @@
 
 import { prisma } from '@repo/db';
 import type { DIFFICULTIES } from './challenges-progress';
+import {
+  AwardDifficultyBadge,
+  DifficultyBadgeKeys,
+  type DifficultyBadges,
+  difficultyBadgesFn,
+} from './badges/_difficulty_badges';
+import {
+  AwardSolutionBadge,
+  sharedSolutionsBadgesFn,
+  SolutionBadgeKeys,
+  type SolutionBadges,
+} from './badges/_shared_solutions_badges';
+import {
+  adventBadgesFn, type AdventChallenges,
+  AotBadgeKeys,
+  type AotBadges,
+  CreateAdventBadges,
+} from './badges/_advent_badges';
 
 export type HistoricalChallenge = Awaited<ReturnType<typeof getChallengeHistoryByCategory>>[0];
 
@@ -167,72 +185,69 @@ export async function getSolvedChallenges(userId: string) {
   };
 }
 
-export interface BadgeInfo {
-  // eslint-disable-next-line @typescript-eslint/sort-type-constituents
-  slug: 'aot-2023-bronze' | 'aot-2023-silver' | 'aot-2023-gold' | 'aot-2023-platinum';
+export interface Badges<T> {
+  slug: T;
   name: string;
+  shortName: string;
 }
 
-export async function getBadges(userId: string): Promise<BadgeInfo[]> {
-  const badges: BadgeInfo[] = [];
+type BadgeTypes = AotBadges | DifficultyBadges | SolutionBadges;
+export type BadgeObj<T> = {
+  [key in BadgeTypes]?: {
+    slug: key;
+    name: string;
+    shortName: string;
+  };
+};
 
-  const holidayTrack = await prisma.track.findFirst({
-    where: {
-      slug: 'advent-of-typescript-2023',
-    },
-    include: {
-      trackChallenges: {
-        orderBy: {
-          orderId: 'asc',
-        },
-        include: {
-          challenge: {
-            include: {
-              submission: {
-                where: {
-                  userId,
-                },
-              },
-            },
-          },
-        },
-      },
-      enrolledUsers: {
-        where: {
-          id: userId,
-        },
-        select: {
-          id: true,
-        },
-      },
-    },
-  });
+export type AllBadges = Badges<BadgeTypes>;
+export type AllBadgeObjs = BadgeObj<BadgeTypes>;
 
-  const numberOfAttemptedHolidayChallenges =
-    holidayTrack?.trackChallenges.filter((trackChallenge) => {
-      return (trackChallenge.challenge.submission?.length ?? 0) > 0;
-    }).length ?? 0;
+export type BadgeFn = ({ userId, badges }: { userId: string; badges: AllBadgeObjs }) => Promise<AllBadgeObjs>;
 
-  if (numberOfAttemptedHolidayChallenges > 0) {
-    badges.push({ slug: 'aot-2023-bronze', name: 'Advent of TypeScript 2023 Bronze' });
+const badgeCalculations: BadgeFn[] = [
+  adventBadgesFn,
+  difficultyBadgesFn,
+  sharedSolutionsBadgesFn,
+];
+
+// TODO: If the submission is successful this gets called, is the right spot?
+export async function fillInMissingBadges(userId: string): Promise<AllBadgeObjs> {
+  let badges: AllBadgeObjs = {};
+
+  // calculate badges user has achieved
+  for (const badgeFn of badgeCalculations) {
+    badges = await badgeFn({ userId, badges });
   }
 
-  const numberOfCompletedHolidayChallenges =
-    holidayTrack?.trackChallenges.filter((trackChallenge) => {
-      return trackChallenge.challenge.submission?.some((submission) => submission.isSuccessful);
-    }).length ?? 0;
+  // retrieve current awarded badges
+  const userBadges: { slug: string; }[] = await prisma.$queryRaw`SELECT badge_name AS slug FROM UserBadges WHERE user_id=${userId}`;
 
-  if (numberOfCompletedHolidayChallenges >= 5) {
-    badges.push({ slug: 'aot-2023-silver', name: 'Advent of TypeScript 2023 Silver' });
+  // award missing badges
+  const missingBadges = Object.values(badges)
+    .filter(x =>
+      !userBadges
+        .map(x => x.slug)
+        .includes(x.slug));
+  for (const badge of missingBadges) {
+    await prisma.$queryRaw`INSERT INTO UserBadges(badge_name, achievement_date, user_id) VALUES(${badge.slug}, ${new Date(Date.now()).toISOString().slice(0, 10).replace('T', ' ')}, ${userId})`;
   }
+  return badges;
+}
 
-  if (numberOfCompletedHolidayChallenges >= 15) {
-    badges.push({ slug: 'aot-2023-gold', name: 'Advent of TypeScript 2023 Gold' });
-  }
+export async function getBadges(userId: string): Promise<AllBadgeObjs> {
+  let badges: AllBadgeObjs = {};
 
-  if (numberOfCompletedHolidayChallenges >= 25) {
-    badges.push({ slug: 'aot-2023-platinum', name: 'Advent of TypeScript 2023 Platinum' });
-  }
+  // retrieve current awarded badges
+  const userBadges: { slug: AotBadges | DifficultyBadges | SolutionBadges; }[] =
+    await prisma.$queryRaw`SELECT badge_name AS slug FROM UserBadges WHERE user_id=${userId}`;
+
+  userBadges.forEach(({slug}: { slug: AotBadges | DifficultyBadges | SolutionBadges }) => {
+    const badge = AwardDifficultyBadge(slug) ||
+      AwardSolutionBadge(slug) ||
+      CreateAdventBadges(slug);
+    badges = Object.assign(badges, badge);
+  })
 
   return badges;
 }
