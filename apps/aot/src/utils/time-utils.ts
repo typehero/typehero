@@ -7,11 +7,7 @@ export function getCurrentAdventDay() {
   const today = Date.now();
   const startDate = new Date('2024-10-01T04:00:00.000Z').getTime();
 
-  if (today < startDate) {
-    return 0; // advent hasn't started yet!!
-  }
-
-  const adventDay = Math.floor((today - startDate) / MS_PER_DAY) + 1;
+  const adventDay: AdventDay = Math.floor((today - startDate) / MS_PER_DAY) + 1;
 
   return adventDay;
 }
@@ -25,9 +21,9 @@ function isAdventDay(value: number): value is AdventDay {
   return value >= 1 && value <= 25;
 }
 
-export function validateAdventDay(routeDay: unknown) {
-  const currentDay = Number(routeDay);
-  if (!isAdventDay(currentDay)) return undefined;
+export function validateAdventDay(selectedDay: unknown) {
+  const selectedDayNum = Number(selectedDay);
+  if (!isAdventDay(selectedDayNum)) return undefined;
   const currentAdventDay = getCurrentAdventDay();
-  return currentDay <= currentAdventDay ? currentAdventDay : undefined;
+  return selectedDayNum <= currentAdventDay ? currentAdventDay : undefined;
 }

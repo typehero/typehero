@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { validateAdventDay } from '~/utils/time-utils';
+import AdventDaysRow from '../../_components/advent-days-row';
 
 export default function LeaderboardLayout({
   children,
@@ -15,26 +15,7 @@ export default function LeaderboardLayout({
 
   return (
     <>
-      <div className="flex gap-2 text-xl">
-        <p>Per day:</p>
-        <ul className="flex gap-2">
-          {Array.from({ length: currentAdventDay }, (_, index) => {
-            const day = index + 1;
-            return (
-              <li key={day}>
-                <Link
-                  href={`/leaderboard/day/${day}`}
-                  className={`hover:text-blue-400 ${
-                    day === routeDayNum ? 'font-bold text-blue-600' : ''
-                  }`}
-                >
-                  {day}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+      <AdventDaysRow currentAdventDay={currentAdventDay} selectedDay={routeDayNum} />
       {children}
     </>
   );

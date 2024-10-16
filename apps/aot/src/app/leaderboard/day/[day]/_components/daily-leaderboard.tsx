@@ -1,4 +1,5 @@
 import { prisma } from '@repo/db';
+import type { Submission, User } from '@repo/db/types';
 import { type AdventDay } from '~/utils/time-utils';
 
 async function takeSnapshot(adventDay: number) {
@@ -30,6 +31,7 @@ const getFirst100SubmissionsRanked = async (adventDay: AdventDay) => {
       challengeId,
       isSuccessful: true,
     },
+    distinct: ['userId'],
     orderBy: {
       createdAt: 'asc',
     },
