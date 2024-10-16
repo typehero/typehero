@@ -1,0 +1,1 @@
+type CookieSurveyInput = unknown;
