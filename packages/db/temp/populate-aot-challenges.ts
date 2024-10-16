@@ -7,9 +7,9 @@ import { prisma } from '../src';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const challengePath = path.join(__dirname, '../../../challenges/aot/2023');
+const challengePath = path.join(__dirname, '../../../challenges/aot');
 
-const excludes = ['blank', 'solutions'];
+const excludes = ['blank', 'solutions', 'metadata.schema.json'];
 export const slugify = (str: string) => str.toLowerCase().replace(/\s/g, '-');
 
 const TYPEHERO_ID = uuidByString('typehero');
