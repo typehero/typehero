@@ -24,4 +24,3 @@ export default async function EventByYearLandingPage({ params: { year } }: Props
     </div>
   );
 }
-// router.push(`/challenge/${challenge.slug}/submissions`);
