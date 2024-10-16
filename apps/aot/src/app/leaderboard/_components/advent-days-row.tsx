@@ -1,11 +1,10 @@
 import Link from 'next/link';
-import type { AdventDay } from '~/utils/time-utils';
 
 export default function AdventDaysRow({
   currentAdventDay,
   selectedDay,
 }: {
-  currentAdventDay: AdventDay;
+  currentAdventDay: number;
   selectedDay?: number;
 }) {
   return (

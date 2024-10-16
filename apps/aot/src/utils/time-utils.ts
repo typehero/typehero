@@ -7,23 +7,22 @@ export function getCurrentAdventDay() {
   const today = Date.now();
   const startDate = new Date('2024-10-01T04:00:00.000Z').getTime();
 
-  const adventDay: AdventDay = Math.floor((today - startDate) / MS_PER_DAY) + 1;
+  if (today < startDate) {
+    return 0; // not advent yet!
+  }
+
+  const adventDay = Math.floor((today - startDate) / MS_PER_DAY) + 1;
 
   return adventDay;
 }
 
-// prettier-ignore
-export type AdventDay = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
-            11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 |
-            19 | 20 | 21 | 22 | 23 | 24 | 25;
-
-function isAdventDay(value: number): value is AdventDay {
+function isValidAdventDay(value: number) {
   return value >= 1 && value <= 25;
 }
 
-export function validateAdventDay(selectedDay: unknown) {
-  const selectedDayNum = Number(selectedDay);
-  if (!isAdventDay(selectedDayNum)) return undefined;
+export function validateAdventDay(selectedDay: number) {
+  if (!isValidAdventDay(selectedDay)) return undefined;
+
   const currentAdventDay = getCurrentAdventDay();
-  return selectedDayNum <= currentAdventDay ? currentAdventDay : undefined;
+  return selectedDay <= currentAdventDay ? currentAdventDay : undefined;
 }

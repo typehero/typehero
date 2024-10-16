@@ -11,7 +11,7 @@ export default function LeaderboardLayout({
 }) {
   const routeDayNum = Number(routeDay);
   const currentAdventDay = validateAdventDay(routeDayNum);
-  if (currentAdventDay === undefined) return notFound();
+  if (!currentAdventDay) return notFound();
 
   return (
     <>

@@ -1,6 +1,5 @@
 import { prisma } from '@repo/db';
 import type { Submission, User } from '@repo/db/types';
-import { type AdventDay } from '~/utils/time-utils';
 
 async function takeSnapshot(adventDay: number) {
   const challengeId = FAKE_DAILY_CHALLENGE_IDS[adventDay - 1];
@@ -22,9 +21,9 @@ async function takeSnapshot(adventDay: number) {
 // Just temporary to display my thinking
 type SubmissionWithUser = Submission & { user: User };
 const SNAPSHOTS: SubmissionWithUser[][] = []; // pretend this is an array of snapshots from snapshots.ts
-const getSnapshot = (adventDay: AdventDay) => SNAPSHOTS[adventDay - 1];
+const getSnapshot = (adventDay: number) => SNAPSHOTS[adventDay - 1];
 
-const getFirst100SubmissionsRanked = async (adventDay: AdventDay) => {
+const getFirst100SubmissionsRanked = async (adventDay: number) => {
   const challengeId = FAKE_DAILY_CHALLENGE_IDS[adventDay - 1];
   const submissions = await prisma.submission.findMany({
     where: {
@@ -43,7 +42,7 @@ const getFirst100SubmissionsRanked = async (adventDay: AdventDay) => {
   return submissions;
 };
 
-export default async function DailyLeaderboard({ adventDay }: { adventDay: AdventDay }) {
+export default async function DailyLeaderboard({ adventDay }: { adventDay: number }) {
   const snapshot = getSnapshot(adventDay);
   const first100SubmissionsRanked = snapshot ?? (await getFirst100SubmissionsRanked(adventDay));
 
