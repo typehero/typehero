@@ -13,6 +13,22 @@ export const eventRouter = createTRPCRouter({
     });
     return aotEvents;
   }),
+  getEventChallengeBySlug: publicProcedure
+    .input(
+      z.object({
+        slug: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      // @TODO: actually select fields
+      const challenges = await ctx.db.challenge.findFirstOrThrow({
+        where: {
+          slug: input.slug,
+        },
+      });
+
+      return challenges;
+    }),
   getEventChallengesByYear: publicProcedure
     .input(
       z.object({
