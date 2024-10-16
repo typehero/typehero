@@ -1,4 +1,3 @@
-// `app/page.tsx` is the UI for the `/` URL
-export default function Page() {
-  return <h1>leaderboard</h1>;
+export default function LeaderboardPage() {
+  return <>General leaderboard here: coming soon!</>;
 }
