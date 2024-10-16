@@ -7,5 +7,5 @@ async function getTop100SubmissionsByChallengeIds(challengeIds: number[]) {
 }
 
 export default function OverallLeaderboard() {
-  return <>Coming soon!!</>;
+  return <>Overall leaderboard coming soon!!</>;
 }
