@@ -36,10 +36,7 @@ export function getAdminUrl() {
 }
 
 export async function Navigation() {
-  const [session, featureFlags] = await Promise.all([
-    auth(),
-    getAllFlags(),
-  ]);
+  const [session, featureFlags] = await Promise.all([auth(), getAllFlags()]);
 
   const notificationCount = session ? await getNotificationCount() : 0;
 
