@@ -36,11 +36,13 @@ export function getAdminUrl() {
 }
 
 export async function Navigation() {
-  const [session, featureFlags, notificationCount] = await Promise.all([
+  const [session, featureFlags] = await Promise.all([
     auth(),
     getAllFlags(),
-    getNotificationCount(),
   ]);
+
+  const notificationCount = session ? await getNotificationCount() : 0;
+
   const isAdminOrMod = isAdminOrModerator(session);
   const isAdminRole = isAdmin(session);
 
