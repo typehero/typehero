@@ -22,6 +22,7 @@ import { CardWithRadialBg } from './_components/card-radial-bg';
 import { MovingGrid } from './_components/moving-grid';
 import { getProgressData, getUserActivity } from './user-info';
 import { auth } from '~/server/auth';
+import { MagicIcon } from '@repo/ui/components/magic-icon';
 
 const hardcodedGitHubActivity = [
   {
@@ -747,6 +748,7 @@ export default async function ProfilePage(props: { params: { username: string } 
       image: true,
       roles: true,
       createdAt: true,
+      userLinks: true,
       sharedSolution: {
         take: 3,
         orderBy: {
@@ -779,12 +781,14 @@ export default async function ProfilePage(props: { params: { username: string } 
   const gradient = getGradient(user.roles);
   const progressData = await getProgressData(user.id);
   const activityData = await getUserActivity(user.id);
+  // TODO: Change form to prevent it from adding empty links?
+  const userLinks = user.userLinks.filter((u) => u.url !== '');
 
   const session = await auth();
   const isOwnProfile = session?.user?.id === user.id;
 
   return (
-    <div className="container space-y-8 pt-16">
+    <div className="container space-y-10 pt-16">
       <MovingGrid>
         <div className="relative flex flex-row items-start justify-between">
           <div className="flex h-full flex-col justify-center space-y-3">
@@ -809,12 +813,19 @@ export default async function ProfilePage(props: { params: { username: string } 
                   Joined {getRelativeTime(user.createdAt)}
                 </h2>
                 <div className="flex flex-row space-x-1">
-                  <Button variant="ghost" size="sm" className="p-2">
-                    <Twitter className="h-7 w-7" />
-                  </Button>
-                  <Button variant="ghost" size="sm" className="p-2">
-                    <Github className="h-7 w-7" />
-                  </Button>
+                  {userLinks.map((link) => (
+                    <Button
+                      key={link.id}
+                      variant="ghost"
+                      size="sm"
+                      className="hover:border-border border border-transparent p-2 py-5 transition-colors hover:bg-transparent dark:hover:bg-transparent"
+                    >
+                      <MagicIcon
+                        url={link.url}
+                        className="text-foreground dark:text-foreground h-7 w-7"
+                      />
+                    </Button>
+                  ))}
                 </div>
               </div>
             </div>
@@ -843,8 +854,8 @@ export default async function ProfilePage(props: { params: { username: string } 
         </div>
       </MovingGrid>
 
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-8">
-        <CardWithRadialBg className="col-span-3">
+      <div className="flex flex-row justify-center space-x-10">
+        <CardWithRadialBg className="basis-1/3">
           <div className="flex h-full flex-col">
             <CardHeader>
               <Button
@@ -894,7 +905,7 @@ export default async function ProfilePage(props: { params: { username: string } 
           </div>
         </CardWithRadialBg>
 
-        <CardWithRadialBg className="col-span-2 ">
+        <CardWithRadialBg>
           <div className="flex h-full flex-col">
             <CardHeader>
               <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Badges</h1>
@@ -920,7 +931,7 @@ export default async function ProfilePage(props: { params: { username: string } 
           </div>
         </CardWithRadialBg>
 
-        <CardWithRadialBg className="col-span-3 h-fit w-fit">
+        <CardWithRadialBg className="h-fit w-fit">
           <CardHeader>
             <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Recent Activity</h1>
           </CardHeader>
