@@ -28,4 +28,8 @@ export const tracks = [
     name: 'Advent of TypeScript 2023',
     description: 'Explore and follow along with the community across Advent of TypeScript 2023.',
   },
+  {
+    name: 'Advent of TypeScript 2024',
+    description: 'Explore and follow along with the community across Advent of TypeScript 2024.',
+  },
 ];

@@ -73,6 +73,49 @@ try {
       },
     });
 
+    if (track.name === 'Advent of TypeScript 2023' || track.name === 'Advent of TypeScript 2024') {
+      const challengesForTrack = await prisma.challenge.findMany({
+        where: {
+          slug: {
+            in: [
+              'day-1',
+              'day-2',
+              'day-3',
+              'day-4',
+              'day-5',
+              'day-6',
+              'day-7',
+              'day-8',
+              'day-9',
+              'day-10',
+              'day-11',
+              'day-12',
+              'day-13',
+              'day-14',
+              'day-15',
+              'day-16',
+              'day-17',
+              'day-18',
+              'day-19',
+              'day-20',
+              'day-21',
+              'day-22',
+              'day-23',
+              'day-24',
+              'day-25',
+            ],
+          },
+        },
+      });
+      await prisma.trackChallenge.createMany({
+        data: challengesForTrack.map((challenge, index) => ({
+          challengeId: challenge.id,
+          trackId: createdTrack.id,
+          orderId: index,
+        })),
+      });
+    }
+
     if (track.name === 'TypeScript Foundations') {
       const challengesForTrack = await prisma.challenge.findMany({
         where: {
