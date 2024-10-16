@@ -15,7 +15,7 @@ export default async function EventByYearLandingPage({ params: { year } }: Props
       <ul>
         {event.trackChallenges.map((trackChallenge) => (
           <li key={trackChallenge.challenge.slug}>
-            <Link href={`/events/${year}/${trackChallenge.challenge.slug}`}>
+            <Link href={`/events/${year}/${trackChallenge.challenge.slug.split('-').at(-1)}`}>
               {trackChallenge.challenge.name}
             </Link>
           </li>

@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default async function Challenges({ params: { year, day } }: Props) {
-  const events = await api.event.getEventChallengeBySlug({ slug: `${year}-${day}` });
+  const challenge = await api.event.getEventChallengeBySlug({ slug: `${year}-${day}` });
 
-  return <pre>{JSON.stringify({}, null, 2)}</pre>;
+  return <pre>{JSON.stringify(challenge, null, 2)}</pre>;
 }
