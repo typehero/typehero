@@ -1,13 +1,18 @@
+import Link from 'next/link';
 import { api } from '~/trpc/server';
 
 export default async function Page() {
   const events = await api.event.getAll();
   return (
-    <div>
+    <ul>
       {events.map((event) => {
-        const name = event.slug.split('-').at(-1);
-        return <div key={event.id}>{name}</div>;
+        const year = event.slug.split('-').at(-1);
+        return (
+          <li key={event.slug}>
+            <Link href={`/events/${year}`}>{year}</Link>
+          </li>
+        );
       })}
-    </div>
+    </ul>
   );
 }
