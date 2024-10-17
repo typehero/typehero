@@ -1,7 +1,8 @@
 import { prisma } from '@repo/db';
+import { ADVENT_CHALLENGE_IDS, LEADERBOARD_RANKING_LIMIT } from '~/app/leaderboard/constants';
 
 const getFirst100SubmissionsRanked = async (adventDay: number) => {
-  const challengeId = FAKE_DAILY_CHALLENGE_IDS[adventDay - 1];
+  const challengeId = ADVENT_CHALLENGE_IDS[adventDay - 1];
   const submissions = await prisma.submission.findMany({
     where: {
       challengeId,
@@ -11,7 +12,7 @@ const getFirst100SubmissionsRanked = async (adventDay: number) => {
     orderBy: {
       createdAt: 'asc',
     },
-    take: 100,
+    take: LEADERBOARD_RANKING_LIMIT,
     include: {
       user: true,
     },
@@ -23,11 +24,11 @@ export default async function DailyLeaderboard({ adventDay }: { adventDay: numbe
   const first100SubmissionsRanked = await getFirst100SubmissionsRanked(adventDay);
 
   return (
-    <div>
-      <ul className="flex flex-col gap-2 p-4 font-mono">
+    <div className="p-4">
+      <ul className="flex flex-col gap-2 font-mono">
         {first100SubmissionsRanked.map((submission, index) => (
           <li key={submission.id} className="flex gap-10 border p-4">
-            <p>{index + 1})</p>
+            <p className="w-12 text-right">{index + 1})</p>
             <p>{formatDate(submission.createdAt)}</p>
             <p>{submission.user.name}</p>
           </li>
@@ -50,9 +51,3 @@ const formatDate = (date: Date) => {
     hourCycle: 'h23',
   }).format(new Date(date));
 };
-
-// Id of each challenge in order
-// We can then lookup day x's challenge by doing FAKE_DAILY_CHALLENGE_IDS[day-1]
-const FAKE_DAILY_CHALLENGE_IDS = [
-  2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 43, 55, 57, 59, 62, 89, 90,
-] as const;
