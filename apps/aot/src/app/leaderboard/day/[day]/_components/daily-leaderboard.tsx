@@ -1,27 +1,4 @@
 import { prisma } from '@repo/db';
-import type { Submission, User } from '@repo/db/types';
-
-async function takeSnapshot(adventDay: number) {
-  const challengeId = FAKE_DAILY_CHALLENGE_IDS[adventDay - 1];
-  const topSubmissions = await prisma.submission.findMany({
-    where: { challengeId, isSuccessful: true },
-    orderBy: { createdAt: 'asc' },
-    take: 100,
-    include: { user: true },
-  });
-
-  // TODO / UNDECIDED:
-  // What method do we want to go with for saving the top submissions once we have the first 100?
-  //
-  // Easy solution is to run this function and save results in a snapshots.ts file
-  // Then we can retrieve from snapshot if exists or getFirst100SubmissionsRanked if not
-  // Requires us to manually run this or set up some automatic job
-}
-
-// Just temporary to display my thinking
-type SubmissionWithUser = Submission & { user: User };
-const SNAPSHOTS: SubmissionWithUser[][] = []; // pretend this is an array of snapshots from snapshots.ts
-const getSnapshot = (adventDay: number) => SNAPSHOTS[adventDay - 1];
 
 const getFirst100SubmissionsRanked = async (adventDay: number) => {
   const challengeId = FAKE_DAILY_CHALLENGE_IDS[adventDay - 1];
@@ -43,8 +20,7 @@ const getFirst100SubmissionsRanked = async (adventDay: number) => {
 };
 
 export default async function DailyLeaderboard({ adventDay }: { adventDay: number }) {
-  const snapshot = getSnapshot(adventDay);
-  const first100SubmissionsRanked = snapshot ?? (await getFirst100SubmissionsRanked(adventDay));
+  const first100SubmissionsRanked = await getFirst100SubmissionsRanked(adventDay);
 
   return (
     <div>

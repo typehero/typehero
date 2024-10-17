@@ -4,12 +4,12 @@ import AdventDaysRow from '../../_components/advent-days-row';
 
 export default function LeaderboardLayout({
   children,
-  params: { day: routeDay },
+  params: { day },
 }: {
   children: React.ReactNode;
-  params: { day: number };
+  params: { day: string };
 }) {
-  const routeDayNum = Number(routeDay);
+  const routeDayNum = Number(day);
   const currentAdventDay = validateAdventDay(routeDayNum);
   if (!currentAdventDay) return notFound();
 
