@@ -28,7 +28,7 @@ export default async function DailyLeaderboard({ adventDay }: { adventDay: numbe
       <ul className="flex flex-col gap-2 font-mono">
         {first100SubmissionsRanked.map((submission, index) => (
           <li key={submission.id} className="flex gap-10 border p-4">
-            <p>{index + 1})</p>
+            <p className="w-12 text-right">{index + 1})</p>
             <p>{formatDate(submission.createdAt)}</p>
             <p>{submission.user.name}</p>
           </li>

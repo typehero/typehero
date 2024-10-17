@@ -54,9 +54,9 @@ export default async function OverallLeaderboard({
       <p>Overall AoT leaderboard!</p>
       <ul className="flex flex-col gap-2 font-mono">
         {top100Ranking.map((rankedUser, index) => (
-          <li key={index} className="flex gap-10 border p-4">
-            <p className="w-12 text-right">{index + 1})</p>
-            <p>{rankedUser.totalPoints}</p>
+          <li key={index} className="flex gap-6 border p-4">
+            <p className="w-10 text-right">{index + 1})</p>
+            <p className="w-10 text-right">{rankedUser.totalPoints}</p>
             <p>{rankedUser.name}</p>
           </li>
         ))}
