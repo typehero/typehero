@@ -24,691 +24,6 @@ import { getProgressData, getUserActivity } from './user-info';
 import { auth } from '~/server/auth';
 import { MagicIcon } from '@repo/ui/components/magic-icon';
 
-const hardcodedGitHubActivity = [
-  {
-    date: '2023-07-23',
-    day: 0,
-    week: 30,
-    month: 6,
-    comments: 0,
-    badges: 0,
-    submissions: 0,
-    activity: 0,
-  },
-  {
-    date: '2023-07-24',
-    day: 1,
-    week: 30,
-    month: 6,
-    comments: 3,
-    badges: 0,
-    submissions: 1,
-    activity: 4,
-  },
-  {
-    date: '2023-07-25',
-    day: 2,
-    week: 30,
-    month: 6,
-    comments: 4,
-    badges: 1,
-    submissions: 4,
-    activity: 9,
-  },
-  {
-    date: '2023-07-26',
-    day: 3,
-    week: 30,
-    month: 6,
-    comments: 2,
-    badges: 0,
-    submissions: 3,
-    activity: 5,
-  },
-  {
-    date: '2023-07-27',
-    day: 4,
-    week: 30,
-    month: 6,
-    comments: 0,
-    badges: 0,
-    submissions: 0,
-    activity: 0,
-  },
-  {
-    date: '2023-07-28',
-    day: 5,
-    week: 30,
-    month: 6,
-    comments: 0,
-    badges: 0,
-    submissions: 1,
-    activity: 1,
-  },
-  {
-    date: '2023-07-29',
-    day: 6,
-    week: 30,
-    month: 6,
-    comments: 2,
-    badges: 0,
-    submissions: 0,
-    activity: 2,
-  },
-  {
-    date: '2023-07-30',
-    day: 0,
-    week: 31,
-    month: 6,
-    comments: 4,
-    badges: 0,
-    submissions: 2,
-    activity: 6,
-  },
-  {
-    date: '2023-07-31',
-    day: 1,
-    week: 31,
-    month: 6,
-    comments: 0,
-    badges: 0,
-    submissions: 0,
-    activity: 0,
-  },
-  {
-    date: '2023-08-01',
-    day: 2,
-    week: 31,
-    month: 7,
-    comments: 3,
-    badges: 0,
-    submissions: 3,
-    activity: 6,
-  },
-  {
-    date: '2023-08-02',
-    day: 3,
-    week: 31,
-    month: 7,
-    comments: 0,
-    badges: 0,
-    submissions: 0,
-    activity: 0,
-  },
-  {
-    date: '2023-08-03',
-    day: 4,
-    week: 31,
-    month: 7,
-    comments: 0,
-    badges: 1,
-    submissions: 4,
-    activity: 5,
-  },
-  {
-    date: '2023-08-04',
-    day: 5,
-    week: 31,
-    month: 7,
-    comments: 2,
-    badges: 0,
-    submissions: 0,
-    activity: 2,
-  },
-
-  // Consecutive high activity days
-  {
-    date: '2023-08-05',
-    day: 6,
-    week: 31,
-    month: 7,
-    comments: 4,
-    badges: 0,
-    submissions: 3,
-    activity: 7,
-  },
-  {
-    date: '2023-08-06',
-    day: 0,
-    week: 32,
-    month: 7,
-    comments: 3,
-    badges: 1,
-    submissions: 2,
-    activity: 6,
-  },
-  {
-    date: '2023-08-07',
-    day: 1,
-    week: 32,
-    month: 7,
-    comments: 5,
-    badges: 0,
-    submissions: 4,
-    activity: 9,
-  },
-  {
-    date: '2023-08-08',
-    day: 2,
-    week: 32,
-    month: 7,
-    comments: 2,
-    badges: 0,
-    submissions: 3,
-    activity: 5,
-  },
-
-  // Sparse activity
-  {
-    date: '2023-08-09',
-    day: 3,
-    week: 32,
-    month: 7,
-    comments: 0,
-    badges: 0,
-    submissions: 0,
-    activity: 0,
-  },
-  {
-    date: '2023-08-10',
-    day: 4,
-    week: 32,
-    month: 7,
-    comments: 1,
-    badges: 0,
-    submissions: 2,
-    activity: 3,
-  },
-  {
-    date: '2023-08-11',
-    day: 5,
-    week: 32,
-    month: 7,
-    comments: 1,
-    badges: 1,
-    submissions: 0,
-    activity: 2,
-  },
-  {
-    date: '2023-08-12',
-    day: 6,
-    week: 32,
-    month: 7,
-    comments: 0,
-    badges: 0,
-    submissions: 0,
-    activity: 0,
-  },
-
-  // Another series of active days
-  {
-    date: '2023-08-13',
-    day: 0,
-    week: 33,
-    month: 7,
-    comments: 4,
-    badges: 0,
-    submissions: 4,
-    activity: 8,
-  },
-  {
-    date: '2023-08-14',
-    day: 1,
-    week: 33,
-    month: 7,
-    comments: 3,
-    badges: 1,
-    submissions: 3,
-    activity: 7,
-  },
-  {
-    date: '2023-08-15',
-    day: 2,
-    week: 33,
-    month: 7,
-    comments: 2,
-    badges: 0,
-    submissions: 2,
-    activity: 4,
-  },
-  {
-    date: '2023-08-16',
-    day: 3,
-    week: 33,
-    month: 7,
-    comments: 5,
-    badges: 0,
-    submissions: 3,
-    activity: 8,
-  },
-
-  // Some more gaps
-  {
-    date: '2023-08-17',
-    day: 4,
-    week: 33,
-    month: 7,
-    comments: 0,
-    badges: 0,
-    submissions: 0,
-    activity: 0,
-  },
-  {
-    date: '2023-08-18',
-    day: 5,
-    week: 33,
-    month: 7,
-    comments: 1,
-    badges: 0,
-    submissions: 1,
-    activity: 2,
-  },
-  {
-    date: '2023-08-19',
-    day: 6,
-    week: 33,
-    month: 7,
-    comments: 0,
-    badges: 0,
-    submissions: 3,
-    activity: 3,
-  },
-
-  // Rest of the sparse days
-  {
-    date: '2023-08-20',
-    day: 0,
-    week: 34,
-    month: 7,
-    comments: 1,
-    badges: 0,
-    submissions: 0,
-    activity: 1,
-  },
-  {
-    date: '2023-08-21',
-    day: 1,
-    week: 34,
-    month: 7,
-    comments: 0,
-    badges: 0,
-    submissions: 0,
-    activity: 0,
-  },
-  {
-    date: '2023-08-22',
-    day: 2,
-    week: 34,
-    month: 7,
-    comments: 2,
-    badges: 1,
-    submissions: 3,
-    activity: 6,
-  },
-  {
-    date: '2023-08-23',
-    day: 3,
-    week: 34,
-    month: 7,
-    comments: 0,
-    badges: 0,
-    submissions: 1,
-    activity: 1,
-  },
-  {
-    date: '2023-08-24',
-    day: 4,
-    week: 34,
-    month: 7,
-    comments: 3,
-    badges: 0,
-    submissions: 0,
-    activity: 3,
-  },
-  {
-    date: '2023-08-25',
-    day: 5,
-    week: 34,
-    month: 7,
-    comments: 1,
-    badges: 0,
-    submissions: 1,
-    activity: 2,
-  },
-
-  // Final stretch
-  {
-    date: '2023-08-26',
-    day: 6,
-    week: 34,
-    month: 7,
-    comments: 0,
-    badges: 1,
-    submissions: 0,
-    activity: 1,
-  },
-  {
-    date: '2023-08-27',
-    day: 0,
-    week: 35,
-    month: 7,
-    comments: 3,
-    badges: 0,
-    submissions: 2,
-    activity: 5,
-  },
-  {
-    date: '2023-08-28',
-    day: 1,
-    week: 35,
-    month: 7,
-    comments: 2,
-    badges: 0,
-    submissions: 3,
-    activity: 5,
-  },
-  {
-    date: '2023-08-29',
-    day: 2,
-    week: 35,
-    month: 7,
-    comments: 0,
-    badges: 0,
-    submissions: 0,
-    activity: 0,
-  },
-  {
-    date: '2023-08-30',
-    day: 3,
-    week: 35,
-    month: 7,
-    comments: 0,
-    badges: 1,
-    submissions: 1,
-    activity: 2,
-  },
-  {
-    date: '2023-08-31',
-    day: 4,
-    week: 35,
-    month: 7,
-    comments: 4,
-    badges: 0,
-    submissions: 2,
-    activity: 6,
-  },
-  {
-    date: '2023-09-01',
-    day: 5,
-    week: 35,
-    month: 8,
-    comments: 2,
-    badges: 0,
-    submissions: 0,
-    activity: 2,
-  },
-  {
-    date: '2023-09-02',
-    day: 6,
-    week: 35,
-    month: 8,
-    comments: 1,
-    badges: 0,
-    submissions: 2,
-    activity: 3,
-  },
-  {
-    date: '2023-09-03',
-    day: 0,
-    week: 36,
-    month: 8,
-    comments: 0,
-    badges: 0,
-    submissions: 0,
-    activity: 0,
-  },
-  {
-    date: '2023-09-04',
-    day: 1,
-    week: 36,
-    month: 8,
-    comments: 2,
-    badges: 1,
-    submissions: 1,
-    activity: 4,
-  },
-  {
-    date: '2023-09-05',
-    day: 2,
-    week: 36,
-    month: 8,
-    comments: 3,
-    badges: 0,
-    submissions: 4,
-    activity: 7,
-  },
-  {
-    date: '2023-09-06',
-    day: 3,
-    week: 36,
-    month: 8,
-    comments: 0,
-    badges: 1,
-    submissions: 1,
-    activity: 2,
-  },
-  {
-    date: '2023-09-07',
-    day: 4,
-    week: 36,
-    month: 8,
-    comments: 1,
-    badges: 1,
-    submissions: 0,
-    activity: 2,
-  },
-  {
-    date: '2023-09-08',
-    day: 5,
-    week: 36,
-    month: 8,
-    comments: 4,
-    badges: 0,
-    submissions: 3,
-    activity: 7,
-  },
-  {
-    date: '2023-09-09',
-    day: 6,
-    week: 36,
-    month: 8,
-    comments: 1,
-    badges: 0,
-    submissions: 2,
-    activity: 3,
-  },
-  {
-    date: '2023-09-10',
-    day: 0,
-    week: 37,
-    month: 8,
-    comments: 0,
-    badges: 1,
-    submissions: 0,
-    activity: 1,
-  },
-  {
-    date: '2023-09-11',
-    day: 1,
-    week: 37,
-    month: 8,
-    comments: 2,
-    badges: 0,
-    submissions: 3,
-    activity: 5,
-  },
-  {
-    date: '2023-09-12',
-    day: 2,
-    week: 37,
-    month: 8,
-    comments: 3,
-    badges: 1,
-    submissions: 1,
-    activity: 5,
-  },
-  {
-    date: '2023-09-13',
-    day: 3,
-    week: 37,
-    month: 8,
-    comments: 0,
-    badges: 0,
-    submissions: 0,
-    activity: 0,
-  },
-  {
-    date: '2023-09-14',
-    day: 4,
-    week: 37,
-    month: 8,
-    comments: 1,
-    badges: 0,
-    submissions: 2,
-    activity: 3,
-  },
-  {
-    date: '2023-09-15',
-    day: 5,
-    week: 37,
-    month: 8,
-    comments: 4,
-    badges: 0,
-    submissions: 3,
-    activity: 7,
-  },
-  {
-    date: '2023-09-16',
-    day: 6,
-    week: 37,
-    month: 8,
-    comments: 0,
-    badges: 0,
-    submissions: 0,
-    activity: 0,
-  },
-  {
-    date: '2023-09-17',
-    day: 0,
-    week: 38,
-    month: 8,
-    comments: 1,
-    badges: 1,
-    submissions: 2,
-    activity: 4,
-  },
-  {
-    date: '2023-09-18',
-    day: 1,
-    week: 38,
-    month: 8,
-    comments: 3,
-    badges: 0,
-    submissions: 0,
-    activity: 3,
-  },
-  {
-    date: '2023-09-19',
-    day: 2,
-    week: 38,
-    month: 8,
-    comments: 0,
-    badges: 0,
-    submissions: 1,
-    activity: 1,
-  },
-  {
-    date: '2023-09-20',
-    day: 3,
-    week: 38,
-    month: 8,
-    comments: 2,
-    badges: 0,
-    submissions: 2,
-    activity: 4,
-  },
-  {
-    date: '2023-09-21',
-    day: 4,
-    week: 38,
-    month: 8,
-    comments: 0,
-    badges: 0,
-    submissions: 0,
-    activity: 0,
-  },
-  {
-    date: '2023-09-22',
-    day: 5,
-    week: 38,
-    month: 8,
-    comments: 4,
-    badges: 1,
-    submissions: 3,
-    activity: 8,
-  },
-  {
-    date: '2023-09-23',
-    day: 6,
-    week: 38,
-    month: 8,
-    comments: 1,
-    badges: 0,
-    submissions: 1,
-    activity: 2,
-  },
-  {
-    date: '2023-09-24',
-    day: 0,
-    week: 39,
-    month: 8,
-    comments: 2,
-    badges: 0,
-    submissions: 0,
-    activity: 2,
-  },
-  {
-    date: '2023-09-25',
-    day: 1,
-    week: 39,
-    month: 9,
-    comments: 0,
-    badges: 0,
-    submissions: 0,
-    activity: 0,
-  },
-  {
-    date: '2023-09-26',
-    day: 2,
-    week: 39,
-    month: 9,
-    comments: 3,
-    badges: 1,
-    submissions: 2,
-    activity: 6,
-  },
-  {
-    date: '2023-09-27',
-    day: 3,
-    week: 39,
-    month: 9,
-    comments: 0,
-    badges: 0,
-    submissions: 0,
-    activity: 0,
-  },
-];
-
 export function generateSampleData() {
   const endDate = new Date();
   // endDate.setDate(4);
@@ -729,7 +44,6 @@ export function generateSampleData() {
       activity,
     };
   });
-  return hardcodedGitHubActivity.map((r) => ({ ...r, date: new Date(r.date) }));
 }
 
 export default async function ProfilePage(props: { params: { username: string } }) {
@@ -786,10 +100,43 @@ export default async function ProfilePage(props: { params: { username: string } 
 
   const session = await auth();
   const isOwnProfile = session?.user?.id === user.id;
-
   return (
-    <div className="container space-y-10 pt-16">
-      <MovingGrid>
+    <div className="space-y-10 pt-16">
+      <div className="flex flex-col items-center space-y-2 md:hidden">
+        <Avatar className="z-10 h-56 w-56 rounded-lg transition group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:-rotate-1">
+          <AvatarImage src={user.image ?? ''} alt={`${user.name} profile picture`} />
+          <AvatarFallback className="rounded-lg capitalize">{user.name.slice(0, 1)}</AvatarFallback>
+        </Avatar>
+        <div className="flex flex-col items-center space-y-1">
+          <h1
+            className={cn(
+              'w-min bg-gradient-to-r bg-clip-text text-3xl font-bold text-transparent',
+              gradient,
+            )}
+          >
+            {user.name}
+          </h1>
+          <Titles data={titles} />
+          {user.bio === '' && isOwnProfile ? (
+            <div className="space-y-3 p-4">
+              <h1 className="text-center">
+                ? 'You haven’t added a bio yet—tell others a bit about yourself!'
+              </h1>
+              <Button asChild variant="outline" className="text-center">
+                <Link href="./v2/all">Update your bio</Link>
+              </Button>
+            </div>
+          ) : (
+            <div className="max-w-[60ch]">
+              <p className="text-center tracking-tighter ">{user.bio}</p>
+            </div>
+          )}
+          <h2 className="text-muted-foreground text-sm tracking-tight">
+            Joined {getRelativeTime(user.createdAt)}
+          </h2>
+        </div>
+      </div>
+      <MovingGrid className="hidden md:block">
         <div className="relative flex flex-row items-start justify-between">
           <div className="flex h-full flex-col justify-center space-y-3">
             <div className="flex flex-row items-end space-x-4">
@@ -854,8 +201,8 @@ export default async function ProfilePage(props: { params: { username: string } 
         </div>
       </MovingGrid>
 
-      <div className="flex flex-row justify-center space-x-10">
-        <CardWithRadialBg className="basis-1/3">
+      <div className="flex flex-wrap justify-center gap-4">
+        <CardWithRadialBg className="min-h-[200px] ">
           <div className="flex h-full flex-col">
             <CardHeader>
               <Button
@@ -911,7 +258,7 @@ export default async function ProfilePage(props: { params: { username: string } 
               <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Badges</h1>
             </CardHeader>
             {badges.length === 0 ? (
-              <CardContent className="flex h-full w-full grow flex-col items-center justify-center space-y-3  ">
+              <CardContent className="flex h-full w-full grow flex-col items-center justify-center space-y-3 px-16  ">
                 <h1 className="text-center">
                   {isOwnProfile
                     ? "You haven't earned a badge yet - keep going, you're close!"
@@ -931,11 +278,11 @@ export default async function ProfilePage(props: { params: { username: string } 
           </div>
         </CardWithRadialBg>
 
-        <CardWithRadialBg className="h-fit w-fit">
+        <CardWithRadialBg className="h-fit w-full md:w-fit">
           <CardHeader>
             <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Recent Activity</h1>
           </CardHeader>
-          <CardContent>
+          <CardContent className="mx-auto">
             <ActivityChart data={activityData} />
           </CardContent>
         </CardWithRadialBg>

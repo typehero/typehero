@@ -1,3 +1,5 @@
+@media (min-width: 768px) {
+}
 .radial-bg::before {
   @apply pointer-events-none absolute select-none rounded-3xl opacity-0 transition-opacity duration-300 hover:opacity-100;
   background: radial-gradient(

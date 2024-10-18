@@ -16,7 +16,7 @@ type WrapperStyle = MotionStyle & {
   '--y': MotionValue<string>;
 };
 
-export function MovingGrid(props: React.PropsWithChildren<{}>) {
+export function MovingGrid(props: React.PropsWithChildren<{ className?: string }>) {
   const transition = { damping: 100, stiffness: 1000, type: 'spring' } as const;
   const mouseX = useMotionValue(43.5);
   const x = useSpring(mouseX, transition);
@@ -41,7 +41,7 @@ export function MovingGrid(props: React.PropsWithChildren<{}>) {
     <motion.div
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={cn('relative overflow-hidden', styles['radial-bg'])}
+      className={cn('relative overflow-hidden', styles['radial-bg'], props.className)}
       style={
         {
           '--x': useMotionTemplate`${x}px`,

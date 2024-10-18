@@ -37,7 +37,10 @@ export function ActivityChart(props: {
   }[];
 }) {
   return (
-    <ChartContainer config={chartConfig} className="h-[250px] w-[300px]">
+    <ChartContainer
+      config={chartConfig}
+      className="pointer-events-auto mx-auto aspect-[9/7] h-[250px]"
+    >
       <ScatterChart data={props.data} accessibilityLayer>
         <ChartTooltip
           cursor={false}

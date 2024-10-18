@@ -27,7 +27,11 @@ export function CardWithRadialBg(
   }
   return (
     <motion.div
-      className={cn(styles['radial-bg'], 'relative', props.className)}
+      className={cn(
+        styles['radial-bg'],
+        'pointer-events-none relative md:pointer-events-auto md:basis-1/3',
+        props.className,
+      )}
       onMouseMove={handleMouseMove}
       style={
         {
