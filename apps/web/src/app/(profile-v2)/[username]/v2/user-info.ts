@@ -105,6 +105,7 @@ export async function getProgressData(userId: string) {
     completedPercentage: number;
     completed: number;
     fill: string;
+    total: number;
   }[] = [];
 
   // assign values to the challenges object
@@ -118,6 +119,7 @@ export async function getProgressData(userId: string) {
       completed: solved,
       completedPercentage: Math.round((solved / challenge._count._all) * 100),
       fill: `var(--color-${challenge.difficulty})`,
+      total: challenge._count._all,
     });
   });
   const difficultyOrder = ['BEGINNER', 'EASY', 'MEDIUM', 'HARD', 'EXTREME'] as const;

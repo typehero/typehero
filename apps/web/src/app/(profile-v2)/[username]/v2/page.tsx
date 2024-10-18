@@ -101,7 +101,7 @@ export default async function ProfilePage(props: { params: { username: string } 
   const session = await auth();
   const isOwnProfile = session?.user?.id === user.id;
   return (
-    <div className="space-y-10 pt-16">
+    <div className="space-y-6 px-2 pt-16 md:space-y-10 md:px-0">
       <div className="flex flex-col items-center space-y-2 md:hidden">
         <Avatar className="z-10 h-56 w-56 rounded-lg transition group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:-rotate-1">
           <AvatarImage src={user.image ?? ''} alt={`${user.name} profile picture`} />
@@ -135,6 +135,12 @@ export default async function ProfilePage(props: { params: { username: string } 
             Joined {getRelativeTime(user.createdAt)}
           </h2>
         </div>
+      </div>
+      <div className="md:hidden">
+        <ProgressChart
+          totalCompleted={progressData.totalSolved}
+          chartData={progressData.chartData}
+        />
       </div>
       <MovingGrid className="hidden md:block">
         <div className="relative flex flex-row items-start justify-between">
@@ -201,7 +207,7 @@ export default async function ProfilePage(props: { params: { username: string } 
         </div>
       </MovingGrid>
 
-      <div className="flex flex-wrap justify-center gap-4">
+      <div className="flex flex-wrap justify-center gap-5">
         <CardWithRadialBg className="min-h-[200px] ">
           <div className="flex h-full flex-col">
             <CardHeader>
@@ -219,7 +225,7 @@ export default async function ProfilePage(props: { params: { username: string } 
             </CardHeader>
 
             {user.sharedSolution.length === 0 ? (
-              <CardContent className="flex h-full w-full grow flex-col items-center justify-center space-y-3 px-16">
+              <CardContent className="flex h-full w-full grow flex-col items-center justify-center space-y-3 md:px-16">
                 <h1 className="text-center">
                   {isOwnProfile
                     ? "It looks like you haven't shared any solutions yet."
@@ -258,11 +264,11 @@ export default async function ProfilePage(props: { params: { username: string } 
               <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Badges</h1>
             </CardHeader>
             {badges.length === 0 ? (
-              <CardContent className="flex h-full w-full grow flex-col items-center justify-center space-y-3 px-16  ">
+              <CardContent className="flex h-full w-full grow flex-col items-center justify-center space-y-3 md:px-16">
                 <h1 className="text-center">
                   {isOwnProfile
                     ? "You haven't earned a badge yet - keep going, you're close!"
-                    : `@${username} is yet to discover an achievement !`}
+                    : `@${username} is yet to discover an achievement`}
                 </h1>
                 <div className="mx-auto grid w-fit grid-cols-3 gap-4  ">
                   {Array.from({ length: 6 }).map((i) => (
@@ -282,7 +288,7 @@ export default async function ProfilePage(props: { params: { username: string } 
           <CardHeader>
             <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Recent Activity</h1>
           </CardHeader>
-          <CardContent className="mx-auto">
+          <CardContent>
             <ActivityChart data={activityData} />
           </CardContent>
         </CardWithRadialBg>

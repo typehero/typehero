@@ -44,7 +44,7 @@ export function CardWithRadialBg(
         } as WrapperStyle
       }
     >
-      <Card className="h-full border bg-transparent bg-gradient-to-br from-neutral-50 to-neutral-100 transition hover:border-transparent dark:from-neutral-900/95 dark:to-neutral-950/95">
+      <Card className="h-full border bg-transparent bg-gradient-to-br from-neutral-50 to-neutral-100 transition md:hover:border-transparent dark:from-neutral-900/95 dark:to-neutral-950/95">
         {props.children}
       </Card>
     </motion.div>

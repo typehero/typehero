@@ -8,6 +8,9 @@ import {
 import { Scatter, ScatterChart, XAxis, YAxis, ZAxis } from '@repo/ui/recharts';
 import { format, setWeek, startOfYear } from 'date-fns';
 import { MessageCircle, FileCode, Award } from '@repo/ui/icons';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { cn } from '@repo/ui/cn';
+import { number } from 'zod';
 
 const chartConfig = {
   submissions: {
@@ -36,72 +39,121 @@ export function ActivityChart(props: {
     activity: number;
   }[];
 }) {
+  const [selectedNode, setSelectedNode] = useState<{ x: number; y: number } | null>(null);
   return (
-    <ChartContainer
-      config={chartConfig}
-      className="pointer-events-auto mx-auto aspect-[9/7] h-[250px]"
-    >
-      <ScatterChart data={props.data} accessibilityLayer>
-        <ChartTooltip
-          cursor={false}
-          content={({ payload, content, ...props }) => {
-            const innerPayload = (payload?.[0]?.payload as Record<string, number>) ?? {};
-            const customPayload = Object.entries(innerPayload ?? {})
-              .filter(([key]) => key === 'comments' || key === 'badges' || key === 'submissions')
-              .map(([key, val]) => ({ name: key, value: val, payload }));
-            return <ChartTooltipContent {...props} payload={customPayload} />;
-          }}
-          labelFormatter={(_, [val]) => {
-            return format(val?.payload[0].payload.date, 'dd MMM');
-          }}
-        />
-        <XAxis
-          orientation="bottom"
-          dataKey="week"
-          type="category"
-          allowDuplicatedCategory={false}
-          tickLine={false}
-          axisLine={false}
-          tickFormatter={(val, idx) => {
-            return getMonthFromWeek(val, idx);
-          }}
-        />
+    <SelectedNodeContext.Provider value={{ selectedNode, setSeletedNode: setSelectedNode }}>
+      <ChartContainer config={chartConfig} className="pointer-events-auto aspect-[9/7] h-[250px]">
+        <ScatterChart data={props.data} accessibilityLayer>
+          <ChartTooltip
+            cursor={false}
+            content={({ payload, content, ...props }) => {
+              const innerPayload = (payload?.[0]?.payload as Record<string, number>) ?? {};
+              const customPayload = Object.entries(innerPayload ?? {})
+                .filter(([key]) => key === 'comments' || key === 'badges' || key === 'submissions')
+                .map(([key, val]) => ({ name: key, value: val, payload }));
+              return <ChartTooltipContent {...props} payload={customPayload} />;
+            }}
+            labelFormatter={(_, [val]) => {
+              return format(val?.payload[0].payload.date, 'dd MMM');
+            }}
+          />
+          <XAxis
+            orientation="bottom"
+            dataKey="week"
+            type="category"
+            allowDuplicatedCategory={false}
+            tickLine={false}
+            axisLine={false}
+            tickFormatter={(val, idx) => {
+              return getMonthFromWeek(val, idx);
+            }}
+          />
 
-        <YAxis dataKey="day" type="category" allowDuplicatedCategory={false} hide />
-        <ZAxis dataKey="activity" type="number" />
-        <Scatter
-          // ReCharts has this type defined as Record<string, any> so attempting
-          // to overide it throws an error
-          shape={(item: unknown) => {
-            const { cx, cy, activity } = item as { cx: number; cy: number; activity: number };
-            const squareLength = 24;
-            const borderV = 10;
-            const borderH = 10;
-            return (
-              <g>
-                <rect
-                  x={cx - borderH / 2 - squareLength / 2}
-                  y={cy - borderV / 2 - squareLength / 2}
-                  width={squareLength + borderH}
-                  height={squareLength + borderV}
-                  className="fill-transparent"
-                />
-                <rect
-                  x={cx - squareLength / 2}
-                  y={cy - squareLength / 2}
-                  width={squareLength}
-                  height={squareLength}
-                  className={getColor(activity)}
-                  rx={2}
-                />
-              </g>
-            );
-          }}
-        />
-      </ScatterChart>
-    </ChartContainer>
+          <YAxis dataKey="day" type="category" allowDuplicatedCategory={false} hide />
+          <ZAxis dataKey="activity" type="number" />
+          <Scatter
+            // ReCharts has this type defined as Record<string, any> so attempting
+            // to overide it throws an error
+            shape={(item: unknown) => getShape(item)}
+          />
+        </ScatterChart>
+      </ChartContainer>
+    </SelectedNodeContext.Provider>
   );
 }
+
+const getShape = (item: unknown) => {
+  const { cx, cy, activity, node } = item as {
+    cx: number;
+    cy: number;
+    activity: number;
+    node: { x: number; y: number };
+  };
+  const squareLength = 24;
+  const borderV = 10;
+  const borderH = 10;
+  return (
+    <SquareWrapper node={node}>
+      <rect
+        x={cx - borderH / 2 - squareLength / 2}
+        y={cy - borderV / 2 - squareLength / 2}
+        width={squareLength + borderH}
+        height={squareLength + borderV}
+        className="fill-transparent"
+      />
+      <Square
+        node={node}
+        x={cx - squareLength / 2}
+        y={cy - squareLength / 2}
+        width={squareLength}
+        height={squareLength}
+        className={getColor(activity)}
+        rx={2}
+      />
+    </SquareWrapper>
+  );
+};
+const Square = (props: {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  className: string;
+  rx: number;
+  node: { x: number; y: number };
+}) => {
+  // const context = useContext(SelectedNodeContext);
+  const isSelected = false;
+  console.log({ isSelected });
+  return (
+    <rect
+      x={props.x}
+      y={props.y}
+      width={props.width}
+      height={props.height}
+      className={cn(
+        props.className,
+        isSelected ? 'stroke-red-500 stroke-1 transition-colors duration-1000' : '',
+      )}
+      rx={props.rx}
+    />
+  );
+};
+const SquareWrapper = (props: {
+  children: React.ReactNode;
+  node: {
+    x: number;
+    y: number;
+  };
+}) => {
+  // const contexte = useContext(SelectedNodeContext);
+  return <g>{props.children}</g>;
+};
+
+const SelectedNodeContext = createContext<{
+  selectedNode: { x: number; y: number } | null;
+  setSeletedNode: (node: { x: number; y: number }) => void;
+} | null>(null);
 
 function getColor(count: number) {
   if (count < 1) {

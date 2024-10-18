@@ -17,41 +17,6 @@ import {
 import Link from 'next/link';
 import { ArrowUpRight } from '@repo/ui/icons';
 
-export const description = 'A radial chart with a grid';
-
-/* const chartData = [
-  {
-    difficulty: 'beginner',
-    completedPercentage: 25,
-    completed: 20,
-    fill: 'var(--color-beginner)',
-  },
-  {
-    difficulty: 'easy',
-    completedPercentage: 66.67,
-    completed: 20,
-    fill: 'var(--color-easy)',
-  },
-  {
-    difficulty: 'medium',
-    completedPercentage: 100,
-    completed: 20,
-    fill: 'var(--color-medium)',
-  },
-  {
-    difficulty: 'hard',
-    completedPercentage: 75,
-    completed: 20,
-    fill: 'var(--color-hard)',
-  },
-  {
-    difficulty: 'expert',
-    completedPercentage: 100,
-    completed: 20,
-    fill: 'var(--color-expert)',
-  },
-]; */
-
 const chartConfig = {
   BEGINNER: {
     label: 'Beginner',
@@ -80,17 +45,19 @@ export function ProgressChart(props: {
     difficulty: string;
     completed: number;
     completedPercentage: number;
+    total: number;
   }[];
   totalCompleted: number;
 }) {
   return (
-    <div className="flex flex-row items-start space-x-4">
-      <div className="grid h-fit grid-flow-col grid-rows-3 gap-6">
+    <div className="flex flex-row flex-wrap-reverse items-center justify-center gap-3 md:items-start">
+      <div className="grid h-fit grid-cols-3 gap-6 md:grid-cols-2 md:grid-rows-3">
         {props.chartData.map((d) => (
           <LegendItem
             key={d.difficulty}
             completed={d.completed}
             difficulty={d.difficulty}
+            total={d.total}
             config={chartConfig}
           />
         ))}
@@ -171,7 +138,12 @@ export function ProgressChart(props: {
   );
 }
 
-function LegendItem(props: { difficulty: string; completed: number; config: ChartConfig }) {
+function LegendItem(props: {
+  difficulty: string;
+  completed: number;
+  total: number;
+  config: ChartConfig;
+}) {
   return (
     <div>
       <div className="flex flex-row space-x-2">
@@ -181,7 +153,10 @@ function LegendItem(props: { difficulty: string; completed: number; config: Char
         />
         <div>
           <h1 className="text-muted-foreground">{props.config[props.difficulty]?.label}</h1>
-          <h2 className="text-3xl">{props.completed}</h2>
+          <div className="flex flex-row items-baseline space-x-1">
+            <h2 className="text-3xl">{props.completed}</h2>
+            <h3 className="text-muted-foreground text-sm">/ {props.total}</h3>
+          </div>
         </div>
       </div>
     </div>
