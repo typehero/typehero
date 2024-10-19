@@ -6,41 +6,38 @@ interface RankingResult {
   totalPoints: number;
 }
 
-async function getTop100SubmissionsToday(currentAdventDay: number) {
-  // I tried setting up TypedSQL from Prisma: https://www.prisma.io/docs/orm/prisma-client/using-raw-sql/typedsql
-  // But it was getting stuck trying to load schema.prisma for some reason
-  // Would love some help so we can get inferred typing for this!
+async function getOverallLeaderboard(currentAdventDay: number) {
   const challengeIdsSoFar = ADVENT_CHALLENGE_IDS.slice(0, currentAdventDay);
 
   const ranking = await prisma.$queryRaw<RankingResult[]>`
-  WITH RankedSubmissionsForAllChallenges AS (
-  	SELECT
-  	  userId,
-  	  challengeId,
-  	  ROW_NUMBER() OVER (PARTITION BY challengeId ORDER BY MIN(createdAt)) AS \`rank\`
-  	FROM Submission
-  	WHERE challengeId IN (${Prisma.join(challengeIdsSoFar)})
-  	  AND isSuccessful = 1
-  	GROUP BY userId, challengeId
-  ),
-  RankingWithPointsForAllChallenges AS (
-  	SELECT
-  	  userId,
-  	  101 - \`rank\` AS points
-  	FROM RankedSubmissionsForAllChallenges
-  	WHERE \`rank\` <= ${LEADERBOARD_RANKING_LIMIT}
-  	ORDER BY challengeId, \`rank\`
-  )
   SELECT
     u.name,
     SUM(r.points) AS totalPoints
-  FROM RankingWithPointsForAllChallenges r
-  JOIN User u ON u.id = r.userId
-  GROUP BY r.userId
+  FROM 
+    User u
+  JOIN 
+    (
+      SELECT
+        userId,
+        101 - \`rank\` AS points
+      FROM 
+        (
+          SELECT
+            userId,
+            challengeId,
+            ROW_NUMBER() OVER (PARTITION BY challengeId ORDER BY MIN(createdAt)) AS \`rank\`
+          FROM Submission
+          WHERE challengeId IN (${Prisma.join(challengeIdsSoFar)}) AND isSuccessful = 1
+          GROUP BY userId, challengeId
+        ) AS RankedSubmissions
+      WHERE \`rank\` <= ${LEADERBOARD_RANKING_LIMIT}
+    ) r ON u.id = r.userId
+  GROUP BY r.userId, u.name
   ORDER BY totalPoints DESC
-  LIMIT ${LEADERBOARD_RANKING_LIMIT};`;
+  LIMIT ${LEADERBOARD_RANKING_LIMIT};
+`;
 
-  return ranking; // query to return top 100 of each day so far
+  return ranking;
 }
 
 export default async function OverallLeaderboard({
@@ -48,7 +45,7 @@ export default async function OverallLeaderboard({
 }: {
   currentAdventDay: number;
 }) {
-  const top100Ranking = await getTop100SubmissionsToday(currentAdventDay);
+  const top100Ranking = await getOverallLeaderboard(currentAdventDay);
   return (
     <div className="p-4">
       <p>Overall AoT leaderboard!</p>
