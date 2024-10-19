@@ -77,6 +77,8 @@ export {
   Text,
   FlaskConical,
   History,
+  // HandHeart,
+  HeartHandshake,
   ArrowLeft,
   RectangleVertical,
   SearchIcon,

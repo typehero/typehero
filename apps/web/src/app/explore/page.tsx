@@ -7,7 +7,8 @@ export const dynamic = 'force-dynamic';
 export async function generateMetadata(): Promise<Metadata> {
   return buildMetaForDefault({
     title: 'Explore Challenges | TypeHero',
-    description: 'Explore all challenges by difficulty or tags on TypeHero.',
+    description:
+      'Explore all challenges by difficulty on TypeHero. These are interactive coding challenges to help you learn and improve your TypeScript skills.',
   });
 }
 

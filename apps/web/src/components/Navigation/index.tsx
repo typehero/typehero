@@ -50,7 +50,7 @@ export async function Navigation() {
       <NavLink title="Tracks" href="/tracks" />
       {featureFlags?.enableHolidayEvent ? (
         <div className="flex items-center gap-1">
-          <NavLink title="Advent of TypeScript" href="/aot-2023" />
+          <NavLink title="Advent of TS" href="/aot-2023" />
         </div>
       ) : null}
     </>
@@ -58,8 +58,8 @@ export async function Navigation() {
 
   const NavLinks = (
     <>
-      <div className="ml-4 hidden items-center gap-4 md:flex">{TopSectionLinks}</div>
-      <div className="flex flex-col gap-5 pl-4 md:hidden">
+      <div className="hidden items-center gap-4 md:flex">{TopSectionLinks}</div>
+      <div className="flex flex-col gap-5 pl-2 md:hidden">
         {TopSectionLinks}
         {!session?.user && (
           <div className="flex items-center gap-2">
@@ -95,7 +95,7 @@ export async function Navigation() {
     <header className="w-full">
       <NavWrapper>
         <div className="flex w-full items-center justify-between">
-          <div className="relative flex items-center gap-3">
+          <div className="relative flex items-center gap-4">
             <SkipToCodeEditor />
             <Link className="flex space-x-1.5 focus:outline-none focus-visible:ring-2" href="/">
               <svg
@@ -123,7 +123,7 @@ export async function Navigation() {
                 hero <span className="text-muted-foreground bg-muted px-1 text-xs">BETA</span>
               </div>
             </Link>
-            <div className="hidden items-center md:ml-4 md:flex md:gap-4">{NavLinks}</div>
+            <div className="hidden items-center md:flex md:gap-4">{NavLinks}</div>
           </div>
 
           <div className="flex">
@@ -131,6 +131,12 @@ export async function Navigation() {
               <Suspense>
                 <Search />
               </Suspense>
+              <Link
+                className="donate-btn relative overflow-hidden rounded-md border border-[#bea74b66] px-3 py-2 text-black duration-300 hover:bg-[#eed15f] dark:text-white dark:hover:bg-[#bea74b44]"
+                href="/support"
+              >
+                Support Us
+              </Link>
               {session ? <NotificationLink notificationCount={notificationCount} /> : null}
               {featureFlags?.enableLogin ? (
                 <LoginButton isAdminOrMod={isAdminOrMod} session={session} isAdmin={isAdminRole} />
@@ -201,20 +207,20 @@ async function LoginButton({
           </a>
         ) : null}
         {isAdminOrMod ? (
-          <a className="block" href="/challenge-playground">
+          <Link className="block" href="/challenge-playground">
             <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
               <Play className="mr-2 h-4 w-4" />
               <span>Challenge Playground</span>
             </DropdownMenuItem>
-          </a>
+          </Link>
         ) : null}
         {isAdmin ? (
-          <a className="block" href="/share">
+          <Link className="block" href="/share">
             <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
               <ExternalLink className="mr-2 h-4 w-4" />
               <span>URL Shortener</span>
             </DropdownMenuItem>
-          </a>
+          </Link>
         ) : null}
         <DropdownMenuSeparator />
 

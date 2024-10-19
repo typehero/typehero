@@ -1,5 +1,6 @@
 # create a docker image with mysql and a default password of admin
-#name: typehero
+
+name: typehero
 
 services:
   db:

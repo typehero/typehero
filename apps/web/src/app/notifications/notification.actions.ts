@@ -14,6 +14,7 @@ export async function markNotificationsAsRead(ids: number[]) {
 
   await prisma.notification.updateMany({
     where: {
+      toUserId: session.user.id,
       id: {
         in: ids,
       },

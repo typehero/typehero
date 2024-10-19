@@ -143,6 +143,7 @@ model User {
   imageUpload          ImageUpload[]
   tracks               Track[]
   BetaTokens           BetaTokens[]
+  donations            Donation[]
   shortUrls            ShortURL[]
   toUserNotification   Notification[] @relation("notificationToUser")
   fromUserNotification Notification[] @relation("notificationFromUser")
@@ -437,6 +438,17 @@ model BetaTokens {
   @@index([userId])
 }
 
+model Donation {
+  id                      Int     @id @default(autoincrement())
+  user                    User    @relation(fields: [userId], references: [id])
+  userId                  String
+  amount                  Int
+  stripeCheckoutSessionId String  @unique
+  createdAt DateTime? @default(now())
+
+  @@index([userId])
+}
+
 model Notification {
   id               Int              @id @default(autoincrement())
   createdAt        DateTime         @default(now())
@@ -468,18 +480,18 @@ model Notification {
 }
 
 model ShortURL {
-  id           Int        @id @default(autoincrement())
+  id           Int       @id @default(autoincrement())
   /// the original full url that we want to shorten e.g. https://www.url.com
-  originalUrl  String     @db.MediumText
+  originalUrl  String    @db.MediumText
   /// slug for the short url e.g. url.com/[shortUrlSlug]
-  shortUrlSlug String     @unique
-  createdAt    DateTime   @default(now())
+  shortUrlSlug String    @unique
+  createdAt    DateTime  @default(now())
   /// the time the short url will expire
   expiresAt    DateTime?
   /// the number of times the short url has redirected to the original url
-  clicks       Int        @default(0)
+  clicks       Int       @default(0)
   userId       String?
-  user         User?      @relation(fields: [userId], references: [id])
+  user         User?     @relation(fields: [userId], references: [id])
 
   @@index([userId])
   @@index([shortUrlSlug])

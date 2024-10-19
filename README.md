@@ -35,17 +35,10 @@ If you find our project interesting and want to support us please consider spons
       </a>
     </td>
     <td>
-      <a href="https://planetscale.com/" target="_parent">
-        <img src="./media/ps-badge.png" alt="Powered by Planetscale" title="Powered by Planetscale" width="200">
-      </a>
-    </td>
-    <td>
       <a href="https://www.webdevopen.com/" target="_parent">
         <img src="./media/open.png" alt="Open Bootcamp Logo" title="Open Bootcamp" width="160">
       </a>
     </td>
-  </tr>
-  <tr>
     <td>
       <a href="https://www.herodevs.com/" target="_parent">
         <picture>
@@ -54,6 +47,8 @@ If you find our project interesting and want to support us please consider spons
         </picture>
       </a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://www.uploadthing.com/" target="_parent">
         <picture>
@@ -64,7 +59,7 @@ If you find our project interesting and want to support us please consider spons
     </td>
     <td>
       <a href="https://www.surgehq.ai/?utm_campaign=oss&utm_source=typehero" target="_parent">
-        <img src="./media/surge.svg" alt="Powered by Planetscale" title="Powered by Planetscale" width="150">
+        <img src="./media/surge.svg" alt="surge logo" title="Surge HQ" width="150">
       </a>
     </td>
   </tr>

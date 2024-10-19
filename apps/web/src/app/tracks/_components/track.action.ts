@@ -14,7 +14,7 @@ import { auth } from '~/server/auth';
 export async function enrollUserInTrack(id: number, slug: string) {
   const session = await auth();
   if (!session) {
-    throw new Error('User is not logged in');
+    return 'User is not logged in';
   }
 
   await prisma.track.update({
@@ -41,7 +41,7 @@ export async function enrollUserInTrack(id: number, slug: string) {
 export async function unenrollUserFromTrack(id: number, slug: string) {
   const session = await auth();
   if (!session) {
-    throw new Error('User is not logged in');
+    return 'User is not logged in';
   }
 
   await prisma.track.update({

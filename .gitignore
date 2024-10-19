@@ -60,3 +60,4 @@ yarn-error.log*
 #idea
 .idea
 .pnpm-store
+playwright-report
