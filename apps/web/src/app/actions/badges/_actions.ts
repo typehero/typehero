@@ -5,7 +5,7 @@ import type { DIFFICULTIES } from '../../(profile)/[username]/_components/dashbo
 import {
   awardDifficultyBadge,
   difficultyBadgeKeys,
-  type difficultyBadges,
+  type DifficultyBadges,
   difficultyBadgesFn,
 } from '~/app/actions/badges/badge_types/difficulty_badges';
 import {
@@ -191,7 +191,7 @@ export interface Badges<T> {
   shortName: string;
 }
 
-type BadgeTypes = AotBadges | difficultyBadges | SolutionBadges;
+type BadgeTypes = AotBadges | DifficultyBadges | SolutionBadges;
 export type BadgeObj<T> = {
   [key in BadgeTypes]?: {
     slug: key;
@@ -235,7 +235,7 @@ export async function fillInMissingBadges(userId: string): Promise<AllBadgeObjs>
   return badges;
 }
 
-const isBadgeWith = <T extends AotBadges | difficultyBadges | SolutionBadges>(badge: string, keys: string[]): badge is T =>
+const isBadgeWith = <T extends AotBadges | DifficultyBadges | SolutionBadges>(badge: string, keys: string[]): badge is T =>
   keys.includes(badge);
 export async function getBadges(userId: string): Promise<AllBadgeObjs> {
   await fillInMissingBadges(userId);
@@ -254,7 +254,7 @@ export async function getBadges(userId: string): Promise<AllBadgeObjs> {
       //`SELECT badgeName AS slug FROM UserBadges WHERE userId=${userId}`;
 
   userBadges.forEach(({ badgeName }) => {
-    if (isBadgeWith<difficultyBadges>(badgeName, difficultyBadgeKeys as unknown as string[])) {
+    if (isBadgeWith<DifficultyBadges>(badgeName, difficultyBadgeKeys as unknown as string[])) {
       badges = Object.assign(badges, awardDifficultyBadge(badgeName));
     } else if (isBadgeWith<SolutionBadges>(badgeName, solutionBadgeKeys as unknown as string[])){
       badges = Object.assign(badges, awardSolutionBadge(badgeName));

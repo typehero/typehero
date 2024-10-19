@@ -3,9 +3,9 @@ import type { AllBadgeObjs, BadgesFn } from '~/app/actions/badges/_actions';
 
 export const difficultyBadgeKeys = ['BEGINNER', 'EASY', 'MEDIUM', 'HARD', 'EXTREME'] as const;
 
-export type difficultyBadges = typeof difficultyBadgeKeys[number];
+export type DifficultyBadges = typeof difficultyBadgeKeys[number];
 export interface Difficulty {
-  Difficulty: difficultyBadges;
+  Difficulty: DifficultyBadges;
   TotalCompleted: number;
 }
 
@@ -37,7 +37,7 @@ export async function challengesRetrieveData() {
   });
 }
 
-export const awardDifficultyBadge = (slug: difficultyBadges) => {
+export const awardDifficultyBadge = (slug: DifficultyBadges) => {
   const pascalCase = `${slug[0]}${slug.substring(1).toLowerCase()}`;
   console.log(pascalCase)
   return {
@@ -55,7 +55,7 @@ export const computeDifficultyBadge = async (
   challenges: { _count: { id: number; }; difficulty: string }[],
 ) => {
   const highNumberOnError = 1_000_000;
-  const thresholds: { difficulty: difficultyBadges; threshold: number }[] = [
+  const thresholds: { difficulty: DifficultyBadges; threshold: number }[] = [
     {
       difficulty: 'EASY',
       threshold:

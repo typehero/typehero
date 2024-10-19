@@ -1,6 +1,6 @@
 import { prisma } from '@repo/db';
 import type { AllBadgeObjs, BadgesFn } from '../_actions';
-import type { difficultyBadges } from '~/app/actions/badges/badge_types/difficulty_badges';
+import type { DifficultyBadges } from '~/app/actions/badges/badge_types/difficulty_badges';
 import type { AotBadges } from '~/app/actions/badges/badge_types/advent_badges';
 
 export const solutionBadgeKeys = [
@@ -35,7 +35,7 @@ export const sharedSolutionRetrieveData = async (userId: string) => {
   >`SELECT COUNT(SharedSolutionId) as TotalCompleted FROM (SELECT DISTINCT SharedSolutionId FROM SharedSolution JOIN Challenge ON SharedSolution.challengeId = Challenge.Id JOIN Vote ON SharedSolution.Id = Vote.SharedSolutionId WHERE SharedSolution.userId = ${userId} AND rootType = 'SHAREDSOLUTION') unique_query`;
 }
 
-export const awardSolutionBadge = (slug: AotBadges | difficultyBadges | SolutionBadges) => {
+export const awardSolutionBadge = (slug: AotBadges | DifficultyBadges | SolutionBadges) => {
   const badgeName = `${slug[0]?.toUpperCase()}${slug.substring(
     1,
   )} Unique Solutions Badge`;
