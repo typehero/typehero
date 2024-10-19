@@ -32,7 +32,6 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@esbuild/linux-x64": "^0.24.0",
     "@prisma/client": "5.7.0"
   },
   "devDependencies": {
