@@ -8,7 +8,6 @@ import { useQuery } from '@tanstack/react-query';
 import { getProfileData } from './enhanced-user-badge.getProfileData';
 import { useState } from 'react';
 import { SlugToBadgeIcon } from '~/app/(profile)/[username]/_components/dashboard/badges';
-import {AllBadges, type AOT2023} from '~/app/actions/badges/_actions';
 import { cn } from '@repo/ui/cn';
 import { type Role } from '@repo/db/types';
 import { Button } from '@repo/ui/components/button';
@@ -16,6 +15,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from '@repo/ui/componen
 import { getTitles, type TitleInfo } from './enhanced-user-badge.getTitles';
 import { Skeleton } from '@repo/ui/components/skeleton';
 import { DefaultAvatar } from '~/components/default-avatar';
+import type {AllBadges} from "~/app/actions/badges/_actions";
 
 interface UserBadgeProps {
   user: {

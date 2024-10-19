@@ -3,7 +3,7 @@ import { PrismaClient, type Challenge, type Prisma } from '@prisma/client';
 import uuidByString from 'uuid-by-string';
 import { loadChallengesFromTypeChallenge } from '../mocks/challenges.mock';
 import { createComment } from '../mocks/comment.mock';
-import {createUser, createUsers} from '../mocks/user.mock';
+import { createUsers} from '../mocks/user.mock';
 import { tracks } from './data/tracks';
 
 const prisma = new PrismaClient();
