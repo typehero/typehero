@@ -432,6 +432,9 @@ importers:
       framer-motion:
         specifier: ^10.12.22
         version: 10.12.22(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      jotai:
+        specifier: ^2.10.1
+        version: 2.10.1(@types/react@18.2.20)(react@18.2.0)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -887,7 +890,7 @@ importers:
     dependencies:
       '@next/eslint-plugin-next':
         specifier: canary
-        version: 15.0.0-canary.179
+        version: 15.0.0-canary.198
       '@repo/tsconfig':
         specifier: workspace:*
         version: link:../config-typescript
@@ -899,7 +902,7 @@ importers:
         version: 5.62.0(eslint@8.45.0)(typescript@5.3.3)
       '@vercel/style-guide':
         specifier: ^4.0.2
-        version: 4.0.2(@next/eslint-plugin-next@15.0.0-canary.179)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3)
+        version: 4.0.2(@next/eslint-plugin-next@15.0.0-canary.198)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3)
       eslint:
         specifier: ^8.45.0
         version: 8.45.0
@@ -2002,8 +2005,8 @@ packages:
   '@next/eslint-plugin-next@13.4.10':
     resolution: {integrity: sha512-YJqyq6vk39JQfvaNtN83t/p5Jy45+bazRL+V4QI8FPd3FBqFYMEsULiwRLgSJMgFqkk4t4JbeZurz+gILEAFpA==}
 
-  '@next/eslint-plugin-next@15.0.0-canary.179':
-    resolution: {integrity: sha512-WeO7BnD2fypxAD5B76kksSeujmjEwwua7acEZmzoLaDppHy4vt+YbIRObpmWtTuB3ojVF1KoT9eUCdkwjseCBA==}
+  '@next/eslint-plugin-next@15.0.0-canary.198':
+    resolution: {integrity: sha512-Iyvdq3xHfaNdO3+/VVBfiJtiwZpEDZgzI9ZadvYb7TGxzLl/1a8ZIUAWp593jwjv1RUB45VhHbBxqi3y+QTx1w==}
 
   '@next/swc-darwin-arm64@14.2.5':
     resolution: {integrity: sha512-/9zVxJ+K9lrzSGli1///ujyRfon/ZneeZ+v4ptpiPoOU+GKZnm8Wj8ELWU1Pm7GHltYRBklmXMTUqM/DqQ99FQ==}
@@ -5269,11 +5272,13 @@ packages:
   eslint@8.45.0:
     resolution: {integrity: sha512-pd8KSxiQpdYRfYa9Wufvdoct3ZPQQuVuU5O6scNgMuOMYuxvH0IGaYK0wUFjo4UYYQQCUndlXiMbnxopwvvTiw==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   eslint@8.56.0:
     resolution: {integrity: sha512-Go19xM6T9puCOWntie1/P997aXxFsOi37JIHRWI514Hc6ZnaHGKY9xFhrU65RT6CcBEzZoGG1e6Nq+DT04ZtZQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   espree@9.6.1:
@@ -6077,6 +6082,18 @@ packages:
 
   jose@5.1.3:
     resolution: {integrity: sha512-GPExOkcMsCLBTi1YetY2LmkoY559fss0+0KVa6kOfb2YFe84nAM7Nm/XzuZozah4iHgmBGrCOHL5/cy670SBRw==}
+
+  jotai@2.10.1:
+    resolution: {integrity: sha512-4FycO+BOTl2auLyF2Chvi6KTDqdsdDDtpaL/WHQMs8f3KS1E3loiUShQzAzFA/sMU5cJ0hz/RT1xum9YbG/zaA==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      '@types/react': '>=17.0.0'
+      react: '>=17.0.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      react:
+        optional: true
 
   joycon@3.1.1:
     resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}
@@ -9295,7 +9312,7 @@ snapshots:
   '@eslint-community/eslint-utils@4.4.0(eslint@8.56.0)':
     dependencies:
       eslint: 8.56.0
-      eslint-visitor-keys: 3.4.3
+      eslint-visitor-keys: 3.4.1
 
   '@eslint-community/regexpp@4.5.1': {}
 
@@ -9523,7 +9540,7 @@ snapshots:
     dependencies:
       glob: 7.1.7
 
-  '@next/eslint-plugin-next@15.0.0-canary.179':
+  '@next/eslint-plugin-next@15.0.0-canary.198':
     dependencies:
       fast-glob: 3.3.1
 
@@ -11618,7 +11635,7 @@ snapshots:
       next: 14.2.5(@babel/core@7.22.10)(@playwright/test@1.38.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
 
-  '@vercel/style-guide@4.0.2(@next/eslint-plugin-next@15.0.0-canary.179)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3)':
+  '@vercel/style-guide@4.0.2(@next/eslint-plugin-next@15.0.0-canary.198)(eslint@8.45.0)(prettier@3.1.1)(typescript@5.3.3)':
     dependencies:
       '@babel/core': 7.22.10
       '@babel/eslint-parser': 7.22.10(@babel/core@7.22.10)(eslint@8.45.0)
@@ -11640,7 +11657,7 @@ snapshots:
       eslint-plugin-unicorn: 43.0.2(eslint@8.45.0)
       prettier-plugin-packagejson: 2.4.3(prettier@3.1.1)
     optionalDependencies:
-      '@next/eslint-plugin-next': 15.0.0-canary.179
+      '@next/eslint-plugin-next': 15.0.0-canary.198
       eslint: 8.45.0
       prettier: 3.1.1
       typescript: 5.3.3
@@ -14327,6 +14344,11 @@ snapshots:
   jju@1.4.0: {}
 
   jose@5.1.3: {}
+
+  jotai@2.10.1(@types/react@18.2.20)(react@18.2.0):
+    optionalDependencies:
+      '@types/react': 18.2.20
+      react: 18.2.0
 
   joycon@3.1.1: {}
 

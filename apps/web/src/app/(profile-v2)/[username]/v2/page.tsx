@@ -284,7 +284,7 @@ export default async function ProfilePage(props: { params: { username: string } 
           </div>
         </CardWithRadialBg>
 
-        <CardWithRadialBg className="h-fit w-full md:w-fit">
+        <CardWithRadialBg>
           <CardHeader>
             <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Recent Activity</h1>
           </CardHeader>
