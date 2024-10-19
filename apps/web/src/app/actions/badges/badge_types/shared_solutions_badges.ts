@@ -1,9 +1,14 @@
 import { prisma } from '@repo/db';
-import type {AllBadgeObjs, BadgesFn} from "../_actions";
-import type {difficultyBadges} from "~/app/actions/badges/badge_types/difficulty_badges";
-import type {AotBadges} from "~/app/actions/badges/badge_types/advent_badges";
+import type { AllBadgeObjs, BadgesFn } from '../_actions';
+import type { difficultyBadges } from '~/app/actions/badges/badge_types/difficulty_badges';
+import type { AotBadges } from '~/app/actions/badges/badge_types/advent_badges';
 
-export const solutionBadgeKeys = ['most-shared-solutions-bronze', 'most-shared-solutions-silver', 'most-shared-solutions-gold', 'most-shared-solutions-platinum'] as const;
+export const solutionBadgeKeys = [
+  'most-shared-solutions-bronze',
+  'most-shared-solutions-silver',
+  'most-shared-solutions-gold',
+  'most-shared-solutions-platinum',
+] as const;
 
 export type SolutionBadges = typeof solutionBadgeKeys[number];
 
@@ -25,9 +30,9 @@ export const sharedSolutionsBadgesFn: BadgesFn =
   };
 
 export const sharedSolutionRetrieveData = async (userId: string) => {
-  const data: SharedTotals[] | null =
-    await prisma.$queryRaw`SELECT COUNT(SharedSolutionId) as TotalCompleted FROM (SELECT DISTINCT SharedSolutionId FROM SharedSolution JOIN Challenge ON SharedSolution.challengeId = Challenge.Id JOIN Vote ON SharedSolution.Id = Vote.SharedSolutionId WHERE SharedSolution.userId = ${userId} AND rootType = 'SHAREDSOLUTION') unique_query`;
-  return data;
+  return await prisma.$queryRaw<
+    SharedTotals[]
+  >`SELECT COUNT(SharedSolutionId) as TotalCompleted FROM (SELECT DISTINCT SharedSolutionId FROM SharedSolution JOIN Challenge ON SharedSolution.challengeId = Challenge.Id JOIN Vote ON SharedSolution.Id = Vote.SharedSolutionId WHERE SharedSolution.userId = ${userId} AND rootType = 'SHAREDSOLUTION') unique_query`;
 }
 
 export const awardSolutionBadge = (slug: AotBadges | difficultyBadges | SolutionBadges) => {

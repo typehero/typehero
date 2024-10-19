@@ -1,8 +1,5 @@
 import { prisma } from '@repo/db';
-import type {
-  AllBadgeObjs,
-  BadgesFn,
-} from '~/app/actions/badges/_actions';
+import type { AllBadgeObjs, BadgesFn } from '~/app/actions/badges/_actions';
 
 export const difficultyBadgeKeys = ['BEGINNER', 'EASY', 'MEDIUM', 'HARD', 'EXTREME'] as const;
 
@@ -27,9 +24,9 @@ export const difficultyBadgesFn: BadgesFn =
   };
 
 export async function difficultyRetrieveData(userId: string) {
-  const data: Difficulty[] | null =
-    await prisma.$queryRaw`SELECT Difficulty, COUNT(Id) as TotalCompleted FROM (SELECT DISTINCT Difficulty, Challenge.Id FROM Submission JOIN Challenge ON Submission.challengeId = Challenge.Id WHERE Submission.userId = ${userId} AND IsSuccessful = 1) unique_query GROUP BY Difficulty `;
-  return data;
+  return await prisma.$queryRaw<
+    Difficulty[]
+  >`SELECT Difficulty, COUNT(Id) as TotalCompleted FROM (SELECT DISTINCT Difficulty, Challenge.Id FROM Submission JOIN Challenge ON Submission.challengeId = Challenge.Id WHERE Submission.userId = ${userId} AND IsSuccessful = 1) unique_query GROUP BY Difficulty `;
 }
 export async function challengesRetrieveData() {
   return prisma.challenge.groupBy({

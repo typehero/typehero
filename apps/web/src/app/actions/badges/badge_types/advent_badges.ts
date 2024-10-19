@@ -1,8 +1,5 @@
 import type {AllBadgeObjs, BadgesFn} from "../_actions";
 import {prisma} from "@repo/db";
-import type {difficultyBadges} from "~/app/actions/badges/badge_types/difficulty_badges";
-import type {SolutionBadges} from "~/app/actions/badges/badge_types/shared_solutions_badges";
-
 export interface AdventChallenges {
   trackChallenges: { challenge: { submission: { isSuccessful: boolean }[] } }[];
 }
