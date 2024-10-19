@@ -224,7 +224,7 @@ export default async function ProfilePage(props: { params: { username: string } 
                 variant="link"
                 className="text-muted-foreground hover:text-primary w-fit text-lg "
               >
-                <Link href="./v2/completed">
+                <Link href="./v2/shared-solutions">
                   Shared Solutions
                   <ArrowUpRight className="ml-1 h-4 w-4 " />
                 </Link>
@@ -240,7 +240,9 @@ export default async function ProfilePage(props: { params: { username: string } 
                 </h1>
                 {isOwnProfile ? (
                   <Button asChild variant="link" className="text-center">
-                    <Link href="./v2/all">Explore completed solutions and share your own!</Link>
+                    <Link href="./v2/completed">
+                      Explore completed solutions and share your own!
+                    </Link>
                   </Button>
                 ) : null}
               </CardContent>

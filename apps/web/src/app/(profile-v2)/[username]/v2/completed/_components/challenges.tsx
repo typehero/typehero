@@ -23,13 +23,25 @@ export function Challenges(props: {
       <FilterBar filter={filter} setFilter={setFilter} />
       {filteredChallenges.length === 0 ? (
         <Alert className="mx-auto w-fit">
-          <p>
-            This user hasn't completed any <span className="lowercase">{filter}</span> challenges
-            yet
-          </p>
+          {filter === 'ALL' ? (
+            <p>This user hasn't completed any challenges yet</p>
+          ) : (
+            <p>
+              This user hasn't completed any{' '}
+              <span
+                className="lowercase"
+                style={{
+                  color: `hsl(${DIFFICULTY_COLOR_MAP[filter]})`,
+                }}
+              >
+                {filter}
+              </span>{' '}
+              challenges yet
+            </p>
+          )}
         </Alert>
       ) : null}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {filteredChallenges.map((c) => (
           <ExploreCard key={c.id} challenge={c} className="min-w-fit xl:min-w-fit" />
         ))}
@@ -64,6 +76,7 @@ function FilterBar(props: { filter: FilterOptions; setFilter: (val: FilterOption
         setLastSelected(props.filter);
         props.setFilter(val);
       }}
+      className="flex-wrap"
     >
       {difficulties.map((difficulty) => (
         <ToggleGroupItem

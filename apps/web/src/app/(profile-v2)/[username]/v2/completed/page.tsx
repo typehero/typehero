@@ -10,7 +10,6 @@ export default async function CompletedPage(props: { params: { username: string 
   if (username === undefined) {
     notFound();
   }
-  console.log({ username });
   const challenges = await prisma.challenge.findMany({
     select: {
       difficulty: true,
@@ -41,17 +40,10 @@ export default async function CompletedPage(props: { params: { username: string 
     },
   });
 
-  console.log(challenges.length);
   return (
-    <div className="w-full space-y-4">
-      <Button asChild variant="ghost" size="sm">
-        <Link href="../v2">
-          <ArrowLeft className="mr-2 h-5 w-5" />
-          Back to Profile
-        </Link>
-      </Button>
+    <div className="lg:mt10 relative  mt-8">
       <div className="space-y-2">
-        <h1 className="text-lg font-bold">Completed Challenges</h1>
+        <h1 className="text-center text-xl">Completed Challenges</h1>
         <Challenges challenges={challenges} />
       </div>
     </div>
