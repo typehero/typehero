@@ -3,7 +3,7 @@
 import { type ColumnDef } from '@tanstack/react-table';
 import Link from 'next/link';
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
-import type { HistoricalChallenge } from './_actions';
+import type { HistoricalChallenge } from '~/app/actions/badges/_actions';
 
 export const columns: ColumnDef<HistoricalChallenge>[] = [
   {

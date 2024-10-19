@@ -4,7 +4,7 @@ import { cn } from '@repo/ui/cn';
 import { Text } from '@repo/ui/components/typography/typography';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 
-import type {AllBadgeObjs, AllBadges} from './_actions';
+import type {AllBadgeObjs, AllBadges} from '~/app/actions/badges/_actions';
 import {
   HolidayBronzeBadge,
   HolidayGoldBadge,

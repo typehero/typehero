@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Dashboard } from './dashboard';
 import { auth } from '~/server/auth';
-import { getBadges } from './dashboard/_actions';
+import { getBadges } from '../../../actions/badges/_actions';
 
 interface Props {
   username: string;

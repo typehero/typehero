@@ -1,25 +1,25 @@
 'use server';
 
 import { prisma } from '@repo/db';
-import type { DIFFICULTIES } from './challenges-progress';
+import type { DIFFICULTIES } from '../../(profile)/[username]/_components/dashboard/challenges-progress';
 import {
   awardDifficultyBadge,
   difficultyBadgeKeys,
   type difficultyBadges,
   difficultyBadgesFn,
-} from './badges/_difficulty_badges';
+} from '~/app/actions/badges/badge_types/difficulty_badges';
 import {
   awardSolutionBadge,
   sharedSolutionsBadgesFn,
   solutionBadgeKeys,
   type SolutionBadges,
-} from './badges/_shared_solutions_badges';
+} from '~/app/actions/badges/badge_types/shared_solutions_badges';
 import {
-  adventBadgesFn, type AdventChallenges,
+  adventBadgesFn,
   aotBadgeKeys,
   type AotBadges,
   awardAdventBadges,
-} from './badges/_advent_badges';
+} from '~/app/actions/badges/badge_types/advent_badges';
 
 export type HistoricalChallenge = Awaited<ReturnType<typeof getChallengeHistoryByCategory>>[0];
 
@@ -215,15 +215,15 @@ const badgeCalculations: BadgesFn[] = [
 export async function fillInMissingBadges(userId: string): Promise<AllBadgeObjs> {
   let badges: AllBadgeObjs = {};
 
-  // calculate badges user has achieved
+  // calculate badge_types user has achieved
   for (const badgeFn of badgeCalculations) {
     badges = await badgeFn({ userId, badges });
   }
 
-  // retrieve current awarded badges
+  // retrieve current awarded badge_types
   const userBadges: { slug: string; }[] = await prisma.$queryRaw`SELECT badgeName AS slug FROM UserBadges WHERE userId=${userId}`;
 
-  // award missing badges
+  // award missing badge_types
   const missingBadges = Object.values(badges)
     .filter(x =>
       !userBadges
@@ -241,7 +241,7 @@ export async function getBadges(userId: string): Promise<AllBadgeObjs> {
   await fillInMissingBadges(userId);
   let badges: AllBadgeObjs = {};
 
-  // retrieve current awarded badges
+  // retrieve current awarded badge_types
   const userBadges =
     await prisma.userBadges.findMany({
       where: {

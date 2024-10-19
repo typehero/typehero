@@ -9,7 +9,7 @@ import {
 import { notFound } from 'next/navigation';
 import { createInProgressSubmissionCacheKey } from '~/app/challenge/[slug]/submissions/[[...catchAll]]/cache-keys';
 import { withUnstableCache } from '~/utils/withUnstableCache';
-import { getChallengeHistoryByCategory } from '../_components/dashboard/_actions';
+import { getChallengeHistoryByCategory } from '../../../actions/badges/_actions';
 import ChallengeHistory from '../_components/dashboard/challenge-history';
 import { auth } from '~/server/auth';
 

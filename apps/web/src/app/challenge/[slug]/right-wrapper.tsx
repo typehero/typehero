@@ -10,7 +10,7 @@ import { SettingsButton } from '../_components/settings/settings-button';
 import type { ChallengeRouteData } from './getChallengeRouteData';
 import { SubmissionOverview } from './submissions/[[...catchAll]]/_components/overview';
 import { saveSubmission } from './submissions/[[...catchAll]]/save-submission.action';
-import {fillInMissingBadges} from "~/app/(profile)/[username]/_components/dashboard/_actions";
+import {fillInMissingBadges} from "~/app/actions/badges/_actions";
 
 interface Props {
   challenge: ChallengeRouteData['challenge'];

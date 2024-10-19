@@ -1,7 +1,7 @@
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@repo/ui/components/card';
 import { DifficultyBadge } from '@repo/ui/components/difficulty-badge';
 import { Progress } from '@repo/ui/components/progress';
-import { getSolvedChallenges } from './_actions';
+import { getSolvedChallenges } from '~/app/actions/badges/_actions';
 
 export const DIFFICULTIES = ['BEGINNER', 'EASY', 'MEDIUM', 'HARD', 'EXTREME'] as const;
 

@@ -2,7 +2,7 @@ import { prisma } from '@repo/db';
 import type {
   AllBadgeObjs,
   BadgesFn,
-} from '~/app/(profile)/[username]/_components/dashboard/_actions';
+} from '~/app/actions/badges/_actions';
 
 export const difficultyBadgeKeys = ['BEGINNER', 'EASY', 'MEDIUM', 'HARD', 'EXTREME'] as const;
 

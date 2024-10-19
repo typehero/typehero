@@ -16,7 +16,7 @@ import { Bookmark, CheckCircle, ChevronRightSquare, Play, Settings, Text } from 
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import { stripProtocolAndWWW } from '~/utils/stringUtils';
 
-import type { AllBadgeObjs } from './_actions';
+import type { AllBadgeObjs } from '~/app/actions/badges/_actions';
 import { Badges } from './badges';
 import UserHeader from './user-header';
 
