@@ -36,7 +36,8 @@ export const sharedSolutionRetrieveData = async (userId: string) => {
 }
 
 export const awardSolutionBadge = (slug: AotBadges | DifficultyBadges | SolutionBadges) => {
-  const badgeName = `${slug[0]?.toUpperCase()}${slug.substring(
+  const badgeLevel = `${slug.split('-')[3]}`
+  const badgeName = `${badgeLevel[0]?.toUpperCase()}${badgeLevel.substring(
     1,
   )} Unique Solutions Badge`;
   return {
