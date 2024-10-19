@@ -103,13 +103,6 @@ try {
   });
 
   const badgeALotId = '420';
-  // await prisma.user.create({
-  //   data: {
-  //     ...createUser(),
-  //     id: badgeALotId
-  //   }
-  // });
-  // upsert user with 50 challenges completed
   await prisma.user.upsert({
     where: { id: badgeALotId },
     update: {},
