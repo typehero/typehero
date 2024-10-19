@@ -95,56 +95,62 @@ export default async function ProfilePage(props: { params: { username: string } 
   const gradient = getGradient(user.roles);
   const progressData = await getProgressData(user.id);
   const activityData = await getUserActivity(user.id);
+  const sortedSharedSolutions = [...user.sharedSolution].sort((a, b) => (a.isPinned ? -1 : 1));
   // TODO: Change form to prevent it from adding empty links?
   const userLinks = user.userLinks.filter((u) => u.url !== '');
 
   const session = await auth();
   const isOwnProfile = session?.user?.id === user.id;
   return (
-    <div className="space-y-6 px-2 pt-16 md:space-y-10 md:px-0">
-      <div className="flex flex-col items-center space-y-2 md:hidden">
-        <Avatar className="z-10 h-56 w-56 rounded-lg transition group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:-rotate-1">
-          <AvatarImage src={user.image ?? ''} alt={`${user.name} profile picture`} />
-          <AvatarFallback className="rounded-lg capitalize">{user.name.slice(0, 1)}</AvatarFallback>
-        </Avatar>
-        <div className="flex flex-col items-center space-y-1">
-          <h1
-            className={cn(
-              'w-min bg-gradient-to-r bg-clip-text text-3xl font-bold text-transparent',
-              gradient,
+    <div className="px-2 pt-8 lg:px-0 lg:pt-10">
+      <div className="flex flex-col space-y-6 lg:hidden">
+        <div className="flex flex-col items-center space-y-2">
+          <Avatar className="h-56 w-56 rounded-lg transition group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:-rotate-1">
+            <AvatarImage src={user.image ?? ''} alt={`${user.name} profile picture`} />
+            <AvatarFallback className="rounded-lg capitalize">
+              {user.name.slice(0, 1)}
+            </AvatarFallback>
+          </Avatar>
+          <div className="flex flex-col items-center space-y-1">
+            <h1
+              className={cn(
+                'w-min bg-gradient-to-r bg-clip-text text-3xl font-bold text-transparent',
+                gradient,
+              )}
+            >
+              {user.name}
+            </h1>
+            <Titles data={titles} />
+            {user.bio === '' && isOwnProfile ? (
+              <div className="space-y-3 p-4">
+                <h1 className="text-center">
+                  ? 'You haven’t added a bio yet—tell others a bit about yourself!'
+                </h1>
+                <Button asChild variant="outline" className="text-center">
+                  <Link href="./v2/all">Update your bio</Link>
+                </Button>
+              </div>
+            ) : (
+              <div className="max-w-[60ch]">
+                <p className="text-center tracking-tighter ">{user.bio}</p>
+              </div>
             )}
-          >
-            {user.name}
-          </h1>
-          <Titles data={titles} />
-          {user.bio === '' && isOwnProfile ? (
-            <div className="space-y-3 p-4">
-              <h1 className="text-center">
-                ? 'You haven’t added a bio yet—tell others a bit about yourself!'
-              </h1>
-              <Button asChild variant="outline" className="text-center">
-                <Link href="./v2/all">Update your bio</Link>
-              </Button>
-            </div>
-          ) : (
-            <div className="max-w-[60ch]">
-              <p className="text-center tracking-tighter ">{user.bio}</p>
-            </div>
-          )}
-          <h2 className="text-muted-foreground text-sm tracking-tight">
-            Joined {getRelativeTime(user.createdAt)}
-          </h2>
+            <h2 className="text-muted-foreground text-sm tracking-tight">
+              Joined {getRelativeTime(user.createdAt)}
+            </h2>
+          </div>
+        </div>
+        <div>
+          <ProgressChart
+            totalCompleted={progressData.totalSolved}
+            chartData={progressData.chartData}
+            totalChallenges={progressData.totalChallenges}
+          />
         </div>
       </div>
-      <div className="md:hidden">
-        <ProgressChart
-          totalCompleted={progressData.totalSolved}
-          chartData={progressData.chartData}
-        />
-      </div>
-      <MovingGrid className="hidden md:block">
-        <div className="relative flex flex-row items-start justify-between">
-          <div className="flex h-full flex-col justify-center space-y-3">
+      <MovingGrid className="hidden lg:block">
+        <div className="relative flex flex-row flex-wrap items-start justify-between">
+          <div className="flex h-full max-w-full flex-col justify-center space-y-3 lg:max-w-[50%]">
             <div className="flex flex-row items-end space-x-4">
               <Avatar className="z-10 h-56 w-56 rounded-lg transition group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:-rotate-1">
                 <AvatarImage src={user.image ?? ''} alt={`${user.name} profile picture`} />
@@ -198,17 +204,18 @@ export default async function ProfilePage(props: { params: { username: string } 
             )}
           </div>
 
-          <div className="h-fit items-center">
+          <div className="h-fit max-w-[50%] items-center">
             <ProgressChart
               totalCompleted={progressData.totalSolved}
               chartData={progressData.chartData}
+              totalChallenges={progressData.totalChallenges}
             />
           </div>
         </div>
       </MovingGrid>
 
-      <div className="flex flex-wrap justify-center gap-5">
-        <CardWithRadialBg className="min-h-[200px] ">
+      <div className="mt-6 flex flex-wrap justify-center gap-5 lg:mt-8">
+        <CardWithRadialBg className="min-h-[200px] max-w-sm basis-full md:basis-1/2 lg:basis-1/3">
           <div className="flex h-full flex-col">
             <CardHeader>
               <Button
@@ -224,8 +231,8 @@ export default async function ProfilePage(props: { params: { username: string } 
               </Button>
             </CardHeader>
 
-            {user.sharedSolution.length === 0 ? (
-              <CardContent className="flex h-full w-full grow flex-col items-center justify-center space-y-3 md:px-16">
+            {sortedSharedSolutions.length === 0 ? (
+              <CardContent className="flex h-full grow flex-col items-center justify-center space-y-3 lg:px-16">
                 <h1 className="text-center">
                   {isOwnProfile
                     ? "It looks like you haven't shared any solutions yet."
@@ -238,8 +245,8 @@ export default async function ProfilePage(props: { params: { username: string } 
                 ) : null}
               </CardContent>
             ) : (
-              <CardContent className="flex flex-col space-y-2">
-                {user.sharedSolution.map((s) => (
+              <CardContent className="pointer-events-auto flex flex-col space-y-2">
+                {sortedSharedSolutions.map((s) => (
                   <SharedSolutionCard
                     key={s.id}
                     solution={{
@@ -258,14 +265,14 @@ export default async function ProfilePage(props: { params: { username: string } 
           </div>
         </CardWithRadialBg>
 
-        <CardWithRadialBg>
+        <CardWithRadialBg className="max-w-sm basis-full md:basis-1/2 lg:basis-1/3">
           <div className="flex h-full flex-col">
             <CardHeader>
               <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Badges</h1>
             </CardHeader>
             {badges.length === 0 ? (
-              <CardContent className="flex h-full w-full grow flex-col items-center justify-center space-y-3 md:px-16">
-                <h1 className="text-center">
+              <CardContent className="flex h-full w-full grow flex-col items-center justify-center space-y-3 lg:px-16">
+                <h1 className="text-center md:px-4 lg:px-2">
                   {isOwnProfile
                     ? "You haven't earned a badge yet - keep going, you're close!"
                     : `@${username} is yet to discover an achievement`}
@@ -284,11 +291,11 @@ export default async function ProfilePage(props: { params: { username: string } 
           </div>
         </CardWithRadialBg>
 
-        <CardWithRadialBg>
+        <CardWithRadialBg className="h-fit max-w-sm basis-full md:basis-1/2 lg:basis-1/3">
           <CardHeader>
             <h1 className="text-muted-foreground pl-2 text-lg tracking-wide">Recent Activity</h1>
           </CardHeader>
-          <CardContent>
+          <CardContent className="flex flex-col justify-center">
             <ActivityChart data={activityData} />
           </CardContent>
         </CardWithRadialBg>

@@ -75,7 +75,7 @@ export function EmptyBadge() {
         />
       </mask>
       <g mask="url(#mask0_408_2530)">
-        <path d="M56 0H-4V60H56V0Z" className="fill-muted/50" />
+        <path d="M56 0H-4V60H56V0Z" className="dark:fill-muted/50 fill-muted-foreground/50" />
       </g>
     </svg>
   );

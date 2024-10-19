@@ -120,7 +120,7 @@ export function Titles(props: { data: TitleInfo[] }) {
     return null;
   }
   return (
-    <div className="flex flex-row space-x-2">
+    <div className="flex flex-row flex-wrap gap-2">
       {props.data.map((t) => {
         const Icon = TITLE_TO_ICON[t.type];
         return (

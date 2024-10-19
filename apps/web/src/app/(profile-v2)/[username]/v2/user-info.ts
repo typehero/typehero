@@ -63,42 +63,6 @@ export async function getProgressData(userId: string) {
   // Calculate percentage, total solved and total challenges
   const totalSolved = challengesSolved.reduce((acc, challenge) => acc + challenge._count._all, 0);
   const totalChallenges = allChallenges.reduce((acc, challenge) => acc + challenge._count._all, 0);
-  const percentage = ((totalSolved / totalChallenges) * 100).toFixed(1);
-
-  const challenges: Record<
-    Difficulty,
-    {
-      solved: number;
-      total: number;
-      percentage: number;
-    }
-  > = {
-    BEGINNER: {
-      solved: 0,
-      total: 0,
-      percentage: 0,
-    },
-    EASY: {
-      solved: 0,
-      total: 0,
-      percentage: 0,
-    },
-    MEDIUM: {
-      solved: 0,
-      total: 0,
-      percentage: 0,
-    },
-    HARD: {
-      solved: 0,
-      total: 0,
-      percentage: 0,
-    },
-    EXTREME: {
-      solved: 0,
-      total: 0,
-      percentage: 0,
-    },
-  };
 
   const chartData: {
     difficulty: Difficulty;
@@ -126,12 +90,11 @@ export async function getProgressData(userId: string) {
   chartData.sort(
     (a, b) => difficultyOrder.indexOf(a.difficulty) - difficultyOrder.indexOf(b.difficulty),
   );
-
+  console.log({ totalChallenges });
   return {
     chartData,
     totalSolved,
-    /* totalChallenges,
-    percentage, */
+    totalChallenges,
   };
 }
 

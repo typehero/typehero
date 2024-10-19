@@ -5,12 +5,12 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@repo/ui/components/chart';
-import { Rectangle, Scatter, ScatterChart, XAxis, YAxis, ZAxis } from '@repo/ui/recharts';
+import { Scatter, ScatterChart, XAxis, YAxis, ZAxis } from '@repo/ui/recharts';
 import { format, setWeek, startOfYear } from 'date-fns';
 import { MessageCircle, FileCode, Award } from '@repo/ui/icons';
 import { cn } from '@repo/ui/cn';
-import { atom, useAtom, type PrimitiveAtom, useSetAtom, useAtomValue } from 'jotai';
-import { useEffect, useMemo, useState } from 'react';
+import { atom, useAtom, type PrimitiveAtom } from 'jotai';
+import { useMemo } from 'react';
 import { useIsMobile } from '~/utils/useIsMobile';
 
 const chartConfig = {
@@ -41,7 +41,7 @@ export function ActivityChart(props: {
   }[];
 }) {
   return (
-    <ChartContainer config={chartConfig} className="pointer-events-auto aspect-[9/7] h-[250px]">
+    <ChartContainer config={chartConfig} className="pointer-events-auto aspect-[8/7] h-[270px]">
       <ScatterChart data={props.data} accessibilityLayer>
         <ChartTooltip
           cursor={false}

@@ -16,6 +16,7 @@ import {
 } from '@repo/ui/components/chart';
 import Link from 'next/link';
 import { ArrowUpRight } from '@repo/ui/icons';
+import { vi } from 'date-fns/locale';
 
 const chartConfig = {
   BEGINNER: {
@@ -48,10 +49,11 @@ export function ProgressChart(props: {
     total: number;
   }[];
   totalCompleted: number;
+  totalChallenges: number;
 }) {
   return (
-    <div className="flex flex-row flex-wrap-reverse items-center justify-center gap-3 md:items-start">
-      <div className="grid h-fit grid-cols-3 gap-6 md:grid-cols-2 md:grid-rows-3">
+    <div className="flex flex-row flex-wrap-reverse items-center justify-center gap-3 lg:items-start">
+      <div className="grid h-fit grid-cols-3 gap-6 lg:grid-cols-2 lg:grid-rows-3">
         {props.chartData.map((d) => (
           <LegendItem
             key={d.difficulty}
@@ -64,7 +66,7 @@ export function ProgressChart(props: {
       </div>
       <ChartContainer
         config={chartConfig}
-        className="[&_.recharts-radial-bar-background-sector]:fill-muted/40 aspect-square h-[280px]"
+        className="[&_.recharts-radial-bar-background-sector]:fill-muted-foreground/20 dark:[&_.recharts-radial-bar-background-sector]:fill-muted/40 aspect-square h-[280px]"
       >
         <RadialBarChart
           data={props.chartData}
@@ -93,25 +95,34 @@ export function ProgressChart(props: {
                       >
                         <tspan
                           x={viewBox.cx}
-                          dy={-15}
+                          dy={-30}
+                          dx={-5}
                           y={viewBox.cy}
                           className="fill-muted-foreground group-hover:underline"
                         >
                           Total
                         </tspan>
-                        <ArrowUpRight className="ml-1 h-4 w-4 " />
                         <tspan
                           y={viewBox.cy}
                           x={viewBox.cx}
-                          dy={15}
+                          dy={2}
                           className="fill-foreground text-4xl font-bold"
                         >
                           {props.totalCompleted}
                         </tspan>
+
+                        <tspan
+                          y={viewBox.cy}
+                          x={viewBox.cx}
+                          dy={30}
+                          className="fill-muted-foreground text-sm "
+                        >
+                          of {props.totalChallenges}
+                        </tspan>
                       </text>
                       <foreignObject
-                        x={(viewBox.cx ?? 0) + 15}
-                        y={(viewBox.cy ?? 0) - 25}
+                        x={(viewBox.cx ?? 0) + 10}
+                        y={(viewBox.cy ?? 0) - 39}
                         width="20"
                         height="20"
                       >

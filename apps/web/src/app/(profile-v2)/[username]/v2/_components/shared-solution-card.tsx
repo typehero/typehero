@@ -26,7 +26,7 @@ export async function SharedSolutionCard(props: {
     >
       <ChallengeDifficultyIcon difficulty={props.solution.challenge.difficulty} />
       <CardHeader className="relative flex flex-col items-start gap-1 py-5">
-        <CardTitle className="max-w-[75%] truncate text-2xl duration-300">
+        <CardTitle className="max-w-[75%] truncate text-lg duration-300 lg:text-2xl">
           {props.solution.challenge.name}
         </CardTitle>
         <div className="flex items-center gap-5 text-center duration-300">
