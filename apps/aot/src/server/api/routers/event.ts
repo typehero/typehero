@@ -13,6 +13,7 @@ export const eventRouter = createTRPCRouter({
     });
     return aotEvents;
   }),
+  // todo: make a challenge route
   getEventChallengeBySlug: publicProcedure
     .input(
       z.object({
@@ -24,6 +25,39 @@ export const eventRouter = createTRPCRouter({
       const challenges = await ctx.db.challenge.findFirstOrThrow({
         where: {
           slug: input.slug,
+        },
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+              roles: true,
+              bio: true,
+              image: true,
+            },
+          },
+          _count: {
+            select: {
+              vote: true,
+            },
+          },
+          vote: {
+            where: {
+              userId: ctx.session?.user?.id || '',
+            },
+          },
+          bookmark: {
+            where: {
+              userId: ctx.session?.user?.id || '',
+            },
+          },
+          submission: {
+            where: {
+              userId: ctx.session?.user?.id || '',
+              isSuccessful: true,
+            },
+            take: 1,
+          },
         },
       });
 
