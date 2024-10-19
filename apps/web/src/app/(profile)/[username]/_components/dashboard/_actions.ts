@@ -3,22 +3,22 @@
 import { prisma } from '@repo/db';
 import type { DIFFICULTIES } from './challenges-progress';
 import {
-  AwardDifficultyBadge,
-  DifficultyBadgeKeys,
-  type DifficultyBadges,
+  awardDifficultyBadge,
+  difficultyBadgeKeys,
+  type difficultyBadges,
   difficultyBadgesFn,
 } from './badges/_difficulty_badges';
 import {
-  AwardSolutionBadge,
+  awardSolutionBadge,
   sharedSolutionsBadgesFn,
-  SolutionBadgeKeys,
+  solutionBadgeKeys,
   type SolutionBadges,
 } from './badges/_shared_solutions_badges';
 import {
   adventBadgesFn, type AdventChallenges,
-  AotBadgeKeys,
+  aotBadgeKeys,
   type AotBadges,
-  CreateAdventBadges,
+  awardAdventBadges,
 } from './badges/_advent_badges';
 
 export type HistoricalChallenge = Awaited<ReturnType<typeof getChallengeHistoryByCategory>>[0];
@@ -191,7 +191,7 @@ export interface Badges<T> {
   shortName: string;
 }
 
-type BadgeTypes = AotBadges | DifficultyBadges | SolutionBadges;
+type BadgeTypes = AotBadges | difficultyBadges | SolutionBadges;
 export type BadgeObj<T> = {
   [key in BadgeTypes]?: {
     slug: key;
@@ -203,9 +203,9 @@ export type BadgeObj<T> = {
 export type AllBadges = Badges<BadgeTypes>;
 export type AllBadgeObjs = BadgeObj<BadgeTypes>;
 
-export type BadgeFn = ({ userId, badges }: { userId: string; badges: AllBadgeObjs }) => Promise<AllBadgeObjs>;
+export type BadgesFn = ({ userId, badges }: { userId: string; badges: AllBadgeObjs }) => Promise<AllBadgeObjs>;
 
-const badgeCalculations: BadgeFn[] = [
+const badgeCalculations: BadgesFn[] = [
   adventBadgesFn,
   difficultyBadgesFn,
   sharedSolutionsBadgesFn,
@@ -221,7 +221,7 @@ export async function fillInMissingBadges(userId: string): Promise<AllBadgeObjs>
   }
 
   // retrieve current awarded badges
-  const userBadges: { slug: string; }[] = await prisma.$queryRaw`SELECT badge_name AS slug FROM UserBadges WHERE user_id=${userId}`;
+  const userBadges: { slug: string; }[] = await prisma.$queryRaw`SELECT badgeName AS slug FROM UserBadges WHERE userId=${userId}`;
 
   // award missing badges
   const missingBadges = Object.values(badges)
@@ -230,24 +230,37 @@ export async function fillInMissingBadges(userId: string): Promise<AllBadgeObjs>
         .map(x => x.slug)
         .includes(x.slug));
   for (const badge of missingBadges) {
-    await prisma.$queryRaw`INSERT INTO UserBadges(badge_name, achievement_date, user_id) VALUES(${badge.slug}, ${new Date(Date.now()).toISOString().slice(0, 10).replace('T', ' ')}, ${userId})`;
+    await prisma.$queryRaw`INSERT INTO UserBadges(badgeName, achievementDate, userId) VALUES(${badge.slug}, ${new Date(Date.now()).toISOString().slice(0, 10).replace('T', ' ')}, ${userId})`;
   }
   return badges;
 }
 
+const isBadgeWith = <T extends AotBadges | difficultyBadges | SolutionBadges>(badge: string, keys: string[]): badge is T =>
+  keys.includes(badge);
 export async function getBadges(userId: string): Promise<AllBadgeObjs> {
+  await fillInMissingBadges(userId);
   let badges: AllBadgeObjs = {};
 
   // retrieve current awarded badges
-  const userBadges: { slug: AotBadges | DifficultyBadges | SolutionBadges; }[] =
-    await prisma.$queryRaw`SELECT badge_name AS slug FROM UserBadges WHERE user_id=${userId}`;
+  const userBadges =
+    await prisma.userBadges.findMany({
+      where: {
+        userId
+      },
+      select: {
+        badgeName: true
+      }
+    })
+      //`SELECT badgeName AS slug FROM UserBadges WHERE userId=${userId}`;
 
-  userBadges.forEach(({slug}: { slug: AotBadges | DifficultyBadges | SolutionBadges }) => {
-    const badge = AwardDifficultyBadge(slug) ||
-      AwardSolutionBadge(slug) ||
-      CreateAdventBadges(slug);
-    badges = Object.assign(badges, badge);
+  userBadges.forEach(({ badgeName }) => {
+    if (isBadgeWith<difficultyBadges>(badgeName, difficultyBadgeKeys as unknown as string[])) {
+      badges = Object.assign(badges, awardDifficultyBadge(badgeName));
+    } else if (isBadgeWith<SolutionBadges>(badgeName, solutionBadgeKeys as unknown as string[])){
+      badges = Object.assign(badges, awardSolutionBadge(badgeName));
+    } else if (isBadgeWith<AotBadges>(badgeName, aotBadgeKeys as unknown as string[])) {
+      badges = Object.assign(badges, awardAdventBadges(badgeName));
+          }
   })
-
   return badges;
 }

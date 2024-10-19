@@ -24,10 +24,10 @@ export const SlugToBadgeIcon: Record<keyof AllBadgeObjs, FC<{ className: string;
   'MEDIUM': GoldBadge,
   'HARD': GoldBadge,
   'EXTREME': PlatinumBadge,
-  'bronze': BronzeBadge,
-  'silver': SilverBadge,
-  'gold': GoldBadge,
-  'platinum': PlatinumBadge,
+  'most-shared-solutions-bronze': BronzeBadge,
+  'most-shared-solutions-silver': SilverBadge,
+  'most-shared-solutions-gold': GoldBadge,
+  'most-shared-solutions-platinum': PlatinumBadge,
 };
 
 const Badge = ({ slug, name, shortName }: AllBadges) => {
@@ -61,12 +61,12 @@ const Badge = ({ slug, name, shortName }: AllBadges) => {
 };
 
 interface BadgesProps {
-  badges: AllBadges[];
+  badges: AllBadgeObjs;
   className?: string;
 }
 
 export const Badges = ({ badges, className }: BadgesProps) => {
-  if (badges.length === 0) return null;
+  if (Object.keys(badges).length === 0) return null;
 
   return (
     <div className={cn('border-border flex flex-col gap-4 border-t py-4', className)}>

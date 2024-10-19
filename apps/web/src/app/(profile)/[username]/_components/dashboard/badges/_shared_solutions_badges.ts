@@ -1,17 +1,17 @@
 import { prisma } from '@repo/db';
-import type {AllBadgeObjs, BadgeFn} from "../_actions";
-import type {DifficultyBadges} from "~/app/(profile)/[username]/_components/dashboard/badges/_difficulty_badges";
+import type {AllBadgeObjs, BadgesFn} from "../_actions";
+import type {difficultyBadges} from "~/app/(profile)/[username]/_components/dashboard/badges/_difficulty_badges";
 import type {AotBadges} from "~/app/(profile)/[username]/_components/dashboard/badges/_advent_badges";
 
-export const SolutionBadgeKeys = ['bronze', 'silver', 'gold', 'platinum'] as const;
+export const solutionBadgeKeys = ['most-shared-solutions-bronze', 'most-shared-solutions-silver', 'most-shared-solutions-gold', 'most-shared-solutions-platinum'] as const;
 
-export type SolutionBadges = typeof SolutionBadgeKeys[number];
+export type SolutionBadges = typeof solutionBadgeKeys[number];
 
 export interface SharedTotals {
   TotalCompleted: number;
 }
 
-export const sharedSolutionsBadgesFn: BadgeFn =
+export const sharedSolutionsBadgesFn: BadgesFn =
   async ({
            userId,
            badges,
@@ -20,17 +20,17 @@ export const sharedSolutionsBadgesFn: BadgeFn =
     badges: AllBadgeObjs;
   }) => {
     // Shared Solutions Badges
-    const sharedSolutions: SharedTotals[] | null = await SharedSolutionRetrieveData(userId);
-    return await SharedBadgesFn(badges, sharedSolutions ?? []);
+    const sharedSolutions: SharedTotals[] | null = await sharedSolutionRetrieveData(userId);
+    return await computeSharedBadges(badges, sharedSolutions ?? []);
   };
 
-export const SharedSolutionRetrieveData = async (userId: string) => {
+export const sharedSolutionRetrieveData = async (userId: string) => {
   const data: SharedTotals[] | null =
     await prisma.$queryRaw`SELECT COUNT(SharedSolutionId) as TotalCompleted FROM (SELECT DISTINCT SharedSolutionId FROM SharedSolution JOIN Challenge ON SharedSolution.challengeId = Challenge.Id JOIN Vote ON SharedSolution.Id = Vote.SharedSolutionId WHERE SharedSolution.userId = ${userId} AND rootType = 'SHAREDSOLUTION') unique_query`;
   return data;
 }
 
-export const AwardSolutionBadge = (slug: AotBadges | DifficultyBadges | SolutionBadges): slug is SolutionBadges => {
+export const awardSolutionBadge = (slug: AotBadges | difficultyBadges | SolutionBadges) => {
   const badgeName = `${slug[0]?.toUpperCase()}${slug.substring(
     1,
   )} Unique Solutions Badge`;
@@ -42,17 +42,17 @@ export const AwardSolutionBadge = (slug: AotBadges | DifficultyBadges | Solution
     }};
 };
 
-export const SharedBadgesFn = async (badges: AllBadgeObjs, query: SharedTotals[]) => {
+export const computeSharedBadges = async (badges: AllBadgeObjs, query: SharedTotals[]) => {
   const thresholds: { slug: SolutionBadges; threshold: number }[] = [
-    { slug: 'platinum', threshold: 6 },
-    { slug: 'gold', threshold: 4 },
-    { slug: 'silver', threshold: 2 },
-    { slug: 'bronze', threshold: 0 },
+    { slug: solutionBadgeKeys[3], threshold: 6 },
+    { slug: solutionBadgeKeys[2], threshold: 4 },
+    { slug: solutionBadgeKeys[1], threshold: 2 },
+    { slug: solutionBadgeKeys[0], threshold: 0 },
   ];
   const total = query?.[0]?.TotalCompleted || 0;
   const [highestBadge] = thresholds.filter((x) => total >= x.threshold);
   if (highestBadge) {
-    badges = Object.assign(badges, AwardSolutionBadge(highestBadge.slug));
+    badges = Object.assign(badges, awardSolutionBadge(highestBadge.slug));
   }
   return badges
 };

@@ -1,16 +1,14 @@
 import { prisma } from '@repo/db';
-import type {AllBadgeObjs, BadgeFn} from "~/app/(profile)/[username]/_components/dashboard/_actions";
-import type {SolutionBadges} from "~/app/(profile)/[username]/_components/dashboard/badges/_shared_solutions_badges";
-import type {AotBadges} from "~/app/(profile)/[username]/_components/dashboard/badges/_advent_badges";
-export const DifficultyBadgeKeys = ['BEGINNER', 'EASY', 'MEDIUM', 'HARD', 'EXTREME'] as const;
+import type {AllBadgeObjs, BadgesFn} from "~/app/(profile)/[username]/_components/dashboard/_actions";
+export const difficultyBadgeKeys = ['BEGINNER', 'EASY', 'MEDIUM', 'HARD', 'EXTREME'] as const;
 
-export type DifficultyBadges = typeof DifficultyBadgeKeys[number];
+export type difficultyBadges = typeof difficultyBadgeKeys[number];
 export interface Difficulty {
-  Difficulty: DifficultyBadges;
+  Difficulty: difficultyBadges;
   TotalCompleted: number;
 }
 
-export const difficultyBadgesFn: BadgeFn =
+export const difficultyBadgesFn: BadgesFn =
   async ({
            userId,
            badges,
@@ -19,18 +17,19 @@ export const difficultyBadgesFn: BadgeFn =
     badges: AllBadgeObjs;
   }) => {
     // DifficultyBadges
-    const difficulty: Difficulty[] | null = await DifficultyRetrieveData(userId);
-    return await DifficultyBadgesFn(badges, difficulty ?? []);
+    const difficulty: Difficulty[] | null = await difficultyRetrieveData(userId);
+    return await computeDifficultyBadge(badges, difficulty ?? []);
   };
 
-export async function DifficultyRetrieveData(userId: string) {
+export async function difficultyRetrieveData(userId: string) {
   const data: Difficulty[] | null =
     await prisma.$queryRaw`SELECT Difficulty, COUNT(Id) as TotalCompleted FROM (SELECT DISTINCT Difficulty, Challenge.Id FROM Submission JOIN Challenge ON Submission.challengeId = Challenge.Id WHERE Submission.userId = ${userId} AND IsSuccessful = 1) unique_query GROUP BY Difficulty `;
   return data;
 }
 
-export const AwardDifficultyBadge = (slug: AotBadges | DifficultyBadges | SolutionBadges ): slug is DifficultyBadges => {
+export const awardDifficultyBadge = (slug: difficultyBadges) => {
   const pascalCase = `${slug[0]}${slug.substring(1).toLowerCase()}`;
+  console.log(pascalCase)
   return {
     [slug]: {
       slug,
@@ -39,9 +38,9 @@ export const AwardDifficultyBadge = (slug: AotBadges | DifficultyBadges | Soluti
     }};
 }
 
-export const DifficultyBadgesFn = async (badges: AllBadgeObjs, query: Difficulty[]) => {
-  const thresholds: { difficulty: DifficultyBadges; threshold: number }[] = [
-    { difficulty: 'BEGINNER', threshold: 1 },
+
+export const computeDifficultyBadge = async (badges: AllBadgeObjs, query: Difficulty[]) => {
+  const thresholds: { difficulty: difficultyBadges; threshold: number }[] = [
     { difficulty: 'EASY', threshold: 13 },
     { difficulty: 'MEDIUM', threshold: 97 },
     { difficulty: 'HARD', threshold: 54 },
@@ -51,7 +50,7 @@ export const DifficultyBadgesFn = async (badges: AllBadgeObjs, query: Difficulty
     const levelThreshold = thresholds.find((x) => x.difficulty.toUpperCase() === currQuery.Difficulty);
     const completedAllChallenges = levelThreshold?.threshold === Number(currQuery.TotalCompleted);
     if (completedAllChallenges) {
-      badges = Object.assign(badges, AwardDifficultyBadge(currQuery?.Difficulty));
+      badges = Object.assign(badges, awardDifficultyBadge(currQuery?.Difficulty));
     }
   });
   return badges;

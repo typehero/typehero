@@ -146,6 +146,7 @@ model User {
   shortUrls            ShortURL[]
   toUserNotification   Notification[] @relation("notificationToUser")
   fromUserNotification Notification[] @relation("notificationFromUser")
+  userBadges           UserBadges[]
 }
 
 model VerificationToken {
@@ -482,4 +483,15 @@ model ShortURL {
 
   @@index([userId])
   @@index([shortUrlSlug])
+}
+
+model UserBadges {
+  badgeName          String
+  achievementDate     DateTime   @default(now())
+  userId              String
+  user                User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([badgeName])
+  @@id([userId, badgeName])
 }

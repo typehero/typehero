@@ -16,7 +16,7 @@ import { Bookmark, CheckCircle, ChevronRightSquare, Play, Settings, Text } from 
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import { stripProtocolAndWWW } from '~/utils/stringUtils';
 
-import {AllBadges} from './_actions';
+import type { AllBadgeObjs } from './_actions';
 import { Badges } from './badges';
 import UserHeader from './user-header';
 
@@ -26,7 +26,7 @@ interface Props {
     userLinks: { id: string | null; url: string }[];
   };
   isOwnProfile: boolean;
-  badges: AllBadges[];
+  badges: AllBadgeObjs;
   children: React.ReactNode;
 }
 type Tab = 'bookmarks' | 'completed' | 'in-progress' | 'overview' | 'shared-solutions';

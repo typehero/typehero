@@ -56,7 +56,7 @@ export function RightWrapper({ track, challenge }: Props) {
           isSuccessful,
         });
 
-        return await handleSuccessfulSubmission(submission.isSuccessful, submission.id, track?.slug);
+        return handleSuccessfulSubmission(submission.isSuccessful, submission.id, track?.slug);
       }}
       submissionDisabled={!session?.user}
       settingsElement={<SettingsElements />}
