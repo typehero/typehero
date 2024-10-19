@@ -23,7 +23,7 @@
     "db:push": "dotenv -e ../../.env prisma db push",
     "db:reset": "dotenv -e ../../.env prisma db push -- --force-reset",
     "db:seed": "dotenv -e ../../.env tsx ./seed/dev.ts",
-    "db:prod:seed": "dotenv -e ../../.env tsx ./temp/populate-aot-challenges.ts && tsx ./seed/prod.ts",
+    "db:prod:seed": "dotenv -e ../../.env tsx ./temp/populate-aot-challenges.ts && dotenv -e ../../.env tsx ./seed/prod.ts",
     "db:studio": "dotenv -e ../../.env prisma studio",
     "format": "prettier . --check --cache --cache-location=\"node_modules/.cache/prettiercache\"",
     "format:fix": "prettier . --write --cache --cache-location=\"node_modules/.cache/prettiercache\" --log-level=warn",
@@ -32,7 +32,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@prisma/client": "5.7.0"
+    "@prisma/client": "5.21.1"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
@@ -41,15 +41,12 @@
     "@types/node": "^20.4.2",
     "dotenv-cli": "^7.2.1",
     "eslint": "^8.45.0",
-    "prisma": "5.7.0",
+    "prisma": "5.21.1",
     "simple-git": "^3.19.1",
     "tsup": "5.12.0",
     "tsx": "4.19.0",
     "typescript": "^5.3.3",
     "uuid-by-string": "^4.0.0",
     "yaml": "^2.3.1"
-  },
-  "prisma": {
-    "seed": "tsx ./seed.ts"
   }
 }
