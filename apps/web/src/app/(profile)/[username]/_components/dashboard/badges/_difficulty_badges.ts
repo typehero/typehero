@@ -1,5 +1,9 @@
 import { prisma } from '@repo/db';
-import type {AllBadgeObjs, BadgesFn} from "~/app/(profile)/[username]/_components/dashboard/_actions";
+import type {
+  AllBadgeObjs,
+  BadgesFn,
+} from '~/app/(profile)/[username]/_components/dashboard/_actions';
+
 export const difficultyBadgeKeys = ['BEGINNER', 'EASY', 'MEDIUM', 'HARD', 'EXTREME'] as const;
 
 export type difficultyBadges = typeof difficultyBadgeKeys[number];
@@ -18,13 +22,22 @@ export const difficultyBadgesFn: BadgesFn =
   }) => {
     // DifficultyBadges
     const difficulty: Difficulty[] | null = await difficultyRetrieveData(userId);
-    return await computeDifficultyBadge(badges, difficulty ?? []);
+    const challenges = await challengesRetrieveData();
+    return await computeDifficultyBadge(badges, difficulty ?? [], challenges);
   };
 
 export async function difficultyRetrieveData(userId: string) {
   const data: Difficulty[] | null =
     await prisma.$queryRaw`SELECT Difficulty, COUNT(Id) as TotalCompleted FROM (SELECT DISTINCT Difficulty, Challenge.Id FROM Submission JOIN Challenge ON Submission.challengeId = Challenge.Id WHERE Submission.userId = ${userId} AND IsSuccessful = 1) unique_query GROUP BY Difficulty `;
   return data;
+}
+export async function challengesRetrieveData() {
+  return prisma.challenge.groupBy({
+    by: ['difficulty'],
+    _count: {
+      id: true,
+    },
+  });
 }
 
 export const awardDifficultyBadge = (slug: difficultyBadges) => {
@@ -39,15 +52,42 @@ export const awardDifficultyBadge = (slug: difficultyBadges) => {
 }
 
 
-export const computeDifficultyBadge = async (badges: AllBadgeObjs, query: Difficulty[]) => {
+export const computeDifficultyBadge = async (
+  badges: AllBadgeObjs,
+  query: Difficulty[],
+  challenges: { _count: { id: number; }; difficulty: string }[],
+) => {
+  const highNumberOnError = 1_000_000;
   const thresholds: { difficulty: difficultyBadges; threshold: number }[] = [
-    { difficulty: 'EASY', threshold: 13 },
-    { difficulty: 'MEDIUM', threshold: 97 },
-    { difficulty: 'HARD', threshold: 54 },
-    { difficulty: 'EXTREME', threshold: 17 },
+    {
+      difficulty: 'EASY',
+      threshold:
+        challenges.find(({ difficulty }: { difficulty: string }) => difficulty === 'EASY')
+          ?._count?.id ?? highNumberOnError,
+    },
+    {
+      difficulty: 'MEDIUM',
+      threshold:
+        challenges.find(({ difficulty }: { difficulty: string }) => difficulty === 'MEDIUM')
+          ?._count?.id ?? highNumberOnError,
+    },
+    {
+      difficulty: 'HARD',
+      threshold:
+        challenges.find(({ difficulty }: { difficulty: string }) => difficulty === 'HARD')
+          ?._count?.id ?? highNumberOnError,
+    },
+    {
+      difficulty: 'EXTREME',
+      threshold:
+        challenges.find(({ difficulty }: { difficulty: string }) => difficulty === 'EXTREME')
+          ?._count?.id ?? highNumberOnError,
+    },
   ];
   query.forEach((currQuery) => {
-    const levelThreshold = thresholds.find((x) => x.difficulty.toUpperCase() === currQuery.Difficulty);
+    const levelThreshold = thresholds.find(
+      (x) => x.difficulty.toUpperCase() === currQuery.Difficulty,
+    );
     const completedAllChallenges = levelThreshold?.threshold === Number(currQuery.TotalCompleted);
     if (completedAllChallenges) {
       badges = Object.assign(badges, awardDifficultyBadge(currQuery?.Difficulty));
