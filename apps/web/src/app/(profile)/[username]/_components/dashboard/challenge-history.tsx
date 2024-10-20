@@ -1,6 +1,6 @@
 import { DataTable } from '@repo/ui/components/data-table';
 import { columns } from './challenge-history-columns';
-import type { HistoricalChallenge } from "~/app/actions/badges/_actions";
+import type { HistoricalChallenge } from '~/app/actions/badges/_actions';
 
 interface Props {
   challenges: HistoricalChallenge[];
