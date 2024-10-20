@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getProfileData } from './enhanced-user-badge.getProfileData';
 import { useState } from 'react';
 import { SlugToBadgeIcon } from '~/app/(profile)/[username]/_components/dashboard/badges';
+import { type BadgeInfo } from '~/app/actions/badges/_actions';
 import { cn } from '@repo/ui/cn';
 import { type Role } from '@repo/db/types';
 import { Button } from '@repo/ui/components/button';
@@ -16,7 +17,6 @@ import { getTitles, type TitleInfo } from './enhanced-user-badge.getTitles';
 import { Skeleton } from '@repo/ui/components/skeleton';
 import { DefaultAvatar } from '~/components/default-avatar';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
-import type { BadgeModel } from '~/app/actions/badges/_actions';
 
 interface UserBadgeProps {
   user: {
@@ -158,12 +158,12 @@ function Titles(props: { data: TitleInfo[] }) {
   );
 }
 
-function Badges(props: { data: BadgeModel[] }) {
+function Badges(props: { data: BadgeInfo[] }) {
   return (
     <div className="flex flex-row space-x-[-15px]">
-      {props.data.map((badge) => {
-        const Icon = SlugToBadgeIcon[badge.slug];
-        return <Icon className="h-10 w-10" key={badge.slug} shortName={badge.shortName} />;
+      {props.data.map((b) => {
+        const Icon = SlugToBadgeIcon[b.slug];
+        return <Icon className="h-10 w-10" key={b.slug} />;
       })}
     </div>
   );

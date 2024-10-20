@@ -4,7 +4,7 @@ import { cn } from '@repo/ui/cn';
 import { Text } from '@repo/ui/components/typography/typography';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 
-import type { AllBadgeObjs, AllBadges, BadgeModel } from '~/app/actions/badges/_actions';
+import { type BadgeInfo } from '~/app/actions/badges/_actions';
 import {
   HolidayBronzeBadge,
   HolidayGoldBadge,
@@ -12,27 +12,15 @@ import {
   HolidaySilverBadge,
 } from '../badges/aot-2023-badge';
 import { toast } from '@repo/ui/components/use-toast';
-import { BronzeBadge, GoldBadge, PlatinumBadge, SilverBadge } from '../badges/badge-svg';
 
-export const SlugToBadgeIcon: Record<
-  keyof AllBadgeObjs,
-  FC<{ className?: string; shortName: string }>
-> = {
+export const SlugToBadgeIcon: Record<BadgeInfo['slug'], FC<{ className: string }>> = {
   'aot-2023-bronze': HolidayBronzeBadge,
   'aot-2023-silver': HolidaySilverBadge,
   'aot-2023-gold': HolidayGoldBadge,
   'aot-2023-platinum': HolidayPlatinumBadge,
-  EASY: GoldBadge,
-  MEDIUM: GoldBadge,
-  HARD: GoldBadge,
-  EXTREME: PlatinumBadge,
-  'most-shared-solutions-bronze': BronzeBadge,
-  'most-shared-solutions-silver': SilverBadge,
-  'most-shared-solutions-gold': GoldBadge,
-  'most-shared-solutions-platinum': PlatinumBadge,
 };
 
-const Badge = ({ slug, name, shortName }: AllBadges) => {
+const Badge = ({ slug, name }: BadgeInfo) => {
   const Icon = SlugToBadgeIcon[slug];
 
   if (Icon === undefined) return null;
@@ -42,18 +30,14 @@ const Badge = ({ slug, name, shortName }: AllBadges) => {
       <TooltipTrigger>
         <span
           onClick={(e) => {
-            navigator.clipboard
-              .writeText(e.currentTarget.innerHTML)
-              .then((_x) => {
-                toast({
-                  title: 'Copied to clipboard',
-                  variant: 'success',
-                });
-              })
-              .catch();
+            navigator.clipboard.writeText(e.currentTarget.innerHTML);
+            toast({
+              title: 'Copied to clipboard',
+              variant: 'success',
+            });
           }}
         >
-          <Icon className="h-12 w-12" shortName={shortName} />
+          <Icon className="h-12 w-12" />
         </span>
       </TooltipTrigger>
       <TooltipContent side="bottom">
@@ -64,7 +48,7 @@ const Badge = ({ slug, name, shortName }: AllBadges) => {
 };
 
 interface BadgesProps {
-  badges: BadgeModel[];
+  badges: BadgeInfo[];
   className?: string;
 }
 
@@ -74,7 +58,7 @@ export const Badges = ({ badges, className }: BadgesProps) => {
   return (
     <div className={cn('border-border flex flex-col gap-4 border-t py-4', className)}>
       <Text intent="leading">Badges</Text>
-      <div className="flex max-w-60 flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2">
         {badges.map((badge) => (
           <Badge key={badge.slug} {...badge} />
         ))}

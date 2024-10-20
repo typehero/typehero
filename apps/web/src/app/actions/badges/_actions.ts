@@ -249,13 +249,12 @@ const isBadgeWith = <T extends AotBadges | DifficultyBadges | SolutionBadges>(
   keys: string[],
 ): badge is T => keys.includes(badge);
 
-export interface BadgeModel {
-  slug: BadgeTypes;
+export interface BadgeInfo {
+  slug: AotBadges;
   name: string;
-  shortName: string;
 }
 
-export async function getBadges(userId: string): Promise<BadgeModel[]> {
+export async function getBadges(userId: string): Promise<BadgeInfo[]> {
   //TODO: should this be removed, or changed? On every call to profile is excessive
   await fillInMissingBadges(userId);
   let badges: AllBadgeObjs = {};
@@ -279,5 +278,7 @@ export async function getBadges(userId: string): Promise<BadgeModel[]> {
       badges = Object.assign(badges, awardAdventBadges(badgeName));
     }
   });
-  return Object.values(badges);
+  return Object.values(badges)
+    .filter((x) => aotBadgeKeys.includes(x.slug as AotBadges))
+    .map((x) => ({ slug: x.slug as AotBadges, name: x.name }));
 }
