@@ -11,23 +11,20 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@repo/ui/components/dialog';
-import { DifficultyBadge } from '@repo/ui/components/difficulty-badge';
 import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { TypographyH3 } from '@repo/ui/components/typography/h3';
 import { Bookmark as BookmarkIcon, Calendar, CheckCircle, Flag, Share } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { debounce } from 'lodash';
-import { useMemo, useRef, useState } from 'react';
-import { getRelativeTimeStrict } from '~/utils/relativeTime';
-import { addOrRemoveBookmark } from '../bookmark.action';
-import { Vote } from '../vote';
-import { Suggestions } from './suggestions';
-import { UserBadge } from '../comments/enhanced-user-badge';
-import { ShareUrl } from '~/components/share-url';
-import type { ChallengeRouteData } from '../../getChallengeRouteData';
-import { AOT_CHALLENGES } from '../../aot-slugs';
+import { useRef, useState } from 'react';
 import { ReportDialog } from '~/components/report-dialog';
+import { ShareUrl } from '~/components/share-url';
+import { getRelativeTimeStrict } from '~/utils/relativeTime';
+import type { ChallengeRouteData } from '../../getChallengeRouteData';
+import { addOrRemoveBookmark } from '../bookmark.action';
+import { UserBadge } from '../comments/enhanced-user-badge';
+import { Vote } from '../vote';
 
 interface Props {
   challenge: ChallengeRouteData['challenge'];
@@ -43,8 +40,6 @@ export interface FormValues {
 export function Description({ challenge }: Props) {
   const [hasBookmarked, setHasBookmarked] = useState(challenge.bookmark.length > 0);
   const session = useSession();
-
-  const isAotChallenge = useMemo(() => AOT_CHALLENGES.includes(challenge.slug), [challenge.slug]);
 
   const debouncedBookmark = useRef(
     debounce(async (challengeId: number, userId: string, shouldBookmark: boolean) => {
@@ -101,7 +96,6 @@ export function Description({ challenge }: Props) {
       </div>
       {/* Difficulty & Action Buttons */}
       <div className="mt-3 flex items-center gap-3">
-        {!isAotChallenge ? <DifficultyBadge difficulty={challenge.difficulty} /> : null}
         {challenge.hasSolved ? (
           <Tooltip>
             <TooltipTrigger asChild>
@@ -189,8 +183,6 @@ export function Description({ challenge }: Props) {
       <div className="prose-invert prose-h3:text-xl mt-6 leading-7">
         <Markdown>{challenge.description}</Markdown>
       </div>
-      {/* More Challenges Suggestions */}
-      {!isAotChallenge && <Suggestions challengeId={challenge.id} />}
     </div>
   );
 }

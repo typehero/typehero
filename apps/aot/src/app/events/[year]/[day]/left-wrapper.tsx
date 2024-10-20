@@ -1,29 +1,25 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 
 import { cn } from '@repo/ui/cn';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui/components/tabs';
 import { FlaskConical, History, Text } from '@repo/ui/icons';
 
-import { AOT_CHALLENGES } from './aot-slugs';
-import type { ChallengeRouteData } from './getChallengeRouteData';
-
 type Tab = 'description' | 'solutions' | 'submissions';
 interface Props {
   children: ReactNode;
-  challenge: ChallengeRouteData['challenge'];
   expandPanel: () => void;
   isDesktop: boolean;
 }
 
-export function LeftWrapper({ children, challenge, expandPanel, isDesktop }: Props) {
+export function LeftWrapper({ children, expandPanel, isDesktop }: Props) {
   const pathname = usePathname();
   const router = useRouter();
+  const { year, day } = useParams();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
-  const isAotChallenge = useMemo(() => AOT_CHALLENGES.includes(challenge.slug), [challenge.slug]);
   const isCollapsedRef = useRef(isCollapsed);
   const isDesktopRef = useRef(isDesktop);
   isDesktopRef.current = isDesktop;
@@ -115,7 +111,7 @@ export function LeftWrapper({ children, challenge, expandPanel, isDesktop }: Pro
               },
             )}
             onClick={() => {
-              // router.push(`/${year}/${day}`);
+              router.push(`/events/${year}/${day}`);
               isCollapsed && expandPanel();
             }}
             onFocus={(e) => {
@@ -131,7 +127,7 @@ export function LeftWrapper({ children, challenge, expandPanel, isDesktop }: Pro
               { 'p-4': isIconOnly },
             )}
             onClick={() => {
-              // router.push(`/${year}/${day}/solutions`);
+              router.push(`/events/${year}/${day}/solutions`);
               isCollapsed && expandPanel();
             }}
             onFocus={(e) => {
@@ -150,7 +146,7 @@ export function LeftWrapper({ children, challenge, expandPanel, isDesktop }: Pro
               },
             )}
             onClick={() => {
-              // router.push(`/${year}/${day}/submissions`);
+              router.push(`/events/${year}/${day}/submissions`);
               isCollapsed && expandPanel();
             }}
             onFocus={(e) => {

@@ -8,10 +8,11 @@ import { useTheme } from 'next-themes';
 import { useParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
 import { createNoProfanitySchemaWithValidate } from '~/utils/antiProfanityZod';
 import type { ChallengeSolution } from '~/app/challenge/[slug]/solutions/[solutionId]/page';
 import { updateSolution } from './_actions';
+import { RichMarkdownEditor } from '@repo/ui/components/rich-markdown-editor';
+import { useUploadThing } from '~/utils/useUploadthing';
 
 const formSchema = z.object({
   title: createNoProfanitySchemaWithValidate((zodString) =>
@@ -118,6 +119,7 @@ export function EditSolution({ solution, setIsEditing }: Props) {
                   value={field.value}
                   // non-split-screen by default
                   onChange={field.onChange}
+                  useUploadThing={useUploadThing}
                 />
                 <FormMessage />
               </FormItem>

@@ -11,6 +11,8 @@ export default async function LayoutData({
   children: React.ReactNode;
   params: { year: string; day: string };
 }) {
+  // we do the same query in page.tsx..
+  // confirm its reusing the cache or doing two duplicate queries
   const challenge = await api.event.getEventChallengeBySlug({ slug: `${year}-${day}` });
 
   return (

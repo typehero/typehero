@@ -9,11 +9,11 @@ import { Form, FormField, FormItem, FormLabel, FormMessage } from '@repo/ui/comp
 import { Input } from '@repo/ui/components/input';
 import { MagicIcon } from '@repo/ui/components/magic-icon';
 import { useToast } from '@repo/ui/components/use-toast';
-
-import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
+import { RichMarkdownEditor } from '@repo/ui/components/rich-markdown-editor';
 
 import { updateProfile } from './settings.action';
 import { profileSchema, type ProfileSchema } from './schema';
+import { useUploadThing } from '~/utils/useUploadthing';
 
 interface Props {
   user: User & { userLinks: { id: string | null; url: string }[] };
@@ -87,7 +87,11 @@ function ProfileForm({ user }: Props) {
           render={({ field }) => (
             <FormItem className="h-[300px] md:w-[600px]">
               <FormLabel>Bio</FormLabel>
-              <RichMarkdownEditor onChange={field.onChange} value={field.value} />
+              <RichMarkdownEditor
+                onChange={field.onChange}
+                value={field.value}
+                useUploadThing={useUploadThing}
+              />
               <FormMessage />
             </FormItem>
           )}

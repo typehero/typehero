@@ -2,12 +2,11 @@
 import { useSession } from '@repo/auth/react';
 import { CodePanel } from '@repo/monaco';
 import { useRouter, useSelectedLayoutSegments } from 'next/navigation';
-import { SubmissionOverview } from './(submissions)/[[...catchAll]]/_components/overview';
-import { saveSubmission } from './(submissions)/[[...catchAll]]/save-submission.action';
 import { ResetEditorButton } from './_components/reset-editor-button';
 import { EditorShortcutsButton } from './_components/editor-shortcuts/editor-shortcuts-button';
 import { SettingsButton } from './_components/settings/settings-button';
 import { FullscreenButton } from './fullscreen-button';
+import { SubmissionOverview } from './submissions/[[...catchAll]]/_components/overview';
 
 interface Props {
   challenge: any;
@@ -39,13 +38,13 @@ export function RightWrapper({ challenge }: Props) {
     <CodePanel
       challenge={challenge}
       saveSubmission={async (code, isSuccessful) => {
-        const submission = await saveSubmission({
-          challenge,
-          code,
-          isSuccessful,
-        });
-
-        return handleSuccessfulSubmission(submission.isSuccessful, submission.id, '');
+        // const submission = await saveSubmission({
+        //   challenge,
+        //   code,
+        //   isSuccessful,
+        // });
+        //
+        // return handleSuccessfulSubmission(submission.isSuccessful, submission.id, '');
       }}
       submissionDisabled={!session?.user}
       settingsElement={<SettingsElements />}

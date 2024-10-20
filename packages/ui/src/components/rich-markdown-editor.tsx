@@ -1,9 +1,8 @@
 import { useTheme } from 'next-themes';
+import type { generateReactHelpers } from '@uploadthing/react/hooks';
 import type { ChangeEvent } from 'react';
 import { useContext, useEffect, useRef, useState } from 'react';
 import MDEditor, { EditorContext, commands, type ICommand } from '@uiw/react-md-editor';
-import { insertText } from '~/utils/domUtils';
-import { useUploadThing } from '~/utils/useUploadthing';
 import { toast } from '@repo/ui/components/use-toast';
 
 const codePreview: ICommand = {
@@ -23,6 +22,8 @@ interface Props {
    * @default false
    */
   allowImageUpload?: boolean;
+  // @TODO: make the type for this
+  useUploadThing: ReturnType<typeof generateReactHelpers<any>>['useUploadThing'];
 }
 
 export function RichMarkdownEditor({
@@ -30,6 +31,7 @@ export function RichMarkdownEditor({
   value,
   onChange,
   allowImageUpload = false,
+  useUploadThing,
 }: Props) {
   const editorRef = useRef<typeof MDEditor>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -265,4 +267,34 @@ function PreviewToggle() {
       Edit
     </button>
   );
+}
+
+/**
+ * This will insert the given text at the caret position into the textarea element
+ */
+function insertText(newText: string, textarea: HTMLTextAreaElement) {
+  // @ts-ignore - i don't care that you error
+  const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+    window.HTMLTextAreaElement.prototype,
+    'value',
+  ).set;
+
+  if (!nativeInputValueSetter) return;
+
+  // get left value of the textarea
+  const left = textarea.value.substring(0, textarea.selectionStart);
+
+  // get right value of the textarea
+  const right = textarea.value.substring(textarea.selectionEnd, textarea.value.length);
+  nativeInputValueSetter.call(textarea, left + newText + right);
+
+  // set the caret position to the end of the new text
+  const newCaretPosition = left.length + newText.length;
+
+  // make sure to keep focus on the textarea
+  textarea.focus();
+  textarea.setSelectionRange(newCaretPosition, newCaretPosition);
+
+  const inputEvent = new Event('input', { bubbles: true });
+  textarea.dispatchEvent(inputEvent);
 }
