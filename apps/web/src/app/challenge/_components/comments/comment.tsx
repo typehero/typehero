@@ -329,41 +329,41 @@ function SingleComment({
                   }}
                 />
 
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="secondary"
-                      size="xs"
-                      className="gap-2"
-                      onClick={() => {
-                        copyPathNotifyUser(Boolean(isReply), slug as string);
-                      }}
-                    >
-                      <Share className="h-3 w-3" />
-                      <span className="sr-only">Share this comment</span>
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Share</p>
-                  </TooltipContent>
-                </Tooltip>
+                {!isReply && (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button variant="secondary" size="xs" onClick={onClickReply}>
+                        <Reply className="h-3 w-3" />
+                        <span className="sr-only">Create a reply</span>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Reply</p>
+                    </TooltipContent>
+                  </Tooltip>
+                )}
               </div>
 
               <div className="flex gap-1">
                 <div className="opacity-0 transition-opacity delay-200 ease-in-out group-hover:opacity-100">
-                  {!isReply && (
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button variant="secondary" size="xs" onClick={onClickReply}>
-                          <Reply className="h-3 w-3" />
-                          <span className="sr-only">Create a reply</span>
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Reply</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  )}
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="secondary"
+                        size="xs"
+                        className="gap-2"
+                        onClick={() => {
+                          copyPathNotifyUser(Boolean(isReply), slug as string);
+                        }}
+                      >
+                        <Share className="h-3 w-3" />
+                        <span className="sr-only">Share this comment</span>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Share</p>
+                    </TooltipContent>
+                  </Tooltip>
                 </div>
 
                 <div className="opacity-0 transition-opacity delay-150 ease-in-out group-hover:opacity-100">
