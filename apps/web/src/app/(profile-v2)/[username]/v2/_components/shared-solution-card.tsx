@@ -9,14 +9,15 @@ import {
 } from '~/app/explore/_components/explore-card';
 import { Badge } from '@repo/ui/components/badge';
 
-export async function SharedSolutionCard(props: {
+export interface SharedSolutionCardProps {
   solution: {
     commentCount: number;
     voteCount: number;
     isPinned: boolean;
     challenge: { difficulty: Difficulty; name: string };
   };
-}) {
+}
+export function SharedSolutionCard(props: SharedSolutionCardProps) {
   return (
     <Card
       className={`group/card bg-background hover:bg-card-hovered xl:min-w-[333px]} relative overflow-hidden duration-300 sm:min-w-[300px]

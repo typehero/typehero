@@ -6,7 +6,6 @@ import { Button } from '@repo/ui/components/button';
 import { ArrowUpRight, Github, Twitter } from '@repo/ui/icons';
 import Link from 'next/link';
 import { ActivityChart } from './_components/activity-chart';
-import { getWeek, startOfWeek, eachDayOfInterval, subDays, getDay, getMonth } from 'date-fns';
 import { getBadges } from '~/app/(profile)/[username]/_components/dashboard/_actions';
 import { cn } from '@repo/ui/cn';
 import { Avatar, AvatarImage, AvatarFallback } from '@repo/ui/components/avatar';
@@ -23,28 +22,6 @@ import { MovingGrid } from './_components/moving-grid';
 import { getProgressData, getUserActivity } from './user-info';
 import { auth } from '~/server/auth';
 import { MagicIcon } from '@repo/ui/components/magic-icon';
-
-export function generateSampleData() {
-  const endDate = new Date();
-  // endDate.setDate(4);
-  const startDate = startOfWeek(subDays(endDate, 60), { weekStartsOn: 0 });
-  const days = eachDayOfInterval({ start: startDate, end: endDate }).map((date) => {
-    const comments = Math.floor(Math.random() * 5);
-    const badges = Math.floor(Math.random() * 2);
-    const submissions = Math.floor(Math.random() * 5);
-    const activity = comments + badges + submissions;
-    return {
-      date,
-      day: getDay(date),
-      week: getWeek(date),
-      month: getMonth(date),
-      comments,
-      badges,
-      submissions,
-      activity,
-    };
-  });
-}
 
 export default async function ProfilePage(props: { params: { username: string } }) {
   const [, username] = decodeURIComponent(props.params.username).split('@');
@@ -121,12 +98,15 @@ export default async function ProfilePage(props: { params: { username: string } 
               {user.name}
             </h1>
             <Titles data={titles} />
+            <h2 className="text-muted-foreground text-sm tracking-tight">
+              Joined {getRelativeTime(user.createdAt)}
+            </h2>
             {user.bio === '' && isOwnProfile ? (
-              <div className="space-y-3 p-4">
+              <div className="flex flex-col justify-center p-4">
                 <h1 className="text-center">
-                  ? 'You haven’t added a bio yet—tell others a bit about yourself!'
+                  You haven’t added a bio yet—tell others a bit about yourself !
                 </h1>
-                <Button asChild variant="outline" className="text-center">
+                <Button asChild variant="link" className="text-center" size="sm">
                   <Link href="./v2/all">Update your bio</Link>
                 </Button>
               </div>
@@ -135,9 +115,6 @@ export default async function ProfilePage(props: { params: { username: string } 
                 <p className="text-center tracking-tighter ">{user.bio}</p>
               </div>
             )}
-            <h2 className="text-muted-foreground text-sm tracking-tight">
-              Joined {getRelativeTime(user.createdAt)}
-            </h2>
           </div>
         </div>
         <div>
@@ -189,11 +166,9 @@ export default async function ProfilePage(props: { params: { username: string } 
               </div>
             </div>
             {user.bio === '' && isOwnProfile ? (
-              <div className="space-y-3 p-4">
-                <h1 className="text-center">
-                  ? 'You haven’t added a bio yet—tell others a bit about yourself!'
-                </h1>
-                <Button asChild variant="outline" className="text-center">
+              <div className="p-4">
+                <h1>You haven’t added a bio yet—tell others a bit about yourself !</h1>
+                <Button asChild variant="link" className="px-0 " size="sm">
                   <Link href="./v2/all">Update your bio</Link>
                 </Button>
               </div>
@@ -241,7 +216,7 @@ export default async function ProfilePage(props: { params: { username: string } 
                 {isOwnProfile ? (
                   <Button asChild variant="link" className="text-center">
                     <Link href="./v2/completed">
-                      Explore completed solutions and share your own!
+                      Explore your completed solutions and share your own!
                     </Link>
                   </Button>
                 ) : null}

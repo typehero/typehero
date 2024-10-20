@@ -1,27 +1,36 @@
 'use client';
 import { useState } from 'react';
-import { ExploreCard, type ExploreCardProps } from '~/app/explore/_components/explore-card';
+import {
+  SharedSolutionCard,
+  type SharedSolutionCardProps,
+} from '../../_components/shared-solution-card';
+import {
+  DIFFICULTY_COLOR_MAP,
+  FilterBar,
+  type FilterOptions,
+} from '../../completed/_components/filter-bar';
+import { cn } from '@repo/ui/cn';
+
 import { Alert, AlertDescription, AlertTitle } from '@repo/ui/components/alert';
 import { Button } from '@repo/ui/components/button';
 import Link from 'next/link';
-import { DIFFICULTY_COLOR_MAP, FilterBar, type FilterOptions } from './filter-bar';
-import { cn } from '@repo/ui/cn';
 
-export function Challenges(props: {
-  challenges: (ExploreCardProps['challenge'] & { id: number })[];
+export function SharedSolutions(props: {
+  solutions: SharedSolutionCardProps['solution'][];
+  className?: string;
   isOwnProfile: boolean;
   username: string;
-  className?: string;
 }) {
   const [filter, setFilter] = useState<FilterOptions>('ALL');
-  const filteredChallenges = props.challenges.filter((c) => {
+  /*TODO: Can be optimized by sending the data, pregrouped from the backend*/
+  const filteredChallenges = props.solutions.filter((c) => {
     if (filter === 'ALL') return true;
-    return c.difficulty === filter;
+    return c.challenge.difficulty === filter;
   });
-
   return (
     <div className={cn('flex flex-col justify-center space-y-8', props.className)}>
       <FilterBar filter={filter} setFilter={setFilter} />
+
       {filteredChallenges.length === 0 ? (
         <Alert className="mx-auto w-fit md:px-8">
           <AlertTitle className="text-center leading-normal">
@@ -48,9 +57,10 @@ export function Challenges(props: {
           ) : null}
         </Alert>
       ) : null}
+
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {filteredChallenges.map((c) => (
-          <ExploreCard key={c.id} challenge={c} className="min-w-fit xl:min-w-fit" />
+        {filteredChallenges.map((s) => (
+          <SharedSolutionCard key={s.challenge.name} solution={s} />
         ))}
       </div>
     </div>
