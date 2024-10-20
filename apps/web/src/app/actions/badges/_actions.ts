@@ -20,6 +20,7 @@ import {
   type AotBadges,
   awardAdventBadges,
 } from '~/app/actions/badges/badge_types/advent_badges';
+import {DifficultyBadge} from "@repo/ui/src/components/difficulty-badge";
 
 export type HistoricalChallenge = Awaited<ReturnType<typeof getChallengeHistoryByCategory>>[0];
 
@@ -245,10 +246,9 @@ export async function fillInMissingBadges(userId: string): Promise<AllBadgeObjs>
   return badges;
 }
 
-const isBadgeWith = <T extends AotBadges | DifficultyBadges | SolutionBadges>(
+const isBadgeWith = (
   badge: string,
-  keys: string[],
-): badge is T => keys.includes(badge);
+) => (keys: readonly string[]) => keys.includes(badge);
 
 export interface BadgeInfo {
   slug: AotBadges;
@@ -271,12 +271,13 @@ export async function getBadges(userId: string): Promise<BadgeInfo[]> {
   });
 
   userBadges.forEach(({ badgeName }) => {
-    if (isBadgeWith<DifficultyBadges>(badgeName, difficultyBadgeKeys as unknown as string[])) {
-      badges = Object.assign(badges, awardDifficultyBadge(badgeName));
-    } else if (isBadgeWith<SolutionBadges>(badgeName, solutionBadgeKeys as unknown as string[])) {
-      badges = Object.assign(badges, awardSolutionBadge(badgeName));
-    } else if (isBadgeWith<AotBadges>(badgeName, aotBadgeKeys as unknown as string[])) {
-      badges = Object.assign(badges, awardAdventBadges(badgeName));
+    const checkBadgeType = isBadgeWith(badgeName);
+    if (checkBadgeType(difficultyBadgeKeys)) {
+      badges = Object.assign(badges, awardDifficultyBadge(badgeName as DifficultyBadges));
+    } else if (checkBadgeType(solutionBadgeKeys)) {
+      badges = Object.assign(badges, awardSolutionBadge(badgeName as SolutionBadges));
+    } else if (checkBadgeType(aotBadgeKeys)) {
+      badges = Object.assign(badges, awardAdventBadges(badgeName as AotBadges));
     }
   });
   return Object.values(badges)
