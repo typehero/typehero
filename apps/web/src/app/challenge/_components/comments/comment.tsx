@@ -262,7 +262,7 @@ function SingleComment({
     <div
       id={`comment-${comment.id}`}
       className={clsx(
-        'relative p-2 pl-3',
+        'relative p-2 pl-3 group',
         isHighlighted && SELECTED_CLASSES,
         'transition-colors',
         'duration-150',
@@ -301,39 +301,14 @@ function SingleComment({
           </Tooltip>
         </div>
       </div>
-      {!isEditing && (
-        <div className="-mb-1">
-          <ExpandableContent content={comment.text} />
-          {hasBeenEdited ? (
-            <div className="text-muted-foreground flex items-center gap-2 whitespace-nowrap text-xs">
-              Last edited at{' '}
-              {new Intl.DateTimeFormat(undefined, {
-                timeStyle: 'short',
-                dateStyle: 'short',
-              }).format(comment.updatedAt)}
-            </div>
-          ) : null}
-        </div>
-      )}
-      {isEditing ? (
-        <div className="mb-2">
-          <CommentInput
-            mode="edit"
-            defaultValue={comment.text}
-            onCancel={() => {
-              setIsEditing(false);
-            }}
-            onSubmit={async (text) => {
-              await updateComment(text, comment.id);
-              setIsEditing(false);
-            }}
-          />
-        </div>
-      ) : null}
-      <div className="my-auto mt-3 flex items-center gap-2">
+
+      <div className="flex gap-3">
+      <ExpandableContent content={comment.text} />
+      <div className="flex flex-col items-end gap-2">
         {!readonly && (
           <>
-            <Vote
+         <div className="flex gap-1">
+         <Vote
               comment={comment}
               toUserId={comment.user.id}
               challengeSlug={comment.rootChallenge?.slug ?? ''}
@@ -353,6 +328,7 @@ function SingleComment({
                 comment._count.vote += didUpvote ? 1 : -1;
               }}
             />
+
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
@@ -371,7 +347,12 @@ function SingleComment({
                 <p>Share</p>
               </TooltipContent>
             </Tooltip>
-            {!isReply && (
+         </div>
+
+          <div className="flex gap-1">
+
+          <div className='opacity-0 group-hover:opacity-100 transition-opacity ease-in-out delay-200'>
+          {!isReply && (
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button variant="secondary" size="xs" onClick={onClickReply}>
@@ -384,7 +365,10 @@ function SingleComment({
                 </TooltipContent>
               </Tooltip>
             )}
-            {isAuthor ? (
+          </div>
+            
+           <div className='opacity-0 group-hover:opacity-100 transition-opacity ease-in-out delay-150'>
+           {isAuthor ? (
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button variant="secondary" size="xs" onClick={() => setIsEditing(!isEditing)}>
@@ -397,7 +381,10 @@ function SingleComment({
                 </TooltipContent>
               </Tooltip>
             ) : null}
-            {isAuthor || isAdminAndModerator ? (
+           </div>
+
+           <div className='opacity-0 group-hover:opacity-100 transition-opacity ease-in-out delay-100'>
+           {isAuthor || isAdminAndModerator ? (
               <Tooltip>
                 <CommentDeleteDialog asChild comment={comment} deleteComment={deleteComment}>
                   <TooltipTrigger asChild>
@@ -426,7 +413,26 @@ function SingleComment({
                 </TooltipContent>
               </Tooltip>
             )}
-            {comment._count.replies > 0 && (
+           </div>
+
+          </div>
+          </>
+        )}
+      </div>
+      </div>
+
+      {!isEditing && (
+        <div className="mb-2 mt-1.5 flex justify-between">
+          {hasBeenEdited ? (
+            <div className="text-muted-foreground flex items-center gap-2 whitespace-nowrap text-xs">
+              Last edited at{' '}
+              {new Intl.DateTimeFormat(undefined, {
+                timeStyle: 'short',
+                dateStyle: 'short',
+              }).format(comment.updatedAt)}
+            </div>
+          ) : null}
+          {comment._count.replies > 0 && (
               <Button
                 variant="ghost"
                 size="xs"
@@ -445,9 +451,23 @@ function SingleComment({
                 <span className="sr-only">Toggle replies view</span>
               </Button>
             )}
-          </>
-        )}
-      </div>
+        </div>
+      )}
+      {isEditing ? (
+        <div className="mb-2">
+          <CommentInput
+            mode="edit"
+            defaultValue={comment.text}
+            onCancel={() => {
+              setIsEditing(false);
+            }}
+            onSubmit={async (text) => {
+              await updateComment(text, comment.id);
+              setIsEditing(false);
+            }}
+          />
+        </div>
+      ) : null}
     </div>
   );
 }
