@@ -8,12 +8,6 @@ import {
 } from '@repo/ui/components/tooltip';
 
 export function Badges(props: { data: BadgeInfo[] }) {
-  /* const data = [
-    { slug: 'aot-2023-bronze', name: 'Advent of TypeScript 2023 Bronze' },
-    { slug: 'aot-2023-silver', name: 'Advent of TypeScript 2023 Bronze' },
-    { slug: 'aot-2023-gold', name: 'Advent of TypeScript 2023 Bronze' },
-    { slug: 'aot-2023-platinum', name: 'Advent of TypeScript 2023 Bronze' },
-  ] as BadgeInfo[]; */
   return (
     <div>
       <TooltipProvider>
@@ -25,7 +19,7 @@ export function Badges(props: { data: BadgeInfo[] }) {
 
 function BadgesStuff(props: { data: BadgeInfo[] }) {
   return (
-    <div className="mx-auto grid w-fit grid-cols-3 gap-4  ">
+    <div className="mx-auto grid w-fit grid-cols-4 gap-4  ">
       {props.data.map((b) => {
         const Icon = SlugToBadgeIcon[b.slug];
         return (

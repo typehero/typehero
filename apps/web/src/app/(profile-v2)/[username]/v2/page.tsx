@@ -6,7 +6,10 @@ import { Button } from '@repo/ui/components/button';
 import { ArrowUpRight, Github, Twitter } from '@repo/ui/icons';
 import Link from 'next/link';
 import { ActivityChart } from './_components/activity-chart';
-import { getBadges } from '~/app/(profile)/[username]/_components/dashboard/_actions';
+import {
+  getBadges,
+  type BadgeInfo,
+} from '~/app/(profile)/[username]/_components/dashboard/_actions';
 import { cn } from '@repo/ui/cn';
 import { Avatar, AvatarImage, AvatarFallback } from '@repo/ui/components/avatar';
 import { Titles } from '~/app/challenge/_components/comments/enhanced-user-badge';
@@ -23,6 +26,12 @@ import { getProgressData, getUserActivity } from './user-info';
 import { auth } from '~/server/auth';
 import { MagicIcon } from '@repo/ui/components/magic-icon';
 
+/* const sampleBadgeData = [
+  { slug: 'aot-2023-bronze', name: 'Advent of TypeScript 2023 Bronze' },
+  { slug: 'aot-2023-silver', name: 'Advent of TypeScript 2023 Bronze' },
+  { slug: 'aot-2023-gold', name: 'Advent of TypeScript 2023 Bronze' },
+  { slug: 'aot-2023-platinum', name: 'Advent of TypeScript 2023 Bronze' },
+] as BadgeInfo[]; */
 export default async function ProfilePage(props: { params: { username: string } }) {
   const [, username] = decodeURIComponent(props.params.username).split('@');
   if (username === undefined) {
