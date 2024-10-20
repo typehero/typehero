@@ -228,7 +228,6 @@ export async function fillInMissingBadges(userId: string): Promise<AllBadgeObjs>
       badgeName: true,
     },
   });
-  await prisma.$queryRaw`SELECT badgeName AS slug FROM UserBadge WHERE userId=${userId}`;
 
   const missingBadges = Object.values(badges).filter(
     (x) => !userBadges.map((x) => x.badgeName).includes(x.slug),
