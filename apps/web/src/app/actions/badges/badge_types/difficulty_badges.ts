@@ -1,7 +1,7 @@
 import { prisma } from '@repo/db';
 import type { AllBadgeObjs, BadgesFn } from '~/app/actions/badges/_actions';
 
-export const difficultyBadgeKeys = ['EASY', 'MEDIUM', 'HARD', 'EXTREME'] as const;
+export const difficultyBadgeKeys = ['all-easy-completed', 'all-medium-completed', 'all-hard-completed', 'all-extreme-completed'] as const;
 
 export type DifficultyBadges = (typeof difficultyBadgeKeys)[number];
 export interface Difficulty {
@@ -23,7 +23,7 @@ export const difficultyBadgesFn: BadgesFn = async ({
 };
 
 export async function difficultyRetrieveData(userId: string) {
-  return await prisma.$queryRaw<
+  return prisma.$queryRaw<
     Difficulty[]
   >`SELECT Difficulty, COUNT(Id) as TotalCompleted FROM (SELECT DISTINCT Difficulty, Challenge.Id FROM Submission JOIN Challenge ON Submission.challengeId = Challenge.Id WHERE Submission.userId = ${userId} AND IsSuccessful = 1) unique_query GROUP BY Difficulty `;
 }
@@ -37,13 +37,13 @@ export async function challengesRetrieveData() {
 }
 
 export const awardDifficultyBadge = (slug: DifficultyBadges) => {
-  const pascalCase = `${slug[0]}${slug.substring(1).toLowerCase()}`;
-  console.log(pascalCase);
+  const badgeLevel = `${slug.split('-')[1]}`
+  const pascalCase = `${badgeLevel[0]?.toUpperCase()}${badgeLevel.substring(1).toLowerCase()}`;
   return {
     [slug]: {
       slug,
       name: `Completed ${pascalCase} Difficulty Badge`,
-      shortName: slug?.toLowerCase(),
+      shortName: badgeLevel?.toLowerCase(),
     },
   };
 };
@@ -54,7 +54,7 @@ export const computeDifficultyBadge = async (
   challenges: { _count: { id: number }; difficulty: string }[],
 ) => {
   const highNumberOnError = 1_000_000;
-  const thresholds: { difficulty: DifficultyBadges; threshold: number }[] = [
+  const thresholds: { difficulty: 'EASY' | 'EXTREME' | 'HARD' | 'MEDIUM'; threshold: number }[] = [
     {
       difficulty: 'EASY',
       threshold:
@@ -80,13 +80,20 @@ export const computeDifficultyBadge = async (
           ?._count?.id ?? highNumberOnError,
     },
   ];
+  const convertToBadgeName = {
+    EASY: difficultyBadgeKeys[0],
+    MEDIUM: difficultyBadgeKeys[1],
+    HARD: difficultyBadgeKeys[2],
+    EXTREME: difficultyBadgeKeys[3],
+  }
   query.forEach((currQuery) => {
     const levelThreshold = thresholds.find(
       (x) => x.difficulty.toUpperCase() === currQuery.Difficulty,
     );
     const completedAllChallenges = levelThreshold?.threshold === Number(currQuery.TotalCompleted);
     if (completedAllChallenges) {
-      badges = Object.assign(badges, awardDifficultyBadge(currQuery?.Difficulty));
+      const badgeName = convertToBadgeName[currQuery?.Difficulty as 'EASY' | 'EXTREME' | 'HARD' | 'MEDIUM'];
+      badges = Object.assign(badges, awardDifficultyBadge(badgeName));
     }
   });
   return badges;
