@@ -1,5 +1,4 @@
 import { type Session } from '@repo/auth/server';
-import { auth } from '~/server/auth';
 import { api } from '~/trpc/server';
 import { Comments } from './_components/comments';
 import { Description } from './_components/description';
@@ -32,10 +31,6 @@ interface Props {
 // }
 
 export default async function Challenges({ params: { year, day } }: Props) {
-  const session = await auth();
-
-  // const { challenge } = await getChallengeRouteData(slug, session);
-
   const challenge = await api.event.getEventChallengeBySlug({ slug: `${year}-${day}` });
 
   return (

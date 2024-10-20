@@ -177,6 +177,9 @@ importers:
 
   apps/aot:
     dependencies:
+      '@hookform/resolvers':
+        specifier: ^3.1.1
+        version: 3.1.1(react-hook-form@7.45.1(react@18.2.0))
       '@tanstack/react-query':
         specifier: 5.51.21
         version: 5.51.21(react@18.2.0)
@@ -192,6 +195,9 @@ importers:
       '@trpc/server':
         specifier: ^11.0.0-rc.446
         version: 11.0.0-rc.477
+      '@uploadthing/react':
+        specifier: ^6.2.2
+        version: 6.2.2(@uploadthing/mime-types@0.2.2)(next@14.2.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(uploadthing@6.3.1)
       '@vercel/edge-config':
         specifier: ^0.2.1
         version: 0.2.1
@@ -228,6 +234,9 @@ importers:
       superjson:
         specifier: ^2.2.1
         version: 2.2.1
+      uploadthing:
+        specifier: 6.3.1
+        version: 6.3.1
       zod:
         specifier: 3.23.3
         version: 3.23.3
@@ -425,7 +434,7 @@ importers:
         version: 3.23.3(@types/react@18.2.20)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@uploadthing/react':
         specifier: ^6.2.2
-        version: 6.2.2(@uploadthing/mime-types@0.2.2)(next@14.2.5(@playwright/test@1.38.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(uploadthing@6.3.1)
+        version: 6.2.2(@uploadthing/mime-types@0.2.2)(next@14.2.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(uploadthing@6.3.1)
       '@vercel/analytics':
         specifier: ^1.1.1
         version: 1.1.1
@@ -857,6 +866,12 @@ importers:
       '@tanstack/react-table':
         specifier: ^8.20.5
         version: 8.20.5(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
+      '@uiw/react-md-editor':
+        specifier: ^3.23.3
+        version: 3.23.3(@types/react@18.2.20)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
+      '@uploadthing/react':
+        specifier: ^6.2.2
+        version: 6.2.2(@uploadthing/mime-types@0.2.2)(next@14.2.5(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(react@18.2.0)(uploadthing@6.3.1)
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
@@ -11644,12 +11659,43 @@ snapshots:
       - '@types/react'
       - supports-color
 
+  '@uiw/react-markdown-preview@4.1.13(@types/react@18.2.20)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)':
+    dependencies:
+      '@babel/runtime': 7.22.6
+      '@uiw/copy-to-clipboard': 1.0.15
+      react: 18.2.0
+      react-dom: 18.3.1(react@18.2.0)
+      react-markdown: 8.0.7(@types/react@18.2.20)(react@18.2.0)
+      rehype-attr: 2.1.4
+      rehype-autolink-headings: 6.1.1
+      rehype-ignore: 1.0.5
+      rehype-prism-plus: 1.5.1
+      rehype-raw: 6.1.1
+      rehype-rewrite: 3.0.6
+      rehype-slug: 5.1.0
+      remark-gfm: 3.0.1
+      unist-util-visit: 4.1.2
+    transitivePeerDependencies:
+      - '@types/react'
+      - supports-color
+
   '@uiw/react-md-editor@3.23.3(@types/react@18.2.20)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@babel/runtime': 7.22.6
       '@uiw/react-markdown-preview': 4.1.13(@types/react@18.2.20)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+      rehype: 12.0.1
+    transitivePeerDependencies:
+      - '@types/react'
+      - supports-color
+
+  '@uiw/react-md-editor@3.23.3(@types/react@18.2.20)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)':
+    dependencies:
+      '@babel/runtime': 7.22.6
+      '@uiw/react-markdown-preview': 4.1.13(@types/react@18.2.20)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.3.1(react@18.2.0)
       rehype: 12.0.1
     transitivePeerDependencies:
       - '@types/react'
@@ -11664,7 +11710,7 @@ snapshots:
 
   '@uploadthing/mime-types@0.2.2': {}
 
-  '@uploadthing/react@6.2.2(@uploadthing/mime-types@0.2.2)(next@14.2.5(@playwright/test@1.38.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(uploadthing@6.3.1)':
+  '@uploadthing/react@6.2.2(@uploadthing/mime-types@0.2.2)(next@14.2.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(uploadthing@6.3.1)':
     dependencies:
       '@uploadthing/dropzone': 0.1.1
       '@uploadthing/shared': 6.2.0(@uploadthing/mime-types@0.2.2)
@@ -11675,6 +11721,20 @@ snapshots:
       uploadthing: 6.3.1
     optionalDependencies:
       next: 14.2.5(@playwright/test@1.38.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+    transitivePeerDependencies:
+      - '@uploadthing/mime-types'
+
+  '@uploadthing/react@6.2.2(@uploadthing/mime-types@0.2.2)(next@14.2.5(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(react@18.2.0)(uploadthing@6.3.1)':
+    dependencies:
+      '@uploadthing/dropzone': 0.1.1
+      '@uploadthing/shared': 6.2.0(@uploadthing/mime-types@0.2.2)
+      attr-accept: 2.2.2
+      file-selector: 0.6.0
+      react: 18.2.0
+      tailwind-merge: 1.14.0
+      uploadthing: 6.3.1
+    optionalDependencies:
+      next: 14.2.5(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
     transitivePeerDependencies:
       - '@uploadthing/mime-types'
 

@@ -11,14 +11,14 @@ import { type PaginatedSolution, getPaginatedSolutions } from '../getSolutionRou
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import { Badge } from '@repo/ui/components/badge';
 import { useParams } from 'next/navigation';
-import { Pagination } from '../../../_components/pagination';
 import { useQuery } from '@tanstack/react-query';
 import { SolutionsSkeleton } from './solution-skeleton';
-import { SortSelect } from '../../../_components/sort-select';
 import { useGetQueryString } from './useGetQueryString';
 import { useQueryParamState } from './useQueryParamState';
 import { useLocalStorage } from '~/utils/useLocalStorage';
-import { UserBadge } from '../../../_components/comments/enhanced-user-badge';
+import { SortSelect } from '../../_components/sort-select';
+import { Pagination } from '../../_components/pagination';
+import { UserBadge } from '../../_components/comments/enhanced-user-badge';
 
 interface Props {
   slug: string;

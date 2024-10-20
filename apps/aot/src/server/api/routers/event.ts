@@ -22,7 +22,7 @@ export const eventRouter = createTRPCRouter({
     )
     .query(async ({ ctx, input }) => {
       // @TODO: actually select fields
-      const challenges = await ctx.db.challenge.findFirstOrThrow({
+      const challenge = await ctx.db.challenge.findFirstOrThrow({
         where: {
           slug: input.slug,
         },
@@ -61,7 +61,10 @@ export const eventRouter = createTRPCRouter({
         },
       });
 
-      return challenges;
+      return {
+        ...challenge,
+        hasSolved: challenge.submission.length > 0,
+      };
     }),
   getEventChallengesByYear: publicProcedure
     .input(

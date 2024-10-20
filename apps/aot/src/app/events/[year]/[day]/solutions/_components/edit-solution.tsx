@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from '@repo/auth/react';
 import { Button } from '@repo/ui/components/button';
+import { RichMarkdownEditor } from '@repo/ui/components/rich-markdown-editor';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@repo/ui/components/form';
 import { Input } from '@repo/ui/components/input';
 import { useToast } from '@repo/ui/components/use-toast';
@@ -8,10 +9,10 @@ import { useTheme } from 'next-themes';
 import { useParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
 import { createNoProfanitySchemaWithValidate } from '~/utils/antiProfanityZod';
-import type { ChallengeSolution } from '~/app/challenge/[slug]/solutions/[solutionId]/page';
 import { updateSolution } from './_actions';
+import { useUploadThing } from '~/utils/useUploadthing';
+import type { ChallengeSolution } from '../[solutionId]/page';
 
 const formSchema = z.object({
   title: createNoProfanitySchemaWithValidate((zodString) =>
@@ -116,8 +117,8 @@ export function EditSolution({ solution, setIsEditing }: Props) {
                 <RichMarkdownEditor
                   allowImageUpload
                   value={field.value}
-                  // non-split-screen by default
                   onChange={field.onChange}
+                  useUploadThing={useUploadThing}
                 />
                 <FormMessage />
               </FormItem>
