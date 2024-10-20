@@ -73,6 +73,92 @@ try {
       },
     });
 
+    if (track.name === 'Advent of TypeScript 2023') {
+      const challengesForTrack = await prisma.challenge.findMany({
+        where: {
+          slug: {
+            in: [
+              '2023-1',
+              '2023-2',
+              '2023-3',
+              '2023-4',
+              '2023-5',
+              '2023-6',
+              '2023-7',
+              '2023-8',
+              '2023-9',
+              '2023-10',
+              '2023-11',
+              '2023-12',
+              '2023-13',
+              '2023-14',
+              '2023-15',
+              '2023-16',
+              '2023-17',
+              '2023-18',
+              '2023-19',
+              '2023-20',
+              '2023-21',
+              '2023-22',
+              '2023-23',
+              '2023-24',
+              '2023-25',
+            ],
+          },
+        },
+      });
+      await prisma.trackChallenge.createMany({
+        data: challengesForTrack.map((challenge, index) => ({
+          challengeId: challenge.id,
+          trackId: createdTrack.id,
+          orderId: index,
+        })),
+      });
+    }
+
+    if (track.name === 'Advent of TypeScript 2024') {
+      const challengesForTrack = await prisma.challenge.findMany({
+        where: {
+          slug: {
+            in: [
+              '2024-1',
+              '2024-2',
+              '2024-3',
+              '2024-4',
+              '2024-5',
+              '2024-6',
+              '2024-7',
+              '2024-8',
+              '2024-9',
+              '2024-10',
+              '2024-11',
+              '2024-12',
+              '2024-13',
+              '2024-14',
+              '2024-15',
+              '2024-16',
+              '2024-17',
+              '2024-18',
+              '2024-19',
+              '2024-20',
+              '2024-21',
+              '2024-22',
+              '2024-23',
+              '2024-24',
+              '2024-25',
+            ],
+          },
+        },
+      });
+      await prisma.trackChallenge.createMany({
+        data: challengesForTrack.map((challenge, index) => ({
+          challengeId: challenge.id,
+          trackId: createdTrack.id,
+          orderId: index,
+        })),
+      });
+    }
+
     if (track.name === 'TypeScript Foundations') {
       const challengesForTrack = await prisma.challenge.findMany({
         where: {

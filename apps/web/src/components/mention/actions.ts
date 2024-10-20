@@ -13,6 +13,11 @@ export async function searchUsers(query: string) {
         contains: query,
       },
     },
+    select: {
+      id: true,
+      name: true,
+      image: true,
+    },
     orderBy: {
       name: 'desc',
     },

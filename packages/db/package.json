@@ -23,7 +23,7 @@
     "db:push": "dotenv -e ../../.env prisma db push",
     "db:reset": "dotenv -e ../../.env prisma db push -- --force-reset",
     "db:seed": "dotenv -e ../../.env tsx ./seed/dev.ts",
-    "db:prod:seed": "dotenv -e ../../.env tsx ./seed/prod.ts",
+    "db:prod:seed": "dotenv -e ../../.env tsx ./temp/populate-aot-challenges.ts && dotenv -e ../../.env tsx ./seed/prod.ts",
     "db:leaderboard:seed": "dotenv -e ../../.env tsx ./seed/leaderboard.ts",
     "db:studio": "dotenv -e ../../.env prisma studio",
     "format": "prettier . --check --cache --cache-location=\"node_modules/.cache/prettiercache\"",
@@ -49,8 +49,5 @@
     "typescript": "^5.3.3",
     "uuid-by-string": "^4.0.0",
     "yaml": "^2.3.1"
-  },
-  "prisma": {
-    "seed": "tsx ./seed.ts"
   }
 }

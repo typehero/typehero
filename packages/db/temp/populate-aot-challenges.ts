@@ -1,4 +1,5 @@
 import path from 'node:path';
+import uuidByString from 'uuid-by-string';
 import { fileURLToPath } from 'node:url';
 import { ingestChallenges } from '../seed/data/challenge-ingest';
 import { prisma } from '../src';
@@ -6,12 +7,28 @@ import { prisma } from '../src';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const challengePath = path.join(__dirname, '../../../challenges/aot/2023');
+const challengePath = path.join(__dirname, '../../../challenges/aot');
 
-const excludes = ['blank', 'solutions'];
+const excludes = ['blank', 'solutions', 'metadata.schema.json'];
 export const slugify = (str: string) => str.toLowerCase().replace(/\s/g, '-');
 
+const TYPEHERO_ID = uuidByString('typehero');
+
 try {
+  await prisma.user.upsert({
+    where: { id: TYPEHERO_ID },
+    update: {},
+    create: {
+      id: TYPEHERO_ID,
+      email: 'typeherapp@gmail.com',
+      name: 'TypeHero',
+      userLinks: {
+        create: {
+          url: 'https://typehero.dev',
+        },
+      },
+    },
+  });
   const challengesToUpdateOrCreate = await ingestChallenges(challengePath, excludes);
 
   const transactions = [];
