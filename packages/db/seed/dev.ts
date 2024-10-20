@@ -3,7 +3,7 @@ import { PrismaClient, type Challenge, type Prisma } from '@prisma/client';
 import uuidByString from 'uuid-by-string';
 import { loadChallengesFromTypeChallenge } from '../mocks/challenges.mock';
 import { createComment } from '../mocks/comment.mock';
-import { createUsers} from '../mocks/user.mock';
+import { createUsers } from '../mocks/user.mock';
 import { tracks } from './data/tracks';
 
 const prisma = new PrismaClient();
@@ -115,8 +115,8 @@ try {
       },
       submission: {
         create: aLotOfSubmissionsManyChallenges(challengesFromTypeChallenges),
-      }
-    }
+      },
+    },
   });
   await prisma.$disconnect();
 } catch (e) {
@@ -150,11 +150,12 @@ function aLotOfSharedSolutionsManyChallenges(
   }));
 }
 function aLotOfSubmissionsManyChallenges(
-  challengeIds: Omit<Prisma.ChallengeCreateManyInput, 'userId'>[],) {
+  challengeIds: Omit<Prisma.ChallengeCreateManyInput, 'userId'>[],
+) {
   return challengeIds.map((challenge) => ({
     challengeId: challenge.id || 0,
     code: faker.lorem.words(7),
     isSuccessful: true,
-    createdAt: new Date()
+    createdAt: new Date(),
   }));
 }

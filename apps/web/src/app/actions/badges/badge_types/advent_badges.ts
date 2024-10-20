@@ -1,24 +1,29 @@
-import type {AllBadgeObjs, BadgesFn} from "../_actions";
-import {prisma} from "@repo/db";
+import type { AllBadgeObjs, BadgesFn } from '../_actions';
+import { prisma } from '@repo/db';
+
 export interface AdventChallenges {
   trackChallenges: { challenge: { submission: { isSuccessful: boolean }[] } }[];
 }
 
-export const aotBadgeKeys = ['aot-2023-bronze', 'aot-2023-silver', 'aot-2023-gold', 'aot-2023-platinum'] as const;
+export const aotBadgeKeys = [
+  'aot-2023-bronze',
+  'aot-2023-silver',
+  'aot-2023-gold',
+  'aot-2023-platinum',
+] as const;
 
-export type AotBadges = typeof aotBadgeKeys[number];
+export type AotBadges = (typeof aotBadgeKeys)[number];
 
-export const adventBadgesFn: BadgesFn =
-  async ({
-           userId,
-           badges,
-         }: {
-    userId: string;
-    badges: AllBadgeObjs;
-  }): Promise<AllBadgeObjs> => {
-    const advent: AdventChallenges | null = await adventRetrieveData(userId);
-    return await computeAdventBadges(badges, advent);
-  };
+export const adventBadgesFn: BadgesFn = async ({
+  userId,
+  badges,
+}: {
+  userId: string;
+  badges: AllBadgeObjs;
+}): Promise<AllBadgeObjs> => {
+  const advent: AdventChallenges | null = await adventRetrieveData(userId);
+  return await computeAdventBadges(badges, advent);
+};
 export async function adventRetrieveData(userId: string) {
   const advent: AdventChallenges | null = await prisma.track.findFirst({
     where: {
@@ -56,17 +61,20 @@ export async function adventRetrieveData(userId: string) {
 
 export const awardAdventBadges = (slug: AotBadges) => {
   const badgeColor = slug.split('-')?.[2] ?? '';
-  const badgeLevel = `${badgeColor[0]?.toUpperCase()}${badgeColor.substring(1)}`
+  const badgeLevel = `${badgeColor[0]?.toUpperCase()}${badgeColor.substring(1)}`;
   return {
     [slug]: {
       slug,
       name: `Advent of Typescript 2023 ${badgeLevel}`,
-      shortName: 'Advent'
-    }
-  }
-}
+      shortName: 'Advent',
+    },
+  };
+};
 
-export const computeAdventBadges = async (badges: AllBadgeObjs, advent: AdventChallenges | null) => {
+export const computeAdventBadges = async (
+  badges: AllBadgeObjs,
+  advent: AdventChallenges | null,
+) => {
   // Advent Badge Logic
   const attemptedChallenges =
     advent?.trackChallenges.filter((trackChallenge) => {
@@ -92,10 +100,7 @@ export const computeAdventBadges = async (badges: AllBadgeObjs, advent: AdventCh
     badgeLevel = 'platinum';
   }
   if (badgeLevel) {
-    Object.assign(badges, awardAdventBadges(
-      `aot-2023-${badgeLevel}`));
+    Object.assign(badges, awardAdventBadges(`aot-2023-${badgeLevel}`));
   }
   return badges;
 };
-
-

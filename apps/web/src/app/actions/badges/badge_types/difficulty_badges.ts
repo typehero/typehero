@@ -1,27 +1,26 @@
 import { prisma } from '@repo/db';
 import type { AllBadgeObjs, BadgesFn } from '~/app/actions/badges/_actions';
 
-export const difficultyBadgeKeys = ['BEGINNER', 'EASY', 'MEDIUM', 'HARD', 'EXTREME'] as const;
+export const difficultyBadgeKeys = ['EASY', 'MEDIUM', 'HARD', 'EXTREME'] as const;
 
-export type DifficultyBadges = typeof difficultyBadgeKeys[number];
+export type DifficultyBadges = (typeof difficultyBadgeKeys)[number];
 export interface Difficulty {
   Difficulty: DifficultyBadges;
   TotalCompleted: number;
 }
 
-export const difficultyBadgesFn: BadgesFn =
-  async ({
-           userId,
-           badges,
-         }: {
-    userId: string;
-    badges: AllBadgeObjs;
-  }) => {
-    // DifficultyBadges
-    const difficulty: Difficulty[] | null = await difficultyRetrieveData(userId);
-    const challenges = await challengesRetrieveData();
-    return await computeDifficultyBadge(badges, difficulty ?? [], challenges);
-  };
+export const difficultyBadgesFn: BadgesFn = async ({
+  userId,
+  badges,
+}: {
+  userId: string;
+  badges: AllBadgeObjs;
+}) => {
+  // DifficultyBadges
+  const difficulty: Difficulty[] | null = await difficultyRetrieveData(userId);
+  const challenges = await challengesRetrieveData();
+  return await computeDifficultyBadge(badges, difficulty ?? [], challenges);
+};
 
 export async function difficultyRetrieveData(userId: string) {
   return await prisma.$queryRaw<
@@ -39,40 +38,40 @@ export async function challengesRetrieveData() {
 
 export const awardDifficultyBadge = (slug: DifficultyBadges) => {
   const pascalCase = `${slug[0]}${slug.substring(1).toLowerCase()}`;
-  console.log(pascalCase)
+  console.log(pascalCase);
   return {
     [slug]: {
       slug,
       name: `Completed ${pascalCase} Difficulty Badge`,
       shortName: slug?.toLowerCase(),
-    }};
-}
-
+    },
+  };
+};
 
 export const computeDifficultyBadge = async (
   badges: AllBadgeObjs,
   query: Difficulty[],
-  challenges: { _count: { id: number; }; difficulty: string }[],
+  challenges: { _count: { id: number }; difficulty: string }[],
 ) => {
   const highNumberOnError = 1_000_000;
   const thresholds: { difficulty: DifficultyBadges; threshold: number }[] = [
     {
       difficulty: 'EASY',
       threshold:
-        challenges.find(({ difficulty }: { difficulty: string }) => difficulty === 'EASY')
-          ?._count?.id ?? highNumberOnError,
+        challenges.find(({ difficulty }: { difficulty: string }) => difficulty === 'EASY')?._count
+          ?.id ?? highNumberOnError,
     },
     {
       difficulty: 'MEDIUM',
       threshold:
-        challenges.find(({ difficulty }: { difficulty: string }) => difficulty === 'MEDIUM')
-          ?._count?.id ?? highNumberOnError,
+        challenges.find(({ difficulty }: { difficulty: string }) => difficulty === 'MEDIUM')?._count
+          ?.id ?? highNumberOnError,
     },
     {
       difficulty: 'HARD',
       threshold:
-        challenges.find(({ difficulty }: { difficulty: string }) => difficulty === 'HARD')
-          ?._count?.id ?? highNumberOnError,
+        challenges.find(({ difficulty }: { difficulty: string }) => difficulty === 'HARD')?._count
+          ?.id ?? highNumberOnError,
     },
     {
       difficulty: 'EXTREME',

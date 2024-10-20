@@ -203,13 +203,15 @@ export type BadgeObj = {
 export type AllBadges = Badges<BadgeTypes>;
 export type AllBadgeObjs = BadgeObj;
 
-export type BadgesFn = ({ userId, badges }: { userId: string; badges: AllBadgeObjs }) => Promise<AllBadgeObjs>;
+export type BadgesFn = ({
+  userId,
+  badges,
+}: {
+  userId: string;
+  badges: AllBadgeObjs;
+}) => Promise<AllBadgeObjs>;
 
-const badgeCalculations: BadgesFn[] = [
-  adventBadgesFn,
-  difficultyBadgesFn,
-  sharedSolutionsBadgesFn,
-];
+const badgeCalculations: BadgesFn[] = [adventBadgesFn, difficultyBadgesFn, sharedSolutionsBadgesFn];
 
 export async function fillInMissingBadges(userId: string): Promise<AllBadgeObjs> {
   let badges: AllBadgeObjs = {};
@@ -218,61 +220,66 @@ export async function fillInMissingBadges(userId: string): Promise<AllBadgeObjs>
     badges = await badgeFn({ userId, badges });
   }
 
-  const userBadges =
-      await prisma.userBadge.findMany({
-        where: {
-          userId
-        },
-        select: {
-          badgeName: true
-        }
-      })
-      await prisma.$queryRaw`SELECT badgeName AS slug FROM UserBadge WHERE userId=${userId}`;
+  const userBadges = await prisma.userBadge.findMany({
+    where: {
+      userId,
+    },
+    select: {
+      badgeName: true,
+    },
+  });
+  await prisma.$queryRaw`SELECT badgeName AS slug FROM UserBadge WHERE userId=${userId}`;
 
-  const missingBadges = Object.values(badges)
-    .filter(x =>
-      !userBadges
-        .map(x => x.badgeName)
-        .includes(x.slug));
+  const missingBadges = Object.values(badges).filter(
+    (x) => !userBadges.map((x) => x.badgeName).includes(x.slug),
+  );
   for (const badge of missingBadges) {
     await prisma.userBadge.create({
-        data: {
-            badgeName: badge.slug,
-            achievementDate: new Date(Date.now()).toISOString(),
-            userId
-        }
-      });
+      data: {
+        badgeName: badge.slug,
+        achievementDate: new Date(Date.now()).toISOString(),
+        userId,
+      },
+    });
   }
   return badges;
 }
 
-const isBadgeWith = <T extends AotBadges | DifficultyBadges | SolutionBadges>(badge: string, keys: string[]): badge is T =>
-  keys.includes(badge);
-export async function getBadges(userId: string): Promise<AllBadgeObjs> {
+const isBadgeWith = <T extends AotBadges | DifficultyBadges | SolutionBadges>(
+  badge: string,
+  keys: string[],
+): badge is T => keys.includes(badge);
+
+export interface BadgeModel {
+  slug: BadgeTypes;
+  name: string;
+  shortName: string;
+}
+
+export async function getBadges(userId: string): Promise<BadgeModel[]> {
   //TODO: should this be removed, or changed? On every call to profile is excessive
   await fillInMissingBadges(userId);
   let badges: AllBadgeObjs = {};
 
   // retrieve current awarded badge_types
-  const userBadges =
-    await prisma.userBadge.findMany({
-      where: {
-        userId
-      },
-      select: {
-        badgeName: true
-      }
-    })
-      //`SELECT badgeName AS slug FROM UserBadges WHERE userId=${userId}`;
+  const userBadges = await prisma.userBadge.findMany({
+    where: {
+      userId,
+    },
+    select: {
+      badgeName: true,
+    },
+  });
+  //`SELECT badgeName AS slug FROM UserBadges WHERE userId=${userId}`;
 
   userBadges.forEach(({ badgeName }) => {
     if (isBadgeWith<DifficultyBadges>(badgeName, difficultyBadgeKeys as unknown as string[])) {
       badges = Object.assign(badges, awardDifficultyBadge(badgeName));
-    } else if (isBadgeWith<SolutionBadges>(badgeName, solutionBadgeKeys as unknown as string[])){
+    } else if (isBadgeWith<SolutionBadges>(badgeName, solutionBadgeKeys as unknown as string[])) {
       badges = Object.assign(badges, awardSolutionBadge(badgeName));
     } else if (isBadgeWith<AotBadges>(badgeName, aotBadgeKeys as unknown as string[])) {
       badges = Object.assign(badges, awardAdventBadges(badgeName));
-          }
-  })
-  return badges;
+    }
+  });
+  return Object.values(badges);
 }

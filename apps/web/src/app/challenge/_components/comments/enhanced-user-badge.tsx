@@ -16,7 +16,7 @@ import { getTitles, type TitleInfo } from './enhanced-user-badge.getTitles';
 import { Skeleton } from '@repo/ui/components/skeleton';
 import { DefaultAvatar } from '~/components/default-avatar';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
-import type {AllBadges} from "~/app/actions/badges/_actions";
+import type { BadgeModel } from '~/app/actions/badges/_actions';
 
 interface UserBadgeProps {
   user: {
@@ -158,12 +158,12 @@ function Titles(props: { data: TitleInfo[] }) {
   );
 }
 
-function Badges(props: { data: AllBadges[] }) {
+function Badges(props: { data: BadgeModel[] }) {
   return (
     <div className="flex flex-row space-x-[-15px]">
-      {props.data.map((b) => {
-        const Icon = SlugToBadgeIcon[b.slug];
-        return <Icon className="h-10 w-10" key={b.slug} />;
+      {props.data.map((badge) => {
+        const Icon = SlugToBadgeIcon[badge.slug];
+        return <Icon className="h-10 w-10" key={badge.slug} shortName={badge.shortName} />;
       })}
     </div>
   );

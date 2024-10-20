@@ -1,4 +1,4 @@
-export function Silver({ className, shortName }: { className?: string, shortName: string }) {
+export function Silver({ className, shortName }: { className?: string; shortName: string }) {
   return (
     <>
       <svg
@@ -11,7 +11,7 @@ export function Silver({ className, shortName }: { className?: string, shortName
       >
         <mask
           id="mask0_13_495"
-          style={{maskType: 'alpha'}}
+          style={{ maskType: 'alpha' }}
           maskUnits="userSpaceOnUse"
           x="16"
           y="3"
@@ -24,7 +24,7 @@ export function Silver({ className, shortName }: { className?: string, shortName
           />
         </mask>
         <g mask="url(#mask0_13_495)">
-          <rect width="250" height="250" fill="url(#paint0_linear_13_495)"/>
+          <rect width="250" height="250" fill="url(#paint0_linear_13_495)" />
           <path
             d="M74.3309 80.3861L92.2815 71.0789L110.232 80.3861L106.8 60.6722L121.326 46.7073L101.257 43.8349L92.2815 25.899L83.3068 43.8349L63.2314 46.7073L77.7586 60.6722L74.3309 80.3861Z"
             fill="white"
@@ -55,14 +55,13 @@ export function Silver({ className, shortName }: { className?: string, shortName
             y2="215.658"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stopColor="#3D5954"/>
-            <stop offset="0.614583" stopColor="#9BCBC2"/>
-            <stop offset="1" stopColor="#48625D"/>
+            <stop stopColor="#3D5954" />
+            <stop offset="0.614583" stopColor="#9BCBC2" />
+            <stop offset="1" stopColor="#48625D" />
           </linearGradient>
         </defs>
       </svg>
       <p className="text-xs capitalize">{shortName}</p>
     </>
-
   );
 }

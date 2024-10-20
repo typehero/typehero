@@ -1,4 +1,4 @@
-export function Platinum({ className, shortName }: { className?: string, shortName: string }) {
+export function Platinum({ className, shortName }: { className?: string; shortName: string }) {
   return (
     <>
       <svg
@@ -11,7 +11,7 @@ export function Platinum({ className, shortName }: { className?: string, shortNa
       >
         <mask
           id="mask0_16_74"
-          style={{maskType: 'alpha'}}
+          style={{ maskType: 'alpha' }}
           maskUnits="userSpaceOnUse"
           x="16"
           y="3"
@@ -24,7 +24,7 @@ export function Platinum({ className, shortName }: { className?: string, shortNa
           />
         </mask>
         <g mask="url(#mask0_16_74)">
-          <rect width="250" height="250" fill="url(#paint0_linear_16_74)"/>
+          <rect width="250" height="250" fill="url(#paint0_linear_16_74)" />
           <path
             d="M74.3309 80.3861L92.2816 71.0789L110.232 80.3861L106.8 60.6722L121.326 46.7073L101.257 43.8349L92.2816 25.899L83.3068 43.8349L63.2314 46.7073L77.7586 60.6722L74.3309 80.3861Z"
             fill="white"
@@ -55,14 +55,13 @@ export function Platinum({ className, shortName }: { className?: string, shortNa
             y2="212.197"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stopColor="#2EECEC"/>
-            <stop offset="0.677083" stopColor="#00A184"/>
-            <stop offset="1" stopColor="#0F7562"/>
+            <stop stopColor="#2EECEC" />
+            <stop offset="0.677083" stopColor="#00A184" />
+            <stop offset="1" stopColor="#0F7562" />
           </linearGradient>
         </defs>
       </svg>
       <p className="text-xs capitalize">{shortName}</p>
     </>
-
   );
 }
