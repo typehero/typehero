@@ -69,7 +69,7 @@ interface BadgesProps {
 }
 
 export const Badges = ({ badges, className }: BadgesProps) => {
-  if (Object.keys(badges).length === 0) return null;
+  if (badges.length === 0) return null;
 
   return (
     <div className={cn('border-border flex flex-col gap-4 border-t py-4', className)}>
