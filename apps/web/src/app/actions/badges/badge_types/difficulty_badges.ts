@@ -1,7 +1,12 @@
 import { prisma } from '@repo/db';
 import type { AllBadgeObjs, BadgesFn } from '~/app/actions/badges/_actions';
 
-export const difficultyBadgeKeys = ['all-easy-completed', 'all-medium-completed', 'all-hard-completed', 'all-extreme-completed'] as const;
+export const difficultyBadgeKeys = [
+  'all-easy-completed',
+  'all-medium-completed',
+  'all-hard-completed',
+  'all-extreme-completed',
+] as const;
 
 export type DifficultyBadges = (typeof difficultyBadgeKeys)[number];
 export interface Difficulty {
@@ -37,7 +42,7 @@ export async function challengesRetrieveData() {
 }
 
 export const awardDifficultyBadge = (slug: DifficultyBadges) => {
-  const badgeLevel = `${slug.split('-')[1]}`
+  const badgeLevel = `${slug.split('-')[1]}`;
   const pascalCase = `${badgeLevel[0]?.toUpperCase()}${badgeLevel.substring(1).toLowerCase()}`;
   return {
     [slug]: {
@@ -85,14 +90,15 @@ export const computeDifficultyBadge = async (
     MEDIUM: difficultyBadgeKeys[1],
     HARD: difficultyBadgeKeys[2],
     EXTREME: difficultyBadgeKeys[3],
-  }
+  };
   query.forEach((currQuery) => {
     const levelThreshold = thresholds.find(
       (x) => x.difficulty.toUpperCase() === currQuery.Difficulty,
     );
     const completedAllChallenges = levelThreshold?.threshold === Number(currQuery.TotalCompleted);
     if (completedAllChallenges) {
-      const badgeName = convertToBadgeName[currQuery?.Difficulty as 'EASY' | 'EXTREME' | 'HARD' | 'MEDIUM'];
+      const badgeName =
+        convertToBadgeName[currQuery?.Difficulty as 'EASY' | 'EXTREME' | 'HARD' | 'MEDIUM'];
       badges = Object.assign(badges, awardDifficultyBadge(badgeName));
     }
   });

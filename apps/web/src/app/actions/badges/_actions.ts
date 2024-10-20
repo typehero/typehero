@@ -20,7 +20,6 @@ import {
   type AotBadges,
   awardAdventBadges,
 } from '~/app/actions/badges/badge_types/advent_badges';
-import {DifficultyBadge} from "@repo/ui/src/components/difficulty-badge";
 
 export type HistoricalChallenge = Awaited<ReturnType<typeof getChallengeHistoryByCategory>>[0];
 
