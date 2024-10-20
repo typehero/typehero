@@ -13,14 +13,14 @@ async function getOverallLeaderboard(currentAdventDay: number) {
   SELECT
     u.name,
     SUM(r.points) AS totalPoints
-  FROM 
+  FROM
     User u
-  JOIN 
+  JOIN
     (
       SELECT
         userId,
         101 - \`rank\` AS points
-      FROM 
+      FROM
         (
           SELECT
             userId,
@@ -53,7 +53,7 @@ export default async function OverallLeaderboard({
         {top100Ranking.map((rankedUser, index) => (
           <li key={index} className="flex gap-6 border p-4">
             <p className="w-10 text-right">{index + 1})</p>
-            <p className="w-10 text-right">{rankedUser.totalPoints}</p>
+            <p className="w-10 text-right">{Number(rankedUser.totalPoints)}</p>
             <p>{rankedUser.name}</p>
           </li>
         ))}
