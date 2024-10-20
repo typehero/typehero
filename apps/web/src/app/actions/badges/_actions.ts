@@ -269,7 +269,6 @@ export async function getBadges(userId: string): Promise<BadgeModel[]> {
       badgeName: true,
     },
   });
-  //`SELECT badgeName AS slug FROM UserBadges WHERE userId=${userId}`;
 
   userBadges.forEach(({ badgeName }) => {
     if (isBadgeWith<DifficultyBadges>(badgeName, difficultyBadgeKeys as unknown as string[])) {
