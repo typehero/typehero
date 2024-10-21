@@ -11,14 +11,14 @@ import { Loader2, LogIn, Moon, Sun, User } from '@repo/ui/icons';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { NavLink } from './nav-link';
+import Link from 'next/link';
 
 export function Navigation() {
   return (
     <header className="z-0 w-full fixed">
-      <nav className="flex h-14 items-center px-4">
-        <div className="flex w-full items-center justify-between">
+      <nav className="flex h-14 items-center justify-between px-4 xl:grid grid-cols-3">
           <div className="relative flex gap-3">
-            <a className="flex items-center space-x-2 duration-300" href="/">
+            <Link className="flex items-center space-x-2 duration-300" href="/">
               <svg
                 className="h-8 w-8 rounded-md bg-[#3178C6] p-[2px]"
                 viewBox="0 0 38 38"
@@ -43,20 +43,19 @@ export function Navigation() {
                 <br />
                 hero
               </span>
-            </a>
+            </Link>
           </div>
-          <div className="items-center hidden md:ml-4 mt-32 md:mt-0 md:flex rounded-full bg-white/10 border-white/20 backdrop-blur border p-2">
+          <div className="items-center hidden w-fit mx-auto mt-32 md:mt-0 md:flex rounded-full bg-white/10 border-white/20 backdrop-blur border p-2">
             <NavLink title="About" href="/about" />
             <NavLink title="Leaderboard" href="/leaderboard" />
             <NavLink title="Events" href="/events" />
           </div>
-          <div className="flex">
+          <div className="flex xl:ml-auto">
             <div className="flex items-center justify-end gap-2">
               <ThemeButton />
               <LoginButton />
             </div>
           </div>
-        </div>
       </nav>
     </header>
   );
