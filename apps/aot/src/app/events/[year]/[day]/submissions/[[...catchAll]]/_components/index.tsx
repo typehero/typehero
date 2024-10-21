@@ -76,10 +76,10 @@ export function Submissions({ submissions }: Props) {
 }
 
 function SubmissionRow({ submission }: { submission: Submission }) {
-  const { slug } = useParams();
+  const { year, day } = useParams();
   return (
     <li className="flex cursor-pointer items-center justify-between px-4 py-2 duration-300 hover:bg-neutral-100 dark:rounded-none dark:hover:bg-zinc-700/50">
-      <Link className="w-full" href={`/challenge/${slug}/submissions/${submission.id}`}>
+      <Link className="w-full" href={`/events/${year}/${day}/submissions/${submission.id}`}>
         <div
           className={clsx({
             'text-emerald-600  dark:text-emerald-400': submission.isSuccessful,
