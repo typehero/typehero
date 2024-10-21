@@ -1,7 +1,25 @@
 'use server';
 
 import { prisma } from '@repo/db';
-import type { DIFFICULTIES } from './challenges-progress';
+import type { DIFFICULTIES } from '../../(profile)/[username]/_components/dashboard/challenges-progress';
+import {
+  awardDifficultyBadge,
+  difficultyBadgeKeys,
+  type DifficultyBadges,
+  difficultyBadgesFn,
+} from '~/app/actions/badges/badge_types/difficulty_badges';
+import {
+  awardSolutionBadge,
+  sharedSolutionsBadgesFn,
+  solutionBadgeKeys,
+  type SolutionBadges,
+} from '~/app/actions/badges/badge_types/shared_solutions_badges';
+import {
+  adventBadgesFn,
+  aotBadgeKeys,
+  type AotBadges,
+  awardAdventBadges,
+} from '~/app/actions/badges/badge_types/advent_badges';
 
 export type HistoricalChallenge = Awaited<ReturnType<typeof getChallengeHistoryByCategory>>[0];
 
@@ -167,72 +185,99 @@ export async function getSolvedChallenges(userId: string) {
   };
 }
 
+export interface Badges<T> {
+  slug: T;
+  name: string;
+  shortName: string;
+}
+
+type BadgeTypes = AotBadges | DifficultyBadges | SolutionBadges;
+export type BadgeObj = {
+  [key in BadgeTypes]?: {
+    slug: key;
+    name: string;
+    shortName: string;
+  };
+};
+
+export type AllBadges = Badges<BadgeTypes>;
+export type AllBadgeObjs = BadgeObj;
+
+export type BadgesFn = ({
+  userId,
+  badges,
+}: {
+  userId: string;
+  badges: AllBadgeObjs;
+}) => Promise<AllBadgeObjs>;
+
+const badgeCalculations: BadgesFn[] = [adventBadgesFn, difficultyBadgesFn, sharedSolutionsBadgesFn];
+
+export async function fillInMissingBadges(userId: string): Promise<AllBadgeObjs> {
+  let badges: AllBadgeObjs = {};
+
+  for (const badgeFn of badgeCalculations) {
+    badges = await badgeFn({ userId, badges });
+  }
+
+  const userBadges = await prisma.userBadge.findMany({
+    where: {
+      userId,
+    },
+    select: {
+      badgeName: true,
+    },
+  });
+
+  const missingBadges = Object.values(badges).filter(
+    (x) => !userBadges.map((x) => x.badgeName).includes(x.slug),
+  );
+  console.log(missingBadges);
+  for (const badge of missingBadges) {
+    await prisma.userBadge.create({
+      data: {
+        badgeName: badge.slug,
+        achievementDate: new Date(Date.now()).toISOString(),
+        userId,
+      },
+    });
+  }
+  return badges;
+}
+
+const isBadgeWith = (badge: string) => (keys: readonly string[]) => keys.includes(badge);
+
 export interface BadgeInfo {
-  // eslint-disable-next-line @typescript-eslint/sort-type-constituents
-  slug: 'aot-2023-bronze' | 'aot-2023-silver' | 'aot-2023-gold' | 'aot-2023-platinum';
+  slug: AotBadges;
   name: string;
 }
 
 export async function getBadges(userId: string): Promise<BadgeInfo[]> {
-  const badges: BadgeInfo[] = [];
+  //TODO: should this be removed, or changed? On every call to profile is excessive
+  await fillInMissingBadges(userId);
+  let badges: AllBadgeObjs = {};
 
-  const holidayTrack = await prisma.track.findFirst({
+  // retrieve current awarded badge_types
+  const userBadges = await prisma.userBadge.findMany({
     where: {
-      slug: 'advent-of-typescript-2023',
+      userId,
     },
-    include: {
-      trackChallenges: {
-        orderBy: {
-          orderId: 'asc',
-        },
-        include: {
-          challenge: {
-            include: {
-              submission: {
-                where: {
-                  userId,
-                },
-              },
-            },
-          },
-        },
-      },
-      enrolledUsers: {
-        where: {
-          id: userId,
-        },
-        select: {
-          id: true,
-        },
-      },
+    select: {
+      badgeName: true,
     },
   });
 
-  const numberOfAttemptedHolidayChallenges =
-    holidayTrack?.trackChallenges.filter((trackChallenge) => {
-      return (trackChallenge.challenge.submission?.length ?? 0) > 0;
-    }).length ?? 0;
-
-  if (numberOfAttemptedHolidayChallenges > 0) {
-    badges.push({ slug: 'aot-2023-bronze', name: 'Advent of TypeScript 2023 Bronze' });
-  }
-
-  const numberOfCompletedHolidayChallenges =
-    holidayTrack?.trackChallenges.filter((trackChallenge) => {
-      return trackChallenge.challenge.submission?.some((submission) => submission.isSuccessful);
-    }).length ?? 0;
-
-  if (numberOfCompletedHolidayChallenges >= 5) {
-    badges.push({ slug: 'aot-2023-silver', name: 'Advent of TypeScript 2023 Silver' });
-  }
-
-  if (numberOfCompletedHolidayChallenges >= 15) {
-    badges.push({ slug: 'aot-2023-gold', name: 'Advent of TypeScript 2023 Gold' });
-  }
-
-  if (numberOfCompletedHolidayChallenges >= 25) {
-    badges.push({ slug: 'aot-2023-platinum', name: 'Advent of TypeScript 2023 Platinum' });
-  }
-
-  return badges;
+  userBadges.forEach(({ badgeName }) => {
+    const checkBadgeType = isBadgeWith(badgeName);
+    if (checkBadgeType(difficultyBadgeKeys)) {
+      badges = Object.assign(badges, awardDifficultyBadge(badgeName as DifficultyBadges));
+    } else if (checkBadgeType(solutionBadgeKeys)) {
+      badges = Object.assign(badges, awardSolutionBadge(badgeName as SolutionBadges));
+    } else if (checkBadgeType(aotBadgeKeys)) {
+      badges = Object.assign(badges, awardAdventBadges(badgeName as AotBadges));
+    }
+  });
+  return Object.values(badges)
+    .filter((x) => aotBadgeKeys.includes(x.slug as AotBadges))
+    .map((x) => ({ slug: x.slug as AotBadges, name: x.name }));
 }
