@@ -34,6 +34,7 @@ import { isAdminOrModerator } from '~/utils/auth-guards';
 import { DefaultAvatar } from '~/utils/default-avatar';
 import { ReportDialog } from '~/components/report-dialog';
 import type { ChallengeRouteData } from '../../getChallengeRouteData';
+import type { SolutionRouteData } from '../../solutions/[solutionId]/getSolutionIdRouteData';
 
 interface SingleCommentProps {
   comment: PaginatedComments['comments'][number];
@@ -193,7 +194,7 @@ function SingleComment({
   deleteComment,
   updateComment,
 }: SingleCommentProps) {
-  const { slug } = useParams();
+  const { year, day } = useParams();
   const searchParams = useSearchParams();
   const replyId = searchParams.get('replyId');
   const [isEditing, setIsEditing] = useState(false);
@@ -204,9 +205,9 @@ function SingleComment({
     ? Number(replyId) === comment.id
     : preselectedCommentMetadata?.selectedComment?.id === comment.id;
 
-  async function copyPathNotifyUser(isReply: boolean, slug: string) {
+  async function copyPathNotifyUser(isReply: boolean) {
     try {
-      await copyCommentUrlToClipboard(isReply, slug);
+      await copyCommentUrlToClipboard(isReply);
       toast({
         title: 'Success!',
         variant: 'success',
@@ -222,13 +223,13 @@ function SingleComment({
     }
   }
 
-  async function copyCommentUrlToClipboard(isReply: boolean, slug: string) {
+  async function copyCommentUrlToClipboard(isReply: boolean) {
     const commentId = isReply ? comment.parentId : comment.id;
     const paramsObj = { replyId: String(comment.id) };
     const searchParams = new URLSearchParams(paramsObj);
 
     const { rootType, rootSolutionId } = comment;
-    const baseURL = `${window.location.origin}/challenge/${slug}`;
+    const baseURL = `${window.location.origin}/events/${year}/${day}`;
     const hasGetParams = isReply ? `?${searchParams.toString()}` : '';
 
     const shareUrl =
@@ -344,10 +345,10 @@ function SingleComment({
               onVote={(didUpvote: boolean) => {
                 comment.vote = didUpvote
                   ? [
-                    {
-                      userId: session?.data?.user?.id ?? '',
-                    },
-                  ]
+                      {
+                        userId: session?.data?.user?.id ?? '',
+                      },
+                    ]
                   : [];
                 comment._count.vote += didUpvote ? 1 : -1;
               }}
@@ -359,7 +360,7 @@ function SingleComment({
                   size="xs"
                   className="gap-2"
                   onClick={() => {
-                    copyPathNotifyUser(Boolean(isReply), slug as string);
+                    copyPathNotifyUser(Boolean(isReply));
                   }}
                 >
                   <Share className="h-3 w-3" />

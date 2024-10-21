@@ -3,17 +3,19 @@ import { getChallengeRouteData } from '../../getChallengeRouteData';
 import { getPreselectedCommentMetadata } from '../../_components/comments/getCommentRouteData';
 import { Description } from '../../_components/description';
 import { Comments } from '../../_components/comments';
+import { getAotSlug } from '~/utils/getAotSlug';
 
 interface Props {
   params: {
-    slug: string;
+    year: string;
+    day: string;
     commentId: string;
   };
 }
 
-export default async function CommentPage({ params: { slug, commentId } }: Props) {
+export default async function CommentPage({ params: { year, day, commentId } }: Props) {
   const session = await auth();
-  const { challenge } = await getChallengeRouteData(slug, session);
+  const { challenge } = await getChallengeRouteData(getAotSlug({ year, day }), session);
   const preselectedCommentMetadata = await getPreselectedCommentMetadata(
     challenge.id,
     Number(commentId),

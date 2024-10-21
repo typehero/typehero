@@ -3,10 +3,10 @@
 import { prisma } from '@repo/db';
 import { auth } from '~/server/auth';
 import { isAdminOrModerator, isAuthor } from '~/utils/auth-guards';
-import type { ChallengeRouteData } from '../../[slug]/getChallengeRouteData';
-import type { SolutionRouteData } from '../../[slug]/solutions/[solutionId]/getSolutionIdRouteData';
 import type { PaginatedComments } from './getCommentRouteData';
 import { getMentionsFromComment } from './getMentionsFromComment';
+import type { ChallengeRouteData } from '../../getChallengeRouteData';
+import type { SolutionRouteData } from '../../solutions/[solutionId]/getSolutionIdRouteData';
 
 /**
  * @param comment a Challenge or Solution-based comment.
