@@ -160,13 +160,13 @@ function SolutionRow({
       <h3 className="truncate font-bold">{solution.title}</h3>
       <div className="flex items-center gap-2">
         <UserBadge
-          hideLinks={false}
           user={{
             name: solution.user?.name ?? '',
             image: solution.user?.image ?? '',
             bio: solution.user?.bio ?? '',
             roles: solution.user?.roles ?? [],
           }}
+          hideLinks
         />
         <div className="text-muted-foreground flex flex-1 items-center gap-2">
           <Calendar className=" h-4 w-4" />

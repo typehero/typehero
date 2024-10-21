@@ -50,7 +50,7 @@ export function UserBadge(props: UserBadgeProps) {
   const gradient = getGradient(props.user.roles);
   const shouldShowHoverCard = props.user.bio !== '' || query.data.titles.length > 0;
 
-  if (!props.hideLinks) {
+  if (props.hideLinks) {
     return (
       <HoverCardWrapper
         enabled={shouldShowHoverCard}
