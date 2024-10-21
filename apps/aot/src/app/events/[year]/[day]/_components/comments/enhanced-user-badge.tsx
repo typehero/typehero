@@ -25,6 +25,7 @@ interface UserBadgeProps {
     bio: string;
     image: string;
   };
+  hideLinks?: boolean;
 }
 
 export function UserBadge(props: UserBadgeProps) {
@@ -49,6 +50,64 @@ export function UserBadge(props: UserBadgeProps) {
   const gradient = getGradient(props.user.roles);
   const shouldShowHoverCard = props.user.bio !== '' || query.data.titles.length > 0;
 
+  if (!props.hideLinks) {
+    return (
+      <HoverCardWrapper
+        enabled={shouldShowHoverCard}
+        usernameComponent={
+          <Button
+            className="-ml-2 font-bold "
+            asChild
+            variant="ghost"
+            size="xs"
+            onMouseOver={onMouseOver}
+          >
+            <span
+              className={cn('bg-gradient-to-r bg-clip-text font-bold text-transparent', gradient)}
+            >
+              @{props.user.name}
+            </span>
+          </Button>
+        }
+        onHoverComponent={
+          //When a user does not have a bio & they have no titles, then a compact version is shown
+          <div className="flex flex-row space-x-2">
+            <div className="flex min-w-20 flex-col items-center justify-center space-y-2">
+              <div className={cn('w-min rounded-full bg-gradient-to-r p-0.5', gradient)}>
+                <Avatar className="h-14 w-14">
+                  <AvatarImage src={query.data.image ?? ''} />
+                  <AvatarFallback>
+                    <DefaultAvatar />
+                  </AvatarFallback>
+                </Avatar>
+              </div>
+
+              {query.isRefetching ? (
+                <Skeleton className="h-full w-full" />
+              ) : query.data.badges.length > 0 ? (
+                <Badges data={query.data.badges} />
+              ) : null}
+            </div>
+            <div className="flex w-max max-w-[calc(39ch)] flex-col space-y-2 ">
+              <h1
+                className={cn(
+                  'bg-gradient-to-r bg-clip-text font-extrabold text-transparent',
+                  gradient,
+                )}
+              >
+                @{props.user.name}
+              </h1>
+
+              <Titles data={query.data.titles} />
+              <p className="line-clamp-2 text-sm font-light text-zinc-700 dark:text-zinc-300">
+                {query.data.bio === '' ? 'This user has no bio' : query.data.bio}
+              </p>
+            </div>
+          </div>
+        }
+      />
+    );
+  }
   return (
     <HoverCardWrapper
       enabled={shouldShowHoverCard}
