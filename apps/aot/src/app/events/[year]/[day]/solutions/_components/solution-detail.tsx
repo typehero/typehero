@@ -11,10 +11,7 @@ import { toast } from '@repo/ui/components/use-toast';
 import { Calendar, Flag, Pin, Share, Trash, ArrowLeft, Pencil } from '@repo/ui/icons';
 import clsx from 'clsx';
 import Link from 'next/link';
-import type { ChallengeSolution } from '~/app/challenge/[slug]/solutions/[solutionId]/page';
-import { ReportDialog } from '~/components/ReportDialog';
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
-import { Vote } from '../../../_components/vote';
 import { pinOrUnpinSolution } from './_actions';
 import { isAdminOrModerator, isAuthor } from '~/utils/auth-guards';
 import { SolutionDeleteDialog } from './delete';
@@ -22,9 +19,12 @@ import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import { EditSolution } from './edit-solution';
 import { useGetQueryString } from './useGetQueryString';
-import { UserBadge } from '~/app/challenge/_components/comments/enhanced-user-badge';
 import { useQueryClient } from '@tanstack/react-query';
-import { DefaultAvatar } from '~/components/default-avatar';
+import type { ChallengeSolution } from '../[solutionId]/page';
+import { DefaultAvatar } from '~/utils/default-avatar';
+import { ReportDialog } from '~/components/report-dialog';
+import { UserBadge } from '../../_components/comments/enhanced-user-badge';
+import { Vote } from '../../_components/vote';
 
 interface Props {
   solution: ChallengeSolution;

@@ -9,6 +9,7 @@ import { useRef, useState } from 'react';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { Button } from '@repo/ui/components/button';
 import type { PaginatedComments } from './comments/getCommentRouteData';
+import { incrementOrDecrementUpvote } from '../increment.action';
 
 interface ChallengeCommentVoteProps {
   type: 'COMMENT';
@@ -29,39 +30,29 @@ interface VoteProps {
   voteCount: number;
   initialHasVoted?: boolean;
   rootId: number;
-  // user id of the content thats being liked
-  toUserId: string;
-  challengeSlug: string;
   rootType: VoteType;
   disabled?: boolean;
   onVote?: (didUpvote: boolean) => void;
-  comment?: PaginatedComments['comments'][number];
 }
 
 export function Vote({
-  challengeSlug,
   voteCount,
   initialHasVoted,
   rootId,
   rootType,
   disabled,
   onVote,
-  toUserId,
-  comment,
 }: VoteProps) {
   const [votes, setVotes] = useState(voteCount);
   const [hasVoted, setHasVoted] = useState(initialHasVoted);
   const session = useSession();
   const debouncedIncrement = useRef(
     debounce(async (shouldIncrement: boolean) => {
-      // await incrementOrDecrementUpvote({
-      //   comment,
-      //   rootId,
-      //   rootType,
-      //   shouldIncrement,
-      //   toUserId,
-      //   challengeSlug,
-      // });
+      await incrementOrDecrementUpvote({
+        rootId,
+        rootType,
+        shouldIncrement,
+      });
     }, 500),
   ).current;
 

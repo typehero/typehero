@@ -8,7 +8,7 @@ import {
   createCompletedSubmissionCacheKey,
   createInProgressSubmissionCacheKey,
 } from './cache-keys';
-import { createCacheKeyForSolutions } from '../../(solutions)/_components/_actions';
+import { createCacheKeyForSolutions } from '../../solutions/_components/_actions';
 
 interface Args {
   challenge: ChallengeRouteData['challenge'];
@@ -30,6 +30,7 @@ export async function saveSubmission({ challenge, code, isSuccessful }: Args) {
       isSuccessful,
     },
   });
+  // @TODO: we should be able to just invalidate by the challenge slug
   revalidateTag(createChallengeSubmissionCacheKey(challenge.slug));
   revalidateTag(createCacheKeyForSolutions(challenge.slug));
   revalidateTag(createInProgressSubmissionCacheKey(userId));

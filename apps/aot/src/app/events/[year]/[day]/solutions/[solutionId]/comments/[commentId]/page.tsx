@@ -1,22 +1,24 @@
 import { auth } from '~/server/auth';
-import { SolutionDetails } from '~/app/challenge/[slug]/solutions/_components/solution-detail';
-import { Comments } from '~/app/challenge/_components/comments';
-import { getPreselectedSolutionCommentMetadata } from '~/app/challenge/_components/comments/getCommentRouteData';
 import { getSolutionIdRouteData } from '../../getSolutionIdRouteData';
+import { getPreselectedSolutionCommentMetadata } from '../../../../_components/comments/getCommentRouteData';
+import { SolutionDetails } from '../../../_components/solution-detail';
+import { Comments } from '../../../../_components/comments';
+import { getAotSlug } from '~/utils/getAotSlug';
 
 interface Props {
   params: {
-    slug: string;
+    year: string;
+    day: string;
     commentId: string;
     solutionId: string;
   };
 }
 
 export default async function SolutionPageComments({
-  params: { solutionId, commentId, slug },
+  params: { solutionId, commentId, year, day },
 }: Props) {
   const session = await auth();
-  const solution = await getSolutionIdRouteData(slug, solutionId, session);
+  const solution = await getSolutionIdRouteData(getAotSlug({ year, day }), solutionId, session);
   const preselectedCommentMetadata = await getPreselectedSolutionCommentMetadata(
     Number(solutionId),
     Number(commentId),

@@ -5,10 +5,12 @@ import { cache } from 'react';
 import { Submissions } from './_components';
 import { createChallengeSubmissionCacheKey } from './cache-keys';
 import { withUnstableCache } from '~/utils/withUnstableCache';
+import { getAotSlug } from '~/utils/getAotSlug';
 
 interface Props {
   params: {
-    slug: string;
+    year: string;
+    day: string;
   };
 }
 
@@ -17,8 +19,10 @@ export const metadata = {
   description: 'View your submissions to this challenge on TypeHero.',
 };
 
-export default async function SubmissionPage({ params: { slug } }: Props) {
+export default async function SubmissionPage({ params: { year, day } }: Props) {
   const session = await auth();
+
+  const slug = getAotSlug({ year, day });
 
   const submissions = await withUnstableCache({
     fn: getChallengeSubmissions,

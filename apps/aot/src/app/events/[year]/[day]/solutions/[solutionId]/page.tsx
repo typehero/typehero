@@ -1,21 +1,23 @@
 import { prisma } from '@repo/db';
 import { SolutionDetails } from '../_components/solution-detail';
 import { auth } from '~/server/auth';
-import { Comments } from '~/app/challenge/_components/comments';
 import { getSolutionIdRouteData } from './getSolutionIdRouteData';
+import { Comments } from '../../_components/comments';
+import { getAotSlug } from '~/utils/getAotSlug';
 
 interface Props {
   params: {
-    slug: string;
+    year: string;
+    day: string;
     solutionId: string;
   };
 }
 
 export type ChallengeSolution = NonNullable<Awaited<ReturnType<typeof getSolutionIdRouteData>>>;
-export default async function SolutionPage({ params: { solutionId, slug } }: Props) {
+export default async function SolutionPage({ params: { solutionId, year, day } }: Props) {
   const session = await auth();
 
-  const solution = await getSolutionIdRouteData(slug, solutionId, session);
+  const solution = await getSolutionIdRouteData(getAotSlug({ year, day }), solutionId, session);
 
   return (
     <div className="relative h-full">
