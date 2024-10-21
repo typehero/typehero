@@ -232,7 +232,7 @@ export async function fillInMissingBadges(userId: string): Promise<AllBadgeObjs>
   const missingBadges = Object.values(badges).filter(
     (x) => !userBadges.map((x) => x.badgeName).includes(x.slug),
   );
-  console.log(missingBadges)
+  console.log(missingBadges);
   for (const badge of missingBadges) {
     await prisma.userBadge.create({
       data: {
@@ -245,9 +245,7 @@ export async function fillInMissingBadges(userId: string): Promise<AllBadgeObjs>
   return badges;
 }
 
-const isBadgeWith = (
-  badge: string,
-) => (keys: readonly string[]) => keys.includes(badge);
+const isBadgeWith = (badge: string) => (keys: readonly string[]) => keys.includes(badge);
 
 export interface BadgeInfo {
   slug: AotBadges;
