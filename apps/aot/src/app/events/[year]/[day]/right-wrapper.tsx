@@ -1,12 +1,13 @@
 'use client';
 import { useSession } from '@repo/auth/react';
 import { CodePanel } from '@repo/monaco';
-import { useRouter, useSelectedLayoutSegments } from 'next/navigation';
+import { useParams, useRouter, useSelectedLayoutSegments } from 'next/navigation';
 import { ResetEditorButton } from './_components/reset-editor-button';
 import { EditorShortcutsButton } from './_components/editor-shortcuts/editor-shortcuts-button';
 import { SettingsButton } from './_components/settings/settings-button';
 import { FullscreenButton } from './fullscreen-button';
 import { SubmissionOverview } from './submissions/[[...catchAll]]/_components/overview';
+import { saveSubmission } from './submissions/[[...catchAll]]/save-submission.action';
 
 interface Props {
   challenge: any;
@@ -14,6 +15,7 @@ interface Props {
 
 export function RightWrapper({ challenge }: Props) {
   const router = useRouter();
+  const { year, day } = useParams();
   const segments = useSelectedLayoutSegments();
   const { data: session } = useSession();
 
@@ -31,20 +33,20 @@ export function RightWrapper({ challenge }: Props) {
   ) {
     const query = slug ? `&slug=${slug}` : '';
     isSuccessful &&
-      router.push(`/challenge/${challenge.slug}/submissions/${submissionId}?success=true${query}`);
+      router.push(`/events/${year}/${day}/submissions/${submissionId}?success=true${query}`);
   }
 
   return (
     <CodePanel
       challenge={challenge}
       saveSubmission={async (code, isSuccessful) => {
-        // const submission = await saveSubmission({
-        //   challenge,
-        //   code,
-        //   isSuccessful,
-        // });
-        //
-        // return handleSuccessfulSubmission(submission.isSuccessful, submission.id, '');
+        const submission = await saveSubmission({
+          challenge,
+          code,
+          isSuccessful,
+        });
+
+        return handleSuccessfulSubmission(submission.isSuccessful, submission.id, '');
       }}
       submissionDisabled={!session?.user}
       settingsElement={<SettingsElements />}
