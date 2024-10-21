@@ -285,6 +285,7 @@ function SingleComment({
                 bio: comment.user?.bio ?? '',
                 roles: comment.user?.roles ?? [],
               }}
+              hideLinks
             />
           </div>
 

@@ -88,6 +88,7 @@ export function Description({ challenge }: Props) {
             bio: challenge.user?.bio ?? '',
             roles: challenge.user?.roles ?? [],
           }}
+          hideLinks
         />
         <div className="text-muted-foreground flex items-center gap-2">
           <Calendar className=" h-4 w-4" />

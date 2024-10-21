@@ -102,6 +102,7 @@ export function SolutionDetails({ solution }: Props) {
                   bio: solution.user?.bio ?? '',
                   roles: solution.user?.roles ?? [],
                 }}
+                hideLinks
               />
               <div className="text-muted-foreground flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
