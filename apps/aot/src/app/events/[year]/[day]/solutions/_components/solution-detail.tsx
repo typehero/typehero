@@ -25,13 +25,15 @@ import { DefaultAvatar } from '~/utils/default-avatar';
 import { ReportDialog } from '~/components/report-dialog';
 import { UserBadge } from '../../_components/comments/enhanced-user-badge';
 import { Vote } from '../../_components/vote';
+import { getAotSlug } from '~/utils/getAotSlug';
 
 interface Props {
   solution: ChallengeSolution;
 }
 
 export function SolutionDetails({ solution }: Props) {
-  const { slug } = useParams();
+  const { year, day } = useParams<Record<string, string>>();
+  const slug = getAotSlug({ year: year!, day: day! });
   const { data: session } = useSession();
   const showPin = isAdminOrModerator(session);
   const [isEditing, setIsEditing] = useState(false);
@@ -39,7 +41,7 @@ export function SolutionDetails({ solution }: Props) {
   const queryClient = useQueryClient();
 
   const handlePinClick = async () => {
-    await pinOrUnpinSolution(solution.id, !solution.isPinned, slug as string);
+    await pinOrUnpinSolution(solution.id, !solution.isPinned, slug);
     queryClient.invalidateQueries({
       queryKey: ['challenge-solutions', slug],
     });
@@ -60,7 +62,7 @@ export function SolutionDetails({ solution }: Props) {
         <div className="custom-scrollable-element flex-1 overflow-y-auto px-4 pb-16 pt-3">
           <div className="mb-5 flex flex-col gap-3">
             <div className="flex items-center gap-3">
-              <Link href={`/challenge/${slug}/solutions?${queryString}`} className="h-7 w-7">
+              <Link href={`/events/${year}/${day}/solutions?${queryString}`} className="h-7 w-7">
                 <div className="rounded-full p-1 hover:bg-gray-200 hover:bg-opacity-10">
                   <ArrowLeft className="stroke-gray-500" size={20} />
                 </div>
@@ -108,8 +110,6 @@ export function SolutionDetails({ solution }: Props) {
             </div>
             <div className="flex items-center gap-3">
               <Vote
-                challengeSlug={solution.challenge?.slug ?? ''}
-                toUserId={solution.user?.id!}
                 voteCount={solution._count.vote}
                 initialHasVoted={solution.vote.length > 0}
                 disabled={!session?.user?.id || solution.userId === session?.user?.id}
