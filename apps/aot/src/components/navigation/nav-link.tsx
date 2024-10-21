@@ -9,9 +9,12 @@ export function NavLink({ href, title }: { href: string; title: string }) {
   return (
     <Link href={href}>
       <div
-        className={clsx('hover:text-foreground hover:bg-white/20 px-4 py-1 rounded-full text-foreground/80 transition-colors', {
-          '!text-foreground': pathname === href,
-        })}
+        className={clsx(
+          'hover:text-foreground text-foreground/80 rounded-full px-4 py-1 transition-colors hover:bg-white/20',
+          {
+            '!text-foreground': pathname === href,
+          },
+        )}
       >
         {title}
       </div>
