@@ -15,47 +15,47 @@ import Link from 'next/link';
 
 export function Navigation() {
   return (
-    <header className="z-0 w-full fixed">
-      <nav className="flex h-14 items-center justify-between px-4 xl:grid grid-cols-3">
-          <div className="relative flex gap-3">
-            <Link className="flex items-center space-x-2 duration-300" href="/">
-              <svg
-                className="h-8 w-8 rounded-md bg-[#3178C6] p-[2px]"
-                viewBox="0 0 38 38"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect width="38" height="38" rx="4.5" fill="#3178C6" />
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M15.6947 20.9344H20V18H8V20.9344H12.2842V34H15.6947V20.9344Z"
-                  fill="white"
-                />
-                <path
-                  d="M22 34V18H25.4511V24.6309H30.5405V18H34V34H30.5405V27.3458H25.4511V34H22Z"
-                  fill="white"
-                />
-              </svg>
+    <header className="fixed z-0 w-full">
+      <nav className="flex h-14 grid-cols-3 items-center justify-between px-4 xl:grid">
+        <div className="relative flex gap-3">
+          <Link className="flex items-center space-x-2 duration-300" href="/">
+            <svg
+              className="h-8 w-8 rounded-md bg-[#3178C6] p-[2px]"
+              viewBox="0 0 38 38"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect width="38" height="38" rx="4.5" fill="#3178C6" />
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M15.6947 20.9344H20V18H8V20.9344H12.2842V34H15.6947V20.9344Z"
+                fill="white"
+              />
+              <path
+                d="M22 34V18H25.4511V24.6309H30.5405V18H34V34H30.5405V27.3458H25.4511V34H22Z"
+                fill="white"
+              />
+            </svg>
 
-              <span className="font-bold leading-3">
-                type
-                <br />
-                hero
-              </span>
-            </Link>
+            <span className="font-bold leading-3">
+              type
+              <br />
+              hero
+            </span>
+          </Link>
+        </div>
+        <div className="mx-auto mt-32 hidden w-fit items-center rounded-full border border-white/20 bg-white/10 p-2 backdrop-blur md:mt-0 md:flex">
+          <NavLink title="About" href="/about" />
+          <NavLink title="Leaderboard" href="/leaderboard" />
+          <NavLink title="Events" href="/events" />
+        </div>
+        <div className="flex xl:ml-auto">
+          <div className="flex items-center justify-end gap-2">
+            <ThemeButton />
+            <LoginButton />
           </div>
-          <div className="items-center hidden w-fit mx-auto mt-32 md:mt-0 md:flex rounded-full bg-white/10 border-white/20 backdrop-blur border p-2">
-            <NavLink title="About" href="/about" />
-            <NavLink title="Leaderboard" href="/leaderboard" />
-            <NavLink title="Events" href="/events" />
-          </div>
-          <div className="flex xl:ml-auto">
-            <div className="flex items-center justify-end gap-2">
-              <ThemeButton />
-              <LoginButton />
-            </div>
-          </div>
+        </div>
       </nav>
     </header>
   );
