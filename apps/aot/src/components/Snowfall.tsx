@@ -16,10 +16,10 @@ interface ParticleAttributes {
 
 export default function Snowfall() {
   // Initial Setup
-  const canvasRef = useRef();
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
     if (canvasRef.current) {
-      const canvas = canvasRef.current as HTMLCanvasElement;
+      const canvas = canvasRef.current;
       const c = canvas.getContext('2d');
 
       canvas.width = innerWidth;
