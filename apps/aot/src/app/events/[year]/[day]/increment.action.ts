@@ -29,6 +29,18 @@ export async function incrementOrDecrementUpvote({
     },
   });
 
+  if (session?.user && !voteExists && shouldIncrement) {
+    await prisma.vote.create({
+      data: {
+        rootType,
+        challengeId: rootType === 'CHALLENGE' ? rootId : undefined,
+        commentId: rootType === 'COMMENT' ? rootId : undefined,
+        sharedSolutionId: rootType === 'SHAREDSOLUTION' ? rootId : undefined,
+        userId: session.user.id,
+      },
+    });
+  }
+
   if (session?.user && voteExists && !shouldIncrement) {
     await prisma.vote.delete({
       where: {
