@@ -1,4 +1,4 @@
-import { buildMetaForDefault } from '~/app/metadata';
+import { buildMetaForDefault } from '~/utils/metadata';
 import { getChallengeRouteData } from '../getChallengeRouteData';
 import { Solutions } from './_components';
 

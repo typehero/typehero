@@ -2,9 +2,9 @@ import { auth } from '~/server/auth';
 import { prisma } from '@repo/db';
 import { notFound } from 'next/navigation';
 import { cache } from 'react';
-import { withUnstableCache } from '~/utils/withUnstableCache';
 import { Submissions } from './_components';
 import { createChallengeSubmissionCacheKey } from './cache-keys';
+import { withUnstableCache } from '~/utils/withUnstableCache';
 
 interface Props {
   params: {
