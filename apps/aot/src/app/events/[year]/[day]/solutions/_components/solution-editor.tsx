@@ -13,6 +13,7 @@ import { postSolution } from './_actions';
 import { useQueryClient } from '@tanstack/react-query';
 import { RichMarkdownEditor } from '@repo/ui/components/rich-markdown-editor';
 import { useUploadThing } from '~/utils/useUploadthing';
+import { getAotSlug } from '~/utils/getAotSlug';
 
 const getDefaultMarkdown = (solution: string) => `
 ## Thoughts
@@ -46,7 +47,8 @@ interface Props {
 }
 
 export function SolutionEditor({ dismiss, challengeId, code }: Props) {
-  const { slug } = useParams();
+  const { year, day } = useParams();
+  const slug = getAotSlug({ year: year as string, day: day as string });
   const queryClient = useQueryClient();
   const session = useSession();
   const form = useForm<FormSchema>({
@@ -63,7 +65,7 @@ export function SolutionEditor({ dismiss, challengeId, code }: Props) {
       await postSolution({
         challengeId,
         description: data.content ?? '',
-        slug: slug as string,
+        slug,
         title: data.title ?? `${session.data?.user?.name}'s Solution`,
         userId: session.data?.user?.id!,
       });
