@@ -160,6 +160,7 @@ function SolutionRow({
       <h3 className="truncate font-bold">{solution.title}</h3>
       <div className="flex items-center gap-2">
         <UserBadge
+          hideLinks={false}
           user={{
             name: solution.user?.name ?? '',
             image: solution.user?.image ?? '',
