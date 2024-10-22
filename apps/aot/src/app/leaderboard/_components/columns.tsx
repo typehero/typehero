@@ -49,7 +49,7 @@ export const dailyLeaderboardColumns = [
   dailyLeaderboardColumnHelper.accessor('user', {
     header: 'User',
     cell: (info) => (
-      <div className="flex items-center justify-start gap-4">
+      <div className="flex flex-wrap items-center justify-start gap-2 sm:gap-4">
         <Avatar className="h-8 w-8 md:h-12 md:w-12">
           <AvatarImage alt="github profile picture" src={info.getValue().image ?? ''} />
           <AvatarFallback>

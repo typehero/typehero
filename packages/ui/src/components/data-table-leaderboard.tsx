@@ -28,14 +28,18 @@ export function DataTableLeaderboard<TData>({ columns, data }: DataTableProps<TD
       <TableHeader>
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
-            {headerGroup.headers.map((header, i) => {
+            {headerGroup.headers.map((header, colIndex) => {
               return (
-                <TableHead key={header.id} onClick={header.column.getToggleSortingHandler()}>
-                  <div className={`relative text-center ${i === 1 ? 'text-start' : ''}`}>
+                <TableHead
+                  key={header.id}
+                  onClick={header.column.getToggleSortingHandler()}
+                  className={`text-start ${colIndex === 2 ? 'text-end' : ''}`}
+                >
+                  <span>
                     {header.isPlaceholder
                       ? null
                       : flexRender(header.column.columnDef.header, header.getContext())}
-                  </div>
+                  </span>
                 </TableHead>
               );
             })}
@@ -44,14 +48,19 @@ export function DataTableLeaderboard<TData>({ columns, data }: DataTableProps<TD
       </TableHeader>
       <TableBody>
         {table.getRowModel().rows?.length ? (
-          table.getRowModel().rows.map((row, i) => (
+          table.getRowModel().rows.map((row, rowIndex) => (
             <TableRow
               key={row.id}
               data-state={row.getIsSelected() && 'selected'}
-              className={getRankColor(i) ?? 'odd:bg-[#101010] even:bg-[#1A1A1A]'}
+              className={getRankColor(rowIndex) ?? 'odd:bg-[#101010] even:bg-[#1A1A1A]'}
             >
-              {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id} className="text-center">
+              {row.getVisibleCells().map((cell, colIndex) => (
+                <TableCell
+                  key={cell.id}
+                  className={`text-start ${colIndex === 1 ? 'w-48 sm:w-96' : ''} ${
+                    colIndex === 2 ? 'text-end' : ''
+                  }`}
+                >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}
@@ -73,10 +82,7 @@ const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableE
   ({ className, ...props }, ref) => (
     <div className="w-full overflow-auto font-mono">
       <table
-        className={cn(
-          'w-full caption-bottom border-separate border-spacing-y-2 text-sm',
-          className,
-        )}
+        className={cn('w-full border-separate border-spacing-y-2 text-sm', className)}
         ref={ref}
         {...props}
       />
@@ -88,17 +94,13 @@ Table.displayName = 'Table';
 const TableHeader = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
->(({ className, ...props }, ref) => (
-  <thead className={cn('[&_tr]:border-b', className)} ref={ref} {...props} />
-));
+>(({ className, ...props }, ref) => <thead className={cn(className)} ref={ref} {...props} />);
 TableHeader.displayName = 'TableHeader';
 
 const TableBody = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
->(({ className, ...props }, ref) => (
-  <tbody className={cn('[&_tr:last-child]:border-0', className)} ref={ref} {...props} />
-));
+>(({ className, ...props }, ref) => <tbody className={cn(className)} ref={ref} {...props} />);
 TableBody.displayName = 'TableBody';
 
 const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTMLTableRowElement>>(
