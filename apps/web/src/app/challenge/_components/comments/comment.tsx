@@ -344,8 +344,8 @@ function SingleComment({
                 )}
               </div>
 
-              <div className="flex gap-1">
-                <div className="opacity-0 transition-opacity delay-200 ease-in-out group-hover:opacity-100">
+              <div className="flex gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+                <div>
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Button
@@ -366,7 +366,7 @@ function SingleComment({
                   </Tooltip>
                 </div>
 
-                <div className="opacity-0 transition-opacity delay-150 ease-in-out group-hover:opacity-100">
+                <div>
                   {isAuthor ? (
                     <Tooltip>
                       <TooltipTrigger asChild>
@@ -386,7 +386,7 @@ function SingleComment({
                   ) : null}
                 </div>
 
-                <div className="opacity-0 transition-opacity delay-100 ease-in-out group-hover:opacity-100">
+                <div>
                   {isAuthor || isAdminAndModerator ? (
                     <Tooltip>
                       <CommentDeleteDialog asChild comment={comment} deleteComment={deleteComment}>
