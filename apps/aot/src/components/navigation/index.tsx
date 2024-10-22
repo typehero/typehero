@@ -45,7 +45,7 @@ export function Navigation() {
             </span>
           </Link>
         </div>
-        <div className="mx-auto mt-32 hidden w-fit items-center rounded-full border border-white/20 bg-white/10 p-2 backdrop-blur md:mt-0 md:flex">
+        <div className="mx-auto mt-32 hidden w-fit items-center rounded-full md:mt-0 md:flex">
           <NavLink title="About" href="/about" />
           <NavLink title="Leaderboard" href="/leaderboard" />
           <NavLink title="Events" href="/events" />

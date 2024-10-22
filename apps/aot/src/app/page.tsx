@@ -6,23 +6,46 @@ export default function Home() {
     <div className="grid min-h-screen place-content-center overflow-hidden bg-gradient-to-b from-emerald-400/40 to-transparent to-50%">
       <Snowfall />
       <div className="container relative flex flex-col font-black italic">
-        <div className="h-full w-full bg-red-500">
-          <div className="animate-rotate absolute right-0 top-0 -z-10 flex w-full origin-top-right justify-end ">
-            <div className="animate-rotate-reverse h-24 w-72 rounded-xl border border-white/30 bg-white/10 p-4 font-mono text-sm font-normal not-italic backdrop-blur">
-              some typescript code here
-            </div>
-          </div>
-          <div className="animate-rotate absolute bottom-0 left-0 -z-10 flex w-full origin-bottom-left justify-start ">
-            <div className="animate-rotate-reverse h-24 w-72 rounded-xl border border-white/30 bg-white/10 p-4 font-mono text-sm font-normal not-italic backdrop-blur">
-              some typescript code here
-            </div>
+        <div className="animate-rotate absolute -left-12 -top-24 -z-10 origin-[45%] md:-left-32 md:-top-24">
+          <div
+            className="animate-rotate-reverse h-16 w-56 rounded-xl border border-white/30 bg-white/10 p-3 font-mono text-[0.69rem] font-normal not-italic opacity-70 backdrop-blur md:h-24 md:w-72 md:rounded-3xl md:p-6 md:text-sm"
+            style={{
+              rotate: '-12deg',
+            }}
+          >
+            <span className="text-blue-400">type</span> <span className="text-teal-400">arr1</span>{' '}
+            = [<span className="text-orange-400">'a'</span>,{' '}
+            <span className="text-orange-400">'b'</span>,{' '}
+            <span className="text-orange-400">'c'</span>]
+            <div className="h-1.5" />
+            <span className="text-blue-400">type</span> <span className="text-teal-400">arr2</span>{' '}
+            = [<span className="text-green-400">3</span>, <span className="text-green-400">2</span>,{' '}
+            <span className="text-green-400">1</span>]
           </div>
         </div>
-        <div className="w-56 text-4xl leading-5 sm:w-[40rem] sm:text-8xl sm:leading-10">Advent</div>
-        <div className="z-10 mx-auto w-56 text-center text-2xl leading-5 text-rose-400 sm:w-[40rem] sm:text-6xl sm:leading-10">
+        <div className="animate-rotate-reverse absolute -bottom-28 -right-24 z-10 origin-[55%] md:-bottom-28 md:-right-32">
+          <div
+            className="animate-rotate h-16 w-56 rounded-xl border border-white/30 bg-white/10 p-3 font-mono text-[0.69rem] font-normal not-italic backdrop-blur md:h-24 md:w-72 md:rounded-3xl md:p-6 md:text-sm"
+            style={{
+              rotate: '12deg',
+            }}
+          >
+            <span className="text-blue-400">type</span> <span className="text-teal-400">head1</span>{' '}
+            = <span className="text-teal-400">First</span>&lt;
+            <span className="text-teal-400">arr1</span>&gt;
+            <div className="h-1.5" />
+            <span className="text-blue-400">type</span> <span className="text-teal-400">head2</span>{' '}
+            = <span className="text-teal-400">First</span>&lt;
+            <span className="text-teal-400">arr2</span>&gt;
+          </div>
+        </div>
+        <div className="w-56 text-4xl leading-5 drop-shadow-2xl sm:w-[40rem] sm:text-8xl sm:leading-10">
+          Advent
+        </div>
+        <div className="z-10 mx-auto -mb-1 w-56 text-center text-2xl leading-5 text-rose-400 drop-shadow-2xl sm:w-[40rem] sm:text-6xl sm:leading-10 md:-mb-2.5">
           of
         </div>
-        <div className="ml-auto w-56 text-right text-4xl leading-5 sm:w-[40rem] sm:text-8xl sm:leading-10">
+        <div className="-mr-0.5 ml-auto w-56 text-right text-4xl leading-5 drop-shadow-2xl sm:w-[40rem] sm:text-8xl sm:leading-10">
           TypeScript
         </div>
       </div>
