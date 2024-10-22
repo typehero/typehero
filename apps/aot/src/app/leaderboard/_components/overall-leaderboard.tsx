@@ -1,7 +1,7 @@
 import { Prisma, prisma } from '@repo/db';
 import { ADVENT_CHALLENGE_IDS, LEADERBOARD_RANKING_LIMIT } from '../constants';
 import { DataTableLeaderboard } from '@repo/ui/components/data-table-leaderboard';
-import { columns, type OverallLeaderboardEntry } from './columns';
+import { overallLeaderboardColumns, type OverallLeaderboardEntry } from './columns';
 
 async function getOverallLeaderboard(currentAdventDay: number) {
   const challengeIdsSoFar = ADVENT_CHALLENGE_IDS.slice(0, currentAdventDay);
@@ -45,7 +45,7 @@ export default async function OverallLeaderboard({
   const top100Ranking = await getOverallLeaderboard(currentAdventDay);
   return (
     <div>
-      <DataTableLeaderboard data={top100Ranking} columns={columns} />
+      <DataTableLeaderboard data={top100Ranking} columns={overallLeaderboardColumns} />
     </div>
   );
 }
