@@ -1,6 +1,6 @@
 'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
+import { Avatar, AvatarFallback, AvatarImage, DefaultAvatar } from '@repo/ui/components/avatar';
 import Link from 'next/link';
 import { Badge } from '@repo/ui/components/badge';
 import { Shield, Sword, Wand2, type LucideIcon } from '@repo/ui/icons';
@@ -15,7 +15,6 @@ import { Button } from '@repo/ui/components/button';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@repo/ui/components/hover-card';
 import { getTitles, type TitleInfo } from './enhanced-user-badge.getTitles';
 import { Skeleton } from '@repo/ui/components/skeleton';
-import { DefaultAvatar } from '~/components/default-avatar';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 
 interface UserBadgeProps {

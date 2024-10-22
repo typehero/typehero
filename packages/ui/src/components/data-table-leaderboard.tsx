@@ -57,7 +57,7 @@ export function DataTableLeaderboard<TData>({ columns, data }: DataTableProps<TD
               {row.getVisibleCells().map((cell, colIndex) => (
                 <TableCell
                   key={cell.id}
-                  className={`text-start ${colIndex === 1 ? 'w-48 sm:w-96' : ''} ${
+                  className={`text-start ${colIndex === 0 ? 'w-10' : ''}  ${
                     colIndex === 2 ? 'text-end' : ''
                   }`}
                 >
@@ -82,7 +82,10 @@ const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableE
   ({ className, ...props }, ref) => (
     <div className="w-full overflow-auto font-mono">
       <table
-        className={cn('w-full border-separate border-spacing-y-2 text-sm', className)}
+        className={cn(
+          'w-full border-separate border-spacing-y-1 text-sm md:border-spacing-y-2',
+          className,
+        )}
         ref={ref}
         {...props}
       />

@@ -26,7 +26,7 @@ import { Vote } from '../vote';
 import { CommentInput } from './comment-input';
 import { CommentDeleteDialog } from './delete';
 import { type PaginatedComments, type PreselectedCommentMetadata } from './getCommentRouteData';
-import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
+import { Avatar, AvatarFallback, AvatarImage, DefaultAvatar } from '@repo/ui/components/avatar';
 import { Button } from '@repo/ui/components/button';
 import { CommentSkeleton } from './comment-skeleton';
 import { isAdminOrModerator } from '~/utils/auth-guards';
@@ -34,7 +34,6 @@ import { useCommentsReplies } from './comments.hooks';
 import { UserBadge } from './enhanced-user-badge';
 import type { ChallengeRouteData } from '../../[slug]/getChallengeRouteData';
 import type { SolutionRouteData } from '../../[slug]/solutions/[solutionId]/getSolutionIdRouteData';
-import { DefaultAvatar } from '~/components/default-avatar';
 
 interface SingleCommentProps {
   comment: PaginatedComments['comments'][number];
