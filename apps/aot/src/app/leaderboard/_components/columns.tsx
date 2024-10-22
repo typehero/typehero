@@ -10,6 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage, DefaultAvatar } from '@repo/ui/com
 export interface OverallLeaderboardEntry {
   totalPoints: number;
   name: string;
+  image: string | null;
 }
 
 const overallLeaderboardColumnHelper = createColumnHelper<OverallLeaderboardEntry>();
@@ -20,11 +21,23 @@ export const overallLeaderboardColumns = [
     header: '#',
     cell: (props) => props.row.index + 1,
   }),
-  overallLeaderboardColumnHelper.accessor('totalPoints', {
-    cell: (info) => Number(info.getValue()),
-  }),
   overallLeaderboardColumnHelper.accessor('name', {
-    cell: (info) => info.getValue(),
+    header: 'User',
+    cell: (info) => (
+      <div className="flex flex-wrap items-center justify-start gap-2 sm:gap-4">
+        <Avatar className="h-8 w-8 md:h-12 md:w-12">
+          <AvatarImage alt="github profile picture" src={info.row.original.image ?? ''} />
+          <AvatarFallback>
+            <DefaultAvatar />
+          </AvatarFallback>
+        </Avatar>
+        <span>@{info.getValue()}</span>
+      </div>
+    ),
+  }),
+  overallLeaderboardColumnHelper.accessor('totalPoints', {
+    header: 'Points',
+    cell: (info) => Number(info.getValue()),
   }),
 ];
 

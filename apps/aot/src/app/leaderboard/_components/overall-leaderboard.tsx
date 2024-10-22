@@ -9,6 +9,7 @@ async function getOverallLeaderboard(currentAdventDay: number) {
   const ranking = await prisma.$queryRaw<OverallLeaderboardEntry[]>`
   SELECT
     u.name,
+    u.image,
     SUM(r.points) AS totalPoints
   FROM
     User u
@@ -29,7 +30,7 @@ async function getOverallLeaderboard(currentAdventDay: number) {
         ) AS RankedSubmissions
       WHERE \`rank\` <= ${LEADERBOARD_RANKING_LIMIT}
     ) r ON u.id = r.userId
-  GROUP BY r.userId, u.name
+  GROUP BY r.userId, u.name, u.image
   ORDER BY totalPoints DESC
   LIMIT ${LEADERBOARD_RANKING_LIMIT};
 `;
@@ -44,7 +45,7 @@ export default async function OverallLeaderboard({
 }) {
   const top100Ranking = await getOverallLeaderboard(currentAdventDay);
   return (
-    <div>
+    <div className="p-4">
       <DataTableLeaderboard data={top100Ranking} columns={overallLeaderboardColumns} />
     </div>
   );
