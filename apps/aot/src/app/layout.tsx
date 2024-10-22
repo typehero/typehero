@@ -22,7 +22,7 @@ export default async function RootLayout({
 
   if (!enableAotPlatform) {
     return (
-      <html lang="en" className="bg-black text-white">
+      <html lang="en">
         <body className={inter.className}>
           <main>
             <ComingSoon />
@@ -32,7 +32,7 @@ export default async function RootLayout({
     );
   }
   return (
-    <html lang="en" className="bg-black text-white">
+    <html lang="en">
       <body className={inter.className}>
         <Providers>
           <Navigation />

@@ -45,7 +45,7 @@ export const dailyLeaderboardColumns = [
     cell: (props) => props.row.index + 1,
   }),
   dailyLeaderboardColumnHelper.accessor('createdAt', {
-    header: 'Submission date and time',
+    header: 'Time solved',
     cell: (info) => formatDate(info.getValue()),
   }),
   dailyLeaderboardColumnHelper.accessor('user.name', {

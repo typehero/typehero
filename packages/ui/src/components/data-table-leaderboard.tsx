@@ -1,7 +1,8 @@
 'use client';
 
 import { flexRender, getCoreRowModel, useReactTable, type ColumnDef } from '@tanstack/react-table';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './table';
+import { cn } from '../cn';
+import * as React from 'react';
 
 interface DataTableProps<TData> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -16,48 +17,124 @@ export function DataTableLeaderboard<TData>({ columns, data }: DataTableProps<TD
     getCoreRowModel: getCoreRowModel(),
   });
 
+  const getRankColor = (index: number) => {
+    if (index === 0) return 'bg-[#1a1810]'; // First row (gold)
+    if (index === 1) return 'bg-[#202021]'; // Second row (silver)
+    if (index === 2) return 'bg-[#191411]'; // Third row (bronze)
+  };
+
   return (
-    <div className="space-y-4">
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id} onClick={header.column.getToggleSortingHandler()}>
-                      <div className="relative">
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(header.column.columnDef.header, header.getContext())}
-                      </div>
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
+    <Table>
+      <TableHeader>
+        {table.getHeaderGroups().map((headerGroup) => (
+          <TableRow key={headerGroup.id}>
+            {headerGroup.headers.map((header) => {
+              return (
+                <TableHead key={header.id} onClick={header.column.getToggleSortingHandler()}>
+                  <div className="relative text-center">
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(header.column.columnDef.header, header.getContext())}
+                  </div>
+                </TableHead>
+              );
+            })}
+          </TableRow>
+        ))}
+      </TableHeader>
+      <TableBody>
+        {table.getRowModel().rows?.length ? (
+          table.getRowModel().rows.map((row, i) => (
+            <TableRow
+              key={row.id}
+              data-state={row.getIsSelected() && 'selected'}
+              className={getRankColor(i) ?? 'odd:bg-[#101010] even:bg-[#1A1A1A]'}
+            >
+              {row.getVisibleCells().map((cell) => (
+                <TableCell key={cell.id} className="text-center">
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
-    </div>
+              ))}
+            </TableRow>
+          ))
+        ) : (
+          <TableRow>
+            <TableCell colSpan={columns.length} className="h-24 text-center">
+              No results.
+            </TableCell>
+          </TableRow>
+        )}
+      </TableBody>
+    </Table>
   );
 }
+
+const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(
+  ({ className, ...props }, ref) => (
+    <div className="w-full overflow-auto font-mono">
+      <table
+        className={cn(
+          'w-full caption-bottom border-separate border-spacing-y-4 text-sm',
+          className,
+        )}
+        ref={ref}
+        {...props}
+      />
+    </div>
+  ),
+);
+Table.displayName = 'Table';
+
+const TableHeader = React.forwardRef<
+  HTMLTableSectionElement,
+  React.HTMLAttributes<HTMLTableSectionElement>
+>(({ className, ...props }, ref) => (
+  <thead className={cn('[&_tr]:border-b', className)} ref={ref} {...props} />
+));
+TableHeader.displayName = 'TableHeader';
+
+const TableBody = React.forwardRef<
+  HTMLTableSectionElement,
+  React.HTMLAttributes<HTMLTableSectionElement>
+>(({ className, ...props }, ref) => (
+  <tbody className={cn('[&_tr:last-child]:border-0', className)} ref={ref} {...props} />
+));
+TableBody.displayName = 'TableBody';
+
+const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTMLTableRowElement>>(
+  ({ className, ...props }, ref) => (
+    <tr className={cn('hover:bg-muted/50 transition-colors', className)} ref={ref} {...props} />
+  ),
+);
+TableRow.displayName = 'TableRow';
+
+const TableHead = React.forwardRef<
+  HTMLTableCellElement,
+  React.ThHTMLAttributes<HTMLTableCellElement>
+>(({ className, ...props }, ref) => (
+  <th
+    className={cn(
+      'text-muted-foreground h-12 border-b px-4 text-left align-middle font-medium',
+      className,
+    )}
+    ref={ref}
+    {...props}
+  />
+));
+TableHead.displayName = 'TableHead';
+
+const TableCell = React.forwardRef<
+  HTMLTableCellElement,
+  React.TdHTMLAttributes<HTMLTableCellElement>
+>(({ className, ...props }, ref) => (
+  <td className={cn('px-4 py-8 align-middle', className)} ref={ref} {...props} />
+));
+TableCell.displayName = 'TableCell';
+
+const TableCaption = React.forwardRef<
+  HTMLTableCaptionElement,
+  React.HTMLAttributes<HTMLTableCaptionElement>
+>(({ className, ...props }, ref) => (
+  <caption className={cn('text-muted-foreground mt-4 text-sm', className)} ref={ref} {...props} />
+));
+TableCaption.displayName = 'TableCaption';
