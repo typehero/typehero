@@ -20,24 +20,17 @@ export default async function RootLayout({
 }>) {
   const { enableAotPlatform } = await getAllFlags();
 
-  if (!enableAotPlatform) {
-    return (
-      <html lang="en" className="bg-black text-white">
-        <body className={inter.className}>
-          <main>
-            <ComingSoon />
-          </main>
-        </body>
-      </html>
-    );
-  }
   return (
     <html lang="en" className="bg-black text-white">
       <body className={inter.className}>
-        <Providers>
-          <Navigation />
-          <main>{children}</main>
-        </Providers>
+        {enableAotPlatform ? (
+          <Providers>
+            <Navigation />
+            <main>{children}</main>
+          </Providers>
+        ) : (
+          <ComingSoon />
+        )}
       </body>
     </html>
   );
