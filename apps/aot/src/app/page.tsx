@@ -5,6 +5,29 @@ export default function Home() {
   return (
     <div className="grid min-h-screen place-content-center overflow-hidden bg-gradient-to-b from-emerald-400/40 to-transparent to-50%">
       <Snowfall />
+      {/* background timer */}
+      <div className="absolute bottom-0 left-1/2 z-30 flex -translate-x-1/2 gap-2 not-italic">
+        <div className="h-32 w-24 origin-bottom-right scale-75 rounded-[1.125rem] bg-white/30 p-1 backdrop-blur">
+          <div className="grid h-full w-full place-items-center rounded-2xl bg-gradient-to-b from-white/30 to-black/30 text-4xl font-black text-white">
+            0
+          </div>
+        </div>
+        <div className="h-32 w-24 rounded-[1.125rem] bg-white/30 p-1 backdrop-blur">
+          <div className="grid h-full w-full place-items-center rounded-2xl bg-gradient-to-b from-white/30 to-black/30 text-4xl font-black text-white">
+            69
+          </div>
+        </div>
+        <div className="h-32 w-24 rounded-[1.125rem] bg-white/30 p-1 backdrop-blur">
+          <div className="grid h-full w-full place-items-center rounded-2xl bg-gradient-to-b from-white/30 to-black/30 text-4xl font-black text-white">
+            69
+          </div>
+        </div>
+        <div className="h-32 w-24 origin-bottom-left scale-75 rounded-[1.125rem] bg-white/30 p-1 backdrop-blur">
+          <div className="grid h-full w-full animate-pulse place-items-center rounded-2xl bg-gradient-to-b from-white/30 to-black/30 text-4xl font-black text-white">
+            69
+          </div>
+        </div>
+      </div>
       <div className="container relative flex flex-col font-black italic">
         <div className="animate-rotate absolute -left-12 -top-24 -z-10 origin-[45%] md:-left-32 md:-top-24">
           <div
@@ -39,6 +62,7 @@ export default function Home() {
             <span className="text-teal-400">arr2</span>&gt;
           </div>
         </div>
+
         <div className="w-56 text-4xl leading-5 drop-shadow-2xl sm:w-[40rem] sm:text-8xl sm:leading-10">
           Advent
         </div>
