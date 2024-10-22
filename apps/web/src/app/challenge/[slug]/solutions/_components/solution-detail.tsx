@@ -2,7 +2,7 @@
 
 import { useSession } from '@repo/auth/react';
 import { ActionMenu } from '@repo/ui/components/action-menu';
-import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
+import { Avatar, AvatarFallback, AvatarImage, DefaultAvatar } from '@repo/ui/components/avatar';
 import { Button } from '@repo/ui/components/button';
 import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
@@ -24,7 +24,6 @@ import { EditSolution } from './edit-solution';
 import { useGetQueryString } from './useGetQueryString';
 import { UserBadge } from '~/app/challenge/_components/comments/enhanced-user-badge';
 import { useQueryClient } from '@tanstack/react-query';
-import { DefaultAvatar } from '~/components/default-avatar';
 
 interface Props {
   solution: ChallengeSolution;

@@ -1,15 +1,12 @@
 import { Prisma, prisma } from '@repo/db';
 import { ADVENT_CHALLENGE_IDS, LEADERBOARD_RANKING_LIMIT } from '../constants';
-
-interface RankingResult {
-  name: string;
-  totalPoints: number;
-}
+import { DataTableLeaderboard } from '@repo/ui/components/data-table-leaderboard';
+import { overallLeaderboardColumns, type OverallLeaderboardEntry } from './columns';
 
 async function getOverallLeaderboard(currentAdventDay: number) {
   const challengeIdsSoFar = ADVENT_CHALLENGE_IDS.slice(0, currentAdventDay);
 
-  const ranking = await prisma.$queryRaw<RankingResult[]>`
+  const ranking = await prisma.$queryRaw<OverallLeaderboardEntry[]>`
   SELECT
     u.name,
     SUM(r.points) AS totalPoints
@@ -47,17 +44,8 @@ export default async function OverallLeaderboard({
 }) {
   const top100Ranking = await getOverallLeaderboard(currentAdventDay);
   return (
-    <div className="p-4">
-      <p>Overall AoT leaderboard!</p>
-      <ul className="flex flex-col gap-2 font-mono">
-        {top100Ranking.map((rankedUser, index) => (
-          <li key={index} className="flex gap-6 border p-4">
-            <p className="w-10 text-right">{index + 1})</p>
-            <p className="w-10 text-right">{Number(rankedUser.totalPoints)}</p>
-            <p>{rankedUser.name}</p>
-          </li>
-        ))}
-      </ul>
+    <div>
+      <DataTableLeaderboard data={top100Ranking} columns={overallLeaderboardColumns} />
     </div>
   );
 }
