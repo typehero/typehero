@@ -6,7 +6,7 @@ import { dailyLeaderboardColumns } from './columns';
 const getFirst100SubmissionsRanked = async (adventDay: number) => {
   const challengeId = ADVENT_CHALLENGE_IDS[adventDay - 1];
   const submissions = await prisma.submission.findMany({
-    select: { id: true, createdAt: true, user: { select: { name: true } } },
+    select: { id: true, createdAt: true, user: { select: { name: true, image: true } } },
     where: {
       challengeId,
       isSuccessful: true,

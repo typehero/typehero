@@ -28,10 +28,10 @@ export function DataTableLeaderboard<TData>({ columns, data }: DataTableProps<TD
       <TableHeader>
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
-            {headerGroup.headers.map((header) => {
+            {headerGroup.headers.map((header, i) => {
               return (
                 <TableHead key={header.id} onClick={header.column.getToggleSortingHandler()}>
-                  <div className="relative text-center">
+                  <div className={`relative text-center ${i === 1 ? 'text-start' : ''}`}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(header.column.columnDef.header, header.getContext())}
@@ -74,7 +74,7 @@ const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableE
     <div className="w-full overflow-auto font-mono">
       <table
         className={cn(
-          'w-full caption-bottom border-separate border-spacing-y-4 text-sm',
+          'w-full caption-bottom border-separate border-spacing-y-2 text-sm',
           className,
         )}
         ref={ref}
@@ -102,9 +102,7 @@ const TableBody = React.forwardRef<
 TableBody.displayName = 'TableBody';
 
 const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTMLTableRowElement>>(
-  ({ className, ...props }, ref) => (
-    <tr className={cn('hover:bg-muted/50 transition-colors', className)} ref={ref} {...props} />
-  ),
+  ({ className, ...props }, ref) => <tr className={className} ref={ref} {...props} />,
 );
 TableRow.displayName = 'TableRow';
 
@@ -130,11 +128,3 @@ const TableCell = React.forwardRef<
   <td className={cn('px-4 py-8 align-middle', className)} ref={ref} {...props} />
 ));
 TableCell.displayName = 'TableCell';
-
-const TableCaption = React.forwardRef<
-  HTMLTableCaptionElement,
-  React.HTMLAttributes<HTMLTableCaptionElement>
->(({ className, ...props }, ref) => (
-  <caption className={cn('text-muted-foreground mt-4 text-sm', className)} ref={ref} {...props} />
-));
-TableCaption.displayName = 'TableCaption';
