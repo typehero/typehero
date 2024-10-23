@@ -16,6 +16,7 @@ import {
   HolidayGoldBadge,
   HolidayPlatinumBadge,
 } from '~/app/(profile)/[username]/_components/aot-badges/aot-2023-badge';
+
 export function About({ className }: { className?: string }) {
   return (
     <Sheet>

@@ -63,7 +63,7 @@ export default async function CompletedPage(props: { params: { username: string 
             {isOwnProfile ? (
               <AlertDescription className="flex justify-center">
                 <Button variant="link" size="sm">
-                  <Link href={`/explore}`}>Get started with your first challenge</Link>
+                  <Link href="/explore}">Get started with your first challenge</Link>
                 </Button>
               </AlertDescription>
             ) : null}

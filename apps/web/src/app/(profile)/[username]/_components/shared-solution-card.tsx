@@ -1,4 +1,4 @@
-import { Card, CardDescription, CardHeader, CardTitle } from '@repo/ui/components/card';
+import { Card, CardHeader, CardTitle } from '@repo/ui/components/card';
 import { MessageCircle, ThumbsUp } from '@repo/ui/icons';
 
 import type { Difficulty } from '@repo/db/types';
