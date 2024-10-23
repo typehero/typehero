@@ -5,7 +5,7 @@ export default function LeaderboardPage() {
   return (
     <>
       <AdventDaysRow />
-      <OverallLeaderboard />;
+      <OverallLeaderboard />
     </>
   );
 }
