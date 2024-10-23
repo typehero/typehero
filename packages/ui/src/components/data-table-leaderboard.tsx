@@ -18,9 +18,9 @@ export function DataTableLeaderboard<TData>({ columns, data }: DataTableProps<TD
   });
 
   const getRankColor = (index: number) => {
-    if (index === 0) return 'bg-[#1a1810]'; // First row (gold)
-    if (index === 1) return 'bg-[#202021]'; // Second row (silver)
-    if (index === 2) return 'bg-[#191411]'; // Third row (bronze)
+    if (index === 0) return 'dark:bg-[#1A1810] bg-[#FFF6E5]'; // First row (gold)
+    if (index === 1) return 'dark:bg-[#202021] bg-[#F0F0F0]'; // Second row (silver)
+    if (index === 2) return 'dark:bg-[#191411] bg-[#FDE9E1]'; // Third row (bronze)
   };
 
   return (
@@ -52,7 +52,10 @@ export function DataTableLeaderboard<TData>({ columns, data }: DataTableProps<TD
             <TableRow
               key={row.id}
               data-state={row.getIsSelected() && 'selected'}
-              className={getRankColor(rowIndex) ?? 'odd:bg-[#101010] even:bg-[#1A1A1A]'}
+              className={
+                getRankColor(rowIndex) ??
+                'odd:bg-[#FAFAFA] even:bg-[#F5F5F5] dark:odd:bg-[#101010] dark:even:bg-[#1A1A1A]'
+              }
             >
               {row.getVisibleCells().map((cell, colIndex) => (
                 <TableCell
