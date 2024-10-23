@@ -1,5 +1,3 @@
-import type { BadgeInfo } from '~/app/(profile)/[username]/_components/dashboard/_actions';
-import { SlugToBadgeIcon } from '~/app/(profile)/[username]/_components/dashboard/badges';
 import {
   Tooltip,
   TooltipContent,
@@ -7,6 +5,21 @@ import {
   TooltipTrigger,
 } from '@repo/ui/components/tooltip';
 
+import {
+  HolidayBronzeBadge,
+  HolidayGoldBadge,
+  HolidayPlatinumBadge,
+  HolidaySilverBadge,
+} from './aot-badges/aot-2023-badge';
+import type { BadgeInfo } from '../user-info';
+import type { FC } from 'react';
+
+export const SlugToBadgeIcon: Record<BadgeInfo['slug'], FC<{ className: string }>> = {
+  'aot-2023-bronze': HolidayBronzeBadge,
+  'aot-2023-silver': HolidaySilverBadge,
+  'aot-2023-gold': HolidayGoldBadge,
+  'aot-2023-platinum': HolidayPlatinumBadge,
+};
 export function Badges(props: { data: BadgeInfo[] }) {
   return (
     <div>

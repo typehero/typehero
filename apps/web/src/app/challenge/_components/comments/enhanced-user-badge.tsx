@@ -7,8 +7,6 @@ import { Shield, Sword, Wand2, type LucideIcon } from '@repo/ui/icons';
 import { useQuery } from '@tanstack/react-query';
 import { getProfileData } from './enhanced-user-badge.getProfileData';
 import { useState } from 'react';
-import { SlugToBadgeIcon } from '~/app/(profile)/[username]/_components/dashboard/badges';
-import { type BadgeInfo } from '~/app/(profile)/[username]/_components/dashboard/_actions';
 import { cn } from '@repo/ui/cn';
 import { type Role } from '@repo/db/types';
 import { Button } from '@repo/ui/components/button';
@@ -16,6 +14,8 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from '@repo/ui/componen
 import { getGradient, getTitles, type TitleInfo } from './enhanced-user-badge.getTitles';
 import { Skeleton } from '@repo/ui/components/skeleton';
 import { DefaultAvatar } from '~/components/default-avatar';
+import type { BadgeInfo } from '~/app/(profile)/[username]/user-info';
+import { SlugToBadgeIcon } from '~/app/(profile)/[username]/_components/badges';
 
 interface UserBadgeProps {
   user: {

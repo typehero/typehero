@@ -61,5 +61,5 @@ export async function updateProfile(profileData: EditFormSchema) {
   }
 
   // do this after we do the shit
-  redirect(`/@${user.name}/v2`);
+  redirect(`/@${user.name}`);
 }

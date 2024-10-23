@@ -16,7 +16,6 @@ import {
 } from '@repo/ui/components/chart';
 import Link from 'next/link';
 import { ArrowUpRight } from '@repo/ui/icons';
-import { vi } from 'date-fns/locale';
 
 const chartConfig = {
   BEGINNER: {
@@ -86,7 +85,7 @@ export function ProgressChart(props: {
               content={({ viewBox }) => {
                 if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
                   return (
-                    <Link href="./v2/completed" className="group">
+                    <Link href="./completed" className="group">
                       <text
                         x={viewBox.cx}
                         y={viewBox.cy}
