@@ -16,13 +16,9 @@ export function getCurrentAdventDay() {
   return adventDay;
 }
 
-function isValidAdventDay(value: number) {
-  return value >= 1 && value <= 25;
-}
-
-export function validateAdventDay(selectedDay: number) {
-  if (!isValidAdventDay(selectedDay)) return undefined;
+export function isValidAdventDay(selectedDay: number) {
+  if (selectedDay < 1 && selectedDay > 25) return false;
 
   const currentAdventDay = getCurrentAdventDay();
-  return selectedDay <= currentAdventDay ? currentAdventDay : undefined;
+  return selectedDay <= currentAdventDay;
 }

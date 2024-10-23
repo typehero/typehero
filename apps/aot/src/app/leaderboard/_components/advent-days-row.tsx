@@ -1,16 +1,13 @@
 import Link from 'next/link';
+import { getCurrentAdventDay } from '~/utils/time-utils';
 
-export default function AdventDaysRow({
-  currentAdventDay,
-  selectedDay,
-}: {
-  currentAdventDay: number;
-  selectedDay?: number;
-}) {
+export default function AdventDaysRow({ selectedDay }: { selectedDay?: number }) {
+  const currentAdventDay = getCurrentAdventDay();
+
   return (
-    <div className="flex gap-2 text-xl">
+    <div className="flex w-full gap-2 text-xl">
       <p>Per day:</p>
-      <ul className="flex gap-2">
+      <ul className="flex flex-wrap gap-2">
         {Array.from({ length: currentAdventDay }, (_, index) => {
           const day = index + 1;
           return (

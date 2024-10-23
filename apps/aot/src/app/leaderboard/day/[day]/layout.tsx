@@ -1,21 +1,20 @@
+import { isValidAdventDay } from '~/utils/time-utils';
 import { notFound } from 'next/navigation';
-import { validateAdventDay } from '~/utils/time-utils';
 import AdventDaysRow from '../../_components/advent-days-row';
 
-export default function LeaderboardLayout({
-  children,
+export default function DailyLeaderboardLayout({
   params: { day },
+  children,
 }: {
-  children: React.ReactNode;
   params: { day: string };
+  children: React.ReactNode;
 }) {
   const routeDayNum = Number(day);
-  const currentAdventDay = validateAdventDay(routeDayNum);
-  if (!currentAdventDay) return notFound();
+  if (!isValidAdventDay(routeDayNum)) return notFound();
 
   return (
     <>
-      <AdventDaysRow currentAdventDay={currentAdventDay} selectedDay={routeDayNum} />
+      <AdventDaysRow selectedDay={routeDayNum} />
       {children}
     </>
   );
