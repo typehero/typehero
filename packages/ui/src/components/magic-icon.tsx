@@ -9,13 +9,9 @@ export function MagicIcon({ url, className }: { url: string; className?: string 
 
   const lowercaseUrl = url.toLowerCase();
 
-  if (githubRegex.test(lowercaseUrl))
-    return <Github className={cn('h-3 w-3 text-neutral-400 dark:text-neutral-600', className)} />;
-  if (twitterRegex.test(lowercaseUrl))
-    return <Twitter className={cn('h-3 w-3 text-neutral-400 dark:text-neutral-600', className)} />;
-  if (linkedinRegex.test(lowercaseUrl))
-    return <Linkedin className={cn('h-3 w-3 text-neutral-400 dark:text-neutral-600', className)} />;
-  if (youtubeRegex.test(lowercaseUrl))
-    return <Youtube className={cn('h-3 w-3 text-neutral-400 dark:text-neutral-600', className)} />;
-  return <LinkIcon className={cn('h-3 w-3 text-neutral-400 dark:text-neutral-600', className)} />;
+  if (githubRegex.test(lowercaseUrl)) return <Github className={cn('h-3 w-3', className)} />;
+  if (twitterRegex.test(lowercaseUrl)) return <Twitter className={cn('h-3 w-3', className)} />;
+  if (linkedinRegex.test(lowercaseUrl)) return <Linkedin className={cn('h-3 w-3', className)} />;
+  if (youtubeRegex.test(lowercaseUrl)) return <Youtube className={cn('h-3 w-3', className)} />;
+  return <LinkIcon className={cn('h-3 w-3', className)} />;
 }

@@ -13,7 +13,6 @@ import { useToast } from '@repo/ui/components/use-toast';
 import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
 
 import { updateProfile } from './settings.action';
-import { profileSchema, type ProfileSchema } from './schema';
 
 interface Props {
   user: User & { userLinks: { id: string | null; url: string }[] };

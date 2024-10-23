@@ -63,6 +63,7 @@ export {
   Settings2,
   Shapes,
   Palette,
+  UserPen,
   Share,
   Shield,
   ShieldAlert,

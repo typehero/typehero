@@ -3,13 +3,10 @@ import { notFound } from 'next/navigation';
 import { ProgressChart } from './_components/progress-chart';
 import { SharedSolutionCard } from './_components/shared-solution-card';
 import { Button } from '@repo/ui/components/button';
-import { ArrowUpRight, Github, Twitter } from '@repo/ui/icons';
+import { ArrowUpRight, UserPen } from '@repo/ui/icons';
 import Link from 'next/link';
 import { ActivityChart } from './_components/activity-chart';
-import {
-  getBadges,
-  type BadgeInfo,
-} from '~/app/(profile)/[username]/_components/dashboard/_actions';
+import { getBadges } from '~/app/(profile)/[username]/_components/dashboard/_actions';
 import { cn } from '@repo/ui/cn';
 import { Avatar, AvatarImage, AvatarFallback } from '@repo/ui/components/avatar';
 import { Titles } from '~/app/challenge/_components/comments/enhanced-user-badge';
@@ -116,7 +113,7 @@ export default async function ProfilePage(props: { params: { username: string } 
                   You haven’t added a bio yet—tell others a bit about yourself !
                 </h1>
                 <Button asChild variant="link" className="text-center" size="sm">
-                  <Link href="./v2/all">Update your bio</Link>
+                  <Link href="./v2/edit">Update your bio</Link>
                 </Button>
               </div>
             ) : (
@@ -145,31 +142,36 @@ export default async function ProfilePage(props: { params: { username: string } 
                 </AvatarFallback>
               </Avatar>
               <div className="ml-56 flex flex-col space-y-2">
-                <h1
-                  className={cn(
-                    'w-min bg-gradient-to-r bg-clip-text text-3xl font-bold text-transparent',
-                    gradient,
-                  )}
-                >
-                  {user.name}
-                </h1>
+                <div className="flex flex-row items-baseline space-x-2">
+                  <h1
+                    className={cn(
+                      'w-min bg-gradient-to-r bg-clip-text text-3xl font-bold text-transparent',
+                      gradient,
+                    )}
+                  >
+                    {user.name}
+                  </h1>
+                  {isOwnProfile && user.bio !== '' ? (
+                    <Link
+                      href="./v2/edit"
+                      className="text-muted-foreground/80 hover:text-foreground flex h-6 items-end px-1 transition-colors"
+                    >
+                      <UserPen className="h-4 w-4 " />
+                    </Link>
+                  ) : null}
+                </div>
                 <Titles data={titles} />
                 <h2 className="text-muted-foreground text-sm tracking-tight">
                   Joined {getRelativeTime(user.createdAt)}
                 </h2>
                 <div className="flex flex-row space-x-1">
                   {userLinks.map((link) => (
-                    <Button
-                      key={link.id}
-                      variant="ghost"
-                      size="sm"
-                      className="hover:border-border border border-transparent p-2 py-5 transition-colors hover:bg-transparent dark:hover:bg-transparent"
-                    >
+                    <Link key={link.id} className="group p-2" href={link.url}>
                       <MagicIcon
                         url={link.url}
-                        className="text-foreground dark:text-foreground h-7 w-7"
+                        className="text-foreground/60 group-hover:text-foreground h-7 w-7 transition-colors"
                       />
-                    </Button>
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -178,7 +180,7 @@ export default async function ProfilePage(props: { params: { username: string } 
               <div className="p-4">
                 <h1>You haven’t added a bio yet—tell others a bit about yourself !</h1>
                 <Button asChild variant="link" className="px-0 " size="sm">
-                  <Link href="./v2/all">Update your bio</Link>
+                  <Link href="./v2/edit">Update your bio</Link>
                 </Button>
               </div>
             ) : (
