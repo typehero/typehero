@@ -117,22 +117,9 @@ const TITLE_TO_ICON: Record<TitleInfo['type'], LucideIcon> = {
   contributor: Wand2,
 };
 
-<<<<<<< HEAD
 export function Titles(props: { data: TitleInfo[] }) {
   if (props.data.length === 0) {
     return null;
-=======
-const TITLE_TO_CLASSNAME: Record<TitleInfo['type'], string> = {
-  admin: 'bg-gradient-to-r from-rose-400 to-orange-500 dark:from-rose-400 dark:to-orange-300',
-  contributor: 'bg-gradient-to-r from-sky-400 to-cyan-600 dark:from-sky-400 dark:to-cyan-300',
-  supporter:
-    'bg-gradient-to-r from-yellow-500 to-yellow-600 dark:from-yellow-200 dark:to-yellow-500',
-};
-
-function getGradient(roles: Role[]) {
-  if (roles.find((r) => r.role === 'ADMIN')) {
-    return TITLE_TO_CLASSNAME.admin;
->>>>>>> main
   }
   return (
     <div className="flex flex-row flex-wrap gap-2">
