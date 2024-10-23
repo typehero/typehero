@@ -6,7 +6,6 @@ import { Navigation } from '~/components/Navigation';
 import '../styles/globals.css';
 import { OG_URL, tagline } from './metadata';
 import { Providers } from './providers';
-import { FeatureAnnouncementModal } from '@repo/ui/components/feature-announcement-modal';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -66,7 +65,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Providers>
         <Analytics />
         <SpeedInsights />
-        <FeatureAnnouncementModal />
       </body>
     </html>
   );

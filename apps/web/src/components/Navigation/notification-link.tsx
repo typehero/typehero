@@ -23,6 +23,7 @@ export function NotificationLink({ notificationCount }: { notificationCount: num
       onClick={() => {
         track('notifications');
       }}
+      className="ml-2"
       aria-label="notification page link"
       href={{
         pathname: '/notifications',

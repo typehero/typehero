@@ -384,6 +384,12 @@ importers:
       '@sentry/nextjs':
         specifier: ^7.73.0
         version: 7.73.0(next@14.2.5(@babel/core@7.22.10)(@playwright/test@1.38.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(webpack@5.89.0)
+      '@stripe/react-stripe-js':
+        specifier: ^2.8.0
+        version: 2.8.1(@stripe/stripe-js@4.9.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@stripe/stripe-js':
+        specifier: ^4.6.0
+        version: 4.9.0
       '@t3-oss/env-nextjs':
         specifier: ^0.6.0
         version: 0.6.0(typescript@5.3.3)(zod@3.23.3)
@@ -459,6 +465,9 @@ importers:
       react:
         specifier: 18.2.0
         version: 18.2.0
+      react-confetti:
+        specifier: ^6.1.0
+        version: 6.1.0(react@18.2.0)
       react-day-picker:
         specifier: ^8.8.0
         version: 8.8.0(date-fns@2.30.0)(react@18.2.0)
@@ -486,6 +495,9 @@ importers:
       react-markdown:
         specifier: ^8.0.7
         version: 8.0.7(@types/react@18.2.20)(react@18.2.0)
+      react-number-format:
+        specifier: ^5.4.2
+        version: 5.4.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-select:
         specifier: ^5.7.4
         version: 5.7.4(@types/react@18.2.20)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -501,6 +513,12 @@ importers:
       resend:
         specifier: ^0.17.2
         version: 0.17.2
+      server-only:
+        specifier: ^0.0.1
+        version: 0.0.1
+      stripe:
+        specifier: ^17.1.0
+        version: 17.2.1
       superjson:
         specifier: ^2.2.1
         version: 2.2.1
@@ -591,7 +609,7 @@ importers:
     dependencies:
       '@auth/prisma-adapter':
         specifier: ^1.0.13
-        version: 1.0.13(@prisma/client@5.7.0(prisma@5.7.0))
+        version: 1.0.13(@prisma/client@5.21.1(prisma@5.21.1))
       '@repo/db':
         specifier: workspace:*
         version: link:../db
@@ -612,8 +630,8 @@ importers:
         specifier: ^8.45.0
         version: 8.45.0
       prisma:
-        specifier: 5.7.0
-        version: 5.7.0
+        specifier: 5.21.1
+        version: 5.21.1
       tsup:
         specifier: 5.12.0
         version: 5.12.0(postcss@8.4.31)(typescript@5.3.3)
@@ -624,8 +642,8 @@ importers:
   packages/db:
     dependencies:
       '@prisma/client':
-        specifier: 5.7.0
-        version: 5.7.0(prisma@5.7.0)
+        specifier: 5.21.1
+        version: 5.21.1(prisma@5.21.1)
     devDependencies:
       '@faker-js/faker':
         specifier: ^8.0.2
@@ -646,8 +664,8 @@ importers:
         specifier: ^8.45.0
         version: 8.45.0
       prisma:
-        specifier: 5.7.0
-        version: 5.7.0
+        specifier: 5.21.1
+        version: 5.21.1
       simple-git:
         specifier: ^3.19.1
         version: 3.19.1
@@ -2279,8 +2297,8 @@ packages:
   '@polka/url@1.0.0-next.21':
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
 
-  '@prisma/client@5.7.0':
-    resolution: {integrity: sha512-cZmglCrfNbYpzUtz7HscVHl38e9CrUs31nrVoGUK1nIPXGgt8hT4jj2s657UXcNdQ/jBUxDgGmHyu2Nyrq1txg==}
+  '@prisma/client@5.21.1':
+    resolution: {integrity: sha512-3n+GgbAZYjaS/k0M03yQsQfR1APbr411r74foknnsGpmhNKBG49VuUkxIU6jORgvJPChoD4WC4PqoHImN1FP0w==}
     engines: {node: '>=16.13'}
     peerDependencies:
       prisma: '*'
@@ -2288,20 +2306,20 @@ packages:
       prisma:
         optional: true
 
-  '@prisma/debug@5.7.0':
-    resolution: {integrity: sha512-tZ+MOjWlVvz1kOEhNYMa4QUGURY+kgOUBqLHYIV8jmCsMuvA1tWcn7qtIMLzYWCbDcQT4ZS8xDgK0R2gl6/0wA==}
+  '@prisma/debug@5.21.1':
+    resolution: {integrity: sha512-uY8SAhcnORhvgtOrNdvWS98Aq/nkQ9QDUxrWAgW8XrCZaI3j2X7zb7Xe6GQSh6xSesKffFbFlkw0c2luHQviZA==}
 
-  '@prisma/engines-version@5.7.0-41.79fb5193cf0a8fdbef536e4b4a159cad677ab1b9':
-    resolution: {integrity: sha512-V6tgRVi62jRwTm0Hglky3Scwjr/AKFBFtS+MdbsBr7UOuiu1TKLPc6xfPiyEN1+bYqjEtjxwGsHgahcJsd1rNg==}
+  '@prisma/engines-version@5.21.1-1.bf0e5e8a04cada8225617067eaa03d041e2bba36':
+    resolution: {integrity: sha512-qvnEflL0//lh44S/T9NcvTMxfyowNeUxTunPcDfKPjyJNrCNf2F1zQLcUv5UHAruECpX+zz21CzsC7V2xAeM7Q==}
 
-  '@prisma/engines@5.7.0':
-    resolution: {integrity: sha512-TkOMgMm60n5YgEKPn9erIvFX2/QuWnl3GBo6yTRyZKk5O5KQertXiNnrYgSLy0SpsKmhovEPQb+D4l0SzyE7XA==}
+  '@prisma/engines@5.21.1':
+    resolution: {integrity: sha512-hGVTldUkIkTwoV8//hmnAAiAchi4oMEKD3aW5H2RrnI50tTdwza7VQbTTAyN3OIHWlK5DVg6xV7X8N/9dtOydA==}
 
-  '@prisma/fetch-engine@5.7.0':
-    resolution: {integrity: sha512-zIn/qmO+N/3FYe7/L9o+yZseIU8ivh4NdPKSkQRIHfg2QVTVMnbhGoTcecbxfVubeTp+DjcbjS0H9fCuM4W04w==}
+  '@prisma/fetch-engine@5.21.1':
+    resolution: {integrity: sha512-70S31vgpCGcp9J+mh/wHtLCkVezLUqe/fGWk3J3JWZIN7prdYSlr1C0niaWUyNK2VflLXYi8kMjAmSxUVq6WGQ==}
 
-  '@prisma/get-platform@5.7.0':
-    resolution: {integrity: sha512-ZeV/Op4bZsWXuw5Tg05WwRI8BlKiRFhsixPcAM+5BKYSiUZiMKIi713tfT3drBq8+T0E1arNZgYSA9QYcglWNA==}
+  '@prisma/get-platform@5.21.1':
+    resolution: {integrity: sha512-sRxjL3Igst3ct+e8ya/x//cDXmpLbZQ5vfps2N4tWl4VGKQAmym77C/IG/psSMsQKszc8uFC/q1dgmKFLUgXZQ==}
 
   '@radix-ui/number@1.0.1':
     resolution: {integrity: sha512-T5gIdVO2mmPW3NNhjNgEP3cqMXjXL9UbO0BzWcXfvdBs+BohbQxvd/K5hSVKmn9/lbTdsQVKbUcP5WLCwvUbBg==}
@@ -3402,6 +3420,17 @@ packages:
   '@sindresorhus/merge-streams@1.0.0':
     resolution: {integrity: sha512-rUV5WyJrJLoloD4NDN1V1+LDMDWOa4OTsT4yYJwQNpTU6FWxkxHpL7eu4w+DmiH8x/EAM1otkPE1+LaspIbplw==}
     engines: {node: '>=18'}
+
+  '@stripe/react-stripe-js@2.8.1':
+    resolution: {integrity: sha512-C410jVKOATinXLalWotab6E6jlWAlbqUDWL9q1km0p5UHrvnihjjYzA8imYXc4xc4Euf9GeKDQc4n35HKZvgwg==}
+    peerDependencies:
+      '@stripe/stripe-js': ^1.44.1 || ^2.0.0 || ^3.0.0 || ^4.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+
+  '@stripe/stripe-js@4.9.0':
+    resolution: {integrity: sha512-tMPZQZZXGWyNX7hbgenq+1xEj2oigJ54XddbtSX36VedoKsPBq7dxwRXu4Xd5FdpT3JDyyDtnmvYkaSnH1yHTQ==}
+    engines: {node: '>=12.16'}
 
   '@swc/counter@0.1.3':
     resolution: {integrity: sha512-e2BR4lsJkkRlKZ/qCHPw9ZaSxc0MVUd7gtbtaB7aMvHeJVYe8sOB8DBZkP2DtISHGSku9sCK6T6cnY0CtXrOCQ==}
@@ -7165,8 +7194,8 @@ packages:
     resolution: {integrity: sha512-G9xUchgTEiNpormdYBl+Pha50gOUovT18IvAe7EYMZ1/f9W/WWMPRn+xI68yXNMUk3QXHDwo/1wV/4NejVNe1w==}
     engines: {node: '>=0.10.0'}
 
-  prisma@5.7.0:
-    resolution: {integrity: sha512-0rcfXO2ErmGAtxnuTNHQT9ztL0zZheQjOI/VNJzdq87C3TlGPQtMqtM+KCwU6XtmkoEr7vbCQqA7HF9IY0ST+Q==}
+  prisma@5.21.1:
+    resolution: {integrity: sha512-PB+Iqzld/uQBPaaw2UVIk84kb0ITsLajzsxzsadxxl54eaU5Gyl2/L02ysivHxK89t7YrfQJm+Ggk37uvM70oQ==}
     engines: {node: '>=16.13'}
     hasBin: true
 
@@ -7236,6 +7265,12 @@ packages:
 
   rc9@2.1.1:
     resolution: {integrity: sha512-lNeOl38Ws0eNxpO3+wD1I9rkHGQyj1NU1jlzv4go2CtEnEQEUfqnIvZG7W+bC/aXdJ27n5x/yUjb6RoT9tko+Q==}
+
+  react-confetti@6.1.0:
+    resolution: {integrity: sha512-7Ypx4vz0+g8ECVxr88W9zhcQpbeujJAVqL14ZnXJ3I23mOI9/oBVTQ3dkJhUmB0D6XOtCZEM6N0Gm9PMngkORw==}
+    engines: {node: '>=10.18'}
+    peerDependencies:
+      react: ^16.3.0 || ^17.0.1 || ^18.0.0
 
   react-day-picker@8.8.0:
     resolution: {integrity: sha512-QIC3uOuyGGbtypbd5QEggsCSqVaPNu8kzUWquZ7JjW9fuWB9yv7WyixKmnaFelTLXFdq7h7zU6n/aBleBqe/dA==}
@@ -7312,6 +7347,12 @@ packages:
     peerDependencies:
       '@types/react': '>=16'
       react: '>=16'
+
+  react-number-format@5.4.2:
+    resolution: {integrity: sha512-cg//jVdS49PYDgmcYoBnMMHl4XNTMuV723ZnHD2aXYtWWWqbVF3hjQ8iB+UZEuXapLbeA8P8H+1o6ZB1lcw3vg==}
+    peerDependencies:
+      react: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
 
   react-remove-scroll-bar@2.3.4:
     resolution: {integrity: sha512-63C4YQBUt0m6ALadE9XV56hV8BgJWDmmTPY758iIJjfQKt2nYwoUrPk0LXRXcB/yIj82T1/Ixfdpdk68LwIB0A==}
@@ -7847,6 +7888,10 @@ packages:
   strip-literal@1.3.0:
     resolution: {integrity: sha512-PugKzOsyXpArk0yWmUwqOZecSO0GH0bPoctLcqNDH9J04pVW3lflYE0ujElBGTloevcxF5MofAOZ7C5l2b+wLg==}
 
+  stripe@17.2.1:
+    resolution: {integrity: sha512-Mwb0SitV/UjxTLSUiTlUQ0VDE/gfyQ7OHDGdvDdvKIH4CNNqobPKlzlWhoZHFFU0OA/YsZyBtPULK4JG86BAAg==}
+    engines: {node: '>=12.*'}
+
   style-to-object@0.4.1:
     resolution: {integrity: sha512-HFpbb5gr2ypci7Qw+IOhnP2zOU7e77b+rzM+wTzXzfi1PrtBCX0E7Pk4wL4iTLnhzZ+JgEGAhX81ebTg/aYjQw==}
 
@@ -8079,6 +8124,9 @@ packages:
   turbo@2.0.12:
     resolution: {integrity: sha512-8s2KwqjwQj7z8Z53SUZSKVkQOZ2/Sl4D2F440oaBY/k2lGju60dW6srEpnn8/RIDeICZmQn3pQHF79Jfnc5Skw==}
     hasBin: true
+
+  tween-functions@1.2.0:
+    resolution: {integrity: sha512-PZBtLYcCLtEcjL14Fzb1gSxPBeL7nWvGhO5ZFPGqziCcr8uvHp0NDmdjBchp6KHL+tExcg0m3NISmKxhU394dA==}
 
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
@@ -8699,10 +8747,10 @@ snapshots:
       preact: 10.11.3
       preact-render-to-string: 5.2.3(preact@10.11.3)
 
-  '@auth/prisma-adapter@1.0.13(@prisma/client@5.7.0(prisma@5.7.0))':
+  '@auth/prisma-adapter@1.0.13(@prisma/client@5.21.1(prisma@5.21.1))':
     dependencies:
       '@auth/core': 0.19.0
-      '@prisma/client': 5.7.0(prisma@5.7.0)
+      '@prisma/client': 5.21.1(prisma@5.21.1)
     transitivePeerDependencies:
       - nodemailer
 
@@ -9825,30 +9873,30 @@ snapshots:
 
   '@polka/url@1.0.0-next.21': {}
 
-  '@prisma/client@5.7.0(prisma@5.7.0)':
+  '@prisma/client@5.21.1(prisma@5.21.1)':
     optionalDependencies:
-      prisma: 5.7.0
+      prisma: 5.21.1
 
-  '@prisma/debug@5.7.0': {}
+  '@prisma/debug@5.21.1': {}
 
-  '@prisma/engines-version@5.7.0-41.79fb5193cf0a8fdbef536e4b4a159cad677ab1b9': {}
+  '@prisma/engines-version@5.21.1-1.bf0e5e8a04cada8225617067eaa03d041e2bba36': {}
 
-  '@prisma/engines@5.7.0':
+  '@prisma/engines@5.21.1':
     dependencies:
-      '@prisma/debug': 5.7.0
-      '@prisma/engines-version': 5.7.0-41.79fb5193cf0a8fdbef536e4b4a159cad677ab1b9
-      '@prisma/fetch-engine': 5.7.0
-      '@prisma/get-platform': 5.7.0
+      '@prisma/debug': 5.21.1
+      '@prisma/engines-version': 5.21.1-1.bf0e5e8a04cada8225617067eaa03d041e2bba36
+      '@prisma/fetch-engine': 5.21.1
+      '@prisma/get-platform': 5.21.1
 
-  '@prisma/fetch-engine@5.7.0':
+  '@prisma/fetch-engine@5.21.1':
     dependencies:
-      '@prisma/debug': 5.7.0
-      '@prisma/engines-version': 5.7.0-41.79fb5193cf0a8fdbef536e4b4a159cad677ab1b9
-      '@prisma/get-platform': 5.7.0
+      '@prisma/debug': 5.21.1
+      '@prisma/engines-version': 5.21.1-1.bf0e5e8a04cada8225617067eaa03d041e2bba36
+      '@prisma/get-platform': 5.21.1
 
-  '@prisma/get-platform@5.7.0':
+  '@prisma/get-platform@5.21.1':
     dependencies:
-      '@prisma/debug': 5.7.0
+      '@prisma/debug': 5.21.1
 
   '@radix-ui/number@1.0.1':
     dependencies:
@@ -11123,6 +11171,15 @@ snapshots:
 
   '@sindresorhus/merge-streams@1.0.0': {}
 
+  '@stripe/react-stripe-js@2.8.1(@stripe/stripe-js@4.9.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+    dependencies:
+      '@stripe/stripe-js': 4.9.0
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+
+  '@stripe/stripe-js@4.9.0': {}
+
   '@swc/counter@0.1.3': {}
 
   '@swc/helpers@0.5.5':
@@ -11346,7 +11403,7 @@ snapshots:
 
   '@types/jsonwebtoken@9.0.2':
     dependencies:
-      '@types/node': 20.16.5
+      '@types/node': 20.16.15
 
   '@types/lodash@4.14.195': {}
 
@@ -15683,9 +15740,11 @@ snapshots:
       extend-shallow: 2.0.1
       js-beautify: 1.14.9
 
-  prisma@5.7.0:
+  prisma@5.21.1:
     dependencies:
-      '@prisma/engines': 5.7.0
+      '@prisma/engines': 5.21.1
+    optionalDependencies:
+      fsevents: 2.3.3
 
   prismjs@1.27.0: {}
 
@@ -15742,6 +15801,11 @@ snapshots:
       defu: 6.1.3
       destr: 2.0.2
       flat: 5.0.2
+
+  react-confetti@6.1.0(react@18.2.0):
+    dependencies:
+      react: 18.2.0
+      tween-functions: 1.2.0
 
   react-day-picker@8.8.0(date-fns@2.30.0)(react@18.2.0):
     dependencies:
@@ -15838,6 +15902,11 @@ snapshots:
       vfile: 5.3.7
     transitivePeerDependencies:
       - supports-color
+
+  react-number-format@5.4.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
 
   react-remove-scroll-bar@2.3.4(@types/react@18.2.20)(react@18.2.0):
     dependencies:
@@ -16516,6 +16585,11 @@ snapshots:
     dependencies:
       acorn: 8.10.0
 
+  stripe@17.2.1:
+    dependencies:
+      '@types/node': 20.16.15
+      qs: 6.11.2
+
   style-to-object@0.4.1:
     dependencies:
       inline-style-parser: 0.1.1
@@ -16771,6 +16845,8 @@ snapshots:
       turbo-linux-arm64: 2.0.12
       turbo-windows-64: 2.0.12
       turbo-windows-arm64: 2.0.12
+
+  tween-functions@1.2.0: {}
 
   type-check@0.4.0:
     dependencies:

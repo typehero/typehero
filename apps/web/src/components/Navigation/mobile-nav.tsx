@@ -40,7 +40,7 @@ export function MobileNav({ children }: Props) {
           {/* Hamburger Icon */}
           <button
             className={cn(
-              'hamburger  rounded-lg p-4 duration-300 focus:outline-none ',
+              'hamburger rounded-lg p-4 duration-300 focus:outline-none ',
               open ? 'is-active' : '',
             )}
             onClick={() => setOpen((prev) => !prev)}

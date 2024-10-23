@@ -4,7 +4,8 @@ import { buildMetaForDefault } from '~/app/metadata';
 export async function generateMetadata(): Promise<Metadata> {
   return buildMetaForDefault({
     title: 'Explore Tracks | TypeHero',
-    description: 'Explore the tracks available on TypeHero.',
+    description:
+      'Explore the tracks available on TypeHero. These tracks are designed to help you learn and improve your TypeScript skills.',
   });
 }
 

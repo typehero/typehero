@@ -317,6 +317,28 @@ main {
   }
 }
 
+.animate-halloween {
+  opacity: 0;
+  transform: translate(-2%, -2%);
+  animation: halloween 2.75s 0.75s ease 1 forwards;
+}
+
+@keyframes halloween {
+  15% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.15;
+  }
+  55% {
+    opacity: 0.05;
+  }
+  to {
+    opacity: 0.1;
+    transform: translate(0%, 0%);
+  }
+}
+
 /* portrait */
 @media (orientation: portrait) {
   .animate-beam {
@@ -771,4 +793,35 @@ a {
 
 body.mobile-nav-active {
   overflow: hidden;
+}
+
+.donate-btn:before {
+  content: '';
+  background: #ffffff80;
+  filter: blur(8px);
+  width: 150%;
+  height: 1rem;
+  position: absolute;
+  top: 50%;
+  transform: rotate(-30deg) translateX(-100%) translateY(-25%);
+  opacity: 0;
+}
+
+.donate-btn:hover:before {
+  animation: shimmer 1.69s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    opacity: 1;
+    transform: translateX(-100%) translateY(0rem) rotate(-30deg);
+  }
+  42% {
+    opacity: 1;
+    transform: translateX(0%) translateY(0rem) rotate(-30deg);
+  }
+  69% {
+    opacity: 0;
+    transform: translateX(100%) translateY(-1rem) rotate(-30deg);
+  }
 }
