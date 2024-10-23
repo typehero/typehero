@@ -55,19 +55,17 @@ export default async function CompletedPage(props: { params: { username: string 
         />
       ) : (
         <Alert className="mx-auto mt-4 w-fit md:px-8">
-          <AlertTitle className="mx-auto w-fit md:px-8">
-            <AlertTitle className="text-center leading-normal">
-              <span>{isOwnProfile ? "You haven't" : `@${username} hasn't`}</span> completed any{' '}
-              challenges yet
-            </AlertTitle>
-            {isOwnProfile ? (
-              <AlertDescription className="flex justify-center">
-                <Button variant="link" size="sm">
-                  <Link href="/explore}">Get started with your first challenge</Link>
-                </Button>
-              </AlertDescription>
-            ) : null}
+          <AlertTitle className="text-center leading-normal">
+            <span>{isOwnProfile ? "You haven't" : `@${username} hasn't`}</span> completed any{' '}
+            challenges yet
           </AlertTitle>
+          {isOwnProfile ? (
+            <AlertDescription className="flex justify-center">
+              <Link className="text-primary underline-offset-4 hover:underline" href="./explore">
+                Get started with your first challenge
+              </Link>
+            </AlertDescription>
+          ) : null}
         </Alert>
       )}
     </div>
