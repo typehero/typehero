@@ -45,7 +45,7 @@ export default async function CompletedPage(props: { params: { username: string 
 
   return (
     <div className="mt-8 lg:mt-10">
-      <h1 className="text-center text-xl">Completed Challenges</h1>
+      <h1 className="text-muted-foreground text-center text-xl">Completed Challenges</h1>
       {challenges.length > 0 ? (
         <Challenges
           challenges={challenges}

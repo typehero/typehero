@@ -49,6 +49,7 @@ export function ProgressChart(props: {
   }[];
   totalCompleted: number;
   totalChallenges: number;
+  allCompletedHref: string;
 }) {
   return (
     <div className="flex flex-row flex-wrap-reverse items-center justify-center gap-3 lg:items-start">
@@ -85,7 +86,7 @@ export function ProgressChart(props: {
               content={({ viewBox }) => {
                 if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
                   return (
-                    <Link href="./completed" className="group">
+                    <Link href={props.allCompletedHref} className="group">
                       <text
                         x={viewBox.cx}
                         y={viewBox.cy}

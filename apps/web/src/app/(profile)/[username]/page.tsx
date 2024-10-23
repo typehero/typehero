@@ -102,17 +102,35 @@ export default async function ProfilePage(props: { params: { username: string } 
             >
               {user.name}
             </h1>
+            {isOwnProfile ? (
+              <Link
+                href={`/@${encodeURIComponent(username)}/edit`}
+                className="text-muted-foreground/80 hover:text-foreground flex items-center p-2 transition-colors"
+              >
+                <UserPen className="h-5 w-5 " />
+              </Link>
+            ) : null}
             <Titles data={titles} />
             <h2 className="text-muted-foreground text-sm tracking-tight">
               Joined {getRelativeTime(user.createdAt)}
             </h2>
+            <div className="flex flex-row space-x-1">
+              {userLinks.map((link) => (
+                <Link key={link.id} className="group p-2" href={link.url}>
+                  <MagicIcon
+                    url={link.url}
+                    className="text-foreground/80 group-hover:text-foreground h-5 w-5 transition-colors"
+                  />
+                </Link>
+              ))}
+            </div>
             {user.bio === '' && isOwnProfile ? (
               <div className="flex flex-col justify-center p-4">
                 <h1 className="text-center">
                   You haven’t added a bio yet—tell others a bit about yourself !
                 </h1>
                 <Button asChild variant="link" className="text-center" size="sm">
-                  <Link href="./edit">Update your bio</Link>
+                  <Link href={`/@${encodeURIComponent(username)}/edit`}>Update your bio</Link>
                 </Button>
               </div>
             ) : (
@@ -127,6 +145,7 @@ export default async function ProfilePage(props: { params: { username: string } 
             totalCompleted={progressData.totalSolved}
             chartData={progressData.chartData}
             totalChallenges={progressData.totalChallenges}
+            allCompletedHref={`/@${encodeURIComponent(username)}/completed`}
           />
         </div>
       </div>
@@ -150,9 +169,9 @@ export default async function ProfilePage(props: { params: { username: string } 
                   >
                     {user.name}
                   </h1>
-                  {isOwnProfile && user.bio !== '' ? (
+                  {isOwnProfile ? (
                     <Link
-                      href="./edit"
+                      href={`/@${encodeURIComponent(username)}/edit`}
                       className="text-muted-foreground/80 hover:text-foreground flex h-6 items-end px-1 transition-colors"
                     >
                       <UserPen className="h-4 w-4 " />
@@ -179,7 +198,7 @@ export default async function ProfilePage(props: { params: { username: string } 
               <div className="p-4">
                 <h1>You haven’t added a bio yet—tell others a bit about yourself !</h1>
                 <Button asChild variant="link" className="px-0 " size="sm">
-                  <Link href="./edit">Update your bio</Link>
+                  <Link href={`/@${encodeURIComponent(username)}/edit`}>Update your bio</Link>
                 </Button>
               </div>
             ) : (
@@ -194,6 +213,7 @@ export default async function ProfilePage(props: { params: { username: string } 
               totalCompleted={progressData.totalSolved}
               chartData={progressData.chartData}
               totalChallenges={progressData.totalChallenges}
+              allCompletedHref={`/@${encodeURIComponent(username)}/completed`}
             />
           </div>
         </div>
@@ -209,7 +229,7 @@ export default async function ProfilePage(props: { params: { username: string } 
                 variant="link"
                 className="text-muted-foreground hover:text-primary w-fit text-lg "
               >
-                <Link href="./shared-solutions">
+                <Link href={`/@${encodeURIComponent(username)}/shared-solutions`}>
                   Shared Solutions
                   <ArrowUpRight className="ml-1 h-4 w-4 " />
                 </Link>
@@ -225,7 +245,7 @@ export default async function ProfilePage(props: { params: { username: string } 
                 </h1>
                 {isOwnProfile ? (
                   <Button asChild variant="link" className="text-center">
-                    <Link href="./completed">
+                    <Link href={`/@${encodeURIComponent(username)}/completed`}>
                       Explore your completed solutions and share your own!
                     </Link>
                   </Button>

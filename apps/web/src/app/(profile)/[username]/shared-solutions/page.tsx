@@ -45,7 +45,7 @@ export default async function SharedSolutionPage(props: { params: { username: st
 
   return (
     <div className="mt-8 lg:mt-10">
-      <h1 className="text-center text-xl">Shared Solutions</h1>
+      <h1 className="text-muted-foreground text-center text-xl">Shared Solutions</h1>
       {solutions.length > 0 ? (
         <SharedSolutions
           solutions={solutions}
