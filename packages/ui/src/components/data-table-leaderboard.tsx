@@ -57,7 +57,7 @@ export function DataTableLeaderboard<TData>({ columns, data }: DataTableProps<TD
               {row.getVisibleCells().map((cell, colIndex) => (
                 <TableCell
                   key={cell.id}
-                  className={`text-start ${colIndex === 0 ? 'w-10' : ''}  ${
+                  className={`text-start ${colIndex === 0 ? 'w-16' : ''}  ${
                     colIndex === 2 ? 'text-end' : ''
                   }`}
                 >
