@@ -92,7 +92,7 @@ export function UserBadge(props: UserBadgeProps) {
             <div className="flex w-max max-w-[calc(39ch)] flex-col space-y-2 ">
               <h1
                 className={cn(
-                  'bg-gradient-to-r bg-clip-text font-extrabold text-transparent',
+                  'w-fit bg-gradient-to-r bg-clip-text font-extrabold text-transparent',
                   gradient,
                 )}
               >
