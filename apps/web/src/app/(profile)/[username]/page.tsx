@@ -85,6 +85,7 @@ export default async function ProfilePage(props: { params: { username: string } 
   const isOwnProfile = session?.user?.id === user.id;
   return (
     <div className="px-2 pt-8 lg:px-0 lg:pt-10">
+      {/*     MobileView */}
       <div className="flex flex-col space-y-6 lg:hidden">
         <div className="flex flex-col items-center space-y-2">
           <Avatar className="h-56 w-56 rounded-lg transition group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:-rotate-1">
@@ -125,7 +126,7 @@ export default async function ProfilePage(props: { params: { username: string } 
               ))}
             </div>
             {user.bio === '' && isOwnProfile ? (
-              <div className="flex flex-col justify-center p-4">
+              <div className="flex flex-col justify-center">
                 <h1 className="text-center">
                   You haven’t added a bio yet—tell others a bit about yourself !
                 </h1>
@@ -149,6 +150,8 @@ export default async function ProfilePage(props: { params: { username: string } 
           />
         </div>
       </div>
+
+      {/*       Desktop View */}
       <MovingGrid className="hidden lg:block">
         <div className="relative flex flex-row flex-wrap items-start justify-between">
           <div className="flex h-full max-w-full flex-col justify-center space-y-3 lg:max-w-[50%]">
