@@ -88,37 +88,33 @@ export function ProgressChart(props: {
                   return (
                     <Link href={props.allCompletedHref} className="group">
                       <text
+                        x={(viewBox.cx ?? 0) - 5}
+                        y={(viewBox.cy ?? 0) - 30}
+                        textAnchor="middle"
+                        dominantBaseline="middle"
+                        className="fill-muted-foreground group-hover:underline"
+                      >
+                        Total
+                      </text>
+
+                      <text
                         x={viewBox.cx}
                         y={viewBox.cy}
                         textAnchor="middle"
                         dominantBaseline="middle"
+                        className="fill-foreground text-4xl font-bold"
                       >
-                        <tspan
-                          x={viewBox.cx}
-                          dy={-30}
-                          dx={-5}
-                          y={viewBox.cy}
-                          className="fill-muted-foreground group-hover:underline"
-                        >
-                          Total
-                        </tspan>
-                        <tspan
-                          y={viewBox.cy}
-                          x={viewBox.cx}
-                          dy={2}
-                          className="fill-foreground text-4xl font-bold"
-                        >
-                          {props.totalCompleted}
-                        </tspan>
+                        {props.totalCompleted}
+                      </text>
 
-                        <tspan
-                          y={viewBox.cy}
-                          x={viewBox.cx}
-                          dy={30}
-                          className="fill-muted-foreground text-sm "
-                        >
-                          of {props.totalChallenges}
-                        </tspan>
+                      <text
+                        x={viewBox.cx}
+                        y={(viewBox.cy ?? 0) + 30}
+                        textAnchor="middle"
+                        dominantBaseline="middle"
+                        className="fill-muted-foreground text-sm"
+                      >
+                        of {props.totalChallenges}
                       </text>
                       <foreignObject
                         x={(viewBox.cx ?? 0) + 10}
