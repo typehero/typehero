@@ -2,7 +2,6 @@ import { prisma } from '@repo/db';
 import { notFound } from 'next/navigation';
 import { SharedSolutions } from './_components/SharedSolutions';
 import { Alert, AlertDescription, AlertTitle } from '@repo/ui/components/alert';
-import { Button } from '@repo/ui/components/button';
 import Link from 'next/link';
 import { auth } from '~/server/auth';
 

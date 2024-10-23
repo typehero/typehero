@@ -3,7 +3,6 @@ import { Challenges } from './_components/challenges';
 import { notFound } from 'next/navigation';
 import { auth } from '~/server/auth';
 import { AlertTitle, Alert, AlertDescription } from '@repo/ui/components/alert';
-import { Button } from '@repo/ui/components/button';
 import Link from 'next/link';
 
 export default async function CompletedPage(props: { params: { username: string } }) {
