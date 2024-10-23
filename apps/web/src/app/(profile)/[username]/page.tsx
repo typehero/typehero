@@ -97,7 +97,7 @@ export default async function ProfilePage(props: { params: { username: string } 
           <div className="flex flex-col items-center space-y-1">
             <h1
               className={cn(
-                'w-min bg-gradient-to-r bg-clip-text text-3xl font-bold text-transparent',
+                'bg-gradient-to-r bg-clip-text text-3xl font-bold text-transparent',
                 gradient,
               )}
             >
@@ -166,7 +166,7 @@ export default async function ProfilePage(props: { params: { username: string } 
                 <div className="flex flex-row items-baseline space-x-2">
                   <h1
                     className={cn(
-                      'w-min bg-gradient-to-r bg-clip-text text-3xl font-bold text-transparent',
+                      'bg-gradient-to-r bg-clip-text text-3xl font-bold text-transparent',
                       gradient,
                     )}
                   >
