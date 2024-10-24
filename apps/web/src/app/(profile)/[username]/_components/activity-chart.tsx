@@ -73,18 +73,17 @@ export function ActivityChart(props: {
         <Scatter
           // ReCharts has this type defined as Record<string, any> so attempting
           // to overide it throws an error
-          shape={(item: unknown) => getShape(item)}
+          shape={(props: unknown) => (
+            <MyItem {...(props as { cx: number; cy: number; activity: number })} />
+          )}
         />
       </ScatterChart>
     </ChartContainer>
   );
 }
-const getShape = (item: unknown) => {
-  const { cx, cy, activity } = item as {
-    cx: number;
-    cy: number;
-    activity: number;
-  };
+
+function MyItem(props: { cx: number; cy: number; activity: number }) {
+  const { cx, cy, activity } = props;
   const squareLength = 24;
   const borderV = 10;
   const borderH = 10;
@@ -111,7 +110,7 @@ const getShape = (item: unknown) => {
       )}
     </SquareWrapper>
   );
-};
+}
 
 const activeNodeAtom = atom<PrimitiveAtom<boolean> | null>(null);
 const SquareWrapper = (props: { children: (isSelected: boolean) => React.ReactElement }) => {
