@@ -47,9 +47,7 @@ export default async function ProfilePage(props: { params: { username: string } 
       userLinks: true,
       sharedSolution: {
         take: 3,
-        orderBy: {
-          createdAt: 'desc',
-        },
+        orderBy: [{ isPinned: 'desc' }, { createdAt: 'desc' }],
         select: {
           id: true,
           _count: {
@@ -62,6 +60,7 @@ export default async function ProfilePage(props: { params: { username: string } 
           challenge: {
             select: {
               name: true,
+              slug: true,
               difficulty: true,
             },
           },
@@ -77,7 +76,6 @@ export default async function ProfilePage(props: { params: { username: string } 
   const gradient = getGradient(user.roles);
   const progressData = await getProgressData(user.id);
   const activityData = await getUserActivity(user.id);
-  const sortedSharedSolutions = [...user.sharedSolution].sort((a, b) => (a.isPinned ? -1 : 1));
   // TODO: Change form to prevent it from adding empty links?
   const userLinks = user.userLinks.filter((u) => u.url !== '');
 
@@ -239,7 +237,7 @@ export default async function ProfilePage(props: { params: { username: string } 
               </Button>
             </CardHeader>
 
-            {sortedSharedSolutions.length === 0 ? (
+            {user.sharedSolution.length === 0 ? (
               <CardContent className="flex h-full grow flex-col items-center justify-center space-y-3 lg:px-16">
                 <h1 className="text-center">
                   {isOwnProfile
@@ -256,19 +254,25 @@ export default async function ProfilePage(props: { params: { username: string } 
               </CardContent>
             ) : (
               <CardContent className="pointer-events-auto flex flex-col space-y-2">
-                {sortedSharedSolutions.map((s) => (
-                  <SharedSolutionCard
+                {user.sharedSolution.map((s) => (
+                  <Link
+                    href={`/challenge/${encodeURIComponent(s.challenge?.slug ?? '')}/solutions/${
+                      s.id
+                    }`}
                     key={s.id}
-                    solution={{
-                      isPinned: s.isPinned,
-                      voteCount: s._count.vote,
-                      commentCount: s._count.solutionComment,
-                      challenge: {
-                        name: s.challenge?.name ?? '',
-                        difficulty: s.challenge?.difficulty ?? 'EASY',
-                      },
-                    }}
-                  />
+                  >
+                    <SharedSolutionCard
+                      solution={{
+                        isPinned: s.isPinned,
+                        voteCount: s._count.vote,
+                        commentCount: s._count.solutionComment,
+                        challenge: {
+                          name: s.challenge?.name ?? '',
+                          difficulty: s.challenge?.difficulty ?? 'EASY',
+                        },
+                      }}
+                    />
+                  </Link>
                 ))}
               </CardContent>
             )}

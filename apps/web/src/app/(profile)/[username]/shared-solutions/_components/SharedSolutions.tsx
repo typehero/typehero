@@ -16,7 +16,7 @@ import { Button } from '@repo/ui/components/button';
 import Link from 'next/link';
 
 export function SharedSolutions(props: {
-  solutions: SharedSolutionCardProps['solution'][];
+  solutions: (SharedSolutionCardProps['solution'] & { id: number; challenge: { slug: string } })[];
   className?: string;
   isOwnProfile: boolean;
   username: string;
@@ -60,7 +60,12 @@ export function SharedSolutions(props: {
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {filteredChallenges.map((s) => (
-          <SharedSolutionCard key={s.challenge.name} solution={s} />
+          <Link
+            href={`/challenge/${encodeURIComponent(s.challenge.slug)}/solutions/${s.id}`}
+            key={s.challenge.name}
+          >
+            <SharedSolutionCard solution={s} />
+          </Link>
         ))}
       </div>
     </div>

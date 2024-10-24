@@ -12,11 +12,13 @@ export default async function SharedSolutionPage(props: { params: { username: st
   }
   const sharedSolutions = await prisma.sharedSolution.findMany({
     select: {
+      id: true,
       isPinned: true,
       challenge: {
         select: {
           difficulty: true,
           name: true,
+          slug: true,
         },
       },
       _count: {
@@ -33,10 +35,15 @@ export default async function SharedSolutionPage(props: { params: { username: st
     },
   });
   const solutions = sharedSolutions.map((s) => ({
+    id: s.id,
     commentCount: s._count.solutionComment,
     voteCount: s._count.vote,
     isPinned: s.isPinned,
-    challenge: { difficulty: s.challenge?.difficulty ?? 'BEGINNER', name: s.challenge?.name ?? '' },
+    challenge: {
+      difficulty: s.challenge?.difficulty ?? 'BEGINNER',
+      name: s.challenge?.name ?? '',
+      slug: s.challenge?.slug ?? '',
+    },
   }));
 
   const session = await auth();

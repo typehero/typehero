@@ -15,7 +15,20 @@ export default async function CompletedPage(props: { params: { username: string 
       difficulty: true,
       id: true,
       name: true,
-      submission: true,
+      slug: true,
+      //The submission part below is run as a separate query, this ensures that the most recently successfull submission of the current user is selected
+      submission: {
+        take: 1,
+        orderBy: {
+          createdAt: 'desc',
+        },
+        where: {
+          isSuccessful: true,
+          user: {
+            name: username,
+          },
+        },
+      },
       updatedAt: true,
       shortDescription: true,
       user: {

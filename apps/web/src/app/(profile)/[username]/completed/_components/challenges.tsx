@@ -8,7 +8,7 @@ import { DIFFICULTY_COLOR_MAP, FilterBar, type FilterOptions } from './filter-ba
 import { cn } from '@repo/ui/cn';
 
 export function Challenges(props: {
-  challenges: (ExploreCardProps['challenge'] & { id: number })[];
+  challenges: (ExploreCardProps['challenge'] & { id: number; slug: string })[];
   isOwnProfile: boolean;
   username: string;
   className?: string;
@@ -50,7 +50,16 @@ export function Challenges(props: {
       ) : null}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {filteredChallenges.map((c) => (
-          <ExploreCard key={c.id} challenge={c} className="min-w-fit xl:min-w-fit" />
+          <Link
+            href={
+              props.isOwnProfile
+                ? `/challenge/${encodeURIComponent(c.slug)}/submissions/${c.submission[0]?.id}`
+                : `/challenge/${encodeURIComponent(c.slug)}`
+            }
+            key={c.id}
+          >
+            <ExploreCard challenge={c} className="min-w-fit xl:min-w-fit" />
+          </Link>
         ))}
       </div>
     </div>
