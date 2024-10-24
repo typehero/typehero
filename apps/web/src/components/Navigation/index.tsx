@@ -21,9 +21,8 @@ import { SkipToCodeEditor } from './skip-to-code-editor';
 import { auth } from '~/server/auth';
 import { NotificationLink } from './notification-link';
 import { getNotificationCount } from './navigation.actions';
-import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
+import { Avatar, AvatarFallback, AvatarImage, DefaultAvatar } from '@repo/ui/components/avatar';
 import { ThemeButton } from './theme-button';
-import { DefaultAvatar } from '../default-avatar';
 
 export function getAdminUrl() {
   // reference for vercel.com

@@ -1,7 +1,7 @@
 'use client';
 
 import type { NotificationType } from '@repo/db/types';
-import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
+import { Avatar, AvatarFallback, AvatarImage, DefaultAvatar } from '@repo/ui/components/avatar';
 import { Markdown } from '@repo/ui/components/markdown';
 import { AlertCircle, AtSign, Heart, MessageCircle, ShieldAlert } from '@repo/ui/icons';
 import Link from 'next/link';
@@ -10,7 +10,6 @@ import { useInView } from 'react-intersection-observer';
 import { getRelativeTime } from '~/utils/relativeTime';
 import type { Notification } from './notification.actions';
 import { cn } from '@repo/ui/cn';
-import { DefaultAvatar } from '~/components/default-avatar';
 
 const BLURBS = {
   MENTION: 'mentioned you in a comment',
