@@ -18,17 +18,14 @@ import {
   Triangle,
 } from '@repo/ui/icons';
 import dynamic from 'next/dynamic';
-import type { ExploreChallengeData } from './explore.action';
+import type { Difficulty, Submission } from '@repo/db/types';
+import { cn } from '@repo/ui/cn';
 
 const RelativeTime = dynamic(() => import('./relative-time'), {
   ssr: false,
 });
 
-interface ExploreCardProps {
-  challenge: Awaited<ExploreChallengeData>[0];
-}
-
-const BORDERS_BY_DIFFICULTY = {
+export const BORDERS_BY_DIFFICULTY = {
   BEGINNER:
     'dark:hover:border-difficulty-beginner-dark hover:border-difficulty-beginner dark:group-focus:border-difficulty-beginner-dark group-focus:border-difficulty-beginner',
   EASY: 'dark:hover:border-difficulty-easy-dark hover:border-difficulty-easy dark:group-focus:border-difficulty-easy-dark group-focus:border-difficulty-easy',
@@ -42,7 +39,7 @@ const BORDERS_BY_DIFFICULTY = {
     'dark:hover:border-difficulty-extreme-dark hover:border-difficulty-extreme dark:group-focus:border-difficulty-extreme-dark group-focus:border-difficulty-extreme',
 };
 
-const SHADOWS_BY_DIFFICULTY = {
+export const SHADOWS_BY_DIFFICULTY = {
   BEGINNER:
     'hover:shadow-beginner group-focus:shadow-beginner dark:hover:shadow-beginner-dark dark:group-focus:shadow-beginner-dark',
   EASY: 'hover:shadow-easy group-focus:shadow-easy dark:hover:shadow-easy-dark dark:group-focus:shadow-easy-dark',
@@ -56,7 +53,7 @@ const SHADOWS_BY_DIFFICULTY = {
     'hover:shadow-extreme group-focus:shadow-extreme dark:hover:shadow-extreme-dark dark:group-focus:shadow-extreme-dark',
 };
 
-function ChallengeDifficultyIcon({ difficulty }: { difficulty: string }) {
+export function ChallengeDifficultyIcon({ difficulty }: { difficulty: string }) {
   switch (difficulty) {
     case 'BEGINNER':
       return (
@@ -98,15 +95,34 @@ function ChallengeDifficultyIcon({ difficulty }: { difficulty: string }) {
   }
 }
 
-export async function ExploreCard({ challenge }: ExploreCardProps) {
+export interface ExploreCardProps {
+  challenge: {
+    difficulty: Difficulty;
+    name: string;
+    _count: {
+      comment: number;
+      vote: number;
+    };
+    submission: Submission[];
+    user: {
+      name: string;
+    };
+    updatedAt: Date;
+    shortDescription: string;
+  };
+}
+export function ExploreCard({ challenge, className }: ExploreCardProps & { className?: string }) {
   const hasBeenSolved = challenge.submission.length > 0;
 
   return (
     <Card
-      className={`group/card bg-background hover:bg-card-hovered relative overflow-hidden duration-300 sm:min-w-[300px] xl:min-w-[333px]
+      className={cn(
+        `group/card bg-background hover:bg-card-hovered relative overflow-hidden duration-300 sm:min-w-[300px] xl:min-w-[333px]
       ${SHADOWS_BY_DIFFICULTY[challenge.difficulty]}
       ${BORDERS_BY_DIFFICULTY[challenge.difficulty]}
-      `}
+      `,
+        className,
+      )}
     >
       <ChallengeDifficultyIcon difficulty={challenge.difficulty} />
       <CardHeader className="relative flex flex-col items-start gap-1 py-5">

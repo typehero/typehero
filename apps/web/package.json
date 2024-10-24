@@ -52,6 +52,7 @@
     "cmdk": "^0.2.0",
     "date-fns": "^2.30.0",
     "framer-motion": "^10.12.22",
+    "jotai": "^2.10.1",
     "lodash": "^4.17.21",
     "lz-string": "^1.5.0",
     "million": "2.6.0-beta.12",

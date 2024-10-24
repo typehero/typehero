@@ -198,12 +198,12 @@ async function LoginButton({
           <ThemeButton />
         </div>
         {isAdminOrMod ? (
-          <a className="block" href={getAdminUrl()}>
+          <Link className="block" href={getAdminUrl()}>
             <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
               <Settings className="mr-2 h-4 w-4" />
               <span>Admin</span>
             </DropdownMenuItem>
-          </a>
+          </Link>
         ) : null}
         {isAdminOrMod ? (
           <Link className="block" href="/challenge-playground">

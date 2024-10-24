@@ -1,26 +1,25 @@
 'use server';
 
 import { auth } from '~/server/auth';
-import { revalidatePath } from 'next/cache';
 import { prisma } from '@repo/db';
-import type { ProfileSchema } from './schema';
-import { profileSchema } from './schema';
+import { EditFormSchema } from './edit-form.schema';
+import { redirect } from 'next/navigation';
 
 /**
  * This will only let you update your own profile
  * @param profileData
  */
-export async function updateProfile(profileData: ProfileSchema) {
+export async function updateProfile(profileData: EditFormSchema) {
   const session = await auth();
 
   // 1. Checks that the user is logged in
   if (!session?.user?.id) return { error: 'unauthorized' };
 
   // 2. test schema validation with zod
-  profileSchema.parse(profileData);
+  EditFormSchema.parse(profileData);
 
   // 3. Update the user bio field in the db
-  await prisma.user.update({
+  const user = await prisma.user.update({
     where: { id: session.user.id },
     data: { bio: profileData.bio },
   });
@@ -62,7 +61,5 @@ export async function updateProfile(profileData: ProfileSchema) {
   }
 
   // do this after we do the shit
-  revalidatePath('/settings');
-
-  return { success: true };
+  redirect(`/@${user.name}`);
 }

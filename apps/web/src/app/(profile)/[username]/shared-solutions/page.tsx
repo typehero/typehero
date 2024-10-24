@@ -1,93 +1,79 @@
 import { prisma } from '@repo/db';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@repo/ui/components/card';
-import { DataTable } from '@repo/ui/components/data-table';
 import { notFound } from 'next/navigation';
-import { withUnstableCache } from '~/utils/withUnstableCache';
-import { createCacheKeyForSharedSolutionsTab } from '../../../challenge/[slug]/solutions/_components/_actions';
-import { sharedSolutionsColumns } from './_components/shared-solutions-columns';
+import { SharedSolutions } from './_components/SharedSolutions';
+import { Alert, AlertDescription, AlertTitle } from '@repo/ui/components/alert';
+import Link from 'next/link';
 import { auth } from '~/server/auth';
 
-interface Props {
-  params: {
-    username: string;
-  };
-}
-
-export default async function SharedSolutionsPage({
-  params: { username: usernameFromQuery },
-}: Props) {
-  const [, username] = decodeURIComponent(usernameFromQuery).split('@');
-
-  if (!username) return notFound();
-
-  const user = await prisma.user.findFirst({
-    where: {
-      name: {
-        equals: username,
-      },
-    },
+export default async function SharedSolutionPage(props: { params: { username: string } }) {
+  const [, username] = decodeURIComponent(props.params.username).split('@');
+  if (username === undefined) {
+    notFound();
+  }
+  const sharedSolutions = await prisma.sharedSolution.findMany({
     select: {
       id: true,
-      name: true,
-    },
-  });
-
-  if (!user) return notFound();
-
-  const solutions = await withUnstableCache({
-    fn: getSharedSolutions,
-    args: [user.id],
-    keys: [`shared-solutions`],
-    tags: [createCacheKeyForSharedSolutionsTab(user.id)],
-  });
-
-  const session = await auth();
-  const isOwnProfile = session?.user?.id === user.id;
-
-  return (
-    <Card className="col-span-4 md:min-h-[calc(100vh_-_56px_-_6rem)]">
-      <CardHeader>
-        <CardTitle>Shared Solutions</CardTitle>
-        <CardDescription className="text-muted-foreground mb-4 text-sm">
-          {isOwnProfile ? 'Your' : `${user.name}'s`} shared challenge solutions.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <DataTable data={solutions} columns={sharedSolutionsColumns} />
-      </CardContent>
-    </Card>
-  );
-}
-
-export type SharedSolutions = Awaited<ReturnType<typeof getSharedSolutions>>;
-export type SharedSolution = SharedSolutions[0];
-async function getSharedSolutions(userId: string) {
-  return await prisma.sharedSolution.findMany({
-    where: {
-      userId,
-    },
-    orderBy: {
-      createdAt: 'desc',
-    },
-    include: {
+      isPinned: true,
+      challenge: {
+        select: {
+          difficulty: true,
+          name: true,
+          slug: true,
+        },
+      },
       _count: {
         select: {
           vote: true,
-        },
-      },
-      challenge: {
-        select: {
-          id: true,
-          slug: true,
-          name: true,
+          solutionComment: true,
         },
       },
     },
+    where: {
+      user: {
+        name: username,
+      },
+    },
   });
+  const solutions = sharedSolutions.map((s) => ({
+    id: s.id,
+    commentCount: s._count.solutionComment,
+    voteCount: s._count.vote,
+    isPinned: s.isPinned,
+    challenge: {
+      difficulty: s.challenge?.difficulty ?? 'BEGINNER',
+      name: s.challenge?.name ?? '',
+      slug: s.challenge?.slug ?? '',
+    },
+  }));
+
+  const session = await auth();
+  const isOwnProfile = username === session?.user.name;
+
+  return (
+    <div className="mt-8 lg:mt-10">
+      <h1 className="text-muted-foreground text-center text-xl">Shared Solutions</h1>
+      {solutions.length > 0 ? (
+        <SharedSolutions
+          solutions={solutions}
+          className="mt-2"
+          isOwnProfile={isOwnProfile}
+          username={username}
+        />
+      ) : (
+        <Alert className="mx-auto mt-4 w-fit md:px-8">
+          <AlertTitle className="text-center leading-normal">
+            <span>{isOwnProfile ? "You haven't" : `@${username} hasn't`}</span> shared any{' '}
+            challenges yet
+          </AlertTitle>
+          {isOwnProfile ? (
+            <AlertDescription className="flex justify-center">
+              <Link className="text-primary underline-offset-4 hover:underline" href="./completed">
+                Explore your completed solutions and share your own!
+              </Link>
+            </AlertDescription>
+          ) : null}
+        </Alert>
+      )}
+    </div>
+  );
 }

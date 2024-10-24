@@ -7,14 +7,14 @@ import { Shield, Sword, Wand2, type LucideIcon } from '@repo/ui/icons';
 import { useQuery } from '@tanstack/react-query';
 import { getProfileData } from './enhanced-user-badge.getProfileData';
 import { useState } from 'react';
-import { SlugToBadgeIcon } from '~/app/(profile)/[username]/_components/dashboard/badges';
-import { type BadgeInfo } from '~/app/(profile)/[username]/_components/dashboard/_actions';
 import { cn } from '@repo/ui/cn';
 import { type Role } from '@repo/db/types';
 import { Button } from '@repo/ui/components/button';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@repo/ui/components/hover-card';
-import { getTitles, type TitleInfo } from './enhanced-user-badge.getTitles';
+import { getGradient, getTitles, type TitleInfo } from './enhanced-user-badge.getTitles';
 import { Skeleton } from '@repo/ui/components/skeleton';
+import type { BadgeInfo } from '~/app/(profile)/[username]/user-info';
+import { SlugToBadgeIcon } from '~/app/(profile)/[username]/_components/badges';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 
 interface UserBadgeProps {
@@ -91,7 +91,7 @@ export function UserBadge(props: UserBadgeProps) {
             <div className="flex w-max max-w-[calc(39ch)] flex-col space-y-2 ">
               <h1
                 className={cn(
-                  'bg-gradient-to-r bg-clip-text font-extrabold text-transparent',
+                  'w-fit bg-gradient-to-r bg-clip-text font-extrabold text-transparent',
                   gradient,
                 )}
               >
@@ -116,29 +116,12 @@ const TITLE_TO_ICON: Record<TitleInfo['type'], LucideIcon> = {
   contributor: Wand2,
 };
 
-const TITLE_TO_CLASSNAME: Record<TitleInfo['type'], string> = {
-  admin: 'bg-gradient-to-r from-rose-400 to-orange-500 dark:from-rose-400 dark:to-orange-300',
-  contributor: 'bg-gradient-to-r from-sky-400 to-cyan-600 dark:from-sky-400 dark:to-cyan-300',
-  supporter:
-    'bg-gradient-to-r from-yellow-500 to-yellow-600 dark:from-yellow-200 dark:to-yellow-500',
-};
-
-function getGradient(roles: Role[]) {
-  if (roles.find((r) => r.role === 'ADMIN')) {
-    return TITLE_TO_CLASSNAME.admin;
+export function Titles(props: { data: TitleInfo[] }) {
+  if (props.data.length === 0) {
+    return null;
   }
-  if (roles.find((r) => r.role === 'CONTRIBUTOR')) {
-    return TITLE_TO_CLASSNAME.contributor;
-  }
-  if (roles.find((r) => r.role === 'SUPPORTER')) {
-    return TITLE_TO_CLASSNAME.supporter;
-  }
-  return 'text-foreground';
-}
-
-function Titles(props: { data: TitleInfo[] }) {
   return (
-    <div className="flex flex-row space-x-2">
+    <div className="flex flex-row flex-wrap gap-2">
       {props.data.map((t) => {
         const Icon = TITLE_TO_ICON[t.type];
         return (
