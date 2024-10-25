@@ -1,30 +1,15 @@
 'use client';
 
 import { useSession } from '@repo/auth/react';
-import type { Comment, VoteType } from '@repo/db/types';
+import type { VoteType } from '@repo/db/types';
+import { Button } from '@repo/ui/components/button';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { ThumbsUp } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { debounce } from 'lodash';
 import { useRef, useState } from 'react';
 import { incrementOrDecrementUpvote } from '../increment.action';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
-import { Button } from '@repo/ui/components/button';
 import type { PaginatedComments } from './comments/getCommentRouteData';
-
-interface ChallengeCommentVoteProps {
-  type: 'COMMENT';
-  comment: Comment;
-}
-
-interface ChallengeVoteProps {
-  type: 'CHALLENGE';
-  comment: Comment;
-}
-
-interface SharedSolutionVoteProps {
-  type: 'SHAREDSOLUTION';
-  comment: Comment;
-}
 
 interface VoteProps {
   voteCount: number;
