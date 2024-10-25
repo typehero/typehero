@@ -2,39 +2,39 @@
 
 import { useSession } from '@repo/auth/react';
 import { type CommentRoot } from '@repo/db/types';
+import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
+import { Button } from '@repo/ui/components/button';
 import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { toast } from '@repo/ui/components/use-toast';
 import {
+  Calendar,
   ChevronDown,
   ChevronUp,
-  Calendar,
   Flag,
+  MoreHorizontal,
   Pencil,
   Reply,
   Share,
   Trash2,
-  MoreHorizontal,
 } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { useParams, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { z } from 'zod';
-import { getRelativeTimeStrict } from '~/utils/relativeTime';
-import { Vote } from '../vote';
-import { CommentInput } from './comment-input';
-import { CommentDeleteDialog } from './delete';
-import { type PaginatedComments, type PreselectedCommentMetadata } from './getCommentRouteData';
-import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
-import { Button } from '@repo/ui/components/button';
-import { CommentSkeleton } from './comment-skeleton';
-import { useCommentsReplies } from './comments.hooks';
-import { UserBadge } from './enhanced-user-badge';
+import { ReportDialog } from '~/components/report-dialog';
 import { isAdminOrModerator } from '~/utils/auth-guards';
 import { DefaultAvatar } from '~/utils/default-avatar';
-import { ReportDialog } from '~/components/report-dialog';
-import type { ChallengeRouteData } from '../../getChallengeRouteData';
+import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import type { SolutionRouteData } from '../../solutions/[solutionId]/getSolutionIdRouteData';
+import type { Challenge } from '../types';
+import { Vote } from '../vote';
+import { CommentInput } from './comment-input';
+import { CommentSkeleton } from './comment-skeleton';
+import { useCommentsReplies } from './comments.hooks';
+import { CommentDeleteDialog } from './delete';
+import { UserBadge } from './enhanced-user-badge';
+import { type PaginatedComments, type PreselectedCommentMetadata } from './getCommentRouteData';
 
 interface SingleCommentProps {
   comment: PaginatedComments['comments'][number];
@@ -50,7 +50,7 @@ interface SingleCommentProps {
 
 type CommentProps = SingleCommentProps & {
   preselectedCommentMetadata?: PreselectedCommentMetadata;
-  root: ChallengeRouteData['challenge'] | SolutionRouteData;
+  root: Challenge | SolutionRouteData;
   type: CommentRoot;
   deleteComment: (commentId: number) => Promise<void>;
   updateComment: (text: string, commentId: number) => Promise<void>;
@@ -335,9 +335,6 @@ function SingleComment({
         {!readonly && (
           <>
             <Vote
-              comment={comment}
-              toUserId={comment.user.id}
-              challengeSlug={comment.rootChallenge?.slug ?? ''}
               voteCount={comment._count.vote}
               initialHasVoted={comment.vote.length > 0}
               disabled={!session?.data?.user?.id || comment.userId === session?.data?.user?.id}

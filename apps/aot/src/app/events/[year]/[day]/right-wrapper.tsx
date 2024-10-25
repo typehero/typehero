@@ -2,15 +2,16 @@
 import { useSession } from '@repo/auth/react';
 import { CodePanel } from '@repo/monaco';
 import { useParams, useRouter, useSelectedLayoutSegments } from 'next/navigation';
-import { ResetEditorButton } from './_components/reset-editor-button';
 import { EditorShortcutsButton } from './_components/editor-shortcuts/editor-shortcuts-button';
+import { ResetEditorButton } from './_components/reset-editor-button';
 import { SettingsButton } from './_components/settings/settings-button';
+import type { Challenge } from './_components/types';
 import { FullscreenButton } from './fullscreen-button';
 import { SubmissionOverview } from './submissions/[[...catchAll]]/_components/overview';
 import { saveSubmission } from './submissions/[[...catchAll]]/save-submission.action';
 
 interface Props {
-  challenge: any;
+  challenge: Challenge;
 }
 
 export function RightWrapper({ challenge }: Props) {

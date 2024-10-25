@@ -3,7 +3,7 @@ import type { generateReactHelpers } from '@uploadthing/react/hooks';
 import type { ChangeEvent } from 'react';
 import { useContext, useEffect, useRef, useState } from 'react';
 import MDEditor, { EditorContext, commands, type ICommand } from '@uiw/react-md-editor';
-import { toast } from '@repo/ui/components/use-toast';
+import { toast } from './use-toast';
 
 const codePreview: ICommand = {
   name: 'preview',
@@ -23,6 +23,7 @@ interface Props {
    */
   allowImageUpload?: boolean;
   // @TODO: make the type for this
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   useUploadThing: ReturnType<typeof generateReactHelpers<any>>['useUploadThing'];
 }
 

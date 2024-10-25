@@ -20,8 +20,8 @@ import {
   updateComment as updateCommentAction,
 } from './comment.action';
 import { toast } from '@repo/ui/components/use-toast';
-import type { ChallengeRouteData } from '../../[slug]/getChallengeRouteData';
-import type { SolutionRouteData } from '../../[slug]/solutions/[solutionId]/getSolutionIdRouteData';
+import type { ChallengeRouteData } from '../../getChallengeRouteData';
+import type { SolutionRouteData } from '../../solutions/[solutionId]/getSolutionIdRouteData';
 
 const getRootQueryKey = (rootId: number, type: CommentRoot) =>
   `${type.toLowerCase()}-${rootId}-comments`;

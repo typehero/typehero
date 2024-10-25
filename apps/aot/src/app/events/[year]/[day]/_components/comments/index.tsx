@@ -4,22 +4,23 @@ import type { CommentRoot } from '@repo/db/types';
 import { ChevronDown, MessageCircle } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { useRef, useState } from 'react';
+import type { SolutionRouteData } from '../../solutions/[solutionId]/getSolutionIdRouteData';
+import { useTrackNavigationVisiblity } from '../../use-track-visibility.hook';
+import { Pagination } from '../pagination';
+import { SortSelect } from '../sort-select';
+import type { Challenge } from '../types';
 import { Comment } from './comment';
 import { CommentInput } from './comment-input';
 import { CommentSkeleton } from './comment-skeleton';
+import { sortKeys } from './comments.constants';
+import { useComments } from './comments.hooks';
 import { type PreselectedCommentMetadata } from './getCommentRouteData';
 import NoComments from './nocomments';
-import { Pagination } from '../pagination';
-import { SortSelect } from '../sort-select';
-import { useComments } from './comments.hooks';
-import { sortKeys } from './comments.constants';
-import type { ChallengeRouteData } from '../../getChallengeRouteData';
-import { useTrackNavigationVisiblity } from '../../use-track-visibility.hook';
 
 interface Props {
   preselectedCommentMetadata?: PreselectedCommentMetadata;
   expanded?: boolean;
-  root: ChallengeRouteData['challenge'] | SolutionRouteData;
+  root: Challenge | SolutionRouteData;
   type: CommentRoot;
 }
 

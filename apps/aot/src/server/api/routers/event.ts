@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc';
+import { validateCompilerOptions } from '~/utils/validateCompilerOptions';
 
 const AOT_TRACKS = ['advent-of-typescript-2023', 'advent-of-typescript-2024'];
 export const eventRouter = createTRPCRouter({
@@ -61,8 +62,14 @@ export const eventRouter = createTRPCRouter({
         },
       });
 
+      const tsconfig = challenge.tsconfig;
+      if (!validateCompilerOptions(tsconfig)) {
+        throw new Error(`Challenge "${challenge.slug}" has an invalid tsconfig`);
+      }
+
       return {
         ...challenge,
+        tsconfig,
         hasSolved: challenge.submission.length > 0,
       };
     }),

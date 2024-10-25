@@ -21,13 +21,13 @@ import { useRef, useState } from 'react';
 import { ReportDialog } from '~/components/report-dialog';
 import { ShareUrl } from '~/components/share-url';
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
-import type { ChallengeRouteData } from '../../getChallengeRouteData';
 import { addOrRemoveBookmark } from '../bookmark.action';
 import { UserBadge } from '../comments/enhanced-user-badge';
+import type { Challenge } from '../types';
 import { Vote } from '../vote';
 
 interface Props {
-  challenge: ChallengeRouteData['challenge'];
+  challenge: Challenge;
 }
 
 export interface FormValues {

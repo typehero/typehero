@@ -1,12 +1,13 @@
 'use client';
 import { useState, type ReactNode } from 'react';
-import { ChallengeLayout, MOBILE_BREAKPOINT } from './challenge-layout';
-import usePanelAdjustments from './usePanelAdjustments';
 import { LeftWrapper } from '../left-wrapper';
 import { RightWrapper } from '../right-wrapper';
+import { ChallengeLayout, MOBILE_BREAKPOINT } from './challenge-layout';
+import type { Challenge } from './types';
+import usePanelAdjustments from './usePanelAdjustments';
 
 interface Props {
-  challenge: any;
+  challenge: Challenge;
   children: ReactNode;
 }
 
@@ -30,7 +31,7 @@ export function ChallengeLayoutWrapper({ challenge, children }: Props) {
   return (
     <ChallengeLayout
       left={
-        <LeftWrapper challenge={challenge} expandPanel={expandPanel} isDesktop={isDesktop}>
+        <LeftWrapper expandPanel={expandPanel} isDesktop={isDesktop}>
           {children}
         </LeftWrapper>
       }

@@ -7,7 +7,7 @@ import { CheckCircle2, Clipboard } from '@repo/ui/icons';
 import { DialogFooter } from '@repo/ui/components/dialog';
 import { useToast } from '@repo/ui/components/use-toast';
 import { useLocalStorage } from '~/utils/useLocalStorage';
-import { createShortURL } from './share-url/_actions/create-short-url';
+import { createShortURL } from './_actions/create-short-url';
 
 interface ShareShortUrlProps {
   desciprtion?: string;
