@@ -15,8 +15,8 @@ import { Button } from '@repo/ui/components/button';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@repo/ui/components/hover-card';
 import { getGradient, getTitles, type TitleInfo } from './enhanced-user-badge.getTitles';
 import { Skeleton } from '@repo/ui/components/skeleton';
-import type { BadgeInfo } from '~/app/(profile)/[username]/user-info';
-import { SlugToBadgeIcon } from '~/app/(profile)/[username]/_components/badges';
+// import type { BadgeInfo } from '~/app/(profile)/[username]/user-info';
+// import { SlugToBadgeIcon } from '~/app/(profile)/[username]/_components/badges';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 
 interface UserBadgeProps {

@@ -1,6 +1,5 @@
 import { prisma } from '@repo/db';
-<<<<<<<< HEAD:apps/web/src/app/actions/badges/_actions.ts
-import type { DIFFICULTIES } from '../../(profile)/[username]/_components/dashboard/challenges-progress';
+// import type { DIFFICULTIES } from '../../(profile)/[username]/_components/dashboard/challenges-progress';
 import {
   awardDifficultyBadge,
   difficultyBadgeKeys,
@@ -19,7 +18,6 @@ import {
   type AotBadges,
   awardAdventBadges,
 } from '~/app/actions/badges/badge_types/advent_badges';
-========
 import type { Difficulty as DifficultyWithEvent } from '@repo/db/types';
 import {
   eachDayOfInterval,
@@ -30,7 +28,6 @@ import {
   startOfWeek,
   subDays,
 } from 'date-fns';
->>>>>>>> main:apps/web/src/app/(profile)/[username]/user-info.ts
 
 type Difficulty = Exclude<DifficultyWithEvent, 'EVENT'>;
 
@@ -120,7 +117,6 @@ export async function getProgressData(userId: string) {
   };
 }
 
-<<<<<<<< HEAD:apps/web/src/app/actions/badges/_actions.ts
 export interface Badges<T> {
   slug: T;
   name: string;
@@ -183,7 +179,6 @@ export async function fillInMissingBadges(userId: string): Promise<AllBadgeObjs>
 
 const isBadgeWith = (badge: string) => (keys: readonly string[]) => keys.includes(badge);
 
-========
 export async function getUserActivity(userId: string) {
   const endDate = new Date();
   const startDate = startOfWeek(subDays(endDate, 60), { weekStartsOn: 0 });
@@ -227,38 +222,7 @@ export async function getUserActivity(userId: string) {
   return days;
 }
 
->>>>>>>> main:apps/web/src/app/(profile)/[username]/user-info.ts
 export interface BadgeInfo {
   slug: AotBadges;
   name: string;
-}
-
-export async function getBadges(userId: string): Promise<BadgeInfo[]> {
-  //TODO: should this be removed, or changed? On every call to profile is excessive
-  await fillInMissingBadges(userId);
-  let badges: AllBadgeObjs = {};
-
-  // retrieve current awarded badge_types
-  const userBadges = await prisma.userBadge.findMany({
-    where: {
-      userId,
-    },
-    select: {
-      badgeName: true,
-    },
-  });
-
-  userBadges.forEach(({ badgeName }) => {
-    const checkBadgeType = isBadgeWith(badgeName);
-    if (checkBadgeType(difficultyBadgeKeys)) {
-      badges = Object.assign(badges, awardDifficultyBadge(badgeName as DifficultyBadges));
-    } else if (checkBadgeType(solutionBadgeKeys)) {
-      badges = Object.assign(badges, awardSolutionBadge(badgeName as SolutionBadges));
-    } else if (checkBadgeType(aotBadgeKeys)) {
-      badges = Object.assign(badges, awardAdventBadges(badgeName as AotBadges));
-    }
-  });
-  return Object.values(badges)
-    .filter((x) => aotBadgeKeys.includes(x.slug as AotBadges))
-    .map((x) => ({ slug: x.slug as AotBadges, name: x.name }));
 }

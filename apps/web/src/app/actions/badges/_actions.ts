@@ -277,7 +277,9 @@ export async function getBadges(userId: string): Promise<BadgeInfo[]> {
       badges = Object.assign(badges, awardAdventBadges(badgeName as AotBadges));
     }
   });
-  return Object.values(badges)
+  const badgeModels = Object.values(badges)
     .filter((x) => aotBadgeKeys.includes(x.slug as AotBadges))
     .map((x) => ({ slug: x.slug as AotBadges, name: x.name }));
+  console.log('badges', badgeModels);
+  return badgeModels;
 }

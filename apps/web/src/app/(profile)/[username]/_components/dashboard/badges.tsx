@@ -10,7 +10,7 @@ import {
   HolidayGoldBadge,
   HolidayPlatinumBadge,
   HolidaySilverBadge,
-} from '../badges/aot-2023-badge';
+} from '../aot-badges/aot-2023-badge';
 import { toast } from '@repo/ui/components/use-toast';
 
 export const SlugToBadgeIcon: Record<BadgeInfo['slug'], FC<{ className: string }>> = {
