@@ -7,7 +7,6 @@ import { Shield, Sword, Wand2, type LucideIcon } from '@repo/ui/icons';
 import { useQuery } from '@tanstack/react-query';
 import { getProfileData } from './enhanced-user-badge.getProfileData';
 import { useState } from 'react';
-import { SlugToBadgeIcon } from '~/app/(profile)/[username]/_components/dashboard/badges';
 import { type BadgeInfo } from '~/app/actions/badges/_actions';
 import { cn } from '@repo/ui/cn';
 import { type Role } from '@repo/db/types';
@@ -18,6 +17,7 @@ import { Skeleton } from '@repo/ui/components/skeleton';
 // import type { BadgeInfo } from '~/app/(profile)/[username]/user-info';
 // import { SlugToBadgeIcon } from '~/app/(profile)/[username]/_components/badges';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
+import { SlugToBadgeIcon } from "~/app/(profile)/[username]/_components/badges";
 
 interface UserBadgeProps {
   user: {
