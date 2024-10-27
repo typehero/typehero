@@ -6,19 +6,19 @@ import {
   difficultyBadgeKeys,
   type DifficultyBadges,
   difficultyBadgesFn,
-} from '~/app/actions/badges/badge_types/difficulty_badges';
+} from '~/app/actions/badges/badge_types/difficulty-badges';
 import {
   awardSolutionBadge,
   sharedSolutionsBadgesFn,
   solutionBadgeKeys,
   type SolutionBadges,
-} from '~/app/actions/badges/badge_types/shared_solutions_badges';
+} from '~/app/actions/badges/badge_types/shared-solutions-badges';
 import {
   adventBadgesFn,
   aotBadgeKeys,
   type AotBadges,
   awardAdventBadges,
-} from '~/app/actions/badges/badge_types/advent_badges';
+} from '~/app/actions/badges/badge_types/advent-badges';
 
 export type HistoricalChallenge = Awaited<ReturnType<typeof getChallengeHistoryByCategory>>[0];
 

@@ -1,7 +1,7 @@
 import { prisma } from '@repo/db';
 import type { AllBadgeObjs, BadgesFn } from '../_actions';
-import type { DifficultyBadges } from '~/app/actions/badges/badge_types/difficulty_badges';
-import type { AotBadges } from '~/app/actions/badges/badge_types/advent_badges';
+import type { DifficultyBadges } from '~/app/actions/badges/badge_types/difficulty-badges';
+import type { AotBadges } from '~/app/actions/badges/badge_types/advent-badges';
 
 export const solutionBadgeKeys = [
   'most-shared-solutions-bronze',
