@@ -1,55 +1,35 @@
 'use client';
-import { useState, useCallback } from 'react';
-import { useParams } from 'next/navigation';
-import lzstring from 'lz-string';
 import { Checkbox } from '@repo/ui/components/checkbox';
-import { CheckCircle2, Clipboard } from '@repo/ui/icons';
 import { DialogFooter } from '@repo/ui/components/dialog';
 import { useToast } from '@repo/ui/components/use-toast';
+import { CheckCircle2, Clipboard } from '@repo/ui/icons';
+import lzstring from 'lz-string';
+import { useParams } from 'next/navigation';
+import { useCallback, useState } from 'react';
 import { useLocalStorage } from '~/utils/useLocalStorage';
-import { createShortURL } from './share-url/_actions/create-short-url';
 
-interface ShareShortUrlProps {
-  desciprtion?: string;
-  isChallenge?: boolean;
-  code?: string;
-  longUrl?: string;
-}
-
-export function ShareUrl({ desciprtion, isChallenge = false, code, longUrl }: ShareShortUrlProps) {
-  const { slug } = useParams();
+export function ShareUrl() {
+  const { year, day } = useParams();
   const { toast } = useToast();
-  const shareType = isChallenge ? 'challenge' : 'playground';
   const [state, setState] = useState<'copied' | 'idle' | 'loading'>('idle');
   // enable copy with code by default on playground, or we are provided with code
-  const [copyWithCode, setCopyWithCode] = useState(shareType === 'playground' || Boolean(code));
-  const [localStorageCode] = useLocalStorage(`${shareType}-${slug}`, '');
-  const [shortUrl, setShortUrl] = useState('');
-  const [previousCode, setPreviousCode] = useState('');
-  const url = longUrl ?? `${window.location.origin}/${shareType}/${slug}`;
+  const [copyWithCode, setCopyWithCode] = useState(false);
+  const [localStorageCode] = useLocalStorage(`challenge-${year}-${day}`, '');
+  const url = window.location.href;
 
   const genShortUrl = useCallback(async () => {
     let long = url;
-    const fullCode = code ?? localStorageCode;
-    if (copyWithCode && fullCode) {
-      const compressedCode = lzstring.compressToEncodedURIComponent(fullCode);
+    const code = localStorageCode;
+    if (copyWithCode && code) {
+      const compressedCode = lzstring.compressToEncodedURIComponent(code);
       long += `?code=${compressedCode}`;
-
-      // Check if the code has changed
-      if (fullCode !== previousCode) {
-        const short = await createShortURL(long);
-        setPreviousCode(fullCode);
-        return short ?? long;
-      }
-      return shortUrl;
     }
     return long;
-  }, [url, code, localStorageCode, copyWithCode, previousCode, shortUrl]);
+  }, [url, localStorageCode, copyWithCode]);
 
   const copyToClipboard = useCallback(async () => {
     setState('loading');
     const short = await genShortUrl();
-    setShortUrl(short);
     try {
       if (navigator.clipboard) {
         await navigator.clipboard.writeText(short);
@@ -76,17 +56,16 @@ export function ShareUrl({ desciprtion, isChallenge = false, code, longUrl }: Sh
 
   return (
     <div className="flex flex-col space-y-4">
-      <p>{desciprtion ?? 'Copy this url to share with your friends!'}</p>
+      <p>Copy this url to share with your friends!</p>
       <code
         aria-disabled={state === 'loading'}
         className="break-all rounded-lg border border-black/20 bg-white px-4 py-2 aria-disabled:cursor-not-allowed aria-disabled:opacity-50 dark:border-white/20 dark:bg-black"
       >
-        {shortUrl.length === 0 ? (code ? 'Copy to Generate URL!' : url) : shortUrl}
+        {url}
       </code>
       <DialogFooter>
         <div className="flex items-center justify-end gap-2">
-          {/* Checkbox not needed in playground, or we already are providing code */}
-          {localStorageCode && isChallenge && !code ? (
+          {localStorageCode ? (
             <div className="flex h-fit items-center justify-center gap-2 text-xs">
               <Checkbox
                 id="copy-with-code"

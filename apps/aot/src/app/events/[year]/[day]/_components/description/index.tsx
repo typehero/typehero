@@ -137,7 +137,7 @@ export function Description({ challenge }: Props) {
               <DialogTitle>Share</DialogTitle>
             </DialogHeader>
             <div className="pt-4">
-              <ShareUrl isChallenge />
+              <ShareUrl />
             </div>
           </DialogContent>
         </Dialog>
