@@ -100,9 +100,8 @@ export function SubmissionOverview({ submissionId }: Props) {
               </DialogHeader>
               <div className="pt-4">
                 <ShareUrl
-                  isChallenge
                   code={submission.code}
-                  desciprtion="Click Copy to Share code on Playground."
+                  description="Click Copy to Share code on Playground."
                 />
               </div>
             </DialogContent>

@@ -8,24 +8,24 @@ import { useParams } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import { useLocalStorage } from '~/utils/useLocalStorage';
 
-export function ShareUrl() {
+export function ShareUrl({ code, description }: { code?: string; description?: string }) {
   const { year, day } = useParams();
   const { toast } = useToast();
   const [state, setState] = useState<'copied' | 'idle' | 'loading'>('idle');
   // enable copy with code by default on playground, or we are provided with code
-  const [copyWithCode, setCopyWithCode] = useState(false);
+  const [copyWithCode, setCopyWithCode] = useState(Boolean(code));
   const [localStorageCode] = useLocalStorage(`challenge-${year}-${day}`, '');
-  const url = window.location.href;
+  const url = `${window.location.origin}/events/${year}/${day}`;
 
   const genShortUrl = useCallback(async () => {
     let long = url;
-    const code = localStorageCode;
-    if (copyWithCode && code) {
-      const compressedCode = lzstring.compressToEncodedURIComponent(code);
+    const codeToCopy = code ?? localStorageCode;
+    if (copyWithCode && codeToCopy) {
+      const compressedCode = lzstring.compressToEncodedURIComponent(codeToCopy);
       long += `?code=${compressedCode}`;
     }
     return long;
-  }, [url, localStorageCode, copyWithCode]);
+  }, [url, localStorageCode, code, copyWithCode]);
 
   const copyToClipboard = useCallback(async () => {
     setState('loading');
@@ -56,7 +56,7 @@ export function ShareUrl() {
 
   return (
     <div className="flex flex-col space-y-4">
-      <p>Copy this url to share with your friends!</p>
+      <p>{description ?? 'Copy this url to share with your friends!'}</p>
       <code
         aria-disabled={state === 'loading'}
         className="break-all rounded-lg border border-black/20 bg-white px-4 py-2 aria-disabled:cursor-not-allowed aria-disabled:opacity-50 dark:border-white/20 dark:bg-black"
@@ -65,7 +65,7 @@ export function ShareUrl() {
       </code>
       <DialogFooter>
         <div className="flex items-center justify-end gap-2">
-          {localStorageCode ? (
+          {localStorageCode && !code ? (
             <div className="flex h-fit items-center justify-center gap-2 text-xs">
               <Checkbox
                 id="copy-with-code"
