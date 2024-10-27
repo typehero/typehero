@@ -140,4 +140,3 @@ export async function getUserActivity(userId: string) {
 
   return days;
 }
-

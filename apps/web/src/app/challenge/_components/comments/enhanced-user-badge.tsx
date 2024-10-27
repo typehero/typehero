@@ -17,7 +17,7 @@ import { Skeleton } from '@repo/ui/components/skeleton';
 // import type { BadgeInfo } from '~/app/(profile)/[username]/user-info';
 // import { SlugToBadgeIcon } from '~/app/(profile)/[username]/_components/badges';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
-import { SlugToBadgeIcon } from "~/app/(profile)/[username]/_components/badges";
+import { SlugToBadgeIcon } from '~/app/(profile)/[username]/_components/badges';
 
 interface UserBadgeProps {
   user: {
