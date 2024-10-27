@@ -1,14 +1,13 @@
 'use client';
 
 import { cn } from '@repo/ui/cn';
-import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
+import { Avatar, AvatarFallback, AvatarImage, DefaultAvatar } from '@repo/ui/components/avatar';
 import { Popover, PopoverAnchor, PopoverContent } from '@repo/ui/components/popover';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import { searchUsers } from './actions';
 import { useToast } from '@repo/ui/components/use-toast';
 import { Loader } from '../loader';
-import { DefaultAvatar } from '../default-avatar';
 
 interface Props {
   isOpen: boolean;

@@ -11,7 +11,11 @@ export function useIsMobile() {
     );
 
     const isDev = process.env.NODE_ENV !== 'production';
-    if (isDev) setIsMobile(isSmall || isMobile);
+
+    if (isDev) {
+      setIsMobile(isSmall || isMobile);
+      return;
+    }
 
     setIsMobile(isSmall && isMobile);
   }, []);

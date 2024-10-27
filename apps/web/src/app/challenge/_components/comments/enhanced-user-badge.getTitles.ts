@@ -26,3 +26,22 @@ export function getTitles(roles: Role[]) {
   }
   return flairs;
 }
+
+const TITLE_TO_CLASSNAME: Record<TitleInfo['type'], string> = {
+  admin: 'bg-gradient-to-r from-rose-400 to-orange-500 dark:from-rose-400 dark:to-orange-300',
+  contributor: 'bg-gradient-to-r from-sky-400 to-cyan-600 dark:from-sky-400 dark:to-cyan-300',
+  supporter:
+    'bg-gradient-to-r from-emerald-500 to-emerald-600 dark:from-emerald-200 dark:to-emerald-500',
+};
+export function getGradient(roles: Role[]) {
+  if (roles.find((r) => r.role === 'ADMIN')) {
+    return TITLE_TO_CLASSNAME.admin;
+  }
+  if (roles.find((r) => r.role === 'CONTRIBUTOR')) {
+    return TITLE_TO_CLASSNAME.contributor;
+  }
+  if (roles.find((r) => r.role === 'SUPPORTER')) {
+    return TITLE_TO_CLASSNAME.supporter;
+  }
+  return 'text-foreground';
+}

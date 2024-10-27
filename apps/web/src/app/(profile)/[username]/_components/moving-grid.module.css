@@ -1,0 +1,30 @@
+@keyframes movingbackground {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(0, -50%);
+  }
+}
+.moving-grid-background {
+  @apply bg-background/90;
+  will-change: transform;
+  background-size: 3rem 3rem;
+  background-image: linear-gradient(to right, #8882 1px, transparent 1px),
+    linear-gradient(to bottom, #8882 1px, transparent 1px);
+  animation: movingbackground 90s linear infinite;
+}
+
+.radial-bg::before {
+  @apply border-background pointer-events-none absolute select-none border opacity-100 transition-opacity duration-300;
+  background: radial-gradient(
+    1000px circle at var(--x) var(--y),
+    var(--color-center) 0,
+    var(--color-mid) 25%,
+    var(--color-fade) 50%,
+    var(--color-outer) 80%
+  );
+  z-index: -1;
+  content: '';
+  inset: -1px;
+}
