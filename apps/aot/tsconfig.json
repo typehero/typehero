@@ -25,8 +25,7 @@
     // to make sure `@repo/monaco` doesn't break
     "../../packages/monaco/monaco-editor.d.ts",
     "../../packages/monaco/monaco-vim.d.ts",
-    "postcss.config.mjs",
     "postcss.config.mjs"
   ],
-  "exclude": ["node_modules", ".next", "public", "playwright-report"]
+  "exclude": ["node_modules", ".next", "public"]
 }
