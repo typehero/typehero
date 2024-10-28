@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc';
+import { validateCompilerOptions } from '~/utils/validateCompilerOptions';
 
 const AOT_TRACKS = ['advent-of-typescript-2023', 'advent-of-typescript-2024'];
 export const eventRouter = createTRPCRouter({
@@ -13,6 +14,7 @@ export const eventRouter = createTRPCRouter({
     });
     return aotEvents;
   }),
+  // todo: make a challenge route
   getEventChallengeBySlug: publicProcedure
     .input(
       z.object({
@@ -21,13 +23,55 @@ export const eventRouter = createTRPCRouter({
     )
     .query(async ({ ctx, input }) => {
       // @TODO: actually select fields
-      const challenges = await ctx.db.challenge.findFirstOrThrow({
+      const challenge = await ctx.db.challenge.findFirstOrThrow({
         where: {
           slug: input.slug,
         },
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+              roles: true,
+              bio: true,
+              image: true,
+            },
+          },
+          _count: {
+            select: {
+              vote: true,
+            },
+          },
+          vote: {
+            where: {
+              userId: ctx.session?.user?.id || '',
+            },
+          },
+          bookmark: {
+            where: {
+              userId: ctx.session?.user?.id || '',
+            },
+          },
+          submission: {
+            where: {
+              userId: ctx.session?.user?.id || '',
+              isSuccessful: true,
+            },
+            take: 1,
+          },
+        },
       });
 
-      return challenges;
+      const tsconfig = challenge.tsconfig;
+      if (!validateCompilerOptions(tsconfig)) {
+        throw new Error(`Challenge "${challenge.slug}" has an invalid tsconfig`);
+      }
+
+      return {
+        ...challenge,
+        tsconfig,
+        hasSolved: challenge.submission.length > 0,
+      };
     }),
   getEventChallengesByYear: publicProcedure
     .input(

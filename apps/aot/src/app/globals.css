@@ -2,10 +2,505 @@
 @tailwind components;
 @tailwind utilities;
 
-/* TODO: upgrade tailwind to latest & remove this */
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@layer base {
+  :root {
+    --gradient-angle: 360deg;
+
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 45%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+
+    --card: 0 0% 100%;
+    --card-hovered: 0 0% 98%;
+    --card-foreground: 240 10% 3.9%;
+
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+
+    --primary: 211 61% 48%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: ;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --error-label: 0 84.2% 60.2%;
+
+    --ring: 240 5% 64.9%;
+
+    --radius: 0.5rem;
+
+    --difficulty-beginner: 201 96% 32%;
+    --difficulty-easy: 150 100% 25%;
+    --difficulty-medium: 35 92% 33%;
+    --difficulty-hard: 0 72% 51%;
+    --difficulty-extreme: 262 83% 58%;
+
+    --difficulty-beginner-dark: 199 69% 72%;
+    --difficulty-easy-dark: 142 77% 73%;
+    --difficulty-medium-dark: 31 86% 60%;
+    --difficulty-hard-dark: 0 91% 71%;
+    --difficulty-extreme-dark: 269 97% 85%;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+
+    --card: 240 10% 3.9%;
+    --card-hovered: 240 10% 6.9%;
+    --card-foreground: 0 0% 98%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+
+    --primary: 211 61% 48%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: ;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 85.7% 97.3%;
+
+    --error-label: 0 92.2% 64.9%;
+
+    --ring: 240 3.7% 15.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+html,
+body,
+#__next,
+main {
+  scroll-padding-top: 64px;
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+.from-background {
+  --tw-gradient-from: hsl(var(--background)) var(--tw-gradient-from-position);
+}
+
+.w-md-editor-content {
+  @apply bg-background dark:bg-muted;
+}
+
+.w-md-editor-toolbar {
+  @apply flex w-full gap-2;
+  /* border-b border-b-zinc-300 */
+  border-bottom: 1px solid rgb(212 212 216) !important;
+  /* bg-background (in light mode) */
+  background: #fff !important;
+}
+
+/* dark:border-b-zinc-300 dark:bg-muted */
+.dark .w-md-editor-toolbar {
+  border-bottom: 1px solid rgb(63 63 70) !important;
+  background: hsl(240 3.7% 15.9%) !important;
+}
+
+.w-md-editor-toolbar-divider {
+  @apply bg-zinc-300 dark:bg-zinc-700;
+  /* TODO: not aligned center vertically */
+  height: 1.5rem !important;
+}
+.w-md-editor-toolbar ul {
+  @apply flex items-center;
+}
+.w-md-editor-toolbar ul li.active button {
+  @apply text-black dark:text-white;
+}
+.w-md-editor-toolbar ul li button {
+  @apply flex h-8 w-auto min-w-[2rem] items-center justify-center rounded-md p-1 text-neutral-500 hover:bg-neutral-200 hover:text-black dark:hover:bg-zinc-700 dark:hover:text-white;
+}
+.w-md-editor-toolbar ul li button[disabled] {
+  @apply cursor-default text-neutral-700 hover:bg-transparent hover:text-neutral-700;
+}
+.w-md-editor-toolbar ul li button svg {
+  @apply h-4 w-4;
+}
+.w-md-editor {
+  background: var(--muted) !important;
+}
+
+.w-md-editor-preview {
+  padding: 1rem !important;
+  box-shadow: inset 1px 0 0 0 rgb(212 212 216) !important;
+}
+.dark .w-md-editor-preview {
+  box-shadow: inset 1px 0 0 0 rgb(63 63 70) !important;
+}
+
+.w-md-editor-preview .wmde-markdown {
+  @apply bg-muted;
+}
+.wmde-markdown ol {
+  list-style: null !important;
+}
+
+.wmde-markdown ul {
+  list-style: unset !important;
+}
+.custom-scrollable-element::-webkit-scrollbar {
+  width: 0.6rem;
+}
+.custom-scrollable-element::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+.custom-scrollable-element::-webkit-scrollbar-thumb {
+  @apply rounded-l-xl bg-neutral-300/50 dark:bg-zinc-700/50;
+}
+
+.custom-scrollable-element::-webkit-scrollbar-thumb:hover {
+  @apply bg-neutral-300 dark:bg-zinc-600;
+}
+
+#container {
+  mask: linear-gradient(90deg, #0000, #000 10% 80%, #0000);
+  -webkit-mask: linear-gradient(90deg, #0000, #000 10% 80%, #0000);
+}
+
+@media (min-width: 1400px) {
+  #container {
+    /* here we calculate the diffrence between screen width and the container width (1400px)
+    then split that on half to make carousel align left with the rest of the content and i added some rems to aligned perfectly */
+    padding-left: calc(((100vw - 1400px) + 12rem) / 2);
+  }
+}
+
+@media (max-width: 768px) {
+  .animated-feature-cards::before {
+    background: none !important;
+  }
+}
+
+@keyframes movingbackground {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(0, -50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moving-grid-background {
+    animation: none !important;
+  }
+}
+
+.container {
+  @apply mx-auto max-w-[1400px] px-4 md:px-24;
+}
+
+@property --gradient-angle {
+  syntax: '<angle>'; /* <- defined as type angle for the transition to work */
+  initial-value: 360deg;
+  inherits: false;
+}
+
+.hero-join-button {
+  background: linear-gradient(
+    var(--gradient-angle),
+    hsla(211, 60%, 48%, 0.7),
+    hsla(211, 60%, 48%, 0.3),
+    #3178c6,
+    hsla(211, 60%, 48%, 0.5)
+  );
+  animation: gradient-rotate 5s linear infinite reverse;
+}
+
+.hero-join-button-dark {
+  background: linear-gradient(
+    var(--gradient-angle),
+    hsla(0, 0%, 100%, 0.5),
+    hsla(0, 0%, 100%, 0.1),
+    #fff,
+    hsla(0, 0%, 100%, 0.3)
+  ) !important;
+  animation: gradient-rotate 5s linear infinite reverse;
+}
+
+.wl-form-button {
+  background: linear-gradient(var(--gradient-angle), #34d399, #60a5fa, #ff88ff, #ff8844);
+  animation: gradient-rotate 5s linear infinite reverse;
+}
+
+.animate-beam {
+  opacity: 0;
+  transform: translate(-72%, -62%) scale(0.5);
+  animation: beam 2s 0.75s ease 1 forwards;
+}
+
+@keyframes beam {
+  to {
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
+  }
+}
+
+.animate-newstar {
+  opacity: 0;
+  animation: newstar 1.5s 0.95s ease 1 forwards;
+}
+.animate-oldstar {
+  opacity: 1;
+  animation: oldstar 1.5s 0.95s ease 1 forwards;
+}
+
+@keyframes newstar {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes oldstar {
+  to {
+    opacity: 0;
+  }
+}
+
+.animate-bg-gradient-to-center {
+  animation: bg-to-center 1s 0.75s ease 1 forwards;
+}
+.animate-bg-gradient-to-center-title {
+  animation: bg-to-center 1s 0.95s ease 1 forwards;
+}
+
+@keyframes bg-to-center {
+  to {
+    background-position: center;
+  }
+}
+
+.animate-logo-light {
+  filter: brightness(90%);
+  animation: logo-light 1.25s 0.85s ease 1 forwards;
+}
+@keyframes logo-light {
+  to {
+    filter: brightness(110%);
+  }
+}
+
+.animate-3d-logo {
+  opacity: 0.1;
+  animation: logo-3d 1.25s 0.85s ease 1 forwards;
+}
+@keyframes logo-3d {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes gradient-rotate {
+  0% {
+    --gradient-angle: 360deg;
+  }
+
+  100% {
+    --gradient-angle: 0deg;
+  }
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome Safari */
+  scrollbar-width: none; /* Firefox */
+}
+
+* {
+  @apply focus:ring-blue-600 group-focus:ring-blue-600;
+}
+
+a {
+  @apply focus:outline-none focus-visible:ring-2;
+}
+
+.infinite-scroll-x-container {
+  overflow: hidden;
+  mask: linear-gradient(to right, transparent, white 20%, white 80%, transparent);
+  -webkit-mask: linear-gradient(to right, transparent, white 20%, white 80%, transparent);
+}
+.infinite-scroll-x {
+  animation: infinite-scroll-x 120s linear infinite;
+}
+
+.infinite-scroll-x-reverse {
+  animation: infinite-scroll-x 120s linear infinite reverse;
+}
+
+.infinite-scroll-x:hover,
+.infinite-scroll-x-reverse:hover {
+  animation-play-state: paused;
+}
+
+@keyframes infinite-scroll-x {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.fancy-border-gradient::before {
+  inset: 0;
+  content: '';
+  --angle: 0deg;
+  position: absolute;
+  border-radius: inherit;
+  padding: 1.5px; /* control the border thickness */
+  background: conic-gradient(
+    from var(--angle),
+    #3178c622,
+    #3178c644 35%,
+    #3178c688 39%,
+    #3178c6,
+    #3178c688 61%,
+    #3178c644 65%,
+    #3178c622
+  );
+  -webkit-mask-composite: xor;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  animation: 3s rotate linear infinite;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+@keyframes rotate {
+  to {
+    --angle: 360deg;
+  }
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.animate-amogup {
+  opacity: 0;
+  transform: translateY(50%);
+  animation: amogup 1s 0.25s ease 1 forwards;
+}
+
+@keyframes amogup {
+  to {
+    opacity: 0.5;
+    transform: translateY(0%);
+  }
+}
+
+.ReactQueryDevtools > button {
+  margin-bottom: 5rem !important;
+}
+
+/* overrides silly annoying shadcn default */
+/* it doesn't transition shadows by default */
+.shadcnoverridetransition {
+  transition: all 0.3s ease !important;
+}
+.shadcnoverridetransition:active {
+  transition: all 0.075s ease !important;
+}
+
+.hamburger .line {
+  width: 20px;
+  height: 2px;
+  background-color: hsl(var(--foreground));
+  display: block;
+  -webkit-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.hamburger {
+  padding: 5px;
+}
+
+.hamburger:hover {
+  cursor: pointer;
+}
+
+.hamburger .line:nth-child(1) {
+  height: 2px;
+}
+
+.hamburger.is-active .line:nth-child(1) {
+  height: 2px;
+  -webkit-transform: translateY(5px) rotate(45deg);
+  -ms-transform: translateY(5px) rotate(45deg);
+  -o-transform: translateY(5px) rotate(45deg);
+  transform: translateY(5px) rotate(45deg);
+}
+
+.hamburger.is-active .line:nth-child(2) {
+  -webkit-transform: translateY(-5px) rotate(-45deg);
+  -ms-transform: translateY(-5px) rotate(-45deg);
+  -o-transform: translateY(-5px) rotate(-45deg);
+  transform: translateY(-5px) rotate(-45deg);
+}
+
+body.mobile-nav-active {
+  overflow: hidden;
+}
+
+.donate-btn:before {
+  content: '';
+  background: #ffffff80;
+  filter: blur(8px);
+  width: 150%;
+  height: 1rem;
+  position: absolute;
+  top: 50%;
+  transform: rotate(-30deg) translateX(-100%) translateY(-25%);
+  opacity: 0;
+}
+
+.donate-btn:hover:before {
+  animation: shimmer 1.69s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    opacity: 1;
+    transform: translateX(-100%) translateY(0rem) rotate(-30deg);
+  }
+  42% {
+    opacity: 1;
+    transform: translateX(0%) translateY(0rem) rotate(-30deg);
+  }
+  69% {
+    opacity: 0;
+    transform: translateX(100%) translateY(-1rem) rotate(-30deg);
   }
 }
 

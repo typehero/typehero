@@ -8,10 +8,11 @@ import { useTheme } from 'next-themes';
 import { useParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { RichMarkdownEditor } from '~/components/rich-markdown-editor';
 import { createNoProfanitySchemaWithValidate } from '~/utils/antiProfanityZod';
 import { postSolution } from './_actions';
 import { useQueryClient } from '@tanstack/react-query';
+import { useUploadThing } from '~/utils/useUploadthing';
+import { RichMarkdownEditor } from '@repo/ui/components/rich-markdown-editor';
 
 const getDefaultMarkdown = (solution: string) => `
 ## Thoughts
@@ -142,6 +143,7 @@ export function SolutionEditor({ dismiss, challengeId, code }: Props) {
                   value={field.value}
                   // non-split-screen by default
                   onChange={field.onChange}
+                  useUploadThing={useUploadThing}
                 />
                 <FormMessage />
               </FormItem>

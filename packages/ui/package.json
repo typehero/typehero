@@ -59,6 +59,8 @@
     "@radix-ui/react-tooltip": "^1.0.6",
     "@repo/db": "workspace:*",
     "@tanstack/react-table": "^8.20.5",
+    "@uiw/react-md-editor": "^3.23.3",
+    "@uploadthing/react": "^6.2.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "lucide-react": "^0.453.0",
