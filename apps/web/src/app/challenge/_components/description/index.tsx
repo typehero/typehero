@@ -18,16 +18,15 @@ import { TypographyH3 } from '@repo/ui/components/typography/h3';
 import { Bookmark as BookmarkIcon, Calendar, CheckCircle, Flag, Share } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { debounce } from 'lodash';
-import { useMemo, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { type ChallengeRouteData } from '~/app/challenge/[slug]/getChallengeRouteData';
 import { ReportDialog } from '~/components/ReportDialog';
+import { ShareUrl } from '~/components/share-url';
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import { addOrRemoveBookmark } from '../bookmark.action';
-import { Vote } from '../vote';
-import { AOT_CHALLENGES } from '../../[slug]/aot-slugs';
-import { Suggestions } from './suggestions';
 import { UserBadge } from '../comments/enhanced-user-badge';
-import { ShareUrl } from '~/components/share-url';
+import { Vote } from '../vote';
+import { Suggestions } from './suggestions';
 
 interface Props {
   challenge: ChallengeRouteData['challenge'];
@@ -43,8 +42,6 @@ export interface FormValues {
 export function Description({ challenge }: Props) {
   const [hasBookmarked, setHasBookmarked] = useState(challenge.bookmark.length > 0);
   const session = useSession();
-
-  const isAotChallenge = useMemo(() => AOT_CHALLENGES.includes(challenge.slug), [challenge.slug]);
 
   const debouncedBookmark = useRef(
     debounce(async (challengeId: number, userId: string, shouldBookmark: boolean) => {
@@ -101,7 +98,7 @@ export function Description({ challenge }: Props) {
       </div>
       {/* Difficulty & Action Buttons */}
       <div className="mt-3 flex items-center gap-3">
-        {!isAotChallenge ? <DifficultyBadge difficulty={challenge.difficulty} /> : null}
+        <DifficultyBadge difficulty={challenge.difficulty} />
         {challenge.hasSolved ? (
           <Tooltip>
             <TooltipTrigger asChild>
@@ -190,7 +187,7 @@ export function Description({ challenge }: Props) {
         <Markdown>{challenge.description}</Markdown>
       </div>
       {/* More Challenges Suggestions */}
-      {!isAotChallenge && <Suggestions challengeId={challenge.id} />}
+      <Suggestions challengeId={challenge.id} />
     </div>
   );
 }

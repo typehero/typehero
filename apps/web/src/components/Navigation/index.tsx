@@ -49,7 +49,7 @@ export async function Navigation() {
       <NavLink title="Tracks" href="/tracks" />
       {featureFlags?.enableHolidayEvent ? (
         <div className="flex items-center gap-1">
-          <NavLink title="Advent of TS" href="/aot-2023" />
+          <NavLink title="Advent of TS" href="https://www.adventofts.com" />
         </div>
       ) : null}
     </>

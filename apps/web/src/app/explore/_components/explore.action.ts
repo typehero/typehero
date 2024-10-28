@@ -3,7 +3,6 @@
 import { auth } from '~/server/auth';
 import { prisma } from '@repo/db';
 import { Tags, type Difficulty } from '@repo/db/types';
-import { AOT_CHALLENGES } from '../../challenge/[slug]/aot-slugs';
 import { cache } from 'react';
 
 export type ExploreChallengeData = ReturnType<typeof getChallengesByTagOrDifficulty>;
@@ -23,9 +22,6 @@ export async function getChallengesByTagOrDifficulty(str: string, take?: number)
         NOT: {
           status: 'BANNED',
         },
-      },
-      slug: {
-        notIn: AOT_CHALLENGES,
       },
       // OR didn't work. so this workaround is fine because IT WORKS :3
       ...(allTags.includes(formattedStr as keyof typeof Tags)
