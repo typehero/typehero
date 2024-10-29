@@ -44,7 +44,7 @@ async function getOverallLeaderboard(currentAdventDay: number) {
   LIMIT ${LEADERBOARD_RANKING_LIMIT};`;
 
   // Prisma doesn't suppport distinct for .count()...
-  const challengeIdToday = ADVENT_CHALLENGE_IDS[currentAdventDay];
+  const challengeIdToday = ADVENT_CHALLENGE_IDS[currentAdventDay - 1];
   const numberOfSubmissionsTodayPromise = prisma.$queryRaw<[{ count: number }]>`
     SELECT COUNT(DISTINCT userId) as count
     FROM Submission
@@ -56,6 +56,7 @@ async function getOverallLeaderboard(currentAdventDay: number) {
     numberOfSubmissionsTodayPromise,
   ]);
 
+  // Once we have top 100 for today, we can cache until midnight (next challenge release)
   if (Number(numberOfSubmissionsToday) >= LEADERBOARD_RANKING_LIMIT) {
     await redisClient.set(
       'aot-overall-leaderboard',
