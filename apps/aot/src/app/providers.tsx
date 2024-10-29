@@ -13,7 +13,7 @@ export function Providers({ children }: Props) {
   return (
     <SessionProvider>
       <TRPCReactProvider>
-        <ThemeProvider attribute="class">
+        <ThemeProvider attribute="class" enableSystem disableTransitionOnChange>
           <TooltipProvider>{children}</TooltipProvider>
         </ThemeProvider>
       </TRPCReactProvider>
