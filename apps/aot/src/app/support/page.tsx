@@ -3,6 +3,7 @@ import { auth } from '~/server/auth';
 import { Button } from '@repo/ui/components/button';
 import styles from './support.module.css';
 import { HeartHandshake } from '@repo/ui/icons';
+// import { HandHeart } from '@repo/ui/icons/hand-heart';
 
 export const metadata: Metadata = {
   title: 'Support the Platform | TypeHero',
@@ -43,7 +44,7 @@ export default async function DonatePage() {
           className={`${styles.donateStripeLinkBtn} group relative w-fit overflow-hidden rounded-xl border-none p-0 font-bold !ring-0 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:duration-75 dark:p-[1px]`}
           variant="outline"
         >
-          <a href="https://donate.stripe.com/7sIdR1c992mdf1m000">
+          <a href="https://donate.stripe.com/14k5kv1uv0e57yU4gh">
             <span className="inline-flex h-full w-fit items-center gap-2 rounded-xl bg-black px-4 py-2 text-white transition-all duration-300 dark:bg-neutral-900 dark:text-white">
               Click to Donate
             </span>

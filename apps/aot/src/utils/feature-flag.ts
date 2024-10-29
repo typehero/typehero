@@ -8,6 +8,7 @@ export const mockFlags = {
   enableInChallengeTrack: true,
   enableHolidayEvent: true,
   enableAotPlatform: true,
+  enableAotLandingPage: true,
 };
 
 export async function getAllFlags() {
