@@ -4,16 +4,18 @@ import { useMemo } from 'react';
 import { ExploreDrawer } from '~/app/challenge/_components/explore-drawer';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight, Swords } from '@repo/ui/icons';
+import { ArrowLeft, ChevronLeft, ChevronRight, Swords } from '@repo/ui/icons';
 import { cn } from '@repo/ui/cn';
 import { Button } from '@repo/ui/components/button';
 import { useChallengeRouteData } from '~/app/challenge/[slug]/challenge-route-data.hook';
+import { useRouter } from 'next/navigation';
 
 interface ProblemExplorerTrackNav {
   isCollapsed: boolean;
   className?: string;
 }
 export function ProblemExplorerTrackNav({ isCollapsed, className }: ProblemExplorerTrackNav) {
+  const router = useRouter();
   const { currentChallenge } = useChallengeRouteData();
   const { getTrack, title } = useProblemExplorerContext();
   const track = getTrack;
@@ -50,11 +52,23 @@ export function ProblemExplorerTrackNav({ isCollapsed, className }: ProblemExplo
         className,
       )}
     >
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={() => router.back()}
+        className={cn('rounded-tl-xl', {
+          'justify-start': !isCollapsed,
+          'h-full items-center justify-center p-4 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50':
+            isCollapsed,
+        })}
+      >
+        <ArrowLeft className="h-4 w-4" />
+      </Button>
       <ExploreDrawer asChild>
         <Button
           variant="ghost"
           size="sm"
-          className={cn('inline-flex flex-1 gap-2 overflow-hidden rounded-tl-xl', {
+          className={cn('inline-flex flex-1 gap-2 overflow-hidden', {
             'justify-start': !isCollapsed,
             'h-full items-center justify-center p-4 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50':
               isCollapsed,
