@@ -12,6 +12,7 @@
         "STAGING",
         "NODE_ENV",
         "DATABASE_URL",
+        "REDIS_URL",
         "GH_TOKEN",
         "GITHUB_ID",
         "GITHUB_SECRET",

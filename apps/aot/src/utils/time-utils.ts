@@ -22,3 +22,15 @@ export function isValidAdventDay(selectedDay: number) {
   const currentAdventDay = getCurrentAdventDay();
   return selectedDay <= currentAdventDay;
 }
+
+export const getNextAdventDay = () => {
+  const currentDate = new Date();
+  const releaseTime = new Date(currentDate);
+  releaseTime.setUTCHours(5, 0, 0, 0);
+
+  if (releaseTime.getTime() <= currentDate.getTime()) {
+    releaseTime.setUTCDate(releaseTime.getUTCDate() + 1);
+  }
+
+  return releaseTime.getTime();
+};

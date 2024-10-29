@@ -20,6 +20,7 @@
     "@radix-ui/react-dialog": "^1.0.4",
     "@repo/auth": "workspace:*",
     "@repo/db": "workspace:*",
+    "@repo/redis": "workspace:*",
     "@repo/monaco": "workspace:*",
     "@repo/ui": "workspace:*",
     "@tanstack/react-query": "5.51.21",

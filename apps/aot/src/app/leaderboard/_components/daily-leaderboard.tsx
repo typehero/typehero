@@ -3,6 +3,8 @@ import { DataTableLeaderboard } from '@repo/ui/components/data-table-leaderboard
 import { ADVENT_CHALLENGE_IDS, LEADERBOARD_RANKING_LIMIT } from '~/app/leaderboard/constants';
 import { dailyLeaderboardColumns } from './columns';
 
+export const dynamic = 'force-dynamic';
+
 const getFirst100SubmissionsRanked = async (adventDay: number) => {
   const challengeId = ADVENT_CHALLENGE_IDS[adventDay - 1];
   const submissions = await prisma.submission.findMany({
