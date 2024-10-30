@@ -591,3 +591,25 @@ main {
   scroll-behavior: smooth;
   height: 100%;
 }
+
+
+/* TODO: upgrade tailwind to latest & remove this */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.animate-rotate {
+  animation: rotate 12s linear infinite;
+}
+
+.animate-rotate-reverse {
+  animation: rotate 12s linear infinite reverse;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
