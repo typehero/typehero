@@ -6,19 +6,19 @@ import {
   difficultyBadgeKeys,
   type DifficultyBadges,
   difficultyBadgesFn,
-} from '~/app/actions/badges/badge_types/difficulty-badges';
+} from '~/app/actions/badges/badge-types/difficulty-badges';
 import {
   awardSolutionBadge,
   sharedSolutionsBadgesFn,
   solutionBadgeKeys,
   type SolutionBadges,
-} from '~/app/actions/badges/badge_types/shared-solutions-badges';
+} from '~/app/actions/badges/badge-types/shared-solutions-badges';
 import {
   adventBadgesFn,
   aotBadgeKeys,
   type AotBadges,
   awardAdventBadges,
-} from '~/app/actions/badges/badge_types/advent-badges';
+} from '~/app/actions/badges/badge-types/advent-badges';
 
 export type HistoricalChallenge = Awaited<ReturnType<typeof getChallengeHistoryByCategory>>[0];
 
@@ -158,7 +158,7 @@ export async function getBadges(userId: string): Promise<BadgeInfo[]> {
   await fillInMissingBadges(userId);
   let badges: AllBadgeObjs = {};
 
-  // retrieve current awarded badge_types
+  // retrieve current awarded badge-types
   const userBadges = await prisma.userBadge.findMany({
     where: {
       userId,
