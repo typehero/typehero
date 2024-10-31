@@ -68,11 +68,33 @@ const calculateTimeComponents = (milliseconds: number) => {
 };
 
 export const CountdownTimer = () => {
+  const [isMounted, setIsMounted] = useState(false);
   const { days, hours, minutes, seconds } = useCountdown();
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null; // or return a skeleton/placeholder
+  }
 
   return (
     <>
-      {days}, {hours}, {minutes}, {seconds}
+      <div className="mx-auto flex gap-2">
+        <div className="grid h-full w-full place-items-center text-4xl font-black dark:text-white">
+          {days}
+        </div>
+        <div className="grid h-full w-full place-items-center text-3xl font-black dark:text-white">
+          {hours}
+        </div>
+        <div className="grid h-full w-full place-items-center text-2xl font-black dark:text-white">
+          {minutes}
+        </div>
+        <div className="grid h-full w-full animate-pulse place-items-center text-xl font-black dark:text-white">
+          {seconds}
+        </div>
+      </div>
     </>
   );
 };
