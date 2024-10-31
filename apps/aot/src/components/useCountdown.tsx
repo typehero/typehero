@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from 'react';
 
-export const useCountdown = () => {
+export const useAotCountdown = () => {
   const [releaseDate, setReleaseDate] = useState(() => calculateNextReleaseTime());
   const [remainingTime, setRemainingTime] = useState(
     Math.max(0, releaseDate.getTime() - Date.now()),
   );
 
   useEffect(() => {
-    const aotEndTime = new Date(Date.UTC(2024, 11, 26, 5, 0, 0));
+    const aotEndTime = new Date(Date.UTC(2024, 11, 25, 5, 0, 0));
     if (Date.now() > aotEndTime.getTime()) {
       setRemainingTime(0);
       return;
@@ -69,15 +69,26 @@ const calculateTimeComponents = (milliseconds: number) => {
 };
 
 export const CountdownTimer = () => {
+  const december26th = new Date(Date.UTC(2024, 11, 26, 5, 0, 0));
   const [isMounted, setIsMounted] = useState(false);
-  const { days, hours, minutes, seconds } = useCountdown();
+  const { days, hours, minutes, seconds } = useAotCountdown();
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
   if (!isMounted) {
-    return null; // or return a skeleton/placeholder
+    return null;
+  }
+
+  const isCountdownComplete = days === 0 && hours === 0 && minutes === 0 && seconds === 0;
+
+  if (Date.now() > december26th.getTime()) {
+    return <>It's actually over</>;
+  }
+
+  if (isCountdownComplete) {
+    return <>No countdown on last challenge day</>;
   }
 
   return (
