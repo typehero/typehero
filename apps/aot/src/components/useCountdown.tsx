@@ -80,6 +80,7 @@ export const CountdownTimer = () => {
   }, []);
 
   if (!isMounted) {
+    // div prevents layout shift in page.tsx
     return <div />;
   }
 
@@ -98,6 +99,7 @@ export const CountdownTimer = () => {
   // Make sure to adjust UI for this being gone!
   const isCountdownComplete = days === 0 && hours === 0 && minutes === 0 && seconds === 0;
   if (isCountdownComplete) {
+    // TODO: countdown complete component (pill-shaped blurb above title)
     return null;
   }
 

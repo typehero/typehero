@@ -23,6 +23,9 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+      </head>
       <body className={inter.className}>
         {enableAotPlatform ? (
           <Providers>

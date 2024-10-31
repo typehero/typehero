@@ -2,6 +2,7 @@ import Snowfall from '../components/Snowfall';
 import Image from 'next/image';
 import { CountdownTimer } from '~/components/useCountdown';
 import FrontendMasters from '../../public/frontend-masters.svg';
+import TypeHero from '../../public/typehero.svg';
 
 export default function Home() {
   return (
@@ -66,9 +67,12 @@ export default function Home() {
       <div className="flex w-36 flex-col gap-4 text-center md:w-96">
         <div className="text-xs font-light opacity-50 sm:text-sm md:text-base">Partners</div>
         <div className="h-[1px] w-full bg-black/30 [mask-image:linear-gradient(to_right,transparent,red,transparent)] dark:bg-white/30" />
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-12">
           <a href="https://frontendmasters.com/" target="_blank" rel="noreferrer">
-            <Image src={FrontendMasters} alt="FrontendMasters" />
+            <Image src={FrontendMasters} alt="FrontendMasters" className="h-12 w-fit" />
+          </a>
+          <a href="https://typehero.dev/" target="_blank" rel="noreferrer">
+            <Image src={TypeHero} alt="TypeHero" className="h-12 w-fit" />
           </a>
         </div>
       </div>

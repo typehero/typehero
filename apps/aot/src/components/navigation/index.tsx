@@ -12,6 +12,8 @@ import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { NavLink } from './nav-link';
 import Link from 'next/link';
+import Image from 'next/image';
+import logo from 'public/logo.svg';
 
 export function Navigation() {
   return (
@@ -19,30 +21,7 @@ export function Navigation() {
       <nav className="flex h-14 grid-cols-3 items-center justify-between px-4 xl:grid">
         <div className="relative flex gap-3">
           <Link className="flex items-center space-x-2 duration-300" href="/">
-            <svg
-              className="h-8 w-8 rounded-md bg-[#3178C6] p-[2px]"
-              viewBox="0 0 38 38"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect width="38" height="38" rx="4.5" fill="#3178C6" />
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M15.6947 20.9344H20V18H8V20.9344H12.2842V34H15.6947V20.9344Z"
-                fill="white"
-              />
-              <path
-                d="M22 34V18H25.4511V24.6309H30.5405V18H34V34H30.5405V27.3458H25.4511V34H22Z"
-                fill="white"
-              />
-            </svg>
-
-            <span className="font-bold leading-3">
-              type
-              <br />
-              hero
-            </span>
+            <Image src={logo} alt="Advent of TypeScript" className="h-6 w-fit" />
           </Link>
         </div>
         <div className="mx-auto mt-32 hidden w-fit items-center rounded-full md:mt-0 md:flex">
