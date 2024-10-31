@@ -9,13 +9,13 @@ export const useCountdown = () => {
   );
 
   useEffect(() => {
-    const countdown = () => {
-      const aotEndTime = new Date(Date.UTC(2024, 11, 26, 5, 0, 0));
-      if (Date.now() > aotEndTime.getTime()) {
-        setRemainingTime(0);
-        return;
-      }
+    const aotEndTime = new Date(Date.UTC(2024, 11, 26, 5, 0, 0));
+    if (Date.now() > aotEndTime.getTime()) {
+      setRemainingTime(0);
+      return;
+    }
 
+    const countdown = () => {
       const newRemainingTime = Math.max(0, releaseDate.getTime() - Date.now());
       setRemainingTime(newRemainingTime);
 
@@ -31,7 +31,8 @@ export const useCountdown = () => {
     return () => {
       clearInterval(timerId);
     };
-  }, [remainingTime, releaseDate]);
+  }, [releaseDate]);
+
   return calculateTimeComponents(remainingTime);
 };
 
