@@ -1,12 +1,14 @@
 // import { CodeXml, ExternalLink } from 'lucide-react';
 import Snowfall from '../components/Snowfall';
 import Image from 'next/image';
+import { CountdownTimer } from '~/components/useCountdown';
 import FrontendMasters from '~/public/FrontendMasters.svg';
 
 export default function Home() {
   return (
     <div className="-mt-14 grid min-h-screen grid-rows-3 place-content-center place-items-center overflow-hidden bg-gradient-to-b from-transparent to-transparent to-50% dark:from-emerald-400/40">
       <Snowfall />
+      <CountdownTimer />
       {/* background timer */}
       <div className="mx-auto flex gap-2">
         <div className="grid h-full w-full place-items-center text-4xl font-black dark:text-white">
