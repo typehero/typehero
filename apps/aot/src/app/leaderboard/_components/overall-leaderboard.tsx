@@ -1,20 +1,22 @@
 import { Prisma, prisma } from '@repo/db';
-import { ADVENT_CHALLENGE_IDS, LEADERBOARD_RANKING_LIMIT } from '../constants';
+import { LEADERBOARD_RANKING_LIMIT } from '../constants';
 import { DataTableLeaderboard } from '@repo/ui/components/data-table-leaderboard';
 import { overallLeaderboardColumns, type OverallLeaderboardEntry } from './columns';
-import { getCurrentAdventDay, getNextAdventDay } from '~/utils/time-utils';
+import { getNextAdventDay } from '~/utils/time-utils';
 import { redisClient } from '@repo/redis';
+import { getAotChallengeIdsSoFar } from '../getAotChallengeIds';
 
 export const dynamic = 'force-dynamic';
 
-async function getOverallLeaderboard(currentAdventDay: number) {
+async function getOverallLeaderboard() {
   const cachedRanking = await redisClient.get('aot-overall-leaderboard');
 
   if (cachedRanking) {
     return JSON.parse(cachedRanking) as OverallLeaderboardEntry[];
   }
 
-  const challengeIdsSoFar = ADVENT_CHALLENGE_IDS.slice(0, currentAdventDay);
+  const challengeIdsSoFar = await getAotChallengeIdsSoFar();
+
   const rankingPromise = prisma.$queryRaw<OverallLeaderboardEntry[]>`
   SELECT
     u.name,
@@ -44,7 +46,7 @@ async function getOverallLeaderboard(currentAdventDay: number) {
   LIMIT ${LEADERBOARD_RANKING_LIMIT};`;
 
   // Prisma doesn't suppport distinct for .count()...
-  const challengeIdToday = ADVENT_CHALLENGE_IDS[currentAdventDay - 1];
+  const challengeIdToday = challengeIdsSoFar.at(-1);
   const numberOfSubmissionsTodayPromise = prisma.$queryRaw<[{ count: number }]>`
     SELECT COUNT(DISTINCT userId) as count
     FROM Submission
@@ -69,8 +71,7 @@ async function getOverallLeaderboard(currentAdventDay: number) {
 }
 
 export default async function OverallLeaderboard() {
-  const currentAdventDay = getCurrentAdventDay();
-  const top100Ranking = await getOverallLeaderboard(currentAdventDay);
+  const top100Ranking = await getOverallLeaderboard();
 
   return (
     <div className="p-4">
