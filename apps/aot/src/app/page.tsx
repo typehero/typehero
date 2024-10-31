@@ -1,7 +1,7 @@
 import Snowfall from '../components/Snowfall';
 import { CountdownTimer } from '../components/countdown';
 import Image from 'next/image';
-import FrontendMasters from '~/public/FrontendMasters.svg';
+import FrontendMasters from '../assets/frontend-masters.svg';
 
 export default function Home() {
   return (
