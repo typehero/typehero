@@ -20,6 +20,14 @@ services:
       - typehero-data:/bitnami/mysql/data
     ports:
       - 3306:3306
+  redis:
+    image: 'bitnami/redis:latest'
+    container_name: typehero-redis
+    restart: always
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - 6379:6379
 volumes:
   typehero-data:
     driver: local

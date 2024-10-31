@@ -15,7 +15,7 @@ Provide your values as needed.
 
 You can use a local Docker container to run your database, or any other remote MySQL host you prefer that is compatible with Prisma.
 
-### 2.a Local Database (using Docker)
+### 2.a Local Database & Redis (using Docker)
 
 Starting the docker container
 
