@@ -22,13 +22,13 @@ export default function Home() {
             }}
           >
             <span className="text-blue-600 dark:text-blue-400">type</span>{' '}
-            <span className="text-teal-600 dark:text-teal-400">arr1</span> = [
+            <span className="text-teal-600 dark:text-teal-400">Arr1</span> = [
             <span className="text-orange-600 dark:text-orange-400">'a'</span>,{' '}
             <span className="text-orange-600 dark:text-orange-400">'b'</span>,{' '}
             <span className="text-orange-600 dark:text-orange-400">'c'</span>]
             <div className="h-1.5" />
             <span className="text-blue-600 dark:text-blue-400">type</span>{' '}
-            <span className="text-teal-600 dark:text-teal-400">arr2</span> = [
+            <span className="text-teal-600 dark:text-teal-400">Arr2</span> = [
             <span className="text-green-400">3</span>, <span className="text-green-400">2</span>,{' '}
             <span className="text-green-400">1</span>]
           </div>
@@ -41,14 +41,14 @@ export default function Home() {
             }}
           >
             <span className="text-blue-600 dark:text-blue-400">type</span>{' '}
-            <span className="text-teal-600 dark:text-teal-400">head1</span> ={' '}
-            <span className="text-teal-600 dark:text-teal-400">First</span>&lt;
-            <span className="text-teal-600 dark:text-teal-400">arr1</span>&gt;
+            <span className="text-teal-600 dark:text-teal-400">Tail</span> ={' '}
+            <span className="text-teal-600 dark:text-teal-400">Last</span>&lt;
+            <span className="text-teal-600 dark:text-teal-400">Arr1</span>&gt;
             <div className="h-1.5" />
             <span className="text-blue-600 dark:text-blue-400">type</span>{' '}
-            <span className="text-teal-600 dark:text-teal-400">head2</span> ={' '}
+            <span className="text-teal-600 dark:text-teal-400">Head</span> ={' '}
             <span className="text-teal-600 dark:text-teal-400">First</span>&lt;
-            <span className="text-teal-600 dark:text-teal-400">arr2</span>&gt;
+            <span className="text-teal-600 dark:text-teal-400">Arr2</span>&gt;
           </div>
         </div>
 
