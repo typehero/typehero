@@ -80,7 +80,7 @@ export const CountdownTimer = () => {
   }, []);
 
   if (!isMounted) {
-    return null;
+    return <div />;
   }
 
   // After holiday ends
@@ -102,21 +102,14 @@ export const CountdownTimer = () => {
   }
 
   return (
-    <>
-      <div className="mx-auto flex gap-2">
-        <div className="grid h-full w-full place-items-center text-4xl font-black dark:text-white">
-          {days}
-        </div>
-        <div className="grid h-full w-full place-items-center text-3xl font-black dark:text-white">
-          {hours}
-        </div>
-        <div className="grid h-full w-full place-items-center text-2xl font-black dark:text-white">
-          {minutes}
-        </div>
-        <div className="grid h-full w-full animate-pulse place-items-center text-xl font-black dark:text-white">
-          {seconds}
-        </div>
+    <div className="flex w-48 gap-2">
+      {/* ml-32 */}
+      <div className="text-5xl font-black dark:text-white">{days}</div>
+      <div className="text-3xl font-bold opacity-90 dark:text-white">{hours}</div>
+      <div className="text-xl font-semibold opacity-80 blur-[0.5px] dark:text-white">{minutes}</div>
+      <div className="animate-pulse-fast text-sm font-medium opacity-70 blur-[1px] dark:text-white">
+        {seconds}
       </div>
-    </>
+    </div>
   );
 };
