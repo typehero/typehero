@@ -106,11 +106,29 @@ export const CountdownTimer = () => {
   return (
     <div className="flex w-48 gap-2">
       {/* ml-32 */}
-      <div className="text-5xl font-black dark:text-white">{days}</div>
-      <div className="text-3xl font-bold opacity-90 dark:text-white">{hours}</div>
-      <div className="text-xl font-semibold opacity-80 blur-[0.5px] dark:text-white">{minutes}</div>
-      <div className="animate-pulse-fast text-sm font-medium opacity-70 blur-[1px] dark:text-white">
+      <div className="relative w-16 text-right text-5xl font-black dark:text-white">
+        {days}
+        <div className="absolute right-0 top-0 -translate-y-full font-mono text-xs font-normal opacity-50">
+          d
+        </div>
+      </div>
+      <div className="relative w-8 text-right text-3xl font-bold opacity-90 dark:text-white">
+        1{hours}
+        <div className="absolute right-0 top-0 -translate-y-full font-mono text-xs font-normal opacity-50">
+          h
+        </div>
+      </div>
+      <div className="relative w-6 text-right text-xl font-semibold opacity-80 blur-[0.5px] dark:text-white">
+        {minutes}
+        <div className="absolute right-0 top-0 -translate-y-full font-mono text-xs font-normal opacity-50">
+          m
+        </div>
+      </div>
+      <div className="animate-pulse-fast relative w-4 text-right text-sm font-medium opacity-70 blur-[1px] dark:text-white">
         {seconds}
+        <div className="absolute right-0 top-0 -translate-y-full font-mono text-xs font-normal opacity-50">
+          s
+        </div>
       </div>
     </div>
   );

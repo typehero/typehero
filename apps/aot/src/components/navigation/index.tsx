@@ -12,8 +12,7 @@ import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { NavLink } from './nav-link';
 import Link from 'next/link';
-import Image from 'next/image';
-import logo from 'public/logo.svg';
+import Logo from './logo';
 
 export function Navigation() {
   return (
@@ -21,7 +20,7 @@ export function Navigation() {
       <nav className="flex h-14 grid-cols-3 items-center justify-between px-4 xl:grid">
         <div className="relative flex gap-3">
           <Link className="flex items-center space-x-2 duration-300" href="/">
-            <Image src={logo} alt="Advent of TypeScript" className="h-6 w-fit" />
+            <Logo />
           </Link>
         </div>
         <div className="mx-auto mt-32 hidden w-fit items-center rounded-full md:mt-0 md:flex">

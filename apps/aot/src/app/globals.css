@@ -353,6 +353,10 @@ a {
   animation: infinite-scroll-x 120s linear infinite;
 }
 
+.infinite-scroll-x-fast {
+  animation: infinite-scroll-x 12s linear infinite;
+}
+
 .infinite-scroll-x-reverse {
   animation: infinite-scroll-x 120s linear infinite reverse;
 }
