@@ -1,4 +1,4 @@
-import { prisma } from '@repo/db/*';
+import { prisma } from '@repo/db';
 import { getAotSlug } from '~/utils/getAotSlug';
 import { getCurrentAdventDay } from '~/utils/time-utils';
 
