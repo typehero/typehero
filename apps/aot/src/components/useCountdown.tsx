@@ -84,8 +84,6 @@ export const CountdownTimer = () => {
     return null;
   }
 
-  const isCountdownComplete = days === 0 && hours === 0 && minutes === 0 && seconds === 0;
-
   // After holiday ends
   if (Date.now() > holidayEnd.getTime()) {
     return (
@@ -98,6 +96,7 @@ export const CountdownTimer = () => {
   // This will be true between 05:00AM Dec 25, 2024 (UTC) and 05:00AM Jan 1, 2025 (UTC)
   //
   // Make sure to adjust UI for this being gone!
+  const isCountdownComplete = days === 0 && hours === 0 && minutes === 0 && seconds === 0;
   if (isCountdownComplete) {
     return null;
   }
