@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 
 export const CountdownTimer = () => {
-  const releaseDateTimeInMilliSeconds = new Date('2024-12-01T05:00:00.000Z').getTime();
+  const releaseDateTimeInMilliSeconds = new Date('2024-12-01T04:00:00.000Z').getTime();
   const [remainingTime, setRemainingTime] = useState(
     Math.max(0, releaseDateTimeInMilliSeconds - Date.now()),
   );

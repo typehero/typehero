@@ -67,7 +67,7 @@ export default function Home() {
         <div className="text-xs font-light opacity-50 sm:text-sm md:text-base">Sponsors</div>
         <div className="h-[1px] w-full bg-black/30 [mask-image:linear-gradient(to_right,transparent,red,transparent)] dark:bg-white/30" />
         <div className="flex items-center gap-4">
-          <a href="https://frontendmasters.com/">
+          <a href="https://frontendmasters.com/" target="_blank" rel="noreferrer">
             <Image src={FrontendMasters} alt="FrontendMasters" />
           </a>
         </div>
