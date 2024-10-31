@@ -9,6 +9,7 @@ export const useAotCountdown = () => {
   );
 
   useEffect(() => {
+    // 05:00AM Dec 25, 2024 (UTC) <-> 00:00AM Dec 25, 2024 (EST)
     const aotEndTime = new Date(Date.UTC(2024, 11, 25, 5, 0, 0));
     if (Date.now() > aotEndTime.getTime()) {
       setRemainingTime(0);
@@ -41,7 +42,8 @@ const calculateNextReleaseTime = () => {
   const releaseTime = new Date(currentDate);
   releaseTime.setUTCHours(5, 0, 0, 0);
 
-  const decemberFirstReleaseTime = new Date(Date.UTC(currentDate.getUTCFullYear(), 11, 1, 5, 0, 0));
+  // 05:00AM Dec 01, 2024 (UTC) <-> 00:00AM Dec 01, 2024 (EST)
+  const decemberFirstReleaseTime = new Date(Date.UTC(2024, 11, 1, 5, 0, 0));
 
   if (currentDate < decemberFirstReleaseTime) {
     return decemberFirstReleaseTime;
@@ -69,7 +71,8 @@ const calculateTimeComponents = (milliseconds: number) => {
 };
 
 export const CountdownTimer = () => {
-  const december26th = new Date(Date.UTC(2024, 11, 26, 5, 0, 0));
+  // 05:00AM Jan 1, 2025 (UTC) <-> 00:00AM Jan 1, 2025 (EST)
+  const holidayEnd = new Date(Date.UTC(2025, 0, 1, 5, 0, 0));
   const [isMounted, setIsMounted] = useState(false);
   const { days, hours, minutes, seconds } = useAotCountdown();
 
@@ -83,12 +86,20 @@ export const CountdownTimer = () => {
 
   const isCountdownComplete = days === 0 && hours === 0 && minutes === 0 && seconds === 0;
 
-  if (Date.now() > december26th.getTime()) {
-    return <>It's actually over</>;
+  // After holiday ends
+  if (Date.now() > holidayEnd.getTime()) {
+    return (
+      <>
+        <p className="text-center text-xl font-semibold">Thats a wrap!</p>
+      </>
+    );
   }
 
+  // This will be true between 05:00AM Dec 25, 2024 (UTC) and 05:00AM Jan 1, 2025 (UTC)
+  //
+  // Make sure to adjust UI for this being gone!
   if (isCountdownComplete) {
-    return <>No countdown on last challenge day</>;
+    return null;
   }
 
   return (
