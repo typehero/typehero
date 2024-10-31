@@ -15,7 +15,7 @@ import Link from 'next/link';
 
 export function Navigation() {
   return (
-    <header className="fixed z-0 w-full">
+    <header className="sticky top-0 z-50 w-full">
       <nav className="flex h-14 grid-cols-3 items-center justify-between px-4 xl:grid">
         <div className="relative flex gap-3">
           <Link className="flex items-center space-x-2 duration-300" href="/">

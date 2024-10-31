@@ -3,7 +3,7 @@ import Snowfall from '../components/Snowfall';
 
 export default function Home() {
   return (
-    <div className="grid min-h-screen place-content-center overflow-hidden bg-gradient-to-b from-emerald-400/40 to-transparent to-50%">
+    <div className="-mt-14 grid min-h-screen place-content-center overflow-hidden bg-gradient-to-b from-emerald-400/40 to-transparent to-50%">
       <Snowfall />
       {/* background timer */}
       <div className="absolute bottom-0 left-1/2 z-30 flex -translate-x-1/2 gap-2 not-italic">
