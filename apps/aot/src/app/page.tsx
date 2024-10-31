@@ -1,27 +1,17 @@
-// import { CodeXml, ExternalLink } from 'lucide-react';
 import Snowfall from '../components/Snowfall';
+import { CountdownTimer } from '../components/countdown';
 import Image from 'next/image';
 import FrontendMasters from '~/public/FrontendMasters.svg';
 
 export default function Home() {
   return (
     <div className="-mt-14 grid min-h-screen grid-rows-3 place-content-center place-items-center overflow-hidden bg-gradient-to-b from-transparent to-transparent to-50% dark:from-emerald-400/40">
+      <div className="absolute right-1/4 top-1/2 -z-10 hidden h-48 w-[32rem] translate-y-1/2 -rotate-45 animate-pulse rounded-full bg-emerald-200 blur-3xl xl:block dark:bg-transparent" />
+      <div className="animate-pulse-alternate absolute bottom-1/2 left-1/4 -z-10 hidden h-48 w-[32rem] -translate-y-1/2 rotate-12 rounded-full bg-rose-200 blur-3xl xl:block dark:bg-transparent" />
       <Snowfall />
       {/* background timer */}
-      <div className="mx-auto flex gap-2">
-        <div className="grid h-full w-full place-items-center text-4xl font-black dark:text-white">
-          0
-        </div>
-        <div className="grid h-full w-full place-items-center text-3xl font-black dark:text-white">
-          69
-        </div>
-        <div className="grid h-full w-full place-items-center text-2xl font-black dark:text-white">
-          69
-        </div>
-        <div className="grid h-full w-full animate-pulse place-items-center text-xl font-black dark:text-white">
-          69
-        </div>
-      </div>
+      <CountdownTimer />
+
       {/* hero text */}
       <div className="container relative flex flex-col font-black italic">
         <div className="animate-rotate absolute -left-12 -top-28 -z-10 origin-[45%] md:-left-24 md:-top-20">
