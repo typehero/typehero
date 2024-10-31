@@ -594,3 +594,20 @@ body.mobile-nav-active {
     transform: rotate(360deg);
   }
 }
+
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-pulse-alternate {
+  animation: pulse 2s 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-pulse-fast {
+  animation: pulse 2s ease-in-out infinite;
+}

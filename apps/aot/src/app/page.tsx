@@ -1,12 +1,13 @@
-// import { CodeXml, ExternalLink } from 'lucide-react';
 import Snowfall from '../components/Snowfall';
 import Image from 'next/image';
 import { CountdownTimer } from '~/components/useCountdown';
-import FrontendMasters from '~/public/FrontendMasters.svg';
+import FrontendMasters from '../../public/frontend-masters.svg';
 
 export default function Home() {
   return (
     <div className="-mt-14 grid min-h-screen grid-rows-3 place-content-center place-items-center overflow-hidden bg-gradient-to-b from-transparent to-transparent to-50% dark:from-emerald-400/40">
+      <div className="absolute right-1/4 top-1/2 -z-10 hidden h-48 w-[32rem] translate-y-1/2 -rotate-45 animate-pulse rounded-full bg-emerald-200 blur-3xl xl:block dark:bg-transparent" />
+      <div className="animate-pulse-alternate absolute bottom-1/2 left-1/4 -z-10 hidden h-48 w-[32rem] -translate-y-1/2 rotate-12 rounded-full bg-rose-200 blur-3xl xl:block dark:bg-transparent" />
       <Snowfall />
       {/* background timer */}
       <CountdownTimer />
@@ -66,7 +67,9 @@ export default function Home() {
         <div className="text-xs font-light opacity-50 sm:text-sm md:text-base">Sponsors</div>
         <div className="h-[1px] w-full bg-black/30 [mask-image:linear-gradient(to_right,transparent,red,transparent)] dark:bg-white/30" />
         <div className="flex items-center gap-4">
-          <Image src={FrontendMasters} alt="FrontendMasters" />
+          <a href="https://frontendmasters.com/" target="_blank" rel="noreferrer">
+            <Image src={FrontendMasters} alt="FrontendMasters" />
+          </a>
         </div>
       </div>
     </div>
