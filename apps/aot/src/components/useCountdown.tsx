@@ -72,7 +72,6 @@ const calculateTimeComponents = (milliseconds: number) => {
 
 export const CountdownTimer = () => {
   // 05:00AM Jan 1, 2025 (UTC) <-> 00:00AM Jan 1, 2025 (EST)
-  const holidayEnd = new Date(Date.UTC(2025, 0, 1, 5, 0, 0));
   const [isMounted, setIsMounted] = useState(false);
   const { days, hours, minutes, seconds } = useAotCountdown();
 
@@ -85,6 +84,7 @@ export const CountdownTimer = () => {
   }
 
   // After holiday ends
+  const holidayEnd = new Date(Date.UTC(2025, 0, 1, 5, 0, 0));
   if (Date.now() > holidayEnd.getTime()) {
     return (
       <>
