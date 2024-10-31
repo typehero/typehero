@@ -1,7 +1,7 @@
 import Snowfall from '../components/Snowfall';
 import { CountdownTimer } from '../components/countdown';
 import Image from 'next/image';
-import FrontendMasters from '../assets/frontend-masters.svg';
+import FrontendMasters from 'public/frontend-masters.svg';
 
 export default function Home() {
   return (
@@ -67,7 +67,9 @@ export default function Home() {
         <div className="text-xs font-light opacity-50 sm:text-sm md:text-base">Sponsors</div>
         <div className="h-[1px] w-full bg-black/30 [mask-image:linear-gradient(to_right,transparent,red,transparent)] dark:bg-white/30" />
         <div className="flex items-center gap-4">
-          <Image src={FrontendMasters} alt="FrontendMasters" />
+          <a href="https://frontendmasters.com/">
+            <Image src={FrontendMasters} alt="FrontendMasters" />
+          </a>
         </div>
       </div>
     </div>
