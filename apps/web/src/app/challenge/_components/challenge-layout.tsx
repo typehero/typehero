@@ -145,6 +145,7 @@ export function ChallengeLayout({
         height: 0,
       };
 
+      // swap the logic for dragging left and right 
       const adjustedDx = isReversed ? -dx : dx;
       const newDimensionValue = isDesktop
           ? ((leftWidth + adjustedDx) * 100) / divideByW
