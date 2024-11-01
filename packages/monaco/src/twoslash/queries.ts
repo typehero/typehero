@@ -102,6 +102,7 @@ export async function checkInlineTwoslashQuery({
       position: inspectionPos,
       lineLength: endIndex - startIndex - 2,
       worker,
+      monaco,
     });
 
     const inlayHint = await createInlayHint({

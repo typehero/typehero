@@ -1,4 +1,4 @@
-import * as monaco from 'monaco-editor';
+import type * as monaco from 'monaco-editor';
 
 interface InlayHintInfo {
   hint: QuickInfoResponse | undefined;
@@ -48,9 +48,16 @@ interface LineInfo {
   position: monaco.Position;
   lineLength: number;
   worker: monaco.languages.typescript.TypeScriptWorker;
+  monaco: typeof monaco;
 }
 /** Gets the first `QuickInfo` response in a given line, if available. */
-export async function getLeftMostHintOfLine({ model, position, lineLength, worker }: LineInfo) {
+export async function getLeftMostHintOfLine({
+  model,
+  position,
+  lineLength,
+  monaco,
+  worker,
+}: LineInfo) {
   for (const i of range(lineLength)) {
     const newPosition: monaco.Position = new monaco.Position(position.lineNumber + 1, i);
     const offset = model.getOffsetAt(newPosition);
