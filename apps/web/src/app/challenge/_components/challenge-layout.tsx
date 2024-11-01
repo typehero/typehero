@@ -38,6 +38,8 @@ export interface ChallengeLayoutProps {
   adjustPanelSize: (divideByW: number, divideByH: number, newDimensionValue: number) => void;
   isLeftPanelCollapsed: () => boolean;
   isPlayground?: boolean;
+  isReversed?: boolean;
+  toggleLayoutDirection?: () => void;
 }
 
 export const MOBILE_BREAKPOINT = 1025;
@@ -55,6 +57,8 @@ export function ChallengeLayout({
   expandPanel,
   isLeftPanelCollapsed,
   isPlayground,
+  isReversed = false,
+  toggleLayoutDirection,
 }: ChallengeLayoutProps) {
   const parent = useRef<HTMLDivElement>(null);
   const resizer = useRef<HTMLDivElement>(null);
@@ -141,9 +145,11 @@ export function ChallengeLayout({
         height: 0,
       };
 
+      const adjustedDx = isReversed ? -dx : dx;
       const newDimensionValue = isDesktop
-        ? ((leftWidth + dx) * 100) / divideByW
-        : ((topHeight + dy) * 100) / divideByH;
+          ? ((leftWidth + adjustedDx) * 100) / divideByW
+          : ((topHeight + dy) * 100) / divideByH;
+  
 
       if (currPos <= COLLAPSE_BREAKPOINT) {
         collapsePanel();
@@ -281,10 +287,18 @@ export function ChallengeLayout({
 
   return (
     <div
-      className="flex flex-col px-4 pb-4 lg:flex-row"
+      className={`flex flex-col px-4 pb-4 ${isReversed ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
       ref={parent}
       style={{ height: fssettings.isFullscreen ? '100vh' : 'calc(100vh - 3.5rem)' }}
     >
+       {toggleLayoutDirection && (
+        <button 
+          onClick={toggleLayoutDirection}
+          className="absolute top-15 right-[200px] z-10 p-2 bg-primary text-sm text-white rounded-md"
+        >
+          Swap
+        </button>
+      )}
       <div
         className={`w-full overflow-hidden rounded-2xl border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 ${
           !isPlayground && 'border'

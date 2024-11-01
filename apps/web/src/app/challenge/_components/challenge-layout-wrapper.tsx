@@ -36,8 +36,16 @@ export function ChallengeLayoutWrapper({ challenge, track, children }: Props) {
     isLeftPanelCollapsed,
   };
 
+  const [isReversed, setIsReversed] = useState(false);
+
+  const toggleLayoutDirection = () => {
+    setIsReversed(prev => !prev);
+  };
+
   return (
     <ChallengeLayout
+      isReversed={isReversed}
+      toggleLayoutDirection={toggleLayoutDirection}
       left={
         <LeftWrapper
           challenge={challenge}
