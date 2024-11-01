@@ -66,13 +66,13 @@ interface SettingsElementsProps {
   toggleDirection: () => void;
 }
 
-function SettingsElements({toggleDirection}: SettingsElementsProps) {
+function SettingsElements({ toggleDirection }: SettingsElementsProps) {
   return (
     <>
       <ResetEditorButton />
       <EditorShortcutsButton />
       <SettingsButton />
-      <SwapPanelButton toggleDirection={toggleDirection}/>
+      <SwapPanelButton toggleDirection={toggleDirection} />
       <FullscreenButton />
     </>
   );

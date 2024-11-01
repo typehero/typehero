@@ -66,7 +66,6 @@ export function ChallengeLayout({
   const { fssettings, updateFSSettings } = useFullscreenSettingsStore();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
-
   const LEFT_PANEL_BREAKPOINT = isDesktop ? 500 : 318;
   const COLLAPSE_BREAKPOINT = isCollapsed ? 50 : 300;
   const _COLLAPSED_MOBILE_HEIGHT = isPlayground ? 0 : COLLAPSED_MOBILE_HEIGHT;
@@ -144,12 +143,11 @@ export function ChallengeLayout({
         height: 0,
       };
 
-      // swap the logic for dragging left and right 
+      // swap the logic for dragging left and right
       const adjustedDx = isReversed ? -dx : dx;
       const newDimensionValue = isDesktop
-          ? ((leftWidth + adjustedDx) * 100) / divideByW
-          : ((topHeight + dy) * 100) / divideByH;
-  
+        ? ((leftWidth + adjustedDx) * 100) / divideByW
+        : ((topHeight + dy) * 100) / divideByH;
 
       if (currPos <= COLLAPSE_BREAKPOINT) {
         collapsePanel();
