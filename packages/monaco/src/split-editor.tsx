@@ -1,7 +1,5 @@
 'use client';
 
-import { createTwoslashInlayProvider } from './twoslash';
-
 import { type OnChange, type OnMount, type OnValidate } from '@monaco-editor/react';
 import { setupTypeAcquisition } from '@typescript/ata';
 import clsx from 'clsx';
@@ -16,6 +14,7 @@ import { PrettierFormatProvider } from './prettier';
 import { useEditorSettingsStore } from './settings-store';
 import { getEventDeltas } from './utils';
 import { useToast } from '@repo/ui/components/use-toast';
+import { createTwoslashInlayProvider } from './twoslash/provider';
 
 function preventSelection(event: Event) {
   event.preventDefault();
