@@ -39,7 +39,6 @@ export interface ChallengeLayoutProps {
   isLeftPanelCollapsed: () => boolean;
   isPlayground?: boolean;
   isReversed?: boolean;
-  toggleLayoutDirection?: () => void;
 }
 
 export const MOBILE_BREAKPOINT = 1025;
@@ -58,7 +57,6 @@ export function ChallengeLayout({
   isLeftPanelCollapsed,
   isPlayground,
   isReversed = false,
-  toggleLayoutDirection,
 }: ChallengeLayoutProps) {
   const parent = useRef<HTMLDivElement>(null);
   const resizer = useRef<HTMLDivElement>(null);
@@ -67,6 +65,7 @@ export function ChallengeLayout({
   const { settings, updateSettings } = useLayoutSettingsStore();
   const { fssettings, updateFSSettings } = useFullscreenSettingsStore();
   const [isCollapsed, setIsCollapsed] = useState(false);
+
 
   const LEFT_PANEL_BREAKPOINT = isDesktop ? 500 : 318;
   const COLLAPSE_BREAKPOINT = isCollapsed ? 50 : 300;
@@ -284,6 +283,7 @@ export function ChallengeLayout({
     updateSettings,
     _COLLAPSED_DESKTOP_WIDTH,
     _COLLAPSED_MOBILE_HEIGHT,
+    isReversed,
   ]);
 
   return (
@@ -292,14 +292,6 @@ export function ChallengeLayout({
       ref={parent}
       style={{ height: fssettings.isFullscreen ? '100vh' : 'calc(100vh - 3.5rem)' }}
     >
-       {toggleLayoutDirection && (
-        <button 
-          onClick={toggleLayoutDirection}
-          className="absolute top-15 right-[200px] z-10 p-2 bg-primary text-sm text-white rounded-md"
-        >
-          Swap
-        </button>
-      )}
       <div
         className={`w-full overflow-hidden rounded-2xl border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 ${
           !isPlayground && 'border'
