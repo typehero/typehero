@@ -353,8 +353,10 @@ a {
   animation: infinite-scroll-x 120s linear infinite;
 }
 
-.infinite-scroll-x-fast {
-  animation: infinite-scroll-x 12s linear infinite;
+@media (max-width: 768px) {
+  .infinite-scroll-x-fast-mobile-only {
+    animation: infinite-scroll-x 12s linear infinite;
+  }
 }
 
 .infinite-scroll-x-reverse {

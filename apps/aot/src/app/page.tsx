@@ -65,18 +65,16 @@ export default function Home() {
         </div>
       </div>
       {/* Partners */}
-      <div className="flex w-36 flex-col text-center [mask-image:linear-gradient(to_bottom,red_calc(100%-2rem),transparent)] md:w-96">
-        <div className="text-xs font-extralight opacity-70 sm:text-sm md:text-base dark:opacity-30">
-          Partners
-        </div>
+      <div className="relative flex w-36 flex-col text-center md:w-96 md:[mask-image:linear-gradient(to_bottom,red_calc(100%-2rem),transparent)]">
+        <div className="font-extralight opacity-70 dark:opacity-30">Partners</div>
         <div className="mt-4 h-[1px] w-full bg-black/40 [mask-image:linear-gradient(to_right,transparent,red,transparent)] dark:bg-white/30" />
-        <div className="-mx-[50%] w-[200%] overflow-hidden [mask-image:linear-gradient(to_right,transparent,red_20%,red_80%,transparent)] md:mx-0 md:w-auto">
-          <div className="infinite-scroll-x-fast flex w-[200%] items-center">
+        <div className="absolute left-1/2 top-10 w-screen -translate-x-1/2 sm:w-[69vw] md:static md:w-auto md:translate-x-0 md:[mask-image:none]">
+          <div className="mx-auto flex w-fit flex-wrap items-center justify-center md:flex-nowrap">
             <a
               href="https://frontendmasters.com/learn/typescript/"
               target="_blank"
               rel="noreferrer"
-              className="group relative border-r border-black/10 px-6 pb-6 pt-3 duration-300 hover:bg-black/5 dark:border-white/10 dark:hover:bg-white/5"
+              className="group relative flex-shrink-0 px-6 pb-3 pt-3 duration-300 hover:bg-black/5 focus:bg-black/5 active:bg-black/10 active:duration-75 md:flex-shrink md:pb-6 dark:hover:bg-white/5 dark:focus:bg-white/5 dark:active:bg-white/10"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -88,19 +86,19 @@ export default function Home() {
                 strokeWidth="1"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="lucide lucide-external-link absolute right-1 top-1 -translate-x-full translate-y-full opacity-0 duration-300 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-50"
+                className="lucide lucide-external-link absolute right-1 top-1 -translate-x-1/2 translate-y-1/2 opacity-0 duration-300 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-50 group-focus:translate-x-0 group-focus:translate-y-0 group-focus:opacity-50 group-active:-translate-y-1/2 group-active:translate-x-1/2 group-active:opacity-0 group-active:duration-75"
               >
                 <path d="M15 3h6v6" />
                 <path d="M10 14 21 3" />
                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
               </svg>
-              <Image src={FrontendMasters} alt="FrontendMasters" className="h-12 w-fit" />
+              <Image src={FrontendMasters} alt="FrontendMasters" className="h-8 w-fit md:h-12" />
             </a>
             <a
               href="https://typehero.dev/"
               target="_blank"
               rel="noreferrer"
-              className="group relative border-r border-black/10 px-6 pb-6 pt-3 duration-300 hover:bg-black/5 dark:border-white/10 dark:hover:bg-white/5"
+              className="group relative flex-shrink-0 px-6 pb-3 pt-3 duration-300 hover:bg-black/5 focus:bg-black/5 active:bg-black/10 active:duration-75 md:flex-shrink md:pb-6 dark:hover:bg-white/5 dark:focus:bg-white/5 dark:active:bg-white/10"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -112,63 +110,18 @@ export default function Home() {
                 strokeWidth="1"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="lucide lucide-external-link absolute right-1 top-1 -translate-x-full translate-y-full opacity-0 duration-300 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-50"
+                className="lucide lucide-external-link absolute right-1 top-1 -translate-x-1/2 translate-y-1/2 opacity-0 duration-300 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-50 group-focus:translate-x-0 group-focus:translate-y-0 group-focus:opacity-50 group-active:-translate-y-1/2 group-active:translate-x-1/2 group-active:opacity-0 group-active:duration-75"
               >
                 <path d="M15 3h6v6" />
                 <path d="M10 14 21 3" />
                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
               </svg>
-              <Image src={TypeHeroDark} alt="TypeHero" className="hidden h-12 w-fit dark:block" />
-              <Image src={TypeHero} alt="TypeHero" className="h-12 w-fit dark:hidden" />
-            </a>
-            <a
-              href="https://frontendmasters.com/learn/typescript/"
-              target="_blank"
-              rel="noreferrer"
-              className="group relative border-r border-black/10 px-6 pb-6 pt-3 duration-300 hover:bg-black/5 dark:border-white/10 dark:hover:bg-white/5"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="12"
-                height="12"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-external-link absolute right-1 top-1 -translate-x-full translate-y-full opacity-0 duration-300 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-50"
-              >
-                <path d="M15 3h6v6" />
-                <path d="M10 14 21 3" />
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-              </svg>
-              <Image src={FrontendMasters} alt="FrontendMasters" className="h-12 w-fit" />
-            </a>
-            <a
-              href="https://typehero.dev/"
-              target="_blank"
-              rel="noreferrer"
-              className="group relative border-r border-black/10 px-6 pb-6 pt-3 duration-300 hover:bg-black/5 dark:border-white/10 dark:hover:bg-white/5"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="12"
-                height="12"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-external-link absolute right-1 top-1 -translate-x-full translate-y-full opacity-0 duration-300 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-50"
-              >
-                <path d="M15 3h6v6" />
-                <path d="M10 14 21 3" />
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-              </svg>
-              <Image src={TypeHeroDark} alt="TypeHero" className="hidden h-12 w-fit dark:block" />
-              <Image src={TypeHero} alt="TypeHero" className="h-12 w-fit dark:hidden" />
+              <Image
+                src={TypeHeroDark}
+                alt="TypeHero"
+                className="hidden h-8 w-fit md:h-12 dark:block"
+              />
+              <Image src={TypeHero} alt="TypeHero" className="h-8 w-fit md:h-12 dark:hidden" />
             </a>
           </div>
         </div>
