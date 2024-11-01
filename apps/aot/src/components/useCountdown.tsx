@@ -113,7 +113,7 @@ export const CountdownTimer = () => {
         </div>
       </div>
       <div className="relative w-8 text-right text-3xl font-bold opacity-90 dark:text-white">
-        1{hours}
+        {hours}
         <div className="absolute right-0 top-0 -translate-y-full font-mono text-xs font-normal opacity-50">
           h
         </div>
