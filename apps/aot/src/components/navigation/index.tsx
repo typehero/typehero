@@ -13,6 +13,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Logo from './logo';
 import { NavLink } from './nav-link';
+import { Avatar, AvatarFallback, AvatarImage, DefaultAvatar } from '@repo/ui/components/avatar';
 
 export function Navigation() {
   return (
@@ -124,9 +125,14 @@ function LoginButton() {
       <DropdownMenuTrigger asChild>
         <button
           aria-label="profile button"
-          className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none"
+          className="hidden rounded-lg p-2 duration-300 focus:outline-none focus-visible:ring-2 md:block"
         >
-          <User className="h-5 w-5" />
+          <Avatar className="h-7 w-7">
+            <AvatarImage src={session.user.image ?? ''} alt="user avatar" />
+            <AvatarFallback>
+              <DefaultAvatar />
+            </AvatarFallback>
+          </Avatar>
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
