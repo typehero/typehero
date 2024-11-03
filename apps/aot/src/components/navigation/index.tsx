@@ -63,6 +63,7 @@ export function SimpleNavigation() {
             >
               Support Us
             </Link>
+            <LoginButton />
           </div>
         </div>
       </nav>
