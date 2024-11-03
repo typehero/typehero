@@ -103,7 +103,7 @@ body,
 main {
   scroll-padding-top: 64px;
   scroll-behavior: smooth;
-  /* height: 100%; */
+  height: 100%;
 }
 
 .from-background {

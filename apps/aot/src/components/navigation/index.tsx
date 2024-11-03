@@ -9,10 +9,10 @@ import {
 } from '@repo/ui/components/dropdown-menu';
 import { Loader2, LogIn, Moon, Sun, User } from '@repo/ui/icons';
 import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
-import { NavLink } from './nav-link';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import Logo from './logo';
+import { NavLink } from './nav-link';
 
 export function Navigation() {
   return (
@@ -27,11 +27,42 @@ export function Navigation() {
           <NavLink title="About" href="/about" />
           <NavLink title="Leaderboard" href="/leaderboard" />
           <NavLink title="Events" href="/events" />
+          {/* support button looks kinda out of place here */}
+          <Link
+            className="donate-btn relative overflow-hidden rounded-md border border-[#bea74b66] px-3 py-2 text-black duration-300 hover:bg-[#eed15f] dark:text-white dark:hover:bg-[#bea74b44]"
+            href="/support"
+          >
+            Support Us
+          </Link>
         </div>
         <div className="flex xl:ml-auto">
           <div className="flex items-center justify-end gap-2">
             <ThemeButton />
             <LoginButton />
+          </div>
+        </div>
+      </nav>
+    </header>
+  );
+}
+
+export function SimpleNavigation() {
+  return (
+    <header className="sticky top-0 z-50 w-full">
+      <nav className="flex h-14 grid-cols-2 items-center justify-between px-4 xl:grid">
+        <div className="relative flex gap-3">
+          <Link className="flex items-center space-x-2 duration-300" href="/">
+            <Logo />
+          </Link>
+        </div>
+        <div className="flex xl:ml-auto">
+          <div className="flex items-center justify-end gap-2">
+            <Link
+              className="donate-btn relative overflow-hidden rounded-md border border-[#bea74b66] px-3 py-2 text-black duration-300 hover:bg-[#eed15f] dark:text-white dark:hover:bg-[#bea74b44]"
+              href="/support"
+            >
+              Support Us
+            </Link>
           </div>
         </div>
       </nav>
