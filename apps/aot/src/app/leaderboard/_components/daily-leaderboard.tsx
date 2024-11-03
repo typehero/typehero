@@ -1,10 +1,14 @@
 import { prisma } from '@repo/db';
 import { DataTableLeaderboard } from '@repo/ui/components/data-table-leaderboard';
-import { ADVENT_CHALLENGE_IDS, LEADERBOARD_RANKING_LIMIT } from '~/app/leaderboard/constants';
+import { LEADERBOARD_RANKING_LIMIT } from '~/app/leaderboard/constants';
 import { dailyLeaderboardColumns } from './columns';
+import { getAotChallengeIdForAdventDay } from '../getAotChallengeIds';
+
+export const dynamic = 'force-dynamic';
 
 const getFirst100SubmissionsRanked = async (adventDay: number) => {
-  const challengeId = ADVENT_CHALLENGE_IDS[adventDay - 1];
+  // We already checked adventDay is valid in day/[day]/layout.tsx
+  const challengeId = await getAotChallengeIdForAdventDay(adventDay)!;
   const submissions = await prisma.submission.findMany({
     select: { id: true, createdAt: true, user: { select: { name: true, image: true } } },
     where: {

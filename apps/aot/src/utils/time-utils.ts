@@ -1,11 +1,8 @@
 export function getCurrentAdventDay() {
   const MS_PER_DAY = 24 * 60 * 60 * 1000;
-  // Midnight EST
-  // const startDate = new Date('2024-12-01T05:00:00.000Z').getTime();
 
-  // Midnight EDT
   const today = Date.now();
-  const startDate = new Date('2024-10-01T04:00:00.000Z').getTime();
+  const startDate = new Date('2024-12-01T05:00:00.000Z').getTime();
 
   if (today < startDate) {
     return 0; // not advent yet!
@@ -22,3 +19,15 @@ export function isValidAdventDay(selectedDay: number) {
   const currentAdventDay = getCurrentAdventDay();
   return selectedDay <= currentAdventDay;
 }
+
+export const getNextAdventDay = () => {
+  const currentDate = new Date();
+  const releaseTime = new Date(currentDate);
+  releaseTime.setUTCHours(5, 0, 0, 0);
+
+  if (releaseTime.getTime() <= currentDate.getTime()) {
+    releaseTime.setUTCDate(releaseTime.getUTCDate() + 1);
+  }
+
+  return releaseTime.getTime();
+};

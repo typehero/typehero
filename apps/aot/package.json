@@ -21,6 +21,7 @@
     "@repo/auth": "workspace:*",
     "@repo/db": "workspace:*",
     "@repo/monaco": "workspace:*",
+    "@repo/redis": "workspace:*",
     "@repo/ui": "workspace:*",
     "@stripe/react-stripe-js": "^2.8.0",
     "@stripe/stripe-js": "^4.6.0",
