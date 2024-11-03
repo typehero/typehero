@@ -125,7 +125,7 @@ function LoginButton() {
       <DropdownMenuTrigger asChild>
         <button
           aria-label="profile button"
-          className="hidden rounded-lg p-2 duration-300 focus:outline-none focus-visible:ring-2 md:block"
+          className="rounded-lg p-2 duration-300 focus:outline-none focus-visible:ring-2"
         >
           <Avatar className="h-7 w-7">
             <AvatarImage src={session.user.image ?? ''} alt="user avatar" />
