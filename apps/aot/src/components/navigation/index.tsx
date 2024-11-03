@@ -7,7 +7,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@repo/ui/components/dropdown-menu';
-import { Loader2, LogIn, Moon, Sun, User } from '@repo/ui/icons';
+import { Loader2, LogIn, Moon, Sun } from '@repo/ui/icons';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
