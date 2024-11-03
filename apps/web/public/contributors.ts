@@ -21,7 +21,7 @@ export const contributors = [
         "type": "User",
         "user_view_type": "public",
         "site_admin": false,
-        "contributions": 407
+        "contributions": 411
     },
     {
         "login": "Hacksore",
@@ -112,6 +112,28 @@ export const contributors = [
         "contributions": 26
     },
     {
+        "login": "odicho",
+        "id": 53154523,
+        "node_id": "MDQ6VXNlcjUzMTU0NTIz",
+        "avatar_url": "https://avatars.githubusercontent.com/u/53154523?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/odicho",
+        "html_url": "https://github.com/odicho",
+        "followers_url": "https://api.github.com/users/odicho/followers",
+        "following_url": "https://api.github.com/users/odicho/following{/other_user}",
+        "gists_url": "https://api.github.com/users/odicho/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/odicho/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/odicho/subscriptions",
+        "organizations_url": "https://api.github.com/users/odicho/orgs",
+        "repos_url": "https://api.github.com/users/odicho/repos",
+        "events_url": "https://api.github.com/users/odicho/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/odicho/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false,
+        "contributions": 25
+    },
+    {
         "login": "zaCKoZAck0",
         "id": 69889382,
         "node_id": "MDQ6VXNlcjY5ODg5Mzgy",
@@ -132,28 +154,6 @@ export const contributors = [
         "user_view_type": "public",
         "site_admin": false,
         "contributions": 25
-    },
-    {
-        "login": "odicho",
-        "id": 53154523,
-        "node_id": "MDQ6VXNlcjUzMTU0NTIz",
-        "avatar_url": "https://avatars.githubusercontent.com/u/53154523?v=4",
-        "gravatar_id": "",
-        "url": "https://api.github.com/users/odicho",
-        "html_url": "https://github.com/odicho",
-        "followers_url": "https://api.github.com/users/odicho/followers",
-        "following_url": "https://api.github.com/users/odicho/following{/other_user}",
-        "gists_url": "https://api.github.com/users/odicho/gists{/gist_id}",
-        "starred_url": "https://api.github.com/users/odicho/starred{/owner}{/repo}",
-        "subscriptions_url": "https://api.github.com/users/odicho/subscriptions",
-        "organizations_url": "https://api.github.com/users/odicho/orgs",
-        "repos_url": "https://api.github.com/users/odicho/repos",
-        "events_url": "https://api.github.com/users/odicho/events{/privacy}",
-        "received_events_url": "https://api.github.com/users/odicho/received_events",
-        "type": "User",
-        "user_view_type": "public",
-        "site_admin": false,
-        "contributions": 24
     },
     {
         "login": "jhechtf",
