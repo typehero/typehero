@@ -3,9 +3,8 @@ import './globals.css';
 import { Toaster } from '@repo/ui/components/toaster';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { Navigation } from '~/components/navigation';
+import { Navigation, SimpleNavigation } from '~/components/navigation';
 import { getAllFlags } from '~/utils/feature-flag';
-import { ComingSoon } from './coming-soon';
 import { Providers } from './providers';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -23,15 +22,14 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+      </head>
       <body className={inter.className}>
-        {enableAotPlatform ? (
-          <Providers>
-            <Navigation />
-            <main>{children}</main>
-          </Providers>
-        ) : (
-          <ComingSoon />
-        )}
+        <Providers>
+          {enableAotPlatform ? <Navigation /> : <SimpleNavigation />}
+          <main>{children}</main>
+        </Providers>
         <Toaster />
       </body>
     </html>

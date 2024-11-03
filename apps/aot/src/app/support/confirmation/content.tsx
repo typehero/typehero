@@ -5,7 +5,7 @@ import { Button } from '@repo/ui/components/button';
 import Link from 'next/link';
 import Confetti from 'react-confetti';
 
-export default function Content() {
+export default function Content({ enableAotPlatform }: { enableAotPlatform: boolean }) {
   const { data: session } = useSession();
 
   const thankYouMessage = session?.user?.name
@@ -18,12 +18,21 @@ export default function Content() {
         <h1 className="mb-8 text-4xl font-bold tracking-tight text-neutral-900 dark:text-white">
           {thankYouMessage}
         </h1>
+
         <div className="flex flex-col gap-4">
-          <Link href="/events">
-            <Button className="w-56" variant="default" size="lg">
-              Explore Our Events
-            </Button>
-          </Link>
+          {enableAotPlatform ? (
+            <Link href="/events">
+              <Button className="w-56" variant="default" size="lg">
+                Explore Our Events
+              </Button>
+            </Link>
+          ) : (
+            <Link href="/">
+              <Button className="w-56" variant="default" size="lg">
+                Back to Home
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
       <Confetti recycle={false} />

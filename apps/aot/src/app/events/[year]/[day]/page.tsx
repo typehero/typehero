@@ -29,7 +29,7 @@ export default async function Challenges({ params: { year, day } }: Props) {
   const challenge = await api.event.getEventChallengeBySlug({ slug: `${year}-${day}` });
 
   return (
-    <div className="relative h-full ">
+    <div className="relative">
       <Description challenge={challenge} />
       <Comments root={challenge} type="CHALLENGE" />
     </div>

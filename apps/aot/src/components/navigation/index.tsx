@@ -9,53 +9,60 @@ import {
 } from '@repo/ui/components/dropdown-menu';
 import { Loader2, LogIn, Moon, Sun, User } from '@repo/ui/icons';
 import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
-import { NavLink } from './nav-link';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import Logo from './logo';
+import { NavLink } from './nav-link';
 
 export function Navigation() {
   return (
-    <header className="z-0 w-full">
-      <nav className="flex h-14 items-center px-4">
-        <div className="flex w-full items-center justify-between">
-          <div className="relative flex gap-3">
-            <Link className="flex items-center space-x-2 duration-300" href="/">
-              <svg
-                className="h-8 w-8 rounded-md bg-[#3178C6] p-[2px]"
-                viewBox="0 0 38 38"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect width="38" height="38" rx="4.5" fill="#3178C6" />
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M15.6947 20.9344H20V18H8V20.9344H12.2842V34H15.6947V20.9344Z"
-                  fill="white"
-                />
-                <path
-                  d="M22 34V18H25.4511V24.6309H30.5405V18H34V34H30.5405V27.3458H25.4511V34H22Z"
-                  fill="white"
-                />
-              </svg>
+    <header className="sticky top-0 z-50 w-full">
+      <nav className="flex h-14 grid-cols-3 items-center justify-between px-4 xl:grid">
+        <div className="relative flex gap-3">
+          <Link className="flex items-center space-x-2 duration-300" href="/">
+            <Logo />
+          </Link>
+        </div>
+        <div className="mx-auto mt-32 hidden w-fit items-center rounded-full md:mt-0 md:flex">
+          <NavLink title="About" href="/about" />
+          <NavLink title="Leaderboard" href="/leaderboard" />
+          <NavLink title="Events" href="/events" />
+          {/* support button looks kinda out of place here */}
+          <Link
+            className="donate-btn relative overflow-hidden rounded-md border border-[#bea74b66] px-3 py-2 text-black duration-300 hover:bg-[#eed15f] dark:text-white dark:hover:bg-[#bea74b44]"
+            href="/support"
+          >
+            Support Us
+          </Link>
+        </div>
+        <div className="flex xl:ml-auto">
+          <div className="flex items-center justify-end gap-2">
+            <ThemeButton />
+            <LoginButton />
+          </div>
+        </div>
+      </nav>
+    </header>
+  );
+}
 
-              <span className="font-bold leading-3">
-                type
-                <br />
-                hero
-              </span>
+export function SimpleNavigation() {
+  return (
+    <header className="sticky top-0 z-50 w-full">
+      <nav className="flex h-14 grid-cols-2 items-center justify-between px-4 xl:grid">
+        <div className="relative flex gap-3">
+          <Link className="flex items-center space-x-2 duration-300" href="/">
+            <Logo />
+          </Link>
+        </div>
+        <div className="flex xl:ml-auto">
+          <div className="flex items-center justify-end gap-2">
+            <Link
+              className="donate-btn relative overflow-hidden rounded-md border border-[#bea74b66] px-3 py-2 text-black duration-300 hover:bg-[#eed15f] dark:text-white dark:hover:bg-[#bea74b44]"
+              href="/support"
+            >
+              Support Us
             </Link>
-          </div>
-          <div className="items-center md:ml-4 md:flex md:gap-4">
-            <NavLink title="About" href="/about" />
-            <NavLink title="Events" href="/events" />
-            <NavLink title="Leaderboard" href="/leaderboard" />
-          </div>
-          <div className="flex">
-            <div className="flex items-center justify-end gap-2">
-              <ThemeButton />
-              <LoginButton />
-            </div>
           </div>
         </div>
       </nav>
