@@ -1,62 +1,75 @@
-'use client';
-
-import { signIn, signOut, useSession } from '@repo/auth/react';
-import { Button } from '@repo/ui/components/button';
+import type { Session } from '@repo/auth/server';
+import { Avatar, AvatarFallback, AvatarImage, DefaultAvatar } from '@repo/ui/components/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@repo/ui/components/dropdown-menu';
-import { Loader2, LogIn, Moon, Sun } from '@repo/ui/icons';
-import { useTheme } from 'next-themes';
+import { Palette } from '@repo/ui/icons';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { auth } from '~/server/auth';
+import { getAllFlags } from '~/utils/feature-flag';
+import { LoginLink } from './login-link';
 import Logo from './logo';
+import { MobileNav } from './mobile-nav';
 import { NavLink } from './nav-link';
-import { Avatar, AvatarFallback, AvatarImage, DefaultAvatar } from '@repo/ui/components/avatar';
+import { NavWrapper } from './nav-wrapper';
+import { SignOutLink } from './signout-link';
+import { ThemeButton } from './theme-button';
 
-export function Navigation() {
-  return (
-    <header className="sticky top-0 z-50 w-full">
-      <nav className="flex h-14 grid-cols-3 items-center justify-between px-4 xl:grid">
-        <div className="relative flex gap-3">
-          <Link className="flex items-center space-x-2 duration-300" href="/">
-            <Logo />
-          </Link>
-        </div>
-        <div className="mx-auto mt-32 hidden w-fit items-center rounded-full md:mt-0 md:flex">
+export async function Navigation() {
+  const [session, featureFlags] = await Promise.all([auth(), getAllFlags()]);
+
+  const TopSectionLinks = (
+    <>
+      {featureFlags.enableAotPlatform ? (
+        <>
           <NavLink title="About" href="/about" />
           <NavLink title="Leaderboard" href="/leaderboard" />
           <NavLink title="Events" href="/events" />
-          {/* support button looks kinda out of place here */}
-          <Link
-            className="donate-btn relative overflow-hidden rounded-md border border-[#bea74b66] px-3 py-2 text-black duration-300 hover:bg-[#eed15f] dark:text-white dark:hover:bg-[#bea74b44]"
-            href="/support"
-          >
-            Support Us
-          </Link>
-        </div>
-        <div className="flex xl:ml-auto">
-          <div className="flex items-center justify-end gap-2">
-            <ThemeButton />
-            <LoginButton />
-          </div>
-        </div>
-      </nav>
-    </header>
+        </>
+      ) : null}
+    </>
   );
-}
+  const NavLinks = (
+    <>
+      <div className="hidden items-center md:flex">{TopSectionLinks}</div>
+      <div className="flex flex-col gap-5 pl-2 md:hidden">
+        {TopSectionLinks}
+        {!session?.user && (
+          <div className="flex items-center gap-2">
+            <span>Theme</span>
+            <ThemeButton />
+          </div>
+        )}
 
-export function SimpleNavigation() {
+        {session?.user ? (
+          <>
+            <hr />
+            <div className="flex items-center gap-2">
+              <span>Theme</span>
+              <ThemeButton />
+            </div>
+            <SignOutLink className="px-0" />
+          </>
+        ) : (
+          <LoginLink className="px-0 hover:bg-transparent hover:dark:bg-transparent" />
+        )}
+      </div>
+    </>
+  );
+
   return (
-    <header className="sticky top-0 z-50 w-full">
-      <nav className="flex h-14 grid-cols-2 items-center justify-between px-4 xl:grid">
-        <div className="relative flex gap-3">
-          <Link className="flex items-center space-x-2 duration-300" href="/">
-            <Logo />
-          </Link>
-        </div>
-        <div className="flex xl:ml-auto">
+    <header className="z-50 w-full">
+      <NavWrapper>
+        <div className="flex w-full items-center justify-between">
+          <div className="relative flex gap-3">
+            <Link className="flex items-center space-x-2 duration-300" href="/">
+              <Logo />
+            </Link>
+          </div>
+          <div className="hidden items-center md:flex">{NavLinks}</div>
           <div className="flex items-center justify-end gap-2">
             <Link
               className="donate-btn relative overflow-hidden rounded-md border border-[#bea74b66] px-3 py-2 text-black duration-300 hover:bg-[#eed15f] dark:text-white dark:hover:bg-[#bea74b44]"
@@ -64,68 +77,22 @@ export function SimpleNavigation() {
             >
               Support Us
             </Link>
-            <LoginButton />
+            <LoginButton session={session} />
+            <MobileNav>{NavLinks}</MobileNav>
           </div>
         </div>
-      </nav>
+      </NavWrapper>
     </header>
   );
 }
 
-function ThemeButton() {
-  const [mounted, setMounted] = useState(false);
-  const { setTheme, resolvedTheme } = useTheme();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  return (
-    <>
-      {mounted ? (
-        <button
-          aria-label="theme button"
-          className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none"
-          onClick={() => {
-            setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
-          }}
-          type="button"
-        >
-          {resolvedTheme === 'dark' && <Moon aria-hidden="true" className="h-5 w-5" />}
-          {resolvedTheme === 'light' && <Sun aria-hidden="true" className="h-5 w-5" />}
-        </button>
-      ) : null}
-    </>
-  );
-}
-
-function LoginButton() {
-  const [loading, setLoading] = useState(false);
-  const { data: session, status } = useSession();
-
-  // NOTE: 1. loading == true -> 2. signIn() -> 3. session status == 'loading' (loading == false)
-  const handleSignIn = async () => {
-    try {
-      setLoading(true);
-      // page reloads after sign in, so no need to setLoading(false), othersiwe ugly visual glitch
-      await signIn('github', { redirect: false });
-    } catch (error) {
-      // only set loading to false if there was an error and page didn't reload after sign in
-      setLoading(false);
-    }
-  };
-  const handleSignOut = async () => {
-    await signOut({ redirect: false });
-    // whatever
-    window.location.reload();
-  };
-
-  return session ? (
+async function LoginButton({ session }: { session: Session | null }) {
+  return session?.user ? (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button
           aria-label="profile button"
-          className="rounded-lg p-2 duration-300 focus:outline-none focus-visible:ring-2"
+          className="hidden rounded-lg p-2 duration-300 focus:outline-none focus-visible:ring-2 md:block"
         >
           <Avatar className="h-7 w-7">
             <AvatarImage src={session.user.image ?? ''} alt="user avatar" />
@@ -139,29 +106,21 @@ function LoginButton() {
         align="end"
         className="mt-[0.33rem] w-56 rounded-xl bg-white/50 backdrop-blur-sm dark:bg-neutral-950/50"
       >
-        <Button
-          className="h-8 w-full justify-start rounded-b-lg rounded-t-sm bg-opacity-50 px-2 text-red-500 hover:bg-red-500/20 hover:text-red-500"
-          onClick={handleSignOut}
-          variant="ghost"
-        >
-          <span className="text-red-500">Log out</span>
-        </Button>
+        <div className="flex items-center justify-between rounded-lg px-2 py-0.5 text-sm ">
+          <div className="flex items-center">
+            <Palette className="mr-2 h-4 w-4" />
+            <span>Theme</span>
+          </div>
+          <ThemeButton />
+        </div>
+        <DropdownMenuSeparator />
+
+        <SignOutLink className="w-full rounded-b-lg rounded-t-sm" />
       </DropdownMenuContent>
     </DropdownMenu>
   ) : (
-    <Button
-      className="focus:bg-accent w-20 rounded-lg bg-transparent p-2 text-black duration-300 hover:bg-gray-200 focus:outline-none dark:text-white hover:dark:bg-gray-800"
-      disabled={loading || status === 'loading'}
-      onClick={handleSignIn}
-    >
-      {loading || status === 'loading' ? (
-        <Loader2 className="h-5 w-5 animate-spin" />
-      ) : (
-        <div className="flex items-center space-x-2">
-          <LogIn className="h-5 w-5" />
-          <span className="dark:text-white">Login</span>
-        </div>
-      )}
-    </Button>
+    <span className="hidden md:flex">
+      <LoginLink />
+    </span>
   );
 }

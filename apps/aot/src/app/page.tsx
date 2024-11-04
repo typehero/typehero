@@ -1,7 +1,7 @@
-import Snowfall from '../components/landing/Snowfall';
-import { CountdownTimer } from '~/components/landing/useCountdown';
-import Partners from '~/components/landing/Partners';
 import Hero from '~/components/landing/Hero';
+import Partners from '~/components/landing/Partners';
+import { CountdownTimer } from '~/components/landing/useCountdown';
+import Snowfall from '../components/landing/Snowfall';
 
 export default function Home() {
   return (
@@ -14,6 +14,8 @@ export default function Home() {
       <CountdownTimer />
       <Hero />
       <Partners />
+      {/* looks bad on desktop and mobile */}
+      {/* <Footsies /> */}
     </div>
   );
 }
