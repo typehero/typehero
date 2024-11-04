@@ -3,8 +3,7 @@ import './globals.css';
 import { Toaster } from '@repo/ui/components/toaster';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { Navigation, SimpleNavigation } from '~/components/navigation';
-import { getAllFlags } from '~/utils/feature-flag';
+import { Navigation } from '~/components/navigation';
 import { Providers } from './providers';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -18,8 +17,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { enableAotPlatform } = await getAllFlags();
-
   return (
     <html lang="en">
       <head>
@@ -27,7 +24,7 @@ export default async function RootLayout({
       </head>
       <body className={inter.className}>
         <Providers>
-          {enableAotPlatform ? <Navigation /> : <SimpleNavigation />}
+          <Navigation />
           <main>{children}</main>
         </Providers>
         <Toaster />

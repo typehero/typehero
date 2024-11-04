@@ -1,13 +1,4 @@
-import type { Metadata } from 'next';
-import { buildMetaForDefault } from '~/app/metadata';
 import { Footsies } from '~/components/footsies';
-
-export async function generateMetadata(): Promise<Metadata> {
-  return buildMetaForDefault({
-    title: 'Privacy | TypeHero',
-    description: 'Read the TypeHero Privacy Policy.',
-  });
-}
 
 export default function Page() {
   return (
