@@ -183,7 +183,7 @@ async function LoginButton({
             <span>Profile</span>
           </DropdownMenuItem>
         </Link>
-        <Link className="block" href="/settings">
+        <Link className="block" href={`/@${session.user.name}/settings`}>
           <DropdownMenuItem className="focus:bg-accent rounded-lg p-2 duration-300 focus:outline-none">
             <Settings2 className="mr-2 h-4 w-4" />
             <span>Settings</span>
