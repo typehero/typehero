@@ -1,5 +1,6 @@
 import './globals.css';
 
+import { Analytics } from '@vercel/analytics/react';
 import { Toaster } from '@repo/ui/components/toaster';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
@@ -28,6 +29,7 @@ export default async function RootLayout({
           <main>{children}</main>
         </Providers>
         <Toaster />
+        <Analytics />
       </body>
     </html>
   );
