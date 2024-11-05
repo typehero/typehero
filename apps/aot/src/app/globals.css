@@ -395,7 +395,7 @@ a {
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
-  animation: 3s rotate linear infinite;
+  /* animation: 3s rotate linear infinite; */
   mask-composite: exclude;
   pointer-events: none;
 }
