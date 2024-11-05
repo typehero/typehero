@@ -17,7 +17,7 @@ export default async function Challenges({ params: { year, day } }: Props) {
   const { unlockAotChallenges } = await getAllFlags();
   const daysPassed = daysAfterDecemberFirst(year);
 
-  if (unlockAotChallenges || parseInt(day) > daysPassed) {
+  if (!unlockAotChallenges && parseInt(day) > daysPassed) {
     return notFound();
   }
   const challenge = await api.event.getEventChallengeBySlug({ slug: `${year}-${day}` });
