@@ -5,7 +5,6 @@ import { ChevronDown, MessageCircle } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { useRef, useState } from 'react';
 import type { SolutionRouteData } from '../../solutions/[solutionId]/getSolutionIdRouteData';
-import { useTrackNavigationVisiblity } from '../../use-track-visibility.hook';
 import { Pagination } from '../pagination';
 import { SortSelect } from '../sort-select';
 import type { Challenge } from '../types';
@@ -26,7 +25,6 @@ interface Props {
 
 // million-ignore
 export function Comments({ preselectedCommentMetadata, root, type, expanded = false }: Props) {
-  const { isTrackTitleVisible } = useTrackNavigationVisiblity();
   const [showComments, setShowComments] = useState(expanded);
   const commentContainerRef = useRef<HTMLDivElement>(null);
   const {
@@ -86,9 +84,7 @@ export function Comments({ preselectedCommentMetadata, root, type, expanded = fa
             'custom-scrollable-element flex flex-col overscroll-contain duration-300',
             {
               'h-0 overflow-y-hidden': !showComments,
-              'h-64 pb-4 lg:h-[calc(100vh_-_164px)]': showComments && !isTrackTitleVisible, // no title
-              'h-[calc(256px_-_46px)] pb-4 lg:h-[calc(100vh_-_210px)]':
-                showComments && isTrackTitleVisible, // with title
+              'h-64 pb-4 lg:h-[calc(100vh_-_164px)]': showComments,
               'overflow-y-auto ': showComments && (data?.comments.length ?? 0) > 0,
             },
           )}
