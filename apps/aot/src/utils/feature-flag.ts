@@ -9,6 +9,7 @@ export const mockFlags = {
   enableHolidayEvent: true,
   enableAotPlatform: true,
   enableAotLandingPage: true,
+  unlockAotChallenges: true,
 };
 
 export async function getAllFlags() {

@@ -3,14 +3,15 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { rm } from 'node:fs/promises';
 import path from 'node:path';
 import { simpleGit } from 'simple-git';
+import { prisma } from '../src';
 
-const token = process.env.MY_PAT;
+const token = 'PLACEHOLDER';
 const repoOwner = 'dimitropoulos';
 const repoName = 'advent-of-typescript-2024';
 const repoUrl = `https://${token}:x-oauth-basic@github.com/${repoOwner}/${repoName}.git`;
 const localDir = './.tmp/aot-2024';
 
-export async function loadChallengesFromRepo() {
+async function loadChallengesFromRepo() {
   const git = simpleGit();
   await git.clone(repoUrl, localDir, ['--depth', '1']);
 
@@ -43,14 +44,23 @@ export async function loadChallengesFromRepo() {
       const filePath = path.join(dayPath, file);
       const fileName = path.parse(filePath).name;
       const fileContents = readFileSync(filePath, 'utf8');
+
+      console.log(`- ${fileName}:`);
+      console.log(fileContents);
+      console.log('---');
       if (fileName === 'prompt') {
         challengeToCreate.description = fileContents;
       }
-      if (fileName === 'user') {
-        challengeToCreate.code = fileContents;
+      if (fileName === 'start') {
+        // replace the word export with nothing in fileContents
+        challengeToCreate.code = fileContents.replace('export ', '');
       }
-      if (fileName === 'tests') {
-        challengeToCreate.tests = fileContents;
+      if (fileName === 'test') {
+        const filteredSolutionImport = fileContents
+          .split('\n')
+          .filter((line) => !line.includes('./solution'))
+          .join('\n');
+        challengeToCreate.tests = filteredSolutionImport;
       }
       if (fileName === 'metadata') {
         const jsonData = JSON.parse(fileContents);
@@ -62,22 +72,64 @@ export async function loadChallengesFromRepo() {
       }
       if (fileName === 'tsconfig') {
         const jsonData = JSON.parse(fileContents);
+        console.log({ jsonData });
         if (jsonData.compilerOptions != null) {
           challengeToCreate.tsconfig = jsonData.compilerOptions;
         }
       }
-      console.log(`- ${fileName}:`);
-      console.log(fileContents);
-      console.log('---');
     });
     challengesToCreate.push(challengeToCreate);
   }
 
-  // Cleanup
-  await rm('./.tmp', {
-    recursive: true,
-    force: true,
-  });
+  return challengesToCreate;
 }
 
-loadChallengesFromRepo();
+async function ingest() {
+  try {
+    const challengesToUpdateOrCreate = await loadChallengesFromRepo();
+
+    if (!challengesToUpdateOrCreate) {
+      console.error('No challenges to ingest.');
+      return;
+    }
+
+    const transactions = [];
+    for (const challenge of challengesToUpdateOrCreate) {
+      const author = await prisma.user.findFirstOrThrow({
+        where: {
+          name: challenge.author,
+        },
+      });
+      const { author: _, ...challengeWithoutAuthor } = challenge;
+      transactions.push(
+        prisma.challenge.upsert({
+          where: {
+            slug: challenge.slug,
+          },
+          update: {
+            ...challengeWithoutAuthor,
+            userId: author.id,
+          },
+          create: {
+            ...challengeWithoutAuthor,
+            userId: author.id,
+          },
+        }),
+      );
+    }
+
+    await prisma.$transaction(transactions);
+
+    await prisma.$disconnect();
+  } catch (error) {
+    console.error(error);
+    await prisma.$disconnect();
+  } finally {
+    await rm('./.tmp', {
+      recursive: true,
+      force: true,
+    });
+  }
+}
+
+ingest();
