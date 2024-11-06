@@ -1,3 +1,8 @@
+export function hasAdventStarted() {
+  const aoStartTime = new Date(Date.UTC(2024, 11, 1, 5, 0, 0));
+  return Date.now() >= aoStartTime.getTime();
+}
+
 export function getCurrentAdventDay() {
   const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
@@ -14,7 +19,7 @@ export function getCurrentAdventDay() {
 }
 
 export function isValidAdventDay(selectedDay: number) {
-  if (selectedDay < 1 && selectedDay > 25) return false;
+  if (selectedDay < 1 || selectedDay > 25) return false;
 
   const currentAdventDay = getCurrentAdventDay();
   return selectedDay <= currentAdventDay;
