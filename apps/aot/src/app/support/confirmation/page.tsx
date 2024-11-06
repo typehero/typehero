@@ -3,6 +3,7 @@ import { stripe } from '../_utils/stripe';
 import { auth } from '~/server/auth';
 import { prisma } from '@repo/db';
 import dynamic from 'next/dynamic';
+import { getAllFlags } from '~/utils/feature-flag';
 
 const ContentNoSSR = dynamic(() => import('./content'), {
   ssr: false,
@@ -17,6 +18,7 @@ export default async function ResultPage({
     throw new Error('Please provide a valid session_id (`cs_test_...`)');
 
   const session = await auth();
+  const { enableAotPlatform } = await getAllFlags();
 
   const checkoutSession: Stripe.Checkout.Session = await stripe.checkout.sessions.retrieve(
     searchParams.checkout_id,
@@ -70,5 +72,5 @@ export default async function ResultPage({
     );
   }
 
-  return <ContentNoSSR />;
+  return <ContentNoSSR enableAotPlatform={enableAotPlatform} />;
 }
