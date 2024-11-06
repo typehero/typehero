@@ -1,6 +1,5 @@
 import { z } from 'zod';
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc';
-import { getAotSlug } from '~/utils/getAotSlug';
 import { getCurrentAdventDay } from '~/utils/time-utils';
 import { validateCompilerOptions } from '~/utils/validateCompilerOptions';
 
@@ -83,27 +82,30 @@ export const eventRouter = createTRPCRouter({
     )
     .query(async ({ ctx, input }) => {
       const currentAdventDay = getCurrentAdventDay();
-      const day = String(currentAdventDay);
-      const endSlug = getAotSlug({ year: input.year, day });
+      // Get the starting id of this year (first aot was 2023)
+      const startId = (Number(input.year) - 2023) * 25 + 1;
+      const endId = startId + currentAdventDay - 1;
 
-      const challenges = await ctx.db.challenge.findMany({
-        where: {
-          slug: {
-            gte: `${input.year}-1`,
-            lte: endSlug,
-          },
-        },
-        orderBy: {
-          slug: 'asc',
-        },
+      const challenges = await ctx.db.trackChallenge.findMany({
         include: {
-          user: true,
-          submission: {
-            where: {
-              userId: ctx.session?.user?.id || '',
+          challenge: {
+            include: {
+              user: true,
+              submission: {
+                where: {
+                  userId: ctx.session?.user?.id || '',
+                },
+              },
             },
           },
         },
+        where: {
+          id: {
+            gte: startId,
+            lte: endId,
+          },
+        },
+        orderBy: { orderId: 'asc' },
       });
 
       return challenges;

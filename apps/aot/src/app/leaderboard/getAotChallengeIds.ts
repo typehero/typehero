@@ -1,23 +1,28 @@
 import { prisma } from '@repo/db';
-import { getAotSlug } from '~/utils/getAotSlug';
 import { getCurrentAdventDay } from '~/utils/time-utils';
 
 export const getAotChallengeIdsSoFar = async () => {
   const currentAdventDay = getCurrentAdventDay();
-  const year = new Date().getUTCFullYear().toString();
-  const day = String(currentAdventDay);
-  const endSlug = getAotSlug({ year, day });
+  // TODO: Put leaderboard under event/[year]/leaderboard
+  // pass in year from slug
+  const year = new Date().getUTCFullYear();
+
+  // Get the starting id of this year (first aot was 2023)
+  const startId = (year - 2023) * 25 + 1;
+  const endId = startId + currentAdventDay - 1;
 
   // Fetch challenges for December up to the current day in a single query
-  const challengesSoFar = await prisma.challenge.findMany({
-    where: {
-      slug: {
-        gte: `${year}-1`,
-        lte: endSlug,
+  const challengesSoFar = await prisma.trackChallenge.findMany({
+    include: {
+      challenge: {
+        select: { id: true },
       },
     },
-    select: {
-      id: true,
+    where: {
+      id: {
+        gte: startId,
+        lte: endId,
+      },
     },
   });
 
