@@ -2,6 +2,8 @@ import { buildMetaForDefault } from '~/utils/metadata';
 import { getChallengeRouteData } from '../getChallengeRouteData';
 import { Solutions } from './_components';
 import { getAotSlug } from '~/utils/getAotSlug';
+import { notFound } from 'next/navigation';
+import { isAfterJanuaryFirst } from '~/utils/aot';
 
 interface Props {
   params: {
@@ -20,5 +22,10 @@ export async function generateMetadata({ params: { year, day } }: Props) {
 
 export default async function SolutionPage({ params: { year, day } }: Props) {
   const slug = getAotSlug({ year, day });
+
+  if (!isAfterJanuaryFirst(Number(year))) {
+    return notFound();
+  }
+
   return <Solutions slug={slug} />;
 }
