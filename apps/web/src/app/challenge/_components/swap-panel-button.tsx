@@ -1,4 +1,4 @@
-import {ArrowRightLeft} from '@repo/ui/icons';
+import { ArrowRightLeft } from '@repo/ui/icons';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 
 interface props {
