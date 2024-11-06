@@ -16,9 +16,6 @@ export const getAotChallengeIdsSoFar = async () => {
         lte: endSlug,
       },
     },
-    orderBy: {
-      slug: 'asc',
-    },
     select: {
       id: true,
     },
