@@ -1,6 +1,7 @@
 'use client';
 
 import { type OnChange, type OnMount, type OnValidate } from '@monaco-editor/react';
+import { useToast } from '@repo/ui/components/use-toast';
 import { setupTypeAcquisition } from '@typescript/ata';
 import clsx from 'clsx';
 import debounce from 'lodash/debounce';
@@ -12,9 +13,8 @@ import { CodeEditor } from './code-editor';
 import { useResetEditor } from './editor-hooks';
 import { PrettierFormatProvider } from './prettier';
 import { useEditorSettingsStore } from './settings-store';
-import { getEventDeltas } from './utils';
-import { useToast } from '@repo/ui/components/use-toast';
 import { createTwoslashInlayProvider } from './twoslash/provider';
+import { getEventDeltas } from './utils';
 
 /** these types are dynamically fetched on load and used to add node types to the monaco instance */
 const NECESSARY_NODE_TYPES = ['process'];
@@ -292,6 +292,23 @@ export default function SplitEditor({
     [monaco, userEditorState],
   );
 
+  const inlayHintsRef = useRef<monacoType.IDisposable | null>(null);
+
+  const debouncedRefreshInlayHints = useRef(
+    debounce(async (monaco: typeof monacoType) => {
+      inlayHintsRef.current?.dispose();
+
+      const model = monaco?.editor.getModel(monaco.Uri.parse(USER_CODE_PATH))!;
+      const getTsWorker = await monaco?.languages.typescript.getTypeScriptWorker();
+      const tsWorker = await getTsWorker?.(model.uri);
+
+      inlayHintsRef.current = monaco?.languages.registerInlayHintsProvider(
+        'typescript',
+        createTwoslashInlayProvider(monaco, tsWorker),
+      );
+    }, 1000),
+  ).current;
+
   return (
     <div className={clsx('flex h-[calc(100%-_90px)] flex-col', className)} ref={wrapper}>
       <section
@@ -382,7 +399,7 @@ export default function SplitEditor({
             const getTsWorker = await monaco.languages.typescript.getTypeScriptWorker();
             const tsWorker = await getTsWorker(model.uri);
 
-            monaco.languages.registerInlayHintsProvider(
+            inlayHintsRef.current = monaco.languages.registerInlayHintsProvider(
               'typescript',
               createTwoslashInlayProvider(monaco, tsWorker),
             );
@@ -434,6 +451,8 @@ export default function SplitEditor({
               monaco?.languages.typescript.typescriptDefaults.addExtraLib('', USER_FILE_PATH);
             }
             onChange?.user?.(value, changeEvent);
+
+            debouncedRefreshInlayHints(monaco!);
             typeCheck(monaco!);
           }}
         />
