@@ -1,7 +1,14 @@
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import { api } from '~/trpc/server';
+import { getAllFlags } from '~/utils/feature-flag';
 
 export default async function Page() {
+  const { enableAotPlatform } = await getAllFlags();
+  if (!enableAotPlatform) {
+    return notFound();
+  }
+
   const events = await api.event.getAll();
   return (
     <ul>

@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc';
+import { getCurrentAdventDay } from '~/utils/time-utils';
 import { validateCompilerOptions } from '~/utils/validateCompilerOptions';
 
 const AOT_TRACKS = ['advent-of-typescript-2023', 'advent-of-typescript-2024'];
@@ -80,6 +81,8 @@ export const eventRouter = createTRPCRouter({
       }),
     )
     .query(async ({ ctx, input }) => {
+      const currentAdventDay = getCurrentAdventDay();
+
       const challenges = await ctx.db.track.findFirstOrThrow({
         where: {
           slug: `advent-of-typescript-${input.year}`,
@@ -88,6 +91,12 @@ export const eventRouter = createTRPCRouter({
           trackChallenges: {
             orderBy: {
               orderId: 'asc',
+            },
+            where: {
+              orderId: {
+                gte: 0,
+                lte: currentAdventDay - 1,
+              },
             },
             include: {
               challenge: {

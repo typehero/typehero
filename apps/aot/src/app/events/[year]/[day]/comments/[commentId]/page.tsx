@@ -4,6 +4,8 @@ import { getPreselectedCommentMetadata } from '../../_components/comments/getCom
 import { Description } from '../../_components/description';
 import { Comments } from '../../_components/comments';
 import { getAotSlug } from '~/utils/getAotSlug';
+import { isAfterJanuaryFirst } from '~/utils/aot';
+import { notFound } from 'next/navigation';
 
 interface Props {
   params: {
@@ -20,6 +22,10 @@ export default async function CommentPage({ params: { year, day, commentId } }: 
     challenge.id,
     Number(commentId),
   );
+
+  if (!isAfterJanuaryFirst(Number(year))) {
+    return notFound();
+  }
 
   return (
     <div className="relative h-full">
