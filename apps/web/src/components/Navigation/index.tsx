@@ -167,7 +167,7 @@ async function LoginButton({
         >
           <Avatar className="h-7 w-7">
             <AvatarImage src={session.user.image ?? ''} alt="user avatar" />
-            <AvatarFallback>
+            <AvatarFallback delayMs={5000}>
               <DefaultAvatar />
             </AvatarFallback>
           </Avatar>
