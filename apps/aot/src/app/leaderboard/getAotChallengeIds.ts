@@ -14,11 +14,6 @@ export const getAotChallengeIdsSoFar = async () => {
 
   // Fetch challenges for December up to the current day in a single query
   const challengesSoFar = await prisma.trackChallenge.findMany({
-    include: {
-      challenge: {
-        select: { id: true },
-      },
-    },
     where: {
       id: {
         gte: startId,
@@ -27,7 +22,7 @@ export const getAotChallengeIdsSoFar = async () => {
     },
   });
 
-  const challengeIdsSoFar = challengesSoFar.map((challenge) => challenge.id);
+  const challengeIdsSoFar = challengesSoFar.map((trackChallenge) => trackChallenge.challengeId);
 
   return challengeIdsSoFar;
 };
