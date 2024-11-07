@@ -1,8 +1,8 @@
 export function hasAdventStarted() {
   const today = new Date().getTime();
-  const aoStartTime = new Date(Date.UTC(2024, 11, 1, 5, 0, 0));
+  const aotStartTime = new Date(Date.UTC(2024, 11, 1, 5, 0, 0));
 
-  return today >= aoStartTime.getTime();
+  return today >= aotStartTime.getTime();
 }
 
 export function getCurrentAdventDay() {
