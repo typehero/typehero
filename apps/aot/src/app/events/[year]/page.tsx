@@ -9,7 +9,7 @@ interface Props {
 
 export default async function EventByYearLandingPage({ params: { year } }: Props) {
   const event = await api.event.getEventChallengesByYear({ year });
-  const daysCompleted = event.length;
+  const daysCompleted = event.trackChallenges.length;
 
   const daysLeftArray = Array.from({ length: 25 - daysCompleted }, (_, i) => daysCompleted + i + 1);
 
@@ -17,7 +17,7 @@ export default async function EventByYearLandingPage({ params: { year } }: Props
     <div>
       <h1>Challenges for {year}</h1>
       <ul>
-        {event.map((trackChallenge) => (
+        {event.trackChallenges.map((trackChallenge) => (
           <li key={trackChallenge.challenge.slug}>
             <Link href={`/events/${year}/${trackChallenge.challenge.slug.split('-').at(-1)}`}>
               {trackChallenge.challenge.name}

@@ -8,21 +8,26 @@ export const getAotChallengeIdsSoFar = async () => {
   // pass in year from slug
   const year = new Date().getUTCFullYear();
 
-  // Get the starting id of this year (first aot was 2023)
-  const startId = (year - 2023) * 25 + 1;
-  const endId = startId + currentAdventDay - 1;
-
   // Fetch challenges for December up to the current day in a single query
-  const challengesSoFar = await prisma.trackChallenge.findMany({
+  const challengesSoFar = await prisma.track.findFirstOrThrow({
     where: {
-      id: {
-        gte: startId,
-        lte: endId,
+      slug: `advent-of-typescript-${year}`,
+    },
+    select: {
+      trackChallenges: {
+        where: {
+          orderId: {
+            gte: 0,
+            lte: currentAdventDay - 1,
+          },
+        },
       },
     },
   });
 
-  const challengeIdsSoFar = challengesSoFar.map((trackChallenge) => trackChallenge.challengeId);
+  const challengeIdsSoFar = challengesSoFar.trackChallenges.map(
+    (trackChallenge) => trackChallenge.challengeId,
+  );
 
   return challengeIdsSoFar;
 };

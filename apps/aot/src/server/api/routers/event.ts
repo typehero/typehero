@@ -82,30 +82,40 @@ export const eventRouter = createTRPCRouter({
     )
     .query(async ({ ctx, input }) => {
       const currentAdventDay = getCurrentAdventDay();
-      // Get the starting id of this year (first aot was 2023)
-      const startId = (Number(input.year) - 2023) * 25 + 1;
-      const endId = startId + currentAdventDay - 1;
 
-      const challenges = await ctx.db.trackChallenge.findMany({
-        include: {
-          challenge: {
+      const challenges = await ctx.db.track.findFirstOrThrow({
+        where: {
+          slug: `advent-of-typescript-${input.year}`,
+        },
+        select: {
+          trackChallenges: {
+            orderBy: {
+              orderId: 'asc',
+            },
+            where: {
+              orderId: {
+                gte: 0,
+                lte: currentAdventDay - 1,
+              },
+            },
             include: {
-              user: true,
-              submission: {
-                where: {
-                  userId: ctx.session?.user?.id || '',
+              challenge: {
+                include: {
+                  submission: {
+                    where: {
+                      userId: ctx.session?.user?.id || '',
+                    },
+                  },
+                  user: {
+                    select: {
+                      name: true,
+                    },
+                  },
                 },
               },
             },
           },
         },
-        where: {
-          id: {
-            gte: startId,
-            lte: endId,
-          },
-        },
-        orderBy: { orderId: 'asc' },
       });
 
       return challenges;
