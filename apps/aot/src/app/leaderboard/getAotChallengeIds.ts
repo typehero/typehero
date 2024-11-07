@@ -4,32 +4,37 @@ import { getCurrentAdventDay } from '~/utils/time-utils';
 
 export const getAotChallengeIdsSoFar = async () => {
   const currentAdventDay = getCurrentAdventDay();
-  const year = new Date().getUTCFullYear().toString();
-  const day = String(currentAdventDay);
-  const endSlug = getAotSlug({ year, day });
+  // TODO: Put leaderboard under event/[year]/leaderboard
+  // pass in year from slug
+  const year = new Date().getUTCFullYear();
 
   // Fetch challenges for December up to the current day in a single query
-  const challengesSoFar = await prisma.challenge.findMany({
+  const challengesSoFar = await prisma.track.findFirstOrThrow({
     where: {
-      slug: {
-        gte: `${year}-1`,
-        lte: endSlug,
-      },
-    },
-    orderBy: {
-      slug: 'asc',
+      slug: `advent-of-typescript-${year}`,
     },
     select: {
-      id: true,
+      trackChallenges: {
+        where: {
+          orderId: {
+            gte: 0,
+            lte: currentAdventDay - 1,
+          },
+        },
+      },
     },
   });
 
-  const challengeIdsSoFar = challengesSoFar.map((challenge) => challenge.id);
+  const challengeIdsSoFar = challengesSoFar.trackChallenges.map(
+    (trackChallenge) => trackChallenge.challengeId,
+  );
 
   return challengeIdsSoFar;
 };
 
 export const getAotChallengeIdForAdventDay = async (adventDay: number) => {
+  // TODO: Put leaderboard under event/[year]/leaderboard
+  // pass in year from slug
   const year = new Date().getUTCFullYear().toString();
   const day = String(adventDay);
   const slug = getAotSlug({ year, day });
