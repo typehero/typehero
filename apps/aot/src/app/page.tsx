@@ -6,8 +6,8 @@ import { buildMetaForEventPage } from '~/utils/metadata';
 
 export async function generateMetadata() {
   return buildMetaForEventPage({
-    title: 'Advent of Typescript 2023 | TypeHero',
-    description: 'Advent of Typescript 2023',
+    title: 'Advent of Typescript',
+    description: 'Advent of Typescript',
   });
 }
 export default function Home() {
