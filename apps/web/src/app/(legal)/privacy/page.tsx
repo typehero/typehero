@@ -45,8 +45,8 @@ export default function Page() {
         <h2>Information we collect</h2>
 
         <p>
-          In the course of using the Services, we collect personally identifiable information, in
-          the form of Persistent Identifiers, including IP Address. We collect and store this
+          In the course of using the Services, we collect personally identifiable
+          information(information that is already public via GitHub). We collect and store this
           personal information solely for the purpose of providing support for the internal
           operations of our Services and our Site.
         </p>
@@ -56,9 +56,8 @@ export default function Page() {
         <ul>
           <li>Provide, operate, and maintain our website</li>
           <li>
-            Communicate with you, either directly or through one of our partners, including for
-            customer service, to provide you with updates and other information relating to the
-            website, and for marketing and promotional purposes(opt in).{' '}
+            Communicate with you for customer service, to provide you with updates and other
+            information relating to the website, and for marketing and promotional purposes(opt in).{' '}
           </li>
           <li>Find and prevent fraud</li>
         </ul>

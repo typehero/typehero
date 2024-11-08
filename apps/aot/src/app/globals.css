@@ -353,6 +353,12 @@ a {
   animation: infinite-scroll-x 120s linear infinite;
 }
 
+@media (max-width: 768px) {
+  .infinite-scroll-x-fast-mobile-only {
+    animation: infinite-scroll-x 12s linear infinite;
+  }
+}
+
 .infinite-scroll-x-reverse {
   animation: infinite-scroll-x 120s linear infinite reverse;
 }
@@ -389,7 +395,7 @@ a {
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
-  animation: 3s rotate linear infinite;
+  /* animation: 3s rotate linear infinite; */
   mask-composite: exclude;
   pointer-events: none;
 }
@@ -504,90 +510,40 @@ body.mobile-nav-active {
   }
 }
 
-@layer base {
-  :root {
-    --gradient-angle: 360deg;
-
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-
-    --card: 0 0% 100%;
-    --card-hovered: 0 0% 98%;
-    --card-foreground: 240 10% 3.9%;
-
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: ;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-
-    --ring: 240 5% 64.9%;
-
-    --radius: 0.5rem;
-  }
-
-  .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-
-    --card: 240 10% 3.9%;
-    --card-hovered: 240 10% 6.9%;
-    --card-foreground: 0 0% 98%;
-
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: ;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 85.7% 97.3%;
-
-    --ring: 240 3.7% 15.9%;
+/* TODO: upgrade tailwind to latest & remove this */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
+.animate-rotate {
+  animation: rotate 12s linear infinite;
+}
+
+.animate-rotate-reverse {
+  animation: rotate 12s linear infinite reverse;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
   }
 }
 
-html,
-body,
-#__next,
-main {
-  scroll-padding-top: 64px;
-  scroll-behavior: smooth;
-  height: 100%;
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-pulse-alternate {
+  animation: pulse 2s 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-pulse-fast {
+  animation: pulse 2s ease-in-out infinite;
 }

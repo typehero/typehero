@@ -317,28 +317,6 @@ main {
   }
 }
 
-.animate-halloween {
-  opacity: 0;
-  transform: translate(-2%, -2%);
-  animation: halloween 2.75s 0.75s ease 1 forwards;
-}
-
-@keyframes halloween {
-  15% {
-    opacity: 0;
-  }
-  30% {
-    opacity: 0.15;
-  }
-  55% {
-    opacity: 0.05;
-  }
-  to {
-    opacity: 0.1;
-    transform: translate(0%, 0%);
-  }
-}
-
 /* portrait */
 @media (orientation: portrait) {
   .animate-beam {
