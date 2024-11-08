@@ -54,35 +54,13 @@ export const buildMetaForEventPage = async ({
 }): Promise<Metadata> => {
   return buildMeta({
     ogImageUrl: `${OG_URL}/api/aot-2024`,
-    title,
-    description,
   });
 };
 
 /** update the metadata for og */
-const buildMeta = async ({
-  ogImageUrl,
-  description,
-  title,
-}: {
-  ogImageUrl: string;
-  description?: string;
-  title?: string;
-}): Promise<Metadata> => {
+const buildMeta = async ({ ogImageUrl }: { ogImageUrl: string }): Promise<Metadata> => {
   baseMetadata.openGraph!.images = ogImageUrl;
   baseMetadata.twitter!.images = ogImageUrl;
-
-  if (description) {
-    baseMetadata.description = description;
-    baseMetadata.twitter!.description = description;
-    baseMetadata.openGraph!.description = description;
-  }
-
-  if (title) {
-    baseMetadata.title = title;
-    baseMetadata.twitter!.title = title;
-    baseMetadata.openGraph!.title = title;
-  }
 
   return baseMetadata;
 };
