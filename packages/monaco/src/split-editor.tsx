@@ -320,7 +320,7 @@ export default function SplitEditor({
                 const baseUrl = 'https://unpkg.com/@types/node/';
                 const indexResponse = await fetch(`${baseUrl}index.d.ts`);
 
-                if (indexResponse.ok) {
+                if (!indexResponse.ok) {
                   console.error('Failed to load Node.js types:', indexResponse.statusText);
                   return;
                 }
