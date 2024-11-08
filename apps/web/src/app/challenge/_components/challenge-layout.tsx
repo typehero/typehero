@@ -149,7 +149,12 @@ export function ChallengeLayout({
         ? ((leftWidth + adjustedDx) * 100) / divideByW
         : ((topHeight + dy) * 100) / divideByH;
 
-      if (currPos <= COLLAPSE_BREAKPOINT) {
+      // Adjust collapse check for reversed layout
+      const shouldCollapse = isReversed
+        ? currPos >= parent.current!.getBoundingClientRect().width - COLLAPSE_BREAKPOINT
+        : currPos <= COLLAPSE_BREAKPOINT;
+
+      if (shouldCollapse) {
         collapsePanel();
       } else {
         adjustPanelSize(divideByW, divideByH, newDimensionValue);
