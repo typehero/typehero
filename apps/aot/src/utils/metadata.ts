@@ -17,8 +17,6 @@ export const baseMetadata: Metadata = {
   description: tagline,
   openGraph: {
     title: 'Advent of TypeScript',
-    description: tagline,
-    siteName: 'Advent of TypeScript',
     images: [
       {
         url: `${OG_URL}/api/default`,
