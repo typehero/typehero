@@ -21,10 +21,16 @@ export function ChallengeLayoutWrapper({ challenge, track, children }: Props) {
   }, [challenge, setCurrentChallenge]);
 
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > MOBILE_BREAKPOINT);
+  const [isReversed, setIsReversed] = useState(false);
+
   const LEFT_PANEL_BREAKPOINT = isDesktop ? 500 : 318;
   const DEFAULT_DESKTOP_WIDTH_PX = `${LEFT_PANEL_BREAKPOINT}px`;
   const { leftSide, adjustPanelSize, expandPanel, collapsePanel, isLeftPanelCollapsed } =
     usePanelAdjustments(DEFAULT_DESKTOP_WIDTH_PX, LEFT_PANEL_BREAKPOINT, isDesktop);
+
+  const toggleDirection = () => {
+    setIsReversed((prev) => !prev);
+  };
 
   const props = {
     setIsDesktop,
@@ -38,6 +44,7 @@ export function ChallengeLayoutWrapper({ challenge, track, children }: Props) {
 
   return (
     <ChallengeLayout
+      isReversed={isReversed}
       left={
         <LeftWrapper
           challenge={challenge}
@@ -48,7 +55,7 @@ export function ChallengeLayoutWrapper({ challenge, track, children }: Props) {
           {children}
         </LeftWrapper>
       }
-      right={<RightWrapper track={track} challenge={challenge} />}
+      right={<RightWrapper track={track} challenge={challenge} toggleDirection={toggleDirection} />}
       {...props}
     />
   );
