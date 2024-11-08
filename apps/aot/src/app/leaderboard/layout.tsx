@@ -1,4 +1,4 @@
-import { getCurrentAdventDay, isValidAdventDay } from '~/utils/time-utils';
+import { hasAdventStarted } from '~/utils/time-utils';
 import { notFound } from 'next/navigation';
 import { getAllFlags } from '~/utils/feature-flag';
 import { ComingSoon } from '../coming-soon';
@@ -10,8 +10,7 @@ export default async function LeaderboardLayout({ children }: { children: React.
     return <ComingSoon />;
   }
 
-  const currentAdventDay = getCurrentAdventDay();
-  if (!isValidAdventDay(currentAdventDay)) return notFound();
+  if (!hasAdventStarted()) return notFound();
 
   return <>{children}</>;
 }

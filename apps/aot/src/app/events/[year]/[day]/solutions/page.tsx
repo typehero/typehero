@@ -1,7 +1,8 @@
-import { buildMetaForDefault } from '~/utils/metadata';
-import { getChallengeRouteData } from '../getChallengeRouteData';
-import { Solutions } from './_components';
+import { notFound } from 'next/navigation';
+import { isAfterJanuaryFirst } from '~/utils/aot';
 import { getAotSlug } from '~/utils/getAotSlug';
+import { buildMetaForEventPage } from '~/utils/metadata';
+import { Solutions } from './_components';
 
 interface Props {
   params: {
@@ -10,15 +11,19 @@ interface Props {
   };
 }
 
-export async function generateMetadata({ params: { year, day } }: Props) {
-  const { challenge } = await getChallengeRouteData(getAotSlug({ year, day }), null);
-  return buildMetaForDefault({
-    title: `Solutions to ${challenge.name} | TypeHero`,
-    description: challenge.shortDescription,
+export async function generateMetadata() {
+  return buildMetaForEventPage({
+    title: 'Advent of Typescript',
+    description: 'Advent of Typescript',
   });
 }
 
 export default async function SolutionPage({ params: { year, day } }: Props) {
   const slug = getAotSlug({ year, day });
+
+  if (!isAfterJanuaryFirst(Number(year))) {
+    return notFound();
+  }
+
   return <Solutions slug={slug} />;
 }

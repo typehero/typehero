@@ -46,7 +46,6 @@ export async function Navigation() {
 
         {session?.user ? (
           <>
-            <hr />
             <div className="flex items-center gap-2">
               <span>Theme</span>
               <ThemeButton />

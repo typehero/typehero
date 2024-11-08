@@ -4,7 +4,7 @@ import { Comments } from './_components/comments';
 import { Description } from './_components/description';
 import { buildMetaForEventPage } from '~/utils/metadata';
 import { notFound } from 'next/navigation';
-import { daysAfterDecemberFirst } from '~/utils/aot';
+import { daysAfterDecemberFirst, isAfterJanuaryFirst } from '~/utils/aot';
 
 interface Props {
   params: {
@@ -29,9 +29,9 @@ export default async function Challenges({ params: { year, day } }: Props) {
   const challenge = await api.event.getEventChallengeBySlug({ slug: `${year}-${day}` });
 
   return (
-    <div className="relative">
+    <div className="relative h-full">
       <Description challenge={challenge} />
-      <Comments root={challenge} type="CHALLENGE" />
+      {isAfterJanuaryFirst(Number(year)) && <Comments root={challenge} type="CHALLENGE" />}
     </div>
   );
 }

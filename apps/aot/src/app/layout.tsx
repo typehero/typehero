@@ -23,10 +23,10 @@ export default async function RootLayout({
       <head>
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} flex flex-col`}>
         <Providers>
           <Navigation />
-          <main>{children}</main>
+          <main className="flex-1">{children}</main>
         </Providers>
         <Toaster />
         <Analytics />

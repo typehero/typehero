@@ -1,6 +1,7 @@
 'use client';
 
 import { type OnChange, type OnMount, type OnValidate } from '@monaco-editor/react';
+import { useToast } from '@repo/ui/components/use-toast';
 import { setupTypeAcquisition } from '@typescript/ata';
 import clsx from 'clsx';
 import debounce from 'lodash/debounce';
@@ -12,9 +13,11 @@ import { CodeEditor } from './code-editor';
 import { useResetEditor } from './editor-hooks';
 import { PrettierFormatProvider } from './prettier';
 import { useEditorSettingsStore } from './settings-store';
-import { getEventDeltas } from './utils';
-import { useToast } from '@repo/ui/components/use-toast';
 import { createTwoslashInlayProvider } from './twoslash/provider';
+import { getEventDeltas } from './utils';
+
+/** these types are dynamically fetched on load and used to add node types to the monaco instance */
+const NECESSARY_NODE_TYPES = ['process'];
 
 function preventSelection(event: Event) {
   event.preventDefault();
@@ -289,6 +292,23 @@ export default function SplitEditor({
     [monaco, userEditorState],
   );
 
+  const inlayHintsRef = useRef<monacoType.IDisposable | null>(null);
+
+  const debouncedRefreshInlayHints = useRef(
+    debounce(async (monaco: typeof monacoType) => {
+      inlayHintsRef.current?.dispose();
+
+      const model = monaco?.editor.getModel(monaco.Uri.parse(USER_CODE_PATH))!;
+      const getTsWorker = await monaco?.languages.typescript.getTypeScriptWorker();
+      const tsWorker = await getTsWorker?.(model.uri);
+
+      inlayHintsRef.current = monaco?.languages.registerInlayHintsProvider(
+        'typescript',
+        createTwoslashInlayProvider(monaco, tsWorker),
+      );
+    }, 1000),
+  ).current;
+
   return (
     <div className={clsx('flex h-[calc(100%-_90px)] flex-col', className)} ref={wrapper}>
       <section
@@ -311,6 +331,54 @@ export default function SplitEditor({
             const code = model.getValue();
             debouncedUserCodeAta(code);
 
+            async function addNodeTypesToMonaco() {
+              try {
+                // Fetch the main Node types index file
+                const baseUrl = 'https://unpkg.com/@types/node/';
+                const indexResponse = await fetch(`${baseUrl}index.d.ts`);
+
+                if (!indexResponse.ok) {
+                  console.error('Failed to load Node.js types:', indexResponse.statusText);
+                  return;
+                }
+                const indexContent = await indexResponse.text();
+
+                // Add the main index.d.ts file
+                monaco.languages.typescript.typescriptDefaults.addExtraLib(
+                  indexContent,
+                  'file:///node_modules/@types/node/index.d.ts',
+                );
+
+                // Extract all referenced files from the index.d.ts
+                const referenceRegex = /\/\/\/ <reference path="(.+?)" \/>/g;
+                const referencedFiles = [];
+                let match;
+                while ((match = referenceRegex.exec(indexContent)) !== null) {
+                  const x = match[1] ?? '';
+                  if (NECESSARY_NODE_TYPES.some((type) => x.includes(type))) {
+                    referencedFiles.push(match[1]);
+                  }
+                }
+
+                // Fetch each referenced file and add it to Monaco
+                await Promise.all(
+                  referencedFiles.map(async (file) => {
+                    const response = await fetch(`${baseUrl}${file}`);
+                    const content = await response.text();
+                    monaco.languages.typescript.typescriptDefaults.addExtraLib(
+                      content,
+                      `file:///node_modules/@types/node/${file}`,
+                    );
+                  }),
+                );
+
+                // Restart the Monaco worker to make sure types are recognized
+                monaco.languages.typescript.typescriptDefaults.setEagerModelSync(true);
+              } catch (error) {
+                console.error('Failed to load Node.js types:', error);
+              }
+            }
+
             monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
               allowNonTsExtensions: true,
               strict: true,
@@ -321,6 +389,7 @@ export default function SplitEditor({
               outDir: 'lib', // kills the override input file error
               ...tsconfig,
             });
+            addNodeTypesToMonaco();
 
             monaco.languages.registerDocumentFormattingEditProvider(
               'typescript',
@@ -330,7 +399,7 @@ export default function SplitEditor({
             const getTsWorker = await monaco.languages.typescript.getTypeScriptWorker();
             const tsWorker = await getTsWorker(model.uri);
 
-            monaco.languages.registerInlayHintsProvider(
+            inlayHintsRef.current = monaco.languages.registerInlayHintsProvider(
               'typescript',
               createTwoslashInlayProvider(monaco, tsWorker),
             );
@@ -382,6 +451,8 @@ export default function SplitEditor({
               monaco?.languages.typescript.typescriptDefaults.addExtraLib('', USER_FILE_PATH);
             }
             onChange?.user?.(value, changeEvent);
+
+            debouncedRefreshInlayHints(monaco!);
             typeCheck(monaco!);
           }}
         />

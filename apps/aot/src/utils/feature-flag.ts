@@ -7,7 +7,7 @@ export const mockFlags = {
   enableEarlyAccess: false,
   enableInChallengeTrack: true,
   enableHolidayEvent: true,
-  enableAotPlatform: false,
+  enableAotPlatform: true,
   enableAotLandingPage: true,
 };
 
