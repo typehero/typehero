@@ -1,4 +1,4 @@
-import { isValidAdventDay } from '~/utils/time-utils';
+import { isChallengeUnlocked } from '~/utils/time-utils';
 import { notFound } from 'next/navigation';
 import AdventDaysRow from '../_components/advent-days-row';
 
@@ -12,7 +12,7 @@ export default function DailyLeaderboardLayout({
   const day = Number(params.day);
   const year = Number(params.year);
 
-  if (!isValidAdventDay(day)) return notFound();
+  if (!isChallengeUnlocked(year, day)) return notFound();
 
   return (
     <>

@@ -6,10 +6,5 @@ export async function generateStaticParams() {
 }
 
 export default function Page({ params: { day } }: { params: { day: string } }) {
-  return (
-    <>
-      statically generted
-      <DailyLeaderboard adventYear={YEAR.toString()} adventDay={day} />
-    </>
-  );
+  return <DailyLeaderboard adventYear={YEAR.toString()} adventDay={day} />;
 }

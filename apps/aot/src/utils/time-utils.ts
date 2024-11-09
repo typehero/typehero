@@ -1,5 +1,6 @@
 export function hasAdventStarted(year: number) {
   if (!isValidAdventYear(year)) return false;
+
   const now = new Date().getTime();
   const aotStartTime = new Date(Date.UTC(year, 11, 1, 5, 0, 0));
 
