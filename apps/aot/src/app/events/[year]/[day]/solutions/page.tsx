@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { isAfterJanuaryFirst } from '~/utils/aot';
+import { isAfterJanuaryFirst } from '~/utils/time-utils';
 import { getAotSlug } from '~/utils/getAotSlug';
 import { buildMetaForEventPage } from '~/utils/metadata';
 import { Solutions } from './_components';
