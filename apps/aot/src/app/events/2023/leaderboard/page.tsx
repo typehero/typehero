@@ -19,6 +19,7 @@ export default async function LeaderboardPage() {
 
   return (
     <>
+      <p>OVERALL LEADERBOARD!</p>
       <AdventDaysRow year={YEAR} />
       <OverallLeaderboard year={YEAR} />
     </>

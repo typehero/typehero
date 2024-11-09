@@ -1,8 +1,6 @@
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
 import { api } from '~/trpc/server';
 import { buildMetaForEventPage } from '~/utils/metadata';
-import { isValidAdventYear } from '~/utils/time-utils';
 
 interface Props {
   params: {
@@ -18,8 +16,6 @@ export async function generateMetadata() {
 }
 export default async function EventByYearLandingPage({ params }: Props) {
   const year = Number(params.year);
-  if (!isValidAdventYear(year)) return notFound();
-
   const event = await api.event.getEventChallengesByYear({ year });
   const daysCompleted = event.trackChallenges.length;
 
