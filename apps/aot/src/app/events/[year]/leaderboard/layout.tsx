@@ -1,4 +1,4 @@
-import { hasAdventStarted, isValidAdventYear } from '~/utils/time-utils';
+import { hasAdventStarted } from '~/utils/time-utils';
 import { notFound } from 'next/navigation';
 import { getAllFlags } from '~/utils/feature-flag';
 import { ComingSoon } from '../../../coming-soon';
@@ -18,7 +18,7 @@ export default async function LeaderboardLayout({
 
   const year = Number(params.year);
 
-  if (!isValidAdventYear(year) || !hasAdventStarted(year)) return notFound();
+  if (!hasAdventStarted(year)) return notFound();
 
   return <>{children}</>;
 }
