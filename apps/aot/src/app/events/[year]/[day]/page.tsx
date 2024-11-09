@@ -3,8 +3,8 @@ import { api } from '~/trpc/server';
 import { Comments } from './_components/comments';
 import { Description } from './_components/description';
 import { buildMetaForEventPage } from '~/utils/metadata';
-import { notFound } from 'next/navigation';
-import { daysAfterDecemberFirst, isAfterJanuaryFirst } from '~/utils/aot';
+import { isAfterJanuaryFirst } from '~/utils/time-utils';
+import { getAotSlug } from '~/utils/getAotSlug';
 
 interface Props {
   params: {
@@ -21,12 +21,7 @@ export async function generateMetadata({ params: { year } }: Props) {
 }
 
 export default async function Challenges({ params: { year, day } }: Props) {
-  const daysPassed = daysAfterDecemberFirst(year);
-
-  if (parseInt(day) > daysPassed) {
-    return notFound();
-  }
-  const challenge = await api.event.getEventChallengeBySlug({ slug: `${year}-${day}` });
+  const challenge = await api.event.getEventChallengeBySlug({ slug: getAotSlug({ year, day }) });
 
   return (
     <div className="relative h-full">

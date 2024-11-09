@@ -10,16 +10,18 @@ export async function generateMetadata() {
     description: 'Advent of Typescript',
   });
 }
-export default async function LeaderboardPage() {
+export default async function LeaderboardPage({ params }: { params: { year: string } }) {
   const { enableAotPlatform } = await getAllFlags();
   if (!enableAotPlatform) {
     return notFound();
   }
 
+  const year = Number(params.year);
+
   return (
     <>
-      <AdventDaysRow />
-      <OverallLeaderboard />
+      <AdventDaysRow year={year} />
+      <OverallLeaderboard year={year} />
     </>
   );
 }

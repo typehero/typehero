@@ -8,14 +8,14 @@ import { getAotChallengeIdsSoFar } from '../getAotChallengeIds';
 
 export const dynamic = 'force-dynamic';
 
-async function getOverallLeaderboard() {
+async function getOverallLeaderboard(year: number) {
   const cachedRanking = await redisClient.get('aot-overall-leaderboard');
 
   if (cachedRanking) {
     return JSON.parse(cachedRanking) as OverallLeaderboardEntry[];
   }
 
-  const challengeIdsSoFar = await getAotChallengeIdsSoFar();
+  const challengeIdsSoFar = await getAotChallengeIdsSoFar(year);
 
   const rankingPromise = prisma.$queryRaw<OverallLeaderboardEntry[]>`
   SELECT
@@ -70,8 +70,8 @@ async function getOverallLeaderboard() {
   return ranking;
 }
 
-export default async function OverallLeaderboard() {
-  const top100Ranking = await getOverallLeaderboard();
+export default async function OverallLeaderboard({ year }: { year: number }) {
+  const top100Ranking = await getOverallLeaderboard(year);
 
   return (
     <div className="p-4">
