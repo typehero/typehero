@@ -1,16 +1,16 @@
-export function hasAdventStarted() {
+export function hasAdventStarted(year: number) {
   const today = new Date().getTime();
-  const aotStartTime = new Date(Date.UTC(2024, 11, 1, 5, 0, 0));
+  const aotStartTime = new Date(Date.UTC(year, 11, 1, 5, 0, 0));
 
   return today >= aotStartTime.getTime();
 }
 
-export function getCurrentAdventDay() {
+export function getCurrentAdventDay(year: number) {
   const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
   const today = new Date().getTime();
-  const startDate = new Date('2024-12-01T05:00:00.000Z').getTime();
-  const endDate = new Date('2024-12-26T05:00:00.000Z').getTime();
+  const startDate = new Date(Date.UTC(year, 11, 1, 5, 0, 0)).getTime();
+  const endDate = new Date(Date.UTC(year, 11, 26, 5, 0, 0)).getTime();
 
   if (today < startDate) {
     return 0; // not advent yet!
@@ -26,10 +26,11 @@ export function getCurrentAdventDay() {
 }
 
 export function isValidAdventDay(selectedDay: number) {
-  if (selectedDay < 1 || selectedDay > 25) return false;
+  return selectedDay >= 1 && selectedDay <= 25;
+}
 
-  const currentAdventDay = getCurrentAdventDay();
-  return selectedDay <= currentAdventDay;
+export function isValidAdventYear(selectedYear: number) {
+  return selectedYear >= 2023 && selectedYear <= 2024;
 }
 
 export const getNextAdventDay = () => {

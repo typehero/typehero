@@ -77,11 +77,11 @@ export const eventRouter = createTRPCRouter({
   getEventChallengesByYear: publicProcedure
     .input(
       z.object({
-        year: z.string(),
+        year: z.number(),
       }),
     )
     .query(async ({ ctx, input }) => {
-      const currentAdventDay = getCurrentAdventDay();
+      const currentAdventDay = getCurrentAdventDay(input.year);
 
       const challenges = await ctx.db.track.findFirstOrThrow({
         where: {
