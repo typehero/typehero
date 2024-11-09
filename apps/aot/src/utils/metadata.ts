@@ -7,7 +7,7 @@ export const tagline = 'Advent of TypeScript';
 export const baseMetadata: Metadata = {
   metadataBase: new URL(OG_URL),
   title: {
-    default: 'Advend of TypeScript',
+    default: 'Advent of TypeScript',
     template: '%s',
   },
   robots: {

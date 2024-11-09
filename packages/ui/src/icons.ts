@@ -4,6 +4,7 @@ export {
   ArrowLeft,
   ArrowUp,
   ArrowUpNarrowWide,
+  ArrowRightLeft,
   ArrowUpRight,
   AtSign,
   Award,
