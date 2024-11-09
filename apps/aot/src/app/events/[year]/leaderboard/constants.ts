@@ -1,0 +1,1 @@
+export const LEADERBOARD_RANKING_LIMIT = 100;
