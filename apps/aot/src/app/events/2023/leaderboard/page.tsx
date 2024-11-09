@@ -3,7 +3,7 @@ import AdventDaysRow from '../../[year]/leaderboard/_components/advent-days-row'
 import OverallLeaderboard from '../../[year]/leaderboard/_components/overall-leaderboard';
 import { notFound } from 'next/navigation';
 import { buildMetaForEventPage } from '~/utils/metadata';
-import { YEAR } from '../year';
+import { YEAR } from '../date_constants';
 
 export async function generateMetadata() {
   return buildMetaForEventPage({
