@@ -48,7 +48,7 @@ export const getNextAdventDay = () => {
 
 export function isAfterJanuaryFirst(year: number) {
   const now = new Date();
-  const januaryFirst = new Date(Date.UTC(year + 1, 0, 1)); // January 1st of the next year, in UTC
+  const januaryFirst = new Date(Date.UTC(year + 1, 0, 1, 5, 0, 0));
   return now.getTime() > januaryFirst.getTime();
 }
 
