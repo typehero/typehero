@@ -44,3 +44,21 @@ export const getNextAdventDay = () => {
 
   return releaseTime.getTime();
 };
+
+export function isAfterJanuaryFirst(year: number) {
+  const now = new Date();
+  const januaryFirst = new Date(Date.UTC(year + 1, 0, 1)); // January 1st of the next year, in UTC
+  return now.getTime() > januaryFirst.getTime();
+}
+
+export function isChallengeUnlocked(year: number, day: number): boolean {
+  if (!hasAdventStarted(year) || !isValidAdventYear(year) || !isValidAdventDay(day)) {
+    return false;
+  }
+
+  // Get the current day in the Advent period
+  const currentAdventDay = getCurrentAdventDay(year);
+
+  // If the current Advent day is greater than or equal to the challenge day, it’s unlocked
+  return currentAdventDay >= day;
+}

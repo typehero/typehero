@@ -6,7 +6,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { cn } from '@repo/ui/cn';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui/components/tabs';
 import { FlaskConical, History, Text } from '@repo/ui/icons';
-import { isAfterJanuaryFirst } from '~/utils/aot';
+import { isAfterJanuaryFirst } from '~/utils/time-utils';
 
 type Tab = 'description' | 'solutions' | 'submissions';
 interface Props {
