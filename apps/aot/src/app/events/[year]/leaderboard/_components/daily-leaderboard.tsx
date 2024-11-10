@@ -1,14 +1,14 @@
 import { prisma } from '@repo/db';
 import { DataTableLeaderboard } from '@repo/ui/components/data-table-leaderboard';
-import { LEADERBOARD_RANKING_LIMIT } from '~/app/leaderboard/constants';
+import { LEADERBOARD_RANKING_LIMIT } from '../constants';
 import { dailyLeaderboardColumns } from './columns';
 import { getAotChallengeIdForAdventDay } from '../getAotChallengeIds';
 
 export const dynamic = 'force-dynamic';
 
-const getFirst100SubmissionsRanked = async (adventDay: number) => {
+const getFirst100SubmissionsRanked = async (adventYear: string, adventDay: string) => {
   // We already checked adventDay is valid in day/[day]/layout.tsx
-  const challengeId = await getAotChallengeIdForAdventDay(adventDay)!;
+  const challengeId = await getAotChallengeIdForAdventDay(adventYear, adventDay)!;
   const submissions = await prisma.submission.findMany({
     select: { id: true, createdAt: true, user: { select: { name: true, image: true } } },
     where: {
@@ -24,8 +24,14 @@ const getFirst100SubmissionsRanked = async (adventDay: number) => {
   return submissions;
 };
 
-export default async function DailyLeaderboard({ adventDay }: { adventDay: number }) {
-  const first100SubmissionsRanked = await getFirst100SubmissionsRanked(adventDay);
+export default async function DailyLeaderboard({
+  adventYear,
+  adventDay,
+}: {
+  adventYear: string;
+  adventDay: string;
+}) {
+  const first100SubmissionsRanked = await getFirst100SubmissionsRanked(adventYear, adventDay);
 
   return (
     <div className="p-4">

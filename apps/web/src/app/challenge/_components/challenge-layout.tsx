@@ -38,6 +38,7 @@ export interface ChallengeLayoutProps {
   adjustPanelSize: (divideByW: number, divideByH: number, newDimensionValue: number) => void;
   isLeftPanelCollapsed: () => boolean;
   isPlayground?: boolean;
+  isReversed?: boolean;
 }
 
 export const MOBILE_BREAKPOINT = 1025;
@@ -55,6 +56,7 @@ export function ChallengeLayout({
   expandPanel,
   isLeftPanelCollapsed,
   isPlayground,
+  isReversed = false,
 }: ChallengeLayoutProps) {
   const parent = useRef<HTMLDivElement>(null);
   const resizer = useRef<HTMLDivElement>(null);
@@ -141,11 +143,18 @@ export function ChallengeLayout({
         height: 0,
       };
 
+      // swap the logic for dragging left and right
+      const adjustedDx = isReversed ? -dx : dx;
       const newDimensionValue = isDesktop
-        ? ((leftWidth + dx) * 100) / divideByW
+        ? ((leftWidth + adjustedDx) * 100) / divideByW
         : ((topHeight + dy) * 100) / divideByH;
 
-      if (currPos <= COLLAPSE_BREAKPOINT) {
+      // Adjust collapse check for reversed layout
+      const shouldCollapse = isReversed
+        ? currPos >= parent.current!.getBoundingClientRect().width - COLLAPSE_BREAKPOINT
+        : currPos <= COLLAPSE_BREAKPOINT;
+
+      if (shouldCollapse) {
         collapsePanel();
       } else {
         adjustPanelSize(divideByW, divideByH, newDimensionValue);
@@ -277,11 +286,12 @@ export function ChallengeLayout({
     updateSettings,
     _COLLAPSED_DESKTOP_WIDTH,
     _COLLAPSED_MOBILE_HEIGHT,
+    isReversed,
   ]);
 
   return (
     <div
-      className="flex flex-col px-4 pb-4 lg:flex-row"
+      className={`flex flex-col px-4 pb-4 ${isReversed ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
       ref={parent}
       style={{ height: fssettings.isFullscreen ? '100vh' : 'calc(100vh - 3.5rem)' }}
     >

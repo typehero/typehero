@@ -1,16 +1,24 @@
 import { hasAdventStarted } from '~/utils/time-utils';
 import { notFound } from 'next/navigation';
 import { getAllFlags } from '~/utils/feature-flag';
-import { ComingSoon } from '../coming-soon';
+import { ComingSoon } from '../../../coming-soon';
 
-export default async function LeaderboardLayout({ children }: { children: React.ReactNode }) {
+export default async function LeaderboardLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: { year: string };
+}) {
   const { enableAotPlatform } = await getAllFlags();
 
   if (!enableAotPlatform) {
     return <ComingSoon />;
   }
 
-  if (!hasAdventStarted()) return notFound();
+  const year = Number(params.year);
+
+  if (!hasAdventStarted(year)) return notFound();
 
   return <>{children}</>;
 }

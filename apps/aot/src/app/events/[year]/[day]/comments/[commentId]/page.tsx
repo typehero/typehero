@@ -4,7 +4,7 @@ import { getPreselectedCommentMetadata } from '../../_components/comments/getCom
 import { Description } from '../../_components/description';
 import { Comments } from '../../_components/comments';
 import { getAotSlug } from '~/utils/getAotSlug';
-import { isAfterJanuaryFirst } from '~/utils/aot';
+import { isAfterJanuaryFirst } from '~/utils/time-utils';
 import { notFound } from 'next/navigation';
 
 interface Props {

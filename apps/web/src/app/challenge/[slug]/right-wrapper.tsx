@@ -10,13 +10,15 @@ import { SettingsButton } from '../_components/settings/settings-button';
 import type { ChallengeRouteData } from './getChallengeRouteData';
 import { SubmissionOverview } from './submissions/[[...catchAll]]/_components/overview';
 import { saveSubmission } from './submissions/[[...catchAll]]/save-submission.action';
+import SwapPanelButton from '../_components/swap-panel-button';
 
 interface Props {
   challenge: ChallengeRouteData['challenge'];
   track: ChallengeRouteData['track'];
+  toggleDirection: () => void;
 }
 
-export function RightWrapper({ track, challenge }: Props) {
+export function RightWrapper({ track, challenge, toggleDirection }: Props) {
   const router = useRouter();
   const segments = useSelectedLayoutSegments();
   const { data: session } = useSession();
@@ -55,17 +57,22 @@ export function RightWrapper({ track, challenge }: Props) {
         return handleSuccessfulSubmission(submission.isSuccessful, submission.id, track?.slug);
       }}
       submissionDisabled={!session?.user}
-      settingsElement={<SettingsElements />}
+      settingsElement={<SettingsElements toggleDirection={toggleDirection} />}
     />
   );
 }
 
-function SettingsElements() {
+interface SettingsElementsProps {
+  toggleDirection: () => void;
+}
+
+function SettingsElements({ toggleDirection }: SettingsElementsProps) {
   return (
     <>
       <ResetEditorButton />
       <EditorShortcutsButton />
       <SettingsButton />
+      <SwapPanelButton toggleDirection={toggleDirection} />
       <FullscreenButton />
     </>
   );

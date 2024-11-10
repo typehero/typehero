@@ -1,8 +1,14 @@
 import Link from 'next/link';
 import { getCurrentAdventDay } from '~/utils/time-utils';
 
-export default function AdventDaysRow({ selectedDay }: { selectedDay?: number }) {
-  const currentAdventDay = getCurrentAdventDay();
+export default function AdventDaysRow({
+  year,
+  selectedDay,
+}: {
+  year: number;
+  selectedDay?: number;
+}) {
+  const currentAdventDay = getCurrentAdventDay(year);
 
   return (
     <div className="flex w-full gap-2 text-xl">
@@ -13,7 +19,7 @@ export default function AdventDaysRow({ selectedDay }: { selectedDay?: number })
           return (
             <li key={day}>
               <Link
-                href={`/leaderboard/day/${day}`}
+                href={{ pathname: `/events/${year}/leaderboard/${day}` }}
                 className={`hover:text-blue-400 ${
                   day === selectedDay ? 'font-bold text-blue-600' : ''
                 }`}
