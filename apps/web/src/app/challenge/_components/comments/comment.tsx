@@ -2,38 +2,38 @@
 
 import { useSession } from '@repo/auth/react';
 import { type CommentRoot } from '@repo/db/types';
+import { Button } from '@repo/ui/components/button';
 import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { toast } from '@repo/ui/components/use-toast';
+import { UserAvatar } from '@repo/ui/components/user-avatar';
 import {
+  Calendar,
   ChevronDown,
   ChevronUp,
-  Calendar,
   Flag,
+  MoreHorizontal,
   Pencil,
   Reply,
   Share,
   Trash2,
-  MoreHorizontal,
 } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { useParams, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { z } from 'zod';
 import { ReportDialog } from '~/components/ReportDialog';
-import { getRelativeTimeStrict } from '~/utils/relativeTime';
-import { Vote } from '../vote';
-import { CommentInput } from './comment-input';
-import { CommentDeleteDialog } from './delete';
-import { type PaginatedComments, type PreselectedCommentMetadata } from './getCommentRouteData';
-import { Avatar, AvatarFallback, AvatarImage, DefaultAvatar } from '@repo/ui/components/avatar';
-import { Button } from '@repo/ui/components/button';
-import { CommentSkeleton } from './comment-skeleton';
 import { isAdminOrModerator } from '~/utils/auth-guards';
-import { useCommentsReplies } from './comments.hooks';
-import { UserBadge } from './enhanced-user-badge';
+import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import type { ChallengeRouteData } from '../../[slug]/getChallengeRouteData';
 import type { SolutionRouteData } from '../../[slug]/solutions/[solutionId]/getSolutionIdRouteData';
+import { Vote } from '../vote';
+import { CommentInput } from './comment-input';
+import { CommentSkeleton } from './comment-skeleton';
+import { useCommentsReplies } from './comments.hooks';
+import { CommentDeleteDialog } from './delete';
+import { UserBadge } from './enhanced-user-badge';
+import { type PaginatedComments, type PreselectedCommentMetadata } from './getCommentRouteData';
 
 interface SingleCommentProps {
   comment: PaginatedComments['comments'][number];
@@ -271,12 +271,7 @@ function SingleComment({
       <div className="flex items-start justify-between gap-4 pr-[0.4rem]">
         <div className="mb-2 flex w-full items-center justify-between gap-1">
           <div className="flex items-center gap-2">
-            <Avatar className="h-7 w-7">
-              <AvatarImage alt="github profile picture" src={comment.user?.image ?? ''} />
-              <AvatarFallback>
-                <DefaultAvatar />
-              </AvatarFallback>
-            </Avatar>
+            <UserAvatar src={comment.user?.image ?? ''} />
             <UserBadge
               user={{
                 name: comment.user?.name ?? '',

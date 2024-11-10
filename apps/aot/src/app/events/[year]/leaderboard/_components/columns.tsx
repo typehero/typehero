@@ -1,7 +1,7 @@
 'use client';
 
+import { UserAvatar } from '@repo/ui/components/user-avatar';
 import { createColumnHelper } from '@tanstack/react-table';
-import { Avatar, AvatarFallback, AvatarImage, DefaultAvatar } from '@repo/ui/components/avatar';
 
 /*
  *  Overall Leaderboard Table Columns
@@ -25,12 +25,7 @@ export const overallLeaderboardColumns = [
     header: 'User',
     cell: (info) => (
       <div className="flex flex-wrap items-center justify-start gap-2 sm:gap-4">
-        <Avatar className="h-8 w-8 md:h-12 md:w-12">
-          <AvatarImage alt="github profile picture" src={info.row.original.image ?? ''} />
-          <AvatarFallback>
-            <DefaultAvatar />
-          </AvatarFallback>
-        </Avatar>
+        <UserAvatar className="h-8 w-8 md:h-12 md:w-12" src={info.row.original.image ?? ''} />
         <span>@{info.getValue()}</span>
       </div>
     ),
@@ -62,12 +57,7 @@ export const dailyLeaderboardColumns = [
     header: 'User',
     cell: (info) => (
       <div className="flex flex-wrap items-center justify-start gap-2 sm:gap-4">
-        <Avatar className="h-8 w-8 md:h-12 md:w-12">
-          <AvatarImage alt="github profile picture" src={info.getValue().image ?? ''} />
-          <AvatarFallback>
-            <DefaultAvatar />
-          </AvatarFallback>
-        </Avatar>
+        <UserAvatar className="h-8 w-8 md:h-12 md:w-12" src={info.getValue().image ?? ''} />
         <span>@{info.getValue().name}</span>
       </div>
     ),
