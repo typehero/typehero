@@ -2,28 +2,28 @@
 
 import { useSession } from '@repo/auth/react';
 import { ActionMenu } from '@repo/ui/components/action-menu';
-import { Avatar, AvatarFallback, AvatarImage, DefaultAvatar } from '@repo/ui/components/avatar';
 import { Button } from '@repo/ui/components/button';
 import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { TypographyLarge } from '@repo/ui/components/typography/large';
 import { toast } from '@repo/ui/components/use-toast';
-import { Calendar, Flag, Pin, Share, Trash, ArrowLeft, Pencil } from '@repo/ui/icons';
+import { UserAvatar } from '@repo/ui/components/user-avatar';
+import { ArrowLeft, Calendar, Flag, Pencil, Pin, Share, Trash } from '@repo/ui/icons';
+import { useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
+import { useState } from 'react';
 import type { ChallengeSolution } from '~/app/challenge/[slug]/solutions/[solutionId]/page';
+import { UserBadge } from '~/app/challenge/_components/comments/enhanced-user-badge';
 import { ReportDialog } from '~/components/ReportDialog';
+import { isAdminOrModerator, isAuthor } from '~/utils/auth-guards';
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import { Vote } from '../../../_components/vote';
 import { pinOrUnpinSolution } from './_actions';
-import { isAdminOrModerator, isAuthor } from '~/utils/auth-guards';
 import { SolutionDeleteDialog } from './delete';
-import { useParams } from 'next/navigation';
-import { useState } from 'react';
 import { EditSolution } from './edit-solution';
 import { useGetQueryString } from './useGetQueryString';
-import { UserBadge } from '~/app/challenge/_components/comments/enhanced-user-badge';
-import { useQueryClient } from '@tanstack/react-query';
 
 interface Props {
   solution: ChallengeSolution;
@@ -65,12 +65,7 @@ export function SolutionDetails({ solution }: Props) {
                 </div>
               </Link>
               <div className="flex items-center gap-2">
-                <Avatar className="h-7 w-7">
-                  <AvatarImage alt="github profile picture" src={solution.user?.image ?? ''} />
-                  <AvatarFallback>
-                    <DefaultAvatar />
-                  </AvatarFallback>
-                </Avatar>
+                <UserAvatar src={solution.user?.image ?? ''} />
                 <TypographyLarge>{solution.title}</TypographyLarge>
               </div>
               <div className="flex items-center gap-2">

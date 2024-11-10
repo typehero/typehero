@@ -1,14 +1,13 @@
 'use client';
 
 import { cn } from '@repo/ui/cn';
-import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
 import { Popover, PopoverAnchor, PopoverContent } from '@repo/ui/components/popover';
+import { useToast } from '@repo/ui/components/use-toast';
+import { UserAvatar } from '@repo/ui/components/user-avatar';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
-import { searchUsers } from './actions';
-import { useToast } from '@repo/ui/components/use-toast';
 import { Loader } from '../loader';
-import { DefaultAvatar } from '~/utils/default-avatar';
+import { searchUsers } from './actions';
 
 interface Props {
   isOpen: boolean;
@@ -134,12 +133,10 @@ export function UserResults({ isOpen, onFocusOutside, onSelectedUser, query }: P
                           'flex w-full cursor-pointer justify-start gap-3 rounded-none px-4 py-3  hover:bg-zinc-400/50 dark:hover:bg-zinc-600/50',
                         )}
                       >
-                        <Avatar className="h-10 w-10 border border-gray-500 dark:border-gray-700">
-                          <AvatarImage src={user.image ?? ''} alt="user avatar" />
-                          <AvatarFallback>
-                            <DefaultAvatar />
-                          </AvatarFallback>
-                        </Avatar>
+                        <UserAvatar
+                          className="h-10 w-10 border border-gray-500 dark:border-gray-700"
+                          src={user.image ?? ''}
+                        />
                         <div className="flex flex-col">
                           <span className="text-sm font-bold text-gray-900 dark:text-white">
                             {user.name}

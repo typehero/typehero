@@ -6,9 +6,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@repo/ui/components/dropdown-menu';
-import { ExternalLink, Play, Settings, Settings2, User, Palette } from '@repo/ui/icons';
+import { UserAvatar } from '@repo/ui/components/user-avatar';
+import { ExternalLink, Palette, Play, Settings, Settings2, User } from '@repo/ui/icons';
 import Link from 'next/link';
 import { Suspense } from 'react';
+import { auth } from '~/server/auth';
 import { isAdmin, isAdminOrModerator } from '~/utils/auth-guards';
 import { getAllFlags } from '~/utils/feature-flags';
 import { Search } from '../search/search';
@@ -16,12 +18,10 @@ import { LoginLink } from './login-link';
 import { MobileNav } from './mobile-nav';
 import { NavLink } from './nav-link';
 import { NavWrapper } from './nav-wrapper';
+import { getNotificationCount } from './navigation.actions';
+import { NotificationLink } from './notification-link';
 import { SignOutLink } from './signout-link';
 import { SkipToCodeEditor } from './skip-to-code-editor';
-import { auth } from '~/server/auth';
-import { NotificationLink } from './notification-link';
-import { getNotificationCount } from './navigation.actions';
-import { Avatar, AvatarFallback, AvatarImage, DefaultAvatar } from '@repo/ui/components/avatar';
 import { ThemeButton } from './theme-button';
 
 export function getAdminUrl() {
@@ -165,12 +165,7 @@ async function LoginButton({
           aria-label="profile button"
           className="hidden rounded-lg p-2 duration-300 focus:outline-none focus-visible:ring-2 md:block"
         >
-          <Avatar className="h-7 w-7">
-            <AvatarImage src={session.user.image ?? ''} alt="user avatar" />
-            <AvatarFallback delayMs={5000}>
-              <DefaultAvatar />
-            </AvatarFallback>
-          </Avatar>
+          <UserAvatar src={session.user.image ?? ''} />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent

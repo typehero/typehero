@@ -1,22 +1,21 @@
 'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
-import Link from 'next/link';
-import { Badge } from '@repo/ui/components/badge';
-import { Shield, Sword, Wand2, type LucideIcon } from '@repo/ui/icons';
-import { useQuery } from '@tanstack/react-query';
-import { getProfileData } from './enhanced-user-badge.getProfileData';
-import { useState } from 'react';
-import { cn } from '@repo/ui/cn';
 import { type Role } from '@repo/db/types';
+import { cn } from '@repo/ui/cn';
+import { Badge } from '@repo/ui/components/badge';
 import { Button } from '@repo/ui/components/button';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@repo/ui/components/hover-card';
-import { getTitles, type TitleInfo } from './enhanced-user-badge.getTitles';
 import { Skeleton } from '@repo/ui/components/skeleton';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
-import { DefaultAvatar } from '~/utils/default-avatar';
+import { UserAvatar } from '@repo/ui/components/user-avatar';
+import { Shield, Sword, Wand2, type LucideIcon } from '@repo/ui/icons';
+import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
+import { useState } from 'react';
 import type { BadgeInfo } from '~/components/_actions';
 import { SlugToBadgeIcon } from '~/components/badges';
+import { getProfileData } from './enhanced-user-badge.getProfileData';
+import { getTitles, type TitleInfo } from './enhanced-user-badge.getTitles';
 
 interface UserBadgeProps {
   user: {
@@ -74,12 +73,7 @@ export function UserBadge(props: UserBadgeProps) {
           <div className="flex flex-row space-x-2">
             <div className="flex min-w-20 flex-col items-center justify-center space-y-2">
               <div className={cn('w-min rounded-full bg-gradient-to-r p-0.5', gradient)}>
-                <Avatar className="h-14 w-14">
-                  <AvatarImage src={query.data.image ?? ''} />
-                  <AvatarFallback>
-                    <DefaultAvatar />
-                  </AvatarFallback>
-                </Avatar>
+                <UserAvatar className="h-14 w-14" src={query.data.image ?? ''} />
               </div>
 
               {query.isRefetching ? (
@@ -134,12 +128,7 @@ export function UserBadge(props: UserBadgeProps) {
           <div className="flex flex-row space-x-2">
             <div className="flex min-w-20 flex-col items-center justify-center space-y-2">
               <div className={cn('w-min rounded-full bg-gradient-to-r p-0.5', gradient)}>
-                <Avatar className="h-14 w-14">
-                  <AvatarImage src={query.data.image ?? ''} />
-                  <AvatarFallback>
-                    <DefaultAvatar />
-                  </AvatarFallback>
-                </Avatar>
+                <UserAvatar className="h-14 w-14" src={query.data.image ?? ''} />
               </div>
 
               {query.isRefetching ? (

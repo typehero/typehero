@@ -1,15 +1,15 @@
 'use client';
 
 import type { NotificationType } from '@repo/db/types';
-import { Avatar, AvatarFallback, AvatarImage, DefaultAvatar } from '@repo/ui/components/avatar';
+import { cn } from '@repo/ui/cn';
 import { Markdown } from '@repo/ui/components/markdown';
+import { UserAvatar } from '@repo/ui/components/user-avatar';
 import { AlertCircle, AtSign, Heart, MessageCircle, ShieldAlert } from '@repo/ui/icons';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useInView } from 'react-intersection-observer';
 import { getRelativeTime } from '~/utils/relativeTime';
 import type { Notification } from './notification.actions';
-import { cn } from '@repo/ui/cn';
 
 const BLURBS = {
   MENTION: 'mentioned you in a comment',
@@ -57,18 +57,7 @@ export function NotificationItem({
       )}
     >
       <div className="flex items-start space-x-4">
-        <Avatar className="h-10 w-10">
-          {notification.fromUser.image ? (
-            <AvatarImage
-              src={notification.fromUser.image}
-              alt={`${notification.fromUser.name} profile photo`}
-            />
-          ) : (
-            <AvatarFallback>
-              <DefaultAvatar />
-            </AvatarFallback>
-          )}
-        </Avatar>
+        <UserAvatar className="h-10 w-10" src={notification.fromUser.image ?? ''} />
         <div className="flex-grow">
           <div className="flex items-center space-x-2">
             <Link
