@@ -127,22 +127,6 @@ export function Comment({
         deleteComment={deleteComment}
         updateComment={updateComment}
       />
-      {isReplying ? (
-        <div className="relative mt-2 pb-2 pl-8">
-          <Reply className="absolute left-2 top-2 h-4 w-4 opacity-50" />
-          <CommentInput
-            mode="edit"
-            onCancel={() => {
-              setIsReplying(false);
-            }}
-            onSubmit={async (text) => {
-              await addReplyComment(text);
-              setShowReplies(true);
-              setIsReplying(false);
-            }}
-          />
-        </div>
-      ) : null}
 
       {showReplies && status === 'pending' ? <CommentSkeleton /> : null}
       {showReplies ? (
@@ -158,6 +142,7 @@ export function Comment({
                   preselectedCommentMetadata={preselectedCommentMetadata}
                   deleteComment={deleteReplyComment}
                   updateComment={updateReplyComment}
+                  onClickReply={toggleIsReplying}
                 />
               )),
             )}
@@ -174,6 +159,23 @@ export function Comment({
             </Button>
           ) : null}
         </>
+      ) : null}
+
+      {isReplying ? (
+        <div className="relative mt-2 pb-2 pl-8">
+          <Reply className="absolute left-2 top-2 h-4 w-4 opacity-50" />
+          <CommentInput
+            mode="edit"
+            onCancel={() => {
+              setIsReplying(false);
+            }}
+            onSubmit={async (text) => {
+              await addReplyComment(text);
+              setShowReplies(true);
+              setIsReplying(false);
+            }}
+          />
+        </div>
       ) : null}
     </div>
   );
@@ -323,19 +325,17 @@ function SingleComment({
                   }}
                 />
 
-                {!isReply && (
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button variant="secondary" size="xs" onClick={onClickReply}>
-                        <Reply className="h-3 w-3" />
-                        <span className="sr-only">Create a reply</span>
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Reply</p>
-                    </TooltipContent>
-                  </Tooltip>
-                )}
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button variant="secondary" size="xs" onClick={onClickReply}>
+                      <Reply className="h-3 w-3" />
+                      <span className="sr-only">Create a reply</span>
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Reply</p>
+                  </TooltipContent>
+                </Tooltip>
               </div>
 
               <div className="flex gap-1 opacity-0 transition-opacity group-hover:opacity-100">
