@@ -40,7 +40,7 @@ interface SingleCommentProps {
   readonly?: boolean;
   isReply?: boolean;
   isToggleReply?: boolean;
-  onClickReply?: () => void;
+  onClickReply?: (replyingTo: string) => void;
   onClickToggleReply?: () => void;
   preselectedCommentMetadata?: PreselectedCommentMetadata;
   deleteComment: (commentId: number) => Promise<void>;
@@ -89,6 +89,8 @@ export function Comment({
   const params = useSearchParams();
   const replyId = params.get('replyId');
 
+  const timeoutRef = useRef<NodeJS.Timeout>();
+
   const hasPreselectedReply =
     preselectedCommentMetadata?.selectedComment?.id === comment.id && Boolean(replyId);
 
@@ -112,8 +114,50 @@ export function Comment({
     preselectedReplyId: hasPreselectedReply ? Number(replyId) : undefined,
   });
 
-  const toggleReplies = () => setShowReplies(!showReplies);
-  const toggleIsReplying = () => setIsReplying(!isReplying);
+  const toggleReplies = () => {
+    if (showReplies) {
+      setIsReplying(false);
+    }
+
+    setShowReplies(!showReplies);
+  };
+
+  const commentInputRef = useRef<{
+    textarea: HTMLTextAreaElement;
+    setInputValue: (value: string) => void;
+  }>(null);
+
+  useEffect(() => {
+    return () => clearTimeout(timeoutRef.current);
+  }, []);
+
+  function prefillReplyInput(replyingTo: string) {
+    if (commentInputRef?.current) {
+      const name = `@${replyingTo} `;
+      commentInputRef.current.setInputValue(name);
+      commentInputRef.current.textarea?.setSelectionRange(name.length, name.length);
+      commentInputRef.current.textarea?.focus();
+      window.requestAnimationFrame(
+        () =>
+          commentInputRef.current?.textarea?.scrollIntoView({
+            block: 'nearest',
+            behavior: 'smooth',
+          }),
+      );
+    }
+  }
+
+  const showReplyInput = (replyingTo: string) => {
+    setIsReplying(true);
+    clearTimeout(timeoutRef.current);
+
+    timeoutRef.current = setTimeout(() => prefillReplyInput(replyingTo));
+  };
+
+  const hideReplyInput = () => {
+    setIsReplying(false);
+    clearTimeout(timeoutRef.current);
+  };
 
   return (
     <div className="flex flex-col px-2 py-1">
@@ -121,7 +165,7 @@ export function Comment({
         preselectedCommentMetadata={preselectedCommentMetadata}
         comment={comment}
         isToggleReply={showReplies}
-        onClickReply={toggleIsReplying}
+        onClickReply={(replyingTo) => showReplyInput(replyingTo)}
         onClickToggleReply={toggleReplies}
         readonly={readonly}
         deleteComment={deleteComment}
@@ -142,7 +186,7 @@ export function Comment({
                   preselectedCommentMetadata={preselectedCommentMetadata}
                   deleteComment={deleteReplyComment}
                   updateComment={updateReplyComment}
-                  onClickReply={toggleIsReplying}
+                  onClickReply={(replyingTo) => showReplyInput(replyingTo)}
                 />
               )),
             )}
@@ -166,14 +210,13 @@ export function Comment({
           <Reply className="absolute left-2 top-2 h-4 w-4 opacity-50" />
           <CommentInput
             mode="edit"
-            onCancel={() => {
-              setIsReplying(false);
-            }}
+            onCancel={() => hideReplyInput()}
             onSubmit={async (text) => {
               await addReplyComment(text);
+              hideReplyInput();
               setShowReplies(true);
-              setIsReplying(false);
             }}
+            ref={commentInputRef}
           />
         </div>
       ) : null}
@@ -327,7 +370,11 @@ function SingleComment({
 
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="secondary" size="xs" onClick={onClickReply}>
+                    <Button
+                      variant="secondary"
+                      size="xs"
+                      onClick={() => onClickReply?.(comment?.user?.name)}
+                    >
                       <Reply className="h-3 w-3" />
                       <span className="sr-only">Create a reply</span>
                     </Button>
