@@ -1,10 +1,14 @@
 import { isValidAdventDay } from '~/utils/time-utils';
 import { notFound } from 'next/navigation';
 import AdventDaysRow from '../../../[year]/leaderboard/_components/advent-days-row';
-import { YEAR } from '../../date_constants';
+import { YEAR, DAY } from '../../date_constants';
 
 export const dynamic = 'force-static';
 export const dynamicParams = false;
+
+export async function generateStaticParams() {
+  return Array.from({ length: DAY }).map((_, index) => ({ day: (index + 1).toString() }));
+}
 
 export default function DailyLeaderboardLayout({
   params,
