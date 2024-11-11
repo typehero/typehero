@@ -6,12 +6,14 @@ import type { Challenge } from './_components/types';
 import { SubmissionOverview } from './submissions/[[...catchAll]]/_components/overview';
 import { saveSubmission } from './submissions/[[...catchAll]]/save-submission.action';
 import { SettingsElements } from './SettingsElements';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface Props {
   challenge: Challenge;
 }
 
 export function RightWrapper({ challenge }: Props) {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const { year, day } = useParams();
   const segments = useSelectedLayoutSegments();
@@ -43,6 +45,12 @@ export function RightWrapper({ challenge }: Props) {
           code,
           isSuccessful,
         });
+
+        if (submission.isSuccessful) {
+          queryClient.invalidateQueries({
+            queryKey: ['challenge-solutions', challenge.slug],
+          });
+        }
 
         return handleSuccessfulSubmission(submission.isSuccessful, submission.id, '');
       }}
