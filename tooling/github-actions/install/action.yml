@@ -4,7 +4,7 @@ description: 'Sets up Node.js and runs install'
 runs:
   using: composite
   steps:
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v4
       with:
         node-version: 18
 
@@ -16,7 +16,7 @@ runs:
       with:
         version: 9.6.0
 
-    - uses: actions/cache@v3
+    - uses: actions/cache@v4
       name: pnpm-cache
       id: pnpm-cache
       with:
@@ -28,7 +28,7 @@ runs:
           ${{ runner.os }}-pnpm
 
     - name: Cache TypeScript TSBuild Info Files
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: '*/*/node_modules/.cache/tsbuildinfo.json'
         # Commit hash is for working around this: https://github.com/actions/cache/issues/106
