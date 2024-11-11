@@ -40,7 +40,8 @@ async function getOverallLeaderboard(year: number) {
           GROUP BY userId, challengeId
         ) AS RankedSubmissions
       WHERE \`rank\` <= ${LEADERBOARD_RANKING_LIMIT}
-    ) r ON u.id = r.userId AND u.status = 'ACTIVE'
+    ) r ON u.id = r.userId
+  WHERE u.status = 'ACTIVE'
   GROUP BY r.userId, u.name, u.image
   ORDER BY totalPoints DESC
   LIMIT ${LEADERBOARD_RANKING_LIMIT};`;
