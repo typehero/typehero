@@ -35,7 +35,6 @@ export {
   FileCode,
   FlaskConical,
   GitBranch,
-  Github,
   Heart,
   HeartHandshake,
   History,
@@ -80,7 +79,6 @@ export {
   TrendingUp,
   TrendingUpIcon,
   Triangle,
-  Twitter,
   Unlock,
   User,
   UserPen,
@@ -90,3 +88,5 @@ export {
   Text,
   type LucideIcon,
 } from 'lucide-react';
+export { Github } from './icons/github';
+export { Twitter } from './icons/twitter';
