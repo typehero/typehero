@@ -83,6 +83,7 @@ export const dailyLeaderboardColumns = [
  */
 const formatDate = (date: Date) => {
   return new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York',
     month: 'short',
     day: '2-digit',
     hour: '2-digit',
