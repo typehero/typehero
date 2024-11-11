@@ -11,6 +11,7 @@ import type { ChallengeRouteData } from './getChallengeRouteData';
 import { SubmissionOverview } from './submissions/[[...catchAll]]/_components/overview';
 import { saveSubmission } from './submissions/[[...catchAll]]/save-submission.action';
 import SwapPanelButton from '../_components/swap-panel-button';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface Props {
   challenge: ChallengeRouteData['challenge'];
@@ -19,6 +20,7 @@ interface Props {
 }
 
 export function RightWrapper({ track, challenge, toggleDirection }: Props) {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const segments = useSelectedLayoutSegments();
   const { data: session } = useSession();
@@ -53,6 +55,12 @@ export function RightWrapper({ track, challenge, toggleDirection }: Props) {
           code,
           isSuccessful,
         });
+
+        if (submission.isSuccessful) {
+          queryClient.invalidateQueries({
+            queryKey: ['challenge-solutions', challenge.slug],
+          });
+        }
 
         return handleSuccessfulSubmission(submission.isSuccessful, submission.id, track?.slug);
       }}
