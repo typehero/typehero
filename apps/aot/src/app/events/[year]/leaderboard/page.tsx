@@ -20,7 +20,6 @@ export default async function LeaderboardPage({ params }: { params: { year: stri
 
   return (
     <>
-      <p>OVERALL LEADERBOARD!</p>
       <AdventDaysRow year={year} />
       <OverallLeaderboard year={year} />
     </>

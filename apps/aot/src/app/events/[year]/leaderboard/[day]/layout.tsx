@@ -16,7 +16,6 @@ export default function DailyLeaderboardLayout({
 
   return (
     <>
-      <p>DAILY LEADERBOARD!</p>
       <AdventDaysRow year={year} selectedDay={day} />
       {children}
     </>
