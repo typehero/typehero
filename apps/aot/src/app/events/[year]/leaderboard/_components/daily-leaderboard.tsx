@@ -14,6 +14,11 @@ const getFirst100SubmissionsRanked = async (adventYear: string, adventDay: strin
     where: {
       challengeId,
       isSuccessful: true,
+      user: {
+        status: {
+          not: 'BANNED',
+        },
+      },
     },
     distinct: ['userId'],
     orderBy: {
