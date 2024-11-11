@@ -121,6 +121,7 @@ export function Comment({
 
     setShowReplies(!showReplies);
   };
+  const toggleIsReplying = () => setIsReplying(!isReplying);
 
   const commentInputRef = useRef<{
     textarea: HTMLTextAreaElement;
@@ -165,7 +166,7 @@ export function Comment({
         preselectedCommentMetadata={preselectedCommentMetadata}
         comment={comment}
         isToggleReply={showReplies}
-        onClickReply={(replyingTo) => showReplyInput(replyingTo)}
+        onClickReply={toggleIsReplying}
         onClickToggleReply={toggleReplies}
         readonly={readonly}
         deleteComment={deleteComment}
