@@ -5,6 +5,8 @@ import { notFound } from 'next/navigation';
 import { buildMetaForEventPage } from '~/utils/metadata';
 import { YEAR } from '../date_constants';
 
+export const dynamic = 'force-static';
+
 export async function generateMetadata() {
   return buildMetaForEventPage({
     title: 'Advent of Typescript',
