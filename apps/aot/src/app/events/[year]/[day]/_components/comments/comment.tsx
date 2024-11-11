@@ -2,11 +2,11 @@
 
 import { useSession } from '@repo/auth/react';
 import { type CommentRoot } from '@repo/db/types';
-import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
 import { Button } from '@repo/ui/components/button';
 import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { toast } from '@repo/ui/components/use-toast';
+import { UserAvatar } from '@repo/ui/components/user-avatar';
 import {
   Calendar,
   ChevronDown,
@@ -24,7 +24,6 @@ import { useEffect, useRef, useState } from 'react';
 import { z } from 'zod';
 import { ReportDialog } from '~/components/report-dialog';
 import { isAdminOrModerator } from '~/utils/auth-guards';
-import { DefaultAvatar } from '~/utils/default-avatar';
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import type { SolutionRouteData } from '../../solutions/[solutionId]/getSolutionIdRouteData';
 import type { Challenge } from '../types';
@@ -272,12 +271,7 @@ function SingleComment({
       <div className="flex items-start justify-between gap-4 pr-[0.4rem]">
         <div className="mb-2 flex w-full items-center justify-between gap-1">
           <div className="flex items-center gap-2">
-            <Avatar className="h-7 w-7">
-              <AvatarImage alt="github profile picture" src={comment.user?.image ?? ''} />
-              <AvatarFallback>
-                <DefaultAvatar />
-              </AvatarFallback>
-            </Avatar>
+            <UserAvatar src={comment.user?.image ?? ''} />
             <UserBadge
               user={{
                 name: comment.user?.name ?? '',

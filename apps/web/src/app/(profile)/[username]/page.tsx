@@ -1,26 +1,26 @@
 import { prisma } from '@repo/db';
-import { notFound } from 'next/navigation';
-import { ProgressChart } from './_components/progress-chart';
-import { SharedSolutionCard } from './_components/shared-solution-card';
+import { cn } from '@repo/ui/cn';
 import { Button } from '@repo/ui/components/button';
+import { CardContent, CardHeader } from '@repo/ui/components/card';
+import { MagicIcon } from '@repo/ui/components/magic-icon';
+import { UserAvatar } from '@repo/ui/components/user-avatar';
 import { ArrowUpRight, UserPen } from '@repo/ui/icons';
 import Link from 'next/link';
-import { ActivityChart } from './_components/activity-chart';
-import { cn } from '@repo/ui/cn';
-import { Avatar, AvatarImage, AvatarFallback } from '@repo/ui/components/avatar';
+import { notFound } from 'next/navigation';
 import { Titles } from '~/app/challenge/_components/comments/enhanced-user-badge';
 import {
-  getTitles,
   getGradient,
+  getTitles,
 } from '~/app/challenge/_components/comments/enhanced-user-badge.getTitles';
+import { auth } from '~/server/auth';
 import { getRelativeTime } from '~/utils/relativeTime';
-import { CardContent, CardHeader } from '@repo/ui/components/card';
+import { ActivityChart } from './_components/activity-chart';
 import { Badges, EmptyBadge } from './_components/badges';
 import { CardWithRadialBg } from './_components/card-radial-bg';
 import { MovingGrid } from './_components/moving-grid';
+import { ProgressChart } from './_components/progress-chart';
+import { SharedSolutionCard } from './_components/shared-solution-card';
 import { getBadges, getProgressData, getUserActivity } from './user-info';
-import { auth } from '~/server/auth';
-import { MagicIcon } from '@repo/ui/components/magic-icon';
 
 /* const sampleBadgeData = [
   { slug: 'aot-2023-bronze', name: 'Advent of TypeScript 2023 Bronze' },
@@ -36,6 +36,7 @@ export default async function ProfilePage(props: { params: { username: string } 
   const user = await prisma.user.findFirst({
     where: {
       name: username,
+      status: 'ACTIVE',
     },
     select: {
       id: true,
@@ -86,12 +87,10 @@ export default async function ProfilePage(props: { params: { username: string } 
       {/*     MobileView */}
       <div className="flex flex-col space-y-6 lg:hidden">
         <div className="flex flex-col items-center space-y-2">
-          <Avatar className="h-56 w-56 rounded-lg transition group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:-rotate-1">
-            <AvatarImage src={user.image ?? ''} alt={`${user.name} profile picture`} />
-            <AvatarFallback className="rounded-lg capitalize">
-              {user.name.slice(0, 1)}
-            </AvatarFallback>
-          </Avatar>
+          <UserAvatar
+            className="h-56 w-56 rounded-lg transition group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:-rotate-1"
+            src={user.image ?? ''}
+          />
           <div className="flex flex-col items-center space-y-1">
             <h1
               className={cn(
@@ -154,12 +153,10 @@ export default async function ProfilePage(props: { params: { username: string } 
         <div className="relative flex flex-row flex-wrap items-start justify-between">
           <div className="flex h-full max-w-full flex-col justify-center space-y-3 lg:max-w-[50%]">
             <div className="flex flex-row items-end space-x-4">
-              <Avatar className="z-10 h-56 w-56 rounded-lg transition group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:-rotate-1">
-                <AvatarImage src={user.image ?? ''} alt={`${user.name} profile picture`} />
-                <AvatarFallback className="rounded-lg capitalize">
-                  {user.name.slice(0, 1)}
-                </AvatarFallback>
-              </Avatar>
+              <UserAvatar
+                className="z-10 h-56 w-56 rounded-lg transition group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:-rotate-1"
+                src={user.image ?? ''}
+              />
               <div className="ml-56 flex flex-col space-y-2">
                 <div className="flex flex-row items-baseline space-x-2">
                   <h1

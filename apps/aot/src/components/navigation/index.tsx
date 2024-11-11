@@ -1,11 +1,11 @@
 import type { Session } from '@repo/auth/server';
-import { Avatar, AvatarFallback, AvatarImage, DefaultAvatar } from '@repo/ui/components/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@repo/ui/components/dropdown-menu';
+import { UserAvatar } from '@repo/ui/components/user-avatar';
 import { Palette } from '@repo/ui/icons';
 import Link from 'next/link';
 import { auth } from '~/server/auth';
@@ -92,12 +92,7 @@ async function LoginButton({ session }: { session: Session | null }) {
           aria-label="profile button"
           className="hidden rounded-lg p-2 duration-300 focus:outline-none focus-visible:ring-2 md:block"
         >
-          <Avatar className="h-7 w-7">
-            <AvatarImage src={session.user.image ?? ''} alt="user avatar" />
-            <AvatarFallback>
-              <DefaultAvatar />
-            </AvatarFallback>
-          </Avatar>
+          <UserAvatar src={session.user.image ?? ''} />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
