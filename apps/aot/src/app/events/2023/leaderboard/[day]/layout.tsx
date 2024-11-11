@@ -3,6 +3,9 @@ import { notFound } from 'next/navigation';
 import AdventDaysRow from '../../../[year]/leaderboard/_components/advent-days-row';
 import { YEAR } from '../../date_constants';
 
+export const dynamic = 'force-static';
+export const dynamicParams = false;
+
 export default function DailyLeaderboardLayout({
   params,
   children,

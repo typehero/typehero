@@ -6,6 +6,7 @@ import { buildMetaForEventPage } from '~/utils/metadata';
 import { YEAR } from '../date_constants';
 
 export const dynamic = 'force-static';
+export const dynamicParams = false;
 
 export async function generateMetadata() {
   return buildMetaForEventPage({

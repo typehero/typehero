@@ -1,6 +1,7 @@
 import DailyLeaderboard from '../../../[year]/leaderboard/_components/daily-leaderboard';
 import { YEAR, DAY } from '../../date_constants';
 
+export const dynamic = 'force-static';
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
