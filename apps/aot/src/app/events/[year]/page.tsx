@@ -1,6 +1,8 @@
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import { api } from '~/trpc/server';
 import { buildMetaForEventPage } from '~/utils/metadata';
+import { isValidAdventYear } from '~/utils/time-utils';
 
 interface Props {
   params: {
