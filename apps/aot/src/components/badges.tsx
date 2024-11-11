@@ -6,18 +6,13 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/too
 
 import { type BadgeInfo } from './_actions';
 import { toast } from '@repo/ui/components/use-toast';
-import {
-  HolidayBronzeBadge,
-  HolidayGoldBadge,
-  HolidayPlatinumBadge,
-  HolidaySilverBadge,
-} from './aot-2023-badge';
+import { GoldBadge, PlatinumBadge, SilverBadge, BronzeBadge } from './badges/2024';
 
 export const SlugToBadgeIcon: Record<BadgeInfo['slug'], FC<{ className: string }>> = {
-  'aot-2023-bronze': HolidayBronzeBadge,
-  'aot-2023-silver': HolidaySilverBadge,
-  'aot-2023-gold': HolidayGoldBadge,
-  'aot-2023-platinum': HolidayPlatinumBadge,
+  'aot-2024-bronze': BronzeBadge,
+  'aot-2024-silver': SilverBadge,
+  'aot-2024-gold': GoldBadge,
+  'aot-2024-platinum': PlatinumBadge,
 };
 
 const Badge = ({ slug, name }: BadgeInfo) => {
