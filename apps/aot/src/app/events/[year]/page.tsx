@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { NavLink } from '~/components/navigation/nav-link';
 import { api } from '~/trpc/server';
 import { buildMetaForEventPage } from '~/utils/metadata';
 
@@ -24,7 +23,6 @@ export default async function EventByYearLandingPage({ params }: Props) {
 
   return (
     <>
-      <TempSubNav year={year} />
       <div>
         <h1>Challenges for {year}</h1>
         <ul>
@@ -45,12 +43,3 @@ export default async function EventByYearLandingPage({ params }: Props) {
     </>
   );
 }
-
-const TempSubNav = ({ year }: { year: number }) => {
-  return (
-    <div className="flex py-10">
-      <NavLink title="Challenges" href={`/events/${year}`} />
-      <NavLink title="Leaderboard" href={`/events/${year}/leaderboard`} />
-    </div>
-  );
-};
