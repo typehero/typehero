@@ -20,10 +20,12 @@ export default function Custom404() {
         Couldn't find the requested resource
       </p>
       <div className="mt-8 flex flex-row gap-x-2">
-        <Button disabled variant="outline">
-          <Compass className="mr-2 size-4" />
-          Explore Challenges
-        </Button>
+        <Link href="/events">
+          <Button variant="outline">
+            <Compass className="mr-2 size-4" />
+            Explore Challenges
+          </Button>
+        </Link>
         <Link href="/">
           <Button>
             Return Home
