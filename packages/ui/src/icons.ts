@@ -30,6 +30,7 @@ export {
   Compass,
   Copy,
   Diamond,
+  EllipsisVertical,
   ExternalLink,
   Flag,
   FileCode,
