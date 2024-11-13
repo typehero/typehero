@@ -8,7 +8,7 @@ import { getAotChallengeIdsSoFar } from '../getAotChallengeIds';
 
 export const dynamic = 'force-dynamic';
 
-async function getOverallLeaderboard(year: number) {
+export async function getOverallLeaderboard(year: number) {
   const cachedRanking = await redisClient.get('aot-overall-leaderboard');
 
   if (cachedRanking) {
