@@ -1,8 +1,9 @@
 import { hasAdventStarted } from '~/utils/time-utils';
-import { notFound } from 'next/navigation';
+import { notFound, useSelectedLayoutSegment } from 'next/navigation';
 import { getAllFlags } from '~/utils/feature-flag';
 import { ComingSoon } from '../../../coming-soon';
 import { YEAR } from '../date_constants';
+import { DayScroller } from './_components/day-scroller';
 
 export default async function LeaderboardLayout({ children }: { children: React.ReactNode }) {
   const { enableAotPlatform } = await getAllFlags();
@@ -13,5 +14,12 @@ export default async function LeaderboardLayout({ children }: { children: React.
 
   if (!hasAdventStarted(YEAR)) return notFound();
 
-  return <>{children}</>;
+  return (
+    <div className="container pt-8">
+      <div className="container fixed inset-0 top-20">
+        <DayScroller />
+      </div>
+      {children}
+    </div>
+  );
 }

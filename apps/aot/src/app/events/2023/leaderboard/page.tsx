@@ -23,7 +23,6 @@ export default async function LeaderboardPage() {
   return (
     <div className="container pt-8">
       {/* <div className="fixed inset-0 h-[500px] w-[400px] bg-red-500"></div> */}
-      <DayScroller />
       <div className="fixed inset-0 top-16 h-[300px] lg:top-32 lg:h-[500px]">
         <Stage data={data.slice(0, 3)} />
       </div>
@@ -31,7 +30,7 @@ export default async function LeaderboardPage() {
         className="bg-background relative mt-[230px] rounded-lg p-6 shadow-[0px_-70px_150px_-53px_hsla(221,83%,53%,1)] lg:mt-[490px]
 "
       >
-        <LeaderboardTable data={data} />
+        <LeaderboardTable data={data} isDayTable={false} />
       </div>
     </div>
   );

@@ -26,20 +26,14 @@ export function Stage(props: DataProps) {
 
 function Experience(props: DataProps) {
   const cameraRef = useRef<PerspectiveCameraType>(null);
-  const { scrollY } = useScroll({ smooth: 0.4 });
-  const scrollYProgress = useSpring(scrollY, {
-    stiffness: 500,
-    damping: 100,
-    mass: 1,
-    // mass: 0.1
-    // mass: 1,
-  });
+  const { scrollY: scrollYProgress } = useScroll({ smooth: 0.4 });
+  /* const scrollYProgress = useSpring(scrollY, {
+  }); */
   useFrame(() => {
     if (cameraRef.current === null) return;
 
-    const progress = Math.min(scrollYProgress.get() / 105, 1);
-    console.log(progress);
-    cameraRef.current.position.y = 4 + progress * -4;
+    const progress = Math.min(scrollYProgress.get() / 330, 1);
+    cameraRef.current.position.y = 4 + progress * -15;
     cameraRef.current.lookAt(0, 2, 0);
   });
 
