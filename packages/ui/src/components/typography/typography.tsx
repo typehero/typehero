@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type ElementType } from 'react';
 import { cva } from 'class-variance-authority';
 import { cn } from '../../cn';
 
@@ -89,7 +89,7 @@ export function Text<T extends TagOptions>({
     }
   }
 
-  const Tag = tagStr as string;
+  const Tag = tagStr as ElementType;
 
   return (
     <Tag className={cn(styles({ intent, weight, color }), className)} {...props}>
