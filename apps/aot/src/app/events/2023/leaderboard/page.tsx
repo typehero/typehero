@@ -20,7 +20,7 @@ export default async function LeaderboardPage() {
   return (
     <>
       <AdventDaysRow year={YEAR} />
-      <OverallLeaderboard year={YEAR} />
+      <OverallLeaderboard isPast year={YEAR} />
     </>
   );
 }

@@ -4,6 +4,8 @@ import { getAllFlags } from '~/utils/feature-flag';
 import { ComingSoon } from '../../../coming-soon';
 import { YEAR } from '../date_constants';
 
+export const dynamic = 'force-static';
+
 export default async function LeaderboardLayout({ children }: { children: React.ReactNode }) {
   const { enableAotPlatform } = await getAllFlags();
 
