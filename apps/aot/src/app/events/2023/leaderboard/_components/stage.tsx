@@ -44,7 +44,7 @@ function Experience(props: DataProps) {
       <group scale={1.35}>
         <Platform
           x={-1}
-          height={1.3}
+          height={1.5}
           userInfo={{
             username: props.data[1]?.name ?? '',
             points: props.data[1]?.score ?? '',
@@ -53,7 +53,7 @@ function Experience(props: DataProps) {
         />
         <Platform
           x={0}
-          height={1.6}
+          height={1.8}
           userInfo={{
             username: props.data[0]?.name ?? '',
             points: props.data[0]?.score ?? '',
@@ -62,7 +62,7 @@ function Experience(props: DataProps) {
         />
         <Platform
           x={1}
-          height={1.1}
+          height={1.3}
           userInfo={{
             username: props.data[2]?.name ?? '',
             points: props.data[2]?.score ?? '',
@@ -84,27 +84,32 @@ function Platform(props: {
         <Image url={props.userInfo.image ?? ''}>
           <roundedPlaneGeometry args={[1, 1, 0.1]} />
         </Image>
-        <Text fontSize={0.1} position-y={0.6} maxWidth={1}>
-          {props.userInfo.points}
+        <Text
+          fontSize={0.14}
+          position-y={0.65}
+          maxWidth={1}
+          font="/roboto-mono-v23-latin-regular.woff"
+        >
+          {props.userInfo.username}
         </Text>
       </Billboard>
       <mesh position-y={(props.height - 1) / 2}>
         <boxGeometry args={[1, props.height, 1]} />
         <meshBasicMaterial color="black" />
-        <Edges linewidth={1} color="white" />
+        <Edges linewidth={2} color="white" />
       </mesh>
       <group>
         <Text
           fontSize={0.12}
+          font="/roboto-mono-v23-latin-regular.woff"
           textAlign="center"
           anchorY="top"
           position-y={props.height - 0.6}
           position-z={0.51}
           maxWidth={0.9}
           overflowWrap="break-word"
-          fontWeight={600}
         >
-          {props.userInfo.username}
+          {props.userInfo.points}
         </Text>
       </group>
     </group>
