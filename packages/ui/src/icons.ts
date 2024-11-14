@@ -29,6 +29,7 @@ export {
   Command,
   Compass,
   Copy,
+  CornerDownLeft,
   Diamond,
   ExternalLink,
   Flag,

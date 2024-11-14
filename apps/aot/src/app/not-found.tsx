@@ -1,4 +1,4 @@
-import { Compass, CornerDownLeft } from 'lucide-react';
+import { Compass, CornerDownLeft } from '@repo/ui/icons';
 import Snowfall from '../components/landing/Snowfall';
 import { Button } from '@repo/ui/components/button';
 import type { Metadata } from 'next';
