@@ -1,10 +1,12 @@
 'use client';
 import { Billboard, Edges, Image, PerspectiveCamera, Text } from '@react-three/drei';
 import { Canvas, extend, useFrame } from '@react-three/fiber';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { type PerspectiveCamera as PerspectiveCameraType } from 'three';
 import { geometry } from 'maath';
-import { useScroll } from 'framer-motion';
+import { useScroll, useSpring } from 'framer-motion';
+import { motion } from 'framer-motion-3d';
+import { Perf } from 'r3f-perf';
 
 declare module '@react-three/fiber' {
   interface ThreeElements {
@@ -18,6 +20,7 @@ interface DataProps {
 export function Stage(props: DataProps) {
   return (
     <Canvas>
+      <Perf position="bottom-right" />
       <color args={['ivory']} />
       <Experience data={props.data} />
     </Canvas>
@@ -41,16 +44,14 @@ function Experience(props: DataProps) {
     <>
       <PerspectiveCamera makeDefault position={[0, 0, 4.2]} ref={cameraRef} zoom={1} />
       {/* <OrbitControls /> */}
-      <group scale={1.35}>
-        <Platform
-          x={-1}
-          height={1.5}
-          userInfo={{
-            username: props.data[1]?.name ?? '',
-            points: props.data[1]?.score ?? '',
-            image: 'https://avatars.githubusercontent.com/u/3579142?v=4',
-          }}
-        />
+      <motion.group
+        scale={1.35}
+        initial="initial"
+        animate="animate"
+        transition={{
+          staggerChildren: 0.05,
+        }}
+      >
         <Platform
           x={0}
           height={1.8}
@@ -58,6 +59,15 @@ function Experience(props: DataProps) {
             username: props.data[0]?.name ?? '',
             points: props.data[0]?.score ?? '',
             image: 'https://avatars.githubusercontent.com/u/53154523?v=4',
+          }}
+        />
+        <Platform
+          x={-1}
+          height={1.5}
+          userInfo={{
+            username: props.data[1]?.name ?? '',
+            points: props.data[1]?.score ?? '',
+            image: 'https://avatars.githubusercontent.com/u/3579142?v=4',
           }}
         />
         <Platform
@@ -69,7 +79,7 @@ function Experience(props: DataProps) {
             image: 'https://avatars.githubusercontent.com/u/31113245?v=4',
           }}
         />
-      </group>
+      </motion.group>
     </>
   );
 }
@@ -79,7 +89,20 @@ function Platform(props: {
   userInfo: { username: string; points: number | string; image: string | null };
 }) {
   return (
-    <group position-x={props.x} position-y={0.4}>
+    <motion.group
+      position-x={props.x}
+      variants={{
+        initial: {
+          y: -1,
+        },
+        animate: {
+          y: 0.4,
+          transition: {
+            duration: 0.5,
+          },
+        },
+      }}
+    >
       <Billboard lockZ position-y={props.height} position-z={0.35} scale={0.7}>
         <Image url={props.userInfo.image ?? ''}>
           <roundedPlaneGeometry args={[1, 1, 0.1]} />
@@ -112,6 +135,6 @@ function Platform(props: {
           {props.userInfo.points}
         </Text>
       </group>
-    </group>
+    </motion.group>
   );
 }

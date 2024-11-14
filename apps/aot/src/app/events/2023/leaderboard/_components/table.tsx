@@ -24,9 +24,9 @@ export function LeaderboardTable(props: {
       <TableCaption>Leader board for 2023</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[20%] text-center text-lg uppercase">Rank</TableHead>
-          <TableHead className="w-[60%] text-center text-lg uppercase">Username</TableHead>
-          <TableHead className="w-[20%] text-center text-lg uppercase">
+          <TableHead className="w-[20%] text-center uppercase">Rank</TableHead>
+          <TableHead className="w-[60%] text-center uppercase">Username</TableHead>
+          <TableHead className="w-[20%] text-center uppercase">
             {props.isDayTable ? 'Time to Complete' : 'Points'}
           </TableHead>
         </TableRow>
