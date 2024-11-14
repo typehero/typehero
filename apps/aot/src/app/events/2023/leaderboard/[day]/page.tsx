@@ -1,7 +1,5 @@
-import DailyLeaderboard, {
-  getFirst100SubmissionsRanked,
-} from '../../../[year]/leaderboard/_components/daily-leaderboard';
-import { YEAR, DAY } from '../../date_constants';
+import { getFirst100SubmissionsRanked } from '../../../[year]/leaderboard/_components/daily-leaderboard';
+import { DAY } from '../../date_constants';
 import { Stage } from '../_components/stage';
 import { LeaderboardTable } from '../_components/table';
 

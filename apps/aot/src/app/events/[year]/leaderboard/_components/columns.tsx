@@ -8,9 +8,10 @@ import { createColumnHelper } from '@tanstack/react-table';
  */
 
 export interface OverallLeaderboardEntry {
-  totalPoints: number;
+  score: number;
   name: string;
   image: string | null;
+  isSupporter: boolean;
 }
 
 const overallLeaderboardColumnHelper = createColumnHelper<OverallLeaderboardEntry>();
@@ -30,7 +31,7 @@ export const overallLeaderboardColumns = [
       </div>
     ),
   }),
-  overallLeaderboardColumnHelper.accessor('totalPoints', {
+  overallLeaderboardColumnHelper.accessor('score', {
     header: 'Points',
     cell: (info) => Number(info.getValue()),
   }),

@@ -10,27 +10,15 @@ import {
 } from '@repo/ui/components/table';
 import Link from 'next/link';
 
-export function LeaderboardTable(
-  props:
-    | {
-        data: {
-          name: string;
-          image: string | null;
-          isSupporter: boolean;
-          timeToComplete: string;
-        }[];
-        isDayTable: true;
-      }
-    | {
-        data: {
-          name: string;
-          image: string | null;
-          totalPoints: string;
-          isSupporter: boolean;
-        }[];
-        isDayTable: false;
-      },
-) {
+export function LeaderboardTable(props: {
+  data: {
+    name: string;
+    image: string | null;
+    isSupporter: boolean;
+    score: number | string;
+  }[];
+  isDayTable: boolean;
+}) {
   return (
     <Table className="font-mono">
       <TableCaption>Leader board for 2023</TableCaption>
@@ -59,11 +47,7 @@ export function LeaderboardTable(
                 </Link>
               ) : null}
             </TableCell>
-            {props.isDayTable ? (
-              <TableCell className="text-center text-xl">{props.data[i]?.timeToComplete}</TableCell>
-            ) : (
-              <TableCell className="text-center text-xl">{props.data[i]?.totalPoints}</TableCell>
-            )}
+            <TableCell className="text-center text-xl">{d.score}</TableCell>
           </TableRow>
         ))}
       </TableBody>

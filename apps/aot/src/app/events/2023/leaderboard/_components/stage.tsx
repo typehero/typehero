@@ -1,10 +1,10 @@
 'use client';
-import { Billboard, Edges, Image, OrbitControls, PerspectiveCamera, Text } from '@react-three/drei';
-import { Canvas, extend, type BufferGeometryProps, useFrame } from '@react-three/fiber';
+import { Billboard, Edges, Image, PerspectiveCamera, Text } from '@react-three/drei';
+import { Canvas, extend, useFrame } from '@react-three/fiber';
 import { useRef } from 'react';
-import { Color, type PerspectiveCamera as PerspectiveCameraType } from 'three';
+import { type PerspectiveCamera as PerspectiveCameraType } from 'three';
 import { geometry } from 'maath';
-import { useScroll, useSpring } from 'framer-motion';
+import { useScroll } from 'framer-motion';
 
 declare module '@react-three/fiber' {
   interface ThreeElements {
@@ -12,9 +12,9 @@ declare module '@react-three/fiber' {
   }
 }
 extend({ RoundedPlaneGeometry: geometry.RoundedPlaneGeometry });
-type DataProps = {
-  data: { name: string; totalPoints: string; image: string | null; isSupporter: boolean }[];
-};
+interface DataProps {
+  data: { name: string; image: string | null; isSupporter: boolean; score: number | string }[];
+}
 export function Stage(props: DataProps) {
   return (
     <Canvas>
@@ -37,11 +37,6 @@ function Experience(props: DataProps) {
     cameraRef.current.lookAt(0, 2, 0);
   });
 
-  const userInfo = {
-    // username: '@dca123',
-    username: 'this-is-a-very-long-github-username-39-char',
-    points: 1234,
-  } as const;
   return (
     <>
       <PerspectiveCamera makeDefault position={[0, 0, 4.2]} ref={cameraRef} zoom={1} />
@@ -52,7 +47,7 @@ function Experience(props: DataProps) {
           height={1.3}
           userInfo={{
             username: props.data[1]?.name ?? '',
-            points: props.data[1]?.totalPoints ?? '',
+            points: props.data[1]?.score ?? '',
             image: 'https://avatars.githubusercontent.com/u/3579142?v=4',
           }}
         />
@@ -61,7 +56,7 @@ function Experience(props: DataProps) {
           height={1.6}
           userInfo={{
             username: props.data[0]?.name ?? '',
-            points: props.data[0]?.totalPoints ?? '',
+            points: props.data[0]?.score ?? '',
             image: 'https://avatars.githubusercontent.com/u/53154523?v=4',
           }}
         />
@@ -70,7 +65,7 @@ function Experience(props: DataProps) {
           height={1.1}
           userInfo={{
             username: props.data[2]?.name ?? '',
-            points: props.data[2]?.totalPoints ?? '',
+            points: props.data[2]?.score ?? '',
             image: 'https://avatars.githubusercontent.com/u/31113245?v=4',
           }}
         />
@@ -81,11 +76,11 @@ function Experience(props: DataProps) {
 function Platform(props: {
   x: number;
   height: number;
-  userInfo: { username: string; points: string; image: string | null };
+  userInfo: { username: string; points: number | string; image: string | null };
 }) {
   return (
     <group position-x={props.x} position-y={0.4}>
-      <Billboard lockZ={true} position-y={props.height} position-z={0.35} scale={0.7}>
+      <Billboard lockZ position-y={props.height} position-z={0.35} scale={0.7}>
         <Image url={props.userInfo.image ?? ''}>
           <roundedPlaneGeometry args={[1, 1, 0.1]} />
         </Image>

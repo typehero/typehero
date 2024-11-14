@@ -1,14 +1,13 @@
 import { Prisma, prisma } from '@repo/db';
 import { LEADERBOARD_RANKING_LIMIT } from '../constants';
-import { DataTableLeaderboard } from '@repo/ui/components/data-table-leaderboard';
-import { overallLeaderboardColumns, type OverallLeaderboardEntry } from './columns';
+import { type OverallLeaderboardEntry } from './columns';
 import { getNextAdventDay } from '~/utils/time-utils';
 import { redisClient } from '@repo/redis';
 import { getAotChallengeIdsSoFar } from '../getAotChallengeIds';
 
 export const dynamic = 'force-dynamic';
 
-export async function getOverallLeaderboard(year: number) {
+export async function getOverallLeaderboard(year: number): Promise<OverallLeaderboardEntry[]> {
   const cachedRanking = await redisClient.get('aot-overall-leaderboard');
 
   if (cachedRanking) {
@@ -21,7 +20,7 @@ export async function getOverallLeaderboard(year: number) {
   SELECT
     u.name,
     u.image,
-    CAST(SUM(r.points) AS SIGNED) AS totalPoints
+    CAST(SUM(r.points) AS SIGNED) AS score
   FROM
     User u
   JOIN
@@ -42,7 +41,7 @@ export async function getOverallLeaderboard(year: number) {
       WHERE \`rank\` <= ${LEADERBOARD_RANKING_LIMIT}
     ) r ON u.id = r.userId
   GROUP BY r.userId, u.name, u.image
-  ORDER BY totalPoints DESC
+  ORDER BY score DESC
   LIMIT ${LEADERBOARD_RANKING_LIMIT};`;
 
   // Prisma doesn't suppport distinct for .count()...
@@ -67,15 +66,15 @@ export async function getOverallLeaderboard(year: number) {
     );
   }
 
-  return ranking;
+  const rankingWithSupporters = ranking.map((r) => ({
+    ...r,
+    isSupporter: Math.random() > 0.9,
+  }));
+  return rankingWithSupporters;
 }
 
 export default async function OverallLeaderboard({ year }: { year: number }) {
   const top100Ranking = await getOverallLeaderboard(year);
 
-  return (
-    <div className="p-4">
-      <DataTableLeaderboard data={top100Ranking} columns={overallLeaderboardColumns} />
-    </div>
-  );
+  return <div className="p-4" />;
 }

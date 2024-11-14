@@ -1,10 +1,7 @@
 import { prisma } from '@repo/db';
-import { DataTableLeaderboard } from '@repo/ui/components/data-table-leaderboard';
 import { LEADERBOARD_RANKING_LIMIT } from '../constants';
-import { dailyLeaderboardColumns } from './columns';
 import { getAotChallengeIdForAdventDay } from '../getAotChallengeIds';
 import { formatDuration, intervalToDuration } from 'date-fns';
-import { time } from 'console';
 
 export const dynamic = 'force-dynamic';
 
@@ -24,9 +21,10 @@ export const getFirst100SubmissionsRanked = async (adventYear: string, adventDay
     take: LEADERBOARD_RANKING_LIMIT,
   });
   const submissionsWithFlatUsers = submissions.map((s) => ({
-    timeToComplete: calculateDuration({ year: adventYear, day: adventDay }, s.createdAt),
+    //Named score since this shape of this type is being shared with getOverallLeaderboard
+    score: calculateDuration({ year: adventYear, day: adventDay }, s.createdAt),
     //todo
-    isSupporter: Math.random() > 0.8 ? true : false,
+    isSupporter: Math.random() > 0.8,
     ...s.user,
   }));
   return submissionsWithFlatUsers;
@@ -43,19 +41,3 @@ const calculateDuration = (start: { year: string; day: string }, end: Date) => {
   });
   return formatDuration(duration);
 };
-
-export default async function DailyLeaderboard({
-  adventYear,
-  adventDay,
-}: {
-  adventYear: string;
-  adventDay: string;
-}) {
-  const first100SubmissionsRanked = await getFirst100SubmissionsRanked(adventYear, adventDay);
-
-  return (
-    <div className="p-4">
-      <DataTableLeaderboard data={first100SubmissionsRanked} columns={dailyLeaderboardColumns} />
-    </div>
-  );
-}

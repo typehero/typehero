@@ -14,7 +14,7 @@ export function DayScroller() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const scrollToSelectedDay = useCallback(
-    (behavior: 'smooth' | 'instant') => {
+    (behavior: 'instant' | 'smooth') => {
       const container = containerRef.current;
       if (container === null) return;
       const children = container.children;
@@ -54,7 +54,7 @@ export function DayScroller() {
       >
         <div className="text-nowrap first:pl-[40%] last:pr-[40%]">
           <Button variant="ghost" asChild onClick={() => setSelectedDay(0)}>
-            <Link href={'/events/2023/leaderboard'}>
+            <Link href="/events/2023/leaderboard">
               <h1
                 className={cn(
                   'text-foreground text-lg uppercase tracking-wide',
