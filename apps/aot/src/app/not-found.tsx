@@ -1,5 +1,5 @@
 import { Compass, CornerDownLeft } from '@repo/ui/icons';
-import Snowfall from '../components/landing/Snowfall';
+import Snowfall from '~/components/landing/Snowfall';
 import { Button } from '@repo/ui/components/button';
 import type { Metadata } from 'next';
 import Link from 'next/link';
