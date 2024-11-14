@@ -1,7 +1,13 @@
 import { prisma } from '@repo/db';
 import { LEADERBOARD_RANKING_LIMIT } from '../constants';
 import { getAotChallengeIdForAdventDay } from '../getAotChallengeIds';
-import { formatDuration, intervalToDuration } from 'date-fns';
+import {
+  differenceInMilliseconds,
+  format,
+  formatDistanceStrict,
+  formatDuration,
+  intervalToDuration,
+} from 'date-fns';
 
 export const dynamic = 'force-dynamic';
 
@@ -31,9 +37,12 @@ export const getFirst100SubmissionsRanked = async (adventYear: string, adventDay
 };
 
 const calculateDuration = (start: { year: string; day: string }, end: Date) => {
-  const duration = intervalToDuration({
-    start: new Date(Number(start.year), 11, Number(start.day)),
+  const duration = differenceInMilliseconds(
     end,
-  });
-  return formatDuration(duration);
+    new Date(Number(start.year), 11, Number(start.day)),
+  );
+  const date = format(duration, 'HH:MM:SS');
+  // return formatDistanceStrict(new Date(Number(start.year), 11, Number(start.day)), end);
+  // return formatDuration(duration);
+  return date;
 };

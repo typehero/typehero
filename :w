@@ -20,7 +20,7 @@ interface DataProps {
 export function Stage(props: DataProps) {
   return (
     <Canvas>
-      <Perf position="top-right" />
+      <Perf position="bottom-right" />
       <color args={['ivory']} />
       <Experience data={props.data} />
     </Canvas>
@@ -49,7 +49,7 @@ function Experience(props: DataProps) {
         initial="initial"
         animate="animate"
         transition={{
-          staggerChildren: 0.5,
+          staggerChildren: 0.05,
         }}
       >
         <Platform
@@ -93,7 +93,7 @@ function Platform(props: {
       position-x={props.x}
       variants={{
         initial: {
-          y: -props.height,
+          y: -1,
         },
         animate: {
           y: 0.4,
@@ -109,10 +109,9 @@ function Platform(props: {
         </Image>
         <Text
           fontSize={0.14}
-          position-y={0.55}
+          position-y={0.65}
           maxWidth={1}
           font="/roboto-mono-v23-latin-regular.woff"
-          anchorY="bottom"
         >
           {props.userInfo.username}
         </Text>
@@ -124,7 +123,7 @@ function Platform(props: {
       </mesh>
       <group>
         <Text
-          fontSize={0.1}
+          fontSize={0.12}
           font="/roboto-mono-v23-latin-regular.woff"
           textAlign="center"
           anchorY="top"
