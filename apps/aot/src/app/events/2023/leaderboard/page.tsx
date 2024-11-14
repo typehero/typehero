@@ -20,21 +20,13 @@ export default async function LeaderboardPage() {
   const top100 = await getOverallLeaderboard(2023);
 
   return (
-    <div className="container pt-8">
-      {/* <div className="fixed inset-0 h-[500px] w-[400px] bg-red-500"></div> */}
-      <div className="fixed inset-0 top-16 h-[300px] lg:top-32 lg:h-[500px]">
+    <div className="">
+      <div className="fixed  inset-0 left-[5%] top-28 h-[300px] max-w-sm border lg:left-[15%] lg:top-32 lg:h-[500px] lg:max-w-screen-lg">
         <Stage data={top100.slice(0, 3)} />
       </div>
-      <div
-        className="bg-background relative mt-[230px] rounded-lg p-6 shadow-[0px_-70px_150px_-53px_hsla(221,83%,53%,1)] lg:mt-[490px]
-"
-      >
+      <div className="bg-background relative mt-[330px] rounded-lg p-6 shadow-[0px_-70px_150px_-53px_hsla(221,83%,53%,1)] lg:mt-[490px]">
         <LeaderboardTable data={top100} isDayTable={false} />
       </div>
     </div>
   );
 }
-/* <>
-      <AdventDaysRow year={YEAR} />
-      <OverallLeaderboard year={YEAR} />
-    </> */

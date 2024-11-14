@@ -35,9 +35,5 @@ const calculateDuration = (start: { year: string; day: string }, end: Date) => {
     start: new Date(Number(start.year), 11, Number(start.day)),
     end,
   });
-  console.log({
-    start: new Date(Number(start.year), 11, Number(start.day)),
-    end,
-  });
   return formatDuration(duration);
 };

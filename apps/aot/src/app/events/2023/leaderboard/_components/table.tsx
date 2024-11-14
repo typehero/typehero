@@ -34,8 +34,8 @@ export function LeaderboardTable(props: {
       <TableBody>
         {props.data.slice(4).map((d, i) => (
           <TableRow key={i}>
-            <TableCell className="text-center text-xl">{i + 4}</TableCell>
-            <TableCell className="flex flex-row justify-center space-x-4 text-center text-xl">
+            <TableCell className="text-center ">{i + 4}</TableCell>
+            <TableCell className="flex flex-row flex-wrap items-center justify-center space-x-4 space-y-1 text-center">
               <span>{d.name}</span>
               {d.isSupporter ? (
                 <Link href="/support" className="focus:outline-none focus-visible:ring-0">
@@ -47,7 +47,7 @@ export function LeaderboardTable(props: {
                 </Link>
               ) : null}
             </TableCell>
-            <TableCell className="text-center text-xl">{d.score}</TableCell>
+            <TableCell className="text-center ">{d.score}</TableCell>
           </TableRow>
         ))}
       </TableBody>

@@ -41,7 +41,7 @@ function Experience(props: DataProps) {
     <>
       <PerspectiveCamera makeDefault position={[0, 0, 4.2]} ref={cameraRef} zoom={1} />
       {/* <OrbitControls /> */}
-      <group scale={1.5}>
+      <group scale={1.35}>
         <Platform
           x={-1}
           height={1.3}

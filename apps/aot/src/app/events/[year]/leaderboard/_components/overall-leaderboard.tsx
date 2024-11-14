@@ -58,18 +58,20 @@ export async function getOverallLeaderboard(year: number): Promise<OverallLeader
   ]);
 
   // Once we have top 100 for today, we can cache until midnight (next challenge release)
+  const rankingWithSupporters = ranking.map((r) => ({
+    ...r,
+    isSupporter: Math.random() > 0.8,
+  }));
   if (Number(numberOfSubmissionsToday) >= LEADERBOARD_RANKING_LIMIT) {
     await redisClient.set(
       'aot-overall-leaderboard',
-      JSON.stringify(ranking, (_, value) => (typeof value === 'bigint' ? value.toString() : value)),
+      JSON.stringify(rankingWithSupporters, (_, value) =>
+        typeof value === 'bigint' ? value.toString() : value,
+      ),
       { PXAT: getNextAdventDay() },
     );
   }
 
-  const rankingWithSupporters = ranking.map((r) => ({
-    ...r,
-    isSupporter: Math.random() > 0.9,
-  }));
   return rankingWithSupporters;
 }
 
