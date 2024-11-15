@@ -21,7 +21,7 @@ export function LeaderboardTable(props: {
 }) {
   return (
     <Table className="font-mono">
-      <TableCaption>Leader board for 2023</TableCaption>
+      <TableCaption>Leaderboard for 2023</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="w-[20%] text-center uppercase">Rank</TableHead>
@@ -32,7 +32,7 @@ export function LeaderboardTable(props: {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {props.data.slice(4).map((d, i) => (
+        {props.data.slice(3).map((d, i) => (
           <TableRow key={i}>
             <TableCell className="text-center ">{i + 4}</TableCell>
             <TableCell className="flex flex-row flex-wrap items-center justify-center space-x-4 space-y-1 text-center">

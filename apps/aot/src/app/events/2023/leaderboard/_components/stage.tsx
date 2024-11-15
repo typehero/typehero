@@ -113,6 +113,7 @@ function Platform(props: {
           maxWidth={1}
           font="/roboto-mono-v23-latin-regular.woff"
           anchorY="bottom"
+          textAlign="center"
         >
           {props.userInfo.username}
         </Text>
