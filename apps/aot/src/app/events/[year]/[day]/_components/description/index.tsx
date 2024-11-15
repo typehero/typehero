@@ -64,38 +64,7 @@ export function Description({ challenge }: Props) {
         <TypographyH3 className="mr-auto max-w-[75%] items-center truncate text-2xl font-bold">
           {challenge.name}
         </TypographyH3>
-        <ReportDialog challengeId={challenge.id} reportType="CHALLENGE">
-          <ActionMenu
-            items={[
-              {
-                key: 'feedback',
-                label: 'Feedback',
-                icon: Flag,
-              },
-            ]}
-            onChange={() => {
-              // do nothing
-            }}
-          />
-        </ReportDialog>
       </div>
-      {/* Author & Time */}
-      <div className="mt-2 flex items-center gap-4">
-        <UserBadge
-          user={{
-            name: challenge.user?.name ?? '',
-            image: challenge.user?.image ?? '',
-            bio: challenge.user?.bio ?? '',
-            roles: challenge.user?.roles ?? [],
-          }}
-          hideLinks
-        />
-        <div className="text-muted-foreground flex items-center gap-2">
-          <Calendar className=" h-4 w-4" />
-          <span className="text-xs">Last updated {getRelativeTimeStrict(challenge.updatedAt)}</span>
-        </div>
-      </div>
-      {/* Difficulty & Action Buttons */}
       <div className="mt-3 flex items-center gap-3">
         {challenge.hasSolved ? (
           <Tooltip>
