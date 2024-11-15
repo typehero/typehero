@@ -33,10 +33,15 @@ export function LeaderboardTable(props: {
       </TableHeader>
       <TableBody>
         {props.data.slice(3).map((d, i) => (
-          <TableRow key={i}>
+          <TableRow key={i} className="group">
             <TableCell className="text-center ">{i + 4}</TableCell>
             <TableCell className="flex flex-row flex-wrap items-center justify-center space-x-4 space-y-1 text-center">
-              <span>{d.name}</span>
+              <Link
+                href={`https://typehero.dev/@${d.name}`}
+                className="underline-offset-4 group-hover:underline"
+              >
+                {d.name}
+              </Link>
               {d.isSupporter ? (
                 <Link href="/support" className="focus:outline-none focus-visible:ring-0">
                   <Badge className="-ml-2 font-bold" size="xs" variant="outline">

@@ -54,7 +54,7 @@ export function DayScroller() {
       >
         <div className="text-nowrap first:pl-[40%] last:pr-[40%]">
           <Button variant="ghost" asChild onClick={() => setSelectedDay(0)}>
-            <Link href="/events/2023/leaderboard">
+            <Link href="/events/2023/leaderboard" prefetch>
               <h1
                 className={cn(
                   'text-foreground text-lg uppercase tracking-wide',
@@ -69,7 +69,7 @@ export function DayScroller() {
         {days.map((_, i) => (
           <div key={i + 1} className="text-nowrap first:pl-[40%] last:pr-[40%]">
             <Button variant="ghost" onClick={() => setSelectedDay(i + 1)} asChild>
-              <Link href={`/events/2023/leaderboard/${i + 1}`}>
+              <Link href={`/events/2023/leaderboard/${i + 1}`} prefetch>
                 <h1
                   className={cn(
                     'text-lg uppercase tracking-wide',
