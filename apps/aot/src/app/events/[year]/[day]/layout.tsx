@@ -3,8 +3,22 @@ import { ForceRenderUntilClient } from '@repo/ui/components/force-render-until-c
 import { api } from '~/trpc/server';
 import { ChallengeLayoutWrapper } from './_components/challenge-layout-wrapper';
 import { TrackVisibiltyProvider } from './use-track-visibility.hook';
+import { buildMetaForEventPage } from '~/utils/metadata';
 import { isChallengeUnlocked } from '~/utils/time-utils';
 import { notFound } from 'next/navigation';
+
+interface Props {
+  params: {
+    year: string;
+    day: string;
+  };
+}
+export async function generateMetadata({ params: { year } }: Props) {
+  return buildMetaForEventPage({
+    title: `Advent of Typescript ${year}`,
+    description: `Advent of Typescript ${year}`,
+  });
+}
 
 export default async function LayoutData({
   children,
