@@ -158,7 +158,7 @@ function Platform(props: {
         >
           {props.userInfo.points}
         </Text>
-        {props.isDayStage ? (
+        {props.isDayStage ? null : (
           <Text
             anchorY="top"
             position-y={props.height - 0.74}
@@ -167,7 +167,7 @@ function Platform(props: {
           >
             points
           </Text>
-        ) : null}
+        )}
       </group>
     </motion.group>
   );
