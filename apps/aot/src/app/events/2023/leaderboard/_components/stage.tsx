@@ -58,7 +58,7 @@ function Experience(props: DataProps) {
           userInfo={{
             username: props.data[0]?.name ?? '',
             points: props.data[0]?.score ?? '',
-            image: 'https://avatars.githubusercontent.com/u/53154523?v=4',
+            image: props.data[0]?.image ?? fallbackImage,
           }}
         />
         <Platform
@@ -67,7 +67,7 @@ function Experience(props: DataProps) {
           userInfo={{
             username: props.data[1]?.name ?? '',
             points: props.data[1]?.score ?? '',
-            image: 'https://avatars.githubusercontent.com/u/3579142?v=4',
+            image: props.data[1]?.image ?? fallbackImage,
           }}
         />
         <Platform
@@ -76,13 +76,15 @@ function Experience(props: DataProps) {
           userInfo={{
             username: props.data[2]?.name ?? '',
             points: props.data[2]?.score ?? '',
-            image: 'https://avatars.githubusercontent.com/u/31113245?v=4',
+            image: props.data[2]?.image ?? fallbackImage,
           }}
         />
       </motion.group>
     </>
   );
 }
+const fallbackImage = 'https://avatars.githubusercontent.com/u/3579142?v=4';
+
 function Platform(props: {
   x: number;
   height: number;
