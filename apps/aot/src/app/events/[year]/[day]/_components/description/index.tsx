@@ -2,7 +2,6 @@
 
 import { useSession } from '@repo/auth/react';
 import { cn } from '@repo/ui/cn';
-import { ActionMenu } from '@repo/ui/components/action-menu';
 import { Button, buttonVariants } from '@repo/ui/components/button';
 import {
   Dialog,
@@ -14,15 +13,12 @@ import {
 import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { TypographyH3 } from '@repo/ui/components/typography/h3';
-import { Bookmark as BookmarkIcon, Calendar, CheckCircle, Flag, Share } from '@repo/ui/icons';
+import { Bookmark as BookmarkIcon, CheckCircle, Share } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { debounce } from 'lodash';
 import { useRef, useState } from 'react';
-import { ReportDialog } from '~/components/report-dialog';
 import { ShareUrl } from '~/components/share-url';
-import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import { addOrRemoveBookmark } from '../bookmark.action';
-import { UserBadge } from '../comments/enhanced-user-badge';
 import type { Challenge } from '../types';
 import { Vote } from '../vote';
 
