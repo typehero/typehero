@@ -3,6 +3,12 @@
 import { useSession } from '@repo/auth/react';
 import { type CommentRoot } from '@repo/db/types';
 import { Button } from '@repo/ui/components/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@repo/ui/components/dropdown-menu';
 import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { toast } from '@repo/ui/components/use-toast';
@@ -11,6 +17,7 @@ import {
   Calendar,
   ChevronDown,
   ChevronUp,
+  EllipsisVertical,
   Flag,
   MoreHorizontal,
   Pencil,
@@ -307,14 +314,14 @@ function SingleComment({
     <div
       id={`comment-${comment.id}`}
       className={clsx(
-        'group relative p-2 pl-3',
+        'group relative p-1 pl-3',
         isHighlighted && SELECTED_CLASSES,
         'transition-colors',
         'duration-150',
       )}
       ref={elRef}
     >
-      <div className="flex items-start justify-between gap-4 pr-[0.4rem]">
+      <div className="flex items-start justify-between gap-4 ">
         <div className="mb-2 flex w-full items-center justify-between gap-1">
           <div className="flex items-center gap-2">
             <UserAvatar src={comment.user?.image ?? ''} />
@@ -326,25 +333,130 @@ function SingleComment({
                 roles: comment.user?.roles ?? [],
               }}
             />
-          </div>
-
-          <Tooltip delayDuration={0.05}>
-            <TooltipTrigger asChild>
+            {hasBeenEdited ? (
               <div className="text-muted-foreground flex items-center gap-2 whitespace-nowrap text-xs">
-                <Calendar className="h-4 w-4" />
-                <span>{getRelativeTimeStrict(comment.createdAt)}</span>
+                Last edited at{' '}
+                {new Intl.DateTimeFormat(undefined, {
+                  timeStyle: 'short',
+                  dateStyle: 'short',
+                }).format(comment.updatedAt)}
               </div>
-            </TooltipTrigger>
-            <TooltipContent align="start" alignOffset={-55} className="rounded-xl">
-              <span className="text-foreground text-xs">{comment.createdAt.toLocaleString()}</span>
-            </TooltipContent>
-          </Tooltip>
+            ) : null}
+          </div>
+          <div className="flex items-center gap-2">
+            <Tooltip delayDuration={0.05}>
+              <TooltipTrigger asChild>
+                <div className="text-muted-foreground flex items-center gap-2 whitespace-nowrap text-xs">
+                  <Calendar className="h-4 w-4" />
+                  <span>{getRelativeTimeStrict(comment.createdAt)}</span>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent align="start" alignOffset={-55} className="rounded-xl">
+                <span className="text-foreground text-xs">
+                  {comment.createdAt.toLocaleString()}
+                </span>
+              </TooltipContent>
+            </Tooltip>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center">
+                <Button variant="outline" size="xs">
+                  <EllipsisVertical className="h-3 w-3" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-neutral-900">
+                <DropdownMenuItem>
+                  <div>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <div
+                          className="flex items-center gap-2"
+                          onClick={() => {
+                            copyPathNotifyUser(Boolean(isReply), slug as string);
+                          }}
+                        >
+                          <Share className="h-4 w-4" />
+                          Share
+                          <span className="sr-only">Share this comment</span>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Share this comment</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <div>
+                    {isAuthor ? (
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <div
+                            onClick={() => setIsEditing(!isEditing)}
+                            className="flex items-center gap-2"
+                          >
+                            <Pencil className="h-4 w-4" />
+                            Edit
+                            <span className="sr-only">Edit this comment</span>
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Edit this comment</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    ) : null}
+                  </div>
+                </DropdownMenuItem>
+                <div>
+                  {isAuthor || isAdminAndModerator ? (
+                    <Tooltip>
+                      <CommentDeleteDialog asChild comment={comment} deleteComment={deleteComment}>
+                        <TooltipTrigger asChild>
+                          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                            <div className="flex items-center gap-2">
+                              <Trash2 className="h-4 w-4" />
+                              Delete
+                              <span className="sr-only">Delete this comment</span>
+                            </div>
+                          </DropdownMenuItem>
+                        </TooltipTrigger>
+                      </CommentDeleteDialog>
+                      <TooltipContent>
+                        <p>Delete this comment</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  ) : (
+                    <Tooltip>
+                      <ReportDialog triggerAsChild commentId={comment.id} reportType="COMMENT">
+                        <TooltipTrigger asChild>
+                          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                            <div className="flex items-center gap-2">
+                              <Flag className="h-4 w-4" />
+                              Report
+                              <span className="sr-only">Report this comment</span>
+                            </div>
+                          </DropdownMenuItem>
+                        </TooltipTrigger>
+                      </ReportDialog>
+                      <TooltipContent>
+                        <p>Report this comment</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
+                </div>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       </div>
 
       <div className="flex gap-3">
         <ExpandableContent content={comment.text} />
-        <div className="flex flex-col items-end">
+
+      
+      </div>
+
+      {!isEditing && (
+        <div className="mb-2 mt-1.5 flex justify-between">
           {!readonly && (
             <>
               <div className="flex gap-1">
@@ -369,6 +481,47 @@ function SingleComment({
                   }}
                 />
 
+                {!isReply && (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button variant="secondary" size="xs" onClick={onClickReply}>
+                        <Reply className="h-4 w-4" />
+                        <span className="sr-only">Create a reply</span>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Reply</p>
+                    </TooltipContent>
+                  </Tooltip>
+                )}
+              </div>
+            </>
+          )}
+          {comment._count.replies > 0 && (
+            <Button
+              variant="ghost"
+              size="xs"
+              className="z-50 ml-auto gap-1"
+              onClick={onClickToggleReply}
+            >
+              {isToggleReply ? (
+                <ChevronDown className="h-4 w-4 opacity-50" />
+              ) : (
+                <ChevronUp className="h-4 w-4" />
+              )}
+              {isToggleReply ? (
+                <div className="text-xs opacity-50">
+                  {comment._count.replies === 1 ? '1 reply' : `${comment._count.replies} replies`}
+                </div>
+              ) : (
+                <div className="text-xs">
+                  {comment._count.replies === 1 ? '1 reply' : `${comment._count.replies} replies`}
+                </div>
+              )}
+
+              <span className="sr-only">Toggle replies view</span>
+            </Button>
+          )}
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
@@ -491,7 +644,7 @@ function SingleComment({
                 </TooltipContent>
               </Tooltip>
             )}
-          </div>
+          </div
         </div>
       </div>
 
@@ -516,12 +669,14 @@ function SingleComment({
 
 function ExpandableContent({ content }: { content: string }) {
   const [expanded, setExpanded] = useState(true);
+  const [seeCollapse, setSeeCollapse] = useState(false);
   const contentWrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleResize = () => {
-      if ((contentWrapperRef.current?.clientHeight ?? 0) > 300) {
+      if ((contentWrapperRef.current?.clientHeight ?? 0) > 100) {
         setExpanded(false);
+        setSeeCollapse(true);
       }
     };
 
@@ -536,8 +691,8 @@ function ExpandableContent({ content }: { content: string }) {
   return (
     <div
       className={clsx(
-        { 'h-full': expanded, 'max-h-[300px]': !expanded },
-        'relative w-full overflow-hidden break-words pl-[1px] text-sm',
+        { 'h-full': expanded, 'max-h-[100px]': !expanded },
+        'relative w-full overflow-hidden break-words pl-[1px] text-sm transition-transform',
       )}
       ref={contentWrapperRef}
     >
@@ -545,13 +700,30 @@ function ExpandableContent({ content }: { content: string }) {
       {!expanded && (
         <div
           className="absolute top-0 flex h-full w-full cursor-pointer items-end bg-gradient-to-b from-transparent to-white dark:to-zinc-800"
-          onClick={() => setExpanded(true)}
+          onClick={() => {
+            setExpanded(true);
+            setSeeCollapse(true);
+          }}
         >
           <div className="text-md text-label-1 dark:text-dark-label-1 flex w-full items-center justify-center hover:bg-transparent">
             Read more
           </div>
         </div>
       )}
+      {expanded && seeCollapse ? <div className="flex w-full items-center justify-center">
+          <Button
+            variant="ghost"
+            size="xs"
+            className="z-50 mx-auto gap-1"
+            onClick={() => {
+              setExpanded(false);
+              setSeeCollapse(false);
+            }}
+          >
+            <ChevronUp className="h-4 w-4" />
+            collapse
+          </Button>
+        </div> : null}
     </div>
   );
 }
