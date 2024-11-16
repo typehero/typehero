@@ -1,3 +1,4 @@
+import type { Role } from '@repo/db/types';
 import { Badge } from '@repo/ui/components/badge';
 import {
   Table,
@@ -13,6 +14,8 @@ import Link from 'next/link';
 export function LeaderboardTable(props: {
   data: {
     name: string;
+    roles: Role[];
+    bio: string;
     image: string | null;
     isSupporter: boolean;
     score: number | string;
@@ -27,7 +30,7 @@ export function LeaderboardTable(props: {
           <TableHead className="w-[20%] text-center uppercase">Rank</TableHead>
           <TableHead className="w-[60%] text-center uppercase">Username</TableHead>
           <TableHead className="w-[20%] text-center uppercase">
-            {props.isDayTable ? 'Time to Complete' : 'Points'}
+            {props.isDayTable ? 'Time' : 'Points'}
           </TableHead>
         </TableRow>
       </TableHeader>
@@ -38,6 +41,7 @@ export function LeaderboardTable(props: {
             <TableCell className="flex flex-row flex-wrap items-center justify-center space-x-4 space-y-1 text-center">
               <Link
                 href={`https://typehero.dev/@${d.name}`}
+                target="_blank"
                 className="underline-offset-4 group-hover:underline"
               >
                 {d.name}

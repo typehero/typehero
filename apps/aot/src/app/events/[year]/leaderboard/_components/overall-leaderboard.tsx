@@ -1,18 +1,25 @@
 import { Prisma, prisma } from '@repo/db';
 import { LEADERBOARD_RANKING_LIMIT } from '../constants';
-import { type OverallLeaderboardEntry } from './columns';
 import { getNextAdventDay } from '~/utils/time-utils';
 import { redisClient } from '@repo/redis';
 import { getAotChallengeIdsSoFar } from '../getAotChallengeIds';
 
 export const dynamic = 'force-dynamic';
 
+export interface OverallLeaderboardEntry {
+  score: string;
+  name: string;
+  image: string | null;
+  bio: string;
+  isSupporter: boolean;
+}
+
 export async function getOverallLeaderboard(year: number): Promise<OverallLeaderboardEntry[]> {
   const cachedRanking = await redisClient.get('aot-overall-leaderboard');
 
-  if (cachedRanking) {
-    return JSON.parse(cachedRanking) as OverallLeaderboardEntry[];
-  }
+  // if (cachedRanking) {
+  //   return JSON.parse(cachedRanking) as OverallLeaderboardEntry[];
+  // }
 
   const challengeIdsSoFar = await getAotChallengeIdsSoFar(year);
 
@@ -60,6 +67,7 @@ export async function getOverallLeaderboard(year: number): Promise<OverallLeader
   // Once we have top 100 for today, we can cache until midnight (next challenge release)
   const rankingWithSupporters = ranking.map((r) => ({
     ...r,
+    score: r.score.toString(),
     isSupporter: Math.random() > 0.8,
   }));
   if (Number(numberOfSubmissionsToday) >= LEADERBOARD_RANKING_LIMIT) {

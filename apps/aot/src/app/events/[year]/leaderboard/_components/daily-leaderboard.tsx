@@ -9,7 +9,11 @@ export const getFirst100SubmissionsRanked = async (adventYear: string, adventDay
   // We already checked adventDay is valid in day/[day]/layout.tsx
   const challengeId = await getAotChallengeIdForAdventDay(adventYear, adventDay)!;
   const submissions = await prisma.submission.findMany({
-    select: { id: true, createdAt: true, user: { select: { name: true, image: true } } },
+    select: {
+      id: true,
+      createdAt: true,
+      user: { select: { name: true, image: true, roles: true, bio: true } },
+    },
     where: {
       challengeId,
       isSuccessful: true,
