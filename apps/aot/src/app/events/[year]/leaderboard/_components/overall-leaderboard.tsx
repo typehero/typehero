@@ -23,9 +23,15 @@ async function getOverallLeaderboard(year: number, isPast: boolean) {
   SELECT
     u.name,
     u.image,
-    CAST(SUM(r.points) AS SIGNED) AS totalPoints
+    u.bio,
+    CAST(SUM(r.points) AS SIGNED) AS totalPoints,
+    GROUP_CONCAT(DISTINCT ro.role) AS roles
   FROM
     User u
+  LEFT JOIN
+    _RoleToUser rtu ON u.id = rtu.B
+  LEFT JOIN
+    Role ro ON rtu.A = ro.id
   JOIN
     (
       SELECT
@@ -44,7 +50,7 @@ async function getOverallLeaderboard(year: number, isPast: boolean) {
       WHERE \`rank\` <= ${LEADERBOARD_RANKING_LIMIT}
     ) r ON u.id = r.userId
   WHERE u.status = 'ACTIVE'
-  GROUP BY r.userId, u.name, u.image
+  GROUP BY r.userId, u.name, u.image, u.bio
   ORDER BY totalPoints DESC
   LIMIT ${LEADERBOARD_RANKING_LIMIT};`;
 

@@ -11,6 +11,8 @@ export interface OverallLeaderboardEntry {
   totalPoints: number;
   name: string;
   image: string | null;
+  bio: string;
+  roles: string | null;
 }
 
 const overallLeaderboardColumnHelper = createColumnHelper<OverallLeaderboardEntry>();
