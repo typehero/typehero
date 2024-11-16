@@ -1,4 +1,4 @@
-import type { Role } from '@repo/db/types';
+import { RoleTypes, type Role } from '@repo/db/types';
 import { Badge } from '@repo/ui/components/badge';
 import {
   Table,
@@ -10,6 +10,7 @@ import {
   TableRow,
 } from '@repo/ui/components/table';
 import Link from 'next/link';
+import { UserBadge } from '~/app/events/[year]/[day]/_components/comments/enhanced-user-badge';
 
 export function LeaderboardTable(props: {
   data: {
@@ -17,7 +18,6 @@ export function LeaderboardTable(props: {
     roles: Role[];
     bio: string;
     image: string | null;
-    isSupporter: boolean;
     score: number | string;
   }[];
   isDayTable: boolean;
@@ -39,24 +39,26 @@ export function LeaderboardTable(props: {
           <TableRow key={i} className="group">
             <TableCell className="text-center ">{i + 4}</TableCell>
             <TableCell className="flex flex-row flex-wrap items-center justify-center space-x-4 space-y-1 text-center">
-              <Link
-                href={`https://typehero.dev/@${d.name}`}
-                target="_blank"
+              <UserBadge
                 className="underline-offset-4 group-hover:underline"
-              >
-                {d.name}
-              </Link>
-              {d.isSupporter ? (
+                user={{
+                  ...d,
+                  image: d.image ?? '',
+                }}
+              />
+              {d.roles.find((r) => r.role === RoleTypes.SUPPORTER) !== undefined ? (
                 <Link href="/support" className="focus:outline-none focus-visible:ring-0">
-                  <Badge className="-ml-2 font-bold" size="xs" variant="outline">
-                    <span className="bg-gradient-to-r  from-emerald-500 to-emerald-600 bg-clip-text font-bold text-transparent dark:from-emerald-200 dark:to-emerald-500">
-                      Supporter
-                    </span>
+                  <Badge
+                    className="-ml-2 border-none bg-gradient-to-r from-yellow-500 to-yellow-600 font-bold dark:from-yellow-200 dark:to-yellow-500"
+                    size="xs"
+                    variant="outline"
+                  >
+                    <span className="text-card">Supporter</span>
                   </Badge>
                 </Link>
               ) : null}
             </TableCell>
-            <TableCell className="text-center ">{d.score}</TableCell>
+            <TableCell className="text-center">{d.score}</TableCell>
           </TableRow>
         ))}
       </TableBody>

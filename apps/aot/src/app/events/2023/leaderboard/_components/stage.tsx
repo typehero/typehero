@@ -1,10 +1,10 @@
 'use client';
 import { Billboard, Edges, Image, OrbitControls, PerspectiveCamera, Text } from '@react-three/drei';
 import { Canvas, extend, useFrame } from '@react-three/fiber';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { Color, type PerspectiveCamera as PerspectiveCameraType } from 'three';
 import { geometry } from 'maath';
-import { useScroll, useSpring } from 'framer-motion';
+import { useScroll } from 'framer-motion';
 import { motion } from 'framer-motion-3d';
 import { Perf } from 'r3f-perf';
 declare module '@react-three/fiber' {
@@ -14,7 +14,7 @@ declare module '@react-three/fiber' {
 }
 extend({ RoundedPlaneGeometry: geometry.RoundedPlaneGeometry });
 interface DataProps {
-  data: { name: string; image: string | null; isSupporter: boolean; score: number | string }[];
+  data: { name: string; image: string | null; score: number | string }[];
   isDayStage: boolean;
 }
 export function Stage(props: DataProps) {

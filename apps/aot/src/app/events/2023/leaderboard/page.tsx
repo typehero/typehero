@@ -3,7 +3,10 @@ import { notFound } from 'next/navigation';
 import { buildMetaForEventPage } from '~/utils/metadata';
 import { LeaderboardTable } from './_components/table';
 import { Stage } from './_components/stage';
-import { getOverallLeaderboard } from '../../[year]/leaderboard/_components/overall-leaderboard';
+import {
+  getOverallLeaderboard,
+  getOverallTableData,
+} from '../../[year]/leaderboard/_components/overall-leaderboard';
 
 export async function generateMetadata() {
   return buildMetaForEventPage({
@@ -17,7 +20,8 @@ export default async function LeaderboardPage() {
     return notFound();
   }
 
-  const data = await getOverallLeaderboard(2023, true);
+  const leaderboardEntries = await getOverallLeaderboard(2023, true);
+  const data = await getOverallTableData(leaderboardEntries);
 
   return (
     <div>

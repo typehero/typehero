@@ -5,10 +5,40 @@ import { redisClient } from '@repo/redis';
 import { getAotChallengeIdsSoFar } from '../getAotChallengeIds';
 
 interface OverallLeaderboardEntry {
-  score: number;
+  score: number | bigint;
   name: string;
   image: string | null;
-  isSupporter: boolean;
+}
+
+export async function getOverallTableData(leaderboard: OverallLeaderboardEntry[]) {
+  const userData = await getUserData(leaderboard);
+  const rows = leaderboard.map((r) => {
+    const user = userData.find((u) => u.name === r.name);
+    if (user === undefined) {
+      throw new Error(`Leaderboard entry for ${r.name} does not have a matching user record`);
+    }
+    return {
+      ...user,
+      ...r,
+      score: Number(r.score),
+    };
+  });
+  return rows;
+}
+async function getUserData(leaderboardEntries: OverallLeaderboardEntry[]) {
+  const userData = await prisma.user.findMany({
+    where: {
+      name: {
+        in: leaderboardEntries.map((e) => e.name),
+      },
+    },
+    select: {
+      name: true,
+      bio: true,
+      roles: true,
+    },
+  });
+  return userData;
 }
 
 export async function getOverallLeaderboard(year: number, isPast: boolean) {
@@ -72,6 +102,5 @@ export async function getOverallLeaderboard(year: number, isPast: boolean) {
       { PXAT: getNextAdventDay() },
     );
   }
-
   return ranking;
 }
