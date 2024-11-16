@@ -4,22 +4,14 @@ import { getNextAdventDay } from '~/utils/time-utils';
 import { redisClient } from '@repo/redis';
 import { getAotChallengeIdsSoFar } from '../getAotChallengeIds';
 
-export const dynamic = 'force-dynamic';
+export async function getOverallLeaderboard(year: number, isPast: boolean) {
+  if (!isPast) {
+    const cachedRanking = await redisClient.get('aot-overall-leaderboard');
 
-export interface OverallLeaderboardEntry {
-  score: string;
-  name: string;
-  image: string | null;
-  bio: string;
-  isSupporter: boolean;
-}
-
-export async function getOverallLeaderboard(year: number): Promise<OverallLeaderboardEntry[]> {
-  const cachedRanking = await redisClient.get('aot-overall-leaderboard');
-
-  // if (cachedRanking) {
-  //   return JSON.parse(cachedRanking) as OverallLeaderboardEntry[];
-  // }
+    if (cachedRanking) {
+      return JSON.parse(cachedRanking) as OverallLeaderboardEntry[];
+    }
+  }
 
   const challengeIdsSoFar = await getAotChallengeIdsSoFar(year);
 
@@ -47,6 +39,7 @@ export async function getOverallLeaderboard(year: number): Promise<OverallLeader
         ) AS RankedSubmissions
       WHERE \`rank\` <= ${LEADERBOARD_RANKING_LIMIT}
     ) r ON u.id = r.userId
+  WHERE u.status = 'ACTIVE'
   GROUP BY r.userId, u.name, u.image
   ORDER BY score DESC
   LIMIT ${LEADERBOARD_RANKING_LIMIT};`;
@@ -65,12 +58,7 @@ export async function getOverallLeaderboard(year: number): Promise<OverallLeader
   ]);
 
   // Once we have top 100 for today, we can cache until midnight (next challenge release)
-  const rankingWithSupporters = ranking.map((r) => ({
-    ...r,
-    score: r.score.toString(),
-    isSupporter: Math.random() > 0.8,
-  }));
-  if (Number(numberOfSubmissionsToday) >= LEADERBOARD_RANKING_LIMIT) {
+  if (!isPast && Number(numberOfSubmissionsToday) >= LEADERBOARD_RANKING_LIMIT) {
     await redisClient.set(
       'aot-overall-leaderboard',
       JSON.stringify(rankingWithSupporters, (_, value) =>
@@ -81,10 +69,4 @@ export async function getOverallLeaderboard(year: number): Promise<OverallLeader
   }
 
   return rankingWithSupporters;
-}
-
-export default async function OverallLeaderboard({ year }: { year: number }) {
-  const top100Ranking = await getOverallLeaderboard(year);
-
-  return <div className="p-4" />;
 }

@@ -36,6 +36,7 @@ export default async function ProfilePage(props: { params: { username: string } 
   const user = await prisma.user.findFirst({
     where: {
       name: username,
+      status: 'ACTIVE',
     },
     select: {
       id: true,

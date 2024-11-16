@@ -1,23 +1,15 @@
 import { type Session } from '@repo/auth/server';
 import { api } from '~/trpc/server';
+import { getAotSlug } from '~/utils/getAotSlug';
+import { isAfterJanuaryFirst } from '~/utils/time-utils';
 import { Comments } from './_components/comments';
 import { Description } from './_components/description';
-import { buildMetaForEventPage } from '~/utils/metadata';
-import { isAfterJanuaryFirst } from '~/utils/time-utils';
-import { getAotSlug } from '~/utils/getAotSlug';
 
 interface Props {
   params: {
     year: string;
     day: string;
   };
-}
-
-export async function generateMetadata({ params: { year } }: Props) {
-  return buildMetaForEventPage({
-    title: `Advent of Typescript ${year}`,
-    description: `Advent of Typescript ${year}`,
-  });
 }
 
 export default async function Challenges({ params: { year, day } }: Props) {
