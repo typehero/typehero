@@ -2,7 +2,6 @@
 
 import { useSession } from '@repo/auth/react';
 import { cn } from '@repo/ui/cn';
-import { ActionMenu } from '@repo/ui/components/action-menu';
 import { Button, buttonVariants } from '@repo/ui/components/button';
 import {
   Dialog,
@@ -14,15 +13,12 @@ import {
 import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { TypographyH3 } from '@repo/ui/components/typography/h3';
-import { Bookmark as BookmarkIcon, Calendar, CheckCircle, Flag, Share } from '@repo/ui/icons';
+import { Bookmark as BookmarkIcon, CheckCircle, Share } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { debounce } from 'lodash';
 import { useRef, useState } from 'react';
-import { ReportDialog } from '~/components/report-dialog';
 import { ShareUrl } from '~/components/share-url';
-import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import { addOrRemoveBookmark } from '../bookmark.action';
-import { UserBadge } from '../comments/enhanced-user-badge';
 import type { Challenge } from '../types';
 import { Vote } from '../vote';
 
@@ -64,38 +60,7 @@ export function Description({ challenge }: Props) {
         <TypographyH3 className="mr-auto max-w-[75%] items-center truncate text-2xl font-bold">
           {challenge.name}
         </TypographyH3>
-        <ReportDialog challengeId={challenge.id} reportType="CHALLENGE">
-          <ActionMenu
-            items={[
-              {
-                key: 'feedback',
-                label: 'Feedback',
-                icon: Flag,
-              },
-            ]}
-            onChange={() => {
-              // do nothing
-            }}
-          />
-        </ReportDialog>
       </div>
-      {/* Author & Time */}
-      <div className="mt-2 flex items-center gap-4">
-        <UserBadge
-          user={{
-            name: challenge.user?.name ?? '',
-            image: challenge.user?.image ?? '',
-            bio: challenge.user?.bio ?? '',
-            roles: challenge.user?.roles ?? [],
-          }}
-          hideLinks
-        />
-        <div className="text-muted-foreground flex items-center gap-2">
-          <Calendar className=" h-4 w-4" />
-          <span className="text-xs">Last updated {getRelativeTimeStrict(challenge.updatedAt)}</span>
-        </div>
-      </div>
-      {/* Difficulty & Action Buttons */}
       <div className="mt-3 flex items-center gap-3">
         {challenge.hasSolved ? (
           <Tooltip>

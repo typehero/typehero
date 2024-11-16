@@ -47,7 +47,7 @@ interface SingleCommentProps {
   readonly?: boolean;
   isReply?: boolean;
   isToggleReply?: boolean;
-  onClickReply?: () => void;
+  onClickReply?: (replyingTo: string) => void;
   onClickToggleReply?: () => void;
   preselectedCommentMetadata?: PreselectedCommentMetadata;
   deleteComment: (commentId: number) => Promise<void>;
@@ -96,6 +96,8 @@ export function Comment({
   const params = useSearchParams();
   const replyId = params.get('replyId');
 
+  const timeoutRef = useRef<NodeJS.Timeout>();
+
   const hasPreselectedReply =
     preselectedCommentMetadata?.selectedComment?.id === comment.id && Boolean(replyId);
 
@@ -119,8 +121,51 @@ export function Comment({
     preselectedReplyId: hasPreselectedReply ? Number(replyId) : undefined,
   });
 
-  const toggleReplies = () => setShowReplies(!showReplies);
+  const toggleReplies = () => {
+    if (showReplies) {
+      setIsReplying(false);
+    }
+
+    setShowReplies(!showReplies);
+  };
   const toggleIsReplying = () => setIsReplying(!isReplying);
+
+  const commentInputRef = useRef<{
+    textarea: HTMLTextAreaElement;
+    setInputValue: (value: string) => void;
+  }>(null);
+
+  useEffect(() => {
+    return () => clearTimeout(timeoutRef.current);
+  }, []);
+
+  function prefillReplyInput(replyingTo: string) {
+    if (commentInputRef?.current) {
+      const name = `@${replyingTo} `;
+      commentInputRef.current.setInputValue(name);
+      commentInputRef.current.textarea?.setSelectionRange(name.length, name.length);
+      commentInputRef.current.textarea?.focus();
+      window.requestAnimationFrame(
+        () =>
+          commentInputRef.current?.textarea?.scrollIntoView({
+            block: 'nearest',
+            behavior: 'smooth',
+          }),
+      );
+    }
+  }
+
+  const showReplyInput = (replyingTo: string) => {
+    setIsReplying(true);
+    clearTimeout(timeoutRef.current);
+
+    timeoutRef.current = setTimeout(() => prefillReplyInput(replyingTo));
+  };
+
+  const hideReplyInput = () => {
+    setIsReplying(false);
+    clearTimeout(timeoutRef.current);
+  };
 
   return (
     <div className="flex flex-col px-2 py-1">
@@ -134,22 +179,6 @@ export function Comment({
         deleteComment={deleteComment}
         updateComment={updateComment}
       />
-      {isReplying ? (
-        <div className="relative mt-2 pb-2 pl-8">
-          <Reply className="absolute left-2 top-2 h-4 w-4 opacity-50" />
-          <CommentInput
-            mode="edit"
-            onCancel={() => {
-              setIsReplying(false);
-            }}
-            onSubmit={async (text) => {
-              await addReplyComment(text);
-              setShowReplies(true);
-              setIsReplying(false);
-            }}
-          />
-        </div>
-      ) : null}
 
       {showReplies && status === 'pending' ? <CommentSkeleton /> : null}
       {showReplies ? (
@@ -165,6 +194,7 @@ export function Comment({
                   preselectedCommentMetadata={preselectedCommentMetadata}
                   deleteComment={deleteReplyComment}
                   updateComment={updateReplyComment}
+                  onClickReply={(replyingTo) => showReplyInput(replyingTo)}
                 />
               )),
             )}
@@ -181,6 +211,22 @@ export function Comment({
             </Button>
           ) : null}
         </>
+      ) : null}
+
+      {isReplying ? (
+        <div className="relative mt-2 pb-2 pl-8">
+          <Reply className="absolute left-2 top-2 h-4 w-4 opacity-50" />
+          <CommentInput
+            mode="edit"
+            onCancel={() => hideReplyInput()}
+            onSubmit={async (text) => {
+              await addReplyComment(text);
+              hideReplyInput();
+              setShowReplies(true);
+            }}
+            ref={commentInputRef}
+          />
+        </div>
       ) : null}
     </div>
   );
@@ -405,48 +451,8 @@ function SingleComment({
 
       <div className="flex gap-3">
         <ExpandableContent content={comment.text} />
-        {/* <div className="flex flex-col items-end gap-2">
-          {!readonly && (
-            <>
-              <div className="flex gap-1">
-                <Vote
-                  comment={comment}
-                  toUserId={comment.user.id}
-                  challengeSlug={comment.rootChallenge?.slug ?? ''}
-                  voteCount={comment._count.vote}
-                  initialHasVoted={comment.vote.length > 0}
-                  disabled={!session?.data?.user?.id || comment.userId === session?.data?.user?.id}
-                  rootType="COMMENT"
-                  rootId={comment.id}
-                  onVote={(didUpvote: boolean) => {
-                    comment.vote = didUpvote
-                      ? [
-                          {
-                            userId: session?.data?.user?.id ?? '',
-                          },
-                        ]
-                      : [];
-                    comment._count.vote += didUpvote ? 1 : -1;
-                  }}
-                />
 
-                {!isReply && (
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button variant="secondary" size="xs" onClick={onClickReply}>
-                        <Reply className="h-4 w-4" />
-                        <span className="sr-only">Create a reply</span>
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Reply</p>
-                    </TooltipContent>
-                  </Tooltip>
-                )}
-              </div>
-            </>
-          )}
-        </div> */}
+      
       </div>
 
       {!isEditing && (
@@ -516,8 +522,132 @@ function SingleComment({
               <span className="sr-only">Toggle replies view</span>
             </Button>
           )}
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="secondary"
+                      size="xs"
+                      onClick={() => onClickReply?.(comment?.user?.name)}
+                    >
+                      <Reply className="h-3 w-3" />
+                      <span className="sr-only">Create a reply</span>
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Reply</p>
+                  </TooltipContent>
+                </Tooltip>
+              </div>
+            </>
+          )}
         </div>
-      )}
+      </div>
+
+      <div className="mb-2 flex flex-row flex-wrap items-center justify-between">
+        {!isEditing && (
+          <div className="flex gap-4">
+            {comment._count.replies > 0 && (
+              <Button
+                variant="secondary"
+                size="xs"
+                className="z-50 gap-1"
+                onClick={onClickToggleReply}
+              >
+                {isToggleReply ? (
+                  <ChevronDown className="h-4 w-4" />
+                ) : (
+                  <ChevronUp className="h-4 w-4" />
+                )}
+
+                <div className="text-xs">
+                  {comment._count.replies === 1 ? '1 reply' : `${comment._count.replies} replies`}
+                </div>
+                <span className="sr-only">Toggle replies view</span>
+              </Button>
+            )}
+            {hasBeenEdited ? (
+              <div className="text-muted-foreground flex items-center gap-2 whitespace-nowrap text-xs">
+                Last edited at{' '}
+                {new Intl.DateTimeFormat(undefined, {
+                  timeStyle: 'short',
+                  dateStyle: 'short',
+                }).format(comment.updatedAt)}
+              </div>
+            ) : null}
+          </div>
+        )}
+        <div className="flex gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+          <div>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="secondary"
+                  size="xs"
+                  className="gap-2"
+                  onClick={() => {
+                    copyPathNotifyUser(Boolean(isReply), slug as string);
+                  }}
+                >
+                  <Share className="h-3 w-3" />
+                  <span className="sr-only">Share this comment</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Share</p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+
+          <div>
+            {isAuthor ? (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="secondary" size="xs" onClick={() => setIsEditing(!isEditing)}>
+                    <Pencil className="h-3 w-3" />
+                    <span className="sr-only">Edit this comment</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Edit</p>
+                </TooltipContent>
+              </Tooltip>
+            ) : null}
+          </div>
+
+          <div>
+            {isAuthor || isAdminAndModerator ? (
+              <Tooltip>
+                <CommentDeleteDialog asChild comment={comment} deleteComment={deleteComment}>
+                  <TooltipTrigger asChild>
+                    <Button variant="secondary" size="xs">
+                      <Trash2 className="h-3 w-3" />
+                      <span className="sr-only">Delete this comment</span>
+                    </Button>
+                  </TooltipTrigger>
+                </CommentDeleteDialog>
+                <TooltipContent>
+                  <p>Delete</p>
+                </TooltipContent>
+              </Tooltip>
+            ) : (
+              <Tooltip>
+                <ReportDialog triggerAsChild commentId={comment.id} reportType="COMMENT">
+                  <TooltipTrigger asChild>
+                    <Button variant="secondary" size="xs">
+                      <Flag className="h-3 w-3" />
+                      <span className="sr-only">Report this comment</span>
+                    </Button>
+                  </TooltipTrigger>
+                </ReportDialog>
+                <TooltipContent>
+                  <p>Report</p>
+                </TooltipContent>
+              </Tooltip>
+            )}
+          </div
+        </div>
+      </div>
+
       {isEditing ? (
         <div className="mb-2">
           <CommentInput

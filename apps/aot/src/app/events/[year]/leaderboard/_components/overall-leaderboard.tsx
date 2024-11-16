@@ -8,11 +8,13 @@ import { getAotChallengeIdsSoFar } from '../getAotChallengeIds';
 
 export const dynamic = 'force-dynamic';
 
-async function getOverallLeaderboard(year: number) {
-  const cachedRanking = await redisClient.get('aot-overall-leaderboard');
+async function getOverallLeaderboard(year: number, isPast: boolean) {
+  if (!isPast) {
+    const cachedRanking = await redisClient.get('aot-overall-leaderboard');
 
-  if (cachedRanking) {
-    return JSON.parse(cachedRanking) as OverallLeaderboardEntry[];
+    if (cachedRanking) {
+      return JSON.parse(cachedRanking) as OverallLeaderboardEntry[];
+    }
   }
 
   const challengeIdsSoFar = await getAotChallengeIdsSoFar(year);
@@ -41,6 +43,7 @@ async function getOverallLeaderboard(year: number) {
         ) AS RankedSubmissions
       WHERE \`rank\` <= ${LEADERBOARD_RANKING_LIMIT}
     ) r ON u.id = r.userId
+  WHERE u.status = 'ACTIVE'
   GROUP BY r.userId, u.name, u.image
   ORDER BY totalPoints DESC
   LIMIT ${LEADERBOARD_RANKING_LIMIT};`;
@@ -59,7 +62,7 @@ async function getOverallLeaderboard(year: number) {
   ]);
 
   // Once we have top 100 for today, we can cache until midnight (next challenge release)
-  if (Number(numberOfSubmissionsToday) >= LEADERBOARD_RANKING_LIMIT) {
+  if (!isPast && Number(numberOfSubmissionsToday) >= LEADERBOARD_RANKING_LIMIT) {
     await redisClient.set(
       'aot-overall-leaderboard',
       JSON.stringify(ranking, (_, value) => (typeof value === 'bigint' ? value.toString() : value)),
@@ -70,8 +73,14 @@ async function getOverallLeaderboard(year: number) {
   return ranking;
 }
 
-export default async function OverallLeaderboard({ year }: { year: number }) {
-  const top100Ranking = await getOverallLeaderboard(year);
+export default async function OverallLeaderboard({
+  year,
+  isPast = false,
+}: {
+  year: number;
+  isPast?: boolean;
+}) {
+  const top100Ranking = await getOverallLeaderboard(year, isPast);
 
   return (
     <div className="p-4">
