@@ -313,7 +313,7 @@ function SingleComment({
             </Tooltip>
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center">
-                <Button variant="outline" size={'xs'}>
+                <Button variant="outline" size="xs">
                   <EllipsisVertical className="h-3 w-3" />
                 </Button>
               </DropdownMenuTrigger>
@@ -580,8 +580,7 @@ function ExpandableContent({ content }: { content: string }) {
           </div>
         </div>
       )}
-      {expanded && seeCollapse && (
-        <div className="flex w-full items-center justify-center">
+      {expanded && seeCollapse ? <div className="flex w-full items-center justify-center">
           <Button
             variant="ghost"
             size="xs"
@@ -594,8 +593,7 @@ function ExpandableContent({ content }: { content: string }) {
             <ChevronUp className="h-4 w-4" />
             collapse
           </Button>
-        </div>
-      )}
+        </div> : null}
     </div>
   );
 }
