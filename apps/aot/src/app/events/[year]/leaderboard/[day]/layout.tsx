@@ -1,6 +1,5 @@
 import { isChallengeUnlocked } from '~/utils/time-utils';
 import { notFound } from 'next/navigation';
-import AdventDaysRow from '../_components/advent-days-row';
 
 export default function DailyLeaderboardLayout({
   params,
@@ -14,10 +13,5 @@ export default function DailyLeaderboardLayout({
 
   if (!isChallengeUnlocked(year, day)) return notFound();
 
-  return (
-    <>
-      <AdventDaysRow year={year} selectedDay={day} />
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }

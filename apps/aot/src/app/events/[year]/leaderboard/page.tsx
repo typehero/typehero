@@ -1,6 +1,4 @@
 import { getAllFlags } from '~/utils/feature-flag';
-import AdventDaysRow from './_components/advent-days-row';
-import OverallLeaderboard from './_components/overall-leaderboard';
 import { notFound } from 'next/navigation';
 import { buildMetaForEventPage } from '~/utils/metadata';
 
@@ -18,10 +16,5 @@ export default async function LeaderboardPage({ params }: { params: { year: stri
 
   const year = Number(params.year);
 
-  return (
-    <>
-      <AdventDaysRow year={year} />
-      <OverallLeaderboard year={year} />
-    </>
-  );
+  return <></>;
 }

@@ -17,7 +17,7 @@ export default async function LeaderboardPage() {
     return notFound();
   }
 
-  const data = await getOverallLeaderboard(2023);
+  const data = await getOverallLeaderboard(2023, true);
 
   return (
     <div>

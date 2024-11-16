@@ -4,6 +4,13 @@ import { getNextAdventDay } from '~/utils/time-utils';
 import { redisClient } from '@repo/redis';
 import { getAotChallengeIdsSoFar } from '../getAotChallengeIds';
 
+interface OverallLeaderboardEntry {
+  score: number;
+  name: string;
+  image: string | null;
+  isSupporter: boolean;
+}
+
 export async function getOverallLeaderboard(year: number, isPast: boolean) {
   if (!isPast) {
     const cachedRanking = await redisClient.get('aot-overall-leaderboard');
@@ -61,12 +68,10 @@ export async function getOverallLeaderboard(year: number, isPast: boolean) {
   if (!isPast && Number(numberOfSubmissionsToday) >= LEADERBOARD_RANKING_LIMIT) {
     await redisClient.set(
       'aot-overall-leaderboard',
-      JSON.stringify(rankingWithSupporters, (_, value) =>
-        typeof value === 'bigint' ? value.toString() : value,
-      ),
+      JSON.stringify(ranking, (_, value) => (typeof value === 'bigint' ? value.toString() : value)),
       { PXAT: getNextAdventDay() },
     );
   }
 
-  return rankingWithSupporters;
+  return ranking;
 }
