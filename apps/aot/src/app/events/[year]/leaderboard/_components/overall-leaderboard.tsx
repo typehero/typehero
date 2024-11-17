@@ -43,13 +43,13 @@ async function getUserData(leaderboardEntries: OverallLeaderboardEntry[]) {
 }
 
 export async function getOverallLeaderboard(year: number, isPast: boolean) {
-  if (!isPast) {
-    const cachedRanking = await redisClient.get('aot-overall-leaderboard');
-
-    if (cachedRanking) {
-      return JSON.parse(cachedRanking) as OverallLeaderboardEntry[];
-    }
-  }
+  // if (!isPast) {
+  //   const cachedRanking = await redisClient.get('aot-overall-leaderboard');
+  //
+  //   if (cachedRanking) {
+  //     return JSON.parse(cachedRanking) as OverallLeaderboardEntry[];
+  //   }
+  // }
 
   const challengeIdsSoFar = await getAotChallengeIdsSoFar(year);
 
