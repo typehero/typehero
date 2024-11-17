@@ -1,7 +1,7 @@
 import { prisma } from '@repo/db';
 import { LEADERBOARD_RANKING_LIMIT } from '../constants';
 import { getAotChallengeIdForAdventDay } from '../getAotChallengeIds';
-import { differenceInMilliseconds, format } from 'date-fns';
+import { differenceInMilliseconds } from 'date-fns';
 import { TZDate } from '@date-fns/tz';
 
 export const getFirst100SubmissionsRanked = async (adventYear: string, adventDay: string) => {
@@ -35,13 +35,24 @@ export const getFirst100SubmissionsRanked = async (adventYear: string, adventDay
 };
 
 const calculateDuration = (start: { year: string; day: string }, end: Date) => {
-  const startDate = new Date(Number(start.year), 11, Number(start.day));
-  const endDate = new TZDate(end, '-05:00');
+  //Create new day at midnight, at EST
+  const startDate = TZDate.tz('America/New_York', Number(start.year), 11, Number(start.day));
+  //Let's TZDate know this date is in EST
+  const endDate = new TZDate(end, 'America/New_York');
 
-  console.log({ startDate, endDate });
   const duration = differenceInMilliseconds(endDate, startDate);
-  console.log(duration);
-  const date = format(new Date(duration), 'HH:mm:ss');
-  console.log(date);
-  return date;
+  const formattedDuration = msToTime(duration);
+  return formattedDuration;
 };
+
+function msToTime(duration: number) {
+  const hours = Math.floor(duration / (1000 * 60 * 60));
+  const minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((duration % (1000 * 60)) / 1000);
+
+  const hh = hours.toString().padStart(2, '0');
+  const mm = minutes.toString().padStart(2, '0');
+  const ss = seconds.toString().padStart(2, '0');
+
+  return `${hh}:${mm}:${ss}`;
+}
