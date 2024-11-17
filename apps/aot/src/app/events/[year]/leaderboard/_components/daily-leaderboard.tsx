@@ -35,10 +35,13 @@ export const getFirst100SubmissionsRanked = async (adventYear: string, adventDay
 };
 
 const calculateDuration = (start: { year: string; day: string }, end: Date) => {
-  const duration = differenceInMilliseconds(
-    end,
-    new TZDate(Number(start.year), 11, Number(start.day), 'Etc/UTC'),
-  );
-  const date = format(duration, 'HH:MM:SS');
+  const startDate = new Date(Number(start.year), 11, Number(start.day));
+  const endDate = new TZDate(end, '-05:00');
+
+  console.log({ startDate, endDate });
+  const duration = differenceInMilliseconds(endDate, startDate);
+  console.log(duration);
+  const date = format(new Date(duration), 'HH:mm:ss');
+  console.log(date);
   return date;
 };
