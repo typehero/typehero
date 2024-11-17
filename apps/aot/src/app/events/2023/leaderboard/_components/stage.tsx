@@ -42,14 +42,13 @@ function Experience(props: DataProps) {
     cameraRef.current.position.y = 4 + progress * -10;
     cameraRef.current.lookAt(0, 2, 0);
   });
-  const scale = useScale();
 
   return (
     <>
       <PerspectiveCamera makeDefault position={[0, 0, 4.2]} ref={cameraRef} zoom={1} />
       {/* <OrbitControls /> */}
       <motion.group
-        scale={scale}
+        scale={1.35}
         initial="initial"
         animate="animate"
         transition={{
@@ -210,25 +209,3 @@ function ImageWithFallback(props: { image: string | null; name: string }) {
     </Image>
   );
 }
-
-const useScale = () => {
-  const [scale, setScale] = useState(1.35);
-
-  useEffect(() => {
-    const updateScale = () => {
-      console.log(window.innerWidth);
-      const width = window.innerWidth;
-      // if (width >= 768) return setScale(1.35);
-      // if (width >= 425) return setScale(1.31);
-      // if (width >= 375) return setScale(1.1);
-      // return setScale(0.95); // mobile
-    };
-
-    updateScale();
-
-    window.addEventListener('resize', updateScale);
-
-    return () => window.removeEventListener('resize', updateScale);
-  }, []);
-  return scale;
-};

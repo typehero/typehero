@@ -14,7 +14,7 @@ interface OverallLeaderboardEntry {
 export async function getOverallTableData(leaderboard: OverallLeaderboardEntry[]) {
   const userData = await getUserData(leaderboard);
   const rows = leaderboard.map((r) => {
-    const user = userData.find((u) => u.name === r.name);
+    const user = userData.get(r.userId);
     if (user === undefined) {
       throw new Error(`Leaderboard entry for ${r.name} does not have a matching user record`);
     }
@@ -26,6 +26,7 @@ export async function getOverallTableData(leaderboard: OverallLeaderboardEntry[]
   });
   return rows;
 }
+
 async function getUserData(leaderboardEntries: OverallLeaderboardEntry[]) {
   const userData = await prisma.user.findMany({
     where: {
@@ -34,12 +35,14 @@ async function getUserData(leaderboardEntries: OverallLeaderboardEntry[]) {
       },
     },
     select: {
+      id: true,
       name: true,
       bio: true,
       roles: true,
     },
   });
-  return userData;
+  const userMap = new Map(userData.map((u) => [u.id, u]));
+  return userMap;
 }
 
 export async function getOverallLeaderboard(year: number, isPast: boolean) {
