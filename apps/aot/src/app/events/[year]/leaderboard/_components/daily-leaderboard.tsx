@@ -4,8 +4,6 @@ import { getAotChallengeIdForAdventDay } from '../getAotChallengeIds';
 import { differenceInMilliseconds, format } from 'date-fns';
 import { TZDate } from '@date-fns/tz';
 
-export const dynamic = 'force-dynamic';
-
 export const getFirst100SubmissionsRanked = async (adventYear: string, adventDay: string) => {
   // We already checked adventDay is valid in day/[day]/layout.tsx
   const challengeId = await getAotChallengeIdForAdventDay(adventYear, adventDay)!;
@@ -39,7 +37,7 @@ export const getFirst100SubmissionsRanked = async (adventYear: string, adventDay
 const calculateDuration = (start: { year: string; day: string }, end: Date) => {
   const duration = differenceInMilliseconds(
     end,
-    new TZDate(Number(start.year), 11, Number(start.day), 'America/Los_Angeles'),
+    new TZDate(Number(start.year), 11, Number(start.day), 'Etc/UTC'),
   );
   const date = format(duration, 'HH:MM:SS');
   return date;
