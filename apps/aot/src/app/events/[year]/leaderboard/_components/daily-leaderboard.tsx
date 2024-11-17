@@ -30,8 +30,6 @@ export const getFirst100SubmissionsRanked = async (adventYear: string, adventDay
   const submissionsWithFlatUsers = submissions.map((s) => ({
     //Named score since this shape of this type is being shared with getOverallLeaderboard
     score: calculateDuration({ year: adventYear, day: adventDay }, s.createdAt),
-    //todo
-    isSupporter: Math.random() > 0.8,
     ...s.user,
   }));
   return submissionsWithFlatUsers;

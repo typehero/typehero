@@ -31,16 +31,15 @@ function Experience(props: DataProps) {
   const cameraRef = useRef<PerspectiveCameraType>(null);
   const { scrollY } = useScroll({ smooth: 0.4 });
   const scrollYProgress = useSpring(scrollY, {
-    stiffness: 120,
-    damping: 25,
-    mass: 0.5,
+    damping: 20,
+    stiffness: 100,
   });
   useFrame(() => {
     if (cameraRef.current === null) return;
 
-    const progress = Math.min(scrollYProgress.get() / 600, 1);
+    const progress = Math.min(scrollYProgress.get() / 330, 1);
     console.log(progress);
-    cameraRef.current.position.y = 4 + progress * -15;
+    cameraRef.current.position.y = 4 + progress * -10;
     cameraRef.current.lookAt(0, 2, 0);
   });
 
@@ -58,7 +57,8 @@ function Experience(props: DataProps) {
       >
         <Platform
           x={0}
-          height={1.8 + 2}
+          height={1.8 + 2.5}
+          heightOffset={2.5}
           userInfo={{
             username: props.data[0]?.name ?? '',
             points: props.data[0]?.score ?? '',
@@ -67,8 +67,9 @@ function Experience(props: DataProps) {
           isDayStage={props.isDayStage}
         />
         <Platform
-          x={-1}
-          height={1.5 + 2}
+          x={-1.001}
+          height={1.5 + 2.5}
+          heightOffset={2.5}
           userInfo={{
             username: props.data[1]?.name ?? '',
             points: props.data[1]?.score ?? '',
@@ -77,8 +78,9 @@ function Experience(props: DataProps) {
           isDayStage={props.isDayStage}
         />
         <Platform
-          x={1}
-          height={2 + 1.3}
+          x={1.001}
+          height={1.35 + 2.5}
+          heightOffset={2.5}
           userInfo={{
             username: props.data[2]?.name ?? '',
             points: props.data[2]?.score ?? '',
@@ -94,6 +96,7 @@ function Experience(props: DataProps) {
 function Platform(props: {
   x: number;
   height: number;
+  heightOffset: number;
   userInfo: { username: string; points: number | string; image: string | null };
   isDayStage: boolean;
 }) {
@@ -102,10 +105,10 @@ function Platform(props: {
       position-x={props.x}
       variants={{
         initial: {
-          y: -props.height - 2,
+          y: -props.height - props.heightOffset,
         },
         animate: {
-          y: 0.4 - 2,
+          y: 0.4 - props.heightOffset,
           transition: {
             duration: 1,
           },
@@ -148,7 +151,7 @@ function Platform(props: {
       <mesh position-y={(props.height - 1) / 2}>
         <boxGeometry args={[1, props.height, 1]} />
         <meshBasicMaterial color="black" />
-        <Edges linewidth={2} color="white" />
+        <Edges linewidth={2} color="white" scale={1.001} />
       </mesh>
       <group position-z={0.51}>
         <Text
