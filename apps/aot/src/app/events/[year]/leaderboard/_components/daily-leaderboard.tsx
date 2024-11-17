@@ -28,31 +28,18 @@ export const getFirst100SubmissionsRanked = async (adventYear: string, adventDay
   });
   const submissionsWithFlatUsers = submissions.map((s) => ({
     //Named score since this shape of this type is being shared with getOverallLeaderboard
-    score: calculateDuration({ year: adventYear, day: adventDay }, s.createdAt),
+    score: formatDate(s.createdAt),
     ...s.user,
   }));
   return submissionsWithFlatUsers;
 };
 
-const calculateDuration = (start: { year: string; day: string }, end: Date) => {
-  //Create a new day at midnight, at EST
-  const startDate = TZDate.tz('America/New_York', Number(start.year), 11, Number(start.day));
-  //Let TZDate know this date is in EST
-  const endDate = new TZDate(end, 'America/New_York');
-
-  const duration = differenceInMilliseconds(endDate, startDate);
-  const formattedDuration = msToTime(duration);
-  return formattedDuration;
+const formatDate = (date: Date) => {
+  return new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hourCycle: 'h23',
+  }).format(new Date(date));
 };
-
-function msToTime(duration: number) {
-  const hours = Math.floor(duration / (1000 * 60 * 60));
-  const minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((duration % (1000 * 60)) / 1000);
-
-  const hh = hours.toString().padStart(2, '0');
-  const mm = minutes.toString().padStart(2, '0');
-  const ss = seconds.toString().padStart(2, '0');
-
-  return `${hh}:${mm}:${ss}`;
-}
