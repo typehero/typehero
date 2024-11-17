@@ -1,16 +1,17 @@
 'use client';
-import { Billboard, Edges, Image, OrbitControls, PerspectiveCamera, Text } from '@react-three/drei';
-import { Canvas, extend, useFrame } from '@react-three/fiber';
-import { useEffect, useRef, useState } from 'react';
+import { Billboard, Edges, Image, PerspectiveCamera, Text } from '@react-three/drei';
+import { Canvas, extend, useFrame, type Object3DNode } from '@react-three/fiber';
+import { useRef } from 'react';
 import { Color, type PerspectiveCamera as PerspectiveCameraType } from 'three';
 import { geometry } from 'maath';
 import { useScroll, useSpring } from 'framer-motion';
 import { motion } from 'framer-motion-3d';
-import { Perf } from 'r3f-perf';
 import { useTheme } from 'next-themes';
+import type { RoundedPlaneGeometry } from 'maath/dist/declarations/src/geometry';
+
 declare module '@react-three/fiber' {
   interface ThreeElements {
-    roundedPlaneGeometry: any;
+    roundedPlaneGeometry: Object3DNode<RoundedPlaneGeometry, typeof RoundedPlaneGeometry>;
   }
 }
 extend({ RoundedPlaneGeometry: geometry.RoundedPlaneGeometry });
@@ -190,7 +191,7 @@ function ImageWithFallback(props: { image: string | null; name: string }) {
     return (
       <mesh>
         <roundedPlaneGeometry args={[1, 1, 0.1]} />
-        <Text position-z={0.01} fontSize={0.5} color={'white'}>
+        <Text position-z={0.01} fontSize={0.5} color="white">
           {props.name.slice(0, 1)}
         </Text>
         <meshBasicMaterial

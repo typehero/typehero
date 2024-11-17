@@ -1,6 +1,6 @@
 import { isValidAdventDay } from '~/utils/time-utils';
 import { notFound } from 'next/navigation';
-import { YEAR, DAY } from '../../date_constants';
+import { DAY } from '../../date_constants';
 
 export const dynamic = 'force-static';
 export const dynamicParams = false;

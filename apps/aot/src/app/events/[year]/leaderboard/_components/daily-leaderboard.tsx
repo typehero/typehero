@@ -1,8 +1,6 @@
 import { prisma } from '@repo/db';
 import { LEADERBOARD_RANKING_LIMIT } from '../constants';
 import { getAotChallengeIdForAdventDay } from '../getAotChallengeIds';
-import { differenceInMilliseconds } from 'date-fns';
-import { TZDate } from '@date-fns/tz';
 
 export const getFirst100SubmissionsRanked = async (adventYear: string, adventDay: string) => {
   // We already checked adventDay is valid in day/[day]/layout.tsx

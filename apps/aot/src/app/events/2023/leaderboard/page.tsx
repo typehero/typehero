@@ -26,7 +26,7 @@ export default async function LeaderboardPage() {
   return (
     <div>
       <div className="container fixed inset-0 top-32 ">
-        <div className="top-32 mx-auto h-[220px] border px-4 md:left-0 md:h-[330px] md:max-w-full lg:h-[500px]">
+        <div className="top-32 mx-auto h-[220px] px-4 md:left-0 md:h-[330px] md:max-w-full lg:h-[500px]">
           <Stage data={data.slice(0, 3)} isDayStage={false} />
         </div>
       </div>
