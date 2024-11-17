@@ -5,6 +5,7 @@ import { redisClient } from '@repo/redis';
 import { getAotChallengeIdsSoFar } from '../getAotChallengeIds';
 
 interface OverallLeaderboardEntry {
+  userId: string;
   score: number | bigint;
   name: string;
   image: string | null;

@@ -16,6 +16,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@date-fns/tz": "^1.2.0",
     "@hookform/resolvers": "^3.1.1",
     "@radix-ui/react-dialog": "^1.0.4",
     "@react-three/drei": "^9.116.0",
@@ -61,7 +62,6 @@
     "zustand": "^4.3.9"
   },
   "devDependencies": {
-    "r3f-perf": "^7.2.1",
     "@repo/lint": "workspace:*",
     "@repo/og-utils": "workspace:*",
     "@repo/tsconfig": "workspace:*",
@@ -76,6 +76,7 @@
     "postcss": "^8.4.31",
     "prettier": "^3.1.1",
     "prettier-plugin-tailwindcss": "^0.5.9",
+    "r3f-perf": "^7.2.1",
     "tailwindcss": "3.4.7",
     "tailwindcss-animate": "^1.0.6",
     "typescript": "^5.3.3"
