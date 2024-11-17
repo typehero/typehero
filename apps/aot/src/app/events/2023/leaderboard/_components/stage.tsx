@@ -4,7 +4,7 @@ import { Canvas, extend, useFrame } from '@react-three/fiber';
 import { useRef } from 'react';
 import { Color, type PerspectiveCamera as PerspectiveCameraType } from 'three';
 import { geometry } from 'maath';
-import { useScroll } from 'framer-motion';
+import { useScroll, useSpring } from 'framer-motion';
 import { motion } from 'framer-motion-3d';
 import { Perf } from 'r3f-perf';
 declare module '@react-three/fiber' {
@@ -29,13 +29,17 @@ export function Stage(props: DataProps) {
 
 function Experience(props: DataProps) {
   const cameraRef = useRef<PerspectiveCameraType>(null);
-  const { scrollY: scrollYProgress } = useScroll({ smooth: 0.4 });
-  /* const scrollYProgress = useSpring(scrollY, {
-  }); */
+  const { scrollY } = useScroll({ smooth: 0.4 });
+  const scrollYProgress = useSpring(scrollY, {
+    stiffness: 120,
+    damping: 25,
+    mass: 0.5,
+  });
   useFrame(() => {
     if (cameraRef.current === null) return;
 
-    const progress = Math.min(scrollYProgress.get() / 330, 1);
+    const progress = Math.min(scrollYProgress.get() / 600, 1);
+    console.log(progress);
     cameraRef.current.position.y = 4 + progress * -15;
     cameraRef.current.lookAt(0, 2, 0);
   });
@@ -54,7 +58,7 @@ function Experience(props: DataProps) {
       >
         <Platform
           x={0}
-          height={1.8}
+          height={1.8 + 2}
           userInfo={{
             username: props.data[0]?.name ?? '',
             points: props.data[0]?.score ?? '',
@@ -64,7 +68,7 @@ function Experience(props: DataProps) {
         />
         <Platform
           x={-1}
-          height={1.5}
+          height={1.5 + 2}
           userInfo={{
             username: props.data[1]?.name ?? '',
             points: props.data[1]?.score ?? '',
@@ -74,7 +78,7 @@ function Experience(props: DataProps) {
         />
         <Platform
           x={1}
-          height={1.3}
+          height={2 + 1.3}
           userInfo={{
             username: props.data[2]?.name ?? '',
             points: props.data[2]?.score ?? '',
@@ -98,10 +102,10 @@ function Platform(props: {
       position-x={props.x}
       variants={{
         initial: {
-          y: -props.height,
+          y: -props.height - 2,
         },
         animate: {
-          y: 0.4,
+          y: 0.4 - 2,
           transition: {
             duration: 1,
           },
