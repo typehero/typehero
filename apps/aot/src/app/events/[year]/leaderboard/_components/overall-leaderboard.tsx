@@ -79,7 +79,7 @@ export async function getOverallLeaderboard(year: number, isPast: boolean) {
       WHERE \`rank\` <= ${LEADERBOARD_RANKING_LIMIT}
     ) r ON u.id = r.userId
   WHERE u.status = 'ACTIVE'
-  GROUP BY r.userId, u.name, u.image
+  GROUP BY userId, u.name, u.image
   ORDER BY score DESC
   LIMIT ${LEADERBOARD_RANKING_LIMIT};`;
 
