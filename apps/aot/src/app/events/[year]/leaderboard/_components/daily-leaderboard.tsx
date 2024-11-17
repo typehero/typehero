@@ -35,9 +35,9 @@ export const getFirst100SubmissionsRanked = async (adventYear: string, adventDay
 };
 
 const calculateDuration = (start: { year: string; day: string }, end: Date) => {
-  //Create new day at midnight, at EST
+  //Create a new day at midnight, at EST
   const startDate = TZDate.tz('America/New_York', Number(start.year), 11, Number(start.day));
-  //Let's TZDate know this date is in EST
+  //Let TZDate know this date is in EST
   const endDate = new TZDate(end, 'America/New_York');
 
   const duration = differenceInMilliseconds(endDate, startDate);

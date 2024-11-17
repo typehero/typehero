@@ -11,10 +11,12 @@ export default async function Page({ params: { day } }: { params: { day: string 
   const data = await getFirst100SubmissionsRanked('2023', day);
   return (
     <div>
-      <div className="fixed inset-0 left-[5%] top-32 h-[300px] max-w-sm border md:left-0 md:max-w-full lg:top-32 lg:h-[500px]">
-        <Stage data={data.slice(0, 3)} isDayStage />
+      <div className="container fixed inset-0 top-32 ">
+        <div className="top-32 mx-auto h-[220px] border px-4 md:left-0 md:h-[330px] md:max-w-full lg:h-[400px] xl:h-[500px]">
+          <Stage data={data.slice(0, 3)} isDayStage />
+        </div>
       </div>
-      <div className="border-[hsla(0, 0%, 100%, 0.12)] mx-auto mt-[330px] max-w-screen-lg rounded-2xl border bg-[hsla(0,0%,100%,0.07)] p-2 shadow-[0px_-18px_131px_-78px_hsla(221,83%,53%,1)] backdrop-blur-sm lg:mt-[490px]">
+      <div className="border-[hsla(0, 0%, 100%, 0.12)] mx-auto mt-[255px] max-w-screen-lg rounded-2xl border bg-[hsla(0,0%,100%,0.07)] p-2 shadow-[0px_-18px_131px_-78px_hsla(221,83%,53%,1)] backdrop-blur-sm md:mt-[350px] lg:mt-[500px]">
         <div className="bg-background relative rounded-lg">
           <LeaderboardTable data={data} isDayTable />
         </div>
