@@ -54,6 +54,7 @@ export async function getOverallLeaderboard(year: number, isPast: boolean) {
 
   const rankingPromise = prisma.$queryRaw<OverallLeaderboardEntry[]>`
   SELECT
+    u.id as userId
     u.name,
     u.image,
     CAST(SUM(r.points) AS SIGNED) AS score
