@@ -10,7 +10,6 @@ export function DayScroller() {
   const segment = useSelectedLayoutSegment();
   const days = Array.from({ length: 25 });
   const [selectedDay, setSelectedDay] = useState(Number(segment));
-  console.log(selectedDay);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const scrollToSelectedDay = useCallback(
@@ -52,7 +51,7 @@ export function DayScroller() {
         ref={containerRef}
         className="scrollbar-hide flex flex-row flex-nowrap space-x-4 overflow-x-scroll "
       >
-        <div className="text-nowrap first:pl-[40%] last:pr-[40%]">
+        <div className="text-nowrap last:pr-[40%] md:first:pl-[40%]">
           <Button variant="ghost" asChild onClick={() => setSelectedDay(0)}>
             <Link href="/events/2023/leaderboard" prefetch>
               <h1

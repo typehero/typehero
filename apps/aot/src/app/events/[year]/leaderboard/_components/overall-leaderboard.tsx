@@ -19,8 +19,10 @@ export async function getOverallTableData(leaderboard: OverallLeaderboardEntry[]
       throw new Error(`Leaderboard entry for ${r.name} does not have a matching user record`);
     }
     return {
-      ...user,
-      ...r,
+      name: user.name,
+      image: r.image,
+      bio: user.bio,
+      roles: user.roles,
       score: Number(r.score),
     };
   });

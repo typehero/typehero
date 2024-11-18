@@ -24,12 +24,11 @@ export function LeaderboardTable(props: {
 }) {
   return (
     <Table className="font-mono">
-      <TableCaption>Leaderboard for 2023</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[20%] text-center uppercase">Rank</TableHead>
-          <TableHead className="w-[60%] text-center uppercase">Username</TableHead>
-          <TableHead className="w-[20%] text-center uppercase">
+          <TableHead className="text-center uppercase">Rank</TableHead>
+          <TableHead className="text-center uppercase">Username</TableHead>
+          <TableHead className="text-center uppercase">
             {props.isDayTable ? 'Time' : 'Points'}
           </TableHead>
         </TableRow>
@@ -38,9 +37,9 @@ export function LeaderboardTable(props: {
         {props.data.slice(3).map((d, i) => (
           <TableRow key={i} className="group">
             <TableCell className="text-center ">{i + 4}</TableCell>
-            <TableCell className="flex flex-row flex-wrap items-center justify-center space-x-4 space-y-1 text-center">
+            <TableCell className="flex flex-col items-center justify-center gap-1 text-center md:flex-row md:gap-2">
               <UserBadge
-                className="underline-offset-4 group-hover:underline"
+                className="text-wrap break-all underline-offset-4 group-hover:underline"
                 user={{
                   ...d,
                   image: d.image ?? '',
