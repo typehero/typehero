@@ -9,6 +9,7 @@ export interface TextProps<T extends TagOptions = 'text'> {
   weight?: 'bold' | 'default' | 'medium' | 'semi';
   color?: 'default' | 'primary';
   tag?: T;
+  className?: string;
 }
 
 export type TagOptions = keyof JSX.IntrinsicElements;
