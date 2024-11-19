@@ -21,7 +21,7 @@ export const getAotChallengeIdsSoFar = async (year: number) => {
       },
     },
   });
-
+  console.dir({ currentAdventDay, challengesSoFar }, { depth: null });
   const challengeIdsSoFar = challengesSoFar.trackChallenges.map(
     (trackChallenge) => trackChallenge.challengeId,
   );

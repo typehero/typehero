@@ -45,7 +45,7 @@ export function LeaderboardTable(props: {
                   image: d.image ?? '',
                 }}
               />
-              {d.roles.find((r) => r.role === RoleTypes.SUPPORTER) !== undefined ? (
+              {d.roles.some((r) => r.role === RoleTypes.SUPPORTER) ? (
                 <Link href="/support" className="focus:outline-none focus-visible:ring-0">
                   <Badge
                     className="-ml-2 border-none bg-gradient-to-r from-yellow-500 to-yellow-600 font-bold dark:from-yellow-200 dark:to-yellow-500"

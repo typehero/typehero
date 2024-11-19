@@ -20,5 +20,5 @@ export default function DailyLeaderboardLayout({
 
   if (!isValidAdventDay(day)) return notFound();
 
-  return <>{children}</>;
+  return children;
 }
