@@ -1,12 +1,8 @@
-import type { Stripe } from 'stripe';
-import { stripe } from '../_utils/stripe';
-import { auth } from '~/server/auth';
 import { prisma } from '@repo/db';
-import dynamic from 'next/dynamic';
-
-const ContentNoSSR = dynamic(() => import('./content'), {
-  ssr: false,
-});
+import type { Stripe } from 'stripe';
+import { auth } from '~/server/auth';
+import { stripe } from '../_utils/stripe';
+import Content from './content';
 
 export default async function ResultPage({
   searchParams,
@@ -70,5 +66,5 @@ export default async function ResultPage({
     );
   }
 
-  return <ContentNoSSR />;
+  return <Content />;
 }
