@@ -120,6 +120,7 @@ export function Markdown({
       }}
       // FIXME: this is vuln to XSS and I don't know why we use it, let's remove it
       // or add in a sanitizer lib like: https://github.com/rehypejs/rehype-sanitize
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       rehypePlugins={[rehypeRaw as any]}
       remarkPlugins={[removeHtmlComments, remarkGfm, ...(disableMentions ? [] : [userMentions])]}
     >
