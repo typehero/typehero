@@ -2,7 +2,7 @@
 import { Billboard, Edges, Image, PerspectiveCamera, Text } from '@react-three/drei';
 import { Canvas, extend, useFrame, type Object3DNode } from '@react-three/fiber';
 import { useRef } from 'react';
-import { Color, type PerspectiveCamera as PerspectiveCameraType } from 'three';
+import { Color, LinearToneMapping, type PerspectiveCamera as PerspectiveCameraType } from 'three';
 import { geometry } from 'maath';
 import { useScroll, useSpring } from 'framer-motion';
 import { motion } from 'framer-motion-3d';
@@ -21,9 +21,12 @@ interface DataProps {
 }
 export function Stage(props: DataProps) {
   return (
-    <Canvas>
+    <Canvas
+      gl={{
+        toneMapping: LinearToneMapping,
+      }}
+    >
       {/* <Perf position="top-right" /> */}
-      <color args={['ivory']} />
       <Experience data={props.data} isDayStage={props.isDayStage} />
     </Canvas>
   );
@@ -57,6 +60,7 @@ function Experience(props: DataProps) {
         }}
       >
         <Platform
+          color="red"
           x={0}
           height={1.8 + 2.5}
           heightOffset={2.5}
@@ -65,9 +69,11 @@ function Experience(props: DataProps) {
             points: props.data[0]?.score ?? '',
             image: props.data[0]?.image ?? null,
           }}
+          z={0.001}
           isDayStage={props.isDayStage}
         />
         <Platform
+          color="green"
           x={-1.001}
           height={1.5 + 2.5}
           heightOffset={2.5}
@@ -79,6 +85,7 @@ function Experience(props: DataProps) {
           isDayStage={props.isDayStage}
         />
         <Platform
+          color="green"
           x={1.001}
           height={1.35 + 2.5}
           heightOffset={2.5}
@@ -96,14 +103,17 @@ function Experience(props: DataProps) {
 
 function Platform(props: {
   x: number;
+  z?: number;
   height: number;
   heightOffset: number;
   userInfo: { username: string; points: number | string; image: string | null };
   isDayStage: boolean;
+  color: string;
 }) {
   const { resolvedTheme } = useTheme();
   return (
     <motion.group
+      position-z={props.z ?? 0}
       position-x={props.x}
       variants={{
         initial: {
@@ -154,7 +164,11 @@ function Platform(props: {
       <mesh position-y={(props.height - 1) / 2}>
         <boxGeometry args={[1, props.height, 1]} />
         <meshBasicMaterial color={resolvedTheme === 'dark' ? 'black' : 'white'} />
-        <Edges linewidth={2} color={resolvedTheme === 'dark' ? 'white' : 'black'} scale={1.001} />
+        <Edges
+          linewidth={2}
+          color={resolvedTheme === 'dark' ? props.color : props.color}
+          scale={1.001}
+        />
       </mesh>
       <group position-z={0.51}>
         <Text
@@ -197,8 +211,8 @@ function ImageWithFallback(props: { image: string | null; name: string }) {
         <meshBasicMaterial
           color={
             resolvedTheme === 'dark'
-              ? new Color('hsl(221, 83%, 20%)')
-              : new Color('hsl(217, 91%, 60%)')
+              ? new Color('hsl(132, 90%, 10%)')
+              : new Color('hsl(132, 80%, 40%)')
           }
         />
       </mesh>
