@@ -10,43 +10,44 @@ import {
 import { ChevronLeft, ChevronRight } from '@repo/ui/icons';
 import Link from 'next/link';
 import { useSelectedLayoutSegment } from 'next/navigation';
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 export function DayScroller(props: { eventDay?: number; year: number }) {
-  console.log(props.eventDay);
   const segment = useSelectedLayoutSegment();
   const days = Array.from({ length: 25 });
   const [selectedDay, setSelectedDay] = useState(Number(segment));
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerRef, setContainerRef] = useState<HTMLDivElement | null>(null);
 
   const scrollToSelectedDay = useCallback(
-    (behavior: 'instant' | 'smooth') => {
-      const container = containerRef.current;
+    (dayIdx: number, behavior: 'instant' | 'smooth', node: HTMLDivElement | null) => {
+      const container = node;
       if (container === null) return;
       const children = container.children;
-      children[selectedDay]?.scrollIntoView({
+      children[dayIdx]?.scrollIntoView({
         behavior,
         inline: 'center',
         block: 'nearest',
       });
     },
-    [selectedDay],
+    [],
   );
 
-  useLayoutEffect(() => {
-    scrollToSelectedDay('instant');
-    // The instant scroll on the selected day only needs to happen on page load
+  const scrollAndSetRef = useCallback((node: HTMLDivElement | null) => {
+    scrollToSelectedDay(selectedDay, 'instant', node);
+    setContainerRef(node);
+    // This function needs to be called only once to set the ref & scroll after render
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    scrollToSelectedDay('smooth');
-  }, [containerRef, selectedDay, scrollToSelectedDay]);
-
   function scroll(direction: -1 | 1) {
-    const container = containerRef.current;
+    const container = containerRef;
     if (container === null) return;
     container.scrollBy({ left: direction * 600, behavior: 'smooth' });
+  }
+
+  function handleDaySelect(dayIdx: number) {
+    setSelectedDay(dayIdx);
+    scrollToSelectedDay(dayIdx, 'smooth', containerRef);
   }
 
   return (
@@ -55,11 +56,11 @@ export function DayScroller(props: { eventDay?: number; year: number }) {
         <ChevronLeft />
       </Button>
       <div
-        ref={containerRef}
+        ref={scrollAndSetRef}
         className="scrollbar-hide flex flex-row flex-nowrap space-x-4 overflow-x-scroll "
       >
         <div className="text-nowrap md:first:pl-[45%]">
-          <Button variant="ghost" asChild onClick={() => setSelectedDay(0)}>
+          <Button variant="ghost" asChild onClick={() => handleDaySelect(0)}>
             <Link href={`/events/${props.year}/leaderboard`} prefetch>
               <h1
                 className={cn(
@@ -77,7 +78,7 @@ export function DayScroller(props: { eventDay?: number; year: number }) {
             <div key={i + 1} className="text-nowrap last:pr-[40%]">
               <DayLink
                 year={props.year}
-                setSelectedDay={setSelectedDay}
+                setSelectedDay={handleDaySelect}
                 eventDay={props.eventDay ?? 25}
                 selectedDay={selectedDay}
                 i={i}
