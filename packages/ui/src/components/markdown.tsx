@@ -6,6 +6,7 @@ import { useTheme } from 'next-themes';
 import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import type { Transformer } from 'unified';
 import { SKIP, visit, type BuildVisitor } from 'unist-util-visit';
@@ -119,7 +120,7 @@ export function Markdown({
       }}
       // FIXME: this is vuln to XSS and I don't know why we use it, let's remove it
       // or add in a sanitizer lib like: https://github.com/rehypejs/rehype-sanitize
-      // rehypePlugins={[rehypeRaw as any]}
+      rehypePlugins={[rehypeRaw as any]}
       remarkPlugins={[removeHtmlComments, remarkGfm, ...(disableMentions ? [] : [userMentions])]}
     >
       {children}
