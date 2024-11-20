@@ -5,11 +5,13 @@ import { stripe } from '../_utils/stripe';
 import Content from './content';
 
 export default async function ResultPage({
-  searchParams,
+  searchParams: searchParamsData,
 }: {
-  searchParams: { checkout_id: string };
+  searchParams: Promise<{ checkout_id: string }>;
 }) {
-  if (!searchParams.checkout_id)
+  const searchParams = await searchParamsData;
+
+  if (!searchParams.checkout_id || !searchParams)
     throw new Error('Please provide a valid session_id (`cs_test_...`)');
 
   const session = await auth();
