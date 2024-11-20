@@ -5,7 +5,7 @@ import path from 'node:path';
 import { simpleGit } from 'simple-git';
 import { prisma } from '../src';
 
-const token = 'PLACEHOLDER';
+const token = process.env.MY_PAT;
 const repoOwner = 'dimitropoulos';
 const repoName = 'advent-of-typescript-2024';
 const repoUrl = `https://${token}:x-oauth-basic@github.com/${repoOwner}/${repoName}.git`;
