@@ -1,10 +1,9 @@
 import { type Session } from '@repo/auth/server';
 import { api } from '~/trpc/server';
+import { getAotSlug } from '~/utils/getAotSlug';
+import { isAfterJanuaryFirst } from '~/utils/time-utils';
 import { Comments } from './_components/comments';
 import { Description } from './_components/description';
-import { notFound } from 'next/navigation';
-import { daysAfterDecemberFirst, isAfterJanuaryFirst } from '~/utils/aot';
-import { getAllFlags } from '~/utils/feature-flag';
 
 interface Props {
   params: {
@@ -14,13 +13,7 @@ interface Props {
 }
 
 export default async function Challenges({ params: { year, day } }: Props) {
-  const { unlockAotChallenges } = await getAllFlags();
-  const daysPassed = daysAfterDecemberFirst(year);
-
-  if (!unlockAotChallenges && parseInt(day) > daysPassed) {
-    return notFound();
-  }
-  const challenge = await api.event.getEventChallengeBySlug({ slug: `${year}-${day}` });
+  const challenge = await api.event.getEventChallengeBySlug({ slug: getAotSlug({ year, day }) });
 
   return (
     <div className="relative h-full">
