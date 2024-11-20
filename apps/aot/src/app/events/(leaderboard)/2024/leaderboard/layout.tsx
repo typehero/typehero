@@ -5,8 +5,6 @@ import { YEAR } from '../date_constants';
 import { DayScroller } from '../../_components/day-scroller';
 import { ComingSoon } from '~/app/coming-soon';
 
-export const dynamic = 'force-static';
-
 export default async function LeaderboardLayout({ children }: { children: React.ReactNode }) {
   const { enableAotPlatform } = await getAllFlags();
 
