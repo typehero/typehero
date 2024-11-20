@@ -3,7 +3,6 @@ import { Badge } from '@repo/ui/components/badge';
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
