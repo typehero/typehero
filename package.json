@@ -48,9 +48,9 @@
   "packageManager": "pnpm@9.6.0",
   "pnpm": {
     "overrides": {
-      "@auth/core": "0.19.0",
       "@typescript-eslint/eslint-plugin": "8.16.0",
-      "@typescript-eslint/parser": "8.16.0"
+      "@typescript-eslint/parser": "8.16.0",
+      "@auth/core": "0.37.4"
     },
     "peerDependencyRules": {
       "ignoreMissing": [
