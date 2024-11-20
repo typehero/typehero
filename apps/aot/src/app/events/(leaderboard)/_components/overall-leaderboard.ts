@@ -1,29 +1,69 @@
 import { Prisma, prisma } from '@repo/db';
-import { LEADERBOARD_RANKING_LIMIT } from '../constants';
-import { DataTableLeaderboard } from '@repo/ui/components/data-table-leaderboard';
-import { overallLeaderboardColumns, type OverallLeaderboardEntry } from './columns';
+import { LEADERBOARD_RANKING_LIMIT } from './constants';
 import { getNextAdventDay } from '~/utils/time-utils';
 import { redisClient } from '@repo/redis';
-import { getAotChallengeIdsSoFar } from '../getAotChallengeIds';
+import { getAotChallengeIdsSoFar } from './getAotChallengeIds';
 
-export const dynamic = 'force-dynamic';
+interface OverallLeaderboardEntry {
+  userId: string;
+  score: bigint | number;
+  name: string;
+  image: string | null;
+}
 
-async function getOverallLeaderboard(year: number, isPast: boolean) {
-  if (!isPast) {
-    const cachedRanking = await redisClient.get('aot-overall-leaderboard');
-
-    if (cachedRanking) {
-      return JSON.parse(cachedRanking) as OverallLeaderboardEntry[];
+export async function getOverallTableData(leaderboard: OverallLeaderboardEntry[]) {
+  const userData = await getUserData(leaderboard);
+  const rows = leaderboard.map((r) => {
+    const user = userData.get(r.userId);
+    if (user === undefined) {
+      throw new Error(`Leaderboard entry for ${r.name} does not have a matching user record`);
     }
-  }
+    return {
+      name: user.name,
+      image: r.image,
+      bio: user.bio,
+      roles: user.roles,
+      score: Number(r.score),
+    };
+  });
+  return rows;
+}
+
+async function getUserData(leaderboardEntries: OverallLeaderboardEntry[]) {
+  const userData = await prisma.user.findMany({
+    where: {
+      name: {
+        in: leaderboardEntries.map((e) => e.name),
+      },
+    },
+    select: {
+      id: true,
+      name: true,
+      bio: true,
+      roles: true,
+    },
+  });
+  const userMap = new Map(userData.map((u) => [u.id, u]));
+  return userMap;
+}
+
+export async function getOverallLeaderboard(year: number, isPast: boolean) {
+  // if (!isPast) {
+  //   const cachedRanking = await redisClient.get('aot-overall-leaderboard');
+  //
+  //   if (cachedRanking) {
+  //     return JSON.parse(cachedRanking) as OverallLeaderboardEntry[];
+  //   }
+  // }
 
   const challengeIdsSoFar = await getAotChallengeIdsSoFar(year);
 
   const rankingPromise = prisma.$queryRaw<OverallLeaderboardEntry[]>`
   SELECT
+    u.id as userId,
     u.name,
     u.image,
-    CAST(SUM(r.points) AS SIGNED) AS totalPoints
+    CAST(SUM(r.points) AS SIGNED) AS score
   FROM
     User u
   JOIN
@@ -44,8 +84,8 @@ async function getOverallLeaderboard(year: number, isPast: boolean) {
       WHERE \`rank\` <= ${LEADERBOARD_RANKING_LIMIT}
     ) r ON u.id = r.userId
   WHERE u.status = 'ACTIVE'
-  GROUP BY r.userId, u.name, u.image
-  ORDER BY totalPoints DESC
+  GROUP BY u.id, u.name, u.image
+  ORDER BY score DESC
   LIMIT ${LEADERBOARD_RANKING_LIMIT};`;
 
   // Prisma doesn't suppport distinct for .count()...
@@ -69,22 +109,5 @@ async function getOverallLeaderboard(year: number, isPast: boolean) {
       { PXAT: getNextAdventDay() },
     );
   }
-
   return ranking;
-}
-
-export default async function OverallLeaderboard({
-  year,
-  isPast = false,
-}: {
-  year: number;
-  isPast?: boolean;
-}) {
-  const top100Ranking = await getOverallLeaderboard(year, isPast);
-
-  return (
-    <div className="p-4">
-      <DataTableLeaderboard data={top100Ranking} columns={overallLeaderboardColumns} />
-    </div>
-  );
 }

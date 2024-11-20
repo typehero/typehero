@@ -1,8 +1,8 @@
 import { getAllFlags } from '~/utils/feature-flag';
-import AdventDaysRow from '../../[year]/leaderboard/_components/advent-days-row';
-import OverallLeaderboard from '../../[year]/leaderboard/_components/overall-leaderboard';
 import { notFound } from 'next/navigation';
 import { buildMetaForEventPage } from '~/utils/metadata';
+import { LeaderboardPage } from '../../_components/leaderboard-page';
+import { getOverallLeaderboard, getOverallTableData } from '../../_components/overall-leaderboard';
 import { YEAR } from '../date_constants';
 
 export async function generateMetadata() {
@@ -11,16 +11,13 @@ export async function generateMetadata() {
     description: 'Advent of Typescript',
   });
 }
-export default async function LeaderboardPage() {
+export default async function Page() {
   const { enableAotPlatform } = await getAllFlags();
   if (!enableAotPlatform) {
     return notFound();
   }
 
-  return (
-    <>
-      <AdventDaysRow year={YEAR} />
-      <OverallLeaderboard isPast year={YEAR} />
-    </>
-  );
+  const leaderboardEntries = await getOverallLeaderboard(YEAR, true);
+  const data = await getOverallTableData(leaderboardEntries);
+  return <LeaderboardPage data={data} isDayPage={false} />;
 }
