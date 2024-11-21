@@ -1,8 +1,8 @@
 'use client';
 
-import * as React from 'react';
-import type { ComponentProps } from 'react';
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
+import type { ComponentProps } from 'react';
+import * as React from 'react';
 import { cn } from '../cn';
 
 const Avatar = React.forwardRef<
@@ -44,6 +44,7 @@ const AvatarFallback = React.forwardRef<
 ));
 AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName;
 
+// million-ignore
 function DefaultAvatar(props: ComponentProps<'svg'>) {
   return (
     <svg
@@ -77,4 +78,4 @@ function DefaultAvatar(props: ComponentProps<'svg'>) {
   );
 }
 
-export { Avatar, AvatarImage, AvatarFallback, DefaultAvatar };
+export { Avatar, AvatarFallback, AvatarImage, DefaultAvatar };
