@@ -1,4 +1,5 @@
 import Image, { type StaticImageData } from 'next/image';
+import ExtLink from './ExtLink';
 
 interface PartnerLinkProps {
   partner: {
@@ -15,8 +16,9 @@ export default function PartnerLink({ partner }: PartnerLinkProps) {
       href={partner.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex h-16 w-32 items-center justify-center rounded-lg bg-white/5 p-2 transition-all duration-300 hover:scale-105 hover:bg-white/10 dark:bg-black/5 dark:hover:bg-black/10"
+      className="group relative flex h-16 w-32 flex-shrink-0 items-center justify-center rounded-lg bg-white/5 p-2 transition-all duration-300 hover:bg-white/10 md:flex-shrink md:[mask-image:linear-gradient(to_bottom,red_calc(100%-2rem),transparent)] dark:bg-black/5 dark:hover:bg-white/5 dark:focus:bg-white/5 dark:active:bg-white/10"
     >
+      <ExtLink />
       {partner.darkLogo ? (
         <>
           <Image src={partner.darkLogo} alt="TypeHero" className="hidden h-8 w-fit dark:block" />

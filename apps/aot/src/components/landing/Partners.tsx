@@ -3,7 +3,6 @@ import TypeHeroDark from '../../../public/typehero-dark.svg';
 import TypeHero from '../../../public/typehero.svg';
 import Sentry from '../../../public/sentry.svg';
 import PartnerLink from './PartnerLink';
-import Image from 'next/image';
 
 const partners = [
   {
