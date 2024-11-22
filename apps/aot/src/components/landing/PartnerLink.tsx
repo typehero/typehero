@@ -16,7 +16,7 @@ export default function PartnerLink({ partner }: PartnerLinkProps) {
       href={partner.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex h-16 w-32 items-center justify-center rounded-lg bg-white/5 p-2 transition-all duration-300 hover:bg-white/10 dark:bg-black/5 dark:hover:bg-black/10"
+      className="flex h-16 w-32 items-center justify-center rounded-lg bg-white/5 p-2 transition-all duration-300 hover:scale-105 hover:bg-white/10 dark:bg-black/5 dark:hover:bg-black/10"
     >
       {partner.darkLogo ? (
         <>

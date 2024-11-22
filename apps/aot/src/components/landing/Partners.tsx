@@ -31,15 +31,10 @@ export default function Partners() {
         {/* divider */}
         <div className="mt-4 h-[1px] w-full bg-black/40 [mask-image:linear-gradient(to_right,transparent,red,transparent)] dark:bg-white/30" />
         {/* scroll-wrap for mobile carousel */}
-        <div className="relative mt-6 overflow-hidden">
-          <div className="flex w-full items-center justify-start overflow-x-auto scroll-smooth md:justify-center md:overflow-x-visible">
+        <div className="mt-6">
+          <div className="absolute left-1/2 flex w-screen -translate-x-1/2 items-center justify-center">
             {partners.map((partner) => (
-              <div
-                key={partner.name}
-                className="flex-shrink-0 px-2 transition-transform duration-300 ease-in-out hover:scale-105"
-              >
-                <PartnerLink partner={partner} />
-              </div>
+              <PartnerLink key={partner.name} partner={partner} />
             ))}
           </div>
         </div>
