@@ -13,12 +13,17 @@ import {
 } from './aot-badges/aot-2023-badge';
 import type { BadgeInfo } from '../user-info';
 import type { FC } from 'react';
+import { BronzeBadge, GoldBadge, PlatinumBadge, SilverBadge } from './aot-badges/aot-2024-badges';
 
 export const SlugToBadgeIcon: Record<BadgeInfo['slug'], FC<{ className: string }>> = {
   'aot-2023-bronze': HolidayBronzeBadge,
   'aot-2023-silver': HolidaySilverBadge,
   'aot-2023-gold': HolidayGoldBadge,
   'aot-2023-platinum': HolidayPlatinumBadge,
+  'aot-2024-bronze': BronzeBadge,
+  'aot-2024-silver': SilverBadge,
+  'aot-2024-gold': GoldBadge,
+  'aot-2024-platinum': PlatinumBadge,
 };
 export function Badges(props: { data: BadgeInfo[] }) {
   return (
