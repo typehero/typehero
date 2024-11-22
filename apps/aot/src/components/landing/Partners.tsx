@@ -3,6 +3,7 @@ import TypeHeroDark from '../../../public/typehero-dark.svg';
 import TypeHero from '../../../public/typehero.svg';
 import Sentry from '../../../public/sentry.svg';
 import PartnerLink from './PartnerLink';
+import Image from 'next/image';
 
 const partners = [
   {
@@ -32,7 +33,7 @@ export default function Partners() {
         <div className="mt-4 h-[1px] w-full bg-black/40 [mask-image:linear-gradient(to_right,transparent,red,transparent)] dark:bg-white/30" />
         {/* scroll-wrap for mobile carousel */}
         <div className="mt-6">
-          <div className="absolute left-1/2 flex w-screen -translate-x-1/2 items-center justify-center">
+          <div className="absolute left-1/2 flex w-screen -translate-x-1/2 items-center justify-center overflow-x-hidden px-5">
             {partners.map((partner) => (
               <PartnerLink key={partner.name} partner={partner} />
             ))}
