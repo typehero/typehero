@@ -21,7 +21,6 @@ export const getAotChallengeIdsSoFar = async (year: number) => {
       },
     },
   });
-
   const challengeIdsSoFar = challengesSoFar.trackChallenges.map(
     (trackChallenge) => trackChallenge.challengeId,
   );

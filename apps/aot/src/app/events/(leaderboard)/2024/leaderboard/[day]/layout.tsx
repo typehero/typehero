@@ -1,23 +1,18 @@
 import { isChallengeUnlocked } from '~/utils/time-utils';
 import { notFound } from 'next/navigation';
-import AdventDaysRow from '../_components/advent-days-row';
+import { YEAR } from '../../date_constants';
 
 export default function DailyLeaderboardLayout({
   params,
   children,
 }: {
-  params: { day: string; year: string };
+  params: { day: string };
   children: React.ReactNode;
 }) {
   const day = Number(params.day);
-  const year = Number(params.year);
+  const year = Number(YEAR);
 
   if (!isChallengeUnlocked(year, day)) return notFound();
 
-  return (
-    <>
-      <AdventDaysRow year={year} selectedDay={day} />
-      {children}
-    </>
-  );
+  return children;
 }

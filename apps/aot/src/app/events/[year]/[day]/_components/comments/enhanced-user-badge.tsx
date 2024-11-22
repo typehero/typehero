@@ -25,6 +25,7 @@ interface UserBadgeProps {
     image: string;
   };
   hideLinks?: boolean;
+  className?: string;
 }
 
 export function UserBadge(props: UserBadgeProps) {
@@ -55,7 +56,7 @@ export function UserBadge(props: UserBadgeProps) {
         enabled={shouldShowHoverCard}
         usernameComponent={
           <Button
-            className="-ml-2 font-bold "
+            className={cn('-ml-2 font-bold', props.className)}
             asChild
             variant="ghost"
             size="xs"
@@ -106,9 +107,13 @@ export function UserBadge(props: UserBadgeProps) {
     <HoverCardWrapper
       enabled={shouldShowHoverCard}
       usernameComponent={
-        <Link href={`/@${props.user.name}`} className="focus:outline-none focus-visible:ring-0">
+        <Link
+          href={`https://typehero.dev/@${props.user.name}`}
+          target="_blank"
+          className="focus:outline-none focus-visible:ring-0"
+        >
           <Button
-            className="-ml-2 font-bold "
+            className={cn('-ml-2 font-bold', props.className)}
             asChild
             variant="ghost"
             size="xs"
