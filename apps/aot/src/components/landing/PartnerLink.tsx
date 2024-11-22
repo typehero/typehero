@@ -5,7 +5,7 @@ interface PartnerLinkProps {
   partner: {
     name: string;
     url: string;
-    logo: string;
+    logo: StaticImageData;
     darkLogo?: StaticImageData;
   };
 }
