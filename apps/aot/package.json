@@ -33,7 +33,6 @@
     "@trpc/client": "^11.0.0-rc.446",
     "@trpc/react-query": "^11.0.0-rc.446",
     "@trpc/server": "^11.0.0-rc.446",
-    "@types/three": "^0.170.0",
     "@uploadthing/react": "^6.2.2",
     "@vercel/analytics": "^1.1.1",
     "@vercel/edge-config": "^0.2.1",
@@ -78,6 +77,7 @@
     "r3f-perf": "^7.2.1",
     "tailwindcss": "3.4.7",
     "tailwindcss-animate": "^1.0.6",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "@types/three": "^0.170.0"
   }
 }
