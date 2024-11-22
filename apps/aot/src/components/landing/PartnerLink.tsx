@@ -1,4 +1,3 @@
-import ExtLink from '~/components/landing/ExtLink';
 import Image, { type StaticImageData } from 'next/image';
 
 interface PartnerLinkProps {
