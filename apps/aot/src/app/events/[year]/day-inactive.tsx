@@ -18,7 +18,7 @@ export default function DayInactive({ day }: { day: number }) {
       initial={{ opacity: 0, translateY: 15 }}
       animate={{ opacity: 1, translateY: 0 }}
       transition={{ delay: day * 0.05, type: 'spring', damping: 3, stiffness: 100 }}
-      className="group aspect-square rounded-xl bg-gradient-to-b duration-300 hover:scale-110 hover:rounded-2xl"
+      className="group aspect-square rounded-xl bg-gradient-to-b p-[1.5px] duration-300 hover:scale-110 hover:rounded-2xl"
     >
       <div
         className={`relative grid aspect-square h-12 w-12 cursor-wait place-items-center overflow-hidden rounded-xl border-2 border-dashed border-white/30 bg-white/70 backdrop-blur duration-300 group-hover:rounded-2xl group-hover:bg-white/50 dark:bg-black/20 dark:group-hover:bg-black/50 ${
