@@ -74,13 +74,15 @@ const calculateTimeComponents = (milliseconds: number) => {
 
 export const LandingCountdownTimerClientComponent = () => {
   const [isMounted, setIsMounted] = useState(false);
-  const { days, hours, minutes, seconds, aotEnded } = useAotCountdown();
+  const { days, hours, minutes, seconds } = useAotCountdown();
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  if (!isMounted) {
+  const aotStarted = Date.now() >= new Date(Date.UTC(2024, 11, 1, 5, 0, 0)).getTime();
+
+  if (!isMounted || aotStarted) {
     // div prevents layout shift in page.tsx
     return <div />;
   }
