@@ -12,7 +12,7 @@ import BgDecorations from './24BgDecorations';
 import DayInactive from './day-inactive';
 import type { RouterOutputs } from '~/trpc/react';
 
-type Challenge = RouterOutputs['event']['getEventChallengesByYear'][0];
+type Challenge = RouterOutputs['event']['getEventChallengesByYear'][0] & { id?: number };
 interface Props {
   params: {
     year: string;
@@ -60,15 +60,15 @@ export default async function EventByYearLandingPage({ params }: Props) {
         </h1> */}
         <ul className="z-10 flex flex-col items-center gap-2 sm:gap-3 md:gap-4">
           {groupedDays.map((group, index) => (
-            <div key={index} className="flex gap-2 sm:gap-3 md:gap-4">
+            <div key={`row-${index}`} className="flex gap-2 sm:gap-3 md:gap-4">
               {group.map((day) => (
                 <>
                   {day.active ? (
-                    <Link key={day.id} href={`/events/${year}/${day.id}`}>
-                      <DayActive day={day.id} hasSolved={day.hasSolved} />
+                    <Link key={`day-active-${day.day}`} href={`/events/${year}/${day.day}`}>
+                      <DayActive day={day.day} hasSolved={day.hasSolved} />
                     </Link>
                   ) : (
-                    <DayInactive day={day.id} key={day.id} />
+                    <DayInactive key={`day-inactive-${day.day}`} day={day.day} />
                   )}
                 </>
               ))}
