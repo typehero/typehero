@@ -7,7 +7,7 @@ export default function BgDecorations() {
       <motion.div
         initial={{ opacity: 0, transform: 'rotateX(69deg) translate(-50%, 115%)' }}
         animate={{ opacity: 1, transform: 'rotateX(69deg) translate(-50%, 135%)' }}
-        transition={{ delay: 22 * 0.05, type: 'spring' }}
+        transition={{ delay: 22 * 0.025, type: 'spring' }}
         className="absolute bottom-0 left-1/2 h-[30rem] w-[30rem] overflow-hidden rounded-full bg-black/5 dark:bg-white/5"
         style={{
           perspective: '1000px',
@@ -16,7 +16,7 @@ export default function BgDecorations() {
       <motion.div
         initial={{ opacity: 0, transform: 'rotateX(69deg) translate(-50%, 125%)' }}
         animate={{ opacity: 1, transform: 'rotateX(69deg) translate(-50%, 145%)' }}
-        transition={{ delay: 24 * 0.05, type: 'spring' }}
+        transition={{ delay: 26 * 0.025, type: 'spring' }}
         className="absolute bottom-0 left-1/2 h-[35rem] w-[35rem] overflow-hidden rounded-full bg-black/5 dark:bg-white/5"
         style={{
           perspective: '1000px',
@@ -25,7 +25,7 @@ export default function BgDecorations() {
       <motion.div
         initial={{ opacity: 0, transform: 'rotateX(69deg) translate(-50%, 135%)' }}
         animate={{ opacity: 1, transform: 'rotateX(69deg) translate(-50%, 155%)' }}
-        transition={{ delay: 26 * 0.05, type: 'spring' }}
+        transition={{ delay: 30 * 0.025, type: 'spring' }}
         className="absolute bottom-0 left-1/2 h-[40rem] w-[40rem] overflow-hidden rounded-full bg-black/5 dark:bg-white/5"
         style={{
           transform: 'rotateX(69deg) translate(-50%, 155%)',
@@ -35,7 +35,7 @@ export default function BgDecorations() {
       <motion.div
         initial={{ opacity: 0, transform: 'rotateX(69deg) translate(-50%, 115%)' }}
         animate={{ opacity: 1, transform: 'rotateX(69deg) translate(-50%, 135%)' }}
-        transition={{ delay: 22 * 0.05, type: 'spring' }}
+        transition={{ delay: 22 * 0.025, type: 'spring' }}
         className="absolute bottom-0 left-1/2 h-96 w-96 overflow-hidden rounded-full bg-gradient-to-b from-pink-400/10 to-emerald-400/10 blur-xl"
         style={{
           perspective: '1000px',

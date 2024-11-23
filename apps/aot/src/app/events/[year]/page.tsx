@@ -3,17 +3,11 @@ import { notFound } from 'next/navigation';
 import { api } from '~/trpc/server';
 import { buildMetaForEventPage } from '~/utils/metadata';
 import { isValidAdventYear } from '~/utils/time-utils';
-import gift1 from '~/../public/giftbox.png';
-import gift2 from '~/../public/giftbox2.png';
-import gift3 from '~/../public/giftbox3.png';
 import DayActive from './day-active';
-import BgDecorations from './24BgDecorations';
 import DayInactive from './day-inactive';
 import type { RouterOutputs } from '~/trpc/react';
 import { DailyCountdownTimer } from '~/components/DailyCountdownTimer';
-import DayLink from './DayLink';
 import BgDecorations from './24BgDecorations';
-import DayDisabled from './DayDisabled';
 import Partners from '~/components/landing/Partners';
 import YearsSelector from './YearsSelector';
 import GiftBox from './GiftBox';
@@ -41,6 +35,7 @@ export default async function EventByYearLandingPage({ params }: Props) {
   const daysThatHavePassed = activeEventChallenges.length;
 
   const inactiveEventChallenges = Array.from({ length: 25 - daysThatHavePassed }, (_, i) => ({
+    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     day: daysThatHavePassed + i + 1,
     hasSolved: false,
     active: false,
@@ -83,7 +78,15 @@ export default async function EventByYearLandingPage({ params }: Props) {
 
           <div className="-mt-[4.5rem] flex">
             {lastThree.map((day, index) => (
-              <GiftBox key={day.id} day={day} index={index} />
+              <>
+                {day.active ? (
+                  <Link key={day.day} href={`/events/${year}/${day.day}`}>
+                    <GiftBox day={day.day} active={day.active} index={index} />
+                  </Link>
+                ) : (
+                  <GiftBox key={day.day} day={day.day} active={day.active} index={index} />
+                )}
+              </>
             ))}
           </div>
         </ul>
