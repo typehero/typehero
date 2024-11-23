@@ -80,8 +80,8 @@ export const LandingCountdownTimerClientComponent = () => {
     setIsMounted(true);
   }, []);
 
+  // Should not render countdown once AoT has started
   const aotStarted = Date.now() >= new Date(Date.UTC(2024, 11, 1, 5, 0, 0)).getTime();
-
   if (!isMounted || aotStarted) {
     // div prevents layout shift in page.tsx
     return <div />;
