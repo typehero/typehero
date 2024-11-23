@@ -77,7 +77,8 @@ export default async function EventByYearLandingPage({ params }: Props) {
 
           <div className="-mt-[4.5rem] flex">
             {lastThree.map((day, index) => (
-              <div
+              <Link
+                href={`/events/${year}/${day.day}`}
                 key={day.day}
                 className={`group relative h-12 w-12 cursor-pointer rounded-2xl duration-300 hover:bg-white/20 ${
                   index == 2 && 'ml-20 mr-12'
@@ -97,7 +98,7 @@ export default async function EventByYearLandingPage({ params }: Props) {
                 <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-bold">
                   {day.day}
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </ul>
