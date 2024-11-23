@@ -35,7 +35,6 @@ export default async function EventByYearLandingPage({ params }: Props) {
   const daysThatHavePassed = activeEventChallenges.length;
 
   const inactiveEventChallenges = Array.from({ length: 25 - daysThatHavePassed }, (_, i) => ({
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     day: daysThatHavePassed + i + 1,
     hasSolved: false,
     active: false,
