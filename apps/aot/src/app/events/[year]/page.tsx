@@ -37,7 +37,7 @@ export default async function EventByYearLandingPage({ params }: Props) {
   const daysThatHavePassed = activeEventChallenges.length;
 
   const inactiveEventChallenges = Array.from({ length: 25 - daysThatHavePassed }, (_, i) => ({
-    id: daysThatHavePassed + i + 1,
+    day: daysThatHavePassed + i + 1,
     hasSolved: false,
     active: false,
   })) as Challenge[];
@@ -60,15 +60,15 @@ export default async function EventByYearLandingPage({ params }: Props) {
         </h1> */}
         <ul className="z-10 flex flex-col items-center gap-2 sm:gap-3 md:gap-4">
           {groupedDays.map((group, index) => (
-            <div key={index} className="flex gap-2 sm:gap-3 md:gap-4">
+            <div key={`row-${index}`} className="flex gap-2 sm:gap-3 md:gap-4">
               {group.map((day) => (
                 <>
                   {day.active ? (
-                    <Link key={day.id} href={`/events/${year}/${day.id}`}>
-                      <DayActive day={day.id} hasSolved={day.hasSolved} />
+                    <Link key={`day-active-${day.day}`} href={`/events/${year}/${day.day}`}>
+                      <DayActive day={day.day} hasSolved={day.hasSolved} />
                     </Link>
                   ) : (
-                    <DayInactive day={day.id} key={day.id} />
+                    <DayInactive key={`day-inactive-${day.day}`} day={day.day} />
                   )}
                 </>
               ))}
@@ -77,8 +77,9 @@ export default async function EventByYearLandingPage({ params }: Props) {
 
           <div className="-mt-[4.5rem] flex">
             {lastThree.map((day, index) => (
-              <div
-                key={day.id}
+              <Link
+                href={`/events/${year}/${day.day}`}
+                key={day.day}
                 className={`group relative h-12 w-12 cursor-pointer rounded-2xl duration-300 hover:bg-white/20 ${
                   index == 2 && 'ml-20 mr-12'
                 }`}
@@ -95,9 +96,9 @@ export default async function EventByYearLandingPage({ params }: Props) {
                   height={64}
                 />
                 <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-bold">
-                  {day.id}
+                  {day.day}
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </ul>
