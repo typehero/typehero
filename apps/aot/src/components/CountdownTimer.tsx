@@ -128,7 +128,11 @@ export const DailyCountdownTimerClientComponent = () => {
     return <></>;
   }
 
-  if (aotEnded) {
+  const isAtLeastOneDayPastAotEndDate =
+    Date.now() >= new Date(Date.UTC(2024, 11, 26, 5, 0, 0)).getTime();
+
+  // This will render one day after the last challenge is released
+  if (isAtLeastOneDayPastAotEndDate) {
     return (
       <>
         <p className="text-center text-xl font-semibold">Thats a wrap! See you next year!</p>
@@ -138,6 +142,10 @@ export const DailyCountdownTimerClientComponent = () => {
       </>
     );
   }
+
+  // This will render between when the last challenge is released until one day after
+  // This is so that the "that's a wrap" message doesn't show up on the same day of the last challenge
+  if (aotEnded) return <></>;
 
   return (
     <div className="flex w-48 gap-2">
