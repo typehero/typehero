@@ -13,7 +13,7 @@ const colorsArray = [
   'from-pink-200 dark:from-pink-800 via-pink-600 dark:via-pink-400 to-pink-100 dark:to-pink-900',
 ];
 
-export default function DayLink({ day }: { day: number }) {
+export default function DayActive({ day, hasSolved }: { day: number; hasSolved: boolean }) {
   return (
     <motion.div
       key={day}
@@ -38,16 +38,10 @@ export default function DayLink({ day }: { day: number }) {
             height={64}
           />
         )}
-        {/* <div className="pointer-events-none absolute -left-4 -top-4 select-none text-6xl font-black text-white/20 lg:text-8xl">
-      {day}
-    </div>
-    <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none text-6xl font-black text-white/30 lg:text-8xl">
-      {day}
-    </div>
-    <div className="pointer-events-none absolute -bottom-4 -right-4 select-none text-6xl font-black text-white/40 lg:text-8xl">
-      {day}
-    </div> */}
-        <h1 className="z-10 font-bold">{day}</h1>
+        <h1 className="z-10 font-bold">
+          {day}
+          {hasSolved ? 's' : undefined}
+        </h1>
       </div>
     </motion.div>
   );

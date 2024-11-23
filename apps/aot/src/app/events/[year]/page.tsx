@@ -7,10 +7,13 @@ import { isValidAdventYear } from '~/utils/time-utils';
 import gift1 from '~/../public/giftbox.png';
 import gift2 from '~/../public/giftbox2.png';
 import gift3 from '~/../public/giftbox3.png';
-import DayLink from './DayLink';
+import DayActive from './day-active';
 import BgDecorations from './24BgDecorations';
-import DayDisabled from './DayDisabled';
+import DayInactive from './day-inactive';
+import type { RouterOutputs } from '~/trpc/react';
+import { DailyCountdownTimer } from '~/components/DailyCountdownTimer';
 
+type Challenge = RouterOutputs['event']['getEventChallengesByYear'][0];
 interface Props {
   params: {
     year: string;
@@ -24,68 +27,52 @@ export async function generateMetadata() {
   });
 }
 
-const gifts = [gift1, gift2, gift3];
+const GIFTS = [gift1, gift2, gift3];
 
 export default async function EventByYearLandingPage({ params }: Props) {
   const year = Number(params.year);
   if (!isValidAdventYear(year)) return notFound();
 
-  const event = await api.event.getEventChallengesByYear({ year });
-  const daysCompleted = event.trackChallenges.length;
+  // this will only return challenges that have passed/currently active
+  const activeEventChallenges = await api.event.getEventChallengesByYear({ year });
+  const daysThatHavePassed = activeEventChallenges.length;
 
-  const daysLeftArray = Array.from({ length: 25 - daysCompleted }, (_, i) => daysCompleted + i + 1);
+  const inactiveEventChallenges = Array.from({ length: 25 - daysThatHavePassed }, (_, i) => ({
+    day: daysThatHavePassed + i + 1,
+    hasSolved: false,
+    active: false,
+  })) as Challenge[];
 
-  function groupDays(array: { id: number; active: boolean }[]) {
-    const grouped = [];
-    let rowSize = 1; // Start with a row size of 1
-    let i = 0;
+  const eventChallenges = [...activeEventChallenges, ...inactiveEventChallenges];
 
-    while (i < array.length) {
-      grouped.push(array.slice(i, i + rowSize));
-      i += rowSize;
-      rowSize++; // Increase row size for the next group
-    }
-
-    return grouped;
-  }
-
-  // create new array of numbers 1-event.trackChallenges.length
-  const activeDays = Array.from({ length: daysCompleted }, (_, i) => i + 1);
-  // create array of objects with id: number, active: boolean
-  const newArray = activeDays.map((day) => ({ id: day, active: true }));
-  // fill the rest with inactive
-  newArray.push(
-    ...Array.from({ length: 25 - daysCompleted }, (_, i) => ({
-      id: daysCompleted + i + 1,
-      active: false,
-    })),
-  ); // fill the rest with inactive
-  // const groupedActive = groupDays(activeDays);
-
-  const first22ofnewarray = newArray.slice(0, 22);
-
-  const groupedDays = groupDays(first22ofnewarray);
-  const lastThree = newArray.slice(-3);
+  const firstTwentyTwo = eventChallenges.slice(0, 22);
+  const groupedDays = groupDays(firstTwentyTwo);
+  const lastThree = eventChallenges.slice(-3);
 
   return (
     <div className="-mt-14 flex min-h-screen flex-col justify-center overflow-hidden bg-gradient-to-t from-neutral-400/10 to-transparent">
-      <div className="fixed left-0 top-0 -z-10 h-full w-full bg-[url('https://images.pexels.com/photos/724906/pexels-photo-724906.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')] bg-cover opacity-10 blur-3xl" />
+      <div
+        className={`fixed left-0 top-0 -z-10 h-full w-full bg-[url('https://images.pexels.com/photos/724906/pexels-photo-724906.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')] bg-cover opacity-10 blur-3xl`}
+      />
       <div className="container relative mx-auto">
         <BgDecorations />
         {/* <h1 className="mb-16 mt-8 text-center text-3xl font-bold lg:text-6xl">
           Challenges for {year}
         </h1> */}
         <ul className="z-10 flex flex-col items-center gap-2 sm:gap-3 md:gap-4">
+          <div className="flex flex-col items-center pb-10">
+            <DailyCountdownTimer />
+          </div>
           {groupedDays.map((group, index) => (
-            <div key={index} className="flex gap-2 sm:gap-3 md:gap-4">
+            <div key={`row-${index}`} className="flex gap-2 sm:gap-3 md:gap-4">
               {group.map((day) => (
                 <>
                   {day.active ? (
-                    <Link key={day.id} href={`/events/${year}/${day.id}`}>
-                      <DayLink day={day.id} />
+                    <Link key={`day-active-${day.day}`} href={`/events/${year}/${day.day}`}>
+                      <DayActive day={day.day} hasSolved={day.hasSolved} />
                     </Link>
                   ) : (
-                    <DayDisabled day={day.id} key={day.id} />
+                    <DayInactive key={`day-inactive-${day.day}`} day={day.day} />
                   )}
                 </>
               ))}
@@ -94,8 +81,9 @@ export default async function EventByYearLandingPage({ params }: Props) {
 
           <div className="-mt-[4.5rem] flex">
             {lastThree.map((day, index) => (
-              <div
-                key={day.id}
+              <Link
+                href={`/events/${year}/${day.day}`}
+                key={day.day}
                 className={`group relative h-12 w-12 cursor-pointer rounded-2xl duration-300 hover:bg-white/20 ${
                   index == 2 && 'ml-20 mr-12'
                 }`}
@@ -106,19 +94,33 @@ export default async function EventByYearLandingPage({ params }: Props) {
                   } group-hover:brightness-90 dark:brightness-50 ${
                     index == 0 && '-translate-y-[calc(50%+0.5rem)]'
                   }`}
-                  src={gifts[index]!}
+                  src={GIFTS[index]!}
                   alt="Day 23"
                   width={64}
                   height={64}
                 />
                 <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-bold">
-                  {day.id}
+                  {day.day}
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </ul>
       </div>
     </div>
   );
+}
+
+function groupDays(array: Challenge[]) {
+  const grouped = [];
+  let rowSize = 1; // Start with a row size of 1
+  let i = 0;
+
+  while (i < array.length) {
+    grouped.push(array.slice(i, i + rowSize));
+    i += rowSize;
+    rowSize++; // Increase row size for the next group
+  }
+
+  return grouped;
 }

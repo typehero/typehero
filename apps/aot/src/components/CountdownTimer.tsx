@@ -1,12 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
-export const useAotCountdown = () => {
+const useAotCountdown = () => {
   const [releaseDate, setReleaseDate] = useState(() => calculateNextReleaseTime());
   const [remainingTime, setRemainingTime] = useState(
     Math.max(0, releaseDate.getTime() - Date.now()),
   );
+  const aotEnded = remainingTime === 0;
 
   useEffect(() => {
     // 05:00AM Dec 25, 2024 (UTC) <-> 00:00AM Dec 25, 2024 (EST)
@@ -34,7 +36,7 @@ export const useAotCountdown = () => {
     };
   }, [releaseDate]);
 
-  return calculateTimeComponents(remainingTime);
+  return { ...calculateTimeComponents(remainingTime), aotEnded };
 };
 
 const calculateNextReleaseTime = () => {
@@ -70,8 +72,7 @@ const calculateTimeComponents = (milliseconds: number) => {
   return { days, hours, minutes, seconds };
 };
 
-export const CountdownTimer = () => {
-  // 05:00AM Jan 1, 2025 (UTC) <-> 00:00AM Jan 1, 2025 (EST)
+export const LandingCountdownTimerClientComponent = () => {
   const [isMounted, setIsMounted] = useState(false);
   const { days, hours, minutes, seconds } = useAotCountdown();
 
@@ -79,29 +80,74 @@ export const CountdownTimer = () => {
     setIsMounted(true);
   }, []);
 
-  if (!isMounted) {
+  // Should not render countdown once AoT has started
+  const aotStarted = Date.now() >= new Date(Date.UTC(2024, 11, 1, 5, 0, 0)).getTime();
+  if (!isMounted || aotStarted) {
     // div prevents layout shift in page.tsx
     return <div />;
   }
 
-  // After holiday ends
-  const holidayEnd = new Date(Date.UTC(2025, 0, 1, 5, 0, 0));
-  if (Date.now() > holidayEnd.getTime()) {
+  return (
+    <div className="flex w-48 gap-2">
+      {/* ml-32 */}
+      <div className="relative w-16 text-right text-5xl font-black dark:text-white">
+        {days}
+        <div className="absolute right-0 top-0 -translate-y-full font-mono text-xs font-normal opacity-50">
+          d
+        </div>
+      </div>
+      <div className="relative w-8 text-right text-3xl font-bold opacity-90 dark:text-white">
+        {hours}
+        <div className="absolute right-0 top-0 -translate-y-full font-mono text-xs font-normal opacity-50">
+          h
+        </div>
+      </div>
+      <div className="relative w-6 text-right text-xl font-semibold opacity-80 blur-[0.5px] dark:text-white">
+        {minutes}
+        <div className="absolute right-0 top-0 -translate-y-full font-mono text-xs font-normal opacity-50">
+          m
+        </div>
+      </div>
+      <div className="animate-pulse-fast relative w-4 text-right text-sm font-medium opacity-70 blur-[1px] dark:text-white">
+        {seconds}
+        <div className="absolute right-0 top-0 -translate-y-full font-mono text-xs font-normal opacity-50">
+          s
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const DailyCountdownTimerClientComponent = () => {
+  const [isMounted, setIsMounted] = useState(false);
+  const { days, hours, minutes, seconds, aotEnded } = useAotCountdown();
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return <></>;
+  }
+
+  const isAtLeastOneDayPastAotEndDate =
+    Date.now() >= new Date(Date.UTC(2024, 11, 26, 5, 0, 0)).getTime();
+
+  // This will render one day after the last challenge is released
+  if (isAtLeastOneDayPastAotEndDate) {
     return (
       <>
-        <p className="text-center text-xl font-semibold">Thats a wrap!</p>
+        <p className="text-center text-xl font-semibold">Thats a wrap! See you next year!</p>
+        <p className="text-center text-xl font-semibold">
+          <Image src="/santa_dead.png" width={200} height={200} alt="" className="" />
+        </p>
       </>
     );
   }
 
-  // This will be true between 05:00AM Dec 25, 2024 (UTC) and 05:00AM Jan 1, 2025 (UTC)
-  //
-  // Make sure to adjust UI for this being gone!
-  const isCountdownComplete = days === 0 && hours === 0 && minutes === 0 && seconds === 0;
-  if (isCountdownComplete) {
-    // TODO: countdown complete component (pill-shaped blurb above title)
-    return null;
-  }
+  // This will render between when the last challenge is released until one day after
+  // This is so that the "that's a wrap" message doesn't show up on the same day of the last challenge
+  if (aotEnded) return <></>;
 
   return (
     <div className="flex w-48 gap-2">
