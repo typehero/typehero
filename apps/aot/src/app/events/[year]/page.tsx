@@ -12,7 +12,7 @@ import BgDecorations from './24BgDecorations';
 import DayInactive from './day-inactive';
 import type { RouterOutputs } from '~/trpc/react';
 
-type Challenge = RouterOutputs['event']['getEventChallengesByYear'][0] & { id?: number };
+type Challenge = RouterOutputs['event']['getEventChallengesByYear'][0];
 interface Props {
   params: {
     year: string;
@@ -37,7 +37,7 @@ export default async function EventByYearLandingPage({ params }: Props) {
   const daysThatHavePassed = activeEventChallenges.length;
 
   const inactiveEventChallenges = Array.from({ length: 25 - daysThatHavePassed }, (_, i) => ({
-    id: daysThatHavePassed + i + 1,
+    day: daysThatHavePassed + i + 1,
     hasSolved: false,
     active: false,
   })) as Challenge[];
@@ -78,7 +78,7 @@ export default async function EventByYearLandingPage({ params }: Props) {
           <div className="-mt-[4.5rem] flex">
             {lastThree.map((day, index) => (
               <div
-                key={day.id}
+                key={day.day}
                 className={`group relative h-12 w-12 cursor-pointer rounded-2xl duration-300 hover:bg-white/20 ${
                   index == 2 && 'ml-20 mr-12'
                 }`}
@@ -95,7 +95,7 @@ export default async function EventByYearLandingPage({ params }: Props) {
                   height={64}
                 />
                 <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-bold">
-                  {day.id}
+                  {day.day}
                 </div>
               </div>
             ))}
