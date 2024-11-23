@@ -11,7 +11,7 @@ const colorsArray = [
   'from-pink-200 dark:from-pink-800 via-pink-600 dark:via-pink-400 to-pink-100 dark:to-pink-900',
 ];
 
-export default function DayDisabled({ day }: { day: number }) {
+export default function DayInactive({ day }: { day: number }) {
   return (
     <motion.div
       key={day}

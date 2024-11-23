@@ -104,7 +104,12 @@ export const eventRouter = createTRPCRouter({
                   submission: {
                     where: {
                       userId: ctx.session?.user?.id || '',
+                      isSuccessful: true,
                     },
+                    select: {
+                      isSuccessful: true,
+                    },
+                    take: 1,
                   },
                   user: {
                     select: {
@@ -118,6 +123,13 @@ export const eventRouter = createTRPCRouter({
         },
       });
 
-      return challenges;
+      return challenges?.trackChallenges.map((trackChallenge) => {
+        const { submission, ...challenge } = trackChallenge.challenge;
+        return {
+          ...challenge,
+          hasSolved: trackChallenge.challenge.submission.length > 0,
+          active: true,
+        };
+      });
     }),
 });
