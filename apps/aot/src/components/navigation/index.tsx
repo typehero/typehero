@@ -26,7 +26,7 @@ export async function Navigation() {
       {featureFlags.enableAotPlatform ? (
         <>
           <NavLink title="About" href="/about" />
-          <NavLink title="Events" href="/events" />
+          <NavLink title="Events" href="/events/2024" />
         </>
       ) : null}
     </>

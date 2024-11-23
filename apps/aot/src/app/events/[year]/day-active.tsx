@@ -19,7 +19,7 @@ export default function DayActive({ day, hasSolved }: { day: number; hasSolved: 
       key={day}
       initial={{ opacity: 0, translateY: 15 }}
       animate={{ opacity: 1, translateY: 0 }}
-      transition={{ delay: day * 0.05, type: 'spring', damping: 3, stiffness: 100 }}
+      transition={{ delay: day * 0.025, type: 'spring', damping: 3, stiffness: 100 }}
       className={`group aspect-square rounded-xl bg-gradient-to-b duration-300 hover:scale-110 hover:rounded-2xl ${
         day !== 1 && colorsArray[day % 6]
       } p-[1.5px]`}

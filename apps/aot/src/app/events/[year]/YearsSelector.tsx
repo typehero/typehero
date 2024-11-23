@@ -2,16 +2,16 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { api } from '~/trpc/server';
 import { getAllFlags } from '~/utils/feature-flag';
-import { buildMetaForEventPage } from '~/utils/metadata';
+// import { buildMetaForEventPage } from '~/utils/metadata';
 
-export async function generateMetadata() {
-  return buildMetaForEventPage({
-    title: 'Advent of Typescript',
-    description: 'Advent of Typescript',
-  });
-}
+// export async function generateMetadata() {
+//   return buildMetaForEventPage({
+//     title: 'Advent of Typescript',
+//     description: 'Advent of Typescript',
+//   });
+// }
 
-export default async function Page() {
+export default async function YearsSelector() {
   const { enableAotPlatform } = await getAllFlags();
   if (!enableAotPlatform) {
     return notFound();
