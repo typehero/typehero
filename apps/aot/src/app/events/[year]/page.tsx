@@ -11,6 +11,7 @@ import DayActive from './day-active';
 import BgDecorations from './24BgDecorations';
 import DayInactive from './day-inactive';
 import type { RouterOutputs } from '~/trpc/react';
+import { DailyCountdownTimer } from '~/components/DailyCountdownTimer';
 
 type Challenge = RouterOutputs['event']['getEventChallengesByYear'][0];
 interface Props {
@@ -59,6 +60,9 @@ export default async function EventByYearLandingPage({ params }: Props) {
           Challenges for {year}
         </h1> */}
         <ul className="z-10 flex flex-col items-center gap-2 sm:gap-3 md:gap-4">
+          <div className="flex flex-col items-center pb-10">
+            <DailyCountdownTimer />
+          </div>
           {groupedDays.map((group, index) => (
             <div key={`row-${index}`} className="flex gap-2 sm:gap-3 md:gap-4">
               {group.map((day) => (

@@ -1,5 +1,6 @@
 export function hasAdventStarted(year: number) {
   if (!isValidAdventYear(year)) return false;
+  return true;
 
   const now = new Date().getTime();
   const aotStartTime = new Date(Date.UTC(year, 11, 1, 5, 0, 0));
@@ -10,7 +11,7 @@ export function hasAdventStarted(year: number) {
 export function getCurrentAdventDay(year: number) {
   const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
-  const now = new Date().getTime();
+  const now = new Date(Date.UTC(year, 11, 25, 5, 0, 0)).getTime(); //new Date().getTime();
   const startDate = new Date(Date.UTC(year, 11, 1, 5, 0, 0)).getTime();
   const endDate = new Date(Date.UTC(year, 11, 26, 5, 0, 0)).getTime();
 

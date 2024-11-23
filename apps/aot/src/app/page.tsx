@@ -1,6 +1,6 @@
 import Hero from '~/components/landing/Hero';
 import Partners from '~/components/landing/Partners';
-import { CountdownTimer } from '~/components/landing/useCountdown';
+import { LandingCountdownTimer } from '~/components/landing/LandingCountdownTimer';
 import Snowfall from '../components/landing/Snowfall';
 import { buildMetaForEventPage } from '~/utils/metadata';
 
@@ -17,8 +17,7 @@ export default function Home() {
       <div className="absolute right-[10%] top-1/2 -z-10 hidden h-48 w-[32rem] -translate-y-1/2 rotate-45 animate-pulse rounded-full bg-emerald-200 blur-3xl xl:block dark:bg-transparent" />
       <div className="animate-pulse-alternate absolute bottom-1/2 left-[10%] -z-10 hidden h-48 w-[32rem] translate-y-1/2 rotate-45 rounded-full bg-rose-200 blur-3xl xl:block dark:bg-transparent" />
       <Snowfall />
-
-      <CountdownTimer />
+      <LandingCountdownTimer />
       <Hero />
       <Partners />
       {/* looks bad on desktop and mobile */}
