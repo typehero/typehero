@@ -4,6 +4,7 @@ import { auth } from '~/server/auth';
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import { Comments } from '../_components/comments';
 import { Description } from '../_components/description';
+import { AOT_CHALLENGES } from './aot-slugs';
 import { getChallengeRouteData } from './getChallengeRouteData';
 
 type Params = Promise<{ slug: string }>;
