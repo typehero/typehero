@@ -350,7 +350,7 @@ a {
   -webkit-mask: linear-gradient(to right, transparent, white 20%, white 80%, transparent);
 }
 .infinite-scroll-x {
-  animation: infinite-scroll-x 120s linear infinite;
+  animation: infinite-scroll-x 12s linear infinite;
 }
 
 @media (max-width: 768px) {
@@ -363,14 +363,14 @@ a {
   animation: infinite-scroll-x 120s linear infinite reverse;
 }
 
-.infinite-scroll-x:hover,
+/* .infinite-scroll-x:hover,
 .infinite-scroll-x-reverse:hover {
   animation-play-state: paused;
-}
+} */
 
 @keyframes infinite-scroll-x {
   to {
-    transform: translateX(-50%);
+    transform: translateX(-521.82px);
   }
 }
 
@@ -395,12 +395,12 @@ a {
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
-  /* animation: 3s rotate linear infinite; */
+  animation: 3s rotate-fancy-border linear infinite;
   mask-composite: exclude;
   pointer-events: none;
 }
 
-@keyframes rotate {
+@keyframes rotate-fancy-border {
   to {
     --angle: 360deg;
   }
