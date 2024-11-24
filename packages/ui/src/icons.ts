@@ -31,6 +31,7 @@ export {
   Copy,
   CornerDownLeft,
   Diamond,
+  EllipsisVertical,
   ExternalLink,
   Flag,
   FileCode,
