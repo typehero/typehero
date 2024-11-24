@@ -31,7 +31,10 @@ export function Stage(props: DataProps) {
     </Canvas>
   );
 }
-
+const colors = {
+  red: new Color(0xff3d3d),
+  green: new Color(0x2d9d2d),
+};
 function Experience(props: DataProps) {
   const cameraRef = useRef<PerspectiveCameraType>(null);
   const { scrollY } = useScroll({ smooth: 0.4 });
@@ -60,7 +63,7 @@ function Experience(props: DataProps) {
         }}
       >
         <Platform
-          color="red"
+          color={colors.red}
           x={0}
           height={1.8 + 2.5}
           heightOffset={2.5}
@@ -73,7 +76,7 @@ function Experience(props: DataProps) {
           isDayStage={props.isDayStage}
         />
         <Platform
-          color="green"
+          color={colors.green}
           x={-1.001}
           height={1.5 + 2.5}
           heightOffset={2.5}
@@ -85,7 +88,7 @@ function Experience(props: DataProps) {
           isDayStage={props.isDayStage}
         />
         <Platform
-          color="green"
+          color={colors.green}
           x={1.001}
           height={1.35 + 2.5}
           heightOffset={2.5}
@@ -108,7 +111,7 @@ function Platform(props: {
   heightOffset: number;
   userInfo: { username: string; points: number | string; image: string | null };
   isDayStage: boolean;
-  color: string;
+  color: string | Color;
 }) {
   const { resolvedTheme } = useTheme();
   return (
