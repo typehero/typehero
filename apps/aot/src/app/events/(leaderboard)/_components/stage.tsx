@@ -14,6 +14,7 @@ import {
   Color,
   LinearToneMapping,
   type PerspectiveCamera as PerspectiveCameraType,
+  DoubleSide,
 } from 'three';
 import { geometry } from 'maath';
 import { useScroll, useSpring } from 'framer-motion';
@@ -132,7 +133,7 @@ function Experience(props: DataProps) {
               />
               <Gift position-z={0.4} position-x={0.3} rotation-y={Math.PI * 0.1} />
               <Tree position-z={-0.2} position-x={0.3} />
-              <Tree position-z={0.47} position-x={-0.3} />
+              <Snowman position-z={0.49} position-x={-0.4} rotation-y={-Math.PI * 0.3} />
             </group>
           }
         />
@@ -445,3 +446,57 @@ export function Gift(props: JSX.IntrinsicElements['group']) {
 }
 
 useGLTF.preload('/leaderboard-stage/gift.glb');
+
+type SnowmanGLTFResult = ReturnType<typeof useGLTF> & {
+  nodes: {
+    scarf: Mesh;
+    hat: Mesh;
+    eyes: Mesh;
+    teeth: Mesh;
+    belly: Mesh;
+    hand: Mesh;
+    face: Mesh;
+    nose: Mesh;
+  };
+};
+
+function Snowman(props: JSX.IntrinsicElements['group']) {
+  const { nodes } = useGLTF('/leaderboard-stage/snowman.glb') as SnowmanGLTFResult;
+  return (
+    <group {...props} dispose={null} scale={0.1}>
+      <mesh geometry={nodes.scarf.geometry} rotation={[-0.017, 0, 0.009]}>
+        <meshBasicMaterial color={colors.red} />
+      </mesh>
+
+      <mesh geometry={nodes.hat.geometry} rotation={[0, 0.681, 0]}>
+        <meshBasicMaterial color={colors.green} side={DoubleSide} />
+      </mesh>
+
+      <mesh geometry={nodes.eyes.geometry} rotation={[0, 0.681, 0]}>
+        <meshBasicMaterial color="black" />
+      </mesh>
+
+      <mesh geometry={nodes.teeth.geometry} rotation={[0, 0.681, 0]}>
+        <meshBasicMaterial color="black" />
+      </mesh>
+
+      <mesh geometry={nodes.belly.geometry} rotation={[0, 0.681, 0]}>
+        <meshBasicMaterial color={new Color(0xfbfbfb)} />
+      </mesh>
+
+      <mesh geometry={nodes.hand.geometry} rotation={[0, 0.681, 0]}>
+        <meshBasicMaterial color={colors.gold} />
+      </mesh>
+
+      <mesh geometry={nodes.face.geometry} rotation={[0, 0.681, 0]}>
+        <meshBasicMaterial color={new Color(0xfbfbfb)} />
+      </mesh>
+
+      <mesh geometry={nodes.nose.geometry} rotation={[0, 0.681, 0]}>
+        <meshBasicMaterial color={colors.gold} />
+      </mesh>
+    </group>
+  );
+}
+
+useGLTF.preload('/leaderboard-stage/snowman.glb');
