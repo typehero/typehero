@@ -1,6 +1,7 @@
 import type { Role } from '@repo/db/types';
 import { Stage } from './stage';
 import { LeaderboardTable } from './table';
+import styles from './leaderboard-styles.module.css';
 
 export function LeaderboardPage(props: {
   isDayPage: boolean;
@@ -19,8 +20,11 @@ export function LeaderboardPage(props: {
           <Stage data={props.data.slice(0, 3)} isDayStage={props.isDayPage} />
         </div>
       </div>
-      <div className="border-[hsla(0, 0%, 100%, 0.12)] mx-auto mt-[255px] max-w-screen-lg rounded-2xl rounded-b-none border border-b-0 bg-[hsla(0,0%,0%,0.07)] px-2 pt-2 shadow-[0px_-18px_131px_-78px_hsla(132,100%,53%,0.3)] backdrop-blur-sm md:mt-[350px] lg:mt-[500px] dark:bg-[hsla(0,0%,100%,0.07)]">
-        <div className="bg-background relative rounded-lg rounded-b-none">
+      <div className="border-[hsla(0, 0%, 100%, 0.12)] relative mx-auto mt-[255px] max-w-screen-lg rounded-2xl rounded-b-none border border-b-0 bg-[hsla(0,0%,0%,0.07)] px-1 pt-1 shadow-[0px_-18px_131px_-78px_hsla(132,100%,53%,0.3)] backdrop-blur-sm md:mt-[350px] lg:mt-[500px] dark:bg-[hsla(0,0%,100%,0.07)]">
+        <div className={`${styles['ring-container']} -inset-0`}>
+          <div className={`${styles['ring-animation']} inset-1 bg-slate-50/10`} />
+        </div>
+        <div className="bg-background rounded-lg rounded-b-none">
           <LeaderboardTable data={props.data} isDayTable={props.isDayPage} />
         </div>
       </div>
