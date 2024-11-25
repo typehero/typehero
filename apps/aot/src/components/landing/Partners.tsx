@@ -38,7 +38,6 @@ export default function Partners() {
         </div>
         <div className="infinite-scroll-x flex flex-nowrap items-center md:hidden">
           {[...partners, ...partners].map((partner, i) => {
-            console.log(`infinite-partners-${partner.name}-${i}`);
             return <PartnerLink key={`infinite-partners-${partner.name}-${i}`} partner={partner} />;
           })}
         </div>
