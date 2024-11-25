@@ -149,7 +149,12 @@ function Experience(props: DataProps) {
           isDayStage={props.isDayStage}
           decorations={
             <group position-y={1.35 + 2.5 - 0.5}>
-              <Gift position-z={0.4} position-x={0.25} rotation-y={Math.PI * 0.15} />
+              <Gift
+                position-z={0.4}
+                position-x={0.25}
+                rotation-y={Math.PI * 0.15}
+                rotation-z={-Math.PI * 0.04}
+              />
               <CandyCane
                 scale={6}
                 position-z={0.46}
