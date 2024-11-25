@@ -142,17 +142,26 @@ export async function getUserActivity(userId: string) {
 }
 
 export interface BadgeInfo {
-  // eslint-disable-next-line @typescript-eslint/sort-type-constituents
-  slug: 'aot-2023-bronze' | 'aot-2023-silver' | 'aot-2023-gold' | 'aot-2023-platinum';
+  slug: // eslint-disable-next-line @typescript-eslint/sort-type-constituents
+  | 'aot-2023-bronze'
+    | 'aot-2023-silver'
+    | 'aot-2023-gold'
+    | 'aot-2023-platinum'
+    | 'aot-2024-bronze'
+    | 'aot-2024-silver'
+    | 'aot-2024-gold'
+    | 'aot-2024-platinum';
   name: string;
 }
 
 export async function getBadges(userId: string): Promise<BadgeInfo[]> {
   const badges: BadgeInfo[] = [];
 
-  const holidayTrack = await prisma.track.findFirst({
+  const holidayTracks = await prisma.track.findMany({
     where: {
-      slug: 'advent-of-typescript-2023',
+      slug: {
+        in: ['advent-of-typescript-2023', 'advent-of-typescript-2024'],
+      },
     },
     include: {
       trackChallenges: {
@@ -182,30 +191,60 @@ export async function getBadges(userId: string): Promise<BadgeInfo[]> {
     },
   });
 
-  const numberOfAttemptedHolidayChallenges =
-    holidayTrack?.trackChallenges.filter((trackChallenge) => {
+  // this doesnt scale btw
+  const aot2023 = holidayTracks.find((track) => track.slug === 'advent-of-typescript-2023');
+  const aot2024 = holidayTracks.find((track) => track.slug === 'advent-of-typescript-2024');
+
+  const numberOfAttempted2023 =
+    aot2023?.trackChallenges.filter((trackChallenge) => {
       return (trackChallenge.challenge.submission?.length ?? 0) > 0;
     }).length ?? 0;
 
-  if (numberOfAttemptedHolidayChallenges > 0) {
+  if (numberOfAttempted2023 > 0) {
     badges.push({ slug: 'aot-2023-bronze', name: 'Advent of TypeScript 2023 Bronze' });
   }
 
-  const numberOfCompletedHolidayChallenges =
-    holidayTrack?.trackChallenges.filter((trackChallenge) => {
+  const numberOfCompleted2023 =
+    aot2023?.trackChallenges.filter((trackChallenge) => {
       return trackChallenge.challenge.submission?.some((submission) => submission.isSuccessful);
     }).length ?? 0;
 
-  if (numberOfCompletedHolidayChallenges >= 5) {
+  if (numberOfCompleted2023 >= 5) {
     badges.push({ slug: 'aot-2023-silver', name: 'Advent of TypeScript 2023 Silver' });
   }
 
-  if (numberOfCompletedHolidayChallenges >= 15) {
+  if (numberOfCompleted2023 >= 15) {
     badges.push({ slug: 'aot-2023-gold', name: 'Advent of TypeScript 2023 Gold' });
   }
 
-  if (numberOfCompletedHolidayChallenges >= 25) {
+  if (numberOfCompleted2023 >= 25) {
     badges.push({ slug: 'aot-2023-platinum', name: 'Advent of TypeScript 2023 Platinum' });
+  }
+
+  const numberOfAttempted2024 =
+    aot2024?.trackChallenges.filter((trackChallenge) => {
+      return (trackChallenge.challenge.submission?.length ?? 0) > 0;
+    }).length ?? 0;
+
+  if (numberOfAttempted2024 > 0) {
+    badges.push({ slug: 'aot-2024-bronze', name: 'Advent of TypeScript 2024 Bronze' });
+  }
+
+  const numberOfCompleted2024 =
+    aot2024?.trackChallenges.filter((trackChallenge) => {
+      return trackChallenge.challenge.submission?.some((submission) => submission.isSuccessful);
+    }).length ?? 0;
+
+  if (numberOfCompleted2024 >= 5) {
+    badges.push({ slug: 'aot-2024-silver', name: 'Advent of TypeScript 2024 Silver' });
+  }
+
+  if (numberOfCompleted2024 >= 15) {
+    badges.push({ slug: 'aot-2024-gold', name: 'Advent of TypeScript 2024 Gold' });
+  }
+
+  if (numberOfCompleted2024 >= 25) {
+    badges.push({ slug: 'aot-2024-platinum', name: 'Advent of TypeScript 2024 Platinum' });
   }
 
   return badges;

@@ -1,13 +1,5 @@
 'use client';
-import {
-  Billboard,
-  Edges,
-  Image,
-  OrbitControls,
-  PerspectiveCamera,
-  Text,
-  useGLTF,
-} from '@react-three/drei';
+import { Billboard, Edges, Image, PerspectiveCamera, Text, useGLTF } from '@react-three/drei';
 import {
   Canvas,
   extend,
@@ -17,12 +9,16 @@ import {
   type MeshProps,
 } from '@react-three/fiber';
 import { useRef } from 'react';
-import { Color, LinearToneMapping, type PerspectiveCamera as PerspectiveCameraType } from 'three';
+import {
+  type Mesh,
+  Color,
+  LinearToneMapping,
+  type PerspectiveCamera as PerspectiveCameraType,
+} from 'three';
 import { geometry } from 'maath';
 import { useScroll, useSpring } from 'framer-motion';
 import { motion } from 'framer-motion-3d';
 import { useTheme } from 'next-themes';
-import type * as THREE from 'three';
 import type { RoundedPlaneGeometry } from 'maath/dist/declarations/src/geometry';
 
 declare module '@react-three/fiber' {
@@ -229,15 +225,15 @@ function Platform(props: {
       <group>
         {props.decorations}
 
-        <SnowLayer position-y={props.height - 0.5} />
-        {/* front plane */}
+        <SnowCurves position-y={props.height - 0.5} />
+        {/* front snow plane */}
         <mesh position-y={props.height - 0.49} position-z={0.51}>
           <planeGeometry args={[1, 0.02]} />
           <meshBasicMaterial
             color={resolvedTheme === 'dark' ? colors.offWhite : new Color(0xeeeded)}
           />
         </mesh>
-        {/* top plane */}
+        {/* top plane snow */}
         <mesh position-y={props.height - 0.49} rotation-x={-Math.PI / 2}>
           <planeGeometry args={[1.01, 1.01]} />
           <meshBasicMaterial color={resolvedTheme === 'dark' ? 'white' : new Color(0xe3e3e3)} />
@@ -300,9 +296,9 @@ function ImageWithFallback(props: { image: string | null; name: string }) {
 
 type TreeGLTFResult = ReturnType<typeof useGLTF> & {
   nodes: {
-    Tree: THREE.Mesh;
-    Balls: THREE.Mesh;
-    Star: THREE.Mesh;
+    Tree: Mesh;
+    Balls: Mesh;
+    Star: Mesh;
   };
 };
 
@@ -323,7 +319,7 @@ function Tree(props: GroupProps) {
     </group>
   );
 }
-function SnowLayer(props: GroupProps) {
+function SnowCurves(props: GroupProps) {
   const radiuses = fiveRandomNumbers();
   return (
     <group {...props} position-z={0.51}>
@@ -368,7 +364,7 @@ useGLTF.preload('/leaderboard-stage/Chrismas_Tree_Stylized.glb');
 
 type CandyCaneGLTFResult = ReturnType<typeof useGLTF> & {
   nodes: {
-    Vert001: THREE.Mesh;
+    Vert001: Mesh;
   };
 };
 

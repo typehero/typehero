@@ -98,18 +98,16 @@ export const eventRouter = createTRPCRouter({
                 lte: currentAdventDay - 1,
               },
             },
-            include: {
+            select: {
+              orderId: true,
               challenge: {
-                include: {
+                select: {
                   submission: {
                     where: {
                       userId: ctx.session?.user?.id || '',
+                      isSuccessful: true,
                     },
-                  },
-                  user: {
-                    select: {
-                      name: true,
-                    },
+                    take: 1,
                   },
                 },
               },
@@ -118,6 +116,10 @@ export const eventRouter = createTRPCRouter({
         },
       });
 
-      return challenges;
+      return challenges?.trackChallenges.map((trackChallenge) => ({
+        day: trackChallenge.orderId + 1,
+        hasSolved: trackChallenge.challenge.submission.length > 0,
+        active: true,
+      }));
     }),
 });

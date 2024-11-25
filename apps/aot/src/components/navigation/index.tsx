@@ -26,7 +26,7 @@ export async function Navigation() {
       {featureFlags.enableAotPlatform ? (
         <>
           <NavLink title="About" href="/about" />
-          <NavLink title="Events" href="/events" />
+          <NavLink title="Events" href="/events/2024" />
         </>
       ) : null}
     </>
@@ -62,15 +62,15 @@ export async function Navigation() {
     <header className="z-50 w-full">
       <NavWrapper>
         <div className="flex w-full items-center justify-between">
-          <div className="relative flex gap-3">
+          <div className="relative flex w-64 gap-3">
             <Link className="flex items-center space-x-2 duration-300" href="/">
               <Logo />
             </Link>
           </div>
           <div className="hidden items-center md:flex">{NavLinks}</div>
-          <div className="flex items-center justify-end gap-2">
+          <div className="flex w-64 items-center justify-end gap-2">
             <Link
-              className="donate-btn relative overflow-hidden rounded-md border border-[#bea74b66] px-3 py-2 text-black duration-300 hover:bg-[#eed15f] dark:text-white dark:hover:bg-[#bea74b44]"
+              className="donate-btn relative overflow-hidden rounded-full px-4 py-2 text-black duration-300 hover:bg-[#eed15f] dark:text-white dark:hover:bg-[#bea74b44]"
               href="/support"
             >
               Support Us
