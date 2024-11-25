@@ -65,7 +65,6 @@
     "@repo/tsconfig": "workspace:*",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/typography": "^0.5.9",
-    "@types/three": "^0.170.0",
     "@types/node": "^20.4.2",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
