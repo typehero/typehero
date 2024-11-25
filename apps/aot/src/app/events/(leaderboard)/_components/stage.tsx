@@ -263,7 +263,7 @@ function Platform(props: {
       </group>
       <group position-z={0.51}>
         <Text
-          fontSize={0.1}
+          fontSize={0.14}
           font="/roboto-mono-v23-latin-regular.woff"
           textAlign="center"
           anchorY="top"
@@ -277,7 +277,7 @@ function Platform(props: {
         {props.isDayStage ? null : (
           <Text
             anchorY="top"
-            position-y={props.height - 0.74}
+            position-y={props.height - 0.75}
             fontSize={0.1}
             font="/roboto-mono-v23-latin-regular.woff"
             color={resolvedTheme === 'dark' ? 'white' : 'black'}
