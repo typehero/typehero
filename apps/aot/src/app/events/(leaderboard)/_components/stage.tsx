@@ -90,8 +90,16 @@ function Experience(props: DataProps) {
           isDayStage={props.isDayStage}
           decorations={
             <group position-y={1.8 + 2.5 - 0.5}>
+              <Gift
+                position-z={0.4}
+                position-x={-0.42}
+                rotation-y={Math.PI * 0.24}
+                rotation-z={-Math.PI * 0.05}
+              />
+              <Gift position-z={0.4} position-x={-0.3} rotation-y={Math.PI * 0.1} />
+              <Gift position-z={0.3} position-x={-0.39} rotation-y={Math.PI * 0.1} />
               <CandyCane
-                position-z={0.2}
+                position-z={-0.2}
                 position-x={-0.45}
                 position-y={-0.1}
                 rotation-z={-Math.PI * 0.1}
@@ -116,6 +124,13 @@ function Experience(props: DataProps) {
           isDayStage={props.isDayStage}
           decorations={
             <group position-y={1.5 + 2.5 - 0.5}>
+              <Gift
+                position-z={0.4}
+                position-x={0.42}
+                rotation-y={Math.PI * 0.24}
+                rotation-z={Math.PI * 0.1}
+              />
+              <Gift position-z={0.4} position-x={0.3} rotation-y={Math.PI * 0.1} />
               <Tree position-z={-0.2} position-x={0.3} />
               <Tree position-z={0.47} position-x={-0.3} />
             </group>
@@ -134,6 +149,7 @@ function Experience(props: DataProps) {
           isDayStage={props.isDayStage}
           decorations={
             <group position-y={1.35 + 2.5 - 0.5}>
+              <Gift position-z={0.4} position-x={0.25} rotation-y={Math.PI * 0.15} />
               <CandyCane
                 scale={6}
                 position-z={0.46}
@@ -380,3 +396,47 @@ function CandyCane({ scale, ...props }: GroupProps & { scale?: number }) {
 }
 
 useGLTF.preload('/leaderboard-stage/cane.glb');
+
+type GiftGLTFResult = ReturnType<typeof useGLTF> & {
+  nodes: {
+    Gift: Mesh;
+    GiftRibbon: Mesh;
+    Sphere001: Mesh;
+    BézierCircle: Mesh;
+    BézierCircle001: Mesh;
+    BézierCircle002: Mesh;
+    BézierCircle003: Mesh;
+  };
+};
+
+export function Gift(props: JSX.IntrinsicElements['group']) {
+  const { nodes } = useGLTF('/leaderboard-stage/gift.glb') as GiftGLTFResult;
+  return (
+    <group {...props} dispose={null} scale={2}>
+      <mesh geometry={nodes.Gift.geometry}>
+        <meshBasicMaterial color={colors.red} />
+        <Edges color="#000000" scale={1.001} linewidth={0.5} />
+      </mesh>
+      <mesh geometry={nodes.GiftRibbon.geometry}>
+        <meshBasicMaterial color={colors.green} />
+      </mesh>
+      <mesh geometry={nodes.Sphere001.geometry}>
+        <meshBasicMaterial color={colors.gold} />
+        <mesh geometry={nodes.BézierCircle.geometry} rotation={[Math.PI / 2, 0, 0]}>
+          <meshBasicMaterial color={colors.gold} />
+        </mesh>
+        <mesh geometry={nodes.BézierCircle001.geometry} rotation={[Math.PI / 2, 0, -Math.PI / 2]}>
+          <meshBasicMaterial color={colors.gold} />
+        </mesh>
+        <mesh geometry={nodes.BézierCircle002.geometry} rotation={[Math.PI / 2, 0, Math.PI]}>
+          <meshBasicMaterial color={colors.gold} />
+        </mesh>
+        <mesh geometry={nodes.BézierCircle003.geometry} rotation={[Math.PI / 2, 0, Math.PI / 2]}>
+          <meshBasicMaterial color={colors.gold} />
+        </mesh>
+      </mesh>
+    </group>
+  );
+}
+
+useGLTF.preload('/leaderboard-stage/gift.glb');
