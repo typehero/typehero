@@ -267,7 +267,7 @@ function Platform(props: {
           font="/roboto-mono-v23-latin-regular.woff"
           textAlign="center"
           anchorY="top"
-          position-y={props.height - 0.6}
+          position-y={props.height - 0.61}
           maxWidth={0.9}
           overflowWrap="break-word"
           color={resolvedTheme === 'dark' ? 'white' : 'black'}
@@ -277,7 +277,7 @@ function Platform(props: {
         {props.isDayStage ? null : (
           <Text
             anchorY="top"
-            position-y={props.height - 0.75}
+            position-y={props.height - 0.76}
             fontSize={0.1}
             font="/roboto-mono-v23-latin-regular.woff"
             color={resolvedTheme === 'dark' ? 'white' : 'black'}
