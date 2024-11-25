@@ -2,26 +2,18 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { api } from '~/trpc/server';
 import { getAllFlags } from '~/utils/feature-flag';
-// import { buildMetaForEventPage } from '~/utils/metadata';
 
-// export async function generateMetadata() {
-//   return buildMetaForEventPage({
-//     title: 'Advent of Typescript',
-//     description: 'Advent of Typescript',
-//   });
-// }
-
-export default async function YearsSelector() {
+export default async function YearsSelector({ selectedYear }: { selectedYear: string }) {
   const { enableAotPlatform } = await getAllFlags();
   if (!enableAotPlatform) {
     return notFound();
   }
 
   const events = await api.event.getAll();
-  const currentYear = new Date().getFullYear();
   function isCurrent(year: string) {
-    return year === currentYear.toString();
+    return year === selectedYear;
   }
+
   return (
     <ul className="container mx-auto flex justify-center gap-4">
       {events.reverse().map((event) => {
