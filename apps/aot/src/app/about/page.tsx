@@ -11,8 +11,8 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <div className="prose dark:prose-invert container relative flex flex-col p-4 py-8">
-        <div className="not-prose text-lg leading-9">
+      <div className="prose dark:prose-invert container relative flex flex-col p-4 py-8 text-lg">
+        <div className="not-prose leading-9">
           <p className="mb-6 text-balance">
             Thank you for joining us for{' '}
             <span className="bg-gradient-to-br from-rose-400 to-rose-600 bg-clip-text font-bold text-transparent duration-300 hover:underline">
