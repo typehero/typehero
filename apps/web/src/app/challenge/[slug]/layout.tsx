@@ -7,7 +7,7 @@ import { getChallengeRouteData } from './getChallengeRouteData';
 import { TrackVisibiltyProvider } from './use-track-visibility.hook';
 import { ContextProviders } from './context-providers';
 import { AOT_CHALLENGES } from './aot-slugs';
-import { notFound } from 'next/navigation';
+import { permanentRedirect } from 'next/navigation';
 
 export default async function LayoutData({
   children,
@@ -17,7 +17,7 @@ export default async function LayoutData({
   params: { slug: string };
 }) {
   if (AOT_CHALLENGES.includes(slug)) {
-    return notFound();
+    return permanentRedirect('https://adventofts.com/');
   }
   const session = await auth();
   const { challenge, track } = await getChallengeRouteData(slug, session);
