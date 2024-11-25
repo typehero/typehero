@@ -308,7 +308,7 @@ function Tree(props: GroupProps) {
     <group dispose={null} scale={0.2} {...props}>
       <mesh geometry={nodes.Tree.geometry}>
         <meshBasicMaterial color={colors.green} />
-        <Edges color="#000000" scale={1.001} linewidth={1} />
+        <Edges color="#000000" scale={1.001} linewidth={0.5} />
       </mesh>
       <mesh geometry={nodes.Balls.geometry}>
         <meshBasicMaterial color={colors.gold} />
