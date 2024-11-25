@@ -1,12 +1,28 @@
 'use client';
-import { Billboard, Edges, Image, PerspectiveCamera, Text } from '@react-three/drei';
-import { Canvas, extend, useFrame, type Object3DNode } from '@react-three/fiber';
+import {
+  Billboard,
+  Edges,
+  Image,
+  OrbitControls,
+  PerspectiveCamera,
+  Text,
+  useGLTF,
+} from '@react-three/drei';
+import {
+  Canvas,
+  extend,
+  useFrame,
+  type Object3DNode,
+  type GroupProps,
+  type MeshProps,
+} from '@react-three/fiber';
 import { useRef } from 'react';
 import { Color, LinearToneMapping, type PerspectiveCamera as PerspectiveCameraType } from 'three';
 import { geometry } from 'maath';
 import { useScroll, useSpring } from 'framer-motion';
 import { motion } from 'framer-motion-3d';
 import { useTheme } from 'next-themes';
+import type * as THREE from 'three';
 import type { RoundedPlaneGeometry } from 'maath/dist/declarations/src/geometry';
 
 declare module '@react-three/fiber' {
@@ -34,6 +50,8 @@ export function Stage(props: DataProps) {
 const colors = {
   red: new Color(0xff3d3d),
   green: new Color(0x2d9d2d),
+  gold: new Color(0xffd700),
+  offWhite: new Color(0xeaeaea),
 };
 function Experience(props: DataProps) {
   const cameraRef = useRef<PerspectiveCameraType>(null);
@@ -74,6 +92,20 @@ function Experience(props: DataProps) {
           }}
           z={0.001}
           isDayStage={props.isDayStage}
+          decorations={
+            <group position-y={1.8 + 2.5 - 0.5}>
+              <CandyCane
+                position-z={0.2}
+                position-x={-0.45}
+                position-y={-0.1}
+                rotation-z={-Math.PI * 0.1}
+                rotation-y={-Math.PI * 0.65}
+                scale={4}
+              />
+              <Tree position-z={-0.4} position-x={-0.47} />
+              <Tree position-z={0.4} position-x={0.4} />
+            </group>
+          }
         />
         <Platform
           color={colors.green}
@@ -86,6 +118,12 @@ function Experience(props: DataProps) {
             image: props.data[1]?.image ?? null,
           }}
           isDayStage={props.isDayStage}
+          decorations={
+            <group position-y={1.5 + 2.5 - 0.5}>
+              <Tree position-z={-0.2} position-x={0.3} />
+              <Tree position-z={0.47} position-x={-0.3} />
+            </group>
+          }
         />
         <Platform
           color={colors.green}
@@ -98,6 +136,20 @@ function Experience(props: DataProps) {
             image: props.data[2]?.image ?? null,
           }}
           isDayStage={props.isDayStage}
+          decorations={
+            <group position-y={1.35 + 2.5 - 0.5}>
+              <CandyCane
+                scale={6}
+                position-z={0.46}
+                position-x={-0.4}
+                position-y={-0.1}
+                rotation-z={-Math.PI * 0.1}
+                rotation-y={-Math.PI * 0.35}
+              />
+              <Tree position-z={-0.4} position-x={-0.2} />
+              <Tree position-z={0.4} position-x={0.4} />
+            </group>
+          }
         />
       </motion.group>
     </>
@@ -111,7 +163,8 @@ function Platform(props: {
   heightOffset: number;
   userInfo: { username: string; points: number | string; image: string | null };
   isDayStage: boolean;
-  color: string | Color;
+  color: Color | string;
+  decorations: JSX.Element;
 }) {
   const { resolvedTheme } = useTheme();
   return (
@@ -173,6 +226,23 @@ function Platform(props: {
           scale={1.001}
         />
       </mesh>
+      <group>
+        {props.decorations}
+
+        <SnowLayer position-y={props.height - 0.5} />
+        {/* front plane */}
+        <mesh position-y={props.height - 0.49} position-z={0.51}>
+          <planeGeometry args={[1, 0.02]} />
+          <meshBasicMaterial
+            color={resolvedTheme === 'dark' ? colors.offWhite : new Color(0xeeeded)}
+          />
+        </mesh>
+        {/* top plane */}
+        <mesh position-y={props.height - 0.49} rotation-x={-Math.PI / 2}>
+          <planeGeometry args={[1.01, 1.01]} />
+          <meshBasicMaterial color={resolvedTheme === 'dark' ? 'white' : new Color(0xe3e3e3)} />
+        </mesh>
+      </group>
       <group position-z={0.51}>
         <Text
           fontSize={0.1}
@@ -227,3 +297,90 @@ function ImageWithFallback(props: { image: string | null; name: string }) {
     </Image>
   );
 }
+
+type TreeGLTFResult = ReturnType<typeof useGLTF> & {
+  nodes: {
+    Tree: THREE.Mesh;
+    Balls: THREE.Mesh;
+    Star: THREE.Mesh;
+  };
+};
+
+function Tree(props: GroupProps) {
+  const { nodes } = useGLTF('/leaderboard-stage/Chrismas_Tree_Stylized.glb') as TreeGLTFResult;
+  return (
+    <group dispose={null} scale={0.2} {...props}>
+      <mesh geometry={nodes.Tree.geometry}>
+        <meshBasicMaterial color={colors.green} />
+        <Edges color="#000000" scale={1.001} linewidth={1} />
+      </mesh>
+      <mesh geometry={nodes.Balls.geometry}>
+        <meshBasicMaterial color={colors.gold} />
+      </mesh>
+      <mesh geometry={nodes.Star.geometry}>
+        <meshBasicMaterial color={colors.gold} />
+      </mesh>
+    </group>
+  );
+}
+function SnowLayer(props: GroupProps) {
+  const radiuses = fiveRandomNumbers();
+  return (
+    <group {...props} position-z={0.51}>
+      <HalfCircle position-x={-0.4} radius={radiuses[0] ?? 0.1} />
+      <HalfCircle position-x={-0.2} radius={radiuses[1] ?? 0.1} />
+      <HalfCircle position-x={0} radius={radiuses[2] ?? 0.1} />
+      <HalfCircle position-x={0.2} radius={radiuses[3] ?? 0.1} />
+      <HalfCircle position-x={0.4} radius={radiuses[4] ?? 0.1} />
+    </group>
+  );
+}
+
+function HalfCircle(props: MeshProps & { radius: number }) {
+  return (
+    <mesh {...props}>
+      <circleGeometry args={[props.radius, 16, Math.PI, Math.PI]} />
+      <meshBasicMaterial color={colors.offWhite} />
+    </mesh>
+  );
+}
+
+function fiveRandomNumbers() {
+  const result = [0.1];
+  let remainingSum = 0.3;
+
+  for (let i = 0; i < 2; i++) {
+    const maxPossible = Math.min(0.13, remainingSum - 0.05 * (2 - i));
+    const minPossible = Math.max(0.08, remainingSum - 0.13 * (2 - i));
+
+    const num = Math.random() * (maxPossible - minPossible) + minPossible;
+    const rounded = Number(num.toFixed(3));
+    result.push(rounded);
+    remainingSum -= rounded;
+  }
+
+  result.push(Number(remainingSum.toFixed(3)));
+  result.push(0.1);
+  return result;
+}
+
+useGLTF.preload('/leaderboard-stage/Chrismas_Tree_Stylized.glb');
+
+type CandyCaneGLTFResult = ReturnType<typeof useGLTF> & {
+  nodes: {
+    Vert001: THREE.Mesh;
+  };
+};
+
+function CandyCane({ scale, ...props }: GroupProps & { scale?: number }) {
+  const { nodes } = useGLTF('/leaderboard-stage/cane.glb') as CandyCaneGLTFResult;
+  return (
+    <group {...props} dispose={null}>
+      <mesh geometry={nodes.Vert001.geometry} scale={scale ?? 5}>
+        <meshBasicMaterial color={colors.red} />
+      </mesh>
+    </group>
+  );
+}
+
+useGLTF.preload('/leaderboard-stage/cane.glb');
