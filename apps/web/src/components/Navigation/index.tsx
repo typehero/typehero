@@ -23,6 +23,7 @@ import { NotificationLink } from './notification-link';
 import { SignOutLink } from './signout-link';
 import { SkipToCodeEditor } from './skip-to-code-editor';
 import { ThemeButton } from './theme-button';
+import { Badge } from '@repo/ui/components/badge';
 
 export function getAdminUrl() {
   // reference for vercel.com
@@ -47,11 +48,27 @@ export async function Navigation() {
     <>
       <NavLink title="Explore" href="/explore" />
       <NavLink title="Tracks" href="/tracks" />
+<<<<<<< Updated upstream
       {featureFlags?.enableHolidayEvent ? (
         <div className="flex items-center gap-1">
           <NavLink title="Advent of TS" href="https://www.adventofts.com" />
         </div>
       ) : null}
+=======
+      <div className="flex items-center gap-1">
+        <a
+          className="text-foreground/80"
+          target="_blank"
+          href="https://adventofts.com/"
+          rel="noopener"
+        >
+          Advent of TS
+        </a>
+        <Badge className="h-4 bg-red-600 px-1.5" variant="default">
+          New
+        </Badge>
+      </div>
+>>>>>>> Stashed changes
     </>
   );
 
