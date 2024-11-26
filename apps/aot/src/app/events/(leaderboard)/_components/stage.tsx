@@ -140,7 +140,7 @@ function Experience(props: DataProps) {
         <Platform
           color={colors.green}
           x={1.001}
-          height={1.35 + 2.5}
+          height={1.2 + 2.5}
           heightOffset={2.5}
           userInfo={{
             username: props.data[2]?.name ?? '',
@@ -149,7 +149,7 @@ function Experience(props: DataProps) {
           }}
           isDayStage={props.isDayStage}
           decorations={
-            <group position-y={1.35 + 2.5 - 0.5}>
+            <group position-y={1.18 + 2.5 - 0.5}>
               <Gift
                 position-z={0.4}
                 position-x={0.25}
