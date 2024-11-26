@@ -121,7 +121,7 @@ export function SubmissionOverview({ submissionId }: Props) {
             className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
             variant="outline"
           >
-            <Link href={`/events/${year}/leaderboard`} className="gap-1 md:inline-flex">
+            <Link href={`/events/${year}/leaderboard/${day}`} className="gap-1 md:inline-flex">
               <Trophy className="h-4 w-4" />
               Leaderboard
             </Link>
