@@ -9,14 +9,18 @@ import {
 } from '@repo/ui/components/tooltip';
 import { ChevronLeft, ChevronRight } from '@repo/ui/icons';
 import Link from 'next/link';
-import { useSelectedLayoutSegment } from 'next/navigation';
-import { useCallback, useState } from 'react';
+import { useParams } from 'next/navigation';
+import { useCallback, useEffect, useState } from 'react';
 
 export function DayScroller(props: { eventDay?: number; year: number }) {
-  const segment = useSelectedLayoutSegment();
+  const { day } = useParams();
   const days = Array.from({ length: 25 });
-  const [selectedDay, setSelectedDay] = useState(Number(segment));
+  const [selectedDay, setSelectedDay] = useState(Number(day ?? 0));
   const [containerRef, setContainerRef] = useState<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    setSelectedDay(Number(day ?? 0));
+  }, [day]);
 
   const scrollToSelectedDay = useCallback(
     (dayIdx: number, behavior: 'instant' | 'smooth', node: HTMLDivElement | null) => {
@@ -104,6 +108,7 @@ function DayLink({
 }: {
   selectedDay: number;
   i: number;
+  /** determines the last day that is unlocked. for past events its 25 since the entire event is available */
   eventDay: number;
   setSelectedDay: (val: number) => void;
   year: number;
