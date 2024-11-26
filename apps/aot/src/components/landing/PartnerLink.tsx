@@ -13,7 +13,6 @@ interface PartnerLinkProps {
 export default function PartnerLink({ partner }: PartnerLinkProps) {
   return (
     <a
-      key={partner.name}
       href={partner.url}
       target="_blank"
       rel="noreferrer"

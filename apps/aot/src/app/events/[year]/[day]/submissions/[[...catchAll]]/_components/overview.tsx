@@ -8,7 +8,7 @@ import {
 } from '@repo/ui/components/dialog';
 import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
-import { CheckCircle2, Share, Twitter, X, XCircle } from '@repo/ui/icons';
+import { CheckCircle2, Share, Twitter, X, XCircle, Trophy } from '@repo/ui/icons';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useParams, useSearchParams } from 'next/navigation';
@@ -115,6 +115,16 @@ export function SubmissionOverview({ submissionId }: Props) {
               <Twitter className="h-4 w-4" />
               Share on Twitter
             </a>
+          </Button>
+          <Button
+            asChild
+            className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
+            variant="outline"
+          >
+            <Link href={`/events/${year}/leaderboard/${day}`} className="gap-1 md:inline-flex">
+              <Trophy className="h-4 w-4" />
+              Leaderboard
+            </Link>
           </Button>
           <Button asChild variant="outline" className="fancy-border-gradient relative border-none">
             <Link href={`/events/${year}`}>Back to Advent of TypeScript</Link>
