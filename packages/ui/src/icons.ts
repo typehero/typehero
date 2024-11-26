@@ -65,6 +65,7 @@ export {
   Settings,
   Settings2,
   Shapes,
+  Star,
   Palette,
   Share,
   Shield,
