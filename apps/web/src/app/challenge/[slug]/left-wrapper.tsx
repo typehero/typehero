@@ -10,7 +10,6 @@ import { cn } from '@repo/ui/cn';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui/components/tabs';
 import { FlaskConical, History, Text } from '@repo/ui/icons';
 
-import { AOT_CHALLENGES } from './aot-slugs';
 import type { ChallengeRouteData } from './getChallengeRouteData';
 import { useTrackNavigationVisiblity } from './use-track-visibility.hook';
 import { ProblemExplorerTrackNav } from '~/components/Navigation/problem-explorer-track-nav';
@@ -31,7 +30,6 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
 
   const featureFlags = useContext(FeatureFlagContext);
 
-  const isAotChallenge = useMemo(() => AOT_CHALLENGES.includes(challenge.slug), [challenge.slug]);
   const isCollapsedRef = useRef(isCollapsed);
   const isDesktopRef = useRef(isDesktop);
   isDesktopRef.current = isDesktop;
@@ -98,7 +96,7 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
   // Hide the enrolled track when in collapsed mobile view.
   const isTrackFeatureEnabled = featureFlags?.enableInChallengeTrack;
   const hasEnrolledTrackForChallenge = track !== null;
-  const isTrackVisible = isTrackFeatureEnabled && (!isCollapsed || isDesktop) && !isAotChallenge;
+  const isTrackVisible = isTrackFeatureEnabled && (!isCollapsed || isDesktop);
 
   const isIconOnly = isCollapsed && isDesktop;
   const { setIsTrackTitleVisible } = useTrackNavigationVisiblity();
