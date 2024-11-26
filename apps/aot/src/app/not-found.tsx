@@ -20,7 +20,7 @@ export default function Custom404() {
         Couldn't find the requested resource
       </p>
       <div className="mt-8 flex flex-row gap-x-2">
-        <Link href="/events">
+        <Link href="/events/2024">
           <Button variant="outline">
             <Compass className="mr-2 size-4" />
             Explore Challenges
@@ -28,7 +28,7 @@ export default function Custom404() {
         </Link>
         <Link href="/">
           <Button>
-            Return Home
+            Home
             <CornerDownLeft className="ml-2 size-4" />
           </Button>
         </Link>

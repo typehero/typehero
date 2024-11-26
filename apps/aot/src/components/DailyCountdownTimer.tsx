@@ -3,7 +3,6 @@ import Image from 'next/image';
 
 export const DailyCountdownTimer = () => {
   const nowDate = Date.now();
-  const aotStarted = nowDate >= new Date(Date.UTC(2024, 11, 1, 5, 0, 0)).getTime();
   const isAtLeastOneDayPastAotEndDate =
     nowDate >= new Date(Date.UTC(2024, 11, 26, 5, 0, 0)).getTime();
 
@@ -19,5 +18,5 @@ export const DailyCountdownTimer = () => {
     );
   }
 
-  return aotStarted ? <DailyCountdownTimerClientComponent /> : <></>;
+  return <DailyCountdownTimerClientComponent />;
 };

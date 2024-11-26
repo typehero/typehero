@@ -24,20 +24,26 @@ export const getFirst100SubmissionsRanked = async (adventYear: string, adventDay
     },
     take: LEADERBOARD_RANKING_LIMIT,
   });
+
+  const releaseDate = new Date(Date.UTC(Number(adventYear), 11, Number(adventDay), 5, 0, 0));
   const submissionsWithFlatUsers = submissions.map((s) => ({
     //Named score since this shape of this type is being shared with getOverallLeaderboard
-    score: formatDate(s.createdAt),
+    score: formatTimeSinceRelease(s.createdAt, releaseDate),
     ...s.user,
   }));
+
   return submissionsWithFlatUsers;
 };
 
-const formatDate = (date: Date) => {
-  return new Intl.DateTimeFormat('en-US', {
-    timeZone: 'America/New_York',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hourCycle: 'h23',
-  }).format(new Date(date));
-};
+const padTimeComponent = (value: number): string => String(value).padStart(2, '0');
+function formatTimeSinceRelease(submissionDate: Date, releaseDate: Date) {
+  const diffInMilliseconds = submissionDate.getTime() - releaseDate.getTime();
+
+  const totalSeconds = Math.floor(diffInMilliseconds / 1000);
+
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  return `${padTimeComponent(hours)}:${padTimeComponent(minutes)}:${padTimeComponent(seconds)}`;
+}
