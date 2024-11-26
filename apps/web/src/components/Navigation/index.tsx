@@ -48,13 +48,6 @@ export async function Navigation() {
     <>
       <NavLink title="Explore" href="/explore" />
       <NavLink title="Tracks" href="/tracks" />
-<<<<<<< Updated upstream
-      {featureFlags?.enableHolidayEvent ? (
-        <div className="flex items-center gap-1">
-          <NavLink title="Advent of TS" href="https://www.adventofts.com" />
-        </div>
-      ) : null}
-=======
       <div className="flex items-center gap-1">
         <a
           className="text-foreground/80"
@@ -68,7 +61,6 @@ export async function Navigation() {
           New
         </Badge>
       </div>
->>>>>>> Stashed changes
     </>
   );
 
