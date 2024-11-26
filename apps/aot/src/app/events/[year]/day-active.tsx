@@ -40,7 +40,7 @@ export default function DayActive({ day, hasSolved }: { day: number; hasSolved: 
         )}
         <h1 className="z-10 font-bold">
           {day}
-          {hasSolved ? 's' : undefined}
+          {hasSolved ? '' : undefined}
         </h1>
       </div>
     </motion.div>
