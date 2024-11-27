@@ -1,4 +1,5 @@
 'use client';
+import { Star } from '@repo/ui/icons';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import gift1 from '~/../public/giftbox.png';
@@ -11,9 +12,11 @@ export default function GiftBox({
   day,
   active,
   index,
+  hasSolved,
 }: {
   day: number;
   active: boolean;
+  hasSolved: boolean;
   index: number;
 }) {
   return (
@@ -25,6 +28,9 @@ export default function GiftBox({
         index == 2 && 'ml-20 mr-12'
       }`}
     >
+      {hasSolved ? (
+        <Star className="absolute right-1 top-1 z-50 h-3 w-3 select-none fill-yellow-600 text-yellow-600 dark:fill-yellow-300 dark:text-yellow-300" />
+      ) : null}
       <Image
         className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none brightness-100 ${
           !active && 'opacity-50 grayscale'
