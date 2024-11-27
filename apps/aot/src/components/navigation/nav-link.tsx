@@ -4,7 +4,15 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-export function NavLink({ href, title }: { href: string; title: string }) {
+export function NavLink({
+  href,
+  children,
+  className,
+}: {
+  href: string;
+  className?: string;
+  children: React.ReactNode;
+}) {
   const pathname = usePathname();
   return (
     <Link href={href}>
@@ -14,9 +22,10 @@ export function NavLink({ href, title }: { href: string; title: string }) {
           {
             '!text-black dark:!text-white': pathname === href,
           },
+          className,
         )}
       >
-        {title}
+        {children}
       </div>
     </Link>
   );

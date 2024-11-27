@@ -6,7 +6,7 @@ import {
   DropdownMenuTrigger,
 } from '@repo/ui/components/dropdown-menu';
 import { UserAvatar } from '@repo/ui/components/user-avatar';
-import { Palette } from '@repo/ui/icons';
+import { Palette, Discord, NewTwitter } from '@repo/ui/icons';
 import Link from 'next/link';
 import { auth } from '~/server/auth';
 import { getAllFlags } from '~/utils/feature-flag';
@@ -17,6 +17,11 @@ import { NavLink } from './nav-link';
 import { NavWrapper } from './nav-wrapper';
 import { SignOutLink } from './signout-link';
 import { ThemeButton } from './theme-button';
+import { Button } from '@repo/ui/components/button';
+import { Separator } from '@repo/ui/components/separator';
+
+const DISCORD_INVITE_LINK = 'https://discord.gg/trash-devs-796594544980000808';
+const TWITTER_LINK = 'https://x.com/typeheroapp';
 
 export async function Navigation() {
   const [session, featureFlags] = await Promise.all([auth(), getAllFlags()]);
@@ -25,8 +30,22 @@ export async function Navigation() {
     <>
       {featureFlags.enableAotPlatform ? (
         <>
-          <NavLink title="About" href="/about" />
-          <NavLink title="Events" href="/events/2024" />
+          <NavLink href="/events/2024">Events</NavLink>
+          <NavLink href="/events/2024">Leaderboard</NavLink>
+          <NavLink href="/about">About</NavLink>
+          <Separator className="md:hidden dark:bg-white/20" />
+          <NavLink
+            href={DISCORD_INVITE_LINK}
+            className="flex flex-row items-center gap-2 text-black/40 md:hidden dark:text-white/60"
+          >
+            <span>Join us on Discord</span> <Discord className="h-4 w-4" />
+          </NavLink>
+          <NavLink
+            href={TWITTER_LINK}
+            className="flex flex-row items-center gap-2 text-black/40 md:hidden dark:text-white/60"
+          >
+            <span>Follow us on </span> <NewTwitter className="h-3.5 w-3.5" />
+          </NavLink>
         </>
       ) : null}
     </>
@@ -68,7 +87,28 @@ export async function Navigation() {
             </Link>
           </div>
           <div className="hidden items-center md:flex">{NavLinks}</div>
-          <div className="flex w-64 items-center justify-end gap-2">
+          <div className="flex w-80 items-center justify-end gap-2">
+            <Button
+              size="icon"
+              variant="outline"
+              asChild
+              className="hidden border-none bg-transparent hover:bg-transparent md:flex dark:hover:text-yellow-400"
+            >
+              <Link href={DISCORD_INVITE_LINK}>
+                <Discord />
+              </Link>
+            </Button>
+            <Button
+              size="icon"
+              variant="outline"
+              asChild
+              className="hidden border-none bg-transparent hover:bg-transparent md:flex dark:hover:text-yellow-400"
+            >
+              <Link href={TWITTER_LINK}>
+                <NewTwitter />
+              </Link>
+            </Button>
+
             <Link
               className="donate-btn relative overflow-hidden rounded-full px-4 py-2 text-black duration-300 hover:bg-[#eed15f] dark:text-white dark:hover:bg-[#bea74b44]"
               href="/support"
