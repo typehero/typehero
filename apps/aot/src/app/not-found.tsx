@@ -1,8 +1,8 @@
-import { Compass, CornerDownLeft } from '@repo/ui/icons';
-import Snowfall from '~/components/landing/Snowfall';
 import { Button } from '@repo/ui/components/button';
+import { Compass } from '@repo/ui/icons';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Snowfall from '~/components/landing/Snowfall';
 
 export const metadata: Metadata = {
   title: 'Not Found | Advent of TypeScript 2024',
@@ -27,10 +27,7 @@ export default function Custom404() {
           </Button>
         </Link>
         <Link href="/">
-          <Button>
-            Home
-            <CornerDownLeft className="ml-2 size-4" />
-          </Button>
+          <Button>Home</Button>
         </Link>
       </div>
     </div>
