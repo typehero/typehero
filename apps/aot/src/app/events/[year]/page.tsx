@@ -92,7 +92,13 @@ export default async function EventByYearLandingPage({ params }: Props) {
                     />
                   </Link>
                 ) : (
-                  <GiftBox key={day.day} day={day.day} active={day.active} index={index} />
+                  <GiftBox
+                    key={day.day}
+                    day={day.day}
+                    active={day.active}
+                    index={index}
+                    hasSolved={day.hasSolved}
+                  />
                 )}
               </>
             ))}
