@@ -117,7 +117,7 @@ export default function AboutPage() {
         <p>
           This year, we're introducing <strong>leaderboards</strong>📈! You'll find a daily
           leaderboard and an overall leaderboard, where top contestants can win exciting prizes.
-          Stay tuned for details on the number of participants and prize specifics!
+          Join the discord to stay updated on the latest announcements about prizes!
         </p>
         <p>
           Here's how scoring works: each day, the first 100 participants will earn points based on
