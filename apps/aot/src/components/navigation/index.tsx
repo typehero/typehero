@@ -19,6 +19,7 @@ import { SignOutLink } from './signout-link';
 import { ThemeButton } from './theme-button';
 import { Button } from '@repo/ui/components/button';
 import { Separator } from '@repo/ui/components/separator';
+import { YearSwitcher } from './year-switcher';
 
 const DISCORD_INVITE_LINK = 'https://discord.gg/trash-devs-796594544980000808';
 const TWITTER_LINK = 'https://x.com/typeheroapp';
@@ -30,8 +31,7 @@ export async function Navigation() {
     <>
       {featureFlags.enableAotPlatform ? (
         <>
-          <NavLink href="/events/2024">Events</NavLink>
-          <NavLink href="/events/2024">Leaderboard</NavLink>
+          <YearSwitcher />
           <NavLink href="/about">About</NavLink>
           <Separator className="md:hidden dark:bg-white/20" />
           <NavLink
