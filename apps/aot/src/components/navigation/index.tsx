@@ -89,7 +89,7 @@ export async function Navigation() {
     <header className="z-50 w-full">
       <NavWrapper>
         <div className="flex w-full items-center justify-between">
-          <div className="relative flex gap-3 md:w-64">
+          <div className="relative flex gap-3 md:w-32 lg:w-64">
             <Link className="flex items-center space-x-2 duration-300" href="/">
               <Logo />
             </Link>
