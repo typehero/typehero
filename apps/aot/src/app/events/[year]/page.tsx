@@ -9,7 +9,6 @@ import type { RouterOutputs } from '~/trpc/react';
 import { DailyCountdownTimer } from '~/components/DailyCountdownTimer';
 import BgDecorations from './24BgDecorations';
 import Partners from '~/components/landing/Partners';
-import YearsSelector from './YearsSelector';
 import GiftBox from './GiftBox';
 
 type Challenge = RouterOutputs['event']['getEventChallengesByYear'][0];
