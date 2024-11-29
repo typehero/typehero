@@ -1,16 +1,55 @@
 'use client';
 import { YearSelector } from '@repo/ui/components/year-selector';
-import { useState } from 'react';
 import { NavLink } from './nav-link';
+import { useRouter, useSelectedLayoutSegments } from 'next/navigation';
+import { atom, useAtom, useAtomValue } from 'jotai';
+import { hasAdventEnded, hasAdventStarted } from '~/utils/time-utils';
 
-export function YearSwitcher() {
-  const [selectedYear, setSelectedYear] = useState('2024');
+//Need this atom to show the year on pages without /events/year, i.e index
+//and about
+const SelectedYearAtom = atom('2024');
+
+export function YearSwitcher(props: { className: string }) {
+  const segments = useSelectedLayoutSegments().filter((s) => !s.startsWith('('));
+  const [selectYear, setSelectYear] = useAtom(SelectedYearAtom);
+  const router = useRouter();
+
+  const currentYear = new Date().getFullYear();
+  const isLive = hasAdventStarted(currentYear) && !hasAdventEnded(currentYear);
+  console.log({
+    isLive,
+    started: hasAdventStarted(currentYear),
+    ended: !hasAdventEnded(currentYear),
+  });
+
+  function handleYearChange(newYear: string) {
+    console.log(newYear);
+    if (segments[0] === 'events') {
+      const rest = segments.slice(2);
+      console.log(rest);
+      const newUrl = `/events/${newYear}/${rest.join('/')}`;
+      router.push(newUrl);
+    }
+    setSelectYear(newYear);
+  }
 
   return (
+    <div className={props.className}>
+      <YearSelector
+        setSelectedYear={handleYearChange}
+        selectedYear={selectYear}
+        showLive={isLive}
+      />
+    </div>
+  );
+}
+
+export function NavLinksWithYear() {
+  const year = useAtomValue(SelectedYearAtom);
+  return (
     <>
-      <YearSelector setSelectedYear={setSelectedYear} selectedYear={selectedYear} />
-      <NavLink href={`/events/${selectedYear}`}>Event</NavLink>
-      <NavLink href={`/leaderboard/${selectedYear}`}>Leaderboard</NavLink>
+      <NavLink href={`/events/${year}`}>Event</NavLink>
+      <NavLink href={`/events/${year}/leaderboard`}>Leaderboard</NavLink>
     </>
   );
 }

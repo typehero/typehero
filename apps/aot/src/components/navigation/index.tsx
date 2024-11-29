@@ -6,7 +6,7 @@ import {
   DropdownMenuTrigger,
 } from '@repo/ui/components/dropdown-menu';
 import { UserAvatar } from '@repo/ui/components/user-avatar';
-import { Palette, Discord, NewTwitter } from '@repo/ui/icons';
+import { Palette, Discord, NewTwitter, Github } from '@repo/ui/icons';
 import Link from 'next/link';
 import { auth } from '~/server/auth';
 import { getAllFlags } from '~/utils/feature-flag';
@@ -19,10 +19,11 @@ import { SignOutLink } from './signout-link';
 import { ThemeButton } from './theme-button';
 import { Button } from '@repo/ui/components/button';
 import { Separator } from '@repo/ui/components/separator';
-import { YearSwitcher } from './year-switcher';
+import { NavLinksWithYear, YearSwitcher } from './year-switcher';
 
 const DISCORD_INVITE_LINK = 'https://discord.gg/trash-devs-796594544980000808';
 const TWITTER_LINK = 'https://x.com/typeheroapp';
+const GITHUB_LINK = 'https://github.com/typehero/typehero';
 
 export async function Navigation() {
   const [session, featureFlags] = await Promise.all([auth(), getAllFlags()]);
@@ -31,7 +32,8 @@ export async function Navigation() {
     <>
       {featureFlags.enableAotPlatform ? (
         <>
-          <YearSwitcher />
+          <YearSwitcher className="hidden md:inline-flex" />
+          <NavLinksWithYear />
           <NavLink href="/about">About</NavLink>
           <Separator className="md:hidden dark:bg-white/20" />
           <NavLink
@@ -45,6 +47,12 @@ export async function Navigation() {
             className="flex flex-row items-center gap-2 text-black/40 md:hidden dark:text-white/60"
           >
             <span>Follow us on </span> <NewTwitter className="h-3.5 w-3.5" />
+          </NavLink>
+          <NavLink
+            href={GITHUB_LINK}
+            className="flex flex-row items-center gap-2 text-black/40 md:hidden dark:text-white/60"
+          >
+            <span>Contribute on </span> <Github className="h-3.5 w-3.5" />
           </NavLink>
         </>
       ) : null}
@@ -81,13 +89,14 @@ export async function Navigation() {
     <header className="z-50 w-full">
       <NavWrapper>
         <div className="flex w-full items-center justify-between">
-          <div className="relative flex w-64 gap-3">
+          <div className="relative flex gap-3 md:w-64">
             <Link className="flex items-center space-x-2 duration-300" href="/">
               <Logo />
             </Link>
           </div>
+          <YearSwitcher className="md:hidden" />
           <div className="hidden items-center md:flex">{NavLinks}</div>
-          <div className="flex w-80 items-center justify-end gap-2">
+          <div className="flex items-center justify-end gap-1">
             <Button
               size="icon"
               variant="outline"
@@ -96,6 +105,16 @@ export async function Navigation() {
             >
               <Link href={DISCORD_INVITE_LINK}>
                 <Discord />
+              </Link>
+            </Button>
+            <Button
+              size="icon"
+              variant="outline"
+              asChild
+              className="hidden border-none bg-transparent hover:bg-transparent md:flex dark:hover:text-yellow-400"
+            >
+              <Link href={GITHUB_LINK}>
+                <Github />
               </Link>
             </Button>
             <Button

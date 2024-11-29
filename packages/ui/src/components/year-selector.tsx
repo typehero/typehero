@@ -4,29 +4,47 @@ import { ChevronDownIcon } from 'lucide-react';
 import * as React from 'react';
 import { cn } from '../cn';
 
+const YEARS = ['2024', '2023'];
+
 const YEAR_COLOR_MAP: Record<string, string> = {
   '2024': 'border-red-800 from-red-950 to-red-700',
   '2023': 'border-emerald-800 from-emerald-700 to-emerald-900',
 };
 
-export function YearSelector(props: {
+const YEAR_TO_SELECT_ITEMS_MAP: Record<string, (isLive: boolean) => JSX.Element | number> = {
+  '2024': (isLive: boolean) => {
+    return (
+      <div className="inline-flex flex-row items-center gap-2">
+        {isLive ? (
+          <>
+            <div className="h-2 w-2 animate-ping rounded-full bg-red-500" />
+            <div className="-ml-4 h-2 w-2 rounded-full bg-red-500" />
+          </>
+        ) : null}
+        2024
+      </div>
+    );
+  },
+  '2023': () => 2023,
+};
+
+interface YearSelectorProps {
   selectedYear: string;
   setSelectedYear: (year: string) => void;
-}) {
+  showLive: boolean;
+}
+export const YearSelector = React.forwardRef<HTMLButtonElement, YearSelectorProps>((props) => {
   return (
-    <Select.Root
-      defaultValue="2024"
-      value={props.selectedYear}
-      onValueChange={props.setSelectedYear}
-    >
-      {/* <Select.Trigger className="border-input ring-offset-background focus:ring-ring inline-flex items-center justify-center gap-1 px-2 text-black/50 hover:text-black focus:outline-none focus:ring-2 focus:ring-offset-0 aria-expanded:text-black dark:text-white/80 dark:hover:text-yellow-400 dark:aria-expanded:text-yellow-400"> */}
+    <Select.Root value={props.selectedYear} onValueChange={props.setSelectedYear}>
       <Select.Trigger
         className={cn(
-          'inline-flex items-center justify-center gap-1 rounded-full border bg-gradient-to-r px-3 py-1.5',
+          'inline-flex min-w-24 items-center justify-end gap-1 rounded-full border bg-gradient-to-r px-3 py-1 md:min-w-28 md:py-1.5',
           YEAR_COLOR_MAP[props.selectedYear],
         )}
       >
-        <Select.Value />
+        <Select.Value>
+          {YEAR_TO_SELECT_ITEMS_MAP[props.selectedYear]?.(props.showLive)}
+        </Select.Value>
         <Select.Icon>
           <ChevronDownIcon className="h-5 w-6" />
         </Select.Icon>
@@ -34,20 +52,20 @@ export function YearSelector(props: {
       <Select.Portal>
         <Select.Content
           position="popper"
+          align="center"
+          alignOffset={10}
           className="data-[state=open]:animate-in date-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 z-50 gap-1 data-[side=bottom]:translate-y-1"
         >
-          <SelectItem value="2024">
-            <div className="inline-flex flex-row items-center gap-2">
-              <div className="h-2 w-2 animate-ping rounded-full bg-red-500" />
-              2024
-            </div>
-          </SelectItem>
-          <SelectItem value="2023">2023</SelectItem>
+          {YEARS.filter((y) => y !== props.selectedYear).map((y) => (
+            <SelectItem key={y} value={y}>
+              {YEAR_TO_SELECT_ITEMS_MAP[y]?.(props.showLive)}
+            </SelectItem>
+          ))}
         </Select.Content>
       </Select.Portal>
     </Select.Root>
   );
-}
+});
 
 const SelectItem = React.forwardRef<
   React.ElementRef<typeof Select.Item>,
@@ -57,7 +75,7 @@ const SelectItem = React.forwardRef<
     <Select.Item
       className={cn(
         'cursor-pointer select-none outline-none',
-        'inline-flex justify-center gap-2 rounded-full border bg-gradient-to-r px-3 py-1.5',
+        'inline-flex items-center justify-end gap-1 rounded-full border bg-gradient-to-r px-3 py-1 md:py-1.5',
         YEAR_COLOR_MAP[props.value],
         className,
       )}
