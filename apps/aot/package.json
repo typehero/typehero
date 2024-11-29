@@ -41,6 +41,7 @@
     "date-fns": "^2.30.0",
     "framer-motion": "^10.12.22",
     "framer-motion-3d": "^11.11.17",
+    "jotai": "^2.10.1",
     "lodash": "^4.17.21",
     "lz-string": "^1.5.0",
     "maath": "^0.10.8",

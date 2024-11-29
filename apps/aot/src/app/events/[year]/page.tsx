@@ -9,7 +9,6 @@ import type { RouterOutputs } from '~/trpc/react';
 import { DailyCountdownTimer } from '~/components/DailyCountdownTimer';
 import BgDecorations from './24BgDecorations';
 import Partners from '~/components/landing/Partners';
-import YearsSelector from './YearsSelector';
 import GiftBox from './GiftBox';
 
 type Challenge = RouterOutputs['event']['getEventChallengesByYear'][0];
@@ -48,10 +47,7 @@ export default async function EventByYearLandingPage({ params }: Props) {
 
   return (
     <div className="-mt-14 flex min-h-screen flex-col items-center justify-between overflow-hidden bg-gradient-to-t from-neutral-400/10 to-transparent py-14">
-      <YearsSelector selectedYear={params.year} />
-      <div
-        className={`fixed left-0 top-0 -z-10 h-full w-full bg-[url('https://images.pexels.com/photos/724906/pexels-photo-724906.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')] bg-cover opacity-10 blur-3xl`}
-      />
+      <div className="fixed left-0 top-0 -z-10 h-full w-full bg-[url('https://images.pexels.com/photos/724906/pexels-photo-724906.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')] bg-cover opacity-10 blur-3xl" />
       <div className="container relative mx-auto">
         <BgDecorations />
         {/* <h1 className="mb-16 mt-8 text-center text-3xl font-bold lg:text-6xl">
@@ -59,12 +55,12 @@ export default async function EventByYearLandingPage({ params }: Props) {
         </h1> */}
         <ul className="z-10 flex flex-col items-center gap-2 sm:gap-3 md:gap-4">
           {year === 2024 && (
-            <div className="flex flex-col items-center pb-10">
+            <div className="flex flex-col items-center pt-10">
               <DailyCountdownTimer />
             </div>
           )}
           {groupedDays.map((group, index) => (
-            <div key={`row-${index}`} className="flex gap-2 sm:gap-3 md:gap-4">
+            <div key={`row-${index}`} className="flex gap-2 first:pt-10 sm:gap-3 md:gap-4">
               {group.map((day) => (
                 <>
                   {day.active ? (
