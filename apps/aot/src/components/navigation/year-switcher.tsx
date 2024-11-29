@@ -7,10 +7,17 @@ import { hasAdventEnded, hasAdventStarted } from '~/utils/time-utils';
 
 //Need this atom to show the year on pages without /events/year, i.e index
 //and about
-const SelectedYearAtom = atom('2024');
+const SelectedYearAtom = atom<string | undefined>(undefined);
+
+const useUrlYear = () => {
+  const segments = useSelectedLayoutSegments().filter((s) => !s.startsWith('('));
+  let urlYear = '2024';
+  if (segments[0] === 'events' && segments[1]) urlYear = segments[1];
+  return [urlYear, segments] as const;
+};
 
 export function YearSwitcher(props: { className: string }) {
-  const segments = useSelectedLayoutSegments().filter((s) => !s.startsWith('('));
+  const [urlYear, segments] = useUrlYear();
   const [selectYear, setSelectYear] = useAtom(SelectedYearAtom);
   const router = useRouter();
 
@@ -19,18 +26,25 @@ export function YearSwitcher(props: { className: string }) {
 
   function handleYearChange(newYear: string) {
     if (segments[0] === 'events') {
-      const rest = segments.slice(2);
-      const newUrl = `/events/${newYear}/${rest.join('/')}`;
+      const newUrl = `/events/${newYear}`;
       router.push(newUrl);
     }
     setSelectYear(newYear);
   }
 
+  const ref = (node: HTMLDivElement | null) => {
+    if (node !== null) {
+      //After the element is rendered, set's the year to the year from the url
+      setSelectYear(urlYear);
+    }
+  };
+
   return (
-    <div className={props.className}>
+    <div className={props.className} ref={ref}>
       <YearSelector
         setSelectedYear={handleYearChange}
-        selectedYear={selectYear}
+        //selected year is not available until first render, where the ref sets it to the url year.
+        selectedYear={selectYear ?? urlYear}
         showLive={isLive}
       />
     </div>

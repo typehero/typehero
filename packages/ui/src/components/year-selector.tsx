@@ -28,12 +28,11 @@ const YEAR_TO_SELECT_ITEMS_MAP: Record<string, (isLive: boolean) => JSX.Element 
   '2023': () => 2023,
 };
 
-interface YearSelectorProps {
+export const YearSelector = (props: {
   selectedYear: string;
   setSelectedYear: (year: string) => void;
   showLive: boolean;
-}
-export const YearSelector = React.forwardRef<HTMLButtonElement, YearSelectorProps>((props) => {
+}) => {
   return (
     <Select.Root value={props.selectedYear} onValueChange={props.setSelectedYear}>
       <Select.Trigger
@@ -65,7 +64,7 @@ export const YearSelector = React.forwardRef<HTMLButtonElement, YearSelectorProp
       </Select.Portal>
     </Select.Root>
   );
-});
+};
 
 const SelectItem = React.forwardRef<
   React.ElementRef<typeof Select.Item>,
