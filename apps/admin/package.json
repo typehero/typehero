@@ -32,7 +32,7 @@
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.45.1",
-    "react-select": "^5.7.4",
+    "react-select": "^5.8.3",
     "tailwindcss": "3.4.7",
     "tailwindcss-animate": "^1.0.6",
     "zod": "3.23.3"
