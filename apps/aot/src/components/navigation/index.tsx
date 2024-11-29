@@ -35,6 +35,12 @@ export async function Navigation() {
           <YearSwitcher className="hidden md:inline-flex" />
           <NavLinksWithYear />
           <NavLink href="/about">About</NavLink>
+          <Link
+            className="donate-btn relative overflow-hidden rounded-full px-4 py-2 text-black duration-300 hover:bg-[#eed15f] md:hidden dark:text-white dark:hover:bg-[#bea74b44]"
+            href="/support"
+          >
+            Support Us
+          </Link>
           <Separator className="md:hidden dark:bg-white/20" />
           <NavLink
             href={DISCORD_INVITE_LINK}
@@ -94,48 +100,50 @@ export async function Navigation() {
               <Logo />
             </Link>
           </div>
-          <YearSwitcher className="md:hidden" />
           <div className="hidden items-center md:flex">{NavLinks}</div>
-          <div className="flex items-center justify-end gap-1">
-            <Button
-              size="icon"
-              variant="outline"
-              asChild
-              className="hidden border-none bg-transparent hover:bg-transparent md:flex dark:hover:text-yellow-400"
-            >
-              <Link href={DISCORD_INVITE_LINK}>
-                <Discord />
-              </Link>
-            </Button>
-            <Button
-              size="icon"
-              variant="outline"
-              asChild
-              className="hidden border-none bg-transparent hover:bg-transparent md:flex dark:hover:text-yellow-400"
-            >
-              <Link href={GITHUB_LINK}>
-                <Github />
-              </Link>
-            </Button>
-            <Button
-              size="icon"
-              variant="outline"
-              asChild
-              className="hidden border-none bg-transparent hover:bg-transparent md:flex dark:hover:text-yellow-400"
-            >
-              <Link href={TWITTER_LINK}>
-                <NewTwitter />
-              </Link>
-            </Button>
+          <div className="flex flex-row gap-2">
+            <YearSwitcher className="md:hidden" />
+            <div className="flex items-center justify-end gap-1">
+              <Button
+                size="icon"
+                variant="outline"
+                asChild
+                className="hidden border-none bg-transparent hover:bg-transparent md:flex dark:hover:text-yellow-400"
+              >
+                <Link href={DISCORD_INVITE_LINK}>
+                  <Discord />
+                </Link>
+              </Button>
+              <Button
+                size="icon"
+                variant="outline"
+                asChild
+                className="hidden border-none bg-transparent hover:bg-transparent md:flex dark:hover:text-yellow-400"
+              >
+                <Link href={GITHUB_LINK}>
+                  <Github />
+                </Link>
+              </Button>
+              <Button
+                size="icon"
+                variant="outline"
+                asChild
+                className="hidden border-none bg-transparent hover:bg-transparent md:flex dark:hover:text-yellow-400"
+              >
+                <Link href={TWITTER_LINK}>
+                  <NewTwitter />
+                </Link>
+              </Button>
 
-            <Link
-              className="donate-btn relative overflow-hidden rounded-full px-4 py-2 text-black duration-300 hover:bg-[#eed15f] dark:text-white dark:hover:bg-[#bea74b44]"
-              href="/support"
-            >
-              Support Us
-            </Link>
-            <LoginButton session={session} />
-            <MobileNav>{NavLinks}</MobileNav>
+              <Link
+                className="donate-btn relative hidden overflow-hidden rounded-full px-4 py-2 text-black duration-300 hover:bg-[#eed15f] md:flex dark:text-white dark:hover:bg-[#bea74b44]"
+                href="/support"
+              >
+                Support Us
+              </Link>
+              <LoginButton session={session} />
+              <MobileNav>{NavLinks}</MobileNav>
+            </div>
           </div>
         </div>
       </NavWrapper>
