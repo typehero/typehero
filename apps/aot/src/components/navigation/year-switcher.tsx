@@ -13,11 +13,11 @@ const useUrlYear = () => {
   const segments = useSelectedLayoutSegments().filter((s) => !s.startsWith('('));
   let urlYear = '2024';
   if (segments[0] === 'events' && segments[1]) urlYear = segments[1];
-  return [urlYear, segments] as const;
+  return urlYear;
 };
 
 export function YearSwitcher(props: { className: string }) {
-  const [urlYear, segments] = useUrlYear();
+  const urlYear = useUrlYear();
   const [selectYear, setSelectYear] = useAtom(SelectedYearAtom);
   const router = useRouter();
 
@@ -25,10 +25,8 @@ export function YearSwitcher(props: { className: string }) {
   const isLive = hasAdventStarted(currentYear) && !hasAdventEnded(currentYear);
 
   function handleYearChange(newYear: string) {
-    if (segments[0] === 'events') {
-      const newUrl = `/events/${newYear}`;
-      router.push(newUrl);
-    }
+    const newUrl = `/events/${newYear}`;
+    router.push(newUrl);
     setSelectYear(newYear);
   }
 
