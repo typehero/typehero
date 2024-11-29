@@ -36,7 +36,7 @@ export async function Navigation() {
           <NavLinksWithYear />
           <NavLink href="/about">About</NavLink>
           <Link
-            className="donate-btn relative overflow-hidden rounded-full px-4 py-2 text-black duration-300 hover:bg-[#eed15f] md:hidden dark:text-white dark:hover:bg-[#bea74b44]"
+            className="donate-btn relative w-fit overflow-hidden rounded-full px-4 py-2 text-black duration-300 hover:bg-[#eed15f] md:hidden dark:text-white dark:hover:bg-[#bea74b44]"
             href="/support"
           >
             Support Us
