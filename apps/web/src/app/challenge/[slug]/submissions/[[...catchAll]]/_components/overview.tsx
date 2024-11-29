@@ -5,7 +5,6 @@ import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useParams, useSearchParams } from 'next/navigation';
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
-import { AOT_CHALLENGES } from '../../../aot-slugs';
 import { getChallengeSubmissionById } from '../getChallengeSubmissions';
 import { Suggestions } from './suggestions';
 import {
@@ -30,8 +29,6 @@ export function SubmissionOverview({ submissionId }: Props) {
   const { slug } = useParams();
   const searchParams = useSearchParams();
 
-  const isAotChallenge = AOT_CHALLENGES.includes(slug as string);
-
   const showSuggestions = searchParams.get('success') === 'true';
   const { data: submission } = useQuery({
     queryKey: [`submission`, submissionId],
@@ -42,13 +39,9 @@ export function SubmissionOverview({ submissionId }: Props) {
 
   const track = searchParams.get('slug');
 
-  const tweet = isAotChallenge
-    ? `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-        `I've completed ${submission?.challenge.name} - Advent of TypeScript 2023`,
-      )}&url=https://typehero.dev/challenge/${slug}&hashtags=AdventOfTypescript`
-    : `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-        `I've completed ${submission?.challenge.name} on TypeHero!`,
-      )}&url=https://typehero.dev/challenge/${slug}`;
+  const tweet = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+    `I've completed ${submission?.challenge.name} on TypeHero!`,
+  )}&url=https://typehero.dev/challenge/${slug}`;
 
   if (!submission) return null;
 
@@ -80,18 +73,16 @@ export function SubmissionOverview({ submissionId }: Props) {
               Submitted {getRelativeTimeStrict(submission.createdAt)}
             </div>
           </div>
-          {!isAotChallenge && (
-            <div>
-              <Link
-                className="bg-primary flex h-8 items-center gap-1 rounded-lg py-2 pl-2 pr-3 text-sm text-white"
-                href={`/challenge/${slug}/solutions`}
-              >
-                <Plus size={16} /> Share your Solution
-              </Link>
-            </div>
-          )}
+          <div>
+            <Link
+              className="bg-primary flex h-8 items-center gap-1 rounded-lg py-2 pl-2 pr-3 text-sm text-white"
+              href={`/challenge/${slug}/solutions`}
+            >
+              <Plus size={16} /> Share your Solution
+            </Link>
+          </div>
         </div>
-        {showSuggestions && !isAotChallenge ? (
+        {showSuggestions ? (
           <div className="flex w-full items-start">
             <Suggestions track={track} challengeId={submission.challengeId} />
           </div>
@@ -140,15 +131,6 @@ export function SubmissionOverview({ submissionId }: Props) {
               Share on Twitter
             </a>
           </Button>
-          {isAotChallenge ? (
-            <Button
-              asChild
-              variant="outline"
-              className="fancy-border-gradient relative border-none"
-            >
-              <Link href="/aot-2023">Back to Advent of TypeScript</Link>
-            </Button>
-          ) : null}
         </div>
       </div>
     </>

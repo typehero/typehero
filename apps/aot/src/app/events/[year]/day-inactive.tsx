@@ -18,31 +18,13 @@ export default function DayInactive({ day }: { day: number }) {
       initial={{ opacity: 0, translateY: 15 }}
       animate={{ opacity: 1, translateY: 0 }}
       transition={{ delay: day * 0.025, type: 'spring', damping: 3, stiffness: 100 }}
-      className="group aspect-square rounded-xl bg-gradient-to-b p-[1.5px] duration-300 hover:scale-110 hover:rounded-2xl"
+      className="group aspect-square rounded-xl p-[1.5px] duration-300 hover:scale-110 hover:rounded-2xl"
     >
       <div
         className={`relative grid aspect-square h-12 w-12 cursor-wait place-items-center overflow-hidden rounded-xl border-2 border-dashed border-white/30 bg-white/70 backdrop-blur duration-300 group-hover:rounded-2xl group-hover:bg-white/50 dark:bg-black/20 dark:group-hover:bg-black/50 ${
           day === 22 && 'h-14'
         }`}
       >
-        {/* {day === 1 && (
-          <Image
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 brightness-100 grayscale-0 group-hover:brightness-90 dark:brightness-50"
-            src={star}
-            alt="Day 23"
-            width={64}
-            height={64}
-          />
-        )} */}
-        {/* <div className="pointer-events-none absolute -left-4 -top-4 select-none text-6xl font-black text-white/20 lg:text-8xl">
-      {day}
-    </div>
-    <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none text-6xl font-black text-white/30 lg:text-8xl">
-      {day}
-    </div>
-    <div className="pointer-events-none absolute -bottom-4 -right-4 select-none text-6xl font-black text-white/40 lg:text-8xl">
-      {day}
-    </div> */}
         <h1 className="z-10 font-bold">{day}</h1>
       </div>
     </motion.div>

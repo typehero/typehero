@@ -109,15 +109,15 @@ export default function AboutPage() {
           </li>
           <li>
             Remember, it’s all about having fun! These challenges are meant to tease your brain.
-            They’ll ramp up real quick 🙈. Don’t sweat it if a challenge feels tough. We’ll drop the
-            solutions on our after the event, so be sure to give it a star!
+            They’ll ramp up real quick 🙈. Don’t sweat it if a challenge feels tough. Everyone will
+            be able to share their own solutions at the end of the event.
           </li>
         </ul>
         <h2>Rewards</h2>
         <p>
           This year, we're introducing <strong>leaderboards</strong>📈! You'll find a daily
           leaderboard and an overall leaderboard, where top contestants can win exciting prizes.
-          Stay tuned for details on the number of participants and prize specifics!
+          Join the discord to stay updated on the latest announcements about prizes!
         </p>
         <p>
           Here's how scoring works: each day, the first 100 participants will earn points based on

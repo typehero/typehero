@@ -3,6 +3,7 @@ import star from '~/../public/star.png';
 import Image from 'next/image';
 
 import { motion } from 'framer-motion';
+import { Star } from '@repo/ui/icons';
 
 const colorsArray = [
   'from-blue-200 dark:from-blue-800 via-blue-600 dark:via-blue-400 to-blue-100 dark:to-blue-900',
@@ -29,6 +30,9 @@ export default function DayActive({ day, hasSolved }: { day: number; hasSolved: 
           day === 22 && 'h-14'
         }`}
       >
+        {hasSolved ? (
+          <Star className="absolute right-1 top-1 z-50 h-3 w-3 select-none fill-yellow-600 text-yellow-600 dark:fill-yellow-300 dark:text-yellow-300" />
+        ) : null}
         {day === 1 && (
           <Image
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none brightness-100 grayscale-0 group-hover:brightness-90 dark:brightness-50"
@@ -38,10 +42,7 @@ export default function DayActive({ day, hasSolved }: { day: number; hasSolved: 
             height={64}
           />
         )}
-        <h1 className="z-10 font-bold">
-          {day}
-          {hasSolved ? 's' : undefined}
-        </h1>
+        <h1 className="z-10 font-bold">{day}</h1>
       </div>
     </motion.div>
   );

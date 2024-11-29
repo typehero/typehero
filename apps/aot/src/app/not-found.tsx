@@ -1,8 +1,8 @@
-import { Compass, CornerDownLeft } from '@repo/ui/icons';
-import Snowfall from '~/components/landing/Snowfall';
 import { Button } from '@repo/ui/components/button';
+import { Compass } from '@repo/ui/icons';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Snowfall from '~/components/landing/Snowfall';
 
 export const metadata: Metadata = {
   title: 'Not Found | Advent of TypeScript 2024',
@@ -20,17 +20,14 @@ export default function Custom404() {
         Couldn't find the requested resource
       </p>
       <div className="mt-8 flex flex-row gap-x-2">
-        <Link href="/events">
+        <Link href="/events/2024">
           <Button variant="outline">
             <Compass className="mr-2 size-4" />
             Explore Challenges
           </Button>
         </Link>
         <Link href="/">
-          <Button>
-            Return Home
-            <CornerDownLeft className="ml-2 size-4" />
-          </Button>
+          <Button>Home</Button>
         </Link>
       </div>
     </div>

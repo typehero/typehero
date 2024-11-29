@@ -54,9 +54,11 @@ export default async function EventByYearLandingPage({ params }: Props) {
           Challenges for {year}
         </h1> */}
         <ul className="z-10 flex flex-col items-center gap-2 sm:gap-3 md:gap-4">
-          <div className="flex flex-col items-center pb-10">
-            <DailyCountdownTimer />
-          </div>
+          {year === 2024 && (
+            <div className="flex flex-col items-center pb-10">
+              <DailyCountdownTimer />
+            </div>
+          )}
           {groupedDays.map((group, index) => (
             <div key={`row-${index}`} className="flex gap-2 sm:gap-3 md:gap-4">
               {group.map((day) => (
@@ -78,10 +80,21 @@ export default async function EventByYearLandingPage({ params }: Props) {
               <>
                 {day.active ? (
                   <Link key={day.day} href={`/events/${year}/${day.day}`}>
-                    <GiftBox day={day.day} active={day.active} index={index} />
+                    <GiftBox
+                      day={day.day}
+                      active={day.active}
+                      index={index}
+                      hasSolved={day.hasSolved}
+                    />
                   </Link>
                 ) : (
-                  <GiftBox key={day.day} day={day.day} active={day.active} index={index} />
+                  <GiftBox
+                    key={day.day}
+                    day={day.day}
+                    active={day.active}
+                    index={index}
+                    hasSolved={day.hasSolved}
+                  />
                 )}
               </>
             ))}

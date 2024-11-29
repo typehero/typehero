@@ -22,6 +22,7 @@ export interface CodePanelProps {
     tests: string;
     tsconfig?: monaco.languages.typescript.CompilerOptions;
   };
+  validator?: (args: unknown[]) => boolean;
   saveSubmission: (code: string, isSuccessful: boolean) => Promise<void>;
   submissionDisabled: boolean;
   settingsElement: React.ReactNode;
@@ -71,8 +72,32 @@ export function CodePanel(props: CodePanelProps) {
   const [userEditorState, setUserEditorState] = useState<monaco.editor.IStandaloneCodeEditor>();
   const [monacoInstance, setMonacoInstance] = useState<typeof monaco>();
 
+  // validators will come from metatadata but for now this is fine
+  // ex: challenge.validator
+  function validator(code: string) {
+    if (props.challenge.slug !== '2024-10') return;
+
+    const disallowed = ['5', '6', '7', '8', '9', '+', '-'];
+
+    if (disallowed.some((char) => code.includes(char))) {
+      throw new Error(`Solution cannot include: ${disallowed.join(', ')}`);
+    }
+  }
+
   const handleSubmit = useCallback(async () => {
     const hasErrors = tsErrors?.some((e) => e.length) ?? false;
+
+    try {
+      validator(code);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      return toast({
+        variant: 'destructive',
+        title: 'Invalid characters!',
+        description: e?.message,
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
+    }
 
     try {
       await props.saveSubmission(code ?? '', !hasErrors);

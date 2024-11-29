@@ -33,7 +33,7 @@ export default function Partners() {
       <div className="absolute left-1/2 top-[calc(2.5rem+1px)] w-screen max-w-[600px] -translate-x-1/2 [mask-image:linear-gradient(to_right,transparent,red,transparent)] md:w-screen md:[mask-image:none]">
         <div className="hidden flex-nowrap items-center justify-center md:flex">
           {partners.map((partner) => {
-            return <PartnerLink key={partner.name} partner={partner} />;
+            return <PartnerLink key={`partners-${partner.name}`} partner={partner} />;
           })}
         </div>
         <div className="infinite-scroll-x flex flex-nowrap items-center md:hidden">

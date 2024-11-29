@@ -65,6 +65,7 @@ export {
   Settings,
   Settings2,
   Shapes,
+  Star,
   Palette,
   Share,
   Shield,
@@ -88,6 +89,7 @@ export {
   X,
   XCircle,
   Text,
+  Trophy,
   type LucideIcon,
 } from 'lucide-react';
 export { Github } from './icons/github';
