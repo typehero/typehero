@@ -16,17 +16,10 @@ export function YearSwitcher(props: { className: string }) {
 
   const currentYear = new Date().getFullYear();
   const isLive = hasAdventStarted(currentYear) && !hasAdventEnded(currentYear);
-  console.log({
-    isLive,
-    started: hasAdventStarted(currentYear),
-    ended: !hasAdventEnded(currentYear),
-  });
 
   function handleYearChange(newYear: string) {
-    console.log(newYear);
     if (segments[0] === 'events') {
       const rest = segments.slice(2);
-      console.log(rest);
       const newUrl = `/events/${newYear}/${rest.join('/')}`;
       router.push(newUrl);
     }
