@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { getAllFlags } from '~/utils/feature-flag';
 import { YEAR } from '../date_constants';
 import { DayScroller } from '../../_components/day-scroller';
-import { ComingSoon } from '~/app/coming-soon';
+import ComingSoon from '~/app/coming-soon';
 
 export const dynamic = 'force-static';
 
