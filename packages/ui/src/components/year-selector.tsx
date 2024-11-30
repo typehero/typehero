@@ -6,11 +6,6 @@ import { cn } from '../cn';
 
 const YEARS = ['2024', '2023'];
 
-const YEAR_COLOR_MAP: Record<string, string> = {
-  '2024': 'border-red-800 from-red-950 to-red-700',
-  '2023': 'border-emerald-800 from-emerald-700 to-emerald-900',
-};
-
 const YEAR_TO_SELECT_ITEMS_MAP: Record<string, (isLive: boolean) => JSX.Element | number> = {
   '2024': (isLive: boolean) => {
     return (
@@ -35,17 +30,12 @@ export const YearSelector = (props: {
 }) => {
   return (
     <Select.Root value={props.selectedYear} onValueChange={props.setSelectedYear}>
-      <Select.Trigger
-        className={cn(
-          'inline-flex min-w-24 items-center justify-end gap-1 rounded-full border bg-gradient-to-r px-3 py-1 md:min-w-28 md:py-1.5',
-          YEAR_COLOR_MAP[props.selectedYear],
-        )}
-      >
+      <Select.Trigger className="flex items-center justify-end gap-1 rounded-full px-1.5 text-black/50 duration-300 hover:bg-black/10 hover:text-black dark:text-white/80 dark:hover:bg-white/10 dark:hover:text-white">
         <Select.Value>
           {YEAR_TO_SELECT_ITEMS_MAP[props.selectedYear]?.(props.showLive)}
         </Select.Value>
         <Select.Icon>
-          <ChevronDownIcon className="h-5 w-6" />
+          <ChevronDownIcon className="h-4 w-4 stroke-2" />
         </Select.Icon>
       </Select.Trigger>
       <Select.Portal>
@@ -74,8 +64,7 @@ const SelectItem = React.forwardRef<
     <Select.Item
       className={cn(
         'cursor-pointer select-none outline-none',
-        'inline-flex items-center justify-end gap-1 rounded-full border bg-gradient-to-r px-3 py-1 md:py-1.5',
-        YEAR_COLOR_MAP[props.value],
+        'inline-flex items-center justify-end gap-1 rounded-full',
         className,
       )}
       {...props}

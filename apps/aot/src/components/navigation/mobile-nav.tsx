@@ -1,6 +1,5 @@
 'use client';
 import { cn } from '@repo/ui/cn';
-import { motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import React, { useEffect } from 'react';
 
@@ -49,16 +48,16 @@ export function MobileNav({ children }: Props) {
             <span className="line mt-2" />
           </button>
         </div>
-        <motion.div
+        <div
           key={open ? 'open' : 'close'}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className={`bg-background/30 left-0 top-[55px] z-50 flex h-full w-full flex-1 snap-y flex-col gap-5 justify-self-center border-b p-3 backdrop-blur-md md:mt-0 md:hidden md:pb-0 ${
-            open ? 'absolute block w-full' : 'hidden'
+          className={`bg-background/30 absolute left-0 top-[55px] z-50 flex h-full w-full flex-1 snap-y flex-col gap-5 justify-self-center border-b p-3 backdrop-blur-md duration-300 md:mt-0 md:hidden md:pb-0 ${
+            open
+              ? 'pointer-events-auto translate-y-0 opacity-100'
+              : 'pointer-events-none -translate-y-12 opacity-0'
           }`}
         >
           {children}
-        </motion.div>
+        </div>
       </>
     )
   );

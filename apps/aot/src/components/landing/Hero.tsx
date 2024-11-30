@@ -1,7 +1,9 @@
+import { LandingStartExploringButton } from './LandingStartExploringButton';
+
 export default function Hero() {
   return (
     <div className="container relative flex flex-col font-black italic">
-      <div className="animate-rotate absolute -left-12 -top-28 -z-10 origin-[45%] md:-left-24 md:-top-20">
+      <div className="animate-rotate absolute -left-12 -top-28 origin-[45%] md:-left-24 md:-top-20">
         <div
           className="animate-rotate-reverse h-16 w-52 rounded-xl border border-black/30 bg-white/50 p-2.5 font-mono text-[0.69rem] font-normal not-italic opacity-70 shadow-lg blur-[0.5px] backdrop-blur md:h-24 md:w-72 md:rounded-3xl md:p-6 md:text-sm dark:border-white/30 dark:bg-white/10"
           style={{
@@ -48,6 +50,7 @@ export default function Hero() {
       <div className="-mr-0.5 ml-auto w-56 text-right text-4xl leading-5 drop-shadow-2xl sm:w-[40rem] sm:text-8xl sm:leading-10">
         TypeScript
       </div>
+      <LandingStartExploringButton />
     </div>
   );
 }
