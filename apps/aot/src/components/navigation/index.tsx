@@ -21,7 +21,7 @@ import { Button } from '@repo/ui/components/button';
 import { Separator } from '@repo/ui/components/separator';
 import { NavLinksWithYear, YearSwitcher } from './year-switcher';
 
-const DISCORD_INVITE_LINK = 'https://discord.gg/trash-devs-796594544980000808';
+const DISCORD_INVITE_LINK = 'https://discord.gg/WjZhvVbFHM';
 const TWITTER_LINK = 'https://x.com/typeheroapp';
 const GITHUB_LINK = 'https://github.com/typehero/typehero';
 
