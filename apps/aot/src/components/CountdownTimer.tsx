@@ -21,6 +21,10 @@ const useAotCountdown = () => {
     }
 
     const countdown = () => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        return;
+      }
+
       const newRemainingTime = Math.max(0, releaseDate.getTime() - Date.now());
       setRemainingTime(newRemainingTime);
 
