@@ -63,7 +63,7 @@ const SelectItem = React.forwardRef<
   return (
     <Select.Item
       className={cn(
-        'cursor-pointer select-none outline-none',
+        'cursor-pointer select-none rounded-xl border border-black/40 bg-black/20 px-3 outline-none backdrop-blur dark:border-white/40 dark:bg-white/20',
         'inline-flex items-center justify-end gap-1 rounded-full',
         className,
       )}
