@@ -15,8 +15,8 @@ export default function Custom404() {
       <div className="absolute right-[10%] top-1/2 -z-10 hidden h-48 w-[32rem] -translate-y-1/2 rotate-45 animate-pulse rounded-full bg-red-900 blur-3xl xl:block dark:bg-transparent" />
       <div className="animate-pulse-alternate absolute bottom-1/2 left-[10%] -z-10 hidden h-48 w-[32rem] translate-y-1/2 rotate-45 rounded-full bg-rose-200 blur-3xl xl:block dark:bg-transparent" />
       <Snowfall />
-      <h1 className="text-center text-6xl font-black text-white">404</h1>
-      <p className="mt-2 text-center text-xl font-medium text-white">
+      <h1 className="text-center text-6xl font-black text-black dark:text-white">404</h1>
+      <p className="mt-2 text-center text-xl font-medium text-black dark:text-white">
         Couldn't find the requested resource
       </p>
       <div className="mt-8 flex flex-row gap-x-2">
