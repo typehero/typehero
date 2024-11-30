@@ -37,7 +37,7 @@ export const YearSelector = (props: {
     <Select.Root value={props.selectedYear} onValueChange={props.setSelectedYear}>
       <Select.Trigger
         className={cn(
-          'inline-flex min-w-24 items-center justify-end gap-1 rounded-full border bg-gradient-to-r px-3 py-1 md:min-w-28 md:py-1.5',
+          'inline-flex min-w-24 items-center justify-end gap-1 rounded-full border bg-gradient-to-r px-3 py-1 text-white md:min-w-28 md:py-1.5',
           YEAR_COLOR_MAP[props.selectedYear],
         )}
       >
@@ -53,7 +53,7 @@ export const YearSelector = (props: {
           position="popper"
           align="center"
           alignOffset={10}
-          className="data-[state=open]:animate-in date-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 z-50 gap-1 data-[side=bottom]:translate-y-1"
+          className="data-[state=open]:animate-in date-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 z-50 gap-1 text-white data-[side=bottom]:translate-y-1"
         >
           {YEARS.filter((y) => y !== props.selectedYear).map((y) => (
             <SelectItem key={y} value={y}>
