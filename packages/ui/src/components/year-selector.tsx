@@ -7,8 +7,8 @@ import { cn } from '../cn';
 const YEARS = ['2024', '2023'];
 
 const YEAR_COLOR_MAP: Record<string, string> = {
-  '2024': 'border-red-800 from-red-950 to-red-700',
-  '2023': 'border-emerald-800 from-emerald-700 to-emerald-900',
+  '2024': 'border-red-800 from-red-950 to-red-700 text-white',
+  '2023': 'border-emerald-800 from-emerald-700 to-emerald-900 text-white',
 };
 
 const YEAR_TO_SELECT_ITEMS_MAP: Record<string, (isLive: boolean) => JSX.Element | number> = {
