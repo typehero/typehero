@@ -88,7 +88,7 @@ export function Markdown({
           <blockquote
             className={clsx(
               className,
-              'mx-3 my-[10px] border-l-8 border-gray-400 bg-zinc-200 px-2 py-[10px] dark:border-gray-200 dark:bg-zinc-700 ',
+              'mx-0 my-[10px] border-l-8 border-gray-400 bg-zinc-200 px-2 py-[10px] dark:border-gray-200 dark:bg-zinc-700 ',
             )}
             {...props}
           />
