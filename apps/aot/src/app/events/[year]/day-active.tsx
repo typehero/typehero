@@ -21,14 +21,16 @@ export default function DayActive({ day, hasSolved }: { day: number; hasSolved: 
       initial={{ opacity: 0, translateY: 15 }}
       animate={{ opacity: 1, translateY: 0 }}
       transition={{ delay: day * 0.025, type: 'spring', damping: 3, stiffness: 100 }}
-      className={`group aspect-square rounded-xl bg-gradient-to-b duration-300 hover:scale-110 hover:rounded-2xl ${
-        day !== 1 && colorsArray[day % 6]
+      className={`group aspect-square rounded-xl duration-300 hover:scale-110 hover:rounded-2xl ${
+        day !== 1 && `bg-gradient-to-br ${colorsArray[day % 6]}`
       } p-[1.5px]`}
     >
       <div
-        className={`relative grid aspect-square h-12 w-12 cursor-pointer place-items-center overflow-hidden rounded-xl bg-white/70 backdrop-blur duration-300 group-hover:rounded-2xl group-hover:bg-white/50 dark:bg-black/70 dark:group-hover:bg-black/50 ${
-          day === 22 && 'h-14'
-        }`}
+        className={`relative grid aspect-square h-12 w-12 cursor-pointer place-items-center overflow-hidden rounded-xl duration-300 group-hover:rounded-2xl ${
+          day !== 1 &&
+          'bg-white/70 backdrop-blur group-hover:bg-white/50 dark:bg-black/70 dark:group-hover:bg-black/50'
+        }
+          ${day === 22 && 'h-14'}`}
       >
         {hasSolved ? (
           <Star className="absolute right-1 top-1 z-50 h-3 w-3 select-none fill-yellow-600 text-yellow-600 dark:fill-yellow-300 dark:text-yellow-300" />

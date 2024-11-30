@@ -55,7 +55,7 @@ export function DayScroller(props: { eventDay?: number; year: number }) {
   }
 
   return (
-    <div className="flex flex-row space-x-4">
+    <div className="flex flex-row space-x-4 bg-gradient-to-r from-transparent via-neutral-300/50 to-transparent dark:via-neutral-700/50">
       <Button variant="ghost" size="icon" className="flex-none" onClick={() => scroll(-1)}>
         <ChevronLeft />
       </Button>

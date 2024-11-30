@@ -10,6 +10,7 @@ import { DailyCountdownTimer } from '~/components/DailyCountdownTimer';
 import BgDecorations from './24BgDecorations';
 import Partners from '~/components/landing/Partners';
 import GiftBox from './GiftBox';
+import { Footsies } from '~/components/footsies';
 
 type Challenge = RouterOutputs['event']['getEventChallengesByYear'][0];
 interface Props {
@@ -46,65 +47,74 @@ export default async function EventByYearLandingPage({ params }: Props) {
   const lastThree = eventChallenges.slice(-3);
 
   return (
-    <div className="-mt-14 flex min-h-screen flex-col items-center justify-between overflow-hidden bg-gradient-to-t from-neutral-400/10 to-transparent py-14">
-      <div className="fixed left-0 top-0 -z-10 h-full w-full bg-[url('https://images.pexels.com/photos/724906/pexels-photo-724906.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')] bg-cover opacity-10 blur-3xl" />
-      <div className="container relative mx-auto">
-        <BgDecorations />
-        {/* <h1 className="mb-16 mt-8 text-center text-3xl font-bold lg:text-6xl">
+    <>
+      <div className="z-10 -mt-14 flex min-h-screen flex-col items-center justify-between overflow-hidden border-b border-neutral-300 bg-gradient-to-t from-neutral-200 to-neutral-50 py-14 dark:border-neutral-700 dark:from-neutral-800 dark:to-neutral-950">
+        <div
+          className={`pointer-events-none fixed left-0 top-0 h-full w-full bg-[url('https://images.pexels.com/photos/724906/pexels-photo-724906.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')] bg-cover opacity-10 blur-3xl`}
+        />
+        <div className="container relative mx-auto pt-12">
+          <BgDecorations />
+          {/* <h1 className="mb-16 mt-8 text-center text-3xl font-bold lg:text-6xl">
           Challenges for {year}
         </h1> */}
-        <ul className="z-10 flex flex-col items-center gap-2 sm:gap-3 md:gap-4">
-          {year === 2024 && (
-            <div className="flex flex-col items-center pt-10">
-              <DailyCountdownTimer />
-            </div>
-          )}
-          {groupedDays.map((group, index) => (
-            <div key={`row-${index}`} className="flex gap-2 first:pt-10 sm:gap-3 md:gap-4">
-              {group.map((day) => (
+          <ul className="z-10 flex flex-col items-center gap-2 sm:gap-3 md:gap-4">
+            {year === 2024 ? (
+              <div className="flex flex-col items-center pb-10">
+                <DailyCountdownTimer />
+              </div>
+            ) : (
+              <div className="h-12 pb-10" />
+            )}
+            {groupedDays.map((group, index) => (
+              <div key={`row-${index}`} className="flex gap-2 sm:gap-3 md:gap-4">
+                {group.map((day) => (
+                  <>
+                    {day.active ? (
+                      <Link key={`day-active-${day.day}`} href={`/events/${year}/${day.day}`}>
+                        <DayActive day={day.day} hasSolved={day.hasSolved} />
+                      </Link>
+                    ) : (
+                      <DayInactive key={`day-inactive-${day.day}`} day={day.day} />
+                    )}
+                  </>
+                ))}
+              </div>
+            ))}
+
+            <div className="-mt-[4.5rem] flex">
+              {lastThree.map((day, index) => (
                 <>
                   {day.active ? (
-                    <Link key={`day-active-${day.day}`} href={`/events/${year}/${day.day}`}>
-                      <DayActive day={day.day} hasSolved={day.hasSolved} />
+                    <Link key={day.day} href={`/events/${year}/${day.day}`}>
+                      <GiftBox
+                        day={day.day}
+                        active={day.active}
+                        index={index}
+                        hasSolved={day.hasSolved}
+                      />
                     </Link>
                   ) : (
-                    <DayInactive key={`day-inactive-${day.day}`} day={day.day} />
-                  )}
-                </>
-              ))}
-            </div>
-          ))}
-
-          <div className="-mt-[4.5rem] flex">
-            {lastThree.map((day, index) => (
-              <>
-                {day.active ? (
-                  <Link key={day.day} href={`/events/${year}/${day.day}`}>
                     <GiftBox
+                      key={day.day}
                       day={day.day}
                       active={day.active}
                       index={index}
                       hasSolved={day.hasSolved}
                     />
-                  </Link>
-                ) : (
-                  <GiftBox
-                    key={day.day}
-                    day={day.day}
-                    active={day.active}
-                    index={index}
-                    hasSolved={day.hasSolved}
-                  />
-                )}
-              </>
-            ))}
-          </div>
-        </ul>
+                  )}
+                </>
+              ))}
+            </div>
+          </ul>
+        </div>
+        <div className="mt-20">
+          <Partners />
+        </div>
       </div>
-      <div className="mt-20">
-        <Partners />
+      <div className="sticky bottom-0 -z-10 w-full">
+        <Footsies />
       </div>
-    </div>
+    </>
   );
 }
 

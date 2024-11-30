@@ -17,8 +17,8 @@ export default async function LeaderboardLayout({ children }: { children: React.
   if (!hasAdventStarted(YEAR)) return notFound();
 
   return (
-    <div className="container mx-auto pt-8">
-      <div className="container fixed inset-0 top-20">
+    <div>
+      <div className="top-14">
         <DayScroller year={YEAR} />
       </div>
       {children}

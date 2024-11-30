@@ -32,11 +32,10 @@ export async function Navigation() {
     <>
       {featureFlags.enableAotPlatform ? (
         <>
-          <YearSwitcher className="hidden md:inline-flex" />
           <NavLinksWithYear />
           <NavLink href="/about">About</NavLink>
           <Link
-            className="donate-btn relative w-fit overflow-hidden rounded-full px-4 py-2 text-black duration-300 hover:bg-[#eed15f] md:hidden dark:text-white dark:hover:bg-[#bea74b44]"
+            className="donate-btn relative w-fit overflow-hidden rounded-full px-4 py-2 text-black/50 duration-300 hover:bg-[#eed15f] md:hidden dark:text-white/80 dark:hover:bg-[#bea74b44]"
             href="/support"
           >
             Support Us
@@ -70,7 +69,7 @@ export async function Navigation() {
       <div className="flex flex-col gap-5 pl-2 md:hidden">
         {TopSectionLinks}
         {!session?.user && (
-          <div className="flex items-center gap-2">
+          <div className="ml-4 flex items-center gap-2">
             <span>Theme</span>
             <ThemeButton />
           </div>
@@ -95,20 +94,21 @@ export async function Navigation() {
     <header className="z-50 w-full">
       <NavWrapper>
         <div className="flex w-full items-center justify-between">
-          <div className="relative flex w-32 gap-3 lg:w-64">
-            <Link className="flex items-center space-x-2 duration-300" href="/">
+          <div className="relative flex w-32 items-center gap-3 md:w-64 lg:w-[22rem]">
+            <Link className="flex items-center space-x-2 pb-1 duration-300" href="/">
               <Logo />
             </Link>
+            <YearSwitcher className="hidden md:flex" />
           </div>
           <div className="hidden items-center md:flex">{NavLinks}</div>
-          <div className="flex flex-row gap-2">
+          <div className="flex gap-4">
             <YearSwitcher className="md:hidden" />
-            <div className="flex items-center justify-end gap-1">
+            <div className="flex items-center justify-end gap-1 md:w-56 lg:w-[22rem]">
               <Button
                 size="icon"
                 variant="outline"
                 asChild
-                className="hidden border-none bg-transparent hover:bg-transparent md:flex dark:hover:text-yellow-400"
+                className="hidden border-none bg-transparent hover:bg-transparent lg:flex dark:hover:text-yellow-400"
               >
                 <Link href={DISCORD_INVITE_LINK}>
                   <Discord />
@@ -118,7 +118,7 @@ export async function Navigation() {
                 size="icon"
                 variant="outline"
                 asChild
-                className="hidden border-none bg-transparent hover:bg-transparent md:flex dark:hover:text-yellow-400"
+                className="hidden border-none bg-transparent hover:bg-transparent lg:flex dark:hover:text-yellow-400"
               >
                 <Link href={GITHUB_LINK}>
                   <Github />
@@ -128,7 +128,7 @@ export async function Navigation() {
                 size="icon"
                 variant="outline"
                 asChild
-                className="hidden border-none bg-transparent hover:bg-transparent md:flex dark:hover:text-yellow-400"
+                className="hidden border-none bg-transparent hover:bg-transparent lg:flex dark:hover:text-yellow-400"
               >
                 <Link href={TWITTER_LINK}>
                   <NewTwitter />
