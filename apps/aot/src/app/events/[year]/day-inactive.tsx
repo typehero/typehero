@@ -16,6 +16,8 @@ export default function DayInactive({ day }: { day: number }) {
           day === 22 && 'h-14'
         }`}
       >
+        <div className="candy-cane absolute inset-0" />
+
         <h1 className="z-10 font-bold">{day}</h1>
       </div>
     </motion.div>
