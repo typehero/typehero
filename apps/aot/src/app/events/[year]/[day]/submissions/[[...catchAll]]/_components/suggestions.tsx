@@ -5,6 +5,7 @@ interface SuggestionsProps {
   challengeId: number;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function Suggestions({ track, challengeId }: SuggestionsProps) {
   // // Get suggested challenges
   // const { data: similarChallenges } = useQuery({

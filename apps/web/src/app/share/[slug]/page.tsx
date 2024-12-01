@@ -2,13 +2,13 @@ import { notFound, permanentRedirect } from 'next/navigation';
 import { getLongURL } from '../_actions/get-long-url';
 import { updateClick } from '../_actions/update-click-count';
 
-interface Props {
+interface PageProps {
   params: {
     slug: string;
   };
 }
 
-export default async function Page({ params }: Props) {
+export default async function Page({ params }: PageProps) {
   const { slug } = params;
   const url = await getLongURL(slug);
 

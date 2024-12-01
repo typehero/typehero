@@ -4,14 +4,14 @@ import { getPreselectedCommentMetadata } from '../../../_components/comments/get
 import { Description } from '../../../_components/description';
 import { getChallengeRouteData } from '../../getChallengeRouteData';
 
-interface Props {
+interface CommentPageProps {
   params: {
     slug: string;
     commentId: string;
   };
 }
 
-export default async function CommentPage({ params: { slug, commentId } }: Props) {
+export default async function CommentPage({ params: { slug, commentId } }: CommentPageProps) {
   const session = await auth();
   const { challenge } = await getChallengeRouteData(slug, session);
   const preselectedCommentMetadata = await getPreselectedCommentMetadata(

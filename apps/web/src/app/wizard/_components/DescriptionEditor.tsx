@@ -8,11 +8,11 @@ import { useWatch } from 'react-hook-form';
 import { useUploadThing } from '~/utils/useUploadthing';
 import { type WizardForm } from '.';
 
-interface Props {
+interface DescriptionEditorProps {
   form: WizardForm;
 }
 
-export function DescriptionEditor({ form }: Props) {
+export function DescriptionEditor({ form }: DescriptionEditorProps) {
   const description = useWatch({ control: form.control, name: 'description' });
   return (
     <div className="flex h-full flex-1 flex-col">

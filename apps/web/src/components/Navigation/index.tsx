@@ -158,7 +158,7 @@ export async function Navigation() {
   );
 }
 
-async function LoginButton({
+function LoginButton({
   isAdminOrMod,
   isAdmin,
   session,

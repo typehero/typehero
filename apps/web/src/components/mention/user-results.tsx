@@ -9,14 +9,14 @@ import { useEffect, useRef, useState } from 'react';
 import { Loader } from '../loader';
 import { searchUsers } from './actions';
 
-interface Props {
+interface UserResultsProps {
   isOpen: boolean;
   query: string;
   onFocusOutside: () => void;
   onSelectedUser: (user: string) => void;
 }
 
-export function UserResults({ isOpen, onFocusOutside, onSelectedUser, query }: Props) {
+export function UserResults({ isOpen, onFocusOutside, onSelectedUser, query }: UserResultsProps) {
   const { toast } = useToast();
   const popoverRef = useRef<HTMLDivElement | null>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);

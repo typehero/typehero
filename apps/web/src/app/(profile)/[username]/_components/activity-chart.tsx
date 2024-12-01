@@ -45,7 +45,7 @@ export function ActivityChart(props: {
       <ScatterChart data={props.data} accessibilityLayer>
         <ChartTooltip
           cursor={false}
-          content={({ payload, content, ...props }) => {
+          content={({ payload, content: _, ...props }) => {
             const innerPayload = (payload?.[0]?.payload as Record<string, number>) ?? {};
             const customPayload = Object.entries(innerPayload ?? {})
               .filter(([key]) => key === 'comments' || key === 'badges' || key === 'submissions')

@@ -39,13 +39,13 @@ const formSchema = z.object({
 
 export type FormSchema = z.infer<typeof formSchema>;
 
-interface Props {
+interface SolutionEditorProps {
   challengeId: number;
   code?: string;
   dismiss: () => void;
 }
 
-export function SolutionEditor({ dismiss, challengeId, code }: Props) {
+export function SolutionEditor({ dismiss, challengeId, code }: SolutionEditorProps) {
   const { slug } = useParams();
   const queryClient = useQueryClient();
   const session = useSession();

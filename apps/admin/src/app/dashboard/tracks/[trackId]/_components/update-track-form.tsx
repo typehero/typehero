@@ -38,7 +38,7 @@ const formSchema = z.object({
 });
 
 export type FormSchema = z.infer<typeof formSchema>;
-export interface Props {
+export interface UpdateTrackFormProps {
   track: TrackToManage;
   challenges: ChallengesForTrack;
 }
@@ -50,7 +50,7 @@ function transformChallengesForDropdown(challenges: ChallengesForTrack) {
   }));
 }
 
-export function UpdateTrackForm({ challenges, track }: Props) {
+export function UpdateTrackForm({ challenges, track }: UpdateTrackFormProps) {
   const { toast } = useToast();
 
   const form = useForm<FormSchema>({
@@ -170,7 +170,7 @@ export function UpdateTrackForm({ challenges, track }: Props) {
             <Select
               isMulti
               styles={{
-                option: (base, { data, isDisabled, isFocused, isSelected }) => {
+                option: (base, { isFocused, isSelected }) => {
                   return {
                     ...base,
                     ':active': {

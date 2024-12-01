@@ -8,17 +8,8 @@ import { isChallengeUnlocked } from '~/utils/time-utils';
 import { notFound } from 'next/navigation';
 import { getAllFlags } from '~/utils/feature-flag';
 
-interface Props {
-  params: {
-    year: string;
-    day: string;
-  };
-}
-export async function generateMetadata({ params: { year } }: Props) {
-  return buildMetaForEventPage({
-    title: `Advent of Typescript ${year}`,
-    description: `Advent of Typescript ${year}`,
-  });
+export function generateMetadata() {
+  return buildMetaForEventPage();
 }
 
 export default async function LayoutData({

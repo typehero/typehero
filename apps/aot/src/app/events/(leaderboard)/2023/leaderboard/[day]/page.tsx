@@ -2,7 +2,7 @@ import { getFirst100SubmissionsRanked } from '../../../_components/daily-leaderb
 import { LeaderboardPage } from '../../../_components/leaderboard-page';
 import { DAY, YEAR } from '../../date_constants';
 
-export async function generateStaticParams() {
+export function generateStaticParams() {
   return Array.from({ length: DAY }).map((_, index) => ({ day: (index + 1).toString() }));
 }
 

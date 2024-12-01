@@ -7,7 +7,7 @@ import { createChallengeSubmissionCacheKey } from './cache-keys';
 import { withUnstableCache } from '~/utils/withUnstableCache';
 import { getAotSlug } from '~/utils/getAotSlug';
 
-interface Props {
+interface SubmissionPageProps {
   params: {
     year: string;
     day: string;
@@ -19,7 +19,7 @@ export const metadata = {
   description: 'View your submissions to this challenge on TypeHero.',
 };
 
-export default async function SubmissionPage({ params: { year, day } }: Props) {
+export default async function SubmissionPage({ params: { year, day } }: SubmissionPageProps) {
   const session = await auth();
 
   const slug = getAotSlug({ year, day });

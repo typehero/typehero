@@ -1,7 +1,7 @@
 import type { ReactNode, RefObject } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
-interface Props {
+interface InfiniteListProps {
   children: ReactNode;
   isLoadingNext: boolean;
   next: () => void;
@@ -47,7 +47,13 @@ export function useObserver(ref: RefObject<HTMLDivElement>, options?: Intersecti
   return entry;
 }
 
-export default function InfiniteList({ children, hasNext, isLoadingNext, next, loader }: Props) {
+export default function InfiniteList({
+  children,
+  hasNext,
+  isLoadingNext,
+  next,
+  loader,
+}: InfiniteListProps) {
   const loaderRef = useRef<HTMLDivElement>(null);
   const entry = useObserver(loaderRef);
 

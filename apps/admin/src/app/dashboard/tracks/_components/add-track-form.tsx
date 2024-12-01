@@ -25,10 +25,10 @@ const formSchema = z.object({
 
 export type FormSchema = z.infer<typeof formSchema>;
 
-interface Props {
+interface AddTrackFormProps {
   toggle: (value: boolean) => void;
 }
-export function AddTrackForm({ toggle }: Props) {
+export function AddTrackForm({ toggle }: AddTrackFormProps) {
   const { toast } = useToast();
   const router = useRouter();
 

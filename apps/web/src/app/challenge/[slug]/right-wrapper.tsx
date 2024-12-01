@@ -13,13 +13,13 @@ import { saveSubmission } from './submissions/[[...catchAll]]/save-submission.ac
 import SwapPanelButton from '../_components/swap-panel-button';
 import { useQueryClient } from '@tanstack/react-query';
 
-interface Props {
+interface RightWrapperProps {
   challenge: ChallengeRouteData['challenge'];
   track: ChallengeRouteData['track'];
   toggleDirection: () => void;
 }
 
-export function RightWrapper({ track, challenge, toggleDirection }: Props) {
+export function RightWrapper({ track, challenge, toggleDirection }: RightWrapperProps) {
   const queryClient = useQueryClient();
   const router = useRouter();
   const segments = useSelectedLayoutSegments();
@@ -32,11 +32,7 @@ export function RightWrapper({ track, challenge, toggleDirection }: Props) {
   }
 
   // Redirect to solution on successful submission and show suggestions
-  async function handleSuccessfulSubmission(
-    isSuccessful: boolean,
-    submissionId: number,
-    slug?: string,
-  ) {
+  function handleSuccessfulSubmission(isSuccessful: boolean, submissionId: number, slug?: string) {
     const query = slug ? `&slug=${slug}` : '';
     isSuccessful &&
       router.push(`/challenge/${challenge.slug}/submissions/${submissionId}?success=true${query}`);

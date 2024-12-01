@@ -12,7 +12,7 @@ const codePreview: ICommand = {
   icon: <PreviewToggle />,
 };
 
-interface Props {
+interface RichMarkdownEditorProps {
   value: string;
   onChange: (v: ChangeEvent | string) => void;
   dismissPreview?: boolean;
@@ -33,7 +33,7 @@ export function RichMarkdownEditor({
   onChange,
   allowImageUpload = false,
   useUploadThing,
-}: Props) {
+}: RichMarkdownEditorProps) {
   const editorRef = useRef<typeof MDEditor>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isImageUploading, setIsImageUploading] = useState(false);
@@ -73,7 +73,7 @@ export function RichMarkdownEditor({
         />
       </svg>
     ),
-    execute: async () => {
+    execute: () => {
       const ref = fileInputRef.current!;
 
       if (!ref) return;

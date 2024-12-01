@@ -5,7 +5,7 @@ import { SolutionDetails } from '../../../_components/solution-detail';
 import { Comments } from '../../../../_components/comments';
 import { getAotSlug } from '~/utils/getAotSlug';
 
-interface Props {
+interface SolutionPageCommentsProps {
   params: {
     year: string;
     day: string;
@@ -16,7 +16,7 @@ interface Props {
 
 export default async function SolutionPageComments({
   params: { solutionId, commentId, year, day },
-}: Props) {
+}: SolutionPageCommentsProps) {
   const session = await auth();
   const solution = await getSolutionIdRouteData(getAotSlug({ year, day }), solutionId, session);
   const preselectedCommentMetadata = await getPreselectedSolutionCommentMetadata(

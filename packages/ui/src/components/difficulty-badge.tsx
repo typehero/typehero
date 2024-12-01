@@ -2,7 +2,7 @@ import { type Difficulty } from '@repo/db/types';
 import { Badge } from './badge';
 import { cn } from '../cn';
 
-interface Props {
+interface DifficultyBadgeProps {
   difficulty: Difficulty;
   className?: string;
 }
@@ -17,7 +17,7 @@ const COLORS_BY_DIFFICULTY = {
   EVENT: 'dark:bg-difficulty-extreme-dark bg-difficulty-extreme',
 };
 
-export function DifficultyBadge({ className, difficulty }: Props) {
+export function DifficultyBadge({ className, difficulty }: DifficultyBadgeProps) {
   return (
     <Badge
       className={cn(

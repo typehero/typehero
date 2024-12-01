@@ -17,7 +17,7 @@ export function ShareUrl({ code, description }: { code?: string; description?: s
   const [localStorageCode] = useLocalStorage(`challenge-${year}-${day}`, '');
   const url = `${window.location.origin}/events/${year}/${day}`;
 
-  const genShortUrl = useCallback(async () => {
+  const genShortUrl = useCallback(() => {
     let long = url;
     const codeToCopy = code ?? localStorageCode;
     if (copyWithCode && codeToCopy) {
@@ -29,7 +29,7 @@ export function ShareUrl({ code, description }: { code?: string; description?: s
 
   const copyToClipboard = useCallback(async () => {
     setState('loading');
-    const short = await genShortUrl();
+    const short = genShortUrl();
     try {
       if (navigator.clipboard) {
         await navigator.clipboard.writeText(short);

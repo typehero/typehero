@@ -5,14 +5,14 @@ import { isAfterJanuaryFirst } from '~/utils/time-utils';
 import { Comments } from './_components/comments';
 import { Description } from './_components/description';
 
-interface Props {
+interface ChallengesProps {
   params: {
     year: string;
     day: string;
   };
 }
 
-export default async function Challenges({ params: { year, day } }: Props) {
+export default async function Challenges({ params: { year, day } }: ChallengesProps) {
   const challenge = await api.event.getEventChallengeBySlug({ slug: getAotSlug({ year, day }) });
 
   return (

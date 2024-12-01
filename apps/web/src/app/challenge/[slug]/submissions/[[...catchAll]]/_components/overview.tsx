@@ -17,7 +17,7 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { ShareUrl } from '~/components/share-url';
 
-interface Props {
+interface SubmissionOverviewProps {
   submissionId: string;
 }
 const codifyForMarkdown = (code: string) => {
@@ -25,7 +25,7 @@ const codifyForMarkdown = (code: string) => {
 ${code}`;
 };
 
-export function SubmissionOverview({ submissionId }: Props) {
+export function SubmissionOverview({ submissionId }: SubmissionOverviewProps) {
   const { slug } = useParams();
   const searchParams = useSearchParams();
 

@@ -16,11 +16,11 @@ import {
 } from '@repo/ui/components/select';
 import { Input } from '@repo/ui/components/input';
 
-interface Props {
+interface ChallengeCardEditorProps {
   form: WizardForm;
 }
 
-export function ChallengeCardEditor({ form }: Props) {
+export function ChallengeCardEditor({ form }: ChallengeCardEditorProps) {
   const difficulty = useWatch({ control: form.control, name: 'difficulty' });
   const title = useWatch({ control: form.control, name: 'name' });
   const shortDescription = useWatch({ control: form.control, name: 'shortDescription' });

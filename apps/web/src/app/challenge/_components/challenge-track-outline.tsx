@@ -19,14 +19,19 @@ import {
 import type { Challenge } from '@repo/db/types';
 import { ChevronRight } from '@repo/ui/icons';
 
-interface Props {
+interface ChallengeTrackOutlineProps {
   children: ReactNode;
   challenge: Challenge;
   track: NonNullable<Awaited<ReturnType<typeof getTrackDetails>>>;
   asChild?: boolean;
 }
 
-export function ChallengeTrackOutline({ children, challenge, track, asChild = false }: Props) {
+export function ChallengeTrackOutline({
+  children,
+  challenge,
+  track,
+  asChild = false,
+}: ChallengeTrackOutlineProps) {
   const router = useRouter();
 
   const trackChallenges = track?.trackChallenges ?? [];

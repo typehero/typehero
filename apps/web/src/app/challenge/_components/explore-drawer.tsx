@@ -2,12 +2,12 @@ import { Sheet, SheetContent, SheetTrigger } from '@repo/ui/components/sheet';
 import { ExplorerPanel } from './sheet-content-custom';
 import type { ReactNode } from 'react';
 
-interface Props {
+interface ExploreDrawerProps {
   children: ReactNode;
   asChild?: boolean;
 }
 
-export function ExploreDrawer({ children, asChild = false }: Props) {
+export function ExploreDrawer({ children, asChild = false }: ExploreDrawerProps) {
   return (
     <Sheet>
       <SheetTrigger asChild={asChild}>{children}</SheetTrigger>

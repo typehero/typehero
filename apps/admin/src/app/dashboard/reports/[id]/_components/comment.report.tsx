@@ -5,7 +5,6 @@ import type { ReportWithInfo } from '../_actions';
 
 export function CommentReport({ report }: { report: NonNullable<ReportWithInfo> }) {
   if (report.type !== 'COMMENT' || report.commentId === null || !report.comment) return null;
-  const rootId = report.comment.rootChallengeId ?? report.comment.rootSolutionId ?? -1;
 
   return (
     <div>

@@ -63,13 +63,13 @@ interface MetaParamsForUser {
   dateSince: string;
 }
 /** Helper to build opengraph metadata for a user, you should call this in generateMetadata() next function */
-export const buildMetaForUser = async ({
+export const buildMetaForUser = ({
   title,
   description,
   username,
   dateSince,
   avatar,
-}: MetaParamsForUser): Promise<Metadata> => {
+}: MetaParamsForUser): Metadata => {
   const params = `${userParam.toSearchString({
     username,
     avatar,
@@ -86,13 +86,13 @@ export const buildMetaForUser = async ({
 };
 
 /** Helper to build opengraph metadata for a challenge, you should call this in generateMetadata() next function */
-export const buildMetaForChallenge = async ({
+export const buildMetaForChallenge = ({
   title,
   description,
   username,
   difficulty,
   date,
-}: MetaParamsForChallenge): Promise<Metadata> => {
+}: MetaParamsForChallenge): Metadata => {
   const params = `${challengeParam.toSearchString({
     description,
     title,
@@ -111,13 +111,13 @@ export const buildMetaForChallenge = async ({
 };
 
 /** Helper to build opengraph metadata with defaults, you should call this in generateMetadata() next function */
-export const buildMetaForDefault = async ({
+export const buildMetaForDefault = ({
   title,
   description,
 }: {
   title?: string;
   description?: string;
-}): Promise<Metadata> => {
+}): Metadata => {
   return buildMeta({
     ogImageUrl: `${OG_URL}/api/default?cache-bust=${new Date().getDate()}`,
     title,
@@ -125,13 +125,13 @@ export const buildMetaForDefault = async ({
   });
 };
 
-export const buildMetaForEventPage = async ({
+export const buildMetaForEventPage = ({
   title,
   description,
 }: {
   title?: string;
   description?: string;
-}): Promise<Metadata> => {
+}): Metadata => {
   return buildMeta({
     ogImageUrl: `${OG_URL}/api/aot-2023`,
     title,
@@ -140,7 +140,7 @@ export const buildMetaForEventPage = async ({
 };
 
 /** update the metadata for og */
-const buildMeta = async ({
+const buildMeta = ({
   ogImageUrl,
   description,
   title,
@@ -148,7 +148,7 @@ const buildMeta = async ({
   ogImageUrl: string;
   description?: string;
   title?: string;
-}): Promise<Metadata> => {
+}): Metadata => {
   baseMetadata.openGraph!.images = ogImageUrl;
   baseMetadata.twitter!.images = ogImageUrl;
 

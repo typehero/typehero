@@ -26,11 +26,11 @@ import { SolutionDeleteDialog } from './delete';
 import { EditSolution } from './edit-solution';
 import { useGetQueryString } from './useGetQueryString';
 
-interface Props {
+interface SolutionDetailsProps {
   solution: ChallengeSolution;
 }
 
-export function SolutionDetails({ solution }: Props) {
+export function SolutionDetails({ solution }: SolutionDetailsProps) {
   const { year, day } = useParams<Record<string, string>>();
   const slug = getAotSlug({ year: year!, day: day! });
   const { data: session } = useSession();

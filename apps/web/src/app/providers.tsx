@@ -9,11 +9,11 @@ import React, { Suspense } from 'react';
 import { Toolbar } from '~/components/toolbar';
 import { FeatureFlagProvider } from './feature-flag-provider';
 
-interface Props {
+interface ProvidersProps {
   children: React.ReactNode;
 }
 
-export function Providers({ children }: Props) {
+export function Providers({ children }: ProvidersProps) {
   const [queryClient] = React.useState(
     () =>
       new QueryClient({

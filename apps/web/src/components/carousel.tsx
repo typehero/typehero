@@ -5,11 +5,11 @@ import clsx from 'clsx';
 import { useEffect, useRef, useState, type ReactNode, useCallback, useId } from 'react';
 import { useResizeObserver } from '~/utils/useResizeObserver';
 
-interface Props {
+interface CarouselProps {
   children: ReactNode;
 }
 
-export function Carousel({ children }: Props) {
+export function Carousel({ children }: CarouselProps) {
   const id = useId();
   const buttonRightSelector = `slideRight-${id}`;
   const buttonLeftSelector = `slideLeft-${id}`;

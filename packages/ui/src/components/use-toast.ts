@@ -48,7 +48,7 @@ type Action =
       toast: Partial<ToasterToast>;
     };
 
-interface State {
+interface ToastState {
   toasts: ToasterToast[];
 }
 
@@ -70,7 +70,7 @@ const addToRemoveQueue = (toastId: string) => {
   toastTimeouts.set(toastId, timeout);
 };
 
-export const reducer = (state: State, action: Action): State => {
+export const reducer = (state: ToastState, action: Action): ToastState => {
   switch (action.type) {
     case 'ADD_TOAST':
       return {
@@ -123,9 +123,9 @@ export const reducer = (state: State, action: Action): State => {
   }
 };
 
-const listeners: ((state: State) => void)[] = [];
+const listeners: ((state: ToastState) => void)[] = [];
 
-let memoryState: State = { toasts: [] };
+let memoryState: ToastState = { toasts: [] };
 
 function dispatch(action: Action) {
   memoryState = reducer(memoryState, action);
@@ -166,7 +166,7 @@ function toast({ ...props }: Toast) {
 }
 
 function useToast() {
-  const [state, setState] = useState<State>(memoryState);
+  const [state, setState] = useState<ToastState>(memoryState);
 
   useEffect(() => {
     listeners.push(setState);

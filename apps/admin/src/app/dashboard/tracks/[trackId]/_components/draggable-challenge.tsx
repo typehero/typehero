@@ -9,13 +9,13 @@ interface DragItem {
   type: string;
 }
 
-export interface Props {
+export interface DraggableChallengeProps {
   id: number;
   text: string;
   index: number;
   moveChallenge: (dragIndex: number, hoverIndex: number) => void;
 }
-export function DraggableChallenge({ id, text, index, moveChallenge }: Props) {
+export function DraggableChallenge({ id, text, index, moveChallenge }: DraggableChallengeProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [{ handlerId }, drop] = useDrop<DragItem, unknown, { handlerId: Identifier | null }>({
     accept: 'trackChallenge',
@@ -83,7 +83,6 @@ export function DraggableChallenge({ id, text, index, moveChallenge }: Props) {
     }),
   });
 
-  const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
   return (
     <div
