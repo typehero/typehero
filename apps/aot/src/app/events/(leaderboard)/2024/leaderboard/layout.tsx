@@ -1,9 +1,8 @@
-import { getCurrentAdventDay, hasAdventStarted } from '~/utils/time-utils';
-import { notFound } from 'next/navigation';
+import ComingSoon from '~/app/coming-soon';
 import { getAllFlags } from '~/utils/feature-flag';
-import { YEAR } from '../date_constants';
+import { getCurrentAdventDay, hasAdventStarted } from '~/utils/time-utils';
 import { DayScroller } from '../../_components/day-scroller';
-import { ComingSoon } from '~/app/coming-soon';
+import { YEAR } from '../date_constants';
 
 export default async function LeaderboardLayout({ children }: { children: React.ReactNode }) {
   const { enableAotPlatform } = await getAllFlags();
@@ -12,7 +11,7 @@ export default async function LeaderboardLayout({ children }: { children: React.
     return <ComingSoon />;
   }
 
-  if (!hasAdventStarted(YEAR)) return notFound();
+  if (!hasAdventStarted(YEAR)) return <ComingSoon />;
   const eventDay = getCurrentAdventDay(YEAR);
 
   return (

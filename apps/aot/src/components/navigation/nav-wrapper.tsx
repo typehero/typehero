@@ -12,7 +12,7 @@ export function NavWrapper({ children }: { children: React.ReactNode }) {
   return (
     <nav
       className={`flex h-14 items-center ${
-        pathname?.startsWith('placeholder') ? 'container' : 'px-4'
+        pathname?.includes('2023/') || pathname?.includes('2024/') ? 'px-4' : 'container'
       }`}
     >
       {children}

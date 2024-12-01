@@ -7,13 +7,20 @@ export function hasAdventStarted(year: number) {
   return now >= aotStartTime.getTime();
 }
 
+export function hasAdventEnded(year: number) {
+  if (!isValidAdventYear(year)) return false;
+  const now = new Date().getTime();
+  const aotEndTime = new Date(Date.UTC(year, 11, 26, 5, 0, 0)).getTime();
+
+  return now > aotEndTime;
+}
+
 export function getCurrentAdventDay(year: number) {
   const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
   const now = new Date().getTime();
   const startDate = new Date(Date.UTC(year, 11, 1, 5, 0, 0)).getTime();
   const endDate = new Date(Date.UTC(year, 11, 26, 5, 0, 0)).getTime();
-
   if (now < startDate) {
     return 0; // not advent yet!
   }

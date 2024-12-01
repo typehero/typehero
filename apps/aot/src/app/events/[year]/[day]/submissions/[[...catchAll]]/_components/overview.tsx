@@ -1,18 +1,9 @@
 import { Button } from '@repo/ui/components/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@repo/ui/components/dialog';
 import { Markdown } from '@repo/ui/components/markdown';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
-import { CheckCircle2, Share, Twitter, X, XCircle, Trophy } from '@repo/ui/icons';
+import { Bluesky, CheckCircle2, Trophy, Twitter, X, XCircle } from '@repo/ui/icons';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
-import { useParams, useSearchParams } from 'next/navigation';
-import { ShareUrl } from '~/components/share-url';
+import { useParams } from 'next/navigation';
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import { getChallengeSubmissionById } from '../getChallengeSubmissions';
 
@@ -26,9 +17,6 @@ ${code}`;
 
 export function SubmissionOverview({ submissionId }: Props) {
   const { year, day } = useParams();
-  const searchParams = useSearchParams();
-
-  const showSuggestions = searchParams.get('success') === 'true';
   const { data: submission } = useQuery({
     queryKey: [`submission`, submissionId],
     queryFn: () => getChallengeSubmissionById(submissionId),
@@ -36,11 +24,13 @@ export function SubmissionOverview({ submissionId }: Props) {
 
   const code = codifyForMarkdown(submission?.code.trimStart() ?? '');
 
-  const track = searchParams.get('slug');
-
   const tweet = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
     `I've completed ${submission?.challenge.name} - Advent of TypeScript ${year}`,
   )}&url=https://adventofts.com/events/${year}/${day}&hashtags=AdventOfTypescript`;
+
+  const skeet = `https://bsky.app/intent/compose?text=${encodeURIComponent(
+    `I've completed ${submission?.challenge.name} - Advent of TypeScript ${year} https://adventofts.com/events/${year}/${day}`,
+  )}`;
 
   if (!submission) return null;
 
@@ -77,35 +67,6 @@ export function SubmissionOverview({ submissionId }: Props) {
           <Markdown>{code}</Markdown>
         </div>
         <div className="mb-3 flex gap-2 px-3">
-          <Dialog>
-            <DialogTrigger>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
-                    variant="outline"
-                  >
-                    <Share className="h-4 w-4" />
-                    Share Code on Playground
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Share Challenge with Code</p>
-                </TooltipContent>
-              </Tooltip>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Share</DialogTitle>
-              </DialogHeader>
-              <div className="pt-4">
-                <ShareUrl
-                  code={submission.code}
-                  description="Click Copy to Share code on Playground."
-                />
-              </div>
-            </DialogContent>
-          </Dialog>
           <Button
             asChild
             className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
@@ -114,6 +75,16 @@ export function SubmissionOverview({ submissionId }: Props) {
             <a target="_blank" rel="noreferrer" className="gap-1 md:inline-flex" href={tweet}>
               <Twitter className="h-4 w-4" />
               Share on Twitter
+            </a>
+          </Button>
+          <Button
+            asChild
+            className="flex items-center gap-2 rounded-xl border-2 px-4 py-2 dark:text-white"
+            variant="outline"
+          >
+            <a target="_blank" rel="noreferrer" className="gap-1 md:inline-flex" href={skeet}>
+              <Bluesky className="h-4 w-4" />
+              Share on Bluesky
             </a>
           </Button>
           <Button

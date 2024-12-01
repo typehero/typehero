@@ -18,13 +18,18 @@ export function ThemeButton() {
   if (!mounted) return null;
 
   return (
-    <div className={cn('flex items-center rounded-full border p-0.5')}>
+    <div className="flex items-center rounded-full border bg-white p-0.5 dark:bg-black">
       {themes.map((t) => {
         const isActive = theme === t;
         return (
           <motion.button
             key={t}
-            className={cn('rounded-full p-1.5', isActive && 'bg-secondary')}
+            className={cn(
+              'rounded-full p-1.5',
+              isActive
+                ? 'bg-neutral-200 dark:bg-neutral-700'
+                : 'hover:bg-neutral-100 dark:hover:bg-neutral-800',
+            )}
             onClick={() => setTheme(t)}
             aria-label="theme button"
             whileHover={{ scale: 1.1 }}

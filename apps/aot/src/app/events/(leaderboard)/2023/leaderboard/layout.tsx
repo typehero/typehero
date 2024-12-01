@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { getAllFlags } from '~/utils/feature-flag';
 import { YEAR } from '../date_constants';
 import { DayScroller } from '../../_components/day-scroller';
-import { ComingSoon } from '~/app/coming-soon';
+import ComingSoon from '~/app/coming-soon';
 
 export const dynamic = 'force-static';
 
@@ -17,8 +17,8 @@ export default async function LeaderboardLayout({ children }: { children: React.
   if (!hasAdventStarted(YEAR)) return notFound();
 
   return (
-    <div className="container mx-auto pt-8">
-      <div className="container fixed inset-0 top-20">
+    <div>
+      <div className="top-14">
         <DayScroller year={YEAR} />
       </div>
       {children}

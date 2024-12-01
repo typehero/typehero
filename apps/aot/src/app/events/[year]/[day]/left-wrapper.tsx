@@ -108,7 +108,7 @@ export function LeftWrapper({ children, expandPanel, isDesktop }: Props) {
         >
           <TabsTrigger
             className={cn(
-              'rounded-md duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700',
+              'rounded-md rounded-tl-xl duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700',
               {
                 'p-4': isIconOnly,
                 'rounded-bl-xl': isCollapsed && !isDesktop,
@@ -145,7 +145,7 @@ export function LeftWrapper({ children, expandPanel, isDesktop }: Props) {
           ) : null}
           <TabsTrigger
             className={cn(
-              'rounded-md rounded-tr-lg duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700',
+              'rounded-md rounded-tr-xl duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700',
               {
                 'p-4': isIconOnly,
                 'rounded-br-xl': isCollapsed && !isDesktop,

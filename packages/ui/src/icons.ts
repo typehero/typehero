@@ -94,3 +94,8 @@ export {
 } from 'lucide-react';
 export { Github } from './icons/github';
 export { Twitter } from './icons/twitter';
+export {
+  SiDiscord as Discord,
+  SiX as NewTwitter,
+  SiBluesky as Bluesky,
+} from '@icons-pack/react-simple-icons';
