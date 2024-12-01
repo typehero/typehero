@@ -165,18 +165,10 @@ export function ChallengeLayout({
     const mouseDownHandler = (e: MouseEvent | TouchEvent) => {
       if (e instanceof MouseEvent) {
         // Get the current mouse position
-        if (isDesktop) {
-          x = e.clientX;
-        } else {
-          y = e.clientY;
-        }
+        isDesktop ? (x = e.clientX) : (y = e.clientY);
       } else if (e instanceof TouchEvent) {
         // Get the current finger position
-        if (isDesktop) {
-          x = e.touches[0]?.clientX ?? 0;
-        } else {
-          y = e.touches[0]?.clientY ?? 0;
-        }
+        isDesktop ? (x = e.touches[0]?.clientX ?? 0) : (y = e.touches[0]?.clientY ?? 0);
       }
 
       if (isDesktop) {
