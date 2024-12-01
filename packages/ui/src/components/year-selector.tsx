@@ -30,7 +30,10 @@ export const YearSelector = (props: {
 }) => {
   return (
     <Select.Root value={props.selectedYear} onValueChange={props.setSelectedYear}>
-      <Select.Trigger className="flex items-center justify-end gap-1 rounded-full px-1.5 text-black/50 duration-300 hover:bg-black/10 hover:text-black dark:text-white/80 dark:hover:bg-white/10 dark:hover:text-white">
+      <Select.Trigger
+        className="flex items-center justify-end gap-1 rounded-full px-1.5 text-black/60 duration-300 hover:bg-black/10 hover:text-black dark:text-white/80 dark:hover:bg-white/10 dark:hover:text-white"
+        title="Select year"
+      >
         <Select.Value>
           {YEAR_TO_SELECT_ITEMS_MAP[props.selectedYear]?.(props.showLive)}
         </Select.Value>
