@@ -560,3 +560,7 @@ body.mobile-nav-active {
 .candy-cane {
   background: repeating-linear-gradient(45deg, #fff2, #fff2 10px, #fff0 10px, #fff0 20px);
 }
+
+.candy-cane-neutral {
+  background: repeating-linear-gradient(45deg, #8884, #8884 10px, #fff0 10px, #fff0 20px);
+}
