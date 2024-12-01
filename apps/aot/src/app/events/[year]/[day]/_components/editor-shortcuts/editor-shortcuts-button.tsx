@@ -15,7 +15,11 @@ export function EditorShortcutsButton() {
       <DialogTrigger>
         <Tooltip>
           <TooltipTrigger asChild>
-            <SquareSlash className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" size={20} />
+            <SquareSlash
+              aria-label="Shortcuts"
+              className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400"
+              size={20}
+            />
           </TooltipTrigger>
           <TooltipContent className="px-2 py-1">Shortcuts</TooltipContent>
         </Tooltip>

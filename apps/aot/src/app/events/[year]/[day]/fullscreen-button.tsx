@@ -49,9 +49,17 @@ export function FullscreenButton() {
           onClick={handleToggleFullscreen}
         >
           {fssettings.isFullscreen ? (
-            <Minimize2 className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" size={20} />
+            <Minimize2
+              aria-label="Minimize"
+              className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400"
+              size={20}
+            />
           ) : (
-            <Maximize2 className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" size={20} />
+            <Maximize2
+              aria-label="Maximize"
+              className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400"
+              size={20}
+            />
           )}
         </button>
       </TooltipTrigger>
