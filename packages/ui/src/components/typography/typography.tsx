@@ -70,7 +70,27 @@ export function Text<T extends TagOptions>({
   className,
   ...props
 }: React.PropsWithChildren<Combined<CorrectProps<T>, TextProps<T>>>) {
-  const Tag = tag ?? ('div' as ElementType);
+  let tagStr: TagOptions = tag ?? 'div';
+  if (tagStr === undefined) {
+    switch (intent) {
+      case 'body':
+      case 'leading':
+        tagStr = 'p';
+        break;
+      case 'h1':
+      case 'h2':
+      case 'h3':
+        tagStr = intent;
+        break;
+      case 'title':
+        tagStr = 'h1';
+        break;
+      default:
+        tagStr = 'div';
+    }
+  }
+
+  const Tag = tagStr as ElementType;
 
   return (
     <Tag className={cn(styles({ intent, weight, color }), className)} {...props}>
