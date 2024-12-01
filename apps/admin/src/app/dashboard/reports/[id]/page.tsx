@@ -39,7 +39,7 @@ const getComponentByType = (type: ReportWithInfo['type']) => {
     USER: UserReport,
   }[type];
 };
-export default async function ({ params: { id } }: Props) {
+export default async function ReportPage({ params: { id } }: Props) {
   const session = await auth();
   assertAdmin(session);
 

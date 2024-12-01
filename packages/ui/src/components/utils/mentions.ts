@@ -1,11 +1,48 @@
-// @ts-nocheck
-import { findAndReplace } from 'mdast-util-find-and-replace';
+import {
+  findAndReplace,
+  type RegExpMatchObject,
+  type ReplaceFunction,
+} from 'mdast-util-find-and-replace';
+import type { Nodes } from 'mdast-util-find-and-replace/lib';
+
+export interface BuildUrlValueBase {
+  user: string;
+}
+
+export interface CommitBuildUrlValues extends BuildUrlValueBase {
+  type: 'commit';
+  project: string;
+  hash: string;
+}
+
+export interface CompareBuildUrlValues extends BuildUrlValueBase {
+  type: 'compare';
+  project: string;
+  base: string;
+  compare: string;
+}
+
+export interface IssueBuildUrlValues extends BuildUrlValueBase {
+  type: 'issue';
+  project: string;
+  no: string;
+}
+
+export interface MentionBuildUrlValues extends BuildUrlValueBase {
+  type: 'mention';
+}
+
+export type BuildUrlValues =
+  | CommitBuildUrlValues
+  | CompareBuildUrlValues
+  | IssueBuildUrlValues
+  | MentionBuildUrlValues;
 
 /**
  * yoinked from https://github.com/remarkjs/remark-github/blob/main/lib/index.js#L177
  * courtesy of @hacksore
  */
-export function buildUrl(values) {
+export function buildUrl(values: BuildUrlValues) {
   const base = '';
 
   if (values.type === 'mention') {
@@ -30,16 +67,8 @@ const userGroup = '[\\da-z][-\\da-z]{0,38}';
 const mentionRegex = new RegExp(`(@${userGroup}(?:\\/${userGroup})?)`, 'gi');
 
 export function userMentions() {
-  return function (tree) {
-    findAndReplace(tree, [[mentionRegex, replaceMention]], { ignore: ['link', 'linkReference'] });
-
-    /**
-     * @type {ReplaceFunction}
-     * @param {string} value
-     * @param {string} username
-     * @param {RegExpMatchObject} match
-     */
-    function replaceMention(value, username, match) {
+  return function (tree: Nodes) {
+    const replaceMention = ((value: string, username: string, match: RegExpMatchObject) => {
       if (
         /[\w`]/.test(match.input.charAt(match.index - 1)) ||
         /[/\w`]/.test(match.input.charAt(Number(match.index) + Number(value.length)))
@@ -55,6 +84,8 @@ export function userMentions() {
       const node = { type: 'text', value };
 
       return { type: 'link', title: null, url, children: [node] };
-    }
+    }) as ReplaceFunction;
+
+    findAndReplace(tree, [[mentionRegex, replaceMention]], { ignore: ['link', 'linkReference'] });
   };
 }

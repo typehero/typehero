@@ -1,3 +1,6 @@
+// SVG props don't play well with react/no-unknown-property.
+// TODO: Is the auto-fixer right? Can we switch from kebab-case to camelCase?
+/* eslint-disable react/no-unknown-property */
 export function HolidayBronzeBadge({ className }: { className?: string }) {
   return (
     <svg

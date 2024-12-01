@@ -32,8 +32,9 @@ export function RightWrapper({ challenge }: Props) {
     slug?: string,
   ) {
     const query = slug ? `&slug=${slug}` : '';
-    isSuccessful &&
+    if (isSuccessful) {
       router.push(`/events/${year}/${day}/submissions/${submissionId}?success=true${query}`);
+    }
   }
 
   return (

@@ -38,8 +38,9 @@ export function RightWrapper({ track, challenge, toggleDirection }: Props) {
     slug?: string,
   ) {
     const query = slug ? `&slug=${slug}` : '';
-    isSuccessful &&
+    if (isSuccessful) {
       router.push(`/challenge/${challenge.slug}/submissions/${submissionId}?success=true${query}`);
+    }
   }
 
   return (

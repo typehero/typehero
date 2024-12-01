@@ -5,7 +5,7 @@ import { ActionBar } from './_components/action-bar';
 import { columns } from './_components/columns';
 import { getTracks } from './tracks.actions';
 
-export default async function () {
+export default async function TracksPage() {
   const session = await auth();
   assertAdmin(session);
 

@@ -19,7 +19,7 @@ test.describe('homepage a11y', () => {
     page,
   }) => {
     // TODO: fix this type error
-    // @ts-expect-error
+    // @ts-expect-error -- playwright types are duplicated in pages
     const a11yScanResults = await new AxeBuilder({ page }).withTags(A11YTAGS).analyze();
     if (a11yScanResults.violations.length > 0) {
       throw new A11yError(a11yScanResults.violations);
@@ -37,7 +37,7 @@ test.describe('homepage a11y', () => {
       .click();
 
     // TODO: fix this type error
-    // @ts-expect-error
+    // @ts-expect-error -- playwright types are duplicated in pages
     const a11yScanResults = await new AxeBuilder({ page }).withTags(A11YTAGS).analyze();
 
     if (a11yScanResults.violations.length > 0) {

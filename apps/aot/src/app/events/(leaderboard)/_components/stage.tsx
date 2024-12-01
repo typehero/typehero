@@ -1,3 +1,5 @@
+// SVG props don't play well with react/no-unknown-property.
+/* eslint-disable react/no-unknown-property */
 'use client';
 import { Billboard, Edges, Image, PerspectiveCamera, Text, useGLTF } from '@react-three/drei';
 import {
@@ -182,7 +184,7 @@ function Platform(props: {
   userInfo: { username: string; points: number | string; image: string | null };
   isDayStage: boolean;
   color: Color | string;
-  decorations: JSX.Element;
+  decorations: React.JSX.Element;
 }) {
   const { resolvedTheme } = useTheme();
   return (
@@ -415,7 +417,7 @@ type GiftGLTFResult = ReturnType<typeof useGLTF> & {
   };
 };
 
-export function Gift(props: JSX.IntrinsicElements['group']) {
+export function Gift(props: React.JSX.IntrinsicElements['group']) {
   const { nodes } = useGLTF('/leaderboard-stage/gift.glb') as GiftGLTFResult;
   return (
     <group {...props} dispose={null} scale={2}>
@@ -460,7 +462,7 @@ type SnowmanGLTFResult = ReturnType<typeof useGLTF> & {
   };
 };
 
-function Snowman(props: JSX.IntrinsicElements['group']) {
+function Snowman(props: React.JSX.IntrinsicElements['group']) {
   const { nodes } = useGLTF('/leaderboard-stage/snowman.glb') as SnowmanGLTFResult;
   return (
     <group {...props} dispose={null} scale={0.1}>

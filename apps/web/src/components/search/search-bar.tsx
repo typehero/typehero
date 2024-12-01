@@ -2,6 +2,8 @@ import { Button } from '@repo/ui/components/button';
 import { SearchIcon } from '@repo/ui/icons';
 
 function isMacOS() {
+  // TODO: Use a package or some such
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   return navigator.platform.toLowerCase().includes('mac');
 }
 

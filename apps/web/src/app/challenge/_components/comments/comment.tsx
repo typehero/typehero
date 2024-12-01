@@ -31,7 +31,7 @@ import type { SolutionRouteData } from '../../[slug]/solutions/[solutionId]/getS
 import { Vote } from '../vote';
 import { CommentInput } from './comment-input';
 import { CommentSkeleton } from './comment-skeleton';
-import { useCommentsReplies } from './comments.hooks';
+import { useCommentsReplies, type UseCommentRepliesProps } from './comments.hooks';
 import { CommentDeleteDialog } from './delete';
 import { UserBadge } from './enhanced-user-badge';
 import { type PaginatedComments, type PreselectedCommentMetadata } from './getCommentRouteData';
@@ -112,14 +112,13 @@ export function Comment({
     updateReplyComment,
     deleteReplyComment,
     showLoadMoreRepliesBtn,
-    // @ts-ignore
   } = useCommentsReplies({
     enabled: showReplies,
     root,
     type,
     parentComment: comment,
     preselectedReplyId: hasPreselectedReply ? Number(replyId) : undefined,
-  });
+  } as UseCommentRepliesProps);
 
   const toggleReplies = () => {
     if (showReplies) {

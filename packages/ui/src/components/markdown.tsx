@@ -142,7 +142,7 @@ function CopyButton({ text }: { text: string }) {
 
   const copyToClipboard = async () => {
     if (navigator.clipboard) {
-      await navigator.clipboard.writeText(text).catch(console.error);
+      await navigator.clipboard.writeText(text).catch(console.error.bind);
       setIsCopied(true);
       setTimeout(() => {
         setIsCopied(false);
