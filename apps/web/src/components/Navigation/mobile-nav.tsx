@@ -4,11 +4,11 @@ import { motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import React, { useEffect } from 'react';
 
-interface Props {
+interface MobileNavProps {
   children: React.ReactNode;
 }
 
-export function MobileNav({ children }: Props) {
+export function MobileNav({ children }: MobileNavProps) {
   const pathname = usePathname();
   const [open, setOpen] = React.useState(false);
   const [mounted, setMounted] = React.useState(false);

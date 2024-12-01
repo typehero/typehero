@@ -2,13 +2,11 @@ import Link from 'next/link';
 import { LoginButton } from './_components/LoginButton';
 import { buildMetaForEventPage } from '~/utils/metadata';
 
-export async function generateMetadata() {
-  return buildMetaForEventPage({
-    title: 'Advent of Typescript',
-    description: 'Advent of Typescript',
-  });
+export function generateMetadata() {
+  return buildMetaForEventPage();
 }
-export default async function Index({
+
+export default function Index({
   searchParams,
 }: {
   searchParams: {

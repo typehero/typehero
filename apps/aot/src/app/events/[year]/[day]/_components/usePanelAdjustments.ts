@@ -67,9 +67,11 @@ const usePanelAdjustments = (
 
       const sizeValue = panelSize < LEFT_PANEL_BREAKPOINT ? breakpointSize : newDimensionValue;
 
-      isDesktop
-        ? (leftSide.current.style.width = `${sizeValue}%`)
-        : (leftSide.current.style.height = `${sizeValue}%`);
+      if (isDesktop) {
+        leftSide.current.style.width = `${sizeValue}%`;
+      } else {
+        leftSide.current.style.height = `${sizeValue}%`;
+      }
     },
     [LEFT_PANEL_BREAKPOINT, expandPanel, isDesktop, isLeftPanelCollapsed],
   );

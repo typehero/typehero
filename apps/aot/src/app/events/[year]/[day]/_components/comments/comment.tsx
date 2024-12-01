@@ -21,7 +21,6 @@ import {
 import clsx from 'clsx';
 import { useParams, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { z } from 'zod';
 import { ReportDialog } from '~/components/report-dialog';
 import { isAdminOrModerator } from '~/utils/auth-guards';
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
@@ -30,7 +29,7 @@ import type { Challenge } from '../types';
 import { Vote } from '../vote';
 import { CommentInput } from './comment-input';
 import { CommentSkeleton } from './comment-skeleton';
-import { useCommentsReplies } from './comments.hooks';
+import { useCommentsReplies, type UseCommentRepliesProps } from './comments.hooks';
 import { CommentDeleteDialog } from './delete';
 import { UserBadge } from './enhanced-user-badge';
 import { type PaginatedComments, type PreselectedCommentMetadata } from './getCommentRouteData';
@@ -55,26 +54,13 @@ type CommentProps = SingleCommentProps & {
   updateComment: (text: string, commentId: number) => Promise<void>;
 };
 
-const commentReportSchema = z
-  .object({
-    spam: z.boolean().optional(),
-    threat: z.boolean().optional(),
-    hate_speech: z.boolean().optional(),
-    bullying: z.boolean().optional(),
-    text: z.string().optional(),
-  })
-  .refine(
-    (obj) => {
-      const { spam, threat, hate_speech, bullying, text } = obj;
-      return spam || threat || hate_speech || bullying || (text !== undefined && text !== '');
-    },
-    {
-      path: ['text'],
-      message: 'Your report should include an issue or a reason.',
-    },
-  );
-
-export type CommentReportSchemaType = z.infer<typeof commentReportSchema>;
+export type CommentReportSchemaType = {
+  spam?: boolean;
+  threat?: boolean;
+  hate_speech?: boolean;
+  bullying?: boolean;
+  text?: string;
+};
 
 // million-ignore
 export function Comment({
@@ -105,14 +91,13 @@ export function Comment({
     updateReplyComment,
     deleteReplyComment,
     showLoadMoreRepliesBtn,
-    // @ts-ignore
   } = useCommentsReplies({
     enabled: showReplies,
     root,
     type,
     parentComment: comment,
     preselectedReplyId: hasPreselectedReply ? Number(replyId) : undefined,
-  });
+  } as UseCommentRepliesProps);
 
   const toggleReplies = () => {
     if (showReplies) {

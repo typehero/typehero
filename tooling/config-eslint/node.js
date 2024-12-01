@@ -1,3 +1,4 @@
+const path = require("path");
 const { rules } = require('./utils/rules');
 
 module.exports = {
@@ -6,6 +7,7 @@ module.exports = {
     ...['@vercel/style-guide/eslint/node', '@vercel/style-guide/eslint/typescript'].map((config) =>
       require.resolve(config),
     ),
+    'plugin:@typescript-eslint/recommended'
   ],
   ignorePatterns: ['node_modules/', 'dist/'],
   overrides: [
@@ -13,13 +15,13 @@ module.exports = {
       files: ['**/*.test.*'],
       extends: [require.resolve('@vercel/style-guide/eslint/jest')],
       rules: {
-        '@typescript-eslint/no-explicit-any': 'off',
-        '@typescript-eslint/no-unsafe-assignment': 'off',
-        'jest/valid-expect': 'off',
+        // '@typescript-eslint/no-explicit-any': 'off',
+        // '@typescript-eslint/no-unsafe-assignment': 'off',
+        // 'jest/valid-expect': 'off',
       },
     },
     {
-      files: ['jest.config.*', 'vite.config.*', 'tsup.config.*', 'drizzle.config.ts'],
+      files: ['*.config.ts'],
       rules: {
         'import/no-default-export': 'off',
       },
@@ -30,15 +32,17 @@ module.exports = {
         'import/no-default-export': 'off',
       },
     },
+    {
+      extends: ['plugin:@typescript-eslint/disable-type-checked'],
+      files: ['.eslintrc.js'],
+    },
   ],
   parserOptions: {
-    project: `${__dirname}/tsconfig.json`,
+    projectService: {
+      allowDefaultProject: ["*.config.*"]
+    },
+    tsconfigRootDir: path.join(__dirname, "../..")
   },
   root: true,
-  plugins: ['unused-imports'],
-  rules: {
-    ...rules,
-    'unused-imports/no-unused-imports': 'error',
-    'eslint-comments/disable-enable-pair': 'off'
-  },
+  rules,
 };

@@ -13,13 +13,13 @@ interface SortKey {
   order: string;
 }
 
-interface Props {
+interface SortSelectProps {
   currentSortKey: SortKey;
   totalSortKeys: readonly SortKey[];
   onValueChange: (value: string) => void;
 }
 
-export function SortSelect({ currentSortKey, totalSortKeys, onValueChange }: Props) {
+export function SortSelect({ currentSortKey, totalSortKeys, onValueChange }: SortSelectProps) {
   return (
     <div className="flex items-center gap-2 px-3 py-2">
       <Select value={currentSortKey.value} defaultValue="newest" onValueChange={onValueChange}>

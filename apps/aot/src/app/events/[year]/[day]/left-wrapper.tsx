@@ -9,13 +9,14 @@ import { FlaskConical, History, Text } from '@repo/ui/icons';
 import { isAfterJanuaryFirst } from '~/utils/time-utils';
 
 type Tab = 'description' | 'solutions' | 'submissions';
-interface Props {
+
+interface LeftWrapperProps {
   children: ReactNode;
   expandPanel: () => void;
   isDesktop: boolean;
 }
 
-export function LeftWrapper({ children, expandPanel, isDesktop }: Props) {
+export function LeftWrapper({ children, expandPanel, isDesktop }: LeftWrapperProps) {
   const pathname = usePathname();
   const router = useRouter();
   const { year, day } = useParams();
@@ -116,7 +117,9 @@ export function LeftWrapper({ children, expandPanel, isDesktop }: Props) {
             )}
             onClick={() => {
               router.push(`/events/${year}/${day}`);
-              isCollapsed && expandPanel();
+              if (isCollapsed) {
+                expandPanel();
+              }
             }}
             onFocus={(e) => {
               e.target.click();
@@ -133,7 +136,9 @@ export function LeftWrapper({ children, expandPanel, isDesktop }: Props) {
               )}
               onClick={() => {
                 router.push(`/events/${year}/${day}/solutions`);
-                isCollapsed && expandPanel();
+                if (isCollapsed) {
+                  expandPanel();
+                }
               }}
               onFocus={(e) => {
                 e.target.click();
@@ -153,7 +158,9 @@ export function LeftWrapper({ children, expandPanel, isDesktop }: Props) {
             )}
             onClick={() => {
               router.push(`/events/${year}/${day}/submissions`);
-              isCollapsed && expandPanel();
+              if (isCollapsed) {
+                expandPanel();
+              }
             }}
             onFocus={(e) => {
               e.target.click();

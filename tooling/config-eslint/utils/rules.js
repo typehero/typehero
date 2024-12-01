@@ -6,16 +6,18 @@ module.exports = {
     'react/no-unescaped-entities': 'off',
     'unicorn/filename-case': 'off',
     '@typescript-eslint/consistent-type-imports': ['warn', { disallowTypeAnnotations: false }],
+
+    // Intentional opinions that differ from the defaults.
+    '@typescript-eslint/switch-exhaustiveness-check': ['error', { considerDefaultExhaustiveForUnions: true }],
+
     // Rules below here can be re-enabled when the team wants to address them.
     // When this repo was first monorepo'ed and given tighter checks,
     // there were too many issues to address all at once.
     // They are organized into groups based on what type of warning they are.
     // ---
     // Potential Bugs
-    '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/no-misused-promises': 'off',
-    '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
     '@typescript-eslint/unbound-method': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/no-shadow': 'off',
@@ -40,19 +42,13 @@ module.exports = {
     eqeqeq: 'off',
     'no-control-regex': 'off',
     'no-return-await': 'off',
-    '@typescript-eslint/require-await': 'off',
 
     // Best practice/readability
     // Some of these might be opinions.
     // You can ignore if you'd like.
-    'eslint-comments/no-unlimited-disable': 'off',
     'prefer-named-capture-group': 'off',
     'prefer-regex-literals': 'off',
-    '@typescript-eslint/naming-convention': 'off',
     'import/no-default-export': 'off',
-    '@typescript-eslint/no-unused-vars': 'off',
-    '@typescript-eslint/no-unnecessary-condition': 'off',
-    '@typescript-eslint/prefer-optional-chain': 'off',
     'react/jsx-no-useless-fragment': 'off',
     'no-nested-ternary': 'off',
     'react/jsx-sort-props': 'off',

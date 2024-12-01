@@ -1,10 +1,10 @@
 import { cn } from '../../cn';
 
-interface Props extends React.HTMLAttributes<HTMLHeadingElement> {
+interface TypographyH2Props extends React.HTMLAttributes<HTMLHeadingElement> {
   children: React.ReactNode;
 }
 
-export function TypographyH2({ children, className, ...props }: Props) {
+export function TypographyH2({ children, className, ...props }: TypographyH2Props) {
   return (
     <h2
       className={cn(

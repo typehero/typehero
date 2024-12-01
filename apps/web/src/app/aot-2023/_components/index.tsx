@@ -1,5 +1,5 @@
 import { permanentRedirect } from 'next/navigation';
 
-export async function AotLandingPage() {
+export function AotLandingPage() {
   return permanentRedirect('https://adventofts.com/');
 }

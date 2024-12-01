@@ -154,7 +154,7 @@ export async function Navigation() {
   );
 }
 
-async function LoginButton({ session }: { session: Session | null }) {
+function LoginButton({ session }: { session: Session | null }) {
   return session?.user ? (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

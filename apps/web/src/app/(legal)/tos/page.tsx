@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { buildMetaForDefault } from '~/app/metadata';
 import { Footsies } from '~/components/footsies';
 
-export async function generateMetadata(): Promise<Metadata> {
+export function generateMetadata(): Promise<Metadata> {
   return buildMetaForDefault({
     title: 'ToS | TypeHero',
     description: 'Read the TypeHero Terms of Service.',

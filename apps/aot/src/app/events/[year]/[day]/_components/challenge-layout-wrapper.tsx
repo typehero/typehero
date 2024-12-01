@@ -6,12 +6,12 @@ import { ChallengeLayout, MOBILE_BREAKPOINT } from './challenge-layout';
 import type { Challenge } from './types';
 import usePanelAdjustments from './usePanelAdjustments';
 
-interface Props {
+interface ChallengeLayoutWrapperProps {
   challenge: Challenge;
   children: ReactNode;
 }
 
-export function ChallengeLayoutWrapper({ challenge, children }: Props) {
+export function ChallengeLayoutWrapper({ challenge, children }: ChallengeLayoutWrapperProps) {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > MOBILE_BREAKPOINT);
   const LEFT_PANEL_BREAKPOINT = isDesktop ? 500 : 318;
   const DEFAULT_DESKTOP_WIDTH_PX = `${LEFT_PANEL_BREAKPOINT}px`;

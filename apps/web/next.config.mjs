@@ -15,15 +15,15 @@ const nextConfig = {
   async headers() {
     return !isProd
       ? [
-          {
-            // allow CORS only on dev for admin site to get monaco files
-            source: '/min/vs/(.*)',
-            headers: [
-              { key: 'Access-Control-Allow-Origin', value: '*' },
-              { key: 'Access-Control-Allow-Methods', value: 'GET' },
-            ],
-          },
-        ]
+        {
+          // allow CORS only on dev for admin site to get monaco files
+          source: '/min/vs/(.*)',
+          headers: [
+            { key: 'Access-Control-Allow-Origin', value: '*' },
+            { key: 'Access-Control-Allow-Methods', value: 'GET' },
+          ],
+        },
+      ]
       : [];
   },
   webpack: (config) => {
@@ -62,8 +62,6 @@ const withVercelToolbar = vercelToolbar();
 
 export default million.next(
   withSentryConfig(
-    // NOTE: this whole package is bugged and once they fix this we can remove this workaround
-    // @ts-ignore
     withBundleAnalyzer(withVercelToolbar(nextConfig)),
     {
       // For all available options, see:

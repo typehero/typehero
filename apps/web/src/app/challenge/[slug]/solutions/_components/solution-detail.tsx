@@ -25,11 +25,11 @@ import { SolutionDeleteDialog } from './delete';
 import { EditSolution } from './edit-solution';
 import { useGetQueryString } from './useGetQueryString';
 
-interface Props {
+interface SolutionDetailsProps {
   solution: ChallengeSolution;
 }
 
-export function SolutionDetails({ solution }: Props) {
+export function SolutionDetails({ solution }: SolutionDetailsProps) {
   const { slug } = useParams();
   const { data: session } = useSession();
   const showPin = isAdminOrModerator(session);
@@ -103,6 +103,8 @@ export function SolutionDetails({ solution }: Props) {
             <div className="flex items-center gap-3">
               <Vote
                 challengeSlug={solution.challenge?.slug ?? ''}
+                // TODO: Is this guaranteed to exist, or is userId actually optional?
+                // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
                 toUserId={solution.user?.id!}
                 voteCount={solution._count.vote}
                 initialHasVoted={solution.vote.length > 0}

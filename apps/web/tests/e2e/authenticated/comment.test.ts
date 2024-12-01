@@ -105,7 +105,7 @@ test.describe('sharing comments', () => {
   const commentNumber = Math.floor(Math.random() * 1000);
   const parentComment = `Here is my comment ${commentNumber}`;
 
-  test('share comment and navigate to comment link', async ({ page, context }) => {
+  test('share comment and navigate to comment link', async ({ page }) => {
     const comment = await prisma.comment.create({
       data: {
         rootChallengeId: 3,

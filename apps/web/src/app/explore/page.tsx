@@ -4,7 +4,7 @@ import { buildMetaForDefault } from '~/app/metadata';
 // CI fails without this
 export const dynamic = 'force-dynamic';
 
-export async function generateMetadata(): Promise<Metadata> {
+export function generateMetadata(): Promise<Metadata> {
   return buildMetaForDefault({
     title: 'Explore Challenges | TypeHero',
     description:

@@ -22,7 +22,7 @@ export async function quickInfoRequest({
   };
 }
 
-export async function createInlayHint({ hint, monaco, position }: InlayHintInfo) {
+export function createInlayHint({ hint, monaco, position }: InlayHintInfo) {
   if (!hint || !hint.displayParts) return;
   // Make a one-liner
   let text = hint.displayParts

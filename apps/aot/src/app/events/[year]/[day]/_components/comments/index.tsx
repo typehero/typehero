@@ -16,7 +16,7 @@ import { useComments } from './comments.hooks';
 import { type PreselectedCommentMetadata } from './getCommentRouteData';
 import NoComments from './nocomments';
 
-interface Props {
+interface CommentsProps {
   preselectedCommentMetadata?: PreselectedCommentMetadata;
   expanded?: boolean;
   root: Challenge | SolutionRouteData;
@@ -24,7 +24,12 @@ interface Props {
 }
 
 // million-ignore
-export function Comments({ preselectedCommentMetadata, root, type, expanded = false }: Props) {
+export function Comments({
+  preselectedCommentMetadata,
+  root,
+  type,
+  expanded = false,
+}: CommentsProps) {
   const [showComments, setShowComments] = useState(expanded);
   const commentContainerRef = useRef<HTMLDivElement>(null);
   const {

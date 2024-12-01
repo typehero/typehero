@@ -2,13 +2,13 @@ import { useLocalStorage } from '~/utils/useLocalStorage';
 
 const SEARCH_LOCAL_STORAGE_KEY = '__TYPEHERO_SEARCH__';
 
-interface UseRecentSearchesStorageProps<Item extends { id: number | string }> {
+interface UseRecentSearchesStorageProps {
   limit?: number;
 }
 
-export function useRecentSearchesStorage<Item extends { id: number | string }>({
-  limit = 5,
-}: UseRecentSearchesStorageProps<Item> = {}) {
+type Item = { id: number | string };
+
+export function useRecentSearchesStorage({ limit = 5 }: UseRecentSearchesStorageProps = {}) {
   const [storage, setStorage] = useLocalStorage(SEARCH_LOCAL_STORAGE_KEY, '[]');
 
   const getItems = () => {

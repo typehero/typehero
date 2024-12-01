@@ -2,8 +2,5 @@
 module.exports = {
   root: true,
   extends: [require.resolve('@repo/lint/node')],
-  parserOptions: {
-    project: `${__dirname}/tsconfig.json`,
-  },
   ignorePatterns: ['mocks/test-overrides/*.ts', 'temp/*.ts'],
 };

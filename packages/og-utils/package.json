@@ -16,15 +16,15 @@
     "clean": "rm -rf .next dist node_modules",
     "format": "prettier . --check --cache --cache-location=\"node_modules/.cache/prettiercache\"",
     "format:fix": "prettier . --write --cache --cache-location=\"node_modules/.cache/prettiercache\" --log-level=warn",
-    "lint": "eslint . --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
-    "lint:fix": "eslint . --fix --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix--max-warnings 0",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@repo/lint": "workspace:*",
     "@repo/tsconfig": "workspace:*",
     "@types/node": "^20.4.2",
-    "eslint": "^8.45.0",
+    "eslint": "^8.57.0",
     "typescript": "^5.3.3"
   },
   "dependencies": {

@@ -56,7 +56,7 @@ try {
     })),
   });
   await prisma.challenge.createMany({
-    data: challengesToCreate.map(({ author, ...challenge }) => ({
+    data: challengesToCreate.map(({ author: _author, ...challenge }) => ({
       ...challenge,
       userId: typeHeroUser.id,
     })),

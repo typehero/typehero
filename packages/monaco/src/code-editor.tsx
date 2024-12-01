@@ -1,5 +1,6 @@
 'use client';
 
+// eslint-disable-next-line import/no-named-as-default
 import Editor, { loader, type EditorProps } from '@monaco-editor/react';
 import { useTheme } from 'next-themes';
 import { useMemo } from 'react';

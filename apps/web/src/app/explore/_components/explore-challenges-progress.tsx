@@ -7,7 +7,7 @@ interface ExploreChallengesProgressionProps {
 
 const SOLVED = 'Solved';
 
-export async function ExploreChallengesProgression({
+export function ExploreChallengesProgression({
   completed,
   total,
 }: ExploreChallengesProgressionProps) {

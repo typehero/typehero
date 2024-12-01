@@ -4,7 +4,7 @@ import { auth } from '~/server/auth';
 import { Comments } from '~/app/challenge/_components/comments';
 import { getSolutionIdRouteData } from './getSolutionIdRouteData';
 
-interface Props {
+interface SolutionPageProps {
   params: {
     slug: string;
     solutionId: string;
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export type ChallengeSolution = NonNullable<Awaited<ReturnType<typeof getSolutionIdRouteData>>>;
-export default async function SolutionPage({ params: { solutionId, slug } }: Props) {
+export default async function SolutionPage({ params: { solutionId, slug } }: SolutionPageProps) {
   const session = await auth();
 
   const solution = await getSolutionIdRouteData(slug, solutionId, session);
@@ -25,7 +25,7 @@ export default async function SolutionPage({ params: { solutionId, slug } }: Pro
   );
 }
 
-export async function generateMetadata({ params: { solutionId } }: Props) {
+export async function generateMetadata({ params: { solutionId } }: SolutionPageProps) {
   const solution = await prisma.sharedSolution.findFirstOrThrow({
     where: {
       id: Number(solutionId),

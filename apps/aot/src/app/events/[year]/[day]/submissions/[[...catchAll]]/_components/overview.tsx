@@ -7,7 +7,7 @@ import { useParams } from 'next/navigation';
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import { getChallengeSubmissionById } from '../getChallengeSubmissions';
 
-interface Props {
+interface SubmissionOverviewProps {
   submissionId: string;
 }
 const codifyForMarkdown = (code: string) => {
@@ -15,7 +15,7 @@ const codifyForMarkdown = (code: string) => {
 ${code}`;
 };
 
-export function SubmissionOverview({ submissionId }: Props) {
+export function SubmissionOverview({ submissionId }: SubmissionOverviewProps) {
   const { year, day } = useParams();
   const { data: submission } = useQuery({
     queryKey: [`submission`, submissionId],

@@ -13,7 +13,7 @@ export function LoginButton({ redirectTo }: { redirectTo: string }) {
     try {
       setState('pending');
       await signIn('github', { callbackUrl: redirectTo });
-    } catch (error) {
+    } catch {
       setState('error');
     }
   };

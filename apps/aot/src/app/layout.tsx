@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   title: 'Advent of TypeScript',
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

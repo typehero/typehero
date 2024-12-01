@@ -298,6 +298,8 @@ export default function SplitEditor({
     debounce(async (monaco: typeof monacoType) => {
       inlayHintsRef.current?.dispose();
 
+      // TODO: Surely monaco is guaranteed to exist, right? Why the optional chaining?
+      // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
       const model = monaco?.editor.getModel(monaco.Uri.parse(USER_CODE_PATH))!;
       const getTsWorker = await monaco?.languages.typescript.getTypeScriptWorker();
       const tsWorker = await getTsWorker?.(model.uri);
@@ -422,7 +424,7 @@ export default function SplitEditor({
           defaultValue={userCode}
           value={userCode}
           onValidate={onValidate?.user}
-          onChange={async (value, changeEvent) => {
+          onChange={(value, changeEvent) => {
             const code = value ?? '';
             debouncedUserCodeAta(code);
             if (hasImports(code)) {
@@ -482,7 +484,7 @@ export default function SplitEditor({
               renderValidationDecorations: 'on',
               readOnly: isTestsReadonly,
             }}
-            onMount={async (editor, monaco) => {
+            onMount={(editor, monaco) => {
               // this just does the typechecking so the UI can update
               onMount?.tests?.(editor, monaco);
               const testModel = monaco.editor.getModel(monaco.Uri.parse(TESTS_PATH))!;
@@ -507,7 +509,7 @@ export default function SplitEditor({
             defaultPath={TESTS_PATH}
             value={tests}
             defaultValue={tests}
-            onChange={async (editor, changeEvent) => {
+            onChange={(editor, changeEvent) => {
               const code = editor ?? '';
               debouncedTestCodeAta(code);
               if (hasImports(code)) {

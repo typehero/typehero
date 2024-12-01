@@ -5,12 +5,10 @@ import Snowfall from '../components/landing/Snowfall';
 import { buildMetaForEventPage } from '~/utils/metadata';
 import { Footsies } from '~/components/footsies';
 
-export async function generateMetadata() {
-  return buildMetaForEventPage({
-    title: 'Advent of Typescript',
-    description: 'Advent of Typescript',
-  });
+export function generateMetadata() {
+  return buildMetaForEventPage();
 }
+
 export default function Home() {
   return (
     <>

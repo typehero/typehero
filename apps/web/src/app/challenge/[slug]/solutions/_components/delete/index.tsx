@@ -41,7 +41,7 @@ export function SolutionDeleteDialog({
         queryKey: ['challenge-solutions', slug],
       });
       router.back();
-    } catch (e) {
+    } catch {
       toast({
         title: 'Uh Oh!',
         variant: 'destructive',

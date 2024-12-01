@@ -8,11 +8,11 @@ import { saveSubmission } from './submissions/[[...catchAll]]/save-submission.ac
 import { SettingsElements } from './SettingsElements';
 import { useQueryClient } from '@tanstack/react-query';
 
-interface Props {
+interface RightWrapperProps {
   challenge: Challenge;
 }
 
-export function RightWrapper({ challenge }: Props) {
+export function RightWrapper({ challenge }: RightWrapperProps) {
   const queryClient = useQueryClient();
   const router = useRouter();
   const { year, day } = useParams();
@@ -26,14 +26,11 @@ export function RightWrapper({ challenge }: Props) {
   }
 
   // Redirect to solution on successful submission and show suggestions
-  async function handleSuccessfulSubmission(
-    isSuccessful: boolean,
-    submissionId: number,
-    slug?: string,
-  ) {
+  function handleSuccessfulSubmission(isSuccessful: boolean, submissionId: number, slug?: string) {
     const query = slug ? `&slug=${slug}` : '';
-    isSuccessful &&
+    if (isSuccessful) {
       router.push(`/events/${year}/${day}/submissions/${submissionId}?success=true${query}`);
+    }
   }
 
   return (

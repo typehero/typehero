@@ -2,10 +2,10 @@
 
 import { type ReactNode } from 'react';
 
-interface Props {
+interface LeftWrapperProps {
   children: ReactNode;
 }
 
-export function LeftWrapper({ children }: Props) {
+export function LeftWrapper({ children }: LeftWrapperProps) {
   return <div className="flex h-full w-full flex-col">{children}</div>;
 }

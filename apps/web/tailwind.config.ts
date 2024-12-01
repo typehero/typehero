@@ -1,5 +1,7 @@
+// TODO: Why not use ESM in Tailwind config files?
+// eslint-disable-next-line eslint-comments/disable-enable-pair
+/* eslint-disable @typescript-eslint/no-require-imports */
 const { fontFamily } =
-  // eslint-disable-next-line
   require('tailwindcss/defaultTheme') as typeof import('tailwindcss/defaultTheme');
 
 /** @type {import('tailwindcss').Config} */

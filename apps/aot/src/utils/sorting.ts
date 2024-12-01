@@ -1,8 +1,6 @@
-const sortingKeys = ['createdAt', 'vote', 'replies', 'solutionComment'] as const;
-const sortingOrders = ['asc', 'desc'] as const;
+export type SortKey = 'createdAt' | 'replies' | 'solutionComment' | 'vote';
 
-export type SortKey = (typeof sortingKeys)[number];
-export type SortOrder = (typeof sortingOrders)[number];
+export type SortOrder = 'asc' | 'desc';
 
 export function orderBy(sortKey: SortKey, sortOrder: SortOrder) {
   switch (sortKey) {

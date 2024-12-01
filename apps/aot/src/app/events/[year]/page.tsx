@@ -11,20 +11,18 @@ import Partners from '~/components/landing/Partners';
 import { Footsies } from '~/components/footsies';
 
 type Challenge = RouterOutputs['event']['getEventChallengesByYear'][0];
-interface Props {
+
+interface EventByYearLandingPageProps {
   params: {
     year: string;
   };
 }
 
-export async function generateMetadata() {
-  return buildMetaForEventPage({
-    title: 'Advent of Typescript',
-    description: 'Advent of Typescript',
-  });
+export function generateMetadata() {
+  return buildMetaForEventPage();
 }
 
-export default async function EventByYearLandingPage({ params }: Props) {
+export default async function EventByYearLandingPage({ params }: EventByYearLandingPageProps) {
   const year = Number(params.year);
   if (!isValidAdventYear(year)) return notFound();
 

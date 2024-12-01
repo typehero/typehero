@@ -22,7 +22,7 @@ import { addOrRemoveBookmark } from '../bookmark.action';
 import type { Challenge } from '../types';
 import { Vote } from '../vote';
 
-interface Props {
+interface DescriptionProps {
   challenge: Challenge;
 }
 
@@ -33,7 +33,7 @@ export interface FormValues {
   other: boolean;
 }
 
-export function Description({ challenge }: Props) {
+export function Description({ challenge }: DescriptionProps) {
   const [hasBookmarked, setHasBookmarked] = useState(challenge.bookmark.length > 0);
   const session = useSession();
 
@@ -52,7 +52,8 @@ export function Description({ challenge }: Props) {
 
   return (
     <div
-      // eslint-disable-next-line
+      // TODO: Fix this accessibility issue!
+      // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
       tabIndex={0}
       className="custom-scrollable-element h-full overflow-y-auto px-4 pb-[11.4rem] pt-3 outline-none"
     >
@@ -128,6 +129,8 @@ export function Description({ challenge }: Props) {
                   shouldBookmark = true;
                   setHasBookmarked(true);
                 }
+                // TODO: Is this guaranteed to exist, or is userId actually optional?
+                // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
                 debouncedBookmark(challenge.id, session.data?.user?.id!, shouldBookmark)?.catch(
                   (e) => {
                     console.error(e);

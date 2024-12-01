@@ -16,7 +16,7 @@ import { useForm } from 'react-hook-form';
 import { MentionInput } from '~/components/mention/mention-input';
 import { singleFieldSchema, type SingleFieldSchema } from '~/utils/zodSingleStringField';
 
-interface Props {
+interface CommentInputProps {
   mode: 'create' | 'edit' | 'reply';
   onCancel?: () => void;
   placeholder?: string;
@@ -29,8 +29,8 @@ interface CommentInputRefProps {
   setInputValue: (value: string) => void;
 }
 
-export const CommentInput = forwardRef<CommentInputRefProps, Props>(
-  ({ mode, onCancel, placeholder, onSubmit, defaultValue }: Props, ref) => {
+export const CommentInput = forwardRef<CommentInputRefProps, CommentInputProps>(
+  ({ mode, onCancel, placeholder, onSubmit, defaultValue }: CommentInputProps, ref) => {
     const { data: session } = useSession();
     const [commentMode, setCommentMode] = useState<'editor' | 'preview'>('editor');
 
@@ -43,6 +43,8 @@ export const CommentInput = forwardRef<CommentInputRefProps, Props>(
 
     // We need to control the textarea element from parent component.
     useImperativeHandle(ref, () => ({
+      // TODO: Either textAreaRef is always defined, or textarea can be nullish
+      // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
       textarea: textAreaRef?.current!,
       setInputValue: (value: string) => {
         form.setValue('text', value);
@@ -156,6 +158,7 @@ function useAutosizeTextArea(
       // Trying to set this with state or a ref will product an incorrect value.
       textAreaRef.current.style.height = `${scrollHeight}px`;
     }
-    // eslint-disable-next-line
+    // TODO: Fix this incorrect set of deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [textAreaRef.current, value, commentMode]);
 }

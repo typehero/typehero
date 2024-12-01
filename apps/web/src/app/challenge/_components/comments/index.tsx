@@ -17,7 +17,7 @@ import { useTrackNavigationVisiblity } from '../../[slug]/use-track-visibility.h
 import type { ChallengeRouteData } from '../../[slug]/getChallengeRouteData';
 import type { SolutionRouteData } from '../../[slug]/solutions/[solutionId]/getSolutionIdRouteData';
 
-interface Props {
+interface CommentsProps {
   preselectedCommentMetadata?: PreselectedCommentMetadata;
   expanded?: boolean;
   root: ChallengeRouteData['challenge'] | SolutionRouteData;
@@ -25,7 +25,12 @@ interface Props {
 }
 
 // million-ignore
-export function Comments({ preselectedCommentMetadata, root, type, expanded = false }: Props) {
+export function Comments({
+  preselectedCommentMetadata,
+  root,
+  type,
+  expanded = false,
+}: CommentsProps) {
   const { isTrackTitleVisible } = useTrackNavigationVisiblity();
   const [showComments, setShowComments] = useState(expanded);
   const commentContainerRef = useRef<HTMLDivElement>(null);
