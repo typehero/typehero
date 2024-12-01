@@ -21,7 +21,7 @@ export function LeaderboardPage(props: {
         </div>
       </div>
       <div className="border-[hsla(0, 0%, 100%, 0.12)] relative mx-auto mt-[255px] max-w-screen-lg rounded-2xl rounded-b-none border border-b-0 bg-[hsla(0,0%,0%,0.07)] px-1 pt-1 shadow-[0px_-18px_131px_-78px_hsla(132,100%,53%,0.3)] backdrop-blur-sm md:mt-[350px] lg:mt-[500px] dark:bg-[hsla(0,0%,100%,0.07)]">
-        <div className={`${styles['ring-container']} -inset-0`}>
+        <div className={`${styles['ring-container']} -inset-0 pointer-events-none`}>
           <div className={`${styles['ring-animation']} inset-1 bg-slate-50/10`} />
         </div>
         <div className="bg-background rounded-lg rounded-b-none">
