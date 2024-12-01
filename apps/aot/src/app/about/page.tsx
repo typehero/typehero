@@ -35,7 +35,7 @@ export default function AboutPage() {
             out to us on our Discord or GitHub.
           </p>
 
-          <div className="mb-6 flex flex-col items-center gap-5 md:flex-row">
+          <div className="mb-6 flex flex-col items-center gap-5 sm:flex-row">
             <a
               target="_blank"
               rel="noreferrer"
@@ -71,11 +71,11 @@ export default function AboutPage() {
             </Button>
             <Button
               asChild
-              className={`${styles.donateStripeLinkBtn} group relative w-fit overflow-hidden rounded-xl border-none p-0 font-bold !ring-0 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:duration-75 dark:p-[1px]`}
+              className={`${styles.donateStripeLinkBtn} group relative w-full overflow-hidden rounded-xl border-none p-0 font-bold outline-offset-4 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:duration-75 md:w-auto dark:p-[1px]`}
               variant="outline"
             >
               <a href="https://donate.stripe.com/14k5kv1uv0e57yU4gh">
-                <span className="inline-flex h-full w-fit items-center gap-2 rounded-xl bg-black px-4 py-2 text-white transition-all duration-300 dark:bg-neutral-900 dark:text-white">
+                <span className="flex h-full w-full items-center justify-center gap-2 rounded-xl bg-black px-4 py-2 text-white transition-all duration-300 dark:bg-neutral-900 dark:text-white">
                   Click to Donate
                 </span>
               </a>
