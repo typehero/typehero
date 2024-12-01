@@ -6,7 +6,7 @@ module.exports = {
         },
         {
             extends: ['plugin:@typescript-eslint/disable-type-checked'],
-            files: ['.eslintrc.js'],
+            files: ['**/.eslintrc.*'],
         },
     ]
 };
