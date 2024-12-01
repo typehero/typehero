@@ -15,7 +15,11 @@ export function SettingsButton() {
       <DialogTrigger>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Settings className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" size={20} />
+            <Settings
+              aria-label="Settings"
+              className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400"
+              size={20}
+            />
           </TooltipTrigger>
           <TooltipContent className="px-2 py-1">Settings</TooltipContent>
         </Tooltip>
