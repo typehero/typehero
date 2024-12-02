@@ -1,7 +1,4 @@
-// TODO: Why not use ESM in Tailwind config files?
-/* eslint-disable @typescript-eslint/no-require-imports */
-const { fontFamily } =
-  require('tailwindcss/defaultTheme') as typeof import('tailwindcss/defaultTheme');
+import { fontFamily } from 'tailwindcss/defaultTheme';
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
