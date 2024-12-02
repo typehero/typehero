@@ -6,6 +6,7 @@ module.exports = {
     '@typescript-eslint/switch-exhaustiveness-check': ['error', { considerDefaultExhaustiveForUnions: true }],
     'import/no-named-as-default': 'off',
     'react/no-unescaped-entities': 'off',
+    'react/no-unknown-property': 'off',
     'unicorn/filename-case': 'off',
 
     // Pending https://github.com/vercel/style-guide/issues/115

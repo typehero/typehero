@@ -1,5 +1,3 @@
-// SVG props don't play well with react/no-unknown-property.
-/* eslint-disable react/no-unknown-property */
 'use client';
 import { Billboard, Edges, Image, PerspectiveCamera, Text, useGLTF } from '@react-three/drei';
 import {
