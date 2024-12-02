@@ -6,7 +6,6 @@ mailchimp.setConfig({
   server: process.env.MAILCHIMP_API_SERVER,
 });
 
-// TODO: This has got to be declared somewhere, right?
 interface MailchimpError {
   response: {
     text: string;
