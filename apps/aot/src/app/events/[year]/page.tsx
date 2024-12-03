@@ -4,12 +4,10 @@ import { api } from '~/trpc/server';
 import { buildMetaForEventPage } from '~/utils/metadata';
 import { isValidAdventYear } from '~/utils/time-utils';
 import DaySolved from './day-solved';
-import DayUnsolved from './day-unsolved';
 import type { RouterOutputs } from '~/trpc/react';
 import { DailyCountdownTimer } from '~/components/DailyCountdownTimer';
 import BgDecorations from './24BgDecorations';
 import Partners from '~/components/landing/Partners';
-import GiftBox from './GiftBox';
 import { Footsies } from '~/components/footsies';
 
 type Challenge = RouterOutputs['event']['getEventChallengesByYear'][0];

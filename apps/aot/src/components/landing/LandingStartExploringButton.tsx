@@ -2,8 +2,7 @@ import { Button } from '@repo/ui/components/button';
 import Link from 'next/link';
 
 export const LandingStartExploringButton = () => {
-  let aotStarted = Date.now() >= new Date(Date.UTC(2024, 11, 1, 5, 0, 0)).getTime();
-  aotStarted = true;
+  const aotStarted = Date.now() >= new Date(Date.UTC(2024, 11, 1, 5, 0, 0)).getTime();
   return aotStarted ? <StartExploringButton /> : <div />;
 };
 
