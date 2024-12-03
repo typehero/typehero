@@ -3,8 +3,8 @@ import { notFound } from 'next/navigation';
 import { api } from '~/trpc/server';
 import { buildMetaForEventPage } from '~/utils/metadata';
 import { isValidAdventYear } from '~/utils/time-utils';
-import DayActive from './day-active';
-import DayInactive from './day-inactive';
+import DaySolved from './day-solved';
+import DayUnsolved from './day-unsolved';
 import type { RouterOutputs } from '~/trpc/react';
 import { DailyCountdownTimer } from '~/components/DailyCountdownTimer';
 import BgDecorations from './24BgDecorations';
@@ -41,10 +41,7 @@ export default async function EventByYearLandingPage({ params }: Props) {
   })) as Challenge[];
 
   const eventChallenges = [...activeEventChallenges, ...inactiveEventChallenges];
-
-  const firstTwentyTwo = eventChallenges.slice(0, 22);
-  const groupedDays = groupDays(firstTwentyTwo);
-  const lastThree = eventChallenges.slice(-3);
+  const groupedDays = groupDays(eventChallenges);
 
   return (
     <>
@@ -68,43 +65,17 @@ export default async function EventByYearLandingPage({ params }: Props) {
             {groupedDays.map((group, index) => (
               <div key={`row-${index}`} className="flex gap-2 sm:gap-3 md:gap-4">
                 {group.map((day) => (
-                  <>
-                    {day.active ? (
-                      <Link key={`day-active-${day.day}`} href={`/events/${year}/${day.day}`}>
-                        <DayActive day={day.day} hasSolved={day.hasSolved} />
-                      </Link>
-                    ) : (
-                      <DayInactive key={`day-inactive-${day.day}`} day={day.day} />
-                    )}
-                  </>
+                  <Link
+                    key={`day-active-${day.day}`}
+                    href={`/events/${year}/${day.day}`}
+                    className={`${!day.active && 'pointer-events-none'}`}
+                    aria-disabled={!day.active}
+                  >
+                    <DaySolved day={day.day} active={day.active} hasSolved={day.hasSolved} />
+                  </Link>
                 ))}
               </div>
             ))}
-
-            <div className="-mt-[4.5rem] flex">
-              {lastThree.map((day, index) => (
-                <>
-                  {day.active ? (
-                    <Link key={day.day} href={`/events/${year}/${day.day}`}>
-                      <GiftBox
-                        day={day.day}
-                        active={day.active}
-                        index={index}
-                        hasSolved={day.hasSolved}
-                      />
-                    </Link>
-                  ) : (
-                    <GiftBox
-                      key={day.day}
-                      day={day.day}
-                      active={day.active}
-                      index={index}
-                      hasSolved={day.hasSolved}
-                    />
-                  )}
-                </>
-              ))}
-            </div>
           </ul>
         </div>
         <div className="mt-20">
