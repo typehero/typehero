@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { api } from '~/trpc/server';
 import { buildMetaForEventPage } from '~/utils/metadata';
 import { isValidAdventYear } from '~/utils/time-utils';
-import DaySolved from './day-solved';
+import DaySolved from './day';
 import type { RouterOutputs } from '~/trpc/react';
 import { DailyCountdownTimer } from '~/components/DailyCountdownTimer';
 import BgDecorations from './24BgDecorations';
