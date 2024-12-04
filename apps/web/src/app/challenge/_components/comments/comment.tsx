@@ -22,7 +22,6 @@ import {
 import clsx from 'clsx';
 import { useParams, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { z } from 'zod';
 import { ReportDialog } from '~/components/ReportDialog';
 import { isAdminOrModerator } from '~/utils/auth-guards';
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
@@ -62,26 +61,13 @@ type CommentProps = SingleCommentProps & {
   updateComment: (text: string, commentId: number) => Promise<void>;
 };
 
-const commentReportSchema = z
-  .object({
-    spam: z.boolean().optional(),
-    threat: z.boolean().optional(),
-    hate_speech: z.boolean().optional(),
-    bullying: z.boolean().optional(),
-    text: z.string().optional(),
-  })
-  .refine(
-    (obj) => {
-      const { spam, threat, hate_speech, bullying, text } = obj;
-      return spam || threat || hate_speech || bullying || (text !== undefined && text !== '');
-    },
-    {
-      path: ['text'],
-      message: 'Your report should include an issue or a reason.',
-    },
-  );
-
-export type CommentReportSchemaType = z.infer<typeof commentReportSchema>;
+export interface CommentReportSchemaType {
+  spam: boolean;
+  threat: boolean;
+  hate_speech: boolean;
+  bullying: boolean;
+  text: string;
+}
 
 // million-ignore
 export function Comment({

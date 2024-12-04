@@ -2,7 +2,7 @@ import { EnrolledTrackSection } from './track-enrolled-section';
 import { TrackGrid } from './track-grid';
 import { Footsies } from '~/components/footsies';
 
-export async function Tracks() {
+export function Tracks() {
   return (
     <>
       <div className="flex flex-col gap-5 pb-8 md:gap-10 md:py-5">

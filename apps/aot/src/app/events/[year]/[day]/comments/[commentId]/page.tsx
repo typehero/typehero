@@ -7,7 +7,7 @@ import { getAotSlug } from '~/utils/getAotSlug';
 import { isAfterJanuaryFirst } from '~/utils/time-utils';
 import { notFound } from 'next/navigation';
 
-interface Props {
+interface CommentPageProps {
   params: {
     year: string;
     day: string;
@@ -15,7 +15,7 @@ interface Props {
   };
 }
 
-export default async function CommentPage({ params: { year, day, commentId } }: Props) {
+export default async function CommentPage({ params: { year, day, commentId } }: CommentPageProps) {
   const session = await auth();
   const { challenge } = await getChallengeRouteData(getAotSlug({ year, day }), session);
   const preselectedCommentMetadata = await getPreselectedCommentMetadata(

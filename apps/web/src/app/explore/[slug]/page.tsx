@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
 
-interface Props {
+interface PageProps {
   params: {
     slug: string;
   };
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 // accepts both difficulty & tags as slug.
 // ex: `/explore/easy`, `explore/popular`
-export default function Page({ params }: Props) {
+export default function Page({ params }: PageProps) {
   return (
     <Suspense fallback={<ExploreSlugSkeleton />}>
       <ExploreSlug slug={params.slug} />

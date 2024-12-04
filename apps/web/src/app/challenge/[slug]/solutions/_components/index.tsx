@@ -20,7 +20,7 @@ import { useQueryParamState } from './useQueryParamState';
 import { useLocalStorage } from '~/utils/useLocalStorage';
 import { UserBadge } from '../../../_components/comments/enhanced-user-badge';
 
-interface Props {
+interface SolutionsProps {
   slug: string;
 }
 
@@ -47,7 +47,7 @@ export const SORT_KEYS = [
 
 type View = 'details' | 'editor' | 'list';
 
-export function Solutions({ slug }: Props) {
+export function Solutions({ slug }: SolutionsProps) {
   const [view, setView] = useState<View>('list');
   const commentContainerRef = useRef<HTMLDivElement>(null);
   const [storageKey, setStorageKey] = useLocalStorage('sortKey', 'newest');

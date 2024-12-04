@@ -10,12 +10,12 @@ export const DEFAULT_SETTINGS = {
 };
 
 type Settings = typeof DEFAULT_SETTINGS;
-interface State {
+interface ChallengeLayoutState {
   settings: Settings;
   updateSettings: (settings: Settings) => void;
 }
 
-export const useLayoutSettingsStore = create<State>()(
+export const useLayoutSettingsStore = create<ChallengeLayoutState>()(
   persist(
     (set, get) => ({
       settings: DEFAULT_SETTINGS,
@@ -61,7 +61,7 @@ export function ChallengeLayout({
   const rightSide = useRef<HTMLDivElement>(null);
 
   const { settings, updateSettings } = useLayoutSettingsStore();
-  const { fssettings, updateFSSettings } = useFullscreenSettingsStore();
+  const { fssettings } = useFullscreenSettingsStore();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const LEFT_PANEL_BREAKPOINT = isDesktop ? 500 : 318;

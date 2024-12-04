@@ -22,7 +22,7 @@ import { addOrRemoveBookmark } from '../bookmark.action';
 import type { Challenge } from '../types';
 import { Vote } from '../vote';
 
-interface Props {
+interface DescriptionProps {
   challenge: Challenge;
 }
 
@@ -33,7 +33,7 @@ export interface FormValues {
   other: boolean;
 }
 
-export function Description({ challenge }: Props) {
+export function Description({ challenge }: DescriptionProps) {
   const [hasBookmarked, setHasBookmarked] = useState(challenge.bookmark.length > 0);
   const session = useSession();
 

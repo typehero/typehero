@@ -43,7 +43,7 @@ export function NewsletterForm() {
     },
   });
 
-  async function onSubmit(data: NewsletterFormSchema) {
+  function onSubmit(data: NewsletterFormSchema) {
     mutation.mutate(data);
   }
 

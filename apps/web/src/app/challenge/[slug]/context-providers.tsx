@@ -6,11 +6,11 @@ import { AllChallengesProvider } from './all-challenges.hook';
 import { ProblemExplorerProvider } from '~/app/problem-explorer.hooks';
 import { ChallegeRouteDataProvider } from './challenge-route-data.hook';
 
-interface Props {
+interface ContextProvidersProps {
   children: React.ReactNode;
 }
 
-export async function ContextProviders({ children }: Props) {
+export async function ContextProviders({ children }: ContextProvidersProps) {
   const allChallenges = await getAllChallenges();
   const session = await auth();
   const isExplorerDisabled = await isEnrolledInAnyTrack(session);

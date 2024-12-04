@@ -5,7 +5,7 @@ import { Balancer } from 'react-wrap-balancer';
 import styles from './newsletter.module.css';
 import { Button } from '@repo/ui/components/button';
 
-export async function NewsletterBanner() {
+export function NewsletterBanner() {
   return (
     <section className={clsx(styles.backdrop, 'relative overflow-hidden')}>
       <div className="container relative grid grid-cols-1 items-center justify-center py-[64px] md:grid-cols-2">

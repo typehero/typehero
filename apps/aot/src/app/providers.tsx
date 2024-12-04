@@ -5,11 +5,11 @@ import { TooltipProvider } from '@repo/ui/components/tooltip';
 import { ThemeProvider } from 'next-themes';
 import { TRPCReactProvider } from '~/trpc/react';
 
-interface Props {
+interface ProvidersProps {
   children: React.ReactNode;
 }
 
-export function Providers({ children }: Props) {
+export function Providers({ children }: ProvidersProps) {
   return (
     <SessionProvider>
       <TRPCReactProvider>

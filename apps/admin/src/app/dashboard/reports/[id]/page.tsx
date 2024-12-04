@@ -12,7 +12,7 @@ import { SolutionReport } from './_components/solution.report';
 import { UserReport } from './_components/user.report';
 import { ReportActions } from './actions';
 
-export interface Props {
+export interface ReportPageProps {
   params: {
     id: string;
   };
@@ -39,7 +39,7 @@ const getComponentByType = (type: ReportWithInfo['type']) => {
     USER: UserReport,
   }[type];
 };
-export default async function ReportPage({ params: { id } }: Props) {
+export default async function ReportPage({ params: { id } }: ReportPageProps) {
   const session = await auth();
   assertAdmin(session);
 

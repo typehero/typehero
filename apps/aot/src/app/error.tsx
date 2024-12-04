@@ -3,7 +3,11 @@
 import Snowfall from '~/components/landing/Snowfall';
 import { useEffect } from 'react';
 
-export default function Error({ error, reset }: { error: Error; reset: () => void }) {
+export interface ErrorProps {
+  error: Error;
+}
+
+export default function Error({ error }: ErrorProps) {
   useEffect(() => {
     console.error(error);
   }, [error]);

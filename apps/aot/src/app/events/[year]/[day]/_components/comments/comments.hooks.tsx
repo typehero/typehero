@@ -110,7 +110,7 @@ export function useComments(props: UseCommentsProps) {
       queryClient.invalidateQueries({
         queryKey: getQueryKey({ sort: commentsMeta.sort.value, page: newPage }),
       });
-    } catch (e) {
+    } catch {
       toast({
         ...commentErrors.unexpected,
         variant: 'destructive',
@@ -138,7 +138,7 @@ export function useComments(props: UseCommentsProps) {
       queryClient.invalidateQueries({
         queryKey: getQueryKey({ sort: commentsMeta.sort.value, page: newPage }),
       });
-    } catch (e) {
+    } catch {
       toast({
         ...commentErrors.unauthorized,
         variant: 'destructive',
@@ -157,7 +157,7 @@ export function useComments(props: UseCommentsProps) {
       queryClient.invalidateQueries({
         queryKey: getQueryKey({ sort: commentsMeta.sort.value, page: commentsMeta.page }),
       });
-    } catch (e) {
+    } catch {
       toast({
         ...commentErrors.unauthorized,
         variant: 'destructive',
@@ -270,7 +270,7 @@ export function useCommentsReplies({
       }
       //Invalidate the root query to refetch the comments
       queryClient.invalidateQueries({ queryKey: rootQueryKey });
-    } catch (e) {
+    } catch {
       toast({
         ...commentErrors.unauthorized,
         variant: 'destructive',
@@ -287,7 +287,7 @@ export function useCommentsReplies({
         toast(commentErrors.unauthorized);
       }
       queryClient.invalidateQueries({ queryKey });
-    } catch (e) {
+    } catch {
       toast({
         ...commentErrors.unauthorized,
         variant: 'destructive',
@@ -309,7 +309,7 @@ export function useCommentsReplies({
       }
       //Invalidate the root query to refetch the comments
       queryClient.invalidateQueries({ queryKey: rootQueryKey });
-    } catch (e) {
+    } catch {
       toast({
         ...commentErrors.unexpected,
         variant: 'destructive',

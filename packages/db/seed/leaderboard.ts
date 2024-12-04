@@ -12,7 +12,7 @@ async function generateMockUsers() {
   try {
     await prisma.user.createMany({ data: users });
     console.log('Generated 200 mock users');
-  } catch (e) {
+  } catch {
     console.log('mock users already generated');
   }
 }

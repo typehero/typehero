@@ -13,12 +13,12 @@ export const DEFAULT_VALUES = {
 
 type Values = typeof DEFAULT_VALUES;
 
-interface State {
+interface ChallengePlaygroundState {
   values: Values;
   updateValues: (values: Values) => void;
 }
 
-export const useChallengePlaygroundStore = create<State>()(
+export const useChallengePlaygroundStore = create<ChallengePlaygroundState>()(
   persist(
     (set, get) => ({
       values: DEFAULT_VALUES,

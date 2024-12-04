@@ -2,13 +2,13 @@ import { Check } from '@repo/ui/icons';
 import clsx from 'clsx';
 import { type Step } from '.';
 
-interface Props<T extends Step> {
+interface StepsProps<T extends Step> {
   current: number;
   steps: T[];
   onChange: (index: number) => void;
 }
 
-export function Steps<T extends Step>({ steps, current, onChange }: Props<T>) {
+export function Steps<T extends Step>({ steps, current, onChange }: StepsProps<T>) {
   return (
     <nav aria-label="Progress" className="flex justify-center px-4 lg:-mt-[56px]">
       <ol

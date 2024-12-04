@@ -7,13 +7,17 @@ import { LeftWrapper } from '../[slug]/left-wrapper';
 import { RightWrapper } from '../[slug]/right-wrapper';
 import { useChallengeRouteData } from '../[slug]/challenge-route-data.hook';
 
-interface Props {
+interface ChallengeLayoutWrapperProps {
   challenge: ChallengeRouteData['challenge'];
   track: ChallengeRouteData['track'];
   children: ReactNode;
 }
 
-export function ChallengeLayoutWrapper({ challenge, track, children }: Props) {
+export function ChallengeLayoutWrapper({
+  challenge,
+  track,
+  children,
+}: ChallengeLayoutWrapperProps) {
   const { setCurrentChallenge } = useChallengeRouteData();
 
   useEffect(() => {

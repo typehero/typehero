@@ -16,7 +16,7 @@ import { useForm } from 'react-hook-form';
 import { MentionInput } from '~/components/mention/mention-input';
 import { singleFieldSchema, type SingleFieldSchema } from '~/utils/zodSingleStringField';
 
-interface Props {
+interface CommentInputProps {
   mode: 'create' | 'edit' | 'reply';
   onCancel?: () => void;
   placeholder?: string;
@@ -29,8 +29,8 @@ interface CommentInputRefProps {
   setInputValue: (value: string) => void;
 }
 
-export const CommentInput = forwardRef<CommentInputRefProps, Props>(
-  ({ mode, onCancel, placeholder, onSubmit, defaultValue }: Props, ref) => {
+export const CommentInput = forwardRef<CommentInputRefProps, CommentInputProps>(
+  ({ mode, onCancel, placeholder, onSubmit, defaultValue }: CommentInputProps, ref) => {
     const { data: session } = useSession();
     const [commentMode, setCommentMode] = useState<'editor' | 'preview'>('editor');
 

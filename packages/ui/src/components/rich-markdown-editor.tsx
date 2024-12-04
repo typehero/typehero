@@ -73,7 +73,7 @@ export function RichMarkdownEditor({
         />
       </svg>
     ),
-    execute: async () => {
+    execute: () => {
       const ref = fileInputRef.current!;
 
       if (!ref) return;
