@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { LoginButton } from './_components/LoginButton';
 
-export default function Index({
+export default async function Index({
   searchParams,
 }: {
   searchParams: Promise<{
