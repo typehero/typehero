@@ -110,6 +110,7 @@ export function Wizard() {
 
     const handleBeforeUnload: EventListenerOrEventListenerObject = (event) => {
       event.preventDefault();
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
       event.returnValue = false;
     };
 

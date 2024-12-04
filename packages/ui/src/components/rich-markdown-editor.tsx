@@ -12,7 +12,7 @@ const codePreview: ICommand = {
   icon: <PreviewToggle />,
 };
 
-interface Props {
+interface RichMarkdownEditorProps {
   value: string;
   onChange: (v: ChangeEvent | string) => void;
   dismissPreview?: boolean;
@@ -33,8 +33,8 @@ export function RichMarkdownEditor({
   onChange,
   allowImageUpload = false,
   useUploadThing,
-}: Props) {
-  const editorRef = useRef<typeof MDEditor>(null);
+}: RichMarkdownEditorProps) {
+  const editorRef = useRef<typeof MDEditor & { textarea: HTMLTextAreaElement }>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isImageUploading, setIsImageUploading] = useState(false);
   const handleFileChange = () => {};
@@ -78,8 +78,7 @@ export function RichMarkdownEditor({
 
       if (!ref) return;
 
-      // @ts-expect-error
-      ref.value = null;
+      ref.value = null!;
       ref.click();
     },
   };
@@ -102,11 +101,7 @@ export function RichMarkdownEditor({
 
       // insert string at cursor position by calling on change
       const markdownImageEmbed = `![${uploadedFile?.name}](${uploadedFile?.url})`;
-      insertText(
-        markdownImageEmbed,
-        // @ts-expect-error
-        editorRef.current.textarea,
-      );
+      insertText(markdownImageEmbed, editorRef.current!.textarea);
 
       setIsImageUploading(false);
 
@@ -194,10 +189,8 @@ export function RichMarkdownEditor({
         ref={editorRef}
         // non-split-screen by default
         value={value}
-        // @ts-ignore
         preview="edit"
         visibleDragbar={false}
-        // @ts-ignore
         commands={myCommands}
       />
       {isImageUploading ? (
@@ -274,11 +267,10 @@ function PreviewToggle() {
  * This will insert the given text at the caret position into the textarea element
  */
 function insertText(newText: string, textarea: HTMLTextAreaElement) {
-  // @ts-ignore - i don't care that you error
   const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
     window.HTMLTextAreaElement.prototype,
     'value',
-  ).set;
+  )!.set;
 
   if (!nativeInputValueSetter) return;
 

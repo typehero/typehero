@@ -12,7 +12,7 @@ import { getMentionsFromComment } from './getMentionsFromComment';
  * @param comment a Challenge or Solution-based comment.
  * @returns the prisma create response.
  */
-type CommentToCreate =
+export type CommentToCreate =
   | {
       text: string;
       rootType: 'CHALLENGE';

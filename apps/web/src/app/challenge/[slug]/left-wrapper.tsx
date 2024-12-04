@@ -148,7 +148,9 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
             )}
             onClick={() => {
               router.push(`/challenge/${challenge.slug}`);
-              isCollapsed && expandPanel();
+              if (isCollapsed) {
+                expandPanel();
+              }
             }}
             onFocus={(e) => {
               e.target.click();
@@ -164,7 +166,9 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
             )}
             onClick={() => {
               router.push(`/challenge/${challenge.slug}/solutions`);
-              isCollapsed && expandPanel();
+              if (isCollapsed) {
+                expandPanel();
+              }
             }}
             onFocus={(e) => {
               e.target.click();
@@ -184,7 +188,9 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
             )}
             onClick={() => {
               router.push(`/challenge/${challenge.slug}/submissions`);
-              isCollapsed && expandPanel();
+              if (isCollapsed) {
+                expandPanel();
+              }
             }}
             onFocus={(e) => {
               e.target.click();

@@ -1,3 +1,5 @@
+// https://github.com/typescript-eslint/typescript-eslint/issues/10434
+/* eslint-disable @typescript-eslint/no-unnecessary-template-expression */
 import url from 'node:url';
 import fs from 'node:fs/promises';
 import path from 'node:path';
