@@ -23,7 +23,7 @@ import {
   CuratedTracksCard,
 } from './feature-card';
 
-export async function Features() {
+export function Features() {
   return (
     <section className="relative overflow-hidden" id="features">
       <div className="mx-auto mb-[64px] grid max-w-[1400px] items-center justify-center px-4 sm:px-24 md:px-4 lg:px-24">

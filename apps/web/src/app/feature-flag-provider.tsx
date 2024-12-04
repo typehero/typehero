@@ -4,12 +4,12 @@ import { mockFlags } from '~/utils/feature-flags';
 
 export const FeatureFlagContext = createContext<Record<string, boolean>>({});
 
-interface Props {
+interface FeatureFlagProviderProps {
   children: ReactNode;
 }
 
 const isProd = process.env.NODE_ENV === 'production';
-export function FeatureFlagProvider({ children }: Props) {
+export function FeatureFlagProvider({ children }: FeatureFlagProviderProps) {
   const { data: featureFlags } = useQuery({
     queryKey: ['featureFlags'],
     queryFn: () => getFeatureFlags(),

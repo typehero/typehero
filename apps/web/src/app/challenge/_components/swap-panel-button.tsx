@@ -1,11 +1,11 @@
 import { ArrowRightLeft } from '@repo/ui/icons';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 
-interface props {
+interface SwapPanelButtonProps {
   toggleDirection: () => void;
 }
 
-const SwapPanelButton = ({ toggleDirection }: props) => {
+const SwapPanelButton = ({ toggleDirection }: SwapPanelButtonProps) => {
   return (
     <Tooltip>
       <TooltipTrigger asChild>

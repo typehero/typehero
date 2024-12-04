@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Binary, Github, Twitter } from '@repo/ui/icons';
 import { ThemeButton } from './Navigation/theme-button';
 
-export async function Footsies() {
+export function Footsies() {
   return (
     <footer className="flex flex-col items-center gap-2 px-8 pb-12 text-sm font-light sm:px-16 sm:pb-20 sm:pt-6 md:px-0 md:py-12">
       <div className="container flex flex-col-reverse justify-between gap-2 md:flex-row md:items-end">

@@ -101,8 +101,7 @@ export default function SplitEditor({
       if (
         (e.ctrlKey || e.metaKey) &&
         e.code === 'KeyS' &&
-        wrapper.current &&
-        wrapper.current.contains(document.activeElement)
+        wrapper.current?.contains(document.activeElement)
       ) {
         e.preventDefault();
         editorRef.current?.getAction('editor.action.formatDocument')?.run();
@@ -429,7 +428,7 @@ export default function SplitEditor({
           defaultValue={userCode}
           value={userCode}
           onValidate={onValidate?.user}
-          onChange={async (value, changeEvent) => {
+          onChange={(value, changeEvent) => {
             const code = value ?? '';
             debouncedUserCodeAta(code);
             if (hasImports(code)) {
@@ -489,7 +488,7 @@ export default function SplitEditor({
               renderValidationDecorations: 'on',
               readOnly: isTestsReadonly,
             }}
-            onMount={async (editor, monaco) => {
+            onMount={(editor, monaco) => {
               // this just does the typechecking so the UI can update
               onMount?.tests?.(editor, monaco);
               const testModel = monaco.editor.getModel(monaco.Uri.parse(TESTS_PATH))!;
@@ -514,7 +513,7 @@ export default function SplitEditor({
             defaultPath={TESTS_PATH}
             value={tests}
             defaultValue={tests}
-            onChange={async (editor, changeEvent) => {
+            onChange={(editor, changeEvent) => {
               const code = editor ?? '';
               debouncedTestCodeAta(code);
               if (hasImports(code)) {

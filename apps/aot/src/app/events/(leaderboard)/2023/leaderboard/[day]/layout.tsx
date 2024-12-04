@@ -5,7 +5,7 @@ import { DAY } from '../../date_constants';
 export const dynamic = 'force-static';
 export const dynamicParams = false;
 
-export async function generateStaticParams() {
+export function generateStaticParams() {
   return Array.from({ length: DAY }).map((_, index) => ({ day: (index + 1).toString() }));
 }
 

@@ -25,11 +25,11 @@ import { SolutionDeleteDialog } from './delete';
 import { EditSolution } from './edit-solution';
 import { useGetQueryString } from './useGetQueryString';
 
-interface Props {
+interface SolutionDetailsProps {
   solution: ChallengeSolution;
 }
 
-export function SolutionDetails({ solution }: Props) {
+export function SolutionDetails({ solution }: SolutionDetailsProps) {
   const { slug } = useParams();
   const { data: session } = useSession();
   const showPin = isAdminOrModerator(session);

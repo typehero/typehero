@@ -54,7 +54,7 @@ export function ReportActions({ report }: ReportActionsProps) {
         description: <p>User banned successfully.</p>,
       });
       router.push('/?tab=reports');
-    } catch (e) {
+    } catch {
       toast({
         title: 'Error',
         variant: 'destructive',

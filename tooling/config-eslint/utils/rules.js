@@ -49,7 +49,6 @@ module.exports = {
     eqeqeq: 'off',
     'no-control-regex': 'off',
     'no-return-await': 'off',
-    '@typescript-eslint/require-await': 'off',
 
     // Best practice/readability
     // Some of these might be opinions.
@@ -57,12 +56,9 @@ module.exports = {
     'prefer-named-capture-group': 'off',
     'prefer-regex-literals': 'off',
     '@typescript-eslint/consistent-indexed-object-style': 'off',
-    '@typescript-eslint/naming-convention': 'off',
     '@typescript-eslint/prefer-nullish-coalescing': 'off',
     'import/no-default-export': 'off',
-    '@typescript-eslint/no-unused-vars': 'off',
     '@typescript-eslint/no-unnecessary-condition': 'off',
-    '@typescript-eslint/prefer-optional-chain': 'off',
     'react/jsx-no-useless-fragment': 'off',
     'no-nested-ternary': 'off',
     'react/jsx-sort-props': 'off',

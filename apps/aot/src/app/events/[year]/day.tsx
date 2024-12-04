@@ -42,8 +42,6 @@ interface DayProps {
 }
 
 export default function DaySolved({ day, active, hasSolved }: DayProps) {
-  const currentDay = new Date().getDate() === day;
-
   return (
     <motion.div
       key={day}

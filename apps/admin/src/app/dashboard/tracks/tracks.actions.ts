@@ -19,7 +19,7 @@ export async function createTrack(data: Omit<Prisma.TrackCreateInput, 'slug'>) {
   const session = await auth();
   assertAdmin(session);
 
-  const { trackChallenges, ...rest } = data;
+  const { trackChallenges: _, ...rest } = data;
   const slug = rest.name.toLowerCase().replace(/\s/g, '-');
   return prisma.track.create({
     data: {
