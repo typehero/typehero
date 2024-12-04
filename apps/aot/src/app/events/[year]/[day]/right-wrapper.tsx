@@ -28,8 +28,9 @@ export function RightWrapper({ challenge }: RightWrapperProps) {
   // Redirect to solution on successful submission and show suggestions
   function handleSuccessfulSubmission(isSuccessful: boolean, submissionId: number, slug?: string) {
     const query = slug ? `&slug=${slug}` : '';
-    isSuccessful &&
+    if (isSuccessful) {
       router.push(`/events/${year}/${day}/submissions/${submissionId}?success=true${query}`);
+    }
   }
 
   return (

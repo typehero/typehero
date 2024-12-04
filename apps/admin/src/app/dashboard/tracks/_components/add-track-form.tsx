@@ -54,7 +54,7 @@ export function AddTrackForm({ toggle }: AddTrackFormProps) {
           </pre>
         ),
       });
-    } catch (e) {
+    } catch {
       toast({
         variant: 'destructive',
         title: 'Something went wrong',

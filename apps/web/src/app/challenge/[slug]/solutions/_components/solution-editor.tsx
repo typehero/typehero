@@ -80,7 +80,7 @@ export function SolutionEditor({ dismiss, challengeId, code }: SolutionEditorPro
       queryClient.refetchQueries({
         queryKey: ['challenge-solutions', slug],
       });
-    } catch (error) {
+    } catch {
       toast({
         variant: 'destructive',
         title: 'Uh oh! Something went wrong. Please try again.',
@@ -91,9 +91,7 @@ export function SolutionEditor({ dismiss, challengeId, code }: SolutionEditorPro
   };
 
   const { theme } = useTheme();
-  theme !== undefined
-    ? document.documentElement.setAttribute('data-color-mode', theme)
-    : document.documentElement.setAttribute('data-color-mode', 'system');
+  document.documentElement.setAttribute('data-color-mode', theme ?? 'system');
 
   return (
     <Form {...form}>

@@ -70,11 +70,11 @@ export const buildMetaForUser = ({
   dateSince,
   avatar,
 }: MetaParamsForUser): Metadata => {
-  const params = `${userParam.toSearchString({
+  const params = userParam.toSearchString({
     username,
     avatar,
     dateSince,
-  })}`;
+  });
 
   const ogImageUrl = `${OG_URL}/api/user?${params}`;
 
@@ -93,13 +93,13 @@ export const buildMetaForChallenge = ({
   difficulty,
   date,
 }: MetaParamsForChallenge): Metadata => {
-  const params = `${challengeParam.toSearchString({
+  const params = challengeParam.toSearchString({
     description,
     title,
     username,
     difficulty,
     date,
-  })}`;
+  });
 
   const ogImageUrl = `${OG_URL}/api/challenge?${params}`;
 

@@ -84,7 +84,7 @@ export function URLShortenerForm() {
             variant: 'destructive',
           });
         }
-      } catch (error) {
+      } catch {
         toast({
           title: 'Something went wrong',
           description: 'Error creating short URL',

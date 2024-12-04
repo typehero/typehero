@@ -9,7 +9,7 @@ export interface TracksPageProps {
   };
 }
 
-export default async function (props: TracksPageProps) {
+export default async function TrackPage(props: TracksPageProps) {
   const session = await auth();
   assertAdmin(session);
 

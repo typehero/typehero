@@ -39,7 +39,7 @@ export function NotificationLink({ notificationCount }: { notificationCount: num
               count > 20 && 'w-8',
             )}
           >
-            {count > 20 ? `${20}+` : count}
+            {count > 20 ? `20+` : count}
           </span>
         )}
       </div>

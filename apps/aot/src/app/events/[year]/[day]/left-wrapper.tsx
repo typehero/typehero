@@ -116,7 +116,9 @@ export function LeftWrapper({ children, expandPanel, isDesktop }: LeftWrapperPro
             )}
             onClick={() => {
               router.push(`/events/${year}/${day}`);
-              isCollapsed && expandPanel();
+              if (isCollapsed) {
+                expandPanel();
+              }
             }}
             onFocus={(e) => {
               e.target.click();
@@ -133,7 +135,9 @@ export function LeftWrapper({ children, expandPanel, isDesktop }: LeftWrapperPro
               )}
               onClick={() => {
                 router.push(`/events/${year}/${day}/solutions`);
-                isCollapsed && expandPanel();
+                if (isCollapsed) {
+                  expandPanel();
+                }
               }}
               onFocus={(e) => {
                 e.target.click();
@@ -153,7 +157,9 @@ export function LeftWrapper({ children, expandPanel, isDesktop }: LeftWrapperPro
             )}
             onClick={() => {
               router.push(`/events/${year}/${day}/submissions`);
-              isCollapsed && expandPanel();
+              if (isCollapsed) {
+                expandPanel();
+              }
             }}
             onFocus={(e) => {
               e.target.click();

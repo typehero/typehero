@@ -1,3 +1,8 @@
+// TODO: Handle the deprecation
+// > `Github` is deprecated. Brand icons have been deprecated and are due to be removed, please refer to https://github.com/lucide-icons/lucide/issues/670.
+// > We recommend using https://simpleicons.org/?q=github instead.
+// > This icon will be removed in v1.0
+/* eslint-disable @typescript-eslint/no-deprecated */
 import { Github, Link as LinkIcon, Linkedin, Twitter, Youtube } from 'lucide-react';
 import { cn } from '../cn';
 

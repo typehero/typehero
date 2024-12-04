@@ -56,7 +56,7 @@ export function EditSolution({ solution, setIsEditing }: EditSolutionProps) {
         variant: 'success',
         title: 'Your solution has been updated!',
       });
-    } catch (error) {
+    } catch {
       toast({
         variant: 'destructive',
         title: 'Uh oh! Something went wrong. Please try again.',
@@ -67,9 +67,7 @@ export function EditSolution({ solution, setIsEditing }: EditSolutionProps) {
   };
 
   const { theme } = useTheme();
-  theme !== undefined
-    ? document.documentElement.setAttribute('data-color-mode', theme)
-    : document.documentElement.setAttribute('data-color-mode', 'system');
+  document.documentElement.setAttribute('data-color-mode', theme ?? 'system');
 
   return (
     <Form {...form}>

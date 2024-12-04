@@ -165,15 +165,25 @@ export function ChallengeLayout({
     const mouseDownHandler = (e: MouseEvent | TouchEvent) => {
       if (e instanceof MouseEvent) {
         // Get the current mouse position
-        isDesktop ? (x = e.clientX) : (y = e.clientY);
+        if (isDesktop) {
+          x = e.clientX;
+        } else {
+          y = e.clientY;
+        }
       } else if (e instanceof TouchEvent) {
         // Get the current finger position
-        isDesktop ? (x = e.touches[0]?.clientX ?? 0) : (y = e.touches[0]?.clientY ?? 0);
+        if (isDesktop) {
+          x = e.touches[0]?.clientX ?? 0;
+        } else {
+          y = e.touches[0]?.clientY ?? 0;
+        }
       }
 
-      isDesktop
-        ? (leftWidth = leftSide.current?.getBoundingClientRect().width!)
-        : (topHeight = leftSide.current?.getBoundingClientRect().height!);
+      if (isDesktop) {
+        leftWidth = leftSide.current?.getBoundingClientRect().width!;
+      } else {
+        topHeight = leftSide.current?.getBoundingClientRect().height!;
+      }
 
       // Attach the listeners to `document`
       if (e instanceof MouseEvent) {
@@ -203,9 +213,11 @@ export function ChallengeLayout({
       document.removeEventListener('touchend', mouseUpHandler);
       document.removeEventListener('mouseup', mouseUpHandler);
 
-      isDesktop
-        ? updateSettings({ width: `${leftRef.offsetWidth}px`, height: settings.height })
-        : updateSettings({ width: settings.width, height: `${leftRef.offsetHeight}px` });
+      updateSettings(
+        isDesktop
+          ? { width: `${leftRef.offsetWidth}px`, height: settings.height }
+          : { width: settings.width, height: `${leftRef.offsetHeight}px` },
+      );
     };
 
     // handle window resize
@@ -245,9 +257,11 @@ export function ChallengeLayout({
         collapsePanel();
       }
 
-      isDesktop
-        ? updateSettings({ width: `${leftRef.offsetWidth}px`, height: settings.height })
-        : updateSettings({ width: settings.width, height: `${leftRef.offsetHeight}px` });
+      updateSettings(
+        isDesktop
+          ? { width: `${leftRef.offsetWidth}px`, height: settings.height }
+          : { width: settings.width, height: `${leftRef.offsetHeight}px` },
+      );
     };
 
     window.addEventListener('resize', resizeHandler);

@@ -96,7 +96,7 @@ export function UpdateTrackForm({ challenges, track }: UpdateTrackFormProps) {
       toast({
         title: 'Track Updated',
       });
-    } catch (e) {
+    } catch {
       toast({
         variant: 'destructive',
         title: 'Something went wrong',

@@ -101,8 +101,7 @@ export default function SplitEditor({
       if (
         (e.ctrlKey || e.metaKey) &&
         e.code === 'KeyS' &&
-        wrapper.current &&
-        wrapper.current.contains(document.activeElement)
+        wrapper.current?.contains(document.activeElement)
       ) {
         e.preventDefault();
         editorRef.current?.getAction('editor.action.formatDocument')?.run();

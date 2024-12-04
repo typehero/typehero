@@ -13,7 +13,7 @@ export const ExtraActionsButton = ({ report }: { report: ReportWithInfo }) => {
         description: <p>Comment deleted successfully</p>,
       });
       router.push('/?tab=reports');
-    } catch (e) {
+    } catch {
       toast({
         title: 'Error',
         variant: 'destructive',
@@ -25,7 +25,7 @@ export const ExtraActionsButton = ({ report }: { report: ReportWithInfo }) => {
     try {
       await banChallenge(challengeId, reportId);
       router.push('/?tab=reports');
-    } catch (e) {
+    } catch {
       toast({
         title: 'Error',
         variant: 'destructive',

@@ -34,8 +34,9 @@ export function RightWrapper({ track, challenge, toggleDirection }: RightWrapper
   // Redirect to solution on successful submission and show suggestions
   function handleSuccessfulSubmission(isSuccessful: boolean, submissionId: number, slug?: string) {
     const query = slug ? `&slug=${slug}` : '';
-    isSuccessful &&
+    if (isSuccessful) {
       router.push(`/challenge/${challenge.slug}/submissions/${submissionId}?success=true${query}`);
+    }
   }
 
   return (
