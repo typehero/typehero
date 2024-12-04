@@ -25,9 +25,7 @@ export default function AboutPage() {
             team is thrilled to unveil our brand-new platform, designed not just for this year's
             event but for many more to come. We hope you enjoy the challenges, learn something new
             along the way, and have a great time participating. If you’re enjoying the experience,
-            we’d love it if you shared the event with your friends to help it grow even more! If you
-            have any questions, spot any bugs, or want to share feedback, don’t hesitate to connect
-            with us on Discord or GitHub. We're here to help!
+            we’d love it if you shared the event with your friends to help it grow even more!
           </p>
 
           <p className="mb-6">
@@ -94,17 +92,17 @@ export default function AboutPage() {
             >
               TypeScript Playground
             </a>{' '}
-            preferred over our editor(at least for now 🤐). Just copy the code from the test
-            section, start coding, and when you nail it, pop your code (except the tests) back into
-            our editor.
+            preferred over our editor (at least for now 🤐). You can copy the code from the test
+            section into the playground, start coding, and when you nail it, pop your code (except
+            any tests) back into our editor.
           </li>
           <li>
             The test cases are your friends! They’ll guide you through what we’re asking for. When
             things get trickier, these cases will be your trusty helpers.
           </li>
           <li>
-            Join the advent-of-typescript channel in our discord linked above just for chewing over
-            these challenges. Jump in, chat, and share your thoughts on solutions. We highly
+            Join the advent-of-typescript channel in our discord linked earlier just for chewing
+            over these challenges. Jump in, chat, and share your thoughts on solutions. We highly
             recommend it!
           </li>
           <li>

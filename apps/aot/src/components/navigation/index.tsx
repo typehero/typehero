@@ -35,7 +35,7 @@ export async function Navigation() {
           <NavLinksWithYear />
           <NavLink href="/about">About</NavLink>
           <Link
-            className="donate-btn relative w-fit overflow-hidden rounded-full px-4 py-2 text-black/50 duration-300 hover:bg-[#eed15f] md:hidden dark:text-white/80 dark:hover:bg-[#bea74b44]"
+            className="donate-btn relative w-fit overflow-hidden rounded-full px-4 py-2 text-black/60 duration-300 hover:bg-[#eed15f] md:hidden dark:text-white/80 dark:hover:bg-[#bea74b44]"
             href="/support"
           >
             Support Us
@@ -43,19 +43,22 @@ export async function Navigation() {
           <Separator className="md:hidden dark:bg-white/20" />
           <NavLink
             href={DISCORD_INVITE_LINK}
-            className="flex flex-row items-center gap-2 text-black/40 md:hidden dark:text-white/60"
+            className="flex flex-row items-center gap-2 text-black/40 dark:text-white/60"
+            linkClassName="md:hidden"
           >
             <span>Join us on Discord</span> <Discord className="h-4 w-4" />
           </NavLink>
           <NavLink
             href={TWITTER_LINK}
-            className="flex flex-row items-center gap-2 text-black/40 md:hidden dark:text-white/60"
+            className="flex flex-row items-center gap-2 text-black/40 dark:text-white/60"
+            linkClassName="md:hidden"
           >
             <span>Follow us on </span> <NewTwitter className="h-3.5 w-3.5" />
           </NavLink>
           <NavLink
             href={GITHUB_LINK}
-            className="flex flex-row items-center gap-2 text-black/40 md:hidden dark:text-white/60"
+            className="flex flex-row items-center gap-2 text-black/40 dark:text-white/60"
+            linkClassName="md:hidden"
           >
             <span>Contribute on </span> <Github className="h-3.5 w-3.5" />
           </NavLink>

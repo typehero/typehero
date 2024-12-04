@@ -9,7 +9,7 @@ export interface Props {
   };
 }
 
-export default async function (props: Props) {
+export default async function TrackPage(props: Props) {
   const session = await auth();
   assertAdmin(session);
 

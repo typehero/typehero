@@ -309,6 +309,13 @@ export default function SplitEditor({
     }, 1000),
   ).current;
 
+  useEffect(
+    () => () => {
+      inlayHintsRef.current?.dispose();
+    },
+    [],
+  );
+
   return (
     <div className={clsx('flex h-[calc(100%-_90px)] flex-col', className)} ref={wrapper}>
       <section

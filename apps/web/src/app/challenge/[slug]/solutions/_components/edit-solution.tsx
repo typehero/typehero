@@ -67,9 +67,7 @@ export function EditSolution({ solution, setIsEditing }: Props) {
   };
 
   const { theme } = useTheme();
-  theme !== undefined
-    ? document.documentElement.setAttribute('data-color-mode', theme)
-    : document.documentElement.setAttribute('data-color-mode', 'system');
+  document.documentElement.setAttribute('data-color-mode', theme ?? 'system');
 
   return (
     <Form {...form}>

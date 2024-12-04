@@ -18,6 +18,7 @@ import {
   deleteComment as deleteCommentAction,
   replyComment,
   updateComment as updateCommentAction,
+  type CommentToCreate,
 } from './comment.action';
 import { toast } from '@repo/ui/components/use-toast';
 import type { ChallengeRouteData } from '../../[slug]/getChallengeRouteData';
@@ -176,7 +177,7 @@ export function useComments(props: UseCommentsProps) {
   };
 }
 
-type UseCommentRepliesProps =
+export type UseCommentRepliesProps =
   | {
       root: ChallengeRouteData['challenge'];
       type: 'CHALLENGE';
@@ -254,14 +255,12 @@ export function useCommentsReplies({
 
   const addReplyComment = async (text: string) => {
     try {
-      // @ts-ignore
       const res = await replyComment(
-        // @ts-ignore
         {
           text,
           root,
           rootType: type,
-        },
+        } as CommentToCreate,
         parentComment,
       );
       if (res === 'text_is_empty') {

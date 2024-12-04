@@ -1,3 +1,5 @@
+const path = require("node:path");
+const { overrides } = require('./utils/overrides');
 const { rules } = require('./utils/rules');
 
 module.exports = {
@@ -13,6 +15,7 @@ module.exports = {
   ],
   ignorePatterns: ['**/.next/**', '**/.eslintrc.cjs', '**/node_modules/**', 'public/**'],
   overrides: [
+    ...overrides,
     {
       files: ['**/route.tsx'],
       rules: {
@@ -35,12 +38,9 @@ module.exports = {
     },
   ],
   parserOptions: {
-    tsconfigRootDir: `${__dirname}/tsconfig.json`,
+    projectService: true,
+    tsconfigRootDir: path.join(__dirname, "../..")
   },
   root: true,
-  plugins: ['unused-imports'],
-  rules: {
-    ...rules,
-    'unused-imports/no-unused-imports': 'error',
-  },
+  rules,
 };

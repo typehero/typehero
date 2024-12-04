@@ -10,7 +10,4 @@ module.exports = {
     'monaco-editor.d.ts',
     'next-env.d.ts',
   ],
-  parserOptions: {
-    project: `${__dirname}/tsconfig.json`,
-  },
 };

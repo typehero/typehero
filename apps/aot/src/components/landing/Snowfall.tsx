@@ -55,8 +55,8 @@ export default function Snowfall() {
         return Math.floor(Math.random() * (max - min + 1) + min);
       };
 
-      const randomColor = (colors: string) => {
-        return colors[Math.floor(Math.random() * colors.length)];
+      const randomColor = (colors: string[]) => {
+        return colors[Math.floor(Math.random() * colors.length)]!;
       };
 
       const distance = (x1: number, y1: number, x2: number, y2: number) => {
@@ -128,12 +128,11 @@ export default function Snowfall() {
 
         for (let i = 0; i < attributes.particleCount; i++) {
           particles.push(
-            // @ts-ignore
+            // @ts-expect-error -- This is being used approximately like a class.
             new Particle(
               Math.random() * canvas.width,
               Math.random() * canvas.height,
               randomIntFromRange(0.5, attributes.particleSize),
-              // @ts-ignore
               randomColor(attributes.colors),
               Math.random() * 80,
             ),
@@ -163,7 +162,7 @@ export default function Snowfall() {
   }, []);
 
   return (
-    <div className="pointer-events-none fixed left-0 top-0 z-0 h-full w-full">
+    <div className="pointer-events-none fixed left-0 top-0 z-0 h-full w-full motion-reduce:hidden">
       <canvas ref={canvasRef} className="h-full w-full" />
     </div>
   );
