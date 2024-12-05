@@ -20,7 +20,7 @@ export function SignOutLink({ className }: { className?: string }) {
       onClick={handleSignOut}
       variant="ghost"
     >
-      <span className="ml-3 text-red-500 md:ml-0">Log out</span>
+      <span className="text-red-500">Log out</span>
     </Button>
   );
 }

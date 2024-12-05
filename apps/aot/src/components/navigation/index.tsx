@@ -84,7 +84,7 @@ export async function Navigation() {
               <span>Theme</span>
               <ThemeButton />
             </div>
-            <SignOutLink className="px-0" />
+            <SignOutLink className="ml-3 px-0" />
           </>
         ) : (
           <LoginLink className="px-0 hover:bg-transparent hover:dark:bg-transparent" />
