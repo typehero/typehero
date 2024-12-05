@@ -129,7 +129,7 @@ export function UserBadge(props: UserBadgeProps) {
       }
       onHoverComponent={
         //When a user does not have a bio & they have no titles, then a compact version is shown
-        <Link href={`/@${props.user.name}`}>
+        <Link href={`https://typehero.dev/@${props.user.name}`}>
           <div className="flex flex-row space-x-2">
             <div className="flex min-w-20 flex-col items-center justify-center space-y-2">
               <div className={cn('w-min rounded-full bg-gradient-to-r p-0.5', gradient)}>
