@@ -21,12 +21,12 @@ const colorsArray = [
 ];
 
 const dimmedColors = [
-  'from-blue-200/50 dark:from-blue-800/50 via-blue-400/50 dark:via-blue-600/50 to-blue-100/50 dark:to-blue-900/50',
-  'from-green-200/50 dark:from-green-800/50 via-green-400/50 dark:via-green-600/50 to-green-100/50 dark:to-green-900/50',
-  'from-yellow-200/50 dark:from-yellow-800/50 via-yellow-400/50 dark:via-yellow-600/50 to-yellow-100/50 dark:to-yellow-900/50',
-  'from-red-200/50 dark:from-red-800/50 via-red-400/50 dark:via-red-600/50 to-red-100/50 dark:to-red-900/50',
-  'from-purple-200/50 dark:from-purple-800/50 via-purple-400/50 dark:via-purple-600/50 to-purple-100/50 dark:to-purple-900/50',
-  'from-pink-200/50 dark:from-pink-800/50 via-pink-400/50 dark:via-pink-600/50 to-pink-100/50 dark:to-pink-900/50',
+  'from-blue-100 dark:from-blue-900 via-blue-200 dark:via-blue-800 to-blue-50 dark:to-blue-950',
+  'from-green-100 dark:from-green-900 via-green-200 dark:via-green-800 to-green-50 dark:to-green-950',
+  'from-yellow-100 dark:from-yellow-900 via-yellow-200 dark:via-yellow-800 to-yellow-50 dark:to-yellow-950',
+  'from-red-100 dark:from-red-900 via-red-200 dark:via-red-800 to-red-50 dark:to-red-950',
+  'from-purple-100 dark:from-purple-900 via-purple-200 dark:via-purple-800 to-purple-50 dark:to-purple-950',
+  'from-pink-100 dark:from-pink-900 via-pink-200 dark:via-pink-800 to-pink-50 dark:to-pink-950',
 ];
 
 const unsolvedDashedBorder =
