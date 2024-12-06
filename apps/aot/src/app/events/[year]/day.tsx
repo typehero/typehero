@@ -20,6 +20,15 @@ const colorsArray = [
   'from-pink-200 dark:from-pink-800 via-pink-600 dark:via-pink-400 to-pink-100 dark:to-pink-900',
 ];
 
+const dimmedColors = [
+  'from-blue-200/50 dark:from-blue-800/50 via-blue-400/50 dark:via-blue-600/50 to-blue-100/50 dark:to-blue-900/50',
+  'from-green-200/50 dark:from-green-800/50 via-green-400/50 dark:via-green-600/50 to-green-100/50 dark:to-green-900/50',
+  'from-yellow-200/50 dark:from-yellow-800/50 via-yellow-400/50 dark:via-yellow-600/50 to-yellow-100/50 dark:to-yellow-900/50',
+  'from-red-200/50 dark:from-red-800/50 via-red-400/50 dark:via-red-600/50 to-red-100/50 dark:to-red-900/50',
+  'from-purple-200/50 dark:from-purple-800/50 via-purple-400/50 dark:via-purple-600/50 to-purple-100/50 dark:to-purple-900/50',
+  'from-pink-200/50 dark:from-pink-800/50 via-pink-400/50 dark:via-pink-600/50 to-pink-100/50 dark:to-pink-900/50',
+];
+
 const unsolvedDashedBorder =
   'border-2 border-dashed border-black/30 bg-white/20 backdrop-blur group-hover:bg-white/50 dark:border-white/30 dark:bg-black/20 dark:group-hover:bg-black/50';
 
@@ -52,7 +61,15 @@ export default function DaySolved({ day, active, hasSolved }: DayProps) {
           day !== 23 &&
           day !== 25 &&
           `bg-gradient-to-br ${colorsArray[day % 6]}`
-        } p-[1.5px]`}
+        }
+      ${
+        active &&
+        !hasSolved &&
+        day !== 22 &&
+        day !== 23 &&
+        day !== 25 &&
+        `bg-gradient-to-br ${dimmedColors[day % 6]}`
+      } p-[1.5px]`}
     >
       <div
         className={`relative grid aspect-square h-12 w-12 cursor-pointer place-items-center overflow-hidden rounded-xl duration-300 group-hover:rounded-2xl
@@ -67,7 +84,7 @@ export default function DaySolved({ day, active, hasSolved }: DayProps) {
           : day !== 22 &&
             day !== 23 &&
             day !== 25 && <div className="candy-cane-neutral absolute inset-0" />}
-        {hasSolved ? (
+        {hasSolved && day !== 1 ? (
           <Star className="absolute right-1 top-1 z-50 h-3 w-3 select-none fill-yellow-600 text-yellow-600 dark:fill-yellow-300 dark:text-yellow-300" />
         ) : null}
         {hasSolved && day === 1 ? (
