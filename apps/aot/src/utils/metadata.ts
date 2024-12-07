@@ -14,7 +14,8 @@ export const baseMetadata: Metadata = {
     index: true,
     follow: true,
   },
-  description: tagline,
+  description:
+    'Advent of TypeScript is a month-long event running from December 1 to Christmas, featuring daily TypeScript challenges. Participants can test their skills, climb the leaderboard, and engage with the TypeScript community',
   openGraph: {
     title: 'Advent of TypeScript',
     images: [
