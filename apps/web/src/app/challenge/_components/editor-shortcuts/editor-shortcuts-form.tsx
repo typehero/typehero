@@ -2,12 +2,12 @@
 
 import type { PropsWithChildren } from 'react';
 
-interface Props {
+interface EditorShortcutProps {
   title: string;
   description: React.ReactNode;
 }
 
-function EditorShortcut(props: Props) {
+function EditorShortcut(props: EditorShortcutProps) {
   return (
     <div className="grid grid-cols-2 gap-2">
       <h1>{props.title}</h1>
@@ -24,6 +24,8 @@ const Key = (props: PropsWithChildren) => {
   );
 };
 function isMacOS() {
+  // TODO: Use a package or some such
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   return navigator.platform.toLowerCase().includes('mac');
 }
 export function EditorShortcuts() {

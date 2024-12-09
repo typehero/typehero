@@ -53,7 +53,7 @@ export function EditForm(props: {
         description: 'Your profile has been successfully updated !',
         variant: 'success',
       });
-    } catch (error) {
+    } catch {
       toast({
         title: 'Could not update profile',
         variant: 'destructive',

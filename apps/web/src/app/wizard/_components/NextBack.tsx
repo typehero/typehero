@@ -1,7 +1,7 @@
 import { Button } from '@repo/ui/components/button';
 import { STEPS } from '.';
 
-interface Props {
+interface NextBackProps {
   current: number;
   onChange: (index: number) => void;
   onNext: () => void;
@@ -9,7 +9,7 @@ interface Props {
   isSubmitting: boolean;
 }
 
-export function NextBack({ current, onChange, onNext, onSubmit, isSubmitting }: Props) {
+export function NextBack({ current, onChange, onNext, onSubmit, isSubmitting }: NextBackProps) {
   return (
     <div className={`flex justify-center gap-3 ${current === STEPS.Summary && ''}`}>
       {current > STEPS.ChallengeCard && (

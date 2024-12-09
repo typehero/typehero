@@ -25,9 +25,7 @@ export default function AboutPage() {
             team is thrilled to unveil our brand-new platform, designed not just for this year's
             event but for many more to come. We hope you enjoy the challenges, learn something new
             along the way, and have a great time participating. If you’re enjoying the experience,
-            we’d love it if you shared the event with your friends to help it grow even more! If you
-            have any questions, spot any bugs, or want to share feedback, don’t hesitate to connect
-            with us on Discord or GitHub. We're here to help!
+            we’d love it if you shared the event with your friends to help it grow even more!
           </p>
 
           <p className="mb-6">
@@ -35,7 +33,7 @@ export default function AboutPage() {
             out to us on our Discord or GitHub.
           </p>
 
-          <div className="mb-6 flex flex-col items-center gap-5 md:flex-row">
+          <div className="mb-6 flex flex-col items-center gap-5 sm:flex-row">
             <a
               target="_blank"
               rel="noreferrer"
@@ -71,11 +69,11 @@ export default function AboutPage() {
             </Button>
             <Button
               asChild
-              className={`${styles.donateStripeLinkBtn} group relative w-fit overflow-hidden rounded-xl border-none p-0 font-bold !ring-0 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:duration-75 dark:p-[1px]`}
+              className={`${styles.donateStripeLinkBtn} group relative w-full overflow-hidden rounded-xl border-none p-0 font-bold outline-offset-4 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:duration-75 md:w-auto dark:p-[1px]`}
               variant="outline"
             >
               <a href="https://donate.stripe.com/14k5kv1uv0e57yU4gh">
-                <span className="inline-flex h-full w-fit items-center gap-2 rounded-xl bg-black px-4 py-2 text-white transition-all duration-300 dark:bg-neutral-900 dark:text-white">
+                <span className="flex h-full w-full items-center justify-center gap-2 rounded-xl bg-black px-4 py-2 text-white transition-all duration-300 dark:bg-neutral-900 dark:text-white">
                   Click to Donate
                 </span>
               </a>
@@ -94,17 +92,17 @@ export default function AboutPage() {
             >
               TypeScript Playground
             </a>{' '}
-            preferred over our editor(at least for now 🤐). Just copy the code from the test
-            section, start coding, and when you nail it, pop your code (except the tests) back into
-            our editor.
+            preferred over our editor (at least for now 🤐). You can copy the code from the test
+            section into the playground, start coding, and when you nail it, pop your code (except
+            any tests) back into our editor.
           </li>
           <li>
             The test cases are your friends! They’ll guide you through what we’re asking for. When
             things get trickier, these cases will be your trusty helpers.
           </li>
           <li>
-            Join the advent-of-typescript channel in our discord linked above just for chewing over
-            these challenges. Jump in, chat, and share your thoughts on solutions. We highly
+            Join the advent-of-typescript channel in our discord linked earlier just for chewing
+            over these challenges. Jump in, chat, and share your thoughts on solutions. We highly
             recommend it!
           </li>
           <li>

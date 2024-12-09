@@ -12,14 +12,11 @@
   "dependencies": {
     "@next/eslint-plugin-next": "canary",
     "@repo/tsconfig": "workspace:*",
-    "@typescript-eslint/eslint-plugin": "^5.59.1",
-    "@typescript-eslint/parser": "^5.59.1",
-    "@vercel/style-guide": "^4.0.2",
-    "eslint": "^8.45.0",
-    "eslint-config-turbo": "2.0.12",
+    "@typescript-eslint/eslint-plugin": "^8.16.0",
+    "@typescript-eslint/parser": "^8.16.0",
+    "@vercel/style-guide": "^6.0.0",
+    "eslint": "^8.57.0",
+    "eslint-config-turbo": "^2.3.3",
     "typescript": "^5.3.3"
-  },
-  "devDependencies": {
-    "eslint-plugin-unused-imports": "^3.0.0"
   }
 }

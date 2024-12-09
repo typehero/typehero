@@ -21,12 +21,12 @@ nmap gcc :M<Space>editor.action.commentLine`,
 
 type Settings = typeof DEFAULT_SETTINGS;
 
-interface State {
+interface EditorSettingsState {
   settings: Settings;
   updateSettings: (settings: Settings) => void;
 }
 
-export const useEditorSettingsStore = create<State>()(
+export const useEditorSettingsStore = create<EditorSettingsState>()(
   persist(
     (set, get) => ({
       settings: DEFAULT_SETTINGS,

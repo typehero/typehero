@@ -9,7 +9,7 @@ export const ImageList = ({ images }: { images: ImageUpload[] }) => {
         <a href={image.url} key={image.id} target="_blank" rel="noreferrer">
           {/*  eslint-disable-next-line @next/next/no-img-element */}
           <img
-            alt={`${image.id}`}
+            alt={image.id}
             className="bg-blue-300"
             height="auto"
             onError={(e) => {

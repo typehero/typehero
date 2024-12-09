@@ -12,7 +12,7 @@ import type { SolutionRouteData } from '../../solutions/[solutionId]/getSolution
  * @param comment a Challenge or Solution-based comment.
  * @returns the prisma create response.
  */
-type CommentToCreate =
+export type CommentToCreate =
   | {
       text: string;
       rootType: 'CHALLENGE';
@@ -187,7 +187,7 @@ export async function replyComment(
 export async function updateComment(text: string, id: number) {
   const session = await auth();
 
-  if (!session || !session.user) return 'unauthorized';
+  if (!session?.user) return 'unauthorized';
   if (text.length === 0) return 'text_is_empty';
 
   const comment = await prisma.comment.findFirstOrThrow({

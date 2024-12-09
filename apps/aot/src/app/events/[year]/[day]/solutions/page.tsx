@@ -4,21 +4,18 @@ import { getAotSlug } from '~/utils/getAotSlug';
 import { buildMetaForEventPage } from '~/utils/metadata';
 import { Solutions } from './_components';
 
-interface Props {
+interface SolutionPageProps {
   params: {
     year: string;
     day: string;
   };
 }
 
-export async function generateMetadata() {
-  return buildMetaForEventPage({
-    title: 'Advent of Typescript',
-    description: 'Advent of Typescript',
-  });
+export function generateMetadata() {
+  return buildMetaForEventPage();
 }
 
-export default async function SolutionPage({ params: { year, day } }: Props) {
+export default function SolutionPage({ params: { year, day } }: SolutionPageProps) {
   const slug = getAotSlug({ year, day });
 
   if (!isAfterJanuaryFirst(Number(year))) {

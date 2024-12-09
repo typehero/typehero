@@ -138,7 +138,7 @@ export async function deleteSolution(solutionId: number, reportId: number) {
       }),
     ]);
     return 'ok';
-  } catch (e) {
+  } catch {
     return 'failed';
   }
 }

@@ -5,7 +5,7 @@ import { ExploreSectionSkeleton } from './explore-section-skeleton';
 
 export const dynamic = 'force-dynamic';
 
-export async function Explore() {
+export function Explore() {
   return (
     <>
       <div className="flex flex-col gap-8 py-8 md:gap-10">

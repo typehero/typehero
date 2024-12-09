@@ -14,7 +14,8 @@ export const baseMetadata: Metadata = {
     index: true,
     follow: true,
   },
-  description: tagline,
+  description:
+    'Advent of TypeScript is a month-long event running from December 1 to Christmas, featuring daily TypeScript challenges. Participants can test their skills, climb the leaderboard, and engage with the TypeScript community',
   openGraph: {
     title: 'Advent of TypeScript',
     images: [
@@ -43,20 +44,14 @@ export const baseMetadata: Metadata = {
   },
 };
 
-export const buildMetaForEventPage = async ({
-  title,
-  description,
-}: {
-  title?: string;
-  description?: string;
-}): Promise<Metadata> => {
+export const buildMetaForEventPage = (): Metadata => {
   return buildMeta({
     ogImageUrl: `${OG_URL}/api/aot-2024`,
   });
 };
 
 /** update the metadata for og */
-const buildMeta = async ({ ogImageUrl }: { ogImageUrl: string }): Promise<Metadata> => {
+const buildMeta = ({ ogImageUrl }: { ogImageUrl: string }): Metadata => {
   baseMetadata.openGraph!.images = ogImageUrl;
   baseMetadata.twitter!.images = ogImageUrl;
 

@@ -80,11 +80,11 @@ export async function Navigation() {
 
         {session?.user ? (
           <>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 pl-4 md:pl-0">
               <span>Theme</span>
               <ThemeButton />
             </div>
-            <SignOutLink className="px-0" />
+            <SignOutLink className="ml-3 px-0" />
           </>
         ) : (
           <LoginLink className="px-0 hover:bg-transparent hover:dark:bg-transparent" />
@@ -154,7 +154,7 @@ export async function Navigation() {
   );
 }
 
-async function LoginButton({ session }: { session: Session | null }) {
+function LoginButton({ session }: { session: Session | null }) {
   return session?.user ? (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

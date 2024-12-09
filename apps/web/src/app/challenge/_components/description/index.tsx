@@ -28,7 +28,7 @@ import { UserBadge } from '../comments/enhanced-user-badge';
 import { Vote } from '../vote';
 import { Suggestions } from './suggestions';
 
-interface Props {
+interface DescriptionProps {
   challenge: ChallengeRouteData['challenge'];
 }
 
@@ -39,7 +39,7 @@ export interface FormValues {
   other: boolean;
 }
 
-export function Description({ challenge }: Props) {
+export function Description({ challenge }: DescriptionProps) {
   const [hasBookmarked, setHasBookmarked] = useState(challenge.bookmark.length > 0);
   const session = useSession();
 

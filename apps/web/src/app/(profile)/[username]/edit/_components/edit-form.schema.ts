@@ -6,7 +6,7 @@ const validUrlWithHttpOrHttps = z.string().refine(
     try {
       const parsedUrl = new URL(url);
       return ['https:', 'http:'].includes(parsedUrl.protocol);
-    } catch (error) {
+    } catch {
       return false;
     }
   },

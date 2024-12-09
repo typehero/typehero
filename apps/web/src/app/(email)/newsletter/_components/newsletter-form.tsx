@@ -43,7 +43,7 @@ export function NewsletterForm() {
     },
   });
 
-  async function onSubmit(data: NewsletterFormSchema) {
+  function onSubmit(data: NewsletterFormSchema) {
     mutation.mutate(data);
   }
 
@@ -150,7 +150,6 @@ export function NewsletterForm() {
         {mutation.status === 'error' && (
           <AlertDestructive
             text={
-              // @ts-ignore
               mutation.error?.message === 'Member Exists'
                 ? 'You have already subscribed using this email!'
                 : 'Something went wrong, please try again.'

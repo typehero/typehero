@@ -15,7 +15,7 @@ import { useTrackNavigationVisiblity } from './use-track-visibility.hook';
 import { ProblemExplorerTrackNav } from '~/components/Navigation/problem-explorer-track-nav';
 
 type Tab = 'description' | 'solutions' | 'submissions';
-interface Props {
+interface LeftWrapperProps {
   children: ReactNode;
   challenge: ChallengeRouteData['challenge'];
   track: ChallengeRouteData['track'];
@@ -23,7 +23,13 @@ interface Props {
   isDesktop: boolean;
 }
 
-export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop }: Props) {
+export function LeftWrapper({
+  children,
+  challenge,
+  track,
+  expandPanel,
+  isDesktop,
+}: LeftWrapperProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -148,7 +154,9 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
             )}
             onClick={() => {
               router.push(`/challenge/${challenge.slug}`);
-              isCollapsed && expandPanel();
+              if (isCollapsed) {
+                expandPanel();
+              }
             }}
             onFocus={(e) => {
               e.target.click();
@@ -164,7 +172,9 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
             )}
             onClick={() => {
               router.push(`/challenge/${challenge.slug}/solutions`);
-              isCollapsed && expandPanel();
+              if (isCollapsed) {
+                expandPanel();
+              }
             }}
             onFocus={(e) => {
               e.target.click();
@@ -184,7 +194,9 @@ export function LeftWrapper({ children, challenge, track, expandPanel, isDesktop
             )}
             onClick={() => {
               router.push(`/challenge/${challenge.slug}/submissions`);
-              isCollapsed && expandPanel();
+              if (isCollapsed) {
+                expandPanel();
+              }
             }}
             onFocus={(e) => {
               e.target.click();

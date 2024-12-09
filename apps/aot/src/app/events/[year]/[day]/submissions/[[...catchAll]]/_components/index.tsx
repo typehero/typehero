@@ -10,12 +10,12 @@ import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import type { ChallengeSubmissions } from '../page';
 import { useParams } from 'next/navigation';
 
-interface Props {
+interface SubmissionsProps {
   submissions: ChallengeSubmissions;
 }
 
 type Status = 'accepted' | 'all' | 'rejected';
-export function Submissions({ submissions }: Props) {
+export function Submissions({ submissions }: SubmissionsProps) {
   const [selectedStatus, setSelectStatus] = useState<Status>('all');
 
   const filteredSubmissions = useMemo(() => {

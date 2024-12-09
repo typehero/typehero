@@ -1,21 +1,21 @@
 import './globals.css';
 
-import { Analytics } from '@vercel/analytics/react';
 import { Toaster } from '@repo/ui/components/toaster';
-import type { Metadata } from 'next';
+import { Analytics } from '@vercel/analytics/react';
 import { Inter } from 'next/font/google';
 import { Navigation } from '~/components/navigation';
 import { Providers } from './providers';
+import { buildMetaForEventPage } from '~/utils/metadata';
 
 const inter = Inter({
   subsets: ['latin'],
 });
 
-export const metadata: Metadata = {
-  title: 'Advent of TypeScript',
-};
+export function generateMetadata() {
+  return buildMetaForEventPage();
+}
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

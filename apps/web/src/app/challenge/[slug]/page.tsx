@@ -6,13 +6,13 @@ import { Comments } from '../_components/comments';
 import { Description } from '../_components/description';
 import { getChallengeRouteData } from './getChallengeRouteData';
 
-interface Props {
+interface ChallengesProps {
   params: {
     slug: string;
   };
 }
 
-export async function generateMetadata({ params: { slug } }: Props) {
+export async function generateMetadata({ params: { slug } }: ChallengesProps) {
   const { challenge } = await getChallengeRouteData(slug, null);
   const description = `Unlock your TypeScript potential by solving the ${challenge.name} challenge on TypeHero.`;
 
@@ -25,7 +25,7 @@ export async function generateMetadata({ params: { slug } }: Props) {
   });
 }
 
-export default async function Challenges({ params: { slug } }: Props) {
+export default async function Challenges({ params: { slug } }: ChallengesProps) {
   const session = await auth();
 
   const { challenge } = await getChallengeRouteData(slug, session);

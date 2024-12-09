@@ -2,7 +2,7 @@ import { Balancer } from 'react-wrap-balancer';
 import styles from './newsletter.module.css';
 import { NewsletterForm } from './newsletter-form';
 
-export function Newsletter({ params: { locale } }: { params: { locale: string } }) {
+export function Newsletter() {
   return (
     <main className="relative min-h-[calc(100vh-56px)] sm:px-16 md:px-0">
       <div className={`${styles.newsletterBackground} fixed left-0 top-0 -z-10 h-full w-full`} />

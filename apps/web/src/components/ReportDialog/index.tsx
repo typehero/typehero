@@ -59,13 +59,7 @@ export function ReportDialog({
   | ReportSolutionDialogProps
   | ReportUserDialogProps
 >) {
-  const {
-    handleSubmit,
-    formState: { errors },
-    register,
-    control,
-    setValue,
-  } = useForm({
+  const { handleSubmit, register, control, setValue } = useForm({
     defaultValues: {
       derogatory: false,
       unclear: false,
@@ -187,7 +181,7 @@ export function ReportDialog({
             <FormField
               control={control}
               name="derogatory"
-              render={({ field }) => (
+              render={() => (
                 <FormItem>
                   <div className="flex items-center gap-2">
                     <Checkbox
@@ -203,7 +197,7 @@ export function ReportDialog({
             <FormField
               control={control}
               name="derogatory"
-              render={({ field }) => (
+              render={() => (
                 <FormItem>
                   <div className="flex items-center gap-2">
                     <Checkbox
@@ -219,7 +213,7 @@ export function ReportDialog({
             <FormField
               control={control}
               name="hateSpeech"
-              render={({ field }) => (
+              render={() => (
                 <FormItem>
                   <div className="flex items-center gap-2">
                     <Checkbox
@@ -235,7 +229,7 @@ export function ReportDialog({
             <FormField
               control={control}
               name="spam"
-              render={({ field }) => (
+              render={() => (
                 <FormItem>
                   <div className="flex items-center gap-2">
                     <Checkbox
@@ -251,7 +245,7 @@ export function ReportDialog({
             <FormField
               control={control}
               name="threat"
-              render={({ field }) => (
+              render={() => (
                 <FormItem>
                   <div className="flex items-center gap-2">
                     <Checkbox
@@ -268,7 +262,7 @@ export function ReportDialog({
               <FormField
                 control={control}
                 name="unclear"
-                render={({ field }) => (
+                render={() => (
                   <FormItem>
                     <div className="flex items-center gap-2">
                       <Checkbox
@@ -286,7 +280,7 @@ export function ReportDialog({
             <FormField
               control={control}
               name="comments"
-              render={({ field }) => (
+              render={() => (
                 <FormItem className="my-3">
                   <div className="flex flex-col gap-3">
                     <div>Other information</div>

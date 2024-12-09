@@ -6,7 +6,7 @@ import { cn } from '../cn';
 
 const YEARS = ['2024', '2023'];
 
-const YEAR_TO_SELECT_ITEMS_MAP: Record<string, (isLive: boolean) => JSX.Element | number> = {
+const YEAR_TO_SELECT_ITEMS_MAP: Record<string, (isLive: boolean) => React.JSX.Element | number> = {
   '2024': (isLive: boolean) => {
     return (
       <div className="inline-flex flex-row items-center gap-2">

@@ -3,13 +3,13 @@ import { prisma } from '@repo/db';
 import { assertAdmin } from '~/utils/auth-guards';
 import { UpdateTrackForm } from './_components/update-track-form';
 
-export interface Props {
+export interface TracksPageProps {
   params: {
     trackId: string;
   };
 }
 
-export default async function (props: Props) {
+export default async function TrackPage(props: TracksPageProps) {
   const session = await auth();
   assertAdmin(session);
 

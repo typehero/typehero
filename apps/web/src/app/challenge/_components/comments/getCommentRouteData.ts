@@ -62,7 +62,7 @@ export async function getPreselectedSolutionCommentMetadata(
     },
   });
 
-  if (!solution || !solution.solutionComment) return;
+  if (!solution?.solutionComment) return;
 
   const comments = solution.solutionComment;
   const index = comments.findIndex((comment) => comment.id === commentId);

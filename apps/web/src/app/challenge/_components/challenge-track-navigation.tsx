@@ -14,14 +14,19 @@ import { Swords, ChevronLeft, ChevronRight } from '@repo/ui/icons';
 
 import { ChallengeTrackOutline } from './challenge-track-outline';
 
-interface Props {
+interface ChallengeTrackNavigationProps {
   challenge: ChallengeRouteData['challenge'];
   track: ChallengeRouteData['track'];
   isCollapsed: boolean;
   className?: string;
 }
 
-export function ChallengeTrackNavigation({ challenge, track, isCollapsed, className }: Props) {
+export function ChallengeTrackNavigation({
+  challenge,
+  track,
+  isCollapsed,
+  className,
+}: ChallengeTrackNavigationProps) {
   const router = useRouter();
 
   const { data: trackDetails, isPending } = useQuery({

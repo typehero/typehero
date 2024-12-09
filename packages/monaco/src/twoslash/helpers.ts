@@ -22,8 +22,8 @@ export async function quickInfoRequest({
   };
 }
 
-export async function createInlayHint({ hint, monaco, position }: InlayHintInfo) {
-  if (!hint || !hint.displayParts) return;
+export function createInlayHint({ hint, monaco, position }: InlayHintInfo) {
+  if (!hint?.displayParts) return;
   // Make a one-liner
   let text = hint.displayParts
     .map((d: { text: string }) => d.text)
@@ -68,7 +68,7 @@ export async function getLeftMostHintOfLine({
       worker,
     });
 
-    if (!hint || !hint.displayParts) {
+    if (!hint?.displayParts) {
       continue;
     }
 

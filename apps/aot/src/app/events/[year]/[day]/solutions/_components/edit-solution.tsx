@@ -25,12 +25,12 @@ const formSchema = z.object({
 
 export type FormSchema = z.infer<typeof formSchema>;
 
-interface Props {
+interface EditSolutionProps {
   solution: ChallengeSolution;
   setIsEditing: (isEditing: boolean) => void;
 }
 
-export function EditSolution({ solution, setIsEditing }: Props) {
+export function EditSolution({ solution, setIsEditing }: EditSolutionProps) {
   const { slug } = useParams();
   const session = useSession();
   const form = useForm<FormSchema>({
@@ -56,7 +56,7 @@ export function EditSolution({ solution, setIsEditing }: Props) {
         variant: 'success',
         title: 'Your solution has been updated!',
       });
-    } catch (error) {
+    } catch {
       toast({
         variant: 'destructive',
         title: 'Uh oh! Something went wrong. Please try again.',
@@ -67,9 +67,7 @@ export function EditSolution({ solution, setIsEditing }: Props) {
   };
 
   const { theme } = useTheme();
-  theme !== undefined
-    ? document.documentElement.setAttribute('data-color-mode', theme)
-    : document.documentElement.setAttribute('data-color-mode', 'system');
+  document.documentElement.setAttribute('data-color-mode', theme ?? 'system');
 
   return (
     <Form {...form}>

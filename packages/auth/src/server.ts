@@ -24,10 +24,6 @@ declare module '@auth/core/adapters' {
   }
 }
 
-const useSecureCookies = process.env.VERCEL_ENV === 'production';
-const cookiePrefix = useSecureCookies ? '__Secure-' : '';
-const cookieDomain = useSecureCookies ? 'typehero.dev' : undefined;
-
 export const baseNextAuthConfig: Omit<NextAuthConfig, 'providers'> = {
   pages: {
     signIn: '/login',
@@ -63,7 +59,7 @@ export const baseNextAuthConfig: Omit<NextAuthConfig, 'providers'> = {
     },
   },
   callbacks: {
-    session: async (opts) => {
+    session: (opts) => {
       if (!('user' in opts)) throw new Error("unreachable, we're not using JWT");
 
       const { session, user } = opts;

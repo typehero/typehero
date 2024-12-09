@@ -14,7 +14,7 @@ export function SignOutLink({ className }: { className?: string }) {
   return (
     <Button
       className={clsx(
-        'h-8 justify-start bg-opacity-50 px-2 text-red-500 hover:bg-red-500/20 hover:text-red-500',
+        'h-8 justify-start bg-opacity-50 text-red-500 hover:bg-red-500/20 hover:text-red-500 [&:not(:disabled)]:px-2',
         className,
       )}
       onClick={handleSignOut}
