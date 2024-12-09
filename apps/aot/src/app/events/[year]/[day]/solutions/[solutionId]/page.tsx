@@ -14,7 +14,6 @@ interface SolutionPageProps {
 }
 
 export type ChallengeSolution = NonNullable<Awaited<ReturnType<typeof getSolutionIdRouteData>>>;
-
 export default async function SolutionPage({
   params: { solutionId, year, day },
 }: SolutionPageProps) {

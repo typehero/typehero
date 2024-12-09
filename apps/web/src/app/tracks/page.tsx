@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { buildMetaForDefault } from '~/app/metadata';
 
-export function generateMetadata(): Promise<Metadata> {
+export function generateMetadata(): Metadata {
   return buildMetaForDefault({
     title: 'Explore Tracks | TypeHero',
     description:

@@ -56,7 +56,7 @@ export default function Snowfall() {
       };
 
       const randomColor = (colors: string[]) => {
-        return colors[Math.floor(Math.random() * colors.length)];
+        return colors[Math.floor(Math.random() * colors.length)]!;
       };
 
       const distance = (x1: number, y1: number, x2: number, y2: number) => {
@@ -133,7 +133,7 @@ export default function Snowfall() {
               Math.random() * canvas.width,
               Math.random() * canvas.height,
               randomIntFromRange(0.5, attributes.particleSize),
-              randomColor(attributes.colors)!,
+              randomColor(attributes.colors),
               Math.random() * 80,
             ),
           );

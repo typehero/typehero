@@ -61,13 +61,13 @@ type CommentProps = SingleCommentProps & {
   updateComment: (text: string, commentId: number) => Promise<void>;
 };
 
-export type CommentReportSchemaType = {
-  spam?: boolean;
-  threat?: boolean;
-  hate_speech?: boolean;
-  bullying?: boolean;
-  text?: string;
-};
+export interface CommentReportSchemaType {
+  spam: boolean;
+  threat: boolean;
+  hate_speech: boolean;
+  bullying: boolean;
+  text: string;
+}
 
 // million-ignore
 export function Comment({

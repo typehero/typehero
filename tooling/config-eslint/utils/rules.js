@@ -1,14 +1,20 @@
 module.exports = {
   rules: {
+    '@typescript-eslint/consistent-type-imports': ['warn', { disallowTypeAnnotations: false }],
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/sort-type-constituents': 'warn',
-    'no-floating-decimal': 'warn',
-    'react/no-unescaped-entities': 'off',
-    'unicorn/filename-case': 'off',
-    '@typescript-eslint/consistent-type-imports': ['warn', { disallowTypeAnnotations: false }],
-
-    // Intentional opinions that differ from the defaults.
     '@typescript-eslint/switch-exhaustiveness-check': ['error', { considerDefaultExhaustiveForUnions: true }],
+    'import/no-named-as-default': 'off',
+    'react/no-unescaped-entities': 'off',
+    'react/no-unknown-property': 'off',
+    'unicorn/filename-case': 'off',
+
+    // Pending https://github.com/vercel/style-guide/issues/115
+    // (the new rule is more permissive around description comments)
+    'eslint-comments/require-description': 'off',
+
+    // Pending https://github.com/typescript-eslint/typescript-eslint/issues/9057
+    "@typescript-eslint/use-unknown-in-catch-callback-variable": "off",
 
     // Rules below here can be re-enabled when the team wants to address them.
     // When this repo was first monorepo'ed and given tighter checks,
@@ -16,6 +22,7 @@ module.exports = {
     // They are organized into groups based on what type of warning they are.
     // ---
     // Potential Bugs
+    '@typescript-eslint/no-confusing-void-expression': 'off',
     '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/no-misused-promises': 'off',
     '@typescript-eslint/unbound-method': 'off',
@@ -29,7 +36,6 @@ module.exports = {
     camelcase: 'off',
     '@typescript-eslint/no-unsafe-return': 'off',
     '@typescript-eslint/no-floating-promises': 'off',
-    '@typescript-eslint/prefer-ts-expect-error': 'off',
     'no-await-in-loop': 'off',
     'no-param-reassign': 'off',
     'no-constant-binary-expression': 'off',
@@ -48,7 +54,10 @@ module.exports = {
     // You can ignore if you'd like.
     'prefer-named-capture-group': 'off',
     'prefer-regex-literals': 'off',
+    '@typescript-eslint/consistent-indexed-object-style': 'off',
+    '@typescript-eslint/prefer-nullish-coalescing': 'off',
     'import/no-default-export': 'off',
+    '@typescript-eslint/no-unnecessary-condition': 'off',
     'react/jsx-no-useless-fragment': 'off',
     'no-nested-ternary': 'off',
     'react/jsx-sort-props': 'off',

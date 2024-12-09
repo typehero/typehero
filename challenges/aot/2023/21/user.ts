@@ -7,9 +7,9 @@ type TicTacToeCell = TicTacToeChip | TicTacToeEmptyCell;
 type TicTacToeYPositions = 'top' | 'middle' | 'bottom';
 type TicTacToeXPositions = 'left' | 'center' | 'right';
 type TicTacToePositions = `${TicTacToeYPositions}-${TicTacToeXPositions}`;
-type TicTactToeBoard = TicTacToeCell[][];
+type TicTacToeBoard = TicTacToeCell[][];
 type TicTacToeGame = {
-  board: TicTactToeBoard;
+  board: TicTacToeBoard;
   state: TicTacToeState;
 };
 

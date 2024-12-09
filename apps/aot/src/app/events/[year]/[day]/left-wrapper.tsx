@@ -9,7 +9,6 @@ import { FlaskConical, History, Text } from '@repo/ui/icons';
 import { isAfterJanuaryFirst } from '~/utils/time-utils';
 
 type Tab = 'description' | 'solutions' | 'submissions';
-
 interface LeftWrapperProps {
   children: ReactNode;
   expandPanel: () => void;

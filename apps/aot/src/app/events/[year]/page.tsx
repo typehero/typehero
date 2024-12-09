@@ -11,7 +11,6 @@ import Partners from '~/components/landing/Partners';
 import { Footsies } from '~/components/footsies';
 
 type Challenge = RouterOutputs['event']['getEventChallengesByYear'][0];
-
 interface EventByYearLandingPageProps {
   params: {
     year: string;

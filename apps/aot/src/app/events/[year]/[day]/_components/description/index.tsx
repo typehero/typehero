@@ -90,7 +90,7 @@ export function Description({ challenge }: DescriptionProps) {
                     'rounded-full',
                   )}
                 >
-                  <Share className="h-4 w-4" />
+                  <Share aria-label="Share" className="h-4 w-4" />
                 </div>
               </TooltipTrigger>
               <TooltipContent>
@@ -138,7 +138,7 @@ export function Description({ challenge }: DescriptionProps) {
                 );
               }}
             >
-              <BookmarkIcon className="h-4 w-4" />
+              <BookmarkIcon aria-label="Bookmark" className="h-4 w-4" />
             </Button>
           </TooltipTrigger>
           <TooltipContent>

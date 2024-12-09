@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element -- Intentionally using native elements for og: */
 'use client';
 
 import Head from 'next/head';

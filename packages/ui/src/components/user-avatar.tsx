@@ -5,7 +5,6 @@ interface UserAvatarProps {
   src: string;
   className?: string;
 }
-
 export function UserAvatar(props: UserAvatarProps) {
   return (
     <Avatar className={cn('h-7 w-7', props.className)}>

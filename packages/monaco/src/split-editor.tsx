@@ -101,8 +101,7 @@ export default function SplitEditor({
       if (
         (e.ctrlKey || e.metaKey) &&
         e.code === 'KeyS' &&
-        wrapper.current &&
-        wrapper.current.contains(document.activeElement)
+        wrapper.current?.contains(document.activeElement)
       ) {
         e.preventDefault();
         editorRef.current?.getAction('editor.action.formatDocument')?.run();
@@ -310,6 +309,13 @@ export default function SplitEditor({
       );
     }, 1000),
   ).current;
+
+  useEffect(
+    () => () => {
+      inlayHintsRef.current?.dispose();
+    },
+    [],
+  );
 
   return (
     <div className={clsx('flex h-[calc(100%-_90px)] flex-col', className)} ref={wrapper}>

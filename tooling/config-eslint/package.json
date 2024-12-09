@@ -14,9 +14,9 @@
     "@repo/tsconfig": "workspace:*",
     "@typescript-eslint/eslint-plugin": "^8.16.0",
     "@typescript-eslint/parser": "^8.16.0",
-    "@vercel/style-guide": "^4.0.2",
+    "@vercel/style-guide": "^6.0.0",
     "eslint": "^8.57.0",
-    "eslint-config-turbo": "2.0.12",
+    "eslint-config-turbo": "^2.3.3",
     "typescript": "^5.3.3"
   }
 }

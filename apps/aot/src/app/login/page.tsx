@@ -5,7 +5,6 @@ import { buildMetaForEventPage } from '~/utils/metadata';
 export function generateMetadata() {
   return buildMetaForEventPage();
 }
-
 export default function Index({
   searchParams,
 }: {

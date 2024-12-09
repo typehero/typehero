@@ -11,7 +11,7 @@ import { SearchIcon, Loader2 as LoaderIcon, X as XIcon } from '@repo/ui/icons';
 import { ScrollArea, ScrollBar } from '@repo/ui/components/scroll-area';
 
 function useRecentSearches() {
-  return useRecentSearchesStorage<Challenge>();
+  return useRecentSearchesStorage();
 }
 
 type OnClick = () => void;
@@ -141,7 +141,7 @@ function Topbar() {
 function RecentSearches({ onClick }: { onClick: OnClick }) {
   const { getItems, onAdd, onRemove } = useRecentSearches();
 
-  const results = getItems();
+  const results = getItems() as Challenge[];
 
   if (results.length === 0) {
     return (

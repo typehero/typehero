@@ -69,12 +69,12 @@ export const buildMetaForUser = ({
   username,
   dateSince,
   avatar,
-}: MetaParamsForUser) => {
-  const params = `${userParam.toSearchString({
+}: MetaParamsForUser): Metadata => {
+  const params = userParam.toSearchString({
     username,
     avatar,
     dateSince,
-  })}`;
+  });
 
   const ogImageUrl = `${OG_URL}/api/user?${params}`;
 
@@ -92,14 +92,14 @@ export const buildMetaForChallenge = ({
   username,
   difficulty,
   date,
-}: MetaParamsForChallenge) => {
-  const params = `${challengeParam.toSearchString({
+}: MetaParamsForChallenge): Metadata => {
+  const params = challengeParam.toSearchString({
     description,
     title,
     username,
     difficulty,
     date,
-  })}`;
+  });
 
   const ogImageUrl = `${OG_URL}/api/challenge?${params}`;
 
@@ -117,7 +117,7 @@ export const buildMetaForDefault = ({
 }: {
   title?: string;
   description?: string;
-}) => {
+}): Metadata => {
   return buildMeta({
     ogImageUrl: `${OG_URL}/api/default?cache-bust=${new Date().getDate()}`,
     title,
@@ -131,7 +131,7 @@ export const buildMetaForEventPage = ({
 }: {
   title?: string;
   description?: string;
-}) => {
+}): Metadata => {
   return buildMeta({
     ogImageUrl: `${OG_URL}/api/aot-2023`,
     title,
@@ -148,7 +148,7 @@ const buildMeta = ({
   ogImageUrl: string;
   description?: string;
   title?: string;
-}) => {
+}): Metadata => {
   baseMetadata.openGraph!.images = ogImageUrl;
   baseMetadata.twitter!.images = ogImageUrl;
 

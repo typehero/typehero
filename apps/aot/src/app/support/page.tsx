@@ -41,7 +41,7 @@ export default async function DonatePage() {
         </p>
         <Button
           asChild
-          className={`${styles.donateStripeLinkBtn} group relative w-fit overflow-hidden rounded-xl border-none p-0 font-bold !ring-0 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:duration-75 dark:p-[1px]`}
+          className={`${styles.donateStripeLinkBtn} group relative w-fit overflow-hidden rounded-xl border-none p-0 font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:duration-75 dark:p-[1px]`}
           variant="outline"
         >
           <a href="https://donate.stripe.com/14k5kv1uv0e57yU4gh">

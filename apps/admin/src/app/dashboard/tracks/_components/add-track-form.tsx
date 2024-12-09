@@ -28,7 +28,6 @@ export type FormSchema = z.infer<typeof formSchema>;
 interface AddTrackFormProps {
   toggle: (value: boolean) => void;
 }
-
 export function AddTrackForm({ toggle }: AddTrackFormProps) {
   const { toast } = useToast();
   const router = useRouter();

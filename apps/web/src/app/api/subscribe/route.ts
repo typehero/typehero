@@ -6,8 +6,7 @@ mailchimp.setConfig({
   server: process.env.MAILCHIMP_API_SERVER,
 });
 
-// TODO: This has got to be declared somewhere, right?
-interface NextError {
+interface MailchimpError {
   response: {
     text: string;
   };
@@ -35,7 +34,7 @@ export async function POST(req: Request) {
       },
     });
   } catch (error) {
-    return new Response((error as NextError).response.text, {
+    return new Response((error as MailchimpError).response.text, {
       status: 500,
       headers: {
         'content-type': 'application/json',

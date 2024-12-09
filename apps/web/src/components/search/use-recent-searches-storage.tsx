@@ -6,7 +6,9 @@ interface UseRecentSearchesStorageProps {
   limit?: number;
 }
 
-type Item = { id: number | string };
+interface Item {
+  id: number | string;
+}
 
 export function useRecentSearchesStorage({ limit = 5 }: UseRecentSearchesStorageProps = {}) {
   const [storage, setStorage] = useLocalStorage(SEARCH_LOCAL_STORAGE_KEY, '[]');

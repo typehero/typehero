@@ -21,7 +21,7 @@
     "lint": "eslint . --max-warnings 0",
     "lint:markdown": "markdownlint-cli2 \"challenges/**/*.md\" \"#**/node_modules\" && cspell challenges/** --no-progress",
     "lint:markdown:validate": "tsx challenges/validate.ts",
-    "lint:fix": "eslint . --fix--max-warnings 0",
+    "lint:fix": "eslint . --fix --max-warnings 0",
     "package-check": "pnpm dlx sherif@latest --ignore-rule root-package-dependencies",
     "package-check:fix": "pnpm dlx sherif@latest --ignore-rule root-package-dependencies --fix",
     "refresh": "turbo db:reset db:seed --concurrency=1",

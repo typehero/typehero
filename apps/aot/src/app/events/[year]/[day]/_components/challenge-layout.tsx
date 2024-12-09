@@ -131,7 +131,7 @@ export function ChallengeLayout({
     let y = 0;
     // Width of left side on dekstop, height of top side on mobile;
     let leftWidth = 0;
-    const topHeight = 0;
+    let topHeight = 0;
 
     const mouseMoveHandler = (e: MouseEvent | TouchEvent) => {
       const { dx, dy, currPosX, currPosY } = getEventDeltas(e, { x, y });
@@ -179,12 +179,14 @@ export function ChallengeLayout({
         }
       }
 
-      leftWidth = isDesktop
-        ? // TODO: Either leftSide.current is always defined, or leftWidth can be nullish
-          // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-          leftSide.current?.getBoundingClientRect().width!
-        : // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-          leftSide.current?.getBoundingClientRect().height!;
+      // TODO: Either leftSide.current is always defined, or leftWidth can be nullish
+      /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+      if (isDesktop) {
+        leftWidth = leftSide.current?.getBoundingClientRect().width!;
+      } else {
+        topHeight = leftSide.current?.getBoundingClientRect().height!;
+      }
+      /* eslint-enable @typescript-eslint/no-non-null-asserted-optional-chain */
 
       // Attach the listeners to `document`
       if (e instanceof MouseEvent) {

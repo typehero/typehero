@@ -1,5 +1,4 @@
 export type SortKey = 'createdAt' | 'replies' | 'solutionComment' | 'vote';
-
 export type SortOrder = 'asc' | 'desc';
 
 export function orderBy(sortKey: SortKey, sortOrder: SortOrder) {
