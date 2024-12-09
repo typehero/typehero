@@ -6,8 +6,10 @@ import { useHits, useInstantSearch, useSearchBox } from 'react-instantsearch';
 import { InstantSearchNext } from 'react-instantsearch-nextjs';
 
 const searchClient = algoliasearch(
-  process.env.NEXT_PUBLIC_ALGOLIA_APP_ID,
-  process.env.NEXT_PUBLIC_ALGOLIA_API_KEY,
+  // eslint-disable-next-line @typescript-eslint/dot-notation
+  process.env['NEXT_PUBLIC_ALGOLIA_APP_ID'],
+  // eslint-disable-next-line @typescript-eslint/dot-notation
+  process.env['NEXT_PUBLIC_ALGOLIA_API_KEY'],
 );
 
 const INDEX_NAME = 'typehero';
