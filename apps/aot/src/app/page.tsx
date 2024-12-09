@@ -8,7 +8,6 @@ import { Footsies } from '~/components/footsies';
 export function generateMetadata() {
   return buildMetaForEventPage();
 }
-
 export default function Home() {
   return (
     <>

@@ -8,7 +8,6 @@ import { YEAR } from '../date_constants';
 export function generateMetadata() {
   return buildMetaForEventPage();
 }
-
 export default async function Page() {
   const { enableAotPlatform } = await getAllFlags();
   if (!enableAotPlatform) {

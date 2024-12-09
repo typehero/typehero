@@ -47,7 +47,6 @@ export const ExtraActionsButton = ({ report }: { report: ReportWithInfo }) => {
       });
     }
   }
-
   switch (report.type) {
     case 'CHALLENGE':
       return (
