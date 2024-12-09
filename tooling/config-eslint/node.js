@@ -5,6 +5,7 @@ const { rules } = require('./utils/rules');
 module.exports = {
   extends: [
     'turbo',
+    'plugin:@typescript-eslint/recommended',
     ...['@vercel/style-guide/eslint/node', '@vercel/style-guide/eslint/typescript'].map((config) =>
       require.resolve(config),
     ),

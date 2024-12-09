@@ -37,7 +37,6 @@ export function RichMarkdownEditor({
   const editorRef = useRef<typeof MDEditor & { textarea: HTMLTextAreaElement }>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isImageUploading, setIsImageUploading] = useState(false);
-  const handleFileChange = () => {};
 
   const { theme } = useTheme();
   useEffect(() => {
@@ -217,7 +216,7 @@ export function RichMarkdownEditor({
           <div>Uploading image...</div>
         </div>
       ) : null}
-      <input className="hidden" onChange={handleFileChange} ref={fileInputRef} type="file" />
+      <input className="hidden" ref={fileInputRef} type="file" />
     </div>
   );
 }

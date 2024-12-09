@@ -132,6 +132,8 @@ export async function getHintsFromQueries(queryInfo: Query): Promise<{
 
   return {
     hints: results,
+    // TODO: is InlayHintList's dispose() required? Or is it just an optional Disposable?
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     dispose: () => {},
   };
 }

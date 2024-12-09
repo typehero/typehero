@@ -23,7 +23,6 @@ module.exports = {
     // ---
     // Potential Bugs
     '@typescript-eslint/no-confusing-void-expression': 'off',
-    '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/no-misused-promises': 'off',
     '@typescript-eslint/unbound-method': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
