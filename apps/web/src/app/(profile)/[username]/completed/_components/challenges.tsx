@@ -1,11 +1,11 @@
 'use client';
-import { useState } from 'react';
-import { ExploreCard, type ExploreCardProps } from '~/app/explore/_components/explore-card';
+import { cn } from '@repo/ui/cn';
 import { Alert, AlertDescription, AlertTitle } from '@repo/ui/components/alert';
 import { Button } from '@repo/ui/components/button';
 import Link from 'next/link';
+import { useState } from 'react';
+import { ExploreCard, type ExploreCardProps } from '~/app/explore/_components/explore-card';
 import { DIFFICULTY_COLOR_MAP, FilterBar, type FilterOptions } from './filter-bar';
-import { cn } from '@repo/ui/cn';
 
 export function Challenges(props: {
   challenges: (ExploreCardProps['challenge'] & { id: number; slug: string })[];
@@ -58,7 +58,7 @@ export function Challenges(props: {
             }
             key={c.id}
           >
-            <ExploreCard challenge={c} className="min-w-fit xl:min-w-fit" />
+            <ExploreCard challenge={c} />
           </Link>
         ))}
       </div>
