@@ -297,6 +297,8 @@ export default function SplitEditor({
     debounce(async (monaco: typeof monacoType) => {
       inlayHintsRef.current?.dispose();
 
+      // TODO: Surely monaco is guaranteed to exist, right? Why the optional chaining?
+      // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
       const model = monaco?.editor.getModel(monaco.Uri.parse(USER_CODE_PATH))!;
       const getTsWorker = await monaco?.languages.typescript.getTypeScriptWorker();
       const tsWorker = await getTsWorker?.(model.uri);

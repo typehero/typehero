@@ -280,6 +280,8 @@ export function ChallengeCreationCard({
             }}
           />
           <div className="absolute -right-4 bottom-4 w-full">
+            {/* TODO: Why is onChange required if it's not always provided? */}
+            {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
             <Steps current={step} onChange={() => {}} steps={steps} />
           </div>
         </>
@@ -355,6 +357,8 @@ export function ChallengeCreationCard({
             }}
           />
           <div className="absolute -right-4 bottom-4 w-full">
+            {/* TODO: Why is onChange required if it's not always provided? */}
+            {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
             <Steps current={step} onChange={() => {}} steps={steps} />
           </div>
         </>

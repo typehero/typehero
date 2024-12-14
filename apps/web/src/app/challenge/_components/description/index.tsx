@@ -58,7 +58,8 @@ export function Description({ challenge }: DescriptionProps) {
 
   return (
     <div
-      // eslint-disable-next-line
+      // TODO: Fix this accessibility issue!
+      // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
       tabIndex={0}
       className="custom-scrollable-element h-full overflow-y-auto px-4 pb-36 pt-3 outline-none"
     >
@@ -167,6 +168,8 @@ export function Description({ challenge }: DescriptionProps) {
                   shouldBookmark = true;
                   setHasBookmarked(true);
                 }
+                // TODO: Is this guaranteed to exist, or is userId actually optional?
+                // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
                 debouncedBookmark(challenge.id, session.data?.user?.id!, shouldBookmark)?.catch(
                   (e) => {
                     console.error(e);
