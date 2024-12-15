@@ -91,6 +91,7 @@ export function CodePanel(props: CodePanelProps) {
       toast({
         variant: 'destructive',
         title: 'You are unable to submit.',
+        description: 'Please wait for the tests to finish running.',
       });
       return;
     }
