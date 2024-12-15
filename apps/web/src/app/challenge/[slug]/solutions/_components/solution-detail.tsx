@@ -103,6 +103,8 @@ export function SolutionDetails({ solution }: SolutionDetailsProps) {
             <div className="flex items-center gap-3">
               <Vote
                 challengeSlug={solution.challenge?.slug ?? ''}
+                // TODO: Is this guaranteed to exist, or is userId actually optional?
+                // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
                 toUserId={solution.user?.id!}
                 voteCount={solution._count.vote}
                 initialHasVoted={solution.vote.length > 0}

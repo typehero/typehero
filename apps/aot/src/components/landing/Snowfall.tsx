@@ -156,8 +156,11 @@ export default function Snowfall() {
     }
 
     return () => {
+      // TODO: Is this a bug? () => {} is not the original listener.
+      /* eslint-disable @typescript-eslint/no-empty-function */
       removeEventListener('mousemove', () => {});
       removeEventListener('resize', () => {});
+      /* eslint-enable @typescript-eslint/no-empty-function */
     };
   }, []);
 

@@ -1,5 +1,6 @@
 import type { ComponentProps } from 'react';
 
+// million-ignore
 export function DefaultAvatar(props: ComponentProps<'svg'>) {
   return (
     <svg

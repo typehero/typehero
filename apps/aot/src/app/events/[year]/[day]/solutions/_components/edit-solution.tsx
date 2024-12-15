@@ -49,6 +49,8 @@ export function EditSolution({ solution, setIsEditing }: EditSolutionProps) {
         description: data.content ?? '',
         slug: slug as string,
         title: data.title ?? '',
+        // TODO: Is this guaranteed to exist, or is userId actually optional?
+        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
         userId: session.data?.user?.id!,
       });
 
