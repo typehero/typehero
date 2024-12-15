@@ -87,6 +87,14 @@ export function CodePanel(props: CodePanelProps) {
   const handleSubmit = useCallback(async () => {
     const hasErrors = tsErrors?.some((e) => e.length) ?? false;
 
+    if (disabled) {
+      toast({
+        variant: 'destructive',
+        title: 'You are unable to submit.',
+      });
+      return;
+    }
+
     try {
       validator(code);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
