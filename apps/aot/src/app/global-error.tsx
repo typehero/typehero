@@ -19,7 +19,7 @@ export default function GlobalError({ error, reset }: { error: Error; reset: () 
         We encountered an unexpected error. Please try refreshing the page.
       </p>
       <Button variant="destructive" onClick={reset} className="mt-4">
-        Retry
+        Try Again
       </Button>
     </div>
   );
