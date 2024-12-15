@@ -91,6 +91,9 @@ export function CodePanel(props: CodePanelProps) {
       toast({
         variant: 'destructive',
         title: 'You are unable to submit.',
+        description: props.submissionDisabled
+          ? 'Please login to submit'
+          : 'Please wait for the editor to load before submitting',
       });
       return;
     }
