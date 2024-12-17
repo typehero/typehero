@@ -1,9 +1,9 @@
 import { prisma } from '@repo/db';
-import { Challenges } from './_components/challenges';
+import { Alert, AlertDescription, AlertTitle } from '@repo/ui/components/alert';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { auth } from '~/server/auth';
-import { AlertTitle, Alert, AlertDescription } from '@repo/ui/components/alert';
-import Link from 'next/link';
+import { Challenges } from './_components/challenges';
 
 export default async function CompletedPage(props: { params: { username: string } }) {
   const [, username] = decodeURIComponent(props.params.username).split('@');
@@ -73,7 +73,7 @@ export default async function CompletedPage(props: { params: { username: string 
           </AlertTitle>
           {isOwnProfile ? (
             <AlertDescription className="flex justify-center">
-              <Link className="text-primary underline-offset-4 hover:underline" href="./explore">
+              <Link className="text-primary underline-offset-4 hover:underline" href="/explore">
                 Get started with your first challenge
               </Link>
             </AlertDescription>
