@@ -50,6 +50,9 @@ export default async function CompletedPage(props: { params: { username: string 
           },
         },
       },
+      difficulty: {
+        not: 'EVENT',
+      },
     },
   });
   const session = await auth();
