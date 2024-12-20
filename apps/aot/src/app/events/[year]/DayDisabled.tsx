@@ -1,6 +1,4 @@
 'use client';
-import star from '~/../public/star.png';
-import Image from 'next/image';
 
 import { motion } from 'framer-motion';
 
