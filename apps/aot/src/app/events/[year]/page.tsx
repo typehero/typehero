@@ -35,7 +35,7 @@ export default async function EventByYearLandingPage({ params }: Props) {
 
   const daysLeftArray = Array.from({ length: 25 - daysCompleted }, (_, i) => daysCompleted + i + 1);
 
-  function groupDays(array: number[]) {
+  function groupDays(array: { id: number; active: boolean }[]) {
     const grouped = [];
     let rowSize = 1; // Start with a row size of 1
     let i = 0;
@@ -49,43 +49,61 @@ export default async function EventByYearLandingPage({ params }: Props) {
     return grouped;
   }
 
-  const groupedDays = groupDays(daysLeftArray.slice(0, 22 - daysCompleted));
-  const lastThree = daysLeftArray.slice(-3);
+  // create new array of numbers 1-event.trackChallenges.length
+  const activeDays = Array.from({ length: daysCompleted }, (_, i) => i + 1);
+  // create array of objects with id: number, active: boolean
+  const newArray = activeDays.map((day) => ({ id: day, active: true }));
+  // fill the rest with inactive
+  newArray.push(
+    ...Array.from({ length: 25 - daysCompleted }, (_, i) => ({
+      id: daysCompleted + i + 1,
+      active: false,
+    })),
+  ); // fill the rest with inactive
+  // const groupedActive = groupDays(activeDays);
+
+  const first22ofnewarray = newArray.slice(0, 22);
+
+  const groupedDays = groupDays(first22ofnewarray);
+  const lastThree = newArray.slice(-3);
 
   return (
     <div className="-mt-14 flex min-h-screen flex-col justify-center overflow-hidden bg-gradient-to-t from-neutral-400/10 to-transparent">
-      {/* <div className="fixed left-0 top-0 -z-10 h-full w-full bg-[url('https://images.pexels.com/photos/724906/pexels-photo-724906.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')] bg-cover opacity-100 blur-3xl" /> */}
+      <div className="fixed left-0 top-0 -z-10 h-full w-full bg-[url('https://images.pexels.com/photos/724906/pexels-photo-724906.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')] bg-cover opacity-10 blur-3xl" />
       <div className="container relative mx-auto">
-        {year === 2024 && BgDecorations()}
+        <BgDecorations />
         {/* <h1 className="mb-16 mt-8 text-center text-3xl font-bold lg:text-6xl">
           Challenges for {year}
         </h1> */}
         <ul className="z-10 flex flex-col items-center gap-2 sm:gap-3 md:gap-4">
-          {event.trackChallenges.map((trackChallenge) => (
-            <Link
-              key={trackChallenge.challenge.slug}
-              href={`/events/${year}/${trackChallenge.challenge.slug.split('-').at(-1)}`}
-            >
-              <DayLink day={Number(trackChallenge.challenge.name)} />
-            </Link>
-          ))}
           {groupedDays.map((group, index) => (
             <div key={index} className="flex gap-2 sm:gap-3 md:gap-4">
               {group.map((day) => (
-                <DayDisabled day={day} key={day} />
+                <>
+                  {day.active ? (
+                    <Link key={day.id} href={`/events/${year}/${day.id}`}>
+                      <DayLink day={day.id} />
+                    </Link>
+                  ) : (
+                    <DayDisabled day={day.id} key={day.id} />
+                  )}
+                </>
               ))}
             </div>
           ))}
+
           <div className="-mt-[4.5rem] flex">
             {lastThree.map((day, index) => (
               <div
-                key={day}
+                key={day.id}
                 className={`group relative h-12 w-12 cursor-pointer rounded-2xl duration-300 hover:bg-white/20 ${
                   index == 2 && 'ml-20 mr-12'
                 }`}
               >
                 <Image
-                  className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none brightness-100 grayscale group-hover:brightness-90 dark:brightness-50 ${
+                  className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none brightness-100 ${
+                    !day.active && 'grayscale'
+                  } group-hover:brightness-90 dark:brightness-50 ${
                     index == 0 && '-translate-y-[calc(50%+0.5rem)]'
                   }`}
                   src={gifts[index]!}
@@ -94,7 +112,7 @@ export default async function EventByYearLandingPage({ params }: Props) {
                   height={64}
                 />
                 <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-bold">
-                  {day}
+                  {day.id}
                 </div>
               </div>
             ))}
