@@ -89,9 +89,8 @@ export function CodePanel(props: CodePanelProps) {
     if (monacoInstance == null) {
       return;
     }
-
     const getTsWorker = await monacoInstance.languages.typescript.getTypeScriptWorker();
-    const model = monacoInstance.editor.getModel(monacoInstance.Uri.parse(USER_CODE_PATH));
+    const model = monacoInstance.editor.getModel(monacoInstance.Uri.parse(TESTS_PATH));
 
     if (!model) {
       throw new Error();
@@ -100,9 +99,9 @@ export function CodePanel(props: CodePanelProps) {
     const tsWorker = await getTsWorker(model.uri);
 
     const testErrors = await Promise.all([
-      tsWorker.getSemanticDiagnostics(USER_CODE_PATH),
-      tsWorker.getSyntacticDiagnostics(USER_CODE_PATH),
-      tsWorker.getCompilerOptionsDiagnostics(USER_CODE_PATH),
+      tsWorker.getSemanticDiagnostics(TESTS_PATH),
+      tsWorker.getSyntacticDiagnostics(TESTS_PATH),
+      tsWorker.getCompilerOptionsDiagnostics(TESTS_PATH),
     ] as const);
 
     const userErrors = await Promise.all([
@@ -164,7 +163,11 @@ export function CodePanel(props: CodePanelProps) {
     }
   };
 
-  const debouncedHandleSubmit = useCallback(debounce(handleSubmit, 1000), [code]);
+  const debouncedHandleSubmit = useCallback(debounce(handleSubmit, 1000), [
+    code,
+    monacoInstance,
+    disabled,
+  ]);
 
   const hasFailingTest = tsErrors?.some((e) => e.length) ?? false;
 
