@@ -13,6 +13,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useResetEditor } from './editor-hooks';
 import SplitEditor, { TESTS_PATH, USER_CODE_PATH } from './split-editor';
 import { useLocalStorage } from './useLocalStorage';
+import { debounce } from 'lodash';
 
 export interface CodePanelProps {
   challenge: {
@@ -85,6 +86,32 @@ export function CodePanel(props: CodePanelProps) {
   }
 
   const handleSubmit = useCallback(async () => {
+    if (monacoInstance == null) {
+      return;
+    }
+    const getTsWorker = await monacoInstance.languages.typescript.getTypeScriptWorker();
+    const model = monacoInstance.editor.getModel(monacoInstance.Uri.parse(TESTS_PATH));
+
+    if (!model) {
+      throw new Error();
+    }
+
+    const tsWorker = await getTsWorker(model.uri);
+
+    const testErrors = await Promise.all([
+      tsWorker.getSemanticDiagnostics(TESTS_PATH),
+      tsWorker.getSyntacticDiagnostics(TESTS_PATH),
+      tsWorker.getCompilerOptionsDiagnostics(TESTS_PATH),
+    ] as const);
+
+    const userErrors = await Promise.all([
+      tsWorker.getSemanticDiagnostics(USER_CODE_PATH),
+      tsWorker.getSyntacticDiagnostics(USER_CODE_PATH),
+      tsWorker.getCompilerOptionsDiagnostics(USER_CODE_PATH),
+    ] as const);
+    const tsErrors = testErrors.map((err, i) => {
+      return [...err, ...(userErrors[i] || [])];
+    }) as TsErrors;
     const hasErrors = tsErrors?.some((e) => e.length) ?? false;
 
     if (disabled) {
@@ -134,14 +161,17 @@ export function CodePanel(props: CodePanelProps) {
         action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
       });
     }
-  }, [tsErrors]);
+  }, [code, monacoInstance, disabled]);
+
+  const debouncedHandleSubmit = useCallback(debounce(handleSubmit, 500), [handleSubmit]);
+
   const hasFailingTest = tsErrors?.some((e) => e.length) ?? false;
 
   useEffect(() => {
     const onSubmit = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.code === 'KeyY') {
         e.preventDefault();
-        handleSubmit();
+        debouncedHandleSubmit();
       }
     };
 
@@ -150,7 +180,8 @@ export function CodePanel(props: CodePanelProps) {
     return () => {
       document.removeEventListener('keydown', onSubmit);
     };
-  }, [handleSubmit]);
+  }, [debouncedHandleSubmit]);
+
   return (
     <>
       <div className="sticky top-0 flex h-[40px] shrink-0 items-center justify-end gap-4 border-b border-zinc-300 bg-white px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">
@@ -334,7 +365,7 @@ export function CodePanel(props: CodePanelProps) {
                 disabled={disabled}
                 size="sm"
                 className="cursor-pointer rounded-lg duration-300"
-                onClick={handleSubmit}
+                onClick={debouncedHandleSubmit}
               >
                 {disabled && 'Login to '}Submit{tsErrors === undefined && ' (open test cases)'}
               </Button>
