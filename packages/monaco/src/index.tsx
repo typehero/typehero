@@ -163,7 +163,7 @@ export function CodePanel(props: CodePanelProps) {
     }
   }, [code, monacoInstance, disabled]);
 
-  const debouncedHandleSubmit = useCallback(debounce(handleSubmit, 1000), [handleSubmit]);
+  const debouncedHandleSubmit = useCallback(debounce(handleSubmit, 500), [handleSubmit]);
 
   const hasFailingTest = tsErrors?.some((e) => e.length) ?? false;
 
