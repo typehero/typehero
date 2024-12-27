@@ -85,7 +85,7 @@ export function CodePanel(props: CodePanelProps) {
     }
   }
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     if (monacoInstance == null) {
       return;
     }
@@ -161,13 +161,9 @@ export function CodePanel(props: CodePanelProps) {
         action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
       });
     }
-  };
+  }, [code, monacoInstance, disabled]);
 
-  const debouncedHandleSubmit = useCallback(debounce(handleSubmit, 1000), [
-    code,
-    monacoInstance,
-    disabled,
-  ]);
+  const debouncedHandleSubmit = useCallback(debounce(handleSubmit, 1000), [handleSubmit]);
 
   const hasFailingTest = tsErrors?.some((e) => e.length) ?? false;
 
