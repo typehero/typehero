@@ -19,20 +19,21 @@ import { ShareUrl } from '~/components/share-url';
 
 interface SubmissionOverviewProps {
   submissionId: string;
+  userId: string;
 }
 const codifyForMarkdown = (code: string) => {
   return `\`\`\`ts
 ${code}`;
 };
 
-export function SubmissionOverview({ submissionId }: SubmissionOverviewProps) {
+export function SubmissionOverview({ submissionId, userId }: SubmissionOverviewProps) {
   const { slug } = useParams();
   const searchParams = useSearchParams();
 
   const showSuggestions = searchParams.get('success') === 'true';
   const { data: submission } = useQuery({
-    queryKey: [`submission`, submissionId],
-    queryFn: () => getChallengeSubmissionById(submissionId),
+    queryKey: [`submission`, submissionId, 'userId', userId],
+    queryFn: () => getChallengeSubmissionById(submissionId, userId),
   });
 
   const code = codifyForMarkdown(submission?.code.trimStart() ?? '');
@@ -43,7 +44,13 @@ export function SubmissionOverview({ submissionId }: SubmissionOverviewProps) {
     `I've completed ${submission?.challenge.name} on TypeHero!`,
   )}&url=https://typehero.dev/challenge/${slug}`;
 
-  if (!submission) return null;
+  if (!submission) {
+    return (
+      <div className="flex h-full items-center justify-center text-neutral-500 dark:text-zinc-400">
+        <p>Submission does not exist</p>
+      </div>
+    );
+  }
 
   return (
     <>
