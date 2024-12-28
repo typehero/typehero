@@ -28,7 +28,7 @@ export function RightWrapper({ track, challenge, toggleDirection }: RightWrapper
   if (!challenge) return null;
 
   if (segments[0] === 'submissions' && typeof segments[1] === 'string') {
-    return <SubmissionOverview submissionId={segments[1]} />;
+    return <SubmissionOverview submissionId={segments[1]} userId={session?.user.id ?? ''} />;
   }
 
   // Redirect to solution on successful submission and show suggestions
