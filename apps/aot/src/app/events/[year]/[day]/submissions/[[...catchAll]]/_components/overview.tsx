@@ -9,17 +9,18 @@ import { getChallengeSubmissionById } from '../getChallengeSubmissions';
 
 interface SubmissionOverviewProps {
   submissionId: string;
+  userId: string;
 }
 const codifyForMarkdown = (code: string) => {
   return `\`\`\`ts
 ${code}`;
 };
 
-export function SubmissionOverview({ submissionId }: SubmissionOverviewProps) {
+export function SubmissionOverview({ submissionId, userId }: SubmissionOverviewProps) {
   const { year, day } = useParams();
   const { data: submission } = useQuery({
-    queryKey: [`submission`, submissionId],
-    queryFn: () => getChallengeSubmissionById(submissionId),
+    queryKey: [`submission`, submissionId, 'userId', userId],
+    queryFn: () => getChallengeSubmissionById(submissionId, userId),
   });
 
   const code = codifyForMarkdown(submission?.code.trimStart() ?? '');
@@ -32,7 +33,13 @@ export function SubmissionOverview({ submissionId }: SubmissionOverviewProps) {
     `I've completed ${submission?.challenge.name} - Advent of TypeScript ${year} https://adventofts.com/events/${year}/${day}`,
   )}`;
 
-  if (!submission) return null;
+  if (!submission) {
+    return (
+      <div className="flex h-full items-center justify-center text-neutral-500 dark:text-zinc-400">
+        <p>Submission does not exist</p>
+      </div>
+    );
+  }
 
   return (
     <>
