@@ -64,7 +64,7 @@ export default async function EventByYearLandingPage({ params }: EventByYearLand
                   <Link
                     key={`day-active-${day.day}`}
                     href={`/events/${year}/${day.day}`}
-                    className={`${!day.active ? 'pointer-events-none' : 'pointer-events-auto'}`}
+                    className={!day.active ? 'pointer-events-none' : 'pointer-events-auto'}
                     aria-disabled={!day.active}
                   >
                     <DaySolved day={day.day} active={day.active} hasSolved={day.hasSolved} />
