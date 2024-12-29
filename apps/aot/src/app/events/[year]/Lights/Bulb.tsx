@@ -30,17 +30,22 @@ export default function Bulb() {
   return (
     <div
       ref={bulb}
-      className="animate-bulb relative p-8 odd:ml-8 odd:[animation-delay:0.25s] even:mr-8"
+      className="animate-bulb relative p-8 will-change-auto odd:ml-8 odd:[animation-delay:0.25s] even:mr-8"
       style={{
         transform: `translateX(${randomSpacing}rem) translateY(${-randomSpacing}rem)`,
       }}
     >
       <div
         className={`${
-          colors[Math.round(Math.random() * 7)]
-        } h-2 w-2 rounded-full bg-white/30 blur-sm duration-75 group-hover:scale-150`}
+          colors[Math.round(Math.random() * 6)]
+        } h-2 w-2 rounded-full blur-sm duration-75 group-hover:scale-150`}
       />
-      <div className="absolute inset-0 m-auto h-0.5 w-0.5 rounded-full bg-white/40" />
+      <div
+        className="absolute inset-0 m-auto h-1 w-0.5 rounded-full bg-white/40"
+        style={{
+          rotate: `${Math.random() * 90 - 45}deg`,
+        }}
+      />
     </div>
   );
 }

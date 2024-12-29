@@ -4,7 +4,7 @@ import Bulb from './Bulb';
 export default function Strip({ delay }: { delay: number }) {
   return (
     <div
-      className="animate-slidedown group flex h-full w-full flex-col items-center justify-center px-2 odd:-translate-y-0 even:translate-y-12 even:-scale-x-100"
+      className="animate-slidedown group flex h-full w-full flex-col items-center justify-center px-2 will-change-auto odd:-translate-y-0 even:translate-y-16 even:-scale-x-100"
       style={
         {
           '--delay': `${delay}s`,
