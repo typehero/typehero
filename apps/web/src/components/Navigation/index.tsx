@@ -80,7 +80,7 @@ export async function Navigation() {
           <>
             <hr />
             <NavLink title="Profile" href={`/@${session.user.name}`} />
-            <NavLink title="Settings" href="/settings" />
+            <NavLink title="Settings" href={`/@${session.user.name}/edit`} />
             <div className="flex items-center gap-2">
               <span>Theme</span>
               <ThemeButton />
