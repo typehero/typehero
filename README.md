@@ -62,5 +62,13 @@ If you find our project interesting and want to support us please consider spons
         <img src="./media/surge.svg" alt="surge logo" title="Surge HQ" width="150">
       </a>
     </td>
+    <td>
+      <a href="https://www.coderabbit.ai" target="_parent">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="./media/cr-white.png">
+          <img alt="CodeRabbit Logo" src="./media/cr-black.png" width="200">
+        </picture>
+      </a>
+    </td>
   </tr>
 </table>
