@@ -11,14 +11,6 @@ overrides:
   '@types/react': npm:types-react@rc
   '@types/react-dom': npm:types-react-dom@rc
 
-patchedDependencies:
-  '@monaco-editor/react@4.5.1':
-    hash: xep4qb27qzc6gvlhv2fxe3r2ka
-    path: patches/@monaco-editor__react@4.5.1.patch
-  monaco-vim@0.4.0:
-    hash: j3oqxjoadtct3pc6tokddngzsm
-    path: patches/monaco-vim@0.4.0.patch
-
 importers:
 
   .:
@@ -452,8 +444,8 @@ importers:
         specifier: ^1.3.3
         version: 1.3.3(monaco-editor@0.50.0)
       '@monaco-editor/react':
-        specifier: 4.5.1
-        version: 4.5.1(patch_hash=xep4qb27qzc6gvlhv2fxe3r2ka)(monaco-editor@0.50.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
+        specifier: ^4.7.0
+        version: 4.7.0(monaco-editor@0.50.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
       '@next/bundle-analyzer':
         specifier: ^13.4.19
         version: 13.4.19
@@ -551,8 +543,8 @@ importers:
         specifier: 2.6.0-beta.12
         version: 2.6.0-beta.12
       monaco-vim:
-        specifier: 0.4.0
-        version: 0.4.0(patch_hash=j3oqxjoadtct3pc6tokddngzsm)(monaco-editor@0.50.0)
+        specifier: ^0.4.2
+        version: 0.4.2(monaco-editor@0.50.0)
       nanoid:
         specifier: ^5.0.7
         version: 5.0.7
@@ -797,8 +789,8 @@ importers:
         specifier: ^1.3.3
         version: 1.3.3(monaco-editor@0.50.0)
       '@monaco-editor/react':
-        specifier: ^4.5.1
-        version: 4.5.1(patch_hash=xep4qb27qzc6gvlhv2fxe3r2ka)(monaco-editor@0.50.0)(react-dom@19.0.0-rc-66855b96-20241106(react@18.2.0))(react@18.2.0)
+        specifier: ^4.7.0
+        version: 4.7.0(monaco-editor@0.50.0)(react-dom@19.0.0-rc-66855b96-20241106(react@18.2.0))(react@18.2.0)
       '@repo/ui':
         specifier: workspace:^
         version: link:../ui
@@ -815,8 +807,8 @@ importers:
         specifier: ^1.5.0
         version: 1.5.0
       monaco-vim:
-        specifier: ^0.4.0
-        version: 0.4.0(patch_hash=j3oqxjoadtct3pc6tokddngzsm)(monaco-editor@0.50.0)
+        specifier: ^0.4.2
+        version: 0.4.2(monaco-editor@0.50.0)
       next:
         specifier: 15.0.3
         version: 15.0.3(react-dom@19.0.0-rc-66855b96-20241106(react@18.2.0))(react@18.2.0)
@@ -1051,7 +1043,7 @@ importers:
     dependencies:
       '@next/eslint-plugin-next':
         specifier: canary
-        version: 15.3.0-canary.19
+        version: 15.3.0-canary.20
       '@repo/tsconfig':
         specifier: workspace:*
         version: link:../config-typescript
@@ -1063,7 +1055,7 @@ importers:
         version: 8.16.0(eslint@8.57.1)(typescript@5.3.3)
       '@vercel/style-guide':
         specifier: ^6.0.0
-        version: 6.0.0(@next/eslint-plugin-next@15.3.0-canary.19)(eslint@8.57.1)(prettier@3.1.1)(typescript@5.3.3)(vitest@0.34.6(playwright@1.38.0)(terser@5.36.0))
+        version: 6.0.0(@next/eslint-plugin-next@15.3.0-canary.20)(eslint@8.57.1)(prettier@3.1.1)(typescript@5.3.3)(vitest@0.34.6(playwright@1.38.0)(terser@5.36.0))
       eslint:
         specifier: ^8.57.0
         version: 8.57.1
@@ -2312,12 +2304,15 @@ packages:
     peerDependencies:
       monaco-editor: '>= 0.21.0 < 1'
 
-  '@monaco-editor/react@4.5.1':
-    resolution: {integrity: sha512-NNDFdP+2HojtNhCkRfE6/D6ro6pBNihaOzMbGK84lNWzRu+CfBjwzGt4jmnqimLuqp5yE5viHS2vi+QOAnD5FQ==}
+  '@monaco-editor/loader@1.5.0':
+    resolution: {integrity: sha512-hKoGSM+7aAc7eRTRjpqAZucPmoNOC4UUbknb/VNoTkEIkCPhqV8LfbsgM1webRM7S/z21eHEx9Fkwx8Z/C/+Xw==}
+
+  '@monaco-editor/react@4.7.0':
+    resolution: {integrity: sha512-cyzXQCtO47ydzxpQtCGSQGOC8Gk3ZUeBXFAxD+CWXYFo5OqZyZUonFl0DwUlTyAfRHntBfw2p3w4s9R6oe1eCA==}
     peerDependencies:
       monaco-editor: '>= 0.25.0 < 1'
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   '@monogrid/gainmap-js@3.0.6':
     resolution: {integrity: sha512-ireqJg7cw0tUn/JePDG8rAL7RyXgUKSDbjYdiygkrnye1WuKGLAWDBwF/ICwCwJ9iZBAF5caU8gSu+c34HLGdQ==}
@@ -2345,8 +2340,8 @@ packages:
   '@next/eslint-plugin-next@15.0.3':
     resolution: {integrity: sha512-3Ln/nHq2V+v8uIaxCR6YfYo7ceRgZNXfTd3yW1ukTaFbO+/I8jNakrjYWODvG9BuR2v5kgVtH/C8r0i11quOgw==}
 
-  '@next/eslint-plugin-next@15.3.0-canary.19':
-    resolution: {integrity: sha512-FvCznlWQV+Du2ImiuBX5UPyIJ++9d1/3qp4BwuL2R527Bl7AqEdOUAvpGxz44lEk8qJLEh5B0qkH5xsq0X3WrA==}
+  '@next/eslint-plugin-next@15.3.0-canary.20':
+    resolution: {integrity: sha512-7ZUjewhZqxH59oixh/q8o3FG8s63EyAD4idXEBGUSht4RCHzzB5XLr0WraiFKo8DuC2eT5KYqhjpg0S4h4ZHTw==}
 
   '@next/swc-darwin-arm64@15.0.3':
     resolution: {integrity: sha512-s3Q/NOorCsLYdCKvQlWU+a+GeAd3C8Rb3L1YnetsgwXzhc3UTWrtQpB/3eCjFOdGUj5QmXfRak12uocd1ZiiQw==}
@@ -7442,8 +7437,8 @@ packages:
   monaco-editor@0.50.0:
     resolution: {integrity: sha512-8CclLCmrRRh+sul7C08BmPBP3P8wVWfBHomsTcndxg5NRCEPfu/mc2AGU8k37ajjDVXcXFc12ORAMUkmk+lkFA==}
 
-  monaco-vim@0.4.0:
-    resolution: {integrity: sha512-+CsW0+Mvx2+eitkXS7OpUXIu57qXlqAL8oVkYhkPCEZ/c6+6gOp/IcG7w+Lb33YiZuTyvJ891+czkeJRPIEwVA==}
+  monaco-vim@0.4.2:
+    resolution: {integrity: sha512-rdbQC3O2rmpwX2Orzig/6gZjZfH7q7TIeB+uEl49sa+QyNm3jCKJOw5mwxBdFzTqbrPD+URfg6A2lEkuL5kymw==}
     peerDependencies:
       monaco-editor: '*'
 
@@ -10832,16 +10827,20 @@ snapshots:
       monaco-editor: 0.50.0
       state-local: 1.0.7
 
-  '@monaco-editor/react@4.5.1(patch_hash=xep4qb27qzc6gvlhv2fxe3r2ka)(monaco-editor@0.50.0)(react-dom@19.0.0-rc-66855b96-20241106(react@18.2.0))(react@18.2.0)':
+  '@monaco-editor/loader@1.5.0':
     dependencies:
-      '@monaco-editor/loader': 1.3.3(monaco-editor@0.50.0)
+      state-local: 1.0.7
+
+  '@monaco-editor/react@4.7.0(monaco-editor@0.50.0)(react-dom@19.0.0-rc-66855b96-20241106(react@18.2.0))(react@18.2.0)':
+    dependencies:
+      '@monaco-editor/loader': 1.5.0
       monaco-editor: 0.50.0
       react: 18.2.0
       react-dom: 19.0.0-rc-66855b96-20241106(react@18.2.0)
 
-  '@monaco-editor/react@4.5.1(patch_hash=xep4qb27qzc6gvlhv2fxe3r2ka)(monaco-editor@0.50.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)':
+  '@monaco-editor/react@4.7.0(monaco-editor@0.50.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)':
     dependencies:
-      '@monaco-editor/loader': 1.3.3(monaco-editor@0.50.0)
+      '@monaco-editor/loader': 1.5.0
       monaco-editor: 0.50.0
       react: 19.0.0-rc-66855b96-20241106
       react-dom: 19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106)
@@ -10876,7 +10875,7 @@ snapshots:
     dependencies:
       fast-glob: 3.3.1
 
-  '@next/eslint-plugin-next@15.3.0-canary.19':
+  '@next/eslint-plugin-next@15.3.0-canary.20':
     dependencies:
       fast-glob: 3.3.1
 
@@ -13395,7 +13394,7 @@ snapshots:
       next: 15.0.3(@playwright/test@1.38.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
       react: 19.0.0-rc-66855b96-20241106
 
-  '@vercel/style-guide@6.0.0(@next/eslint-plugin-next@15.3.0-canary.19)(eslint@8.57.1)(prettier@3.1.1)(typescript@5.3.3)(vitest@0.34.6(playwright@1.38.0)(terser@5.36.0))':
+  '@vercel/style-guide@6.0.0(@next/eslint-plugin-next@15.3.0-canary.20)(eslint@8.57.1)(prettier@3.1.1)(typescript@5.3.3)(vitest@0.34.6(playwright@1.38.0)(terser@5.36.0))':
     dependencies:
       '@babel/core': 7.26.0
       '@babel/eslint-parser': 7.25.9(@babel/core@7.26.0)(eslint@8.57.1)
@@ -13418,7 +13417,7 @@ snapshots:
       eslint-plugin-vitest: 0.3.26(@typescript-eslint/eslint-plugin@8.16.0(@typescript-eslint/parser@8.16.0(eslint@8.57.1)(typescript@5.3.3))(eslint@8.57.1)(typescript@5.3.3))(eslint@8.57.1)(typescript@5.3.3)(vitest@0.34.6(playwright@1.38.0)(terser@5.36.0))
       prettier-plugin-packagejson: 2.5.6(prettier@3.1.1)
     optionalDependencies:
-      '@next/eslint-plugin-next': 15.3.0-canary.19
+      '@next/eslint-plugin-next': 15.3.0-canary.20
       eslint: 8.57.1
       prettier: 3.1.1
       typescript: 5.3.3
@@ -17113,7 +17112,7 @@ snapshots:
 
   monaco-editor@0.50.0: {}
 
-  monaco-vim@0.4.0(patch_hash=j3oqxjoadtct3pc6tokddngzsm)(monaco-editor@0.50.0):
+  monaco-vim@0.4.2(monaco-editor@0.50.0):
     dependencies:
       monaco-editor: 0.50.0
 
