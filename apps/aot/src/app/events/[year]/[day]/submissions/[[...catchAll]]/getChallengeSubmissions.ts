@@ -3,10 +3,11 @@
 import { prisma } from '@repo/db';
 import { cache } from 'react';
 
-export const getChallengeSubmissionById = cache(async (id: string) => {
+export const getChallengeSubmissionById = cache((submissionId: string, userId: string) => {
   return prisma.submission.findFirst({
     where: {
-      id: Number(id),
+      id: Number(submissionId),
+      userId,
     },
     include: {
       challenge: {
