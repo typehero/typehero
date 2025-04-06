@@ -560,9 +560,6 @@ importers:
       react-confetti:
         specifier: ^6.1.0
         version: 6.1.0(react@19.0.0-rc-66855b96-20241106)
-      react-day-picker:
-        specifier: ^8.8.0
-        version: 8.8.0(date-fns@2.30.0)(react@19.0.0-rc-66855b96-20241106)
       react-dnd:
         specifier: ^16.0.1
         version: 16.0.1(@types/node@20.4.2)(react@19.0.0-rc-66855b96-20241106)(types-react@19.0.0-rc.1)
@@ -576,11 +573,11 @@ importers:
         specifier: ^7.45.1
         version: 7.45.1(react@19.0.0-rc-66855b96-20241106)
       react-instantsearch:
-        specifier: ^7.3.0
-        version: 7.3.0(algoliasearch@4.20.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
+        specifier: ^7.14.0
+        version: 7.15.5(algoliasearch@4.20.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
       react-instantsearch-nextjs:
-        specifier: ^0.1.5
-        version: 0.1.5(next@15.0.3(@playwright/test@1.38.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106))(react-instantsearch@7.3.0(algoliasearch@4.20.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106))
+        specifier: ^0.4.0
+        version: 0.4.6(next@15.0.3(@playwright/test@1.38.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106))(react-instantsearch@7.15.5(algoliasearch@4.20.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106))
       react-intersection-observer:
         specifier: ^9.5.2
         version: 9.5.2(react@19.0.0-rc-66855b96-20241106)
@@ -987,8 +984,8 @@ importers:
         specifier: 18.2.0
         version: 18.2.0
       react-day-picker:
-        specifier: ^8.8.0
-        version: 8.8.0(date-fns@2.30.0)(react@18.2.0)
+        specifier: ^9.6.4
+        version: 9.6.4(react@18.2.0)
       react-hook-form:
         specifier: ^7.45.1
         version: 7.45.1(react@18.2.0)
@@ -1043,7 +1040,7 @@ importers:
     dependencies:
       '@next/eslint-plugin-next':
         specifier: canary
-        version: 15.3.0-canary.20
+        version: 15.3.0-canary.39
       '@repo/tsconfig':
         specifier: workspace:*
         version: link:../config-typescript
@@ -1055,7 +1052,7 @@ importers:
         version: 8.16.0(eslint@8.57.1)(typescript@5.3.3)
       '@vercel/style-guide':
         specifier: ^6.0.0
-        version: 6.0.0(@next/eslint-plugin-next@15.3.0-canary.20)(eslint@8.57.1)(prettier@3.1.1)(typescript@5.3.3)(vitest@0.34.6(playwright@1.38.0)(terser@5.36.0))
+        version: 6.0.0(@next/eslint-plugin-next@15.3.0-canary.39)(eslint@8.57.1)(prettier@3.1.1)(typescript@5.3.3)(vitest@0.34.6(playwright@1.38.0)(terser@5.36.0))
       eslint:
         specifier: ^8.57.0
         version: 8.57.1
@@ -1165,12 +1162,6 @@ packages:
 
   '@algolia/transporter@4.20.0':
     resolution: {integrity: sha512-Lsii1pGWOAISbzeyuf+r/GPhvHMPHSPrTDWNcIzOE1SG1inlJHICaVe2ikuoRjcpgxZNU54Jl+if15SUCsaTUg==}
-
-  '@algolia/ui-components-highlight-vdom@1.2.2':
-    resolution: {integrity: sha512-/+7jh7cd5rR2yQC7ME4SDcnAMiD1Ofn5Qq+E7afTJx9XSMOHkLR77/o6YcuJ60TfD1S+9lr7yjBLACon8gOuzQ==}
-
-  '@algolia/ui-components-shared@1.2.2':
-    resolution: {integrity: sha512-FYwEG5sbr8p4V8mqP0iUaKgmWfcrMXRXwp7e6iBuB65P/7QyL8pT4I6/iGb85Q5mNH+UtYYSmLZhKjEblllKEQ==}
 
   '@alloc/quick-lru@5.2.0':
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
@@ -1563,6 +1554,9 @@ packages:
   '@cspell/strong-weak-map@7.3.8':
     resolution: {integrity: sha512-qNnt2wG45wb8JP54mENarnQgxfSYKPp3zlYID/2przbMNmVJRqUlcIBOdLI6plCgGeNkzJTl3T9T1ATbnN+LLw==}
     engines: {node: '>=16'}
+
+  '@date-fns/tz@1.2.0':
+    resolution: {integrity: sha512-LBrd7MiJZ9McsOgxqWX7AaxrDjcFVjWH/tIKJd7pnR7McaslGYOP1QmmiBXdJH/H/yLCT+rcQ7FaPBUxRGUtrg==}
 
   '@effect/schema@0.68.18':
     resolution: {integrity: sha512-+knLs36muKsyqIvQTB0itGp5Lwy+5jgEC0G5P8wSsrB6EWGFirS87QjbaFYGbg32l/P51RM+9cPMiAEyICwN6g==}
@@ -2340,8 +2334,8 @@ packages:
   '@next/eslint-plugin-next@15.0.3':
     resolution: {integrity: sha512-3Ln/nHq2V+v8uIaxCR6YfYo7ceRgZNXfTd3yW1ukTaFbO+/I8jNakrjYWODvG9BuR2v5kgVtH/C8r0i11quOgw==}
 
-  '@next/eslint-plugin-next@15.3.0-canary.20':
-    resolution: {integrity: sha512-7ZUjewhZqxH59oixh/q8o3FG8s63EyAD4idXEBGUSht4RCHzzB5XLr0WraiFKo8DuC2eT5KYqhjpg0S4h4ZHTw==}
+  '@next/eslint-plugin-next@15.3.0-canary.39':
+    resolution: {integrity: sha512-lvHUu8y3a+JaeV61AJi1VKWZ43xT704RbdQhWk+1oYe3X9ZlUHkVc1oxWYZS4DQxjiuuYbvN45EhzInEEY9cww==}
 
   '@next/swc-darwin-arm64@15.0.3':
     resolution: {integrity: sha512-s3Q/NOorCsLYdCKvQlWU+a+GeAd3C8Rb3L1YnetsgwXzhc3UTWrtQpB/3eCjFOdGUj5QmXfRak12uocd1ZiiQw==}
@@ -4040,8 +4034,8 @@ packages:
   '@types/estree@1.0.6':
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
 
-  '@types/google.maps@3.54.10':
-    resolution: {integrity: sha512-N6gwM01mKhooXaw+IKbUH7wJcIJCn8U60VoaVvom5EiQjmfgevhQ+0+/r17beXW5j8ad2x+WPr0iyOUodCw4/w==}
+  '@types/google.maps@3.58.1':
+    resolution: {integrity: sha512-X9QTSvGJ0nCfMzYOnaVs/k6/4L+7F5uCS+4iUmkLEls6J9S/Phv+m/i3mDeyc49ZBgwab3EFO1HEoBY7k98EGQ==}
 
   '@types/hast@2.3.5':
     resolution: {integrity: sha512-SvQi0L/lNpThgPoleH53cdjB3y9zpLlVjRbqB3rH8hx1jiRSBGAhyjV3H+URFjNVRqt2EdYNrbZE5IsGlNfpRg==}
@@ -4549,8 +4543,8 @@ packages:
   ajv@8.12.0:
     resolution: {integrity: sha512-sRu1kpcO9yLtYxBKvqfTeh9KzZEwO3STyX1HT+4CaDzC6HpTGYhIhPIzj9XuKU7KYDwnaeh5hcOwjy1QuJzBPA==}
 
-  algoliasearch-helper@3.15.0:
-    resolution: {integrity: sha512-DGUnK3TGtDQsaUE4ayF/LjSN0DGsuYThB8WBgnnDY0Wq04K6lNVruO3LfqJOgSfDiezp+Iyt8Tj4YKHi+/ivSA==}
+  algoliasearch-helper@3.24.3:
+    resolution: {integrity: sha512-3QKg5lzSfUiPN8Hn1ViHEGv6PjK7i4SFEDLzwlSzPO/4mVOsyos7B7/AsEtFQW5KHHPiCq6DyJl+mzg7CYlEgw==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
 
@@ -5240,9 +5234,15 @@ packages:
     resolution: {integrity: sha512-t/Ygsytq+R995EJ5PZlD4Cu56sWa8InXySaViRzw9apusqsOO2bQP+SbYzAhR0pFKoB+43lYy8rWban9JSuXnA==}
     engines: {node: '>= 0.4'}
 
+  date-fns-jalali@4.1.0-0:
+    resolution: {integrity: sha512-hTIP/z+t+qKwBDcmmsnmjWTduxCg+5KfdqWQvb2X/8C9+knYY6epN/pfxdDuyVlSVeFz0sM5eEfwIUQ70U4ckg==}
+
   date-fns@2.30.0:
     resolution: {integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==}
     engines: {node: '>=0.11'}
+
+  date-fns@4.1.0:
+    resolution: {integrity: sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==}
 
   debounce@1.2.1:
     resolution: {integrity: sha512-XRRe6Glud4rd/ZGQfiV1ruXSfbvfJedlV9Y6zOlP+2K04vBYiJEte6stfFkCP03aMnY5tsipamumUjL14fofug==}
@@ -6608,8 +6608,11 @@ packages:
   inline-style-parser@0.2.4:
     resolution: {integrity: sha512-0aO8FkhNZlj/ZIbNi7Lxxr12obT7cL1moPfE4tg1LkX7LlLfC6DeX4l2ZEud1ukP9jNQyNnfzQVqwbwmAATY4Q==}
 
-  instantsearch.js@4.60.0:
-    resolution: {integrity: sha512-u/xeCT1DaxPioJnSm3hV4lNAojlhbjGrpX5fHO6+RJjpDFv/MgYxiIOdaIRowmt5F0v/3QCm+Un5f4jy1/+emA==}
+  instantsearch-ui-components@0.11.1:
+    resolution: {integrity: sha512-ZqUbJYYgObQ47J08ftXV1KNC1vdEoiD4/49qrkCdW46kRzLxLgYXJGuEuk48DQwK4aBtIoccgTyfbMGfcqNjxg==}
+
+  instantsearch.js@4.78.1:
+    resolution: {integrity: sha512-nDTWQ6DUxYzBZfkSxb/QJsYMZPPU8SGlGurn9147ABvA5Eumtxmk3Qy55EBMl0VxKVltGy3axAYMRB/gKIIHkg==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
 
@@ -7942,9 +7945,6 @@ packages:
     peerDependencies:
       preact: '>=10'
 
-  preact@10.16.0:
-    resolution: {integrity: sha512-XTSj3dJ4roKIC93pald6rWuB2qQJO9gO2iLLyTe87MrjQN+HklueLsmskbywEWqCHlclgz3/M4YLL2iBr9UmMA==}
-
   preact@10.24.3:
     resolution: {integrity: sha512-Z2dPnBnMUfyQfSQ+GBdsGa16hz35YmLmtTLhM169uW944hYL6xzTYkJjC07j+Wosz733pMWx0fgON3JNw1jJQA==}
 
@@ -8131,11 +8131,11 @@ packages:
     peerDependencies:
       react: ^16.3.0 || ^17.0.1 || ^18.0.0
 
-  react-day-picker@8.8.0:
-    resolution: {integrity: sha512-QIC3uOuyGGbtypbd5QEggsCSqVaPNu8kzUWquZ7JjW9fuWB9yv7WyixKmnaFelTLXFdq7h7zU6n/aBleBqe/dA==}
+  react-day-picker@9.6.4:
+    resolution: {integrity: sha512-OekyAWfaypSFN5zms4CD6Bcas5R0KbWdARkWTyQ2phJHQOolDfpLwrN6Q+U3ifPGNmKLf9ngXuSz25NKHMkR6w==}
+    engines: {node: '>=18'}
     peerDependencies:
-      date-fns: ^2.28.0
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react: '>=16.8.0'
 
   react-dnd-html5-backend@16.0.1:
     resolution: {integrity: sha512-Wu3dw5aDJmOGw8WjH1I1/yTH+vlXEL4vmjk5p+MHxP8HuHJS1lAGeIdG/hze1AvNeXWo/JgULV87LyQOr+r5jw==}
@@ -8171,24 +8171,24 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18
 
-  react-instantsearch-core@7.3.0:
-    resolution: {integrity: sha512-v66mG+Io/Mmd5LQaoQXxGD/acHnLIM1Cq/uzlcC0VbFji7JXoJhChRPUcA+z5fGDaidBxdJOPRtQjJpTQ+/h8g==}
+  react-instantsearch-core@7.15.5:
+    resolution: {integrity: sha512-SFxiwwMf0f5F/8U0Y4ullvQ7bZtbYE516UOJbxaHhjV8yY0i8c22K4lrBFrYbxVRT7QAcp2wLGHiB7r/lD7eRA==}
     peerDependencies:
-      algoliasearch: '>= 3.1 < 5'
-      react: '>= 16.8.0 < 19'
+      algoliasearch: '>= 3.1 < 6'
+      react: '>= 16.8.0 < 20'
 
-  react-instantsearch-nextjs@0.1.5:
-    resolution: {integrity: sha512-PP740tSDNN9wPb8Kva2QAnjI8gtsVnErtZV9kDR2M7DmSM2USJ0GqDis/UBWk2bx5oAA2I1mz1LtM7uGI+URyQ==}
+  react-instantsearch-nextjs@0.4.6:
+    resolution: {integrity: sha512-zoD0+mW0MIbZCkSTSLnFPEwiL7wQ9MAt3rOIwnS7KTX+zPvbgfWLpNyOYI7IsRWSqaEUwscbiPHJx3jAMIv2Ng==}
     peerDependencies:
-      next: '>= 13.4 && < 15'
-      react-instantsearch: '>= 7.1.0 && < 8'
+      next: '>= 13.4 < 16'
+      react-instantsearch: '>= 7.1.0 < 8'
 
-  react-instantsearch@7.3.0:
-    resolution: {integrity: sha512-X0ZKDMP7DDKkRqnM99JbpsqASXDBVCUSpEYmPPhDx/PFGUzOu9yAFNCBkpJxfIf2A3nL/Z1QQDXuUYRdBgVCsg==}
+  react-instantsearch@7.15.5:
+    resolution: {integrity: sha512-dpymD+AS6ixEKxQHYDNQn91lPdvBOgOpkjIMR00gqPoZVnVSJ6aQ6juN/+fY7eLgeAdfSYL8qvX8ISGqbhiJ5A==}
     peerDependencies:
-      algoliasearch: '>= 3.1 < 5'
-      react: '>= 16.8.0 < 19'
-      react-dom: '>= 16.8.0 < 19'
+      algoliasearch: '>= 3.1 < 6'
+      react: '>= 16.8.0 < 20'
+      react-dom: '>= 16.8.0 < 20'
 
   react-intersection-observer@9.5.2:
     resolution: {integrity: sha512-EmoV66/yvksJcGa1rdW0nDNc4I1RifDWkT50gXSFnPLYQ4xUptuDD4V7k+Rj1OgVAlww628KLGcxPXFlOkkU/Q==}
@@ -8566,8 +8566,8 @@ packages:
   scule@1.1.1:
     resolution: {integrity: sha512-sHtm/SsIK9BUBI3EFT/Gnp9VoKfY6QLvlkvAE6YK7454IF8FSgJEAnJpVdSC7K5/pjI5NfxhzBLW2JAfYA/shQ==}
 
-  search-insights@2.11.0:
-    resolution: {integrity: sha512-Uin2J8Bpm3xaZi9Y8QibSys6uJOFZ+REMrf42v20AA3FUDUrshKkMEP6liJbMAHCm71wO6ls4mwAf7a3gFVxLw==}
+  search-insights@2.17.3:
+    resolution: {integrity: sha512-RQPdCYTa8A68uM2jwxoY842xDhvx3E5LFL1LxvxCNMev4o5mLuokczhzjAgGwUZBAmOKZknArSxLKmXtIi2AxQ==}
 
   selderee@0.10.0:
     resolution: {integrity: sha512-DEL/RW/f4qLw/NrVg97xKaEBC8IpzIG2fvxnzCp3Z4yk4jQ3MXom+Imav9wApjxX2dfS3eW7x0DXafJr85i39A==}
@@ -9805,13 +9805,6 @@ snapshots:
       '@algolia/logger-common': 4.20.0
       '@algolia/requester-common': 4.20.0
 
-  '@algolia/ui-components-highlight-vdom@1.2.2':
-    dependencies:
-      '@algolia/ui-components-shared': 1.2.2
-      '@babel/runtime': 7.26.0
-
-  '@algolia/ui-components-shared@1.2.2': {}
-
   '@alloc/quick-lru@5.2.0': {}
 
   '@ampproject/remapping@2.2.1':
@@ -10263,6 +10256,8 @@ snapshots:
       import-meta-resolve: 3.0.0
 
   '@cspell/strong-weak-map@7.3.8': {}
+
+  '@date-fns/tz@1.2.0': {}
 
   '@effect/schema@0.68.18(effect@3.4.8)':
     dependencies:
@@ -10875,7 +10870,7 @@ snapshots:
     dependencies:
       fast-glob: 3.3.1
 
-  '@next/eslint-plugin-next@15.3.0-canary.20':
+  '@next/eslint-plugin-next@15.3.0-canary.39':
     dependencies:
       fast-glob: 3.3.1
 
@@ -12904,7 +12899,7 @@ snapshots:
 
   '@types/estree@1.0.6': {}
 
-  '@types/google.maps@3.54.10': {}
+  '@types/google.maps@3.58.1': {}
 
   '@types/hast@2.3.5':
     dependencies:
@@ -13394,7 +13389,7 @@ snapshots:
       next: 15.0.3(@playwright/test@1.38.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
       react: 19.0.0-rc-66855b96-20241106
 
-  '@vercel/style-guide@6.0.0(@next/eslint-plugin-next@15.3.0-canary.20)(eslint@8.57.1)(prettier@3.1.1)(typescript@5.3.3)(vitest@0.34.6(playwright@1.38.0)(terser@5.36.0))':
+  '@vercel/style-guide@6.0.0(@next/eslint-plugin-next@15.3.0-canary.39)(eslint@8.57.1)(prettier@3.1.1)(typescript@5.3.3)(vitest@0.34.6(playwright@1.38.0)(terser@5.36.0))':
     dependencies:
       '@babel/core': 7.26.0
       '@babel/eslint-parser': 7.25.9(@babel/core@7.26.0)(eslint@8.57.1)
@@ -13417,7 +13412,7 @@ snapshots:
       eslint-plugin-vitest: 0.3.26(@typescript-eslint/eslint-plugin@8.16.0(@typescript-eslint/parser@8.16.0(eslint@8.57.1)(typescript@5.3.3))(eslint@8.57.1)(typescript@5.3.3))(eslint@8.57.1)(typescript@5.3.3)(vitest@0.34.6(playwright@1.38.0)(terser@5.36.0))
       prettier-plugin-packagejson: 2.5.6(prettier@3.1.1)
     optionalDependencies:
-      '@next/eslint-plugin-next': 15.3.0-canary.20
+      '@next/eslint-plugin-next': 15.3.0-canary.39
       eslint: 8.57.1
       prettier: 3.1.1
       typescript: 5.3.3
@@ -13598,7 +13593,7 @@ snapshots:
       require-from-string: 2.0.2
       uri-js: 4.4.1
 
-  algoliasearch-helper@3.15.0(algoliasearch@4.20.0):
+  algoliasearch-helper@3.24.3(algoliasearch@4.20.0):
     dependencies:
       '@algolia/events': 4.0.1
       algoliasearch: 4.20.0
@@ -14380,9 +14375,13 @@ snapshots:
       es-errors: 1.3.0
       is-data-view: 1.0.1
 
+  date-fns-jalali@4.1.0-0: {}
+
   date-fns@2.30.0:
     dependencies:
       '@babel/runtime': 7.26.0
+
+  date-fns@4.1.0: {}
 
   debounce@1.2.1: {}
 
@@ -16105,22 +16104,25 @@ snapshots:
 
   inline-style-parser@0.2.4: {}
 
-  instantsearch.js@4.60.0(algoliasearch@4.20.0):
+  instantsearch-ui-components@0.11.1:
+    dependencies:
+      '@babel/runtime': 7.26.0
+
+  instantsearch.js@4.78.1(algoliasearch@4.20.0):
     dependencies:
       '@algolia/events': 4.0.1
-      '@algolia/ui-components-highlight-vdom': 1.2.2
-      '@algolia/ui-components-shared': 1.2.2
       '@types/dom-speech-recognition': 0.0.1
-      '@types/google.maps': 3.54.10
+      '@types/google.maps': 3.58.1
       '@types/hogan.js': 3.0.5
       '@types/qs': 6.9.10
       algoliasearch: 4.20.0
-      algoliasearch-helper: 3.15.0(algoliasearch@4.20.0)
+      algoliasearch-helper: 3.24.3(algoliasearch@4.20.0)
       hogan.js: 3.0.2
       htm: 3.1.1
-      preact: 10.16.0
+      instantsearch-ui-components: 0.11.1
+      preact: 10.24.3
       qs: 6.9.7
-      search-insights: 2.11.0
+      search-insights: 2.17.3
 
   internal-slot@1.0.5:
     dependencies:
@@ -17770,8 +17772,6 @@ snapshots:
     dependencies:
       preact: 10.24.3
 
-  preact@10.16.0: {}
-
   preact@10.24.3: {}
 
   prelude-ls@1.2.1: {}
@@ -17904,15 +17904,12 @@ snapshots:
       react: 19.0.0-rc-66855b96-20241106
       tween-functions: 1.2.0
 
-  react-day-picker@8.8.0(date-fns@2.30.0)(react@18.2.0):
+  react-day-picker@9.6.4(react@18.2.0):
     dependencies:
-      date-fns: 2.30.0
+      '@date-fns/tz': 1.2.0
+      date-fns: 4.1.0
+      date-fns-jalali: 4.1.0-0
       react: 18.2.0
-
-  react-day-picker@8.8.0(date-fns@2.30.0)(react@19.0.0-rc-66855b96-20241106):
-    dependencies:
-      date-fns: 2.30.0
-      react: 19.0.0-rc-66855b96-20241106
 
   react-dnd-html5-backend@16.0.1:
     dependencies:
@@ -17966,28 +17963,29 @@ snapshots:
     dependencies:
       react: 19.0.0-rc-66855b96-20241106
 
-  react-instantsearch-core@7.3.0(algoliasearch@4.20.0)(react@19.0.0-rc-66855b96-20241106):
+  react-instantsearch-core@7.15.5(algoliasearch@4.20.0)(react@19.0.0-rc-66855b96-20241106):
     dependencies:
-      '@babel/runtime': 7.22.6
+      '@babel/runtime': 7.26.0
       algoliasearch: 4.20.0
-      algoliasearch-helper: 3.15.0(algoliasearch@4.20.0)
-      instantsearch.js: 4.60.0(algoliasearch@4.20.0)
+      algoliasearch-helper: 3.24.3(algoliasearch@4.20.0)
+      instantsearch.js: 4.78.1(algoliasearch@4.20.0)
       react: 19.0.0-rc-66855b96-20241106
-      use-sync-external-store: 1.2.0(react@19.0.0-rc-66855b96-20241106)
+      use-sync-external-store: 1.2.2(react@19.0.0-rc-66855b96-20241106)
 
-  react-instantsearch-nextjs@0.1.5(next@15.0.3(@playwright/test@1.38.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106))(react-instantsearch@7.3.0(algoliasearch@4.20.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)):
+  react-instantsearch-nextjs@0.4.6(next@15.0.3(@playwright/test@1.38.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106))(react-instantsearch@7.15.5(algoliasearch@4.20.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)):
     dependencies:
       next: 15.0.3(@playwright/test@1.38.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
-      react-instantsearch: 7.3.0(algoliasearch@4.20.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
+      react-instantsearch: 7.15.5(algoliasearch@4.20.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
 
-  react-instantsearch@7.3.0(algoliasearch@4.20.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106):
+  react-instantsearch@7.15.5(algoliasearch@4.20.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106):
     dependencies:
-      '@babel/runtime': 7.22.6
+      '@babel/runtime': 7.26.0
       algoliasearch: 4.20.0
-      instantsearch.js: 4.60.0(algoliasearch@4.20.0)
+      instantsearch-ui-components: 0.11.1
+      instantsearch.js: 4.78.1(algoliasearch@4.20.0)
       react: 19.0.0-rc-66855b96-20241106
       react-dom: 19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106)
-      react-instantsearch-core: 7.3.0(algoliasearch@4.20.0)(react@19.0.0-rc-66855b96-20241106)
+      react-instantsearch-core: 7.15.5(algoliasearch@4.20.0)(react@19.0.0-rc-66855b96-20241106)
 
   react-intersection-observer@9.5.2(react@19.0.0-rc-66855b96-20241106):
     dependencies:
@@ -18621,7 +18619,7 @@ snapshots:
 
   scule@1.1.1: {}
 
-  search-insights@2.11.0: {}
+  search-insights@2.17.3: {}
 
   selderee@0.10.0:
     dependencies:
@@ -19648,6 +19646,10 @@ snapshots:
   use-sync-external-store@1.2.2(react@18.2.0):
     dependencies:
       react: 18.2.0
+
+  use-sync-external-store@1.2.2(react@19.0.0-rc-66855b96-20241106):
+    dependencies:
+      react: 19.0.0-rc-66855b96-20241106
 
   util-deprecate@1.0.2: {}
 
