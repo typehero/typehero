@@ -22,6 +22,9 @@
       "dependsOn": ["db:push"],
       "cache": false
     },
+    "db:sync-challenges": {
+      "cache": false
+    },
     "db:studio": {
       "cache": false
     }

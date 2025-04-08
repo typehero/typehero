@@ -10,6 +10,7 @@
     "check:solutions": "tsx ./challenges/validate.ts",
     "db:push": "turbo db:push",
     "db:reset": "turbo db:reset",
+    "db:sc": "turbo db:sync-challenges",
     "db:seed": "turbo db:reset && turbo db:seed",
     "db:prod:seed": "turbo db:reset && turbo db:prod:seed",
     "db:studio": "turbo db:studio",

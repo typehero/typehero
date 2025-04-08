@@ -43,6 +43,8 @@ export const CommentInput = forwardRef<CommentInputRefProps, CommentInputProps>(
 
     // We need to control the textarea element from parent component.
     useImperativeHandle(ref, () => ({
+      // TODO: Either textAreaRef is always defined, or textarea can be nullish
+      // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
       textarea: textAreaRef?.current!,
       setInputValue: (value: string) => {
         form.setValue('text', value);
@@ -156,6 +158,7 @@ function useAutosizeTextArea(
       // Trying to set this with state or a ref will product an incorrect value.
       textAreaRef.current.style.height = `${scrollHeight}px`;
     }
-    // eslint-disable-next-line
+    // TODO: Fix this incorrect set of deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [textAreaRef.current, value, commentMode]);
 }

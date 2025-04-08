@@ -19,7 +19,6 @@ export default function NotificationPage() {
   const client = useQueryClient();
   const mutation = useMutation({
     mutationFn: markNotificationsAsRead,
-    onSuccess() {},
   });
 
   const onSeen = (id: number) => {

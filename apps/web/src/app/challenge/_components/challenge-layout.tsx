@@ -188,11 +188,14 @@ export function ChallengeLayout({
         }
       }
 
+      // TODO: Either leftSide.current is always defined, or leftWidth can be nullish
+      /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
       if (isDesktop) {
         leftWidth = leftSide.current?.getBoundingClientRect().width!;
       } else {
         topHeight = leftSide.current?.getBoundingClientRect().height!;
       }
+      /* eslint-enable @typescript-eslint/no-non-null-asserted-optional-chain */
 
       // Attach the listeners to `document`
       if (e instanceof MouseEvent) {

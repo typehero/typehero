@@ -65,6 +65,8 @@ export function SolutionEditor({ dismiss, challengeId, code }: SolutionEditorPro
         description: data.content ?? '',
         slug: slug as string,
         title: data.title ?? `${session.data?.user?.name}'s Solution`,
+        // TODO: Is this guaranteed to exist, or is userId actually optional?
+        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
         userId: session.data?.user?.id!,
       });
 

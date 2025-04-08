@@ -23,6 +23,7 @@
     "db:push": "dotenv -e ../../.env prisma db push",
     "db:reset": "dotenv -e ../../.env prisma db push -- --force-reset",
     "db:seed": "dotenv -e ../../.env tsx ./seed/dev.ts",
+    "db:sync-challenges": "dotenv -e ../../.env tsx ./temp/update-ported-challenges.ts",
     "db:prod:seed": "dotenv -e ../../.env tsx ./temp/populate-aot-challenges.ts && dotenv -e ../../.env tsx ./seed/prod.ts",
     "db:leaderboard:seed": "dotenv -e ../../.env tsx ./seed/leaderboard.ts",
     "db:aot:seed": "dotenv -e ../../.env tsx ./temp/aot-2024-ingest.ts",

@@ -9,6 +9,9 @@ import { buildMetaForEventPage } from '~/utils/metadata';
 import { isValidAdventYear } from '~/utils/time-utils';
 import BgDecorations from './24BgDecorations';
 import DaySolved from './day';
+import Partners from '~/components/landing/Partners';
+import { Footsies } from '~/components/footsies';
+import ChristmasLights from './Lights';
 
 type Challenge = RouterOutputs['event']['getEventChallengesByYear'][0];
 interface EventByYearLandingPageProps {
@@ -40,15 +43,15 @@ export default async function EventByYearLandingPage({ params }: EventByYearLand
 
   return (
     <>
-      <div className="z-10 -mt-14 flex min-h-screen flex-col items-center justify-between overflow-hidden border-b border-neutral-300 bg-gradient-to-t from-neutral-200 to-neutral-50 py-14 dark:border-neutral-700 dark:from-neutral-800 dark:to-neutral-950">
+      <div className="z-10 -mt-14 flex min-h-screen flex-col items-center justify-between overflow-clip border-b border-neutral-300 bg-gradient-to-t from-neutral-200 to-neutral-50 py-14 dark:border-neutral-700 dark:from-neutral-800 dark:to-neutral-950">
+        <ChristmasLights />
+        {/* bg image */}
         <div
           className={`pointer-events-none fixed left-0 top-0 h-full w-full bg-[url('https://images.pexels.com/photos/724906/pexels-photo-724906.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')] bg-cover opacity-10 blur-3xl`}
         />
-        <div className="container relative mx-auto pt-12">
+        <div className="container pointer-events-none relative mx-auto pt-12">
           <BgDecorations />
-          {/* <h1 className="mb-16 mt-8 text-center text-3xl font-bold lg:text-6xl">
-          Challenges for {year}
-        </h1> */}
+
           <ul className="z-10 flex flex-col items-center gap-2 sm:gap-3 md:gap-4">
             {year === 2024 ? (
               <div className="flex flex-col items-center pb-10">
@@ -63,7 +66,7 @@ export default async function EventByYearLandingPage({ params }: EventByYearLand
                   <Link
                     key={`day-active-${day.day}`}
                     href={`/events/${year}/${day.day}`}
-                    className={`${!day.active && 'pointer-events-none'}`}
+                    className={!day.active ? 'pointer-events-none' : 'pointer-events-auto'}
                     aria-disabled={!day.active}
                   >
                     <DaySolved day={day.day} active={day.active} hasSolved={day.hasSolved} />

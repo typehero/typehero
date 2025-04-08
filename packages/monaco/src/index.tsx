@@ -114,6 +114,17 @@ export function CodePanel(props: CodePanelProps) {
     }) as TsErrors;
     const hasErrors = tsErrors?.some((e) => e.length) ?? false;
 
+    if (disabled) {
+      toast({
+        variant: 'destructive',
+        title: 'You are unable to submit.',
+        description: props.submissionDisabled
+          ? 'Please login to submit'
+          : 'Please wait for the editor to load before submitting',
+      });
+      return;
+    }
+
     try {
       validator(code);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -170,6 +181,7 @@ export function CodePanel(props: CodePanelProps) {
       document.removeEventListener('keydown', onSubmit);
     };
   }, [debouncedHandleSubmit]);
+
   return (
     <>
       <div className="sticky top-0 flex h-[40px] shrink-0 items-center justify-end gap-4 border-b border-zinc-300 bg-white px-3 py-2 dark:border-zinc-700 dark:bg-[#1e1e1e]">

@@ -1,6 +1,24 @@
 import Link from 'next/link';
-import { Binary, Github, Twitter } from '@repo/ui/icons';
+import { Binary, Discord, Github, Twitter } from '@repo/ui/icons';
 import { ThemeButton } from './navigation/theme-button';
+
+const links = [
+  {
+    href: 'https://github.com/typehero/typehero',
+    label: 'TypeHero on GitHub',
+    Icon: Github,
+  },
+  {
+    href: 'https://twitter.com/typeheroapp',
+    label: 'TypeHero on Twitter',
+    Icon: Twitter,
+  },
+  {
+    href: 'https://discord.gg/WjZhvVbFHM',
+    label: 'Trash Devs Discord Community',
+    Icon: Discord,
+  },
+];
 
 export function Footsies() {
   return (
@@ -14,24 +32,18 @@ export function Footsies() {
           <ThemeButton />
           <span className="px-2 opacity-50">|</span>
           <div className="flex items-center rounded-full border bg-white p-0.5 dark:bg-black">
-            <a
-              target="_blank"
-              rel="noreferrer"
-              className="group rounded-full p-1.5 hover:bg-neutral-200 dark:hover:bg-neutral-800"
-              href="https://github.com/typehero/typehero"
-            >
-              <span className="sr-only">TypeHero on GitHub</span>
-              <Github className="h-4 w-4 duration-150 group-hover:scale-110 group-hover:fill-black dark:group-hover:fill-white" />
-            </a>
-            <a
-              target="_blank"
-              rel="noreferrer"
-              className="group rounded-full p-1.5 hover:bg-neutral-200 dark:hover:bg-neutral-800"
-              href="https://twitter.com/typeheroapp"
-            >
-              <span className="sr-only">TypeHero on Twitter</span>
-              <Twitter className="h-4 w-4 duration-150 group-hover:scale-110 group-hover:fill-black dark:group-hover:fill-white" />
-            </a>
+            {links.map(({ href, label, Icon }) => (
+              <a
+                key={href}
+                target="_blank"
+                rel="noreferrer"
+                className="group rounded-full p-1.5 hover:bg-neutral-200 dark:hover:bg-neutral-800"
+                href={href}
+              >
+                <span className="sr-only">{label}</span>
+                <Icon className="h-4 w-4 duration-150 group-hover:scale-110 group-hover:fill-black dark:group-hover:fill-white" />
+              </a>
+            ))}
           </div>
         </div>
       </div>
