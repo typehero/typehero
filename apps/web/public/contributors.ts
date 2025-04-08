@@ -21,7 +21,7 @@ export const contributors = [
         "type": "User",
         "user_view_type": "public",
         "site_admin": false,
-        "contributions": 471
+        "contributions": 473
     },
     {
         "login": "Hacksore",
