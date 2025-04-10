@@ -996,8 +996,8 @@ importers:
         specifier: ^15.5.0
         version: 15.5.0(react@18.2.0)
       recharts:
-        specifier: ^2.12.7
-        version: 2.12.7(react-dom@19.0.0-rc-66855b96-20241106(react@18.2.0))(react@18.2.0)
+        specifier: ^2.15.2
+        version: 2.15.2(react-dom@19.0.0-rc-66855b96-20241106(react@18.2.0))(react@18.2.0)
       rehype-raw:
         specifier: ^7.0.0
         version: 7.0.0
@@ -1040,7 +1040,7 @@ importers:
     dependencies:
       '@next/eslint-plugin-next':
         specifier: canary
-        version: 15.3.1-canary.0
+        version: 15.3.1-canary.2
       '@repo/tsconfig':
         specifier: workspace:*
         version: link:../config-typescript
@@ -1052,7 +1052,7 @@ importers:
         version: 8.16.0(eslint@8.57.1)(typescript@5.3.3)
       '@vercel/style-guide':
         specifier: ^6.0.0
-        version: 6.0.0(@next/eslint-plugin-next@15.3.1-canary.0)(eslint@8.57.1)(prettier@3.1.1)(typescript@5.3.3)(vitest@0.34.6(playwright@1.38.0)(terser@5.36.0))
+        version: 6.0.0(@next/eslint-plugin-next@15.3.1-canary.2)(eslint@8.57.1)(prettier@3.1.1)(typescript@5.3.3)(vitest@0.34.6(playwright@1.38.0)(terser@5.36.0))
       eslint:
         specifier: ^8.57.0
         version: 8.57.1
@@ -2335,8 +2335,8 @@ packages:
   '@next/eslint-plugin-next@15.0.3':
     resolution: {integrity: sha512-3Ln/nHq2V+v8uIaxCR6YfYo7ceRgZNXfTd3yW1ukTaFbO+/I8jNakrjYWODvG9BuR2v5kgVtH/C8r0i11quOgw==}
 
-  '@next/eslint-plugin-next@15.3.1-canary.0':
-    resolution: {integrity: sha512-7bXZV1MDhkabJd7b1LJtaZfJVYWRaV9IYEqcSoLaW0PKuGEty61IG/SyuPL9Enp/CwmQZlDtyyIgoQcUldzo/Q==}
+  '@next/eslint-plugin-next@15.3.1-canary.2':
+    resolution: {integrity: sha512-L5APAN00NZNC+2lF+eXJdqrUrv2MaOuruCsLZL9h6V+vAVb2luJG4M262L4rTBE4zQa941nrFPwP4HJdk5ceyg==}
 
   '@next/swc-darwin-arm64@15.0.3':
     resolution: {integrity: sha512-s3Q/NOorCsLYdCKvQlWU+a+GeAd3C8Rb3L1YnetsgwXzhc3UTWrtQpB/3eCjFOdGUj5QmXfRak12uocd1ZiiQw==}
@@ -8202,8 +8202,8 @@ packages:
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
-  react-is@18.2.0:
-    resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
+  react-is@18.3.1:
+    resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
 
   react-markdown@9.0.3:
     resolution: {integrity: sha512-Yk7Z94dbgYTOrdk41Z74GoKA7rThnsbbqBTRYuxoe08qvfQ9tJVhmAKw6BJS/ZORG7kTy/s1QvYzSuaoBA1qfw==}
@@ -8268,11 +8268,11 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
 
-  react-smooth@4.0.1:
-    resolution: {integrity: sha512-OE4hm7XqR0jNOq3Qmk9mFLyd6p2+j6bvbPJ7qlB7+oo0eNcL2l7WQzG6MBnT3EXY6xzkLMUBec3AfewJdA0J8w==}
+  react-smooth@4.0.4:
+    resolution: {integrity: sha512-gnGKTpYwqL0Iii09gHobNolvX4Kiq4PKx6eWBCYYix+8cdw+cGo3do906l1NBPKkSWx1DghC1dlWG9L2uGd61Q==}
     peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   react-style-singleton@2.2.1:
     resolution: {integrity: sha512-ZWj0fHEMyWkHzKYUr2Bs/4zU6XLmq9HsgBURm7g5pAVfyn49DgUiNgY2d4lXRlYSiCif9YBGpQleewkcqddc7g==}
@@ -8336,12 +8336,12 @@ packages:
   recharts-scale@0.4.5:
     resolution: {integrity: sha512-kivNFO+0OcUNu7jQquLXAxz1FIwZj8nrj+YkOKc5694NbjCvcT6aSZiIzNzd2Kul4o4rTto8QVR9lMNtxD4G1w==}
 
-  recharts@2.12.7:
-    resolution: {integrity: sha512-hlLJMhPQfv4/3NBSAyq3gzGg4h2v69RJh6KU7b3pXYNNAELs9kEoXOjbkxdXpALqKBoVmVptGfLpxdaVYqjmXQ==}
+  recharts@2.15.2:
+    resolution: {integrity: sha512-xv9lVztv3ingk7V3Jf05wfAZbM9Q2umJzu5t/cfnAK7LUslNrGT7LPBr74G+ok8kSCeFMaePmWMg0rcYOnczTw==}
     engines: {node: '>=14'}
     peerDependencies:
-      react: ^16.0.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
+      react: ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   redis-errors@1.2.0:
     resolution: {integrity: sha512-1qny3OExCf0UvUV/5wpYKf2YwPcOqXzkwKKSmKHiE6ZMQs5heeE/c8eXK+PNllPvmjgAbfnsbpkGZWy8cBpn9w==}
@@ -10874,7 +10874,7 @@ snapshots:
     dependencies:
       fast-glob: 3.3.1
 
-  '@next/eslint-plugin-next@15.3.1-canary.0':
+  '@next/eslint-plugin-next@15.3.1-canary.2':
     dependencies:
       fast-glob: 3.3.1
 
@@ -13393,7 +13393,7 @@ snapshots:
       next: 15.0.3(@playwright/test@1.38.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
       react: 19.0.0-rc-66855b96-20241106
 
-  '@vercel/style-guide@6.0.0(@next/eslint-plugin-next@15.3.1-canary.0)(eslint@8.57.1)(prettier@3.1.1)(typescript@5.3.3)(vitest@0.34.6(playwright@1.38.0)(terser@5.36.0))':
+  '@vercel/style-guide@6.0.0(@next/eslint-plugin-next@15.3.1-canary.2)(eslint@8.57.1)(prettier@3.1.1)(typescript@5.3.3)(vitest@0.34.6(playwright@1.38.0)(terser@5.36.0))':
     dependencies:
       '@babel/core': 7.26.0
       '@babel/eslint-parser': 7.25.9(@babel/core@7.26.0)(eslint@8.57.1)
@@ -13416,7 +13416,7 @@ snapshots:
       eslint-plugin-vitest: 0.3.26(@typescript-eslint/eslint-plugin@8.16.0(@typescript-eslint/parser@8.16.0(eslint@8.57.1)(typescript@5.3.3))(eslint@8.57.1)(typescript@5.3.3))(eslint@8.57.1)(typescript@5.3.3)(vitest@0.34.6(playwright@1.38.0)(terser@5.36.0))
       prettier-plugin-packagejson: 2.5.6(prettier@3.1.1)
     optionalDependencies:
-      '@next/eslint-plugin-next': 15.3.1-canary.0
+      '@next/eslint-plugin-next': 15.3.1-canary.2
       eslint: 8.57.1
       prettier: 3.1.1
       typescript: 5.3.3
@@ -17801,7 +17801,7 @@ snapshots:
     dependencies:
       '@jest/schemas': 29.6.3
       ansi-styles: 5.2.0
-      react-is: 18.2.0
+      react-is: 18.3.1
 
   pretty@2.0.0:
     dependencies:
@@ -17999,7 +17999,7 @@ snapshots:
 
   react-is@16.13.1: {}
 
-  react-is@18.2.0: {}
+  react-is@18.3.1: {}
 
   react-markdown@9.0.3(react@18.2.0)(types-react@19.0.0-rc.1):
     dependencies:
@@ -18166,7 +18166,7 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  react-smooth@4.0.1(react-dom@19.0.0-rc-66855b96-20241106(react@18.2.0))(react@18.2.0):
+  react-smooth@4.0.4(react-dom@19.0.0-rc-66855b96-20241106(react@18.2.0))(react@18.2.0):
     dependencies:
       fast-equals: 5.0.1
       prop-types: 15.8.1
@@ -18292,15 +18292,15 @@ snapshots:
     dependencies:
       decimal.js-light: 2.5.1
 
-  recharts@2.12.7(react-dom@19.0.0-rc-66855b96-20241106(react@18.2.0))(react@18.2.0):
+  recharts@2.15.2(react-dom@19.0.0-rc-66855b96-20241106(react@18.2.0))(react@18.2.0):
     dependencies:
       clsx: 2.0.0
       eventemitter3: 4.0.7
       lodash: 4.17.21
       react: 18.2.0
       react-dom: 19.0.0-rc-66855b96-20241106(react@18.2.0)
-      react-is: 16.13.1
-      react-smooth: 4.0.1(react-dom@19.0.0-rc-66855b96-20241106(react@18.2.0))(react@18.2.0)
+      react-is: types-react@19.0.0-rc.1
+      react-smooth: 4.0.4(react-dom@19.0.0-rc-66855b96-20241106(react@18.2.0))(react@18.2.0)
       recharts-scale: 0.4.5
       tiny-invariant: 1.3.3
       victory-vendor: 36.9.2

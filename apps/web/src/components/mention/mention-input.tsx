@@ -11,7 +11,7 @@ type Modify<T, R> = Omit<T, keyof R> & R;
 type Props = Modify<
   TextareaProps,
   {
-    forwardedref: RefObject<HTMLTextAreaElement>;
+    forwardedref: RefObject<HTMLTextAreaElement | null>;
     onChange: (e: string) => void;
   }
 >;

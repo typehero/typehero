@@ -6,7 +6,7 @@ interface Size {
 }
 
 export function useResizeObserver(
-  ref: React.RefObject<HTMLElement>,
+  ref: React.RefObject<HTMLElement | null>,
   callback: (size: Size) => unknown,
 ) {
   const [attached, setAttached] = useState(false);
