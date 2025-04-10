@@ -1,13 +1,6 @@
 'use client';
 import { Billboard, Edges, Image, PerspectiveCamera, Text, useGLTF } from '@react-three/drei';
-import {
-  Canvas,
-  extend,
-  useFrame,
-  type GroupProps,
-  type MeshProps,
-  type ThreeElement,
-} from '@react-three/fiber';
+import { Canvas, extend, useFrame, type ThreeElement } from '@react-three/fiber';
 import { useScroll, useSpring } from 'framer-motion';
 import { motion } from 'framer-motion-3d';
 import { geometry } from 'maath';
@@ -22,7 +15,9 @@ import {
   type PerspectiveCamera as PerspectiveCameraType,
 } from 'three';
 
-// TODO: Test this page.
+type MeshProps = React.JSX.IntrinsicElements['mesh'];
+type GroupProps = React.JSX.IntrinsicElements['group'];
+
 declare module '@react-three/fiber' {
   interface ThreeElements {
     roundedPlaneGeometry: ThreeElement<typeof RoundedPlaneGeometry>;

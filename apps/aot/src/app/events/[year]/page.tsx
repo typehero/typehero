@@ -8,10 +8,8 @@ import { api } from '~/trpc/server';
 import { buildMetaForEventPage } from '~/utils/metadata';
 import { isValidAdventYear } from '~/utils/time-utils';
 import BgDecorations from './24BgDecorations';
-import DaySolved from './day';
-import Partners from '~/components/landing/Partners';
-import { Footsies } from '~/components/footsies';
 import ChristmasLights from './Lights';
+import DaySolved from './day';
 
 type Challenge = RouterOutputs['event']['getEventChallengesByYear'][0];
 interface EventByYearLandingPageProps {

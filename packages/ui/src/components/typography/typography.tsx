@@ -1,5 +1,5 @@
 import { cva } from 'class-variance-authority';
-import React, { type ElementType, type JSX } from 'react';
+import React, { type JSX } from 'react';
 import { cn } from '../../cn';
 
 export type Intent = 'body' | 'h1' | 'h2' | 'h3' | 'leading' | 'title';
@@ -90,7 +90,7 @@ export function Text<T extends TagOptions>({
     }
   }
 
-  const Tag = tagStr as ElementType;
+  const Tag = tagStr as unknown as React.ComponentType;
 
   return (
     <Tag className={cn(styles({ intent, weight, color }), className)} {...props}>

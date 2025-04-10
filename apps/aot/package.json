@@ -19,7 +19,7 @@
     "@hookform/resolvers": "^3.1.1",
     "@radix-ui/react-dialog": "^1.0.4",
     "@react-three/drei": "^9.116.0",
-    "@react-three/fiber": "9.0.0-rc.1",
+    "@react-three/fiber": "^9.1.2",
     "@repo/auth": "workspace:*",
     "@repo/db": "workspace:*",
     "@repo/monaco": "workspace:*",
