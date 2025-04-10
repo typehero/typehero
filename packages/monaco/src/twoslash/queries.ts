@@ -1,5 +1,5 @@
 // based on https://github.com/orta/vscode-twoslash-queries
-import type * as monaco from 'monaco-editor';
+import type * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import { createInlayHint, getLeftMostHintOfLine, quickInfoRequest } from './helpers';
 
 /** Strongly-typed RegExp groups (https://github.com/microsoft/TypeScript/issues/32098#issuecomment-1279645368) */

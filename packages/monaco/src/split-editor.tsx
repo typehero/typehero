@@ -5,7 +5,6 @@ import { useToast } from '@repo/ui/components/use-toast';
 import { setupTypeAcquisition } from '@typescript/ata';
 import clsx from 'clsx';
 import debounce from 'lodash/debounce';
-import type * as monacoType from 'monaco-editor';
 import dynamic from 'next/dynamic';
 import { useEffect, useRef, useState } from 'react';
 import ts from 'typescript';
@@ -15,6 +14,9 @@ import { PrettierFormatProvider } from './prettier';
 import { useEditorSettingsStore } from './settings-store';
 import { createTwoslashInlayProvider } from './twoslash/provider';
 import { getEventDeltas } from './utils';
+
+import type * as monaco from 'monaco-editor';
+import type * as monaco_editor from 'monaco-editor/esm/vs/editor/editor.api';
 
 /** these types are dynamically fetched on load and used to add node types to the monaco instance */
 const NECESSARY_NODE_TYPES = ['process'];
@@ -42,7 +44,7 @@ export interface SplitEditorProps {
   setIsTestPanelExpanded: (isExpanded: boolean) => void;
   tests: string;
   userCode: string;
-  tsconfig?: monacoType.languages.typescript.CompilerOptions;
+  tsconfig?: monaco_editor.languages.typescript.CompilerOptions;
   onValidate?: {
     tests?: OnValidate;
     user?: OnValidate;
@@ -55,8 +57,8 @@ export interface SplitEditorProps {
     tests?: OnChange;
     user?: OnChange;
   };
-  monaco: typeof import('monaco-editor') | undefined;
-  userEditorState?: monacoType.editor.IStandaloneCodeEditor;
+  monaco: typeof import('monaco-editor/esm/vs/editor/editor.api') | undefined;
+  userEditorState?: monaco.editor.IStandaloneCodeEditor;
   isTestsReadonly?: boolean;
 }
 
@@ -93,8 +95,8 @@ export default function SplitEditor({
   const resizer = useRef<HTMLDivElement>(null);
   const testPanel = useRef<HTMLDivElement>(null);
   const testPanelSection = useRef<HTMLDivElement>(null);
-  const monacoRef = useRef<typeof import('monaco-editor')>();
-  const editorRef = useRef<monacoType.editor.IStandaloneCodeEditor>();
+  const monacoRef = useRef<typeof import('monaco-editor/esm/vs/editor/editor.api')>(undefined);
+  const editorRef = useRef<monaco.editor.IStandaloneCodeEditor>(undefined);
 
   useEffect(() => {
     const saveHandler = (e: KeyboardEvent) => {
@@ -291,10 +293,10 @@ export default function SplitEditor({
     [monaco, userEditorState],
   );
 
-  const inlayHintsRef = useRef<monacoType.IDisposable | null>(null);
+  const inlayHintsRef = useRef<monaco_editor.IDisposable | null>(null);
 
   const debouncedRefreshInlayHints = useRef(
-    debounce(async (monaco: typeof monacoType) => {
+    debounce(async (monaco: typeof monaco_editor) => {
       inlayHintsRef.current?.dispose();
 
       // TODO: Surely monaco is guaranteed to exist, right? Why the optional chaining?
@@ -543,7 +545,7 @@ export default function SplitEditor({
   );
 }
 
-async function typeCheck(monaco: typeof monacoType) {
+async function typeCheck(monaco: typeof monaco_editor) {
   const models = monaco.editor.getModels();
   const getWorker = await monaco.languages.typescript.getTypeScriptWorker();
 
@@ -567,7 +569,7 @@ async function typeCheck(monaco: typeof monacoType) {
         startColumn: start.column,
         endColumn: end.column,
         message: ts.flattenDiagnosticMessageText(d.messageText, '\n'),
-      } satisfies monacoType.editor.IMarkerData;
+      } satisfies monaco_editor.editor.IMarkerData;
     });
 
     monaco.editor.setModelMarkers(model, model.getLanguageId(), markers);
