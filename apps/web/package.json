@@ -103,7 +103,7 @@
     "eslint": "^8.57.0",
     "eslint-config-next": "^15.0.3",
     "eslint-plugin-import": "^2.31.0",
-    "monaco-editor": "^0.50.0",
+    "monaco-editor": "^0.52.2",
     "postcss": "^8.4.31",
     "prettier": "^3.1.1",
     "prettier-plugin-tailwindcss": "^0.5.9",

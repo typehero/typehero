@@ -6,14 +6,15 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/too
 import { useToast } from '@repo/ui/components/use-toast';
 import { CheckCircle2, ChevronUp, XCircle } from '@repo/ui/icons';
 import clsx from 'clsx';
+import debounce from 'lodash/debounce';
 import lzstring from 'lz-string';
 import type * as monaco from 'monaco-editor';
+import type * as monaco_editor from 'monaco-editor/esm/vs/editor/editor.api';
 import { usePathname, useSearchParams } from 'next/navigation';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useResetEditor } from './editor-hooks';
 import SplitEditor, { TESTS_PATH, USER_CODE_PATH } from './split-editor';
 import { useLocalStorage } from './useLocalStorage';
-import debounce from 'lodash/debounce';
 
 export interface CodePanelProps {
   challenge: {
@@ -71,7 +72,7 @@ export function CodePanel(props: CodePanelProps) {
 
   const [testEditorState, setTestEditorState] = useState<monaco.editor.IStandaloneCodeEditor>();
   const [userEditorState, setUserEditorState] = useState<monaco.editor.IStandaloneCodeEditor>();
-  const [monacoInstance, setMonacoInstance] = useState<typeof monaco>();
+  const [monacoInstance, setMonacoInstance] = useState<typeof monaco_editor>();
 
   // validators will come from metatadata but for now this is fine
   // ex: challenge.validator

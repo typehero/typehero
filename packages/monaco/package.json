@@ -68,7 +68,7 @@
     "@repo/lint": "workspace:*",
     "@repo/tsconfig": "workspace:*",
     "eslint": "^8.57.0",
-    "monaco-editor": "^0.50.0",
+    "monaco-editor": "^0.52.2",
     "typescript": "^5.3.3"
   }
 }

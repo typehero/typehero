@@ -2,13 +2,13 @@
 
 import clsx from 'clsx';
 import { useTheme } from 'next-themes';
-import { useState } from 'react';
+import { useState, type Ref } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import rehypeRaw from 'rehype-raw';
 import rehypeSanitize from 'rehype-sanitize';
 import remarkGfm from 'remark-gfm';
-import type { Transformer } from 'unified';
+import type { Plugin } from 'unified';
 import { SKIP, visit, type BuildVisitor } from 'unist-util-visit';
 import { Check, Copy } from '../icons';
 import { vs } from '../themes/vs';
@@ -22,10 +22,9 @@ const HTML_COMMENT_REGEX = new RegExp('<!--([\\s\\S]*?)-->', 'g');
 /**
  * Remove HTML comments from Markdown
  */
-function removeHtmlComments(): Transformer {
+function removeHtmlComments(): Plugin {
   return (tree) => {
     // TODO: PRs are welcomed to fix the any type
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handler: BuildVisitor<any> = (node, index, parent) => {
       const isComment = node.value.match(HTML_COMMENT_REGEX);
 
@@ -93,13 +92,14 @@ export function Markdown({
             {...props}
           />
         ),
-        code({ inline, className, children, style: _, ...props }) {
+        code({ className, children, style: _, ref, ...props }) {
           const match = /language-(\w+)/.exec(className || '');
-          return !inline && match ? (
+          return match ? (
             <div className="relative">
               {!disableCopy ? <CopyButton text={String(children).replace(/\n$/, '')} /> : null}
               <SyntaxHighlighter
-                PreTag="section" // parent tag
+                ref={ref as Ref<SyntaxHighlighter> | undefined}
+                PreTag={'section' as any} // parent tag
                 className={clsx(className, 'rounded-xl dark:rounded-md')}
                 language={match[1]}
                 style={syntaxHighlighterTheme} // theme
