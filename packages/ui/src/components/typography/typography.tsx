@@ -90,7 +90,7 @@ export function Text<T extends TagOptions>({
     }
   }
 
-  const Tag = tagStr as unknown as React.ComponentType;
+  const Tag = tagStr as unknown as JSX.ElementType;
 
   return (
     <Tag className={cn(styles({ intent, weight, color }), className)} {...props}>
