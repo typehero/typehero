@@ -113,7 +113,7 @@ function ActivitySquare(props: { cx: number; cy: number; activity: number }) {
 }
 
 const activeNodeAtom = atom<PrimitiveAtom<boolean> | null>(null);
-const SquareWrapper = (props: { children: (isSelected: boolean) => React.ReactElement }) => {
+const SquareWrapper = (props: { children: (isSelected: boolean) => React.ReactElement<any> }) => {
   const baseSelectedAtom = useMemo(() => atom(false), []);
   const selectedAtom = useMemo(
     () =>

@@ -60,9 +60,15 @@
       "ignoreMissing": [
         "monaco-editor"
       ]
+    },
+    "patchedDependencies": {
+      "monaco-editor@0.52.2": "patches/monaco-editor@0.52.2.patch"
     }
   },
   "dependencies": {
-    "pnpm": "^8.15.8"
+    "next": "15.3.1",
+    "pnpm": "^8.15.8",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
   }
 }

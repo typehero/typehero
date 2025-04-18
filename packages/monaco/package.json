@@ -57,10 +57,10 @@
     "lodash": "^4.17.21",
     "lz-string": "^1.5.0",
     "monaco-vim": "^0.4.2",
-    "next": "15.0.3",
+    "next": "15.3.1",
     "next-themes": "^0.2.1",
     "prettier": "^3.1.1",
-    "react": "18.2.0",
+    "react": "19.1.0",
     "react-hook-form": "^7.45.1",
     "zustand": "^4.3.9"
   },
