@@ -53,7 +53,7 @@
       "@typescript-eslint/parser": "8.16.0",
       "@auth/core": "0.37.4",
       "@types/react": "npm:types-react@rc",
-      "@types/react-dom": "npm:types-react-dom@rc",
+      "@types/react-dom": "19.1.0",
       "react-is": "19.0.0"
     },
     "peerDependencyRules": {
