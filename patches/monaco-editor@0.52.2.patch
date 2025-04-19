@@ -1,0 +1,56 @@
+diff --git a/esm/vs/base/common/worker/simpleWorker.js b/esm/vs/base/common/worker/simpleWorker.js
+index 85005f72fa8f356259711355424370f4b52acb8f..239ddebc819ba0fa1fa65203c0618ae32bb2144f 100644
+--- a/esm/vs/base/common/worker/simpleWorker.js
++++ b/esm/vs/base/common/worker/simpleWorker.js
+@@ -426,6 +426,10 @@ export class SimpleWorkerServer {
+         }
+         if (isESM) {
+             const url = FileAccess.asBrowserUri(`${moduleId}.js`).toString(true);
++            if (process.env.NODE_ENV === "development") {
++                throw new Error(`No RequestHandler!`);
++                return;
++            }
+             return import(`${url}`).then((module) => {
+                 this._requestHandler = module.create(this);
+                 if (!this._requestHandler) {
+diff --git a/esm/vs/editor/common/services/editorSimpleWorker.js b/esm/vs/editor/common/services/editorSimpleWorker.js
+index 91df4d4a6cda0a903a6e205b151e2a54e0d2098b..a9e77a97c22cd6fe1d798426b021c8eb5b5df6ab 100644
+--- a/esm/vs/editor/common/services/editorSimpleWorker.js
++++ b/esm/vs/editor/common/services/editorSimpleWorker.js
+@@ -3,19 +3,19 @@
+  *  Licensed under the MIT License. See License.txt in the project root for license information.
+  *--------------------------------------------------------------------------------------------*/
+ import { stringDiff } from '../../../base/common/diff/diff.js';
++import { FileAccess } from '../../../base/common/network.js';
++import { createProxyObject, getAllMethodNames } from '../../../base/common/objects.js';
++import { StopWatch } from '../../../base/common/stopwatch.js';
+ import { Range } from '../core/range.js';
++import { linesDiffComputers } from '../diff/linesDiffComputers.js';
++import { computeDefaultDocumentColors } from '../languages/defaultDocumentColorsComputer.js';
+ import { computeLinks } from '../languages/linkComputer.js';
+ import { BasicInplaceReplace } from '../languages/supports/inplaceReplaceSupport.js';
+ import { createMonacoBaseAPI } from './editorBaseApi.js';
+ import { EditorWorkerHost } from './editorWorkerHost.js';
+-import { StopWatch } from '../../../base/common/stopwatch.js';
+-import { UnicodeTextModelHighlighter } from './unicodeTextModelHighlighter.js';
+-import { linesDiffComputers } from '../diff/linesDiffComputers.js';
+-import { createProxyObject, getAllMethodNames } from '../../../base/common/objects.js';
+-import { FileAccess } from '../../../base/common/network.js';
+-import { computeDefaultDocumentColors } from '../languages/defaultDocumentColorsComputer.js';
+ import { findSectionHeaders } from './findSectionHeaders.js';
+ import { WorkerTextModelSyncServer } from './textModelSync/textModelSync.impl.js';
++import { UnicodeTextModelHighlighter } from './unicodeTextModelHighlighter.js';
+ // ESM-comment-begin
+ // const isESM = false;
+ // ESM-comment-end
+@@ -320,6 +320,10 @@ export class EditorSimpleWorker extends BaseEditorSimpleWorker {
+             }
+             else {
+                 const url = FileAccess.asBrowserUri(`${moduleId}.js`).toString(true);
++                if (process.env.NODE_ENV === "development") {
++                    reject();
++                    return;
++                }
+                 import(`${url}`).then(onModuleCallback).catch(reject);
+             }
+         });

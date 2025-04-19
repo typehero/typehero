@@ -34,6 +34,5 @@ const config = {
       },
     ],
   },
-  swcMinify: true,
 };
 export default million.next(config, millionConfig);

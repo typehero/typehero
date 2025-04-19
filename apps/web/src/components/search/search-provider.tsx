@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import type { MultipleQueriesQuery, MultipleQueriesResponse } from '@algolia/client-search';
 import type { Challenge } from '@repo/db/types';
 import algoliasearch from 'algoliasearch/lite';
 import { useHits, useInstantSearch, useSearchBox } from 'react-instantsearch';
@@ -19,7 +20,7 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
     <InstantSearchNext
       searchClient={{
         ...searchClient,
-        search(requests) {
+        search<T>(requests: readonly MultipleQueriesQuery[]): Promise<MultipleQueriesResponse<T>> {
           const isEmptyQuery = requests.every(({ params }) => !params?.query);
           if (isEmptyQuery) {
             return Promise.resolve({

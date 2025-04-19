@@ -1,7 +1,7 @@
 import { Prisma, prisma } from '@repo/db';
-import { LEADERBOARD_RANKING_LIMIT } from './constants';
-import { getNextAdventDay } from '~/utils/time-utils';
 import { redisClient } from '@repo/redis';
+import { getNextAdventDay } from '~/utils/time-utils';
+import { LEADERBOARD_RANKING_LIMIT } from './constants';
 import { getAotChallengeIdsSoFar } from './getAotChallengeIds';
 
 interface OverallLeaderboardEntry {
