@@ -4,10 +4,9 @@ const config = {
   typescript: {
     ignoreBuildErrors: false,
   },
-  transpilePackages: ["@repo/og-utils"],
+  transpilePackages: ['@repo/og-utils'],
   eslint: {
     ignoreDuringBuilds: true,
   },
-  swcMinify: true,
 };
 export default config;
