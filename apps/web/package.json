@@ -15,8 +15,7 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui --ui-port=8080",
     "test:e2e:inspector": "playwright test $1 --debug",
-    "typecheck": "tsc --noEmit",
-    "build:all-ts-errors": "__NEXT_TEST_MODE=true pnpm build"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@axe-core/playwright": "^4.8.2",

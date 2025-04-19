@@ -2,6 +2,7 @@ import { Prisma, prisma } from '@repo/db';
 import { redisClient } from '@repo/redis';
 import { getNextAdventDay } from '~/utils/time-utils';
 import { LEADERBOARD_RANKING_LIMIT } from './constants';
+import { getAotChallengeIdsSoFar } from './getAotChallengeIds';
 
 interface OverallLeaderboardEntry {
   userId: string;
@@ -55,7 +56,7 @@ export async function getOverallLeaderboard(year: number, isPast: boolean) {
   //   }
   // }
 
-  const challengeIdsSoFar = [1];
+  const challengeIdsSoFar = await getAotChallengeIdsSoFar(year);
 
   const rankingPromise = prisma.$queryRaw<OverallLeaderboardEntry[]>`
   SELECT

@@ -223,8 +223,8 @@ function Badges(props: { data: BadgeInfo[] }) {
 }
 
 function HoverCardWrapper(props: {
-  usernameComponent: React.ReactElement<any>;
-  onHoverComponent: React.ReactElement<any>;
+  usernameComponent: React.ReactNode;
+  onHoverComponent: React.ReactNode;
   enabled: boolean;
 }) {
   const [open, setOpen] = useState(false);

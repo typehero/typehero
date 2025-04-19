@@ -1,7 +1,7 @@
-import { useEffect, useRef, type ReactNode, useState, type MutableRefObject, useMemo } from 'react';
+import { getEventDeltas } from '@repo/monaco/utils';
+import { useEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from 'react';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { getEventDeltas } from '@repo/monaco/utils';
 import { useFullscreenSettingsStore } from '../fullscreen-button';
 
 export const DEFAULT_SETTINGS = {
@@ -32,7 +32,7 @@ export interface ChallengeLayoutProps {
   right: ReactNode;
   setIsDesktop: (bool: boolean) => void;
   isDesktop: boolean;
-  leftSide: MutableRefObject<HTMLDivElement | null>;
+  leftSide: RefObject<HTMLDivElement | null>;
   collapsePanel: () => void;
   expandPanel: () => void;
   adjustPanelSize: (divideByW: number, divideByH: number, newDimensionValue: number) => void;

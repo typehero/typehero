@@ -48,7 +48,6 @@ const colors = {
 };
 function Experience(props: DataProps) {
   const cameraRef = useRef<PerspectiveCameraType>(null);
-  // TODO: Removed smooth param: deprecated
   const { scrollY } = useScroll();
   const scrollYProgress = useSpring(scrollY, {
     damping: 20,
