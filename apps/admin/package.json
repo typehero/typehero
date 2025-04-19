@@ -6,12 +6,12 @@
   "scripts": {
     "build": "dotenv -e ../../.env next build",
     "clean": "rm -rf .next dist node_modules",
-    "dev": "dotenv -e ../../.env next dev -- -p 3001",
+    "dev": "dotenv -e ../../.env next dev -- -p 3001 --turbopack",
     "format": "prettier . --check --cache --cache-location=\"node_modules/.cache/prettiercache\"",
     "format:fix": "prettier . --write --cache --cache-location=\"node_modules/.cache/prettiercache\" --log-level=warn",
     "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --fix --max-warnings 0",
-    "start": "next start",
+    "start": "next start --turbopack",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

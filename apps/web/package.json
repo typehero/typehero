@@ -11,7 +11,7 @@
     "format:fix": "prettier . --write --cache --cache-location=\"node_modules/.cache/prettiercache\" --log-level=warn",
     "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --fix --max-warnings 0",
-    "start": "dotenv -e ../../.env next start",
+    "start": "dotenv -e ../../.env next start --turbopack",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui --ui-port=8080",
     "test:e2e:inspector": "playwright test $1 --debug",
