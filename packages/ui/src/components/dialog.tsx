@@ -1,16 +1,16 @@
 'use client';
 
-import * as React from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { X } from 'lucide-react';
+import * as React from 'react';
 import { cn } from '../cn';
 
 const Dialog = DialogPrimitive.Root;
 
 const DialogTrigger = DialogPrimitive.Trigger;
 
-function DialogPortal({ className, ...props }: DialogPrimitive.DialogPortalProps) {
-  return <DialogPrimitive.Portal className={cn(className)} {...props} />;
+function DialogPortal({ ...props }: DialogPrimitive.DialogPortalProps) {
+  return <DialogPrimitive.Portal {...props} />;
 }
 DialogPortal.displayName = DialogPrimitive.Portal.displayName;
 
@@ -105,10 +105,10 @@ DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
 export {
   Dialog,
-  DialogTrigger,
   DialogContent,
-  DialogHeader,
-  DialogFooter,
-  DialogTitle,
   DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 };

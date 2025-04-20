@@ -1,7 +1,7 @@
-import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { A11YTAGS } from '../constant';
+import { expect, test } from '@playwright/test';
 import A11yError from 'playwright/utils/a11yLogger';
+import { A11YTAGS } from '../constant';
 
 test.use({ storageState: 'playwright/.auth/unauthenticated.json' });
 
@@ -19,7 +19,6 @@ test.describe('homepage a11y', () => {
     page,
   }) => {
     // TODO: fix this type error
-    // @ts-expect-error -- playwright types are duplicated across differing versions
     const a11yScanResults = await new AxeBuilder({ page }).withTags(A11YTAGS).analyze();
     if (a11yScanResults.violations.length > 0) {
       throw new A11yError(a11yScanResults.violations);
@@ -37,7 +36,6 @@ test.describe('homepage a11y', () => {
       .click();
 
     // TODO: fix this type error
-    // @ts-expect-error -- playwright types are duplicated across differing versions
     const a11yScanResults = await new AxeBuilder({ page }).withTags(A11YTAGS).analyze();
 
     if (a11yScanResults.violations.length > 0) {

@@ -1,8 +1,7 @@
-import typography from '@tailwindcss/typography';
 import containerQueries from '@tailwindcss/container-queries';
+import typography from '@tailwindcss/typography';
 import { fontFamily } from 'tailwindcss/defaultTheme';
 
-// @ts-expect-error -- We're on a version that doesn't yet publish types
 import animate from 'tailwindcss-animate';
 
 /** @type {import('tailwindcss').Config} */

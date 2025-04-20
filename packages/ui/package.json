@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@icons-pack/react-simple-icons": "^10.2.0",
-    "@radix-ui/react-alert-dialog": "^1.0.4",
+    "@radix-ui/react-alert-dialog": "^1.1.10",
     "@radix-ui/react-avatar": "^1.0.3",
     "@radix-ui/react-checkbox": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.4",
@@ -83,7 +83,8 @@
   "devDependencies": {
     "@repo/lint": "workspace:*",
     "@repo/tsconfig": "workspace:*",
-    "@types/react": "^18.2.20",
+    "@types/mdast": "^4.0.4",
+    "@types/react": "19.1.0",
     "eslint": "^8.57.0",
     "typescript": "^5.3.3",
     "unified": "^10.1.2"
