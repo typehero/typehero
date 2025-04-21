@@ -60,7 +60,7 @@ export const YearSelector = (props: {
 };
 
 const SelectItem = React.forwardRef<
-  React.ElementRef<typeof Select.Item>,
+  React.ComponentRef<typeof Select.Item>,
   React.ComponentPropsWithoutRef<typeof Select.Item>
 >(({ children, className, ...props }, forwardedRef) => {
   return (
