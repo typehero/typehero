@@ -7,7 +7,7 @@ type Params = Promise<{
   trackId: string;
 }>;
 
-export default async function ({ params }: { params: Params }) {
+export default async function TracksPage({ params }: { params: Params }) {
   const { trackId } = await params;
   const session = await auth();
   assertAdmin(session);

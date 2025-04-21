@@ -9,7 +9,7 @@ type Params = Promise<{ slug: string }>;
 
 export default async function Page({ params }: { params: Params }) {
   const { slug } = await params;
-  const session = await auth();
+  await auth();
 
   return <TrackDetail slug={slug} />;
 }

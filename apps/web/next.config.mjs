@@ -1,7 +1,7 @@
 // NOTE: this whole package is bugged and once they fix this we can remove this workaround
-// eslint-disable-next-line import/no-unresolved
 import bundleAnalyzer from '@next/bundle-analyzer';
 import { withSentryConfig } from '@sentry/nextjs';
+// eslint-disable-next-line import/no-unresolved
 import vercelToolbar from '@vercel/toolbar/plugins/next';
 // eslint-disable-next-line import/no-unresolved
 import million from 'million/compiler';

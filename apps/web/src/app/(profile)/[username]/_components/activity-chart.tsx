@@ -1,16 +1,16 @@
 'use client';
+import { cn } from '@repo/ui/cn';
 import {
   ChartContainer,
-  type ChartConfig,
   ChartTooltip,
   ChartTooltipContent,
+  type ChartConfig,
 } from '@repo/ui/components/chart';
+import { Award, FileCode, MessageCircle } from '@repo/ui/icons';
 import { Scatter, ScatterChart, XAxis, YAxis, ZAxis } from '@repo/ui/recharts';
 import { format, setWeek, startOfYear } from 'date-fns';
-import { MessageCircle, FileCode, Award } from '@repo/ui/icons';
-import { cn } from '@repo/ui/cn';
 import { atom, useAtom, type PrimitiveAtom } from 'jotai';
-import { useMemo } from 'react';
+import { useMemo, type SVGProps } from 'react';
 import { useIsMobile } from '~/utils/useIsMobile';
 
 const chartConfig = {
@@ -113,7 +113,9 @@ function ActivitySquare(props: { cx: number; cy: number; activity: number }) {
 }
 
 const activeNodeAtom = atom<PrimitiveAtom<boolean> | null>(null);
-const SquareWrapper = (props: { children: (isSelected: boolean) => React.ReactElement<any> }) => {
+const SquareWrapper = (props: {
+  children: (isSelected: boolean) => React.ReactElement<SVGProps<SVGGElement>>;
+}) => {
   const baseSelectedAtom = useMemo(() => atom(false), []);
   const selectedAtom = useMemo(
     () =>

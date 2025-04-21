@@ -1,6 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
+import type { Html, Parent } from 'mdast';
 import { useTheme } from 'next-themes';
 import { useState, type Ref } from 'react';
 import ReactMarkdown from 'react-markdown';
@@ -25,13 +26,16 @@ const HTML_COMMENT_REGEX = new RegExp('<!--([\\s\\S]*?)-->', 'g');
 function removeHtmlComments(): Plugin {
   return (tree) => {
     // TODO: PRs are welcomed to fix the any type
-    const handler: BuildVisitor<any> = (node, index, parent) => {
+    const handler: BuildVisitor<Html> = (node, index, parent) => {
       const isComment = node.value.match(HTML_COMMENT_REGEX);
 
-      if (isComment) {
-        // remove node
-        parent.children.splice(index, 1);
-        // Do not traverse `node`, continue at the node *now* at `index`. http://unifiedjs.com/learn/recipe/remove-node/
+      if (
+        isComment &&
+        typeof index === 'number' &&
+        parent &&
+        Array.isArray((parent as Parent).children)
+      ) {
+        (parent as Parent).children.splice(index, 1);
         return [SKIP, index];
       }
     };
@@ -99,6 +103,9 @@ export function Markdown({
               {!disableCopy ? <CopyButton text={String(children).replace(/\n$/, '')} /> : null}
               <SyntaxHighlighter
                 ref={ref as Ref<SyntaxHighlighter> | undefined}
+                // TODO: react-syntax-highlighter is not react 19 compatible yet.
+                // ref: https://github.com/react-syntax-highlighter/react-syntax-highlighter/issues/581
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 PreTag={'section' as any} // parent tag
                 className={clsx(className, 'rounded-xl dark:rounded-md')}
                 language={match[1]}
