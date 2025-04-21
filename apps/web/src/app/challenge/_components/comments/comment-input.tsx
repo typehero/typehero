@@ -94,7 +94,7 @@ export const CommentInput = forwardRef<CommentInputRefProps, CommentInputProps>(
                         }
                       }}
                       placeholder={
-                        placeholder ?? !session?.user
+                        (placeholder ?? !session?.user)
                           ? 'You need to be logged in to comment.'
                           : 'Enter your comment here.'
                       }

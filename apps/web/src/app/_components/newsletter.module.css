@@ -1,6 +1,7 @@
 /* The module for the background of the banner on the landing page */
 .backdrop {
-  background: linear-gradient(
+  background:
+    linear-gradient(
       3deg,
       hsl(var(--background)) 50%,
       hsl(var(--background) / 0.75) 66%,
