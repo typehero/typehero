@@ -1,9 +1,9 @@
 'use server';
 
-import { auth } from '~/server/auth';
 import { prisma } from '@repo/db';
 import { Tags, type Difficulty } from '@repo/db/types';
 import { cache } from 'react';
+import { auth } from '~/server/auth';
 
 export type ExploreChallengeData = ReturnType<typeof getChallengesByTagOrDifficulty>;
 const allTags: Tags[] = Object.values(Tags);
@@ -63,7 +63,7 @@ export type ChallengesByTagOrDifficulty = Awaited<
  * difficutly / tag group
  * @param str difficutly or tag string
  */
-export const getExploreChallengesLengthByTagOrDifficulty = cache((str: string) => {
+export const getExploreChallengesLengthByTagOrDifficulty = cache(async (str: string) => {
   const formattedStr = str.trim().toUpperCase();
 
   return prisma.challenge.count({

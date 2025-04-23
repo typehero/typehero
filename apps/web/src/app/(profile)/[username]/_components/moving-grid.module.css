@@ -10,7 +10,8 @@
   @apply bg-background/90;
   will-change: transform;
   background-size: 3rem 3rem;
-  background-image: linear-gradient(to right, #8882 1px, transparent 1px),
+  background-image:
+    linear-gradient(to right, #8882 1px, transparent 1px),
     linear-gradient(to bottom, #8882 1px, transparent 1px);
   animation: movingbackground 90s linear infinite;
 }

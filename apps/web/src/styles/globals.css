@@ -205,7 +205,8 @@ main {
 .moving-grid-background {
   will-change: transform;
   background-size: 3rem 3rem;
-  background-image: linear-gradient(to right, #8882 1px, transparent 1px),
+  background-image:
+    linear-gradient(to right, #8882 1px, transparent 1px),
     linear-gradient(to bottom, #8882 1px, transparent 1px);
   animation: movingbackground 90s linear infinite !important;
 }
@@ -636,7 +637,8 @@ a {
 
 .stars {
   background-size: 200px 200px;
-  background-image: radial-gradient(2px 2px at 40px 60px, #ccc, rgba(0, 0, 0, 0)),
+  background-image:
+    radial-gradient(2px 2px at 40px 60px, #ccc, rgba(0, 0, 0, 0)),
     radial-gradient(2px 2px at 20px 50px, white, rgba(0, 0, 0, 0)),
     radial-gradient(2px 2px at 30px 100px, white, rgba(0, 0, 0, 0)),
     radial-gradient(2px 2px at 40px 60px, white, rgba(0, 0, 0, 0)),
@@ -650,7 +652,8 @@ a {
 }
 
 .stars:nth-of-type(2) {
-  background-image: radial-gradient(2px 2px at 25px 35px, #ccc, rgba(0, 0, 0, 0)),
+  background-image:
+    radial-gradient(2px 2px at 25px 35px, #ccc, rgba(0, 0, 0, 0)),
     radial-gradient(2px 2px at 55px 20px, white, rgba(0, 0, 0, 0)),
     radial-gradient(2px 2px at 69px 42px, white, rgba(0, 0, 0, 0)),
     radial-gradient(2px 2px at 42px 69px, white, rgba(0, 0, 0, 0)),
@@ -660,7 +663,8 @@ a {
 }
 
 .stars:nth-of-type(3) {
-  background-image: radial-gradient(2px 2px at 60px 40px, #ccc, rgba(0, 0, 0, 0)),
+  background-image:
+    radial-gradient(2px 2px at 60px 40px, #ccc, rgba(0, 0, 0, 0)),
     radial-gradient(2px 2px at 50px 20px, white, rgba(0, 0, 0, 0)),
     radial-gradient(2px 2px at 100px 30px, white, rgba(0, 0, 0, 0)),
     radial-gradient(2px 2px at 60px 40px, white, rgba(0, 0, 0, 0)),

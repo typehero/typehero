@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import type { Challenge } from '@repo/db/types';
+import type { SearchClient } from 'algoliasearch';
 import algoliasearch from 'algoliasearch/lite';
 import { useHits, useInstantSearch, useSearchBox } from 'react-instantsearch';
 import { InstantSearchNext } from 'react-instantsearch-nextjs';
@@ -19,20 +20,25 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
     <InstantSearchNext
       searchClient={{
         ...searchClient,
-        search(requests) {
+        search<TObject>(requests: Parameters<SearchClient['search']>[0]) {
           const isEmptyQuery = requests.every(({ params }) => !params?.query);
           if (isEmptyQuery) {
             return Promise.resolve({
-              results: requests.map(
-                () =>
-                  ({
-                    hits: [],
-                  }) as never,
-              ),
+              results: requests.map(() => ({
+                hits: [],
+                nbHits: 0,
+                nbPages: 0,
+                page: 0,
+                processingTimeMS: 0,
+                hitsPerPage: 0,
+                exhaustiveNbHits: false,
+                query: '',
+                params: '',
+              })),
             });
           }
 
-          return searchClient.search(requests);
+          return searchClient.search<TObject>(requests);
         },
       }}
       indexName={INDEX_NAME}
@@ -48,10 +54,10 @@ export function useSearchStatus() {
 }
 
 export function useSearchResult() {
-  const { hits, results } = useHits<Challenge>();
+  const { items, results } = useHits<Challenge>();
   const query = results?.query;
 
-  return { results: hits, query };
+  return { results: items, query };
 }
 export type Result = ReturnType<typeof useSearchResult>['results'][number];
 

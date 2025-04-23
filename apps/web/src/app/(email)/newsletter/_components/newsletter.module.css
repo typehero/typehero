@@ -1,7 +1,8 @@
 /* The module for the Newsletter page background */
 .newsletterBackground {
   top: -56px;
-  background: linear-gradient(0deg, hsl(var(--background)) 0%, rgba(9, 9, 11, 0) 100%),
+  background:
+    linear-gradient(0deg, hsl(var(--background)) 0%, rgba(9, 9, 11, 0) 100%),
     linear-gradient(
       270deg,
       rgba(59, 131, 199, 0) 44.51%,

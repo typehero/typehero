@@ -82,7 +82,7 @@ export function Comment({
   const params = useSearchParams();
   const replyId = params.get('replyId');
 
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<NodeJS.Timeout>(undefined);
 
   const hasPreselectedReply =
     preselectedCommentMetadata?.selectedComment?.id === comment.id && Boolean(replyId);
@@ -130,12 +130,11 @@ export function Comment({
       commentInputRef.current.setInputValue(name);
       commentInputRef.current.textarea?.setSelectionRange(name.length, name.length);
       commentInputRef.current.textarea?.focus();
-      window.requestAnimationFrame(
-        () =>
-          commentInputRef.current?.textarea?.scrollIntoView({
-            block: 'nearest',
-            behavior: 'smooth',
-          }),
+      window.requestAnimationFrame(() =>
+        commentInputRef.current?.textarea?.scrollIntoView({
+          block: 'nearest',
+          behavior: 'smooth',
+        }),
       );
     }
   }

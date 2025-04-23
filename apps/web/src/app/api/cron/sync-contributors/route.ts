@@ -1,8 +1,8 @@
-import { type NextRequest } from 'next/server';
 import { prisma } from '@repo/db';
+import { type NextRequest } from 'next/server';
 
-import { contributors } from '../../../../../public/contributors';
 import { RoleTypes } from '@repo/db/types';
+import { contributors } from '../../../../../public/contributors';
 
 export const dynamic = 'force-dynamic';
 
@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
     const contributorsPartition = contributorIds.splice(0, MAX_PARTITION_SIZE);
 
     const values = contributorsPartition.map(
-      (contributorId) => `('${contributorRole!.id}', '${contributorId}')`,
+      (contributorId) => `('${contributorRole.id}', '${contributorId}')`,
     );
     updateCount += await prisma.$executeRawUnsafe(
       `insert ignore into _RoleToUser (A, B) values ${values.join(',')}`,

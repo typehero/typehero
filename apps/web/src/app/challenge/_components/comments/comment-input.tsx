@@ -34,7 +34,7 @@ export const CommentInput = forwardRef<CommentInputRefProps, CommentInputProps>(
     const { data: session } = useSession();
     const [commentMode, setCommentMode] = useState<'editor' | 'preview'>('editor');
 
-    const textAreaRef = useRef<HTMLTextAreaElement>(null);
+    const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
 
     const form = useForm<SingleFieldSchema>({
       resolver: zodResolver(singleFieldSchema),
@@ -94,7 +94,7 @@ export const CommentInput = forwardRef<CommentInputRefProps, CommentInputProps>(
                         }
                       }}
                       placeholder={
-                        placeholder ?? !session?.user
+                        (placeholder ?? !session?.user)
                           ? 'You need to be logged in to comment.'
                           : 'Enter your comment here.'
                       }
@@ -144,7 +144,7 @@ export const CommentInput = forwardRef<CommentInputRefProps, CommentInputProps>(
 CommentInput.displayName = `CommentInput`;
 
 function useAutosizeTextArea(
-  textAreaRef: RefObject<HTMLTextAreaElement>,
+  textAreaRef: RefObject<HTMLTextAreaElement | null>,
   value: string,
   commentMode: string,
 ) {

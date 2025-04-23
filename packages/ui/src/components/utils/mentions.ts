@@ -3,7 +3,8 @@ import {
   type RegExpMatchObject,
   type ReplaceFunction,
 } from 'mdast-util-find-and-replace';
-import type { Nodes } from 'mdast-util-find-and-replace/lib';
+
+type Nodes = Parameters<typeof findAndReplace>['0'];
 
 export interface BuildUrlValueBase {
   user: string;

@@ -1,38 +1,41 @@
 'use client';
 
 import clsx from 'clsx';
-import { userMentions } from './utils/mentions';
+import type { Html, Parent } from 'mdast';
 import { useTheme } from 'next-themes';
-import { useState } from 'react';
+import { useState, type Ref } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import rehypeRaw from 'rehype-raw';
 import rehypeSanitize from 'rehype-sanitize';
 import remarkGfm from 'remark-gfm';
-import type { Transformer } from 'unified';
+import type { Plugin } from 'unified';
 import { SKIP, visit, type BuildVisitor } from 'unist-util-visit';
+import { Check, Copy } from '../icons';
 import { vs } from '../themes/vs';
 import { vscDarkPlus } from '../themes/vs-dark-plus';
-import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip';
 import { Button } from './button';
-import { Check, Copy } from '../icons';
+import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip';
+import { userMentions } from './utils/mentions';
 
 const HTML_COMMENT_REGEX = new RegExp('<!--([\\s\\S]*?)-->', 'g');
 
 /**
  * Remove HTML comments from Markdown
  */
-function removeHtmlComments(): Transformer {
+function removeHtmlComments(): Plugin {
   return (tree) => {
     // TODO: PRs are welcomed to fix the any type
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const handler: BuildVisitor<any> = (node, index, parent) => {
+    const handler: BuildVisitor<Html> = (node, index, parent) => {
       const isComment = node.value.match(HTML_COMMENT_REGEX);
 
-      if (isComment) {
-        // remove node
-        parent.children.splice(index, 1);
-        // Do not traverse `node`, continue at the node *now* at `index`. http://unifiedjs.com/learn/recipe/remove-node/
+      if (
+        isComment &&
+        typeof index === 'number' &&
+        parent &&
+        Array.isArray((parent as Parent).children)
+      ) {
+        (parent as Parent).children.splice(index, 1);
         return [SKIP, index];
       }
     };
@@ -93,13 +96,17 @@ export function Markdown({
             {...props}
           />
         ),
-        code({ inline, className, children, style: _, ...props }) {
+        code({ className, children, style: _, ref, ...props }) {
           const match = /language-(\w+)/.exec(className || '');
-          return !inline && match ? (
+          return match ? (
             <div className="relative">
               {!disableCopy ? <CopyButton text={String(children).replace(/\n$/, '')} /> : null}
               <SyntaxHighlighter
-                PreTag="section" // parent tag
+                ref={ref as Ref<SyntaxHighlighter> | undefined}
+                // TODO: react-syntax-highlighter is not react 19 compatible yet.
+                // ref: https://github.com/react-syntax-highlighter/react-syntax-highlighter/issues/581
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                PreTag={'section' as any} // parent tag
                 className={clsx(className, 'rounded-xl dark:rounded-md')}
                 language={match[1]}
                 style={syntaxHighlighterTheme} // theme

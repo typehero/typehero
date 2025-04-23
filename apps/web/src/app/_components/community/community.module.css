@@ -8,7 +8,8 @@
   height: 100%;
   position: absolute;
   inset: 0;
-  background: linear-gradient(
+  background:
+    linear-gradient(
       -183deg,
       hsla(var(--background) / 0.75) 0%,
       hsla(var(--background) / 0.95) 33%,
@@ -44,7 +45,8 @@
 }
 @media (max-width: 768px) {
   .backdrop:before {
-    background: linear-gradient(
+    background:
+      linear-gradient(
         -183deg,
         hsla(var(--background) / 0.75) 0%,
         hsla(var(--background) / 0.95) 15%,

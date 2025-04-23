@@ -1,30 +1,26 @@
 'use client';
 import { Billboard, Edges, Image, PerspectiveCamera, Text, useGLTF } from '@react-three/drei';
-import {
-  Canvas,
-  extend,
-  useFrame,
-  type Object3DNode,
-  type GroupProps,
-  type MeshProps,
-} from '@react-three/fiber';
-import { useRef } from 'react';
-import {
-  type Mesh,
-  Color,
-  LinearToneMapping,
-  type PerspectiveCamera as PerspectiveCameraType,
-  DoubleSide,
-} from 'three';
-import { geometry } from 'maath';
+import { Canvas, extend, useFrame, type ThreeElement } from '@react-three/fiber';
 import { useScroll, useSpring } from 'framer-motion';
 import { motion } from 'framer-motion-3d';
-import { useTheme } from 'next-themes';
+import { geometry } from 'maath';
 import type { RoundedPlaneGeometry } from 'maath/dist/declarations/src/geometry';
+import { useTheme } from 'next-themes';
+import { useRef } from 'react';
+import {
+  Color,
+  DoubleSide,
+  LinearToneMapping,
+  type Mesh,
+  type PerspectiveCamera as PerspectiveCameraType,
+} from 'three';
+
+type MeshProps = React.JSX.IntrinsicElements['mesh'];
+type GroupProps = React.JSX.IntrinsicElements['group'];
 
 declare module '@react-three/fiber' {
   interface ThreeElements {
-    roundedPlaneGeometry: Object3DNode<RoundedPlaneGeometry, typeof RoundedPlaneGeometry>;
+    roundedPlaneGeometry: ThreeElement<typeof RoundedPlaneGeometry>;
   }
 }
 extend({ RoundedPlaneGeometry: geometry.RoundedPlaneGeometry });
@@ -52,7 +48,7 @@ const colors = {
 };
 function Experience(props: DataProps) {
   const cameraRef = useRef<PerspectiveCameraType>(null);
-  const { scrollY } = useScroll({ smooth: 0.4 });
+  const { scrollY } = useScroll();
   const scrollYProgress = useSpring(scrollY, {
     damping: 20,
     stiffness: 100,
