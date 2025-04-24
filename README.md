@@ -30,13 +30,16 @@ If you find our project interesting and want to support us please consider spons
 <table>
   <tr>
     <td>
-      <a href="https://vercel.com/?utm_source=trash-company&utm_campaign=oss" target="_parent">
-        <img width="200" src="https://images.ctfassets.net/e5382hct74si/78Olo8EZRdUlcDUFQvnzG7/fa4cdb6dc04c40fceac194134788a0e2/1618983297-powered-by-vercel.svg" alt="Powered by Vercel" title="Powered by Vercel">
+      <a href="https://www.coderabbit.ai" target="_parent">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="./media/cr-white.png">
+          <img alt="CodeRabbit Logo" src="./media/cr-black.png" width="200">
+        </picture>
       </a>
     </td>
     <td>
-      <a href="https://www.webdevopen.com/" target="_parent">
-        <img src="./media/open.png" alt="Open Bootcamp Logo" title="Open Bootcamp" width="160">
+      <a href="https://vercel.com/?utm_source=trash-company&utm_campaign=oss" target="_parent">
+        <img width="200" src="https://images.ctfassets.net/e5382hct74si/78Olo8EZRdUlcDUFQvnzG7/fa4cdb6dc04c40fceac194134788a0e2/1618983297-powered-by-vercel.svg" alt="Powered by Vercel" title="Powered by Vercel">
       </a>
     </td>
     <td>
@@ -60,14 +63,6 @@ If you find our project interesting and want to support us please consider spons
     <td>
       <a href="https://www.surgehq.ai/?utm_campaign=oss&utm_source=typehero" target="_parent">
         <img src="./media/surge.svg" alt="surge logo" title="Surge HQ" width="150">
-      </a>
-    </td>
-    <td>
-      <a href="https://www.coderabbit.ai" target="_parent">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="./media/cr-white.png">
-          <img alt="CodeRabbit Logo" src="./media/cr-black.png" width="200">
-        </picture>
       </a>
     </td>
   </tr>
