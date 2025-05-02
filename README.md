@@ -65,5 +65,10 @@ If you find our project interesting and want to support us please consider spons
         <img src="./media/surge.svg" alt="surge logo" title="Surge HQ" width="150">
       </a>
     </td>
+    <td>
+      <a href="https://aifolks.org" target="_parent">
+        <img src="./media/aifolks.png" alt="AI Folks Logo" width="200">
+      </a>
+    </td>
   </tr>
 </table>
