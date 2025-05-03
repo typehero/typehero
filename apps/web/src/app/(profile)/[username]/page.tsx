@@ -29,7 +29,9 @@ import { getBadges, getProgressData, getUserActivity } from './user-info';
   { slug: 'aot-2023-platinum', name: 'Advent of TypeScript 2023 Bronze' },
 ] as BadgeInfo[]; */
 export default async function ProfilePage(props: { params: { username: string } }) {
-  const [, username] = decodeURIComponent(props.params.username).split('@');
+  const { username: rawUserName } = await props.params;
+
+  const [, username] = decodeURIComponent(rawUserName).split('@');
   if (username === undefined) {
     notFound();
   }
@@ -289,7 +291,7 @@ export default async function ProfilePage(props: { params: { username: string } 
                     : `@${username} is yet to discover an achievement`}
                 </h1>
                 <div className="mx-auto grid w-fit grid-cols-3 gap-4  ">
-                  {Array.from({ length: 6 }).map((i) => (
+                  {Array.from({ length: 6 }).map((_, i) => (
                     <EmptyBadge key={`empty-badge-${i}`} />
                   ))}
                 </div>

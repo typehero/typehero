@@ -90,7 +90,6 @@ export async function getProgressData(userId: string) {
   chartData.sort(
     (a, b) => difficultyOrder.indexOf(a.difficulty) - difficultyOrder.indexOf(b.difficulty),
   );
-  console.log({ totalChallenges });
   return {
     chartData,
     totalSolved,
