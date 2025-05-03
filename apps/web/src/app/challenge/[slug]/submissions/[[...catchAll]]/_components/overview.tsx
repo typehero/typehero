@@ -99,7 +99,7 @@ export function SubmissionOverview({ submissionId, userId }: SubmissionOverviewP
         </div>
         <div className="mb-3 flex gap-2 px-3">
           <Dialog>
-            <DialogTrigger>
+            <DialogTrigger asChild>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button
