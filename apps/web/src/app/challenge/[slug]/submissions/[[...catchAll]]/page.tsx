@@ -20,9 +20,7 @@ export const metadata = {
 export default async function SubmissionPage(props: SubmissionPageProps) {
   const params = await props.params;
 
-  const {
-    slug
-  } = params;
+  const { slug } = params;
 
   const session = await auth();
 

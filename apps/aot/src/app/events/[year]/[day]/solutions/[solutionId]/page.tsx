@@ -17,11 +17,7 @@ export type ChallengeSolution = NonNullable<Awaited<ReturnType<typeof getSolutio
 export default async function SolutionPage(props: SolutionPageProps) {
   const params = await props.params;
 
-  const {
-    solutionId,
-    year,
-    day
-  } = params;
+  const { solutionId, year, day } = params;
 
   const session = await auth();
 
@@ -38,9 +34,7 @@ export default async function SolutionPage(props: SolutionPageProps) {
 export async function generateMetadata(props: SolutionPageProps) {
   const params = await props.params;
 
-  const {
-    solutionId
-  } = params;
+  const { solutionId } = params;
 
   const solution = await prisma.sharedSolution.findFirstOrThrow({
     where: {

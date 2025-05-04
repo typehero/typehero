@@ -9,17 +9,13 @@ export function generateStaticParams() {
   return Array.from({ length: DAY }).map((_, index) => ({ day: (index + 1).toString() }));
 }
 
-export default async function DailyLeaderboardLayout(
-  props: {
-    params: Promise<{ day: string }>;
-    children: React.ReactNode;
-  }
-) {
+export default async function DailyLeaderboardLayout(props: {
+  params: Promise<{ day: string }>;
+  children: React.ReactNode;
+}) {
   const params = await props.params;
 
-  const {
-    children
-  } = props;
+  const { children } = props;
 
   const day = Number(params.day);
 

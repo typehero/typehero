@@ -18,11 +18,7 @@ interface CommentPageProps {
 export default async function CommentPage(props: CommentPageProps) {
   const params = await props.params;
 
-  const {
-    year,
-    day,
-    commentId
-  } = params;
+  const { year, day, commentId } = params;
 
   const session = await auth();
   const { challenge } = await getChallengeRouteData(getAotSlug({ year, day }), session);

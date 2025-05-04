@@ -15,11 +15,7 @@ interface SolutionPageCommentsProps {
 export default async function SolutionPageComments(props: SolutionPageCommentsProps) {
   const params = await props.params;
 
-  const {
-    solutionId,
-    commentId,
-    slug
-  } = params;
+  const { solutionId, commentId, slug } = params;
 
   const session = await auth();
   const solution = await getSolutionIdRouteData(slug, solutionId, session);

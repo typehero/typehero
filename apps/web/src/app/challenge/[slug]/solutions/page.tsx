@@ -11,9 +11,7 @@ interface SolutionPageProps {
 export async function generateMetadata(props: SolutionPageProps) {
   const params = await props.params;
 
-  const {
-    slug
-  } = params;
+  const { slug } = params;
 
   const { challenge } = await getChallengeRouteData(slug, null);
   return buildMetaForDefault({
@@ -25,9 +23,7 @@ export async function generateMetadata(props: SolutionPageProps) {
 export default async function SolutionPage(props: SolutionPageProps) {
   const params = await props.params;
 
-  const {
-    slug
-  } = params;
+  const { slug } = params;
 
   return <Solutions slug={slug} />;
 }

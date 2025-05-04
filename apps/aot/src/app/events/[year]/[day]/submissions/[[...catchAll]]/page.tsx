@@ -22,10 +22,7 @@ export const metadata = {
 export default async function SubmissionPage(props: SubmissionPageProps) {
   const params = await props.params;
 
-  const {
-    year,
-    day
-  } = params;
+  const { year, day } = params;
 
   const session = await auth();
 

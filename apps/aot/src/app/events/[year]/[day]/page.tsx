@@ -17,10 +17,7 @@ interface ChallengesProps {
 export default async function Challenges(props: ChallengesProps) {
   const params = await props.params;
 
-  const {
-    year,
-    day
-  } = params;
+  const { year, day } = params;
 
   const { unlockAotChallenges } = await getAllFlags();
   if (!isChallengeUnlocked(Number(year), Number(day)) && !unlockAotChallenges) {

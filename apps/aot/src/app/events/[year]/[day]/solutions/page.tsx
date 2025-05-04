@@ -18,10 +18,7 @@ export function generateMetadata() {
 export default async function SolutionPage(props: SolutionPageProps) {
   const params = await props.params;
 
-  const {
-    year,
-    day
-  } = params;
+  const { year, day } = params;
 
   const slug = getAotSlug({ year, day });
 
