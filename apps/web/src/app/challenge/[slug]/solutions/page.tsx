@@ -3,12 +3,16 @@ import { getChallengeRouteData } from '../getChallengeRouteData';
 import { Solutions } from './_components';
 
 interface SolutionPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
-export async function generateMetadata({ params: { slug } }: SolutionPageProps) {
+export async function generateMetadata(props: SolutionPageProps) {
+  const params = await props.params;
+
+  const { slug } = params;
+
   const { challenge } = await getChallengeRouteData(slug, null);
   return buildMetaForDefault({
     title: `Solutions to ${challenge.name} | TypeHero`,
@@ -16,6 +20,10 @@ export async function generateMetadata({ params: { slug } }: SolutionPageProps) 
   });
 }
 
-export default function SolutionPage({ params: { slug } }: SolutionPageProps) {
+export default async function SolutionPage(props: SolutionPageProps) {
+  const params = await props.params;
+
+  const { slug } = params;
+
   return <Solutions slug={slug} />;
 }

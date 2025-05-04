@@ -5,8 +5,8 @@ import { notFound } from 'next/navigation';
 import { auth } from '~/server/auth';
 import { Challenges } from './_components/challenges';
 
-export default async function CompletedPage(props: { params: { username: string } }) {
-  const [, username] = decodeURIComponent(props.params.username).split('@');
+export default async function CompletedPage(props: { params: Promise<{ username: string }> }) {
+  const [, username] = decodeURIComponent((await props.params).username).split('@');
   if (username === undefined) {
     notFound();
   }
