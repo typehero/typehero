@@ -8,14 +8,22 @@ import { isAfterJanuaryFirst } from '~/utils/time-utils';
 import { notFound } from 'next/navigation';
 
 interface CommentPageProps {
-  params: {
+  params: Promise<{
     year: string;
     day: string;
     commentId: string;
-  };
+  }>;
 }
 
-export default async function CommentPage({ params: { year, day, commentId } }: CommentPageProps) {
+export default async function CommentPage(props: CommentPageProps) {
+  const params = await props.params;
+
+  const {
+    year,
+    day,
+    commentId
+  } = params;
+
   const session = await auth();
   const { challenge } = await getChallengeRouteData(getAotSlug({ year, day }), session);
   const preselectedCommentMetadata = await getPreselectedCommentMetadata(

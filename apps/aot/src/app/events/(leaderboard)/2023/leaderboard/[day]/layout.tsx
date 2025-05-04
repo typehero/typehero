@@ -9,13 +9,18 @@ export function generateStaticParams() {
   return Array.from({ length: DAY }).map((_, index) => ({ day: (index + 1).toString() }));
 }
 
-export default function DailyLeaderboardLayout({
-  params,
-  children,
-}: {
-  params: { day: string };
-  children: React.ReactNode;
-}) {
+export default async function DailyLeaderboardLayout(
+  props: {
+    params: Promise<{ day: string }>;
+    children: React.ReactNode;
+  }
+) {
+  const params = await props.params;
+
+  const {
+    children
+  } = props;
+
   const day = Number(params.day);
 
   if (!isValidAdventDay(day)) return notFound();

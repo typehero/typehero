@@ -8,10 +8,10 @@ import { withUnstableCache } from '~/utils/withUnstableCache';
 import { getAotSlug } from '~/utils/getAotSlug';
 
 interface SubmissionPageProps {
-  params: {
+  params: Promise<{
     year: string;
     day: string;
-  };
+  }>;
 }
 
 export const metadata = {
@@ -19,7 +19,14 @@ export const metadata = {
   description: 'View your submissions to this challenge on TypeHero.',
 };
 
-export default async function SubmissionPage({ params: { year, day } }: SubmissionPageProps) {
+export default async function SubmissionPage(props: SubmissionPageProps) {
+  const params = await props.params;
+
+  const {
+    year,
+    day
+  } = params;
+
   const session = await auth();
 
   const slug = getAotSlug({ year, day });

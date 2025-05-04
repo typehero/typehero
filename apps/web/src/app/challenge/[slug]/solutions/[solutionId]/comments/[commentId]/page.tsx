@@ -5,16 +5,22 @@ import { getPreselectedSolutionCommentMetadata } from '~/app/challenge/_componen
 import { getSolutionIdRouteData } from '../../getSolutionIdRouteData';
 
 interface SolutionPageCommentsProps {
-  params: {
+  params: Promise<{
     slug: string;
     commentId: string;
     solutionId: string;
-  };
+  }>;
 }
 
-export default async function SolutionPageComments({
-  params: { solutionId, commentId, slug },
-}: SolutionPageCommentsProps) {
+export default async function SolutionPageComments(props: SolutionPageCommentsProps) {
+  const params = await props.params;
+
+  const {
+    solutionId,
+    commentId,
+    slug
+  } = params;
+
   const session = await auth();
   const solution = await getSolutionIdRouteData(slug, solutionId, session);
   const preselectedCommentMetadata = await getPreselectedSolutionCommentMetadata(

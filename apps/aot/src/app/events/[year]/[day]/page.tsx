@@ -8,13 +8,20 @@ import { getAllFlags } from '~/utils/feature-flag';
 import { notFound } from 'next/navigation';
 
 interface ChallengesProps {
-  params: {
+  params: Promise<{
     year: string;
     day: string;
-  };
+  }>;
 }
 
-export default async function Challenges({ params: { year, day } }: ChallengesProps) {
+export default async function Challenges(props: ChallengesProps) {
+  const params = await props.params;
+
+  const {
+    year,
+    day
+  } = params;
+
   const { unlockAotChallenges } = await getAllFlags();
   if (!isChallengeUnlocked(Number(year), Number(day)) && !unlockAotChallenges) {
     return notFound();
