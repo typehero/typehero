@@ -16,6 +16,7 @@ import {
 } from '@repo/ui/components/dialog';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { ShareUrl } from '~/components/share-url';
+import { BootPromo } from '~/app/_components/boot-promo';
 
 interface SubmissionOverviewProps {
   submissionId: string;
@@ -97,7 +98,7 @@ export function SubmissionOverview({ submissionId, userId }: SubmissionOverviewP
         <div className="mb-3 px-3">
           <Markdown>{code}</Markdown>
         </div>
-        <div className="mb-3 flex gap-2 px-3">
+        <div className="mb-9 flex gap-2 px-3">
           <Dialog>
             <DialogTrigger asChild>
               <Tooltip>
@@ -138,6 +139,9 @@ export function SubmissionOverview({ submissionId, userId }: SubmissionOverviewP
               Share on Twitter
             </a>
           </Button>
+        </div>
+        <div>
+          <BootPromo />
         </div>
       </div>
     </>
