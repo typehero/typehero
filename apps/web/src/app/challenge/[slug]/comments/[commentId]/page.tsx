@@ -5,13 +5,17 @@ import { Description } from '../../../_components/description';
 import { getChallengeRouteData } from '../../getChallengeRouteData';
 
 interface CommentPageProps {
-  params: {
+  params: Promise<{
     slug: string;
     commentId: string;
-  };
+  }>;
 }
 
-export default async function CommentPage({ params: { slug, commentId } }: CommentPageProps) {
+export default async function CommentPage(props: CommentPageProps) {
+  const params = await props.params;
+
+  const { slug, commentId } = params;
+
   const session = await auth();
   const { challenge } = await getChallengeRouteData(slug, session);
   const preselectedCommentMetadata = await getPreselectedCommentMetadata(

@@ -6,17 +6,19 @@ import { Comments } from '../../_components/comments';
 import { getAotSlug } from '~/utils/getAotSlug';
 
 interface SolutionPageProps {
-  params: {
+  params: Promise<{
     year: string;
     day: string;
     solutionId: string;
-  };
+  }>;
 }
 
 export type ChallengeSolution = NonNullable<Awaited<ReturnType<typeof getSolutionIdRouteData>>>;
-export default async function SolutionPage({
-  params: { solutionId, year, day },
-}: SolutionPageProps) {
+export default async function SolutionPage(props: SolutionPageProps) {
+  const params = await props.params;
+
+  const { solutionId, year, day } = params;
+
   const session = await auth();
 
   const solution = await getSolutionIdRouteData(getAotSlug({ year, day }), solutionId, session);
@@ -29,7 +31,11 @@ export default async function SolutionPage({
   );
 }
 
-export async function generateMetadata({ params: { solutionId } }: SolutionPageProps) {
+export async function generateMetadata(props: SolutionPageProps) {
+  const params = await props.params;
+
+  const { solutionId } = params;
+
   const solution = await prisma.sharedSolution.findFirstOrThrow({
     where: {
       id: Number(solutionId),

@@ -2,8 +2,8 @@ import { notFound } from 'next/navigation';
 import { EditForm } from './_components/edit-form';
 import { prisma } from '@repo/db';
 
-export default async function EditPage(props: { params: { username: string } }) {
-  const [, username] = decodeURIComponent(props.params.username).split('@');
+export default async function EditPage(props: { params: Promise<{ username: string }> }) {
+  const [, username] = decodeURIComponent((await props.params).username).split('@');
   if (username === undefined) {
     notFound();
   }

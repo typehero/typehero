@@ -28,7 +28,7 @@ import { getBadges, getProgressData, getUserActivity } from './user-info';
   { slug: 'aot-2023-gold', name: 'Advent of TypeScript 2023 Bronze' },
   { slug: 'aot-2023-platinum', name: 'Advent of TypeScript 2023 Bronze' },
 ] as BadgeInfo[]; */
-export default async function ProfilePage(props: { params: { username: string } }) {
+export default async function ProfilePage(props: { params: Promise<{ username: string }> }) {
   const { username: rawUserName } = await props.params;
 
   const [, username] = decodeURIComponent(rawUserName).split('@');

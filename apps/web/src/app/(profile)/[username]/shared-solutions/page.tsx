@@ -5,8 +5,8 @@ import { Alert, AlertDescription, AlertTitle } from '@repo/ui/components/alert';
 import Link from 'next/link';
 import { auth } from '~/server/auth';
 
-export default async function SharedSolutionPage(props: { params: { username: string } }) {
-  const [, username] = decodeURIComponent(props.params.username).split('@');
+export default async function SharedSolutionPage(props: { params: Promise<{ username: string }> }) {
+  const [, username] = decodeURIComponent((await props.params).username).split('@');
   if (username === undefined) {
     notFound();
   }
