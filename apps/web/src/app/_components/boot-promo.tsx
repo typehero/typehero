@@ -6,7 +6,7 @@ export function BootPromo({ className }: { className?: string }) {
   return (
     <div className={cn('flex flex-col items-center gap-2', className)}>
       <Link
-        href="https://www.boot.dev/tracks/backend-python-typescript"
+        href="https://www.boot.dev/tracks/backend-python-typescript?promo=TYPEHERO"
         target="_blank"
         rel="noopener noreferrer"
       >
