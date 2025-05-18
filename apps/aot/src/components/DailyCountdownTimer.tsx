@@ -1,5 +1,4 @@
 import { DailyCountdownTimerClientComponent } from './CountdownTimer';
-import Image from 'next/image';
 
 export const DailyCountdownTimer = () => {
   const nowDate = Date.now();
