@@ -81,10 +81,7 @@ const SheetFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElemen
 );
 SheetFooter.displayName = 'SheetFooter';
 
-const SheetTitle = ({
-  className,
-  ...props
-}: React.ComponentProps<typeof SheetPrimitive.Title>) => (
+const SheetTitle = ({ className, ...props }: React.ComponentProps<typeof SheetPrimitive.Title>) => (
   <SheetPrimitive.Title
     className={cn('text-foreground text-lg font-semibold', className)}
     {...props}

@@ -75,10 +75,7 @@ const FormItem = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>)
   );
 };
 
-const FormLabel = ({
-  className,
-  ...props
-}: React.ComponentProps<typeof LabelPrimitive.Root>) => {
+const FormLabel = ({ className, ...props }: React.ComponentProps<typeof LabelPrimitive.Root>) => {
   const { error, formItemId } = useFormField();
 
   return (

@@ -6,10 +6,7 @@ import { cn } from '../cn';
 
 const Tabs = TabsPrimitive.Root;
 
-const TabsList = ({
-  className,
-  ...props
-}: React.ComponentProps<typeof TabsPrimitive.List>) => (
+const TabsList = ({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.List>) => (
   <TabsPrimitive.List
     className={cn(
       'bg-muted text-muted-foreground inline-flex h-10 items-center justify-center rounded-md p-1',
@@ -52,7 +49,10 @@ const VerticalTabsTrigger = ({
   />
 );
 
-const TabsContent = ({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Content>) => (
+const TabsContent = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof TabsPrimitive.Content>) => (
   <TabsPrimitive.Content
     className={cn(
       'ring-offset-background focus-visible:ring-ring mt-2 focus-visible:outline-none focus-visible:ring-2',
@@ -62,7 +62,10 @@ const TabsContent = ({ className, ...props }: React.ComponentProps<typeof TabsPr
   />
 );
 
-const VerticalTabsContent = ({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Content>) => (
+const VerticalTabsContent = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof TabsPrimitive.Content>) => (
   <TabsPrimitive.Content
     className={cn(
       'ring-offset-background focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',

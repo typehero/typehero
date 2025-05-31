@@ -57,8 +57,7 @@ const Toast = ({
   className,
   variant,
   ...props
-}: React.ComponentProps<typeof ToastPrimitives.Root> &
-  VariantProps<typeof toastVariants>) => {
+}: React.ComponentProps<typeof ToastPrimitives.Root> & VariantProps<typeof toastVariants>) => {
   return (
     <ToastPrimitives.Root className={cn(toastVariants({ variant }), className)} {...props}>
       <div className={cn(bgToastVariants({ variant }))} />

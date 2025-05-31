@@ -15,7 +15,11 @@ const AlertDialogPortal = ({ ...props }: AlertDialogPrimitive.AlertDialogPortalP
 );
 AlertDialogPortal.displayName = AlertDialogPrimitive.Portal.displayName;
 
-const AlertDialogOverlay = ({ className, children: _, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Overlay>) => (
+const AlertDialogOverlay = ({
+  className,
+  children: _,
+  ...props
+}: React.ComponentProps<typeof AlertDialogPrimitive.Overlay>) => (
   <AlertDialogPrimitive.Overlay
     className={cn(
       'bg-background/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 backdrop-blur-sm',
@@ -25,7 +29,10 @@ const AlertDialogOverlay = ({ className, children: _, ...props }: React.Componen
   />
 );
 
-const AlertDialogContent = ({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Content>) => (
+const AlertDialogContent = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof AlertDialogPrimitive.Content>) => (
   <AlertDialogPortal>
     <AlertDialogOverlay />
     <AlertDialogPrimitive.Content
@@ -51,25 +58,37 @@ const AlertDialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDiv
 );
 AlertDialogFooter.displayName = 'AlertDialogFooter';
 
-const AlertDialogTitle = ({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Title>) => (
+const AlertDialogTitle = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof AlertDialogPrimitive.Title>) => (
   <AlertDialogPrimitive.Title
     className={cn('text-lg font-semibold leading-none tracking-tight', className)}
     {...props}
   />
 );
 
-const AlertDialogDescription = ({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Description>) => (
+const AlertDialogDescription = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof AlertDialogPrimitive.Description>) => (
   <AlertDialogPrimitive.Description
     className={cn('text-muted-foreground text-sm', className)}
     {...props}
   />
 );
 
-const AlertDialogAction = ({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Action>) => (
+const AlertDialogAction = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof AlertDialogPrimitive.Action>) => (
   <AlertDialogPrimitive.Action className={cn(buttonVariants(), className)} {...props} />
 );
 
-const AlertDialogCancel = ({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Cancel>) => (
+const AlertDialogCancel = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof AlertDialogPrimitive.Cancel>) => (
   <AlertDialogPrimitive.Cancel
     className={cn(buttonVariants({ variant: 'outline' }), 'mt-2 sm:mt-0', className)}
     {...props}
