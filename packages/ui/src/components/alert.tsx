@@ -21,15 +21,16 @@ const alertVariants = cva(
   },
 );
 
-const Alert = ({ className, variant, ...props }: React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>) => (
+const Alert = ({
+  className,
+  variant,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>) => (
   <div role="alert" className={cn(alertVariants({ variant }), className)} {...props} />
 );
 
 const AlertTitle = ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-  <h5
-    className={cn('mb-1 font-medium leading-none tracking-tight', className)}
-    {...props}
-  />
+  <h5 className={cn('mb-1 font-medium leading-none tracking-tight', className)} {...props} />
 );
 
 const AlertDescription = ({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (

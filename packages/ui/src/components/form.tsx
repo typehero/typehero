@@ -75,7 +75,10 @@ const FormItem = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>)
   );
 };
 
-const FormLabel = ({ className, ...props }: React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>) => {
+const FormLabel = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof LabelPrimitive.Root>) => {
   const { error, formItemId } = useFormField();
 
   return (
@@ -87,7 +90,7 @@ const FormLabel = ({ className, ...props }: React.ComponentPropsWithoutRef<typeo
   );
 };
 
-const FormControl = ({ ...props }: React.ComponentPropsWithoutRef<typeof Slot>) => {
+const FormControl = ({ ...props }: React.ComponentProps<typeof Slot>) => {
   const { error, formItemId, formDescriptionId, formMessageId } = useFormField();
 
   return (
@@ -112,7 +115,11 @@ const FormDescription = ({ className, ...props }: React.HTMLAttributes<HTMLParag
   );
 };
 
-const FormMessage = ({ className, children, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => {
+const FormMessage = ({
+  className,
+  children,
+  ...props
+}: React.HTMLAttributes<HTMLParagraphElement>) => {
   const { error, formMessageId } = useFormField();
   const body = error ? String(error.message) : children;
 

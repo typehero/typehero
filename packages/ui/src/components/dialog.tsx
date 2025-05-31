@@ -14,11 +14,14 @@ function DialogPortal({ ...props }: DialogPrimitive.DialogPortalProps) {
 }
 DialogPortal.displayName = DialogPrimitive.Portal.displayName;
 
-interface ContentProps extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> {
+interface ContentProps extends React.ComponentProps<typeof DialogPrimitive.Content> {
   displayX?: boolean;
 }
 
-const DialogOverlay = ({ className, ...props }: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>) => (
+const DialogOverlay = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof DialogPrimitive.Overlay>) => (
   <DialogPrimitive.Overlay
     className={cn(
       'bg-background/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 backdrop-blur-sm',
@@ -69,14 +72,20 @@ function DialogFooter({ className, ...props }: React.HTMLAttributes<HTMLDivEleme
 }
 DialogFooter.displayName = 'DialogFooter';
 
-const DialogTitle = ({ className, ...props }: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>) => (
+const DialogTitle = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof DialogPrimitive.Title>) => (
   <DialogPrimitive.Title
     className={cn('text-lg font-semibold leading-none tracking-tight', className)}
     {...props}
   />
 );
 
-const DialogDescription = ({ className, ...props }: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>) => (
+const DialogDescription = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof DialogPrimitive.Description>) => (
   <DialogPrimitive.Description
     className={cn('text-muted-foreground text-sm', className)}
     {...props}

@@ -59,7 +59,11 @@ export const YearSelector = (props: {
   );
 };
 
-const SelectItem = ({ children, className, ...props }: React.ComponentPropsWithoutRef<typeof Select.Item>) => {
+const SelectItem = ({
+  children,
+  className,
+  ...props
+}: React.ComponentProps<typeof Select.Item>) => {
   return (
     <Select.Item
       className={cn(

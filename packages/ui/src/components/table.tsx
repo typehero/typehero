@@ -16,10 +16,7 @@ const TableBody = ({ className, ...props }: React.HTMLAttributes<HTMLTableSectio
 );
 
 const TableFooter = ({ className, ...props }: React.HTMLAttributes<HTMLTableSectionElement>) => (
-  <tfoot
-    className={cn('bg-primary text-primary-foreground font-medium', className)}
-    {...props}
-  />
+  <tfoot className={cn('bg-primary text-primary-foreground font-medium', className)} {...props} />
 );
 
 const TableRow = ({ className, ...props }: React.HTMLAttributes<HTMLTableRowElement>) => (
@@ -43,10 +40,7 @@ const TableHead = ({ className, ...props }: React.ThHTMLAttributes<HTMLTableCell
 );
 
 const TableCell = ({ className, ...props }: React.TdHTMLAttributes<HTMLTableCellElement>) => (
-  <td
-    className={cn('p-4 align-middle [&:has([role=checkbox])]:pr-0', className)}
-    {...props}
-  />
+  <td className={cn('p-4 align-middle [&:has([role=checkbox])]:pr-0', className)} {...props} />
 );
 
 const TableCaption = ({ className, ...props }: React.HTMLAttributes<HTMLTableCaptionElement>) => (

@@ -4,7 +4,12 @@ import * as SeparatorPrimitive from '@radix-ui/react-separator';
 import * as React from 'react';
 import { cn } from '../cn';
 
-const Separator = ({ className, orientation = 'horizontal', decorative = true, ...props }: React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root>) => (
+const Separator = ({
+  className,
+  orientation = 'horizontal',
+  decorative = true,
+  ...props
+}: React.ComponentProps<typeof SeparatorPrimitive.Root>) => (
   <SeparatorPrimitive.Root
     className={cn(
       'bg-border shrink-0',
