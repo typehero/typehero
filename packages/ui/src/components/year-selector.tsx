@@ -59,10 +59,11 @@ export const YearSelector = (props: {
   );
 };
 
-const SelectItem = React.forwardRef<
-  React.ComponentRef<typeof Select.Item>,
-  React.ComponentPropsWithoutRef<typeof Select.Item>
->(({ children, className, ...props }, forwardedRef) => {
+const SelectItem = ({
+  children,
+  className,
+  ...props
+}: React.ComponentProps<typeof Select.Item>) => {
   return (
     <Select.Item
       className={cn(
@@ -71,10 +72,9 @@ const SelectItem = React.forwardRef<
         className,
       )}
       {...props}
-      ref={forwardedRef}
     >
       <Select.ItemText>{children}</Select.ItemText>
       <Select.ItemIndicator className="absolute left-0 inline-flex w-[25px] items-center justify-center"></Select.ItemIndicator>
     </Select.Item>
   );
-});
+};

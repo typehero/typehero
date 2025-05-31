@@ -11,16 +11,16 @@ const SelectGroup = SelectPrimitive.Group;
 
 const SelectValue = SelectPrimitive.Value;
 
-const SelectTrigger = React.forwardRef<
-  React.ComponentRef<typeof SelectPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
+const SelectTrigger = ({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.Trigger>) => (
   <SelectPrimitive.Trigger
     className={cn(
       'border-input ring-offset-background placeholder:text-muted-foreground focus:ring-ring flex h-10 w-full items-center justify-between rounded-md border bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50',
       className,
     )}
-    ref={ref}
     {...props}
   >
     {children}
@@ -28,13 +28,14 @@ const SelectTrigger = React.forwardRef<
       <ChevronDown className="h-4 w-4 opacity-50" />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
-));
-SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
+);
 
-const SelectContent = React.forwardRef<
-  React.ComponentRef<typeof SelectPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
->(({ className, children, position = 'popper', ...props }, ref) => (
+const SelectContent = ({
+  className,
+  children,
+  position = 'popper',
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.Content>) => (
   <SelectPrimitive.Portal>
     <SelectPrimitive.Content
       className={cn(
@@ -44,7 +45,6 @@ const SelectContent = React.forwardRef<
         className,
       )}
       position={position}
-      ref={ref}
       {...props}
     >
       <SelectPrimitive.Viewport
@@ -58,31 +58,28 @@ const SelectContent = React.forwardRef<
       </SelectPrimitive.Viewport>
     </SelectPrimitive.Content>
   </SelectPrimitive.Portal>
-));
-SelectContent.displayName = SelectPrimitive.Content.displayName;
+);
 
-const SelectLabel = React.forwardRef<
-  React.ComponentRef<typeof SelectPrimitive.Label>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>
->(({ className, ...props }, ref) => (
+const SelectLabel = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.Label>) => (
   <SelectPrimitive.Label
     className={cn('py-1.5 pl-8 pr-2 text-sm font-semibold', className)}
-    ref={ref}
     {...props}
   />
-));
-SelectLabel.displayName = SelectPrimitive.Label.displayName;
+);
 
-const SelectItem = React.forwardRef<
-  React.ComponentRef<typeof SelectPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
->(({ className, children, ...props }, ref) => (
+const SelectItem = ({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.Item>) => (
   <SelectPrimitive.Item
     className={cn(
       'focus:bg-accent focus:text-accent-foreground relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
       className,
     )}
-    ref={ref}
     {...props}
   >
     <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
@@ -93,20 +90,14 @@ const SelectItem = React.forwardRef<
 
     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
   </SelectPrimitive.Item>
-));
-SelectItem.displayName = SelectPrimitive.Item.displayName;
+);
 
-const SelectSeparator = React.forwardRef<
-  React.ComponentRef<typeof SelectPrimitive.Separator>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
->(({ className, ...props }, ref) => (
-  <SelectPrimitive.Separator
-    className={cn('bg-muted -mx-1 my-1 h-px', className)}
-    ref={ref}
-    {...props}
-  />
-));
-SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
+const SelectSeparator = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.Separator>) => (
+  <SelectPrimitive.Separator className={cn('bg-muted -mx-1 my-1 h-px', className)} {...props} />
+);
 
 export {
   Select,
