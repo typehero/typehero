@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@repo/ui/components/card';
-import { User, Calendar } from '@repo/ui/icons';
+import { User } from '@repo/ui/icons';
 import { DIFFICULTY_COLORS } from '~/constants/difficulties';
 import type { ChallengeCardProps } from '~/types/challenge';
 
@@ -60,10 +60,6 @@ export function ChallengeCard({ challenge, className }: ChallengeCardProps) {
           <div className="flex items-center gap-1.5 text-xs text-gray-400">
             <User size={14} />
             <span>{challenge._count.submission} people</span>
-          </div>
-          <div className="flex items-center gap-1.5 text-xs text-gray-400">
-            <Calendar size={14} />
-            <span>35 minutes</span>
           </div>
         </div>
       </CardContent>

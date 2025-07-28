@@ -23,7 +23,8 @@ import { NotificationLink } from './notification-link';
 import { SignOutLink } from './signout-link';
 import { SkipToCodeEditor } from './skip-to-code-editor';
 import { ThemeButton } from './theme-button';
-
+import { ChallengeDropdown } from './challenge-dropdown';
+import { ChallengeDropdownMobile } from './challenge-dropdown-mobile';
 
 export function getAdminUrl() {
   // reference for vercel.com
@@ -46,7 +47,7 @@ export async function Navigation() {
 
   const TopSectionLinks = (
     <>
-      <NavLink title="Challenges" href="/challenge" />
+      <ChallengeDropdown />
       <NavLink title="Home" href="/" />
       <NavLink title="Tracks" href="/tracks" />
       <div className="flex items-center gap-1">
@@ -68,7 +69,19 @@ export async function Navigation() {
     <>
       <div className="hidden items-center gap-4 md:flex">{TopSectionLinks}</div>
       <div className="flex flex-col gap-5 pl-2 md:hidden">
-        {TopSectionLinks}
+        <ChallengeDropdownMobile />
+        <NavLink title="Home" href="/" />
+        <NavLink title="Tracks" href="/tracks" />
+        <div className="flex items-center gap-1">
+          <a
+            className="text-foreground/80"
+            target="_blank"
+            href="https://adventofts.com/"
+            rel="noopener"
+          >
+            Advent of TypeScript
+          </a>
+        </div>
         {!session?.user && (
           <div className="flex items-center gap-2">
             <span>Theme</span>

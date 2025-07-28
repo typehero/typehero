@@ -18,12 +18,12 @@ export const DIFFICULTY_TO_NUMBER: Record<Challenge['difficulty'], number> = {
 };
 
 export const DIFFICULTY_COLORS = {
-  BEGINNER: 'text-blue-400',
-  EASY: 'text-green-400',
-  MEDIUM: 'text-yellow-400',
-  HARD: 'text-rose-400',
-  EXTREME: 'text-purple-400',
-  EVENT: 'text-purple-400',
+  BEGINNER: 'text-sky-500 dark:text-sky-300',
+  EASY: 'text-green-500 dark:text-green-300',
+  MEDIUM: 'text-yellow-500 dark:text-yellow-300',
+  HARD: 'text-red-500 dark:text-red-300',
+  EXTREME: 'text-purple-500 dark:text-purple-300',
+  EVENT: 'text-purple-500 dark:text-purple-300',
 } as const;
 
 export const DIFFICULTY_BORDERS = {
@@ -62,10 +62,10 @@ export const DIFFICULTY_TITLES = {
 } as const;
 
 export const DIFFICULTY_TAG_COLORS = {
-  BEGINNER: 'dark:bg-sky-300 bg-sky-600/50',
-  EASY: 'dark:bg-green-300 bg-green-600/50',
-  MEDIUM: 'dark:bg-yellow-300 bg-yellow-600/50',
-  HARD: 'dark:bg-red-300 bg-red-600/50',
-  EXTREME: 'dark:bg-purple-300 bg-purple-600/50',
-  EVENT: 'dark:bg-purple-300 bg-purple-600/50',
+  BEGINNER: 'dark:bg-sky-400/20 bg-sky-600/50',
+  EASY: 'dark:bg-green-400/20 bg-green-600/50',
+  MEDIUM: 'dark:bg-yellow-400/20 bg-yellow-600/50',
+  HARD: 'dark:bg-red-400/20 bg-red-600/50',
+  EXTREME: 'dark:bg-purple-400/20 bg-purple-600/50',
+  EVENT: 'dark:bg-purple-400/20 bg-purple-600/50',
 } as const;

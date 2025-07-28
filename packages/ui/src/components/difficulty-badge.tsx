@@ -21,7 +21,7 @@ export function DifficultyBadge({ className, difficulty }: DifficultyBadgeProps)
   return (
     <Badge
       className={cn(
-        `duration-300 ${COLORS_BY_DIFFICULTY[difficulty]} text-white dark:text-black font-medium rounded-full px-3 py-1 text-xs`,
+        `duration-300 ${COLORS_BY_DIFFICULTY[difficulty]} rounded-full px-3 py-1 text-xs font-medium text-white dark:text-black`,
         className,
       )}
     >
