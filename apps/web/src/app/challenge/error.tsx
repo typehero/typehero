@@ -8,9 +8,9 @@ export default function Error() {
   return (
     <div className="container flex h-full flex-col items-center justify-center">
       <Text className="mb-6" intent="h2">
-        Uh oh! We couldn&apos;t find the challenge you were looking for.
+        Uh oh! We couldn&apos;t find the challenges you were looking for.
       </Text>
-      <Link href="/explore">
+      <Link href="/challenges">
         <Button>Explore Challenges</Button>
       </Link>
     </div>
