@@ -11,41 +11,41 @@ import { useChallengeData } from '~/hooks/use-challenge-data';
 import { DIFFICULTY_BADGE_COLORS } from '~/constants/difficulties';
 import type { ChallengeExplorerClientProps } from '~/types/challenge';
 
-export function ChallengeExplorerClient({ difficulties, challengesData }: ChallengeExplorerClientProps) {
+export function ChallengeExplorerClient({
+  difficulties,
+  challengesData,
+}: ChallengeExplorerClientProps) {
   const [selectedTab, setSelectedTab] = useState<string>('BEGINNER');
   const [showAllChallenges, setShowAllChallenges] = useState<boolean>(false);
   const [isMobileDropdownOpen, setIsMobileDropdownOpen] = useState<boolean>(false);
 
-  const selectedData = challengesData.find(data => data.tag === selectedTab);
+  const selectedData = challengesData.find((data) => data.tag === selectedTab);
 
-  if (!selectedData) {
-    return <div>No data found for selected tab</div>;
-  }
-
-  const { sortedChallenges, completedChallenges } = useChallengeData(selectedData.challenges);
+  // Move hook call before any conditional returns
+  const { sortedChallenges, completedChallenges } = useChallengeData(
+    selectedData?.challenges ?? [],
+  );
 
   const handleTabClick = (tag: string) => {
-
     setSelectedTab(tag);
     setShowAllChallenges(false);
-          setIsMobileDropdownOpen(false);
+    setIsMobileDropdownOpen(false);
   };
 
   const handleShowAllClick = () => {
     setShowAllChallenges(true);
   };
 
-  const displayedChallenges = showAllChallenges
-    ? sortedChallenges
-    : sortedChallenges.slice(0, 11);
+  const displayedChallenges = showAllChallenges ? sortedChallenges : sortedChallenges.slice(0, 11);
 
-  const selectedDifficulty = difficulties.find(d => d.tag === selectedTab);
+  if (!selectedData) {
+    return <div>No data found for selected tab</div>;
+  }
 
   return (
     <div className="flex flex-col gap-6">
-
       {/* Mobile Dropdown and Desktop Tabs */}
-      <div className="flex flex-row sm:flex-row gap-4 container items-center">
+      <div className="container flex flex-row items-center gap-4 sm:flex-row">
         {/* Mobile Dropdown */}
         <MobileDropdown
           options={difficulties}
@@ -63,10 +63,7 @@ export function ChallengeExplorerClient({ difficulties, challengesData }: Challe
         />
 
         {/* Progress Bar - Now stacks vertically on mobile */}
-        <ProgressBar
-          completed={completedChallenges.length}
-          total={selectedData.challengesLength}
-        />
+        <ProgressBar completed={completedChallenges.length} total={selectedData.challengesLength} />
       </div>
 
       {/* Challenge Grid */}
@@ -86,7 +83,7 @@ export function ChallengeExplorerClient({ difficulties, challengesData }: Challe
           {!showAllChallenges && (
             <div className="group block">
               <div
-                className="flex h-full cursor-pointer flex-col gap-3 items-start justify-center rounded-3xl border-2 border border-[rgba(31,36,47,1)] p-6 text-center transition-colors"
+                className="flex h-full cursor-pointer flex-col items-start justify-center gap-3 rounded-3xl border border-2 border-[rgba(31,36,47,1)] p-6 text-center transition-colors"
                 onClick={handleShowAllClick}
               >
                 <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
@@ -95,14 +92,17 @@ export function ChallengeExplorerClient({ difficulties, challengesData }: Challe
                 <div className="text-lg font-semibold text-neutral-700 dark:text-neutral-300">
                   See all {selectedTab.toLowerCase()} challenges
                 </div>
-                <div className="text-sm text-neutral-500 dark:text-neutral-500  text-center text-start">
-                  Click see more challenges and get your knowledge tested with {selectedData.challengesLength} new challenges!
+                <div className="text-center text-start text-sm  text-neutral-500 dark:text-neutral-500">
+                  Click see more challenges and get your knowledge tested with{' '}
+                  {selectedData.challengesLength} new challenges!
                 </div>
-                <div className={cn(
-                  "inline-flex items-center justify-center gap-2 w-full rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors",
-                  DIFFICULTY_BADGE_COLORS[selectedTab as keyof typeof DIFFICULTY_BADGE_COLORS],
-                  "hover:opacity-80"
-                )}>
+                <div
+                  className={cn(
+                    'inline-flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors',
+                    DIFFICULTY_BADGE_COLORS[selectedTab as keyof typeof DIFFICULTY_BADGE_COLORS],
+                    'hover:opacity-80',
+                  )}
+                >
                   See {selectedData.label} Challenges →
                 </div>
               </div>

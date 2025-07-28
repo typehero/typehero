@@ -1,4 +1,4 @@
-import type { Challenge, Submission, Difficulty } from '@repo/db/types';
+import type { Submission, Difficulty } from '@repo/db/types';
 
 export interface ChallengeWithStats {
   id: number;
@@ -12,7 +12,7 @@ export interface ChallengeWithStats {
   code: string;
   tests: string;
   status: string;
-  tsconfig: any;
+  tsconfig: unknown;
   userId: string;
   _count: {
     vote: number;
@@ -32,7 +32,7 @@ export interface ChallengeData {
 }
 
 export interface ChallengeExplorerClientProps {
-  difficulties: ReadonlyArray<{ readonly label: string; readonly tag: string }>;
+  difficulties: readonly { readonly label: string; readonly tag: string }[];
   challengesData: ChallengeData[];
 }
 

@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { buildMetaForDefault } from '~/app/metadata';
 
-
 export const dynamic = 'force-dynamic';
 
 export function generateMetadata(): Metadata {

@@ -23,7 +23,7 @@ import { NotificationLink } from './notification-link';
 import { SignOutLink } from './signout-link';
 import { SkipToCodeEditor } from './skip-to-code-editor';
 import { ThemeButton } from './theme-button';
-import { Badge } from '@repo/ui/components/badge';
+
 
 export function getAdminUrl() {
   // reference for vercel.com

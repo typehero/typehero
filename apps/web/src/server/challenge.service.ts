@@ -2,55 +2,52 @@ import { prisma } from '@repo/db';
 import type { Difficulty } from '@repo/db/types';
 import type { ChallengeWithStats } from '~/types/challenge';
 
-export async function getChallengesWithSubmissionCounts(difficulty: string): Promise<ChallengeWithStats[]> {
+export async function getChallengesWithSubmissionCounts(
+  difficulty: string,
+): Promise<ChallengeWithStats[]> {
   // Optimized query to get all data in one go, avoiding N+1 problem
   const challenges = await prisma.challenge.findMany({
-    where: { 
+    where: {
       difficulty: difficulty as Difficulty,
-      status: 'ACTIVE'
+      status: 'ACTIVE',
     },
     include: {
       _count: {
-        select: { 
-          vote: true, 
-          comment: true 
-        }
+        select: {
+          vote: true,
+          comment: true,
+        },
       },
       submission: {
         where: { isSuccessful: true },
-        select: { 
+        select: {
           id: true,
           code: true,
           createdAt: true,
           isSuccessful: true,
           userId: true,
-          challengeId: true
-        }
+          challengeId: true,
+        },
       },
       user: {
-        select: { name: true }
+        select: { name: true },
       },
       TrackChallenge: {
         include: {
           track: {
-            select: { name: true }
-          }
-        }
-      }
+            select: { name: true },
+          },
+        },
+      },
     },
-    orderBy: [
-      { difficulty: 'asc' },
-      { name: 'asc' }
-    ]
+    orderBy: [{ difficulty: 'asc' }, { name: 'asc' }],
   });
 
   // Transform the data to match our interface
-  return challenges.map(challenge => {
+  return challenges.map((challenge) => {
     // Get unique user count for submissions
-    const uniqueUserIds = new Set(
-      challenge.submission.map(sub => sub.userId)
-    );
-    
+    const uniqueUserIds = new Set(challenge.submission.map((sub) => sub.userId));
+
     // Get track information
     const track = challenge.TrackChallenge[0]?.track || null;
 
@@ -70,20 +67,20 @@ export async function getChallengesWithSubmissionCounts(difficulty: string): Pro
       userId: challenge.userId,
       _count: {
         ...challenge._count,
-        submission: uniqueUserIds.size
+        submission: uniqueUserIds.size,
       },
       submission: challenge.submission,
       track,
-      user: challenge.user
+      user: challenge.user,
     };
   });
 }
 
 export async function getChallengesLengthByDifficulty(difficulty: string): Promise<number> {
   return await prisma.challenge.count({
-    where: { 
+    where: {
       difficulty: difficulty as Difficulty,
-      status: 'ACTIVE'
-    }
+      status: 'ACTIVE',
+    },
   });
 }

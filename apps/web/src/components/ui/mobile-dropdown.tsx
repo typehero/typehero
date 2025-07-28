@@ -3,7 +3,7 @@ import { ChevronDown, ChevronUp } from '@repo/ui/icons';
 import { DIFFICULTY_COLORS } from '~/constants/difficulties';
 
 interface MobileDropdownProps {
-  options: ReadonlyArray<{ readonly label: string; readonly tag: string }>;
+  options: readonly { readonly label: string; readonly tag: string }[];
   selected: string;
   onSelect: (tag: string) => void;
   isOpen: boolean;
@@ -11,28 +11,29 @@ interface MobileDropdownProps {
   className?: string;
 }
 
-export function MobileDropdown({ 
-  options, 
-  selected, 
-  onSelect, 
-  isOpen, 
+export function MobileDropdown({
+  options,
+  selected,
+  onSelect,
+  isOpen,
   onToggle,
-  className 
+  className,
 }: MobileDropdownProps) {
-  const selectedOption = options.find(option => option.tag === selected);
+  const selectedOption = options.find((option) => option.tag === selected);
 
   return (
-    <div className={cn("px-4 w-full sm:hidden", className)}>
+    <div className={cn('w-full px-4 sm:hidden', className)}>
       <div className="relative">
         <button
           type="button"
           onClick={onToggle}
           className={cn(
             'flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all duration-200',
-            'border border-neutral-300 dark:border-neutral-700 rounded-lg',
-            'bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100',
-            'hover:bg-neutral-50 dark:hover:bg-neutral-800'
-          )}>
+            'rounded-lg border border-neutral-300 dark:border-neutral-700',
+            'bg-white text-neutral-900 dark:bg-neutral-900 dark:text-neutral-100',
+            'hover:bg-neutral-50 dark:hover:bg-neutral-800',
+          )}
+        >
           <span className="text-gray-900 dark:text-white">
             {selectedOption?.label || 'Select Difficulty'}
           </span>
@@ -42,14 +43,15 @@ export function MobileDropdown({
             <ChevronDown className="h-4 w-4 text-gray-500" />
           )}
         </button>
-        
+
         {/* Dropdown Menu */}
-        {isOpen && (
-          <div className="absolute top-full left-0 right-0 z-10 mt-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg">
+        {isOpen ? (
+          <div className="absolute left-0 right-0 top-full z-10 mt-1 rounded-lg border border-gray-300 bg-white shadow-lg dark:border-gray-600 dark:bg-gray-800">
             {options.map((option) => {
               const isSelected = selected === option.tag;
-              const difficultyColor = DIFFICULTY_COLORS[option.tag as keyof typeof DIFFICULTY_COLORS];
-              
+              const difficultyColor =
+                DIFFICULTY_COLORS[option.tag as keyof typeof DIFFICULTY_COLORS];
+
               return (
                 <button
                   key={option.tag}
@@ -61,7 +63,7 @@ export function MobileDropdown({
                     {
                       [`${difficultyColor} bg-opacity-10 dark:bg-opacity-20`]: isSelected,
                       'text-gray-700 dark:text-gray-300': !isSelected,
-                    }
+                    },
                   )}
                 >
                   {option.label}
@@ -69,7 +71,7 @@ export function MobileDropdown({
               );
             })}
           </div>
-        )}
+        ) : null}
       </div>
     </div>
   );

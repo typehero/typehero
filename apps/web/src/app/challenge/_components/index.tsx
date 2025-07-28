@@ -1,5 +1,4 @@
 import { Footsies } from '~/components/footsies';
-import { BootPromo } from '~/app/_components/boot-promo';
 import { ChallengeExplorerServer } from './challenge-explorer-server';
 
 export const dynamic = 'force-dynamic';
@@ -23,7 +22,7 @@ export function Challenges() {
         {/* <div className="container flex items-center justify-center">
           <BootPromo />
         </div> */}
-        <div className="py-8 px-4">
+        <div className="px-4 py-8">
           <ChallengeExplorerServer />
         </div>
       </div>

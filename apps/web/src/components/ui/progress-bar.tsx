@@ -8,9 +8,9 @@ export function ProgressBar({ completed, total, className }: ProgressBarProps) {
   const percentage = total > 0 ? (completed / total) * 100 : 0;
 
   return (
-    <div className={`px-4 w-full ${className || ''}`}>
+    <div className={`w-full px-4 ${className || ''}`}>
       <div className="flex w-full flex-col">
-        <div className="mb-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <div className="mb-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <span className="text-muted-foreground text-sm">Progress</span>
           <span className="text-muted-foreground text-sm">
             {completed} / {total} solved
@@ -18,7 +18,7 @@ export function ProgressBar({ completed, total, className }: ProgressBarProps) {
         </div>
         <div className="h-[8px] w-full rounded-full bg-neutral-300 dark:bg-neutral-800">
           <div
-            className="h-full rounded-full bg-green-500 dark:bg-green-700 transition-all duration-300"
+            className="h-full rounded-full bg-green-500 transition-all duration-300 dark:bg-green-700"
             style={{ width: `${percentage}%` }}
           />
         </div>

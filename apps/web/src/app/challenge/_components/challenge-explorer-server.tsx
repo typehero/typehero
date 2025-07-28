@@ -15,33 +15,33 @@ const DIFFICULTIES = [
 ] as const;
 
 export async function ChallengeExplorerServer() {
-  let session = null;
+  let _session = null;
 
   try {
-    session = await auth();
+    _session = await auth();
   } catch (error) {
     console.warn('Auth failed, continuing without session:', error);
   }
-
 
   const allChallengesData = await Promise.all(
     DIFFICULTIES.map(async (difficulty) => {
       const challenges = await getChallengesByTagOrDifficulty(difficulty.tag);
       const challengesLength = await getExploreChallengesLengthByTagOrDifficulty(difficulty.tag);
 
-    
       const challengesWithSubmissionCounts = await Promise.all(
         challenges.map(async (challenge) => {
-          const submissionCount = await prisma.submission.findMany({
-            where: {
-              challengeId: challenge.id,
-              isSuccessful: true,
-            },
-            select: {
-              userId: true,
-            },
-            distinct: ['userId'],
-          }).then(result => result.length);
+          const submissionCount = await prisma.submission
+            .findMany({
+              where: {
+                challengeId: challenge.id,
+                isSuccessful: true,
+              },
+              select: {
+                userId: true,
+              },
+              distinct: ['userId'],
+            })
+            .then((result) => result.length);
 
           return {
             ...challenge,
@@ -50,7 +50,7 @@ export async function ChallengeExplorerServer() {
               submission: submissionCount,
             },
           };
-        })
+        }),
       );
 
       const challengesWithTracks = await Promise.all(
@@ -64,9 +64,8 @@ export async function ChallengeExplorerServer() {
             ...challenge,
             track: trackChallenge?.track || null,
           };
-        })
+        }),
       );
-
 
       return {
         tag: difficulty.tag,
@@ -74,8 +73,8 @@ export async function ChallengeExplorerServer() {
         challenges: challengesWithTracks,
         challengesLength,
       };
-    })
+    }),
   );
 
   return <ChallengeExplorerClient difficulties={DIFFICULTIES} challengesData={allChallengesData} />;
-}  
+}
