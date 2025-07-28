@@ -11,11 +11,10 @@ export function NavWrapper({ children }: { children: React.ReactNode }) {
 
   return (
     <nav
-      className={`flex h-14 items-center text-sm font-medium ${
-        pathname?.startsWith('/challenge') ? 'px-4' : 'container'
-      }`}
+      className={`flex h-14 items-center text-sm font-medium container }`}
     >
       {children}
     </nav>
   );
 }
+ 
