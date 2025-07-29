@@ -14,7 +14,7 @@ export function Challenges() {
             </h1>
             <p className="text-lg text-neutral-600 dark:text-neutral-400">
               Explore the challenges. Embrace the opportunity to grow, learn, and showcase your
-              <br />
+              <br className="hidden sm:block" />
               programming abilities. We hope you find the perfect challenge!
             </p>
           </div>
