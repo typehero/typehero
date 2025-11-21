@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@9.6.0",
   "scripts": {
     "build": "dotenv -e ../../.env next build",
     "clean": "rm -rf .next dist node_modules",
