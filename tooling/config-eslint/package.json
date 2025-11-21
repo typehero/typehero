@@ -10,7 +10,7 @@
     "format": "prettier \"**/*.{ts,tsx,md,mdx,json}\" --check"
   },
   "dependencies": {
-    "@next/eslint-plugin-next": "canary",
+    "@next/eslint-plugin-next": "^14.2.18",
     "@repo/tsconfig": "workspace:*",
     "@typescript-eslint/eslint-plugin": "^8.16.0",
     "@typescript-eslint/parser": "^8.16.0",
