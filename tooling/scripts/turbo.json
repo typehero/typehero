@@ -1,5 +1,8 @@
 {
   "$schema": "https://turborepo.com/schema.v2.json",
+  "extends": [
+    "//"
+  ],
   "tasks": {
     "dl-monaco": {
       "cache": false
