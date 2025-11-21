@@ -46,7 +46,7 @@
     "typescript": "^5.3.3",
     "vitest": "^0.34.6"
   },
-  "packageManager": "pnpm@9.6.0",
+  "packageManager": "pnpm@10.11.0",
   "pnpm": {
     "overrides": {
       "@auth/core": "0.37.4",
