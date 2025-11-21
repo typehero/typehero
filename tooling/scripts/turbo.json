@@ -1,10 +1,5 @@
 {
-  "extends": [
-    "//"
-  ],
-  "globalEnv": [
-    "GH_TOKEN"
-  ],
+  "$schema": "https://turborepo.com/schema.v2.json",
   "tasks": {
     "dl-monaco": {
       "cache": false
