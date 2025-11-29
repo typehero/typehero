@@ -1,25 +1,21 @@
-# create a docker image with mysql and a default password of admin
-
 name: typehero
 
 services:
   db:
-    image: bitnami/mysql:latest
-    container_name: typehero-db
+    image: mysql
     restart: always
     environment:
-      MYSQL_ROOT_USER: dev
       MYSQL_ROOT_PASSWORD: dev
       MYSQL_DATABASE: typehero
-    healthcheck:
-      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
-      timeout: 20s
-      retries: 10
-    # create a volume for the docker container_name
     volumes:
-      - typehero-data:/bitnami/mysql/data
+      - typehero-data:/var/lib/mysql
     ports:
       - 3306:3306
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost', '-u', 'root', '-pdev']
+      interval: 5s
+      timeout: 3s
+      retries: 10
   redis:
     image: 'bitnami/redis:latest'
     container_name: typehero-redis
