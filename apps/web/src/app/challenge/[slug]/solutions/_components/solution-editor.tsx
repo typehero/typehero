@@ -50,7 +50,8 @@ export function SolutionEditor({ dismiss, challengeId, code }: SolutionEditorPro
   const queryClient = useQueryClient();
   const session = useSession();
   const form = useForm<FormSchema>({
-    resolver: zodResolver(formSchema as any),
+    // @ts-expect-error - Known type incompatibility between Zod 3.23.3 and @hookform/resolvers 3.1.1
+    resolver: zodResolver(formSchema),
     defaultValues: {
       title: `${session.data?.user?.name}'s Solution`,
       content: getDefaultMarkdown(code ?? ''),

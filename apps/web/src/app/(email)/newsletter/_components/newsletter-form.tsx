@@ -36,7 +36,8 @@ export function NewsletterForm() {
   });
 
   const form = useForm<NewsletterFormSchema>({
-    resolver: zodResolver(newsletterFormSchema as any),
+    // @ts-expect-error - Known type incompatibility between Zod 3.23.3 and @hookform/resolvers 3.1.1
+    resolver: zodResolver(newsletterFormSchema),
     defaultValues: {
       email: '',
       name: '',

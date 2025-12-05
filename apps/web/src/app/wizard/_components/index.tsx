@@ -95,7 +95,8 @@ export function Wizard() {
 
   const hasTsErrors = useMemo(() => tsErrors.some((e) => e.length), [tsErrors]);
   const form = useForm<CreateChallengeSchema>({
-    resolver: zodResolver(createChallengeSchema as any),
+    // @ts-expect-error - Known type incompatibility between Zod 3.23.3 and @hookform/resolvers 3.1.1
+    resolver: zodResolver(createChallengeSchema),
     defaultValues: {
       name: '',
       difficulty: 'BEGINNER',
