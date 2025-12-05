@@ -29,7 +29,7 @@ export function EditForm(props: {
   };
 }) {
   const form = useForm<EditFormSchema>({
-    resolver: zodResolver(EditFormSchema),
+    resolver: zodResolver(EditFormSchema as any),
     defaultValues: {
       ...props.user,
       userLinks: [

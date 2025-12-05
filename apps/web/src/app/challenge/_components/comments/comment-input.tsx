@@ -37,7 +37,7 @@ export const CommentInput = forwardRef<CommentInputRefProps, CommentInputProps>(
     const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
 
     const form = useForm<SingleFieldSchema>({
-      resolver: zodResolver(singleFieldSchema),
+      resolver: zodResolver(singleFieldSchema as any),
       defaultValues: { text: defaultValue ?? '' },
     });
 

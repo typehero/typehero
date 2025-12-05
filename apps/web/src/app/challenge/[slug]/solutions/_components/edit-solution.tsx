@@ -34,7 +34,7 @@ export function EditSolution({ solution, setIsEditing }: EditSolutionProps) {
   const { slug } = useParams();
   const session = useSession();
   const form = useForm<FormSchema>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema as any),
     defaultValues: {
       title: solution.title,
       content: solution.description,

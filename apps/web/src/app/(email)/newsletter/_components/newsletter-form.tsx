@@ -36,7 +36,7 @@ export function NewsletterForm() {
   });
 
   const form = useForm<NewsletterFormSchema>({
-    resolver: zodResolver(newsletterFormSchema),
+    resolver: zodResolver(newsletterFormSchema as any),
     defaultValues: {
       email: '',
       name: '',

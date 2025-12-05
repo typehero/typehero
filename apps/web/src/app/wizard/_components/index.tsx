@@ -95,7 +95,7 @@ export function Wizard() {
 
   const hasTsErrors = useMemo(() => tsErrors.some((e) => e.length), [tsErrors]);
   const form = useForm<CreateChallengeSchema>({
-    resolver: zodResolver(createChallengeSchema),
+    resolver: zodResolver(createChallengeSchema as any),
     defaultValues: {
       name: '',
       difficulty: 'BEGINNER',

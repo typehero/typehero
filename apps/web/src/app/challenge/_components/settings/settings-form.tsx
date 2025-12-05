@@ -39,7 +39,7 @@ export function SettingsForm() {
 
   const { settings, updateSettings } = useEditorSettingsStore();
   const form = useForm<FormSchema>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema as any),
     defaultValues: settings,
   });
   const isVimBindings = form.getValues().bindings === 'vim';

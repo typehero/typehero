@@ -39,7 +39,7 @@ export function URLShortenerForm() {
   const { toast } = useToast();
   const form = useForm<z.infer<typeof FormSchema>>({
     mode: 'onChange',
-    resolver: zodResolver(FormSchema),
+    resolver: zodResolver(FormSchema as any),
     defaultValues: {
       url: '',
       slug: '',

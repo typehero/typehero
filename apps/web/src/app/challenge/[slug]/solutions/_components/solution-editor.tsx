@@ -50,7 +50,7 @@ export function SolutionEditor({ dismiss, challengeId, code }: SolutionEditorPro
   const queryClient = useQueryClient();
   const session = useSession();
   const form = useForm<FormSchema>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema as any),
     defaultValues: {
       title: `${session.data?.user?.name}'s Solution`,
       content: getDefaultMarkdown(code ?? ''),
