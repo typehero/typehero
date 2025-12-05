@@ -45,7 +45,7 @@
     "lz-string": "^1.5.0",
     "maath": "^0.10.8",
     "nanoid": "^5.0.7",
-    "next": "15.3.1",
+    "next": "^15.5.6",
     "next-themes": "^0.2.1",
     "react": "19.1.0",
     "react-confetti": "^6.1.0",
