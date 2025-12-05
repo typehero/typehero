@@ -37,7 +37,6 @@ export const CommentInput = forwardRef<CommentInputRefProps, CommentInputProps>(
     const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
 
     const form = useForm<SingleFieldSchema>({
-      // @ts-expect-error - Known type incompatibility between Zod 3.23.3 and @hookform/resolvers 3.1.1
       resolver: zodResolver(singleFieldSchema),
       defaultValues: { text: defaultValue ?? '' },
     });

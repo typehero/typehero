@@ -39,7 +39,6 @@ export function SettingsForm() {
 
   const { settings, updateSettings } = useEditorSettingsStore();
   const form = useForm<FormSchema>({
-    // @ts-expect-error - Known type incompatibility between Zod 3.23.3 and @hookform/resolvers 3.1.1
     resolver: zodResolver(formSchema),
     defaultValues: settings,
   });

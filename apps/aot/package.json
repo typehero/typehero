@@ -15,7 +15,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.1.1",
+    "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-dialog": "^1.0.4",
     "@react-three/drei": "^9.116.0",
     "@react-three/fiber": "^9.1.2",
@@ -56,7 +56,7 @@
     "superjson": "^2.2.1",
     "three": "^0.170.0",
     "uploadthing": "^6.8.0",
-    "zod": "3.23.3",
+    "zod": "3.25.76",
     "zustand": "^4.3.9"
   },
   "devDependencies": {

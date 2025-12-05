@@ -15,7 +15,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.1.1",
+    "@hookform/resolvers": "^5.2.2",
     "@repo/auth": "workspace:*",
     "@repo/db": "workspace:*",
     "@repo/lint": "workspace:*",
@@ -35,7 +35,7 @@
     "react-select": "^5.8.3",
     "tailwindcss": "3.4.7",
     "tailwindcss-animate": "^1.0.6",
-    "zod": "3.23.3"
+    "zod": "3.25.76"
   },
   "devDependencies": {
     "@repo/tsconfig": "workspace:*",
