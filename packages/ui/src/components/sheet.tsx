@@ -51,8 +51,7 @@ const sheetVariants = cva(
 );
 
 interface SheetContentProps
-  extends React.ComponentProps<typeof SheetPrimitive.Content>,
-    VariantProps<typeof sheetVariants> {}
+  extends React.ComponentProps<typeof SheetPrimitive.Content>, VariantProps<typeof sheetVariants> {}
 
 const SheetContent = ({ side = 'right', className, children, ...props }: SheetContentProps) => (
   <SheetPortal>

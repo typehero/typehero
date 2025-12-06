@@ -9,5 +9,6 @@
   GITHUB_AOT_ID=aoeu
   GITHUB_AOT_SECRET=aoeu
   ```
+
   - Need to figure out a way to be able to sign into both typehero and aot locally but good enough ™
 - Navigate to `http://localhost:3003` to see the app running locally.

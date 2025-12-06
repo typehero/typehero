@@ -142,7 +142,7 @@ export async function getUserActivity(userId: string) {
 
 export interface BadgeInfo {
   slug: // eslint-disable-next-line @typescript-eslint/sort-type-constituents
-  | 'aot-2023-bronze'
+    | 'aot-2023-bronze'
     | 'aot-2023-silver'
     | 'aot-2023-gold'
     | 'aot-2023-platinum'
