@@ -35,7 +35,6 @@
     "@uploadthing/react": "^6.8.0",
     "@vercel/analytics": "^1.1.1",
     "@vercel/edge-config": "^0.2.1",
-    "aot": "link:",
     "bad-words": "^3.0.4",
     "clsx": "^2.0.0",
     "date-fns": "^2.30.0",

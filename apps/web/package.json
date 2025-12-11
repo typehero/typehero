@@ -84,7 +84,6 @@
     "unified": "^10.1.2",
     "unist-util-visit": "^5.0.0",
     "uploadthing": "^6.8.0",
-    "web": "link:",
     "zod": "3.23.3",
     "zustand": "^4.3.9"
   },

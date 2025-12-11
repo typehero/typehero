@@ -23,7 +23,6 @@
     "@repo/ui": "workspace:*",
     "@tanstack/react-query": "5.51.21",
     "@tanstack/react-table": "^8.20.5",
-    "admin": "link:",
     "clsx": "^2.0.0",
     "million": "2.6.0-beta.12",
     "next": "15.3.6",
