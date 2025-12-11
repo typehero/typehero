@@ -22,8 +22,8 @@ importers:
   .:
     dependencies:
       next:
-        specifier: 15.3.1
-        version: 15.3.1(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        specifier: 15.3.6
+        version: 15.3.6(@babel/core@7.26.10)(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       pnpm:
         specifier: ^8.15.8
         version: 8.15.9
@@ -94,9 +94,6 @@ importers:
       '@tanstack/react-table':
         specifier: ^8.20.5
         version: 8.21.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      admin:
-        specifier: 'link:'
-        version: 'link:'
       clsx:
         specifier: ^2.0.0
         version: 2.1.1
@@ -247,16 +244,13 @@ importers:
         version: 11.1.0(typescript@5.8.3)
       '@uploadthing/react':
         specifier: ^6.8.0
-        version: 6.8.0(next@15.3.6(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)(uploadthing@6.13.3(h3@1.15.1)(next@15.3.6(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(tailwindcss@3.4.7))
+        version: 6.8.0(next@15.3.6(@babel/core@7.26.10)(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)(uploadthing@6.13.3(h3@1.15.1)(next@15.3.6(@babel/core@7.26.10)(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(tailwindcss@3.4.7))
       '@vercel/analytics':
         specifier: ^1.1.1
-        version: 1.5.0(next@15.3.6(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
+        version: 1.5.0(next@15.3.6(@babel/core@7.26.10)(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
       '@vercel/edge-config':
         specifier: ^0.2.1
         version: 0.2.1
-      aot:
-        specifier: 'link:'
-        version: 'link:'
       bad-words:
         specifier: ^3.0.4
         version: 3.0.4
@@ -319,7 +313,7 @@ importers:
         version: 0.170.0
       uploadthing:
         specifier: ^6.8.0
-        version: 6.13.3(h3@1.15.1)(next@15.3.6(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(tailwindcss@3.4.7)
+        version: 6.13.3(h3@1.15.1)(next@15.3.6(@babel/core@7.26.10)(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(tailwindcss@3.4.7)
       zod:
         specifier: 3.23.3
         version: 3.23.3
@@ -415,9 +409,6 @@ importers:
 
   apps/og-image:
     dependencies:
-      '@repo/og-image':
-        specifier: 'link:'
-        version: 'link:'
       '@vercel/og':
         specifier: ^1.0.0
         version: 1.0.0
@@ -523,10 +514,10 @@ importers:
         version: 4.0.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(types-react@19.0.0-rc.1)
       '@uploadthing/react':
         specifier: ^6.8.0
-        version: 6.8.0(next@15.3.6(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)(uploadthing@6.13.3(h3@1.15.1)(next@15.3.6(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(tailwindcss@3.4.7))
+        version: 6.8.0(next@15.3.6(@babel/core@7.26.10)(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)(uploadthing@6.13.3(h3@1.15.1)(next@15.3.6(@babel/core@7.26.10)(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(tailwindcss@3.4.7))
       '@vercel/analytics':
         specifier: ^1.1.1
-        version: 1.5.0(next@15.3.6(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
+        version: 1.5.0(next@15.3.6(@babel/core@7.26.10)(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
       '@vercel/edge-config':
         specifier: ^0.2.1
         version: 0.2.1
@@ -649,10 +640,7 @@ importers:
         version: 5.0.0
       uploadthing:
         specifier: ^6.8.0
-        version: 6.13.3(h3@1.15.1)(next@15.3.6(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(tailwindcss@3.4.7)
-      web:
-        specifier: 'link:'
-        version: 'link:'
+        version: 6.13.3(h3@1.15.1)(next@15.3.6(@babel/core@7.26.10)(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(tailwindcss@3.4.7)
       zod:
         specifier: 3.23.3
         version: 3.23.3
@@ -994,7 +982,7 @@ importers:
         version: 4.0.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(types-react@19.0.0-rc.1)
       '@uploadthing/react':
         specifier: ^6.8.0
-        version: 6.8.0(next@15.3.6(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)(uploadthing@6.13.3(h3@1.15.1)(next@15.3.6(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(tailwindcss@3.4.7))
+        version: 6.8.0(next@15.3.6(@babel/core@7.26.10)(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)(uploadthing@6.13.3(h3@1.15.1)(next@15.3.6(@babel/core@7.26.10)(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(tailwindcss@3.4.7))
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.1
@@ -13914,14 +13902,14 @@ snapshots:
 
   '@uploadthing/mime-types@0.2.10': {}
 
-  '@uploadthing/react@6.8.0(next@15.3.6(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)(uploadthing@6.13.3(h3@1.15.1)(next@15.3.6(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(tailwindcss@3.4.7))':
+  '@uploadthing/react@6.8.0(next@15.3.6(@babel/core@7.26.10)(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)(uploadthing@6.13.3(h3@1.15.1)(next@15.3.6(@babel/core@7.26.10)(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(tailwindcss@3.4.7))':
     dependencies:
       '@uploadthing/dropzone': 0.4.1(react@19.1.0)
       '@uploadthing/shared': 6.7.9
       file-selector: 0.6.0
       react: 19.1.0
       tailwind-merge: 2.6.0
-      uploadthing: 6.13.3(h3@1.15.1)(next@15.3.6(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(tailwindcss@3.4.7)
+      uploadthing: 6.13.3(h3@1.15.1)(next@15.3.6(@babel/core@7.26.10)(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(tailwindcss@3.4.7)
     optionalDependencies:
       next: 15.3.6(@babel/core@7.26.10)(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
     transitivePeerDependencies:
@@ -13948,7 +13936,7 @@ snapshots:
     optionalDependencies:
       react: 19.1.0
 
-  '@vercel/analytics@1.5.0(next@15.3.6(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)':
+  '@vercel/analytics@1.5.0(next@15.3.6(@babel/core@7.26.10)(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)':
     optionalDependencies:
       next: 15.3.6(@babel/core@7.26.10)(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react: 19.1.0
@@ -20169,7 +20157,7 @@ snapshots:
       escalade: 3.2.0
       picocolors: 1.1.1
 
-  uploadthing@6.13.3(h3@1.15.1)(next@15.3.6(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(tailwindcss@3.4.7):
+  uploadthing@6.13.3(h3@1.15.1)(next@15.3.6(@babel/core@7.26.10)(@playwright/test@1.52.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(tailwindcss@3.4.7):
     dependencies:
       '@effect/schema': 0.68.18(effect@3.4.8)
       '@uploadthing/mime-types': 0.2.10
