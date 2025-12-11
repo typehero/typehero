@@ -63,10 +63,18 @@
     },
     "patchedDependencies": {
       "monaco-editor@0.52.2": "patches/monaco-editor@0.52.2.patch"
-    }
+    },
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@sentry/cli",
+      "@vercel/speed-insights",
+      "esbuild",
+      "sharp",
+      "unrs-resolver"
+    ]
   },
   "dependencies": {
-    "next": "15.3.1",
+    "next": "15.3.6",
     "pnpm": "^8.15.8",
     "react": "19.1.0",
     "react-dom": "19.1.0"
