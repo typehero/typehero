@@ -10,6 +10,10 @@
     {
       "path": "/api/cron/sync-contributors",
       "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/cron/update-ported-challenges",
+      "schedule": "0 2 * * *"
     }
   ]
 }
