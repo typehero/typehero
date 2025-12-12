@@ -43,7 +43,6 @@ export function EditForm(props: {
     control: form.control,
     name: 'userLinks',
   });
-  console.log(userLinksField.fields);
 
   async function onSubmit(data: EditFormSchema) {
     try {
