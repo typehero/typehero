@@ -1,12 +1,12 @@
 import { ForceRenderUntilClient } from '@repo/ui/components/force-render-until-client';
 
+import { notFound } from 'next/navigation';
 import { api } from '~/trpc/server';
-import { ChallengeLayoutWrapper } from './_components/challenge-layout-wrapper';
-import { TrackVisibiltyProvider } from './use-track-visibility.hook';
+import { getAllFlags } from '~/utils/feature-flag';
 import { buildMetaForEventPage } from '~/utils/metadata';
 import { isChallengeUnlocked } from '~/utils/time-utils';
-import { notFound } from 'next/navigation';
-import { getAllFlags } from '~/utils/feature-flag';
+import { ChallengeLayoutWrapper } from './_components/challenge-layout-wrapper';
+import { TrackVisibiltyProvider } from './use-track-visibility.hook';
 
 export function generateMetadata() {
   return buildMetaForEventPage();
@@ -14,11 +14,12 @@ export function generateMetadata() {
 
 export default async function LayoutData({
   children,
-  params: { year, day },
+  params,
 }: {
   children: React.ReactNode;
-  params: { year: string; day: string };
+  params: Promise<{ year: string; day: string }>;
 }) {
+  const { year, day } = await params;
   const { unlockAotChallenges } = await getAllFlags();
   if (!isChallengeUnlocked(Number(year), Number(day)) && !unlockAotChallenges) {
     return notFound();
