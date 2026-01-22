@@ -28,7 +28,7 @@ jobs:
         uses: ./tooling/github-actions/install
 
       - name: Run Prettier
-        run: turbo format --continue
+        run: turbo run format --continue
 
   eslint:
     name: ESLint
@@ -42,7 +42,7 @@ jobs:
         uses: ./tooling/github-actions/install
 
       - name: Lint
-        run: turbo lint --continue
+        run: turbo run lint --continue
 
   typecheck:
     name: TypeCheck
@@ -67,7 +67,7 @@ jobs:
           restore-keys: ${{ runner.os }}-cache-typescript-tsbuildinfo-
 
       - name: Run TypeScript type check
-        run: turbo typecheck --continue
+        run: turbo run typecheck --continue
 
   sherif:
     name: Sherif
@@ -104,7 +104,7 @@ jobs:
   #         pnpm db:seed
   #
   #     - name: Build
-  #       run: turbo build
+  #       run: turbo run build
   #       env:
   #         GITHUB_ID: ' '
   #         GITHUB_SECRET: ' '
@@ -113,7 +113,7 @@ jobs:
   #         NEXTAUTH_SECRET: 'kGvjABB9ZZsxhYFyxMT4ApohaIvfuNSRMIthI+usjA0='
   #
   #     - name: Run Playwright tests
-  #       run: turbo test:e2e --continue
+  #       run: turbo run test:e2e --continue
   #       env:
   #         DATABASE_URL: mysql://dev:dev@localhost/typehero
   #         GITHUB_ID: ' '

@@ -3,20 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "turbo build",
-    "checks": "turbo format lint typecheck --continue",
-    "checks:fix": "turbo format:fix lint:fix typecheck --continue --force",
-    "clean": "turbo clean && rm -rf node_modules && rm -rf .turbo",
+    "build": "turbo run build",
+    "checks": "turbo run format lint typecheck --continue",
+    "checks:fix": "turbo run format:fix lint:fix typecheck --continue --force",
+    "clean": "turbo run clean && rm -rf node_modules && rm -rf .turbo",
     "check:solutions": "tsx ./challenges/validate.ts",
-    "db:push": "turbo db:push",
-    "db:reset": "turbo db:reset",
-    "db:sc": "turbo db:sync-challenges",
-    "db:seed": "turbo db:reset && turbo db:seed",
-    "db:prod:seed": "turbo db:reset && turbo db:prod:seed",
-    "db:studio": "turbo db:studio",
-    "dev": "turbo dev --concurrency=1000",
-    "dl-git": "turbo dl-git",
-    "dl-monaco:force": "turbo dl-monaco",
+    "db:push": "turbo run db:push",
+    "db:reset": "turbo run db:reset",
+    "db:sc": "turbo run db:sync-challenges",
+    "db:seed": "turbo run db:reset && turbo run db:seed",
+    "db:prod:seed": "turbo run db:reset && turbo run db:prod:seed",
+    "db:studio": "turbo run db:studio",
+    "dev": "turbo run dev --concurrency=1000",
+    "dl-git": "turbo run dl-git",
+    "dl-monaco:force": "turbo run dl-monaco",
     "format": "prettier . \"!./apps/**\" \"!./packages/**\" \"!./tooling/**\" \"!challenges/**/tests.ts\" --check --cache --cache-location=\"node_modules/.cache/prettiercache\"",
     "format:fix": "prettier . \"!./apps/**\" \"!./packages/**\" \"!./tooling/**\" \"!challenges/**/tests.ts\" --write --cache --cache-location=\"node_modules/.cache/prettiercache\" --log-level=warn",
     "lint": "eslint . --max-warnings 0",
@@ -25,13 +25,13 @@
     "lint:fix": "eslint . --fix --max-warnings 0",
     "package-check": "pnpm dlx sherif@latest --ignore-rule root-package-dependencies",
     "package-check:fix": "pnpm dlx sherif@latest --ignore-rule root-package-dependencies --fix",
-    "refresh": "turbo db:reset db:seed --concurrency=1",
-    "test:e2e": "turbo test:e2e",
+    "refresh": "turbo run db:reset db:seed --concurrency=1",
+    "test:e2e": "turbo run test:e2e",
     "test:e2e:install": "playwright install",
-    "test:e2e:ui": "turbo test:e2e:ui",
-    "test:e2e:inspector": "turbo test:e2e:inspector",
+    "test:e2e:ui": "turbo run test:e2e:ui",
+    "test:e2e:inspector": "turbo run test:e2e:inspector",
     "tunnel": "cloudflared tunnel --url http://localhost:3000",
-    "typecheck": "turbo typecheck --continue"
+    "typecheck": "turbo run typecheck --continue"
   },
   "devDependencies": {
     "ajv": "^8.12.0",
@@ -72,11 +72,5 @@
       "sharp",
       "unrs-resolver"
     ]
-  },
-  "dependencies": {
-    "next": "15.3.8",
-    "pnpm": "^8.15.8",
-    "react": "19.1.0",
-    "react-dom": "19.1.0"
   }
 }
