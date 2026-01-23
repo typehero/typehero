@@ -2,7 +2,7 @@
   "extends": ["//"],
   "tasks": {
     "db:generate": {
-      "outputs": ["../../node_modules/.prisma/**"],
+      "outputs": ["$TURBO_ROOT$/node_modules/.prisma/**"],
       "outputLogs": "new-only"
     },
     "db:deploy": {
