@@ -15,3 +15,7 @@ type test_TSConfig_true = Expect<Equal<TSConfig<{ strict: true }>, { strict: tru
 type test_TSConfig_false = Expect<Equal<TSConfig<{ strict: false }>, { strict: false }>>;
 
 type test_TSConfig_boolean = Expect<Equal<TSConfig<{ strict: boolean }>, { strict: boolean }>>;
+
+type test_TSConfig_disallows_widening = Expect<
+  Equal<TSConfig<{ strict: false; extra: 123 }>, { strict: false }>
+>;
