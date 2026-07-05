@@ -30,9 +30,9 @@ export async function saveSubmission({ challenge, code, isSuccessful }: Args) {
       isSuccessful,
     },
   });
-  revalidateTag(createChallengeSubmissionCacheKey(challenge.slug));
-  revalidateTag(createCacheKeyForSolutions(challenge.slug));
-  revalidateTag(createInProgressSubmissionCacheKey(userId));
-  revalidateTag(createCompletedSubmissionCacheKey(userId));
+  revalidateTag(createChallengeSubmissionCacheKey(challenge.slug), 'max');
+  revalidateTag(createCacheKeyForSolutions(challenge.slug), 'max');
+  revalidateTag(createInProgressSubmissionCacheKey(userId), 'max');
+  revalidateTag(createCompletedSubmissionCacheKey(userId), 'max');
   return submission;
 }
