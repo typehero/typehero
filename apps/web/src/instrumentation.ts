@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/nextjs';
 
-export async function register() {
+export function register() {
   if (process.env.NEXT_RUNTIME === 'nodejs') {
     Sentry.init({
       dsn: 'https://612a99a42def98a6f2951b66e0d9d776@o4505790239604736.ingest.sentry.io/4505790257627136',

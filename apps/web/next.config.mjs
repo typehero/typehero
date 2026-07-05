@@ -58,15 +58,12 @@ const withBundleAnalyzer = bundleAnalyzer({
 });
 const withVercelToolbar = vercelToolbar();
 
-export default withSentryConfig(
-  withBundleAnalyzer(withVercelToolbar(nextConfig)),
-  {
-    silent: true,
-    org: 'typehero',
-    project: 'typehero-web-production',
-    widenClientFileUpload: true,
-    sourcemaps: {
-      deleteSourcemapsAfterUpload: true,
-    },
+export default withSentryConfig(withBundleAnalyzer(withVercelToolbar(nextConfig)), {
+  silent: true,
+  org: 'typehero',
+  project: 'typehero-web-production',
+  widenClientFileUpload: true,
+  sourcemaps: {
+    deleteSourcemapsAfterUpload: true,
   },
-);
+});
