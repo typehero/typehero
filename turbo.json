@@ -1,6 +1,6 @@
 {
   "$schema": "https://turborepo.com/schema.v2.json",
-  "globalEnv": ["DATABASE_URL", "NEXT_RUNTIME"],
+  "globalEnv": ["DATABASE_URL", "NEXT_RUNTIME", "GITHUB_AOT_ID", "GITHUB_AOT_SECRET"],
   "globalDependencies": [".env", ".env.*"],
   "tasks": {
     "build": {
