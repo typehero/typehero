@@ -1,3 +1,5 @@
+import 'server-only';
+
 import { createCallerFactory, createTRPCRouter } from '~/server/api/trpc';
 import { eventRouter } from './routers/event';
 
