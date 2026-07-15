@@ -1,15 +1,16 @@
-// TODO: Handle the deprecation
-// > `Github` is deprecated. Brand icons have been deprecated and are due to be removed, please refer to https://github.com/lucide-icons/lucide/issues/670.
-// > We recommend using https://simpleicons.org/?q=github instead.
-// > This icon will be removed in v1.0
-/* eslint-disable @typescript-eslint/no-deprecated */
 import { Link as LinkIcon } from 'lucide-react';
-import { SiBluesky, SiGithub as Github, SiX as Twitter, SiYoutube as Youtube, SiLinkedin as Linkedin } from '@icons-pack/react-simple-icons';
+import {
+  SiBluesky,
+  SiGithub as Github,
+  SiX as Twitter,
+  SiYoutube as Youtube,
+  SiLinkedin as Linkedin,
+} from '@icons-pack/react-simple-icons';
 import { cn } from '../cn';
 
 export function MagicIcon({ url, className }: { url: string; className?: string }) {
   const githubRegex = /^(?:https?:\/\/)?(?:www\.)?github\.com\/([\w-]+)(\/)?$/;
-  const twitterRegex = /^(?:https?:\/\/)?(?:www\.)?x\.com\/(?:\w+)(\/)?$/;
+  const twitterRegex = /^(?:https?:\/\/)?(?:www\.)?(?:twitter|x)\.com\/([\w-]+)(\/)?$/;
   const linkedinRegex = /^(?:https?:\/\/)?(?:www\.)?linkedin\.com\/in\/([\w-]+)(\/)?$/;
   const youtubeRegex = /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/(?:@[\w-]+|channel\/[\w-]+|c\/[\w-]+)(\/)?$/;
   const blueskyRegex = /^(?:https?:\/\/)?(?:www\.)?bsky\.app\/profile\/([\w.-]+)(\/)?$/;

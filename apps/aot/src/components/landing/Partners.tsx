@@ -2,7 +2,6 @@ import FrontendMasters from '../../../public/frontend-masters.svg';
 import TypeHeroDark from '../../../public/typehero-dark.svg';
 import TypeHero from '../../../public/typehero.svg';
 import Sentry from '../../../public/sentry.svg';
-import BlueSky from '../../../public/Blue_sky.png';
 import PartnerLink from './PartnerLink';
 
 const partners = [
@@ -21,13 +20,8 @@ const partners = [
     url: 'https://typehero.dev/',
     logo: TypeHero,
     darkLogo: TypeHeroDark,
-  }, {
-    name: 'Bluesky',
-    url: 'https://bsky.app',
-    logo: BlueSky
-  }
+  },
 ];
-
 
 export default function Partners() {
   return (

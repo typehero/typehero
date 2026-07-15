@@ -11,7 +11,6 @@ interface PartnerLinkProps {
 }
 
 export default function PartnerLink({ partner }: PartnerLinkProps) {
-  console.log("amara  is heere")
   return (
     <a
       href={partner.url}
