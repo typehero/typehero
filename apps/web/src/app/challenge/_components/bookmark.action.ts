@@ -34,5 +34,5 @@ export async function addOrRemoveBookmark(
     });
   }
 
-  revalidateTag(createCacheKeyForBookmarksTab(userId));
+  revalidateTag(createCacheKeyForBookmarksTab(userId), 'max');
 }

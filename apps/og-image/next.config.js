@@ -5,8 +5,5 @@ const config = {
     ignoreBuildErrors: false,
   },
   transpilePackages: ['@repo/og-utils'],
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
 };
 export default config;

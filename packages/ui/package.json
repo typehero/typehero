@@ -67,7 +67,7 @@
     "lucide-react": "^0.453.0",
     "mdast-util-find-and-replace": "^3.0.1",
     "next-themes": "^0.2.1",
-    "react": "19.1.0",
+    "react": "19.2.7",
     "react-day-picker": "^9.6.4",
     "react-hook-form": "^7.45.1",
     "react-markdown": "^9.0.2",
@@ -84,7 +84,7 @@
     "@repo/lint": "workspace:*",
     "@repo/tsconfig": "workspace:*",
     "@types/mdast": "^4.0.4",
-    "@types/react": "19.1.0",
+    "@types/react": "19.2.17",
     "eslint": "^8.57.0",
     "typescript": "^5.3.3",
     "unified": "^10.1.2"
