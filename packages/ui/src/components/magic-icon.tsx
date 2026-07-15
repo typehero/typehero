@@ -12,7 +12,8 @@ export function MagicIcon({ url, className }: { url: string; className?: string 
   const githubRegex = /^(?:https?:\/\/)?(?:www\.)?github\.com\/([\w-]+)(\/)?$/;
   const twitterRegex = /^(?:https?:\/\/)?(?:www\.)?(?:twitter|x)\.com\/([\w-]+)(\/)?$/;
   const linkedinRegex = /^(?:https?:\/\/)?(?:www\.)?linkedin\.com\/in\/([\w-]+)(\/)?$/;
-  const youtubeRegex = /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/(?:@[\w-]+|channel\/[\w-]+|c\/[\w-]+)(\/)?$/;
+  const youtubeRegex =
+    /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/(?:@[\w-]+|channel\/[\w-]+|c\/[\w-]+)(\/)?$/;
   const blueskyRegex = /^(?:https?:\/\/)?(?:www\.)?bsky\.app\/profile\/([\w.-]+)(\/)?$/;
   const lowercaseUrl = url.toLowerCase();
 
