@@ -21,11 +21,11 @@ export default function PartnerLink({ partner }: PartnerLinkProps) {
       <ExtLink />
       {partner.darkLogo ? (
         <>
-          <Image src={partner.darkLogo} alt={partner.name} className="hidden h-8 w-fit dark:block" />
-          <Image src={partner.logo} alt={partner.name} className="h-8 w-fit dark:hidden" />
+          <Image src={partner.darkLogo} alt="TypeHero" className="hidden h-8 w-fit dark:block" />
+          <Image src={partner.logo} alt="TypeHero" className="h-8 w-fit dark:hidden" />
         </>
       ) : (
-        <Image src={partner.logo} alt={partner.name} className="h-8 w-fit" />
+        <Image src={partner.logo} alt="FrontendMasters" className="h-8 w-fit" />
       )}
     </a>
   );
