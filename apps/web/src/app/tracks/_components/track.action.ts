@@ -31,7 +31,7 @@ export async function enrollUserInTrack(id: number, slug: string) {
   });
 
   track?.('track-action', { action: 'enrolled', slug });
-  revalidateTag(`track-${id}-detail`);
+  revalidateTag(`track-${id}-detail`, 'max');
 }
 
 /**
@@ -58,7 +58,7 @@ export async function unenrollUserFromTrack(id: number, slug: string) {
   });
 
   track?.('track-action', { action: 'unenrolled', slug });
-  revalidateTag(`track-${id}-detail`);
+  revalidateTag(`track-${id}-detail`, 'max');
 }
 
 /**

@@ -1,12 +1,13 @@
-// eslint-disable-next-line import/no-unresolved
-import million from 'million/compiler';
-
-const millionConfig = {
-  auto: { rsc: true },
-};
-
 /** @type {import("next").NextConfig} */
 const config = {
+  turbopack: {
+    rules: {
+      '*.md': {
+        loaders: ['raw-loader'],
+        as: '*.js',
+      },
+    },
+  },
   webpack: (config) => {
     config.module.rules.push({
       test: /\.md$/,
@@ -17,9 +18,6 @@ const config = {
   reactStrictMode: true,
   typescript: {
     ignoreBuildErrors: false,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
   },
   transpilePackages: ['@repo/db', '@repo/auth'],
   images: {
@@ -35,4 +33,4 @@ const config = {
     ],
   },
 };
-export default million.next(config, millionConfig);
+export default config;

@@ -31,9 +31,9 @@ export async function saveSubmission({ challenge, code, isSuccessful }: Args) {
     },
   });
   // @TODO: we should be able to just invalidate by the challenge slug
-  revalidateTag(createChallengeSubmissionCacheKey(challenge.slug));
-  revalidateTag(createCacheKeyForSolutions(challenge.slug));
-  revalidateTag(createInProgressSubmissionCacheKey(userId));
-  revalidateTag(createCompletedSubmissionCacheKey(userId));
+  revalidateTag(createChallengeSubmissionCacheKey(challenge.slug), 'max');
+  revalidateTag(createCacheKeyForSolutions(challenge.slug), 'max');
+  revalidateTag(createInProgressSubmissionCacheKey(userId), 'max');
+  revalidateTag(createCompletedSubmissionCacheKey(userId), 'max');
   return submission;
 }

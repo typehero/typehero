@@ -47,7 +47,7 @@ export async function updateSolution({ id, description, slug, title }: SolutionU
     },
   });
 
-  revalidateTag(createCacheKeyForSolutions(slug));
+  revalidateTag(createCacheKeyForSolutions(slug), 'max');
 }
 
 export async function postSolution({ challengeId, description, slug, title, userId }: Args) {
@@ -62,8 +62,8 @@ export async function postSolution({ challengeId, description, slug, title, user
       userId,
     },
   });
-  revalidateTag(createCacheKeyForSolutions(slug));
-  revalidateTag(createCacheKeyForSharedSolutionsTab(userId));
+  revalidateTag(createCacheKeyForSolutions(slug), 'max');
+  revalidateTag(createCacheKeyForSharedSolutionsTab(userId), 'max');
 }
 
 export async function deleteSolution(solutionToDelete: ChallengeSolution) {
@@ -82,7 +82,7 @@ export async function deleteSolution(solutionToDelete: ChallengeSolution) {
     where: { id: solutionToDelete.id },
   });
 
-  revalidateTag(createCacheKeyForSolutions(solutionToDelete.challenge?.slug ?? ''));
+  revalidateTag(createCacheKeyForSolutions(solutionToDelete.challenge?.slug ?? ''), 'max');
 }
 
 export async function pinOrUnpinSolution(id: number, isPinned: boolean, slug: string) {
@@ -95,5 +95,5 @@ export async function pinOrUnpinSolution(id: number, isPinned: boolean, slug: st
     where: { id },
     data: { isPinned },
   });
-  revalidateTag(createCacheKeyForSolutions(slug));
+  revalidateTag(createCacheKeyForSolutions(slug), 'max');
 }
