@@ -48,7 +48,7 @@
     "simple-git": "^3.19.1",
     "tsup": "5.12.0",
     "tsx": "4.19.0",
-    "typescript": "^5.3.3",
+    "typescript": "^5.9.3",
     "uuid-by-string": "^4.0.0",
     "yaml": "^2.3.1"
   }
