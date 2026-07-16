@@ -62,7 +62,6 @@ export default function InfiniteList({
 
   useEffect(() => {
     if (isLoadingNext || !entry?.isIntersecting || !hasNext) return;
-    console.log('call nnext');
     next();
   }, [entry?.isIntersecting, isLoadingNext, hasNext, next]);
 
