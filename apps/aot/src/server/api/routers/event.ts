@@ -1,3 +1,4 @@
+import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc';
 import { getCurrentAdventDay } from '~/utils/time-utils';
@@ -65,7 +66,10 @@ export const eventRouter = createTRPCRouter({
 
       const tsconfig = challenge.tsconfig;
       if (!validateCompilerOptions(tsconfig)) {
-        throw new Error(`Challenge "${challenge.slug}" has an invalid tsconfig`);
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: `Challenge "${challenge.slug}" has an invalid tsconfig`,
+        });
       }
 
       return {

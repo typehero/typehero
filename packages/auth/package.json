@@ -40,6 +40,6 @@
     "eslint": "^8.57.0",
     "prisma": "5.21.1",
     "tsup": "5.12.0",
-    "typescript": "^5.3.3"
+    "typescript": "^5.9.3"
   }
 }
