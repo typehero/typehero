@@ -1,4 +1,3 @@
-import type { inferRouterOutputs } from '@trpc/server';
-import type { AppRouter } from '~/trpc/types';
+import type { RouterOutputs } from '~/trpc/types';
 
-export type Challenge = inferRouterOutputs<AppRouter>['event']['getEventChallengeBySlug'];
+export type Challenge = RouterOutputs['event']['getEventChallengeBySlug'];

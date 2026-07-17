@@ -37,8 +37,8 @@
     "@stripe/react-stripe-js": "^2.8.0",
     "@stripe/stripe-js": "^4.6.0",
     "@t3-oss/env-nextjs": "^0.6.0",
-    "@tanstack/react-query": "5.51.21",
-    "@tanstack/react-query-devtools": "5.51.21",
+    "@tanstack/react-query": "5.101.2",
+    "@tanstack/react-query-devtools": "5.101.2",
     "@tanstack/react-table": "^8.20.5",
     "@uiw/react-md-editor": "^4.0.4",
     "@uploadthing/react": "^6.8.0",
@@ -108,6 +108,6 @@
     "prettier-plugin-tailwindcss": "^0.5.9",
     "raw-loader": "^4.0.2",
     "tailwindcss": "3.4.7",
-    "typescript": "^5.3.3"
+    "typescript": "^5.9.3"
   }
 }
