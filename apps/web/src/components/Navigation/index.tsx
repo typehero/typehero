@@ -23,7 +23,8 @@ import { NotificationLink } from './notification-link';
 import { SignOutLink } from './signout-link';
 import { SkipToCodeEditor } from './skip-to-code-editor';
 import { ThemeButton } from './theme-button';
-import { Badge } from '@repo/ui/components/badge';
+import { ChallengeDropdown } from './challenge-dropdown';
+import { ChallengeDropdownMobile } from './challenge-dropdown-mobile';
 
 export function getAdminUrl() {
   // reference for vercel.com
@@ -46,7 +47,8 @@ export async function Navigation() {
 
   const TopSectionLinks = (
     <>
-      <NavLink title="Explore" href="/explore" />
+      <ChallengeDropdown />
+      <NavLink title="Home" href="/" />
       <NavLink title="Tracks" href="/tracks" />
       <div className="flex items-center gap-1">
         <a
@@ -55,12 +57,11 @@ export async function Navigation() {
           href="https://adventofts.com/"
           rel="noopener"
         >
-          Advent of TS
+          Advent of TypeScript
         </a>
-        <Badge className="h-4 bg-red-600 px-1.5" variant="default">
-          New
-        </Badge>
       </div>
+      {/* <NavLink title="Leaderboard" href="/leaderboard" />
+      <NavLink title="Playground" href="/playground" /> */}
     </>
   );
 
@@ -68,7 +69,19 @@ export async function Navigation() {
     <>
       <div className="hidden items-center gap-4 md:flex">{TopSectionLinks}</div>
       <div className="flex flex-col gap-5 pl-2 md:hidden">
-        {TopSectionLinks}
+        <ChallengeDropdownMobile />
+        <NavLink title="Home" href="/" />
+        <NavLink title="Tracks" href="/tracks" />
+        <div className="flex items-center gap-1">
+          <a
+            className="text-foreground/80"
+            target="_blank"
+            href="https://adventofts.com/"
+            rel="noopener"
+          >
+            Advent of TypeScript
+          </a>
+        </div>
         {!session?.user && (
           <div className="flex items-center gap-2">
             <span>Theme</span>
@@ -136,16 +149,10 @@ export async function Navigation() {
 
           <div className="flex">
             <div className="flex items-center justify-end gap-2">
+              {session ? <NotificationLink notificationCount={notificationCount} /> : null}
               <Suspense>
                 <Search />
               </Suspense>
-              <Link
-                className="donate-btn relative overflow-hidden rounded-md border border-[#bea74b66] px-3 py-2 text-black duration-300 hover:bg-[#eed15f] dark:text-white dark:hover:bg-[#bea74b44]"
-                href="/support"
-              >
-                Support Us
-              </Link>
-              {session ? <NotificationLink notificationCount={notificationCount} /> : null}
               {featureFlags?.enableLogin ? (
                 <LoginButton isAdminOrMod={isAdminOrMod} session={session} isAdmin={isAdminRole} />
               ) : null}

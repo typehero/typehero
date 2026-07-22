@@ -98,6 +98,12 @@
     --difficulty-hard: 0 91% 71%;
     --difficulty-extreme: 269 97% 85%;
 
+    --difficulty-beginner-dark: 199 69% 72%;
+    --difficulty-easy-dark: 142 77% 73%;
+    --difficulty-medium-dark: 31 86% 60%;
+    --difficulty-hard-dark: 0 91% 71%;
+    --difficulty-extreme-dark: 269 97% 85%;
+
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
@@ -428,10 +434,7 @@ main {
   );
   -webkit-mask-image: radial-gradient(100% 50% at center center, black, transparent);
   background-image: var(--first), var(--second);
-  background-attachment:;
-  background-origin:;
-  background-clip:;
-  background-color:;
+
   background-position-x: 1%, 99%;
   background-position-y: 0%, 0%;
   background-size:
