@@ -3,21 +3,21 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { Fragment } from 'react';
 import InfiniteList from '~/components/infinite-list';
+import { useTRPC } from '~/trpc/react';
 import { Empty } from './empty';
 import { NotificationItem } from './notfication-item';
-import { getNotifications } from './notification.actions';
 
 export function NotificationsAll({ onSeen }: { onSeen: (v: number) => void }) {
-  const { data, fetchNextPage, isLoading, isFetchingNextPage, hasNextPage } = useInfiniteQuery({
-    initialPageParam: 0,
-    queryKey: ['notifications-all'],
-    queryFn: ({ pageParam }) => {
-      return getNotifications({ cursor: pageParam });
-    },
-    getNextPageParam: (lastPage) => {
-      return lastPage?.cursor;
-    },
-  });
+  const trpc = useTRPC();
+  const { data, fetchNextPage, isLoading, isFetchingNextPage, hasNextPage } = useInfiniteQuery(
+    trpc.notification.getNotifications.infiniteQueryOptions(
+      {},
+      {
+        initialCursor: 0,
+        getNextPageParam: (lastPage) => lastPage?.cursor,
+      },
+    ),
+  );
 
   if (isLoading) {
     return null;

@@ -5,18 +5,19 @@ import { track } from '@vercel/analytics';
 import { useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
 import Link from 'next/link';
-import { getNotificationCount } from './navigation.actions';
+import { useTRPC } from '~/trpc/react';
 
-export const NOTIFICATION_QUERY_KEY = 'notificationCounts';
 export function NotificationLink({ notificationCount }: { notificationCount: number }) {
+  const trpc = useTRPC();
   // eventually lift this higher and pull new data and insert new rows into the notifications
   // view if user is currently looking at it (example: twitter notif view)
-  const { data: count } = useQuery({
-    initialData: notificationCount,
-    queryKey: [NOTIFICATION_QUERY_KEY],
-    queryFn: () => getNotificationCount(),
-    refetchInterval: 60000, // one minute
-  });
+  const { data } = useQuery(
+    trpc.notification.getUnreadCount.queryOptions(undefined, {
+      initialData: notificationCount,
+      refetchInterval: 60000, // one minute
+    }),
+  );
+  const count = data ?? notificationCount;
 
   return (
     <Link
