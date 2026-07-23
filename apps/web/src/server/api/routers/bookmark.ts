@@ -22,27 +22,18 @@ export const bookmarkRouter = createTRPCRouter({
       const { challengeId, shouldBookmark } = input;
       const userId = ctx.session.user.id;
 
-      const bookmarkExists = await ctx.db.bookmark.findFirst({
-        where: {
-          challengeId,
-          userId,
-        },
-      });
-
-      if (!bookmarkExists && shouldBookmark) {
-        await ctx.db.bookmark.create({
-          data: {
-            challengeId,
-            userId,
-          },
+      if (shouldBookmark) {
+        // Idempotent: relies on the @@unique([userId, challengeId]) constraint so
+        // concurrent adds can't create duplicates.
+        await ctx.db.bookmark.upsert({
+          where: { userId_challengeId: { userId, challengeId } },
+          create: { userId, challengeId },
+          update: {},
         });
-      }
-
-      if (bookmarkExists && !shouldBookmark) {
-        await ctx.db.bookmark.delete({
-          where: {
-            id: bookmarkExists.id,
-          },
+      } else {
+        // Idempotent: won't throw if the row was already removed concurrently.
+        await ctx.db.bookmark.deleteMany({
+          where: { userId, challengeId },
         });
       }
 

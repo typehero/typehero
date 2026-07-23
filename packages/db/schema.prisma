@@ -274,6 +274,7 @@ model Bookmark {
 
   createdAt DateTime? @default(now())
 
+  @@unique([userId, challengeId])
   @@index([userId])
   @@index([challengeId])
 }
