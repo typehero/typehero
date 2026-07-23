@@ -1,4 +1,5 @@
 import { createCallerFactory, createTRPCRouter } from '~/server/api/trpc';
+import { bookmarkRouter } from './routers/bookmark';
 import { notificationRouter } from './routers/notification';
 
 /**
@@ -7,6 +8,7 @@ import { notificationRouter } from './routers/notification';
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
+  bookmark: bookmarkRouter,
   notification: notificationRouter,
 });
 

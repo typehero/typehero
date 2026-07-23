@@ -16,14 +16,15 @@ import { Markdown } from '@repo/ui/components/markdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { TypographyH3 } from '@repo/ui/components/typography/h3';
 import { Bookmark as BookmarkIcon, Calendar, CheckCircle, Flag, Share } from '@repo/ui/icons';
+import { useMutation } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { debounce } from 'lodash';
 import { useRef, useState } from 'react';
 import { type ChallengeRouteData } from '~/app/challenge/[slug]/getChallengeRouteData';
 import { ReportDialog } from '~/components/ReportDialog';
 import { ShareUrl } from '~/components/share-url';
+import { useTRPC } from '~/trpc/react';
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
-import { addOrRemoveBookmark } from '../bookmark.action';
 import { UserBadge } from '../comments/enhanced-user-badge';
 import { Vote } from '../vote';
 import { Suggestions } from './suggestions';
@@ -42,11 +43,13 @@ export interface FormValues {
 export function Description({ challenge }: DescriptionProps) {
   const [hasBookmarked, setHasBookmarked] = useState(challenge.bookmark.length > 0);
   const session = useSession();
+  const trpc = useTRPC();
+  const bookmarkMutation = useMutation(trpc.bookmark.addOrRemove.mutationOptions());
 
   const debouncedBookmark = useRef(
-    debounce(async (challengeId: number, userId: string, shouldBookmark: boolean) => {
+    debounce(async (challengeId: number, shouldBookmark: boolean) => {
       try {
-        await addOrRemoveBookmark(challengeId, userId, shouldBookmark);
+        await bookmarkMutation.mutateAsync({ challengeId, shouldBookmark });
         setHasBookmarked(shouldBookmark);
       } catch (e) {
         console.error(e);
@@ -168,13 +171,9 @@ export function Description({ challenge }: DescriptionProps) {
                   shouldBookmark = true;
                   setHasBookmarked(true);
                 }
-                // TODO: Is this guaranteed to exist, or is userId actually optional?
-                // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-                debouncedBookmark(challenge.id, session.data?.user?.id!, shouldBookmark)?.catch(
-                  (e) => {
-                    console.error(e);
-                  },
-                );
+                debouncedBookmark(challenge.id, shouldBookmark)?.catch((e) => {
+                  console.error(e);
+                });
               }}
             >
               <BookmarkIcon className="h-4 w-4" />
