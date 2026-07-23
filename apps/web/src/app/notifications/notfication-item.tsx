@@ -11,7 +11,8 @@ import { useInView } from 'react-intersection-observer';
 import { getRelativeTime } from '~/utils/relativeTime';
 import type { RouterOutputs } from '~/trpc/types';
 
-export type Notification = RouterOutputs['notification']['getNotifications']['notifications'][number];
+export type Notification =
+  RouterOutputs['notification']['getNotifications']['notifications'][number];
 
 const BLURBS = {
   MENTION: 'mentioned you in a comment',
