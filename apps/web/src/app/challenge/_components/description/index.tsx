@@ -46,16 +46,38 @@ export function Description({ challenge }: DescriptionProps) {
   const trpc = useTRPC();
   const bookmarkMutation = useMutation(trpc.bookmark.addOrRemove.mutationOptions());
 
+  // Tracks the in-flight bookmark request and the most recently requested state
+  // per challenge, so a newer click can't race an earlier, still-pending request.
+  const bookmarkStateRef = useRef(new Map<number, { running: boolean; desired: boolean | null }>());
+
   const debouncedBookmark = useRef(
-    debounce(async (challengeId: number, shouldBookmark: boolean) => {
-      try {
-        await bookmarkMutation.mutateAsync({ challengeId, shouldBookmark });
-        setHasBookmarked(shouldBookmark);
-      } catch (e) {
-        console.error(e);
-        // it errored so reverse the intended changes
-        setHasBookmarked(!shouldBookmark);
-      }
+    debounce((challengeId: number, shouldBookmark: boolean) => {
+      const state = bookmarkStateRef.current.get(challengeId) ?? { running: false, desired: null };
+      // Always remember the latest intent; if a request is already running for
+      // this challenge, the running loop will pick this value up when it finishes.
+      state.desired = shouldBookmark;
+      bookmarkStateRef.current.set(challengeId, state);
+      if (state.running) return;
+      state.running = true;
+
+      void (async () => {
+        try {
+          while (state.desired !== null) {
+            const next = state.desired;
+            state.desired = null;
+            try {
+              await bookmarkMutation.mutateAsync({ challengeId, shouldBookmark: next });
+              setHasBookmarked(next);
+            } catch (e) {
+              console.error(e);
+              // it errored so reverse the intended changes
+              setHasBookmarked(!next);
+            }
+          }
+        } finally {
+          state.running = false;
+        }
+      })();
     }, 500),
   ).current;
 
@@ -171,9 +193,7 @@ export function Description({ challenge }: DescriptionProps) {
                   shouldBookmark = true;
                   setHasBookmarked(true);
                 }
-                debouncedBookmark(challenge.id, shouldBookmark)?.catch((e) => {
-                  console.error(e);
-                });
+                debouncedBookmark(challenge.id, shouldBookmark);
               }}
             >
               <BookmarkIcon className="h-4 w-4" />
