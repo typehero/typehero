@@ -36,13 +36,12 @@ export function getAdminUrl() {
 }
 
 export async function Navigation() {
-  const [session, featureFlags, notificationCount] = await Promise.all([
-    auth(),
-    getAllFlags(),
-    // protected procedure throws when logged out; the count is only rendered for
-    // authenticated users so falling back to 0 keeps the nav rendering.
-    api.notification.getUnreadCount().catch(() => 0),
-  ]);
+  const [session, featureFlags] = await Promise.all([auth(), getAllFlags()]);
+  // The unread badge only renders for authenticated users, and `getUnreadCount`
+  // is a protected procedure, so skip the call entirely when logged out. For
+  // authenticated users we intentionally let real DB/tRPC errors surface instead
+  // of masking them as a zero count.
+  const notificationCount = session ? await api.notification.getUnreadCount() : 0;
   const isAdminOrMod = isAdminOrModerator(session);
   const isAdminRole = isAdmin(session);
 
