@@ -13,12 +13,12 @@ import { Suspense } from 'react';
 import { auth } from '~/server/auth';
 import { isAdmin, isAdminOrModerator } from '~/utils/auth-guards';
 import { getAllFlags } from '~/utils/feature-flags';
+import { api } from '~/trpc/server';
 import { Search } from '../search/search';
 import { LoginLink } from './login-link';
 import { MobileNav } from './mobile-nav';
 import { NavLink } from './nav-link';
 import { NavWrapper } from './nav-wrapper';
-import { getNotificationCount } from './navigation.actions';
 import { NotificationLink } from './notification-link';
 import { SignOutLink } from './signout-link';
 import { SkipToCodeEditor } from './skip-to-code-editor';
@@ -36,11 +36,12 @@ export function getAdminUrl() {
 }
 
 export async function Navigation() {
-  const [session, featureFlags, notificationCount] = await Promise.all([
-    auth(),
-    getAllFlags(),
-    getNotificationCount(),
-  ]);
+  const [session, featureFlags] = await Promise.all([auth(), getAllFlags()]);
+  // The unread badge only renders for authenticated users, and `getUnreadCount`
+  // is a protected procedure, so skip the call entirely when logged out. For
+  // authenticated users we intentionally let real DB/tRPC errors surface instead
+  // of masking them as a zero count.
+  const notificationCount = session ? await api.notification.getUnreadCount() : 0;
   const isAdminOrMod = isAdminOrModerator(session);
   const isAdminRole = isAdmin(session);
 

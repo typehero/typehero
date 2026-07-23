@@ -9,7 +9,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useInView } from 'react-intersection-observer';
 import { getRelativeTime } from '~/utils/relativeTime';
-import type { Notification } from './notification.actions';
+import type { RouterOutputs } from '~/trpc/types';
+
+export type Notification =
+  RouterOutputs['notification']['getNotifications']['notifications'][number];
 
 const BLURBS = {
   MENTION: 'mentioned you in a comment',

@@ -7,8 +7,7 @@ import { useToast } from '@repo/ui/components/use-toast';
 import { Bell } from '@repo/ui/icons';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRef } from 'react';
-import { NOTIFICATION_QUERY_KEY } from '~/components/Navigation/notification-link';
-import { markAllAsRead, markNotificationsAsRead } from './notification.actions';
+import { useTRPC } from '~/trpc/react';
 import { NotificationsAll } from './notifications-all';
 import { NotificationsMentions } from './notifications-mentions';
 
@@ -16,10 +15,10 @@ export default function NotificationPage() {
   const seenNotifications = useRef(new Set<number>());
   const timeoutRef = useRef<number>(undefined);
   const { toast } = useToast();
+  const trpc = useTRPC();
   const client = useQueryClient();
-  const mutation = useMutation({
-    mutationFn: markNotificationsAsRead,
-  });
+  const markAsReadMutation = useMutation(trpc.notification.markAsRead.mutationOptions());
+  const markAllAsReadMutation = useMutation(trpc.notification.markAllAsRead.mutationOptions());
 
   const onSeen = (id: number) => {
     seenNotifications.current.add(id);
@@ -29,24 +28,25 @@ export default function NotificationPage() {
 
     timeoutRef.current = window.setTimeout(() => {
       timeoutRef.current = undefined;
-      mutation.mutate(Array.from(seenNotifications.current), {
-        onSuccess: () => {
-          for (const id of copy) {
-            seenNotifications.current.delete(id);
-          }
+      markAsReadMutation.mutate(
+        { ids: Array.from(seenNotifications.current) },
+        {
+          onSuccess: () => {
+            for (const id of copy) {
+              seenNotifications.current.delete(id);
+            }
+          },
         },
-      });
-      client.setQueryData([NOTIFICATION_QUERY_KEY], 0);
+      );
+      client.setQueryData(trpc.notification.getUnreadCount.queryKey(), 0);
     }, 500);
   };
 
   const onMarkAllAsReadClick = async () => {
-    await markAllAsRead();
-    // partial matching is not working for some reason
-    await client.invalidateQueries({ queryKey: ['notifications-all'] });
-    await client.invalidateQueries({ queryKey: ['notifications-mentions'] });
-    await client.refetchQueries({ queryKey: ['notifications-all'] });
-    await client.refetchQueries({ queryKey: ['notifications-mentions'] });
+    await markAllAsReadMutation.mutateAsync();
+    // invalidate + refetch every notification query (all, mentions, unread count)
+    await client.invalidateQueries(trpc.notification.pathFilter());
+    await client.refetchQueries(trpc.notification.getNotifications.infiniteQueryFilter());
     toast({
       variant: 'success',
       title: 'All notifications marked as read.',
