@@ -49,7 +49,7 @@
   "packageManager": "pnpm@10.11.0",
   "pnpm": {
     "overrides": {
-      "@auth/core": "0.37.4",
+      "@auth/core": "0.41.3",
       "@typescript-eslint/eslint-plugin": "8.16.0",
       "@typescript-eslint/parser": "8.16.0",
       "@types/react": "19.2.17",

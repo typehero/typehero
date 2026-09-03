@@ -13,7 +13,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@auth/core": "^0.37.4"
+    "@auth/core": "^0.41.3"
   },
   "devDependencies": {
     "@repo/lint": "workspace:*",
