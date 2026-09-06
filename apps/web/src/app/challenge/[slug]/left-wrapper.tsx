@@ -8,7 +8,7 @@ import { FeatureFlagContext } from '~/app/feature-flag-provider';
 
 import { cn } from '@repo/ui/cn';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui/components/tabs';
-import { FlaskConical, History, Text } from '@repo/ui/icons';
+import { ArrowLeft, FlaskConical, History, Text } from '@repo/ui/icons';
 
 import type { ChallengeRouteData } from './getChallengeRouteData';
 import { useTrackNavigationVisiblity } from './use-track-visibility.hook';
@@ -136,19 +136,33 @@ export function LeftWrapper({
           className={cn(
             'bg-background/90 dark:bg-muted/90 sticky top-0 grid h-auto w-full border-b border-zinc-300 backdrop-blur-sm dark:border-zinc-700',
             {
-              'grid-rows-3 gap-2': isIconOnly,
-              'grid-cols-3 gap-0.5': !isIconOnly,
+              'grid-rows-4 gap-2': isIconOnly,
+              'grid-cols-[auto_1fr_1fr_1fr] gap-0.5': !isIconOnly,
               'rounded-tl-xl': !isTrackVisible,
             },
           )}
           ref={tabsListRef}
         >
+          <button
+            type="button"
+            title="Go back"
+            aria-label="Go back"
+            className={cn(
+              'flex items-center justify-center rounded-md px-2 duration-300 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50',
+              {
+                'p-4': isIconOnly,
+                'rounded-tl-xl': !isTrackVisible,
+              },
+            )}
+            onClick={() => router.back()}
+          >
+            <ArrowLeft className="h-4 w-4" />
+          </button>
           <TabsTrigger
             className={cn(
               'rounded-md duration-300 hover:bg-neutral-200/50 data-[state=active]:bg-neutral-200 dark:hover:bg-neutral-700/50 dark:data-[state=active]:bg-neutral-700',
               {
                 'p-4': isIconOnly,
-                'rounded-tl-xl': !isTrackVisible,
                 'rounded-bl-xl': isCollapsed && !isDesktop,
               },
             )}
