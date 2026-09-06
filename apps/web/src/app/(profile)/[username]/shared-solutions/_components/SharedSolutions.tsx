@@ -14,6 +14,15 @@ import { cn } from '@repo/ui/cn';
 import { Alert, AlertDescription, AlertTitle } from '@repo/ui/components/alert';
 import { Button } from '@repo/ui/components/button';
 import Link from 'next/link';
+import { AOT_CHALLENGES } from '~/app/challenge/[slug]/aot-slugs';
+
+function getSolutionHref(slug: string, solutionId: number): string {
+  if (AOT_CHALLENGES.includes(slug)) {
+    const [year, day] = slug.split('-');
+    return `https://adventofts.com/events/${year}/${day}/solutions/${solutionId}`;
+  }
+  return `/challenge/${encodeURIComponent(slug)}/solutions/${solutionId}`;
+}
 
 export function SharedSolutions(props: {
   solutions: (SharedSolutionCardProps['solution'] & { id: number; challenge: { slug: string } })[];
@@ -61,7 +70,7 @@ export function SharedSolutions(props: {
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {filteredChallenges.map((s) => (
           <Link
-            href={`/challenge/${encodeURIComponent(s.challenge.slug)}/solutions/${s.id}`}
+            href={getSolutionHref(s.challenge.slug, s.id)}
             key={s.challenge.name}
           >
             <SharedSolutionCard solution={s} />
