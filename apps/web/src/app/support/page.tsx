@@ -14,7 +14,7 @@ export default async function DonatePage() {
     // 3.5rem is the height of the navbar, thus -7rem to center vertically
     <div className="container relative flex min-h-[calc(100lvh-7rem)] flex-col p-4 py-8 sm:items-center sm:justify-center sm:text-center">
       <div className={`${styles.supportBackground} fixed left-0 -z-10 h-full w-full`} />
-      <div className="mx-auto max-w-[69ch] text-lg leading-9 text-neutral-600 dark:text-white/50">
+      <div className="mx-auto max-w-[69ch] text-lg leading-9 text-neutral-600 dark:text-white/70">
         <div className="mb-8 flex items-center gap-4 sm:flex-col">
           <div className="hidden h-12 w-12 place-items-center rounded-full bg-black/10 sm:grid dark:bg-gradient-to-b dark:from-white/10 dark:to-[#bea74b44]">
             <HeartHandshake className="h-8 w-8 stroke-1 text-neutral-900 dark:text-white" />

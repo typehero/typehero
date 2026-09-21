@@ -47,6 +47,7 @@ export function FullscreenButton() {
         <button
           className="focus:outline-none focus-visible:ring-2"
           onClick={handleToggleFullscreen}
+          aria-label={fssettings.isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
         >
           {fssettings.isFullscreen ? (
             <Minimize2 className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" size={20} />

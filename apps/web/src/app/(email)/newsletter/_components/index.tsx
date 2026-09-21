@@ -21,7 +21,7 @@ export function Newsletter() {
               community
             </Balancer>
           </h1>
-          <p className="leading-8 text-black/50 dark:text-white/50">
+          <p className="leading-8 text-black/70 dark:text-white/70">
             <Balancer>
               Interested in the future of the platform? Be the first to get updates on content, new
               features, and more!

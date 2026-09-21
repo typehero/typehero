@@ -69,7 +69,7 @@ export function Comments({
     >
       <div className="relative">
         <button
-          className="flex w-full items-center justify-between gap-2 p-3 font-medium text-neutral-500 duration-300 hover:text-neutral-700 focus:outline-none dark:hover:text-zinc-300"
+          className="flex w-full items-center justify-between gap-2 p-3 font-medium text-neutral-600 duration-300 hover:text-neutral-800 focus:outline-none dark:text-neutral-400 dark:hover:text-zinc-300"
           onClick={() => {
             setShowComments(!showComments);
             commentContainerRef.current?.scroll({ top: 0 });

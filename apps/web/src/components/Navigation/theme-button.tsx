@@ -26,7 +26,7 @@ export function ThemeButton() {
             key={t}
             className={cn('rounded-full p-1.5', isActive && 'bg-secondary')}
             onClick={() => setTheme(t)}
-            aria-label="theme button"
+            aria-label={`Switch to ${t} theme`}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             layout
