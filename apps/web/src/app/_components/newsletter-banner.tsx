@@ -13,7 +13,7 @@ export function NewsletterBanner() {
           <h1 className="max-w-[13ch] text-4xl font-bold md:max-w-none">
             <Balancer>Stay Informed</Balancer>
           </h1>
-          <p className="leading-8 text-black/60 dark:text-white/50">
+          <p className="leading-8 text-black/70 dark:text-white/70">
             <Balancer>
               Interested in the future of the platform? Be the first to get updates on content, new
               features, and more!

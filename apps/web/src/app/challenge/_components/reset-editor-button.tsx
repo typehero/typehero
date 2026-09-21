@@ -16,7 +16,7 @@ const ResetEditorButton = () => {
   const { dispatch } = useResetEditor();
   return (
     <AlertDialog>
-      <AlertDialogTrigger name="reset">
+      <AlertDialogTrigger name="reset" aria-label="Reset editor code">
         <Tooltip>
           <TooltipTrigger asChild>
             <RotateCcw className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" size={20} />

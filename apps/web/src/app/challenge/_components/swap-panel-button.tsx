@@ -9,7 +9,7 @@ const SwapPanelButton = ({ toggleDirection }: SwapPanelButtonProps) => {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <button onClick={toggleDirection} className="hidden lg:block">
+        <button onClick={toggleDirection} className="hidden lg:block" aria-label="Swap panels">
           <ArrowRightLeft className="stroke-zinc-500 stroke-1 hover:stroke-zinc-400" size={20} />
         </button>
       </TooltipTrigger>

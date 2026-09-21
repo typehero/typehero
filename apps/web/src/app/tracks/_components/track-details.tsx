@@ -75,7 +75,7 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
               <h1 className="text-3xl font-bold tracking-tight text-neutral-900 dark:text-white">
                 {track.name}
               </h1>
-              <p className="text-md max-w-[69ch] text-neutral-600 dark:text-white/50">
+              <p className="text-md max-w-[69ch] text-neutral-600 dark:text-white/70">
                 {track.description}
               </p>
             </div>
