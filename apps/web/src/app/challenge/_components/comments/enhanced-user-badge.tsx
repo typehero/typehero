@@ -12,9 +12,9 @@ import { Shield, Sword, Wand2, type LucideIcon } from '@repo/ui/icons';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useState } from 'react';
+import { useTRPC } from '~/trpc/react';
 import { SlugToBadgeIcon } from '~/app/(profile)/[username]/_components/badges';
 import type { BadgeInfo } from '~/app/(profile)/[username]/user-info';
-import { getProfileData } from './enhanced-user-badge.getProfileData';
 import { getGradient, getTitles, type TitleInfo } from './enhanced-user-badge.getTitles';
 
 interface UserBadgeProps {
@@ -28,19 +28,23 @@ interface UserBadgeProps {
 
 export function UserBadge(props: UserBadgeProps) {
   const [queryEnabled, setQueryEnabled] = useState(false);
-  const query = useQuery({
-    queryKey: ['profile-hover-card', props.user.name],
-    queryFn: () => getProfileData(props.user.name),
-    enabled: queryEnabled,
-    staleTime: 60 * 1000,
-    initialData: {
-      ...props.user,
-      id: '',
-      badges: [],
-      titles: getTitles(props.user.roles),
-    },
-    initialDataUpdatedAt: 0,
-  });
+  const trpc = useTRPC();
+  const query = useQuery(
+    trpc.user.getProfileData.queryOptions(
+      { username: props.user.name },
+      {
+        enabled: queryEnabled,
+        staleTime: 60 * 1000,
+        initialData: {
+          ...props.user,
+          id: '',
+          badges: [],
+          titles: getTitles(props.user.roles),
+        },
+        initialDataUpdatedAt: 0,
+      },
+    ),
+  );
   const onMouseOver = () => {
     setQueryEnabled(true);
   };

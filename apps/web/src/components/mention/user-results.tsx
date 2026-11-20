@@ -6,8 +6,8 @@ import { useToast } from '@repo/ui/components/use-toast';
 import { UserAvatar } from '@repo/ui/components/user-avatar';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
+import { useTRPC } from '~/trpc/react';
 import { Loader } from '../loader';
-import { searchUsers } from './actions';
 
 interface UserResultsProps {
   isOpen: boolean;
@@ -18,21 +18,23 @@ interface UserResultsProps {
 
 export function UserResults({ isOpen, onFocusOutside, onSelectedUser, query }: UserResultsProps) {
   const { toast } = useToast();
+  const trpc = useTRPC();
   const popoverRef = useRef<HTMLDivElement | null>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const {
     data: users,
     isLoading,
     error,
-  } = useQuery({
-    retry: false,
-    staleTime: 10000,
-    queryKey: ['search-users', query],
-    queryFn: () => {
-      return searchUsers(query);
-    },
-    enabled: Boolean(query),
-  });
+  } = useQuery(
+    trpc.user.searchUsers.queryOptions(
+      { query },
+      {
+        retry: false,
+        staleTime: 10000,
+        enabled: Boolean(query),
+      },
+    ),
+  );
 
   // when we fetch new users or toggle the popover we want to reset the
   // index to 0
