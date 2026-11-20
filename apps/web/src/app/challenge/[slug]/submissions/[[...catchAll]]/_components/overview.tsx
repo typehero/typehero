@@ -2,7 +2,8 @@ import { Button } from '@repo/ui/components/button';
 import { Markdown } from '@repo/ui/components/markdown';
 import { CheckCircle2, Plus, Share, Twitter, X, XCircle } from '@repo/ui/icons';
 import { useQuery } from '@tanstack/react-query';
-import { useTRPC } from '~/trpc/react';
+import { TRPCClientError } from '@trpc/client';
+import { useTRPCClient } from '~/trpc/react';
 import Link from 'next/link';
 import { useParams, useSearchParams } from 'next/navigation';
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
@@ -32,13 +33,19 @@ export function SubmissionOverview({ submissionId, userId }: SubmissionOverviewP
   const searchParams = useSearchParams();
 
   const showSuggestions = searchParams.get('success') === 'true';
-  const trpc = useTRPC();
+  const trpcClient = useTRPCClient();
   const numericId = Number(submissionId);
   const { data: submission, isLoading } = useQuery({
-    ...trpc.submission.getById.queryOptions({ submissionId: numericId }),
+    // Scoped to the signed-in user: the query client outlives a sign-out, and a shared key
+    // would show the previous user's cached submission to whoever signs in next.
+    queryKey: ['submission', numericId, 'userId', userId],
+    queryFn: () => trpcClient.submission.getById.query({ submissionId: numericId }),
     enabled: Boolean(userId) && Number.isInteger(numericId),
-    // NOT_FOUND / UNAUTHORIZED aren't transient, so don't hold up the empty state.
-    retry: false,
+    // NOT_FOUND / UNAUTHORIZED aren't transient; anything else gets a couple of retries.
+    retry: (failureCount, error) => {
+      const code = error instanceof TRPCClientError ? error.data?.code : undefined;
+      return code !== 'NOT_FOUND' && code !== 'UNAUTHORIZED' && failureCount < 2;
+    },
   });
 
   const code = codifyForMarkdown(submission?.code.trimStart() ?? '');

@@ -50,10 +50,13 @@ export const submissionRouter = createTRPCRouter({
         select: { id: true, isSuccessful: true },
       });
 
-      revalidateTag(createChallengeSubmissionCacheKey(challenge.slug), 'max');
-      revalidateTag(createCacheKeyForSolutions(challenge.slug), 'max');
-      revalidateTag(createInProgressSubmissionCacheKey(userId), 'max');
-      revalidateTag(createCompletedSubmissionCacheKey(userId), 'max');
+      // Expire (rather than stale-while-revalidate) so the user's next visit to the
+      // submissions list includes the attempt they just made.
+      const expireNow = { expire: 0 };
+      revalidateTag(createChallengeSubmissionCacheKey(challenge.slug), expireNow);
+      revalidateTag(createCacheKeyForSolutions(challenge.slug), expireNow);
+      revalidateTag(createInProgressSubmissionCacheKey(userId), expireNow);
+      revalidateTag(createCompletedSubmissionCacheKey(userId), expireNow);
 
       return submission;
     }),
