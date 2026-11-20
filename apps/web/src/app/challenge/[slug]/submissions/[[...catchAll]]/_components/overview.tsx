@@ -2,10 +2,10 @@ import { Button } from '@repo/ui/components/button';
 import { Markdown } from '@repo/ui/components/markdown';
 import { CheckCircle2, Plus, Share, Twitter, X, XCircle } from '@repo/ui/icons';
 import { useQuery } from '@tanstack/react-query';
+import { useTRPC } from '~/trpc/react';
 import Link from 'next/link';
 import { useParams, useSearchParams } from 'next/navigation';
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
-import { getChallengeSubmissionById } from '../getChallengeSubmissions';
 import { Suggestions } from './suggestions';
 import {
   Dialog,
@@ -32,9 +32,13 @@ export function SubmissionOverview({ submissionId, userId }: SubmissionOverviewP
   const searchParams = useSearchParams();
 
   const showSuggestions = searchParams.get('success') === 'true';
-  const { data: submission } = useQuery({
-    queryKey: [`submission`, submissionId, 'userId', userId],
-    queryFn: () => getChallengeSubmissionById(submissionId, userId),
+  const trpc = useTRPC();
+  const numericId = Number(submissionId);
+  const { data: submission, isLoading } = useQuery({
+    ...trpc.submission.getById.queryOptions({ submissionId: numericId }),
+    enabled: Boolean(userId) && Number.isInteger(numericId),
+    // NOT_FOUND / UNAUTHORIZED aren't transient, so don't hold up the empty state.
+    retry: false,
   });
 
   const code = codifyForMarkdown(submission?.code.trimStart() ?? '');
@@ -44,6 +48,8 @@ export function SubmissionOverview({ submissionId, userId }: SubmissionOverviewP
   const tweet = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
     `I've completed ${submission?.challenge.name} on TypeHero!`,
   )}&url=https://typehero.dev/challenge/${slug}`;
+
+  if (isLoading) return null;
 
   if (!submission) {
     return (
