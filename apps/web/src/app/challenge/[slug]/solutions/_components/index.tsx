@@ -55,7 +55,9 @@ export function Solutions({ slug }: SolutionsProps) {
   const [sortKey, setSortKey] = useState<(typeof SORT_KEYS)[number]>(
     SORT_KEYS.find((sk) => sk.value === storageKey) ?? SORT_KEYS[0],
   );
-  const [page, setPage] = useQueryParamState<number>('page', 1);
+  const [rawPage, setPage] = useQueryParamState<number>('page', 1);
+  // The URL is user-editable; anything that isn't a positive integer falls back to page 1.
+  const page = Number.isInteger(rawPage) && rawPage >= 1 ? rawPage : 1;
   const queryKey = ['challenge-solutions', slug, page, sortKey.key, sortKey.order];
   const session = useSession();
   const trpcClient = useTRPCClient();
