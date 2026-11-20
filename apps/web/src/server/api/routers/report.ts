@@ -1,10 +1,11 @@
 import { IssueType } from '@repo/db/types';
 import { z } from 'zod';
 
+import { MAX_REPORT_TEXT_LENGTH } from '~/components/ReportDialog/report-limits';
 import { createTRPCRouter, protectedProcedure } from '~/server/api/trpc';
 
 const baseReportInput = {
-  text: z.string().max(10_000),
+  text: z.string().max(MAX_REPORT_TEXT_LENGTH),
   issues: z.array(z.object({ type: z.nativeEnum(IssueType) })),
 };
 

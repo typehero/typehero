@@ -20,6 +20,7 @@ import { Textarea } from '@repo/ui/components/textarea';
 import { Button } from '@repo/ui/components/button';
 import { useTRPC } from '~/trpc/react';
 import type { RouterInputs } from '~/trpc/types';
+import { MAX_REPORT_TEXT_LENGTH } from './report-limits';
 
 export interface ReportDialogPropsBase {
   triggerAsChild?: boolean;
@@ -56,7 +57,13 @@ export function ReportDialog({
   | ReportSolutionDialogProps
   | ReportUserDialogProps
 >) {
-  const { handleSubmit, register, control, setValue } = useForm({
+  const {
+    handleSubmit,
+    register,
+    control,
+    setValue,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       derogatory: false,
       unclear: false,
@@ -71,6 +78,8 @@ export function ReportDialog({
   const [show, setShow] = React.useState(false);
   const trpc = useTRPC();
   const createReport = useMutation(trpc.report.create.mutationOptions());
+  // Blocks a second submit that fires before React re-renders with the button disabled.
+  const isSubmittingRef = React.useRef(false);
 
   let desc = '';
   switch (reportType) {
@@ -101,6 +110,9 @@ export function ReportDialog({
       <DialogContent>
         <form
           onSubmit={handleSubmit(async (e) => {
+            if (isSubmittingRef.current) return;
+            isSubmittingRef.current = true;
+
             // This shit is like... extra jank.
             const issues = Object.entries(e).reduce<{ type: IssueType }[]>((all, [key, value]) => {
               if (key === 'comments') return all;
@@ -147,7 +159,11 @@ export function ReportDialog({
                   variant: 'destructive',
                   description: <p>Your report could not be sent. Please try again.</p>,
                 });
+                // keep the dialog open so the report isn't lost
+                return;
               }
+            } finally {
+              isSubmittingRef.current = false;
             }
             setShow(false);
           })}
@@ -265,9 +281,19 @@ export function ReportDialog({
                   <div className="flex flex-col gap-3">
                     <div>Other information</div>
                     <Textarea
-                      {...register('comments')}
+                      {...register('comments', {
+                        maxLength: {
+                          value: MAX_REPORT_TEXT_LENGTH,
+                          message: `Please keep your report under ${MAX_REPORT_TEXT_LENGTH.toLocaleString()} characters.`,
+                        },
+                      })}
                       placeholder="Any extra information to help our moderator team when reviewing this report."
                     />
+                    {errors.comments ? (
+                      <p role="alert" className="text-destructive dark:text-error-label text-sm">
+                        {errors.comments.message}
+                      </p>
+                    ) : null}
                   </div>
                 </FormItem>
               )}
@@ -284,7 +310,9 @@ export function ReportDialog({
             >
               Cancel
             </Button>
-            <Button type="submit">Send report</Button>
+            <Button type="submit" disabled={createReport.isPending}>
+              Send report
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
