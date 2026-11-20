@@ -1,10 +1,7 @@
 import { TRPCClientError } from '@trpc/client';
 
-<<<<<<< HEAD
 export const COMMENTS_PAGE_SIZE = 10;
-=======
 export const MAX_COMMENT_LENGTH = 10_000;
->>>>>>> cursor/trpc-comment-mutations-c540
 
 export const sortKeys = [
   {
