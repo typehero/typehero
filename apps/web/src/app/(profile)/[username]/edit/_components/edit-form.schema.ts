@@ -15,14 +15,19 @@ const validUrlWithHttpOrHttps = z.string().refine(
   },
 );
 
+/** The edit form shows four slots; this leaves headroom without letting a request store unbounded rows. */
+export const MAX_USER_LINKS = 10;
+
 export const EditFormSchema = z.object({
   bio: createNoProfanitySchemaWithValidate((str) => str.max(256)),
-  userLinks: z.array(
-    z.object({
-      url: createNoProfanitySchemaWithValidate((str) => str.url().max(256))
-        .and(validUrlWithHttpOrHttps)
-        .or(z.literal('')),
-    }),
-  ),
+  userLinks: z
+    .array(
+      z.object({
+        url: createNoProfanitySchemaWithValidate((str) => str.url().max(256))
+          .and(validUrlWithHttpOrHttps)
+          .or(z.literal('')),
+      }),
+    )
+    .max(MAX_USER_LINKS),
 });
 export type EditFormSchema = z.infer<typeof EditFormSchema>;
