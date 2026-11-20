@@ -1,6 +1,8 @@
 import { createCallerFactory, createTRPCRouter } from '~/server/api/trpc';
 import { bookmarkRouter } from './routers/bookmark';
+import { challengeRouter } from './routers/challenge';
 import { notificationRouter } from './routers/notification';
+import { profileRouter } from './routers/profile';
 
 /**
  * This is the primary router for your server.
@@ -9,7 +11,9 @@ import { notificationRouter } from './routers/notification';
  */
 export const appRouter = createTRPCRouter({
   bookmark: bookmarkRouter,
+  challenge: challengeRouter,
   notification: notificationRouter,
+  profile: profileRouter,
 });
 
 // export type definition of API

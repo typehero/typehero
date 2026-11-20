@@ -17,7 +17,9 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { cn } from '@repo/ui/cn';
 import { EditFormSchema } from './edit-form.schema';
-import { updateProfile } from './edit-form.action';
+import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { useTRPC } from '~/trpc/react';
 import { toast } from '@repo/ui/components/use-toast';
 
 export function EditForm(props: {
@@ -43,11 +45,15 @@ export function EditForm(props: {
     control: form.control,
     name: 'userLinks',
   });
-  console.log(userLinksField.fields);
+  const router = useRouter();
+  const trpc = useTRPC();
+  const updateProfile = useMutation(trpc.profile.update.mutationOptions());
 
   async function onSubmit(data: EditFormSchema) {
     try {
-      await updateProfile(data);
+      const { name } = await updateProfile.mutateAsync(data);
+      router.push(`/@${encodeURIComponent(name)}`);
+      router.refresh();
       toast({
         title: 'Profile updated',
         description: 'Your profile has been successfully updated !',
