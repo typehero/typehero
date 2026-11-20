@@ -1,12 +1,13 @@
 'use client';
 import { Button } from '@repo/ui/components/button';
 import { ChevronRight, Swords } from '@repo/ui/icons';
+import { useSession } from '@repo/auth/react';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useMemo } from 'react';
 import { TrackChallenge } from '~/app/tracks/_components/track-challenge-card';
 import { getTrackDetails } from '~/app/tracks/_components/track.action';
-import { getSimilarChallenges } from '~/utils/server/get-similar-challenges';
+import { useTRPCClient } from '~/trpc/react';
 
 interface SuggestionsProps {
   track: string | null;
@@ -24,11 +25,13 @@ export function Suggestions({ track, challengeId }: SuggestionsProps) {
   });
 
   // Get suggested challenges
+  const trpcClient = useTRPCClient();
+  const { data: session, status: sessionStatus } = useSession();
+  const userId = session?.user?.id ?? null;
   const { data: similarChallenges } = useQuery({
-    queryKey: ['similar-challenges', challengeId],
-    queryFn: () => {
-      return getSimilarChallenges(challengeId);
-    },
+    queryKey: ['similar-challenges', challengeId, 2, userId],
+    queryFn: () => trpcClient.challenge.similar.query({ challengeId, maxChallenges: 2 }),
+    enabled: sessionStatus !== 'loading',
   });
 
   const currentIndex = useMemo(() => {
