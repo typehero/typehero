@@ -45,6 +45,9 @@ export function Vote({
   const latestIntentRef = useRef(Boolean(initialHasVoted));
   // The last vote state the server confirmed, which is what a failed request falls back to.
   const confirmedRef = useRef(Boolean(initialHasVoted));
+  // The debounced callback below is created once, so read the latest `onVote` through a ref.
+  const onVoteRef = useRef(onVote);
+  onVoteRef.current = onVote;
 
   const debouncedVote = useRef(
     debounce((shouldVote: boolean) => {
@@ -70,6 +73,9 @@ export function Vote({
               if (latestIntentRef.current === next && confirmedRef.current !== next) {
                 setHasVoted(confirmedRef.current);
                 setVotes((v) => (next ? v - 1 : v + 1));
+                // `onVote` mutates the parent's copy of the vote on every click, so it
+                // has to be told about the rollback too.
+                onVoteRef.current?.(confirmedRef.current);
               }
             }
           }
