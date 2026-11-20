@@ -5,10 +5,10 @@ import { TypographyLarge } from '@repo/ui/components/typography/large';
 import type { ChallengeSolution } from '~/app/challenge/[slug]/solutions/[solutionId]/page';
 import { Button } from '@repo/ui/components/button';
 import { TypographyP } from '@repo/ui/components/paragraph';
-import { deleteSolution } from '../_actions';
+import { useTRPC } from '~/trpc/react';
 import { toast } from '@repo/ui/components/use-toast';
 import { useRouter } from 'next/navigation';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface SolutionDeleteDialogProps extends DialogTriggerProps {
   solution: ChallengeSolution;
@@ -22,12 +22,14 @@ export function SolutionDeleteDialog({
   ...props
 }: SolutionDeleteDialogProps) {
   const queryClient = useQueryClient();
+  const trpc = useTRPC();
+  const deleteSolution = useMutation(trpc.solution.delete.mutationOptions());
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
   async function handleDeleteSolution() {
     try {
-      await deleteSolution(solution);
+      await deleteSolution.mutateAsync({ id: solution.id });
       toast({
         title: 'Solution Deleted',
         variant: 'success',

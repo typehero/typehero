@@ -9,8 +9,8 @@ import { useParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { createNoProfanitySchemaWithValidate } from '~/utils/antiProfanityZod';
-import { postSolution } from './_actions';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useTRPC } from '~/trpc/react';
 import { useUploadThing } from '~/utils/useUploadthing';
 import { RichMarkdownEditor } from '@repo/ui/components/rich-markdown-editor';
 
@@ -49,6 +49,8 @@ export function SolutionEditor({ dismiss, challengeId, code }: SolutionEditorPro
   const { slug } = useParams();
   const queryClient = useQueryClient();
   const session = useSession();
+  const trpc = useTRPC();
+  const createSolution = useMutation(trpc.solution.create.mutationOptions());
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -60,14 +62,10 @@ export function SolutionEditor({ dismiss, challengeId, code }: SolutionEditorPro
 
   const onSubmit = async (data: FormSchema) => {
     try {
-      await postSolution({
+      await createSolution.mutateAsync({
         challengeId,
         description: data.content ?? '',
-        slug: slug as string,
         title: data.title ?? `${session.data?.user?.name}'s Solution`,
-        // TODO: Is this guaranteed to exist, or is userId actually optional?
-        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-        userId: session.data?.user?.id!,
       });
 
       toast({
