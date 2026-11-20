@@ -1,4 +1,4 @@
-'use server';
+import 'server-only';
 import { prisma } from '@repo/db';
 
 interface Result {
