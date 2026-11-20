@@ -124,11 +124,15 @@ export const voteRouter = createTRPCRouter({
         return;
       }
 
-      await ctx.db.vote.deleteMany({
-        where: { userId, rootType: input.rootType, ...columns },
-      });
-      await ctx.db.notification.deleteMany({
-        where: { type: 'LIKE', fromUserId: userId, ...columns },
-      });
+      // Atomic so a failure can't remove the vote but leave its notification behind
+      // (or report an error after the vote is already gone).
+      await ctx.db.$transaction([
+        ctx.db.vote.deleteMany({
+          where: { userId, rootType: input.rootType, ...columns },
+        }),
+        ctx.db.notification.deleteMany({
+          where: { type: 'LIKE', fromUserId: userId, ...columns },
+        }),
+      ]);
     }),
 });
