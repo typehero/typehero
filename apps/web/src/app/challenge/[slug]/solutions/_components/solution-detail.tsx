@@ -9,10 +9,10 @@ import { TypographyLarge } from '@repo/ui/components/typography/large';
 import { toast } from '@repo/ui/components/use-toast';
 import { UserAvatar } from '@repo/ui/components/user-avatar';
 import { ArrowLeft, Calendar, Flag, Pencil, Pin, Share, Trash } from '@repo/ui/icons';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { ChallengeSolution } from '~/app/challenge/[slug]/solutions/[solutionId]/page';
 import { UserBadge } from '~/app/challenge/_components/comments/enhanced-user-badge';
@@ -20,7 +20,7 @@ import { ReportDialog } from '~/components/ReportDialog';
 import { isAdminOrModerator, isAuthor } from '~/utils/auth-guards';
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import { Vote } from '../../../_components/vote';
-import { pinOrUnpinSolution } from './_actions';
+import { useTRPC } from '~/trpc/react';
 import { SolutionDeleteDialog } from './delete';
 import { EditSolution } from './edit-solution';
 import { useGetQueryString } from './useGetQueryString';
@@ -36,12 +36,24 @@ export function SolutionDetails({ solution }: SolutionDetailsProps) {
   const [isEditing, setIsEditing] = useState(false);
   const queryString = useGetQueryString();
   const queryClient = useQueryClient();
+  const router = useRouter();
+  const trpc = useTRPC();
+  const setPinned = useMutation(trpc.solution.setPinned.mutationOptions());
 
   const handlePinClick = async () => {
-    await pinOrUnpinSolution(solution.id, !solution.isPinned, slug as string);
-    queryClient.invalidateQueries({
-      queryKey: ['challenge-solutions', slug],
-    });
+    try {
+      await setPinned.mutateAsync({ id: solution.id, isPinned: !solution.isPinned });
+      queryClient.invalidateQueries({
+        queryKey: ['challenge-solutions', slug],
+      });
+      // `solution.isPinned` comes from the server component, so re-render it
+      router.refresh();
+    } catch {
+      toast({
+        variant: 'destructive',
+        title: 'Uh oh! Something went wrong. Please try again.',
+      });
+    }
   };
   const handleShareClick = async () => {
     if (navigator.clipboard) {
