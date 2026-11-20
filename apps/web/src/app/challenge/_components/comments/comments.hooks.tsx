@@ -6,20 +6,14 @@ import {
 } from '@tanstack/react-query';
 import { useEffect, useReducer } from 'react';
 
-import { commentErrors, sortKeys } from './comments.constants';
+import { getCommentErrorToast, sortKeys } from './comments.constants';
+import { useTRPCClient } from '~/trpc/react';
 import {
   getAllComments,
   getPaginatedComments,
   type PaginatedComments,
 } from './getCommentRouteData';
 import type { CommentRoot } from '@repo/db/types';
-import {
-  addComment as addCommentAction,
-  deleteComment as deleteCommentAction,
-  replyComment,
-  updateComment as updateCommentAction,
-  type CommentToCreate,
-} from './comment.action';
 import { toast } from '@repo/ui/components/use-toast';
 import type { ChallengeRouteData } from '../../[slug]/getChallengeRouteData';
 import type { SolutionRouteData } from '../../[slug]/solutions/[solutionId]/getSolutionIdRouteData';
@@ -49,6 +43,7 @@ type UseCommentsProps =
 export function useComments(props: UseCommentsProps) {
   const { rootType, root, initialPage } = props;
   const queryClient = useQueryClient();
+  const trpcClient = useTRPCClient();
   const [commentsMeta, updateCommentsMeta] = useReducer(
     (state: CommentsMeta, action: Partial<CommentsMeta>) => ({ ...state, ...action }),
     {
@@ -92,77 +87,50 @@ export function useComments(props: UseCommentsProps) {
 
   const deleteComment = async (commentId: number) => {
     try {
-      const res = await deleteCommentAction(commentId);
-      if (res === 'unauthorized') {
-        toast(commentErrors.unauthorized);
-      } else {
-        toast({
-          title: 'Comment Deleted',
-          variant: 'success',
-          description: 'The comment was successfully deleted.',
-        });
-      }
-      const newPage =
-        data?.comments.length === 1 && commentsMeta.page > 1
-          ? commentsMeta.page - 1
-          : commentsMeta.page;
-      changePage(newPage);
-      queryClient.invalidateQueries({
-        queryKey: getQueryKey({ sort: commentsMeta.sort.value, page: newPage }),
-      });
-    } catch {
-      toast({
-        ...commentErrors.unexpected,
-        variant: 'destructive',
-      });
+      await trpcClient.comment.delete.mutate({ id: commentId });
+    } catch (e) {
+      toast({ ...getCommentErrorToast(e), variant: 'destructive' });
+      return;
     }
+    toast({
+      title: 'Comment Deleted',
+      variant: 'success',
+      description: 'The comment was successfully deleted.',
+    });
+    const newPage =
+      data?.comments.length === 1 && commentsMeta.page > 1
+        ? commentsMeta.page - 1
+        : commentsMeta.page;
+    changePage(newPage);
+    queryClient.invalidateQueries({
+      queryKey: getQueryKey({ sort: commentsMeta.sort.value, page: newPage }),
+    });
   };
 
   const addComment = async (text: string) => {
     try {
-      const { initialPage: _, ...rest } = props;
-      const res = await addCommentAction({
-        ...rest,
-        text,
-      });
-      if (res === 'text_is_empty') {
-        toast(commentErrors.empty);
-      } else if (res === 'unauthorized') {
-        toast({
-          ...commentErrors.unauthorized,
-          variant: 'destructive',
-        });
-      }
-      const newPage = 1;
-      changePage(newPage);
-      queryClient.invalidateQueries({
-        queryKey: getQueryKey({ sort: commentsMeta.sort.value, page: newPage }),
-      });
-    } catch {
-      toast({
-        ...commentErrors.unauthorized,
-        variant: 'destructive',
-      });
+      await trpcClient.comment.create.mutate({ rootType, rootId: root.id, text });
+    } catch (e) {
+      toast({ ...getCommentErrorToast(e), variant: 'destructive' });
+      return;
     }
+    const newPage = 1;
+    changePage(newPage);
+    queryClient.invalidateQueries({
+      queryKey: getQueryKey({ sort: commentsMeta.sort.value, page: newPage }),
+    });
   };
 
   const updateComment = async (text: string, commentId: number) => {
     try {
-      const res = await updateCommentAction(text, commentId);
-      if (res === 'text_is_empty') {
-        toast(commentErrors.empty);
-      } else if (res === 'unauthorized') {
-        toast(commentErrors.unauthorized);
-      }
-      queryClient.invalidateQueries({
-        queryKey: getQueryKey({ sort: commentsMeta.sort.value, page: commentsMeta.page }),
-      });
-    } catch {
-      toast({
-        ...commentErrors.unauthorized,
-        variant: 'destructive',
-      });
+      await trpcClient.comment.update.mutate({ id: commentId, text });
+    } catch (e) {
+      toast({ ...getCommentErrorToast(e), variant: 'destructive' });
+      return;
     }
+    queryClient.invalidateQueries({
+      queryKey: getQueryKey({ sort: commentsMeta.sort.value, page: commentsMeta.page }),
+    });
   };
 
   return {
@@ -203,6 +171,7 @@ export function useCommentsReplies({
   preselectedReplyId,
 }: UseCommentRepliesProps) {
   const queryClient = useQueryClient();
+  const trpcClient = useTRPCClient();
   const rootQueryKey = [getRootQueryKey(root.id, type)];
   const queryKey = [...rootQueryKey, `comment-${parentComment.id}-replies`];
 
@@ -255,66 +224,39 @@ export function useCommentsReplies({
 
   const addReplyComment = async (text: string) => {
     try {
-      const res = await replyComment(
-        {
-          text,
-          root,
-          rootType: type,
-        } as CommentToCreate,
-        parentComment,
-      );
-      if (res === 'text_is_empty') {
-        toast(commentErrors.empty);
-      } else if (res === 'unauthorized') {
-        toast(commentErrors.unauthorized);
-      }
-      //Invalidate the root query to refetch the comments
-      queryClient.invalidateQueries({ queryKey: rootQueryKey });
-    } catch {
-      toast({
-        ...commentErrors.unauthorized,
-        variant: 'destructive',
-      });
+      await trpcClient.comment.reply.mutate({ parentId: parentComment.id, text });
+    } catch (e) {
+      toast({ ...getCommentErrorToast(e), variant: 'destructive' });
+      return;
     }
+    //Invalidate the root query to refetch the comments
+    queryClient.invalidateQueries({ queryKey: rootQueryKey });
   };
 
   const updateReplyComment = async (text: string, commentId: number) => {
     try {
-      const res = await updateCommentAction(text, commentId);
-      if (res === 'text_is_empty') {
-        toast(commentErrors.empty);
-      } else if (res === 'unauthorized') {
-        toast(commentErrors.unauthorized);
-      }
-      queryClient.invalidateQueries({ queryKey });
-    } catch {
-      toast({
-        ...commentErrors.unauthorized,
-        variant: 'destructive',
-      });
+      await trpcClient.comment.update.mutate({ id: commentId, text });
+    } catch (e) {
+      toast({ ...getCommentErrorToast(e), variant: 'destructive' });
+      return;
     }
+    queryClient.invalidateQueries({ queryKey });
   };
 
   const deleteReplyComment = async (commentId: number) => {
     try {
-      const res = await deleteCommentAction(commentId);
-      if (res === 'unauthorized') {
-        toast(commentErrors.unauthorized);
-      } else {
-        toast({
-          title: 'Comment Deleted',
-          variant: 'success',
-          description: 'The comment was successfully deleted.',
-        });
-      }
-      //Invalidate the root query to refetch the comments
-      queryClient.invalidateQueries({ queryKey: rootQueryKey });
-    } catch {
-      toast({
-        ...commentErrors.unexpected,
-        variant: 'destructive',
-      });
+      await trpcClient.comment.delete.mutate({ id: commentId });
+    } catch (e) {
+      toast({ ...getCommentErrorToast(e), variant: 'destructive' });
+      return;
     }
+    toast({
+      title: 'Comment Deleted',
+      variant: 'success',
+      description: 'The comment was successfully deleted.',
+    });
+    //Invalidate the root query to refetch the comments
+    queryClient.invalidateQueries({ queryKey: rootQueryKey });
   };
 
   const showLoadMoreRepliesBtn = hasMoreReplies || isFetchingMoreReplies;
