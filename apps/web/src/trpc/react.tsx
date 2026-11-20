@@ -3,7 +3,13 @@
 import type { QueryClient } from '@tanstack/react-query';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { createTRPCClient, httpBatchStreamLink, loggerLink } from '@trpc/client';
+import {
+  createTRPCClient,
+  httpBatchLink,
+  httpBatchStreamLink,
+  loggerLink,
+  splitLink,
+} from '@trpc/client';
 import { createTRPCContext } from '@trpc/tanstack-react-query';
 import { useState } from 'react';
 import SuperJSON from 'superjson';
@@ -30,26 +36,35 @@ export function TRPCReactProvider(props: Readonly<{ children: React.ReactNode }>
   //       render if it suspends and there is no boundary
   const queryClient = getQueryClient();
 
-  const [trpcClient] = useState(() =>
-    createTRPCClient<AppRouter>({
+  const [trpcClient] = useState(() => {
+    const linkOptions = {
+      transformer: SuperJSON,
+      url: `${getBaseUrl()}/api/trpc`,
+      headers() {
+        const headers = new Headers();
+        headers.set('x-trpc-source', 'nextjs-react');
+        return headers;
+      },
+    };
+
+    return createTRPCClient<AppRouter>({
       links: [
         loggerLink({
           enabled: (op) =>
             process.env.NODE_ENV === 'development' ||
             (op.direction === 'down' && op.result instanceof Error),
         }),
-        httpBatchStreamLink({
-          transformer: SuperJSON,
-          url: `${getBaseUrl()}/api/trpc`,
-          headers() {
-            const headers = new Headers();
-            headers.set('x-trpc-source', 'nextjs-react');
-            return headers;
-          },
+        // Mutations are not streamed: the response must not start until the procedure has
+        // finished, otherwise `revalidateTag` calls made at the end of it (after the route
+        // handler has already returned its Response) are silently dropped.
+        splitLink({
+          condition: (op) => op.type === 'mutation',
+          true: httpBatchLink(linkOptions),
+          false: httpBatchStreamLink(linkOptions),
         }),
       ],
-    }),
-  );
+    });
+  });
 
   return (
     <QueryClientProvider client={queryClient}>

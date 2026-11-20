@@ -9,9 +9,9 @@ import { ResetEditorButton } from '../_components/reset-editor-button';
 import { SettingsButton } from '../_components/settings/settings-button';
 import type { ChallengeRouteData } from './getChallengeRouteData';
 import { SubmissionOverview } from './submissions/[[...catchAll]]/_components/overview';
-import { saveSubmission } from './submissions/[[...catchAll]]/save-submission.action';
 import SwapPanelButton from '../_components/swap-panel-button';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useTRPC } from '~/trpc/react';
 
 interface RightWrapperProps {
   challenge: ChallengeRouteData['challenge'];
@@ -24,6 +24,8 @@ export function RightWrapper({ track, challenge, toggleDirection }: RightWrapper
   const router = useRouter();
   const segments = useSelectedLayoutSegments();
   const { data: session } = useSession();
+  const trpc = useTRPC();
+  const { mutateAsync: createSubmission } = useMutation(trpc.submission.create.mutationOptions());
 
   if (!challenge) return null;
 
@@ -47,11 +49,15 @@ export function RightWrapper({ track, challenge, toggleDirection }: RightWrapper
           success: !isSuccessful,
         });
 
-        const submission = await saveSubmission({
-          challenge,
+        const submission = await createSubmission({
+          challengeId: challenge.id,
           code,
           isSuccessful,
         });
+
+        // Server actions refreshed the page's server-rendered data for us; a tRPC
+        // mutation doesn't, so refresh so the submissions list reflects this attempt.
+        router.refresh();
 
         if (submission.isSuccessful) {
           queryClient.invalidateQueries({
