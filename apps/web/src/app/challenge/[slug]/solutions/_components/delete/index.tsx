@@ -43,6 +43,9 @@ export function SolutionDeleteDialog({
         queryKey: ['challenge-solutions', slug],
       });
       router.back();
+      // Back navigation restores the cached page the user came from (e.g. a profile's
+      // server-rendered shared solutions list), which would still show this solution.
+      router.refresh();
     } catch {
       toast({
         title: 'Uh Oh!',
