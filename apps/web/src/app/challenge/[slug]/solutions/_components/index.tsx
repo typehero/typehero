@@ -7,12 +7,13 @@ import { useRef, useState } from 'react';
 import { SolutionEditor } from './solution-editor';
 import { NoSolutions } from './nosolutions';
 import { SubmitSolution } from './submit-solution';
-import { type PaginatedSolution, getPaginatedSolutions } from '../getSolutionRouteData';
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
 import { Badge } from '@repo/ui/components/badge';
 import { useParams } from 'next/navigation';
 import { Pagination } from '../../../_components/pagination';
 import { useQuery } from '@tanstack/react-query';
+import { useTRPCClient } from '~/trpc/react';
+import type { RouterOutputs } from '~/trpc/types';
 import { SolutionsSkeleton } from './solution-skeleton';
 import { SortSelect } from '../../../_components/sort-select';
 import { useGetQueryString } from './useGetQueryString';
@@ -57,6 +58,7 @@ export function Solutions({ slug }: SolutionsProps) {
   const [page, setPage] = useQueryParamState<number>('page', 1);
   const queryKey = ['challenge-solutions', slug, page, sortKey.key, sortKey.order];
   const session = useSession();
+  const trpcClient = useTRPCClient();
 
   const handleChangePage = (page: number) => {
     setPage(page);
@@ -73,9 +75,16 @@ export function Solutions({ slug }: SolutionsProps) {
   };
 
   const { status, data: pageData } = useQuery({
+    // Keyed by hand so the solution mutations can invalidate by the
+    // `['challenge-solutions', slug]` prefix.
     queryKey,
     queryFn: () =>
-      getPaginatedSolutions({ slug, page, sortKey: sortKey.key, sortOrder: sortKey.order }),
+      trpcClient.solution.list.query({
+        slug,
+        page,
+        sortKey: sortKey.key,
+        sortOrder: sortKey.order,
+      }),
     staleTime: 60000, // one minute
     refetchOnWindowFocus: false,
   });
@@ -148,7 +157,7 @@ export function Solutions({ slug }: SolutionsProps) {
 function SolutionRow({
   solution,
 }: {
-  solution: NonNullable<PaginatedSolution['sharedSolution']>[number];
+  solution: RouterOutputs['solution']['list']['sharedSolution'][number];
 }) {
   const { slug } = useParams();
   const queryString = useGetQueryString();
