@@ -33,7 +33,7 @@ import { CommentSkeleton } from './comment-skeleton';
 import { useCommentsReplies, type UseCommentRepliesProps } from './comments.hooks';
 import { CommentDeleteDialog } from './delete';
 import { UserBadge } from './enhanced-user-badge';
-import { type PaginatedComments, type PreselectedCommentMetadata } from './getCommentRouteData';
+import type { PaginatedComments, PreselectedCommentMetadata } from './getCommentRouteData';
 import {
   DropdownMenu,
   DropdownMenuContent,

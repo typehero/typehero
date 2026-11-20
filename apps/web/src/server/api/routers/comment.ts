@@ -1,12 +1,14 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
+import { COMMENTS_PAGE_SIZE } from '~/app/challenge/_components/comments/comments.constants';
 import { getMentionsFromComment } from '~/app/challenge/_components/comments/getMentionsFromComment';
-import { createTRPCRouter, protectedProcedure } from '~/server/api/trpc';
+import { createTRPCRouter, protectedProcedure, publicProcedure } from '~/server/api/trpc';
 import { createNoProfanitySchemaWithValidate } from '~/utils/antiProfanityZod';
 import { isAdminOrModerator, isAuthor } from '~/utils/auth-guards';
+import { orderBy } from '~/utils/sorting';
 
-import type { prisma } from '@repo/db';
+import type { Prisma, prisma } from '@repo/db';
 
 type Db = typeof prisma;
 
@@ -78,7 +80,75 @@ const rootTarget = z.discriminatedUnion('rootType', [
   z.object({ rootType: z.literal('SOLUTION'), rootId: z.number().int() }),
 ]);
 
+const rootFilter = (rootType: 'CHALLENGE' | 'SOLUTION', rootId: number) => ({
+  rootType,
+  visible: true,
+  ...(rootType === 'CHALLENGE' ? { rootChallengeId: rootId } : { rootSolutionId: rootId }),
+});
+
+const commentListInclude = (viewerId: string) =>
+  ({
+    user: { select: { id: true, name: true, image: true, roles: true, bio: true } },
+    _count: { select: { replies: true, vote: true } },
+    // only the viewer's own vote, used to render the vote button state
+    vote: { select: { userId: true }, where: { userId: viewerId } },
+    rootChallenge: { select: { slug: true, name: true } },
+    rootSolution: { select: { title: true, challenge: { select: { slug: true } } } },
+  }) satisfies Prisma.CommentInclude;
+
+const rootInput = {
+  rootType: z.enum(['CHALLENGE', 'SOLUTION']),
+  rootId: z.number().int(),
+};
+
 export const commentRouter = createTRPCRouter({
+  /** One page of the top-level comments of a challenge or solution. */
+  list: publicProcedure
+    .input(
+      z.object({
+        ...rootInput,
+        page: z.number().int().min(1),
+        sortKey: z.enum(['createdAt', 'vote', 'replies']),
+        sortOrder: z.enum(['asc', 'desc']),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const { rootType, rootId, page, sortKey, sortOrder } = input;
+      const where = rootFilter(rootType, rootId);
+
+      const [totalComments, totalReplies, comments] = await Promise.all([
+        ctx.db.comment.count({ where: { ...where, parentId: null } }),
+        ctx.db.comment.count({ where: { ...where, parentId: { not: null } } }),
+        ctx.db.comment.findMany({
+          skip: (page - 1) * COMMENTS_PAGE_SIZE,
+          take: COMMENTS_PAGE_SIZE,
+          where: { ...where, parentId: null },
+          orderBy: orderBy(sortKey, sortOrder),
+          include: commentListInclude(ctx.session?.user?.id ?? ''),
+        }),
+      ]);
+
+      const totalPages = Math.ceil(totalComments / COMMENTS_PAGE_SIZE);
+
+      return {
+        totalComments: totalReplies + totalComments,
+        totalPages,
+        hasMore: page < totalPages,
+        comments,
+      };
+    }),
+
+  /** Every reply to a top-level comment, newest first. */
+  listReplies: publicProcedure
+    .input(z.object({ ...rootInput, parentId: z.number().int() }))
+    .query(({ ctx, input }) =>
+      ctx.db.comment.findMany({
+        where: { ...rootFilter(input.rootType, input.rootId), parentId: input.parentId },
+        orderBy: orderBy('createdAt', 'desc'),
+        include: commentListInclude(ctx.session?.user?.id ?? ''),
+      }),
+    ),
+
   /**
    * Posts a top-level comment on a challenge or a shared solution.
    *

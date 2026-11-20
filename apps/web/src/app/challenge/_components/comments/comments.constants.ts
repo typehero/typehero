@@ -1,5 +1,7 @@
 import { TRPCClientError } from '@trpc/client';
 
+export const COMMENTS_PAGE_SIZE = 10;
+
 export const sortKeys = [
   {
     label: 'Newest Comments',
