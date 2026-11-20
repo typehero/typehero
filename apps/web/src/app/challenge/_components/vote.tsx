@@ -5,49 +5,84 @@ import type { VoteType } from '@repo/db/types';
 import { Button } from '@repo/ui/components/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { ThumbsUp } from '@repo/ui/icons';
+import { useMutation } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { debounce } from 'lodash';
 import { useRef, useState } from 'react';
-import { incrementOrDecrementUpvote } from '../increment.action';
-import type { PaginatedComments } from './comments/getCommentRouteData';
+import { useTRPC } from '~/trpc/react';
 
 interface VoteProps {
   voteCount: number;
   initialHasVoted?: boolean;
   rootId: number;
-  // user id of the content thats being liked
-  toUserId: string;
-  challengeSlug: string;
-  rootType: VoteType;
+  rootType: Exclude<VoteType, 'SUBMISSION'>;
   disabled?: boolean;
   onVote?: (didUpvote: boolean) => void;
-  comment?: PaginatedComments['comments'][number];
 }
 
 export function Vote({
-  challengeSlug,
   voteCount,
   initialHasVoted,
   rootId,
   rootType,
   disabled,
   onVote,
-  toUserId,
-  comment,
 }: VoteProps) {
   const [votes, setVotes] = useState(voteCount);
   const [hasVoted, setHasVoted] = useState(initialHasVoted);
   const session = useSession();
-  const debouncedIncrement = useRef(
-    debounce(async (shouldIncrement: boolean) => {
-      await incrementOrDecrementUpvote({
-        comment,
-        rootId,
-        rootType,
-        shouldIncrement,
-        toUserId,
-        challengeSlug,
-      });
+  const trpc = useTRPC();
+  const { mutateAsync: addOrRemoveVote } = useMutation(trpc.vote.addOrRemove.mutationOptions());
+
+  // Tracks the in-flight request and the most recently requested state, so a newer
+  // click can't race an earlier, still-pending request.
+  const requestStateRef = useRef<{ running: boolean; desired: boolean | null }>({
+    running: false,
+    desired: null,
+  });
+  // The state the user last clicked into. Unlike `requestStateRef.desired` this is set on
+  // click, before the debounce fires, so a failing request can tell a newer click exists.
+  const latestIntentRef = useRef(Boolean(initialHasVoted));
+  // The last vote state the server confirmed, which is what a failed request falls back to.
+  const confirmedRef = useRef(Boolean(initialHasVoted));
+  // The debounced callback below is created once, so read the latest `onVote` through a ref.
+  const onVoteRef = useRef(onVote);
+  onVoteRef.current = onVote;
+
+  const debouncedVote = useRef(
+    debounce((shouldVote: boolean) => {
+      const state = requestStateRef.current;
+      // Always remember the latest intent; if a request is already running, the
+      // running loop picks this value up when it finishes.
+      state.desired = shouldVote;
+      if (state.running) return;
+      state.running = true;
+
+      void (async () => {
+        try {
+          while (state.desired !== null) {
+            const next = state.desired;
+            state.desired = null;
+            try {
+              await addOrRemoveVote({ rootType, rootId, shouldVote: next });
+              confirmedRef.current = next;
+            } catch (e) {
+              console.error(e);
+              // Only roll back if the user hasn't clicked again since; otherwise a
+              // newer request is about to settle the state they now expect.
+              if (latestIntentRef.current === next && confirmedRef.current !== next) {
+                setHasVoted(confirmedRef.current);
+                setVotes((v) => (next ? v - 1 : v + 1));
+                // `onVote` mutates the parent's copy of the vote on every click, so it
+                // has to be told about the rollback too.
+                onVoteRef.current?.(confirmedRef.current);
+              }
+            }
+          }
+        } finally {
+          state.running = false;
+        }
+      })();
     }, 500),
   ).current;
 
@@ -65,27 +100,17 @@ export function Vote({
           size="xs"
           disabled={disabled}
           onClick={() => {
-            let shouldIncrement = false;
-            const previousVotes = votes;
+            const shouldVote = !hasVoted;
 
-            if (hasVoted) {
-              setVotes((v) => v - 1);
-              shouldIncrement = false;
-              setHasVoted(false);
-            } else {
-              setVotes((v) => v + 1);
-              shouldIncrement = true;
-              setHasVoted(true);
-            }
+            latestIntentRef.current = shouldVote;
+            setHasVoted(shouldVote);
+            setVotes((v) => (shouldVote ? v + 1 : v - 1));
 
             if (onVote) {
-              onVote(shouldIncrement);
+              onVote(shouldVote);
             }
 
-            debouncedIncrement(shouldIncrement)?.catch((e) => {
-              setVotes(previousVotes);
-              console.error(e);
-            });
+            debouncedVote(shouldVote);
           }}
         >
           <ThumbsUp className="h-4 w-4" />
