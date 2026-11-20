@@ -5,7 +5,8 @@ import { clsx } from 'clsx';
 import { ActionButton } from './enroll-button';
 import { TrackChallenge } from './track-challenge-card';
 import { TrackProgress } from './track-progress';
-import { enrollUserInTrack, getTrackDetails, unenrollUserFromTrack } from './track.action';
+import { getTrackDetails } from './get-track-details';
+import { auth } from '~/server/auth';
 import { Footsies } from '~/components/footsies';
 import { notFound } from 'next/navigation';
 
@@ -24,9 +25,10 @@ export const BGS_BY_TRACK: Record<number, string> = {
 export const bgsArray = Object.values(BGS_BY_TRACK);
 
 export async function TrackDetail({ slug }: TrackDetailProps) {
-  const track = await getTrackDetails(slug);
+  const session = await auth();
+  const track = await getTrackDetails(slug, session?.user?.id);
 
-  if (track.isComingSoon || !track.visible) {
+  if (!track || track.isComingSoon || !track.visible) {
     return notFound();
   }
 
@@ -81,14 +83,9 @@ export async function TrackDetail({ slug }: TrackDetailProps) {
             </div>
           </div>
           {isEnrolled ? (
-            <ActionButton
-              slug={slug}
-              action={unenrollUserFromTrack}
-              trackId={track.id}
-              text="Unenroll"
-            />
+            <ActionButton mode="unenroll" trackId={track.id} />
           ) : (
-            <ActionButton slug={slug} action={enrollUserInTrack} trackId={track.id} text="Enroll" />
+            <ActionButton mode="enroll" trackId={track.id} />
           )}
         </div>
         <div className="flex w-full flex-col">

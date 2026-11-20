@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useMemo } from 'react';
 import { TrackChallenge } from '~/app/tracks/_components/track-challenge-card';
-import { getTrackDetails } from '~/app/tracks/_components/track.action';
+import { useTRPC } from '~/trpc/react';
 import { getSimilarChallenges } from '~/utils/server/get-similar-challenges';
 
 interface SuggestionsProps {
@@ -15,11 +15,9 @@ interface SuggestionsProps {
 
 export function Suggestions({ track, challengeId }: SuggestionsProps) {
   // Get challenges in current track
+  const trpc = useTRPC();
   const { data: trackDetails } = useQuery({
-    queryKey: ['track-details', track],
-    queryFn: () => {
-      return getTrackDetails(track!);
-    },
+    ...trpc.track.getDetails.queryOptions({ slug: track ?? '' }),
     enabled: Boolean(track),
   });
 

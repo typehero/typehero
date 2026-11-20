@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Carousel } from '~/components/carousel';
 import { PersonalTrackCard } from './personal-track-card';
-import type { EnrolledTracks } from './track.action';
+import type { EnrolledTracks } from './track-enrolled-section';
 
 export function EnrolledTrackSectionCarousel({ tracks }: { tracks: EnrolledTracks }) {
   return (

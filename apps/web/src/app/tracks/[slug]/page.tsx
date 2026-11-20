@@ -1,7 +1,7 @@
 import { auth } from '~/server/auth';
 
 import { TrackDetail } from '../_components/track-details';
-import { getTrackDetails } from '../_components/track.action';
+import { getTrackDetails } from '../_components/get-track-details';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,7 +16,8 @@ export default async function Page({ params }: { params: Params }) {
 
 export async function generateMetadata({ params }: { params: Params }) {
   const { slug } = await params;
-  const track = await getTrackDetails(slug);
+  const session = await auth();
+  const track = await getTrackDetails(slug, session?.user?.id);
 
   if (!track) {
     return {
