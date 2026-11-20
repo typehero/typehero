@@ -5,49 +5,72 @@ import type { VoteType } from '@repo/db/types';
 import { Button } from '@repo/ui/components/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
 import { ThumbsUp } from '@repo/ui/icons';
+import { useMutation } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { debounce } from 'lodash';
 import { useRef, useState } from 'react';
-import { incrementOrDecrementUpvote } from '../increment.action';
-import type { PaginatedComments } from './comments/getCommentRouteData';
+import { useTRPC } from '~/trpc/react';
 
 interface VoteProps {
   voteCount: number;
   initialHasVoted?: boolean;
   rootId: number;
-  // user id of the content thats being liked
-  toUserId: string;
-  challengeSlug: string;
-  rootType: VoteType;
+  rootType: Exclude<VoteType, 'SUBMISSION'>;
   disabled?: boolean;
   onVote?: (didUpvote: boolean) => void;
-  comment?: PaginatedComments['comments'][number];
 }
 
 export function Vote({
-  challengeSlug,
   voteCount,
   initialHasVoted,
   rootId,
   rootType,
   disabled,
   onVote,
-  toUserId,
-  comment,
 }: VoteProps) {
   const [votes, setVotes] = useState(voteCount);
   const [hasVoted, setHasVoted] = useState(initialHasVoted);
   const session = useSession();
-  const debouncedIncrement = useRef(
-    debounce(async (shouldIncrement: boolean) => {
-      await incrementOrDecrementUpvote({
-        comment,
-        rootId,
-        rootType,
-        shouldIncrement,
-        toUserId,
-        challengeSlug,
-      });
+  const trpc = useTRPC();
+  const { mutateAsync: addOrRemoveVote } = useMutation(trpc.vote.addOrRemove.mutationOptions());
+
+  // Tracks the in-flight request and the most recently requested state, so a newer
+  // click can't race an earlier, still-pending request.
+  const requestStateRef = useRef<{ running: boolean; desired: boolean | null }>({
+    running: false,
+    desired: null,
+  });
+
+  const debouncedVote = useRef(
+    debounce((shouldVote: boolean) => {
+      const state = requestStateRef.current;
+      // Always remember the latest intent; if a request is already running, the
+      // running loop picks this value up when it finishes.
+      state.desired = shouldVote;
+      if (state.running) return;
+      state.running = true;
+
+      void (async () => {
+        try {
+          while (state.desired !== null) {
+            const next = state.desired;
+            state.desired = null;
+            try {
+              await addOrRemoveVote({ rootType, rootId, shouldVote: next });
+            } catch (e) {
+              console.error(e);
+              // Only roll back if the user hasn't clicked again since; otherwise the
+              // next loop iteration sends the state they now expect.
+              if (state.desired === null) {
+                setHasVoted(!next);
+                setVotes((v) => (next ? v - 1 : v + 1));
+              }
+            }
+          }
+        } finally {
+          state.running = false;
+        }
+      })();
     }, 500),
   ).current;
 
@@ -65,27 +88,16 @@ export function Vote({
           size="xs"
           disabled={disabled}
           onClick={() => {
-            let shouldIncrement = false;
-            const previousVotes = votes;
+            const shouldVote = !hasVoted;
 
-            if (hasVoted) {
-              setVotes((v) => v - 1);
-              shouldIncrement = false;
-              setHasVoted(false);
-            } else {
-              setVotes((v) => v + 1);
-              shouldIncrement = true;
-              setHasVoted(true);
-            }
+            setHasVoted(shouldVote);
+            setVotes((v) => (shouldVote ? v + 1 : v - 1));
 
             if (onVote) {
-              onVote(shouldIncrement);
+              onVote(shouldVote);
             }
 
-            debouncedIncrement(shouldIncrement)?.catch((e) => {
-              setVotes(previousVotes);
-              console.error(e);
-            });
+            debouncedVote(shouldVote);
           }}
         >
           <ThumbsUp className="h-4 w-4" />

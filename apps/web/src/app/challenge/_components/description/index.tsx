@@ -141,8 +141,6 @@ export function Description({ challenge }: DescriptionProps) {
           disabled={!session?.data?.user?.id}
           rootType="CHALLENGE"
           rootId={challenge?.id}
-          toUserId={challenge.user.id}
-          challengeSlug={challenge.slug}
         />
         <Dialog>
           <DialogTrigger>
