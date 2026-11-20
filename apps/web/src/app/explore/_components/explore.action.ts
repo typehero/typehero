@@ -1,5 +1,4 @@
-'use server';
-
+import 'server-only';
 import { prisma } from '@repo/db';
 import { Tags, type Difficulty } from '@repo/db/types';
 import { cache } from 'react';
