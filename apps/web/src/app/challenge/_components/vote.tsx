@@ -40,6 +40,11 @@ export function Vote({
     running: false,
     desired: null,
   });
+  // The state the user last clicked into. Unlike `requestStateRef.desired` this is set on
+  // click, before the debounce fires, so a failing request can tell a newer click exists.
+  const latestIntentRef = useRef(Boolean(initialHasVoted));
+  // The last vote state the server confirmed, which is what a failed request falls back to.
+  const confirmedRef = useRef(Boolean(initialHasVoted));
 
   const debouncedVote = useRef(
     debounce((shouldVote: boolean) => {
@@ -57,12 +62,13 @@ export function Vote({
             state.desired = null;
             try {
               await addOrRemoveVote({ rootType, rootId, shouldVote: next });
+              confirmedRef.current = next;
             } catch (e) {
               console.error(e);
-              // Only roll back if the user hasn't clicked again since; otherwise the
-              // next loop iteration sends the state they now expect.
-              if (state.desired === null) {
-                setHasVoted(!next);
+              // Only roll back if the user hasn't clicked again since; otherwise a
+              // newer request is about to settle the state they now expect.
+              if (latestIntentRef.current === next && confirmedRef.current !== next) {
+                setHasVoted(confirmedRef.current);
                 setVotes((v) => (next ? v - 1 : v + 1));
               }
             }
@@ -90,6 +96,7 @@ export function Vote({
           onClick={() => {
             const shouldVote = !hasVoted;
 
+            latestIntentRef.current = shouldVote;
             setHasVoted(shouldVote);
             setVotes((v) => (shouldVote ? v + 1 : v - 1));
 
