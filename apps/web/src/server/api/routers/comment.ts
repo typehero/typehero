@@ -1,7 +1,10 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-import { COMMENTS_PAGE_SIZE } from '~/app/challenge/_components/comments/comments.constants';
+import {
+  COMMENTS_PAGE_SIZE,
+  MAX_COMMENT_LENGTH,
+} from '~/app/challenge/_components/comments/comments.constants';
 import { getMentionsFromComment } from '~/app/challenge/_components/comments/getMentionsFromComment';
 import { createTRPCRouter, protectedProcedure, publicProcedure } from '~/server/api/trpc';
 import { createNoProfanitySchemaWithValidate } from '~/utils/antiProfanityZod';
@@ -11,8 +14,6 @@ import { orderBy } from '~/utils/sorting';
 import type { Prisma, prisma } from '@repo/db';
 
 type Db = typeof prisma;
-
-export const MAX_COMMENT_LENGTH = 10_000;
 
 const commentText = createNoProfanitySchemaWithValidate((zodString) =>
   zodString.min(1, 'Too short.').max(MAX_COMMENT_LENGTH, 'Too long.'),
@@ -182,10 +183,10 @@ export const commentRouter = createTRPCRouter({
             challenge: { select: { slug: true } },
           },
         });
-        if (!solution) throw notFound;
+        if (!solution?.challenge) throw notFound;
         ownerId = solution.userId;
         ownerName = solution.user?.name;
-        slug = solution.challenge?.slug;
+        slug = solution.challenge.slug;
       }
 
       const comment = await ctx.db.comment.create({
@@ -240,15 +241,21 @@ export const commentRouter = createTRPCRouter({
           id: true,
           userId: true,
           parentId: true,
+          visible: true,
           rootType: true,
           rootChallengeId: true,
           rootSolutionId: true,
           user: { select: { name: true } },
-          rootChallenge: { select: { slug: true } },
+          rootChallenge: { select: { slug: true, status: true } },
           rootSolution: { select: { challenge: { select: { slug: true } } } },
         },
       });
-      if (!parent) {
+      const targetAvailable =
+        parent?.visible &&
+        (parent.rootType === 'CHALLENGE'
+          ? parent.rootChallenge?.status === 'ACTIVE'
+          : Boolean(parent.rootSolution?.challenge));
+      if (!parent || !targetAvailable) {
         throw new TRPCError({ code: 'NOT_FOUND', message: 'Comment not found' });
       }
       if (parent.parentId !== null) {
@@ -320,7 +327,13 @@ export const commentRouter = createTRPCRouter({
           parentId: true,
           rootType: true,
           rootSolutionId: true,
-          parentComment: { select: { id: true, rootChallenge: { select: { slug: true } } } },
+          parentComment: {
+            select: {
+              id: true,
+              user: { select: { name: true } },
+              rootChallenge: { select: { slug: true } },
+            },
+          },
           rootChallenge: { select: { slug: true, user: { select: { name: true } } } },
           rootSolution: {
             select: { user: { select: { name: true } }, challenge: { select: { slug: true } } },
@@ -334,22 +347,37 @@ export const commentRouter = createTRPCRouter({
         throw new TRPCError({ code: 'FORBIDDEN', message: 'You can only edit your own comments' });
       }
 
-      const rootOwnerName =
-        (comment.rootType === 'CHALLENGE'
+      // The person who already gets a REPLY notification for this comment: the parent
+      // comment's author for a reply, the owner of the challenge or solution otherwise.
+      const notifiedName = comment.parentId
+        ? comment.parentComment?.user.name
+        : comment.rootType === 'CHALLENGE'
           ? comment.rootChallenge?.user.name
-          : comment.rootSolution?.user?.name) ?? '';
-      const excludeNames = [rootOwnerName, ctx.session.user.name];
+          : comment.rootSolution?.user?.name;
+      const excludeNames = [notifiedName ?? '', ctx.session.user.name];
 
       const before = mentionsExcluding(comment.text, excludeNames);
       const after = mentionsExcluding(input.text, excludeNames);
-      const removed = before.filter((mention) => !after.includes(mention));
-      const added = after.filter((mention) => !before.includes(mention));
+      const removed = before.filter(
+        (mention) => !after.some((next) => lower(next) === lower(mention)),
+      );
+      const added = after.filter(
+        (mention) => !before.some((prev) => lower(prev) === lower(mention)),
+      );
 
-      const updated = await ctx.db.comment.update({
-        where: { id: comment.id },
+      // Only write if the text is still what the mention delta was computed from, so a
+      // concurrent edit can't leave a notification that no edit will ever retract.
+      const { count } = await ctx.db.comment.updateMany({
+        where: { id: comment.id, text: comment.text },
         data: { text: input.text },
-        select: { id: true },
       });
+      if (count === 0) {
+        throw new TRPCError({
+          code: 'CONFLICT',
+          message: 'This comment was changed by another request. Please try again.',
+        });
+      }
+      const updated = { id: comment.id };
 
       if (added.length > 0) {
         const url = !comment.parentId
@@ -382,7 +410,7 @@ export const commentRouter = createTRPCRouter({
       }
 
       if (removed.length > 0) {
-        await Promise.allSettled(
+        const retractions = await Promise.allSettled(
           removed.map(async (mention) => {
             const user = await ctx.db.user.findFirst({
               where: { name: mention },
@@ -399,6 +427,9 @@ export const commentRouter = createTRPCRouter({
             });
           }),
         );
+        for (const result of retractions) {
+          if (result.status === 'rejected') console.error(result.reason);
+        }
       }
 
       return updated;

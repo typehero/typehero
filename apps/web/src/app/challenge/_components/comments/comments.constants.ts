@@ -1,6 +1,10 @@
 import { TRPCClientError } from '@trpc/client';
 
+<<<<<<< HEAD
 export const COMMENTS_PAGE_SIZE = 10;
+=======
+export const MAX_COMMENT_LENGTH = 10_000;
+>>>>>>> cursor/trpc-comment-mutations-c540
 
 export const sortKeys = [
   {
@@ -40,7 +44,14 @@ export const commentErrors = {
     title: 'Invalid Comment',
     description: 'Your comment is empty, too long, or contains language that is not allowed.',
   },
-  notFound: { title: 'Comment Not Found', description: 'This comment no longer exists.' },
+  notFound: {
+    title: 'Not Found',
+    description: 'This comment, or what it was posted on, is no longer available.',
+  },
+  conflict: {
+    title: 'Comment Changed',
+    description: 'This comment was just changed elsewhere. Please try again.',
+  },
   unexpected: {
     title: 'Uh Oh!',
     description: 'Something went wrong while handling your comment. Please try again.',
@@ -59,6 +70,8 @@ export const getCommentErrorToast = (error: unknown) => {
       return commentErrors.invalidText;
     case 'NOT_FOUND':
       return commentErrors.notFound;
+    case 'CONFLICT':
+      return commentErrors.conflict;
     default:
       return commentErrors.unexpected;
   }
