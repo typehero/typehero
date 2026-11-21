@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { useForm, type UseFormReturn } from 'react-hook-form';
-import { z } from 'zod';
+import type { z } from 'zod';
 import { useSession } from '@repo/auth/react';
 import { Form } from '@repo/ui/components/form';
 import type { TsErrors } from '@repo/monaco';
@@ -14,14 +14,20 @@ import { Steps } from './Steps';
 import { NextBack } from './NextBack';
 import { Summary } from './Summary';
 import { TestCasesEditor } from './TestCasesEditor';
-import { uploadChallenge } from './create.action';
+import { useMutation } from '@tanstack/react-query';
+import { TRPCClientError } from '@trpc/client';
+import { toast } from '@repo/ui/components/use-toast';
+import { useTRPC } from '~/trpc/react';
 import DEFAULT_CHALLENGE_TEMPLATE from './default-challenge.md';
 import DEFAULT_TEST_CASES from './default-tests.md';
 import DEFAULT_DESCRIPTION from './default-description.md';
 import {
-  createNoProfanitySchema,
-  createNoProfanitySchemaWithValidate,
-} from '~/utils/antiProfanityZod';
+  createChallengeSchema,
+  createDescriptionSchema,
+  createExploreCardSchema,
+  createTestCasesSchema,
+  type CreateChallengeSchema,
+} from './schema';
 
 export const enum STEPS {
   ChallengeCard,
@@ -29,40 +35,6 @@ export const enum STEPS {
   TestCases,
   Summary,
 }
-
-const testCaseRegex = new RegExp('(?:\n|^)s*(?:Equal|Extends|NotEqual|Expect)<');
-const createExploreCardSchema = z.object({
-  difficulty: z.enum(['BEGINNER', 'EASY', 'MEDIUM', 'HARD', 'EXTREME', 'EVENT']),
-  name: createNoProfanitySchemaWithValidate((zodString) =>
-    zodString
-      .min(3, 'The name must be longer than 3 characters')
-      .max(30, 'The name must be shorter than 30 characters'),
-  ),
-  shortDescription: createNoProfanitySchemaWithValidate((zodString) =>
-    zodString
-      .min(10, 'The short description must be longer than 10 characters')
-      .max(191, 'The short description must be shorter than 191 characters'),
-  ),
-});
-
-const createDescriptionSchema = z.object({
-  description: createNoProfanitySchemaWithValidate((zodString) =>
-    zodString.min(20, 'The description must be longer than 20 characters').max(65536),
-  ),
-});
-
-const createTestCasesSchema = z.object({
-  tests: createNoProfanitySchemaWithValidate((zodString) =>
-    zodString
-      .min(20, 'The test cases must be longer than 20 characters')
-      .max(65536)
-      .regex(testCaseRegex, 'You need to have test cases in your challenge'),
-  ),
-  code: createNoProfanitySchema(),
-});
-export const createChallengeSchema = createExploreCardSchema
-  .merge(createDescriptionSchema)
-  .merge(createTestCasesSchema);
 
 const steps: Step[] = [
   { id: '1', name: 'Challenge Card', schema: createExploreCardSchema },
@@ -77,13 +49,15 @@ export interface Step {
   schema?: z.ZodSchema;
 }
 
-export type CreateChallengeSchema = z.infer<typeof createChallengeSchema>;
+export type { CreateChallengeSchema };
 
 export type WizardForm = UseFormReturn<CreateChallengeSchema>;
 
 export function Wizard() {
   const router = useRouter();
   const { data: session } = useSession();
+  const trpc = useTRPC();
+  const createChallenge = useMutation(trpc.challenge.create.mutationOptions());
   const [step, setStep] = useState(0);
   const [rendered, setRendered] = useState(false);
   const [tsErrors, setTsErrors] = useState<TsErrors>([[], [], []]);
@@ -139,12 +113,28 @@ export function Wizard() {
   };
 
   async function onSubmit(data: CreateChallengeSchema) {
-    const { id } = await uploadChallenge(data, isUserACreator);
+    let challenge;
+    try {
+      challenge = await createChallenge.mutateAsync(data);
+    } catch (error) {
+      const code = error instanceof TRPCClientError ? error.data?.code : undefined;
+      toast({
+        title: 'Could not submit your challenge',
+        variant: 'destructive',
+        description:
+          code === 'CONFLICT'
+            ? 'A challenge with this name already exists. Try a different name.'
+            : code === 'UNAUTHORIZED'
+              ? 'You need to be logged in to submit a challenge.'
+              : 'Something went wrong. Please try again.',
+      });
+      return;
+    }
 
     router.refresh();
 
-    if (isUserACreator) {
-      router.push(`/challenge/${id}`);
+    if (challenge.status === 'ACTIVE') {
+      router.push(`/challenge/${challenge.slug}`);
     } else {
       router.push(`/explore`);
     }

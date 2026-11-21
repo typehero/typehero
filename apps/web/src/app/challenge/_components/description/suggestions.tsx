@@ -1,15 +1,18 @@
+import { useSession } from '@repo/auth/react';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { TrackChallenge } from '~/app/tracks/_components/track-challenge-card';
-import { getSimilarChallenges } from '~/utils/server/get-similar-challenges';
+import { useTRPCClient } from '~/trpc/react';
 import { SuggestionsSkeleton } from './suggestions-skeleton';
 
 export function Suggestions({ challengeId }: { challengeId: number }) {
+  const trpcClient = useTRPCClient();
+  const { data: session, status: sessionStatus } = useSession();
+  const userId = session?.user?.id ?? null;
   const { data: similarChallenges, status } = useQuery({
-    queryKey: ['similar-challenges', challengeId],
-    queryFn: () => {
-      return getSimilarChallenges(challengeId, 3);
-    },
+    queryKey: ['similar-challenges', challengeId, 3, userId],
+    queryFn: () => trpcClient.challenge.similar.query({ challengeId, maxChallenges: 3 }),
+    enabled: sessionStatus !== 'loading',
   });
 
   if (status === 'error') {

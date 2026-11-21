@@ -33,7 +33,7 @@ import { CommentSkeleton } from './comment-skeleton';
 import { useCommentsReplies, type UseCommentRepliesProps } from './comments.hooks';
 import { CommentDeleteDialog } from './delete';
 import { UserBadge } from './enhanced-user-badge';
-import { type PaginatedComments, type PreselectedCommentMetadata } from './getCommentRouteData';
+import type { PaginatedComments, PreselectedCommentMetadata } from './getCommentRouteData';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -466,9 +466,6 @@ function SingleComment({
             <>
               <div className="flex gap-1">
                 <Vote
-                  comment={comment}
-                  toUserId={comment.user.id}
-                  challengeSlug={comment.rootChallenge?.slug ?? ''}
                   voteCount={comment._count.vote}
                   initialHasVoted={comment.vote.length > 0}
                   disabled={!session?.data?.user?.id || comment.userId === session?.data?.user?.id}

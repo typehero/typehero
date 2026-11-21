@@ -2,7 +2,8 @@
 import { useState, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import lzstring from 'lz-string';
-import { createShortURL } from '~/app/share/_actions/create-url';
+import { useMutation } from '@tanstack/react-query';
+import { useTRPC } from '~/trpc/react';
 import { useLocalStorage } from '~/utils/useLocalStorage';
 import { Checkbox } from '@repo/ui/components/checkbox';
 import { CheckCircle2, Clipboard } from '@repo/ui/icons';
@@ -19,6 +20,8 @@ interface ShareShortUrlProps {
 export function ShareUrl({ desciprtion, isChallenge = false, code, longUrl }: ShareShortUrlProps) {
   const { slug } = useParams();
   const { toast } = useToast();
+  const trpc = useTRPC();
+  const { mutateAsync: createShortUrl } = useMutation(trpc.shortUrl.create.mutationOptions());
   const shareType = isChallenge ? 'challenge' : 'playground';
   const [state, setState] = useState<'copied' | 'idle' | 'loading'>('idle');
   // enable copy with code by default on playground, or we are provided with code
@@ -37,14 +40,15 @@ export function ShareUrl({ desciprtion, isChallenge = false, code, longUrl }: Sh
 
       // Check if the code has changed
       if (fullCode !== previousCode) {
-        const short = await createShortURL(long);
+        // fall back to the long url if a short one can't be created (e.g. rate limited)
+        const short = await createShortUrl({ url: long }).catch(() => null);
         setPreviousCode(fullCode);
         return short ?? long;
       }
       return shortUrl;
     }
     return long;
-  }, [url, code, localStorageCode, copyWithCode, previousCode, shortUrl]);
+  }, [url, code, localStorageCode, copyWithCode, previousCode, shortUrl, createShortUrl]);
 
   const copyToClipboard = useCallback(async () => {
     setState('loading');

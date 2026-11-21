@@ -1,16 +1,16 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useSession } from '@repo/auth/react';
 import { Button } from '@repo/ui/components/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@repo/ui/components/form';
 import { Input } from '@repo/ui/components/input';
 import { useToast } from '@repo/ui/components/use-toast';
 import { useTheme } from 'next-themes';
-import { useParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { createNoProfanitySchemaWithValidate } from '~/utils/antiProfanityZod';
 import type { ChallengeSolution } from '~/app/challenge/[slug]/solutions/[solutionId]/page';
-import { updateSolution } from './_actions';
+import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { useTRPC } from '~/trpc/react';
 import { RichMarkdownEditor } from '@repo/ui/components/rich-markdown-editor';
 import { useUploadThing } from '~/utils/useUploadthing';
 
@@ -31,8 +31,9 @@ interface EditSolutionProps {
 }
 
 export function EditSolution({ solution, setIsEditing }: EditSolutionProps) {
-  const { slug } = useParams();
-  const session = useSession();
+  const router = useRouter();
+  const trpc = useTRPC();
+  const updateSolution = useMutation(trpc.solution.update.mutationOptions());
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,15 +45,13 @@ export function EditSolution({ solution, setIsEditing }: EditSolutionProps) {
 
   const onSubmit = async (data: FormSchema) => {
     try {
-      await updateSolution({
+      await updateSolution.mutateAsync({
         id: solution.id,
         description: data.content ?? '',
-        slug: slug as string,
         title: data.title ?? '',
-        // TODO: Is this guaranteed to exist, or is userId actually optional?
-        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-        userId: session.data?.user?.id!,
       });
+      // the solution comes from the server component, so re-render it with the new content
+      router.refresh();
 
       toast({
         variant: 'success',

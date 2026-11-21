@@ -27,7 +27,7 @@ export function ChallengeCardEditor({ form }: ChallengeCardEditorProps) {
 
   const data: Pick<
     Awaited<ExploreChallengeData>[0],
-    '_count' | 'difficulty' | 'name' | 'shortDescription' | 'updatedAt' | 'user'
+    '_count' | 'difficulty' | 'name' | 'shortDescription' | 'submission' | 'updatedAt' | 'user'
   > = {
     difficulty,
     name: title || 'Your Title Here',
@@ -41,6 +41,7 @@ export function ChallengeCardEditor({ form }: ChallengeCardEditorProps) {
       comment: 50,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any,
+    submission: [],
     updatedAt: new Date(),
   };
   return (

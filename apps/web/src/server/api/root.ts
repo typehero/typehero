@@ -1,9 +1,16 @@
 import { createCallerFactory, createTRPCRouter } from '~/server/api/trpc';
 import { bookmarkRouter } from './routers/bookmark';
+import { challengeRouter } from './routers/challenge';
 import { commentRouter } from './routers/comment';
 import { notificationRouter } from './routers/notification';
 import { reportRouter } from './routers/report';
 import { userRouter } from './routers/user';
+import { shortUrlRouter } from './routers/short-url';
+import { voteRouter } from './routers/vote';
+import { solutionRouter } from './routers/solution';
+import { submissionRouter } from './routers/submission';
+import { trackRouter } from './routers/track';
+import { profileRouter } from './routers/profile';
 
 /**
  * This is the primary router for your server.
@@ -12,10 +19,17 @@ import { userRouter } from './routers/user';
  */
 export const appRouter = createTRPCRouter({
   bookmark: bookmarkRouter,
+  challenge: challengeRouter,
   comment: commentRouter,
   notification: notificationRouter,
   report: reportRouter,
   user: userRouter,
+  shortUrl: shortUrlRouter,
+  vote: voteRouter,
+  solution: solutionRouter,
+  submission: submissionRouter,
+  track: trackRouter,
+  profile: profileRouter,
 });
 
 // export type definition of API

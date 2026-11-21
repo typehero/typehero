@@ -8,11 +8,7 @@ import { useEffect, useReducer } from 'react';
 
 import { getCommentErrorToast, sortKeys } from './comments.constants';
 import { useTRPCClient } from '~/trpc/react';
-import {
-  getAllComments,
-  getPaginatedComments,
-  type PaginatedComments,
-} from './getCommentRouteData';
+import type { PaginatedComments } from './getCommentRouteData';
 import type { CommentRoot } from '@repo/db/types';
 import { toast } from '@repo/ui/components/use-toast';
 import type { ChallengeRouteData } from '../../[slug]/getChallengeRouteData';
@@ -60,15 +56,14 @@ export function useComments(props: UseCommentsProps) {
 
   const { status, data } = useQuery({
     queryKey: getQueryKey({ sort: commentsMeta.sort.value, page: commentsMeta.page }),
-    queryFn: () => {
-      return getPaginatedComments({
+    queryFn: () =>
+      trpcClient.comment.list.query({
         rootId: root.id,
         page: commentsMeta.page,
         rootType,
         sortKey: commentsMeta.sort.key,
         sortOrder: commentsMeta.sort.order,
-      });
-    },
+      }),
     placeholderData: keepPreviousData,
     staleTime: 60000, // one minute
     refetchOnWindowFocus: false,
@@ -177,7 +172,12 @@ export function useCommentsReplies({
 
   const { data: replies } = useQuery({
     queryKey,
-    queryFn: () => getAllComments({ rootId: root.id, rootType: type, parentId: parentComment.id }),
+    queryFn: () =>
+      trpcClient.comment.listReplies.query({
+        rootId: root.id,
+        rootType: type,
+        parentId: parentComment.id,
+      }),
     staleTime: 5000,
     enabled,
   });
