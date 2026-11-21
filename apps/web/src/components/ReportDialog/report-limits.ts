@@ -1,0 +1,1 @@
+export const MAX_REPORT_TEXT_LENGTH = 10_000;
