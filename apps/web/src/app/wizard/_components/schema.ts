@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { createNoProfanitySchemaWithValidate } from '~/utils/antiProfanityZod';
 
-const testCaseRegex = new RegExp('(?:\n|^)s*(?:Equal|Extends|NotEqual|Expect)<');
+const testCaseRegex = new RegExp('(?:\n|^)[ \\t]*(?:Equal|Extends|NotEqual|Expect)<');
 
 export const createExploreCardSchema = z.object({
   difficulty: z.enum(['BEGINNER', 'EASY', 'MEDIUM', 'HARD', 'EXTREME', 'EVENT']),

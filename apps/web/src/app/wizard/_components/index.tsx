@@ -134,7 +134,7 @@ export function Wizard() {
     router.refresh();
 
     if (challenge.status === 'ACTIVE') {
-      router.push(`/challenge/${challenge.slug}`);
+      router.push(`/challenge/${encodeURIComponent(challenge.slug)}`);
     } else {
       router.push(`/explore`);
     }
