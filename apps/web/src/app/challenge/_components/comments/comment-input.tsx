@@ -60,12 +60,13 @@ export const CommentInput = forwardRef<CommentInputRefProps, CommentInputProps>(
     const submitComment = async ({ text }: { text: string }) => {
       try {
         await onSubmit(text);
-      } catch (e) {
-        console.error(e);
-      } finally {
-        form.reset();
+      } catch {
+        // The caller has already surfaced the failure; keep the draft so it can be retried.
         setCommentMode('editor');
+        return;
       }
+      form.reset();
+      setCommentMode('editor');
     };
 
     const isSubmitting = form.formState.isSubmitting;

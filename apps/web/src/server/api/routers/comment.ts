@@ -124,7 +124,7 @@ export const commentRouter = createTRPCRouter({
           skip: (page - 1) * COMMENTS_PAGE_SIZE,
           take: COMMENTS_PAGE_SIZE,
           where: { ...where, parentId: null },
-          orderBy: orderBy(sortKey, sortOrder),
+          orderBy: [orderBy(sortKey, sortOrder), { id: 'desc' }],
           include: commentListInclude(ctx.session?.user?.id ?? ''),
         }),
       ]);
@@ -145,7 +145,7 @@ export const commentRouter = createTRPCRouter({
     .query(({ ctx, input }) =>
       ctx.db.comment.findMany({
         where: { ...rootFilter(input.rootType, input.rootId), parentId: input.parentId },
-        orderBy: orderBy('createdAt', 'desc'),
+        orderBy: [orderBy('createdAt', 'desc'), { id: 'desc' }],
         include: commentListInclude(ctx.session?.user?.id ?? ''),
       }),
     ),
