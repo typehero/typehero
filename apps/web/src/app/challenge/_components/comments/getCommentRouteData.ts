@@ -16,9 +16,7 @@ export async function getPreselectedCommentMetadata(challengeId: number, comment
       visible: true,
       parentId: null,
     },
-    orderBy: {
-      createdAt: 'desc',
-    },
+    orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
     select: {
       id: true,
       parentId: true,
@@ -51,17 +49,25 @@ export async function getPreselectedSolutionCommentMetadata(
       id: solutionId,
       challengeId,
     },
+    select: { id: true },
+  });
+
+  if (!solution) return;
+
+  const comments = await prisma.comment.findMany({
+    where: {
+      rootType: 'SOLUTION',
+      rootSolutionId: solution.id,
+      visible: true,
+      parentId: null,
+    },
+    orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
     select: {
       id: true,
-      solutionComment: {
-        orderBy: { createdAt: 'desc' },
-      },
+      parentId: true,
     },
   });
 
-  if (!solution?.solutionComment) return;
-
-  const comments = solution.solutionComment;
   const index = comments.findIndex((comment) => comment.id === commentId);
 
   // this `commentId` couldn't be found (perhaps it was deleted)

@@ -97,9 +97,7 @@ export function useComments(props: UseCommentsProps) {
         ? commentsMeta.page - 1
         : commentsMeta.page;
     changePage(newPage);
-    queryClient.invalidateQueries({
-      queryKey: getQueryKey({ sort: commentsMeta.sort.value, page: newPage }),
-    });
+    queryClient.invalidateQueries({ queryKey: [getRootQueryKey(root.id, rootType)] });
   };
 
   const addComment = async (text: string) => {
@@ -107,13 +105,11 @@ export function useComments(props: UseCommentsProps) {
       await trpcClient.comment.create.mutate({ rootType, rootId: root.id, text });
     } catch (e) {
       toast({ ...getCommentErrorToast(e), variant: 'destructive' });
-      return;
+      throw e;
     }
     const newPage = 1;
     changePage(newPage);
-    queryClient.invalidateQueries({
-      queryKey: getQueryKey({ sort: commentsMeta.sort.value, page: newPage }),
-    });
+    queryClient.invalidateQueries({ queryKey: [getRootQueryKey(root.id, rootType)] });
   };
 
   const updateComment = async (text: string, commentId: number) => {
@@ -121,11 +117,9 @@ export function useComments(props: UseCommentsProps) {
       await trpcClient.comment.update.mutate({ id: commentId, text });
     } catch (e) {
       toast({ ...getCommentErrorToast(e), variant: 'destructive' });
-      return;
+      throw e;
     }
-    queryClient.invalidateQueries({
-      queryKey: getQueryKey({ sort: commentsMeta.sort.value, page: commentsMeta.page }),
-    });
+    queryClient.invalidateQueries({ queryKey: [getRootQueryKey(root.id, rootType)] });
   };
 
   return {
@@ -227,7 +221,7 @@ export function useCommentsReplies({
       await trpcClient.comment.reply.mutate({ parentId: parentComment.id, text });
     } catch (e) {
       toast({ ...getCommentErrorToast(e), variant: 'destructive' });
-      return;
+      throw e;
     }
     //Invalidate the root query to refetch the comments
     queryClient.invalidateQueries({ queryKey: rootQueryKey });
@@ -238,7 +232,7 @@ export function useCommentsReplies({
       await trpcClient.comment.update.mutate({ id: commentId, text });
     } catch (e) {
       toast({ ...getCommentErrorToast(e), variant: 'destructive' });
-      return;
+      throw e;
     }
     queryClient.invalidateQueries({ queryKey });
   };
