@@ -1,12 +1,9 @@
-'use server';
-import { auth } from '~/server/auth';
+import 'server-only';
 import { prisma } from '@repo/db';
-import type { CommentRoot } from '@repo/db/types';
-import { orderBy, type SortKey, type SortOrder } from '~/utils/sorting';
+import type { RouterOutputs } from '~/trpc/types';
+import { COMMENTS_PAGE_SIZE } from './comments.constants';
 
-const PAGESIZE = 10;
-
-export type PaginatedComments = NonNullable<Awaited<ReturnType<typeof getPaginatedComments>>>;
+export type PaginatedComments = RouterOutputs['comment']['list'];
 export type PreselectedCommentMetadata =
   | NonNullable<Awaited<ReturnType<typeof getPreselectedCommentMetadata>>>
   | NonNullable<Awaited<ReturnType<typeof getPreselectedSolutionCommentMetadata>>>;
@@ -34,7 +31,7 @@ export async function getPreselectedCommentMetadata(challengeId: number, comment
   if (index === -1) return;
 
   const selectedComment = challengeComments[index];
-  const page = Math.ceil((index + 1) / PAGESIZE);
+  const page = Math.ceil((index + 1) / COMMENTS_PAGE_SIZE);
 
   return {
     page,
@@ -71,7 +68,7 @@ export async function getPreselectedSolutionCommentMetadata(
   if (index === -1) return;
 
   const selectedComment = comments[index];
-  const page = Math.ceil((index + 1) / PAGESIZE);
+  const page = Math.ceil((index + 1) / COMMENTS_PAGE_SIZE);
 
   return {
     page,
@@ -79,187 +76,4 @@ export async function getPreselectedSolutionCommentMetadata(
     index,
     challengeComments: comments.map((comment) => comment.id),
   };
-}
-
-async function getCommentsCount({
-  rootType,
-  rootId,
-  parentId = null,
-}: {
-  rootType: CommentRoot;
-  rootId: number;
-  parentId?: number | null;
-}) {
-  return prisma.comment.count({
-    where: {
-      rootType,
-      parentId,
-      visible: true,
-      ...(rootType === 'CHALLENGE' ? { rootChallengeId: rootId } : { rootSolutionId: rootId }),
-    },
-  });
-}
-
-export async function getPaginatedComments({
-  page,
-  rootId,
-  rootType,
-  parentId = null,
-  sortKey = 'createdAt',
-  sortOrder = 'desc',
-  take = PAGESIZE,
-}: {
-  page: number;
-  rootId: number;
-  rootType: CommentRoot;
-  parentId?: number | null;
-  sortKey?: SortKey;
-  sortOrder?: SortOrder;
-  take?: number;
-}) {
-  const session = await auth();
-
-  const totalComments = await getCommentsCount({ rootType, rootId, parentId });
-
-  const totalReplies = await prisma.comment.count({
-    where: {
-      rootType,
-      parentId: {
-        not: null,
-      },
-      visible: true,
-      ...(rootType === 'CHALLENGE' ? { rootChallengeId: rootId } : { rootSolutionId: rootId }),
-    },
-  });
-
-  const comments = await prisma.comment.findMany({
-    skip: ((page || 1) - 1) * take,
-    take,
-    where: {
-      rootType,
-      parentId,
-      ...(rootType === 'CHALLENGE' ? { rootChallengeId: rootId } : { rootSolutionId: rootId }),
-      visible: true,
-    },
-    orderBy: orderBy(sortKey, sortOrder),
-    include: {
-      user: {
-        select: {
-          id: true,
-          name: true,
-          image: true,
-          roles: true,
-          bio: true,
-        },
-      },
-      _count: {
-        select: {
-          replies: true,
-          vote: true,
-        },
-      },
-      vote: {
-        select: {
-          userId: true,
-        },
-        where: {
-          userId: session?.user?.id || '',
-        },
-      },
-      rootChallenge: {
-        select: {
-          slug: true,
-          name: true,
-        },
-      },
-      rootSolution: {
-        select: {
-          title: true,
-          challenge: {
-            select: {
-              slug: true,
-            },
-          },
-        },
-      },
-    },
-  });
-
-  const totalPages = Math.ceil(totalComments / take);
-
-  return {
-    totalComments: totalReplies + totalComments,
-    totalPages,
-    hasMore: page < totalPages,
-    comments,
-  };
-}
-
-export async function getAllComments({
-  rootId,
-  rootType,
-  parentId = null,
-  sortKey = 'createdAt',
-  sortOrder = 'desc',
-}: {
-  rootId: number;
-  rootType: CommentRoot;
-  parentId?: number | null;
-  sortKey?: SortKey;
-  sortOrder?: SortOrder;
-}) {
-  const session = await auth();
-
-  const comments = await prisma.comment.findMany({
-    where: {
-      rootType,
-      parentId,
-      ...(rootType === 'CHALLENGE' ? { rootChallengeId: rootId } : { rootSolutionId: rootId }),
-      visible: true,
-    },
-    orderBy: orderBy(sortKey, sortOrder),
-    include: {
-      user: {
-        select: {
-          id: true,
-          name: true,
-          image: true,
-          roles: true,
-          bio: true,
-        },
-      },
-      _count: {
-        select: {
-          replies: true,
-          vote: true,
-        },
-      },
-      vote: {
-        select: {
-          userId: true,
-        },
-        where: {
-          userId: session?.user?.id || '',
-        },
-      },
-      rootChallenge: {
-        select: {
-          slug: true,
-          name: true,
-        },
-      },
-      rootSolution: {
-        select: {
-          title: true,
-          challenge: {
-            select: {
-              slug: true,
-            },
-          },
-        },
-      },
-    },
-  });
-
-  return comments;
 }

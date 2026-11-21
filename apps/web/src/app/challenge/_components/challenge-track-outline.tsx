@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { type ReactNode } from 'react';
 
-import type { getTrackDetails } from '~/app/tracks/_components/track.action';
+import type { RouterOutputs } from '~/trpc/types';
 import { TrackChallenge } from '~/app/tracks/_components/track-challenge-card';
 import { TrackProgress } from '~/app/tracks/_components/track-progress';
 
@@ -22,7 +22,7 @@ import { ChevronRight } from '@repo/ui/icons';
 interface ChallengeTrackOutlineProps {
   children: ReactNode;
   challenge: Challenge;
-  track: NonNullable<Awaited<ReturnType<typeof getTrackDetails>>>;
+  track: RouterOutputs['track']['getDetails'];
   asChild?: boolean;
 }
 

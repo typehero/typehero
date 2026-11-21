@@ -15,8 +15,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { useToast } from '@repo/ui/components/use-toast';
-import { createShortURLWithSlug } from '../_actions/create-url-with-slug';
-import { createShortURL } from '../_actions/create-url';
+import { useMutation } from '@tanstack/react-query';
+import { TRPCClientError } from '@trpc/client';
+import { useTRPC } from '~/trpc/react';
 import { Clipboard, ExternalLink, Calendar as CalendarIcon } from '@repo/ui/icons';
 import { format } from 'date-fns';
 import { cn } from '@repo/ui/cn';
@@ -37,6 +38,9 @@ const FormSchema = z.object({
 export function URLShortenerForm() {
   const [shortURL, setShortURL] = React.useState<string | null>(null);
   const { toast } = useToast();
+  const trpc = useTRPC();
+  const createShortUrl = useMutation(trpc.shortUrl.create.mutationOptions());
+  const createShortUrlWithSlug = useMutation(trpc.shortUrl.createWithSlug.mutationOptions());
   const form = useForm<z.infer<typeof FormSchema>>({
     mode: 'onChange',
     resolver: zodResolver(FormSchema),
@@ -64,47 +68,55 @@ export function URLShortenerForm() {
     setShortURL(null);
     if (data.slug && data.slug.length > 0) {
       try {
-        const shortURL = await createShortURLWithSlug(
-          data.url,
-          data.slug,
-          data.expireAt,
-          data.overwrite,
-        );
-        if (shortURL) {
-          toast({
-            title: 'Short URL created',
-            description: shortURL,
-            variant: 'success',
-          });
-          setShortURL(shortURL);
-        } else {
-          toast({
-            title: `Slug '/${data.slug}' already exists`,
-            description: 'Please try another slug',
-            variant: 'destructive',
-          });
-        }
-      } catch {
-        toast({
-          title: 'Something went wrong',
-          description: 'Error creating short URL',
-          variant: 'destructive',
+        const shortURL = await createShortUrlWithSlug.mutateAsync({
+          url: data.url,
+          slug: data.slug,
+          expiresAt: data.expireAt,
+          overwrite: data.overwrite,
         });
-      }
-    } else {
-      // create short url with auto-generated slug
-      const shortURL = await createShortURL(data.url, {
-        expiresAt: data.expireAt,
-        forceNewUrl: data.overwrite,
-      });
-      if (shortURL) {
         toast({
           title: 'Short URL created',
           description: shortURL,
           variant: 'success',
         });
         setShortURL(shortURL);
-      } else {
+      } catch (error) {
+        const code = error instanceof TRPCClientError ? error.data?.code : undefined;
+        if (code === 'CONFLICT') {
+          toast({
+            title: `Slug '/${data.slug}' already exists`,
+            description: 'Please try another slug',
+            variant: 'destructive',
+          });
+        } else if (code === 'FORBIDDEN' || code === 'UNAUTHORIZED') {
+          toast({
+            title: 'Not allowed',
+            description: 'Only admins can create short URLs with a custom slug',
+            variant: 'destructive',
+          });
+        } else {
+          toast({
+            title: 'Something went wrong',
+            description: 'Error creating short URL',
+            variant: 'destructive',
+          });
+        }
+      }
+    } else {
+      // create short url with auto-generated slug
+      try {
+        const shortURL = await createShortUrl.mutateAsync({
+          url: data.url,
+          expiresAt: data.expireAt,
+          forceNewUrl: data.overwrite,
+        });
+        toast({
+          title: 'Short URL created',
+          description: shortURL,
+          variant: 'success',
+        });
+        setShortURL(shortURL);
+      } catch {
         toast({
           title: 'Error creating short URL',
           description: 'Please try again',

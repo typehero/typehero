@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 
 import { type ChallengeRouteData } from '~/app/challenge/[slug]/getChallengeRouteData';
-import { getTrackDetails } from '~/app/tracks/_components/track.action';
+import { useTRPC } from '~/trpc/react';
 
 import { Button } from '@repo/ui/components/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/tooltip';
@@ -29,11 +29,9 @@ export function ChallengeTrackNavigation({
 }: ChallengeTrackNavigationProps) {
   const router = useRouter();
 
+  const trpc = useTRPC();
   const { data: trackDetails, isPending } = useQuery({
-    queryKey: ['track-details', track?.slug],
-    queryFn: () => {
-      return getTrackDetails(track!.slug);
-    },
+    ...trpc.track.getDetails.queryOptions({ slug: track?.slug ?? '' }),
     enabled: Boolean(track?.slug),
   });
 

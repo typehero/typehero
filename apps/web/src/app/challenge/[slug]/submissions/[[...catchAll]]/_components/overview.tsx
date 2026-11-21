@@ -2,10 +2,11 @@ import { Button } from '@repo/ui/components/button';
 import { Markdown } from '@repo/ui/components/markdown';
 import { CheckCircle2, Plus, Share, Twitter, X, XCircle } from '@repo/ui/icons';
 import { useQuery } from '@tanstack/react-query';
+import { TRPCClientError } from '@trpc/client';
+import { useTRPCClient } from '~/trpc/react';
 import Link from 'next/link';
 import { useParams, useSearchParams } from 'next/navigation';
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
-import { getChallengeSubmissionById } from '../getChallengeSubmissions';
 import { Suggestions } from './suggestions';
 import {
   Dialog,
@@ -32,9 +33,19 @@ export function SubmissionOverview({ submissionId, userId }: SubmissionOverviewP
   const searchParams = useSearchParams();
 
   const showSuggestions = searchParams.get('success') === 'true';
-  const { data: submission } = useQuery({
-    queryKey: [`submission`, submissionId, 'userId', userId],
-    queryFn: () => getChallengeSubmissionById(submissionId, userId),
+  const trpcClient = useTRPCClient();
+  const numericId = Number(submissionId);
+  const { data: submission, isLoading } = useQuery({
+    // Scoped to the signed-in user: the query client outlives a sign-out, and a shared key
+    // would show the previous user's cached submission to whoever signs in next.
+    queryKey: ['submission', numericId, 'userId', userId],
+    queryFn: () => trpcClient.submission.getById.query({ submissionId: numericId }),
+    enabled: Boolean(userId) && Number.isInteger(numericId),
+    // NOT_FOUND / UNAUTHORIZED aren't transient; anything else gets a couple of retries.
+    retry: (failureCount, error) => {
+      const code = error instanceof TRPCClientError ? error.data?.code : undefined;
+      return code !== 'NOT_FOUND' && code !== 'UNAUTHORIZED' && failureCount < 2;
+    },
   });
 
   const code = codifyForMarkdown(submission?.code.trimStart() ?? '');
@@ -44,6 +55,8 @@ export function SubmissionOverview({ submissionId, userId }: SubmissionOverviewP
   const tweet = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
     `I've completed ${submission?.challenge.name} on TypeHero!`,
   )}&url=https://typehero.dev/challenge/${slug}`;
+
+  if (isLoading) return null;
 
   if (!submission) {
     return (

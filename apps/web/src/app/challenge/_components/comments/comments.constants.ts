@@ -1,5 +1,6 @@
 import { TRPCClientError } from '@trpc/client';
 
+export const COMMENTS_PAGE_SIZE = 10;
 export const MAX_COMMENT_LENGTH = 10_000;
 
 export const sortKeys = [

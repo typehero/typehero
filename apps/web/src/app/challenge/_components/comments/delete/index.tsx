@@ -9,7 +9,7 @@ import { TypographyLarge } from '@repo/ui/components/typography/large';
 import { useState } from 'react';
 import { getRelativeTimeStrict } from '~/utils/relativeTime';
 
-import { type PaginatedComments } from '../getCommentRouteData';
+import type { PaginatedComments } from '../getCommentRouteData';
 
 interface CommentDeleteDialogProps extends DialogTriggerProps {
   comment: PaginatedComments['comments'][number];
