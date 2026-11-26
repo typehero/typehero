@@ -33,7 +33,7 @@ export default function WalletConnectBanner() {
         </div>
         <button
           onClick={() => setIsVisible(false)}
-          className="flex-shrink-0 text-gray-400 transition-colors hover:text-gray-500"
+          className="flex-shrink-0 text-gray-500 transition-colors hover:text-gray-700"
           aria-label="Close notification"
         >
           <X className="h-5 w-5" />

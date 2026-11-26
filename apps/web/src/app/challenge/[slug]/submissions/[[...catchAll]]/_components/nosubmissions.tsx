@@ -1,7 +1,7 @@
 function NoSubmissions() {
   return (
     <div className="flex h-full items-center justify-center">
-      <p className="flex flex-col items-center gap-2 text-center text-neutral-500 dark:text-zinc-400">
+      <p className="flex flex-col items-center gap-2 text-center text-neutral-600 dark:text-zinc-400">
         <svg
           className="mr-6 h-28 w-28"
           data-name="Layer 1"

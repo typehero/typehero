@@ -56,7 +56,7 @@ export function Features() {
             <h1 className="text-4xl font-bold">
               <Balancer>What's in TypeHero?</Balancer>
             </h1>
-            <p className="text-black/60 dark:text-white/50">
+            <p className="text-black/70 dark:text-white/70">
               <Balancer>All you need to become a TypeScript menace</Balancer>
             </p>
           </div>

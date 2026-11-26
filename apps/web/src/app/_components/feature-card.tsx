@@ -406,7 +406,7 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
         >
           <div className="flex items-center gap-2">
             <Badge name="dax" />
-            <div className="text-xs text-neutral-500">5 years ago</div>
+            <div className="text-xs text-neutral-600 dark:text-neutral-400">5 years ago</div>
           </div>
           Implementing Pick in TypeScript is hard, can anyone help?
         </div>
@@ -420,7 +420,7 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
           <Reply className="absolute -left-8 h-4 w-4 opacity-50" />
           <div className="flex items-center gap-2">
             <Badge name="trash" />
-            <div className="text-xs text-neutral-500">just now</div>
+            <div className="text-xs text-neutral-600 dark:text-neutral-400">just now</div>
           </div>
           ez, the answer is
           <Markdown>{solutionComment}</Markdown>
@@ -435,7 +435,7 @@ export function CollaborativeEnvironmentCard(props: CardProps) {
           <Reply className="absolute -left-8 h-4 w-4 opacity-50" />
           <div className="flex items-center gap-2">
             <Badge name="nikita" />
-            <div className="text-xs text-neutral-500">just now</div>
+            <div className="text-xs text-neutral-600 dark:text-neutral-400">just now</div>
           </div>
           <Image
             className={clsx({ amoguwusus: inView }, 'hidden opacity-0 xl:block')}

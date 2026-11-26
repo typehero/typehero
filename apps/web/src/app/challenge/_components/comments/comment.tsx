@@ -186,7 +186,7 @@ export function Comment({
           {showLoadMoreRepliesBtn ? (
             <Button
               variant="ghost"
-              className="gap-1 text-xs text-neutral-500 duration-200 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300"
+              className="gap-1 text-xs text-neutral-600 duration-200 hover:text-neutral-500 dark:text-neutral-400 dark:hover:text-neutral-300"
               onClick={() => fetchNextPage()}
             >
               <MoreHorizontal size={24} />

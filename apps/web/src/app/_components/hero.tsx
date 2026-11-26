@@ -177,7 +177,7 @@ export async function Hero() {
             </h1>
           </div>
 
-          <p className="max-w-[55ch] bg-transparent text-center font-medium leading-8 text-black/60 sm:px-8 lg:px-0 lg:text-left dark:text-white/50">
+          <p className="max-w-[55ch] bg-transparent text-center font-medium leading-8 text-black/70 sm:px-8 lg:px-0 lg:text-left dark:text-white/70">
             <Balancer>
               Connect, collaborate, and grow with a community of TypeScript developers. Elevate your
               skills through interactive coding challenges, discussions, and knowledge sharing
